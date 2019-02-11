@@ -15,42 +15,46 @@
 #pragma once
 
 #include <QObject>
-#include <QTimer>
 
 #include "model/wallet_model.h"
-#include "ui_helpers.h"
 
-class RestoreViewModel : public QObject
+class LoadingViewModel : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(double progress READ getProgress WRITE setProgress NOTIFY progressChanged)
     Q_PROPERTY(QString progressMessage READ getProgressMessage WRITE setProgressMessage NOTIFY progressMessageChanged)
+    Q_PROPERTY(bool isCreating READ getIsCreating WRITE setIsCreating NOTIFY isCreatingChanged)
 
 public:
 
-    RestoreViewModel();
-    ~RestoreViewModel();
+    LoadingViewModel();
+    ~LoadingViewModel();
 
     double getProgress() const;
     void setProgress(double value);
     const QString& getProgressMessage() const;
     void setProgressMessage(const QString& value);
+    void setIsCreating(bool value);
+    bool getIsCreating() const;
+
+    Q_INVOKABLE void resetWallet();
 
 public slots:
     void onSyncProgressUpdated(int done, int total);
     void onNodeSyncProgressUpdated(int done, int total);
-    void onUpdateTimer();
     void onNodeConnectionChanged(bool isNodeConnected);
-    void onNodeConnectionFailed();
+    void onGetWalletError(beam::wallet::ErrorType error);
 signals:
     void progressChanged();
     void progressMessageChanged();
     void syncCompleted();
+    void walletError(const QString& title, const QString& message);
+    void isCreatingChanged();
 private:
     void updateProgress();
     void syncWithNode();
 private:
-    WalletModel::Ptr m_walletModel;
+    WalletModel& m_walletModel;
     double m_progress;
     int m_nodeTotal;
     int m_nodeDone;
@@ -59,11 +63,6 @@ private:
     bool m_walletConnected;
     bool m_hasLocalNode;
     QString m_progressMessage;
-    uint64_t m_estimationUpdateDeltaMs;
-    double m_prevProgress;
-    uint64_t m_prevUpdateTimeMs;
-    QTimer m_updateTimer;
-    beamui::Filter m_speedFilter;
-    uint64_t m_currentEstimationSec;
     bool m_skipProgress;
+    bool m_isCreating;
 };
