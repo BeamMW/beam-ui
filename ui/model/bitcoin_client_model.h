@@ -1,4 +1,4 @@
-// Copyright 2018 The Beam Team
+// Copyright 2019 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,22 +11,27 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#pragma once
-#include <QObject>
 
-class WalletCurrency: public QObject
+#pragma once
+
+#include <QObject>
+#include "wallet/bitcoin/bitcoin_client.h"
+
+class BitcoinClientModel
+    : public QObject
+    , public beam::BitcoinClient
 {
     Q_OBJECT
 public:
-    enum class Currency {
-        CurrStart = -1,
-        CurrBeam  = 0,
-        CurrBtc   = 1,
-        CurrLtc   = 2,
-        CurrQtum  = 3,
-        CurrEnd   = 4
-    };
-    Q_ENUMS(Currency)
-};
+    using Ptr = std::shared_ptr<BitcoinClientModel>;
 
-typedef WalletCurrency::Currency Currency;
+    BitcoinClientModel(beam::wallet::IWalletDB::Ptr walletDB, beam::io::Reactor& reactor);
+
+signals:
+    void GotStatus(beam::BitcoinClient::Status status);
+    void GotBalance(const beam::BitcoinClient::Balance& balance);
+
+private:
+    void OnStatus(Status status) override;
+    void OnBalance(const BitcoinClient::Balance& balance) override;
+};
