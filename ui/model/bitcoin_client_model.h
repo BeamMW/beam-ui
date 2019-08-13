@@ -15,7 +15,7 @@
 #pragma once
 
 #include <QObject>
-#include "wallet/bitcoin/bitcoin_client.h"
+#include "wallet/bitcoin/client.h"
 
 class BitcoinClientModel
     : public QObject
