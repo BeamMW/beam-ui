@@ -15,16 +15,18 @@
 #include "wallet_view.h"
 
 #include <iomanip>
-#include "ui_helpers.h"
+
 #include <QApplication>
-#include <QClipboard>
-#include "model/app_model.h"
-#include "qrcode/QRCodeGenerator.h"
 #include <QtGui/qimage.h>
 #include <QtCore/qbuffer.h>
 #include <QUrlQuery>
-#include "model/qr.h"
+#include <QClipboard>
+
+#include "qrcode/QRCodeGenerator.h"
 #include "utility/helpers.h"
+#include "model/app_model.h"
+#include "model/qr.h"
+#include "viewmodel/ui_helpers.h"
 
 using namespace beam;
 using namespace beam::wallet;
@@ -116,7 +118,9 @@ void WalletViewModel::onTxStatus(beam::wallet::ChangeAction action, const std::v
             txIt = find_if(txIt, txEnd, [&item](const auto& tx) {return item.m_txId == tx->getTxDescription().m_txId; });
             if (txIt == txEnd)
             {
-                break;
+                // insert new object
+                _txList.insert(0, new TxObject(item));
+                continue;
             }
             (*txIt)->update(item);
         }
@@ -139,24 +143,31 @@ void WalletViewModel::onTxStatus(beam::wallet::ChangeAction action, const std::v
 
 }
 
-QString WalletViewModel::available() const
+double WalletViewModel::beamAvailable() const
 {
-    return BeamToString(_status.getAvailable());
+    return double(int64_t(_status.getAvailable())) / Rules::Coin;
 }
 
-QString WalletViewModel::receiving() const
+double WalletViewModel::beamReceiving() const
 {
-    return BeamToString(_status.getReceiving());
+     return double(_status.getReceiving()) / Rules::Coin;
 }
 
-QString WalletViewModel::sending() const
+double WalletViewModel::beamSending() const
 {
-    return BeamToString(_status.getSending());
+    return double(_status.getSending()) / Rules::Coin;
 }
+
+double WalletViewModel::beamLocked() const
+{
+     // TODO:SWAP return real value
+    return 0;
+}
+
 
 QString WalletViewModel::maturing() const
 {
-    return BeamToString(_status.getMaturing());
+    return AmountToString(_status.getMaturing(), Currencies::Beam);
 }
 
 QString WalletViewModel::sortRole() const
@@ -166,8 +177,8 @@ QString WalletViewModel::sortRole() const
 
 void WalletViewModel::setSortRole(const QString& value)
 {
-    if (value != getDateRole() && value != getAmountRole() &&
-        value != getStatusRole() && value != getUserRole())
+    if (value != getDateRole() && value != getAmountRole() && value != getSentAmountRole() && value != getReceivedAmountRole() &&
+        value != getStatusRole() && value != getSendingAddressRole() && value != getReceivingAddressRole())
         return;
 
     _sortRole = value;
@@ -195,19 +206,34 @@ QString WalletViewModel::getDateRole() const
     return "date";
 }
 
-QString WalletViewModel::getUserRole() const
-{
-    return "user";
-}
-
 QString WalletViewModel::getDisplayNameRole() const
 {
     return "displayName";
 }
 
+QString WalletViewModel::getSendingAddressRole() const
+{
+    return "sendingAddress";
+}
+
+QString WalletViewModel::getReceivingAddressRole() const
+{
+    return "receivingAddress";
+}
+
 QString WalletViewModel::getAmountRole() const
 {
     return "amount";
+}
+
+QString WalletViewModel::getSentAmountRole() const
+{
+    return "sentAmount";
+}
+
+QString WalletViewModel::getReceivedAmountRole() const
+{
+    return "receivedAmount";
 }
 
 QString WalletViewModel::getStatusRole() const
@@ -246,10 +272,16 @@ std::function<bool(const TxObject*, const TxObject*)> WalletViewModel::generateC
         return compareTx(lf->getTxDescription().m_sender, rt->getTxDescription().m_sender, sortOrder);
     };
 
-    if (_sortRole == getUserRole())
+    if (_sortRole == getSendingAddressRole())
         return [sortOrder = _sortOrder](const TxObject* lf, const TxObject* rt)
     {
-        return compareTx(lf->user(), rt->user(), sortOrder);
+        return compareTx(lf->getSendingAddress(), rt->getSendingAddress(), sortOrder);
+    };
+
+    if (_sortRole == getReceivingAddressRole())
+        return [sortOrder = _sortOrder](const TxObject* lf, const TxObject* rt)
+    {
+        return compareTx(lf->getReceivingAddress(), rt->getReceivingAddress(), sortOrder);
     };
 
     if (_sortRole == getDisplayNameRole())
@@ -261,7 +293,20 @@ std::function<bool(const TxObject*, const TxObject*)> WalletViewModel::generateC
     if (_sortRole == getAmountRole())
         return [sortOrder = _sortOrder](const TxObject* lf, const TxObject* rt)
     {
-        return compareTx(lf->getTxDescription().m_amount, rt->getTxDescription().m_amount, sortOrder);
+        return compareTx(lf->getAmountValue(), rt->getAmountValue(), sortOrder);
+    };
+
+
+    if (_sortRole == getSentAmountRole())
+        return [sortOrder = _sortOrder](const TxObject* lf, const TxObject* rt)
+    {
+        return compareTx(lf->getSentAmountValue(), rt->getSentAmountValue(), sortOrder);
+    };
+
+    if (_sortRole == getReceivedAmountRole())
+        return [sortOrder = _sortOrder](const TxObject* lf, const TxObject* rt)
+    {
+        return compareTx(lf->getReceivedAmountValue(), rt->getReceivedAmountValue(), sortOrder);
     };
 
     if (_sortRole == getStatusRole())
@@ -298,8 +343,7 @@ void WalletViewModel::onAddresses(bool own, const std::vector<beam::wallet::Wall
             tx->setUserName(QString{});
         }
 
-        auto displayName = tx->userName().isEmpty() ? tx->user() : tx->userName();
+        auto displayName = tx->userName();// .isEmpty() ? tx->user() : tx->userName();
         tx->setDisplayName(displayName);
     }
 }
-

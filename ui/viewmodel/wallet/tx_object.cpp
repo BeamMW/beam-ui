@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "tx_object.h"
-#include "ui_helpers.h"
+#include "viewmodel/ui_helpers.h"
 
 using namespace beam;
 using namespace beam::wallet;
 using namespace beamui;
 
-TxObject::TxObject(QObject* parent /*= nullptr*/)
+TxObject::TxObject(QObject* parent)
         : QObject(parent)
 {
 }
@@ -31,6 +31,40 @@ TxObject::TxObject(const TxDescription& tx, QObject* parent/* = nullptr*/)
     setKernelID(kernelID);
 }
 
+auto TxObject::timeCreated() const -> QDateTime
+{
+	QDateTime datetime;
+	datetime.setTime_t(m_tx.m_createTime);
+	return datetime;
+}
+
+auto TxObject::getTxID() const -> beam::wallet::TxID
+{
+    return m_tx.m_txId;
+}
+
+auto TxObject::isBeamSideSwap() const -> bool
+{
+    auto isBeamSide = m_tx.GetParameter<bool>(TxParameterID::AtomicSwapIsBeamSide);
+    return isBeamSide.value();
+}
+
+auto TxObject::getSwapCoinType() const -> beamui::Currencies
+{
+    beam::wallet::AtomicSwapCoin coin;
+    if (m_tx.GetParameter(TxParameterID::AtomicSwapCoin, coin))
+    {
+        switch (coin)
+        {
+            case AtomicSwapCoin::Bitcoin:   return beamui::Currencies::Bitcoin;
+            case AtomicSwapCoin::Litecoin:  return beamui::Currencies::Litecoin;
+            case AtomicSwapCoin::Qtum:      return beamui::Currencies::Qtum;
+            case AtomicSwapCoin::Unknown:   return beamui::Currencies::Unknown;
+        }
+    }
+    return beamui::Currencies::Unknown;
+}
+
 bool TxObject::income() const
 {
     return m_tx.m_sender == false;
@@ -39,11 +73,6 @@ bool TxObject::income() const
 QString TxObject::date() const
 {
     return toString(m_tx.m_createTime);
-}
-
-QString TxObject::user() const
-{
-    return toString(m_tx.m_peerId);
 }
 
 QString TxObject::userName() const
@@ -62,16 +91,41 @@ QString TxObject::comment() const
     return QString(str.c_str()).trimmed();
 }
 
-QString TxObject::amount() const
+QString TxObject::getAmount() const
 {
-    return BeamToString(m_tx.m_amount);
+    return AmountToString(m_tx.m_amount, Currencies::Beam);
+}
+
+double TxObject::getAmountValue() const
+{
+    return m_tx.m_amount;
+}
+
+QString TxObject::getSentAmount() const
+{
+    return m_tx.m_sender ? getAmount() : "";
+}
+
+double TxObject::getSentAmountValue() const
+{
+    return m_tx.m_sender ? m_tx.m_amount : 0;
+}
+
+QString TxObject::getReceivedAmount() const
+{
+    return !m_tx.m_sender ? getAmount() : "";
+}
+
+double TxObject::getReceivedAmountValue() const
+{
+    return !m_tx.m_sender ? m_tx.m_amount : 0;
 }
 
 QString TxObject::change() const
 {
     if (m_tx.m_change)
     {
-        return BeamToString(m_tx.m_change);
+        return AmountToString(m_tx.m_change, Currencies::Beam);
     }
     return QString{};
 }
@@ -116,27 +170,19 @@ beam::wallet::WalletID TxObject::peerId() const
 
 QString TxObject::getSendingAddress() const
 {
-    if (m_tx.m_sender)
-    {
-        return toString(m_tx.m_myId);
-    }
-    return user();
+    return toString(m_tx.m_sender ? m_tx.m_myId : m_tx.m_peerId);
 }
 
 QString TxObject::getReceivingAddress() const
 {
-    if (m_tx.m_sender)
-    {
-        return user();
-    }
-    return toString(m_tx.m_myId);
+    return toString(!m_tx.m_sender ? m_tx.m_myId : m_tx.m_peerId);
 }
 
 QString TxObject::getFee() const
 {
     if (m_tx.m_fee)
     {
-        return BeamToString(m_tx.m_fee);
+        return AmountToString(m_tx.m_fee, Currencies::Beam);
     }
     return QString{};
 }
@@ -176,7 +222,8 @@ QString TxObject::getTransactionID() const
 
 QString TxObject::getFailureReason() const
 {
-    if (getTxDescription().m_status == TxStatus::Failed)
+    // TODO: add support for other transactions
+    if (getTxDescription().m_status == TxStatus::Failed && getTxDescription().m_txType == beam::wallet::TxType::Simple)
     {
         QString Reasons[] =
                 {

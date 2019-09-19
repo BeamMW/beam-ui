@@ -15,27 +15,32 @@
 
 #include <QObject>
 #include <QQmlListProperty>
+#include "wallet/bitcoin/client.h"
 #include "model/wallet_model.h"
 #include "model/settings.h"
-#include "messages_view.h"
-#include "status_holder.h"
+#include "viewmodel/messages_view.h"
+#include "viewmodel/status_holder.h"
 #include "tx_object.h"
 
 class WalletViewModel : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString available   READ available    NOTIFY stateChanged)
-    Q_PROPERTY(QString receiving   READ receiving    NOTIFY stateChanged)
-    Q_PROPERTY(QString sending     READ sending      NOTIFY stateChanged)
+    Q_PROPERTY(double  beamAvailable   READ beamAvailable    NOTIFY stateChanged)
+    Q_PROPERTY(double beamReceiving   READ beamReceiving    NOTIFY stateChanged)
+    Q_PROPERTY(double beamSending   READ beamSending  NOTIFY stateChanged)
+    Q_PROPERTY(double beamLocked    READ beamLocked  NOTIFY stateChanged)
     Q_PROPERTY(QString maturing    READ maturing     NOTIFY stateChanged)
     Q_PROPERTY(QQmlListProperty<TxObject> transactions READ getTransactions NOTIFY transactionsChanged)
     Q_PROPERTY(QString sortRole READ sortRole WRITE setSortRole)
     Q_PROPERTY(Qt::SortOrder sortOrder READ sortOrder WRITE setSortOrder)
     Q_PROPERTY(QString incomeRole READ getIncomeRole CONSTANT)
     Q_PROPERTY(QString dateRole READ getDateRole CONSTANT)
-    Q_PROPERTY(QString userRole READ getUserRole CONSTANT)
     Q_PROPERTY(QString displayNameRole READ getDisplayNameRole CONSTANT)
+    Q_PROPERTY(QString sendingAddressRole READ getSendingAddressRole CONSTANT)
+    Q_PROPERTY(QString receivingAddressRole READ getReceivingAddressRole CONSTANT)
     Q_PROPERTY(QString amountRole READ getAmountRole CONSTANT)
+    Q_PROPERTY(QString sentAmountRole READ getSentAmountRole CONSTANT)
+    Q_PROPERTY(QString receivedAmountRole READ getReceivedAmountRole CONSTANT)
     Q_PROPERTY(QString statusRole READ getStatusRole CONSTANT)
     Q_PROPERTY(bool isAllowedBeamMWLinks READ isAllowedBeamMWLinks WRITE allowBeamMWLinks NOTIFY beamMWLinksAllowed)
 
@@ -49,11 +54,11 @@ public:
     WalletViewModel();
     virtual ~WalletViewModel();
 
-    QString available() const;
-    QString receiving() const;
-    QString sending() const;
+    double  beamAvailable() const;
+    double  beamReceiving() const;
+    double  beamSending() const;
+    double  beamLocked() const;
     QString maturing() const;
-
     QQmlListProperty<TxObject> getTransactions();
     bool getIsOfflineStatus() const;
     bool getIsFailedStatus() const;
@@ -65,9 +70,12 @@ public:
     void setSortOrder(Qt::SortOrder);
     QString getIncomeRole() const;
     QString getDateRole() const;
-    QString getUserRole() const;
     QString getDisplayNameRole() const;
+    QString getSendingAddressRole() const;
+    QString getReceivingAddressRole() const;
     QString getAmountRole() const;
+    QString getSentAmountRole() const;
+    QString getReceivedAmountRole() const;
     QString getStatusRole() const;
 
     Q_INVOKABLE bool isAllowedBeamMWLinks() const;
