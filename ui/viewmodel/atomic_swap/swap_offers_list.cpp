@@ -32,7 +32,9 @@ QHash<int, QByteArray> SwapOffersList::roleNames() const
         { static_cast<int>(Roles::RateSort), "rateSort" },
         { static_cast<int>(Roles::Expiration), "expiration" },
         { static_cast<int>(Roles::ExpirationSort), "expirationSort" },
+        { static_cast<int>(Roles::SwapCoin), "swapCoin" },
         { static_cast<int>(Roles::IsOwnOffer), "isOwnOffer" },
+        { static_cast<int>(Roles::IsBeamSide), "isBeamSide" },
         { static_cast<int>(Roles::RawTxID), "rawTxID" },
         { static_cast<int>(Roles::RawTxParameters), "rawTxParameters" }
         
@@ -50,6 +52,7 @@ QVariant SwapOffersList::data(const QModelIndex &index, int role) const
     switch (static_cast<Roles>(role))
     {
         case Roles::TimeCreated:
+            return value->timeCreated().toString(Qt::SystemLocaleShortDate);
         case Roles::TimeCreatedSort:
             return value->timeCreated();
 
@@ -57,24 +60,32 @@ QVariant SwapOffersList::data(const QModelIndex &index, int role) const
             return value->amountSend();
 
         case Roles::AmountSendSort:
-            return static_cast<uint>(value->rawAmountSend());
+            return static_cast<qulonglong>(value->rawAmountSend());
 
         case Roles::AmountReceive:
             return value->amountReceive();
 
         case Roles::AmountReceiveSort:
-            return static_cast<uint>(value->rawAmountReceive());
+            return static_cast<qulonglong>(value->rawAmountReceive());
 
         case Roles::Rate:
-        case Roles::RateSort:
             return value->rate();
+        case Roles::RateSort:
+            return value->rateValue();
 
         case Roles::Expiration:
+            return value->timeExpiration().toString(Qt::SystemLocaleShortDate);
         case Roles::ExpirationSort:
             return value->timeExpiration();
 
+        case Roles::SwapCoin:
+            return value->getSwapCoinName();
+
         case Roles::IsOwnOffer:
             return value->isOwnOffer();
+
+        case Roles::IsBeamSide:
+            return value->isBeamSide();
 
         case Roles::RawTxID:
             return QVariant::fromValue(value->getTxID());

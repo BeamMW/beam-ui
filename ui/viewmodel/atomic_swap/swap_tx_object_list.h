@@ -14,10 +14,10 @@
 
 #pragma once
 
-#include "tx_object.h"
+#include "swap_tx_object.h"
 #include "viewmodel/helpers/list_model.h"
 
-class TransactionsList : public ListModel<std::shared_ptr<TxObject>>
+class SwapTxObjectList : public ListModel<std::shared_ptr<SwapTxObject>>
 {
 
     Q_OBJECT
@@ -27,10 +27,10 @@ public:
     {
         TimeCreated = Qt::UserRole + 1,
         TimeCreatedSort,
-        AmountSend,
-        AmountSendSort,
-        AmountReceive,
-        AmountReceiveSort,
+        AmountGeneralWithCurrency,
+        AmountGeneralWithCurrencySort,
+        AmountGeneral,
+        AmountGeneralSort,
         AddressFrom,
         AddressFromSort,
         AddressTo,
@@ -47,18 +47,45 @@ public:
         IsSelfTransaction,
         IsIncome,
         IsInProgress,
+        IsPending,
         IsCompleted,
-        IsBeamSideSwap,
+        IsCanceled,
+        IsFailed,
+        IsExpired,
         HasPaymentProof,
+        RawTxID,
+        Search,
+        // atomic swap only roles
+        IsBeamSideSwap,
+        IsLockTxProofReceived,
+        IsRefundTxProofReceived,
+        AmountSendWithCurrency,
+        AmountSendWithCurrencySort,
+        AmountSend,
+        AmountSendSort,
+        AmountReceiveWithCurrency,
+        AmountReceiveWithCurrencySort,
+        AmountReceive,
+        AmountReceiveSort,
+        Token,
         SwapCoin,
-        RawTxID
+        FeeRate,
+        SwapCoinLockTxId,
+        SwapCoinLockTxConfirmations,
+        SwapCoinRedeemTxId,
+        SwapCoinRedeemTxConfirmations,
+        SwapCoinRefundTxId,
+        SwapCoinRefundTxConfirmations,
+        BeamLockTxKernelId,
+        BeamRedeemTxKernelId,
+        BeamRefundTxKernelId
     };
 
-    TransactionsList();
+    SwapTxObjectList();
 
     QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
 
-    void remove(const std::vector<std::shared_ptr<TxObject>>& items);
-    void update(const std::vector<std::shared_ptr<TxObject>>& items);
+    void remove(const std::vector<std::shared_ptr<SwapTxObject>>& items);
+    void update(const std::vector<std::shared_ptr<SwapTxObject>>& items);
 };

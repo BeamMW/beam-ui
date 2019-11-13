@@ -24,13 +24,6 @@ using namespace beam::wallet;
 class SwapOfferItem : public QObject
 {
     Q_OBJECT
-    // Q_PROPERTY(QDateTime    timeCreated         READ timeCreated        NOTIFY changed)
-    // Q_PROPERTY(QDateTime    timeExpiration      READ timeExpiration     NOTIFY changed)
-    // Q_PROPERTY(QString      amountSend          READ amountSend         NOTIFY changed)
-    // Q_PROPERTY(QString      amountReceive       READ amountReceive      NOTIFY changed)
-    // Q_PROPERTY(double       rate                READ rate               NOTIFY changed)
-    // Q_PROPERTY(bool         isOwnOffer          READ isOwnOffer         NOTIFY changed)
-    // Q_PROPERTY(TxParameters txParameters        READ getTxParameters    NOTIFY changed)
 
 public:
     SwapOfferItem() = default;
@@ -40,23 +33,25 @@ public:
     auto timeExpiration() const -> QDateTime;
     auto amountSend() const -> QString;
     auto amountReceive() const -> QString;
-    auto rate() const -> double;
+    auto rate() const -> QString;
+    auto rateValue() const-> double;
     auto isOwnOffer() const -> bool;
+    auto isBeamSide() const -> bool;
 
     auto rawAmountSend() const -> beam::Amount;
     auto rawAmountReceive() const -> beam::Amount;
 
     auto getTxParameters() const -> TxParameters;
     auto getTxID() const -> TxID;
+    auto getSwapCoinName() const -> QString;
 
 signals:
-    // void changed();
 
 private:
     auto getSwapCoinType() const -> beamui::Currencies;
 
-    SwapOffer m_offer;          /// raw TxParameters
+    SwapOffer m_offer;          /// TxParameters subclass
     bool m_isOwnOffer;          /// indicates if offer belongs to this wallet
-    bool m_isBeamSide;          /// pay beam to receive other
+    bool m_isBeamSide;          /// pay beam to receive other coin
     QDateTime m_timeExpiration;
 };
