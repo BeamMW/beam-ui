@@ -14,10 +14,10 @@
 
 #pragma once
 
-#include "tx_object.h"
+#include "utxo_item.h"
 #include "viewmodel/helpers/list_model.h"
 
-class TxObjectList : public ListModel<std::shared_ptr<TxObject>>
+class UtxoItemList : public ListModel<std::shared_ptr<UtxoItem>>
 {
 
     Q_OBJECT
@@ -25,39 +25,17 @@ class TxObjectList : public ListModel<std::shared_ptr<TxObject>>
 public:
     enum class Roles
     {
-        TimeCreated = Qt::UserRole + 1,
-        TimeCreatedSort,
-        AmountGeneralWithCurrency,
-        AmountGeneralWithCurrencySort,
-        AmountGeneral,
-        AmountGeneralSort,
-        AddressFrom,
-        AddressFromSort,
-        AddressTo,
-        AddressToSort,
+        Amount = Qt::UserRole + 1,
+        AmountSort,
+        Maturity,
+        MaturitySort,
         Status,
         StatusSort,
-        Fee,
-        Comment,
-        TxID,
-        KernelID,
-        FailureReason,
-        IsCancelAvailable,
-        IsDeleteAvailable,
-        IsSelfTransaction,
-        IsIncome,
-        IsInProgress,
-        IsPending,
-        IsCompleted,
-        IsCanceled,
-        IsFailed,
-        IsExpired,
-        HasPaymentProof,
-        RawTxID,
-        Search
+        Type,
+        TypeSort
     };
 
-    TxObjectList();
+    UtxoItemList();
 
     QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
