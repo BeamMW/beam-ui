@@ -12,28 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma once
+#include "model/app_model.h"
+#include "notifications_view.h"
 
-#include <QObject>
-
-#include "ui/model/app_model.h"
-#include "wallet/client/extensions/news_channels/interface.h"
-
-class ExchangeRateProvider : public QObject
+NotificationsViewModel::NotificationsViewModel()
+    : m_walletModel{*AppModel::getInstance().getWallet()}
 {
-    Q_OBJECT
-    // Q_PROPERTY()
-
-public:
-    ExchangeRateProvider();
-
-signals:
-    //
-
-public slots:
-    void onExchangeRatesUpdate(const beam::wallet::ExchangeRates& rates);
-
-private:
-    WalletModel& m_walletModel;
-    // WalletSettings& m_settings;
-};
+    // signals connecting
+}
