@@ -16,24 +16,24 @@
 
 #include <QObject>
 
-#include "ui/model/app_model.h"
-#include "wallet/client/extensions/news_channels/interface.h"
+#include "model/app_model.h"
 
-class ExchangeRateProvider : public QObject
+class NotificationsViewModel : public QObject
 {
-    Q_OBJECT
-    // Q_PROPERTY()
+	Q_OBJECT
+    // Q_PROPERTY(QAbstractItemModel*  notifications        READ getNotifications        NOTIFY allNotificationsChanged)
 
 public:
-    ExchangeRateProvider();
+    NotificationsViewModel();
 
-signals:
-    //
+    // QAbstractItemModel* getNotifications();
 
 public slots:
-    void onExchangeRatesUpdate(const beam::wallet::ExchangeRates& rates);
+    
+signals:
+    // void allNotificationsChanged();
 
 private:
     WalletModel& m_walletModel;
-    // WalletSettings& m_settings;
+
 };
