@@ -16,27 +16,24 @@
 
 #include <QObject>
 
-#include "model/app_model.h"
-#include "viewmodel/notifications/notifications_list.h"
+#include "ui/model/app_model.h"
 
-class NotificationsViewModel : public QObject
+class PushNotificationManager : public QObject
 {
-	Q_OBJECT
-    Q_PROPERTY(QAbstractItemModel*  notifications        READ getNotifications        NOTIFY allNotificationsChanged)
+    Q_OBJECT
 
 public:
-    NotificationsViewModel();
+    PushNotificationManager();
 
-    QAbstractItemModel* getNotifications();
+    Q_INVOKABLE void onCancelPopup(const QVariant& variantID);
+
+signals:
+    void showUpdateNotification(const QString&, const QString&, const QVariant&);
 
 public slots:
-    void onNotificationsDataModelChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&);
-    
-signals:
-    void allNotificationsChanged();
+    void onNewSoftwareUpdateAvailable(const beam::wallet::VersionInfo&, const ECC::uintBig& notificationID);
 
 private:
     WalletModel& m_walletModel;
-
-    NotificationsList m_notificationsList;
+    WalletSettings& m_settings; /// TODO store last version user notified about
 };

@@ -15,23 +15,29 @@
 #pragma once
 
 #include <QObject>
+#include <QDateTime>
+#include "model/wallet_model.h"
+#include "viewmodel/ui_helpers.h"
 
-#include "ui/model/app_model.h"
-
-class UpdateInfoProvider : public QObject
+class NotificationItem : public QObject
 {
     Q_OBJECT
 
 public:
-    UpdateInfoProvider();
+    NotificationItem() = default;
+    NotificationItem(const beam::wallet::Notification&);
+    bool operator==(const NotificationItem& other) const;
+
+    auto timeCreated() const -> QDateTime;
+    auto title() const -> QString;
+    auto message() const -> QString;
+    auto type() const -> QString;
+    auto state() const -> QString;
+
+    auto getID() const -> ECC::uintBig;
 
 signals:
-    void showUpdateNotification(const QString& versionString);
-
-public slots:
-    void onNewAppVersion(const QString& msg);
 
 private:
-    WalletModel& m_walletModel;
-    WalletSettings& m_settings; /// TODO store last version user notified about
+    beam::wallet::Notification m_notification;
 };

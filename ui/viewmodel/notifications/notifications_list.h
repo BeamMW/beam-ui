@@ -12,18 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "update_info_provider.h"
+#pragma once
 
-#include "version.h"
+#include "notification_item.h"
+#include "viewmodel/helpers/list_model.h"
 
-UpdateInfoProvider::UpdateInfoProvider()
-    : m_walletModel(*AppModel::getInstance().getWallet())
-    , m_settings(AppModel::getInstance().getSettings())
+class NotificationsList : public ListModel<std::shared_ptr<NotificationItem>>
 {
-    connect(&m_walletModel, SIGNAL(newAppVersion(const QString&)), SLOT(onNewAppVersion(const QString&)));
-}
+    Q_OBJECT
 
-void UpdateInfoProvider::onNewAppVersion(const QString& msg)
-{
-    emit showUpdateNotification(msg);
-}
+public:
+    enum class Roles
+    {
+        TimeCreated = Qt::UserRole + 1,
+        TimeCreatedSort,
+        Title,
+        Message,
+        Type,
+        State,
+        RawID
+    };
+
+    NotificationsList();
+
+    QVariant data(const QModelIndex &index, int role) const override;
+    QHash<int, QByteArray> roleNames() const override;
+};
