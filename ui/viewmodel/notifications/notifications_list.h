@@ -14,9 +14,28 @@
 
 #pragma once
 
-#include <QObject>
+#include "notification_item.h"
+#include "viewmodel/helpers/list_model.h"
 
-class ExchangeRateProvider : public QObject
+class NotificationsList : public ListModel<std::shared_ptr<NotificationItem>>
 {
     Q_OBJECT
+
+public:
+    enum class Roles
+    {
+        TimeCreated = Qt::UserRole + 1,
+        TimeCreatedSort,
+        Title,
+        Message,
+        Type,
+        State,
+        RawID,
+        DateCreated
+    };
+
+    NotificationsList();
+
+    QVariant data(const QModelIndex &index, int role) const override;
+    QHash<int, QByteArray> roleNames() const override;
 };
