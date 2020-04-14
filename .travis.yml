@@ -1,0 +1,249 @@
+git:
+  depth: false
+
+matrix:
+  include:
+
+###############################################################################
+# OSX Debug
+###############################################################################
+
+    - os: osx
+      language: cpp
+      cache: ccache
+      osx_image: xcode10.1
+      install: 
+        - export TZ=Etc/GMT-3
+        - brew update
+        - brew unlink cmake
+        - brew install cmake
+        - brew link cmake
+        - brew install ccache
+        - export PATH="/usr/local/opt/ccache/libexec:$PATH"
+        - brew uninstall --ignore-dependencies qt boost
+        - curl -O https://raw.githubusercontent.com/Homebrew/homebrew-core/56c500b569c724b049be7ab9e12d9693f85522f9/Formula/qt.rb
+        - brew install ./qt.rb
+        - brew link qt5 --force
+        - curl -O https://raw.githubusercontent.com/Homebrew/homebrew-core/5da5895add2f6b9320d654dd844d4827f6876c8b/Formula/boost.rb
+        - brew install ./boost.rb
+        - export PATH=/usr/local/opt/qt/bin:$PATH
+        - export OPENSSL_ROOT_DIR="/usr/local/opt/openssl@1.1"
+      env: 
+        - BUILD_TYPE=Debug
+        - OS_FOLDER=mac
+      script:
+        - git apply 3rdparty/protobuf-patch.diff
+        - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBRANCH_NAME=$TRAVIS_BRANCH -DBEAM_HW_WALLET=Off .
+        - make -j$(sysctl -n hw.ncpu)
+        - ctest --verbose
+      after_success:
+        - cpack
+        # extract build version
+        - BEAM_VERSION="$(cat beam_version.gen)" && rm beam_version.gen
+        - echo BEAM_VERSION = $BEAM_VERSION
+        - export BEAM_WALLET_UI_IN="BeamWallet$BEAM_DISPLAY_SUFFIX-$BEAM_VERSION-Darwin.dmg"
+        - export BEAM_WALLET_UI_OUT="Beam-Wallet$BEAM_DISPLAY_SUFFIX2-$BEAM_VERSION.dmg"
+        - export BEAM_WALLET_UI_OUT_VERLESS="Beam-Wallet$BEAM_DISPLAY_SUFFIX2.dmg"
+
+
+###############################################################################
+# OSX Release
+###############################################################################
+
+    - os: osx
+      language: cpp
+      cache: ccache
+      osx_image: xcode10.1
+      install:
+        - export TZ=GMT-3
+        - sudo systemsetup -gettimezone
+        - brew update
+        - brew unlink cmake
+        - brew install cmake
+        - brew link cmake
+        - brew install ccache
+        - export PATH="/usr/local/opt/ccache/libexec:$PATH"
+        - sudo git clone --depth=1 https://github.com/nesbox/qt5-static-mac.git /usr/local/qt5-static
+        - brew uninstall --ignore-dependencies qt boost
+        - curl -O https://raw.githubusercontent.com/Homebrew/homebrew-core/5da5895add2f6b9320d654dd844d4827f6876c8b/Formula/boost.rb
+        - brew install ./boost.rb
+        - export OPENSSL_ROOT_DIR="/usr/local/opt/openssl@1.1"
+        - export PATH=/usr/local/qt5-static/bin:$PATH
+        - export QT5_ROOT_DIR="/usr/local/qt5-static"
+        - export QML_IMPORT_PATH="/usr/local/qt5-static/qml"
+        - openssl aes-256-cbc -K $encrypted_1f9ebee66ea9_key -iv $encrypted_1f9ebee66ea9_iv -in macos_cert.enc -out macos_cert.tar -d
+        - tar xvf macos_cert.tar
+        # create custom keychain
+        - security create-keychain -p travis macos-build.keychain
+        - security default-keychain -s macos-build.keychain
+        - security unlock-keychain -p travis macos-build.keychain
+        - security set-keychain-settings -t 3600 -l ~/Library/Keychains/macos-build.keychain
+        # import certificates
+        - security import distkey.p12 -P $MACOS_DISTRIBUTION_KEY_PASSWORD  -k ~/Library/Keychains/macos-build.keychain -T /usr/bin/codesign
+        - security import devapp.cer -k ~/Library/Keychains/macos-build.keychain -T /usr/bin/codesign
+        - security set-key-partition-list -S "apple-tool:,apple:" -s -k travis macos-build.keychain
+      env: 
+        - BUILD_TYPE=Release
+        - OS_FOLDER=mac
+      script:
+        - git apply 3rdparty/protobuf-patch.diff
+        - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$TRAVIS_BRANCH -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_HW_WALLET=Off .
+        - make -j$(sysctl -n hw.ncpu)
+        - ctest --verbose
+      after_success:
+        - cpack
+        # extract build version
+        - BEAM_VERSION="$(cat beam_version.gen)" && rm beam_version.gen
+        - echo BEAM_VERSION = $BEAM_VERSION
+        - export BEAM_WALLET_UI_IN="BeamWallet$BEAM_DISPLAY_SUFFIX-$BEAM_VERSION-Darwin.dmg"
+        - export BEAM_WALLET_UI_OUT="Beam-Wallet$BEAM_DISPLAY_SUFFIX2-$BEAM_VERSION.dmg"
+        - export BEAM_WALLET_UI_OUT_VERLESS="Beam-Wallet$BEAM_DISPLAY_SUFFIX2.dmg"
+        # sign our builds
+        - codesign --deep --force -v -s "$MACOS_SIGN_IDENTITY" -o runtime --timestamp beam/beam-node$BEAM_TARGET_SUFFIX
+        - codesign --deep --force -v -s "$MACOS_SIGN_IDENTITY" -o runtime --timestamp wallet/cli/beam-wallet$BEAM_TARGET_SUFFIX
+        - codesign --deep --force -v -s "$MACOS_SIGN_IDENTITY" -o runtime --timestamp wallet/api/wallet-api$BEAM_TARGET_SUFFIX
+        - codesign --deep --force -v -s "$MACOS_SIGN_IDENTITY" -o runtime --timestamp explorer/explorer-node$BEAM_TARGET_SUFFIX
+        - codesign --deep --force -v -s "$MACOS_SIGN_IDENTITY" -o runtime --timestamp $BEAM_WALLET_UI_IN
+        - bash notarize.sh
+
+###############################################################################
+# Linux Debug
+###############################################################################
+
+    - os: linux
+      dist: trusty
+      language: cpp
+      cache: ccache
+      addons:
+        apt:
+          update: true
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+            - libssl-dev
+            - curl
+      install:
+        - export TZ=Etc/GMT-3
+        # install new version cmake
+        - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+        - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
+        - travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.14.0/cmake-3.14.0-Linux-x86_64.tar.gz
+        - tar -xvf cmake-3.14.0-Linux-x86_64.tar.gz > /dev/null
+        - mv cmake-3.14.0-Linux-x86_64 cmake-install
+        - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
+        - cd ${TRAVIS_BUILD_DIR}
+        - cmake --version
+        - sudo git clone --depth=1 https://github.com/BeamMW/boost-linux.git /usr/local/boost_1_69_0
+        - export BOOST_ROOT="/usr/local/boost_1_69_0"
+        - sudo add-apt-repository ppa:beineri/opt-qt-5.10.1-trusty -y
+        - sudo apt-get update
+        - sudo apt-get install qt510declarative qt510svg qttools5-dev libgl1-mesa-dev-lts-trusty
+        - eval "CC=gcc-7 && CXX=g++-7"
+        - export PATH=/opt/qt510/bin:$PATH
+      env: 
+        - BUILD_TYPE=Debug
+        - OS_FOLDER=linux
+      script:
+        - git apply 3rdparty/protobuf-patch.diff
+        - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBRANCH_NAME=$TRAVIS_BRANCH -DBEAM_HW_WALLET=Off .
+        - make -j$(nproc)
+        - ctest --verbose
+      after_success:
+        - cpack
+        # extract build version
+        - BEAM_VERSION="$(cat beam_version.gen)" && rm beam_version.gen
+        - echo BEAM_VERSION = $BEAM_VERSION
+        - export BEAM_WALLET_UI_IN="BeamWallet$BEAM_DISPLAY_SUFFIX-$BEAM_VERSION-Linux.deb"
+        - export BEAM_WALLET_UI_OUT="Beam-Wallet$BEAM_DISPLAY_SUFFIX2-$BEAM_VERSION.deb"
+        - export BEAM_WALLET_UI_OUT_VERLESS="Beam-Wallet$BEAM_DISPLAY_SUFFIX2.deb"
+###############################################################################
+# Linux Release
+###############################################################################
+
+    - os: linux
+      dist: trusty
+      language: cpp
+      cache: ccache
+      addons:
+        apt:
+          update: true
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+            - libssl-dev
+            - curl
+            - libxi-dev
+            - libcups2-dev
+      install:
+        - export TZ=Etc/GMT-3
+        # install new version cmake
+        - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+        - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
+        - travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.14.0/cmake-3.14.0-Linux-x86_64.tar.gz
+        - tar -xvf cmake-3.14.0-Linux-x86_64.tar.gz > /dev/null
+        - mv cmake-3.14.0-Linux-x86_64 cmake-install
+        - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
+        - cd ${TRAVIS_BUILD_DIR}
+        - cmake --version
+        - sudo git clone --depth=1 https://github.com/BeamMW/boost-linux.git /usr/local/boost_1_69_0
+        - export BOOST_ROOT="/usr/local/boost_1_69_0"
+        - eval "CC=gcc-7 && CXX=g++-7"
+        - git clone --depth=1 https://github.com/nesbox/qt5-static-linux.git /home/travis/qt5-static
+        - export QT5_ROOT_DIR="/home/travis/qt5-static"
+        - export QML_IMPORT_PATH="/home/travis/qt5-static/qml"
+      env: 
+        - BUILD_TYPE=Release
+        - OS_FOLDER=linux
+      script:
+        - git apply 3rdparty/protobuf-patch.diff
+        - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$TRAVIS_BRANCH -DBEAM_HW_WALLET=Off .
+        - make -j$(nproc)
+        - ctest --verbose
+      after_success:
+        - cpack
+        # extract build version
+        - BEAM_VERSION="$(cat beam_version.gen)" && rm beam_version.gen
+        - echo BEAM_VERSION = $BEAM_VERSION
+        - export BEAM_WALLET_UI_IN="BeamWallet$BEAM_DISPLAY_SUFFIX-$BEAM_VERSION-Linux.deb"
+        - export BEAM_WALLET_UI_OUT="Beam-Wallet$BEAM_DISPLAY_SUFFIX2-$BEAM_VERSION.deb"
+        - export BEAM_WALLET_UI_OUT_VERLESS="Beam-Wallet$BEAM_DISPLAY_SUFFIX2.deb"
+
+
+
+###############################################################################
+# Common part
+###############################################################################
+before_script:
+  - curl -sL https://raw.githubusercontent.com/travis-ci/artifacts/master/install | bash
+  - BEAM_TARGET_SUFFIX="-masternet"
+  - BEAM_DISPLAY_SUFFIX="Masternet"
+  - BEAM_DISPLAY_SUFFIX2="-Masternet"
+
+after_success:
+  # deploy using ftp server
+  - BUILDS_SERVER_PATH=${BUILD_SERVER}/files/$TRAVIS_BRANCH/$(date +%Y.%m.%d)/$BUILD_TYPE/$OS_FOLDER
+    
+  # upload binaries to FTP
+  - curl --retry 3 --ftp-create-dirs -T "$HOME/build/BeamMW/beam/$BEAM_WALLET_UI_IN" "$BUILDS_SERVER_PATH/$BEAM_WALLET_UI_OUT"
+
+  # upload binaries to FTP, to the latest folder
+  - BUILDS_SERVER_LATEST_PATH=${BUILD_SERVER}/files/$TRAVIS_BRANCH/latest/$BUILD_TYPE/$OS_FOLDER
+  - curl --retry 3 --ftp-create-dirs -T "$HOME/build/BeamMW/beam/$BEAM_WALLET_UI_IN" "$BUILDS_SERVER_LATEST_PATH/$BEAM_WALLET_UI_OUT_VERLESS"
+
+  # prep for deploy to AWS S3
+  - cp $HOME/build/BeamMW/beam/$BEAM_WALLET_UI_IN $HOME/build/BeamMW/beam/$BEAM_WALLET_UI_OUT
+
+  # upload binaries to S3
+  - artifacts upload --target-paths "$TRAVIS_BRANCH/$(date +%Y.%m.%d)/$BUILD_TYPE/$OS_FOLDER/" $HOME/build/BeamMW/beam/$BEAM_WALLET_UI_OUT
+
+  # prep for deploy to AWS S3, latest folder
+  - cp $HOME/build/BeamMW/beam/$BEAM_WALLET_UI_IN $HOME/build/BeamMW/beam/$BEAM_WALLET_UI_OUT_VERLESS
+
+  # upload binaries to S3, to the latest folder
+  - artifacts upload --target-paths "$TRAVIS_BRANCH/latest/$BUILD_TYPE/$OS_FOLDER/" $HOME/build/BeamMW/beam/$BEAM_WALLET_UI_OUT_VERLESS
+
+notifications:
+  email:
+    - big.romanov@gmail.com
