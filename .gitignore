@@ -1,0 +1,69 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+
+.vs
+.vscode/*
+
+.kdev4/
+*.kdev4
+*~
+*.kate-swp
+.idea/
+build/
+debug/
+release/
+cmake-build-*/
+
+docs
+CMakeSettings.json
+
+ui/beam.rc
+ui/beam.png
+ui/beam.icns
+ui/icon.ico
+ui/Info.plist
+ui/beam.desktop
+ui/*.qm
+ui/translations.qrc
+beam_version.gen
+

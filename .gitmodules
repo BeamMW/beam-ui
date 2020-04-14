@@ -1,0 +1,3 @@
+[submodule "beam"]
+	path = beam
+	url = git@github.com:BeamMW/beam.git
