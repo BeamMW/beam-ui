@@ -67,3 +67,4 @@ ui/*.qm
 ui/translations.qrc
 beam_version.gen
 
+/beam_version.gen
