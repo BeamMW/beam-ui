@@ -73,10 +73,21 @@ else()
     set(BRANCH_NAME "")
 endif()
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/beam)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/beam/3rdparty)
+
 # should be before project
 set(BEAM_WALLET_CLIENT_LIBRARY TRUE)
 set(BEAM_TESTS_ENABLED FALSE)
 add_subdirectory(beam)
+
+if(BEAM_LINK_TYPE MATCHES "Static")
+    set(BEAM_USE_STATIC TRUE)
+endif()
+
+if(BEAM_USE_STATIC)
+    add_definitions(-DBEAM_USE_STATIC)
+endif()
 
 message("BRANCH_NAME: ${BRANCH_NAME}")
 
