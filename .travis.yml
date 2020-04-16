@@ -159,6 +159,7 @@ matrix:
         - export BEAM_WALLET_UI_IN="BeamWallet$BEAM_DISPLAY_SUFFIX-$BEAM_VERSION-Linux.deb"
         - export BEAM_WALLET_UI_OUT="Beam-Wallet$BEAM_DISPLAY_SUFFIX2-$BEAM_VERSION.deb"
         - export BEAM_WALLET_UI_OUT_VERLESS="Beam-Wallet$BEAM_DISPLAY_SUFFIX2.deb"
+
 ###############################################################################
 # Linux Release
 ###############################################################################
