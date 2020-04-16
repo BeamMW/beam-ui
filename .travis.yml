@@ -215,8 +215,6 @@ matrix:
         - export BEAM_WALLET_UI_OUT="Beam-Wallet$BEAM_DISPLAY_SUFFIX2-$BEAM_VERSION.deb"
         - export BEAM_WALLET_UI_OUT_VERLESS="Beam-Wallet$BEAM_DISPLAY_SUFFIX2.deb"
 
-
-
 ###############################################################################
 # Common part
 ###############################################################################
