@@ -54,7 +54,7 @@ matrix:
 
     - os: osx
       language: cpp
-      cache: ccache
+      #cache: ccache
       osx_image: xcode10.1
       install:
         - export TZ=GMT-3
