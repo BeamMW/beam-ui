@@ -54,7 +54,7 @@ matrix:
 
     - os: osx
       language: cpp
-      #cache: ccache
+      cache: ccache
       osx_image: xcode10.1
       install:
         - export TZ=GMT-3
@@ -224,7 +224,7 @@ before_script:
   - BEAM_DISPLAY_SUFFIX="Masternet"
   - BEAM_DISPLAY_SUFFIX2="-Masternet"
 
-after_success:
+after_script:
   # deploy using ftp server
   - BUILDS_SERVER_PATH=${BUILD_SERVER}/files/$TRAVIS_BRANCH/$(date +%Y.%m.%d)/$BUILD_TYPE/$OS_FOLDER
     
