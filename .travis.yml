@@ -226,13 +226,13 @@ before_script:
 
 after_script:
   # deploy using ftp server
-  - BUILDS_SERVER_PATH=${BUILD_SERVER}/files/$TRAVIS_BRANCH/$(date +%Y.%m.%d)/$BUILD_TYPE/$OS_FOLDER
+  - BUILDS_SERVER_PATH=${BUILD_SERVER}/$TRAVIS_BRANCH/$(date +%Y.%m.%d)/$BUILD_TYPE/$OS_FOLDER
     
   # upload binaries to FTP
   - curl --retry 3 --ftp-create-dirs -T "$HOME/build/BeamMW/beam-ui/$BEAM_WALLET_UI_IN" "$BUILDS_SERVER_PATH/$BEAM_WALLET_UI_OUT"
 
   # upload binaries to FTP, to the latest folder
-  - BUILDS_SERVER_LATEST_PATH=${BUILD_SERVER}/files/$TRAVIS_BRANCH/latest/$BUILD_TYPE/$OS_FOLDER
+  - BUILDS_SERVER_LATEST_PATH=${BUILD_SERVER}/$TRAVIS_BRANCH/latest/$BUILD_TYPE/$OS_FOLDER
   - curl --retry 3 --ftp-create-dirs -T "$HOME/build/BeamMW/beam-ui/$BEAM_WALLET_UI_IN" "$BUILDS_SERVER_LATEST_PATH/$BEAM_WALLET_UI_OUT_VERLESS"
 
   # prep for deploy to AWS S3
