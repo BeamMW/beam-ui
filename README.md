@@ -106,7 +106,7 @@ Here is the list of Beam related projects created by our community members but N
 - Sync mechanism improvements
 
 
-See [How to build](https://github.com/BeamMW/beam/wiki/How-to-build)
+See [How to build](https://github.com/BeamMW/beam-ui/wiki/How-to-build-Beam-desktop-UI)
 
 # Build status
 [![Build Status](https://travis-ci.org/BeamMW/beam-ui.svg?branch=master)](https://travis-ci.org/BeamMW/beam-ui)
