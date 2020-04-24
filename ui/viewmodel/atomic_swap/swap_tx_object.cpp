@@ -360,7 +360,7 @@ beam::wallet::AtomicSwapCoin SwapTxObject::getSwapCoinType() const
 
 namespace
 {
-    template<size_t SubTxId>
+    template<SubTxIndex SubTxId>
     QString getSwapCoinTxId(const SwapTxDescription& swapTxDescription)
     {
         if (auto res = swapTxDescription.getSwapCoinTxId<SubTxId>(); res)
@@ -370,7 +370,7 @@ namespace
         else return QString();
     }
     
-    template<size_t SubTxId>
+    template<SubTxIndex SubTxId>
     QString getSwapCoinTxConfirmations(const SwapTxDescription& swapTxDescription, uint32_t minTxConfirmations)
     {
         if (auto res = swapTxDescription.getSwapCoinTxConfirmations<SubTxId>(); res)
@@ -390,7 +390,7 @@ namespace
         return QString();
     }
 
-    template<size_t SubTxId>
+    template<SubTxIndex SubTxId>
     QString getBeamTxKernelId(const SwapTxDescription& swapTxDescription)
     {
         if (auto res = swapTxDescription.getBeamTxKernelId<SubTxId>(); res)
