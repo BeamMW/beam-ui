@@ -77,7 +77,7 @@ namespace
 
         QString time;
         QString coin;
-        if (tx.isBeamSideSwap())
+        if (tx.isBeamSide())
         {
             auto refundMinHeight = tx.getMinRefundTxHeight();
             if (refundMinHeight && currentBeamHeight < *refundMinHeight)
@@ -123,7 +123,7 @@ bool SwapTxObject::operator==(const SwapTxObject& other) const
 
 auto SwapTxObject::isBeamSideSwap() const -> bool
 {
-    return m_swapTx.isBeamSideSwap();
+    return m_swapTx.isBeamSide();
 }
 
 bool SwapTxObject::isExpired() const
@@ -234,7 +234,7 @@ beam::Amount SwapTxObject::getReceivedAmountValue() const
 
 QString SwapTxObject::getSwapAmountWithCurrency(bool sent) const
 {
-    bool isBeamSide = m_swapTx.isBeamSideSwap();
+    bool isBeamSide = m_swapTx.isBeamSide();
     bool s = sent ? !isBeamSide : isBeamSide;
     if (s)
     {
@@ -245,7 +245,7 @@ QString SwapTxObject::getSwapAmountWithCurrency(bool sent) const
 
 beam::Amount SwapTxObject::getSwapAmountValue(bool sent) const
 {
-    bool isBeamSide = m_swapTx.isBeamSideSwap();
+    bool isBeamSide = m_swapTx.isBeamSide();
     bool s = sent ? !isBeamSide : isBeamSide;
     if (s)
     {
