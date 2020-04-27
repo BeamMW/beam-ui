@@ -304,7 +304,7 @@ QString SwapTxObject::getFailureReason() const
         return qtTrId("swap-tx-failure-refunded");
     }
     auto failureReason = m_swapTx.getFailureReason();
-    return getReasonString(failureReason ? *failureReason : beam::wallet::TxFailureReason::Unknown);
+    return failureReason ? getReasonString(*failureReason) : QString();
 }
 
 QString SwapTxObject::getStateDetails() const
