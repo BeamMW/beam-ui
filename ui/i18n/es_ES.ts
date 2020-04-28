@@ -1241,8 +1241,9 @@ Update your settings and try again.</oldsource>
         <translation>Crear oferta de intercambio</translation>
     </message>
     <message id="wallet-receive-addr-message">
-        <source>Send this token to the sender over an external secure channel or scan the QR code</source>
-        <translation>Enviar este token al remitente a través de un canal externo seguro o escanear el código QR</translation>
+        <source>Send this address to the sender over an external secure channel or scan the QR code</source>
+        <oldsource>Send this token to the sender over an external secure channel or scan the QR code</oldsource>
+        <translation type="unfinished">Enviar este token al remitente a través de un canal externo seguro o escanear el código QR</translation>
     </message>
     <message id="receive-amount-swap-label">
         <source>Receive amount</source>
@@ -2322,6 +2323,18 @@ despliegue la clave en el nodo en el que confía completamente.</translation>
     <message id="tx-details-error-label">
         <source>Error</source>
         <translation>Error</translation>
+    </message>
+    <message id="wallet-receive-my-addr-label">
+        <source>My address (auto-generated)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-addr-message-token">
+        <source>Send this token to the sender over an external secure channel or scan the QR code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-copy-address">
+        <source>Copy transaction address</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
