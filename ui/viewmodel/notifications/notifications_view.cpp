@@ -91,7 +91,7 @@ void NotificationsViewModel::onNotificationsDataModelChanged(ChangeAction action
                 VersionInfo info;
                 if (fromByteBuffer(n.m_content, info) &&
                     info.m_application == VersionInfo::Application::DesktopWallet &&
-                    !(beamui::getCurrentAppVersion() < info.m_version))
+                    info.m_version <= beamui::getCurrentAppVersion())
                 {
                     // filter out irrelevant software update notifications
                     continue;

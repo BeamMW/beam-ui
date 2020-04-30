@@ -116,6 +116,7 @@ private:
     void onShowKeyKeeperError(const std::string&) override;
 
     void onPostFunctionToClientContext(MessageFunction&& func) override;
+    beam::Version getAppVersion() override;
 
 private slots:
     void setStatus(const beam::wallet::WalletStatus& status);

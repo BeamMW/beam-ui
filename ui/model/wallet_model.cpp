@@ -18,6 +18,7 @@
 #include "utility/bridge.h"
 #include "utility/io/asyncevent.h"
 #include "utility/helpers.h"
+#include "version.h"
 
 using namespace beam;
 using namespace beam::wallet;
@@ -289,6 +290,16 @@ void WalletModel::onExchangeRates(const std::vector<beam::wallet::ExchangeRate>&
 void WalletModel::onNotificationsChanged(beam::wallet::ChangeAction action, const std::vector<Notification>& notifications)
 {
     emit notificationsChanged(action, notifications);
+}
+
+beam::Version WalletModel::getAppVersion()
+{
+    return beam::Version
+        {
+            VERSION_MAJOR,
+            VERSION_MINOR,
+            VERSION_REVISION
+        };
 }
 
 beam::Amount WalletModel::getAvailable() const
