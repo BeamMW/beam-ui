@@ -451,9 +451,6 @@ void WalletSettings::setTxStatusActive(bool isActive)
         {
             auto asyncModel = walletModel->getAsync();
             asyncModel->switchOnOffNotifications(
-                beam::wallet::Notification::Type::TransactionStatusChanged,
-                isActive);
-            asyncModel->switchOnOffNotifications(
                 beam::wallet::Notification::Type::TransactionCompleted,
                 isActive);
             asyncModel->switchOnOffNotifications(

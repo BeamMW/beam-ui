@@ -273,11 +273,11 @@ void AppModel::startWallet()
 
     std::map<Notification::Type,bool> activeNotifications {
         { Notification::Type::SoftwareUpdateAvailable, m_settings.isNewVersionActive() },
+        { Notification::Type::AddressStatusChanged, m_settings.isTxStatusActive() },    // no own switcher in UI for address expiration notifications
+        { Notification::Type::Unused, false },
         { Notification::Type::BeamNews, m_settings.isBeamNewsActive() },
-        { Notification::Type::TransactionStatusChanged, m_settings.isTxStatusActive() },
-        { Notification::Type::TransactionCompleted, m_settings.isTxStatusActive() },
         { Notification::Type::TransactionFailed, m_settings.isTxStatusActive() },
-        { Notification::Type::AddressStatusChanged, m_settings.isTxStatusActive() }
+        { Notification::Type::TransactionCompleted, m_settings.isTxStatusActive() }
     };
 
     bool isSecondCurrencyEnabled = m_settings.getSecondCurrency().toStdString() != noSecondCurrencyStr;
