@@ -320,10 +320,9 @@ RowLayout {
             copyMenuEnabled: true
             font.pixelSize: 14
             color: Style.content_main
-            wrapMode: Text.Wrap
+            wrapMode: Text.WrapAnywhere
             text: getHighlitedText(root.token)
             font.styleName: "Italic"
-            elide: Text.ElideMiddle
             onCopyText: textCopied(root.token)
             visible: root.token.length > 0 && isTextFieldVisible(root.token)
         }
