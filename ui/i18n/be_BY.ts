@@ -1940,10 +1940,6 @@ to complete.</oldsource>
         <source>%1 Estimated transaction fee</source>
         <translation type="unfinished">%1 Estimated transaction fee</translation>
     </message>
-    <message id="wallet-receive-expires-15m">
-        <source>15 minutes</source>
-        <translation>15 хвілін</translation>
-    </message>
     <message id="wallet-receive-expires-30m">
         <source>30 minutes</source>
         <translation>30 хвілін</translation>
@@ -2335,6 +2331,10 @@ deploy the key at the node you trust completely.</translation>
     <message id="wallet-receive-copy-address">
         <source>Copy transaction address</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-expires-12">
+        <source>12 hours</source>
+        <translation>12 гадзін</translation>
     </message>
 </context>
 </TS>

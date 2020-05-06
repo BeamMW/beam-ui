@@ -1946,10 +1946,6 @@ to complete.</translation>
         <source>%1 Estimated transaction fee</source>
         <translation>%1 Процењена такса за трансакцију</translation>
     </message>
-    <message id="wallet-receive-expires-15m">
-        <source>15 minutes</source>
-        <translation>15 минута</translation>
-    </message>
     <message id="wallet-receive-expires-30m">
         <source>30 minutes</source>
         <translation>30 минута</translation>
@@ -2341,6 +2337,10 @@ deploy the key at the node you trust completely.</oldsource>
     <message id="wallet-receive-copy-address">
         <source>Copy transaction address</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-expires-12">
+        <source>12 hours</source>
+        <translation type="unfinished">12 сата</translation>
     </message>
 </context>
 </TS>

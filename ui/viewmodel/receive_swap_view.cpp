@@ -25,19 +25,17 @@
 namespace {
     enum
     {
-        OfferExpires15min = 0,
-        OfferExpires30min,
+        OfferExpires30min = 0,
         OfferExpires1h,
         OfferExpires2h,
-        OfferExpires6h    
+        OfferExpires6h,
+        OfferExpires12h
     };
 
     double GetHourCount(int offerExpires)
     {
         switch (offerExpires)
         {
-        case OfferExpires15min:
-            return 0.25;
         case OfferExpires30min:
             return 0.5;
         case OfferExpires1h:
@@ -46,6 +44,8 @@ namespace {
             return 2.0;
         case OfferExpires6h:
             return 6.0;
+        case OfferExpires12h:
+            return 12.0;
         default:
         {
             assert(false && "Unexpected value!");
@@ -67,7 +67,7 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     , _sentFeeGrothes(0)
     , _receiveCurrency(Currency::CurrBeam)
     , _sentCurrency(Currency::CurrBtc)
-    , _offerExpires(OfferExpires30min)
+    , _offerExpires(OfferExpires12h)
     , _saveParamsAllowed(false)
     , _walletModel(*AppModel::getInstance().getWallet())
     , _txParameters(beam::wallet::CreateSwapTransactionParameters())

@@ -484,8 +484,6 @@ please review your settings and try again"
                             currentIndex:        viewModel.offerExpires
 
                             model: [
-                                //% "15 minutes"
-                                qsTrId("wallet-receive-expires-15m"),
                                 //% "30 minutes"
                                 qsTrId("wallet-receive-expires-30m"),
                                 //% "1 hour"
@@ -493,7 +491,9 @@ please review your settings and try again"
                                 //% "2 hours"
                                 qsTrId("wallet-receive-expires-2"),
                                 //% "6 hours"
-                                qsTrId("wallet-receive-expires-6")
+                                qsTrId("wallet-receive-expires-6"),
+                                //% "12 hours"
+                                qsTrId("wallet-receive-expires-12")
                             ]
                         }
 

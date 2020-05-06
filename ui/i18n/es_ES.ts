@@ -1940,10 +1940,6 @@ to complete.</oldsource>
         <source>%1 Estimated transaction fee</source>
         <translation>%1 Cuota estimada de transacción</translation>
     </message>
-    <message id="wallet-receive-expires-15m">
-        <source>15 minutes</source>
-        <translation>15 minutos</translation>
-    </message>
     <message id="wallet-receive-expires-30m">
         <source>30 minutes</source>
         <translation>30 minutos</translation>
@@ -2335,6 +2331,10 @@ despliegue la clave en el nodo en el que confía completamente.</translation>
     <message id="wallet-receive-copy-address">
         <source>Copy transaction address</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-expires-12">
+        <source>12 hours</source>
+        <translation type="unfinished">12 horas</translation>
     </message>
 </context>
 </TS>
