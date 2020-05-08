@@ -29,6 +29,7 @@
 
 #if defined(BEAM_HW_WALLET)
 #include "core/block_rw.h"
+#include "keykeeper/hw_wallet.h"
 #include "keykeeper/trezor_key_keeper.h"
 #endif
 
@@ -125,12 +126,11 @@ bool AppModel::createWallet(const SecString& seed, const SecString& pass)
 }
 
 #if defined(BEAM_HW_WALLET)
-bool AppModel::createTrezorWallet(std::shared_ptr<ECC::HKdfPub> ownerKey, const beam::SecString& pass)
+bool AppModel::createTrezorWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper)
 {
     const auto dbFilePath = m_settings.getTrezorWalletStorage();
     backupDB(dbFilePath);
     {
-        auto keyKeeper = std::make_shared<HardwareKeyKeeperProxy>();
         auto reactor = io::Reactor::create();
         io::Reactor::Scope s(*reactor); // do it in main thread
         auto db = WalletDB::init(dbFilePath, pass, keyKeeper);
@@ -140,11 +140,21 @@ bool AppModel::createTrezorWallet(std::shared_ptr<ECC::HKdfPub> ownerKey, const 
         generateDefaultAddress(db);
     }
 
-    return openWallet(pass);
+    return openWallet(pass, keyKeeper);
 }
+
+std::shared_ptr<beam::wallet::HWWallet> AppModel::getHardwareWalletClient() const
+{
+    if (!m_hwWallet)
+    {
+        m_hwWallet = std::make_shared<beam::wallet::HWWallet>();
+    }
+    return m_hwWallet;
+}
+
 #endif
 
-bool AppModel::openWallet(const beam::SecString& pass)
+bool AppModel::openWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper)
 {
     assert(m_db == nullptr);
 
@@ -157,7 +167,6 @@ bool AppModel::openWallet(const beam::SecString& pass)
 #if defined(BEAM_HW_WALLET)
         else if (WalletDB::isInitialized(m_settings.getTrezorWalletStorage()))
         {
-            auto keyKeeper = std::make_shared<HardwareKeyKeeperProxy>();
             m_db = WalletDB::open(m_settings.getTrezorWalletStorage(), pass, keyKeeper);
         }
 #endif

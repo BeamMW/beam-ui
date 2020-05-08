@@ -21,13 +21,14 @@
 #include <QQmlListProperty>
 #include <QTimer>
 #include <QThread>
+#include <QJSValue>
 
 #include "wallet/core/wallet_db.h"
 #include "mnemonic/mnemonic.h"
 
 #include "messages_view.h"
 
-namespace beam
+namespace beam::wallet
 {
     class HWWallet;
 }
@@ -100,12 +101,12 @@ private:
 };
 
 #if defined(BEAM_HW_WALLET)
-
+class StartViewModel;
 class TrezorThread : public QThread
 {
     Q_OBJECT
 public:
-    TrezorThread(std::shared_ptr<beam::HWWallet> hw);
+    TrezorThread(StartViewModel& vm);
 
     void run() override;
 
@@ -113,7 +114,7 @@ signals:
     void ownerKeyImported(const QString& key);
 
 private:
-    std::shared_ptr<beam::HWWallet> m_hw;
+    StartViewModel& m_vm;
 };
 
 #endif
@@ -191,9 +192,9 @@ public:
     Q_INVOKABLE void openFolder(const QString& path) const;
 
 #if defined(BEAM_HW_WALLET)
-    Q_INVOKABLE void startOwnerKeyImporting();
-    Q_INVOKABLE bool isPasswordValid(const QString& pass);
-    Q_INVOKABLE void setOwnerKeyPassword(const QString& pass);
+    Q_INVOKABLE void startOwnerKeyImporting(bool creating);
+    //Q_INVOKABLE bool isPasswordValid(const QString& pass);
+    //Q_INVOKABLE void setOwnerKeyPassword(const QString& pass);
 #endif
 
 signals:
@@ -212,8 +213,8 @@ signals:
 #endif
 
 public slots:
-    bool createWallet();
-    bool openWallet(const QString& pass);
+    void createWallet(const QJSValue& callback);
+    void openWallet(const QString& pass, const QJSValue& callback);
     bool checkWalletPassword(const QString& password) const;
     void setPassword(const QString& pass);
     void onNodeSettingsChanged();
@@ -236,13 +237,17 @@ private:
 
     bool m_isRecoveryMode;
     bool m_validateDictionary = true;
+    QJSValue m_callback;
 
 #if defined(BEAM_HW_WALLET)
-    std::shared_ptr<beam::HWWallet> m_hwWallet;
+    std::shared_ptr<beam::wallet::HWWallet> m_hwWallet;
     QTimer m_trezorTimer;
     bool m_isTrezorConnected = false;
+    bool m_creating = false;
+    friend TrezorThread;
     TrezorThread m_trezorThread;
     std::string m_ownerKeyEncrypted;
     std::string m_ownerKeyPass;
+    beam::wallet::IPrivateKeyKeeper2::Ptr m_HWKeyKeeper;
 #endif
 };

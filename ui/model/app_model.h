@@ -24,6 +24,13 @@
 #include "wallet/transactions/swaps/bridges/bitcoin/bridge_holder.h"
 #include <memory>
 
+#if defined(BEAM_HW_WALLET)
+namespace beam::wallet
+{
+    class HWWallet;
+}
+#endif
+
 class AppModel final: public QObject
 {
     Q_OBJECT
@@ -36,10 +43,11 @@ public:
     bool createWallet(const beam::SecString& seed, const beam::SecString& pass);
 
 #if defined(BEAM_HW_WALLET)
-    bool createTrezorWallet(std::shared_ptr<ECC::HKdfPub> ownerKey, const beam::SecString& pass);
+    bool createTrezorWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper);
+    std::shared_ptr<beam::wallet::HWWallet> getHardwareWalletClient() const;
 #endif
 
-    bool openWallet(const beam::SecString& pass);
+    bool openWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper = {});
     bool checkWalletPassword(const beam::SecString& pass) const;
     void changeWalletPassword(const std::string& pass);
 
@@ -96,4 +104,8 @@ private:
     Connections m_walletConnections;
     static AppModel* s_instance;
     std::string m_walletDBBackupPath;
+
+#if defined(BEAM_HW_WALLET)
+    mutable std::shared_ptr<beam::wallet::HWWallet> m_hwWallet;
+#endif
 };

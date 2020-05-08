@@ -21,6 +21,7 @@
 #include <QFileDialog>
 #include <QVariant>
 #include <QStandardPaths>
+#include <QJSEngine>
 #if defined(QT_PRINTSUPPORT_LIB)
 #include <QtPrintSupport/qtprintsupportglobal.h>
 #include <QPrinter>
@@ -102,6 +103,13 @@ namespace
         }
 
         return walletDBs;
+    }
+
+    void DoJSCallback(QJSValue& jsCallback, bool res)
+    {
+        QJSValue v = jsCallback.engine()->toScriptValue(res);
+
+        jsCallback.call(QJSValueList{ v });
     }
 }
 
@@ -219,9 +227,9 @@ bool WalletDBPathItem::isPreferred() const
 StartViewModel::StartViewModel()
     : m_isRecoveryMode{false}
 #if defined(BEAM_HW_WALLET)
-    , m_hwWallet(make_shared<beam::HWWallet>())
+    , m_hwWallet(AppModel::getInstance().getHardwareWalletClient())
     , m_trezorTimer(this)
-    , m_trezorThread(m_hwWallet)
+    , m_trezorThread(*this)
 #endif
 {
     if (!walletExists())
@@ -290,51 +298,92 @@ bool StartViewModel::isOwnerKeyImported() const
     return !m_ownerKeyEncrypted.empty();
 }
 
-TrezorThread::TrezorThread(beam::HWWallet::Ptr hw)
-    : m_hw(hw)
+TrezorThread::TrezorThread(StartViewModel& vm)
+    : m_vm(vm)
 {
 
 }
 
 void TrezorThread::run()
 {
-    auto key = m_hw->getOwnerKeySync();
-    emit ownerKeyImported(QString(key.c_str()));
+    auto reactor = io::Reactor::create();
+    io::Reactor::Scope s(*reactor); // do it in main thread
+    auto keyKeeper = m_vm.m_hwWallet->getKeyKeeper(m_vm.m_hwWallet->getDevices().front());
+    using namespace beam::wallet;
+    struct MyHandler : IPrivateKeyKeeper2::Handler
+    {
+        StartViewModel* m_ViewModel;
+        IPrivateKeyKeeper2::Ptr m_KeyKeeper;
+        io::Reactor::Ptr m_Reactor;
+
+        MyHandler(StartViewModel* vm, IPrivateKeyKeeper2::Ptr keyKeeper, io::Reactor::Ptr reactor)
+            : m_ViewModel(vm)
+            , m_KeyKeeper(keyKeeper)
+            , m_Reactor(reactor)
+        {}
+
+        void OnDone(IPrivateKeyKeeper2::Status::Type s) override
+        {
+            if (s == IPrivateKeyKeeper2::Status::Success)
+            {
+                m_ViewModel->m_HWKeyKeeper = m_KeyKeeper;
+            }
+            m_Reactor->stop();
+        }
+    };
+
+    beam::wallet::IPrivateKeyKeeper2::Method::get_Kdf m;
+    m.m_Root = true;
+    keyKeeper->InvokeAsync(m, std::make_shared<MyHandler>(&m_vm, keyKeeper, reactor));
+    reactor->run();
+    emit ownerKeyImported("");
 }
 
 void StartViewModel::onTrezorOwnerKeyImported(const QString& key)
 {
-    m_ownerKeyEncrypted = key.toStdString();
-    LOG_INFO() << "Trezor Key imported: " << m_ownerKeyEncrypted;
+    //m_ownerKeyEncrypted = key.toStdString();
+    LOG_INFO() << "Trezor Key imported";// << m_ownerKeyEncrypted;
+
+    SecString secretPass = m_password;
+    if (m_creating)
+    {
+        DoJSCallback(m_callback, m_HWKeyKeeper && AppModel::getInstance().createTrezorWallet(secretPass, m_HWKeyKeeper));
+    }
+    else
+    {
+        DoJSCallback(m_callback, AppModel::getInstance().openWallet(secretPass, m_HWKeyKeeper));
+    }
 
     emit isOwnerKeyImportedChanged();
 }
 
-void StartViewModel::startOwnerKeyImporting()
+void StartViewModel::startOwnerKeyImporting(bool creating)
 {
-    if(m_ownerKeyEncrypted.empty())
+    m_creating = creating;
+    //if(m_ownerKeyEncrypted.empty())
+    if (!m_HWKeyKeeper)
         m_trezorThread.start();
 }
 
-bool StartViewModel::isPasswordValid(const QString& pass)
-{
-    if (pass.isEmpty())
-        return false;
-
-    KeyString ks;
-    ks.SetPassword(pass.toStdString());
-
-    ks.m_sRes = m_ownerKeyEncrypted;
-
-    std::shared_ptr<ECC::HKdfPub> pKdf = std::make_shared<ECC::HKdfPub>();
-
-    return ks.Import(*pKdf);
-}
-
-void StartViewModel::setOwnerKeyPassword(const QString& pass)
-{
-    m_ownerKeyPass = pass.toStdString();
-}
+//bool StartViewModel::isPasswordValid(const QString& pass)
+//{
+//    if (pass.isEmpty())
+//        return false;
+//
+//    KeyString ks;
+//    ks.SetPassword(pass.toStdString());
+//
+//    ks.m_sRes = m_ownerKeyEncrypted;
+//
+//    std::shared_ptr<ECC::HKdfPub> pKdf = std::make_shared<ECC::HKdfPub>();
+//
+//    return ks.Import(*pKdf);
+//}
+//
+//void StartViewModel::setOwnerKeyPassword(const QString& pass)
+//{
+//    m_ownerKeyPass = pass.toStdString();
+//}
 
 #endif
 
@@ -560,22 +609,14 @@ void StartViewModel::resetPhrases()
     emit recoveryPhrasesChanged();
 }
 
-bool StartViewModel::createWallet()
+void StartViewModel::createWallet(const QJSValue& callback)
 {
+    m_callback = callback;
 #if defined(BEAM_HW_WALLET)
-    if (!m_ownerKeyEncrypted.empty())
+    if (m_hwWallet->isConnected())
     {
-        assert(!m_ownerKeyPass.empty());
-
-        KeyString ks;
-        ks.SetPassword(m_ownerKeyPass);
-
-        ks.m_sRes = m_ownerKeyEncrypted;
-
-        std::shared_ptr<ECC::HKdfPub> ownerKdf = std::make_shared<ECC::HKdfPub>();
-
-        SecString sectretPass = m_password;
-        return ks.Import(*ownerKdf) && AppModel::getInstance().createTrezorWallet(ownerKdf, sectretPass);
+        startOwnerKeyImporting(true);
+        return;
     }
 #endif
 
@@ -593,14 +634,22 @@ bool StartViewModel::createWallet()
     SecString secretSeed;
     secretSeed.assign(buf.data(), buf.size());
     SecString sectretPass = m_password;
-    return AppModel::getInstance().createWallet(secretSeed, sectretPass);
+    DoJSCallback(m_callback, AppModel::getInstance().createWallet(secretSeed, sectretPass));
 }
 
-bool StartViewModel::openWallet(const QString& pass)
+void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
 {
+    m_callback = callback;
+#if defined(BEAM_HW_WALLET)
+    if (m_hwWallet->isConnected())
+    {
+        startOwnerKeyImporting(false);
+        return;
+    }
+#endif
     // TODO make this secure
     SecString secretPass = pass.toStdString();
-    return AppModel::getInstance().openWallet(secretPass);
+    DoJSCallback(m_callback, AppModel::getInstance().openWallet(secretPass, m_HWKeyKeeper));
 }
 
 bool StartViewModel::checkWalletPassword(const QString& password) const
