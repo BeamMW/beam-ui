@@ -21,10 +21,8 @@
 using namespace beam::wallet;
 
 SwapOfferItem::SwapOfferItem(const SwapOffer& offer,
-                             bool isOwn,
                              const QDateTime& timeExpiration)
     : m_offer{offer}
-    , m_isOwnOffer{isOwn}
     , m_isBeamSide{offer.isBeamSide()}
     , m_timeExpiration{timeExpiration} {}
 
@@ -81,12 +79,12 @@ auto SwapOfferItem::amountReceive() const -> QString
 
 auto SwapOfferItem::isOwnOffer() const -> bool
 {
-    return m_isOwnOffer;
+    return m_offer.m_isOwn;
 }
 
 auto SwapOfferItem::isSendBeam() const -> bool
 {
-    return m_isOwnOffer ? !m_isBeamSide : m_isBeamSide;
+    return m_offer.m_isOwn ? !m_isBeamSide : m_isBeamSide;
 }
 
 auto SwapOfferItem::getTxParameters() const -> beam::wallet::TxParameters

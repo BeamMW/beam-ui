@@ -322,7 +322,7 @@ void SwapOffersViewModel::onSwapOffersDataModelChanged(beam::wallet::ChangeActio
             timeExpiration = beamui::CalculateExpiresTime(currentHeight, expiresHeight);
         }
 
-        modifiedOffers.push_back(make_shared<SwapOfferItem>(offer, m_walletModel.isOwnAddress(offer.m_publisherId), timeExpiration));
+        modifiedOffers.push_back(make_shared<SwapOfferItem>(offer, timeExpiration));
     }
 
     switch (action)
