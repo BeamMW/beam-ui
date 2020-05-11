@@ -48,6 +48,7 @@ public:
     auto getFailureReason() const -> QString override;
     QString getStateDetails() const override;
     beam::wallet::AtomicSwapCoin getSwapCoinType() const;
+    auto getStatus() const -> QString override;
 
     bool isLockTxProofReceived() const;
     bool isRefundTxProofReceived() const;

@@ -2335,5 +2335,9 @@ znát všechny Vaše prostředky (UTXO). Ujistěte se, že jste vystavili klíč
         <source>12 hours</source>
         <translation type="unfinished">12 hodiny</translation>
     </message>
+    <message id="wallet-txs-status-failing">
+        <source>failing</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

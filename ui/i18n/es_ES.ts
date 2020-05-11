@@ -2336,5 +2336,9 @@ despliegue la clave en el nodo en el que confía completamente.</translation>
         <source>12 hours</source>
         <translation type="unfinished">12 horas</translation>
     </message>
+    <message id="wallet-txs-status-failing">
+        <source>failing</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

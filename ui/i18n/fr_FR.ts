@@ -2337,5 +2337,9 @@ deploy the key at the node you trust completely.</translation>
         <source>12 hours</source>
         <translation type="unfinished">12 heure</translation>
     </message>
+    <message id="wallet-txs-status-failing">
+        <source>failing</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

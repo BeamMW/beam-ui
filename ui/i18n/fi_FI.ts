@@ -2336,5 +2336,9 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
         <source>12 hours</source>
         <translation type="unfinished">12 tuntia</translation>
     </message>
+    <message id="wallet-txs-status-failing">
+        <source>failing</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

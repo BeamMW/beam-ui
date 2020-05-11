@@ -20,6 +20,8 @@
 #include "viewmodel/ui_helpers.h"
 #include "model/app_model.h"
 
+#include <qdebug.h>
+
 using namespace beam;
 using namespace beam::wallet;
 
@@ -69,6 +71,7 @@ namespace
 
     QString getInProgressRefundingStr(const beam::wallet::SwapTxDescription& tx, double blocksPerHour, Height currentBeamHeight)
     {
+        
         if (tx.isRefundTxRegistered())
         {
             //% "Swap failed, the money is being released back to your wallet"
@@ -315,37 +318,37 @@ QString SwapTxObject::getStateDetails() const
         {
         case beam::wallet::TxStatus::Pending:
         case beam::wallet::TxStatus::InProgress:
+        {
+            Height currentHeight = AppModel::getInstance().getWallet()->getCurrentHeight();
+            auto state = m_swapTx.getState();
+            if (state)
             {
-                Height currentHeight = AppModel::getInstance().getWallet()->getCurrentHeight();
-                auto state = m_swapTx.getState();
-                if (state)
+                switch (*state)
                 {
-                    switch (*state)
-                    {
-                    case wallet::AtomicSwapTransaction::State::Initial:
-                        return getWaitingPeerStr(m_swapTx, currentHeight);
-                    case wallet::AtomicSwapTransaction::State::BuildingBeamLockTX:
-                    case wallet::AtomicSwapTransaction::State::BuildingBeamRefundTX:
-                    case wallet::AtomicSwapTransaction::State::BuildingBeamRedeemTX:
-                    case wallet::AtomicSwapTransaction::State::HandlingContractTX:
-                    case wallet::AtomicSwapTransaction::State::SendingBeamLockTX:
-                        return getInProgressNormalStr(m_swapTx, currentHeight);
-                    case wallet::AtomicSwapTransaction::State::SendingRedeemTX:
-                    case wallet::AtomicSwapTransaction::State::SendingBeamRedeemTX:
-                        return getInProgressNormalStr(m_swapTx, currentHeight);
-                    case wallet::AtomicSwapTransaction::State::SendingRefundTX:
-                    case wallet::AtomicSwapTransaction::State::SendingBeamRefundTX:
-                        return getInProgressRefundingStr(m_swapTx, m_blocksPerHour, currentHeight);
-                    default:
-                        break;
-                    }
-                }
-                else
-                {
+                case wallet::AtomicSwapTransaction::State::Initial:
                     return getWaitingPeerStr(m_swapTx, currentHeight);
+                case wallet::AtomicSwapTransaction::State::BuildingBeamLockTX:
+                case wallet::AtomicSwapTransaction::State::BuildingBeamRefundTX:
+                case wallet::AtomicSwapTransaction::State::BuildingBeamRedeemTX:
+                case wallet::AtomicSwapTransaction::State::HandlingContractTX:
+                case wallet::AtomicSwapTransaction::State::SendingBeamLockTX:
+                    return getInProgressNormalStr(m_swapTx, currentHeight);
+                case wallet::AtomicSwapTransaction::State::SendingRedeemTX:
+                case wallet::AtomicSwapTransaction::State::SendingBeamRedeemTX:
+                    return getInProgressNormalStr(m_swapTx, currentHeight);
+                case wallet::AtomicSwapTransaction::State::SendingRefundTX:
+                case wallet::AtomicSwapTransaction::State::SendingBeamRefundTX:
+                    return getInProgressRefundingStr(m_swapTx, m_blocksPerHour, currentHeight);
+                default:
+                    break;
                 }
             }
+            else
+            {
+                return getWaitingPeerStr(m_swapTx, currentHeight);
+            }
             break;
+        }
         default:
             break;
         }
@@ -356,6 +359,18 @@ QString SwapTxObject::getStateDetails() const
 beam::wallet::AtomicSwapCoin SwapTxObject::getSwapCoinType() const
 {
     return m_swapTx.getSwapCoin();
+}
+
+auto SwapTxObject::getStatus() const -> QString
+{
+    auto status = TxObject::getStatus();
+    if (status == "in progress")
+    {
+        if (auto refundConfirmations = m_swapTx.getSwapCoinTxConfirmations<SubTxIndex::REFUND_TX>();
+            refundConfirmations)
+            return "failing";
+    }
+    return TxObject::getStatus();
 }
 
 namespace

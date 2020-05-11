@@ -1159,6 +1159,7 @@ Please try again later or create an offer yourself."
             case "in progress":
             case "completed":
                 return Style.accent_swap;
+            case "failing":
             case "failed":
                 return Style.accent_fail;
             default:
@@ -1174,6 +1175,8 @@ Please try again later or create an offer yourself."
                 return "qrc:/assets/icon-swap-in-progress.svg";
             case "completed":
                 return "qrc:/assets/icon-swap-completed.svg";
+            case "failing":
+                return "qrc:/assets/icon-swap-failing.svg";
             case "failed":
                 return "qrc:/assets/icon-swap-failed.svg";
             case "canceled":
@@ -1195,10 +1198,14 @@ Please try again later or create an offer yourself."
             case "completed": return qsTrId("wallet-txs-status-completed");
             //% "cancelled"
             case "canceled": return qsTrId("wallet-txs-status-cancelled");
+            // "canceling"
+            case "canceling": return "canceling";
             //% "expired"
             case "expired": return qsTrId("wallet-txs-status-expired");
             //% "failed"
             case "failed": return qsTrId("wallet-txs-status-failed");
+            //% "failing"
+            case "failing": return qsTrId("wallet-txs-status-failing");;
             //% "unknown"
             default: return qsTrId("wallet-txs-status-unknown");
         }
