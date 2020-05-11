@@ -649,7 +649,7 @@ void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
 #endif
     // TODO make this secure
     SecString secretPass = pass.toStdString();
-    DoJSCallback(m_callback, AppModel::getInstance().openWallet(secretPass, m_HWKeyKeeper));
+    DoJSCallback(m_callback, AppModel::getInstance().openWallet(secretPass));
 }
 
 bool StartViewModel::checkWalletPassword(const QString& password) const
