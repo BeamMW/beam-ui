@@ -72,7 +72,7 @@ namespace beamui
         size_t _index;
         bool _is_poor;
     };
-    QDateTime CalculateExpiresTime(beam::Height currentHeight, beam::Height expiresHeight);
+    QDateTime CalculateExpiresTime(beam::Timestamp currentHeightTime, beam::Height currentHeight, beam::Height expiresHeight);
     QString getEstimateTimeStr(int estimate);
     QString convertBeamHeightDiffToTime(int32_t dt);
 

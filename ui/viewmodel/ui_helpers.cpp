@@ -216,21 +216,19 @@ namespace beamui
         return temp[medianPos];
     }
 
-    QDateTime CalculateExpiresTime(beam::Height currentHeight, beam::Height expiresHeight)
+    QDateTime CalculateExpiresTime(beam::Timestamp currentHeightTime, beam::Height currentHeight, beam::Height expiresHeight)
     {
-        auto currentDateTime = QDateTime::currentDateTime();
-        QDateTime expiresTime = currentDateTime;
+        QDateTime expiresTime = QDateTime();
 
         if (currentHeight <= expiresHeight)
         {
-            expiresTime = currentDateTime.addSecs((expiresHeight - currentHeight) * 60);
+            expiresTime.setTime_t(currentHeightTime + (expiresHeight - currentHeight) * 60);
         }
         else
         {
-            auto dateTimeSecs = currentDateTime.toSecsSinceEpoch() - (currentHeight - expiresHeight) * 60;
-            expiresTime.setSecsSinceEpoch(dateTimeSecs);
+            expiresTime.setTime_t(currentHeightTime - (currentHeight - expiresHeight) * 60);
         }
-
+        
         return expiresTime;
     }
 

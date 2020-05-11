@@ -42,6 +42,7 @@ public:
     beam::Amount getSending() const;
     beam::Amount getMaturing() const;
     beam::Height getCurrentHeight() const;
+    beam::Timestamp getCurrentHeightTimestamp() const;
     beam::Block::SystemState::ID getCurrentStateID() const;
 
 signals:

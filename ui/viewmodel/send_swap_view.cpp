@@ -96,8 +96,9 @@ void SendSwapViewModel::fillParameters(const beam::wallet::TxParameters& paramet
 
         auto currentHeight = _walletModel.getCurrentHeight();
         assert(currentHeight);
+        beam::Timestamp currentHeightTime = _walletModel.getCurrentHeightTimestamp();
         auto expiresHeight = *minHeight + *peerResponseTime;
-        setExpiresTime(beamui::CalculateExpiresTime(currentHeight, expiresHeight));
+        setExpiresTime(beamui::CalculateExpiresTime(currentHeightTime, currentHeight, expiresHeight));
 
         _txParameters = parameters;
         _isBeamSide = *isBeamSide;
