@@ -107,9 +107,11 @@ namespace
 
     void DoJSCallback(QJSValue& jsCallback, bool res)
     {
+        #pragma GCC diagnostic push
+        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
         QJSValue v = jsCallback.engine()->toScriptValue(res);
-
         jsCallback.call(QJSValueList{ v });
+        #pragma GCC diagnostic pop
     }
 }
 
