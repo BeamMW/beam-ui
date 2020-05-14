@@ -232,7 +232,7 @@ QString TxObject::getTransactionID() const
 
 QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
 {
-    static const std::vector<QString> reasons = {
+    static const std::array<QString, TxFailureReason::Count> reasons = {
         //% "Unexpected reason, please send wallet logs to Beam support"
         qtTrId("tx-failure-undefined"),
         //% "Transaction cancelled"
@@ -315,8 +315,15 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
         qtTrId("tx-failure-keeper-malfunctioned"),
         //% "Aborted by the user"
         qtTrId("tx-failure-aborted-by-user"),
+        //% "Asset has been already registered"
+        qtTrId("tx-failure-asset-exists"),
+        //% "Invalid asset owner id"
+        qtTrId("tx-failure-asset-invalid-owner-id"),
+        //% "Assets transactions are disabled"
+        qtTrId("tx-failure-assets-disabled")
     };
 
+    static_assert(std::tuple_size<decltype(reasons)>::value == static_cast<size_t>(TxFailureReason::Count));
     assert(reasons.size() > static_cast<size_t>(reason));
     return reasons[reason];
 }

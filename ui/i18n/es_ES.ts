@@ -2336,5 +2336,17 @@ despliegue la clave en el nodo en el que confía completamente.</translation>
         <source>Copy transaction address</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="tx-failure-asset-exists">
+        <source>Asset has been already registered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-failure-asset-invalid-owner-id">
+        <source>Invalid asset owner id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-failure-assets-disabled">
+        <source>Assets transactions are disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
