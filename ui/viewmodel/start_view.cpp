@@ -107,11 +107,15 @@ namespace
 
     void DoJSCallback(QJSValue& jsCallback, bool res)
     {
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
         #pragma GCC diagnostic push
         #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
         QJSValue v = jsCallback.engine()->toScriptValue(res);
         jsCallback.call(QJSValueList{ v });
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
         #pragma GCC diagnostic pop
+#endif
     }
 }
 
