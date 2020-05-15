@@ -16,6 +16,7 @@
 #include "wallet/core/common.h"
 #include "wallet/core/simple_transaction.h"
 #include "model/app_model.h"
+#include <experimental/array>
 
 using namespace beam;
 using namespace beam::wallet;
@@ -232,7 +233,7 @@ QString TxObject::getTransactionID() const
 
 QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
 {
-    static const std::array<QString, TxFailureReason::Count> reasons = {
+    static const auto reasons = std::experimental::make_array(
         //% "Unexpected reason, please send wallet logs to Beam support"
         qtTrId("tx-failure-undefined"),
         //% "Transaction cancelled"
@@ -321,9 +322,13 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
         qtTrId("tx-failure-asset-invalid-owner-id"),
         //% "Assets transactions are disabled"
         qtTrId("tx-failure-assets-disabled")
-    };
+    );
 
+    // ensure QString
+    static_assert(std::is_same<decltype(reasons)::value_type, QString>::value);
+    // ensure that we have all reasons, otherwise it would be runtime crash
     static_assert(std::tuple_size<decltype(reasons)>::value == static_cast<size_t>(TxFailureReason::Count));
+
     assert(reasons.size() > static_cast<size_t>(reason));
     return reasons[reason];
 }
