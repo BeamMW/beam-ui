@@ -232,7 +232,9 @@ QString TxObject::getTransactionID() const
 
 QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
 {
-    static const std::array reasons {
+    // clang doesn't allow to make 'auto reasons' so for the moment assertions below are a bit pointles
+    // let's wait until they fix template arg deduction and restore it back
+    static const std::array<QString, TxFailureReason::Count> reasons = {
         //% "Unexpected reason, please send wallet logs to Beam support"
         qtTrId("tx-failure-undefined"),
         //% "Transaction cancelled"
