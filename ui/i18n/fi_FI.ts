@@ -2348,5 +2348,9 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
         <source>Assets transactions are disabled</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="tx-failure-no-vouchers">
+        <source>You have no vouchers to insert coins to lelentus</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

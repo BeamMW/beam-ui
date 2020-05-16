@@ -320,7 +320,9 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
         //% "Invalid asset owner id"
         qtTrId("tx-failure-asset-invalid-owner-id"),
         //% "Assets transactions are disabled"
-        qtTrId("tx-failure-assets-disabled")
+        qtTrId("tx-failure-assets-disabled"),
+        //% "You have no vouchers to insert coins to lelentus"
+        qtTrId("tx-failure-no-vouchers")
     };
 
     // ensure QString
