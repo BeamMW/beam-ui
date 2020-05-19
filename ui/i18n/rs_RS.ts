@@ -2355,7 +2355,12 @@ deploy the key at the node you trust completely.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-failure-no-vouchers">
-        <source>You have no vouchers to insert coins to lelentus</source>
+        <source>You have no vouchers to insert coins to lelantus</source>
+        <oldsource>You have no vouchers to insert coins to lelentus</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-failure-assets-fork2">
+        <source>Asset transactions are not available until fork2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
