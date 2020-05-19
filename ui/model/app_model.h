@@ -36,6 +36,7 @@ class AppModel final: public QObject
     Q_OBJECT
 public:
     static AppModel& getInstance();
+    static std::string getMyName();
 
     AppModel(WalletSettings& settings);
     ~AppModel() override;

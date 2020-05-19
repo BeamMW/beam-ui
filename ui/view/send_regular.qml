@@ -108,13 +108,17 @@ ColumnLayout {
             Item {
                 Layout.fillWidth: true
                 SFText {
+                    property bool isTokenOrAddressValid: !isTAInputValid()
                     Layout.alignment: Qt.AlignTop
                     id:               receiverTAError
-                    color:            Style.validator_error
+                    color:            isTokenOrAddressValid ? Style.validator_error : Style.content_secondary
+                    font.italic:      !isTokenOrAddressValid
                     font.pixelSize:   12
-                    //% "Invalid wallet address"
-                    text:             qsTrId("wallet-send-invalid-address-or-token")
-                    visible:          !isTAInputValid()
+                    text:             isTokenOrAddressValid
+                        //% "Invalid wallet address"
+                        ? qsTrId("wallet-send-invalid-address-or-token")
+                        : viewModel.tokenGeneratebByNewAppVersionMessage
+                    visible:          isTokenOrAddressValid || viewModel.isTokenGeneratebByNewAppVersion
                 }
             }
 

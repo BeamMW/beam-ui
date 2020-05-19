@@ -18,6 +18,9 @@
 #include "wallet/transactions/swaps/swap_transaction.h"
 #include "ui_helpers.h"
 
+#include <algorithm>
+#include <regex>
+
 SendSwapViewModel::SendSwapViewModel()
     : _sendAmountGrothes(0)
     , _sendFeeGrothes(0)
@@ -56,7 +59,7 @@ namespace
             return Currency::CurrBeam;
         }
     }
-}
+}  // namespace
 
 void SendSwapViewModel::fillParameters(const beam::wallet::TxParameters& parameters)
 {
@@ -103,6 +106,61 @@ void SendSwapViewModel::fillParameters(const beam::wallet::TxParameters& paramet
         _txParameters = parameters;
         _isBeamSide = *isBeamSide;
     }
+
+    _tokenGeneratebByNewAppVersionMessage.clear();
+
+#ifdef BEAM_LIB_VERSION
+    if (auto libVersion = parameters.GetParameter(beam::wallet::TxParameterID::LibraryVersion); libVersion)
+    {
+        std::string libVersionStr;
+        beam::wallet::fromByteBuffer(*libVersion, libVersionStr);
+        std::string myLibVersionStr = BEAM_LIB_VERSION;
+        std::regex libVersionRegex("\\d{1,}\\.\\d{1,}\\.\\d{4,}");
+        if (std::regex_match(libVersionStr, libVersionRegex) &&
+            std::lexicographical_compare(
+                myLibVersionStr.begin(),
+                myLibVersionStr.end(),
+                libVersionStr.begin(),
+                libVersionStr.end(),
+                std::less<char>{}))
+        {
+            _tokenGeneratebByNewAppVersionMessage = qtTrId("token-newer-lib")
+                .arg(libVersionStr.c_str())
+                .arg(myLibVersionStr.c_str());
+            emit tokenGeneratebByNewAppVersion();
+        }
+    }
+#endif // BEAM_LIB_VERSION
+
+#ifdef BEAM_CLIENT_VERSION
+    if (auto clientVersion = parameters.GetParameter(beam::wallet::TxParameterID::ClientVersion); clientVersion)
+    {
+        std::string clientVersionStr;
+        beam::wallet::fromByteBuffer(*clientVersion, clientVersionStr);
+        std::string myClientVersionStr = BEAM_CLIENT_VERSION;
+
+        auto appName = AppModel::getMyName();
+        auto res = clientVersionStr.find(appName + " ");
+        if (res != std::string::npos)
+        {
+            clientVersionStr.erase(0, appName.length() + 1);
+            std::regex clientVersionRegex("\\d{1,}\\.\\d{1,}\\.\\d{4,}\\.\\d{4,}");
+            if (std::regex_match(clientVersionStr, clientVersionRegex) &&
+                std::lexicographical_compare(
+                    myClientVersionStr.begin(),
+                    myClientVersionStr.end(),
+                    clientVersionStr.begin(),
+                    clientVersionStr.end(),
+                    std::less<char>{}))
+            {
+                _tokenGeneratebByNewAppVersionMessage = qtTrId("token-newer-client")
+                    .arg(clientVersionStr.c_str())
+                    .arg(myClientVersionStr.c_str());
+                emit tokenGeneratebByNewAppVersion();
+            }
+        }
+    }
+#endif // BEAM_CLIENT_VERSION
 }
 
 void SendSwapViewModel::setParameters(const QVariant& parameters)
@@ -441,4 +499,14 @@ QString SendSwapViewModel::getSecondCurrencyReceiveRateValue() const
 QString SendSwapViewModel::getSecondCurrencyLabel() const
 {
     return beamui::getCurrencyLabel(_exchangeRatesManager.getRateUnitRaw());
+}
+
+bool SendSwapViewModel::isTokenGeneratedByNewVersion() const
+{
+    return !_tokenGeneratebByNewAppVersionMessage.isEmpty();
+}
+
+QString SendSwapViewModel::tokenGeneratedByNewVersionMessage() const
+{
+    return _tokenGeneratebByNewAppVersionMessage;
 }

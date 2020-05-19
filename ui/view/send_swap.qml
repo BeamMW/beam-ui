@@ -356,11 +356,24 @@ please review your settings and try again"
                         color:               Style.content_secondary
                     }
                 }
+
+                Row {
+                    id:      tokenGeneratedByNewVersionRow
+                    visible: viewModel.isTokenGeneratedByNewVersion
+                    SFLabel {
+                        horizontalAlignment: Text.AlignHCenter
+                        font.italic:         true
+                        font.pixelSize:      12
+                        text:                viewModel.tokenGeneratedByNewVersionMessage
+                        copyMenuEnabled:     true
+                        color:               Style.content_secondary
+                    }
+                }
             }
 
             Row {
                 Layout.alignment: Qt.AlignHCenter
-                Layout.topMargin: 30
+                Layout.topMargin: viewModel.isTokenGeneratedByNewVersion ? 5 : 30
                 spacing:          25
 
                 CustomButton {

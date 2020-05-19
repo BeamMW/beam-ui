@@ -917,7 +917,7 @@
     </message>
     <message id="open-external-open">
         <source>proceed</source>
-        <translation type="unfinished">proceed</translation>
+        <translation>proceed</translation>
     </message>
     <message id="open-external-title">
         <source>Open external link</source>
@@ -927,10 +927,7 @@
         <source>Beam Wallet app requires a permission to open external links to Beam website in your default browser. This action will expose your IP to the web server.
 
 Allow to open and proceed to the website? You can always update your choice in Settings.</source>
-        <oldsource>Beam Wallet app requires a permission to open external links to Beam website in your default browser. This action will expose your IP to the web server.
-
-Allow to open and proceed to the website? You can always update your choice in Settings.</oldsource>
-        <translation type="unfinished">Beam Wallet app requires a permission to open external links to Beam website in your default browser. This action will expose your IP to the web server.
+        <translation>Beam Wallet app requires a permission to open external links to Beam website in your default browser. This action will expose your IP to the web server.
 
 Allow to open and proceed to the website? You can always update your choice in Settings.</translation>
     </message>
@@ -960,12 +957,7 @@ Allow to open and proceed to the website? You can always update your choice in S
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
 •  must contain at least one number</source>
-        <oldsource>Strong password needs to meet the following requirements:
-•  the length must be at least 10 characters
-•  must contain at least one lowercase letter
-•  must contain at least one uppercase letter
-•  must contain at least one number</oldsource>
-        <translation type="unfinished">Strong password needs to meet the following requirements:
+        <translation>Strong password needs to meet the following requirements:
 •  the length must be at least 10 characters
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
@@ -1232,9 +1224,7 @@ or send this address to the sender over secure channel</translation>
     <message id="swap-na-message">
         <source>You do not have any 3rd-party currencies connected.
 Update your settings and try again.</source>
-        <oldsource>You do not have any 3rd-party currencies connected.
-Update your settings and try again.</oldsource>
-        <translation type="unfinished">You do not have any 3rd-party currencies connected.
+        <translation>You do not have any 3rd-party currencies connected.
 Update your settings and try again.</translation>
     </message>
     <message id="wallet-receive-swap-title">
@@ -1243,8 +1233,7 @@ Update your settings and try again.</translation>
     </message>
     <message id="wallet-receive-addr-message">
         <source>Send this address to the sender over an external secure channel or scan the QR code</source>
-        <oldsource>Send this token to the sender over an external secure channel or scan the QR code</oldsource>
-        <translation type="unfinished">Send this token to the sender over an external secure channel or scan the QR code</translation>
+        <translation>Send this address to the sender over an external secure channel or scan the QR code</translation>
     </message>
     <message id="receive-amount-swap-label">
         <source>Receive amount</source>
@@ -1313,9 +1302,7 @@ Update your settings and try again.</translation>
     <message id="swap-currency-na-message">
         <source>%1 is not connected, 
 please review your settings and try again</source>
-        <oldsource>%1 is not connected, 
-please review your settings and try again</oldsource>
-        <translation type="unfinished">%1 is not connected, 
+        <translation>%1 is not connected, 
 please review your settings and try again</translation>
     </message>
     <message id="send-not-enough">
@@ -1509,17 +1496,13 @@ please review your settings and try again</translation>
     <message id="settings-progress-na">
         <source>You cannot disconnect wallet, edit seed phrase or change default
 fee while you have transactions in progress.</source>
-        <oldsource>You cannot disconnect wallet, edit seed phrase or change default
-fee while you have transactions in progress.</oldsource>
-        <translation type="unfinished">You cannot disconnect wallet, edit seed phrase or change default
+        <translation>You cannot disconnect wallet, edit seed phrase or change default
 fee while you have transactions in progress.</translation>
     </message>
     <message id="atomic-no-offers">
         <source>There are no active offers at the moment.
 Please try again later or create an offer yourself.</source>
-        <oldsource>There are no active offers at the moment.
-Please try again later or create an offer yourself.</oldsource>
-        <translation type="unfinished">There are no active offers at the moment.
+        <translation>There are no active offers at the moment.
 Please try again later or create an offer yourself.</translation>
     </message>
     <message id="send-less-than-fee">
@@ -1689,9 +1672,7 @@ Please try again later or create an offer yourself.</translation>
     <message id="swap-offer-duplicate-message">
         <source>The offer with this transaction token is already accepted.
 Please check the swap token and try again.</source>
-        <oldsource>The offer with this transaction token is already accepted.
-Please check the swap token and try again.</oldsource>
-        <translation type="unfinished">The offer with this transaction token is already accepted.
+        <translation>The offer with this transaction token is already accepted.
 Please check the swap token and try again.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
@@ -1828,10 +1809,7 @@ Please check the swap token and try again.</translation>
     </message>
     <message id="send-swap-sconfirmation-online-time">
         <source>Keep your wallet online. The swap normally takes about 1 hour to complete.</source>
-        <oldsource>Keep your wallet online. The swap normally takes about 1 hour
-to complete.</oldsource>
-        <translation>Keep your wallet online. The swap normally takes about 1 hour
-to complete.</translation>
+        <translation>Keep your wallet online. The swap normally takes about 1 hour to complete.</translation>
     </message>
     <message id="beam-transaction-fee">
         <source>BEAM Transaction fee</source>
@@ -1975,11 +1953,8 @@ to complete.</translation>
         <source>Please notice, that knowing your owner key allows to
 know all your funds (UTXO). Make sure that you
 deploy the key at the node you trust completely.</source>
-        <oldsource>Please notice, that knowing your owner key allows to
-know all your funds (UTXO). Make sure that you
-deploy the key at the node you trust completely.</oldsource>
         <extracomment>settings tab, show owner key message</extracomment>
-        <translation type="unfinished">Please notice, that knowing your owner key allows to
+        <translation>Please notice, that knowing your owner key allows to
 know all your funds (UTXO). Make sure that you
 deploy the key at the node you trust completely.</translation>
     </message>
@@ -2324,36 +2299,47 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="wallet-receive-my-addr-label">
         <source>My address (auto-generated)</source>
-        <translation type="unfinished"></translation>
+        <translation>My address (auto-generated)</translation>
     </message>
     <message id="wallet-receive-addr-message-token">
         <source>Send this token to the sender over an external secure channel or scan the QR code</source>
-        <translation type="unfinished"></translation>
+        <translation>Send this token to the sender over an external secure channel or scan the QR code</translation>
     </message>
     <message id="wallet-receive-copy-address">
         <source>Copy transaction address</source>
-        <translation type="unfinished"></translation>
+        <translation>Copy transaction address</translation>
     </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
-        <translation type="unfinished"></translation>
+        <translation>Asset has been already registered</translation>
     </message>
     <message id="tx-failure-asset-invalid-owner-id">
         <source>Invalid asset owner id</source>
-        <translation type="unfinished"></translation>
+        <translation>Invalid asset owner id</translation>
     </message>
     <message id="tx-failure-assets-disabled">
         <source>Assets transactions are disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Assets transactions are disabled</translation>
     </message>
     <message id="tx-failure-no-vouchers">
         <source>You have no vouchers to insert coins to lelantus</source>
-        <oldsource>You have no vouchers to insert coins to lelentus</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>You have no vouchers to insert coins to lelantus</translation>
     </message>
     <message id="tx-failure-assets-fork2">
         <source>Asset transactions are not available until fork2</source>
-        <translation type="unfinished"></translation>
+        <translation>Asset transactions are not available until fork2</translation>
+    </message>
+    <message id="token-newer-lib">
+        <source>This token generated by newer Beam library version(%1) 
+Your version is: %2. Please, check for updates.</source>
+        <translation>This token generated by newer Beam library version(%1) 
+Your version is: %2. Please, check for updates.</translation>
+    </message>
+    <message id="token-newer-client">
+        <source>This token generated by newer Beam client version(%1) 
+Your version is: %2. Please, check for updates.</source>
+        <translation>This token generated by newer Beam client version(%1) 
+Your version is: %2. Please, check for updates.</translation>
     </message>
 </context>
 </TS>

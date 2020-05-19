@@ -485,6 +485,12 @@ void ReceiveSwapViewModel::updateTransactionToken()
         GetBlockCount(_offerExpires)
     );
 
+#ifdef BEAM_CLIENT_VERSION
+    _txParameters.SetParameter(
+        beam::wallet::TxParameterID::ClientVersion,
+        AppModel::getMyName() + " " + std::string(BEAM_CLIENT_VERSION));
+#endif // BEAM_CLIENT_VERSION
+
     const auto& mirroredTxParams = MirrorSwapTxParams(_txParameters);
     const auto& readyForTokenizeTxParams =
         PrepareSwapTxParamsForTokenization(mirroredTxParams);
