@@ -29,6 +29,7 @@
 
 #if defined(BEAM_HW_WALLET)
 #include "core/block_rw.h"
+#include "keykeeper/hw_wallet.h"
 #include "keykeeper/trezor_key_keeper.h"
 #endif
 
@@ -55,6 +56,12 @@ AppModel& AppModel::getInstance()
 {
     assert(s_instance != nullptr);
     return *s_instance;
+}
+
+// static
+std::string AppModel::getMyName()
+{
+    return "Beam Wallet UI";
 }
 
 AppModel::AppModel(WalletSettings& settings)
@@ -125,12 +132,11 @@ bool AppModel::createWallet(const SecString& seed, const SecString& pass)
 }
 
 #if defined(BEAM_HW_WALLET)
-bool AppModel::createTrezorWallet(std::shared_ptr<ECC::HKdfPub> ownerKey, const beam::SecString& pass)
+bool AppModel::createTrezorWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper)
 {
     const auto dbFilePath = m_settings.getTrezorWalletStorage();
     backupDB(dbFilePath);
     {
-        auto keyKeeper = std::make_shared<HardwareKeyKeeperProxy>();
         auto reactor = io::Reactor::create();
         io::Reactor::Scope s(*reactor); // do it in main thread
         auto db = WalletDB::init(dbFilePath, pass, keyKeeper);
@@ -140,11 +146,21 @@ bool AppModel::createTrezorWallet(std::shared_ptr<ECC::HKdfPub> ownerKey, const 
         generateDefaultAddress(db);
     }
 
-    return openWallet(pass);
+    return openWallet(pass, keyKeeper);
 }
+
+std::shared_ptr<beam::wallet::HWWallet> AppModel::getHardwareWalletClient() const
+{
+    if (!m_hwWallet)
+    {
+        m_hwWallet = std::make_shared<beam::wallet::HWWallet>();
+    }
+    return m_hwWallet;
+}
+
 #endif
 
-bool AppModel::openWallet(const beam::SecString& pass)
+bool AppModel::openWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper)
 {
     assert(m_db == nullptr);
 
@@ -157,7 +173,6 @@ bool AppModel::openWallet(const beam::SecString& pass)
 #if defined(BEAM_HW_WALLET)
         else if (WalletDB::isInitialized(m_settings.getTrezorWalletStorage()))
         {
-            auto keyKeeper = std::make_shared<HardwareKeyKeeperProxy>();
             m_db = WalletDB::open(m_settings.getTrezorWalletStorage(), pass, keyKeeper);
         }
 #endif
@@ -274,15 +289,15 @@ void AppModel::startWallet()
     std::map<Notification::Type,bool> activeNotifications {
         { Notification::Type::SoftwareUpdateAvailable, m_settings.isNewVersionActive() },
         { Notification::Type::AddressStatusChanged, m_settings.isTxStatusActive() },    // no own switcher in UI for address expiration notifications
-        { Notification::Type::Unused, false },
+        // TODO:5.0
+        //{ Notification::Type::Unused, false },
         { Notification::Type::BeamNews, m_settings.isBeamNewsActive() },
         { Notification::Type::TransactionFailed, m_settings.isTxStatusActive() },
         { Notification::Type::TransactionCompleted, m_settings.isTxStatusActive() }
     };
 
     bool isSecondCurrencyEnabled = m_settings.getSecondCurrency().toStdString() != noSecondCurrencyStr;
-
-    m_wallet->start(activeNotifications, isSecondCurrencyEnabled, additionalTxCreators);
+    m_wallet->start(activeNotifications, false, isSecondCurrencyEnabled, additionalTxCreators);
 }
 
 void AppModel::applySettingsChanges()

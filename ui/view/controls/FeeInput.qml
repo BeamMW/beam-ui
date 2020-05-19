@@ -42,7 +42,10 @@ ColumnLayout {
                 return control.fee ? control.fee.toLocaleString(focus ? Qt.locale("C") : Qt.locale(), 'f', -128) : ""
             }
 
-            onTextEdited:   control.fee = text ? parseInt(text) : 0
+            onTextEdited: {
+                control.fee = text ? parseInt(text) : 0
+                feeInput.text = control.fee
+            }
             onFocusChanged: {
                 text = formatFee()
                 if (focus) cursorPosition = positionAt(feeInput.getMousePos().x, feeInput.getMousePos().y)

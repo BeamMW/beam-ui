@@ -104,8 +104,37 @@ void WalletViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, c
 
     for (const auto& t : transactions)
     {
-        if (t.GetParameter<TxType>(TxParameterID::TransactionType) != TxType::AtomicSwap)
+        if(const auto txType = t.GetParameter<TxType>(TxParameterID::TransactionType))
         {
+            switch(*txType)
+            {
+            case TxType::AtomicSwap:
+            case TxType::AssetIssue:
+            case TxType::AssetConsume:
+            case TxType::AssetReg:
+            case TxType::AssetUnreg:
+            case TxType::AssetInfo:
+            case TxType::PushTransaction:
+            case TxType::PullTransaction:
+            case TxType::VoucherRequest:
+            case TxType::VoucherResponse:
+                continue;
+            case TxType::ALL:
+                assert(!"This should not happen");
+                continue;
+            case TxType::Simple:
+                break;
+            }
+
+            // Even simple transactions can be on assets, we do not support these in UI at the moment
+            if(const auto assetId = t.GetParameter<Asset::ID>(TxParameterID::AssetID))
+            {
+                if (*assetId != Asset::s_InvalidID)
+                {
+                    continue;
+                }
+            }
+
             modifiedTransactions.push_back(make_shared<TxObject>(t, secondCurrency));
         }
     }

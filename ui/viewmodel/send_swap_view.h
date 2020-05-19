@@ -47,6 +47,9 @@ class SendSwapViewModel: public QObject
     Q_PROPERTY(WalletCurrency::Currency  receiveCurrency  READ getReceiveCurrency  NOTIFY  receiveCurrencyChanged)
     Q_PROPERTY(WalletCurrency::Currency  sendCurrency     READ getSendCurrency     NOTIFY  sendCurrencyChanged)
 
+    Q_PROPERTY(bool isTokenGeneratedByNewVersion            READ isTokenGeneratedByNewVersion       NOTIFY  tokenGeneratebByNewAppVersion)
+    Q_PROPERTY(QString tokenGeneratedByNewVersionMessage    READ tokenGeneratedByNewVersionMessage  NOTIFY  tokenGeneratebByNewAppVersion)
+
 public:
     SendSwapViewModel();
 
@@ -96,6 +99,9 @@ public:
     QString getSecondCurrencySendRateValue() const;
     QString getSecondCurrencyReceiveRateValue() const;
 
+    bool isTokenGeneratedByNewVersion() const;
+    QString tokenGeneratedByNewVersionMessage() const;
+
 public:
     Q_INVOKABLE void setParameters(const QVariant& parameters);    /// used to pass TxParameters directly without Token generation
     Q_INVOKABLE void sendMoney();
@@ -118,6 +124,7 @@ signals:
     void isReceiveFeeOKChanged();
     void secondCurrencyLabelChanged();
     void secondCurrencyRateChanged();
+    void tokenGeneratebByNewAppVersion();
 
 public slots:
     void onChangeCalculated(beam::Amount change);
@@ -142,4 +149,6 @@ private:
     ExchangeRatesManager _exchangeRatesManager;
     beam::wallet::TxParameters _txParameters;
     bool _isBeamSide;
+
+    QString _tokenGeneratebByNewAppVersionMessage = "";
 };

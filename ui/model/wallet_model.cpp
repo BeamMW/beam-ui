@@ -337,6 +337,11 @@ beam::Height WalletModel::getCurrentHeight() const
     return m_status.stateID.m_Height;
 }
 
+beam::Height WalletModel::getCurrentHeightTimestamp() const
+{
+    return m_status.update.lastTime;
+}
+
 beam::Block::SystemState::ID WalletModel::getCurrentStateID() const
 {
     return m_status.stateID;
@@ -383,6 +388,7 @@ void WalletModel::setStatus(const beam::wallet::WalletStatus& status)
     if (m_status.stateID != status.stateID)
     {
         m_status.stateID = status.stateID;
+        m_status.update = status.update;
         emit stateIDChanged();
     }
 }

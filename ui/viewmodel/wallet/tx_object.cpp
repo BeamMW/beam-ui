@@ -232,7 +232,9 @@ QString TxObject::getTransactionID() const
 
 QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
 {
-    static const std::vector<QString> reasons = {
+    // clang doesn't allow to make 'auto reasons' so for the moment assertions below are a bit pointles
+    // let's wait until they fix template arg deduction and restore it back
+    static const std::array<QString, TxFailureReason::Count> reasons = {
         //% "Unexpected reason, please send wallet logs to Beam support"
         qtTrId("tx-failure-undefined"),
         //% "Transaction cancelled"
@@ -315,7 +317,22 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
         qtTrId("tx-failure-keeper-malfunctioned"),
         //% "Aborted by the user"
         qtTrId("tx-failure-aborted-by-user"),
+        //% "Asset has been already registered"
+        qtTrId("tx-failure-asset-exists"),
+        //% "Invalid asset owner id"
+        qtTrId("tx-failure-asset-invalid-owner-id"),
+        //% "Assets transactions are disabled"
+        qtTrId("tx-failure-assets-disabled"),
+        //% "You have no vouchers to insert coins to lelantus"
+        qtTrId("tx-failure-no-vouchers"),
+        //% "Asset transactions are not available until fork2"
+        qtTrId("tx-failure-assets-fork2")
     };
+
+    // ensure QString
+    static_assert(std::is_same<decltype(reasons)::value_type, QString>::value);
+    // ensure that we have all reasons, otherwise it would be runtime crash
+    static_assert(std::tuple_size<decltype(reasons)>::value == static_cast<size_t>(TxFailureReason::Count));
 
     assert(reasons.size() > static_cast<size_t>(reason));
     return reasons[reason];

@@ -27,7 +27,7 @@ class SwapOfferItem : public QObject
 
 public:
     SwapOfferItem() = default;
-    SwapOfferItem(const SwapOffer& offer, bool isOwn, const QDateTime& timeExpiration);
+    SwapOfferItem(const SwapOffer& offer, const QDateTime& timeExpiration);
     bool operator==(const SwapOfferItem& other) const;
 
     auto timeCreated() const -> QDateTime;
@@ -51,7 +51,6 @@ private:
     auto getSwapCoinType() const -> beamui::Currencies;
 
     beam::wallet::SwapOffer m_offer;          /// TxParameters subclass
-    bool m_isOwnOffer;          /// indicates if offer belongs to this wallet
     bool m_isBeamSide;          /// pay beam to receive other coin
     QDateTime m_timeExpiration;
 };

@@ -41,6 +41,9 @@ class SendViewModel: public QObject
     Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                 NOTIFY secondCurrencyLabelChanged)
     Q_PROPERTY(QString  secondCurrencyRateValue     READ getSecondCurrencyRateValue             NOTIFY secondCurrencyRateChanged)
 
+    Q_PROPERTY(bool     isTokenGeneratebByNewAppVersion      READ isTokenGeneratebByNewAppVersion      NOTIFY tokenGeneratebByNewAppVersion)
+    Q_PROPERTY(QString  tokenGeneratebByNewAppVersionMessage READ tokenGeneratebByNewAppVersionMessage NOTIFY tokenGeneratebByNewAppVersion)
+
 public:
     SendViewModel();
 
@@ -72,6 +75,9 @@ public:
     QString getSecondCurrencyLabel() const;
     QString getSecondCurrencyRateValue() const;
 
+    bool isTokenGeneratebByNewAppVersion() const;
+    QString tokenGeneratebByNewAppVersionMessage() const;
+
 public:
     Q_INVOKABLE void setMaxAvailableAmount();
     Q_INVOKABLE void sendMoney();
@@ -89,6 +95,7 @@ signals:
     void secondCurrencyLabelChanged();
     void secondCurrencyRateChanged();
     void receiverAddressChanged();
+    void tokenGeneratebByNewAppVersion();
 
 public slots:
     void onChangeCalculated(beam::Amount change);
@@ -109,4 +116,6 @@ private:
     WalletModel& _walletModel;
     ExchangeRatesManager _exchangeRatesManager;
     beam::wallet::TxParameters _txParameters;
+
+    QString _tokenGeneratebByNewAppVersionMessage = "";
 };

@@ -871,8 +871,9 @@ Item
                             text: qsTrId("general-next")
                             icon.source: "qrc:/assets/icon-next-blue.svg"
                             onClicked: {
-                                viewModel.startOwnerKeyImporting();
-                                startWizzardView.push(importTrezorOwnerKey);
+                                //viewModel.startOwnerKeyImporting();
+                                //startWizzardView.push(importTrezorOwnerKey);
+                                startWizzardView.push(create);
                             }
                         }
                     }
@@ -2005,12 +2006,14 @@ Item
                                     viewModel.onNodeSettingsChanged();
                                     root.parent.setSource("qrc:/loading.qml");
                                 } else {
-                                    if (viewModel.createWallet()) {
-                                        startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : viewModel.isRecoveryMode, "isCreating" : true, "cancelCallback": startWizzardView.pop});
-                                    }
-                                    else {
-                                        // TODO(alex.starun): error message if wallet not created
-                                    }
+                                    viewModel.createWallet(function (created) {
+                                        if (created) { 
+                                            startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : viewModel.isRecoveryMode, "isCreating" : true, "cancelCallback": startWizzardView.pop});
+                                        }
+                                        else {
+                                            // TODO(alex.starun): error message if wallet not created
+                                        }
+                                    })
                                 }
                             }
                         }
@@ -2042,8 +2045,8 @@ Item
                 property Item defaultFocusItem: openPassword
 
                 // default methods for open wallet, can be changed for unlock wallet
-                property var openWallet: function (pass) {
-                    return viewModel.openWallet(pass);
+                property var openWallet: function (pass, callback) {
+                    viewModel.openWallet(pass, callback);
                 }
                 property var loadWallet: function () {
                     root.parent.setSource("qrc:/loading.qml", {"isRecoveryMode" : false, "isCreating" : false});
@@ -2176,17 +2179,19 @@ Item
                                         }
                                         else
                                         {
-                                            if(!openWallet(openPassword.text))
-                                            {
-                                                //% "Invalid password provided"
-                                                openPasswordError.text = qsTrId("general-pwd-invalid");
-                                                openPassword.selectAll();
-                                                openPassword.focus = true;
-                                            }
-                                            else
-                                            {
-                                                loadWallet();
-                                            }
+                                            openWallet(openPassword.text, function (opened) {
+                                                if(!opened)
+                                                {
+                                                    //% "Invalid password provided"
+                                                    openPasswordError.text = qsTrId("general-pwd-invalid");
+                                                    openPassword.selectAll();
+                                                    openPassword.focus = true;
+                                                }
+                                                else
+                                                {
+                                                    loadWallet();
+                                                }
+                                            })
                                         }
                                     }
                                 }

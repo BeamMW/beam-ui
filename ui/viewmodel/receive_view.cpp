@@ -180,6 +180,14 @@ void ReceiveViewModel::updateTransactionToken()
     }
     _txParameters.SetParameter(beam::wallet::TxParameterID::PeerID, _receiverAddress.m_walletID);
     _txParameters.SetParameter(beam::wallet::TxParameterID::TransactionType, beam::wallet::TxType::Simple);
+#ifdef BEAM_CLIENT_VERSION
+    _txParameters.SetParameter(
+        beam::wallet::TxParameterID::ClientVersion,
+        AppModel::getMyName() + " " + std::string(BEAM_CLIENT_VERSION));
+#endif // BEAM_CLIENT_VERSION
+#ifdef BEAM_LIB_VERSION
+    _txParameters.SetParameter(beam::wallet::TxParameterID::LibraryVersion, std::string(BEAM_LIB_VERSION));
+#endif // BEAM_LIB_VERSION
     if (_hasIdentity)
     {
         _txParameters.SetParameter(beam::wallet::TxParameterID::PeerSecureWalletID, _receiverAddress.m_Identity);

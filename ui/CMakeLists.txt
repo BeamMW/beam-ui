@@ -247,6 +247,9 @@ if(BEAM_HW_WALLET)
 endif()
 
 configure_file("${PROJECT_SOURCE_DIR}/version.h.in" "${CMAKE_CURRENT_BINARY_DIR}/version.h")
+message("client cmake")
+add_definitions(-DBEAM_LIB_VERSION="${BEAM_VERSION}")
+add_definitions(-DBEAM_CLIENT_VERSION="${PROJECT_VERSION}")
 
 target_link_libraries(${TARGET_NAME} qrcode cli)
 if (LINUX)
