@@ -15,6 +15,7 @@
 #include "viewmodel/ui_helpers.h"
 #include "wallet/core/common.h"
 #include "wallet/core/simple_transaction.h"
+#include "wallet/core/strings_resources.h"
 #include "model/app_model.h"
 
 using namespace beam;
@@ -165,7 +166,21 @@ QString TxObject::getSecondCurrencyRate() const
 
 QString TxObject::getStatus() const
 {
-    return m_tx.getStatusString().c_str();
+    if (m_tx.m_txType == wallet::TxType::Simple)
+    {
+        TxStatusInterpreter interpreter(m_tx);
+        return interpreter.getStatus().c_str();
+    }
+    else if (m_tx.m_txType >= wallet::TxType::AssetIssue && m_tx.m_txType <= wallet::TxType::AssetInfo)
+        {
+        AssetTxStatusInterpreter interpreter(m_tx);
+        return interpreter.getStatus().c_str();
+        }
+    else
+        {
+        BOOST_ASSERT_MSG(false, kErrorUnknownTxType);
+        return "unknown";
+    }
 }
 
 bool TxObject::isCancelAvailable() const

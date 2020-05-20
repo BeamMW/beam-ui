@@ -109,7 +109,7 @@ namespace
         //% "Swap failed: the refund of your %2 will start in %1. The refund duration depends on the transaction fee you specified for %2."
         return qtTrId("swap-tx-state-in-progress-refunding").arg(time).arg(coin);
     }
-}
+}  // namespace
 
 SwapTxObject::SwapTxObject(const TxDescription& tx, uint32_t minTxConfirmations, double blocksPerHour, QObject* parent/* = nullptr*/)
         : TxObject(tx, parent),
@@ -363,14 +363,8 @@ beam::wallet::AtomicSwapCoin SwapTxObject::getSwapCoinType() const
 
 auto SwapTxObject::getStatus() const -> QString
 {
-    auto status = TxObject::getStatus();
-    if (status == "in progress")
-    {
-        if (auto refundConfirmations = m_swapTx.getSwapCoinTxConfirmations<SubTxIndex::REFUND_TX>();
-            refundConfirmations)
-            return "failing";
-    }
-    return TxObject::getStatus();
+    SwapTxStatusInterpreter interpreter(getTxDescription());
+    return interpreter.getStatus().c_str();
 }
 
 namespace
