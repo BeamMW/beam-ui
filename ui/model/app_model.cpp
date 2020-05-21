@@ -371,6 +371,7 @@ void AppModel::start()
 {
     m_walletConnections << connect(this, &AppModel::walletReset, this, &AppModel::onResetWallet);
 
+    m_nodeModel.setKdf(m_db->get_MasterKdf());
     m_nodeModel.setOwnerKey(m_db->get_OwnerKdf());
 
     std::string nodeAddrStr = m_settings.getNodeAddress().toStdString();
