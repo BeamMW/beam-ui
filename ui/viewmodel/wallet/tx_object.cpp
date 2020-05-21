@@ -168,7 +168,7 @@ QString TxObject::getStatus() const
 {
     if (m_tx.m_txType == wallet::TxType::Simple)
     {
-        TxStatusInterpreter interpreter(m_tx);
+        SimpleTxStatusInterpreter interpreter(m_tx);
         return interpreter.getStatus().c_str();
     }
     else if (m_tx.m_txType >= wallet::TxType::AssetIssue && m_tx.m_txType <= wallet::TxType::AssetInfo)
