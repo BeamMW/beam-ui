@@ -190,7 +190,7 @@ void ReceiveViewModel::updateTransactionToken()
 #endif // BEAM_LIB_VERSION
     if (_hasIdentity)
     {
-        _txParameters.SetParameter(beam::wallet::TxParameterID::PeerSecureWalletID, _receiverAddress.m_Identity);
+        _txParameters.SetParameter(beam::wallet::TxParameterID::PeerWalletIdentity, _receiverAddress.m_Identity);
     }
     setTranasctionToken(QString::fromStdString(std::to_string(_txParameters)));
 }

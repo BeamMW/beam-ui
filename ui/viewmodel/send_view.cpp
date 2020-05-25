@@ -215,10 +215,10 @@ void SendViewModel::sendMoney()
             p.SetParameter(beam::wallet::TxParameterID::OriginalToken, _receiverTA.toStdString());
         }
 
-        auto identity = _txParameters.GetParameter<beam::PeerID>(beam::wallet::TxParameterID::PeerSecureWalletID);
+        auto identity = _txParameters.GetParameter<beam::PeerID>(beam::wallet::TxParameterID::PeerWalletIdentity);
         if (identity)
         {
-            p.SetParameter(beam::wallet::TxParameterID::PeerSecureWalletID, *identity);
+            p.SetParameter(beam::wallet::TxParameterID::PeerWalletIdentity, *identity);
         }
 
         _walletModel.getAsync()->startTransaction(std::move(p));
