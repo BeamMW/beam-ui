@@ -44,6 +44,7 @@ WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, b
     qRegisterMetaType<std::function<void()>>("std::function<void()>");
     qRegisterMetaType<std::vector<beam::wallet::Notification>>("std::vector<beam::wallet::Notification>");
     qRegisterMetaType<beam::wallet::VersionInfo>("beam::wallet::VersionInfo");
+    qRegisterMetaType<beam::wallet::WalletImplVerInfo>("beam::wallet::WalletImplVerInfo");
     qRegisterMetaType<ECC::uintBig>("ECC::uintBig");
 
     connect(this, SIGNAL(walletStatus(const beam::wallet::WalletStatus&)), this, SLOT(setStatus(const beam::wallet::WalletStatus&)));
@@ -292,14 +293,15 @@ void WalletModel::onNotificationsChanged(beam::wallet::ChangeAction action, cons
     emit notificationsChanged(action, notifications);
 }
 
-beam::Version WalletModel::getAppVersion()
+beam::Version WalletModel::getLibVersion() const
 {
-    return beam::Version
-        {
-            VERSION_MAJOR,
-            VERSION_MINOR,
-            VERSION_REVISION
-        };
+    beam::Version ver;
+    return ver.from_string(BEAM_VERSION) ? ver : beam::Version();
+}
+
+uint32_t WalletModel::getClientRevision() const
+{
+    return VERSION_REVISION;
 }
 
 beam::Amount WalletModel::getAvailable() const

@@ -14,7 +14,7 @@ Popup {
     property var onCancel: function () {}
     property var onAccept: function () {}
 
-    width: 295
+    width: 335
     height: 198
     modal: false
     parent: Overlay.overlay
@@ -80,7 +80,7 @@ Popup {
 
     contentItem: Item {
         CustomToolButton {
-            x: 235
+            x: 275
             y: -10
             icon.source: "qrc:/assets/icon-cancel-white.svg"
             onClicked: onCancel()
@@ -89,7 +89,7 @@ Popup {
         Column {
             SFText {
                 id: title
-                width: 215
+                width: 255
                 leftPadding: 10
                 visible: text.length > 0;
                 font.pixelSize: 18
@@ -103,7 +103,7 @@ Popup {
             
             SFText {
                 id: contentText
-                width: 235
+                width: 275
                 topPadding: 10
                 leftPadding: 10
                 

@@ -86,12 +86,26 @@ void NotificationsViewModel::onNotificationsDataModelChanged(ChangeAction action
     {
         if (action == ChangeAction::Removed || n.m_state != Notification::State::Deleted)
         {
-            if (n.m_type == Notification::Type::SoftwareUpdateAvailable)
+            if (n.m_type == Notification::Type::SoftwareUpdateAvailable) // TODO(sergey.zavarza): deprecated 
             {
                 VersionInfo info;
                 if (fromByteBuffer(n.m_content, info) &&
                     info.m_application == VersionInfo::Application::DesktopWallet &&
-                    info.m_version <= beamui::getCurrentAppVersion())
+                    info.m_version <= beamui::getCurrentLibVersion())
+                {
+                    // filter out irrelevant software update notifications
+                    continue;
+                }
+            }
+            if (n.m_type == Notification::Type::WalletImplUpdateAvailable)
+            {
+                auto currentLibVersion = beamui::getCurrentLibVersion();
+                WalletImplVerInfo walletVersionInfo;
+                if (fromByteBuffer(n.m_content, walletVersionInfo) &&
+                    walletVersionInfo.m_application == VersionInfo::Application::DesktopWallet &&
+                    (walletVersionInfo.m_version < currentLibVersion ||
+                     (walletVersionInfo.m_version == currentLibVersion &&
+                      walletVersionInfo.m_UIrevision <= beamui::getCurrentUIRevision())))
                 {
                     // filter out irrelevant software update notifications
                     continue;

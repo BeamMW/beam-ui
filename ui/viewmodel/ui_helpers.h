@@ -76,6 +76,7 @@ namespace beamui
     QString getEstimateTimeStr(int estimate);
     QString convertBeamHeightDiffToTime(int32_t dt);
 
-    beam::Version getCurrentAppVersion();
+    beam::Version getCurrentLibVersion();
+    quint32 getCurrentUIRevision();
 
 }  // namespace beamui

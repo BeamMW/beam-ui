@@ -333,14 +333,15 @@ namespace beamui
         return beamui::getEstimateTimeStr(time_s);
     }
 
-    beam::Version getCurrentAppVersion()
+    beam::Version getCurrentLibVersion()
     {
-        return beam::Version
-        {
-            VERSION_MAJOR,
-            VERSION_MINOR,
-            VERSION_REVISION
-        };
+        beam::Version ver;
+        return ver.from_string(BEAM_VERSION) ? ver : beam::Version();
+    }
+
+    quint32 getCurrentUIRevision()
+    {
+        return VERSION_REVISION;
     }
 
 }  // namespace beamui

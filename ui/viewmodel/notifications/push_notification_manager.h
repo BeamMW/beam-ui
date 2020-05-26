@@ -37,7 +37,11 @@ signals:
     void showUpdateNotification(const QString&, const QString&, const QVariant&);
 
 public slots:
-    void onNewSoftwareUpdateAvailable(const beam::wallet::VersionInfo&, const ECC::uintBig& notificationID, bool showPopup);
+    // TODO(sergey.zavarza): deprecated 
+    void onNewSoftwareUpdateAvailable(
+        const beam::wallet::VersionInfo&, const ECC::uintBig& notificationID, bool showPopup);
+    void onNewSoftwareUpdateAvailable(
+        const beam::wallet::WalletImplVerInfo&, const ECC::uintBig& notificationID, bool showPopup);
     void onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&);
 
 private:
