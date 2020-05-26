@@ -1,4 +1,4 @@
 [submodule "beam"]
 	path = beam
 	url = https://github.com/BeamMW/beam.git
-	branch = master
+	branch = eager_electron_5.0RC
