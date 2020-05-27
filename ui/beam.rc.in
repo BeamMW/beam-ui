@@ -17,7 +17,7 @@ BEGIN
 	BEGIN
 		BLOCK "04090000"
 		BEGIN
-			VALUE "CompanyName", "Beam Development Limited"
+			VALUE "CompanyName", "Beam Foundation Limited"
 			VALUE "FileDescription", "Beam Wallet@BEAM_DISPLAY_SUFFIX@"
 			VALUE "FileVersion", "@PROJECT_VERSION@"
 			VALUE "InternalName", "Beam Wallet@BEAM_DISPLAY_SUFFIX@.exe"
