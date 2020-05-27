@@ -20,7 +20,7 @@ QString Theme::name()
     // return "mainnet";
 #ifdef BEAM_TESTNET
     return "testnet";
-#elif BEAM_MAINNET
+#elif defined(BEAM_MAINNET)
     return "mainnet";
 #else
     return "masternet";
@@ -32,7 +32,7 @@ QString Theme::iconPath()
 {
 #ifdef BEAM_TESTNET
     return ":/assets/icon_testnet.png";
-#elif BEAM_MAINNET
+#elif defined(BEAM_MAINNET)
     return ":/assets/icon.png";
 #else
     return ":/assets/icon_masternet.png";
