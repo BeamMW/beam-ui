@@ -2308,7 +2308,8 @@ Item
                 startWizzardView.push(nodeSetup)
             }
             else if (isLockedMode) {
-                startWizzardView.push(open, { "openWallet": function (pass) { return viewModel.checkWalletPassword(pass); },
+                startWizzardView.push(open, { "openWallet": function (pass, callback) 
+                                            { callback(viewModel.checkWalletPassword(pass)); },
                                               "loadWallet": function () { root.parent.setSource("qrc:/main.qml"); } });
             }
             else if (viewModel.walletExists) {
