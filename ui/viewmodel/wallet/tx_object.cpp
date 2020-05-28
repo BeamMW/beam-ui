@@ -350,6 +350,12 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
     static_assert(std::tuple_size<decltype(reasons)>::value == static_cast<size_t>(TxFailureReason::Count));
 
     assert(reasons.size() > static_cast<size_t>(reason));
+    if (static_cast<size_t>(reason) >= reasons.size())
+    {
+        LOG_WARNING()  << "Unknown failure reason code " << reason << ". Defaulting to 0";
+        reason = TxFailureReason::Unknown;
+    }
+
     return reasons[reason];
 }
 
