@@ -312,9 +312,10 @@ TrezorThread::TrezorThread(StartViewModel& vm)
 
 void TrezorThread::run()
 {
-    auto reactor = io::Reactor::create();
-    io::Reactor::Scope s(*reactor); // do it in main thread
-    auto keyKeeper = m_vm.m_hwWallet->getKeyKeeper(m_vm.m_hwWallet->getDevices().front());
+    auto reactor = AppModel::getInstance().getWalletReactor();
+    io::Reactor::Scope s(*reactor); 
+    auto hwWallet = std::make_shared<beam::wallet::HWWallet>();
+    auto keyKeeper = hwWallet->getKeyKeeper(hwWallet->getDevices().front());
     using namespace beam::wallet;
     
     {
@@ -346,6 +347,21 @@ void TrezorThread::run()
     {
         struct MyHandler : IPrivateKeyKeeper2::Handler
         {
+            void OnDone(IPrivateKeyKeeper2::Status::Type s) override
+            {
+            }
+        };
+
+        // cache sbbs kdf
+        beam::wallet::IPrivateKeyKeeper2::Method::get_Kdf m;
+        m.m_Root = false;
+        m.m_iChild = Key::Index(-1);
+        keyKeeper->InvokeAsync(m, std::make_shared<MyHandler>());
+    }
+
+    {
+        struct MyHandler : IPrivateKeyKeeper2::Handler
+        {
             io::Reactor::Ptr m_Reactor;
 
             MyHandler(io::Reactor::Ptr reactor)
@@ -360,11 +376,10 @@ void TrezorThread::run()
 
 
         // cache sbbs kdf
-        beam::wallet::IPrivateKeyKeeper2::Method::get_Kdf m;
-        m.m_Root = false;
-        m.m_iChild = Key::Index(-1);
+        beam::wallet::IPrivateKeyKeeper2::Method::get_NumSlots m;
         keyKeeper->InvokeAsync(m, std::make_shared<MyHandler>(reactor));
     }
+    
     
     reactor->run();
     emit ownerKeyImported("");
@@ -391,9 +406,14 @@ void StartViewModel::onTrezorOwnerKeyImported(const QString& key)
 void StartViewModel::startOwnerKeyImporting(bool creating)
 {
     m_creating = creating;
-    //if(m_ownerKeyEncrypted.empty())
     if (!m_HWKeyKeeper)
+    {
         m_trezorThread.start();
+    }
+    else
+    {
+        onTrezorOwnerKeyImported("");
+    }
 }
 
 //bool StartViewModel::isPasswordValid(const QString& pass)
@@ -674,6 +694,7 @@ void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
 #if defined(BEAM_HW_WALLET)
     if (m_hwWallet->isConnected())
     {
+        setPassword(pass);
         startOwnerKeyImporting(false);
         return;
     }
