@@ -134,21 +134,6 @@ QString NotificationItem::title() const
 {
     switch(m_notification.m_type)
     {
-        case Notification::Type::SoftwareUpdateAvailable: // TODO(sergey.zavarza): deprecated 
-        {
-            VersionInfo info;
-            if (fromByteBuffer(m_notification.m_content, info))
-            {
-                QString ver = QString::fromStdString(info.m_version.to_string());
-                //% "New version v %1 is available"
-                return qtTrId("notification-update-title").arg(ver);
-            }
-            else
-            {
-                LOG_ERROR() << "Software update notification deserialization error";
-                return QString();
-            }
-        }
         case Notification::Type::WalletImplUpdateAvailable:
         {
             WalletImplVerInfo info;
@@ -218,23 +203,6 @@ QString NotificationItem::message() const
 {
     switch(m_notification.m_type)
     {
-        case Notification::Type::SoftwareUpdateAvailable: // TODO(sergey.zavarza): deprecated 
-        {
-            VersionInfo info;
-            if (fromByteBuffer(m_notification.m_content, info))
-            {
-                QString currentVer = QString::fromStdString(beamui::getCurrentLibVersion().to_string());
-                QString message("Your current version is v");
-                message.append(currentVer);
-                message.append(". Please update to get the most of your Beam wallet.");
-                return message;
-            }
-            else
-            {
-                LOG_ERROR() << "Software update notification deserialization error";
-                return QString();
-            }
-        }
         case Notification::Type::WalletImplUpdateAvailable:
         {
             WalletImplVerInfo info;

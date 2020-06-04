@@ -16,41 +16,25 @@
 
 #include "viewmodel/ui_helpers.h"
 
+using namespace beam::wallet;
+
 PushNotificationManager::PushNotificationManager()
     : m_walletModel(*AppModel::getInstance().getWallet())
 {
     connect(&m_walletModel,
-            SIGNAL(notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)),
-            SLOT(onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)));
+            SIGNAL(notificationsChanged(ChangeAction, const std::vector<Notification>&)),
+            SLOT(onNotificationsChanged(ChangeAction, const std::vector<Notification>&)));
 
     m_walletModel.getAsync()->getNotifications();
 }
 
-// TODO(sergey.zavarza): deprecated 
 void PushNotificationManager::onNewSoftwareUpdateAvailable(
-    const beam::wallet::VersionInfo& info, const ECC::uintBig& notificationID, bool showPopup)
+        const WalletImplVerInfo& info, const ECC::uintBig& notificationID, bool showPopup)
 {
-    if (info.m_application == beam::wallet::VersionInfo::Application::DesktopWallet &&
-        beamui::getCurrentLibVersion() < info.m_version)
-    {
-        m_hasNewerVersion = true;
-        if (showPopup)
-        {
-            QString newVersion = QString::fromStdString(info.m_version.to_string());
-            QString currentVersion = QString::fromStdString(beamui::getCurrentLibVersion().to_string());
-            QVariant id = QVariant::fromValue(notificationID);
-        
-            emit showUpdateNotification(newVersion, currentVersion, id);
-        }
-    }
-}
-
-void PushNotificationManager::onNewSoftwareUpdateAvailable(
-        const beam::wallet::WalletImplVerInfo& info, const ECC::uintBig& notificationID, bool showPopup)
-{
-    if (info.m_application == beam::wallet::VersionInfo::Application::DesktopWallet &&
-        ((beamui::getCurrentLibVersion() < info.m_version) ||
-         (beamui::getCurrentLibVersion() == info.m_version && beamui::getCurrentUIRevision() < info.m_UIrevision)))
+    auto currentLibVersion = beamui::getCurrentLibVersion();
+    auto currentUIRevision = beamui::getCurrentUIRevision();
+    if (currentLibVersion < info.m_version ||
+        (currentLibVersion == info.m_version && currentUIRevision < info.m_UIrevision))
     {
         m_hasNewerVersion = true;
         if (showPopup)
@@ -58,7 +42,7 @@ void PushNotificationManager::onNewSoftwareUpdateAvailable(
             QString newVersion = QString::fromStdString(
                 info.m_version.to_string() + "." + std::to_string(info.m_UIrevision));
             QString currentVersion = QString::fromStdString(
-                beamui::getCurrentLibVersion().to_string() + "." + std::to_string(beamui::getCurrentUIRevision()));
+                currentLibVersion.to_string() + "." + std::to_string(currentUIRevision));
             QVariant id = QVariant::fromValue(notificationID);
         
             emit showUpdateNotification(newVersion, currentVersion, id);
@@ -66,28 +50,20 @@ void PushNotificationManager::onNewSoftwareUpdateAvailable(
     }
 }
 
-void PushNotificationManager::onNotificationsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Notification>& notifications)
+void PushNotificationManager::onNotificationsChanged(ChangeAction action, const std::vector<Notification>& notifications)
 {
-    if ((m_firstNotification && action == beam::wallet::ChangeAction::Reset)
-        || action == beam::wallet::ChangeAction::Added)
+    if ((m_firstNotification && action == ChangeAction::Reset)
+        || action == ChangeAction::Added)
     {
         for (const auto& n : notifications)
         {
-            // TODO(sergey.zavarza): deprecated 
-            if (n.m_type == beam::wallet::Notification::Type::SoftwareUpdateAvailable)
+            if (n.m_type == Notification::Type::WalletImplUpdateAvailable)
             {
-                beam::wallet::VersionInfo info;
-                if (beam::wallet::fromByteBuffer(n.m_content, info))
+                WalletImplVerInfo info;
+                if (fromByteBuffer(n.m_content, info) &&
+                    info.m_application == VersionInfo::Application::DesktopWallet)
                 {
-                    onNewSoftwareUpdateAvailable(info, n.m_ID, n.m_state == beam::wallet::Notification::State::Unread);
-                }
-            }
-            if (n.m_type == beam::wallet::Notification::Type::WalletImplUpdateAvailable)
-            {
-                beam::wallet::WalletImplVerInfo info;
-                if (beam::wallet::fromByteBuffer(n.m_content, info))
-                {
-                    onNewSoftwareUpdateAvailable(info, n.m_ID, n.m_state == beam::wallet::Notification::State::Unread);
+                    onNewSoftwareUpdateAvailable(info, n.m_ID, n.m_state == Notification::State::Unread);
                 }
             }
         }

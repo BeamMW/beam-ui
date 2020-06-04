@@ -287,11 +287,10 @@ void AppModel::startWallet()
     additionalTxCreators->emplace(TxType::AtomicSwap, swapTransactionCreator);
 
     std::map<Notification::Type,bool> activeNotifications {
-        { Notification::Type::SoftwareUpdateAvailable, false }, // TODO(sergey.zavarza): deprecated 
+
+        { Notification::Type::SoftwareUpdateAvailable, false },
         { Notification::Type::WalletImplUpdateAvailable, m_settings.isNewVersionActive() },
         { Notification::Type::AddressStatusChanged, m_settings.isTxStatusActive() },    // no own switcher in UI for address expiration notifications
-        // TODO:5.0
-        //{ Notification::Type::Unused, false },
         { Notification::Type::BeamNews, m_settings.isBeamNewsActive() },
         { Notification::Type::TransactionFailed, m_settings.isTxStatusActive() },
         { Notification::Type::TransactionCompleted, m_settings.isTxStatusActive() }
