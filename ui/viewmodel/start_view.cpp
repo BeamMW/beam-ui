@@ -316,31 +316,56 @@ void TrezorThread::run()
     io::Reactor::Scope s(*reactor); // do it in main thread
     auto keyKeeper = m_vm.m_hwWallet->getKeyKeeper(m_vm.m_hwWallet->getDevices().front());
     using namespace beam::wallet;
-    struct MyHandler : IPrivateKeyKeeper2::Handler
+    
     {
-        StartViewModel* m_ViewModel;
-        IPrivateKeyKeeper2::Ptr m_KeyKeeper;
-        io::Reactor::Ptr m_Reactor;
-
-        MyHandler(StartViewModel* vm, IPrivateKeyKeeper2::Ptr keyKeeper, io::Reactor::Ptr reactor)
-            : m_ViewModel(vm)
-            , m_KeyKeeper(keyKeeper)
-            , m_Reactor(reactor)
-        {}
-
-        void OnDone(IPrivateKeyKeeper2::Status::Type s) override
+        struct MyHandler : IPrivateKeyKeeper2::Handler
         {
-            if (s == IPrivateKeyKeeper2::Status::Success)
-            {
-                m_ViewModel->m_HWKeyKeeper = m_KeyKeeper;
-            }
-            m_Reactor->stop();
-        }
-    };
+            StartViewModel* m_ViewModel;
+            IPrivateKeyKeeper2::Ptr m_KeyKeeper;;
 
-    beam::wallet::IPrivateKeyKeeper2::Method::get_Kdf m;
-    m.m_Root = true;
-    keyKeeper->InvokeAsync(m, std::make_shared<MyHandler>(&m_vm, keyKeeper, reactor));
+            MyHandler(StartViewModel* vm, IPrivateKeyKeeper2::Ptr keyKeeper)
+                : m_ViewModel(vm)
+                , m_KeyKeeper(keyKeeper)
+            {}
+
+            void OnDone(IPrivateKeyKeeper2::Status::Type s) override
+            {
+                if (s == IPrivateKeyKeeper2::Status::Success)
+                {
+                    m_ViewModel->m_HWKeyKeeper = m_KeyKeeper;
+                }
+            }
+        };
+   
+        // cache master kdf
+        beam::wallet::IPrivateKeyKeeper2::Method::get_Kdf m;
+        m.m_Root = true;
+        keyKeeper->InvokeAsync(m, std::make_shared<MyHandler>(&m_vm, keyKeeper));
+    }
+
+    {
+        struct MyHandler : IPrivateKeyKeeper2::Handler
+        {
+            io::Reactor::Ptr m_Reactor;
+
+            MyHandler(io::Reactor::Ptr reactor)
+                : m_Reactor(reactor)
+            {}
+
+            void OnDone(IPrivateKeyKeeper2::Status::Type s) override
+            {
+                m_Reactor->stop();
+            }
+        };
+
+
+        // cache sbbs kdf
+        beam::wallet::IPrivateKeyKeeper2::Method::get_Kdf m;
+        m.m_Root = false;
+        m.m_iChild = Key::Index(-1);
+        keyKeeper->InvokeAsync(m, std::make_shared<MyHandler>(reactor));
+    }
+    
     reactor->run();
     emit ownerKeyImported("");
 }
