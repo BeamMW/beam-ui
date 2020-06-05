@@ -141,6 +141,7 @@ QString NotificationItem::title() const
             {
                 QString ver = QString::fromStdString(
                     info.m_version.to_string() + "." + std::to_string(info.m_UIrevision));
+                //% "New version v %1 is available"
                 return qtTrId("notification-update-title").arg(ver);
             }
             else

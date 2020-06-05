@@ -1850,8 +1850,9 @@ to complete.</translation>
         <translation>повежи</translation>
     </message>
     <message id="swap-tx-state-initial">
-        <source>If nobody accepts the offer in %1, the offer will be automatically canceled</source>
-        <translation>Ако нико не прихвати понуду за %1, понуда ће аутоматски бити отказана</translation>
+        <source>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</source>
+        <oldsource>If nobody accepts the offer in %1, the offer will be automatically canceled</oldsource>
+        <translation type="unfinished">Ако нико не прихвати понуду за %1, понуда ће аутоматски бити отказана</translation>
     </message>
     <message id="swap-tx-state-in-progress-normal">
         <source>The swap is expected to complete in %1 at most.</source>
@@ -2015,12 +2016,14 @@ deploy the key at the node you trust completely.</oldsource>
         <translation>Неисправан genesis блок</translation>
     </message>
     <message id="tx-state-initial-sender">
-        <source>If the receiver won&apos;t get online in %1, the transaction will be canceled automatically</source>
-        <translation>Ако прималац не буде он-лајн за %1, трансакција ће аутоматски бити отказана</translation>
+        <source>If the receiver doesn&apos;t get online in %1, the transaction will be canceled</source>
+        <oldsource>If the receiver won&apos;t get online in %1, the transaction will be canceled automatically</oldsource>
+        <translation type="unfinished">Ако прималац не буде он-лајн за %1, трансакција ће аутоматски бити отказана</translation>
     </message>
     <message id="tx-state-initial-receiver">
-        <source>If the sender won&apos;t get online in %1, the transaction will be canceled automatically</source>
-        <translation>Ако пошиљалац не буде он-лајн за %1, трансакција ће аутоматски бити отказана</translation>
+        <source>If the sender doesn&apos;t get online in %1, the transaction will be canceled</source>
+        <oldsource>If the sender won&apos;t get online in %1, the transaction will be canceled automatically</oldsource>
+        <translation type="unfinished">Ако пошиљалац не буде он-лајн за %1, трансакција ће аутоматски бити отказана</translation>
     </message>
     <message id="tx-state-in-progress-normal">
         <source>The transaction is usually expected to complete in a few minutes.</source>
@@ -2171,7 +2174,6 @@ deploy the key at the node you trust completely.</oldsource>
     </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
-        <oldsource>New version v %1 is avalable</oldsource>
         <translation type="unfinished">New version v %1 is available</translation>
     </message>
     <message id="notification-address-expired">

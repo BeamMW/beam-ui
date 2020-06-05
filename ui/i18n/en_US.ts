@@ -1828,8 +1828,8 @@ Please check the swap token and try again.</translation>
         <translation>connect</translation>
     </message>
     <message id="swap-tx-state-initial">
-        <source>If nobody accepts the offer in %1, the offer will be automatically canceled</source>
-        <translation>If nobody accepts the offer in %1, the offer will be automatically canceled</translation>
+        <source>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</source>
+        <translation>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</translation>
     </message>
     <message id="swap-tx-state-in-progress-normal">
         <source>The swap is expected to complete in %1 at most.</source>
@@ -1990,12 +1990,12 @@ deploy the key at the node you trust completely.</translation>
         <translation>Invalid genesis block</translation>
     </message>
     <message id="tx-state-initial-sender">
-        <source>If the receiver won&apos;t get online in %1, the transaction will be canceled automatically</source>
-        <translation>If the receiver won&apos;t get online in %1, the transaction will be canceled automatically</translation>
+        <source>If the receiver doesn&apos;t get online in %1, the transaction will be canceled</source>
+        <translation>If the receiver doesn&apos;t get online in %1, the transaction will be canceled</translation>
     </message>
     <message id="tx-state-initial-receiver">
-        <source>If the sender won&apos;t get online in %1, the transaction will be canceled automatically</source>
-        <translation>If the sender won&apos;t get online in %1, the transaction will be canceled automatically</translation>
+        <source>If the sender doesn&apos;t get online in %1, the transaction will be canceled</source>
+        <translation>If the sender doesn&apos;t get online in %1, the transaction will be canceled</translation>
     </message>
     <message id="tx-state-in-progress-normal">
         <source>The transaction is usually expected to complete in a few minutes.</source>
@@ -2343,7 +2343,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-receive-expires-12">
         <source>12 hours</source>
-        <translation type="unfinished">12 hours</translation>
+        <translation>12 hours</translation>
     </message>
 </context>
 </TS>
