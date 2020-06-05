@@ -315,7 +315,40 @@ void TrezorThread::run()
     auto reactor = AppModel::getInstance().getWalletReactor();
     io::Reactor::Scope s(*reactor); 
     auto hwWallet = std::make_shared<beam::wallet::HWWallet>();
-    auto keyKeeper = hwWallet->getKeyKeeper(hwWallet->getDevices().front());
+    struct UIHandlerProxy : public beam::wallet::HWWallet::IHandler
+    {
+        beam::wallet::HWWallet::IHandler::Ptr getHandler()
+        {
+            return std::static_pointer_cast<beam::wallet::HWWallet::IHandler>(AppModel::getInstance().getWallet());
+        }
+
+        void ShowKeyKeeperMessage() override
+        {
+            if (getHandler())
+            {
+                getHandler()->ShowKeyKeeperMessage();
+            }
+        }
+
+        void HideKeyKeeperMessage() override
+        {
+            if (getHandler())
+            {
+                getHandler()->HideKeyKeeperMessage();
+            }
+        }
+
+        void ShowKeyKeeperError(const std::string& m) override
+        {
+            if (getHandler())
+            {
+                getHandler()->ShowKeyKeeperError(m);
+            }
+        }
+    };
+    auto proxy = std::make_shared<UIHandlerProxy>();
+    beam::wallet::HWWallet::IHandler::Ptr p = std::static_pointer_cast<beam::wallet::HWWallet::IHandler>(proxy);
+    auto keyKeeper = hwWallet->getKeyKeeper(hwWallet->getDevices().front(), p);
     using namespace beam::wallet;
     
     {

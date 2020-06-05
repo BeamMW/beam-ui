@@ -17,11 +17,19 @@
 #include <QObject>
 
 #include "wallet/client/wallet_client.h"
+
+#ifdef BEAM_HW_WALLET
+#include "keykeeper/hw_wallet.h"
+#endif
+
 #include <set>
 
 class WalletModel
     : public QObject
     , public beam::wallet::WalletClient
+#ifdef BEAM_HW_WALLET
+    , public beam::wallet::HWWallet::IHandler
+#endif
 {
     Q_OBJECT
 public:
@@ -112,9 +120,9 @@ private:
     void onExchangeRates(const std::vector<beam::wallet::ExchangeRate>&) override;
     void onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&) override;
 
-    void onShowKeyKeeperMessage() override;
-    void onHideKeyKeeperMessage() override;
-    void onShowKeyKeeperError(const std::string&) override;
+    void ShowKeyKeeperMessage() override;
+    void HideKeyKeeperMessage() override;
+    void ShowKeyKeeperError(const std::string&) override;
 
     void onPostFunctionToClientContext(MessageFunction&& func) override;
     beam::Version getLibVersion() const override;
