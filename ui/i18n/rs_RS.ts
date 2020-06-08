@@ -2170,8 +2170,8 @@ deploy the key at the node you trust completely.</oldsource>
         <translation>детаљи</translation>
     </message>
     <message id="notification-update-title">
-        <source>New version v %1 is available</source>
-        <oldsource>New version v %1 is avalable</oldsource>
+        <source></source>
+        <oldsource>New version v %1 is available</oldsource>
         <translation type="unfinished">New version v %1 is available</translation>
     </message>
     <message id="notification-address-expired">
@@ -2376,6 +2376,10 @@ Your version is: %2. Please, check for updates.</source>
     <message id="wallet-receive-expires-12">
         <source>12 hours</source>
         <translation type="unfinished">12 сата</translation>
+    </message>
+    <message id="open-show-wallet-button-hw">
+        <source>Show my wallet with Trezor</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

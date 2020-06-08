@@ -211,7 +211,7 @@ Item
                                     visible: startWizzardView.depth > 1
                                 }
 
-                                ColumnLayout {
+                                Row {
                                     spacing: 20
 
                                     PrimaryButton {
@@ -241,7 +241,7 @@ Item
                                             viewModel.isRecoveryMode = false;
                                             startWizzardView.push(createTrezorWalletEntry);
                                         }
-                                    }                                
+                                    }
                                 }
                             }
 
@@ -2163,7 +2163,33 @@ Item
                                 Layout.alignment: Qt.AlignHCenter
                                 Layout.topMargin: 18
                                 Layout.preferredHeight: 38
+                                spacing:          20
                                 
+                                function tryOpenWallet() {
+                                    if(openPassword.text.length == 0)
+                                    {
+                                        //% "Please, enter password"
+                                        openPasswordError.text = qsTrId("general-pwd-empty-error");
+                                        openPassword.focus = true;
+                                    }
+                                    else
+                                    {
+                                        openWallet(openPassword.text, function (opened) {
+                                            if(!opened)
+                                            {
+                                                //% "Invalid password provided"
+                                                openPasswordError.text = qsTrId("general-pwd-invalid");
+                                                openPassword.selectAll();
+                                                openPassword.focus = true;
+                                            }
+                                            else
+                                            {
+                                                loadWallet();
+                                            }
+                                        })
+                                    }
+                                }
+
                                 PrimaryButton {
                                     anchors.verticalCenter: parent.verticalCenter
                                     id: btnCurrentWallet
@@ -2171,28 +2197,22 @@ Item
                                     text: qsTrId("open-show-wallet-button")
                                     icon.source: "qrc:/assets/icon-wallet-small.svg"
                                     onClicked: {
-                                        if(openPassword.text.length == 0)
-                                        {
-                                            //% "Please, enter password"
-                                            openPasswordError.text = qsTrId("general-pwd-empty-error");
-                                            openPassword.focus = true;
-                                        }
-                                        else
-                                        {
-                                            openWallet(openPassword.text, function (opened) {
-                                                if(!opened)
-                                                {
-                                                    //% "Invalid password provided"
-                                                    openPasswordError.text = qsTrId("general-pwd-invalid");
-                                                    openPassword.selectAll();
-                                                    openPassword.focus = true;
-                                                }
-                                                else
-                                                {
-                                                    loadWallet();
-                                                }
-                                            })
-                                        }
+                                        parent.tryOpenWallet();
+                                    }
+                                }
+
+                                PrimaryButton {
+                                    visible: viewModel.isTrezorEnabled
+                                    //enabled: viewModel.isOwnerKeyImported
+                                    id: createNewTrezorWallet
+                                    //% "Show my wallet with Trezor"
+                                    text: qsTrId("open-show-wallet-button-hw")
+                                    Layout.preferredHeight: 38
+                                    Layout.alignment: Qt.AlignHCenter
+                                    icon.source: "qrc:/assets/icon-wallet-small.svg"
+                                    onClicked: {
+                                        viewModel.useHWWallet = true;
+                                        parent.tryOpenWallet();
                                     }
                                 }
                             }

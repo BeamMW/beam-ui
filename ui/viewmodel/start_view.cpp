@@ -245,7 +245,7 @@ StartViewModel::StartViewModel()
     }
 
 #if defined(BEAM_HW_WALLET)
-    connect(&m_trezorThread, SIGNAL(ownerKeyImported(const QString&)), this, SLOT(onTrezorOwnerKeyImported(const QString&)));
+    connect(&m_trezorThread, SIGNAL(ownerKeyImported()), this, SLOT(onTrezorOwnerKeyImported()));
     connect(&m_trezorTimer, SIGNAL(timeout()), this, SLOT(checkTrezor()));
     m_trezorTimer.start(1000);
 #endif
@@ -301,7 +301,21 @@ QString StartViewModel::getTrezorDeviceName() const
 
 bool StartViewModel::isOwnerKeyImported() const
 {
-    return !m_ownerKeyEncrypted.empty();
+    return bool(m_HWKeyKeeper);
+}
+
+bool StartViewModel::useHWWallet() const
+{
+    return m_useHWWallet;
+}
+
+void StartViewModel::setUseHWWallet(bool value)
+{
+    if (m_useHWWallet != value)
+    {
+        m_useHWWallet = value;
+        emit isUseHWWalletChanged();
+    }
 }
 
 TrezorThread::TrezorThread(StartViewModel& vm)
@@ -352,14 +366,52 @@ void TrezorThread::run()
     using namespace beam::wallet;
     
     {
+        {
+            struct MyHandler : IPrivateKeyKeeper2::Handler
+            {
+                io::Reactor::Ptr m_Reactor;
+
+                MyHandler(io::Reactor::Ptr reactor)
+                    : m_Reactor(reactor)
+                {}
+
+                void OnDone(IPrivateKeyKeeper2::Status::Type s) override
+                {
+                    if (s != IPrivateKeyKeeper2::Status::Success)
+                    {
+                        m_Reactor->stop();
+                    }
+                }
+            };
+
+            auto handler = std::make_shared<MyHandler>(reactor);
+            
+            {
+                // cache sbbs kdf
+                beam::wallet::IPrivateKeyKeeper2::Method::get_NumSlots m;
+                keyKeeper->InvokeAsync(m, handler);
+            }
+
+            {
+                // cache sbbs kdf
+                beam::wallet::IPrivateKeyKeeper2::Method::get_Kdf m;
+                m.m_Root = false;
+                m.m_iChild = Key::Index(-1);
+                keyKeeper->InvokeAsync(m, handler);
+            }
+        }
+
+
         struct MyHandler : IPrivateKeyKeeper2::Handler
         {
             StartViewModel* m_ViewModel;
-            IPrivateKeyKeeper2::Ptr m_KeyKeeper;;
+            IPrivateKeyKeeper2::Ptr m_KeyKeeper;
+            io::Reactor::Ptr m_Reactor;
 
-            MyHandler(StartViewModel* vm, IPrivateKeyKeeper2::Ptr keyKeeper)
+            MyHandler(StartViewModel* vm, IPrivateKeyKeeper2::Ptr keyKeeper, io::Reactor::Ptr reactor)
                 : m_ViewModel(vm)
                 , m_KeyKeeper(keyKeeper)
+                , m_Reactor(reactor)
             {}
 
             void OnDone(IPrivateKeyKeeper2::Status::Type s) override
@@ -368,57 +420,21 @@ void TrezorThread::run()
                 {
                     m_ViewModel->m_HWKeyKeeper = m_KeyKeeper;
                 }
+                m_Reactor->stop();
             }
         };
    
         // cache master kdf
         beam::wallet::IPrivateKeyKeeper2::Method::get_Kdf m;
         m.m_Root = true;
-        keyKeeper->InvokeAsync(m, std::make_shared<MyHandler>(&m_vm, keyKeeper));
+        keyKeeper->InvokeAsync(m, std::make_shared<MyHandler>(&m_vm, keyKeeper, reactor));
     }
 
-    {
-        struct MyHandler : IPrivateKeyKeeper2::Handler
-        {
-            void OnDone(IPrivateKeyKeeper2::Status::Type s) override
-            {
-            }
-        };
-
-        // cache sbbs kdf
-        beam::wallet::IPrivateKeyKeeper2::Method::get_Kdf m;
-        m.m_Root = false;
-        m.m_iChild = Key::Index(-1);
-        keyKeeper->InvokeAsync(m, std::make_shared<MyHandler>());
-    }
-
-    {
-        struct MyHandler : IPrivateKeyKeeper2::Handler
-        {
-            io::Reactor::Ptr m_Reactor;
-
-            MyHandler(io::Reactor::Ptr reactor)
-                : m_Reactor(reactor)
-            {}
-
-            void OnDone(IPrivateKeyKeeper2::Status::Type s) override
-            {
-                m_Reactor->stop();
-            }
-        };
-
-
-        // cache sbbs kdf
-        beam::wallet::IPrivateKeyKeeper2::Method::get_NumSlots m;
-        keyKeeper->InvokeAsync(m, std::make_shared<MyHandler>(reactor));
-    }
-    
-    
     reactor->run();
-    emit ownerKeyImported("");
+    emit ownerKeyImported();
 }
 
-void StartViewModel::onTrezorOwnerKeyImported(const QString& key)
+void StartViewModel::onTrezorOwnerKeyImported()
 {
     LOG_INFO() << "Trezor Key imported";
 
@@ -444,29 +460,9 @@ void StartViewModel::startOwnerKeyImporting(bool creating)
     }
     else
     {
-        onTrezorOwnerKeyImported("");
+        onTrezorOwnerKeyImported();
     }
 }
-
-//bool StartViewModel::isPasswordValid(const QString& pass)
-//{
-//    if (pass.isEmpty())
-//        return false;
-//
-//    KeyString ks;
-//    ks.SetPassword(pass.toStdString());
-//
-//    ks.m_sRes = m_ownerKeyEncrypted;
-//
-//    std::shared_ptr<ECC::HKdfPub> pKdf = std::make_shared<ECC::HKdfPub>();
-//
-//    return ks.Import(*pKdf);
-//}
-//
-//void StartViewModel::setOwnerKeyPassword(const QString& pass)
-//{
-//    m_ownerKeyPass = pass.toStdString();
-//}
 
 #endif
 
@@ -724,7 +720,7 @@ void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
 {
     m_callback = callback;
 #if defined(BEAM_HW_WALLET)
-    if (m_hwWallet->isConnected())
+    if (m_useHWWallet && m_hwWallet->isConnected())
     {
         setPassword(pass);
         startOwnerKeyImporting(false);
