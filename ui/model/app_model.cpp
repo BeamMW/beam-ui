@@ -119,8 +119,7 @@ bool AppModel::createWallet(const SecString& seed, const SecString& pass)
     const auto dbFilePath = m_settings.getWalletStorage();
     backupDB(dbFilePath);
     {
-        auto reactor = io::Reactor::create();
-        io::Reactor::Scope s(*reactor); // do it in main thread
+        io::Reactor::Scope s(*m_walletReactor); // do it in main thread
         auto db = WalletDB::init(dbFilePath, pass, seed.hash());
         if (!db) 
             return false;
@@ -137,8 +136,7 @@ bool AppModel::createTrezorWallet(const beam::SecString& pass, beam::wallet::IPr
     const auto dbFilePath = m_settings.getTrezorWalletStorage();
     backupDB(dbFilePath);
     {
-        auto reactor = io::Reactor::create();
-        io::Reactor::Scope s(*reactor); // do it in main thread
+        io::Reactor::Scope s(*m_walletReactor); // do it in main thread
         auto db = WalletDB::init(dbFilePath, pass, keyKeeper);
         if (!db)
             return false;
@@ -156,6 +154,11 @@ std::shared_ptr<beam::wallet::HWWallet> AppModel::getHardwareWalletClient() cons
         m_hwWallet = std::make_shared<beam::wallet::HWWallet>();
     }
     return m_hwWallet;
+}
+
+beam::io::Reactor::Ptr AppModel::getWalletReactor() const
+{
+    return m_walletReactor;
 }
 
 #endif
@@ -287,11 +290,10 @@ void AppModel::startWallet()
     additionalTxCreators->emplace(TxType::AtomicSwap, swapTransactionCreator);
 
     std::map<Notification::Type,bool> activeNotifications {
-        { Notification::Type::SoftwareUpdateAvailable, false }, // TODO(sergey.zavarza): deprecated 
+
+        { Notification::Type::SoftwareUpdateAvailable, false },
         { Notification::Type::WalletImplUpdateAvailable, m_settings.isNewVersionActive() },
         { Notification::Type::AddressStatusChanged, m_settings.isTxStatusActive() },    // no own switcher in UI for address expiration notifications
-        // TODO:5.0
-        //{ Notification::Type::Unused, false },
         { Notification::Type::BeamNews, m_settings.isBeamNewsActive() },
         { Notification::Type::TransactionFailed, m_settings.isTxStatusActive() },
         { Notification::Type::TransactionCompleted, m_settings.isTxStatusActive() }

@@ -35,7 +35,7 @@ namespace
         auto responseTime = tx.getResponseTime();
 
         QString time = beamui::convertBeamHeightDiffToTime(minHeight + responseTime - currentHeight);
-        //% "If nobody accepts the offer in %1, the offer will be automatically canceled"
+        //% "If nobody accepts the offer in %1 at most, the offer will be automatically canceled"
         return qtTrId("swap-tx-state-initial").arg(time);
     }
 

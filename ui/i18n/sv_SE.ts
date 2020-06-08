@@ -1834,8 +1834,9 @@ to complete.</oldsource>
         <translation>anslut</translation>
     </message>
     <message id="swap-tx-state-initial">
-        <source>If nobody accepts the offer in %1, the offer will be automatically canceled</source>
-        <translation>Om ingen accepterar erbjudandet inom %1, kommer erbjudandet att automatiskt tas bort</translation>
+        <source>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</source>
+        <oldsource>If nobody accepts the offer in %1, the offer will be automatically canceled</oldsource>
+        <translation type="unfinished">Om ingen accepterar erbjudandet inom %1, kommer erbjudandet att automatiskt tas bort</translation>
     </message>
     <message id="swap-tx-state-in-progress-normal">
         <source>The swap is expected to complete in %1 at most.</source>
@@ -1990,11 +1991,13 @@ deploy the key at the node you trust completely.</translation>
         <translation type="unfinished">Invalid genesis block</translation>
     </message>
     <message id="tx-state-initial-sender">
-        <source>If the receiver won&apos;t get online in %1, the transaction will be canceled automatically</source>
+        <source>If the receiver doesn&apos;t get online in %1, the transaction will be canceled</source>
+        <oldsource>If the receiver won&apos;t get online in %1, the transaction will be canceled automatically</oldsource>
         <translation type="unfinished">If the receiver won&apos;t get online in %1, the transaction will be canceled automatically</translation>
     </message>
     <message id="tx-state-initial-receiver">
-        <source>If the sender won&apos;t get online in %1, the transaction will be canceled automatically</source>
+        <source>If the sender doesn&apos;t get online in %1, the transaction will be canceled</source>
+        <oldsource>If the sender won&apos;t get online in %1, the transaction will be canceled automatically</oldsource>
         <translation type="unfinished">If the sender won&apos;t get online in %1, the transaction will be canceled automatically</translation>
     </message>
     <message id="tx-state-in-progress-normal">
@@ -2142,7 +2145,6 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
-        <oldsource>New version v %1 is avalable</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-address-expired">

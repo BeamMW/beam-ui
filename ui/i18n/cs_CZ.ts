@@ -1834,8 +1834,9 @@ to complete.</oldsource>
         <translation>připojit</translation>
     </message>
     <message id="swap-tx-state-initial">
-        <source>If nobody accepts the offer in %1, the offer will be automatically canceled</source>
-        <translation>Jestliže nikdo nepřijme nabídku v %1, bude automaticky zrušena</translation>
+        <source>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</source>
+        <oldsource>If nobody accepts the offer in %1, the offer will be automatically canceled</oldsource>
+        <translation type="unfinished">Jestliže nikdo nepřijme nabídku v %1, bude automaticky zrušena</translation>
     </message>
     <message id="swap-tx-state-in-progress-normal">
         <source>The swap is expected to complete in %1 at most.</source>
@@ -1989,12 +1990,14 @@ znát všechny Vaše prostředky (UTXO). Ujistěte se, že jste vystavili klíč
         <translation>Neplatný výchozí blok</translation>
     </message>
     <message id="tx-state-initial-sender">
-        <source>If the receiver won&apos;t get online in %1, the transaction will be canceled automatically</source>
-        <translation>Pokud příjemce vyhrál&apos;t v %1, transakce bude automaticky zrušena</translation>
+        <source>If the receiver doesn&apos;t get online in %1, the transaction will be canceled</source>
+        <oldsource>If the receiver won&apos;t get online in %1, the transaction will be canceled automatically</oldsource>
+        <translation type="unfinished">Pokud příjemce vyhrál&apos;t v %1, transakce bude automaticky zrušena</translation>
     </message>
     <message id="tx-state-initial-receiver">
-        <source>If the sender won&apos;t get online in %1, the transaction will be canceled automatically</source>
-        <translation>Pokud odesílatel vyhrál:&apos;t je online v %1, transakce bude automaticky zrušena</translation>
+        <source>If the sender doesn&apos;t get online in %1, the transaction will be canceled</source>
+        <oldsource>If the sender won&apos;t get online in %1, the transaction will be canceled automatically</oldsource>
+        <translation type="unfinished">Pokud odesílatel vyhrál:&apos;t je online v %1, transakce bude automaticky zrušena</translation>
     </message>
     <message id="tx-state-in-progress-normal">
         <source>The transaction is usually expected to complete in a few minutes.</source>
@@ -2141,7 +2144,6 @@ znát všechny Vaše prostředky (UTXO). Ujistěte se, že jste vystavili klíč
     </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
-        <oldsource>New version v %1 is avalable</oldsource>
         <translation type="unfinished">New version v %1 is available</translation>
     </message>
     <message id="notification-address-expired">
