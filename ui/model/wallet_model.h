@@ -119,11 +119,11 @@ private:
     void onExportTxHistoryToCsv(const std::string& data) override;
     void onExchangeRates(const std::vector<beam::wallet::ExchangeRate>&) override;
     void onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&) override;
-
+#ifdef BEAM_HW_WALLET
     void ShowKeyKeeperMessage() override;
     void HideKeyKeeperMessage() override;
     void ShowKeyKeeperError(const std::string&) override;
-
+#endif // BEAM_HW_WALLET
     void onPostFunctionToClientContext(MessageFunction&& func) override;
     beam::Version getLibVersion() const override;
     uint32_t getClientRevision() const override;
