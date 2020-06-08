@@ -85,3 +85,20 @@ function currenciesList() {
 
 const maxAmount   = "254000000";
 const minAmount   = "0.00000001";
+
+function createObject(component, parent, props) {
+    return Qt.createComponent(component)
+             .createObject(parent, props);
+}
+
+function createControl(component, parent, props) {
+    return createObject(["controls/", component, ".qml"].join(""), parent, props)
+}
+
+function createDialog(component, props) {
+    return createControl([component, "Dialog"].join(''), main, props)
+}
+
+function openDialog(component, props) {
+    createDialog(component, props).open()
+}

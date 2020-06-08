@@ -149,10 +149,9 @@ please review your settings and try again"
                         }
 
                         onCurrencyChanged: {
-                            if(sentAmountInput.currency != Currency.CurrBeam) {
-                                if(receiveAmountInput.currency != Currency.CurrBeam) {
-                                    receiveAmountInput.currency = Currency.CurrBeam
-                                }
+                            if(sentAmountInput.currency != Currency.CurrBeam &&
+                               receiveAmountInput.currency != Currency.CurrBeam) {
+                                receiveAmountInput.currency = Currency.CurrBeam
                             }
                         }
                     }
@@ -245,9 +244,17 @@ please review your settings and try again"
                             acceptedButtons: Qt.LeftButton
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
+                                var rateWasInFocus = false;
+                                if (rateInput.focus) {
+                                    rateWasInFocus = true;
+                                    rateInput.focus = false;
+                                }
                                 var sentCurency = sentAmountInput.currency;
                                 sentAmountInput.currency = receiveAmountInput.currency;
                                 receiveAmountInput.currency = sentCurency;
+                                if (rateWasInFocus) {
+                                    rateInput.focus = true;
+                                }
                             }
                         }
                     }
@@ -291,10 +298,9 @@ please review your settings and try again"
                         }
 
                         onCurrencyChanged: {
-                            if(receiveAmountInput.currency != Currency.CurrBeam) {
-                                if(sentAmountInput.currency != Currency.CurrBeam) {
-                                    sentAmountInput.currency = Currency.CurrBeam
-                                }
+                            if(receiveAmountInput.currency != Currency.CurrBeam &&
+                               sentAmountInput.currency != Currency.CurrBeam) {
+                                sentAmountInput.currency = Currency.CurrBeam
                             }
                         }
                     }
@@ -346,6 +352,7 @@ please review your settings and try again"
                             if (!rateInput.focus && !lockedByReceiveAmount) {
                                 rateInput.rate = viewModel.rate;
                                 rateInput.text = rateInput.rate == "0" ? "" : Utils.uiStringToLocale(rateInput.rate);
+                                rateRow.checkIsRateValid();
                             }
                         }
 
@@ -410,7 +417,6 @@ please review your settings and try again"
 
                             onFocusChanged: {
                                 text = rate == "0" ? "" : (rateInput.focus ? rate : Utils.uiStringToLocale(Utils.localeDecimalToCString(rate)));
-                                if (focus) cursorPosition = positionAt(rateInput.getMousePos().x, rateInput.getMousePos().y);
                             }
 
                             onTextEdited: {

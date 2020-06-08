@@ -35,10 +35,10 @@ namespace
         }
         if (isSender)
         {
-            //% "If the receiver won't get online in %1, the transaction will be canceled automatically"
+            //% "If the receiver doesn't get online in %1, the transaction will be canceled"
             return qtTrId("tx-state-initial-sender").arg(time);
         }
-        //% "If the sender won't get online in %1, the transaction will be canceled automatically"
+        //% "If the sender doesn't get online in %1, the transaction will be canceled"
         return qtTrId("tx-state-initial-receiver").arg(time);
     }
 

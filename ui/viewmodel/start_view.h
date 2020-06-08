@@ -111,7 +111,7 @@ public:
     void run() override;
 
 signals:
-    void ownerKeyImported(const QString& key);
+    void ownerKeyImported();
 
 private:
     StartViewModel& m_vm;
@@ -134,6 +134,7 @@ class StartViewModel : public QObject
     Q_PROPERTY(bool isTrezorConnected READ isTrezorConnected NOTIFY isTrezorConnectedChanged)
     Q_PROPERTY(QString trezorDeviceName READ getTrezorDeviceName NOTIFY trezorDeviceNameChanged)
     Q_PROPERTY(bool isOwnerKeyImported READ isOwnerKeyImported NOTIFY isOwnerKeyImportedChanged)
+    Q_PROPERTY(bool useHWWallet READ useHWWallet WRITE setUseHWWallet NOTIFY isUseHWWalletChanged)
 #endif
 
     Q_PROPERTY(int localPort READ getLocalPort CONSTANT)
@@ -157,6 +158,8 @@ public:
     bool isTrezorConnected() const;
     QString getTrezorDeviceName() const;
     bool isOwnerKeyImported() const;
+    bool useHWWallet() const;
+    void setUseHWWallet(bool value);
 #endif
 
     bool getIsRecoveryMode() const;
@@ -193,8 +196,6 @@ public:
 
 #if defined(BEAM_HW_WALLET)
     Q_INVOKABLE void startOwnerKeyImporting(bool creating);
-    //Q_INVOKABLE bool isPasswordValid(const QString& pass);
-    //Q_INVOKABLE void setOwnerKeyPassword(const QString& pass);
 #endif
 
 signals:
@@ -210,6 +211,7 @@ signals:
     void isTrezorConnectedChanged();
     void trezorDeviceNameChanged();
     void isOwnerKeyImportedChanged();
+    void isUseHWWalletChanged();
 #endif
 
 public slots:
@@ -220,7 +222,7 @@ public slots:
     void onNodeSettingsChanged();
 
 #if defined(BEAM_HW_WALLET)
-    void onTrezorOwnerKeyImported(const QString& key);
+    void onTrezorOwnerKeyImported();
     void checkTrezor();
 #endif
 
@@ -246,8 +248,7 @@ private:
     bool m_creating = false;
     friend TrezorThread;
     TrezorThread m_trezorThread;
-    std::string m_ownerKeyEncrypted;
-    std::string m_ownerKeyPass;
     beam::wallet::IPrivateKeyKeeper2::Ptr m_HWKeyKeeper;
+    bool m_useHWWallet = false;
 #endif
 };
