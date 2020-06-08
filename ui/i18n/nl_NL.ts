@@ -2465,5 +2465,9 @@ Your version is: %2. Please, check for updates.</source>
         <source>Show my wallet with Trezor</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="overtop-beam-supply">
+        <source>Amount overtop total Beam supply.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
