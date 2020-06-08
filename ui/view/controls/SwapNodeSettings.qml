@@ -647,7 +647,6 @@ fee while you have transactions in progress."
                 enabled:                isSettingsChanged() && canApplySettings()
                 onClicked:              applyChanges()
                 Layout.preferredHeight: 38
-                Layout.preferredWidth:  130
             }
 
             PrimaryButton {
