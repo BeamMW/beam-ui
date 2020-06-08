@@ -20,7 +20,7 @@ AbstractColors {
     property color background_row_even:   "#07ffffff"
     property color background_row_odd:    "#0cffffff"
     property color background_details:    "#3d3d3d"
-    property color background_button:     "#474646"
+    property color background_button:     Qt.rgba(255, 255, 255, 0.1)
     property color background_popup:      "#323232"
     property color row_selected:          "#353636"
     property color separator:             "#353636"

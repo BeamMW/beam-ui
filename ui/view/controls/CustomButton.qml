@@ -9,7 +9,7 @@ import "."
 Button {
     id: control
     
-    palette.button: Style.separator
+    palette.button: Style.background_button
     palette.buttonText: Style.content_main
     property alias textOpacity: rect.opacity
     property alias shadowSamples: drop_shadow.samples

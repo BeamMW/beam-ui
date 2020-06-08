@@ -7,17 +7,12 @@ import Beam.Wallet 1.0
 import "."
 import "../utils.js" as Utils
 
-Control {
+SettingsFoldable {
     id:            control
-    leftPadding:   25
-    rightPadding:  25
-    topPadding:    20
-    bottomPadding: 20
     height:        362
     //
     // Common props
     //
-    property alias  title:                    controlTitle.text
     property alias  showSeedDialogTitle:      seedPhraseDialog.showSeedDialogTitle
     property alias  showAddressesDialogTitle: showAddressesDialog.showAddressesDialogTitle
     property string feeRateLabel:        ""
@@ -28,10 +23,7 @@ Control {
     property bool   isConnected:            false
     property bool   isNodeConnection:       false
     property bool   isElectrumConnection:   false
-    property alias  connectionStatus:       statusIndicator.status
-    property alias  connectionErrorMsg:     connectionErrorMsg.text
-
-    property var    mainSettingsViewModel: undefined
+    property var    mainSettingsViewModel:  undefined
 
     //
     // Node props
@@ -250,52 +242,13 @@ Control {
         internalElectrum.save();
     }
 
-    background: Rectangle {
-        radius:  10
-        color:   Style.background_second
-    }
-
-    contentItem: ColumnLayout {
+    content: ColumnLayout {
         spacing: 0
-
-        // indicator & status
-        RowLayout {
-            width:   parent.width
-            spacing: 0
-
-            ExternalNodeStatus {
-                id:                     statusIndicator
-                width:                  10
-                height:                 10
-                Layout.rightMargin:     20
-            }
-
-            SFText {
-                id:                     controlTitle
-                Layout.topMargin:       3
-                color:                  control.color
-                font.pixelSize:         14
-                font.weight:            Font.Bold
-                font.capitalization:    Font.AllUppercase
-                font.letterSpacing:     3.11
-            }
-
-            SFText {
-                id:                connectionErrorMsg
-                Layout.topMargin:  3
-                Layout.leftMargin: 20
-                color:             Style.validator_error
-                font.pixelSize:    14
-                font.italic:       true
-                visible:           statusIndicator.status == "error"
-            }
-        }
 
         // Node & Electrum switch
         RowLayout {
-            Layout.topMargin: 20
-            height:           20
-            spacing:          10
+            height:   20
+            spacing:  10
 
             SFText {
                 //% "Node"

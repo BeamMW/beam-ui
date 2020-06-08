@@ -224,7 +224,7 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(bool     localNodeRun    READ getLocalNodeRun    WRITE setLocalNodeRun   NOTIFY localNodeRunChanged)
     Q_PROPERTY(QString  localNodePort   READ getLocalNodePort   WRITE setLocalNodePort  NOTIFY localNodePortChanged)
     Q_PROPERTY(QString  remoteNodePort  READ getRemoteNodePort  WRITE setRemoteNodePort NOTIFY remoteNodePortChanged)
-    Q_PROPERTY(bool     isChanged       READ isChanged          NOTIFY propertiesChanged)
+    Q_PROPERTY(bool     isNodeChanged   READ isNodeChanged      NOTIFY nodeSettingsChanged)
     Q_PROPERTY(QStringList  localNodePeers  READ getLocalNodePeers  NOTIFY localNodePeersChanged)
     Q_PROPERTY(int      lockTimeout         READ getLockTimeout     WRITE setLockTimeout NOTIFY lockTimeoutChanged)
     Q_PROPERTY(QString  walletLocation      READ getWalletLocation  CONSTANT)
@@ -276,7 +276,7 @@ public:
     bool isLocalNodeRunning() const;
     bool isValidNodeAddress() const;
 
-    bool isChanged() const;
+    bool isNodeChanged() const;
 
     const QList<QObject*>& getSwapCoinSettings();
     QObject* getNotificationsSettings();
@@ -305,7 +305,7 @@ signals:
     void localNodePortChanged();
     void remoteNodePortChanged();
     void localNodePeersChanged();
-    void propertiesChanged();
+    void nodeSettingsChanged();
     void lockTimeoutChanged();
     void localNodeRunningChanged();
     void passwordReqiredToSpendMoneyChanged();

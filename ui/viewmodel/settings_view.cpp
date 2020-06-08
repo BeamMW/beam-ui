@@ -864,7 +864,7 @@ void SettingsViewModel::setNodeAddress(const QString& value)
         }
 
         emit nodeAddressChanged();
-        emit propertiesChanged();
+        emit nodeSettingsChanged();
     }
 }
 
@@ -891,7 +891,7 @@ void SettingsViewModel::setLocalNodeRun(bool value)
         }
 
         emit localNodeRunChanged();
-        emit propertiesChanged();
+        emit nodeSettingsChanged();
     }
 }
 
@@ -906,7 +906,7 @@ void SettingsViewModel::setLocalNodePort(const QString& value)
     {
         m_localNodePort = value;
         emit localNodePortChanged();
-        emit propertiesChanged();
+        emit nodeSettingsChanged();
     }
 }
 
@@ -921,7 +921,7 @@ void SettingsViewModel::setRemoteNodePort(const QString& value)
     {
         m_remoteNodePort = value;
         emit remoteNodePortChanged();
-        emit propertiesChanged();
+        emit nodeSettingsChanged();
     }
 }
 
@@ -1022,14 +1022,14 @@ void SettingsViewModel::addLocalNodePeer(const QString& localNodePeer)
 {
     m_localNodePeers.push_back(localNodePeer);
     emit localNodePeersChanged();
-    emit propertiesChanged();
+    emit nodeSettingsChanged();
 }
 
 void SettingsViewModel::deleteLocalNodePeer(int index)
 {
     m_localNodePeers.removeAt(index);
     emit localNodePeersChanged();
-    emit propertiesChanged();
+    emit nodeSettingsChanged();
 }
 
 void SettingsViewModel::openUrl(const QString& url)
@@ -1061,7 +1061,7 @@ QString SettingsViewModel::getOwnerKey(const QString& password) const
     return QString::fromStdString(ownerKey);
 }
 
-bool SettingsViewModel::isChanged() const
+bool SettingsViewModel::isNodeChanged() const
 {
     return formatAddress(m_nodeAddress, m_remoteNodePort) != m_settings.getNodeAddress()
         || m_localNodeRun != m_settings.getRunLocalNode()
@@ -1082,7 +1082,7 @@ void SettingsViewModel::applyChanges()
     m_settings.setLocalNodePort(m_localNodePort.toInt());
     m_settings.setLocalNodePeers(m_localNodePeers);
     m_settings.applyChanges();
-    emit propertiesChanged();
+    emit nodeSettingsChanged();
 }
 
 QStringList SettingsViewModel::getLocalNodePeers() const
@@ -1094,7 +1094,7 @@ void SettingsViewModel::setLocalNodePeers(const QStringList& localNodePeers)
 {
     m_localNodePeers = localNodePeers;
     emit localNodePeersChanged();
-    emit propertiesChanged();
+    emit nodeSettingsChanged();
 }
 
 QString SettingsViewModel::getWalletLocation() const

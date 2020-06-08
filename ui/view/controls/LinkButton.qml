@@ -9,14 +9,18 @@ import "."
 Control {
     id: control
 
-    property string linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
+    property string linkColor: "#00f6d2"
+    property string linkStyle: ["<style>a:link {color: '", linkColor, "'; text-decoration: none;}</style>"].join("")
     property string text
+    property bool   semibold: false
     signal   clicked
 
     contentItem: SFText {
         text:           [linkStyle, "<a href='#'>", control.text, "</a>"].join("")
         textFormat:     Text.RichText
         font.pixelSize: 14
+        font.styleName: semibold ? "Medium" : "Normal"
+        font.weight:    semibold ? Font.Medium : Font.Normal
 
         MouseArea {
             id:                area

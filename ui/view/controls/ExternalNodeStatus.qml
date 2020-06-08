@@ -5,73 +5,66 @@ import Beam.Wallet 1.0
 import "."
 
 Item {
-
     id: rootItem
 
     property string status
+    property int radius: 5
 
-    property int indicator_radius: 5
-    property Item indicator: online_indicator
+    width:  radius * 2
+    height: radius * 2
 
-    Item {
-        id: online_indicator
-        anchors.top: parent.top
-        anchors.left: parent.left
-        width: childrenRect.width
+    Rectangle {
+        id: indicator
+        x: 0
+        y: 0
+        width:  rootItem.radius * 2
+        height: rootItem.radius * 2
+        radius: rootItem.radius
+        border.width: 1
+    }
 
-        property color color: Style.content_main
-
-        Rectangle {
-            id: online_rect
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            anchors.topMargin: 2
-
-            width: rootItem.indicator_radius * 2
-            height: rootItem.indicator_radius * 2
-            radius: rootItem.indicator_radius
-            color: parent.color
-            border.width: 1
-        }
-
-        DropShadow {
-            anchors.fill: online_rect
-            radius: 5
-            samples: 9
-            source: online_rect
-            color: parent.color
-        }
+    DropShadow {
+        id: shadow
+        anchors.fill: indicator
+        radius:  rootItem.radius
+        samples: 9
+        source:  indicator
+        color:   indicator.color
+        visible: color != "transparent"
     }
 
     states: [
         State {
             name: "uninitialized"
             when: (rootItem.status === "uninitialized")
-            PropertyChanges { target: online_rect; border.color: Style.content_main }
-            PropertyChanges { target: online_indicator; color: "transparent" }
-            PropertyChanges { target: online_indicator; opacity: 0.3 }
+            PropertyChanges { target: indicator; border.color: Style.content_main }
+            PropertyChanges { target: indicator; color: "transparent" }
+            PropertyChanges { target: indicator; opacity: 0.3 }
+            PropertyChanges { target: shadow; visible: false}
         },
         State {
             name: "disconnected"
             when: (rootItem.status === "disconnected")
-            PropertyChanges { target: online_rect; border.color: Style.content_main }
-            PropertyChanges { target: online_indicator; color: Style.content_main }
-            PropertyChanges { target: online_indicator; opacity: 0.3 }
+            PropertyChanges { target: indicator; border.color: Style.content_main }
+            PropertyChanges { target: indicator; color: Style.content_main }
+            PropertyChanges { target: indicator; opacity: 0.3 }
+            PropertyChanges { target: shadow; visible: false}
         },
         State {
             name: "connected"
             when: (rootItem.status === "connected")
-            PropertyChanges { target: online_rect; border.color: Style.active }
-            PropertyChanges { target: online_indicator; color: Style.active }
-            PropertyChanges { target: online_indicator; opacity: 1 }
+            PropertyChanges { target: indicator; border.color: Style.active }
+            PropertyChanges { target: indicator; color: Style.active }
+            PropertyChanges { target: indicator; opacity: 1 }
+            PropertyChanges { target: shadow; visible: true}
         },
         State {
             name: "error"
             when: (rootItem.status === "error")
-            PropertyChanges { target: online_rect; border.color: Style.accent_fail }
-            PropertyChanges { target: online_indicator; color: Style.accent_fail }
-            PropertyChanges { target: online_indicator; opacity: 1 }
+            PropertyChanges { target: indicator; border.color: Style.accent_fail }
+            PropertyChanges { target: indicator; color: Style.accent_fail }
+            PropertyChanges { target: indicator; opacity: 1 }
+            PropertyChanges { target: shadow; visible: true}
         }
     ]
 }

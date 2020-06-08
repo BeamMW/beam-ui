@@ -302,15 +302,10 @@
         <extracomment>settings tab, version label</extracomment>
         <translation>Версія</translation>
     </message>
-    <message id="settings-local-node-run-checkbox">
-        <source>Run integrated node</source>
-        <extracomment>settings tab, node section, run node label</extracomment>
-        <translation type="unfinished">Run integrated node</translation>
-    </message>
     <message id="settings-local-node-port">
         <source>Port</source>
         <extracomment>settings tab, node section, port label</extracomment>
-        <translation>Порт</translation>
+        <translation type="unfinished">Порт</translation>
     </message>
     <message id="settings-rescan-confirmation-message">
         <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</source>
@@ -318,9 +313,10 @@
         <translation>Сканаванне абновіць інфармацыю аб транзакцыях і UTXO ў адпаведнасці з апошнім станам ланцужка блокаў. Працэс можа заняць некаторы час.</translation>
     </message>
     <message id="settings-general-title">
-        <source>General settings</source>
+        <source>General</source>
+        <oldsource>General settings</oldsource>
         <extracomment>settings tab, general section, title</extracomment>
-        <translation>Агульныя ўсталёўкі</translation>
+        <translation type="unfinished">Агульныя ўсталёўкі</translation>
     </message>
     <message id="settings-general-lock-screen">
         <source>Lock screen</source>
@@ -328,14 +324,15 @@
         <translation>Экран блакіроўкі</translation>
     </message>
     <message id="settings-general-require-pwd-to-spend">
-        <source>Ask password for every sending transaction</source>
+        <source>Ask password on every Send</source>
+        <oldsource>Ask password for every sending transaction</oldsource>
         <extracomment>settings tab, general section, ask password to send label</extracomment>
-        <translation>Пытаць пароль для кожнай выходнай транзакцыі</translation>
+        <translation type="unfinished">Пытаць пароль для кожнай выходнай транзакцыі</translation>
     </message>
     <message id="settings-report-problem-title">
-        <source>Report problem</source>
-        <extracomment>settings tab, report problem section, title</extracomment>
-        <translation>Паведаміць аб праблеме</translation>
+        <source>Report a problem</source>
+        <oldsource>Report problem</oldsource>
+        <translation type="unfinished">Паведаміць аб праблеме</translation>
     </message>
     <message id="settings-wallet-location-label">
         <source>Wallet folder location</source>
@@ -343,9 +340,10 @@
         <translation>Тэчка дадзеных гаманца</translation>
     </message>
     <message id="settings-apply">
-        <source>Apply</source>
+        <source>Apply changes</source>
+        <oldsource>Apply</oldsource>
         <extracomment>settings tab, node section, apply button</extracomment>
-        <translation>Ужыць</translation>
+        <translation type="unfinished">Ужыць</translation>
     </message>
     <message id="logo-description">
         <source>Scalable confidential cryptocurrency</source>
@@ -990,20 +988,12 @@ Allow to open and proceed to the website? You can always update your choice in S
         <extracomment>show QR dialog message, how to use this QR</extracomment>
         <translation>Скануйце гэты QR код або вышліце гэты адрас адпраўніку па абароненаму каналу</translation>
     </message>
-    <message id="settings-peers-title">
-        <source>Peers</source>
-        <extracomment>settings tab, node section, peers label</extracomment>
-        <translation>Піры</translation>
-    </message>
-    <message id="settings-node-title">
-        <source>Node</source>
-        <extracomment>settings tab, node section, title</extracomment>
-        <translation>Вузел</translation>
-    </message>
     <message id="settings-general-allow-beammw-label">
-        <source>Allow access to %1 and %2 (to fetch exchanges and transaction data)</source>
+        <source>Allow access to %1 and %2
+(to fetch exchanges and transaction data)</source>
+        <oldsource>Allow access to %1 and %2 (to fetch exchanges and transaction data)</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
-        <translation>Дазволіць доступ да %1 і %2 (абменнікі і інфармацыя аб транзакцыях)</translation>
+        <translation type="unfinished">Дазволіць доступ да %1 і %2 (абменнікі і інфармацыя аб транзакцыях)</translation>
     </message>
     <message id="settings-report-problem-message-l0">
         <source>To report a problem:</source>
@@ -1973,15 +1963,6 @@ deploy the key at the node you trust completely.</oldsource>
 know all your funds (UTXO). Make sure that you
 deploy the key at the node you trust completely.</translation>
     </message>
-    <message id="general-tab">
-        <source>General</source>
-        <translation type="unfinished">General</translation>
-    </message>
-    <message id="settings-remote-node-address">
-        <source>Remote node address</source>
-        <extracomment>settings tab, node section, address label</extracomment>
-        <translation type="unfinished">Remote node address</translation>
-    </message>
     <message id="settings-general-require-pwd-to-show-owner-key">
         <source>Show owner key</source>
         <extracomment>settings tab, general section, Show owner key button and dialog title</extracomment>
@@ -2065,11 +2046,6 @@ deploy the key at the node you trust completely.</translation>
         <source>Some mandatory data for payment proof is missing</source>
         <translation type="unfinished">Some mandatory data for payment proof is missing</translation>
     </message>
-    <message id="general-invalid-port">
-        <source>Port is mandatory</source>
-        <extracomment>settings tab, node section, port error label</extracomment>
-        <translation type="unfinished">Port is mandatory</translation>
-    </message>
     <message id="tx-failure-there-is-no-master-key">
         <source>Master key is needed for this transaction, but unavailable</source>
         <translation type="unfinished">Master key is needed for this transaction, but unavailable</translation>
@@ -2091,7 +2067,8 @@ deploy the key at the node you trust completely.</translation>
         <translation type="unfinished">Notifications</translation>
     </message>
     <message id="settings-notifications-version">
-        <source>Wallet version</source>
+        <source>Wallet update</source>
+        <oldsource>Wallet version</oldsource>
         <translation type="unfinished">Wallet version</translation>
     </message>
     <message id="settings-notifications-news">
@@ -2370,6 +2347,119 @@ Your version is: %2. Please, check for updates.</source>
     <message id="wallet-receive-expires-12">
         <source>12 hours</source>
         <translation>12 гадзін</translation>
+    </message>
+    <message id="settings-notifications-address-expiration">
+        <source>Address expiration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-wallet-title">
+        <source>Wallet</source>
+        <translation type="unfinished">Гаманец</translation>
+    </message>
+    <message id="settings-connectivity-title">
+        <source>Connectivity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-troubleshooting-title">
+        <source>Troubleshooting</source>
+        <oldsource>Connectivity</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-remove-wallet">
+        <source>Remove current wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-wallet-verification">
+        <source>Complete wallet verification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-clear-local-data">
+        <source>Clear local wallet data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-get-beam">
+        <source>Get Beams from Beam Community Faucet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-export">
+        <source>Export wallet data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-import">
+        <source>Import wallet data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-privacy-title">
+        <source>Privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-resources-title">
+        <source>Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-keep-logs">
+        <source>Keep wallet logs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-logs-forever">
+        <source>For all time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-logs-6m">
+        <source>6 months</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-logs-3m">
+        <source>3 months</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-logs-1m">
+        <source>1 month</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-logs-1w">
+        <source>1 week</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-logs-1d">
+        <source>1 day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-utilities-title">
+        <source>Utilities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-local-node-run-checkbox">
+        <source>Integrated node</source>
+        <oldsource>Run integrated node</oldsource>
+        <extracomment>settings tab, node section, run node label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-invalid-port">
+        <source>Port is mandatory</source>
+        <extracomment>settings tab, node section, port error label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-remote-node-address">
+        <source>Remote node address</source>
+        <extracomment>settings tab, node section, address label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-peers-title">
+        <source>Peers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-integrated-node-title">
+        <source>Beam Integrated Node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-remote-node-title">
+        <source>Beam Remote Node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-run-remote-node">
+        <source>Remote node</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
