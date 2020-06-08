@@ -346,6 +346,7 @@ please review your settings and try again"
                             if (!rateInput.focus && !lockedByReceiveAmount) {
                                 rateInput.rate = viewModel.rate;
                                 rateInput.text = rateInput.rate == "0" ? "" : Utils.uiStringToLocale(rateInput.rate);
+                                rateRow.checkIsRateValid();
                             }
                         }
 
