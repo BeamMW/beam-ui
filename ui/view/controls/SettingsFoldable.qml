@@ -128,7 +128,6 @@ Control {
         }
 
         Control {
-            height:            content ? (content.implicitHeight ? content.implicitHeight : content.height) : 0
             visible:           !control.folded
             Layout.fillWidth:  true
             Layout.topMargin:  connectionError ? 25 - errorRow.height : 25
