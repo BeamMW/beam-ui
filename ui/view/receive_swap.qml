@@ -298,7 +298,6 @@ please review your settings and try again"
                         }
 
                         onCurrencyChanged: {
-                            console.log("receiveAmountInput.onCurrencyChanged")
                             if(receiveAmountInput.currency != Currency.CurrBeam &&
                                sentAmountInput.currency != Currency.CurrBeam) {
                                 sentAmountInput.currency = Currency.CurrBeam
