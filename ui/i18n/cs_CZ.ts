@@ -2462,5 +2462,9 @@ Your version is: %2. Please, check for updates.</source>
         <source>Remote node</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="open-show-wallet-button-hw">
+        <source>Show my wallet with Trezor</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
