@@ -23,7 +23,6 @@ ColumnLayout {
     ReceiveViewModel {
         id: viewModel
         onNewAddressFailed: {
-            walletView.enabled = true
             var popup = Qt.createComponent("popup_message.qml")
                 .createObject(receiveView)
 

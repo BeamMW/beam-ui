@@ -420,8 +420,7 @@ void TrezorThread::run()
 
 void StartViewModel::onTrezorOwnerKeyImported(const QString& key)
 {
-    //m_ownerKeyEncrypted = key.toStdString();
-    LOG_INFO() << "Trezor Key imported";// << m_ownerKeyEncrypted;
+    LOG_INFO() << "Trezor Key imported";
 
     SecString secretPass = m_password;
     if (m_creating)
