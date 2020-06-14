@@ -1915,10 +1915,6 @@ to complete.</oldsource>
         <source>There is active transaction that uses this address, therefore the address expiration cannot be changed.</source>
         <translation>Probíhá aktivní transakce, která používá tuto adresu, proto nelze změnit platnost adresy.</translation>
     </message>
-    <message id="select-server-automatically">
-        <source>Select server automatically</source>
-        <translation>Automaticky vybrat server</translation>
-    </message>
     <message id="settings-swap-seed-segwit-warning">
         <source>Segwit seed phrase is not supported yet.</source>
         <translation>Segwit-ová klíčová slova zatím nejsou podporována.</translation>
@@ -2468,6 +2464,14 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="overtop-beam-supply">
         <source>Amount overtop total Beam supply.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="specific_node">
+        <source>Specific node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="random_node">
+        <source>Random node</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

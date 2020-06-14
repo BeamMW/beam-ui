@@ -40,7 +40,7 @@ SettingsFoldable {
     //
     property alias addressElectrum:                     addressInputElectrum.address
     property alias portElectrum:                        portInputElectrum.text
-    property alias isSelectServerAutomatcally:          selectServerAutomatically.checked
+    property alias useRandomElectrumNode:               useRandomNode.checked
     property alias seedPhrasesElectrum:                 seedPhraseDialog.seedPhrasesElectrum
     property alias phrasesSeparatorElectrum:            seedPhraseDialog.phrasesSeparatorElectrum
     property bool  isCurrentElectrumSeedValid:          false
@@ -94,7 +94,7 @@ SettingsFoldable {
         property string initialAddress
         property string initialPort
         property string initialUsername
-        property string initialPassword        
+        property string initialPassword
 
         function restore() {
             address  = initialAddress
@@ -189,7 +189,7 @@ SettingsFoldable {
         id: internalElectrum
         property string initialAddress
         property string initialPort
-        property bool   initialSelectServerAutomatically
+        property bool   initialRandomNode
         property string initialSeed
         property bool   isSeedChanged: false
 
@@ -197,25 +197,25 @@ SettingsFoldable {
             isSeedChanged = false
             addressElectrum = initialAddress
             porttElectrum = initialPort
-            isSelectServerAutomatcally = initialSelectServerAutomatically
+            useRandomElectrumNode = initialRandomNode
             control.restoreSeedElectrum()
         }
 
         function save() {
             initialAddress  = addressElectrum
             initialPort     = portElectrum
-            initialSelectServerAutomatically = isSelectServerAutomatcally
+            initialRandomNode = useRandomElectrumNode
             isSeedChanged = false
         }
 
         function isChanged() {
-            return (!isSelectServerAutomatcally && initialAddress !== addressElectrum) || initialPort !== portElectrum || isSeedChanged || 
-                    isSelectServerAutomatcally !== initialSelectServerAutomatically
+            return (!useRandomElectrumNode && initialAddress !== addressElectrum) || initialPort !== portElectrum || isSeedChanged || 
+                    useRandomElectrumNode !== initialRandomNode
         }
     }
 
     function canApplyElectrum() {
-        return isCurrentElectrumSeedValid && ((addressInputElectrum.isValid && portInputElectrum.acceptableInput) || isSelectServerAutomatcally)
+        return isCurrentElectrumSeedValid && ((addressInputElectrum.isValid && portInputElectrum.acceptableInput) || useRandomElectrumNode)
     }
 
     function canClearElectrum() {
@@ -232,7 +232,7 @@ SettingsFoldable {
     }
 
     function haveElectrumSettings() {
-        return isCurrentElectrumSeedValid && ((addressInputElectrum.isValid && portInputElectrum.acceptableInput) || isSelectServerAutomatcally);
+        return isCurrentElectrumSeedValid && ((addressInputElectrum.isValid && portInputElectrum.acceptableInput) || useRandomElectrumNode);
     }
 
     Component.onCompleted: {
@@ -240,6 +240,41 @@ SettingsFoldable {
         internalCommon.save();
         internalNode.save();
         internalElectrum.save();
+    }
+
+    headerContent: RowLayout {
+        LinkButton {
+            Layout.alignment: Qt.AlignVCenter
+            linkStyle: "<style>a:link {color: '#f9605b'; text-decoration: none;}</style>"
+            //% "Clear"
+            text:       qsTrId("settings-reset")
+            visible:    canClear()
+            onClicked:  {
+                if (editElectrum) {
+                    //: electrum settings, ask password to clear seed phrase, dialog title
+                    //% "Clear seed phrase"
+                    confirmPasswordDialog.dialogTitle = qsTrId("settings-swap-confirm-clear-seed-title");
+                    //: electrum settings, ask password to clear seed phrase, dialog message
+                    //% "Enter your wallet password to clear seed phrase"
+                    confirmPasswordDialog.dialogMessage = qsTrId("settings-swap-confirm-clear-seed-message");
+                    confirmPasswordDialog.onDialogAccepted = function() {
+                        clear();
+                    };
+                    confirmPasswordDialog.open();
+                } else {
+                    clear();
+                }
+            }
+        }
+
+        LinkButton {
+            Layout.alignment: Qt.AlignVCenter
+            linkStyle: "<style>a:link {color: '#f9605b'; text-decoration: none;}</style>"
+            //% "Disconnect"
+            text:       qsTrId("settings-swap-disconnect")
+            visible:    canDisconnect()
+            onClicked:  disconnect()
+        }
     }
 
     content: ColumnLayout {
@@ -284,41 +319,45 @@ SettingsFoldable {
                 }
             }
 
-            Item {
-                Layout.fillWidth: true
-            }
-
-            LinkButton {
-                Layout.alignment: Qt.AlignVCenter
-                linkStyle: "<style>a:link {color: '#f9605b'; text-decoration: none;}</style>"
-                //% "Clear"
-                text:       qsTrId("settings-reset")
-                visible:    canClear()
-                onClicked:  {
-                    if (editElectrum) {
-                        //: electrum settings, ask password to clear seed phrase, dialog title
-                        //% "Clear seed phrase"
-                        confirmPasswordDialog.dialogTitle = qsTrId("settings-swap-confirm-clear-seed-title");
-                        //: electrum settings, ask password to clear seed phrase, dialog message
-                        //% "Enter your wallet password to clear seed phrase"
-                        confirmPasswordDialog.dialogMessage = qsTrId("settings-swap-confirm-clear-seed-message");
-                        confirmPasswordDialog.onDialogAccepted = function() {
-                            clear();
-                        };
-                        confirmPasswordDialog.open();
-                    } else {
-                        clear();
+            SFText {
+                //% "Specific node"
+                text:  qsTrId("specific_node")
+                color: useRandomNode.checked ? control.color : Style.active
+                font.pixelSize: 14
+                visible: useElectrumSwitch.checked
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    onClicked: {
+                        useRandomNode.checked = !useRandomNode.checked;
                     }
                 }
             }
 
-            LinkButton {
-                Layout.alignment: Qt.AlignVCenter
-                linkStyle: "<style>a:link {color: '#f9605b'; text-decoration: none;}</style>"
-                //% "Disconnect"
-                text:       qsTrId("settings-swap-disconnect")
-                visible:    canDisconnect()
-                onClicked:  disconnect()
+            CustomSwitch {
+                id:          useRandomNode
+                alwaysGreen: true
+                spacing:     0
+                visible: useElectrumSwitch.checked
+            }
+
+            SFText {
+                //% "Random node"
+                text: qsTrId("random_node")
+                color: useRandomNode.checked ? Style.active : control.color
+                font.pixelSize: 14
+                visible: useElectrumSwitch.checked
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    onClicked: {
+                        useRandomNode.checked = !useRandomNode.checked;
+                    }
+                }
+            }
+
+            Item {
+                Layout.fillWidth: true
             }
         }
 
@@ -407,16 +446,6 @@ SettingsFoldable {
             }
 
             // electrum settings
-            CustomCheckBox {
-                id: selectServerAutomatically
-                visible:        editElectrum
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
-                //% "Select server automatically"
-                text: qsTrId("select-server-automatically")
-            }
-
             SFText {
                 visible:        editElectrum
                 font.pixelSize: 14
@@ -431,8 +460,8 @@ SettingsFoldable {
                 Layout.fillWidth: true
                 color:            Style.content_main
                 ipOnly:           false
-                readOnly:         selectServerAutomatically.checked
-                underlineVisible: !selectServerAutomatically.checked
+                readOnly:         useRandomNode.checked
+                underlineVisible: !useRandomNode.checked
             }
 
             SFText {
@@ -449,8 +478,8 @@ SettingsFoldable {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
-                readOnly:           selectServerAutomatically.checked
-                underlineVisible:   !selectServerAutomatically.checked
+                readOnly:           useRandomNode.checked
+                underlineVisible:   !useRandomNode.checked
                 validator:          RegExpValidator {regExp: /^([1-9]|[1-5]?[0-9]{2,4}|6[1-4][0-9]{3}|65[1-4][0-9]{2}|655[1-2][0-9]|6553[1-5])$/g}
             }
 

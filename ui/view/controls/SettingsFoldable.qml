@@ -13,6 +13,7 @@ Control {
     property string title
     property bool   folded: true
     property var    content: null
+    property var    headerContent: null
     spacing: 10
 
     // Status indicator
@@ -70,6 +71,12 @@ Control {
                     }
                 }
 
+                Control {
+                    visible:           !control.folded
+                    Layout.fillWidth:  true
+                    contentItem:       headerContent
+                }
+
                 SFText {
                     text: "^"
                     horizontalAlignment: Text.AlignRight
@@ -84,13 +91,14 @@ Control {
                         letterSpacing:  3.11
                         capitalization: Font.AllUppercase
                     }
-                }
-            }
-            MouseArea {
-                anchors.fill: parent
-                cursorShape:  Qt.PointingHandCursor
-                onClicked: {
-                    control.folded = !control.folded;
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape:  Qt.PointingHandCursor
+                        onClicked: {
+                            control.folded = !control.folded;
+                        }
+                    }
                 }
             }
         }
