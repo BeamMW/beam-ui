@@ -13,6 +13,8 @@ It is also the most beautiful application in the world implemented using QT fram
 
 [Building instructions](https://github.com/BeamMW/beam-ui/wiki/How-to-build-Beam-desktop-UI)
 
+[Contribution Guide](https://github.com/BeamMW/beam/wiki/Contribution-Guidelines)
+
 # Build status
 [![Build Status](https://travis-ci.org/BeamMW/beam-ui.svg?branch=master)](https://travis-ci.org/BeamMW/beam-ui)
 [![Build status](https://ci.appveyor.com/api/projects/status/03rat1ixbo5gt41y/branch/master?svg=true)](https://ci.appveyor.com/project/beam-mw/beam-ui/branch/master)
