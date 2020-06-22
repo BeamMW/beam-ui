@@ -12,6 +12,7 @@ ColumnLayout {
     Layout.fillWidth: true
     state: "general"
     property string linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
+    property bool swapMode: false
 
     SettingsViewModel {
         id: viewModel
@@ -25,7 +26,7 @@ ColumnLayout {
 
         Title {
             //% "Settings"
-            text: qsTrId("settings-title")
+            text: qsTrId("settings-title") + swapMode
         }
 
         SFText {
@@ -143,6 +144,7 @@ ColumnLayout {
                         getAddressesElectrum:     modelData.getAddressesElectrum
                         mainSettingsViewModel:    viewModel
                         hasStatusIndicatior:      true
+                        folded:                   !swapMode
 
                         //
                         // Node
