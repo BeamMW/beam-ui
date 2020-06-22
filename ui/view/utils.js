@@ -83,7 +83,7 @@ function currenciesList() {
     ]
 }
 
-const maxAmount   = "254000000";
+const maxAmount   = "262799999";
 const minAmount   = "0.00000001";
 
 function createObject(component, parent, props) {

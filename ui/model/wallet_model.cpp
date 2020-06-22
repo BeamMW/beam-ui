@@ -186,26 +186,22 @@ void WalletModel::onImportRecoveryProgress(uint64_t done, uint64_t total)
 {
 }
 
-void WalletModel::onShowKeyKeeperMessage()
-{
 #if defined(BEAM_HW_WALLET)
+void WalletModel::ShowKeyKeeperMessage()
+{
     emit showTrezorMessage();
-#endif
 }
 
-void WalletModel::onHideKeyKeeperMessage()
+void WalletModel::HideKeyKeeperMessage()
 {
-#if defined(BEAM_HW_WALLET)
     emit hideTrezorMessage();
-#endif
 }
 
-void WalletModel::onShowKeyKeeperError(const std::string& error)
+void WalletModel::ShowKeyKeeperError(const std::string& error)
 {
-#if defined(BEAM_HW_WALLET)
     emit showTrezorError(QString::fromStdString(error));
-#endif
 }
+#endif
 
 void WalletModel::onSwapParamsLoaded(const beam::ByteBuffer& params)
 {

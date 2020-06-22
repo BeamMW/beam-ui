@@ -149,10 +149,9 @@ please review your settings and try again"
                         }
 
                         onCurrencyChanged: {
-                            if(sentAmountInput.currency != Currency.CurrBeam) {
-                                if(receiveAmountInput.currency != Currency.CurrBeam) {
-                                    receiveAmountInput.currency = Currency.CurrBeam
-                                }
+                            if(sentAmountInput.currency != Currency.CurrBeam &&
+                               receiveAmountInput.currency != Currency.CurrBeam) {
+                                receiveAmountInput.currency = Currency.CurrBeam
                             }
                         }
                     }
@@ -245,9 +244,18 @@ please review your settings and try again"
                             acceptedButtons: Qt.LeftButton
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
+                                var rateWasInFocus = false;
+                                if (rateInput.focus) {
+                                    rateWasInFocus = true;
+                                    rateInput.focus = false;
+                                }
                                 var sentCurency = sentAmountInput.currency;
                                 sentAmountInput.currency = receiveAmountInput.currency;
                                 receiveAmountInput.currency = sentCurency;
+                                if (rateWasInFocus) {
+                                    rateInput.focus = true;
+                                }
+                                rateRow.checkReceive();
                             }
                         }
                     }
@@ -291,10 +299,9 @@ please review your settings and try again"
                         }
 
                         onCurrencyChanged: {
-                            if(receiveAmountInput.currency != Currency.CurrBeam) {
-                                if(sentAmountInput.currency != Currency.CurrBeam) {
-                                    sentAmountInput.currency = Currency.CurrBeam
-                                }
+                            if(receiveAmountInput.currency != Currency.CurrBeam &&
+                               sentAmountInput.currency != Currency.CurrBeam) {
+                                sentAmountInput.currency = Currency.CurrBeam
                             }
                         }
                     }
@@ -346,6 +353,17 @@ please review your settings and try again"
                             if (!rateInput.focus && !lockedByReceiveAmount) {
                                 rateInput.rate = viewModel.rate;
                                 rateInput.text = rateInput.rate == "0" ? "" : Utils.uiStringToLocale(rateInput.rate);
+                                rateRow.checkIsRateValid();
+                            }
+                        }
+
+                        function checkReceive() {
+                            receiveAmountInput.amountInput.onTextChanged();
+                            if (parseFloat(receiveAmountInput.amount) >= rateRow.maxAmount) {
+                                if (receiveAmountInput.currency == Currency.CurrBeam) {
+                                    //% "Amount overtop total Beam supply."
+                                    receiveAmountInput.error = qsTrId("overtop-beam-supply");
+                                }
                             }
                         }
 
@@ -354,28 +372,36 @@ please review your settings and try again"
                             var rateValue =
                                 parseFloat(Utils.localeDecimalToCString(rateInput.rate)) || 0;
                             if (sentAmountInput.amount != "0" && rateValue) {
-                                receiveAmountInput.amount= viewModel.isSendBeam
+                                receiveAmountInput.amount = viewModel.isSendBeam
                                     ? BeamGlobals.multiplyWithPrecision8(sentAmountInput.amount, rateValue)
                                     : BeamGlobals.divideWithPrecision8(sentAmountInput.amount, rateValue);
+                                checkReceive();
                             } else if (byRate && !rateValue) {
                                 receiveAmountInput.amount = "0";
                             } else if (!byRate && sentAmountInput.amount == "0") {
                                 lockedByReceiveAmount = false;
                                 receiveAmountInput.amount = "0";
                             }
+                            checkIsRateValid();
                             lockedByReceiveAmount = false;
                         }
 
                         function checkIsRateValid() {
+
                             var rate = parseFloat(Utils.localeDecimalToCString(rateInput.rate)) || 0;
                             if (rate == 0 ||
                                 receiveAmountInput.amount == "0") {
                                 rateValid = true;
                                 return;
                             }
-                            rateValid =
-                                parseFloat(receiveAmountInput.amount) <= rateRow.maxAmount &&
-                                parseFloat(receiveAmountInput.amount) >= rateRow.minAmount;
+                            if (receiveAmountInput.currency == Currency.CurrBeam) {
+                                rateValid =
+                                    parseFloat(receiveAmountInput.amount) <= rateRow.maxAmount &&
+                                    parseFloat(receiveAmountInput.amount) >= rateRow.minAmount;
+                            } else {
+                                rateValid =
+                                    parseFloat(receiveAmountInput.amount) >= rateRow.minAmount
+                            }
                         }
 
                         SFText {
@@ -410,7 +436,6 @@ please review your settings and try again"
 
                             onFocusChanged: {
                                 text = rate == "0" ? "" : (rateInput.focus ? rate : Utils.uiStringToLocale(Utils.localeDecimalToCString(rate)));
-                                if (focus) cursorPosition = positionAt(rateInput.getMousePos().x, rateInput.getMousePos().y);
                             }
 
                             onTextEdited: {

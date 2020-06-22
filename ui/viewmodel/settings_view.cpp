@@ -418,6 +418,7 @@ void SwapCoinSettingsItem::setSelectServerAutomatically(bool value)
         if (!m_selectServerAutomatically)
         {
             setNodeAddressElectrum("");
+            setNodePortElectrum("");
         }
         else
         {
@@ -711,6 +712,7 @@ void SwapCoinSettingsItem::SetDefaultElectrumSettings()
 {
     setNodePortElectrum(0);
     setNodeAddressElectrum("");
+    setNodePortElectrum("");
     setSelectServerAutomatically(true);
     SetSeedElectrum({});
 }

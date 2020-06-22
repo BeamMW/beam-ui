@@ -364,7 +364,7 @@ Rectangle {
         viewModel.resetLockTimer();
     }
 
-    property var trezor_popup
+    property var trezor_popups : []
 
     Connections {
         target: viewModel
@@ -373,23 +373,27 @@ Rectangle {
         }
 
         onShowTrezorMessage:{
-            trezor_popup = Qt.createComponent("popup_message.qml").createObject(main)
-
+            var popup = Qt.createComponent("popup_message.qml").createObject(main)
             //% "Please, look at your Trezor device to complete actions..."
-            trezor_popup.message = qsTrId("trezor-message")
-            trezor_popup.open()
+            popup.message = qsTrId("trezor-message")
+            popup.open()
+            trezor_popups.push(popup)
         }
 
         onHideTrezorMessage:{
-            trezor_popup.close()
+            console.log("onHideTrezorMessage")
+            if (trezor_popups.length > 0) {
+                var popup = trezor_popups.pop()
+                popup.close()
+            }
         }
 
         onShowTrezorError: function(error) {
             console.log(error)
-            trezor_popup = Qt.createComponent("popup_message.qml").createObject(main)
-            trezor_popup.message = error
-            trezor_popup.open()
-
+            var popup = Qt.createComponent("popup_message.qml").createObject(main)
+            popup.message = error
+            popup.open()
+            trezor_popup.push(popup)
         }
     }
 

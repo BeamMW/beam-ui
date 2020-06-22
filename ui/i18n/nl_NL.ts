@@ -1915,10 +1915,6 @@ to complete.</oldsource>
         <source>There is active transaction that uses this address, therefore the address expiration cannot be changed.</source>
         <translation>Er is een actieve transactie die dit adres gebruikt. De verlooptijd van het adres kan daarom niet worden gewijzigd.</translation>
     </message>
-    <message id="select-server-automatically">
-        <source>Select server automatically</source>
-        <translation>Selecteer server automatisch</translation>
-    </message>
     <message id="settings-swap-seed-segwit-warning">
         <source>Segwit seed phrase is not supported yet.</source>
         <translation>Segwit herstelzin wordt nog niet ondersteund.</translation>
@@ -2459,6 +2455,22 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="settings-run-remote-node">
         <source>Remote node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="open-show-wallet-button-hw">
+        <source>Show my wallet with Trezor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="overtop-beam-supply">
+        <source>Amount overtop total Beam supply.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="specific_node">
+        <source>Specific node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="random_node">
+        <source>Random node</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -21,7 +21,7 @@
 using namespace beam;
 using namespace beam::wallet;
 using namespace std;
-using namespace beam::bitcoin;
+namespace btc = beam::bitcoin;
 
 void SwapOffersViewModel::ActiveTxCounters::increment(AtomicSwapCoin swapCoinType)
 {
@@ -121,32 +121,32 @@ QString SwapOffersViewModel::qtumAvailable() const
 
 bool SwapOffersViewModel::btcOK()  const
 {
-    return m_btcClient->getStatus() == Client::Status::Connected;
+    return m_btcClient->getStatus() == btc::Client::Status::Connected;
 }
 
 bool SwapOffersViewModel::ltcOK()  const
 {
-    return m_ltcClient->getStatus() == Client::Status::Connected;
+    return m_ltcClient->getStatus() == btc::Client::Status::Connected;
 }
 
 bool SwapOffersViewModel::qtumOK() const
 {
-    return m_qtumClient->getStatus() == Client::Status::Connected;
+    return m_qtumClient->getStatus() == btc::Client::Status::Connected;
 }
 
 bool SwapOffersViewModel::btcConnecting()  const
 {
-    return m_btcClient->getStatus() == Client::Status::Connecting;
+    return m_btcClient->getStatus() == btc::Client::Status::Connecting;
 }
 
 bool SwapOffersViewModel::ltcConnecting()  const
 {
-    return m_ltcClient->getStatus() == Client::Status::Connecting;
+    return m_ltcClient->getStatus() == btc::Client::Status::Connecting;
 }
 
 bool SwapOffersViewModel::qtumConnecting()  const
 {
-    return m_qtumClient->getStatus() == Client::Status::Connecting;
+    return m_qtumClient->getStatus() == btc::Client::Status::Connecting;
 }
 
 QAbstractItemModel* SwapOffersViewModel::getTransactions()

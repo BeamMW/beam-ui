@@ -158,7 +158,7 @@ ColumnLayout {
                         //
                         addressElectrum:                     modelData.nodeAddressElectrum
                         portElectrum:                        modelData.nodePortElectrum
-                        isSelectServerAutomatcally:          modelData.selectServerAutomatically
+                        useRandomElectrumNode:               modelData.selectServerAutomatically
                         seedPhrasesElectrum:                 modelData.electrumSeedPhrases
                         phrasesSeparatorElectrum:            modelData.phrasesSeparatorElectrum
                         isCurrentElectrumSeedValid:          modelData.isCurrentSeedValid
@@ -194,7 +194,7 @@ ColumnLayout {
                             //
                             onNodeAddressElectrumChanged: settingsControl.addressElectrum = modelData.nodeAddressElectrum
                             onNodePortElectrumChanged: settingsControl.portElectrum = modelData.nodePortElectrum
-                            onSelectServerAutomaticallyChanged: settingsControl.isSelectServerAutomatcally = modelData.selectServerAutomatically
+                            onSelectServerAutomaticallyChanged: settingsControl.useRandomElectrumNode = modelData.selectServerAutomatically
                             onElectrumSeedPhrasesChanged: settingsControl.seedPhrasesElectrum = modelData.electrumSeedPhrases
                             onIsCurrentSeedValidChanged:  settingsControl.isCurrentElectrumSeedValid = modelData.isCurrentSeedValid
                             onIsCurrentSeedSegwitChanged: settingsControl.isCurrentElectrumSeedSegwitAndValid = modelData.isCurrentSeedSegwit
@@ -257,7 +257,7 @@ ColumnLayout {
                         Binding {
                             target:   modelData
                             property: "selectServerAutomatically"
-                            value:    settingsControl.isSelectServerAutomatcally
+                            value:    settingsControl.useRandomElectrumNode
                         }
                     }
                 }
