@@ -33,6 +33,7 @@ AbstractColors {
 
     property string linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
     property string explorerUrl: "https://master-net.explorer.beam.mw/"
+    property string faucetUrl: "https://faucet.beamprivacy.community/"
 
     property color swapCurrencyPaneGrRight:     "#3b3b3b"
     property color swapCurrencyPaneGrLeftBEAM:  "#00f6d2"
