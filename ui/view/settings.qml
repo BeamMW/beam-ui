@@ -26,7 +26,7 @@ ColumnLayout {
 
         Title {
             //% "Settings"
-            text: qsTrId("settings-title") + swapMode
+            text: qsTrId("settings-title")
         }
 
         SFText {

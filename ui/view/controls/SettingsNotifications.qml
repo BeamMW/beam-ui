@@ -43,6 +43,7 @@ SettingsFoldable {
             }
         }
 
+        /* May be will be restored in the future
         CustomSwitch {
             id: addressNotificationwSwitch
             //% "Address expiration"
@@ -69,6 +70,6 @@ SettingsFoldable {
                 property: "isBeamNewsActive"
                 value: newsNotificationsSwitch.checked
             }
-        }
+        } */
     }
 }
