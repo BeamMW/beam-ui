@@ -374,13 +374,13 @@ unsigned int QMLGlobals::getMinimalFee(Currency currency)
             return minFeeBeam();
         
         case Currency::CurrBtc:
-            return 0;
+            return AppModel::getInstance().getBitcoinClient()->GetSettings().GetMinFeeRate();
 
         case Currency::CurrLtc:
-            return 0;
+            return AppModel::getInstance().getLitecoinClient()->GetSettings().GetMinFeeRate();
         
         case Currency::CurrQtum:
-            return 0;
+            return AppModel::getInstance().getQtumClient()->GetSettings().GetMinFeeRate();
 
         default:
             return 0;

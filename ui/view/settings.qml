@@ -154,6 +154,7 @@ ColumnLayout {
                         username:            modelData.nodeUser
                         password:            modelData.nodePass
                         feeRate:             modelData.feeRate
+                        minFeeRate:          modelData.minFeeRate
 
                         //
                         // Electrum
