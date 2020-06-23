@@ -116,20 +116,9 @@ Control {
                     rightPadding: 20
                 }
 
-                SFText {
-                    text: "^"
-                    horizontalAlignment: Text.AlignRight
-                    verticalAlignment:   Text.AlignVCenter
-                    rotation: control.folded ? "180" : 0
-                    color: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
-
-                    font {
-                        styleName:      "Medium"
-                        weight:         Font.Medium
-                        pixelSize:      14
-                        letterSpacing:  3.11
-                        capitalization: Font.AllUppercase
-                    }
+                Image {
+                    id: originalSizeImage
+                    source: control.folded ? "qrc:/assets/icon-grey-arrow-down.svg" : "qrc:/assets/icon-grey-arrow-up.svg"
 
                     MouseArea {
                         anchors.fill: parent
