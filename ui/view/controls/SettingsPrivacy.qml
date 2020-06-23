@@ -110,16 +110,6 @@ SettingsFoldable {
         }
 
         LinkButton {
-            //% "Complete wallet verification"
-            text: qsTrId("settings-wallet-verification")
-            linkColor: "#ffffff"
-            semibold: true
-            onClicked: {
-                // TODO:SETTINGS
-            }
-        }
-
-        LinkButton {
             //: settings tab, general section, Show owner key button and dialog title
             //% "Show owner key"
             text: qsTrId("settings-general-require-pwd-to-show-owner-key")
