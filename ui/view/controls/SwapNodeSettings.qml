@@ -33,6 +33,7 @@ SettingsFoldable {
     property alias  username:     usernameInput.text
     property alias  password:     passwordInput.text
     property alias  feeRate:      feeRateInput.fee
+    property alias  minFeeRate:   feeRateInput.minFee
     property bool   canEditNode:  !control.isNodeConnection
 
     //
@@ -123,7 +124,7 @@ SettingsFoldable {
     }
 
     function canApplySettings() {
-        return editElectrum ? canApplyElectrum() : canApplyNode();
+        return feeRateInput.isValid && (editElectrum ? canApplyElectrum() : canApplyNode());
     }
 
     function applyChanges() {
@@ -363,6 +364,7 @@ SettingsFoldable {
 
         GridLayout {
             Layout.topMargin: 20
+            Layout.bottomMargin: feeRateInput.isValid ? 0 : 14
             columns:          2
             columnSpacing:    30
             rowSpacing:       13

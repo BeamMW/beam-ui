@@ -298,6 +298,11 @@ void SwapCoinSettingsItem::setFeeRate(int value)
     }
 }
 
+int SwapCoinSettingsItem::getMinFeeRate() const
+{
+    return m_settings->GetMinFeeRate();
+}
+
 QString SwapCoinSettingsItem::getNodeUser() const
 {
     return m_nodeUser;
