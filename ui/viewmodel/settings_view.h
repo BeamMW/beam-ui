@@ -291,11 +291,14 @@ public:
     Q_INVOKABLE void openFolder(const QString& path);
     Q_INVOKABLE bool checkWalletPassword(const QString& password) const;
     Q_INVOKABLE QString getOwnerKey(const QString& password) const;
+    Q_INVOKABLE bool exportData() const;
+    Q_INVOKABLE bool importData() const;
 
 public slots:
     void applyChanges();
     void undoChanges();
 	void reportProblem();
+
     void changeWalletPassword(const QString& pass);
     void onNodeStarted();
     void onNodeStopped();

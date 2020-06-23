@@ -39,7 +39,7 @@ SettingsFoldable {
             linkColor: "#ffffff"
             semibold: true
             onClicked: {
-                // TODO:SETTINGS
+                viewModel.exportData()
             }
         }
 
@@ -49,7 +49,7 @@ SettingsFoldable {
             linkColor: "#ffffff"
             semibold: true
             onClicked: {
-                // TODO:SETTINGS
+                viewModel.importData()
             }
         }
 

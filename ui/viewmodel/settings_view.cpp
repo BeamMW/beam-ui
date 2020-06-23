@@ -1128,6 +1128,16 @@ void SettingsViewModel::reportProblem()
     m_settings.reportProblem();
 }
 
+bool SettingsViewModel::exportData() const
+{
+    return AppModel::getInstance().exportData();
+}
+
+bool SettingsViewModel::importData() const
+{
+    return AppModel::getInstance().importData();
+}
+
 void SettingsViewModel::changeWalletPassword(const QString& pass)
 {
     AppModel::getInstance().changeWalletPassword(pass.toStdString());

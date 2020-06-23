@@ -20,6 +20,8 @@
 #include <boost/filesystem.hpp>
 #include <QApplication>
 #include <QTranslator>
+#include <QFileDialog>
+#include <QStandardPaths>
 
 #include "wallet/transactions/swaps/bridges/bitcoin/bitcoin.h"
 #include "wallet/transactions/swaps/bridges/litecoin/litecoin.h"
@@ -198,6 +200,56 @@ void AppModel::onWalledOpened(const beam::SecString& pass)
 {
     m_passwordHash = pass.hash();
     start();
+}
+
+bool AppModel::exportData()
+{
+    try
+    {
+        const auto fileName = beam::wallet::TimestampFile("export.dat");
+        const auto path = QFileDialog::getSaveFileName(nullptr, "Export wallet data",
+                QDir(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)).filePath(fileName.c_str()),
+                "Wallet data (*.dat)");
+
+        const auto jsonData = storage::ExportDataToJson(*m_db);
+
+        FStream fStream;
+        return fStream.Open(path.toStdString().c_str(), false) &&
+               fStream.write(jsonData.data(), jsonData.size()) == jsonData.size();
+    }
+    catch(const std::runtime_error&)
+    {
+        return false;
+    }
+}
+
+bool AppModel::importData()
+{
+    try
+    {
+        const auto path = QFileDialog::getOpenFileName(nullptr, "Import wallet data",
+                QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+                "Wallet data (*.dat)");
+
+        FStream f;
+        ByteBuffer buffer;
+
+        if (f.Open(path.toStdString().c_str(), true))
+        {
+            const auto size = static_cast<size_t>(f.get_Remaining());
+            if (size > 0)
+            {
+                buffer.resize(size);
+                return f.read(buffer.data(), buffer.size()) == size;
+            }
+        }
+
+        return storage::ImportDataFromJson(*m_db, reinterpret_cast<const char*>(buffer.data()), buffer.size());
+    }
+    catch(const std::runtime_error&)
+    {
+        return false;
+    }
 }
 
 void AppModel::resetWallet()
