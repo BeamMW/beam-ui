@@ -144,7 +144,7 @@ ColumnLayout {
                         getAddressesElectrum:     modelData.getAddressesElectrum
                         mainSettingsViewModel:    viewModel
                         hasStatusIndicatior:      true
-                        folded:                   !swapMode
+                        folded:                   swapMode ? modelData.isConnected : true
 
                         //
                         // Node
