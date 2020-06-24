@@ -94,7 +94,7 @@ Item {
         SvgImage {
             Layout.alignment: Qt.AlignLeft | Qt.AlignHCenter
             Layout.maximumHeight: 15
-            Layout.maximumWidth: 42
+            Layout.maximumWidth: 51
             Layout.topMargin: 8
             source: "qrc:/assets/beta2-label.svg"
         }
