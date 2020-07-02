@@ -245,6 +245,7 @@ please review your settings and try again"
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
                                 var rateWasInFocus = false;
+                                var rate = rateInput.rate;
                                 if (rateInput.focus) {
                                     rateWasInFocus = true;
                                     rateInput.focus = false;
@@ -254,6 +255,8 @@ please review your settings and try again"
                                 receiveAmountInput.currency = sentCurency;
                                 if (rateWasInFocus) {
                                     rateInput.focus = true;
+                                    rateInput.text = rate;
+                                    rateInput.onTextEdited();
                                 }
                                 rateRow.checkReceive();
                             }
