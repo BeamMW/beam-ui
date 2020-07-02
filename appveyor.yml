@@ -12,7 +12,7 @@ environment:
   PATH: c:\beam-libs\qt5-static-win\bin;$(PATH)
  
 before_build:
-  - cmd: git submodule update --init --recursive --remote --jobs 4
+  - cmd: git submodule update --init --recursive --jobs 4
   - cmd: cd beam
   - cmd: git apply 3rdparty/protobuf-patch.diff
   - cmd: cd ..

@@ -1,6 +1,6 @@
 git:
   depth: false
-  submodule: false
+  submodule: true
 
 matrix:
   include:
@@ -219,8 +219,8 @@ matrix:
 ###############################################################################
 # Common part
 ###############################################################################
-before_install:
-  - git submodule update --init --recursive --remote --jobs 4
+#before_install:
+#  - git submodule update --init --recursive --remote --jobs 4
 before_script:
   - curl -sL https://raw.githubusercontent.com/travis-ci/artifacts/master/install | bash
   - BEAM_TARGET_SUFFIX="-masternet"
