@@ -350,10 +350,9 @@ please review your settings and try again"
                         property double maxAmount: parseFloat(Utils.maxAmount)
                         property double minAmount: parseFloat(Utils.minAmount)
                         property bool rateValid:   true
-                        property bool lockedByReceiveAmount: false
 
                         function changeRate() {
-                            if (!rateInput.focus && !lockedByReceiveAmount) {
+                            if (!rateInput.focus) {
                                 rateInput.rate = viewModel.rate;
                                 rateInput.text = rateInput.rate == "0" ? "" : Utils.uiStringToLocale(rateInput.rate);
                                 rateRow.checkIsRateValid();
@@ -370,8 +369,7 @@ please review your settings and try again"
                             }
                         }
 
-                        function changeReceive(byRate) {
-                            lockedByReceiveAmount = true;
+                        function changeReceive() {
                             var rateValue =
                                 parseFloat(Utils.localeDecimalToCString(rateInput.rate)) || 0;
                             if (sentAmountInput.amount != "0" && rateValue) {
@@ -379,14 +377,10 @@ please review your settings and try again"
                                     ? BeamGlobals.multiplyWithPrecision8(sentAmountInput.amount, rateValue)
                                     : BeamGlobals.divideWithPrecision8(sentAmountInput.amount, rateValue);
                                 checkReceive();
-                            } else if (byRate && !rateValue) {
-                                receiveAmountInput.amount = "0";
-                            } else if (!byRate && sentAmountInput.amount == "0") {
-                                lockedByReceiveAmount = false;
+                            } else if (!rateValue) {
                                 receiveAmountInput.amount = "0";
                             }
                             checkIsRateValid();
-                            lockedByReceiveAmount = false;
                         }
 
                         function checkIsRateValid() {
@@ -454,13 +448,12 @@ please review your settings and try again"
                                     if (!parseFloat(Utils.localeDecimalToCString(rate))) {
                                         rate = "0";
                                     }
-                                    rateRow.changeReceive(true);
-                                    rateRow.checkIsRateValid();
+                                    rateRow.changeReceive();
                                 }
                             }
 
                             Component.onCompleted: {
-                                viewModel.amountSentChanged.connect(rateRow.changeReceive);
+                                viewModel.amountSentChanged.connect(rateRow.changeRate);
                                 viewModel.rateChanged.connect(rateRow.changeRate);
                             }
                         }
