@@ -234,7 +234,7 @@ ColumnLayout {
     }
 
     ColumnLayout {
-        visible: false
+        //visible: false
         Layout.fillWidth: true
         Layout.topMargin: 30
         Layout.alignment: Qt.AlignHCenter
@@ -269,7 +269,7 @@ ColumnLayout {
     
         Row {
             id:      tokenRow
-            visible: false
+            //visible: false
             Layout.topMargin: 10
             Layout.alignment: Qt.AlignHCenter
             SFLabel {
@@ -340,7 +340,7 @@ ColumnLayout {
                 onClosed();
             }
             enabled:            receiveView.isValid()
-            visible: false
+            //visible: false
         }
 
         CustomButton {
