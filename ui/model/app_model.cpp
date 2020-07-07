@@ -356,7 +356,7 @@ void AppModel::startWallet()
 
         { Notification::Type::SoftwareUpdateAvailable, false },
         { Notification::Type::WalletImplUpdateAvailable, m_settings.isNewVersionActive() },
-        { Notification::Type::AddressStatusChanged, m_settings.isTxStatusActive() },    // no own switcher in UI for address expiration notifications
+        { Notification::Type::AddressStatusChanged, false },    // turned off
         { Notification::Type::BeamNews, m_settings.isBeamNewsActive() },
         { Notification::Type::TransactionFailed, m_settings.isTxStatusActive() },
         { Notification::Type::TransactionCompleted, m_settings.isTxStatusActive() }
