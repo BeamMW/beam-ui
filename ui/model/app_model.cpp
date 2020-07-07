@@ -239,17 +239,23 @@ bool AppModel::importData()
         FStream f;
         ByteBuffer buffer;
 
-        if (f.Open(path.toStdString().c_str(), true))
+        if (!f.Open(path.toStdString().c_str(), true))
         {
-            const auto size = static_cast<size_t>(f.get_Remaining());
-            if (size > 0)
+            return false;
+        }
+        const auto size = static_cast<size_t>(f.get_Remaining());
+        if (size > 0)
+        {
+            buffer.resize(size);
+            if (f.read(buffer.data(), buffer.size()) != size) 
             {
-                buffer.resize(size);
-                return f.read(buffer.data(), buffer.size()) == size;
+                return false;
             }
         }
+        
+        m_wallet->getAsync()->importDataFromJson(std::string(reinterpret_cast<const char*>(buffer.data()), buffer.size()));
 
-        return storage::ImportDataFromJson(*m_db, reinterpret_cast<const char*>(buffer.data()), buffer.size());
+        return true;
     }
     catch(const std::runtime_error&)
     {
