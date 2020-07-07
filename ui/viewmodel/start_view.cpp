@@ -236,7 +236,11 @@ StartViewModel::StartViewModel()
     , m_hwWallet(AppModel::getInstance().getHardwareWalletClient())
     , m_trezorTimer(this)
     , m_trezorThread(*this)
+    , m_useHWWallet(wallet::WalletDB::isInitialized(AppModel::getInstance().getSettings().getTrezorWalletStorage()))
+#else 
+    , m_useHWWallet(false)
 #endif
+
 {
     if (!walletExists())
     {
@@ -338,25 +342,25 @@ void TrezorThread::run()
 
         void ShowKeyKeeperMessage() override
         {
-            if (getHandler())
+            if (auto h = getHandler(); h)
             {
-                getHandler()->ShowKeyKeeperMessage();
+                h->ShowKeyKeeperMessage();
             }
         }
 
         void HideKeyKeeperMessage() override
         {
-            if (getHandler())
+            if (auto h = getHandler(); h)
             {
-                getHandler()->HideKeyKeeperMessage();
+                h->HideKeyKeeperMessage();
             }
         }
 
         void ShowKeyKeeperError(const std::string& m) override
         {
-            if (getHandler())
+            if (auto h = getHandler(); h)
             {
-                getHandler()->ShowKeyKeeperError(m);
+                h->ShowKeyKeeperError(m);
             }
         }
     };
@@ -733,10 +737,17 @@ void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
 {
     m_callback = callback;
 #if defined(BEAM_HW_WALLET)
-    if (m_useHWWallet && m_hwWallet->isConnected())
+    if (m_useHWWallet)
     {
-        setPassword(pass);
-        startOwnerKeyImporting(false);
+        if (m_hwWallet->isConnected())
+        {
+            setPassword(pass);
+            startOwnerKeyImporting(false);
+        }
+        else
+        {
+            DoJSCallback(m_callback, false);
+        }
         return;
     }
 #endif

@@ -2193,25 +2193,16 @@ Item
                                 PrimaryButton {
                                     anchors.verticalCenter: parent.verticalCenter
                                     id: btnCurrentWallet
-                                    //% "Show my wallet"
-                                    text: qsTrId("open-show-wallet-button")
+                                    enabled: !viewModel.useHWWallet || viewModel.isTrezorConnected
+                                    text: (viewModel.useHWWallet == false)
+                                        ?
+                                        //% "Show my wallet"
+                                        qsTrId("open-show-wallet-button")
+                                        :
+                                        //% "Show my wallet with Trezor"
+                                        qsTrId("open-show-wallet-button-hw")
                                     icon.source: "qrc:/assets/icon-wallet-small.svg"
                                     onClicked: {
-                                        parent.tryOpenWallet();
-                                    }
-                                }
-
-                                PrimaryButton {
-                                    visible: viewModel.isTrezorEnabled
-                                    //enabled: viewModel.isOwnerKeyImported
-                                    id: createNewTrezorWallet
-                                    //% "Show my wallet with Trezor"
-                                    text: qsTrId("open-show-wallet-button-hw")
-                                    Layout.preferredHeight: 38
-                                    Layout.alignment: Qt.AlignHCenter
-                                    icon.source: "qrc:/assets/icon-wallet-small.svg"
-                                    onClicked: {
-                                        viewModel.useHWWallet = true;
                                         parent.tryOpenWallet();
                                     }
                                 }
