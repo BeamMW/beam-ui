@@ -14,6 +14,11 @@
 
 #include "app_model.h"
 #include "wallet/transactions/swaps/swap_transaction.h"
+#ifdef BEAM_LELANTUS_SUPPORT
+#include "wallet/transactions/lelantus/unlink_transaction.h"
+#include "wallet/transactions/lelantus/push_transaction.h"
+#include "wallet/transactions/lelantus/pull_transaction.h"
+#endif
 #include "utility/common.h"
 #include "utility/logger.h"
 #include "utility/fsutils.h"
@@ -234,17 +239,23 @@ bool AppModel::importData()
         FStream f;
         ByteBuffer buffer;
 
-        if (f.Open(path.toStdString().c_str(), true))
+        if (!f.Open(path.toStdString().c_str(), true))
         {
-            const auto size = static_cast<size_t>(f.get_Remaining());
-            if (size > 0)
+            return false;
+        }
+        const auto size = static_cast<size_t>(f.get_Remaining());
+        if (size > 0)
+        {
+            buffer.resize(size);
+            if (f.read(buffer.data(), buffer.size()) != size) 
             {
-                buffer.resize(size);
-                return f.read(buffer.data(), buffer.size()) == size;
+                return false;
             }
         }
+        
+        m_wallet->getAsync()->importDataFromJson(std::string(reinterpret_cast<const char*>(buffer.data()), buffer.size()));
 
-        return storage::ImportDataFromJson(*m_db, reinterpret_cast<const char*>(buffer.data()), buffer.size());
+        return true;
     }
     catch(const std::runtime_error&)
     {
@@ -345,14 +356,22 @@ void AppModel::startWallet()
 
         { Notification::Type::SoftwareUpdateAvailable, false },
         { Notification::Type::WalletImplUpdateAvailable, m_settings.isNewVersionActive() },
-        { Notification::Type::AddressStatusChanged, m_settings.isTxStatusActive() },    // no own switcher in UI for address expiration notifications
+        { Notification::Type::AddressStatusChanged, false },    // turned off
         { Notification::Type::BeamNews, m_settings.isBeamNewsActive() },
         { Notification::Type::TransactionFailed, m_settings.isTxStatusActive() },
         { Notification::Type::TransactionCompleted, m_settings.isTxStatusActive() }
     };
 
+    bool withAssets = false;
+
+#ifdef BEAM_LELANTUS_SUPPORT
+    additionalTxCreators->emplace(TxType::UnlinkFunds, std::make_shared<lelantus::UnlinkFundsTransaction::Creator>(withAssets));
+    additionalTxCreators->emplace(TxType::PushTransaction, std::make_shared<lelantus::PushTransaction::Creator>(withAssets));
+    additionalTxCreators->emplace(TxType::PullTransaction, std::make_shared<lelantus::PullTransaction::Creator>(withAssets));
+#endif
+
     bool isSecondCurrencyEnabled = m_settings.getSecondCurrency().toStdString() != noSecondCurrencyStr;
-    m_wallet->start(activeNotifications, false, isSecondCurrencyEnabled, additionalTxCreators);
+    m_wallet->start(activeNotifications, withAssets, isSecondCurrencyEnabled, additionalTxCreators);
 }
 
 void AppModel::applySettingsChanges()

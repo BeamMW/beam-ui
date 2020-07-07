@@ -140,7 +140,7 @@ bool QMLGlobals::isTAValid(const QString& text)
 
 bool QMLGlobals::isAddress(const QString& text)
 {
-    return beam::wallet::check_receiver_address(text.toStdString());
+    return beam::wallet::CheckReceiverAddress(text.toStdString());
 }
 
 bool QMLGlobals::isTransactionToken(const QString& text)

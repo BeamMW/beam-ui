@@ -116,6 +116,7 @@ void WalletViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, c
             case TxType::AssetInfo:
             case TxType::PushTransaction:
             case TxType::PullTransaction:
+            case TxType::UnlinkFunds:
             case TxType::VoucherRequest:
             case TxType::VoucherResponse:
                 continue;
