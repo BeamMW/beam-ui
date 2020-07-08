@@ -235,8 +235,8 @@ StartViewModel::StartViewModel()
 #if defined(BEAM_HW_WALLET)
     , m_hwWallet(AppModel::getInstance().getHardwareWalletClient())
     , m_trezorTimer(this)
-    , m_trezorThread(*this)
     , m_useHWWallet(wallet::WalletDB::isInitialized(AppModel::getInstance().getSettings().getTrezorWalletStorage()))
+    , m_trezorThread(*this)
 #else 
     , m_useHWWallet(false)
 #endif
