@@ -129,6 +129,11 @@ QString SendViewModel::getReceiverAddress() const
     return _receiverAddress;
 }
 
+QString SendViewModel::getReceiverIdentity() const
+{
+    return _receiverIdentity;
+}
+
 beam::Amount SendViewModel::calcTotalAmount() const
 {
     return _sendAmountGrothes + _feeGrothes;
@@ -240,6 +245,12 @@ void SendViewModel::extractParameters()
         _receiverAddress = QString::fromStdString(std::to_string(*peerID));
         _isToken = _receiverTA != _receiverAddress;
         emit receiverAddressChanged();
+    }
+
+    if (auto peerIdentity = _txParameters.GetParameter<beam::PeerID>(beam::wallet::TxParameterID::PeerWalletIdentity); peerIdentity)
+    {
+        _receiverIdentity = QString::fromStdString(std::to_string(*peerIdentity));
+        emit receiverIdentityChanged();
     }
 
     if (auto amount = _txParameters.GetParameter<beam::Amount>(beam::wallet::TxParameterID::Amount); amount && *amount > 0)

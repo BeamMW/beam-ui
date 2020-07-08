@@ -17,6 +17,7 @@ ConfirmationDialog {
 
     property var    onAcceptedCallback: undefined
     property alias  addressText:        addressLabel.text
+    property alias  identityText:       identityLabel.text
     property bool   swapMode:           false
     property int    currency:           Currency.CurrBeam
     property string amount:             "0"
@@ -148,6 +149,33 @@ ConfirmationDialog {
                     maximumLineCount: 2
                     font.pixelSize: 14
                     color: Style.content_main
+                }
+
+                //
+                // Recipient/Identity
+                //
+                SFText {
+                    Layout.fillWidth: false
+                    Layout.fillHeight: true
+                    Layout.minimumHeight: 16
+                    font.pixelSize: 14
+                    color: Style.content_disabled
+                    //% "Identity"
+                    text: qsTrId("send-confirmation-identity-label") + ":"
+                    verticalAlignment: Text.AlignTop
+                    visible: identityLabel.text.length > 0
+                }
+
+                SFText {
+                    id: identityLabel
+                    Layout.fillWidth: true
+                    Layout.maximumWidth: 290
+                    Layout.minimumHeight: 16
+                    wrapMode: Text.Wrap
+                    maximumLineCount: 2
+                    font.pixelSize: 14
+                    color: Style.content_main
+                    visible: text.length > 0
                 }
 
                 //

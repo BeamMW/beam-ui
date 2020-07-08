@@ -2463,5 +2463,9 @@ Your version is: %2. Please, check for updates.</source>
         <source>Random node</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="send-confirmation-identity-label">
+        <source>Identity</source>
+        <translation type="unfinished">Identität</translation>
+    </message>
 </context>
 </TS>

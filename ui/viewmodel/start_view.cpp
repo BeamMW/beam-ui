@@ -332,7 +332,7 @@ void TrezorThread::run()
 {
     auto reactor = AppModel::getInstance().getWalletReactor();
     io::Reactor::Scope s(*reactor); 
-    auto hwWallet = std::make_shared<beam::wallet::HWWallet>();
+    auto hwWallet = std::make_shared<beam::wallet::HWWallet>();//AppModel::AppModel::getInstance().getHardwareWalletClient();//std::make_shared<beam::wallet::HWWallet>();
     struct UIHandlerProxy : public beam::wallet::HWWallet::IHandler
     {
         beam::wallet::HWWallet::IHandler::Ptr getHandler()
@@ -370,28 +370,6 @@ void TrezorThread::run()
     using namespace beam::wallet;
     
     {
-        // cache slots
-        struct MyHandler : IPrivateKeyKeeper2::Handler
-        {
-            io::Reactor::Ptr m_Reactor;
-            IPrivateKeyKeeper2::Method::get_NumSlots m_Method;
-            MyHandler(io::Reactor::Ptr reactor)
-                : m_Reactor(reactor)
-            {}
-
-            void OnDone(IPrivateKeyKeeper2::Status::Type s) override
-            {
-                if (s != IPrivateKeyKeeper2::Status::Success)
-                {
-                    m_Reactor->stop();
-                }
-            }
-        };
-        auto handler = std::make_shared<MyHandler>(reactor);
-        keyKeeper->InvokeAsync(handler->m_Method, handler);
-    }
-
-    {
         // cache sbbs kdf
         struct MyHandler : IPrivateKeyKeeper2::Handler
         {
@@ -400,7 +378,7 @@ void TrezorThread::run()
             MyHandler(io::Reactor::Ptr reactor)
                 : m_Reactor(reactor)
             {}
-
+    
             void OnDone(IPrivateKeyKeeper2::Status::Type s) override
             {
                 if (s != IPrivateKeyKeeper2::Status::Success)
@@ -417,6 +395,33 @@ void TrezorThread::run()
     }
 
     {
+        // cache slots
+        struct MyHandler : IPrivateKeyKeeper2::Handler
+        {
+            io::Reactor::Ptr m_Reactor;
+            IPrivateKeyKeeper2::Method::get_NumSlots m_Method;
+            MyHandler(io::Reactor::Ptr reactor)
+                : m_Reactor(reactor)
+            {}
+
+            virtual ~MyHandler()
+            {
+
+            }
+
+            void OnDone(IPrivateKeyKeeper2::Status::Type s) override
+            {
+                if (s != IPrivateKeyKeeper2::Status::Success)
+                {
+                    m_Reactor->stop();
+                }
+            }
+        };
+        auto handler = std::make_shared<MyHandler>(reactor);
+        keyKeeper->InvokeAsync(handler->m_Method, handler);
+    }
+    
+    {
         // cache master kdf
         struct MyHandler : IPrivateKeyKeeper2::Handler
         {
@@ -424,13 +429,13 @@ void TrezorThread::run()
             IPrivateKeyKeeper2::Ptr m_KeyKeeper;
             io::Reactor::Ptr m_Reactor;
             IPrivateKeyKeeper2::Method::get_Kdf m_Method;
-
+    
             MyHandler(StartViewModel* vm, IPrivateKeyKeeper2::Ptr keyKeeper, io::Reactor::Ptr reactor)
                 : m_ViewModel(vm)
                 , m_KeyKeeper(keyKeeper)
                 , m_Reactor(reactor)
             {}
-
+    
             void OnDone(IPrivateKeyKeeper2::Status::Type s) override
             {
                 if (s == IPrivateKeyKeeper2::Status::Success)
@@ -440,13 +445,13 @@ void TrezorThread::run()
                 m_Reactor->stop();
             }
         };
-
+    
         auto handler = std::make_shared<MyHandler>(&m_vm, keyKeeper, reactor);
         IPrivateKeyKeeper2::Method::get_Kdf& m = handler->m_Method;
         m.m_Root = true;
         keyKeeper->InvokeAsync(m, handler);
     }
-
+    
     reactor->run();
     emit ownerKeyImported();
 }

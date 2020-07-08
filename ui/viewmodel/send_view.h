@@ -29,6 +29,7 @@ class SendViewModel: public QObject
     Q_PROPERTY(bool     receiverTAValid    READ getRreceiverTAValid                             NOTIFY receiverTAChanged)
 
     Q_PROPERTY(QString  receiverAddress    READ getReceiverAddress                              NOTIFY receiverAddressChanged)
+    Q_PROPERTY(QString  receiverIdentity   READ getReceiverIdentity                             NOTIFY receiverIdentityChanged)
     Q_PROPERTY(QString  available          READ getAvailable                                    NOTIFY availableChanged)
     Q_PROPERTY(QString  change             READ getChange                                       NOTIFY availableChanged)
     Q_PROPERTY(QString  totalUTXO          READ getTotalUTXO                                    NOTIFY availableChanged)
@@ -60,6 +61,7 @@ public:
     void    setReceiverTA(const QString& value);
     bool    getRreceiverTAValid() const;
     QString getReceiverAddress() const;
+    QString getReceiverIdentity() const;
 
     QString getAvailable() const;
     QString getMissing() const;
@@ -95,6 +97,7 @@ signals:
     void secondCurrencyLabelChanged();
     void secondCurrencyRateChanged();
     void receiverAddressChanged();
+    void receiverIdentityChanged();
     void tokenGeneratebByNewAppVersion();
 
 public slots:
@@ -111,6 +114,7 @@ private:
     QString _comment;
     QString _receiverTA;
     QString _receiverAddress;
+    QString _receiverIdentity;
     bool _isToken = false;
 
     WalletModel& _walletModel;
