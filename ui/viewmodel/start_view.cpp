@@ -233,9 +233,9 @@ bool WalletDBPathItem::isPreferred() const
 StartViewModel::StartViewModel()
     : m_isRecoveryMode{false}
 #if defined(BEAM_HW_WALLET)
+    , m_useHWWallet(wallet::WalletDB::isInitialized(AppModel::getInstance().getSettings().getTrezorWalletStorage()))
     , m_hwWallet(AppModel::getInstance().getHardwareWalletClient())
     , m_trezorTimer(this)
-    , m_useHWWallet(wallet::WalletDB::isInitialized(AppModel::getInstance().getSettings().getTrezorWalletStorage()))
     , m_trezorThread(*this)
 #else 
     , m_useHWWallet(false)
