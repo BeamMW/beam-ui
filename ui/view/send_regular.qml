@@ -362,6 +362,7 @@ ColumnLayout {
                 const dialogObject = dialogComponent.createObject(sendRegularView,
                     {
                         addressText: viewModel.receiverAddress,
+                        identityText: viewModel.receiverIdentity,
                         currency: Currency.CurrBeam,
                         amount: viewModel.sendAmount,
                         fee: viewModel.feeGrothes,
