@@ -278,6 +278,20 @@ bool StartViewModel::isTrezorEnabled() const
 #endif
 }
 
+bool StartViewModel::useHWWallet() const
+{
+    return m_useHWWallet;
+}
+
+void StartViewModel::setUseHWWallet(bool value)
+{
+    if (m_useHWWallet != value)
+    {
+        m_useHWWallet = value;
+        emit isUseHWWalletChanged();
+    }
+}
+
 #if defined(BEAM_HW_WALLET)
 bool StartViewModel::isTrezorConnected() const
 {
@@ -306,20 +320,6 @@ QString StartViewModel::getTrezorDeviceName() const
 bool StartViewModel::isOwnerKeyImported() const
 {
     return bool(m_HWKeyKeeper);
-}
-
-bool StartViewModel::useHWWallet() const
-{
-    return m_useHWWallet;
-}
-
-void StartViewModel::setUseHWWallet(bool value)
-{
-    if (m_useHWWallet != value)
-    {
-        m_useHWWallet = value;
-        emit isUseHWWalletChanged();
-    }
 }
 
 TrezorThread::TrezorThread(StartViewModel& vm)
