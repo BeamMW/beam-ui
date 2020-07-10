@@ -66,6 +66,12 @@ matrix:
         - brew link cmake
         - brew install ccache
         - export PATH="/usr/local/opt/ccache/libexec:$PATH"
+        - brew upgrade --ignore-pinned icu4c
+        - brew uninstall --ignore-dependencies sfcgal
+        - brew uninstall --ignore-dependencies cgal
+        - brew uninstall --ignore-dependencies node
+        - brew uninstall --ignore-dependencies postgresql
+        - brew uninstall --ignore-dependencies postgis
         - sudo git clone --depth=1 https://github.com/nesbox/qt5-static-mac.git /usr/local/qt5-static
         - brew uninstall --ignore-dependencies qt boost
         - curl -O https://raw.githubusercontent.com/Homebrew/homebrew-core/5da5895add2f6b9320d654dd844d4827f6876c8b/Formula/boost.rb
