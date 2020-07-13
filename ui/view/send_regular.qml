@@ -148,6 +148,53 @@ ColumnLayout {
                 visible:          viewModel.isToken
             }
 
+            RowLayout {
+                height:   20
+                spacing:  10
+
+                SFText {
+                    //% "Regular privacy"
+                    text:  qsTrId("send-regular")
+                    color: isShieldedTxSwitch.checked ? Style.content_secondary : Style.active
+                    font.pixelSize: 14
+                    MouseArea {
+                        anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton
+                        onClicked: {
+                            isShieldedTxSwitch.checked = !isShieldedTxSwitch.checked;
+                        }
+                    }
+                }
+
+                CustomSwitch {
+                    id:          isShieldedTxSwitch
+                    alwaysGreen: true
+                    spacing:     0
+
+                    checked: viewModel.isShieldedTx
+                    Binding {
+                        target:   viewModel
+                        property: "isShieldedTx"
+                        value:    isShieldedTxSwitch.checked
+                    }
+                }
+
+
+                SFText {
+                    //% "Max privacy"
+                    text: qsTrId("send-lelantus")
+                    color: isShieldedTxSwitch.checked ? Style.active : Style.content_secondary
+                    font.pixelSize: 14
+                    MouseArea {
+                        anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton
+                        onClicked: {
+                            isShieldedTxSwitch.checked = !isShieldedTxSwitch.checked;
+                        }
+                    }
+                }
+            }
+
             SFText {
                 Layout.topMargin: 45
                 font.pixelSize:   14

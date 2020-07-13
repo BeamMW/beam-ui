@@ -2467,5 +2467,17 @@ Your version is: %2. Please, check for updates.</source>
         <source>Identity</source>
         <translation type="unfinished">Identidad</translation>
     </message>
+    <message id="send-regular">
+        <source>Regular privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-lelantus">
+        <source>Max privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="receive-shielded">
+        <source>Request shielded transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

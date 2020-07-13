@@ -31,6 +31,7 @@ class ReceiveViewModel: public QObject
     Q_PROPERTY(bool     hasIdentity        READ getHasIdentity        WRITE  setHasIdentity      NOTIFY  hasIdentityChanged)
     Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                  NOTIFY secondCurrencyLabelChanged)
     Q_PROPERTY(QString  secondCurrencyRateValue     READ getSecondCurrencyRateValue              NOTIFY secondCurrencyRateChanged)
+    Q_PROPERTY(bool     isShieldedTx       READ isShieldedTx          WRITE setIsShieldedTx      NOTIFY isShieldedTxChanged)
 
 public:
     ReceiveViewModel();
@@ -47,6 +48,7 @@ signals:
     void hasIdentityChanged();
     void secondCurrencyLabelChanged();
     void secondCurrencyRateChanged();
+    void isShieldedTxChanged();
 
 public:
     Q_INVOKABLE void generateNewAddress();
@@ -78,6 +80,9 @@ private:
     QString getSecondCurrencyLabel() const;
     QString getSecondCurrencyRateValue() const;
 
+    bool    isShieldedTx() const;
+    void    setIsShieldedTx(bool value);
+
 private slots:
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onReceiverQRChanged();
@@ -88,7 +93,7 @@ private:
     QString      _addressComment;
     QString      _token;
     beam::wallet::WalletAddress _receiverAddress;
-
+    bool _isShieldedTx = false;
     std::unique_ptr<QR> _qr;
     WalletModel& _walletModel;
     ExchangeRatesManager _exchangeRatesManager;

@@ -166,6 +166,8 @@ QString NotificationItem::title() const
                 }
                 //% "Transaction was received"
                 return qtTrId("notification-transaction-received");
+            case TxType::PushTransaction:
+                return qtTrId("notification-transaction-sent");
             case TxType::AtomicSwap:
                 //% "Atomic Swap offer completed"
                 return qtTrId("notification-swap-completed");
@@ -179,6 +181,7 @@ QString NotificationItem::title() const
             switch (getTxType(p))
             {
             case TxType::Simple:
+            case TxType::PushTransaction:
                 //% "Transaction failed"
                 return qtTrId("notification-transaction-failed");
             case TxType::AtomicSwap:
@@ -235,6 +238,7 @@ QString NotificationItem::message() const
             switch (getTxType(p))
             {
             case TxType::Simple:
+            case TxType::PushTransaction:
             {
                 WalletID wid;
                 getPeerID(p, wid);
@@ -271,6 +275,7 @@ QString NotificationItem::message() const
             switch (getTxType(p))
             {
             case TxType::Simple:
+            case TxType::PushTransaction:
             {
                 WalletID wid;
                 getPeerID(p, wid);
@@ -339,6 +344,8 @@ QString NotificationItem::type() const
             {
             case TxType::Simple:
                 return (isSender(p) ? "sent" : "received");
+            case TxType::PushTransaction:
+                return "sent";
             case TxType::AtomicSwap:
                 return "swapCompleted";
             default:
@@ -352,6 +359,8 @@ QString NotificationItem::type() const
             {
             case TxType::Simple:
                 return (isSender(p) ? "failedToSend" : "failedToReceive");
+            case TxType::PushTransaction:
+                return "failedToSend";
             case TxType::AtomicSwap:
                 return isSwapTxExpired(p) ? "swapExpired" : "swapFailed";
             default:

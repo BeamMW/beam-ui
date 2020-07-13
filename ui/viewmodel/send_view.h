@@ -27,6 +27,7 @@ class SendViewModel: public QObject
     // TA = Transaction or Address
     Q_PROPERTY(QString  receiverTA         READ getReceiverTA         WRITE setReceiverTA       NOTIFY receiverTAChanged)
     Q_PROPERTY(bool     receiverTAValid    READ getRreceiverTAValid                             NOTIFY receiverTAChanged)
+    Q_PROPERTY(bool     isShieldedTx       READ isShieldedTx          WRITE setIsShieldedTx     NOTIFY isShieldedTxChanged)
 
     Q_PROPERTY(QString  receiverAddress    READ getReceiverAddress                              NOTIFY receiverAddressChanged)
     Q_PROPERTY(QString  receiverIdentity   READ getReceiverIdentity                             NOTIFY receiverIdentityChanged)
@@ -62,6 +63,8 @@ public:
     bool    getRreceiverTAValid() const;
     QString getReceiverAddress() const;
     QString getReceiverIdentity() const;
+    bool    isShieldedTx() const;
+    void    setIsShieldedTx(bool value);
 
     QString getAvailable() const;
     QString getMissing() const;
@@ -89,6 +92,7 @@ signals:
     void commentChanged();
     void sendAmountChanged();
     void receiverTAChanged();
+    void isShieldedTxChanged();
     void availableChanged();
     void sendMoneyVerified();
     void cantSendToExpired();
@@ -115,6 +119,7 @@ private:
     QString _receiverTA;
     QString _receiverAddress;
     QString _receiverIdentity;
+    bool _isShieldedTx = false;
     bool _isToken = false;
 
     WalletModel& _walletModel;

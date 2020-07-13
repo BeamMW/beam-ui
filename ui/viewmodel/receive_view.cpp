@@ -192,6 +192,17 @@ void ReceiveViewModel::updateTransactionToken()
     {
         _txParameters.SetParameter(beam::wallet::TxParameterID::PeerWalletIdentity, _receiverAddress.m_Identity);
     }
+    if (_isShieldedTx)
+    {
+        // add a voucher
+        auto vouchers = _walletModel.generateVouchers(_receiverAddress.m_OwnID, 1);
+        if (!vouchers.empty())
+        {
+            // add voucher parameter
+            _txParameters.SetParameter(beam::wallet::TxParameterID::ShieldedVoucherList, vouchers);
+            _txParameters.SetParameter(beam::wallet::TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
+        }
+    }
     setTranasctionToken(QString::fromStdString(std::to_string(_txParameters)));
 }
 
@@ -204,4 +215,19 @@ QString ReceiveViewModel::getSecondCurrencyRateValue() const
 {
     auto rate = _exchangeRatesManager.getRate(beam::wallet::ExchangeRate::Currency::Beam);
     return beamui::AmountToUIString(rate);
+}
+
+bool ReceiveViewModel::isShieldedTx() const
+{
+    return _isShieldedTx;
+}
+
+void ReceiveViewModel::setIsShieldedTx(bool value)
+{
+    if (_isShieldedTx != value)
+    {
+        _isShieldedTx = value;
+        emit isShieldedTxChanged();
+        updateTransactionToken();
+    }
 }

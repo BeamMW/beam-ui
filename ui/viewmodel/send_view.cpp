@@ -23,6 +23,18 @@
 #include <regex>
 #include <QLocale>
 
+namespace
+{
+    void CopyParameter(beam::wallet::TxParameterID paramID, const beam::wallet::TxParameters& input, beam::wallet::TxParameters& dest)
+    {
+        beam::wallet::ByteBuffer buf;
+        if (input.GetParameter(paramID, buf))
+        {
+            dest.SetParameter(paramID, buf);
+        }
+    }
+}
+
 SendViewModel::SendViewModel()
     : _feeGrothes(0)
     , _sendAmountGrothes(0)
@@ -134,6 +146,20 @@ QString SendViewModel::getReceiverIdentity() const
     return _receiverIdentity;
 }
 
+bool SendViewModel::isShieldedTx() const
+{
+    return _isShieldedTx;
+}
+
+void SendViewModel::setIsShieldedTx(bool value)
+{
+    if (_isShieldedTx != value)
+    {
+        _isShieldedTx = value;
+        emit isShieldedTxChanged();
+    }
+}
+
 beam::Amount SendViewModel::calcTotalAmount() const
 {
     return _sendAmountGrothes + _feeGrothes;
@@ -203,27 +229,29 @@ void SendViewModel::setMaxAvailableAmount()
 
 void SendViewModel::sendMoney()
 {
+    using namespace beam::wallet;
     assert(canSend());
     if(canSend())
     {
         // TODO:SWAP show 'operation in process' animation here?
         auto messageString = _comment.toStdString();
 
-        auto p = beam::wallet::CreateSimpleTransactionParameters()
-            .SetParameter(beam::wallet::TxParameterID::PeerID, *_txParameters.GetParameter<beam::wallet::WalletID>(beam::wallet::TxParameterID::PeerID))
-            .SetParameter(beam::wallet::TxParameterID::Amount, _sendAmountGrothes)
-            .SetParameter(beam::wallet::TxParameterID::Fee, _feeGrothes)
-            .SetParameter(beam::wallet::TxParameterID::Message, beam::ByteBuffer(messageString.begin(), messageString.end()));
+        auto p = CreateSimpleTransactionParameters()
+            .SetParameter(TxParameterID::Amount, _sendAmountGrothes)
+            .SetParameter(TxParameterID::Fee, _feeGrothes)
+            .SetParameter(TxParameterID::Message, beam::ByteBuffer(messageString.begin(), messageString.end()));
+
+        CopyParameter(TxParameterID::PeerID, _txParameters, p);
+        CopyParameter(TxParameterID::PeerWalletIdentity, _txParameters, p);
+        if (isShieldedTx())
+        {
+            CopyParameter(TxParameterID::TransactionType, _txParameters, p);
+        }
+        CopyParameter(TxParameterID::ShieldedVoucherList, _txParameters, p);
 
         if (isToken())
         {
-            p.SetParameter(beam::wallet::TxParameterID::OriginalToken, _receiverTA.toStdString());
-        }
-
-        auto identity = _txParameters.GetParameter<beam::PeerID>(beam::wallet::TxParameterID::PeerWalletIdentity);
-        if (identity)
-        {
-            p.SetParameter(beam::wallet::TxParameterID::PeerWalletIdentity, *identity);
+            p.SetParameter(TxParameterID::OriginalToken, _receiverTA.toStdString());
         }
 
         _walletModel.getAsync()->startTransaction(std::move(p));
@@ -232,7 +260,8 @@ void SendViewModel::sendMoney()
 
 void SendViewModel::extractParameters()
 {
-    auto txParameters = beam::wallet::ParseParameters(_receiverTA.toStdString());
+    using namespace beam::wallet;
+    auto txParameters = ParseParameters(_receiverTA.toStdString());
     if (!txParameters)
     {
         return;
@@ -240,28 +269,37 @@ void SendViewModel::extractParameters()
 
     _txParameters = *txParameters;
 
-    if (auto peerID = _txParameters.GetParameter<beam::wallet::WalletID>(beam::wallet::TxParameterID::PeerID); peerID)
+    if (auto peerID = _txParameters.GetParameter<WalletID>(TxParameterID::PeerID); peerID)
     {
         _receiverAddress = QString::fromStdString(std::to_string(*peerID));
         _isToken = _receiverTA != _receiverAddress;
         emit receiverAddressChanged();
     }
 
-    if (auto peerIdentity = _txParameters.GetParameter<beam::PeerID>(beam::wallet::TxParameterID::PeerWalletIdentity); peerIdentity)
+    if (auto peerIdentity = _txParameters.GetParameter<beam::PeerID>(TxParameterID::PeerWalletIdentity); peerIdentity)
     {
         _receiverIdentity = QString::fromStdString(std::to_string(*peerIdentity));
         emit receiverIdentityChanged();
     }
 
-    if (auto amount = _txParameters.GetParameter<beam::Amount>(beam::wallet::TxParameterID::Amount); amount && *amount > 0)
+    if (auto txType = _txParameters.GetParameter<TxType>(TxParameterID::TransactionType); txType)
+    {
+        if (*txType == TxType::PushTransaction)
+        {
+            setIsShieldedTx(true);
+        } // ignore other types
+    }
+
+
+    if (auto amount = _txParameters.GetParameter<beam::Amount>(TxParameterID::Amount); amount && *amount > 0)
     {
         setSendAmount(beamui::AmountToUIString(*amount));
     }
-    if (auto fee = _txParameters.GetParameter<beam::Amount>(beam::wallet::TxParameterID::Fee); fee)
+    if (auto fee = _txParameters.GetParameter<beam::Amount>(TxParameterID::Fee); fee)
     {
         setFeeGrothes(*fee);
     }
-    if (auto comment = _txParameters.GetParameter(beam::wallet::TxParameterID::Message); comment)
+    if (auto comment = _txParameters.GetParameter(TxParameterID::Message); comment)
     {
         std::string s(comment->begin(), comment->end());
         setComment(QString::fromStdString(s));
@@ -270,7 +308,7 @@ void SendViewModel::extractParameters()
     _tokenGeneratebByNewAppVersionMessage.clear();
 
 #ifdef BEAM_LIB_VERSION
-    if (auto libVersion = _txParameters.GetParameter(beam::wallet::TxParameterID::LibraryVersion); libVersion)
+    if (auto libVersion = _txParameters.GetParameter(TxParameterID::LibraryVersion); libVersion)
     {
         std::string libVersionStr;
         beam::wallet::fromByteBuffer(*libVersion, libVersionStr);
@@ -296,7 +334,7 @@ Your version is: %2. Please, check for updates."
 #endif // BEAM_LIB_VERSION
 
 #ifdef BEAM_CLIENT_VERSION
-    if (auto clientVersion = _txParameters.GetParameter(beam::wallet::TxParameterID::ClientVersion); clientVersion)
+    if (auto clientVersion = _txParameters.GetParameter(TxParameterID::ClientVersion); clientVersion)
     {
         std::string clientVersionStr;
         beam::wallet::fromByteBuffer(*clientVersion, clientVersionStr);

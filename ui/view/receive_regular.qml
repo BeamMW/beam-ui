@@ -84,7 +84,37 @@ ColumnLayout {
                 activeFocusOnTab: false
                 text:             viewModel.receiverAddress
             }
-            
+
+            RowLayout {
+                height:   20
+                spacing:  10
+
+                SFText {
+                    //% "Request shielded transaction"
+                    text:  qsTrId("receive-shielded")
+                    color: Style.content_main
+                    font.pixelSize: 14
+                    MouseArea {
+                        anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton
+                        onClicked: {
+                            isShieldedTxSwitch.checked = !isShieldedTxSwitch.checked;
+                        }
+                    }
+                }
+
+                CustomSwitch {
+                    id:          isShieldedTxSwitch
+                    spacing:     0
+
+                    checked: viewModel.isShieldedTx
+                    Binding {
+                        target:   viewModel
+                        property: "isShieldedTx"
+                        value:    isShieldedTxSwitch.checked
+                    }
+                }
+            }
             //CustomCheckBox {
             //    id:         useIDCheckBox
             //    //% "Use identity token"
@@ -234,7 +264,7 @@ ColumnLayout {
     }
 
     ColumnLayout {
-        visible: false
+        //visible: false
         Layout.fillWidth: true
         Layout.topMargin: 30
         Layout.alignment: Qt.AlignHCenter
@@ -340,7 +370,7 @@ ColumnLayout {
                 onClosed();
             }
             enabled:            receiveView.isValid()
-            visible: false
+            //visible: false
         }
 
         CustomButton {
