@@ -34,7 +34,7 @@ ColumnLayout
         Layout.topMargin: 40
         Layout.preferredHeight: 20
 
-        //% "Scalable confidential cryptocurrency"
+        Confidential, fast, easy to use
         text: qsTrId("logo-description")
 
         color: Style.accent_incoming
