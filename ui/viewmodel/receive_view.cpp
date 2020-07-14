@@ -194,14 +194,8 @@ void ReceiveViewModel::updateTransactionToken()
     }
     if (_isShieldedTx)
     {
-        // add a voucher
-        auto vouchers = _walletModel.generateVouchers(_receiverAddress.m_OwnID, 1);
-        if (!vouchers.empty())
-        {
-            // add voucher parameter
-            _txParameters.SetParameter(beam::wallet::TxParameterID::ShieldedVoucherList, vouchers);
-            _txParameters.SetParameter(beam::wallet::TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
-        }
+        // change tx type
+        _txParameters.SetParameter(beam::wallet::TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
     }
     setTranasctionToken(QString::fromStdString(std::to_string(_txParameters)));
 }

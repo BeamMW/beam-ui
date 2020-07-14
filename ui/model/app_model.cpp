@@ -366,7 +366,7 @@ void AppModel::startWallet()
 
 #ifdef BEAM_LELANTUS_SUPPORT
     additionalTxCreators->emplace(TxType::UnlinkFunds, std::make_shared<lelantus::UnlinkFundsTransaction::Creator>(withAssets));
-    additionalTxCreators->emplace(TxType::PushTransaction, std::make_shared<lelantus::PushTransaction::Creator>(withAssets));
+    additionalTxCreators->emplace(TxType::PushTransaction, std::make_shared<lelantus::PushTransaction::Creator>(m_db, withAssets));
     additionalTxCreators->emplace(TxType::PullTransaction, std::make_shared<lelantus::PullTransaction::Creator>(withAssets));
 #endif
 
