@@ -1172,8 +1172,9 @@ Allow to open and proceed to the website? You can always update your choice in S
         <translation>detik</translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>Estimate time: %s</source>
-        <translation>Estimasi waktu: %s</translation>
+        <source>Estimated time: %s</source>
+        <oldsource>Estimate time: %s</oldsource>
+        <translation type="unfinished">Estimasi waktu: %s</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>

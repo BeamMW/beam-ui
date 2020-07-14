@@ -1171,8 +1171,9 @@ Allow to open and proceed to the website? You can always update your choice in S
         <translation>vteřiny</translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>Estimate time: %s</source>
-        <translation>Odhad času: %s</translation>
+        <source>Estimated time: %s</source>
+        <oldsource>Estimate time: %s</oldsource>
+        <translation type="unfinished">Odhad času: %s</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>

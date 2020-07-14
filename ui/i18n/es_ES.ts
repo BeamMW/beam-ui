@@ -1172,8 +1172,9 @@ Escanee este código QR o envíe esta dirección al remitente a través de un ca
         <translation>segundos</translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>Estimate time: %s</source>
-        <translation>Tiempo estimado: %s</translation>
+        <source>Estimated time: %s</source>
+        <oldsource>Estimate time: %s</oldsource>
+        <translation type="unfinished">Tiempo estimado: %s</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>

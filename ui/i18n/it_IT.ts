@@ -1172,7 +1172,8 @@ Allow to open and proceed to the website? You can always update your choice in S
         <translation>secondi</translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>Estimate time: %s</source>
+        <source>Estimated time: %s</source>
+        <oldsource>Estimate time: %s</oldsource>
         <translation type="unfinished">Estimate time: %s</translation>
     </message>
     <message id="general-fee-rate">
