@@ -1172,7 +1172,7 @@ Allow to open and proceed to the website? You can always update your choice in S
         <translation>sec.</translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>Estimate time: %s</source>
+        <source>Estimated time: %s</source>
         <translation>Geschatte tijd: %s</translation>
     </message>
     <message id="general-fee-rate">
