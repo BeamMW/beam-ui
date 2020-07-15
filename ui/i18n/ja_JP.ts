@@ -1172,8 +1172,8 @@ Allow to open and proceed to the website? You can always update your choice in S
         <translation type="unfinished">sec</translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>Estimate time: %s</source>
-        <translation>推定時間：%s</translation>
+        <source>Estimated time: %s</source>
+        <translation>予定時刻：%s</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
