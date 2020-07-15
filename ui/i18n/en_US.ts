@@ -2439,16 +2439,16 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Identity</source>
         <translation type="unfinished">Identity</translation>
     </message>
-    <message id="send-regular">
-        <source>Regular privacy</source>
+    <message id="receive-shielded">
+        <source>Request shielded transaction</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="send-lelantus">
+    <message id="send-max-privacy">
         <source>Max privacy</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="receive-shielded">
-        <source>Request shielded transaction</source>
+    <message id="wallet-send-max-privacy-note">
+        <source>Transaction is slower, fees are higher.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
