@@ -1173,7 +1173,7 @@ Allow to open and proceed to the website? You can always update your choice in S
     </message>
     <message id="loading-view-estimate-time">
         <source>Estimate time: %s</source>
-        <translation>예상 소요시간: %s</translation>
+        <translation>예상 시간: %s</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
