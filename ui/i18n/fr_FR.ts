@@ -1175,7 +1175,7 @@ Allow to open and proceed to the website? You can always update your choice in S
     <message id="loading-view-estimate-time">
         <source>Estimated time: %s</source>
         <oldsource>Estimate time: %s</oldsource>
-        <translation type="unfinished">Temps estimé </translation>
+        <translation type="unfinished">Temps estimé: %s</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
