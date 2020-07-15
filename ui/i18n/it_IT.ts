@@ -346,8 +346,8 @@
         <translation type="unfinished">Applicare</translation>
     </message>
     <message id="logo-description">
-        <source>Scalable confidential cryptocurrency</source>
-        <translation>Criptovaluta confidenziale scalabile</translation>
+        <source>Confidential, fast, easy to use</source>
+        <translation>Riservato, veloce, facile da usare</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>
