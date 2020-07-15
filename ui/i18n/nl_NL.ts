@@ -346,8 +346,8 @@
         <translation type="unfinished">Toepassen</translation>
     </message>
     <message id="logo-description">
-        <source>Scalable confidential cryptocurrency</source>
-        <translation>Schaalbare vertrouwelijke cryptovaluta</translation>
+        <source>Confidential, fast, easy to use</source>
+        <translation>Vertrouwelijk, snel en gebruiksvriendelijk</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>

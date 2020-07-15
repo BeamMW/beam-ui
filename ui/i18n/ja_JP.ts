@@ -346,8 +346,8 @@
         <translation type="unfinished">適用</translation>
     </message>
     <message id="logo-description">
-        <source>Scalable confidential cryptocurrency</source>
-        <translation>情報機密性と拡張性を兼ね備えた暗号通貨</translation>
+        <source>Confidential, fast, easy to use</source>
+        <translation>機密、高速、使いやすい</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>

@@ -346,8 +346,8 @@
         <translation type="unfinished">นำไปใช้</translation>
     </message>
     <message id="logo-description">
-        <source>Scalable confidential cryptocurrency</source>
-        <translation>คริปโตที่วางใจได้และไร้ขีดจำกัด</translation>
+        <source>Confidential, fast, easy to use</source>
+        <translation>เป็นความลับรวดเร็วใช้งานง่าย</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>

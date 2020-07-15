@@ -348,8 +348,8 @@
         <translation type="unfinished">应用</translation>
     </message>
     <message id="logo-description">
-        <source>Scalable confidential cryptocurrency</source>
-        <translation>可扩展加密数字货币</translation>
+        <source>Confidential, fast, easy to use</source>
+        <translation>機密，快速，易於使用</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>

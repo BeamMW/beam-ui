@@ -346,8 +346,8 @@
         <translation type="unfinished">Đăng ký</translation>
     </message>
     <message id="logo-description">
-        <source>Scalable confidential cryptocurrency</source>
-        <translation>Tiền điện tử bảo mật có thể mở rộng</translation>
+        <source>Confidential, fast, easy to use</source>
+        <translation>Gizli, hızlı, kullanımı kolay</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>
