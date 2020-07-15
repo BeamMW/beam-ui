@@ -420,6 +420,7 @@ endif()
 
 if(LINUX)
     install(TARGETS ${TARGET_NAME}	DESTINATION bin)
+    install(FILES beam-wallet.cfg DESTINATION bin)
 
     SET(BEAM_DESKTOP_DIR     "/usr/share/applications/")
     SET(BEAM_PIXMAPS_DIR     "/usr/share/icons/")
@@ -432,6 +433,7 @@ else()
 
     if(WIN32)
         install(FILES ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION .)
+        install(FILES beam-wallet.cfg DESTINATION .)
         install(TARGETS ${TARGET_NAME} DESTINATION .)
     endif()
 
