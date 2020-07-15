@@ -346,8 +346,8 @@
         <translation type="unfinished">Примени</translation>
     </message>
     <message id="logo-description">
-        <source>Scalable confidential cryptocurrency</source>
-        <translation type="unfinished">Scalable confidential cryptocurrency</translation>
+        <source>Confidential, fast, easy to use</source>
+        <translation>Поверљиво, брзо, лако за коришћење</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>
