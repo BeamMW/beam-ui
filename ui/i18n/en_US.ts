@@ -1164,8 +1164,8 @@ or send this address to the sender over secure channel</translation>
         <translation>sec</translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>Estimate time: %s</source>
-        <translation>Estimate time: %s</translation>
+        <source>Estimated time: %s</source>
+        <translation>Estimated time: %s</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
