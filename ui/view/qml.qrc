@@ -242,5 +242,8 @@
         <file>assets/icon-notifications-swap-failed.svg</file>
         <file>assets/icon-notifications-receiving-failed.svg</file>
         <file>assets/icon-notifications-sending-failed.svg</file>
+        <file>controls/Panel.qml</file>
+        <file>controls/TokenInfoPanel.qml</file>
+        <file>controls/TokenInfoDialog.qml</file>
     </qresource>
 </RCC>

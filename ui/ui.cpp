@@ -31,6 +31,7 @@
 #include "viewmodel/atomic_swap/swap_offers_view.h"
 #include "viewmodel/address_book_view.h"
 #include "viewmodel/wallet/wallet_view.h"
+#include "viewmodel/wallet/token_item.h"
 #include "viewmodel/help_view.h"
 #include "viewmodel/settings_view.h"
 #include "viewmodel/messages_view.h"
@@ -248,6 +249,7 @@ int main (int argc, char* argv[])
             qmlRegisterType<SwapOffersList>("Beam.Wallet", 1, 0, "SwapOffersList");
             qmlRegisterType<SwapTxObjectList>("Beam.Wallet", 1, 0, "SwapTxObjectList");
             qmlRegisterType<TxObjectList>("Beam.Wallet", 1, 0, "TxObjectList");
+            qmlRegisterType<TokenInfoItem>("Beam.Wallet", 1, 0, "TokenInfoItem");
             
             qmlRegisterType<TokenBootstrapManager>("Beam.Wallet", 1, 0, "TokenBootstrapManager");
             qmlRegisterType<PushNotificationManager>("Beam.Wallet", 1, 0, "PushNotificationManager");

@@ -15,6 +15,7 @@ Button {
     property alias shadowSamples: drop_shadow.samples
     property alias shadowRadius: drop_shadow.radius
     property bool allLowercase: !text.startsWith("I ")
+    property bool showHandCursor: false
 
     font { 
         family: "SF Pro Display"
@@ -45,6 +46,14 @@ Button {
         font: control.font
         
         color: control.enabled ? control.palette.buttonText : Style.content_disabled
+        MouseArea {
+            anchors.fill:  parent
+            hoverEnabled: true
+            enabled:      false
+            cursorShape: control.showHandCursor ? Qt.PointingHandCursor : Qt.ArrowCursor
+            propagateComposedEvents: true
+        }
+        
     }
     
     Keys.onPressed: {

@@ -29,10 +29,12 @@ ReceiveViewModel::ReceiveViewModel()
     : _amountToReceiveGrothes(0)
     , _addressExpires(AddressExpires)
     , _qr(std::make_unique<QR>())
+    , _tokenQr(std::make_unique<QR>())
     , _walletModel(*AppModel::getInstance().getWallet())
     , _hasIdentity(true)
 {
     connect(_qr.get(), &QR::qrDataChanged, this, &ReceiveViewModel::onReceiverQRChanged);
+    connect(_tokenQr.get(), &QR::qrDataChanged, this, &ReceiveViewModel::onTokenQRChanged);
     connect(&_walletModel, &WalletModel::generatedNewAddress, this, &ReceiveViewModel::onGeneratedNewAddress);
     connect(&_walletModel, &WalletModel::newAddressFailed, this, &ReceiveViewModel::newAddressFailed);
     connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyLabelChanged()));
@@ -43,6 +45,7 @@ ReceiveViewModel::ReceiveViewModel()
 
 ReceiveViewModel::~ReceiveViewModel()
 {
+    disconnect(_tokenQr.get(), &QR::qrDataChanged, this, &ReceiveViewModel::onTokenQRChanged);
     disconnect(_qr.get(), &QR::qrDataChanged, this, &ReceiveViewModel::onReceiverQRChanged);
 }
 
@@ -120,6 +123,7 @@ void ReceiveViewModel::setTranasctionToken(const QString& value)
     if (_token != value)
     {
         _token = value;
+        _tokenQr->setAddr(value);
         emit transactionTokenChanged();
     }
 }
@@ -127,6 +131,16 @@ void ReceiveViewModel::setTranasctionToken(const QString& value)
 QString ReceiveViewModel::getTransactionToken() const
 {
     return _token;
+}
+
+QString ReceiveViewModel::getTransactionTokenQR() const
+{
+    return _tokenQr->getEncoded();
+}
+
+void ReceiveViewModel::onTokenQRChanged()
+{
+    emit transactionTokenChanged();
 }
 
 bool ReceiveViewModel::getCommentValid() const

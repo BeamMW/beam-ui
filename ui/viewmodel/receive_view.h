@@ -26,7 +26,9 @@ class ReceiveViewModel: public QObject
     Q_PROPERTY(QString  addressComment     READ getAddressComment     WRITE  setAddressComment   NOTIFY  addressCommentChanged)
     Q_PROPERTY(QString  receiverAddress    READ getReceiverAddress                               NOTIFY  receiverAddressChanged)
     Q_PROPERTY(QString  receiverAddressQR  READ getReceiverAddressQR                             NOTIFY  receiverAddressChanged)
+    Q_PROPERTY(QString  transactionTokenQR READ getTransactionTokenQR                            NOTIFY  transactionTokenChanged)
     Q_PROPERTY(QString  transactionToken   READ getTransactionToken   WRITE  setTranasctionToken NOTIFY  transactionTokenChanged)
+    Q_PROPERTY(QString  transactionTokenQR READ getTransactionTokenQR                            NOTIFY  transactionTokenChanged)
     Q_PROPERTY(bool     commentValid       READ getCommentValid                                  NOTIFY  commentValidChanged)
     Q_PROPERTY(bool     hasIdentity        READ getHasIdentity        WRITE  setHasIdentity      NOTIFY  hasIdentityChanged)
     Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                  NOTIFY secondCurrencyLabelChanged)
@@ -69,6 +71,7 @@ private:
 
     void setTranasctionToken(const QString& value);
     QString getTransactionToken() const;
+    QString getTransactionTokenQR() const;
 
     bool getCommentValid() const;
 
@@ -86,6 +89,7 @@ private:
 private slots:
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onReceiverQRChanged();
+    void onTokenQRChanged();
 
 private:
     beam::Amount _amountToReceiveGrothes;
@@ -95,6 +99,7 @@ private:
     beam::wallet::WalletAddress _receiverAddress;
     bool _isShieldedTx = false;
     std::unique_ptr<QR> _qr;
+    std::unique_ptr<QR> _tokenQr;
     WalletModel& _walletModel;
     ExchangeRatesManager _exchangeRatesManager;
     beam::wallet::TxParameters _txParameters;
