@@ -21,19 +21,22 @@ class QR;
 class ReceiveViewModel: public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString  amountToReceive    READ getAmountToReceive    WRITE  setAmountToReceive  NOTIFY  amountReceiveChanged)
-    Q_PROPERTY(int      addressExpires     READ getAddressExpires     WRITE  setAddressExpires   NOTIFY  addressExpiresChanged)
-    Q_PROPERTY(QString  addressComment     READ getAddressComment     WRITE  setAddressComment   NOTIFY  addressCommentChanged)
-    Q_PROPERTY(QString  receiverAddress    READ getReceiverAddress                               NOTIFY  receiverAddressChanged)
-    Q_PROPERTY(QString  receiverAddressQR  READ getReceiverAddressQR                             NOTIFY  receiverAddressChanged)
-    Q_PROPERTY(QString  transactionTokenQR READ getTransactionTokenQR                            NOTIFY  transactionTokenChanged)
-    Q_PROPERTY(QString  transactionToken   READ getTransactionToken   WRITE  setTranasctionToken NOTIFY  transactionTokenChanged)
-    Q_PROPERTY(QString  transactionTokenQR READ getTransactionTokenQR                            NOTIFY  transactionTokenChanged)
-    Q_PROPERTY(bool     commentValid       READ getCommentValid                                  NOTIFY  commentValidChanged)
-    Q_PROPERTY(bool     hasIdentity        READ getHasIdentity        WRITE  setHasIdentity      NOTIFY  hasIdentityChanged)
-    Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                  NOTIFY secondCurrencyLabelChanged)
-    Q_PROPERTY(QString  secondCurrencyRateValue     READ getSecondCurrencyRateValue              NOTIFY secondCurrencyRateChanged)
-    Q_PROPERTY(bool     isShieldedTx       READ isShieldedTx          WRITE setIsShieldedTx      NOTIFY isShieldedTxChanged)
+    Q_PROPERTY(QString  amountToReceive    READ getAmountToReceive    WRITE  setAmountToReceive   NOTIFY  amountReceiveChanged)
+    Q_PROPERTY(int      addressExpires     READ getAddressExpires     WRITE  setAddressExpires    NOTIFY  addressExpiresChanged)
+    Q_PROPERTY(QString  addressComment     READ getAddressComment     WRITE  setAddressComment    NOTIFY  addressCommentChanged)
+    Q_PROPERTY(QString  receiverAddress    READ getReceiverAddress                                NOTIFY  receiverAddressChanged)
+    Q_PROPERTY(QString  receiverAddressQR  READ getReceiverAddressQR                              NOTIFY  receiverAddressChanged)
+    Q_PROPERTY(QString  transactionTokenQR READ getTransactionTokenQR                             NOTIFY  transactionTokenChanged)
+    Q_PROPERTY(QString  transactionToken   READ getTransactionToken   WRITE  setTranasctionToken  NOTIFY  transactionTokenChanged)
+    Q_PROPERTY(QString  transactionTokenQR READ getTransactionTokenQR                             NOTIFY  transactionTokenChanged)
+    Q_PROPERTY(bool     commentValid       READ getCommentValid                                   NOTIFY  commentValidChanged)
+    Q_PROPERTY(bool     hasIdentity        READ getHasIdentity        WRITE  setHasIdentity       NOTIFY  hasIdentityChanged)
+    Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                   NOTIFY secondCurrencyLabelChanged)
+    Q_PROPERTY(QString  secondCurrencyRateValue     READ getSecondCurrencyRateValue               NOTIFY secondCurrencyRateChanged)
+    Q_PROPERTY(bool     isShieldedTx       READ isShieldedTx          WRITE setIsShieldedTx       NOTIFY isShieldedTxChanged)
+    Q_PROPERTY(bool     isNonInteractive   READ isNonInteractive      WRITE setIsNonInteractive   NOTIFY isNonInteractiveChanged)
+    Q_PROPERTY(bool     isPermanentAddress READ isPermanentAddress    WRITE setIsPermanentAddress NOTIFY isPermanentAddressChanged)
+        
 
 public:
     ReceiveViewModel();
@@ -51,6 +54,8 @@ signals:
     void secondCurrencyLabelChanged();
     void secondCurrencyRateChanged();
     void isShieldedTxChanged();
+    void isPermanentAddressChanged();
+    void isNonInteractiveChanged();
 
 public:
     Q_INVOKABLE void generateNewAddress();
@@ -86,6 +91,12 @@ private:
     bool    isShieldedTx() const;
     void    setIsShieldedTx(bool value);
 
+    bool isPermanentAddress() const;
+    void setIsPermanentAddress(bool value);
+
+    bool isNonInteractive() const;
+    void setIsNonInteractive(bool value);
+
 private slots:
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onReceiverQRChanged();
@@ -98,6 +109,8 @@ private:
     QString      _token;
     beam::wallet::WalletAddress _receiverAddress;
     bool _isShieldedTx = false;
+    bool _isPermanentAddress = false;
+    bool _isNonInteractive = false;
     std::unique_ptr<QR> _qr;
     std::unique_ptr<QR> _tokenQr;
     WalletModel& _walletModel;

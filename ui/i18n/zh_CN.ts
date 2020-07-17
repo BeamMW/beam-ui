@@ -509,26 +509,6 @@
         <source>Wallet</source>
         <translation>钱包</translation>
     </message>
-    <message id="wallet-receive-title">
-        <source>Receive</source>
-        <translation>收款</translation>
-    </message>
-    <message id="wallet-receive-expires-label">
-        <source>Expires in</source>
-        <translation>失效期限</translation>
-    </message>
-    <message id="wallet-receive-expires-24">
-        <source>24 hours</source>
-        <translation>24小时</translation>
-    </message>
-    <message id="wallet-receive-expires-never">
-        <source>Never</source>
-        <translation>永不</translation>
-    </message>
-    <message id="wallet-receive-qr-label">
-        <source>Scan to send</source>
-        <translation>扫描以付款</translation>
-    </message>
     <message id="send-title">
         <source>Send</source>
         <translation>付款</translation>
@@ -909,18 +889,9 @@
         <source>1 hour</source>
         <translation>1小时</translation>
     </message>
-    <message id="receive-amount-label">
-        <source>Receive amount (optional)</source>
-        <translation>收款数量 (可选)</translation>
-    </message>
     <message id="appmodel-failed-time-not-synced">
         <source>Failed to start the integrated node: the timezone settings of your machine are out of sync. Please fix them and restart the wallet.</source>
         <translation>启动集成节点失败：您的设备时区设置未同步，请修正时区设置后重启钱包</translation>
-    </message>
-    <message id="can-not-generate-new-address-message">
-        <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
-        <translation>无法生成新地址
-您的钱包无主密钥</translation>
     </message>
     <message id="settings-general-language">
         <source>Language</source>
@@ -1247,11 +1218,6 @@ Update your settings and try again.</oldsource>
         <source>Create a Swap Offer</source>
         <translation>创建交换报价</translation>
     </message>
-    <message id="wallet-receive-addr-message">
-        <source>Send this address to the sender over an external secure channel or scan the QR code</source>
-        <oldsource>Send this token to the sender over an external secure channel or scan the QR code</oldsource>
-        <translation type="unfinished">通过外部安全媒介将此地址发送给付款方或扫描二维码</translation>
-    </message>
     <message id="receive-amount-swap-label">
         <source>Receive amount</source>
         <translation>收款金额</translation>
@@ -1446,10 +1412,6 @@ please review your settings and try again</oldsource>
     <message id="general-create-trezor-wallet">
         <source>Create new Trezor wallet</source>
         <translation type="unfinished">Create new Trezor wallet</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
-        <translation>为使交易顺利完成，您需要在支付完Beam后12小时内上线同步钱包</translation>
     </message>
     <message id="send-confirmation-pwd-text-online-time">
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
@@ -2030,14 +1992,6 @@ deploy the key at the node you trust completely.</translation>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if unchecked</extracomment>
         <translation type="unfinished">每次付款都需要输入密码</translation>
     </message>
-    <message id="wallet-receive-your-token">
-        <source>Your receive token</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-regular-copy-token">
-        <source>Copy transaction token</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="tx-failure-kernel-min-height">
         <source>Kernel&apos;s min height is unacceptable</source>
         <translation type="unfinished"></translation>
@@ -2308,18 +2262,6 @@ deploy the key at the node you trust completely.</translation>
         <source>Error</source>
         <translation type="unfinished">错误</translation>
     </message>
-    <message id="wallet-receive-my-addr-label">
-        <source>My address (auto-generated)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-addr-message-token">
-        <source>Send this token to the sender over an external secure channel or scan the QR code</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-copy-address">
-        <source>Copy transaction address</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
         <translation type="unfinished"></translation>
@@ -2484,16 +2426,113 @@ Your version is: %2. Please, check for updates.</source>
         <source>Identity</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="receive-shielded">
-        <source>Request shielded transaction</source>
+    <message id="wallet-send-max-privacy-note">
+        <source>Transaction is slower, fees are higher.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="send-max-privacy">
+    <message id="can-not-generate-new-address-message">
+        <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-title">
+        <source>Receive</source>
+        <translation type="unfinished">收款</translation>
+    </message>
+    <message id="wallet-receive-token-for-wallet">
+        <source>For wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-addr-message">
+        <source>Send token or address to the sender over an external secure channel or scan the QR code.</source>
+        <oldsource>Send this address to the sender over an external secure channel or scan the QR code</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-text-online-time">
+        <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="show-token">
+        <source>Show token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-copy-and-close">
+        <source>Copy and close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-token-for-exchange">
+        <source>For exchange or mining pool</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-title">
+        <source>Transaction token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-type">
+        <source>Token type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-transaction-type">
+        <source>Transaction type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-address">
+        <source>Address</source>
+        <translation type="unfinished">地址</translation>
+    </message>
+    <message id="token-info-token">
+        <source>Token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-copy-token">
+        <source>Copy token</source>
+        <translation type="unfinished">Copy token</translation>
+    </message>
+    <message id="wallet-receive-exchanges-not-supported">
+        <source>Max privacy transaction is not supported by exchanges or mining pools yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-transaction-info">
+        <source>Transaction info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="receive-request">
+        <source>Request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-max-privacy">
         <source>Max privacy</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="wallet-send-max-privacy-note">
-        <source>Transaction is slower, fees are higher.</source>
+    <message id="token-one-time">
+        <source>One-time use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-permanent">
+        <source>Permanent token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-regular">
+        <source>Regular</source>
+        <translation type="unfinished">常规</translation>
+    </message>
+    <message id="tx-max-privacy">
+        <source>Max privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-non-interactive">
+        <source>Non-interactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-exchanges-not-supported2">
+        <source>Non-interactive transaction is not supported by exchanges or mining pools yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-exchanges-one-time-not-supported">
+        <source>One-time uses token is not supported by exchanges or mining pools yet. Please switch to the permanent.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-non-int-note">
+        <source>Token good for 20 transactions.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

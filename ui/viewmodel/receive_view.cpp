@@ -181,7 +181,7 @@ void ReceiveViewModel::saveAddress()
 
     if (getCommentValid()) {
         _receiverAddress.m_label = _addressComment.toStdString();
-        _receiverAddress.m_duration = _addressExpires == AddressExpires ? WalletAddress::AddressExpiration24h : WalletAddress::AddressExpirationNever;
+        _receiverAddress.m_duration = isPermanentAddress() == false ? WalletAddress::AddressExpiration24h : WalletAddress::AddressExpirationNever;
         _walletModel.getAsync()->saveAddress(_receiverAddress, true);
     }
 }
@@ -206,10 +206,29 @@ void ReceiveViewModel::updateTransactionToken()
     {
         _txParameters.SetParameter(beam::wallet::TxParameterID::PeerWalletIdentity, _receiverAddress.m_Identity);
     }
-    if (_isShieldedTx)
+    if (isShieldedTx())
     {
         // change tx type
         _txParameters.SetParameter(beam::wallet::TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
+
+        if (isNonInteractive())
+        {
+            // add a vouchers
+            auto vouchers = _walletModel.generateVouchers(_receiverAddress.m_OwnID, 10);
+            if (!vouchers.empty())
+            {
+                // add voucher parameter
+                _txParameters.SetParameter(beam::wallet::TxParameterID::ShieldedVoucherList, vouchers);
+            }
+        }
+        else
+        {
+            _txParameters.DeleteParameter(beam::wallet::TxParameterID::ShieldedVoucherList);
+        }
+    }
+    else
+    {
+        _txParameters.DeleteParameter(beam::wallet::TxParameterID::ShieldedVoucherList);
     }
     setTranasctionToken(QString::fromStdString(std::to_string(_txParameters)));
 }
@@ -236,6 +255,36 @@ void ReceiveViewModel::setIsShieldedTx(bool value)
     {
         _isShieldedTx = value;
         emit isShieldedTxChanged();
+        updateTransactionToken();
+    }
+}
+
+bool ReceiveViewModel::isPermanentAddress() const
+{
+    return _isPermanentAddress;
+}
+
+void ReceiveViewModel::setIsPermanentAddress(bool value)
+{
+    if (_isPermanentAddress != value)
+    {
+        _isPermanentAddress = value;
+        emit isPermanentAddressChanged();
+        updateTransactionToken();
+    }
+}
+
+bool ReceiveViewModel::isNonInteractive() const
+{
+    return _isNonInteractive;
+}
+
+void ReceiveViewModel::setIsNonInteractive(bool value)
+{
+    if (_isNonInteractive != value)
+    {
+        _isNonInteractive = value;
+        emit isNonInteractiveChanged();
         updateTransactionToken();
     }
 }

@@ -232,7 +232,7 @@ ColumnLayout {
 
                 SFText {
                     //% "Max privacy"
-                    text: qsTrId("send-max-privacy")
+                    text: qsTrId("general-max-privacy")
                     color: isShieldedTxSwitch.checked ? Style.active : Style.content_secondary
                     font.pixelSize: 14
                     MouseArea {
@@ -255,7 +255,6 @@ ColumnLayout {
                         value:    isShieldedTxSwitch.checked
                     }
                 }
-
             }
             Item {
                 Layout.fillWidth: true

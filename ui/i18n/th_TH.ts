@@ -506,26 +506,6 @@
         <source>Wallet</source>
         <translation>กระเป๋า</translation>
     </message>
-    <message id="wallet-receive-title">
-        <source>Receive</source>
-        <translation>รับ</translation>
-    </message>
-    <message id="wallet-receive-expires-label">
-        <source>Expires in</source>
-        <translation>หมดอายุใน</translation>
-    </message>
-    <message id="wallet-receive-expires-24">
-        <source>24 hours</source>
-        <translation>24 ชั่วโมง</translation>
-    </message>
-    <message id="wallet-receive-expires-never">
-        <source>Never</source>
-        <translation>ไม่มี</translation>
-    </message>
-    <message id="wallet-receive-qr-label">
-        <source>Scan to send</source>
-        <translation>แสกนเพื่อโอน</translation>
-    </message>
     <message id="send-title">
         <source>Send</source>
         <translation>โอน</translation>
@@ -897,17 +877,9 @@
         <source>1 hour</source>
         <translation>1 ชั่วโมง</translation>
     </message>
-    <message id="receive-amount-label">
-        <source>Receive amount (optional)</source>
-        <translation>จำนวนที่ต้องการ (ตัวเลือก)</translation>
-    </message>
     <message id="appmodel-failed-time-not-synced">
         <source>Failed to start the integrated node: the timezone settings of your machine are out of sync. Please fix them and restart the wallet.</source>
         <translation>ไม่สามารถเริ่ม Integrated Node ได้: การตั้งค่า Timezone ของอุปกรณ์ไม่ตรง กรุณาแก้ไขหรือปิดโปรแกรมกระเป๋าและเปิดใหม่</translation>
-    </message>
-    <message id="can-not-generate-new-address-message">
-        <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
-        <translation>คุณไม่สามารถสร้างที่อยู่ใหม่ได้เนื่องจากกระเป๋าของคุณไม่มี Master Key</translation>
     </message>
     <message id="settings-general-language">
         <source>Language</source>
@@ -1231,11 +1203,6 @@ Update your settings and try again.</oldsource>
         <source>Create a Swap Offer</source>
         <translation>สร้างข้อเสนอการแลกเปลี่ยน</translation>
     </message>
-    <message id="wallet-receive-addr-message">
-        <source>Send this address to the sender over an external secure channel or scan the QR code</source>
-        <oldsource>Send this token to the sender over an external secure channel or scan the QR code</oldsource>
-        <translation type="unfinished">นำที่อยู่นี้ไปให้ผู้ที่จะโอนในช่องทางอื่นหรือสแกน QR Code</translation>
-    </message>
     <message id="receive-amount-swap-label">
         <source>Receive amount</source>
         <translation>จำนวนที่ได้รับ</translation>
@@ -1430,10 +1397,6 @@ please review your settings and try again</oldsource>
     <message id="general-create-trezor-wallet">
         <source>Create new Trezor wallet</source>
         <translation>สร้างกระเป๋า Trezor ใหม่</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
-        <translation>เพื่อให้การทำธุรกรรมเสร็จสมบูรณ์ คุณควรจะออนไลน์ระหว่าง 12 ชั่วโมงหลังจากที่ได้ทำการสั่งโอน Beam ออกไป</translation>
     </message>
     <message id="send-confirmation-pwd-text-online-time">
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
@@ -2016,14 +1979,6 @@ deploy the key at the node you trust completely.</translation>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if unchecked</extracomment>
         <translation type="unfinished">ให้ถามรหัสผ่านทุกครั้งเมื่อจะโอนธุรกรรม</translation>
     </message>
-    <message id="wallet-receive-your-token">
-        <source>Your receive token</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-regular-copy-token">
-        <source>Copy transaction token</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="tx-failure-kernel-min-height">
         <source>Kernel&apos;s min height is unacceptable</source>
         <translation type="unfinished"></translation>
@@ -2294,18 +2249,6 @@ deploy the key at the node you trust completely.</translation>
         <source>Error</source>
         <translation type="unfinished">ผิดพลาด</translation>
     </message>
-    <message id="wallet-receive-my-addr-label">
-        <source>My address (auto-generated)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-addr-message-token">
-        <source>Send this token to the sender over an external secure channel or scan the QR code</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-copy-address">
-        <source>Copy transaction address</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
         <translation type="unfinished"></translation>
@@ -2470,16 +2413,113 @@ Your version is: %2. Please, check for updates.</source>
         <source>Identity</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="receive-shielded">
-        <source>Request shielded transaction</source>
+    <message id="wallet-send-max-privacy-note">
+        <source>Transaction is slower, fees are higher.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="send-max-privacy">
+    <message id="can-not-generate-new-address-message">
+        <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-title">
+        <source>Receive</source>
+        <translation type="unfinished">รับ</translation>
+    </message>
+    <message id="wallet-receive-token-for-wallet">
+        <source>For wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-addr-message">
+        <source>Send token or address to the sender over an external secure channel or scan the QR code.</source>
+        <oldsource>Send this address to the sender over an external secure channel or scan the QR code</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-text-online-time">
+        <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="show-token">
+        <source>Show token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-copy-and-close">
+        <source>Copy and close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-token-for-exchange">
+        <source>For exchange or mining pool</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-title">
+        <source>Transaction token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-type">
+        <source>Token type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-transaction-type">
+        <source>Transaction type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-address">
+        <source>Address</source>
+        <translation type="unfinished">ที่อยู่</translation>
+    </message>
+    <message id="token-info-token">
+        <source>Token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-copy-token">
+        <source>Copy token</source>
+        <translation type="unfinished">คัดลอกโทเค็น</translation>
+    </message>
+    <message id="wallet-receive-exchanges-not-supported">
+        <source>Max privacy transaction is not supported by exchanges or mining pools yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-transaction-info">
+        <source>Transaction info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="receive-request">
+        <source>Request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-max-privacy">
         <source>Max privacy</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="wallet-send-max-privacy-note">
-        <source>Transaction is slower, fees are higher.</source>
+    <message id="token-one-time">
+        <source>One-time use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-permanent">
+        <source>Permanent token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-regular">
+        <source>Regular</source>
+        <translation type="unfinished">ปกติ</translation>
+    </message>
+    <message id="tx-max-privacy">
+        <source>Max privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-non-interactive">
+        <source>Non-interactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-exchanges-not-supported2">
+        <source>Non-interactive transaction is not supported by exchanges or mining pools yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-exchanges-one-time-not-supported">
+        <source>One-time uses token is not supported by exchanges or mining pools yet. Please switch to the permanent.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-non-int-note">
+        <source>Token good for 20 transactions.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

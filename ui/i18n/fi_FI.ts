@@ -506,26 +506,6 @@
         <source>Wallet</source>
         <translation>Lompakko</translation>
     </message>
-    <message id="wallet-receive-title">
-        <source>Receive</source>
-        <translation>Vastaanota</translation>
-    </message>
-    <message id="wallet-receive-expires-label">
-        <source>Expires in</source>
-        <translation>Vanhentuu</translation>
-    </message>
-    <message id="wallet-receive-expires-24">
-        <source>24 hours</source>
-        <translation>24 tuntia</translation>
-    </message>
-    <message id="wallet-receive-expires-never">
-        <source>Never</source>
-        <translation>Ei koskaan</translation>
-    </message>
-    <message id="wallet-receive-qr-label">
-        <source>Scan to send</source>
-        <translation>Skannaa lähettääksesi</translation>
-    </message>
     <message id="send-title">
         <source>Send</source>
         <translation>Lähetä</translation>
@@ -897,17 +877,9 @@
         <source>1 hour</source>
         <translation>1 tunti</translation>
     </message>
-    <message id="receive-amount-label">
-        <source>Receive amount (optional)</source>
-        <translation>Vastaanotettava summa (vapaaehtoinen)</translation>
-    </message>
     <message id="appmodel-failed-time-not-synced">
         <source>Failed to start the integrated node: the timezone settings of your machine are out of sync. Please fix them and restart the wallet.</source>
         <translation>Laitteen oman palvelimen (integrated node) käynnistäminen epäonnistui: laitteesi aikavyöhykkeen asetukset ovat virheelliset. Korjaa laitteesi asetukset ja käynnistä lompakko uudelleen.</translation>
-    </message>
-    <message id="can-not-generate-new-address-message">
-        <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
-        <translation>Et voi luoda uutta osoitetta. Lompakossasi ei ole master key -hallinta-avainta.</translation>
     </message>
     <message id="settings-general-language">
         <source>Language</source>
@@ -1231,11 +1203,6 @@ Update your settings and try again.</oldsource>
         <source>Create a Swap Offer</source>
         <translation>Tee swap-tarjous</translation>
     </message>
-    <message id="wallet-receive-addr-message">
-        <source>Send this address to the sender over an external secure channel or scan the QR code</source>
-        <oldsource>Send this token to the sender over an external secure channel or scan the QR code</oldsource>
-        <translation type="unfinished">Lähetä tämä osoite siirron suorittajalle turvallista viestintävälinettä käyttäen tai skannaa QR-koodi</translation>
-    </message>
     <message id="receive-amount-swap-label">
         <source>Receive amount</source>
         <translation>Vastaanotettava summa</translation>
@@ -1430,10 +1397,6 @@ please review your settings and try again</oldsource>
     <message id="general-create-trezor-wallet">
         <source>Create new Trezor wallet</source>
         <translation>Luo uusi Trezor-lompakko</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
-        <translation>Jotta maksutapahtuma onnistuu, tulee sinun avata lompakkosi 12 tunnin sisällä lähetyksestä.</translation>
     </message>
     <message id="send-confirmation-pwd-text-online-time">
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
@@ -2014,14 +1977,6 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if unchecked</extracomment>
         <translation type="unfinished">Kysy salasanaa aina ennen lähettämistä</translation>
     </message>
-    <message id="wallet-receive-your-token">
-        <source>Your receive token</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-regular-copy-token">
-        <source>Copy transaction token</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="tx-failure-kernel-min-height">
         <source>Kernel&apos;s min height is unacceptable</source>
         <translation type="unfinished"></translation>
@@ -2292,18 +2247,6 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
         <source>Error</source>
         <translation type="unfinished">Virhe</translation>
     </message>
-    <message id="wallet-receive-my-addr-label">
-        <source>My address (auto-generated)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-addr-message-token">
-        <source>Send this token to the sender over an external secure channel or scan the QR code</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-copy-address">
-        <source>Copy transaction address</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
         <translation type="unfinished"></translation>
@@ -2468,16 +2411,113 @@ Your version is: %2. Please, check for updates.</source>
         <source>Identity</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="receive-shielded">
-        <source>Request shielded transaction</source>
+    <message id="wallet-send-max-privacy-note">
+        <source>Transaction is slower, fees are higher.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="send-max-privacy">
+    <message id="can-not-generate-new-address-message">
+        <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-title">
+        <source>Receive</source>
+        <translation type="unfinished">Vastaanota</translation>
+    </message>
+    <message id="wallet-receive-token-for-wallet">
+        <source>For wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-addr-message">
+        <source>Send token or address to the sender over an external secure channel or scan the QR code.</source>
+        <oldsource>Send this address to the sender over an external secure channel or scan the QR code</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-text-online-time">
+        <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="show-token">
+        <source>Show token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-copy-and-close">
+        <source>Copy and close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-token-for-exchange">
+        <source>For exchange or mining pool</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-title">
+        <source>Transaction token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-type">
+        <source>Token type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-transaction-type">
+        <source>Transaction type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-address">
+        <source>Address</source>
+        <translation type="unfinished">Osoite</translation>
+    </message>
+    <message id="token-info-token">
+        <source>Token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-copy-token">
+        <source>Copy token</source>
+        <translation type="unfinished">Kopioi tunniste</translation>
+    </message>
+    <message id="wallet-receive-exchanges-not-supported">
+        <source>Max privacy transaction is not supported by exchanges or mining pools yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-transaction-info">
+        <source>Transaction info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="receive-request">
+        <source>Request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-max-privacy">
         <source>Max privacy</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="wallet-send-max-privacy-note">
-        <source>Transaction is slower, fees are higher.</source>
+    <message id="token-one-time">
+        <source>One-time use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-permanent">
+        <source>Permanent token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-regular">
+        <source>Regular</source>
+        <translation type="unfinished">Normaali</translation>
+    </message>
+    <message id="tx-max-privacy">
+        <source>Max privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-non-interactive">
+        <source>Non-interactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-exchanges-not-supported2">
+        <source>Non-interactive transaction is not supported by exchanges or mining pools yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-exchanges-one-time-not-supported">
+        <source>One-time uses token is not supported by exchanges or mining pools yet. Please switch to the permanent.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-non-int-note">
+        <source>Token good for 20 transactions.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

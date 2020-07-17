@@ -113,7 +113,7 @@
                             font.pixelSize: 14
                             wrapMode: TextInput.Wrap
                             color: verifyLayout.isInvalidPaymentProof() ? Style.validator_error : Style.content_main
-                             text: model ? model.paymentProof : ""
+                            text: model ? model.paymentProof : ""
                             Binding {
                                 target: model
                                 property: "paymentProof"

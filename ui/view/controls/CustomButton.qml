@@ -16,12 +16,14 @@ Button {
     property alias shadowRadius: drop_shadow.radius
     property bool allLowercase: !text.startsWith("I ")
     property bool showHandCursor: false
+    
 
     font { 
         family: "SF Pro Display"
         pixelSize: 14
-        styleName: "Bold"; weight: Font.Bold
-        capitalization: allLowercase ? Font.AllLowercase : Font.MixedCase
+        styleName: control.checkable ? "Regular" : "Bold"
+        weight: control.checkable ? Font.Normal : Font.Bold
+        capitalization: allLowercase && !control.checkable ? Font.AllLowercase : Font.MixedCase
     }
 
 //    width: 122
@@ -45,7 +47,10 @@ Button {
         text: control.text
         font: control.font
         
-        color: control.enabled ? control.palette.buttonText : Style.content_disabled
+        color: control.enabled ? 
+            (control.checkable ?
+                (control.checked ? Style.content_opposite : Style.content_secondary) :
+                    control.palette.buttonText) : Style.content_disabled
         MouseArea {
             anchors.fill:  parent
             hoverEnabled: true
@@ -62,8 +67,10 @@ Button {
 
     background: Rectangle {
         id: rect
-        radius: 50
-        color: control.enabled ? control.palette.button : Style.content_disabled
+        radius: control.checkable ? 10 : 50
+        color: control.enabled ? (control.checkable ?
+            (control.checked ? Style.active : "transparent") :
+                control.palette.button) : Style.content_disabled
         opacity: control.enabled ? 1.0 : 0.6
         
         width: control.width
@@ -77,6 +84,6 @@ Button {
         samples: 9
         color: Style.content_main
         source: rect
-        visible: control.visualFocus || control.hovered
+        visible: control.visualFocus || control.hovered || control.checked
     }
 }

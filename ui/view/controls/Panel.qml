@@ -29,7 +29,7 @@ Pane {
                 capitalization: Font.AllUppercase
             }
         
-            Layout.bottomMargin:  25
+            Layout.bottomMargin:  20
             visible:              text.length > 0
         }
         

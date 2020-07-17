@@ -76,6 +76,7 @@ ColumnLayout {
         font.weight:      Font.Bold
         color:            Style.content_main
         text:             control.title
+        visible:          text.length > 0
     }
 
     RowLayout {
@@ -195,32 +196,36 @@ ColumnLayout {
         }
     }
 
-    Item {
-        Layout.fillWidth: true
-        SFText {
-            id:              errmsg
-            color:           Style.validator_error
-            font.pixelSize:  12
-            font.styleName:  "Italic"
-            width:           parent.width
-            visible:         error.length
-        }
-        SFText {
-            id:             amountSecondCurrencyText
-            visible:        control.showSecondCurrency && !errmsg.visible && !showTotalFee  // show only on send side
-            font.pixelSize: 14
-            opacity:        isExchangeRateAvailable ? 0.5 : 0.7
-            color:          isExchangeRateAvailable ? Style.content_secondary : Style.accent_fail
-            text:           isExchangeRateAvailable
-                            ? getAmountInSecondCurrency()
-                            //% "Exchange rate to %1 is not available"
-                            : qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
-        }
+    //
+    // Exchange rate
+    //
+    SFText {
+        id:              errmsg
+        color:           Style.validator_error
+        font.pixelSize:  12
+        font.styleName:  "Italic"
+        width:           parent.width
+        visible:         error.length
+    }
+    SFText {
+        id:             amountSecondCurrencyText
+        visible:        control.showSecondCurrency && !errmsg.visible && !showTotalFee  // show only on send side
+        font.pixelSize: 14
+        opacity:        isExchangeRateAvailable ? 0.5 : 0.7
+        color:          isExchangeRateAvailable ? Style.content_secondary : Style.accent_fail
+        text:           isExchangeRateAvailable
+                        ? getAmountInSecondCurrency()
+                        //% "Exchange rate to %1 is not available"
+                        : qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
     }
 
+    //
+    // Fee
+    //
     GridLayout {
         columns:       2
         Layout.topMargin: 50
+        visible:       control.hasFee
         ColumnLayout {
             Layout.maximumWidth:  198
             Layout.alignment:     Qt.AlignTop
