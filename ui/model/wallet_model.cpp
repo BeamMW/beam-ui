@@ -302,7 +302,7 @@ uint32_t WalletModel::getClientRevision() const
 
 beam::Amount WalletModel::getAvailable() const
 {
-    return m_status.available;
+    return m_status.available + m_status.shielded;
 }
 
 beam::Amount WalletModel::getReceiving() const
@@ -347,9 +347,10 @@ beam::Block::SystemState::ID WalletModel::getCurrentStateID() const
 
 void WalletModel::setStatus(const beam::wallet::WalletStatus& status)
 {
-    if (m_status.available != status.available)
+    if (m_status.available != status.available || m_status.shielded != status.shielded)
     {
         m_status.available = status.available;
+        m_status.shielded = status.shielded;
         emit availableChanged();
     }
 
