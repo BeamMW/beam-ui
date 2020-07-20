@@ -510,12 +510,9 @@
         <source>Send</source>
         <translation type="unfinished">Send</translation>
     </message>
-    <message id="send-send-to-label">
-        <source>Transaction token or contact</source>
-        <translation type="unfinished">Transaction token or contact</translation>
-    </message>
     <message id="send-contact-placeholder">
-        <source>Please specify contact or transaction token</source>
+        <source>Paste recipient token here</source>
+        <oldsource>Please specify contact or transaction token</oldsource>
         <translation type="unfinished">Please specify contact or transaction token</translation>
     </message>
     <message id="send-amount-label">
@@ -1246,10 +1243,6 @@ Update your settings and try again.</oldsource>
     <message id="general-comment-local">
         <source>Comments are local and won&apos;t be shared</source>
         <translation>Comments are local and won&apos;t be shared</translation>
-    </message>
-    <message id="send-total-label">
-        <source>Total UTXO value</source>
-        <translation type="unfinished">Total UTXO value</translation>
     </message>
     <message id="general-bitcoin">
         <source>Bitcoin</source>
@@ -2518,6 +2511,10 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="wallet-send-non-int-note">
         <source>Token good for 20 transactions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-comment-placeholder">
+        <source>Comments are local and won�t be shared</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

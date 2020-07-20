@@ -36,7 +36,7 @@ namespace
 }
 
 SendViewModel::SendViewModel()
-    : _feeGrothes(0)
+    : _feeGrothes(100)
     , _sendAmountGrothes(0)
     , _changeGrothes(0)
     , _walletModel(*AppModel::getInstance().getWallet())

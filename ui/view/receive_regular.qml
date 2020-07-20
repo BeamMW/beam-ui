@@ -224,9 +224,6 @@ ColumnLayout {
                 // Amount
                 //
                 content: AmountInput {
-                    //Layout.topMargin:           20
-                    ////% "Receive amount (optional)"
-                    //title:                      qsTrId("receive-amount-label")
                     id:                         receiveAmountInput
                     amountIn:                   viewModel.amountToReceive
                     secondCurrencyRateValue:    viewModel.secondCurrencyRateValue

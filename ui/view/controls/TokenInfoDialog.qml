@@ -130,6 +130,7 @@ Dialog {
                 font.pixelSize:         14
                 color:                  Style.content_main
                 text:                   viewModel.address
+                onCopyText:             BeamGlobals.copyToClipboard(text)
             }
             
             
@@ -150,6 +151,7 @@ Dialog {
                 font.pixelSize:         14
                 color:                  Style.content_main
                 text:                   viewModel.token
+                onCopyText:             BeamGlobals.copyToClipboard(text)
             }
             
         }

@@ -510,13 +510,10 @@
         <source>Send</source>
         <translation>Gửi</translation>
     </message>
-    <message id="send-send-to-label">
-        <source>Transaction token or contact</source>
-        <translation>Tiền điện tử hoặc liên hệ của giao dịch</translation>
-    </message>
     <message id="send-contact-placeholder">
-        <source>Please specify contact or transaction token</source>
-        <translation>Vui lòng chỉ định tiền điện tử hoặc liên hệ của giao dịch</translation>
+        <source>Paste recipient token here</source>
+        <oldsource>Please specify contact or transaction token</oldsource>
+        <translation type="unfinished">Vui lòng chỉ định tiền điện tử hoặc liên hệ của giao dịch</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
@@ -1246,10 +1243,6 @@ Update your settings and try again.</oldsource>
     <message id="general-comment-local">
         <source>Comments are local and won&apos;t be shared</source>
         <translation>Bình luận cục bộ, sẽ không&apos; được chia sẻ</translation>
-    </message>
-    <message id="send-total-label">
-        <source>Total UTXO value</source>
-        <translation>Tổng giá trị UTXO</translation>
     </message>
     <message id="general-bitcoin">
         <source>Bitcoin</source>
@@ -2518,6 +2511,10 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="wallet-send-non-int-note">
         <source>Token good for 20 transactions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-comment-placeholder">
+        <source>Comments are local and won�t be shared</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

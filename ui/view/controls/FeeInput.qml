@@ -71,28 +71,27 @@ ColumnLayout {
         }
     }
 
-    Item {
-        Layout.fillWidth: true
-        SFText {
-            id: minimumFeeNotification
-            //% "The minimum fee is %1 %2"
-            text:            qsTrId("general-fee-fail").arg(Utils.uiStringToLocale(control.minFee)).arg(control.feeLabel)
-            color:           Style.validator_error
-            font.pixelSize:  12
-            font.styleName:  "Italic"
-            width:           parent.width
-            visible:         !control.isValid
-        }
-        SFText {
-            id:               feeInSecondCurrency
-            visible:          !minimumFeeNotification.visible && control.showSecondCurrency
-            font.pixelSize:   14
-            opacity:          control.isExchangeRateAvailable ? 0.5 : 0.7
-            color:            control.isExchangeRateAvailable ? Style.content_secondary : Style.accent_fail
-            text:             control.isExchangeRateAvailable
-                              ? control.secondCurrencyAmount
-                              //% "Exchange rate to %1 is not available"
-                              : qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
-        }
+
+    SFText {
+        id: minimumFeeNotification
+        //% "The minimum fee is %1 %2"
+        text:            qsTrId("general-fee-fail").arg(Utils.uiStringToLocale(control.minFee)).arg(control.feeLabel)
+        color:           Style.validator_error
+        font.pixelSize:  12
+        font.styleName:  "Italic"
+        width:           parent.width
+        visible:         !control.isValid
     }
+    SFText {
+        id:               feeInSecondCurrency
+        visible:          !minimumFeeNotification.visible && control.showSecondCurrency
+        font.pixelSize:   14
+        opacity:          control.isExchangeRateAvailable ? 0.5 : 0.7
+        color:            control.isExchangeRateAvailable ? Style.content_secondary : Style.accent_fail
+        text:             control.isExchangeRateAvailable
+                            ? control.secondCurrencyAmount
+                            //% "Exchange rate to %1 is not available"
+                            : qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
+    }
+
 }

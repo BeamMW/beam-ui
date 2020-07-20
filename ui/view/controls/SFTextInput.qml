@@ -41,21 +41,22 @@ T.TextField {
 	selectByMouse: true
 	
     PlaceholderText {
-        id: placeholder
-        x: control.leftPadding
-        y: control.topPadding
-        width: control.width - (control.leftPadding + control.rightPadding)
-        height: control.height - (control.topPadding + control.bottomPadding)
-
-        text: control.placeholderText
-        font: control.font
-        opacity: 0.5
-        color: control.color
-        verticalAlignment: control.verticalAlignment
+        id:                  placeholder
+        x:                   control.leftPadding
+        y:                   control.topPadding
+        width:               control.width - (control.leftPadding + control.rightPadding)
+        height:              control.height - (control.topPadding + control.bottomPadding)
+                             
+        text:                control.placeholderText
+        font.pixelSize:      control.font.pixelSize
+        font.italic:         true
+        opacity:             0.2
+        color:               control.color
+        verticalAlignment:   control.verticalAlignment
         horizontalAlignment: control.horizontalAlignment
-        visible:  (focusablePlaceholder || !control.activeFocus) && !control.length && !control.preeditText
-        elide: Text.ElideRight
-        wrapMode: control.wrapMode
+        visible:             (focusablePlaceholder || !control.activeFocus) && !control.length && !control.preeditText
+        elide:               Text.ElideRight
+        wrapMode:            control.wrapMode
     }
 
     background: Rectangle {

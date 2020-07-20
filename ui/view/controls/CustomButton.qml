@@ -28,6 +28,7 @@ Button {
 
 //    width: 122
     height: 38
+    Layout.preferredHeight: 38
     leftPadding: 30
     rightPadding: 30
     

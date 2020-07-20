@@ -38,151 +38,325 @@ ColumnLayout {
         }
     }
 
+    TokenInfoDialog {
+        id:     tokenInfoDialog;
+        token:  viewModel.receiverTA
+    }
+
     function isTAInputValid() {
         return viewModel.receiverTA.length == 0 || viewModel.receiverTAValid
     }
 
-    Row {
-        Layout.alignment:    Qt.AlignHCenter
-        Layout.topMargin:    75
-        //Layout.bottomMargin: 40
+    function getFeeInSecondCurrency(feeValue) {
+        return BeamGlobals.calcFeeInSecondCurrency(
+            feeValue,
+            Currency.CurrBeam,
+            viewModel.secondCurrencyRateValue ,
+            viewModel.secondCurrencyLabel)
+    }
 
+    //
+    // Title row
+    //
+    Item {
+        Layout.fillWidth:    true
+        Layout.topMargin:    100 // 101
+        Layout.bottomMargin: 30  // 31
+        CustomButton {
+            anchors.left:   parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            palette.button: "transparent"
+            leftPadding:    0
+            showHandCursor: true
+            //% "Back"
+            text:           qsTrId("general-back")
+            icon.source:    "qrc:/assets/icon-back.svg"
+            onClicked:      onClosed();
+        }
+
+        
         SFText {
-            font.pixelSize:  18
-            font.styleName:  "Bold"; font.weight: Font.Bold
-            color:           Style.content_main
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            color:              Style.content_main
+            font {
+                styleName:      "Bold"
+                weight:         Font.Bold
+                pixelSize:      14
+                letterSpacing:  4
+                capitalization: Font.AllUppercase
+            }
             //% "Send"
-            text:            qsTrId("send-title")
+            text:               qsTrId("send-title")
         }
     }
 
-    Item {
-        Layout.fillHeight: true
-        Layout.maximumHeight: 40
-        Layout.minimumHeight: 20
-    }
-
-    RowLayout  {
-        Layout.fillWidth: true
-        spacing:    70
+    //
+    // Content row
+    //
+    RowLayout {
+        Layout.fillWidth:   true
+        spacing:  10
 
         //
         // Left column
         //
         ColumnLayout {
-            Layout.alignment: Qt.AlignTop
-            Layout.leftMargin: 25
-            Layout.fillWidth: true
-            Layout.preferredWidth: 100
+            Layout.alignment:       Qt.AlignTop
+            Layout.fillWidth:       true
+            Layout.preferredWidth:  400
+            spacing:                10
 
-            SFText {
-                font.pixelSize:  14
-                font.styleName:  "Bold"; font.weight: Font.Bold
-                color:           Style.content_main
-                //% "Transaction token or contact"
-                text:            qsTrId("send-send-to-label")
-                bottomPadding:   26
-            }
+            //
+            // Transaction info
+            //
+            Panel {
+                //% "Transaction info"
+                title:                   qsTrId("general-transaction-info")
+                Layout.fillWidth:        true
+                content: 
+                ColumnLayout {
+                    spacing: 0
 
-            SFTextInput {
-                Layout.fillWidth: true
-                id:               receiverTAInput
-                font.pixelSize:   14
-                color:            isTAInputValid() ? Style.content_main : Style.validator_error
-                backgroundColor:  isTAInputValid() ? Style.content_main : Style.validator_error
-                font.italic :     !isTAInputValid()
-                text:             viewModel.receiverTA
-                validator:        RegExpValidator { regExp: /[0-9a-zA-Z]{1,}/ }
-                selectByMouse:    true
-                //% "Please specify contact or transaction token"
-                placeholderText:  qsTrId("send-contact-placeholder")
+                    SFTextInput {
+                        Layout.fillWidth: true
+                        id:               receiverTAInput
+                        font.pixelSize:   14
+                        color:            isTAInputValid() ? Style.content_main : Style.validator_error
+                        backgroundColor:  isTAInputValid() ? Style.content_main : Style.validator_error
+                        font.italic :     !isTAInputValid()
+                        text:             viewModel.receiverTA
+                        validator:        RegExpValidator { regExp: /[0-9a-zA-Z]{1,}/ }
+                        selectByMouse:    true
+                        visible:          !receiverTAText.visible
+                        //% "Paste recipient token here"
+                        placeholderText:  qsTrId("send-contact-placeholder")
+                        onTextChanged: {
+                            if (BeamGlobals.isSwapToken(text)&&
+                                typeof onSwapToken == "function") {
+                                onSwapToken(text);
+                            }
+                        }
+                    }
+                    RowLayout {
+                        id:                 receiverTAText
+                        Layout.fillWidth:     true
+                        Layout.leftMargin:    0
+                        Layout.rightMargin:   6
+                        Layout.topMargin:     6
+                        Layout.bottomMargin:  3
+                        spacing:              0
+                        visible:            !receiverTAInput.activeFocus && viewModel.receiverTAValid
+                        SFText {
+                            id:                 receiverTAPlaceholder
+                            Layout.fillWidth:   true
+                            font.pixelSize:     14
+                            color:              Style.content_main
+                            text:               viewModel.receiverTA
+                            elide:              Text.ElideMiddle
+                            wrapMode:           Text.NoWrap
+                            rightPadding:       160
+                            activeFocusOnTab:   true
+                            onActiveFocusChanged: {
+                                if (activeFocus)
+                                    receiverTAInput.forceActiveFocus();
+                            }
+                            MouseArea {
+                                property bool   hovered: false
+                                id:             receiverTAPlaceholderMA
+                                anchors.fill:   parent
+                                //Layout.fillWidth: true
+                                //Layout.fillHeight:true
+                                hoverEnabled:   true
+                                acceptedButtons: Qt.LeftButton
+                                onPressed: {
+                                    receiverTAInput.forceActiveFocus();
+                                }
+                                onEntered: {
+                                    hovered = true
+                                }
+                                onExited: {
+                                    hovered = false
+                                }
+                            }
+                        }
+                        LinkButton {
+                            //% "Show token"
+                            text:       qsTrId("show-token")
+                            linkColor:  Style.accent_outgoing
+                            visible:    viewModel.receiverTAValid
+                            onClicked: {
+                                tokenInfoDialog.open();
+                            }
+                        }
+                    }
+                    Rectangle {
+                        id:                 receiverTAUnderline
+                        Layout.fillWidth:   true
+                        Layout.bottomMargin:2
+	                    height:             1
+                        color:              receiverTAInput.backgroundColor
+                        visible:            receiverTAText.visible
+		                opacity:            (receiverTAPlaceholder.activeFocus || receiverTAPlaceholderMA.hovered)? 0.3 : 0.1
+                    }
 
-                onTextChanged: {
-                    if (BeamGlobals.isSwapToken(text)&&
-                        typeof onSwapToken == "function") {
-                        onSwapToken(text);
+                    Item {
+                        Layout.fillWidth: true
+                        SFText {
+                            property bool isTokenOrAddressValid: !isTAInputValid()
+                            Layout.alignment: Qt.AlignTop
+                            id:               receiverTAError
+                            color:            isTokenOrAddressValid ? Style.validator_error : Style.content_secondary
+                            font.italic:      !isTokenOrAddressValid
+                            font.pixelSize:   12
+                            text:             isTokenOrAddressValid
+                                //% "Invalid wallet address"
+                                ? qsTrId("wallet-send-invalid-address-or-token")
+                                : viewModel.tokenGeneratebByNewAppVersionMessage
+                            visible:          isTokenOrAddressValid || viewModel.isTokenGeneratebByNewAppVersion
+                        }
+                    }
+                    
+                    Binding {
+                        target:   viewModel
+                        property: "receiverTA"
+                        value:    receiverTAInput.text
+                    }
+
+
+
+                    RowLayout {
+                        spacing:            10
+                        Layout.topMargin:   20
+                        SFText {
+                            //% "Max privacy"
+                            text: qsTrId("general-max-privacy")
+                            color: isShieldedTxSwitch.checked ? Style.active : Style.content_secondary
+                            font.pixelSize: 14
+                            MouseArea {
+                                anchors.fill: parent
+                                acceptedButtons: Qt.LeftButton
+                                onClicked: {
+                                    isShieldedTxSwitch.checked = !isShieldedTxSwitch.checked;
+                                }
+                            }
+                        }
+                    
+                        CustomSwitch {
+                            id:          isShieldedTxSwitch
+                            spacing:     0
+                    
+                            checked: viewModel.isShieldedTx
+                            Binding {
+                                target:   viewModel
+                                property: "isShieldedTx"
+                                value:    isShieldedTxSwitch.checked
+                            }
+                        }
+                    }
+                    
+                    SFText {
+                        height: 16
+                        Layout.alignment:   Qt.AlignTop
+                        Layout.topMargin:   10
+                        id:                 maxPrivacyNote
+                        color:              Style.content_secondary
+                        font.italic:        true
+                        font.pixelSize:     14
+                        //% "Transaction is slower, fees are higher."
+                        text:               qsTrId("wallet-send-max-privacy-note")
+                        visible:            viewModel.isShieldedTx
                     }
                 }
             }
 
-            Item {
-                Layout.fillWidth: true
-                SFText {
-                    property bool isTokenOrAddressValid: !isTAInputValid()
-                    Layout.alignment: Qt.AlignTop
-                    id:               receiverTAError
-                    color:            isTokenOrAddressValid ? Style.validator_error : Style.content_secondary
-                    font.italic:      !isTokenOrAddressValid
-                    font.pixelSize:   12
-                    text:             isTokenOrAddressValid
-                        //% "Invalid wallet address"
-                        ? qsTrId("wallet-send-invalid-address-or-token")
-                        : viewModel.tokenGeneratebByNewAppVersionMessage
-                    visible:          isTokenOrAddressValid || viewModel.isTokenGeneratebByNewAppVersion
+            //
+            // Amount
+            //
+            Panel {
+                //% "Amount"
+                title:                   qsTrId("general-amount")
+                Layout.fillWidth:        true
+
+                content: AmountInput {
+                    id:                         sendAmountInput
+                    amountIn:                   viewModel.sendAmount
+                    secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
+                    secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                    setMaxAvailableAmount:      function() { viewModel.setMaxAvailableAmount(); }
+                    //hasFee:           true
+                    showAddAll:       true
+                    color:            Style.accent_outgoing
+                    error:            showInsufficientBalanceWarning
+                                      //% "Insufficient funds: you would need %1 to complete the transaction"
+                                      ? qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.missing))
+                                      : ""
+                }
+     
+                Binding {
+                    target:   viewModel
+                    property: "sendAmount"
+                    value:    sendAmountInput.amount
                 }
             }
 
-            Binding {
-                target:   viewModel
-                property: "receiverTA"
-                value:    receiverTAInput.text
+            //
+            // Fee
+            //
+            Panel {
+                //% "Fee"
+                title:                   qsTrId("general-fee")
+                Layout.fillWidth:        true
+
+                content: FeeInput {
+                    id:                         feeInput
+                    fee:                        viewModel.feeGrothes
+                    minFee:                     BeamGlobals.getMinimalFee(Currency.CurrBeam)
+                    feeLabel:                   BeamGlobals.getFeeRateLabel(Currency.CurrBeam)
+                    color:                      Style.accent_outgoing
+                    readOnly:                   false
+                    fillWidth:                  true
+                    showSecondCurrency:         true
+                    isExchangeRateAvailable:    viewModel.secondCurrencyRateValue != "0"
+                    secondCurrencyAmount:       getFeeInSecondCurrency(viewModel.feeGrothes)
+                    secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                }
+
+                Binding {
+                    target:   viewModel
+                    property: "feeGrothes"
+                    value:    feeInput.fee
+                }
             }
 
-            SFText {
-                Layout.topMargin: 45
-                font.pixelSize:   14
-                font.styleName:   "Bold"; font.weight: Font.Bold
-                color:            Style.content_main
-                text:             qsTrId(qsTrId("general-address"))
-                topPadding:       5
-                visible:          viewModel.isToken
-            }
-
-            SFTextArea {
-                id:               addressInput
-                Layout.fillWidth: true
-                font.pixelSize:   14
-                color:            Style.content_main
-                //enabled:          false
-                text:             viewModel.receiverAddress
-                visible:          viewModel.isToken
-            }
-
-            SFText {
-                Layout.topMargin: 45
-                font.pixelSize:   14
-                font.styleName:   "Bold"; font.weight: Font.Bold
-                color:            Style.content_main
+            //
+            // Comment
+            //
+            Panel {
                 //% "Comment"
-                text:             qsTrId("general-comment")
-                topPadding:       5
-            }
+                title:             qsTrId("general-comment")
+                Layout.fillWidth:        true
 
-            SFTextInput {
-                id:               comment_input
-                Layout.fillWidth: true
-                font.pixelSize:   14
-                color:            Style.content_main
-                selectByMouse:    true
-                maximumLength:    BeamGlobals.maxCommentLength()
-            }
-
-            Item {
-                Layout.fillWidth: true
-                SFText {
-                    Layout.alignment: Qt.AlignTop
-                    color:            Style.content_secondary
-                    font.italic:      true
-                    font.pixelSize:   12
-                    //% "Comments are local and won't be shared"
-                    text:             qsTrId("general-comment-local")
+                content:
+                ColumnLayout {
+                    SFTextInput {
+                        id:               addressComment
+                        font.pixelSize:   14
+                        Layout.fillWidth: true
+                        focus:            true
+                        color:            Style.content_main
+                        text:             viewModel.comment
+                        maximumLength:    BeamGlobals.maxCommentLength()
+                        //% "Comments are local and won�t be shared"
+                        placeholderText:  qsTrId("general-comment-local")
+                    }
+                 
+                    Binding {
+                        target:   viewModel
+                        property: "comment"
+                        value:    addressComment.text
+                    }
                 }
-            }
-
-            Binding {
-                target:   viewModel
-                property: "comment"
-                value:    comment_input.text
             }
         }
 
@@ -190,242 +364,162 @@ ColumnLayout {
         // Right column
         //
         ColumnLayout {
-            Layout.alignment: Qt.AlignTop
-            Layout.rightMargin: 35
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.preferredWidth: 100
+            Layout.alignment:   Qt.AlignTop
+            Layout.fillWidth:   true
+            Layout.preferredWidth: 400
+            spacing:            10
 
-            AmountInput {
-                //% "Send"
-                title:            qsTrId("send-title")
-                id:               sendAmountInput
-                amountIn:         viewModel.sendAmount
-                secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
-                secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                setMaxAvailableAmount:      function() { viewModel.setMaxAvailableAmount(); }
-                hasFee:           true
-                showAddAll:       true
-                color:            Style.accent_outgoing
-                error:            showInsufficientBalanceWarning
-                                  //% "Insufficient funds: you would need %1 to complete the transaction"
-                                  ? qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.missing))
-                                  : ""
-            }
+            Pane {
+                Layout.fillWidth:        true
+                padding:                 20
 
-            Binding {
-                target:   viewModel
-                property: "sendAmount"
-                value:    sendAmountInput.amount
-            }
-
-            Binding {
-                target:   viewModel
-                property: "feeGrothes"
-                value:    sendAmountInput.fee
-            }
-
-            RowLayout {
-                Layout.topMargin:    32
-                height:   20
-                spacing:  10
-
-                SFText {
-                    //% "Max privacy"
-                    text: qsTrId("general-max-privacy")
-                    color: isShieldedTxSwitch.checked ? Style.active : Style.content_secondary
-                    font.pixelSize: 14
-                    MouseArea {
-                        anchors.fill: parent
-                        acceptedButtons: Qt.LeftButton
-                        onClicked: {
-                            isShieldedTxSwitch.checked = !isShieldedTxSwitch.checked;
-                        }
-                    }
-                }
-
-                CustomSwitch {
-                    id:          isShieldedTxSwitch
-                    spacing:     0
-
-                    checked: viewModel.isShieldedTx
-                    Binding {
-                        target:   viewModel
-                        property: "isShieldedTx"
-                        value:    isShieldedTxSwitch.checked
-                    }
-                }
-            }
-            Item {
-                Layout.fillWidth: true
-                SFText {
-                    height: 16
-                    Layout.alignment: Qt.AlignTop
-                    id:               maxPrivacyNote
-                    color:            Style.content_secondary
-                    font.italic:      true
-                    font.pixelSize:   14
-                    //% "Transaction is slower, fees are higher."
-                    text: qsTrId("wallet-send-max-privacy-note")
-                    visible:          isShieldedTxSwitch.checked
-                }
-            }
-
-            //Item {
-            //    Layout.fillHeight: true
-            //    Layout.maximumHeight: 32
-            //    Layout.minimumHeight: 32
-            //}
-
-            GridLayout {
-                Layout.topMargin:    32
-                Layout.alignment:    Qt.AlignTop
-                Layout.minimumWidth: 400
-                columnSpacing:       20
-                rowSpacing:          10
-                columns:             2
-
-                Rectangle {
-                    x:      0
-                    y:      0
-                    width:  parent.width
-                    height: parent.height
+                background: Rectangle {
                     radius: 10
-                    color:  Style.background_second
+                    color:  Style.background_button
                 }
 
-                SFText {
-                    Layout.alignment:       Qt.AlignTop
-                    Layout.topMargin:       30
-                    Layout.leftMargin:      25
-                    font.pixelSize:         14
-                    color:                  Style.content_secondary
-                    //% "Total UTXO value"
-                    text:                   qsTrId("send-total-label") + ":"
-                }
+                GridLayout {
+                    anchors.fill:        parent
+                    columnSpacing:       20
+                    rowSpacing:          14
+                    columns:             2
+                
+                    //SFText {
+                    //    Layout.alignment:       Qt.AlignTop
+                    //    Layout.fillWidth:       true
+                    //    font.pixelSize:         14
+                    //    color:                  Style.content_secondary
+                    //    //% "Total UTXO value"
+                    //    text:                   qsTrId("send-total-label") + ":"
+                    //}
+                    //
+                    //BeamAmount {
+                    //    Layout.fillWidth:        true
+                    //    error:                   showInsufficientBalanceWarning
+                    //    amount:                  viewModel.totalUTXO
+                    //    currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+                    //    secondCurrencyLabel:     viewModel.secondCurrencyLabel
+                    //    secondCurrencyRateValue: viewModel.secondCurrencyRateValue
+                    //}
+                
+                    SFText {
+                        Layout.alignment:       Qt.AlignTop
+                        Layout.fillWidth:       true
+                        font.pixelSize:         14
+                        color:                  Style.content_secondary
+                        //% "Amount to send"
+                        text:                   qsTrId("send-amount-label") + ":"
+                    }
+                    
+                    BeamAmount {
+                        Layout.alignment:        Qt.AlignTop
+                        Layout.fillWidth:        true
+                        error:                   showInsufficientBalanceWarning
+                        amount:                  viewModel.sendAmount
+                        lightFont:               false
+                        currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+                        secondCurrencyLabel:     viewModel.secondCurrencyLabel
+                        secondCurrencyRateValue: viewModel.secondCurrencyRateValue
+                    }
+                    
+                    SFText {
+                        Layout.alignment:       Qt.AlignTop
+                        Layout.fillWidth:       true
+                        font.pixelSize:         14
+                        color:                  Style.content_secondary
+                        text:                   qsTrId("general-change") + ":"
+                    }
+                    
+                    BeamAmount {
+                        Layout.alignment:        Qt.AlignTop
+                        Layout.fillWidth:        true
+                        error:                   showInsufficientBalanceWarning
+                        amount:                  viewModel.change
+                        lightFont:               false
+                        currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+                        secondCurrencyLabel:     viewModel.secondCurrencyLabel
+                        secondCurrencyRateValue: viewModel.secondCurrencyRateValue
+                    }
 
-                BeamAmount
-                {
-                    Layout.alignment:       Qt.AlignTop
-                    Layout.topMargin:       30
-                    Layout.rightMargin:     25
-                    error:                  showInsufficientBalanceWarning
-                    amount:                 viewModel.totalUTXO
-                    currencySymbol:         BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                    secondCurrencyLabel:    viewModel.secondCurrencyLabel
-                    secondCurrencyRateValue: viewModel.secondCurrencyRateValue
-                }
-
-                SFText {
-                    Layout.alignment:       Qt.AlignTop
-                    Layout.leftMargin:      25
-                    font.pixelSize:         14
-                    color:                  Style.content_secondary
-                    //% "Amount to send"
-                    text:                   qsTrId("send-amount-label") + ":"
-                }
-
-                BeamAmount
-                {
-                    Layout.alignment:       Qt.AlignTop
-                    Layout.rightMargin:     25
-                    error:                  showInsufficientBalanceWarning
-                    amount:                 viewModel.sendAmount
-                    currencySymbol:         BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                    secondCurrencyLabel:    viewModel.secondCurrencyLabel
-                    secondCurrencyRateValue: viewModel.secondCurrencyRateValue
-                }
-
-                SFText {
-                    Layout.alignment:       Qt.AlignTop
-                    Layout.leftMargin:      25
-                    font.pixelSize:         14
-                    color:                  Style.content_secondary
-                    text:                   qsTrId("general-change") + ":"
-                }
-
-                BeamAmount
-                {
-                    Layout.alignment:       Qt.AlignTop
-                    Layout.rightMargin:     25
-                    error:                  showInsufficientBalanceWarning
-                    amount:                 viewModel.change
-                    currencySymbol:         BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                    secondCurrencyLabel:    viewModel.secondCurrencyLabel
-                    secondCurrencyRateValue: viewModel.secondCurrencyRateValue
-                }
-
-                SFText {
-                    Layout.alignment:       Qt.AlignTop
-                    Layout.leftMargin:      25
-                    Layout.bottomMargin:    30
-                    font.pixelSize:         14
-                    color:                  Style.content_secondary
-                    //% "Remaining"
-                    text:                   qsTrId("send-remaining-label") + ":"
-                }
-
-                BeamAmount
-                {
-                    Layout.alignment:       Qt.AlignTop
-                    Layout.rightMargin:     25
-                    Layout.bottomMargin:    30
-                    error:                  showInsufficientBalanceWarning
-                    amount:                 viewModel.available
-                    currencySymbol:         BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                    secondCurrencyLabel:    viewModel.secondCurrencyLabel
-                    secondCurrencyRateValue: viewModel.secondCurrencyRateValue
-                }
-            }
-        }
-    }
-    Item {
-        Layout.fillHeight: true
-        Layout.maximumHeight: 40
-        Layout.minimumHeight: 20
-    }
-    Row {
-        Layout.alignment: Qt.AlignHCenter
-        //Layout.topMargin: 40
-        spacing:          25
-
-        CustomButton {
-            //% "Back"
-            text:        qsTrId("general-back")
-            icon.source: "qrc:/assets/icon-back.svg"
-            onClicked:   onClosed();
-        }
-
-        CustomButton {
-            //% "Send"
-            text:               qsTrId("general-send")
-            palette.buttonText: Style.content_opposite
-            palette.button:     Style.accent_outgoing
-            icon.source:        "qrc:/assets/icon-send-blue.svg"
-            enabled:            viewModel.canSend
-            onClicked: {                
-                const dialogComponent = Qt.createComponent("send_confirm.qml");
-                const dialogObject = dialogComponent.createObject(sendRegularView,
-                    {
-                        addressText: viewModel.receiverAddress,
-                        identityText: viewModel.receiverIdentity,
-                        currency: Currency.CurrBeam,
-                        amount: viewModel.sendAmount,
-                        fee: viewModel.feeGrothes,
-                        onAcceptedCallback: acceptedCallback,
-                        secondCurrencyRate: viewModel.secondCurrencyRateValue,
-                        secondCurrencyLabel: viewModel.secondCurrencyLabel
-                    }).open();
-
-                function acceptedCallback() {
-                    viewModel.sendMoney();
+                    SFText {
+                        Layout.alignment:       Qt.AlignTop
+                        Layout.fillWidth:       true
+                        font.pixelSize:         14
+                        color:                  Style.content_secondary
+                        text:                   qsTrId("general-fee") + ":"
+                    }
+                    
+                    BeamAmount {
+                        Layout.alignment:        Qt.AlignTop
+                        Layout.fillWidth:        true
+                        error:                   showInsufficientBalanceWarning
+                        amount:                  viewModel.feeGrothes
+                        lightFont:               false
+                        currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+                        secondCurrencyLabel:     viewModel.secondCurrencyLabel
+                        secondCurrencyRateValue: viewModel.secondCurrencyRateValue
+                    }
+                    
+                    SFText {
+                        Layout.alignment:       Qt.AlignTop
+                        Layout.fillWidth:       true
+                        font.pixelSize:         14
+                        color:                  Style.content_secondary
+                        //% "Remaining"
+                        text:                   qsTrId("send-remaining-label") + ":"
+                    }
+                    
+                    BeamAmount {
+                        Layout.alignment:        Qt.AlignTop
+                        Layout.fillWidth:        true
+                        error:                   showInsufficientBalanceWarning
+                        amount:                  viewModel.available
+                        lightFont:               false
+                        currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+                        secondCurrencyLabel:     viewModel.secondCurrencyLabel
+                        secondCurrencyRateValue: viewModel.secondCurrencyRateValue
+                    }
                 }
             }
         }
     }
 
+    //
+    // Footers
+    //
+
+    CustomButton {
+        Layout.alignment:    Qt.AlignHCenter
+        Layout.topMargin:    30
+        Layout.bottomMargin: 30
+        //% "Send"
+        text:                qsTrId("general-send")
+        palette.buttonText:  Style.content_opposite
+        palette.button:      Style.accent_outgoing
+        icon.source:         "qrc:/assets/icon-send-blue.svg"
+        enabled:             viewModel.canSend
+        onClicked: {                
+            const dialogComponent = Qt.createComponent("send_confirm.qml");
+            const dialogObject = dialogComponent.createObject(sendRegularView,
+                {
+                    addressText: viewModel.receiverAddress,
+                    identityText: viewModel.receiverIdentity,
+                    currency: Currency.CurrBeam,
+                    amount: viewModel.sendAmount,
+                    fee: viewModel.feeGrothes,
+                    onAcceptedCallback: acceptedCallback,
+                    secondCurrencyRate: viewModel.secondCurrencyRateValue,
+                    secondCurrencyLabel: viewModel.secondCurrencyLabel
+                }).open();
+
+            function acceptedCallback() {
+                viewModel.sendMoney();
+            }
+        }
+    }
+
     Item {
         Layout.fillHeight: true
-        Layout.minimumHeight: 20
     }
+
 }
