@@ -145,7 +145,7 @@ SettingsFoldable {
             }
         }
 
-        LinkButton {
+        /*LinkButton {
             //% "Clear local wallet data"
             text: qsTrId("settings-clear-local-data")
             linkColor: "#ffffff"
@@ -153,6 +153,6 @@ SettingsFoldable {
             onClicked: {
                 // TODO:SETTINGS
             }
-        }
+        }*/
     }
 }
