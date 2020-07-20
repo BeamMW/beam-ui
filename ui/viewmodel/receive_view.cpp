@@ -188,28 +188,29 @@ void ReceiveViewModel::saveAddress()
 
 void ReceiveViewModel::updateTransactionToken()
 {
+    using namespace beam::wallet;
     if (_amountToReceiveGrothes > 0)
     {
-        _txParameters.SetParameter(beam::wallet::TxParameterID::Amount, _amountToReceiveGrothes);
+        _txParameters.SetParameter(TxParameterID::Amount, _amountToReceiveGrothes);
     }
-    _txParameters.SetParameter(beam::wallet::TxParameterID::PeerID, _receiverAddress.m_walletID);
-    _txParameters.SetParameter(beam::wallet::TxParameterID::TransactionType, beam::wallet::TxType::Simple);
+    _txParameters.SetParameter(TxParameterID::PeerID, _receiverAddress.m_walletID);
+    _txParameters.SetParameter(TxParameterID::TransactionType, TxType::Simple);
 #ifdef BEAM_CLIENT_VERSION
     _txParameters.SetParameter(
-        beam::wallet::TxParameterID::ClientVersion,
+        TxParameterID::ClientVersion,
         AppModel::getMyName() + " " + std::string(BEAM_CLIENT_VERSION));
 #endif // BEAM_CLIENT_VERSION
 #ifdef BEAM_LIB_VERSION
-    _txParameters.SetParameter(beam::wallet::TxParameterID::LibraryVersion, std::string(BEAM_LIB_VERSION));
+    _txParameters.SetParameter(TxParameterID::LibraryVersion, std::string(BEAM_LIB_VERSION));
 #endif // BEAM_LIB_VERSION
     if (_hasIdentity)
     {
-        _txParameters.SetParameter(beam::wallet::TxParameterID::PeerWalletIdentity, _receiverAddress.m_Identity);
+        _txParameters.SetParameter(TxParameterID::PeerWalletIdentity, _receiverAddress.m_Identity);
     }
     if (isShieldedTx())
     {
         // change tx type
-        _txParameters.SetParameter(beam::wallet::TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
+        _txParameters.SetParameter(TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
 
         if (isNonInteractive())
         {
@@ -218,7 +219,9 @@ void ReceiveViewModel::updateTransactionToken()
             if (!vouchers.empty())
             {
                 // add voucher parameter
-                _txParameters.SetParameter(beam::wallet::TxParameterID::ShieldedVoucherList, vouchers);
+                _txParameters.SetParameter(TxParameterID::ShieldedVoucherList, vouchers);
+                _txParameters.DeleteParameter(TxParameterID::PeerID);
+                _txParameters.DeleteParameter(TxParameterID::PeerWalletIdentity);
             }
         }
         else
