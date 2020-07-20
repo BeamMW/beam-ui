@@ -12,7 +12,7 @@ ColumnLayout {
     Layout.fillWidth: true
     state: "general"
     property string linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
-    property bool swapMode: false
+    property string swapMode: ""
 
     SettingsViewModel {
         id: viewModel
@@ -144,7 +144,7 @@ ColumnLayout {
                         getAddressesElectrum:     modelData.getAddressesElectrum
                         mainSettingsViewModel:    viewModel
                         hasStatusIndicatior:      true
-                        folded:                   swapMode ? modelData.isConnected : true
+                        folded:                   swapMode == modelData.coinID ? false : (swapMode == "ALL" ? modelData.isConnected : true)
 
                         //
                         // Node

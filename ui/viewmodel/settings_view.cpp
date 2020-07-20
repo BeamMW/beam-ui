@@ -177,6 +177,24 @@ QString SwapCoinSettingsItem::getTitle() const
     }
 }
 
+ QString SwapCoinSettingsItem::getCoinID() const
+ {
+    switch (m_swapCoin)
+    {
+         case beam::wallet::AtomicSwapCoin::Bitcoin:
+            return "BTC";
+        case beam::wallet::AtomicSwapCoin::Litecoin:
+            return "LTC";
+        case beam::wallet::AtomicSwapCoin::Qtum:
+            return "QTUM";
+        default:
+        {
+            assert(false && "unexpected swap coin!");
+            return QString();
+        }
+    }
+ }
+
 QString SwapCoinSettingsItem::getShowSeedDialogTitle() const
 {
     switch (m_swapCoin)

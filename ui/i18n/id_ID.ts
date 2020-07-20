@@ -1514,7 +1514,8 @@ Please try again later or create an offer yourself.</oldsource>
         <translation>Menghubungkan...</translation>
     </message>
     <message id="swap-beta-connection-error">
-        <source>Cannot connect to peer. Please check the address and retry.</source>
+        <source>Cannot connect to peer. Please check the address in Settings and try again.</source>
+        <oldsource>Cannot connect to peer. Please check the address and retry.</oldsource>
         <translation type="unfinished">Cannot connect to peer. Please check the address and retry.</translation>
     </message>
     <message id="swap-alert-confirm-button">
@@ -2292,24 +2293,8 @@ Your version is: %2. Please, check for updates.</source>
         <oldsource>Connectivity</oldsource>
         <translation type="unfinished"></translation>
     </message>
-    <message id="settings-remove-wallet">
-        <source>Remove current wallet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-clear-local-data">
-        <source>Clear local wallet data</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="settings-get-beam">
         <source>Get Beams from Beam Community Faucet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-export">
-        <source>Export wallet data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-import">
-        <source>Import wallet data</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-privacy-title">
@@ -2318,34 +2303,6 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="settings-resources-title">
         <source>Resources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-keep-logs">
-        <source>Keep wallet logs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-logs-forever">
-        <source>For all time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-logs-6m">
-        <source>6 months</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-logs-3m">
-        <source>3 months</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-logs-1m">
-        <source>1 month</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-logs-1w">
-        <source>1 week</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-logs-1d">
-        <source>1 day</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-utilities-title">

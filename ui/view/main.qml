@@ -344,8 +344,8 @@ Rectangle {
 		updateItem("wallet", {"toSend": true})
 	}
 
-	function openSwapSettings() {
-        updateItem("settings", {swapMode:true})
+	function openSwapSettings(coinID) {
+        updateItem("settings", {swapMode: typeof(coinID) == "string" ? coinID : "ALL"})
     }
 
     function openSwapActiveTransactionsList() {

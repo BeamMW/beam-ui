@@ -67,6 +67,7 @@ class SwapCoinSettingsItem : public QObject
     Q_PROPERTY(QString  title                    READ getTitle                                NOTIFY titleChanged)
     Q_PROPERTY(int      feeRate                  READ getFeeRate      WRITE setFeeRate        NOTIFY feeRateChanged)
     Q_PROPERTY(int      minFeeRate               READ getMinFeeRate                           CONSTANT)
+    Q_PROPERTY(QString  coinID                   READ getCoinID                               CONSTANT)
     // node settings
     Q_PROPERTY(QString  nodeUser     READ getNodeUser     WRITE setNodeUser       NOTIFY nodeUserChanged)
     Q_PROPERTY(QString  nodePass     READ getNodePass     WRITE setNodePass       NOTIFY nodePassChanged)
@@ -99,6 +100,7 @@ public:
     QString getTitle() const;
     QString getShowSeedDialogTitle() const;
     QString getShowAddressesDialogTitle() const;
+    QString getCoinID() const;
 
     int getFeeRate() const;
     void setFeeRate(int value);

@@ -261,9 +261,10 @@ Item {
                     isOk: viewModel.btcOK
                     isConnecting: viewModel.btcConnecting
                     visible: BeamGlobals.haveBtc()
+                    swapSettingsPane: "BTC"
                     //% "Connecting..."
                     textConnecting: qsTrId("swap-connecting")
-                    //% "Cannot connect to peer. Please check the address and retry."
+                    //% "Cannot connect to peer. Please check the address in Settings and try again."
                     textConnectionError: qsTrId("swap-beta-connection-error")
                 }
 
@@ -276,6 +277,7 @@ Item {
                     isOk: viewModel.ltcOK
                     isConnecting: viewModel.ltcConnecting
                     visible: BeamGlobals.haveLtc()
+                    swapSettingsPane: "LTC"
                     textConnecting: qsTrId("swap-connecting")
                     textConnectionError: qsTrId("swap-beta-connection-error")
                 }
@@ -289,6 +291,7 @@ Item {
                     isOk: viewModel.qtumOK
                     isConnecting: viewModel.qtumConnecting
                     visible: BeamGlobals.haveQtum()
+                    swapSettingsPane: "QTUM"
                     textConnecting: qsTrId("swap-connecting")
                     textConnectionError: qsTrId("swap-beta-connection-error")
                 }
