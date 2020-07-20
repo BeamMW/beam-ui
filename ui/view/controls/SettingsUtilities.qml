@@ -33,7 +33,7 @@ SettingsFoldable {
             }
         }
 
-        LinkButton {
+        /*LinkButton {
             //% "Export wallet data"
             text: qsTrId("settings-export")
             linkColor: "#ffffff"
@@ -51,7 +51,7 @@ SettingsFoldable {
             onClicked: {
                 viewModel.importData()
             }
-        }
+        }*/
 
         LinkButton {
             //% "Rescan"
