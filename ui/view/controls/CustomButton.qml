@@ -48,10 +48,9 @@ Button {
         text: control.text
         font: control.font
         
-        color: control.enabled ? 
-            (control.checkable ?
+        color: (control.checkable ?
                 (control.checked ? Style.content_opposite : Style.content_secondary) :
-                    control.palette.buttonText) : Style.content_disabled
+                    control.palette.buttonText)
         MouseArea {
             anchors.fill:  parent
             hoverEnabled: true
@@ -69,10 +68,10 @@ Button {
     background: Rectangle {
         id: rect
         radius: control.checkable ? 10 : 50
-        color: control.enabled ? (control.checkable ?
+        color: (control.checkable ?
             (control.checked ? Style.active : "transparent") :
-                control.palette.button) : Style.content_disabled
-        opacity: control.enabled ? 1.0 : 0.6
+                control.palette.button)
+        opacity: control.enabled ? 1.0 : 0.5
         
         width: control.width
         height: control.height

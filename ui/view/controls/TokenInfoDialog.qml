@@ -132,6 +132,25 @@ Dialog {
                 text:                   viewModel.address
                 onCopyText:             BeamGlobals.copyToClipboard(text)
             }
+
+            // Identity
+            SFText {
+                Layout.alignment:       Qt.AlignTop
+                font.pixelSize:         14
+                color:                  Style.content_disabled
+                //% "Identity"
+                text:                   qsTrId("general-identity") + ":"
+            }
+            
+            SFLabel {
+                Layout.fillWidth:       true
+                copyMenuEnabled:        true
+                wrapMode:               Text.Wrap
+                font.pixelSize:         14
+                color:                  Style.content_main
+                text:                   viewModel.identity
+                onCopyText:             BeamGlobals.copyToClipboard(text)
+            }
             
             
             // Token
@@ -143,17 +162,25 @@ Dialog {
                 text:                   qsTrId("token-info-token") + ":"
             }
             
-            SFLabel {
+            ScrollView {
                 Layout.fillWidth:       true
                 Layout.preferredWidth:  578
-                copyMenuEnabled:        true
-                wrapMode:               Text.Wrap
-                font.pixelSize:         14
-                color:                  Style.content_main
-                text:                   viewModel.token
-                onCopyText:             BeamGlobals.copyToClipboard(text)
+                Layout.maximumHeight:   200
+                clip:                   true
+                ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+                ScrollBar.vertical.policy:   ScrollBar.AsNeeded
+                SFLabel {
+                    //Layout.fillWidth:       true
+                    //Layout.preferredWidth:  578
+                    width:                  578
+                    copyMenuEnabled:        true
+                    wrapMode:               Text.Wrap
+                    font.pixelSize:         14
+                    color:                  Style.content_main
+                    text:                   viewModel.token
+                    onCopyText:             BeamGlobals.copyToClipboard(text)
+                }
             }
-            
         }
         Row {
             id:                     buttonsLayout

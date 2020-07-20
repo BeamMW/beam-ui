@@ -25,23 +25,25 @@ class SendViewModel: public QObject
     Q_PROPERTY(QString       comment            READ getComment            WRITE setComment          NOTIFY commentChanged)
 
     // TA = Transaction or Address
-    Q_PROPERTY(QString  receiverTA         READ getReceiverTA         WRITE setReceiverTA       NOTIFY receiverTAChanged)
-    Q_PROPERTY(bool     receiverTAValid    READ getRreceiverTAValid                             NOTIFY receiverTAChanged)
-    Q_PROPERTY(bool     isShieldedTx       READ isShieldedTx          WRITE setIsShieldedTx     NOTIFY isShieldedTxChanged)
+    Q_PROPERTY(QString  receiverTA         READ getReceiverTA         WRITE setReceiverTA              NOTIFY receiverTAChanged)
+    Q_PROPERTY(bool     receiverTAValid    READ getRreceiverTAValid                                    NOTIFY receiverTAChanged)
+    Q_PROPERTY(bool     isShieldedTx       READ isShieldedTx          WRITE setIsShieldedTx            NOTIFY isShieldedTxChanged)
+    Q_PROPERTY(bool     isNonInteractive   READ isNonInteractive      WRITE setIsNonInteractive        NOTIFY isNonInteractiveChanged)
+    Q_PROPERTY(bool     isPermanentAddress READ isPermanentAddress    WRITE setIsPermanentAddress      NOTIFY isPermanentAddressChanged)
 
-    Q_PROPERTY(QString  receiverAddress    READ getReceiverAddress                              NOTIFY receiverAddressChanged)
-    Q_PROPERTY(QString  receiverIdentity   READ getReceiverIdentity                             NOTIFY receiverIdentityChanged)
-    Q_PROPERTY(QString  available          READ getAvailable                                    NOTIFY availableChanged)
-    Q_PROPERTY(QString  change             READ getChange                                       NOTIFY availableChanged)
-    Q_PROPERTY(QString  totalUTXO          READ getTotalUTXO                                    NOTIFY availableChanged)
-    Q_PROPERTY(QString  missing            READ getMissing                                      NOTIFY availableChanged)
-    Q_PROPERTY(bool     isZeroBalance      READ isZeroBalance                                   NOTIFY availableChanged)
-    Q_PROPERTY(bool     isEnough           READ isEnough                                        NOTIFY isEnoughChanged)
-    Q_PROPERTY(bool     canSend            READ canSend                                         NOTIFY canSendChanged)
-    Q_PROPERTY(bool     isToken            READ isToken                                         NOTIFY receiverAddressChanged)
-
-    Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                 NOTIFY secondCurrencyLabelChanged)
-    Q_PROPERTY(QString  secondCurrencyRateValue     READ getSecondCurrencyRateValue             NOTIFY secondCurrencyRateChanged)
+    Q_PROPERTY(QString  receiverAddress    READ getReceiverAddress                                     NOTIFY receiverAddressChanged)
+    Q_PROPERTY(QString  receiverIdentity   READ getReceiverIdentity                                    NOTIFY receiverIdentityChanged)
+    Q_PROPERTY(QString  available          READ getAvailable                                           NOTIFY availableChanged)
+    Q_PROPERTY(QString  change             READ getChange                                              NOTIFY availableChanged)
+    Q_PROPERTY(QString  totalUTXO          READ getTotalUTXO                                           NOTIFY availableChanged)
+    Q_PROPERTY(QString  missing            READ getMissing                                             NOTIFY availableChanged)
+    Q_PROPERTY(bool     isZeroBalance      READ isZeroBalance                                          NOTIFY availableChanged)
+    Q_PROPERTY(bool     isEnough           READ isEnough                                               NOTIFY isEnoughChanged)
+    Q_PROPERTY(bool     canSend            READ canSend                                                NOTIFY canSendChanged)
+    Q_PROPERTY(bool     isToken            READ isToken                                                NOTIFY isTokenChanged)
+                                                                                                       
+    Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                        NOTIFY secondCurrencyLabelChanged)
+    Q_PROPERTY(QString  secondCurrencyRateValue     READ getSecondCurrencyRateValue                    NOTIFY secondCurrencyRateChanged)
 
     Q_PROPERTY(bool     isTokenGeneratebByNewAppVersion      READ isTokenGeneratebByNewAppVersion      NOTIFY tokenGeneratebByNewAppVersion)
     Q_PROPERTY(QString  tokenGeneratebByNewAppVersionMessage READ tokenGeneratebByNewAppVersionMessage NOTIFY tokenGeneratebByNewAppVersion)
@@ -65,6 +67,11 @@ public:
     QString getReceiverIdentity() const;
     bool    isShieldedTx() const;
     void    setIsShieldedTx(bool value);
+    bool isPermanentAddress() const;
+    void setIsPermanentAddress(bool value);
+
+    bool isNonInteractive() const;
+    void setIsNonInteractive(bool value);
 
     QString getAvailable() const;
     QString getMissing() const;
@@ -76,6 +83,7 @@ public:
     bool isEnough() const;
     bool canSend() const;
     bool isToken() const;
+    void setIsToken(bool value);
 
     QString getSecondCurrencyLabel() const;
     QString getSecondCurrencyRateValue() const;
@@ -93,6 +101,8 @@ signals:
     void sendAmountChanged();
     void receiverTAChanged();
     void isShieldedTxChanged();
+    void isPermanentAddressChanged();
+    void isNonInteractiveChanged();
     void availableChanged();
     void sendMoneyVerified();
     void cantSendToExpired();
@@ -103,6 +113,7 @@ signals:
     void receiverAddressChanged();
     void receiverIdentityChanged();
     void tokenGeneratebByNewAppVersion();
+    void isTokenChanged();
 
 public slots:
     void onChangeCalculated(beam::Amount change);
@@ -120,6 +131,8 @@ private:
     QString _receiverAddress;
     QString _receiverIdentity;
     bool _isShieldedTx = false;
+    bool _isPermanentAddress = false;
+    bool _isNonInteractive = false;
     bool _isToken = false;
 
     WalletModel& _walletModel;

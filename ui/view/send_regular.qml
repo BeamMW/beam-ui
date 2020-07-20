@@ -223,15 +223,14 @@ ColumnLayout {
                         value:    receiverTAInput.text
                     }
 
-
-
                     RowLayout {
                         spacing:            10
                         Layout.topMargin:   20
+                        visible:            !viewModel.isToken
                         SFText {
                             //% "Max privacy"
                             text: qsTrId("general-max-privacy")
-                            color: isShieldedTxSwitch.checked ? Style.active : Style.content_secondary
+                            color: isShieldedTxSwitch.checked && viewModel.receiverAddress.length? Style.active : Style.content_secondary
                             font.pixelSize: 14
                             MouseArea {
                                 anchors.fill: parent
@@ -255,6 +254,19 @@ ColumnLayout {
                         }
                     }
                     
+
+                    SFText {
+                        Layout.alignment:   Qt.AlignTop
+                        Layout.topMargin:   20
+                        id:                 maxPrivacyNoteToken
+                        color:              Style.content_main
+                        font.italic:        true
+                        font.pixelSize:     14
+                        //% "Receiver requested Max privacy"
+                        text:               qsTrId("wallet-send-max-privacy-note-token")
+                        visible:            viewModel.isShieldedTx && !viewModel.isNonInteractive && viewModel.isToken
+                    }
+
                     SFText {
                         height: 16
                         Layout.alignment:   Qt.AlignTop
@@ -265,7 +277,7 @@ ColumnLayout {
                         font.pixelSize:     14
                         //% "Transaction is slower, fees are higher."
                         text:               qsTrId("wallet-send-max-privacy-note")
-                        visible:            viewModel.isShieldedTx
+                        visible:            viewModel.isShieldedTx && !viewModel.isNonInteractive
                     }
                 }
             }

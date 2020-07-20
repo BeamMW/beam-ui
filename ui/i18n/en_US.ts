@@ -2485,8 +2485,8 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Token good for 20 transactions.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="send-comment-placeholder">
-        <source>Comments are local and won�t be shared</source>
+    <message id="wallet-send-max-privacy-note-token">
+        <source>Receiver requested Max privacy</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

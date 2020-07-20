@@ -160,6 +160,34 @@ void SendViewModel::setIsShieldedTx(bool value)
     }
 }
 
+bool SendViewModel::isPermanentAddress() const
+{
+    return _isPermanentAddress;
+}
+
+void SendViewModel::setIsPermanentAddress(bool value)
+{
+    if (_isPermanentAddress != value)
+    {
+        _isPermanentAddress = value;
+        emit isPermanentAddressChanged();
+    }
+}
+
+bool SendViewModel::isNonInteractive() const
+{
+    return _isNonInteractive;
+}
+
+void SendViewModel::setIsNonInteractive(bool value)
+{
+    if (_isNonInteractive != value)
+    {
+        _isNonInteractive = value;
+        emit isNonInteractiveChanged();
+    }
+}
+
 beam::Amount SendViewModel::calcTotalAmount() const
 {
     return _sendAmountGrothes + _feeGrothes;
@@ -222,6 +250,15 @@ bool SendViewModel::isToken() const
     return _isToken;
 }
 
+void SendViewModel::setIsToken(bool value)
+{
+    if (_isToken != value)
+    {
+        _isToken = value;
+        emit isTokenChanged();
+    }
+}
+
 void SendViewModel::setMaxAvailableAmount()
 {
     setSendAmount(getMaxAvailable());
@@ -272,8 +309,12 @@ void SendViewModel::extractParameters()
     if (auto peerID = _txParameters.GetParameter<WalletID>(TxParameterID::PeerID); peerID)
     {
         _receiverAddress = QString::fromStdString(std::to_string(*peerID));
-        _isToken = _receiverTA != _receiverAddress;
+        setIsToken(_receiverTA != _receiverAddress);
         emit receiverAddressChanged();
+    }
+    else
+    {
+        setIsToken(true);
     }
 
     if (auto peerIdentity = _txParameters.GetParameter<beam::PeerID>(TxParameterID::PeerWalletIdentity); peerIdentity)
@@ -287,6 +328,7 @@ void SendViewModel::extractParameters()
         if (*txType == TxType::PushTransaction)
         {
             setIsShieldedTx(true);
+            setIsNonInteractive(_receiverAddress.isEmpty());
         } // ignore other types
     }
 

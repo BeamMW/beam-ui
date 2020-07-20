@@ -76,6 +76,16 @@ QString TokenInfoItem::getAddress() const
     return "";
 }
 
+QString TokenInfoItem::getIdentity() const
+{
+    auto p = m_parameters.GetParameter<PeerID>(TxParameterID::PeerWalletIdentity);
+    if (p)
+    {
+        return toString(*p);
+    }
+    return "";
+}
+
 QString TokenInfoItem::getToken() const
 {
     return m_token;
