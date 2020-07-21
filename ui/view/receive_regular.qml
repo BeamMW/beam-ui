@@ -167,7 +167,7 @@ ColumnLayout {
                                         palette.buttonText: Style.content_main
                                         ButtonGroup.group:  txTypeGroup
                                         checkable:          true
-                                        checked: viewModel.isShieldedTx && !viewModel.isNonInteractive
+                                        checked:            viewModel.isShieldedTx && !viewModel.isNonInteractive
                                         onToggled: {
                                             viewModel.isShieldedTx = true;
                                             viewModel.isNonInteractive= false;
@@ -351,22 +351,56 @@ ColumnLayout {
                         token:              viewModel.receiverAddress
                         qrCode:             viewModel.receiverAddressQR
                         isValidToken:       receiveView.isValid()
-                        disabledText:       !viewModel.isPermanentAddress && !viewModel.isNonInteractive ?
-                                                //% "One-time uses token is not supported by exchanges or mining pools yet. Please switch to the permanent."
-                                                qsTrId("wallet-receive-exchanges-one-time-not-supported")
-                                                :
-                                                viewModel.isShieldedTx ?
-                                                    viewModel.isNonInteractive ? 
-                                                        //% "Non-interactive transaction is not supported by exchanges or mining pools yet."
-                                                        qsTrId("wallet-receive-exchanges-not-supported2") :
-                                                        //% "Max privacy transaction is not supported by exchanges or mining pools yet."
-                                                        qsTrId("wallet-receive-exchanges-not-supported") : ""
-
+                        visible:            disabledLabel.text.length == 0
                         onTokenCopied: {
                             receiveView.saveAddress();
                         }
                     }
-
+                    Panel {
+                        Layout.fillWidth:   true
+                        //% "For exchange or mining pool"
+                        title:              qsTrId("wallet-receive-token-for-exchange")
+                        visible:            disabledLabel.text.length > 0
+                        content: ColumnLayout {
+                            anchors.fill:   parent
+                            spacing:        20
+                            SFText {
+                                id:                     disabledLabel
+                                Layout.fillWidth:       true
+                                Layout.preferredWidth:  332
+                                font.pixelSize:         14
+                                font.italic:            true
+                                wrapMode:               Text.WordWrap
+                                color:                  Style.content_secondary
+                                text:                   !viewModel.isPermanentAddress && !viewModel.isShieldedTx ?
+                                                            //% "Exchanges or mining pools support only permanent token now."
+                                                            qsTrId("wallet-receive-exchanges-one-time-not-supported")
+                                                            :
+                                                            viewModel.isShieldedTx ?
+                                                                    //% "Exchanges or mining pools support only regular transaction now."
+                                                                    qsTrId("wallet-receive-exchanges-not-supported2") : ""
+                            }
+                            LinkButton {
+                                //% "Switch to permanent token"
+                                text:       qsTrId("switch-permanent")
+                                visible:    !viewModel.isPermanentAddress && !viewModel.isShieldedTx
+                                linkColor:  Style.accent_incoming
+                                onClicked: {
+                                    viewModel.isPermanentAddress = true;
+                                }
+                            }
+                            LinkButton {
+                                //% "Switch to regular transaction"
+                                text:       qsTrId("switch-regular")
+                                visible:    viewModel.isShieldedTx 
+                                linkColor:  Style.accent_incoming
+                                onClicked: {
+                                    viewModel.isShieldedTx = false;
+                                    viewModel.isNonInteractive= false;
+                                }
+                            }
+                        }
+                    }
                 }
             }
 

@@ -174,7 +174,7 @@ ColumnLayout {
                                 Layout.topMargin:     6
                                 Layout.bottomMargin:  3
                                 spacing:              0
-                                visible:            !receiverTAInput.activeFocus && viewModel.receiverTAValid
+                                visible:              !receiverTAInput.activeFocus && viewModel.receiverTAValid
                                 SFText {
                                     id:                 receiverTAPlaceholder
                                     Layout.fillWidth:   true
@@ -193,8 +193,6 @@ ColumnLayout {
                                         property bool   hovered: false
                                         id:             receiverTAPlaceholderMA
                                         anchors.fill:   parent
-                                        //Layout.fillWidth: true
-                                        //Layout.fillHeight:true
                                         hoverEnabled:   true
                                         acceptedButtons: Qt.LeftButton
                                         onPressed: {
@@ -222,10 +220,10 @@ ColumnLayout {
                                 id:                 receiverTAUnderline
                                 Layout.fillWidth:   true
                                 Layout.bottomMargin:2
-	                            height:             1
+                                height:             1
                                 color:              receiverTAInput.backgroundColor
                                 visible:            receiverTAText.visible
-		                        opacity:            (receiverTAPlaceholder.activeFocus || receiverTAPlaceholderMA.hovered)? 0.3 : 0.1
+                                opacity:            (receiverTAPlaceholder.activeFocus || receiverTAPlaceholderMA.hovered)? 0.3 : 0.1
                             }
 
                             Item {
@@ -254,7 +252,7 @@ ColumnLayout {
                             RowLayout {
                                 spacing:            10
                                 Layout.topMargin:   20
-                                visible:            !(viewModel.isToken && viewModel.isShieldedTx)
+                                visible:            !viewModel.isToken || !(viewModel.isShieldedTx && viewModel.isNonInteractive)
                                 SFText {
                                     //% "Max privacy"
                                     text: qsTrId("general-max-privacy")

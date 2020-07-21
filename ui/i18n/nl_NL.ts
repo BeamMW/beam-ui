@@ -2420,10 +2420,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Copy token</source>
         <translation type="unfinished">Kopieer token</translation>
     </message>
-    <message id="wallet-receive-exchanges-not-supported">
-        <source>Max privacy transaction is not supported by exchanges or mining pools yet.</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="general-transaction-info">
         <source>Transaction info</source>
         <translation type="unfinished"></translation>
@@ -2457,11 +2453,13 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-exchanges-not-supported2">
-        <source>Non-interactive transaction is not supported by exchanges or mining pools yet.</source>
+        <source>Exchanges or mining pools support only regular transaction now.</source>
+        <oldsource>Non-interactive transaction is not supported by exchanges or mining pools yet.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-exchanges-one-time-not-supported">
-        <source>One-time uses token is not supported by exchanges or mining pools yet. Please switch to the permanent.</source>
+        <source>Exchanges or mining pools support only permanent token now.</source>
+        <oldsource>One-time uses token is not supported by exchanges or mining pools yet. Please switch to the permanent.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-send-non-int-note">
@@ -2487,6 +2485,14 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="save-contact-title">
         <source>Name the contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="switch-permanent">
+        <source>Switch to permanent token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="switch-regular">
+        <source>Switch to regular transaction</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
