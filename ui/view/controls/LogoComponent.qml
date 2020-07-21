@@ -6,7 +6,8 @@ import "."
 
 ColumnLayout
 {
-    id: lll
+    property bool isSqueezedHeight: false
+
     function themeName() {
         return Theme.name();
     }
@@ -31,7 +32,7 @@ ColumnLayout
     SFText
     {
         Layout.alignment: Qt.AlignHCenter
-        Layout.topMargin: 40
+        Layout.topMargin: isSqueezedHeight ? 20 : 40
         Layout.preferredHeight: 20
 
      //% "Confidential, fast, easy to use"
@@ -47,7 +48,7 @@ ColumnLayout
         visible: !isMainNet()
         Layout.alignment: Qt.AlignHCenter
         Layout.preferredHeight: 20
-        Layout.topMargin: 40
+        Layout.topMargin: isSqueezedHeight ? 10 : 40
         color: Style.content_secondary
         text: themeName()
         font.pixelSize: 18
@@ -56,6 +57,6 @@ ColumnLayout
     }
 
     Item {
-        Layout.preferredHeight: 30 
+        Layout.preferredHeight: isSqueezedHeight ? 10 : 30 
     }
 }

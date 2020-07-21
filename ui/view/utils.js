@@ -36,8 +36,12 @@ function localeDecimalToCString(amount) {
         .join('.');
 }
 
+function isSqueezedHeight(parentHeight) {
+    return parentHeight <= 768;
+}
+
 function getLogoTopGapSize(parentHeight) {
-    return parentHeight * (parentHeight < 768 ? 0.13 : 0.18)
+    return parentHeight * (isSqueezedHeight(parentHeight) ? 0.13 : 0.18)
 }
 
 function openExternal(externalLink, settings, dialog, onFinish) {

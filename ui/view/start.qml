@@ -2094,15 +2094,17 @@ Item
                 }
 
                 ColumnLayout {
+                    id: openColumn
                     anchors.fill: parent
                     spacing: 0
                     Item {
-                        Layout.preferredHeight: Utils.getLogoTopGapSize(parent.height)
+                        Layout.preferredHeight: Utils.getLogoTopGapSize(openColumn.height)
                     }
 
                     LogoComponent {
                         id: logoComponent
                         Layout.alignment: Qt.AlignHCenter
+                        isSqueezedHeight: Utils.isSqueezedHeight(openColumn.height)
                     }
 
                     Item {
@@ -2123,7 +2125,7 @@ Item
                             }
 
                             Item {
-                                Layout.preferredHeight: 48
+                                Layout.preferredHeight: Utils.isSqueezedHeight(openColumn.height) ? 18 : 48
                             }
 
                             ColumnLayout {
@@ -2211,7 +2213,7 @@ Item
                             Item {
                                 Layout.alignment: Qt.AlignHCenter
                                 Layout.preferredHeight: 36
-                                Layout.topMargin: 20
+                                Layout.topMargin: Utils.isSqueezedHeight(openColumn.height) ? 9 : 20
                                 Layout.bottomMargin: 9
                                 Rectangle {
                                     id: capsWarning
@@ -2254,7 +2256,7 @@ Item
 
                             Item {
                                 Layout.fillHeight: true
-                                Layout.minimumHeight: 40
+                                Layout.minimumHeight: Utils.isSqueezedHeight(openColumn.height) ? 15 : 40
                             }
 
                             SFText {
