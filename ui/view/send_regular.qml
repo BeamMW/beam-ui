@@ -43,6 +43,13 @@ ColumnLayout {
         token:  viewModel.receiverTA
     }
 
+    SaveAddressDialog {
+        id:     saveAddressDialog
+        //% "Save to Address Book"
+        dialogTitle:  qsTrId("save-address-title")
+        text:         "text"
+    }
+
     function isTAInputValid() {
         return viewModel.receiverTA.length == 0 || viewModel.receiverTAValid
     }
@@ -206,10 +213,10 @@ ColumnLayout {
                                 id:                 receiverTAUnderline
                                 Layout.fillWidth:   true
                                 Layout.bottomMargin:2
-                                height:             1
+	                            height:             1
                                 color:              receiverTAInput.backgroundColor
                                 visible:            receiverTAText.visible
-                                opacity:            (receiverTAPlaceholder.activeFocus || receiverTAPlaceholderMA.hovered)? 0.3 : 0.1
+		                        opacity:            (receiverTAPlaceholder.activeFocus || receiverTAPlaceholderMA.hovered)? 0.3 : 0.1
                             }
 
                             Item {
@@ -228,7 +235,7 @@ ColumnLayout {
                                     visible:          isTokenOrAddressValid || viewModel.isTokenGeneratebByNewAppVersion
                                 }
                             }
-                            
+                    
                             Binding {
                                 target:   viewModel
                                 property: "receiverTA"
@@ -238,7 +245,7 @@ ColumnLayout {
                             RowLayout {
                                 spacing:            10
                                 Layout.topMargin:   20
-                                visible:            !viewModel.isToken
+                                visible:            !(viewModel.isToken && viewModel.isShieldedTx)
                                 SFText {
                                     //% "Max privacy"
                                     text: qsTrId("general-max-privacy")
@@ -252,11 +259,11 @@ ColumnLayout {
                                         }
                                     }
                                 }
-                            
+                    
                                 CustomSwitch {
                                     id:          isShieldedTxSwitch
                                     spacing:     0
-                            
+                    
                                     checked: viewModel.isShieldedTx
                                     Binding {
                                         target:   viewModel
@@ -265,7 +272,7 @@ ColumnLayout {
                                     }
                                 }
                             }
-                            
+                    
 
                             SFText {
                                 Layout.alignment:   Qt.AlignTop
@@ -312,11 +319,11 @@ ColumnLayout {
                             showAddAll:       true
                             color:            Style.accent_outgoing
                             error:            showInsufficientBalanceWarning
-                                            //% "Insufficient funds: you would need %1 to complete the transaction"
-                                            ? qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.missing))
-                                            : ""
+                                              //% "Insufficient funds: you would need %1 to complete the transaction"
+                                              ? qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.missing))
+                                              : ""
                         }
-            
+     
                         Binding {
                             target:   viewModel
                             property: "sendAmount"
@@ -374,7 +381,7 @@ ColumnLayout {
                                 //% "Comments are local and won�t be shared"
                                 placeholderText:  qsTrId("general-comment-local")
                             }
-                        
+                 
                             Binding {
                                 target:   viewModel
                                 property: "comment"
@@ -407,7 +414,7 @@ ColumnLayout {
                             columnSpacing:       20
                             rowSpacing:          14
                             columns:             2
-                        
+                
                             //SFText {
                             //    Layout.alignment:       Qt.AlignTop
                             //    Layout.fillWidth:       true
@@ -425,7 +432,7 @@ ColumnLayout {
                             //    secondCurrencyLabel:     viewModel.secondCurrencyLabel
                             //    secondCurrencyRateValue: viewModel.secondCurrencyRateValue
                             //}
-                        
+                
                             SFText {
                                 Layout.alignment:       Qt.AlignTop
                                 Layout.fillWidth:       true
@@ -434,7 +441,7 @@ ColumnLayout {
                                 //% "Amount to send"
                                 text:                   qsTrId("send-amount-label") + ":"
                             }
-                            
+                    
                             BeamAmount {
                                 Layout.alignment:        Qt.AlignTop
                                 Layout.fillWidth:        true
@@ -445,7 +452,7 @@ ColumnLayout {
                                 secondCurrencyLabel:     viewModel.secondCurrencyLabel
                                 secondCurrencyRateValue: viewModel.secondCurrencyRateValue
                             }
-                            
+                    
                             SFText {
                                 Layout.alignment:       Qt.AlignTop
                                 Layout.fillWidth:       true
@@ -453,7 +460,7 @@ ColumnLayout {
                                 color:                  Style.content_secondary
                                 text:                   qsTrId("general-change") + ":"
                             }
-                            
+                    
                             BeamAmount {
                                 Layout.alignment:        Qt.AlignTop
                                 Layout.fillWidth:        true
@@ -472,7 +479,7 @@ ColumnLayout {
                                 color:                  Style.content_secondary
                                 text:                   qsTrId("general-fee") + ":"
                             }
-                            
+                    
                             BeamAmount {
                                 Layout.alignment:        Qt.AlignTop
                                 Layout.fillWidth:        true
@@ -483,7 +490,7 @@ ColumnLayout {
                                 secondCurrencyLabel:     viewModel.secondCurrencyLabel
                                 secondCurrencyRateValue: viewModel.secondCurrencyRateValue
                             }
-                            
+                    
                             SFText {
                                 Layout.alignment:       Qt.AlignTop
                                 Layout.fillWidth:       true
@@ -492,7 +499,7 @@ ColumnLayout {
                                 //% "Remaining"
                                 text:                   qsTrId("send-remaining-label") + ":"
                             }
-                            
+                    
                             BeamAmount {
                                 Layout.alignment:        Qt.AlignTop
                                 Layout.fillWidth:        true

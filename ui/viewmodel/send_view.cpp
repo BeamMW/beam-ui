@@ -125,7 +125,10 @@ void SendViewModel::setReceiverTA(const QString& value)
             }
             else
             {
-                // Just ignore, UI will display error automatically
+                setIsToken(false);
+                setIsShieldedTx(false);
+                setIsNonInteractive(false);
+                setIsPermanentAddress(false);
             }
         }
     }
@@ -330,6 +333,11 @@ void SendViewModel::extractParameters()
             setIsShieldedTx(true);
             setIsNonInteractive(_receiverAddress.isEmpty());
         } // ignore other types
+        else
+        {
+            setIsShieldedTx(false);
+            setIsNonInteractive(false);
+        }
     }
 
 

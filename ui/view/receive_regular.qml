@@ -35,8 +35,32 @@ ColumnLayout {
         return viewModel.commentValid
     }
 
+    SaveAddressDialog {
+        id:           saveAddressDialog
+        //% "Name the contact"
+        dialogTitle:  qsTrId("save-contact-title")
+        text:         viewModel.addressComment
+
+        onAccepted: {
+            viewModel.addressComment = text;
+            viewModel.saveAddress();
+            receiveView.onClosed();
+        }
+        onRejected: {
+            viewModel.addressComment = "No name";
+            viewModel.saveAddress();
+            receiveView.onClosed();
+        }
+    }
+
     function saveAddress() {
-        if (receiveView.isValid()) viewModel.saveAddress();
+        if (receiveView.isValid()) {
+            if (!viewModel.isNonInteractive) {
+                saveAddressDialog.open();
+            } else {
+                onClosed();
+            }
+        }
     }
 
     //
@@ -75,7 +99,7 @@ ColumnLayout {
         }
     }
 
-ScrollView {
+    ScrollView {
         id:                  scrollView
         Layout.fillWidth:    true
         Layout.fillHeight:   true
@@ -109,7 +133,7 @@ ScrollView {
                         content: 
                         ColumnLayout {
                             spacing: 20
-                            
+                    
                             Pane {
                                 padding:    2
                                 background: Rectangle {
@@ -241,7 +265,7 @@ ScrollView {
                             secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
                         }
-                        
+                
                         Binding {
                             target:   viewModel
                             property: "amountToReceive"
@@ -279,13 +303,13 @@ ScrollView {
                                 text:             viewModel.addressComment
                                 maximumLength:    BeamGlobals.maxCommentLength()
                             }
-                        
+                 
                             Binding {
                                 target:   viewModel
                                 property: "addressComment"
                                 value:    addressComment.text
                             }
-                        
+                 
                             Item {
                                 Layout.fillWidth: true
                                 SFText {
@@ -318,7 +342,6 @@ ScrollView {
                         isValidToken:       receiveView.isValid()
                         onTokenCopied: {
                             receiveView.saveAddress();
-                            onClosed();
                         }
                     }
                     TokenInfoPanel {
@@ -341,7 +364,6 @@ ScrollView {
 
                         onTokenCopied: {
                             receiveView.saveAddress();
-                            onClosed();
                         }
                     }
 
@@ -376,6 +398,7 @@ ScrollView {
                 horizontalAlignment:   Text.AlignHCenter
                 //% "For the transaction to complete, you should get online during the 12 hours after Beams are sent."
                 text: qsTrId("wallet-receive-text-online-time")
+                visible:               !viewModel.isNonInteractive
             }
 
             Item {

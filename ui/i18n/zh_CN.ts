@@ -2489,5 +2489,22 @@ Your version is: %2. Please, check for updates.</source>
         <source>Receiver requested Max privacy</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="save-address-title">
+        <source>Save to Address Book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-dont-save">
+        <source>don&apos;t save</source>
+        <oldsource>don�t save</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-save">
+        <source>save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="save-contact-title">
+        <source>Name the contact</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
