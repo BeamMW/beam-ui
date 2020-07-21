@@ -75,298 +75,312 @@ ColumnLayout {
         }
     }
 
-    //
-    // Content row
-    //
-    RowLayout {
-        Layout.fillWidth:   true
-        spacing:  10
+ScrollView {
+        id:                  scrollView
+        Layout.fillWidth:    true
+        Layout.fillHeight:   true
+        Layout.bottomMargin: 10
+        clip:                true
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+        ScrollBar.vertical.policy:   ScrollBar.AsNeeded
 
-        //
-        // Left column
-        //
         ColumnLayout {
-            Layout.alignment:   Qt.AlignTop
-            Layout.fillWidth:   true
-            Layout.preferredWidth: 400
-            spacing:            10
-            Panel {
-                //% "Transaction info"
-                title:                   qsTrId("general-transaction-info")
-                Layout.fillWidth:        true
-                content: 
+            width: scrollView.availableWidth
+
+            //
+            // Content row
+            //
+            RowLayout {
+                Layout.fillWidth:   true
+                spacing:  10
+
+                //
+                // Left column
+                //
                 ColumnLayout {
-                    spacing: 20
-                    
-                    Pane {
-                        padding:    2
-                        background: Rectangle {
-                            color: Style.table_header
-                            radius: 10
-                            border.width: 1
-                            border.color: Style.active
-                        }
-                        ButtonGroup { id: txTypeGroup }
-                        RowLayout {
-                            spacing: 0
-                            CustomButton {
-                                Layout.preferredHeight: 18
-                                id:                 regularCheck
-                                //% "Regular"
-                                text:               qsTrId("tx-regular")
-                                palette.buttonText: Style.content_main
-                                ButtonGroup.group:  txTypeGroup
-                                checkable:          true
-                                checked: !viewModel.isShieldedTx
-                                onToggled: {
-                                    viewModel.isShieldedTx = false;
-                                    viewModel.isNonInteractive= false;
+                    Layout.alignment:   Qt.AlignTop
+                    Layout.fillWidth:   true
+                    Layout.preferredWidth: 400
+                    spacing:            10
+                    Panel {
+                        //% "Transaction info"
+                        title:                   qsTrId("general-transaction-info")
+                        Layout.fillWidth:        true
+                        content: 
+                        ColumnLayout {
+                            spacing: 20
+                            
+                            Pane {
+                                padding:    2
+                                background: Rectangle {
+                                    color: Style.table_header
+                                    radius: 10
+                                    border.width: 1
+                                    border.color: Style.active
+                                }
+                                ButtonGroup { id: txTypeGroup }
+                                RowLayout {
+                                    spacing: 0
+                                    CustomButton {
+                                        Layout.preferredHeight: 18
+                                        id:                 regularCheck
+                                        //% "Regular"
+                                        text:               qsTrId("tx-regular")
+                                        palette.buttonText: Style.content_main
+                                        ButtonGroup.group:  txTypeGroup
+                                        checkable:          true
+                                        checked: !viewModel.isShieldedTx
+                                        onToggled: {
+                                            viewModel.isShieldedTx = false;
+                                            viewModel.isNonInteractive= false;
+                                        }
+                                    }
+                                    CustomButton {
+                                        Layout.preferredHeight: 18
+                                        id:                 maxPrivacyCheck
+                                        //% "Max privacy"
+                                        text:               qsTrId("tx-max-privacy")
+                                        palette.buttonText: Style.content_main
+                                        ButtonGroup.group:  txTypeGroup
+                                        checkable:          true
+                                        checked: viewModel.isShieldedTx && !viewModel.isNonInteractive
+                                        onToggled: {
+                                            viewModel.isShieldedTx = true;
+                                            viewModel.isNonInteractive= false;
+                                        }
+                                    }
+                                    CustomButton {
+                                        Layout.preferredHeight: 18
+                                        //% "Non-interactive"
+                                        text:               qsTrId("tx-non-interactive")
+                                        palette.buttonText: Style.content_main
+                                        ButtonGroup.group:  txTypeGroup
+                                        checkable:          true
+                                        checked:            viewModel.isShieldedTx && viewModel.isNonInteractive
+                                        onToggled: {
+                                            viewModel.isShieldedTx = true;
+                                            viewModel.isNonInteractive= true;
+                                        }
+                                    }
                                 }
                             }
-                            CustomButton {
-                                Layout.preferredHeight: 18
-                                id:                 maxPrivacyCheck
-                                //% "Max privacy"
-                                text:               qsTrId("tx-max-privacy")
-                                palette.buttonText: Style.content_main
-                                ButtonGroup.group:  txTypeGroup
-                                checkable:          true
-                                checked: viewModel.isShieldedTx && !viewModel.isNonInteractive
-                                onToggled: {
-                                    viewModel.isShieldedTx = true;
-                                    viewModel.isNonInteractive= false;
+
+                            RowLayout {
+                                spacing:    10
+                                visible:    !viewModel.isNonInteractive
+                                SFText {
+                                    //% "One-time use"
+                                    text:  qsTrId("token-one-time")
+                                    color: permanentTokenSwitch.checked ? Style.content_secondary : Style.active
+                                    font.pixelSize: 14
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        acceptedButtons: Qt.LeftButton
+                                        onClicked: {
+                                            permanentTokenSwitch.checked = !permanentTokenSwitch.checked;
+                                        }
+                                    }
+                                }
+
+                                CustomSwitch {
+                                    id:          permanentTokenSwitch
+                                    alwaysGreen: true
+                                    spacing:     0
+                                    checked:     viewModel.isPermanentAddress
+                                    Binding {
+                                        target:   viewModel
+                                        property: "isPermanentAddress"
+                                        value:    permanentTokenSwitch.checked
+                                    }
+                                }
+
+                                SFText {
+                                    //% "Permanent token"
+                                    text: qsTrId("token-permanent")
+                                    color: permanentTokenSwitch.checked ? Style.active : Style.content_secondary
+                                    font.pixelSize: 14
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        acceptedButtons: Qt.LeftButton
+                                        onClicked: {
+                                            permanentTokenSwitch.checked = !permanentTokenSwitch.checked;
+                                        }
+                                    }
                                 }
                             }
-                            CustomButton {
-                                Layout.preferredHeight: 18
-                                //% "Non-interactive"
-                                text:               qsTrId("tx-non-interactive")
-                                palette.buttonText: Style.content_main
-                                ButtonGroup.group:  txTypeGroup
-                                checkable:          true
-                                checked:            viewModel.isShieldedTx && viewModel.isNonInteractive
-                                onToggled: {
-                                    viewModel.isShieldedTx = true;
-                                    viewModel.isNonInteractive= true;
-                                }
+
+                            SFText {
+                                height: 16
+                                Layout.alignment:   Qt.AlignTop
+                                id:                 maxPrivacyNote
+                                color:              Style.content_secondary
+                                font.italic:        true
+                                font.pixelSize:     14
+                                text:               viewModel.isNonInteractive ?
+                                                    //% "Token good for 20 transactions."
+                                                    qsTrId("wallet-send-non-int-note") : 
+                                                    //% "Transaction is slower, fees are higher."
+                                                    qsTrId("wallet-send-max-privacy-note")
+                                visible:            viewModel.isShieldedTx
                             }
                         }
                     }
-
-                    RowLayout {
-                        spacing:    10
-                        visible:    !viewModel.isNonInteractive
-                        SFText {
-                            //% "One-time use"
-                            text:  qsTrId("token-one-time")
-                            color: permanentTokenSwitch.checked ? Style.content_secondary : Style.active
-                            font.pixelSize: 14
-                            MouseArea {
-                                anchors.fill: parent
-                                acceptedButtons: Qt.LeftButton
-                                onClicked: {
-                                    permanentTokenSwitch.checked = !permanentTokenSwitch.checked;
-                                }
-                            }
+                    //
+                    // Request
+                    //
+                    Panel {
+                        //% "Request"
+                        title:                   qsTrId("receive-request")
+                        Layout.fillWidth:        true
+                        //
+                        // Amount
+                        //
+                        content: AmountInput {
+                            id:                         receiveAmountInput
+                            amountIn:                   viewModel.amountToReceive
+                            secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
+                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
                         }
+                        
+                        Binding {
+                            target:   viewModel
+                            property: "amountToReceive"
+                            value:    receiveAmountInput.amount
+                        }
+                    }
+                    ////
+                    //// Fee
+                    ////
+                    //Panel {
+                    //    //% "Fee"
+                    //    title:                   qsTrId("general-fee")
+                    //    Layout.preferredHeight:  100
+                    //    Layout.fillWidth:        true
+                    //}
+                    //
+                    // Comment
+                    //
+                    Panel {
+                        //% "Comment"
+                        title:             qsTrId("general-comment")
+                        Layout.preferredHeight:  100
+                        Layout.fillWidth:        true
 
-                        CustomSwitch {
-                            id:          permanentTokenSwitch
-                            alwaysGreen: true
-                            spacing:     0
-                            checked:     viewModel.isPermanentAddress
+                        content:
+                        ColumnLayout {
+                            SFTextInput {
+                                id:               addressComment
+                                font.pixelSize:   14
+                                Layout.fillWidth: true
+                                font.italic :     !viewModel.commentValid
+                                backgroundColor:  viewModel.commentValid ? Style.content_main : Style.validator_error
+                                color:            viewModel.commentValid ? Style.content_main : Style.validator_error
+                                focus:            true
+                                text:             viewModel.addressComment
+                                maximumLength:    BeamGlobals.maxCommentLength()
+                            }
+                        
                             Binding {
                                 target:   viewModel
-                                property: "isPermanentAddress"
-                                value:    permanentTokenSwitch.checked
+                                property: "addressComment"
+                                value:    addressComment.text
                             }
-                        }
-
-                        SFText {
-                            //% "Permanent token"
-                            text: qsTrId("token-permanent")
-                            color: permanentTokenSwitch.checked ? Style.active : Style.content_secondary
-                            font.pixelSize: 14
-                            MouseArea {
-                                anchors.fill: parent
-                                acceptedButtons: Qt.LeftButton
-                                onClicked: {
-                                    permanentTokenSwitch.checked = !permanentTokenSwitch.checked;
+                        
+                            Item {
+                                Layout.fillWidth: true
+                                SFText {
+                                    //% "Address with the same comment already exists"
+                                    text:           qsTrId("general-addr-comment-error")
+                                    color:          Style.validator_error
+                                    font.pixelSize: 12
+                                    visible:        !viewModel.commentValid
+                                    font.italic:    true
                                 }
                             }
                         }
                     }
+                }
 
-                    SFText {
-                        height: 16
-                        Layout.alignment:   Qt.AlignTop
-                        id:                 maxPrivacyNote
-                        color:              Style.content_secondary
-                        font.italic:        true
-                        font.pixelSize:     14
-                        text:               viewModel.isNonInteractive ?
-                                            //% "Token good for 20 transactions."
-                                            qsTrId("wallet-send-non-int-note") : 
-                                            //% "Transaction is slower, fees are higher."
-                                            qsTrId("wallet-send-max-privacy-note")
-                        visible:            viewModel.isShieldedTx
-                    }
-                }
-            }
-            //
-            // Request
-            //
-            Panel {
-                //% "Request"
-                title:                   qsTrId("receive-request")
-                Layout.fillWidth:        true
                 //
-                // Amount
+                // Right column
                 //
-                content: AmountInput {
-                    id:                         receiveAmountInput
-                    amountIn:                   viewModel.amountToReceive
-                    secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
-                    secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                }
-                
-                Binding {
-                    target:   viewModel
-                    property: "amountToReceive"
-                    value:    receiveAmountInput.amount
-                }
-            }
-            ////
-            //// Fee
-            ////
-            //Panel {
-            //    //% "Fee"
-            //    title:                   qsTrId("general-fee")
-            //    Layout.preferredHeight:  100
-            //    Layout.fillWidth:        true
-            //}
-            //
-            // Comment
-            //
-            Panel {
-                //% "Comment"
-                title:             qsTrId("general-comment")
-                Layout.preferredHeight:  100
-                Layout.fillWidth:        true
-
-                content:
                 ColumnLayout {
-                    SFTextInput {
-                        id:               addressComment
-                        font.pixelSize:   14
-                        Layout.fillWidth: true
-                        font.italic :     !viewModel.commentValid
-                        backgroundColor:  viewModel.commentValid ? Style.content_main : Style.validator_error
-                        color:            viewModel.commentValid ? Style.content_main : Style.validator_error
-                        focus:            true
-                        text:             viewModel.addressComment
-                        maximumLength:    BeamGlobals.maxCommentLength()
-                    }
-                 
-                    Binding {
-                        target:   viewModel
-                        property: "addressComment"
-                        value:    addressComment.text
-                    }
-                 
-                    Item {
-                        Layout.fillWidth: true
-                        SFText {
-                            //% "Address with the same comment already exists"
-                            text:           qsTrId("general-addr-comment-error")
-                            color:          Style.validator_error
-                            font.pixelSize: 12
-                            visible:        !viewModel.commentValid
-                            font.italic:    true
+                    Layout.alignment:   Qt.AlignTop
+                    Layout.fillWidth:   true
+                    Layout.preferredWidth: 400
+                    spacing:            10
+                    TokenInfoPanel {
+                        Layout.fillWidth:   true
+                        //% "For wallet"
+                        title:              qsTrId("wallet-receive-token-for-wallet")
+                        token:              viewModel.transactionToken
+                        qrCode:             viewModel.transactionTokenQR
+                        isValidToken:       receiveView.isValid()
+                        onTokenCopied: {
+                            receiveView.saveAddress();
+                            onClosed();
                         }
                     }
-                }
-            }
-        }
+                    TokenInfoPanel {
+                        Layout.fillWidth:   true
+                        //% "For exchange or mining pool"
+                        title:              qsTrId("wallet-receive-token-for-exchange")
+                        token:              viewModel.receiverAddress
+                        qrCode:             viewModel.receiverAddressQR
+                        isValidToken:       receiveView.isValid()
+                        disabledText:       !viewModel.isPermanentAddress && !viewModel.isNonInteractive ?
+                                                //% "One-time uses token is not supported by exchanges or mining pools yet. Please switch to the permanent."
+                                                qsTrId("wallet-receive-exchanges-one-time-not-supported")
+                                                :
+                                                viewModel.isShieldedTx ?
+                                                    viewModel.isNonInteractive ? 
+                                                        //% "Non-interactive transaction is not supported by exchanges or mining pools yet."
+                                                        qsTrId("wallet-receive-exchanges-not-supported2") :
+                                                        //% "Max privacy transaction is not supported by exchanges or mining pools yet."
+                                                        qsTrId("wallet-receive-exchanges-not-supported") : ""
 
-        //
-        // Right column
-        //
-        ColumnLayout {
-            Layout.alignment:   Qt.AlignTop
-            Layout.fillWidth:   true
-            Layout.preferredWidth: 400
-            spacing:            10
-            TokenInfoPanel {
-                Layout.fillWidth:   true
-                //% "For wallet"
-                title:              qsTrId("wallet-receive-token-for-wallet")
-                token:              viewModel.transactionToken
-                qrCode:             viewModel.transactionTokenQR
-                isValidToken:       receiveView.isValid()
-                onTokenCopied: {
-                    receiveView.saveAddress();
-                    onClosed();
-                }
-            }
-            TokenInfoPanel {
-                Layout.fillWidth:   true
-                //% "For exchange or mining pool"
-                title:              qsTrId("wallet-receive-token-for-exchange")
-                token:              viewModel.receiverAddress
-                qrCode:             viewModel.receiverAddressQR
-                isValidToken:       receiveView.isValid()
-                disabledText:       !viewModel.isPermanentAddress && !viewModel.isNonInteractive ?
-                                        //% "One-time uses token is not supported by exchanges or mining pools yet. Please switch to the permanent."
-                                        qsTrId("wallet-receive-exchanges-one-time-not-supported")
-                                        :
-                                        viewModel.isShieldedTx ?
-                                            viewModel.isNonInteractive ? 
-                                                //% "Non-interactive transaction is not supported by exchanges or mining pools yet."
-                                                qsTrId("wallet-receive-exchanges-not-supported2") :
-                                                //% "Max privacy transaction is not supported by exchanges or mining pools yet."
-                                                qsTrId("wallet-receive-exchanges-not-supported") : ""
+                        onTokenCopied: {
+                            receiveView.saveAddress();
+                            onClosed();
+                        }
+                    }
 
-                onTokenCopied: {
-                    receiveView.saveAddress();
-                    onClosed();
                 }
             }
 
-        }
-    }
+            //
+            // Footers
+            //
+            SFText {
+                Layout.alignment:      Qt.AlignHCenter
+                Layout.preferredWidth: 418
+                Layout.topMargin:      30
+                font.pixelSize:        14
+                font.italic:           true
+                color:                 Style.content_main
+                wrapMode:              Text.WordWrap
+                horizontalAlignment:   Text.AlignHCenter
+                //% "Send token or address to the sender over an external secure channel or scan the QR code."
+                text: qsTrId("wallet-receive-addr-message")
+            }
 
-    //
-    // Footers
-    //
-    SFText {
-        Layout.alignment:      Qt.AlignHCenter
-        Layout.preferredWidth: 418
-        Layout.topMargin:      30
-        font.pixelSize:        14
-        font.italic:           true
-        color:                 Style.content_main
-        wrapMode:              Text.WordWrap
-        horizontalAlignment:   Text.AlignHCenter
-        //% "Send token or address to the sender over an external secure channel or scan the QR code."
-        text: qsTrId("wallet-receive-addr-message")
-    }
+            SFText {
+                Layout.alignment:      Qt.AlignHCenter
+                Layout.preferredWidth: 338
+                Layout.topMargin:      20
+                Layout.bottomMargin:   50
+                font.pixelSize:        14
+                font.italic:           true
+                color:                 Style.content_disabled
+                wrapMode:              Text.WordWrap
+                horizontalAlignment:   Text.AlignHCenter
+                //% "For the transaction to complete, you should get online during the 12 hours after Beams are sent."
+                text: qsTrId("wallet-receive-text-online-time")
+            }
 
-    SFText {
-        Layout.alignment:      Qt.AlignHCenter
-        Layout.preferredWidth: 338
-        Layout.topMargin:      20
-        Layout.bottomMargin:   50
-        font.pixelSize:        14
-        font.italic:           true
-        color:                 Style.content_disabled
-        wrapMode:              Text.WordWrap
-        horizontalAlignment:   Text.AlignHCenter
-        //% "For the transaction to complete, you should get online during the 12 hours after Beams are sent."
-        text: qsTrId("wallet-receive-text-online-time")
-    }
-
-    Item {
-        Layout.fillHeight: true
-    }
+            Item {
+                Layout.fillHeight: true
+            }
+        }  // ColumnLayout
+    }  // ScrollView
 }
