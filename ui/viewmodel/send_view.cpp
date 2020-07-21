@@ -45,6 +45,7 @@ SendViewModel::SendViewModel()
     connect(&_walletModel, SIGNAL(sendMoneyVerified()), this, SIGNAL(sendMoneyVerified()));
     connect(&_walletModel, SIGNAL(cantSendToExpired()), this, SIGNAL(cantSendToExpired()));
     connect(&_walletModel, SIGNAL(availableChanged()), this, SIGNAL(availableChanged()));
+    connect(&_walletModel, &WalletModel::getAddressReturned, this, &SendViewModel::onGetAddressReturned);
     connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyLabelChanged()));
     connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
 }
@@ -129,6 +130,7 @@ void SendViewModel::setReceiverTA(const QString& value)
                 setIsShieldedTx(false);
                 setIsNonInteractive(false);
                 setIsPermanentAddress(false);
+                setComment("");
             }
         }
     }
@@ -224,6 +226,20 @@ void SendViewModel::onChangeCalculated(beam::Amount change)
     emit isEnoughChanged();
 }
 
+void SendViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address)
+{
+    if (id == _receiverWalletID && address)
+    {
+        setWalletAddress(address);
+        setComment(QString::fromStdString(address->m_label));
+    }
+    else
+    {
+        setWalletAddress({});
+        setComment("");
+    }
+}
+
 QString SendViewModel::getChange() const
 {
     return beamui::AmountToUIString(_changeGrothes);
@@ -311,9 +327,11 @@ void SendViewModel::extractParameters()
 
     if (auto peerID = _txParameters.GetParameter<WalletID>(TxParameterID::PeerID); peerID)
     {
+        _receiverWalletID = *peerID;
         _receiverAddress = QString::fromStdString(std::to_string(*peerID));
         setIsToken(_receiverTA != _receiverAddress);
         emit receiverAddressChanged();
+        _walletModel.getAsync()->getAddress(_receiverWalletID);
     }
     else
     {
@@ -436,4 +454,18 @@ bool SendViewModel::isTokenGeneratebByNewAppVersion() const
 QString SendViewModel::tokenGeneratebByNewAppVersionMessage() const
 {
     return _tokenGeneratebByNewAppVersionMessage;
+}
+
+bool SendViewModel::hasAddress() const
+{
+    return _receiverWalletAddress.is_initialized();
+}
+
+void SendViewModel::setWalletAddress(const boost::optional<beam::wallet::WalletAddress>& value)
+{
+    if (_receiverWalletAddress != value)
+    {
+        _receiverWalletAddress = value;
+        emit hasAddressChanged();
+    }
 }

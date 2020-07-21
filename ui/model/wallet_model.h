@@ -65,6 +65,7 @@ signals:
     void generatedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void swapParamsLoaded(const beam::ByteBuffer& params);
     void newAddressFailed();
+    void getAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address);
     void nodeConnectionChanged(bool isNodeConnected);
     void walletError(beam::wallet::ErrorType error);
     void sendMoneyVerified();
@@ -102,6 +103,7 @@ private:
     void onSwapOffersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::SwapOffer>& offers) override;
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr) override;
+    void onGetAddress(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address) override;
     void onSwapParamsLoaded(const beam::ByteBuffer& token) override;
     void onNewAddressFailed() override;
     void onNodeConnectionChanged(bool isNodeConnected) override;

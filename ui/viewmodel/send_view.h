@@ -41,7 +41,8 @@ class SendViewModel: public QObject
     Q_PROPERTY(bool     isEnough           READ isEnough                                               NOTIFY isEnoughChanged)
     Q_PROPERTY(bool     canSend            READ canSend                                                NOTIFY canSendChanged)
     Q_PROPERTY(bool     isToken            READ isToken                                                NOTIFY isTokenChanged)
-                                                                                                       
+    Q_PROPERTY(bool     hasAddress         READ hasAddress                                             NOTIFY hasAddressChanged)
+
     Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                        NOTIFY secondCurrencyLabelChanged)
     Q_PROPERTY(QString  secondCurrencyRateValue     READ getSecondCurrencyRateValue                    NOTIFY secondCurrencyRateChanged)
 
@@ -90,6 +91,8 @@ public:
 
     bool isTokenGeneratebByNewAppVersion() const;
     QString tokenGeneratebByNewAppVersionMessage() const;
+    bool hasAddress() const;
+    void setWalletAddress(const boost::optional<beam::wallet::WalletAddress>& value);
 
 public:
     Q_INVOKABLE void setMaxAvailableAmount();
@@ -114,9 +117,11 @@ signals:
     void receiverIdentityChanged();
     void tokenGeneratebByNewAppVersion();
     void isTokenChanged();
+    void hasAddressChanged();
 
 public slots:
     void onChangeCalculated(beam::Amount change);
+    void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address);
 
 private:
     beam::Amount calcTotalAmount() const;
@@ -129,11 +134,13 @@ private:
     QString _comment;
     QString _receiverTA;
     QString _receiverAddress;
+    beam::wallet::WalletID _receiverWalletID = beam::Zero;
     QString _receiverIdentity;
     bool _isShieldedTx = false;
     bool _isPermanentAddress = false;
     bool _isNonInteractive = false;
     bool _isToken = false;
+    boost::optional<beam::wallet::WalletAddress> _receiverWalletAddress;
 
     WalletModel& _walletModel;
     ExchangeRatesManager _exchangeRatesManager;

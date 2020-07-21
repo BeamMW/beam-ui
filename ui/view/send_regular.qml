@@ -47,7 +47,16 @@ ColumnLayout {
         id:     saveAddressDialog
         //% "Save to Address Book"
         dialogTitle:  qsTrId("save-address-title")
-        text:         "text"
+        text:         viewModel.comment
+
+        onAccepted: {
+            viewModel.comment = text;
+            viewModel.sendMoney();
+        }
+        onRejected: {
+            viewModel.comment = "No name";
+            viewModel.sendMoney();
+        }
     }
 
     function isTAInputValid() {
@@ -378,7 +387,7 @@ ColumnLayout {
                                 color:            Style.content_main
                                 text:             viewModel.comment
                                 maximumLength:    BeamGlobals.maxCommentLength()
-                                //% "Comments are local and won�t be shared"
+                                //% "Comments are local and won't be shared"
                                 placeholderText:  qsTrId("general-comment-local")
                             }
                  
@@ -518,7 +527,6 @@ ColumnLayout {
             //
             // Footers
             //
-
             CustomButton {
                 Layout.alignment:    Qt.AlignHCenter
                 Layout.topMargin:    30
@@ -544,7 +552,11 @@ ColumnLayout {
                         }).open();
 
                     function acceptedCallback() {
-                        viewModel.sendMoney();
+                        if (!viewModel.hasAddress) {
+                            saveAddressDialog.open();
+                        } else {
+                            viewModel.sendMoney();
+                        }
                     }
                 }
             }
