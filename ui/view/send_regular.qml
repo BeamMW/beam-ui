@@ -341,7 +341,7 @@ ColumnLayout {
                     //
                     // Fee
                     //
-                    Panel {
+                    FoldablePanel {
                         //% "Fee"
                         title:                   qsTrId("general-fee")
                         Layout.fillWidth:        true
@@ -370,7 +370,7 @@ ColumnLayout {
                     //
                     // Comment
                     //
-                    Panel {
+                    FoldablePanel {
                         //% "Comment"
                         title:             qsTrId("general-comment")
                         Layout.fillWidth:        true

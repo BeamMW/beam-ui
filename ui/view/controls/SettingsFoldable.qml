@@ -116,8 +116,10 @@ Control {
                     rightPadding: 20
                 }
 
-                Image {
-                    id: originalSizeImage
+                SvgImage {
+                    id:     originalSizeImage
+                    Layout.maximumHeight:   8
+                    Layout.maximumWidth:    13
                     source: control.folded ? "qrc:/assets/icon-grey-arrow-down.svg" : "qrc:/assets/icon-grey-arrow-up.svg"
 
                     MouseArea {

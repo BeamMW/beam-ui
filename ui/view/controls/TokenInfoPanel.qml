@@ -12,7 +12,6 @@ Panel {
     property var qrCode:        null
     property alias token:       tokenLabel.text
     property bool isValidToken: false
-    property alias disabledText:disabledLabel.text
     signal tokenCopied;
 
     TokenInfoDialog {
@@ -24,28 +23,16 @@ Panel {
         anchors.fill:   parent
         spacing:        20
 
-        SFText {
-            id:                     disabledLabel
-            Layout.fillWidth:       true
-            Layout.preferredWidth:  332
-            font.pixelSize:         14
-            font.italic:            true
-            wrapMode:               Text.WordWrap
-            color:                  Style.content_secondary
-            visible:                text.length > 0
-        }
-
         Image {
             Layout.preferredWidth:  120
             Layout.preferredHeight: 120
             fillMode:               Image.PreserveAspectFit
             source:                 control.qrCode
-            visible:                !disabledLabel.visible
+            visible:                control.qrCode.length > 0
         }
         ColumnLayout {
             Layout.fillWidth:            true
             Layout.alignment:            Qt.AlignTop
-            visible:                     !disabledLabel.visible
             RowLayout {
                 Layout.topMargin:        20
                 Layout.fillWidth:        true

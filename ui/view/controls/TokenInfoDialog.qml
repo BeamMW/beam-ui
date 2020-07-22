@@ -61,22 +61,22 @@ Dialog {
                 }
             }
         
-            // Token type
-            SFText {
-                Layout.alignment:       Qt.AlignTop
-                font.pixelSize:         14
-                color:                  Style.content_disabled
-                //% "Token type"
-                text:                   qsTrId("token-info-type") + ":"
-            }
-            
-            SFText {
-                Layout.fillWidth:       true
-                wrapMode:               Text.Wrap
-                font.pixelSize:         14
-                text:                   viewModel.isPermanent ? "Permanent" : "One time"
-                color:                  Style.content_main
-            }
+            //// Token type
+            //SFText {
+            //    Layout.alignment:       Qt.AlignTop
+            //    font.pixelSize:         14
+            //    color:                  Style.content_disabled
+            //    //% "Token type"
+            //    text:                   qsTrId("token-info-type") + ":"
+            //}
+            //
+            //SFText {
+            //    Layout.fillWidth:       true
+            //    wrapMode:               Text.Wrap
+            //    font.pixelSize:         14
+            //    text:                   viewModel.isPermanent ? "Permanent" : "One time"
+            //    color:                  Style.content_main
+            //}
             
             // Amount
             SFText {
@@ -121,6 +121,7 @@ Dialog {
                 color:                  Style.content_disabled
                 //% "Address"
                 text:                   qsTrId("token-info-address") + ":"
+                visible:                viewModel.address.length
             }
             
             SFLabel {
@@ -131,6 +132,7 @@ Dialog {
                 color:                  Style.content_main
                 text:                   viewModel.address
                 onCopyText:             BeamGlobals.copyToClipboard(text)
+                visible:                viewModel.address.length
             }
 
             // Identity
@@ -140,6 +142,7 @@ Dialog {
                 color:                  Style.content_disabled
                 //% "Identity"
                 text:                   qsTrId("general-identity") + ":"
+                visible:                viewModel.identity.length
             }
             
             SFLabel {
@@ -150,6 +153,7 @@ Dialog {
                 color:                  Style.content_main
                 text:                   viewModel.identity
                 onCopyText:             BeamGlobals.copyToClipboard(text)
+                visible:                viewModel.identity.length
             }
             
             

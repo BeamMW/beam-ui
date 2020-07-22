@@ -2350,8 +2350,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-addr-message">
-        <source>Send token or address to the sender over an external secure channel or scan the QR code.</source>
-        <oldsource>Send this address to the sender over an external secure channel or scan the QR code</oldsource>
+        <source>To spend the received Max privacy coins the min transaction fee will be 1200000 GROTH.</source>
+        <oldsource>To spend the received Max privacy coins the min transaction fee will be 1200000 GROTH</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-text-online-time">
@@ -2372,10 +2372,6 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="token-info-title">
         <source>Transaction token</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="token-info-type">
-        <source>Token type</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="token-info-transaction-type">
@@ -2467,6 +2463,14 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="switch-regular">
         <source>Switch to regular transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="contact-name-prompt">
+        <source>Enter the name to this contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="receive-request-optional">
+        <source>(optional)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

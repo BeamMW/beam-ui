@@ -17,6 +17,7 @@ Dialog {
 
     property alias dialogTitle:  titleText.text
     property alias text:         labelInput.text
+    property alias placeholderText: labelInput.placeholderText
 
     background: Rectangle {
         radius: 10

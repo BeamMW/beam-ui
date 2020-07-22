@@ -36,10 +36,12 @@ ColumnLayout {
     }
 
     SaveAddressDialog {
-        id:           saveAddressDialog
+        id:              saveAddressDialog
         //% "Name the contact"
-        dialogTitle:  qsTrId("save-contact-title")
-        text:         viewModel.addressComment
+        dialogTitle:     qsTrId("save-contact-title")
+        text:            viewModel.addressComment
+        //% "Enter the name to this contact"
+        placeholderText: qsTrId("contact-name-prompt")
 
         onAccepted: {
             viewModel.addressComment = text;
@@ -210,6 +212,7 @@ ColumnLayout {
                                     id:          permanentTokenSwitch
                                     alwaysGreen: true
                                     spacing:     0
+                                    padding:     0
                                     checked:     viewModel.isPermanentAddress
                                     Binding {
                                         target:   viewModel
@@ -233,28 +236,31 @@ ColumnLayout {
                                 }
                             }
 
-                            SFText {
-                                height: 16
-                                Layout.alignment:   Qt.AlignTop
-                                id:                 maxPrivacyNote
-                                color:              Style.content_secondary
-                                font.italic:        true
-                                font.pixelSize:     14
-                                text:               viewModel.isNonInteractive ?
-                                                    //% "Token good for 20 transactions."
-                                                    qsTrId("wallet-send-non-int-note") : 
-                                                    //% "Transaction is slower, fees are higher."
-                                                    qsTrId("wallet-send-max-privacy-note")
-                                visible:            viewModel.isShieldedTx
+                            RowLayout {
+                                Layout.preferredHeight: 20
+                                visible:                viewModel.isShieldedTx
+                                SFText {
+                                    id:                 maxPrivacyNote
+                                    color:              Style.content_secondary
+                                    font.italic:        true
+                                    font.pixelSize:     14
+                                    text:               viewModel.isNonInteractive ?
+                                                        //% "Token good for 20 transactions."
+                                                        qsTrId("wallet-send-non-int-note") : 
+                                                        //% "Transaction is slower, fees are higher."
+                                                        qsTrId("wallet-send-max-privacy-note")
+                                }
                             }
                         }
                     }
                     //
                     // Request
                     //
-                    Panel {
+                    FoldablePanel {
                         //% "Request"
                         title:                   qsTrId("receive-request")
+                        //% "(optional)"
+                        headerText:              qsTrId("receive-request-optional")
                         Layout.fillWidth:        true
                         //
                         // Amount
@@ -272,22 +278,13 @@ ColumnLayout {
                             value:    receiveAmountInput.amount
                         }
                     }
-                    ////
-                    //// Fee
-                    ////
-                    //Panel {
-                    //    //% "Fee"
-                    //    title:                   qsTrId("general-fee")
-                    //    Layout.preferredHeight:  100
-                    //    Layout.fillWidth:        true
-                    //}
+
                     //
                     // Comment
                     //
-                    Panel {
+                    FoldablePanel {
                         //% "Comment"
-                        title:             qsTrId("general-comment")
-                        Layout.preferredHeight:  100
+                        title:                   qsTrId("general-comment")
                         Layout.fillWidth:        true
 
                         content:
@@ -338,7 +335,7 @@ ColumnLayout {
                         //% "For wallet"
                         title:              qsTrId("wallet-receive-token-for-wallet")
                         token:              viewModel.transactionToken
-                        qrCode:             viewModel.transactionTokenQR
+                        qrCode:             viewModel.isShieldedTx && viewModel.isNonInteractive ? "" : viewModel.transactionTokenQR
                         isValidToken:       receiveView.isValid()
                         onTokenCopied: {
                             receiveView.saveAddress();
@@ -409,15 +406,16 @@ ColumnLayout {
             //
             SFText {
                 Layout.alignment:      Qt.AlignHCenter
-                Layout.preferredWidth: 418
+                Layout.preferredWidth: 298
                 Layout.topMargin:      30
                 font.pixelSize:        14
                 font.italic:           true
                 color:                 Style.content_main
                 wrapMode:              Text.WordWrap
                 horizontalAlignment:   Text.AlignHCenter
-                //% "Send token or address to the sender over an external secure channel or scan the QR code."
+                //% "To spend the received Max privacy coins the min transaction fee will be 1200000 GROTH."
                 text: qsTrId("wallet-receive-addr-message")
+                visible:               viewModel.isShieldedTx
             }
 
             SFText {

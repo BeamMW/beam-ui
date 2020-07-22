@@ -36,9 +36,17 @@ QString TokenInfoItem::getTransactionType() const
         switch (*p)
         {
         case TxType::PushTransaction:
-            return "Shielded";
+            {
+                auto vouchers = m_parameters.GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList);
+                if (vouchers && getAddress().isEmpty())
+                {
+                    return qtTrId("tx-non-interactive");
+                }
+            }
+
+            return qtTrId("tx-max-privacy");
         case TxType::Simple:
-            return "Simple";
+            return qtTrId("tx-regular");
         default:
             break;
         }

@@ -246,5 +246,6 @@
         <file>controls/TokenInfoPanel.qml</file>
         <file>controls/TokenInfoDialog.qml</file>
         <file>controls/SaveAddressDialog.qml</file>
+        <file>controls/FoldablePanel.qml</file>
     </qresource>
 </RCC>

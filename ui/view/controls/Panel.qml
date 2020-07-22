@@ -8,8 +8,8 @@ import "."
 Pane {
     id: control
 
-    property alias title: headerTitle.text
-    property alias content: placeholder.contentItem
+    property alias title:            headerTitle.text
+    property alias content:  placeholder.contentItem
     spacing: 0
     padding: 20
 
@@ -20,7 +20,7 @@ Pane {
         SFText {
             id:    headerTitle
             color: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
-        
+            
             font {
                 styleName:      "Medium"
                 weight:         Font.Medium
