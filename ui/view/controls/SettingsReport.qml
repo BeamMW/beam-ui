@@ -5,6 +5,7 @@ import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.0
 import Beam.Wallet 1.0
 import "."
+import "../utils.js" as Utils
 
 SettingsFoldable {
     id: reportBlock
