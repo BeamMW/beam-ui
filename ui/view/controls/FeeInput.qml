@@ -66,7 +66,7 @@ ColumnLayout {
         }
 
         Item {
-            enabled: !control.underlineVisible && control.readOnly
+            visible: !control.underlineVisible && control.readOnly
             Layout.fillWidth: true
         }
     }
