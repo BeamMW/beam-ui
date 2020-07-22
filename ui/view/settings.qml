@@ -11,8 +11,14 @@ ColumnLayout {
     id: settingsView
     Layout.fillWidth: true
     state: "general"
-    property string linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
-    property string swapMode: ""
+
+    property string  linkStyle:  "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
+    property string  swapMode:   ""
+    property bool    creating:   true
+
+    Component.onCompleted: {
+        settingsView.creating = false
+    }
 
     SettingsViewModel {
         id: viewModel
@@ -128,6 +134,7 @@ ColumnLayout {
                 }
 
                 Repeater {
+                    id: swapSettingsList
                     model: viewModel.swapCoinSettingsList
                     SwapNodeSettings {
                         id:                       settingsControl
@@ -142,9 +149,9 @@ ColumnLayout {
                         connectionStatus:         modelData.connectionStatus
                         connectionErrorMsg:       modelData.connectionErrorMsg
                         getAddressesElectrum:     modelData.getAddressesElectrum
+                        folded:                   creating ? (swapMode == modelData.coinID ? false : (swapMode == "ALL" ? modelData.isConnected : true)) : modelData.folded
                         mainSettingsViewModel:    viewModel
                         hasStatusIndicatior:      true
-                        folded:                   swapMode == modelData.coinID ? false : (swapMode == "ALL" ? modelData.isConnected : true)
 
                         //
                         // Node
@@ -214,6 +221,12 @@ ColumnLayout {
                         onConnectToElectrum:         modelData.connectToElectrum()
                         onCopySeedElectrum:          modelData.copySeedElectrum()
                         onValidateCurrentSeedPhrase: modelData.validateCurrentElectrumSeedPhrase()
+
+                        Binding {
+                            target:   modelData
+                            property: "folded"
+                            value:    settingsControl.folded
+                        }
 
                         Binding {
                             target:   modelData

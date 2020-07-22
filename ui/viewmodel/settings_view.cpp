@@ -302,6 +302,16 @@ QString SwapCoinSettingsItem::getConnectedElectrumTitle() const
     }
 }
 
+bool SwapCoinSettingsItem::getFolded() const
+{
+    return m_isFolded;
+}
+
+void SwapCoinSettingsItem::setFolded(bool value)
+{
+    m_isFolded = value;
+}
+
 int SwapCoinSettingsItem::getFeeRate() const
 {
     return m_feeRate;

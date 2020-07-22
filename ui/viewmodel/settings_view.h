@@ -68,6 +68,8 @@ class SwapCoinSettingsItem : public QObject
     Q_PROPERTY(int      feeRate                  READ getFeeRate      WRITE setFeeRate        NOTIFY feeRateChanged)
     Q_PROPERTY(int      minFeeRate               READ getMinFeeRate                           CONSTANT)
     Q_PROPERTY(QString  coinID                   READ getCoinID                               CONSTANT)
+    Q_PROPERTY(bool     folded                   READ getFolded       WRITE setFolded         NOTIFY foldedChanged)
+
     // node settings
     Q_PROPERTY(QString  nodeUser     READ getNodeUser     WRITE setNodeUser       NOTIFY nodeUserChanged)
     Q_PROPERTY(QString  nodePass     READ getNodePass     WRITE setNodePass       NOTIFY nodePassChanged)
@@ -102,6 +104,8 @@ public:
     QString getShowAddressesDialogTitle() const;
     QString getCoinID() const;
 
+    bool getFolded() const;
+    void setFolded(bool value);
     int getFeeRate() const;
     void setFeeRate(int value);
     int getMinFeeRate() const;
@@ -157,6 +161,7 @@ private:
 
 signals:
 
+    void foldedChanged();
     void titleChanged();
     void feeRateChanged();
     void nodeUserChanged();
@@ -216,6 +221,7 @@ private:
     bool m_isCurrentSeedValid = false;
     // "true" if current seed valid and segwit type
     bool m_isCurrentSeedSegwit = false;
+    bool m_isFolded = true;
 };
 
 
