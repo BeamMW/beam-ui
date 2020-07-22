@@ -249,10 +249,26 @@ ColumnLayout {
                                 value:    receiverTAInput.text
                             }
 
+                            SFText {
+                                Layout.alignment:   Qt.AlignTop
+                                Layout.topMargin:   10
+                                id:                 addressNote
+                                color:              Style.content_secondary
+                                font.italic:        true
+                                font.pixelSize:     14
+                                text:               viewModel.isPermanentAddress ? 
+                                                    //% "Permanent token (you can save it to contacts after send)."
+                                                    qsTrId("wallet-send-permanent-note") 
+                                                    :
+                                                    //% "One-time use token (expire in 2 hours after succesfull transaction)."
+                                                    qsTrId("wallet-send-one-time-note")
+                                visible:            viewModel.isToken && !(viewModel.isShieldedTx && viewModel.isNonInteractive)
+                            }
+
                             RowLayout {
                                 spacing:            10
                                 Layout.topMargin:   20
-                                visible:            !viewModel.isToken || !(viewModel.isShieldedTx && viewModel.isNonInteractive)
+                                visible:            viewModel.canChangeTxType
                                 SFText {
                                     //% "Max privacy"
                                     text: qsTrId("general-max-privacy")
@@ -290,7 +306,7 @@ ColumnLayout {
                                 font.pixelSize:     14
                                 //% "Receiver requested Max privacy"
                                 text:               qsTrId("wallet-send-max-privacy-note-token")
-                                visible:            viewModel.isShieldedTx && !viewModel.isNonInteractive && viewModel.isToken
+                                visible:            !viewModel.canChangeTxType && viewModel.isShieldedTx && !viewModel.isNonInteractive && viewModel.isToken
                             }
 
                             SFText {
@@ -303,7 +319,7 @@ ColumnLayout {
                                 font.pixelSize:     14
                                 //% "Transaction is slower, fees are higher."
                                 text:               qsTrId("wallet-send-max-privacy-note")
-                                visible:            viewModel.isShieldedTx && !viewModel.isNonInteractive
+                                visible:            viewModel.isShieldedTx
                             }
                         }
                     }

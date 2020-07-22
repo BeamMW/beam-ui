@@ -22,8 +22,8 @@ Pane {
             color: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
             
             font {
-                styleName:      "Medium"
-                weight:         Font.Medium
+                styleName:      "Bold"
+                weight:         Font.Bold
                 pixelSize:      14
                 letterSpacing:  3.11
                 capitalization: Font.AllUppercase

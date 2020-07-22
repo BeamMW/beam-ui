@@ -30,6 +30,7 @@ class SendViewModel: public QObject
     Q_PROPERTY(bool     isShieldedTx       READ isShieldedTx          WRITE setIsShieldedTx            NOTIFY isShieldedTxChanged)
     Q_PROPERTY(bool     isNonInteractive   READ isNonInteractive      WRITE setIsNonInteractive        NOTIFY isNonInteractiveChanged)
     Q_PROPERTY(bool     isPermanentAddress READ isPermanentAddress    WRITE setIsPermanentAddress      NOTIFY isPermanentAddressChanged)
+    Q_PROPERTY(bool     canChangeTxType    READ canChangeTxType       WRITE setCanChangeTxType         NOTIFY canChangeTxTypeChanged)
 
     Q_PROPERTY(QString  receiverAddress    READ getReceiverAddress                                     NOTIFY receiverAddressChanged)
     Q_PROPERTY(QString  receiverIdentity   READ getReceiverIdentity                                    NOTIFY receiverIdentityChanged)
@@ -70,6 +71,8 @@ public:
     void    setIsShieldedTx(bool value);
     bool isPermanentAddress() const;
     void setIsPermanentAddress(bool value);
+    bool canChangeTxType() const;
+    void setCanChangeTxType(bool value);
 
     bool isNonInteractive() const;
     void setIsNonInteractive(bool value);
@@ -105,6 +108,7 @@ signals:
     void receiverTAChanged();
     void isShieldedTxChanged();
     void isPermanentAddressChanged();
+    void canChangeTxTypeChanged();
     void isNonInteractiveChanged();
     void availableChanged();
     void sendMoneyVerified();
@@ -138,6 +142,8 @@ private:
     QString _receiverIdentity;
     bool _isShieldedTx = false;
     bool _isPermanentAddress = false;
+    bool _canChangeTxType = true;
+
     bool _isNonInteractive = false;
     bool _isToken = false;
     boost::optional<beam::wallet::WalletAddress> _receiverWalletAddress;

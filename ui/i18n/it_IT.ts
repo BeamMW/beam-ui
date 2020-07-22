@@ -2501,5 +2501,13 @@ Your version is: %2. Please, check for updates.</source>
         <source>(optional)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-send-permanent-note">
+        <source>Permanent token (you can save it to contacts after send).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-one-time-note">
+        <source>One-time use token (expire in 2 hours after succesfull transaction).</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

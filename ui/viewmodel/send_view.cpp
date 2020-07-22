@@ -179,6 +179,19 @@ void SendViewModel::setIsPermanentAddress(bool value)
     }
 }
 
+bool SendViewModel::canChangeTxType() const
+{
+    return _canChangeTxType;
+}
+void SendViewModel::setCanChangeTxType(bool value)
+{
+    if (_canChangeTxType != value)
+    {
+        _canChangeTxType = value;
+        emit canChangeTxTypeChanged();
+    }
+}
+
 bool SendViewModel::isNonInteractive() const
 {
     return _isNonInteractive;
@@ -335,7 +348,10 @@ void SendViewModel::extractParameters()
     }
     else
     {
+        _receiverWalletID = Zero;
+        _receiverAddress = "";
         setIsToken(true);
+        emit receiverAddressChanged();
     }
 
     if (auto peerIdentity = _txParameters.GetParameter<beam::PeerID>(TxParameterID::PeerWalletIdentity); peerIdentity)
@@ -344,10 +360,21 @@ void SendViewModel::extractParameters()
         emit receiverIdentityChanged();
     }
 
+    if (auto isPermanent = _txParameters.GetParameter<bool>(TxParameterID::IsPermanentPeerID); isPermanent)
+    {
+        setIsPermanentAddress(*isPermanent);
+    }
+    else
+    {
+        setIsPermanentAddress(false);
+    }
+
+
     if (auto txType = _txParameters.GetParameter<TxType>(TxParameterID::TransactionType); txType)
     {
         if (*txType == TxType::PushTransaction)
         {
+            setCanChangeTxType(false);
             setIsShieldedTx(true);
             setIsNonInteractive(_receiverAddress.isEmpty());
         } // ignore other types
@@ -355,6 +382,7 @@ void SendViewModel::extractParameters()
         {
             setIsShieldedTx(false);
             setIsNonInteractive(false);
+            setCanChangeTxType(true);
         }
     }
 

@@ -30,7 +30,6 @@ class ReceiveViewModel: public QObject
     Q_PROPERTY(QString  transactionToken   READ getTransactionToken   WRITE  setTranasctionToken  NOTIFY  transactionTokenChanged)
     Q_PROPERTY(QString  transactionTokenQR READ getTransactionTokenQR                             NOTIFY  transactionTokenChanged)
     Q_PROPERTY(bool     commentValid       READ getCommentValid                                   NOTIFY  commentValidChanged)
-    Q_PROPERTY(bool     hasIdentity        READ getHasIdentity        WRITE  setHasIdentity       NOTIFY  hasIdentityChanged)
     Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                   NOTIFY secondCurrencyLabelChanged)
     Q_PROPERTY(QString  secondCurrencyRateValue     READ getSecondCurrencyRateValue               NOTIFY secondCurrencyRateChanged)
     Q_PROPERTY(bool     isShieldedTx       READ isShieldedTx          WRITE setIsShieldedTx       NOTIFY isShieldedTxChanged)
@@ -50,7 +49,6 @@ signals:
     void transactionTokenChanged();
     void newAddressFailed();
     void commentValidChanged();
-    void hasIdentityChanged();
     void secondCurrencyLabelChanged();
     void secondCurrencyRateChanged();
     void isShieldedTxChanged();
@@ -79,9 +77,6 @@ private:
     QString getTransactionTokenQR() const;
 
     bool getCommentValid() const;
-
-    bool getHasIdentity() const;
-    void setHasIdentity(bool value);
 
     void updateTransactionToken();
 
@@ -116,5 +111,4 @@ private:
     WalletModel& _walletModel;
     ExchangeRatesManager _exchangeRatesManager;
     beam::wallet::TxParameters _txParameters;
-    bool         _hasIdentity;
 };

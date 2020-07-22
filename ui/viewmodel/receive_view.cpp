@@ -31,7 +31,6 @@ ReceiveViewModel::ReceiveViewModel()
     , _qr(std::make_unique<QR>())
     , _tokenQr(std::make_unique<QR>())
     , _walletModel(*AppModel::getInstance().getWallet())
-    , _hasIdentity(true)
 {
     connect(_qr.get(), &QR::qrDataChanged, this, &ReceiveViewModel::onReceiverQRChanged);
     connect(_tokenQr.get(), &QR::qrDataChanged, this, &ReceiveViewModel::onTokenQRChanged);
@@ -159,22 +158,6 @@ void ReceiveViewModel::setAddressComment(const QString& value)
     }
 }
 
-
-bool ReceiveViewModel::getHasIdentity() const
-{
-    return _hasIdentity;
-}
-
-void ReceiveViewModel::setHasIdentity(bool value)
-{
-    if (_hasIdentity != value)
-    {
-        _hasIdentity = value;
-        emit hasIdentityChanged();
-        updateTransactionToken();
-    }
-}
-
 void ReceiveViewModel::saveAddress()
 {
     using namespace beam::wallet;
@@ -194,6 +177,8 @@ void ReceiveViewModel::updateTransactionToken()
         _txParameters.SetParameter(TxParameterID::Amount, _amountToReceiveGrothes);
     }
     _txParameters.SetParameter(TxParameterID::PeerID, _receiverAddress.m_walletID);
+    _txParameters.SetParameter(TxParameterID::PeerWalletIdentity, _receiverAddress.m_Identity);
+    _txParameters.SetParameter(TxParameterID::IsPermanentPeerID, isPermanentAddress());
     _txParameters.SetParameter(TxParameterID::TransactionType, TxType::Simple);
 #ifdef BEAM_CLIENT_VERSION
     _txParameters.SetParameter(
@@ -203,10 +188,7 @@ void ReceiveViewModel::updateTransactionToken()
 #ifdef BEAM_LIB_VERSION
     _txParameters.SetParameter(TxParameterID::LibraryVersion, std::string(BEAM_LIB_VERSION));
 #endif // BEAM_LIB_VERSION
-    if (_hasIdentity)
-    {
-        _txParameters.SetParameter(TxParameterID::PeerWalletIdentity, _receiverAddress.m_Identity);
-    }
+
     if (isShieldedTx())
     {
         // change tx type
@@ -222,6 +204,7 @@ void ReceiveViewModel::updateTransactionToken()
                 _txParameters.SetParameter(TxParameterID::ShieldedVoucherList, vouchers);
                 _txParameters.DeleteParameter(TxParameterID::PeerID);
                 _txParameters.DeleteParameter(TxParameterID::PeerWalletIdentity);
+                _txParameters.DeleteParameter(TxParameterID::IsPermanentPeerID);
             }
         }
         else
