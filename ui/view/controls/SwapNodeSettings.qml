@@ -243,6 +243,7 @@ SettingsFoldable {
         internalElectrum.save();
     }
 
+    /*
     headerContent: RowLayout {
         LinkButton {
             Layout.alignment: Qt.AlignVCenter
@@ -268,6 +269,7 @@ SettingsFoldable {
             }
         }
 
+
         LinkButton {
             Layout.alignment: Qt.AlignVCenter
             linkStyle: "<style>a:link {color: '#f9605b'; text-decoration: none;}</style>"
@@ -277,6 +279,7 @@ SettingsFoldable {
             onClicked:  disconnect()
         }
     }
+    */
 
     content: ColumnLayout {
         spacing: 0
