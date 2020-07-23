@@ -24,6 +24,7 @@ Panel {
         spacing:        20
 
         Image {
+            id:                     qrImage
             Layout.preferredWidth:  120
             Layout.preferredHeight: 120
             fillMode:               Image.PreserveAspectFit
@@ -34,7 +35,7 @@ Panel {
             Layout.fillWidth:            true
             Layout.alignment:            Qt.AlignTop
             RowLayout {
-                Layout.topMargin:        20
+                Layout.topMargin:        qrImage.visible ? 20 : 0
                 Layout.fillWidth:        true
                 SFLabel {
                     id:                  tokenLabel

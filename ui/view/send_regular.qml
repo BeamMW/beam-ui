@@ -45,16 +45,16 @@ ColumnLayout {
 
     SaveAddressDialog {
         id:     saveAddressDialog
-        //% "Save to Address Book"
+        //% "Do you want to name the contact?"
         dialogTitle:  qsTrId("save-address-title")
-        text:         viewModel.comment
+        //% "No name"
+        text:         qsTrId("save-address-no-name")
 
         onAccepted: {
-            viewModel.comment = text;
+            viewModel.saveReceiverAddress(text);
             viewModel.sendMoney();
         }
         onRejected: {
-            viewModel.comment = "No name";
             viewModel.sendMoney();
         }
     }
@@ -437,25 +437,7 @@ ColumnLayout {
                             columnSpacing:       20
                             rowSpacing:          14
                             columns:             2
-                
-                            //SFText {
-                            //    Layout.alignment:       Qt.AlignTop
-                            //    Layout.fillWidth:       true
-                            //    font.pixelSize:         14
-                            //    color:                  Style.content_secondary
-                            //    //% "Total UTXO value"
-                            //    text:                   qsTrId("send-total-label") + ":"
-                            //}
-                            //
-                            //BeamAmount {
-                            //    Layout.fillWidth:        true
-                            //    error:                   showInsufficientBalanceWarning
-                            //    amount:                  viewModel.totalUTXO
-                            //    currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                            //    secondCurrencyLabel:     viewModel.secondCurrencyLabel
-                            //    secondCurrencyRateValue: viewModel.secondCurrencyRateValue
-                            //}
-                
+
                             SFText {
                                 Layout.alignment:       Qt.AlignTop
                                 Layout.fillWidth:       true
@@ -566,7 +548,7 @@ ColumnLayout {
                         }).open();
 
                     function acceptedCallback() {
-                        if (!viewModel.hasAddress) {
+                        if (viewModel.isPermanentAddress && !viewModel.hasAddress) {
                             saveAddressDialog.open();
                         } else {
                             viewModel.sendMoney();

@@ -2375,7 +2375,8 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished">Recevoir</translation>
     </message>
     <message id="wallet-receive-token-for-wallet">
-        <source>For wallet</source>
+        <source>(for wallet)</source>
+        <oldsource>For wallet</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-addr-message">
@@ -2396,7 +2397,8 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-token-for-exchange">
-        <source>For exchange or mining pool</source>
+        <source>(for exchange or mining pool)</source>
+        <oldsource>For exchange or mining pool</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="token-info-title">
@@ -2448,7 +2450,8 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-non-interactive">
-        <source>Non-interactive</source>
+        <source></source>
+        <oldsource>Non-interactive</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-exchanges-not-supported2">
@@ -2470,12 +2473,8 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="save-address-title">
-        <source>Save to Address Book</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="address-dont-save">
-        <source>don&apos;t save</source>
-        <oldsource>don�t save</oldsource>
+        <source>Do you want to name the contact?</source>
+        <oldsource>Save to Address Book</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="address-save">
@@ -2483,7 +2482,8 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="save-contact-title">
-        <source>Name the contact</source>
+        <source>Do you want to name the contact?</source>
+        <oldsource>Name the contact</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="switch-permanent">
@@ -2508,6 +2508,18 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="wallet-send-one-time-note">
         <source>One-time use token (expire in 2 hours after succesfull transaction).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="save-address-no-name">
+        <source>No name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-online-token">
+        <source>Online token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-offline-token">
+        <source>Offline token</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="error-peer-exists">

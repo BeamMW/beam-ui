@@ -131,6 +131,7 @@ void SendViewModel::setReceiverTA(const QString& value)
                 setIsNonInteractive(false);
                 setIsPermanentAddress(false);
                 setComment("");
+                setContactName("");
             }
         }
     }
@@ -148,7 +149,7 @@ QString SendViewModel::getReceiverAddress() const
 
 QString SendViewModel::getReceiverIdentity() const
 {
-    return _receiverIdentity;
+    return _receiverIdentityStr;
 }
 
 bool SendViewModel::isShieldedTx() const
@@ -244,12 +245,12 @@ void SendViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const
     if (id == _receiverWalletID && address)
     {
         setWalletAddress(address);
-        setComment(QString::fromStdString(address->m_label));
+        setContactName(QString::fromStdString(address->m_label));
     }
     else
     {
         setWalletAddress({});
-        setComment("");
+        setContactName("");
     }
 }
 
@@ -327,6 +328,22 @@ void SendViewModel::sendMoney()
     }
 }
 
+void SendViewModel::saveReceiverAddress(const QString& name)
+{
+    using namespace beam::wallet;
+    QString trimmed = name;
+    if (!trimmed.isEmpty() && isPermanentAddress())
+    {
+        WalletAddress address;
+        address.m_walletID = _receiverWalletID;
+        address.m_createTime = getTimestamp();
+        address.m_Identity = _receiverIdentity;
+        address.m_label = trimmed.toStdString();
+        address.m_duration = WalletAddress::AddressExpirationNever;
+        _walletModel.getAsync()->saveAddress(address, false);
+    }
+}
+
 void SendViewModel::extractParameters()
 {
     using namespace beam::wallet;
@@ -356,7 +373,8 @@ void SendViewModel::extractParameters()
 
     if (auto peerIdentity = _txParameters.GetParameter<beam::PeerID>(TxParameterID::PeerWalletIdentity); peerIdentity)
     {
-        _receiverIdentity = QString::fromStdString(std::to_string(*peerIdentity));
+        _receiverIdentity = *peerIdentity;
+        _receiverIdentityStr = QString::fromStdString(std::to_string(*peerIdentity));
         emit receiverIdentityChanged();
     }
 
@@ -495,5 +513,20 @@ void SendViewModel::setWalletAddress(const boost::optional<beam::wallet::WalletA
     {
         _receiverWalletAddress = value;
         emit hasAddressChanged();
+    }
+}
+
+QString SendViewModel::getContactName() const
+{
+    return _contactName;
+}
+
+void SendViewModel::setContactName(const QString& value)
+{
+    QString trimmed = value.trimmed();
+    if (_contactName != trimmed)
+    {
+        _contactName = trimmed;
+        emit contactNameChanged();
     }
 }

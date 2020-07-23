@@ -67,24 +67,13 @@ Dialog {
                 dialog.accept()
             }
             Keys.onReturnPressed: {
-                dialog.acceptt()
+                dialog.reject()
             }
         }
 
         RowLayout {
             Layout.alignment:   Qt.AlignHCenter
             spacing:            20
-            CustomButton {
-                id:         cancelButton
-                focus:      true
-                icon.source: "qrc:/assets/icon-cancel-16.svg"
-                //% "don't save"
-                text:       qsTrId("address-dont-save")
-                onClicked: { 
-                    reject();
-                    close();
-                }
-            }
  
             CustomButton {
                 id:                 okButton

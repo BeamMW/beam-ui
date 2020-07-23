@@ -53,8 +53,7 @@ Pane {
                     styleName:      "Bold"
                     weight:         Font.Bold
                     pixelSize:      14
-                    letterSpacing:  3.11
-                    //capitalization: Font.AllUppercase
+                    letterSpacing:  0.35
                 }
         
                 visible:              text.length > 0

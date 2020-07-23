@@ -137,6 +137,20 @@ QString ReceiveViewModel::getTransactionTokenQR() const
     return _tokenQr->getEncoded();
 }
 
+QString ReceiveViewModel::getOfflineToken() const
+{
+    return _offlineToken;
+}
+
+void ReceiveViewModel::setOfflineToken(const QString& value)
+{
+    if (_offlineToken != value)
+    {
+        _offlineToken = value;
+        emit offlineTokenChanged();
+    }
+}
+
 void ReceiveViewModel::onTokenQRChanged()
 {
     emit transactionTokenChanged();
@@ -194,27 +208,26 @@ void ReceiveViewModel::updateTransactionToken()
         // change tx type
         _txParameters.SetParameter(TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
 
-        if (isNonInteractive())
-        {
+        TxParameters offlineParameters = _txParameters;
             // add a vouchers
-            auto vouchers = _walletModel.generateVouchers(_receiverAddress.m_OwnID, 10);
-            if (!vouchers.empty())
-            {
-                // add voucher parameter
-                _txParameters.SetParameter(TxParameterID::ShieldedVoucherList, vouchers);
-                _txParameters.DeleteParameter(TxParameterID::PeerID);
-                _txParameters.DeleteParameter(TxParameterID::PeerWalletIdentity);
-                _txParameters.DeleteParameter(TxParameterID::IsPermanentPeerID);
-            }
+        auto vouchers = _walletModel.generateVouchers(_receiverAddress.m_OwnID, 10);
+        if (!vouchers.empty())
+        {
+            // add voucher parameter
+            offlineParameters.SetParameter(TxParameterID::ShieldedVoucherList, vouchers);
+            //offlineParameters.DeleteParameter(TxParameterID::PeerID);
+            //offlineParameters.DeleteParameter(TxParameterID::PeerWalletIdentity);
+            //offlineParameters.DeleteParameter(TxParameterID::IsPermanentPeerID);
+            setOfflineToken(QString::fromStdString(std::to_string(offlineParameters)));
         }
         else
         {
-            _txParameters.DeleteParameter(beam::wallet::TxParameterID::ShieldedVoucherList);
+            setOfflineToken("");
         }
     }
     else
     {
-        _txParameters.DeleteParameter(beam::wallet::TxParameterID::ShieldedVoucherList);
+        setOfflineToken("");
     }
     setTranasctionToken(QString::fromStdString(std::to_string(_txParameters)));
 }
