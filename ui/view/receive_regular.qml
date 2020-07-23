@@ -37,32 +37,38 @@ ColumnLayout {
 
     SaveAddressDialog {
         id:              saveAddressDialog
-        //% "Name the contact"
+        //% "Do you want to name the contact?"
         dialogTitle:     qsTrId("save-contact-title")
-        text:            viewModel.addressComment
+        //% "No name"
+        text:            qsTrId("save-address-no-name")
         //% "Enter the name to this contact"
         placeholderText: qsTrId("contact-name-prompt")
 
         onAccepted: {
-            viewModel.addressComment = text;
-            viewModel.saveAddress();
-            receiveView.onClosed();
+            saveAddressWithNameAndClose(text)
         }
         onRejected: {
-            viewModel.addressComment = "No name";
-            viewModel.saveAddress();
-            receiveView.onClosed();
+            saveAddressWithNameAndClose("") 
+        }
+    }
+
+    function saveAddressWithNameAndClose(name) {
+        viewModel.addressComment = name;
+        viewModel.saveAddress();
+        receiveView.onClosed();
+    }
+
+    function saveAddressAndClose() {
+        if (receiveView.isValid() && viewModel.isPermanentAddress) {
+            saveAddressDialog.open();
+        } else {
+            saveAddressWithNameAndClose("") 
         }
     }
 
     function saveAddress() {
-        if (receiveView.isValid()) {
-            if (!viewModel.isNonInteractive) {
-                saveAddressDialog.open();
-            } else {
-                onClosed();
-            }
-        }
+        if (receiveView.isValid()) 
+            viewModel.saveAddress();
     }
 
     //
@@ -158,7 +164,6 @@ ColumnLayout {
                                         checked: !viewModel.isShieldedTx
                                         onToggled: {
                                             viewModel.isShieldedTx = false;
-                                            viewModel.isNonInteractive= false;
                                         }
                                     }
                                     CustomButton {
@@ -169,23 +174,9 @@ ColumnLayout {
                                         palette.buttonText: Style.content_main
                                         ButtonGroup.group:  txTypeGroup
                                         checkable:          true
-                                        checked:            viewModel.isShieldedTx && !viewModel.isNonInteractive
+                                        checked:            viewModel.isShieldedTx
                                         onToggled: {
                                             viewModel.isShieldedTx = true;
-                                            viewModel.isNonInteractive= false;
-                                        }
-                                    }
-                                    CustomButton {
-                                        Layout.preferredHeight: 18
-                                        //% "Non-interactive"
-                                        text:               qsTrId("tx-non-interactive")
-                                        palette.buttonText: Style.content_main
-                                        ButtonGroup.group:  txTypeGroup
-                                        checkable:          true
-                                        checked:            viewModel.isShieldedTx && viewModel.isNonInteractive
-                                        onToggled: {
-                                            viewModel.isShieldedTx = true;
-                                            viewModel.isNonInteractive= true;
                                         }
                                     }
                                 }
@@ -332,31 +323,51 @@ ColumnLayout {
                     spacing:            10
                     TokenInfoPanel {
                         Layout.fillWidth:   true
-                        //% "For wallet"
-                        title:              qsTrId("wallet-receive-token-for-wallet")
+                        //% "Online token"
+                        title:              qsTrId("wallet-receive-online-token")
+                        //% "(for wallet)"
+                        headerText:         qsTrId("wallet-receive-token-for-wallet")
                         token:              viewModel.transactionToken
                         qrCode:             viewModel.isShieldedTx && viewModel.isNonInteractive ? "" : viewModel.transactionTokenQR
                         isValidToken:       receiveView.isValid()
                         onTokenCopied: {
-                            receiveView.saveAddress();
+                            receiveView.saveAddressAndClose();
                         }
                     }
                     TokenInfoPanel {
                         Layout.fillWidth:   true
-                        //% "For exchange or mining pool"
-                        title:              qsTrId("wallet-receive-token-for-exchange")
+                        //% "Offline token"
+                        title:              qsTrId("wallet-receive-offline-token")
+                        //% "(for wallet)"
+                        headerText:         qsTrId("wallet-receive-token-for-wallet")
+                        token:              viewModel.offlineToken
+                        qrCode:             ""
+                        isValidToken:       receiveView.isValid()
+                        visible:            viewModel.isShieldedTx && viewModel.offlineToken.length > 0
+                        onTokenCopied: {
+                            receiveView.saveAddressAndClose();
+                        }
+                    }
+                    TokenInfoPanel {
+                        Layout.fillWidth:   true
+                        //% "Online token"
+                        title:              qsTrId("wallet-receive-online-token")
+                        //% "(for exchange or mining pool)"
+                        headerText:         qsTrId("wallet-receive-token-for-exchange")
                         token:              viewModel.receiverAddress
                         qrCode:             viewModel.receiverAddressQR
                         isValidToken:       receiveView.isValid()
                         visible:            disabledLabel.text.length == 0
                         onTokenCopied: {
-                            receiveView.saveAddress();
+                            receiveView.saveAddressAndClose();
                         }
                     }
                     Panel {
                         Layout.fillWidth:   true
-                        //% "For exchange or mining pool"
-                        title:              qsTrId("wallet-receive-token-for-exchange")
+                        //% "Online token"
+                        title:              qsTrId("wallet-receive-online-token")
+                        //% "(for exchange or mining pool)"
+                        headerText:         qsTrId("wallet-receive-token-for-exchange")
                         visible:            disabledLabel.text.length > 0
                         content: ColumnLayout {
                             anchors.fill:   parent

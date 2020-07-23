@@ -28,7 +28,7 @@ class ReceiveViewModel: public QObject
     Q_PROPERTY(QString  receiverAddressQR  READ getReceiverAddressQR                              NOTIFY  receiverAddressChanged)
     Q_PROPERTY(QString  transactionTokenQR READ getTransactionTokenQR                             NOTIFY  transactionTokenChanged)
     Q_PROPERTY(QString  transactionToken   READ getTransactionToken   WRITE  setTranasctionToken  NOTIFY  transactionTokenChanged)
-    Q_PROPERTY(QString  transactionTokenQR READ getTransactionTokenQR                             NOTIFY  transactionTokenChanged)
+    Q_PROPERTY(QString  offlineToken       READ getOfflineToken       WRITE  setOfflineToken      NOTIFY  offlineTokenChanged)
     Q_PROPERTY(bool     commentValid       READ getCommentValid                                   NOTIFY  commentValidChanged)
     Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                   NOTIFY secondCurrencyLabelChanged)
     Q_PROPERTY(QString  secondCurrencyRateValue     READ getSecondCurrencyRateValue               NOTIFY secondCurrencyRateChanged)
@@ -47,6 +47,7 @@ signals:
     void receiverAddressChanged();
     void addressCommentChanged();
     void transactionTokenChanged();
+    void offlineTokenChanged();
     void newAddressFailed();
     void commentValidChanged();
     void secondCurrencyLabelChanged();
@@ -75,6 +76,8 @@ private:
     void setTranasctionToken(const QString& value);
     QString getTransactionToken() const;
     QString getTransactionTokenQR() const;
+    QString getOfflineToken() const;
+    void setOfflineToken(const QString& value);
 
     bool getCommentValid() const;
 
@@ -102,6 +105,7 @@ private:
     int          _addressExpires;
     QString      _addressComment;
     QString      _token;
+    QString      _offlineToken;
     beam::wallet::WalletAddress _receiverAddress;
     bool _isShieldedTx = false;
     bool _isPermanentAddress = false;

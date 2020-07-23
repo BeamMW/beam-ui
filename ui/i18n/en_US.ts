@@ -2346,7 +2346,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished">Receive</translation>
     </message>
     <message id="wallet-receive-token-for-wallet">
-        <source>For wallet</source>
+        <source>(for wallet)</source>
+        <oldsource>For wallet</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-addr-message">
@@ -2367,7 +2368,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-token-for-exchange">
-        <source>For exchange or mining pool</source>
+        <source>(for exchange or mining pool)</source>
+        <oldsource>For exchange or mining pool</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="token-info-title">
@@ -2419,7 +2421,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-non-interactive">
-        <source>Non-interactive</source>
+        <source></source>
+        <oldsource>Non-interactive</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-exchanges-not-supported2">
@@ -2450,7 +2453,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="save-contact-title">
-        <source>Name the contact</source>
+        <source>Do you want to name the contact?</source>
+        <oldsource>Name the contact</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="switch-permanent">
@@ -2479,6 +2483,14 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="save-address-no-name">
         <source>No name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-online-token">
+        <source>Online token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-offline-token">
+        <source>Offline token</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
