@@ -25,6 +25,7 @@ Item {
     }
 
     property bool toSend: false
+    property string receiverAddress: ""
 
     ConfirmationDialog {
         id: deleteTransactionDialog
@@ -102,7 +103,13 @@ Item {
             Layout.fillHeight: true
             spacing: 0
             state: "all"
-
+            function navigateSend() {
+                walletStackView.push(Qt.createComponent("send_regular.qml"),
+                                             {"onAccepted":      onAccepted,
+                                              "onClosed":        onClosed,
+                                              "onSwapToken":     onSwapToken,
+                                              "receiverAddress": receiverAddress})
+            }
             Row {
                 Layout.alignment: Qt.AlignTop | Qt.AlignRight
                 Layout.topMargin: 30
@@ -120,10 +127,7 @@ Item {
                     //font.capitalization: Font.AllUppercase
 
                     onClicked: {
-                        walletStackView.push(Qt.createComponent("send_regular.qml"),
-                                             {"onAccepted":  onAccepted,
-                                              "onClosed":    onClosed,
-                                              "onSwapToken": onSwapToken})
+                        navigateSend();
                     }
                 }
 
@@ -687,8 +691,11 @@ Item {
 
     Component.onCompleted: {
         if (root.toSend) {
-            sendButton.clicked();
-            root.toSend = false;
+            var item = walletStackView.currentItem;
+            if (item && item.navigateSend && typeof item.navigateSend == "function" ) {
+                item.navigateSend();
+                root.toSend = false;
+            }
         }
     }
 

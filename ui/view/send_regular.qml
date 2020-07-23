@@ -11,9 +11,10 @@ ColumnLayout {
     property var defaultFocusItem: receiverTAInput
     spacing: 0
     // callbacks set by parent
-    property var onAccepted: undefined
-    property var onClosed: undefined
-    property var onSwapToken: undefined
+    property var onAccepted:        undefined
+    property var onClosed:          undefined
+    property var onSwapToken:       undefined
+    property alias receiverAddress: viewModel.receiverTA
 
     readonly property bool showInsufficientBalanceWarning:
         !viewModel.isEnough &&
@@ -103,7 +104,7 @@ ColumnLayout {
                 capitalization: Font.AllUppercase
             }
             //% "Send"
-            text:               qsTrId("send-title")
+            text:               qsTrId("general-send")
         }
     }
 
