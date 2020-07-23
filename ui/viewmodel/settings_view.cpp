@@ -1053,6 +1053,11 @@ uint SettingsViewModel::coreAmount() const
     return std::thread::hardware_concurrency();
 }
 
+bool SettingsViewModel::hasPeer(const QString& peer) const
+{
+    return m_localNodePeers.contains(peer, Qt::CaseInsensitive);
+}
+
 void SettingsViewModel::addLocalNodePeer(const QString& localNodePeer)
 {
     m_localNodePeers.push_back(localNodePeer);

@@ -301,6 +301,7 @@ public:
     Q_INVOKABLE QString getOwnerKey(const QString& password) const;
     Q_INVOKABLE bool exportData() const;
     Q_INVOKABLE bool importData() const;
+    Q_INVOKABLE bool hasPeer(const QString& peer) const;
 
 public slots:
     void applyChanges();

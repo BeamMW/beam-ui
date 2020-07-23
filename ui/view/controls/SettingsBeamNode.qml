@@ -17,7 +17,6 @@ SettingsFoldable {
        qsTrId("settings-remote-node-title")
 
     content: ColumnLayout {
-        spacing: 20
         RowLayout {
             SFText {
                 //: settings tab, node section, run node label
@@ -55,6 +54,7 @@ SettingsFoldable {
         //
         GridLayout {
             Layout.fillWidth: true
+            Layout.topMargin: 20
             visible: !viewModel.localNodeRun
             columnSpacing: 20
             rowSpacing: 15
@@ -157,6 +157,7 @@ SettingsFoldable {
         //
         GridLayout {
             Layout.fillWidth: true
+            Layout.topMargin: 20
             visible: viewModel.localNodeRun
             columnSpacing: 20
             rowSpacing: 15
@@ -215,20 +216,41 @@ SettingsFoldable {
             font.pixelSize: 16
             font.styleName: "Bold"; font.weight: Font.Bold
             visible: viewModel.localNodeRun
-            Layout.topMargin: 10
+            Layout.topMargin: 25
         }
 
         RowLayout {
+            Layout.topMargin: 15
+            Layout.bottomMargin: 5
             spacing: 0
             visible: viewModel.localNodeRun
 
-            SFTextInput {
-                Layout.preferredWidth: nodeBlock.width * 0.7
-                id: newLocalNodePeer
-                activeFocusOnTab: true
-                font.pixelSize: 14
-                color: Style.content_main
-                validator: RegExpValidator { regExp: /^(\s|\x180E)*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([\w.-]+(?:\.[\w\.-]+)+))(:([1-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?(\s|\x180E)*$/ }
+            ColumnLayout {
+                SFTextInput {
+                    Layout.preferredWidth: nodeBlock.width * 0.7
+                    id: newLocalNodePeer
+                    activeFocusOnTab: true
+                    font.pixelSize: 14
+                    color: getColor()
+                    backgroundColor: getColor()
+                    validator: RegExpValidator { regExp: /^(\s|\x180E)*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([\w.-]+(?:\.[\w\.-]+)+))(:([1-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?(\s|\x180E)*$/ }
+
+                    function getColor () {
+                        return text.length && (!acceptableInput || viewModel.hasPeer(text)) ? Style.validator_error : Style.content_main
+                    }
+
+                    function canAddPeer() {
+                        return acceptableInput && !viewModel.hasPeer(newLocalNodePeer.text)
+                    }
+                }
+
+                SFText {
+                    font.pixelSize: 12
+                    font.italic:    true
+                    color:          Style.validator_error
+                    //% "Peer already exists"
+                    text:            viewModel.hasPeer(newLocalNodePeer.text) ? qsTrId("error-peer-exists") : ""
+                }
             }
 
             Item {
@@ -239,13 +261,14 @@ SettingsFoldable {
                 Layout.alignment: Qt.AlignRight
                 Layout.preferredHeight: 16
                 Layout.preferredWidth: 16
+                Layout.bottomMargin: 12
                 source: "qrc:/assets/icon-add-green.svg"
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton
-                    cursorShape: newLocalNodePeer.acceptableInput ? Qt.PointingHandCursor : Qt.ArrowCursor
+                    cursorShape: newLocalNodePeer.canAddPeer() ? Qt.PointingHandCursor : Qt.ArrowCursor
                     onClicked: {
-                        if (newLocalNodePeer.acceptableInput) {
+                        if (newLocalNodePeer.canAddPeer()) {
                             viewModel.addLocalNodePeer(newLocalNodePeer.text.trim());
                             newLocalNodePeer.clear();
                         }
@@ -255,7 +278,7 @@ SettingsFoldable {
                     anchors.fill: parent
                     source: parent
                     saturation: -0.5
-                    visible: !newLocalNodePeer.acceptableInput
+                    visible: !newLocalNodePeer.canAddPeer()
                 }
             }
             Item {
@@ -298,7 +321,7 @@ SettingsFoldable {
         RowLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
-            Layout.topMargin: 5
+            Layout.topMargin: 25
 
             CustomButton {
                 Layout.preferredHeight: 38
@@ -328,7 +351,7 @@ SettingsFoldable {
                 enabled: {
                     if (!viewModel.isNodeChanged) return false;
                     if (!localNodeRun.checked) return viewModel.localNodePeers.length > 0 && localNodePort.acceptableInput
-                    return viewModel.isValidNodeAddress && nodeAddress.acceptableInput && remoteNodePort.acceptableInput
+                    return viewModel.isValidNodeAddress && nodeAddress.canAddPeer() && remoteNodePort.acceptableInput
                 }
                 onClicked: viewModel.applyChanges()
             }

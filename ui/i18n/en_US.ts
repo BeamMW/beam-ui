@@ -2481,5 +2481,9 @@ Your version is: %2. Please, check for updates.</translation>
         <source>One-time use token (expire in 2 hours after succesfull transaction).</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="error-peer-exists">
+        <source>Peer already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
