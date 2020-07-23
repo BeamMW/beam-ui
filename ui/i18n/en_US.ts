@@ -2441,12 +2441,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="save-address-title">
-        <source>Save to Address Book</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="address-dont-save">
-        <source>don&apos;t save</source>
-        <oldsource>don�t save</oldsource>
+        <source>Do you want to name the contact?</source>
+        <oldsource>Save to Address Book</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="address-save">
@@ -2479,6 +2475,10 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-send-one-time-note">
         <source>One-time use token (expire in 2 hours after succesfull transaction).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="save-address-no-name">
+        <source>No name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
