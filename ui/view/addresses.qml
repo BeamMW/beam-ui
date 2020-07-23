@@ -313,8 +313,7 @@ ColumnLayout {
 
             TableViewColumn {
                 role: viewModel.addressRole
-                //% "Contact"
-                title: qsTrId("general-contact")
+                title: qsTrId("general-address")
                 width: 170 * contactsView.columnResizeRatio
                 movable: false
                 delegate: 
@@ -437,6 +436,14 @@ ColumnLayout {
                 modal: true
                 dim: false
                 property string address
+                Action {
+                    //% "Send"
+                    text: qsTrId("general-send")
+                    icon.source: "qrc:/assets/icon-send-blue.svg"
+                    onTriggered: {
+                        main.openSendDialog(contextMenu.address);
+                    }
+                }
                 Action {
                     //% "Delete contact"
                     text: qsTrId("address-table-cm-delete-contact")
