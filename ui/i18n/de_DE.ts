@@ -958,8 +958,9 @@ Allow to open and proceed to the website? You can always update your choice in S
         <translation>Um ein Problem zu melden:</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
-        <translation>1. “Save wallet logs” auswählen und einen Speicherort für das log Archiv auswählen</translation>
+        <source>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</source>
+        <oldsource>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;1for log archive</oldsource>
+        <translation type="unfinished">1. “Save wallet logs” auswählen und einen Speicherort für das log Archiv auswählen</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send email to %1 or open a ticket in %2</source>

@@ -959,8 +959,9 @@ Allow to open and proceed to the website? You can always update your choice in S
         <translation>За пријављивање проблема:</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
-        <translation>1. Кликни “Сачувај логове новчаника” и изабери одредишни фолдер за архиву логова</translation>
+        <source>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</source>
+        <oldsource>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;1for log archive</oldsource>
+        <translation type="unfinished">1. Кликни “Сачувај логове новчаника” и изабери одредишни фолдер за архиву логова</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send email to %1 or open a ticket in %2</source>

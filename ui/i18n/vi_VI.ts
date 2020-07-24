@@ -959,8 +959,9 @@ Allow to open and proceed to the website? You can always update your choice in S
         <translation>Để báo cáo sự cố:</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
-        <translation>1. Nhấp vào Lưu Lưu nhật ký ví Nhật ký và chọn thư mục đích để lưu trữ nhật ký</translation>
+        <source>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</source>
+        <oldsource>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;1for log archive</oldsource>
+        <translation type="unfinished">1. Nhấp vào Lưu Lưu nhật ký ví Nhật ký và chọn thư mục đích để lưu trữ nhật ký</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send email to %1 or open a ticket in %2</source>

@@ -959,8 +959,9 @@ Allow to open and proceed to the website? You can always update your choice in S
         <translation>문제 신고하기:</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
-        <translation>1. &quot;지갑 로그 저장하기&quot; 를 누르고 로그를 저장할 폴더를 선택하십시오</translation>
+        <source>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</source>
+        <oldsource>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;1for log archive</oldsource>
+        <translation type="unfinished">1. &quot;지갑 로그 저장하기&quot; 를 누르고 로그를 저장할 폴더를 선택하십시오</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send email to %1 or open a ticket in %2</source>

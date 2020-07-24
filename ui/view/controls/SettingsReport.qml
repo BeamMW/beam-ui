@@ -15,7 +15,6 @@ SettingsFoldable {
 
     content:  ColumnLayout {
         spacing: 25
-        height:  reportText.height + spacing + reportButton.height
 
         SFText {
             id: reportText
@@ -24,7 +23,7 @@ SettingsFoldable {
             property string beamGithub: "<a href='https://github.com/BeamMW'>Github</a>"
             //% "To report a problem:"
             property string rpm0: qsTrId("settings-report-problem-message-l0")
-            //% "1. Click “Save wallet logs” and choose a destination folder for log archive"
+            //% "1. Click “Save wallet logs” and choose a destination folder<br />for log archive"
             property string rpm1: qsTrId("settings-report-problem-message-l1")
             //% "2. Send email to %1 or open a ticket in %2"
             property string rpm2: qsTrId("settings-report-problem-message-l2").arg(beamEmail).arg(beamGithub)
@@ -35,7 +34,6 @@ SettingsFoldable {
             textFormat: Text.RichText
             color: Style.content_main
             font.pixelSize: 14
-            wrapMode: Text.WordWrap
             linkEnabled: true
             onLinkActivated: {
                 Utils.openExternalWithConfirmation(link)
