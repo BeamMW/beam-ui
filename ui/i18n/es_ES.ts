@@ -1150,10 +1150,6 @@ Escanee este código QR o envíe esta dirección al remitente a través de un ca
         <source>Swap</source>
         <translation>Intercambiar</translation>
     </message>
-    <message id="settings-reset">
-        <source>Clear</source>
-        <translation>Limpiar</translation>
-    </message>
     <message id="settings-node-address">
         <source>Node Address</source>
         <translation>Dirección del nodo</translation>
@@ -1591,10 +1587,6 @@ Please try again later or create an offer yourself.</oldsource>
         <source>%1 Transaction fee rate</source>
         <translation>Tarifa de transacción</translation>
     </message>
-    <message id="settings-swap-disconnect">
-        <source>Disconnect</source>
-        <translation>Desconectar</translation>
-    </message>
     <message id="settings-swap-bitcoin-node">
         <source>Bitcoin node</source>
         <translation>Nodo Bitcoin</translation>
@@ -1739,16 +1731,6 @@ Please check the swap token and try again.</oldsource>
         <source>Enter your wallet password to see the phrase</source>
         <extracomment>electrum settings, ask password to show seed phrase, dialog message</extracomment>
         <translation>Introduzca la contraseña de su wallet para ver la frase</translation>
-    </message>
-    <message id="settings-swap-confirm-clear-seed-title">
-        <source>Clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
-        <translation>Limpiar frase semilla</translation>
-    </message>
-    <message id="settings-swap-confirm-clear-seed-message">
-        <source>Enter your wallet password to clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
-        <translation>Introduzca la contraseña de su wallet para borrar la frase semilla</translation>
     </message>
     <message id="wallet-receive-swap-your-token">
         <source>Your swap token</source>

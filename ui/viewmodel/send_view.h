@@ -43,7 +43,6 @@ class SendViewModel: public QObject
     Q_PROPERTY(bool     canSend            READ canSend                                                NOTIFY canSendChanged)
     Q_PROPERTY(bool     isToken            READ isToken                                                NOTIFY isTokenChanged)
     Q_PROPERTY(bool     hasAddress         READ hasAddress                                             NOTIFY hasAddressChanged)
-    Q_PROPERTY(QString  contactName        READ getContactName        WRITE setContactName             NOTIFY contactNameChanged)
 
     Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                        NOTIFY secondCurrencyLabelChanged)
     Q_PROPERTY(QString  secondCurrencyRateValue     READ getSecondCurrencyRateValue                    NOTIFY secondCurrencyRateChanged)
@@ -98,9 +97,6 @@ public:
     bool hasAddress() const;
     void setWalletAddress(const boost::optional<beam::wallet::WalletAddress>& value);
 
-    QString getContactName() const;
-    void setContactName(const QString& value);
-
 public:
     Q_INVOKABLE void setMaxAvailableAmount();
     Q_INVOKABLE void sendMoney();
@@ -127,7 +123,6 @@ signals:
     void tokenGeneratebByNewAppVersion();
     void isTokenChanged();
     void hasAddressChanged();
-    void contactNameChanged();
 
 public slots:
     void onChangeCalculated(beam::Amount change);
@@ -150,7 +145,6 @@ private:
     bool _isShieldedTx = false;
     bool _isPermanentAddress = false;
     bool _canChangeTxType = true;
-    QString _contactName;
 
     bool _isNonInteractive = false;
     bool _isToken = false;

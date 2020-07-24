@@ -33,7 +33,6 @@ class ReceiveViewModel: public QObject
     Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                   NOTIFY secondCurrencyLabelChanged)
     Q_PROPERTY(QString  secondCurrencyRateValue     READ getSecondCurrencyRateValue               NOTIFY secondCurrencyRateChanged)
     Q_PROPERTY(bool     isShieldedTx       READ isShieldedTx          WRITE setIsShieldedTx       NOTIFY isShieldedTxChanged)
-    Q_PROPERTY(bool     isNonInteractive   READ isNonInteractive      WRITE setIsNonInteractive   NOTIFY isNonInteractiveChanged)
     Q_PROPERTY(bool     isPermanentAddress READ isPermanentAddress    WRITE setIsPermanentAddress NOTIFY isPermanentAddressChanged)
         
 
@@ -54,7 +53,6 @@ signals:
     void secondCurrencyRateChanged();
     void isShieldedTxChanged();
     void isPermanentAddressChanged();
-    void isNonInteractiveChanged();
 
 public:
     Q_INVOKABLE void initialize(const QString& address);
@@ -93,9 +91,6 @@ private:
     bool isPermanentAddress() const;
     void setIsPermanentAddress(bool value);
 
-    bool isNonInteractive() const;
-    void setIsNonInteractive(bool value);
-
 private slots:
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onReceiverQRChanged();
@@ -110,7 +105,6 @@ private:
     beam::wallet::WalletAddress _receiverAddress;
     bool _isShieldedTx = false;
     bool _isPermanentAddress = false;
-    bool _isNonInteractive = false;
     std::unique_ptr<QR> _qr;
     std::unique_ptr<QR> _tokenQr;
     WalletModel& _walletModel;

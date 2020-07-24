@@ -64,11 +64,13 @@ ColumnLayout {
     }
 
     function saveAddressAndClose() {
-        if (receiveView.isValid() && viewModel.isPermanentAddress) {
-            saveAddressDialog.open();
-        } else {
-            saveAddressWithNameAndClose("") 
-        }
+        // TODO: uncomment
+        //if (receiveView.isValid() && viewModel.isPermanentAddress) {
+        //    saveAddressDialog.open();
+        //} else {
+        //    saveAddressWithNameAndClose("") 
+        //}
+        saveAddressWithNameAndClose(viewModel.addressComment)
     }
 
     function saveAddress() {

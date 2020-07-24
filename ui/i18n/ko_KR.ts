@@ -1150,10 +1150,6 @@ Allow to open and proceed to the website? You can always update your choice in S
         <source>Swap</source>
         <translation>바꾸기</translation>
     </message>
-    <message id="settings-reset">
-        <source>Clear</source>
-        <translation>지우기</translation>
-    </message>
     <message id="settings-node-address">
         <source>Node Address</source>
         <translation>노드 주소</translation>
@@ -1591,10 +1587,6 @@ Please try again later or create an offer yourself.</oldsource>
         <source>%1 Transaction fee rate</source>
         <translation>Transaction fee rate</translation>
     </message>
-    <message id="settings-swap-disconnect">
-        <source>Disconnect</source>
-        <translation>연결 끊기</translation>
-    </message>
     <message id="settings-swap-bitcoin-node">
         <source>Bitcoin node</source>
         <translation>비트코인 노드</translation>
@@ -1739,16 +1731,6 @@ Please check the swap token and try again.</oldsource>
         <source>Enter your wallet password to see the phrase</source>
         <extracomment>electrum settings, ask password to show seed phrase, dialog message</extracomment>
         <translation>시드 구문을 보기 위해 지갑 비밀번호를 입력해주세요</translation>
-    </message>
-    <message id="settings-swap-confirm-clear-seed-title">
-        <source>Clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
-        <translation>시드 구문 치우기</translation>
-    </message>
-    <message id="settings-swap-confirm-clear-seed-message">
-        <source>Enter your wallet password to clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
-        <translation>시드 구문을 치우기 위해 지갑 비밀번호를 입력해주세요</translation>
     </message>
     <message id="wallet-receive-swap-your-token">
         <source>Your swap token</source>

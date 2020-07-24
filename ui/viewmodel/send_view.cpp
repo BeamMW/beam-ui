@@ -131,7 +131,6 @@ void SendViewModel::setReceiverTA(const QString& value)
                 setIsNonInteractive(false);
                 setIsPermanentAddress(false);
                 setComment("");
-                setContactName("");
             }
         }
     }
@@ -245,12 +244,10 @@ void SendViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const
     if (id == _receiverWalletID && address)
     {
         setWalletAddress(address);
-        setContactName(QString::fromStdString(address->m_label));
     }
     else
     {
         setWalletAddress({});
-        setContactName("");
     }
 }
 
@@ -513,20 +510,5 @@ void SendViewModel::setWalletAddress(const boost::optional<beam::wallet::WalletA
     {
         _receiverWalletAddress = value;
         emit hasAddressChanged();
-    }
-}
-
-QString SendViewModel::getContactName() const
-{
-    return _contactName;
-}
-
-void SendViewModel::setContactName(const QString& value)
-{
-    QString trimmed = value.trimmed();
-    if (_contactName != trimmed)
-    {
-        _contactName = trimmed;
-        emit contactNameChanged();
     }
 }

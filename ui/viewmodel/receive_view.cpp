@@ -298,18 +298,3 @@ void ReceiveViewModel::setIsPermanentAddress(bool value)
         updateTransactionToken();
     }
 }
-
-bool ReceiveViewModel::isNonInteractive() const
-{
-    return _isNonInteractive;
-}
-
-void ReceiveViewModel::setIsNonInteractive(bool value)
-{
-    if (_isNonInteractive != value)
-    {
-        _isNonInteractive = value;
-        emit isNonInteractiveChanged();
-        updateTransactionToken();
-    }
-}

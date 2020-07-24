@@ -1150,10 +1150,6 @@ Allow to open and proceed to the website? You can always update your choice in S
         <source>Swap</source>
         <translation>Swap</translation>
     </message>
-    <message id="settings-reset">
-        <source>Clear</source>
-        <translation>Poista</translation>
-    </message>
     <message id="settings-node-address">
         <source>Node Address</source>
         <translation>Palvelimen (node) osoite</translation>
@@ -1591,10 +1587,6 @@ Please try again later or create an offer yourself.</oldsource>
         <source>%1 Transaction fee rate</source>
         <translation>Vaihtomaksu</translation>
     </message>
-    <message id="settings-swap-disconnect">
-        <source>Disconnect</source>
-        <translation>Katkaise yhteys</translation>
-    </message>
     <message id="settings-swap-bitcoin-node">
         <source>Bitcoin node</source>
         <translation>Bitcoin palvelin (node)</translation>
@@ -1739,16 +1731,6 @@ Please check the swap token and try again.</oldsource>
         <source>Enter your wallet password to see the phrase</source>
         <extracomment>electrum settings, ask password to show seed phrase, dialog message</extracomment>
         <translation>Kirjoita lompakkosi salasana nähdäksesi seed phrasen</translation>
-    </message>
-    <message id="settings-swap-confirm-clear-seed-title">
-        <source>Clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
-        <translation>Nollaa seed phrase</translation>
-    </message>
-    <message id="settings-swap-confirm-clear-seed-message">
-        <source>Enter your wallet password to clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
-        <translation>Kirjoita lompakkosi salasana nollataksesi seed phrasen</translation>
     </message>
     <message id="wallet-receive-swap-your-token">
         <source>Your swap token</source>
