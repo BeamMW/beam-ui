@@ -239,11 +239,12 @@ CustomTableView {
         property string address
         property var addressItem
         Action {
-            id: receiveAction
+            id:          receiveAction
             //: Entry in address table context menu to get receive token
             //% "receive"
-            text: qsTrId("address-table-cm-receive")
+            text:        qsTrId("address-table-cm-receive")
             icon.source: "qrc:/assets/icon-receive-blue.svg"
+            enabled:     contextMenu.addressItem && !contextMenu.addressItem.isExpired
             onTriggered: {
                 main.openReceiveDialog(contextMenu.address);
             }

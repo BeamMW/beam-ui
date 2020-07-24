@@ -32,6 +32,7 @@ class AddressItem : public QObject
     Q_PROPERTY(QDateTime expirationDate READ getExpirationDate  CONSTANT)
     Q_PROPERTY(QDateTime createDate     READ getCreateDate      CONSTANT)
     Q_PROPERTY(bool neverExpired        READ isNeverExpired     CONSTANT)
+    Q_PROPERTY(bool isExpired           READ isExpired          CONSTANT)
 
 public:
 
