@@ -104,7 +104,7 @@ ColumnLayout {
                 capitalization: Font.AllUppercase
             }
             //% "Send"
-            text:               qsTrId("general-send")
+            text:               qsTrId("send-title")
         }
     }
 
@@ -550,7 +550,10 @@ ColumnLayout {
 
                     function acceptedCallback() {
                         if (viewModel.isPermanentAddress && !viewModel.hasAddress) {
-                            saveAddressDialog.open();
+                            // TODO: uncomment when UX will be ready
+                            //saveAddressDialog.open();
+                            viewModel.saveReceiverAddress(viewModel.comment);
+                            viewModel.sendMoney();
                         } else {
                             viewModel.sendMoney();
                         }

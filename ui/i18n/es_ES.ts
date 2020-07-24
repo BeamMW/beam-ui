@@ -15,10 +15,6 @@
         <source>Comment</source>
         <translation>Comentario</translation>
     </message>
-    <message id="general-contact">
-        <source>Contact</source>
-        <translation>Contacto</translation>
-    </message>
     <message id="general-actions">
         <source>Actions</source>
         <translation>Acciones</translation>
@@ -26,14 +22,6 @@
     <message id="general-address">
         <source>Address</source>
         <translation>Dirección</translation>
-    </message>
-    <message id="general-exp-date">
-        <source>Expiration date</source>
-        <translation>Fecha de caducidad</translation>
-    </message>
-    <message id="general-created">
-        <source>Created</source>
-        <translation>Creado</translation>
     </message>
     <message id="general-send">
         <source>Send</source>
@@ -235,8 +223,9 @@
         <translation>desconocido</translation>
     </message>
     <message id="addresses-tittle">
-        <source>Addresses</source>
-        <translation>Direcciones</translation>
+        <source>Address Book</source>
+        <oldsource>Addresses</oldsource>
+        <translation type="unfinished">Direcciones</translation>
     </message>
     <message id="addresses-tab-active">
         <source>My active addresses</source>
@@ -1161,10 +1150,6 @@ Escanee este código QR o envíe esta dirección al remitente a través de un ca
         <source>Swap</source>
         <translation>Intercambiar</translation>
     </message>
-    <message id="settings-reset">
-        <source>Clear</source>
-        <translation>Limpiar</translation>
-    </message>
     <message id="settings-node-address">
         <source>Node Address</source>
         <translation>Dirección del nodo</translation>
@@ -1602,10 +1587,6 @@ Please try again later or create an offer yourself.</oldsource>
         <source>%1 Transaction fee rate</source>
         <translation>Tarifa de transacción</translation>
     </message>
-    <message id="settings-swap-disconnect">
-        <source>Disconnect</source>
-        <translation>Desconectar</translation>
-    </message>
     <message id="settings-swap-bitcoin-node">
         <source>Bitcoin node</source>
         <translation>Nodo Bitcoin</translation>
@@ -1750,16 +1731,6 @@ Please check the swap token and try again.</oldsource>
         <source>Enter your wallet password to see the phrase</source>
         <extracomment>electrum settings, ask password to show seed phrase, dialog message</extracomment>
         <translation>Introduzca la contraseña de su wallet para ver la frase</translation>
-    </message>
-    <message id="settings-swap-confirm-clear-seed-title">
-        <source>Clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
-        <translation>Limpiar frase semilla</translation>
-    </message>
-    <message id="settings-swap-confirm-clear-seed-message">
-        <source>Enter your wallet password to clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
-        <translation>Introduzca la contraseña de su wallet para borrar la frase semilla</translation>
     </message>
     <message id="wallet-receive-swap-your-token">
         <source>Your swap token</source>
@@ -2523,6 +2494,11 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-table-cm-receive">
+        <source>receive</source>
+        <extracomment>Entry in address table context menu to get receive token</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

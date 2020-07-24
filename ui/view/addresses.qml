@@ -25,7 +25,7 @@ ColumnLayout {
     anchors.fill: parent
     state: "active"
 	Title {
-        //% "Addresses"
+        //% "Address Book"
         text: qsTrId("addresses-tittle")
     }
 
@@ -232,7 +232,7 @@ ColumnLayout {
             showQRDialog: showQR
 
             sortIndicatorVisible: true
-            sortIndicatorColumn: 4
+            sortIndicatorColumn: 0
             sortIndicatorOrder: Qt.DescendingOrder
 
             Binding{
@@ -259,7 +259,7 @@ ColumnLayout {
             isExpired: true
 
             sortIndicatorVisible: true
-            sortIndicatorColumn: 4
+            sortIndicatorColumn: 0
             sortIndicatorOrder: Qt.DescendingOrder
 
             Binding{
@@ -280,7 +280,7 @@ ColumnLayout {
 
             property int rowHeight: 56
             property int resizableWidth: parent.width - actions.width
-            property double columnResizeRatio: resizableWidth / 740
+            property double columnResizeRatio: resizableWidth / 914
 
             anchors.fill: parent
             frameVisible: false
@@ -307,14 +307,14 @@ ColumnLayout {
                 role: viewModel.nameRole
                 //% "Comment"
                 title: qsTrId("general-comment")
-                width: 280 * contactsView.columnResizeRatio
+                width: 300 * contactsView.columnResizeRatio
                 movable: false
             }
 
             TableViewColumn {
                 role: viewModel.addressRole
                 title: qsTrId("general-address")
-                width: 170 * contactsView.columnResizeRatio
+                width: 280 * contactsView.columnResizeRatio
                 movable: false
                 delegate: 
                 Item {
@@ -327,6 +327,7 @@ ColumnLayout {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.leftMargin: 20
+                        anchors.rightMargin: 80
                         elide: Text.ElideMiddle
                         anchors.verticalCenter: parent.verticalCenter
                         text: styleData.value
@@ -355,6 +356,7 @@ ColumnLayout {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.leftMargin: 20
+                        anchors.rightMargin: 100
                         elide: Text.ElideMiddle
                         anchors.verticalCenter: parent.verticalCenter
                         text: styleData.value
@@ -423,6 +425,7 @@ ColumnLayout {
                                 ToolTip.text: qsTrId("general-actions")
                                 onClicked: {
                                     contextMenu.address = contactsView.model[styleData.row].address;
+                                    contextMenu.token = contactsView.model[styleData.row].token;
                                     contextMenu.popup();
                                 }
                             }
@@ -436,12 +439,13 @@ ColumnLayout {
                 modal: true
                 dim: false
                 property string address
+                property string token
                 Action {
                     //% "Send"
                     text: qsTrId("general-send")
                     icon.source: "qrc:/assets/icon-send-blue.svg"
                     onTriggered: {
-                        main.openSendDialog(contextMenu.address);
+                        main.openSendDialog(contextMenu.token);
                     }
                 }
                 Action {

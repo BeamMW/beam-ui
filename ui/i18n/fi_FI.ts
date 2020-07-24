@@ -15,10 +15,6 @@
         <source>Comment</source>
         <translation>Kommentti</translation>
     </message>
-    <message id="general-contact">
-        <source>Contact</source>
-        <translation>Yhteystieto</translation>
-    </message>
     <message id="general-actions">
         <source>Actions</source>
         <translation>Toiminnot</translation>
@@ -26,14 +22,6 @@
     <message id="general-address">
         <source>Address</source>
         <translation>Osoite</translation>
-    </message>
-    <message id="general-exp-date">
-        <source>Expiration date</source>
-        <translation>Vanhentumisaika</translation>
-    </message>
-    <message id="general-created">
-        <source>Created</source>
-        <translation>Luotu</translation>
     </message>
     <message id="general-send">
         <source>Send</source>
@@ -235,8 +223,9 @@
         <translation>tuntematon</translation>
     </message>
     <message id="addresses-tittle">
-        <source>Addresses</source>
-        <translation>Osoitteet</translation>
+        <source>Address Book</source>
+        <oldsource>Addresses</oldsource>
+        <translation type="unfinished">Osoitteet</translation>
     </message>
     <message id="addresses-tab-active">
         <source>My active addresses</source>
@@ -1161,10 +1150,6 @@ Allow to open and proceed to the website? You can always update your choice in S
         <source>Swap</source>
         <translation>Swap</translation>
     </message>
-    <message id="settings-reset">
-        <source>Clear</source>
-        <translation>Poista</translation>
-    </message>
     <message id="settings-node-address">
         <source>Node Address</source>
         <translation>Palvelimen (node) osoite</translation>
@@ -1602,10 +1587,6 @@ Please try again later or create an offer yourself.</oldsource>
         <source>%1 Transaction fee rate</source>
         <translation>Vaihtomaksu</translation>
     </message>
-    <message id="settings-swap-disconnect">
-        <source>Disconnect</source>
-        <translation>Katkaise yhteys</translation>
-    </message>
     <message id="settings-swap-bitcoin-node">
         <source>Bitcoin node</source>
         <translation>Bitcoin palvelin (node)</translation>
@@ -1750,16 +1731,6 @@ Please check the swap token and try again.</oldsource>
         <source>Enter your wallet password to see the phrase</source>
         <extracomment>electrum settings, ask password to show seed phrase, dialog message</extracomment>
         <translation>Kirjoita lompakkosi salasana nähdäksesi seed phrasen</translation>
-    </message>
-    <message id="settings-swap-confirm-clear-seed-title">
-        <source>Clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
-        <translation>Nollaa seed phrase</translation>
-    </message>
-    <message id="settings-swap-confirm-clear-seed-message">
-        <source>Enter your wallet password to clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
-        <translation>Kirjoita lompakkosi salasana nollataksesi seed phrasen</translation>
     </message>
     <message id="wallet-receive-swap-your-token">
         <source>Your swap token</source>
@@ -2523,6 +2494,11 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-table-cm-receive">
+        <source>receive</source>
+        <extracomment>Entry in address table context menu to get receive token</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

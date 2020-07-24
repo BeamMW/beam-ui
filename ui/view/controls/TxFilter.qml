@@ -27,8 +27,8 @@ Item  {
         font.pixelSize: 12
         font.styleName: "Bold"; font.weight: Font.Bold
         font.capitalization: capitalization
-        color: Style.content_main
-        opacity: 0.4
+        color: Style.section
+        //opacity: 0.4
         text: label
 
         MouseArea {
@@ -73,7 +73,7 @@ Item  {
 
             PropertyChanges {target: led; visible: showLed}
             PropertyChanges {target: text_label; opacity: 1.0}
-            PropertyChanges {target: text_label; color: Style.active}
+            PropertyChanges {target: text_label; color: Style.content_main}
         }
     ]
 }

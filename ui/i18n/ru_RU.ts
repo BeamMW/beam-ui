@@ -15,10 +15,6 @@
         <source>Comment</source>
         <translation>Комментарий</translation>
     </message>
-    <message id="general-contact">
-        <source>Contact</source>
-        <translation>Контакт</translation>
-    </message>
     <message id="general-actions">
         <source>Actions</source>
         <translation>Действия</translation>
@@ -26,14 +22,6 @@
     <message id="general-address">
         <source>Address</source>
         <translation>Адрес</translation>
-    </message>
-    <message id="general-exp-date">
-        <source>Expiration date</source>
-        <translation>Действителен до</translation>
-    </message>
-    <message id="general-created">
-        <source>Created</source>
-        <translation>Создан</translation>
     </message>
     <message id="general-send">
         <source>Send</source>
@@ -235,8 +223,9 @@
         <translation>не определено</translation>
     </message>
     <message id="addresses-tittle">
-        <source>Addresses</source>
-        <translation>Мои адреса</translation>
+        <source>Address Book</source>
+        <oldsource>Addresses</oldsource>
+        <translation type="unfinished">Мои адреса</translation>
     </message>
     <message id="addresses-tab-active">
         <source>My active addresses</source>
@@ -1160,10 +1149,6 @@ Allow to open and proceed to the website? You can always update your choice in S
         <source>Swap</source>
         <translation>Своп</translation>
     </message>
-    <message id="settings-reset">
-        <source>Clear</source>
-        <translation>Очистить</translation>
-    </message>
     <message id="settings-node-address">
         <source>Node Address</source>
         <translation type="unfinished">Node Address</translation>
@@ -1601,10 +1586,6 @@ Please try again later or create an offer yourself.</oldsource>
         <source>%1 Transaction fee rate</source>
         <translation>Transaction fee rate</translation>
     </message>
-    <message id="settings-swap-disconnect">
-        <source>Disconnect</source>
-        <translation type="unfinished">Disconnect</translation>
-    </message>
     <message id="settings-swap-bitcoin-node">
         <source>Bitcoin node</source>
         <translation type="unfinished">Bitcoin node</translation>
@@ -1749,16 +1730,6 @@ Please check the swap token and try again.</oldsource>
         <source>Enter your wallet password to see the phrase</source>
         <extracomment>electrum settings, ask password to show seed phrase, dialog message</extracomment>
         <translation type="unfinished">Enter your wallet password to see the phrase</translation>
-    </message>
-    <message id="settings-swap-confirm-clear-seed-title">
-        <source>Clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
-        <translation type="unfinished">Clear seed phrase</translation>
-    </message>
-    <message id="settings-swap-confirm-clear-seed-message">
-        <source>Enter your wallet password to clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
-        <translation type="unfinished">Enter your wallet password to clear seed phrase</translation>
     </message>
     <message id="wallet-receive-swap-your-token">
         <source>Your swap token</source>
@@ -2522,6 +2493,11 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-table-cm-receive">
+        <source>receive</source>
+        <extracomment>Entry in address table context menu to get receive token</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
