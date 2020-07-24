@@ -13,7 +13,6 @@ Control {
     property string title
     property bool   folded: true
     property var    content: null
-    property var    headerContent: null
     spacing: 10
 
     // Status indicator
@@ -127,7 +126,11 @@ Control {
         color:   Style.background_second
 
         MouseArea {
-            anchors.fill: parent
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+            height: header.height + errorRow.height
+
             cursorShape:  Qt.PointingHandCursor
             onClicked: {
                 control.folded = !control.folded;
