@@ -15,10 +15,6 @@
         <source>Comment</source>
         <translation>메모</translation>
     </message>
-    <message id="general-contact">
-        <source>Contact</source>
-        <translation>연락처</translation>
-    </message>
     <message id="general-actions">
         <source>Actions</source>
         <translation>작업</translation>
@@ -26,14 +22,6 @@
     <message id="general-address">
         <source>Address</source>
         <translation>주소</translation>
-    </message>
-    <message id="general-exp-date">
-        <source>Expiration date</source>
-        <translation>만료 일자</translation>
-    </message>
-    <message id="general-created">
-        <source>Created</source>
-        <translation>생성됨</translation>
     </message>
     <message id="general-send">
         <source>Send</source>
@@ -235,8 +223,9 @@
         <translation>알려지지 않음</translation>
     </message>
     <message id="addresses-tittle">
-        <source>Addresses</source>
-        <translation>주소</translation>
+        <source>Address Book</source>
+        <oldsource>Addresses</oldsource>
+        <translation type="unfinished">주소</translation>
     </message>
     <message id="addresses-tab-active">
         <source>My active addresses</source>
@@ -2523,6 +2512,11 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-table-cm-receive">
+        <source>receive</source>
+        <extracomment>Entry in address table context menu to get receive token</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -11,7 +11,7 @@ CustomTableView {
 
     property int rowHeight: 56
     property int resizableWidth: parent.width - actions.width
-    property double columnResizeRatio: resizableWidth / 750
+    property double columnResizeRatio: resizableWidth / 914
 
     property var parentModel
     property bool isExpired: false
@@ -22,32 +22,38 @@ CustomTableView {
     selectionMode: SelectionMode.NoSelection
     backgroundVisible: false
     sortIndicatorVisible: true
-    sortIndicatorColumn: 4
+    sortIndicatorColumn: 0
     sortIndicatorOrder: Qt.DescendingOrder
 
-    onSortIndicatorColumnChanged: {
-        if (sortIndicatorColumn != 3 &&
-            sortIndicatorColumn != 4) {
-            sortIndicatorOrder = Qt.AscendingOrder;
-        } else {
-            sortIndicatorOrder = Qt.DescendingOrder;
-        }
-    }
+    //onSortIndicatorColumnChanged: {
+    //    if (sortIndicatorColumn != 3 &&
+    //        sortIndicatorColumn != 4) {
+    //        sortIndicatorOrder = Qt.AscendingOrder;
+    //    } else {
+    //        sortIndicatorOrder = Qt.DescendingOrder;
+    //    }
+    //}
 
     TableViewColumn {
         role: parentModel.nameRole
         //% "Comment"
         title: qsTrId("general-comment")
-        width: 150 * rootControl.columnResizeRatio
+        width: 300 * rootControl.columnResizeRatio
         resizable: false
         movable: false
+        //delegate: TableItem {
+        //    text:           styleData.value
+        //    elide:          styleData.elideMode
+        //    fontWeight:     Font.Bold
+        //    fontStyleName: "Bold"
+        //}
     }
 
     TableViewColumn {
         role: parentModel.addressRole
         //% "Address"
         title: qsTrId("general-address")
-        width: 150 *  rootControl.columnResizeRatio
+        width: 280 *  rootControl.columnResizeRatio
         movable: false
         resizable: false
         delegate: 
@@ -61,6 +67,7 @@ CustomTableView {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.leftMargin: 20
+                anchors.rightMargin: 80
                 elide: Text.ElideMiddle
                 anchors.verticalCenter: parent.verticalCenter
                 text: styleData.value
@@ -72,10 +79,11 @@ CustomTableView {
     }
 
     TableViewColumn {
+        id:   identityColumn
         role: viewModel.identityRole
         //% "Identity"
         title: qsTrId("general-identity")
-        width: 150 *  rootControl.columnResizeRatio
+        width: rootControl.getAdjustedColumnWidth(identityColumn)//150 *  rootControl.columnResizeRatio
         resizable: false
         movable: false
         delegate:
@@ -89,68 +97,72 @@ CustomTableView {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.leftMargin: 20
+                anchors.rightMargin: 100
                 elide: Text.ElideMiddle
                 anchors.verticalCenter: parent.verticalCenter
                 text: styleData.value
                 color: Style.content_main
                 copyMenuEnabled: true
                 onCopyText: BeamGlobals.copyToClipboard(text)
+
             }
         }
     }
 
-    TableViewColumn {
-        role: parentModel.expirationRole
-        //% "Expiration date"
-        title: qsTrId("general-exp-date")
-        width: 150 *  rootControl.columnResizeRatio
-        resizable: false
-        movable: false
-        delegate: Item {
-            Item {
-                width: parent.width
-                height: rootControl.rowHeight
-
-                SFText {
-                    font.pixelSize: 14
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.leftMargin: 20
-                    elide: Text.ElideRight
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: Utils.formatDateTime(styleData.value, BeamGlobals.getLocaleName())
-                    color: Style.content_main
-                }
-            }
-        }
-    }
-
-    TableViewColumn {
-        id: createdColumn
-        role:parentModel.createdRole
-        //% "Created"
-        title: qsTrId("general-created")
-        width: rootControl.getAdjustedColumnWidth(createdColumn)//150 *  rootControl.columnResizeRatio
-        resizable: false
-        movable: false
-        delegate: Item {
-            Item {
-                width: parent.width
-                height: rootControl.rowHeight
-
-                SFText {
-                    font.pixelSize: 14
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.leftMargin: 20
-                    elide: Text.ElideRight
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: Utils.formatDateTime(styleData.value, BeamGlobals.getLocaleName())
-                    color: Style.content_main
-                }
-            }
-        }
-    }
+    //TableViewColumn {
+    //    role: parentModel.expirationRole
+    //    //% "Expiration date"
+    //    title: qsTrId("general-exp-date")
+    //    width: 150 *  rootControl.columnResizeRatio
+    //    resizable: false
+    //    movable: false
+    //    visible: false
+    //    delegate: Item {
+    //        Item {
+    //            width: parent.width
+    //            height: rootControl.rowHeight
+    //
+    //            SFText {
+    //                font.pixelSize: 14
+    //                anchors.left: parent.left
+    //                anchors.right: parent.right
+    //                anchors.leftMargin: 20
+    //                elide: Text.ElideRight
+    //                anchors.verticalCenter: parent.verticalCenter
+    //                text: Utils.formatDateTime(styleData.value, BeamGlobals.getLocaleName())
+    //                color: Style.content_main
+    //            }
+    //        }
+    //    }
+    //}
+    //
+    //TableViewColumn {
+    //    id: createdColumn
+    //    role:parentModel.createdRole
+    //    //% "Created"
+    //    title: qsTrId("general-created")
+    //    width: rootControl.getAdjustedColumnWidth(createdColumn)
+    //    resizable: false
+    //    movable: false
+    //    visible: false
+    //    delegate: Item {
+    //        Item {
+    //            width: parent.width
+    //            height: rootControl.rowHeight
+    //
+    //            SFText {
+    //                font.pixelSize: 14
+    //                anchors.left: parent.left
+    //                anchors.right: parent.right
+    //                anchors.leftMargin: 20
+    //                elide: Text.ElideRight
+    //                anchors.verticalCenter: parent.verticalCenter
+    //                text: Utils.formatDateTime(styleData.value, BeamGlobals.getLocaleName())
+    //                color: Style.content_main
+    //            }
+    //        }
+    //    }
+    //}
 
     TableViewColumn {
         id: actions
@@ -226,6 +238,16 @@ CustomTableView {
         dim: false
         property string address
         property var addressItem
+        Action {
+            id: receiveAction
+            //: Entry in address table context menu to get receive token
+            //% "receive"
+            text: qsTrId("address-table-cm-receive")
+            icon.source: "qrc:/assets/icon-receive-blue.svg"
+            onTriggered: {
+                main.openReceiveDialog(contextMenu.address);
+            }
+        }
         Action {
             id: showQRAction
             //: Entry in address table context menu to show QR

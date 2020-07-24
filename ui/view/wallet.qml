@@ -24,8 +24,10 @@ Item {
         id: viewModel
     }
 
-    property bool toSend: false
-    property string receiverAddress: ""
+    property bool toSend:               false
+    property bool openReceive:          false
+    property string token:              ""
+
 
     ConfirmationDialog {
         id: deleteTransactionDialog
@@ -108,8 +110,18 @@ Item {
                                              {"onAccepted":      onAccepted,
                                               "onClosed":        onClosed,
                                               "onSwapToken":     onSwapToken,
-                                              "receiverAddress": receiverAddress})
+                                              "receiverAddress": token});
+                token = "";
             }
+
+            function navigateReceive() {
+                walletStackView.push(Qt.createComponent("receive_regular.qml"), 
+                                                {"onClosed": onClosed,
+                                                 "token":    token
+                                                });
+                token = "";
+            }
+
             Row {
                 Layout.alignment: Qt.AlignTop | Qt.AlignRight
                 Layout.topMargin: 30
@@ -142,7 +154,7 @@ Item {
                     //font.capitalization: Font.AllUppercase
 
                     onClicked: {
-                        walletStackView.push(Qt.createComponent("receive_regular.qml"), {"onClosed": onClosed});
+                        navigateReceive();
                     }
                 }
             }
@@ -696,7 +708,14 @@ Item {
                 item.navigateSend();
                 root.toSend = false;
             }
+        } else if (root.openReceive) {
+            var item = walletStackView.currentItem;
+            if (item && item.navigateReceive && typeof item.navigateReceive == "function" ) {
+                item.navigateReceive();
+                root.openReceive = false;
+            }
         }
+
     }
 
     Component.onDestruction: {

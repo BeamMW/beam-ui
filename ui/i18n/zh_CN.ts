@@ -15,10 +15,6 @@
         <source>Comment</source>
         <translation>备注</translation>
     </message>
-    <message id="general-contact">
-        <source>Contact</source>
-        <translation>联系人</translation>
-    </message>
     <message id="general-actions">
         <source>Actions</source>
         <translation>操作</translation>
@@ -26,14 +22,6 @@
     <message id="general-address">
         <source>Address</source>
         <translation>地址</translation>
-    </message>
-    <message id="general-exp-date">
-        <source>Expiration date</source>
-        <translation>失效日期</translation>
-    </message>
-    <message id="general-created">
-        <source>Created</source>
-        <translation>已创建</translation>
     </message>
     <message id="general-send">
         <source>Send</source>
@@ -236,8 +224,9 @@
         <translation>未知</translation>
     </message>
     <message id="addresses-tittle">
-        <source>Addresses</source>
-        <translation>地址</translation>
+        <source>Address Book</source>
+        <oldsource>Addresses</oldsource>
+        <translation type="unfinished">地址</translation>
     </message>
     <message id="addresses-tab-active">
         <source>My active addresses</source>
@@ -2538,6 +2527,11 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-table-cm-receive">
+        <source>receive</source>
+        <extracomment>Entry in address table context menu to get receive token</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

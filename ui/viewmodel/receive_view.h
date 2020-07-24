@@ -57,6 +57,7 @@ signals:
     void isNonInteractiveChanged();
 
 public:
+    Q_INVOKABLE void initialize(const QString& address);
     Q_INVOKABLE void generateNewAddress();
     Q_INVOKABLE void saveAddress();
 
@@ -99,7 +100,7 @@ private slots:
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onReceiverQRChanged();
     void onTokenQRChanged();
-
+    void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address);
 private:
     beam::Amount _amountToReceiveGrothes;
     int          _addressExpires;

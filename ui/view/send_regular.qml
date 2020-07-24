@@ -104,7 +104,7 @@ ColumnLayout {
                 capitalization: Font.AllUppercase
             }
             //% "Send"
-            text:               qsTrId("general-send")
+            text:               qsTrId("send-title")
         }
     }
 

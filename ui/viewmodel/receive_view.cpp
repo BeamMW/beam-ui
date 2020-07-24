@@ -35,10 +35,10 @@ ReceiveViewModel::ReceiveViewModel()
     connect(_qr.get(), &QR::qrDataChanged, this, &ReceiveViewModel::onReceiverQRChanged);
     connect(_tokenQr.get(), &QR::qrDataChanged, this, &ReceiveViewModel::onTokenQRChanged);
     connect(&_walletModel, &WalletModel::generatedNewAddress, this, &ReceiveViewModel::onGeneratedNewAddress);
+    connect(&_walletModel, &WalletModel::getAddressReturned, this, &ReceiveViewModel::onGetAddressReturned);
     connect(&_walletModel, &WalletModel::newAddressFailed, this, &ReceiveViewModel::newAddressFailed);
     connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyLabelChanged()));
     connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
-    generateNewAddress();
     updateTransactionToken();
 }
 
@@ -52,7 +52,8 @@ void ReceiveViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& 
 {
     _receiverAddress = addr;
     emit receiverAddressChanged();
-
+    setIsPermanentAddress(addr.isPermanent());
+    setAddressComment(QString::fromStdString(addr.m_label));
     _qr->setAddr(beamui::toString(_receiverAddress.m_walletID));
     updateTransactionToken();
 }
@@ -101,6 +102,19 @@ QString ReceiveViewModel::getReceiverAddressQR() const
 void ReceiveViewModel::onReceiverQRChanged()
 {
     emit receiverAddressChanged();
+}
+
+void ReceiveViewModel::initialize(const QString& address)
+{
+    beam::wallet::WalletID walletID;
+    if (address.isEmpty() || !walletID.FromHex(address.toStdString()))
+    {
+        generateNewAddress();
+    }
+    else
+    {
+        _walletModel.getAsync()->getAddress(walletID);
+    }
 }
 
 void ReceiveViewModel::generateNewAddress()
@@ -156,9 +170,21 @@ void ReceiveViewModel::onTokenQRChanged()
     emit transactionTokenChanged();
 }
 
+void ReceiveViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address)
+{
+    if (address)
+    {
+        onGeneratedNewAddress(*address);
+    }
+    else
+    {
+        generateNewAddress();
+    }
+}
+
 bool ReceiveViewModel::getCommentValid() const
 {
-    return !_walletModel.isAddressWithCommentExist(_addressComment.toStdString());
+    return _walletModel.isOwnAddress(_receiverAddress.m_walletID) || !_walletModel.isAddressWithCommentExist(_addressComment.toStdString());
 }
 
 void ReceiveViewModel::setAddressComment(const QString& value)

@@ -13,6 +13,7 @@ ColumnLayout {
 
     // callbacks set by parent
     property var onClosed: function() {}
+    property string token: ""
 
     TopGradient {
         mainRoot: main
@@ -28,6 +29,10 @@ ColumnLayout {
             //% "You cannot generate new address. Your wallet doesn't have a master key."
             popup.message = qsTrId("can-not-generate-new-address-message")
             popup.open()
+        }
+
+        Component.onCompleted: {
+            viewModel.initialize(token);
         }
     }
 

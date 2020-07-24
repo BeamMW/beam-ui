@@ -15,10 +15,6 @@
         <source>Comment</source>
         <translation type="unfinished">Comment</translation>
     </message>
-    <message id="general-contact">
-        <source>Contact</source>
-        <translation type="unfinished">Contact</translation>
-    </message>
     <message id="general-actions">
         <source>Actions</source>
         <translation>Акције</translation>
@@ -26,14 +22,6 @@
     <message id="general-address">
         <source>Address</source>
         <translation type="unfinished">Address</translation>
-    </message>
-    <message id="general-exp-date">
-        <source>Expiration date</source>
-        <translation type="unfinished">Expiration date</translation>
-    </message>
-    <message id="general-created">
-        <source>Created</source>
-        <translation>Креиран</translation>
     </message>
     <message id="general-send">
         <source>Send</source>
@@ -235,7 +223,8 @@
         <translation>непознато</translation>
     </message>
     <message id="addresses-tittle">
-        <source>Addresses</source>
+        <source>Address Book</source>
+        <oldsource>Addresses</oldsource>
         <translation type="unfinished">Addresses</translation>
     </message>
     <message id="addresses-tab-active">
@@ -2529,6 +2518,11 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-table-cm-receive">
+        <source>receive</source>
+        <extracomment>Entry in address table context menu to get receive token</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
