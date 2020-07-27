@@ -398,7 +398,7 @@ ColumnLayout {
                                 id:               addressComment
                                 font.pixelSize:   14
                                 Layout.fillWidth: true
-                                focus:            true
+                                //focus:            true
                                 color:            Style.content_main
                                 text:             viewModel.comment
                                 maximumLength:    BeamGlobals.maxCommentLength()
