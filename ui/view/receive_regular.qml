@@ -94,7 +94,10 @@ ColumnLayout {
             //% "Back"
             text:           qsTrId("general-back")
             icon.source:    "qrc:/assets/icon-back.svg"
-            onClicked:      onClosed();
+            onClicked:      {
+                receiveView.saveAddress();
+                onClosed();
+            }
         }
 
         
