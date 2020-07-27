@@ -490,7 +490,7 @@ ColumnLayout {
                                 Layout.alignment:        Qt.AlignTop
                                 Layout.fillWidth:        true
                                 error:                   showInsufficientBalanceWarning
-                                amount:                  viewModel.feeGrothes
+                                amount:                  viewModel.fee
                                 lightFont:               false
                                 currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
                                 secondCurrencyLabel:     viewModel.secondCurrencyLabel

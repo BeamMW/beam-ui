@@ -36,6 +36,7 @@ class SendViewModel: public QObject
     Q_PROPERTY(QString  receiverIdentity   READ getReceiverIdentity                                    NOTIFY receiverIdentityChanged)
     Q_PROPERTY(QString  available          READ getAvailable                                           NOTIFY availableChanged)
     Q_PROPERTY(QString  change             READ getChange                                              NOTIFY availableChanged)
+    Q_PROPERTY(QString  fee                READ getFee                                                 NOTIFY availableChanged)
     Q_PROPERTY(QString  totalUTXO          READ getTotalUTXO                                           NOTIFY availableChanged)
     Q_PROPERTY(QString  missing            READ getMissing                                             NOTIFY availableChanged)
     Q_PROPERTY(bool     isZeroBalance      READ isZeroBalance                                          NOTIFY availableChanged)
@@ -80,6 +81,7 @@ public:
     QString getAvailable() const;
     QString getMissing() const;
     QString getChange() const;
+    QString getFee() const;
     QString getTotalUTXO() const;
     QString getMaxAvailable() const;
 

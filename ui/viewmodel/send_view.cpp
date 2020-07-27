@@ -257,6 +257,11 @@ QString SendViewModel::getChange() const
     return beamui::AmountToUIString(_changeGrothes);
 }
 
+QString SendViewModel::getFee() const
+{
+    return beamui::AmountToUIString(_feeGrothes);
+}
+
 QString SendViewModel::getTotalUTXO() const
 {
     return beamui::AmountToUIString(calcTotalAmount() + _changeGrothes);
