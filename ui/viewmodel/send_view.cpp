@@ -244,6 +244,7 @@ void SendViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const
     if (id == _receiverWalletID && address)
     {
         setWalletAddress(address);
+        setComment(QString::fromStdString(address->m_label));
     }
     else
     {
