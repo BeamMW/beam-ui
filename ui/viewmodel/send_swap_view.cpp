@@ -409,7 +409,7 @@ QString SendSwapViewModel::getReceiverAddress() const
 bool SendSwapViewModel::canSend() const
 {
     // TODO:SWAP check if correct
-    return QMLGlobals::isFeeOK(_sendFeeGrothes, _sendCurrency) &&
+    return QMLGlobals::isFeeOK(_sendFeeGrothes, _sendCurrency, false) &&
            _sendCurrency != _receiveCurrency &&
            isEnough() &&
            QDateTime::currentDateTime() < _expiresTime;

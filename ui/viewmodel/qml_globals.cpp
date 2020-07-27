@@ -35,6 +35,7 @@ namespace
 {
     const int kDefaultFeeInGroth = 10;
     const int kFeeInGroth_Fork1 = 100;
+    const int kFeeInGroth_Shielded = 1001000;
 
     template <char C>
     bool char_is(const char c)
@@ -167,11 +168,11 @@ int QMLGlobals::maxCommentLength()
     return 1024;
 }
 
-bool QMLGlobals::isFeeOK(uint32_t fee, Currency currency)
+bool QMLGlobals::isFeeOK(uint32_t fee, Currency currency, bool isShielded)
 {
     switch (currency)
     {
-    case Currency::CurrBeam: return fee >= minFeeBeam();
+    case Currency::CurrBeam: return fee >= minFeeBeam(isShielded);
     case Currency::CurrBtc:  return true;
     case Currency::CurrLtc:  return true;
     case Currency::CurrQtum: return true;
@@ -181,10 +182,11 @@ bool QMLGlobals::isFeeOK(uint32_t fee, Currency currency)
     }
 }
 
-uint32_t QMLGlobals::minFeeBeam()
+uint32_t QMLGlobals::minFeeBeam(bool isShielded)
 {
     assert(AppModel::getInstance().getWallet());
-    return AppModel::getInstance().getWallet()->isFork1() ? kFeeInGroth_Fork1 : kDefaultFeeInGroth;
+    assert(AppModel::getInstance().getWallet()->isFork1());
+    return isShielded ? kFeeInGroth_Shielded : kFeeInGroth_Fork1;
 }
 
 bool QMLGlobals::needPasswordToSpend()
@@ -366,12 +368,12 @@ QString QMLGlobals::getFeeRateLabel(Currency currency)
     return beamui::getFeeRateLabel(currencyCommon);
 }
 
-unsigned int QMLGlobals::getMinimalFee(Currency currency)
+unsigned int QMLGlobals::getMinimalFee(Currency currency, bool isShielded)
 {
     switch (currency)
     {
         case Currency::CurrBeam:
-            return minFeeBeam();
+            return minFeeBeam(isShielded);
         
         case Currency::CurrBtc:
             return AppModel::getInstance().getBitcoinClient()->GetSettings().GetMinFeeRate();

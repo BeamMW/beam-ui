@@ -366,7 +366,7 @@ ColumnLayout {
                         content: FeeInput {
                             id:                         feeInput
                             fee:                        viewModel.feeGrothes
-                            minFee:                     BeamGlobals.getMinimalFee(Currency.CurrBeam)
+                            minFee:                     BeamGlobals.getMinimalFee(Currency.CurrBeam, viewModel.isShieldedTx)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(Currency.CurrBeam)
                             color:                      Style.accent_outgoing
                             readOnly:                   false
