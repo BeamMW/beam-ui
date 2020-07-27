@@ -41,24 +41,13 @@ namespace beamui
     {
         switch (currency)
         {
-            case Currencies::Beam:
-                return QString(currencyBeamLabel.data());
-
-            case Currencies::Bitcoin:
-                return QString(currencyBitcoinLabel.data());
-
-            case Currencies::Litecoin:
-                return QString(currencyLitecoinLabel.data());
-
-            case Currencies::Qtum:
-                return QString(currencyQtumLabel.data());
-
-            case Currencies::Usd:
-                return QString(currencyUsdLabel.data());
-
-            case Currencies::Unknown:
-            default:
-                return QString(currencyUnknownLabel.data());
+#define MACRO(name, label, subLabel, feeLabel, dec) \
+        case Currencies::name: \
+            return QString(label); 
+        CURRENCY_MAP(MACRO)
+#undef MACRO
+        default:
+            return "";
         }
     }
 
@@ -71,22 +60,27 @@ namespace beamui
     {
         switch (currency)
         {
-            case Currencies::Beam:
-                return QString(currencyBeamFeeRateLabel.data());
+#define MACRO(name, label, subLabel, feeLabel, dec) \
+        case Currencies::name: \
+            return QString(feeLabel); 
+        CURRENCY_MAP(MACRO)
+#undef MACRO
+        default:
+            return "";
+        }
+    }
 
-            case Currencies::Bitcoin:
-                return QString(currencyBitcoinFeeRateLabel.data());
-
-            case Currencies::Litecoin:
-                return QString(currencyLitecoinFeeRateLabel.data());
-
-            case Currencies::Qtum:
-                return QString(currencyQtumFeeRateLabel.data());
-
-            case Currencies::Usd:
-            case Currencies::Unknown:
-            default:
-                return QString(currencyUnknownFeeRateLabel.data());
+    QString getCurrencySubunitLabel(Currencies currency)
+    {
+        switch (currency)
+        {
+#define MACRO(name, label, subLabel, feeLabel, dec) \
+        case Currencies::name: \
+            return QString(subLabel); 
+        CURRENCY_MAP(MACRO)
+#undef MACRO
+        default:
+            return "";
         }
     }
     

@@ -30,11 +30,11 @@ Control {
 
     function getAmountInSecondCurrency() {
         var secondCurrencyAmount = Utils.uiStringToLocale(
-            BeamGlobals.calcAmountInSecondCurrency(
+            BeamGlobals.formatAmountInSecondCurrency(
                 control.amount,
                 control.secondCurrencyRateValue,
                 control.secondCurrencyLabel));
-        return control.prefix + (secondCurrencyAmount == "" ? "-" : secondCurrencyAmount) + " " + control.secondCurrencyLabel;
+        return control.prefix + (secondCurrencyAmount == "" ? "-" : secondCurrencyAmount);
     }
 
     contentItem: RowLayout{

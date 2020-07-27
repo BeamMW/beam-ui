@@ -82,10 +82,10 @@ ConfirmationDialog {
     }
 
     function getAmountInSecondCurrency() {
-        return BeamGlobals.calcAmountInSecondCurrency(
+        return BeamGlobals.formatAmountInSecondCurrency(
             sendViewConfirm.amount,
             sendViewConfirm.secondCurrencyRate,
-            sendViewConfirm.secondCurrencyLabel) + " " + sendViewConfirm.secondCurrencyLabel;
+            sendViewConfirm.secondCurrencyLabel);
     }
 
     onAccepted: {

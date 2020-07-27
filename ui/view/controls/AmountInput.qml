@@ -37,10 +37,10 @@ ColumnLayout {
     }
 
     function getAmountInSecondCurrency() {
-        return BeamGlobals.calcAmountInSecondCurrency(
+        return BeamGlobals.formatAmountInSecondCurrency(
             control.amountIn,
             control.secondCurrencyRateValue,
-            control.secondCurrencyLabel) + " " + control.secondCurrencyLabel;
+            control.secondCurrencyLabel);
     }
 
     readonly property bool     isValidFee:     hasFee ? feeInput.isValid : true
@@ -241,7 +241,7 @@ ColumnLayout {
                 id:               feeInput
                 Layout.fillWidth: true
                 fee:              control.fee
-                minFee:           BeamGlobals.getMinimalFee(control.currency)
+                minFee:           BeamGlobals.getMinimalFee(control.currency, false)
                 feeLabel:         BeamGlobals.getFeeRateLabel(control.currency)
                 color:            control.color
                 readOnly:         control.readOnlyF

@@ -36,6 +36,8 @@ namespace
     const int kDefaultFeeInGroth = 10;
     const int kFeeInGroth_Fork1 = 100;
     const int kFeeInGroth_Shielded = 1001000;
+    constexpr uint8_t kBTCDecimalPlaces = libbitcoin::btc_decimal_places;
+    constexpr uint8_t kUSDDecimalPlaces = 2;
 
     template <char C>
     bool char_is(const char c)
@@ -43,10 +45,9 @@ namespace
         return c == C;
     }
 
-    template<uint8_t N>
-    QString rountWithPrecision(const QString& number)
+    QString roundWithPrecision(const QString& number, uint8_t precision)
     {
-        //TODO rounding percision
+        //TODO rounding precision
         const char delimeter = '.';
         auto parts = string_helpers::split(number.toStdString(), delimeter);
 
@@ -57,7 +58,7 @@ namespace
             cpp_dec_float_50 afterPoint("0." + parts[1]);
 
             std::ostringstream afterPointOss;
-            afterPointOss.precision(N);
+            afterPointOss.precision(precision);
             afterPointOss << std::fixed << afterPoint;
 
             auto afterPointParts = string_helpers::split(afterPointOss.str(), delimeter);
@@ -75,8 +76,7 @@ namespace
         return QString::fromStdString(result);
     }
 
-    template<uint8_t N>
-    QString multiplyWithPrecision(const QString& first, const QString& second)
+    QString multiplyWithPrecision(const QString& first, const QString& second, uint8_t precision)
     {
         cpp_dec_float_50 dec_first(first.toStdString().c_str());
         cpp_dec_float_50 dec_second(second.toStdString().c_str());
@@ -88,7 +88,7 @@ namespace
         oss << std::fixed << product;
 
         QString result = QString::fromStdString(oss.str());
-        return rountWithPrecision<N>(result);
+        return roundWithPrecision(result, precision);
     }
 
     beamui::Currencies convertUiCurrencyToCurrencies(WalletCurrency::Currency currency)
@@ -243,21 +243,39 @@ QString QMLGlobals::calcFeeInSecondCurrency(int fee, Currency originalCurrency, 
     }
 
     QString feeInOriginalCurrency = beamui::AmountToUIString(fee);
-    return multiplyWithPrecision<2>(feeInOriginalCurrency, exchangeRate) + " " + secondCurrencyLabel;
+    return formatAmountInSecondCurrency(feeInOriginalCurrency, exchangeRate, secondCurrencyLabel);
 }
 
-QString QMLGlobals::calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel)
+QString QMLGlobals::formatAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel)
 {
+    if (amount == "0")
+    {
+        return QString("0.0 %1").arg(secondCurrLabel);
+    }
     if (exchangeRate.isEmpty() || exchangeRate == "0")
     {
         return "";
     }
     else
     {
-        return (secondCurrLabel == beamui::getCurrencyLabel(beamui::Currencies::Bitcoin))
-               ? multiplyWithPrecision<8>(amount, exchangeRate)     // Btc
-               : multiplyWithPrecision<2>(amount, exchangeRate);    // All other currencies
+#define MACRO(name, label, subLabel, feeLabel, dec) \
+        if (label == secondCurrLabel) \
+        { \
+            QString t = multiplyWithPrecision(amount, exchangeRate, dec); \
+            if (t == "0" && amount != "0") \
+            { \
+                return QString("< 1 %1").arg(subLabel); \
+            } \
+            if (t != "") \
+            { \
+                return QString("%1 %2").arg(t).arg(label); \
+            } \
+            return t; \
+        } 
+        CURRENCY_MAP(MACRO)
+#undef MACRO
     }
+    return "";
 }
 
 bool QMLGlobals::canSwap()
@@ -450,15 +468,15 @@ QString QMLGlobals::divideWithPrecision8(const QString& dividend, const QString&
     oss << std::fixed << quotient;
 
     QString result = QString::fromStdString(oss.str());
-    return QMLGlobals::rountWithPrecision8(result);
+    return QMLGlobals::roundWithPrecision8(result);
 }
 
 QString QMLGlobals::multiplyWithPrecision8(const QString& first, const QString& second)
 {
-    return multiplyWithPrecision<8>(first, second);
+    return multiplyWithPrecision(first, second, kBTCDecimalPlaces);
 }
 
-QString QMLGlobals::rountWithPrecision8(const QString& number)
+QString QMLGlobals::roundWithPrecision8(const QString& number)
 {
-    return rountWithPrecision<libbitcoin::btc_decimal_places>(number);
+    return roundWithPrecision(number, kBTCDecimalPlaces);
 }

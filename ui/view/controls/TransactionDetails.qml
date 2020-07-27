@@ -66,7 +66,7 @@ RowLayout {
 
     function getAmountInSecondCurrency() {
         if (root.amount !== "") {
-            var amountInSecondCurrency = BeamGlobals.calcAmountInSecondCurrency(
+            var amountInSecondCurrency = BeamGlobals.formatAmountInSecondCurrency(
                 root.amount,
                 root.secondCurrencyRate,
                 root.secondCurrencyLabel);
@@ -76,7 +76,7 @@ RowLayout {
             }
             else {
                 //% "(for the day of transaction)"
-                return root.amountPrefix + " " + amountInSecondCurrency + " " + root.secondCurrencyLabel + " " + qsTrId("tx-details-second-currency-notification");
+                return root.amountPrefix + " " + amountInSecondCurrency + " " + qsTrId("tx-details-second-currency-notification");
             }
         }
         else return "";

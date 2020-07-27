@@ -339,13 +339,12 @@ ColumnLayout {
                             secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
                             setMaxAvailableAmount:      function() { viewModel.setMaxAvailableAmount(); }
-                            //hasFee:           true
-                            showAddAll:       true
-                            color:            Style.accent_outgoing
-                            error:            showInsufficientBalanceWarning
-                                              //% "Insufficient funds: you would need %1 to complete the transaction"
-                                              ? qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.missing))
-                                              : ""
+                            showAddAll:                 true
+                            color:                      Style.accent_outgoing
+                            error:                      showInsufficientBalanceWarning
+                                                        //% "Insufficient funds: you would need %1 to complete the transaction"
+                                                        ? qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.missing))
+                                                        : ""
                         }
      
                         Binding {
@@ -371,8 +370,8 @@ ColumnLayout {
                             color:                      Style.accent_outgoing
                             readOnly:                   false
                             fillWidth:                  true
-                            showSecondCurrency:         true
-                            isExchangeRateAvailable:    viewModel.secondCurrencyRateValue != "0"
+                            showSecondCurrency:         sendAmountInput.showSecondCurrency
+                            isExchangeRateAvailable:    sendAmountInput.isExchangeRateAvailable
                             secondCurrencyAmount:       getFeeInSecondCurrency(viewModel.feeGrothes)
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
                         }

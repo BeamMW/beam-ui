@@ -41,7 +41,7 @@ public:
     static int  getMinFeeOrRate(Currency currency);
     Q_INVOKABLE static QString calcTotalFee(Currency currency, unsigned int feeRate);
     Q_INVOKABLE static QString calcFeeInSecondCurrency(int fee, Currency originalCurrency, const QString& exchangeRate, const QString& secondCurrencyLabel);
-    Q_INVOKABLE static QString calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel);
+    Q_INVOKABLE static QString formatAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel);
 
     Q_INVOKABLE static unsigned int minFeeBeam(bool isShielded = false);
     
@@ -64,7 +64,7 @@ public:
     Q_INVOKABLE static bool canReceive(Currency currency);
     Q_INVOKABLE static QString divideWithPrecision8(const QString& dividend, const QString& divider);
     Q_INVOKABLE static QString multiplyWithPrecision8(const QString& first, const QString& second);
-    Q_INVOKABLE static QString rountWithPrecision8(const QString& number);
+    Q_INVOKABLE static QString roundWithPrecision8(const QString& number);
 
 private:
     QQmlEngine& _engine;
