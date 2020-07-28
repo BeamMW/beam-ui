@@ -110,6 +110,11 @@ void SendViewModel::setReceiverTA(const QString& value)
     {
         _tokenGeneratebByNewAppVersionMessage.clear();
         _receiverTA = value;
+        if (_receiverTA.isEmpty())
+        {
+            _canChangeTxType = true;
+            emit canChangeTxTypeChanged();
+        }
         emit receiverTAChanged();
         emit canSendChanged();
 
