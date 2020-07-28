@@ -107,8 +107,8 @@ function navigateToDownloads() {
 function currenciesList() {
     return [
         BeamGlobals.getCurrencyLabel(Currency.CurrBeam),
-        BeamGlobals.getCurrencyLabel(Currency.CurrBtc),
-        BeamGlobals.getCurrencyLabel(Currency.CurrLtc),
+        BeamGlobals.getCurrencyLabel(Currency.CurrBitcoin),
+        BeamGlobals.getCurrencyLabel(Currency.CurrLitecoin),
         BeamGlobals.getCurrencyLabel(Currency.CurrQtum)
     ]
 }

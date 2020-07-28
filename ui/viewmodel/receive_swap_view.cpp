@@ -66,7 +66,7 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     , _receiveFeeGrothes(0)
     , _sentFeeGrothes(0)
     , _receiveCurrency(Currency::CurrBeam)
-    , _sentCurrency(Currency::CurrBtc)
+    , _sentCurrency(Currency::CurrBitcoin)
     , _offerExpires(OfferExpires12h)
     , _saveParamsAllowed(false)
     , _walletModel(*AppModel::getInstance().getWallet())
@@ -351,13 +351,13 @@ bool ReceiveSwapViewModel::isEnough() const
         auto total = _amountSentGrothes + _sentFeeGrothes;
         return _walletModel.getAvailable() >= total;
     }
-    case Currency::CurrBtc:
+    case Currency::CurrBitcoin:
     {
         // TODO sentFee is fee rate. should be corrected
         beam::Amount total = _amountSentGrothes + _sentFeeGrothes;
         return AppModel::getInstance().getBitcoinClient()->getAvailable() > total;
     }
-    case Currency::CurrLtc:
+    case Currency::CurrLitecoin:
     {
         beam::Amount total = _amountSentGrothes + _sentFeeGrothes;
         return AppModel::getInstance().getLitecoinClient()->getAvailable() > total;
@@ -444,9 +444,9 @@ namespace
     {
         switch (currency)
         {
-        case Currency::CurrBtc:
+        case Currency::CurrBitcoin:
             return beam::wallet::AtomicSwapCoin::Bitcoin;
-        case Currency::CurrLtc:
+        case Currency::CurrLitecoin:
             return beam::wallet::AtomicSwapCoin::Litecoin;
         case Currency::CurrQtum:
             return beam::wallet::AtomicSwapCoin::Qtum;

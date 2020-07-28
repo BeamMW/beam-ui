@@ -98,10 +98,10 @@ namespace
             case Currency::CurrBeam:
                 return beamui::Currencies::Beam;
 
-            case Currency::CurrBtc:
+            case Currency::CurrBitcoin:
                 return beamui::Currencies::Bitcoin;
 
-            case Currency::CurrLtc:
+            case Currency::CurrLitecoin:
                 return beamui::Currencies::Litecoin;
 
             case Currency::CurrQtum:
@@ -173,8 +173,8 @@ bool QMLGlobals::isFeeOK(uint32_t fee, Currency currency, bool isShielded)
     switch (currency)
     {
     case Currency::CurrBeam: return fee >= minFeeBeam(isShielded);
-    case Currency::CurrBtc:  return true;
-    case Currency::CurrLtc:  return true;
+    case Currency::CurrBitcoin:  return true;
+    case Currency::CurrLitecoin:  return true;
     case Currency::CurrQtum: return true;
     default:
         assert(false);
@@ -214,11 +214,11 @@ QString QMLGlobals::calcTotalFee(Currency currency, unsigned int feeRate)
         case Currency::CurrBeam: {
             return QString::fromStdString(std::to_string(feeRate));
         }
-        case Currency::CurrBtc: {
+        case Currency::CurrBitcoin: {
             auto total = beam::wallet::BitcoinSide::CalcTotalFee(feeRate);
             return QString::fromStdString(std::to_string(total)) + " sat";
         }
-        case Currency::CurrLtc: {
+        case Currency::CurrLitecoin: {
             auto total = beam::wallet::LitecoinSide::CalcTotalFee(feeRate);
             return QString::fromStdString(std::to_string(total)) + " ph";
         }
@@ -247,8 +247,8 @@ QString QMLGlobals::calcAmountInSecondCurrency(const QString& amount, const QStr
     }
     else
     {
-#define MACRO(name, label, subLabel, feeLabel, dec) \
-        if (label == secondCurrLabel) \
+#define MACRO(name, label, slabel, subunit, feeLabel, dec) \
+        if (slabel == secondCurrLabel) \
         { \
             return multiplyWithPrecision(amount, exchangeRate, dec); \
         } 
@@ -296,13 +296,13 @@ bool QMLGlobals::canReceive(Currency currency)
     {
         return true;
     }
-    case Currency::CurrBtc:
+    case Currency::CurrBitcoin:
     {
         auto client = AppModel::getInstance().getBitcoinClient();
         return client->GetSettings().IsActivated() &&
                client->getStatus() == beam::bitcoin::Client::Status::Connected;
     }
-    case Currency::CurrLtc:
+    case Currency::CurrLitecoin:
     {
         auto client = AppModel::getInstance().getLitecoinClient();
         return client->GetSettings().IsActivated() &&
@@ -337,12 +337,12 @@ QString QMLGlobals::getCurrencyName(Currency currency)
         //% "BEAM"
         return qtTrId("general-beam");
     }
-    case Currency::CurrBtc:
+    case Currency::CurrBitcoin:
     {
         //% "Bitcoin"
         return qtTrId("general-bitcoin");
     }
-    case Currency::CurrLtc:
+    case Currency::CurrLitecoin:
     {
         //% "Litecoin"
         return qtTrId("general-litecoin");
@@ -378,10 +378,10 @@ unsigned int QMLGlobals::getMinimalFee(Currency currency, bool isShielded)
         case Currency::CurrBeam:
             return minFeeBeam(isShielded);
         
-        case Currency::CurrBtc:
+        case Currency::CurrBitcoin:
             return AppModel::getInstance().getBitcoinClient()->GetSettings().GetMinFeeRate();
 
-        case Currency::CurrLtc:
+        case Currency::CurrLitecoin:
             return AppModel::getInstance().getLitecoinClient()->GetSettings().GetMinFeeRate();
         
         case Currency::CurrQtum:
@@ -399,13 +399,13 @@ unsigned int QMLGlobals::getDefaultFee(Currency currency)
         case Currency::CurrBeam:
             return minFeeBeam();
         
-        case Currency::CurrBtc:
+        case Currency::CurrBitcoin:
         {
             const auto btcSettings = AppModel::getInstance().getBitcoinClient()->GetSettings();
             return btcSettings.GetFeeRate();
         }
 
-        case Currency::CurrLtc:
+        case Currency::CurrLitecoin:
         {
             const auto ltcSettings = AppModel::getInstance().getLitecoinClient()->GetSettings();
             return ltcSettings.GetFeeRate();
@@ -425,10 +425,10 @@ bool QMLGlobals::isSwapFeeOK(unsigned int amount, unsigned int fee, Currency cur
         case Currency::CurrBeam: {
             return amount > fee && fee >= QMLGlobals::minFeeBeam();
         }
-        case Currency::CurrBtc: {
+        case Currency::CurrBitcoin: {
             return beam::wallet::BitcoinSide::CheckAmount(amount, fee);
         }
-        case Currency::CurrLtc: {
+        case Currency::CurrLitecoin: {
             return beam::wallet::LitecoinSide::CheckAmount(amount, fee);
         }
         case Currency::CurrQtum: {

@@ -41,9 +41,9 @@ namespace beamui
     {
         switch (currency)
         {
-#define MACRO(name, label, subLabel, feeLabel, dec) \
+#define MACRO(name, label, slabel, subunit, feeLabel, dec) \
         case Currencies::name: \
-            return QString(label); 
+            return QString(slabel); 
         CURRENCY_MAP(MACRO)
 #undef MACRO
         default:
@@ -60,7 +60,7 @@ namespace beamui
     {
         switch (currency)
         {
-#define MACRO(name, label, subLabel, feeLabel, dec) \
+#define MACRO(name, label, slabel, subunit, feeLabel, dec) \
         case Currencies::name: \
             return QString(feeLabel); 
         CURRENCY_MAP(MACRO)
@@ -74,9 +74,9 @@ namespace beamui
     {
         switch (currency)
         {
-#define MACRO(name, label, subLabel, feeLabel, dec) \
+#define MACRO(name, label, slabel, subunit, feeLabel, dec) \
         case Currencies::name: \
-            return QString(subLabel); 
+            return QString(subunit); 
         CURRENCY_MAP(MACRO)
 #undef MACRO
         default:
@@ -86,10 +86,10 @@ namespace beamui
 
     QString getCurrencySubunitFromLabel(const QString& currLabel)
     {
-#define MACRO(name, label, subLabel, feeLabel, dec) \
-        if (currLabel == label) \
+#define MACRO(name, label, slabel, subunite, feeLabel, dec) \
+        if (currLabel == slabel) \
         { \
-            return subLabel; \
+            return subunite; \
         } 
         CURRENCY_MAP(MACRO)
 #undef MACRO
