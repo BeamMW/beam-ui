@@ -380,6 +380,13 @@ ColumnLayout {
                             property: "feeGrothes"
                             value:    feeInput.fee
                         }
+
+                        Connections {
+                            target: viewModel
+                            onFeeGrothesChanged: {
+                                feeInput.fee = viewModel.feeGrothes;
+                            }
+                        }
                     }
 
                     //
