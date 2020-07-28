@@ -20,6 +20,7 @@ ColumnLayout {
         property bool    isExchangeRateAvailable:   false
         property string  secondCurrencyAmount:      ""
         property string  secondCurrencyLabel:       ""
+        property string  minimumFeeNotificationText: ""
 
         RowLayout {
             Layout.fillWidth: true
@@ -74,12 +75,15 @@ ColumnLayout {
 
         SFText {
             id: minimumFeeNotification
-            //% "The minimum fee is %1 %2"
-            text:            qsTrId("general-fee-fail").arg(Utils.uiStringToLocale(control.minFee)).arg(control.feeLabel)
+            text:            minimumFeeNotificationText.length ?
+                                minimumFeeNotificationText :
+                                //% "The minimum fee is %1 %2"
+                                qsTrId("general-fee-fail").arg(Utils.uiStringToLocale(control.minFee)).arg(control.feeLabel)
             color:           Style.validator_error
             font.pixelSize:  12
             font.styleName:  "Italic"
-            width:           parent.width
+            Layout.fillWidth: true
+            wrapMode:        Text.WordWrap
             visible:         !control.isValid
         }
         SFText {

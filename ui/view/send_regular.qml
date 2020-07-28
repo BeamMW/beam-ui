@@ -358,7 +358,7 @@ ColumnLayout {
                     //
                     FoldablePanel {
                         //% "Fee"
-                        title:                   qsTrId("general-fee")
+                        title:                   qsTrId("send-regular-fee")
                         Layout.fillWidth:        true
 
                         content: FeeInput {
@@ -373,6 +373,10 @@ ColumnLayout {
                             isExchangeRateAvailable:    sendAmountInput.isExchangeRateAvailable
                             secondCurrencyAmount:       getFeeInSecondCurrency(viewModel.fee)
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            minimumFeeNotificationText: viewModel.isShieldedTx ?
+                                //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
+                                qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
+                                ""
                         }
 
                         Binding {

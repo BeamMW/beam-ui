@@ -495,27 +495,6 @@
         <source>Wallet</source>
         <translation>Гаманец</translation>
     </message>
-    <message id="send-title">
-        <source>Send</source>
-        <translation>Адправіць</translation>
-    </message>
-    <message id="send-contact-placeholder">
-        <source>Paste recipient token here</source>
-        <oldsource>Please specify contact or transaction token</oldsource>
-        <translation type="unfinished">Пазначце адрас атрымальніка</translation>
-    </message>
-    <message id="send-amount-label">
-        <source>Amount to send</source>
-        <translation type="unfinished">Amount to send</translation>
-    </message>
-    <message id="send-founds-fail">
-        <source>Insufficient funds: you would need %1 to complete the transaction</source>
-        <translation>Недастаткова сродкаў: неабходна %1 для завяршэння транзакцыі</translation>
-    </message>
-    <message id="send-remaining-label">
-        <source>Remaining</source>
-        <translation>Засталося</translation>
-    </message>
     <message id="start-restore-confirm-button">
         <source>I agree</source>
         <translation>Я згодзен</translation>
@@ -1219,10 +1198,6 @@ Update your settings and try again.</oldsource>
     <message id="wallet-send-invalid-token">
         <source>Invalid swap token</source>
         <translation>Няправільны токен свопу</translation>
-    </message>
-    <message id="wallet-send-invalid-address-or-token">
-        <source>Invalid wallet address</source>
-        <translation>Invalid wallet address or swap token</translation>
     </message>
     <message id="general-comment-local">
         <source>Comments are local and won&apos;t be shared</source>
@@ -2400,10 +2375,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Request</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="general-max-privacy">
-        <source>Max privacy</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="token-one-time">
         <source>One-time use</source>
         <translation type="unfinished"></translation>
@@ -2421,8 +2392,7 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-non-interactive">
-        <source></source>
-        <oldsource>Non-interactive</oldsource>
+        <source>Non-interactive</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-exchanges-not-supported2">
@@ -2437,15 +2407,6 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="wallet-send-non-int-note">
         <source>Token good for 20 transactions.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-send-max-privacy-note-token">
-        <source>Receiver requested Max privacy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="save-address-title">
-        <source>Do you want to name the contact?</source>
-        <oldsource>Save to Address Book</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="address-save">
@@ -2471,14 +2432,6 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="receive-request-optional">
         <source>(optional)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-send-permanent-note">
-        <source>Permanent token (you can save it to contacts after send).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-send-one-time-note">
-        <source>One-time use token (expire in 2 hours after succesfull transaction).</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="save-address-no-name">
@@ -2508,6 +2461,58 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="format-amount">
         <source>%1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="save-address-title">
+        <source>Do you want to name the contact?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-title">
+        <source>Send</source>
+        <translation type="unfinished">Адправіць</translation>
+    </message>
+    <message id="send-contact-placeholder">
+        <source>Paste recipient token here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-invalid-address-or-token">
+        <source>Invalid wallet address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-permanent-note">
+        <source>Permanent token (you can save it to contacts after send).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-one-time-note">
+        <source>One-time use token (expire in 2 hours after succesfull transaction).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-max-privacy">
+        <source>Max privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-max-privacy-note-token">
+        <source>Receiver requested Max privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-founds-fail">
+        <source>Insufficient funds: you would need %1 to complete the transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="max-pivacy-fee-fail">
+        <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-amount-label">
+        <source>Amount to send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-remaining-label">
+        <source>Remaining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-regular-fee">
+        <source>Fee</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

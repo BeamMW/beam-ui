@@ -40,6 +40,7 @@ QString TokenInfoItem::getTransactionType() const
                 auto vouchers = m_parameters.GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList);
                 if (vouchers && getAddress().isEmpty())
                 {
+                    //% "Non-interactive"
                     return qtTrId("tx-non-interactive");
                 }
             }
