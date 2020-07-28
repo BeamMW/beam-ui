@@ -2305,8 +2305,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished">Identity</translation>
     </message>
     <message id="wallet-send-max-privacy-note">
-        <source>Transaction is slower, fees are higher.</source>
-        <translation type="unfinished"></translation>
+        <source>Transaction is slower, receiver pays fees.</source>
+        <translation>Transaction is slower, receiver pays fees.</translation>
     </message>
     <message id="can-not-generate-new-address-message">
         <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>

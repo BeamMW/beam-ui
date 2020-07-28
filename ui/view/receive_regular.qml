@@ -248,7 +248,7 @@ ColumnLayout {
                                     text:               viewModel.isNonInteractive ?
                                                         //% "Token good for 20 transactions."
                                                         qsTrId("wallet-send-non-int-note") : 
-                                                        //% "Transaction is slower, fees are higher."
+                                                        //% "Transaction is slower, receiver pays fees."
                                                         qsTrId("wallet-send-max-privacy-note")
                                 }
                             }
@@ -402,7 +402,7 @@ ColumnLayout {
                                 //% "Switch to permanent token"
                                 text:       qsTrId("switch-permanent")
                                 visible:    !viewModel.isPermanentAddress && !viewModel.isShieldedTx
-                                linkColor:  Style.accent_incoming
+                                linkColor:  Style.active//Style.accent_incoming
                                 onClicked: {
                                     viewModel.isPermanentAddress = true;
                                 }
@@ -411,7 +411,7 @@ ColumnLayout {
                                 //% "Switch to regular transaction"
                                 text:       qsTrId("switch-regular")
                                 visible:    viewModel.isShieldedTx 
-                                linkColor:  Style.accent_incoming
+                                linkColor:  Style.active//Style.accent_incoming
                                 onClicked: {
                                     viewModel.isShieldedTx = false;
                                     viewModel.isNonInteractive= false;
