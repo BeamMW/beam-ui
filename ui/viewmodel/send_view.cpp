@@ -309,6 +309,7 @@ void SendViewModel::sendMoney()
     {
         // TODO:SWAP show 'operation in process' animation here?
         auto messageString = _comment.toStdString();
+        saveReceiverAddress(_comment);
 
         auto p = CreateSimpleTransactionParameters()
             .SetParameter(TxParameterID::Amount, _sendAmountGrothes)
@@ -336,7 +337,7 @@ void SendViewModel::saveReceiverAddress(const QString& name)
 {
     using namespace beam::wallet;
     QString trimmed = name;
-    if (!trimmed.isEmpty() && isPermanentAddress())
+    if (!trimmed.isEmpty())
     {
         WalletAddress address;
         address.m_walletID = _receiverWalletID;
