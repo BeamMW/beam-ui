@@ -233,25 +233,14 @@ QString QMLGlobals::calcTotalFee(Currency currency, unsigned int feeRate)
     }
 }
 
-QString QMLGlobals::calcFeeInSecondCurrency(int fee, Currency originalCurrency, const QString& exchangeRate, const QString& secondCurrencyLabel)
+QString QMLGlobals::calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyLabel)
 {
-    // originalCurrency is needed to convert fee to string
-    // possible use uint64_t UnitsPerCoin(AtomicSwapCoin swapCoin);
-    if (exchangeRate == "0")
-    {
-        return "- " + secondCurrencyLabel;
-    }
-
     QString feeInOriginalCurrency = beamui::AmountToUIString(fee);
-    return formatAmountInSecondCurrency(feeInOriginalCurrency, exchangeRate, secondCurrencyLabel);
+    return calcAmountInSecondCurrency(feeInOriginalCurrency, exchangeRate, secondCurrencyLabel);
 }
 
-QString QMLGlobals::formatAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel)
+QString QMLGlobals::calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel)
 {
-    if (amount == "0")
-    {
-        return QString("0.0 %1").arg(secondCurrLabel);
-    }
     if (exchangeRate.isEmpty() || exchangeRate == "0")
     {
         return "";
@@ -261,16 +250,7 @@ QString QMLGlobals::formatAmountInSecondCurrency(const QString& amount, const QS
 #define MACRO(name, label, subLabel, feeLabel, dec) \
         if (label == secondCurrLabel) \
         { \
-            QString t = multiplyWithPrecision(amount, exchangeRate, dec); \
-            if (t == "0" && amount != "0") \
-            { \
-                return QString("< 1 %1").arg(subLabel); \
-            } \
-            if (t != "") \
-            { \
-                return QString("%1 %2").arg(t).arg(label); \
-            } \
-            return t; \
+            return multiplyWithPrecision(amount, exchangeRate, dec); \
         } 
         CURRENCY_MAP(MACRO)
 #undef MACRO
@@ -384,6 +364,11 @@ QString QMLGlobals::getFeeRateLabel(Currency currency)
 {
     beamui::Currencies currencyCommon = convertUiCurrencyToCurrencies(currency);
     return beamui::getFeeRateLabel(currencyCommon);
+}
+
+QString QMLGlobals::getCurrencySubunitFromLabel(const QString& currLabel)
+{
+    return beamui::getCurrencySubunitFromLabel(currLabel);
 }
 
 unsigned int QMLGlobals::getMinimalFee(Currency currency, bool isShielded)

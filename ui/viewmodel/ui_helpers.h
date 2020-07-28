@@ -37,6 +37,7 @@ namespace beamui
     QString getCurrencyLabel(beam::wallet::ExchangeRate::Currency);
     QString getFeeRateLabel(Currencies);
     QString getCurrencySubunitLabel(Currencies);
+    QString getCurrencySubunitFromLabel(const QString& currLabel);
 
     /// Convert amount to ui string with "." as a separator. With the default @coinType, no currency label added.
     QString AmountToUIString(const beam::Amount& value, Currencies coinType = Currencies::Unknown);

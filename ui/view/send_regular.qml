@@ -65,9 +65,8 @@ ColumnLayout {
     }
 
     function getFeeInSecondCurrency(feeValue) {
-        return BeamGlobals.calcFeeInSecondCurrency(
+        return Utils.formatAmountToSecondCurrency(
             feeValue,
-            Currency.CurrBeam,
             viewModel.secondCurrencyRateValue ,
             viewModel.secondCurrencyLabel)
     }
@@ -372,7 +371,7 @@ ColumnLayout {
                             fillWidth:                  true
                             showSecondCurrency:         sendAmountInput.showSecondCurrency
                             isExchangeRateAvailable:    sendAmountInput.isExchangeRateAvailable
-                            secondCurrencyAmount:       getFeeInSecondCurrency(viewModel.feeGrothes)
+                            secondCurrencyAmount:       getFeeInSecondCurrency(viewModel.fee)
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
                         }
 

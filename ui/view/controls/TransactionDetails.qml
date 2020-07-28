@@ -3,6 +3,7 @@ import QtQuick.Controls 2.4
 
 import QtQuick.Layouts 1.11
 import Beam.Wallet 1.0
+import "../utils.js" as Utils
 import "."
 
 RowLayout {
@@ -66,7 +67,7 @@ RowLayout {
 
     function getAmountInSecondCurrency() {
         if (root.amount !== "") {
-            var amountInSecondCurrency = BeamGlobals.formatAmountInSecondCurrency(
+            var amountInSecondCurrency = Utils.formatAmountToSecondCurrency(
                 root.amount,
                 root.secondCurrencyRate,
                 root.secondCurrencyLabel);

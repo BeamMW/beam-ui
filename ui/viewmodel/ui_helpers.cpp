@@ -83,7 +83,19 @@ namespace beamui
             return "";
         }
     }
-    
+
+    QString getCurrencySubunitFromLabel(const QString& currLabel)
+    {
+#define MACRO(name, label, subLabel, feeLabel, dec) \
+        if (currLabel == label) \
+        { \
+            return subLabel; \
+        } 
+        CURRENCY_MAP(MACRO)
+#undef MACRO
+        return "";
+    }
+
     /**
      *  Convert amount value to printable format.
      *  @value      Value in coin quants (satoshi, groth and s.o.). 

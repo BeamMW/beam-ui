@@ -29,15 +29,14 @@ ColumnLayout {
     }
 
     function getFeeInSecondCurrency(feeValue) {
-        return BeamGlobals.calcFeeInSecondCurrency(
+        return Utils.formatFeeToSecondCurrency(
             feeValue,
-            control.currency,
             control.secondCurrencyRateValue,
             control.secondCurrencyLabel);
     }
 
     function getAmountInSecondCurrency() {
-        return BeamGlobals.formatAmountInSecondCurrency(
+        return Utils.formatAmountToSecondCurrency(
             control.amountIn,
             control.secondCurrencyRateValue,
             control.secondCurrencyLabel);

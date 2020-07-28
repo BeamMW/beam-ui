@@ -40,14 +40,15 @@ public:
     static bool isSwapFeeOK(unsigned int amount, unsigned int fee, Currency currency);
     static int  getMinFeeOrRate(Currency currency);
     Q_INVOKABLE static QString calcTotalFee(Currency currency, unsigned int feeRate);
-    Q_INVOKABLE static QString calcFeeInSecondCurrency(int fee, Currency originalCurrency, const QString& exchangeRate, const QString& secondCurrencyLabel);
-    Q_INVOKABLE static QString formatAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel);
+    Q_INVOKABLE static QString calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyLabel);
+    Q_INVOKABLE static QString calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel);
 
     Q_INVOKABLE static unsigned int minFeeBeam(bool isShielded = false);
     
     Q_INVOKABLE static QString getCurrencyLabel(Currency);
     Q_INVOKABLE static QString getCurrencyName(Currency);
     Q_INVOKABLE static QString getFeeRateLabel(Currency);
+    Q_INVOKABLE static QString getCurrencySubunitFromLabel(const QString& currLabel);
     
     Q_INVOKABLE static unsigned int getMinimalFee(Currency, bool isShielded);
     Q_INVOKABLE static unsigned int getDefaultFee(Currency);

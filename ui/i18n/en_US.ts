@@ -2473,5 +2473,13 @@ Your version is: %2. Please, check for updates.</translation>
         <extracomment>Entry in address table context menu to get receive token</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message id="format-small-amount">
+        <source>&lt; 1 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="format-amount">
+        <source>%1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -29,11 +29,11 @@ Control {
     property string  prefix:          ""
 
     function getAmountInSecondCurrency() {
-        var secondCurrencyAmount = Utils.uiStringToLocale(
-            BeamGlobals.formatAmountInSecondCurrency(
+        var secondCurrencyAmount = 
+            Utils.formatAmountToSecondCurrency(
                 control.amount,
                 control.secondCurrencyRateValue,
-                control.secondCurrencyLabel));
+                control.secondCurrencyLabel);
         return control.prefix + (secondCurrencyAmount == "" ? "-" : secondCurrencyAmount);
     }
 
