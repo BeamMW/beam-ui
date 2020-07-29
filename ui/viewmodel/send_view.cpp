@@ -110,6 +110,11 @@ void SendViewModel::setReceiverTA(const QString& value)
     {
         _tokenGeneratebByNewAppVersionMessage.clear();
         _receiverTA = value;
+        if (_receiverTA.isEmpty())
+        {
+            _canChangeTxType = true;
+            emit canChangeTxTypeChanged();
+        }
         emit receiverTAChanged();
         emit canSendChanged();
 
@@ -162,6 +167,7 @@ void SendViewModel::setIsShieldedTx(bool value)
     {
         _isShieldedTx = value;
         emit isShieldedTxChanged();
+        setFeeGrothes(QMLGlobals::getMinimalFee(Currency::CurrBeam, isShieldedTx()));
     }
 }
 
@@ -244,6 +250,7 @@ void SendViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const
     if (id == _receiverWalletID && address)
     {
         setWalletAddress(address);
+        setComment(QString::fromStdString(address->m_label));
     }
     else
     {
@@ -254,6 +261,11 @@ void SendViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const
 QString SendViewModel::getChange() const
 {
     return beamui::AmountToUIString(_changeGrothes);
+}
+
+QString SendViewModel::getFee() const
+{
+    return beamui::AmountToUIString(_feeGrothes);
 }
 
 QString SendViewModel::getTotalUTXO() const
@@ -272,7 +284,7 @@ bool SendViewModel::canSend() const
 {
     return !QMLGlobals::isSwapToken(_receiverTA) && getRreceiverTAValid()
            && _sendAmountGrothes > 0 && isEnough()
-           && QMLGlobals::isFeeOK(_feeGrothes, Currency::CurrBeam);
+           && QMLGlobals::isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx());
 }
 
 bool SendViewModel::isToken() const
@@ -302,6 +314,7 @@ void SendViewModel::sendMoney()
     {
         // TODO:SWAP show 'operation in process' animation here?
         auto messageString = _comment.toStdString();
+        saveReceiverAddress(_comment);
 
         auto p = CreateSimpleTransactionParameters()
             .SetParameter(TxParameterID::Amount, _sendAmountGrothes)
@@ -329,7 +342,7 @@ void SendViewModel::saveReceiverAddress(const QString& name)
 {
     using namespace beam::wallet;
     QString trimmed = name;
-    if (!trimmed.isEmpty() && isPermanentAddress())
+    if (!trimmed.isEmpty())
     {
         WalletAddress address;
         address.m_walletID = _receiverWalletID;

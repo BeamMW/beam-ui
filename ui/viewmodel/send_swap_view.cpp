@@ -27,7 +27,7 @@ SendSwapViewModel::SendSwapViewModel()
     , _sendCurrency(Currency::CurrBeam)
     , _receiveAmountGrothes(0)
     , _receiveFeeGrothes(0)
-    , _receiveCurrency(Currency::CurrBtc)
+    , _receiveCurrency(Currency::CurrBitcoin)
     , _changeGrothes(0)
     , _walletModel(*AppModel::getInstance().getWallet())
     , _isBeamSide(true)
@@ -50,9 +50,9 @@ namespace
         switch (coin)
         {
         case beam::wallet::AtomicSwapCoin::Bitcoin:
-            return Currency::CurrBtc;
+            return Currency::CurrBitcoin;
         case beam::wallet::AtomicSwapCoin::Litecoin:
-            return Currency::CurrLtc;
+            return Currency::CurrLitecoin;
         case beam::wallet::AtomicSwapCoin::Qtum:
             return Currency::CurrQtum;
         default:
@@ -355,13 +355,13 @@ bool SendSwapViewModel::isEnough() const
         const auto total = _sendAmountGrothes + _sendFeeGrothes + _changeGrothes;
         return _walletModel.getAvailable() >= total;
     }
-    case Currency::CurrBtc:
+    case Currency::CurrBitcoin:
     {
         // TODO sentFee is fee rate. should be corrected
         const beam::Amount total = _sendAmountGrothes + _sendFeeGrothes;
         return AppModel::getInstance().getBitcoinClient()->getAvailable() > total;
     }
-    case Currency::CurrLtc:
+    case Currency::CurrLitecoin:
     {
         const beam::Amount total = _sendAmountGrothes + _sendFeeGrothes;
         return AppModel::getInstance().getLitecoinClient()->getAvailable() > total;
@@ -409,7 +409,7 @@ QString SendSwapViewModel::getReceiverAddress() const
 bool SendSwapViewModel::canSend() const
 {
     // TODO:SWAP check if correct
-    return QMLGlobals::isFeeOK(_sendFeeGrothes, _sendCurrency) &&
+    return QMLGlobals::isFeeOK(_sendFeeGrothes, _sendCurrency, false) &&
            _sendCurrency != _receiveCurrency &&
            isEnough() &&
            QDateTime::currentDateTime() < _expiresTime;

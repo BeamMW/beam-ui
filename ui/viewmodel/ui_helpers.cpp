@@ -41,24 +41,13 @@ namespace beamui
     {
         switch (currency)
         {
-            case Currencies::Beam:
-                return QString(currencyBeamLabel.data());
-
-            case Currencies::Bitcoin:
-                return QString(currencyBitcoinLabel.data());
-
-            case Currencies::Litecoin:
-                return QString(currencyLitecoinLabel.data());
-
-            case Currencies::Qtum:
-                return QString(currencyQtumLabel.data());
-
-            case Currencies::Usd:
-                return QString(currencyUsdLabel.data());
-
-            case Currencies::Unknown:
-            default:
-                return QString(currencyUnknownLabel.data());
+#define MACRO(name, label, slabel, subunit, feeLabel, dec) \
+        case Currencies::name: \
+            return QString(slabel); 
+        CURRENCY_MAP(MACRO)
+#undef MACRO
+        default:
+            return "";
         }
     }
 
@@ -71,25 +60,42 @@ namespace beamui
     {
         switch (currency)
         {
-            case Currencies::Beam:
-                return QString(currencyBeamFeeRateLabel.data());
-
-            case Currencies::Bitcoin:
-                return QString(currencyBitcoinFeeRateLabel.data());
-
-            case Currencies::Litecoin:
-                return QString(currencyLitecoinFeeRateLabel.data());
-
-            case Currencies::Qtum:
-                return QString(currencyQtumFeeRateLabel.data());
-
-            case Currencies::Usd:
-            case Currencies::Unknown:
-            default:
-                return QString(currencyUnknownFeeRateLabel.data());
+#define MACRO(name, label, slabel, subunit, feeLabel, dec) \
+        case Currencies::name: \
+            return QString(feeLabel); 
+        CURRENCY_MAP(MACRO)
+#undef MACRO
+        default:
+            return "";
         }
     }
-    
+
+    QString getCurrencySubunitLabel(Currencies currency)
+    {
+        switch (currency)
+        {
+#define MACRO(name, label, slabel, subunit, feeLabel, dec) \
+        case Currencies::name: \
+            return QString(subunit); 
+        CURRENCY_MAP(MACRO)
+#undef MACRO
+        default:
+            return "";
+        }
+    }
+
+    QString getCurrencySubunitFromLabel(const QString& currLabel)
+    {
+#define MACRO(name, label, slabel, subunite, feeLabel, dec) \
+        if (currLabel == slabel) \
+        { \
+            return subunite; \
+        } 
+        CURRENCY_MAP(MACRO)
+#undef MACRO
+        return "";
+    }
+
     /**
      *  Convert amount value to printable format.
      *  @value      Value in coin quants (satoshi, groth and s.o.). 

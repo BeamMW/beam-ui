@@ -29,18 +29,17 @@ ColumnLayout {
     }
 
     function getFeeInSecondCurrency(feeValue) {
-        return BeamGlobals.calcFeeInSecondCurrency(
+        return Utils.formatFeeToSecondCurrency(
             feeValue,
-            control.currency,
             control.secondCurrencyRateValue,
             control.secondCurrencyLabel);
     }
 
     function getAmountInSecondCurrency() {
-        return BeamGlobals.calcAmountInSecondCurrency(
+        return Utils.formatAmountToSecondCurrency(
             control.amountIn,
             control.secondCurrencyRateValue,
-            control.secondCurrencyLabel) + " " + control.secondCurrencyLabel;
+            control.secondCurrencyLabel);
     }
 
     readonly property bool     isValidFee:     hasFee ? feeInput.isValid : true
@@ -98,18 +97,18 @@ ColumnLayout {
             onTextChanged: {
                 // if nothing then "0", remove insignificant zeroes and "." in floats
                 errmsg.text = "";
-                if (ainput.focus) {
+                if (ainput.activeFocus) {
                     control.amount = text ? text.replace(/\.0*$|(\.\d*[1-9])0+$/,'$1') : "0"
                 }
             }
 
-            onFocusChanged: {
+            onActiveFocusChanged: {
                 text = formatDisplayedAmount()
                 if (focus) cursorPosition = positionAt(ainput.getMousePos().x, ainput.getMousePos().y)
             }
 
             function formatDisplayedAmount() {
-                return control.amountIn == "0" ? "" : (ainput.focus ? control.amountIn : Utils.uiStringToLocale(control.amountIn))
+                return control.amountIn == "0" ? "" : (ainput.activeFocus ? control.amountIn : Utils.uiStringToLocale(control.amountIn))
             }
 
             Connections {
@@ -241,7 +240,7 @@ ColumnLayout {
                 id:               feeInput
                 Layout.fillWidth: true
                 fee:              control.fee
-                minFee:           BeamGlobals.getMinimalFee(control.currency)
+                minFee:           BeamGlobals.getMinimalFee(control.currency, false)
                 feeLabel:         BeamGlobals.getFeeRateLabel(control.currency)
                 color:            control.color
                 readOnly:         control.readOnlyF

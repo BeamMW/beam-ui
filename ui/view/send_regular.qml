@@ -65,9 +65,8 @@ ColumnLayout {
     }
 
     function getFeeInSecondCurrency(feeValue) {
-        return BeamGlobals.calcFeeInSecondCurrency(
+        return Utils.formatAmountToSecondCurrency(
             feeValue,
-            Currency.CurrBeam,
             viewModel.secondCurrencyRateValue ,
             viewModel.secondCurrencyLabel)
     }
@@ -318,7 +317,7 @@ ColumnLayout {
                                 color:              Style.content_secondary
                                 font.italic:        true
                                 font.pixelSize:     14
-                                //% "Transaction is slower, fees are higher."
+                                //% "Transaction is slower, receiver pays fees."
                                 text:               qsTrId("wallet-send-max-privacy-note")
                                 visible:            viewModel.isShieldedTx
                             }
@@ -339,13 +338,12 @@ ColumnLayout {
                             secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
                             setMaxAvailableAmount:      function() { viewModel.setMaxAvailableAmount(); }
-                            //hasFee:           true
-                            showAddAll:       true
-                            color:            Style.accent_outgoing
-                            error:            showInsufficientBalanceWarning
-                                              //% "Insufficient funds: you would need %1 to complete the transaction"
-                                              ? qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.missing))
-                                              : ""
+                            showAddAll:                 true
+                            color:                      Style.accent_outgoing
+                            error:                      showInsufficientBalanceWarning
+                                                        //% "Insufficient funds: you would need %1 to complete the transaction"
+                                                        ? qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.missing))
+                                                        : ""
                         }
      
                         Binding {
@@ -360,27 +358,38 @@ ColumnLayout {
                     //
                     FoldablePanel {
                         //% "Fee"
-                        title:                   qsTrId("general-fee")
+                        title:                   qsTrId("send-regular-fee")
                         Layout.fillWidth:        true
 
                         content: FeeInput {
                             id:                         feeInput
                             fee:                        viewModel.feeGrothes
-                            minFee:                     BeamGlobals.getMinimalFee(Currency.CurrBeam)
+                            minFee:                     BeamGlobals.getMinimalFee(Currency.CurrBeam, viewModel.isShieldedTx)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(Currency.CurrBeam)
                             color:                      Style.accent_outgoing
                             readOnly:                   false
                             fillWidth:                  true
-                            showSecondCurrency:         true
-                            isExchangeRateAvailable:    viewModel.secondCurrencyRateValue != "0"
-                            secondCurrencyAmount:       getFeeInSecondCurrency(viewModel.feeGrothes)
+                            showSecondCurrency:         sendAmountInput.showSecondCurrency
+                            isExchangeRateAvailable:    sendAmountInput.isExchangeRateAvailable
+                            secondCurrencyAmount:       getFeeInSecondCurrency(viewModel.fee)
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            minimumFeeNotificationText: viewModel.isShieldedTx ?
+                                //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
+                                qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
+                                ""
                         }
 
                         Binding {
                             target:   viewModel
                             property: "feeGrothes"
                             value:    feeInput.fee
+                        }
+
+                        Connections {
+                            target: viewModel
+                            onFeeGrothesChanged: {
+                                feeInput.fee = viewModel.feeGrothes;
+                            }
                         }
                     }
 
@@ -398,7 +407,7 @@ ColumnLayout {
                                 id:               addressComment
                                 font.pixelSize:   14
                                 Layout.fillWidth: true
-                                focus:            true
+                                //focus:            true
                                 color:            Style.content_main
                                 text:             viewModel.comment
                                 maximumLength:    BeamGlobals.maxCommentLength()
@@ -490,7 +499,7 @@ ColumnLayout {
                                 Layout.alignment:        Qt.AlignTop
                                 Layout.fillWidth:        true
                                 error:                   showInsufficientBalanceWarning
-                                amount:                  viewModel.feeGrothes
+                                amount:                  viewModel.fee
                                 lightFont:               false
                                 currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
                                 secondCurrencyLabel:     viewModel.secondCurrencyLabel

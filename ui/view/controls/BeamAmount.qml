@@ -29,12 +29,12 @@ Control {
     property string  prefix:          ""
 
     function getAmountInSecondCurrency() {
-        var secondCurrencyAmount = Utils.uiStringToLocale(
-            BeamGlobals.calcAmountInSecondCurrency(
+        var secondCurrencyAmount = 
+            Utils.formatAmountToSecondCurrency(
                 control.amount,
                 control.secondCurrencyRateValue,
-                control.secondCurrencyLabel));
-        return control.prefix + (secondCurrencyAmount == "" ? "-" : secondCurrencyAmount) + " " + control.secondCurrencyLabel;
+                control.secondCurrencyLabel);
+        return control.prefix + (secondCurrencyAmount == "" ? "-" : secondCurrencyAmount);
     }
 
     contentItem: RowLayout{

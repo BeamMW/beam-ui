@@ -19,7 +19,7 @@ Control {
         text:           [linkStyle, "<a href='#'>", control.text, "</a>"].join("")
         textFormat:     Text.RichText
         font.pixelSize: 14
-        font.styleName: semibold ? "Medium" : "Normal"
+        font.styleName: semibold ? "Medium" : "Regular"
         font.weight:    semibold ? Font.Medium : Font.Normal
 
         MouseArea {

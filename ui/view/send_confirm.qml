@@ -74,18 +74,17 @@ ConfirmationDialog {
     }
 
     function getFeeInSecondCurrency(feeValue) {
-        return BeamGlobals.calcFeeInSecondCurrency(
+        return Utils.formatFeeToSecondCurrency(
             feeValue,
-            sendViewConfirm.currency,
             sendViewConfirm.secondCurrencyRate,
             sendViewConfirm.secondCurrencyLabel)
     }
 
     function getAmountInSecondCurrency() {
-        return BeamGlobals.calcAmountInSecondCurrency(
+        return Utils.formatAmountToSecondCurrency(
             sendViewConfirm.amount,
             sendViewConfirm.secondCurrencyRate,
-            sendViewConfirm.secondCurrencyLabel) + " " + sendViewConfirm.secondCurrencyLabel;
+            sendViewConfirm.secondCurrencyLabel);
     }
 
     onAccepted: {

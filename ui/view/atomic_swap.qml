@@ -256,7 +256,7 @@ Item {
                     gradLeft: Style.swapCurrencyPaneGrLeftBTC
                     currencyIcon: "qrc:/assets/icon-btc.svg"
                     amount: viewModel.hasBtcTx ? "" : viewModel.btcAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrBtc)
+                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrBitcoin)
                     valueSecondaryStr: parent.btcActiveTxStr()
                     isOk: viewModel.btcOK
                     isConnecting: viewModel.btcConnecting
@@ -272,7 +272,7 @@ Item {
                     gradLeft: Style.swapCurrencyPaneGrLeftLTC
                     currencyIcon: "qrc:/assets/icon-ltc.svg"
                     amount: viewModel.hasLtcTx ? "" : viewModel.ltcAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrLtc)
+                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrLitecoin)
                     valueSecondaryStr: parent.ltcActiveTxStr()
                     isOk: viewModel.ltcOK
                     isConnecting: viewModel.ltcConnecting

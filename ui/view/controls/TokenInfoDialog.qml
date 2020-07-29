@@ -85,6 +85,7 @@ Dialog {
                 color:                  Style.content_disabled
                 //% "Amount"
                 text:                   qsTrId("general-amount") + ":"
+                visible:                viewModel.amount.length
             }
             
             SFLabel {
@@ -94,6 +95,7 @@ Dialog {
                 font.pixelSize:         14
                 color:                  Style.content_main
                 text:                   viewModel.amount
+                visible:                viewModel.amount.length
             }
             
             // Transaction type:
