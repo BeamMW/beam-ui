@@ -226,21 +226,18 @@ ColumnLayout {
                                 opacity:            (receiverTAPlaceholder.activeFocus || receiverTAPlaceholderMA.hovered)? 0.3 : 0.1
                             }
 
-                            Item {
-                                Layout.fillWidth: true
-                                SFText {
-                                    property bool isTokenOrAddressValid: !isTAInputValid()
-                                    Layout.alignment: Qt.AlignTop
-                                    id:               receiverTAError
-                                    color:            isTokenOrAddressValid ? Style.validator_error : Style.content_secondary
-                                    font.italic:      !isTokenOrAddressValid
-                                    font.pixelSize:   12
-                                    text:             isTokenOrAddressValid
-                                        //% "Invalid wallet address"
-                                        ? qsTrId("wallet-send-invalid-address-or-token")
-                                        : viewModel.tokenGeneratebByNewAppVersionMessage
-                                    visible:          isTokenOrAddressValid || viewModel.isTokenGeneratebByNewAppVersion
-                                }
+                            SFText {
+                                property bool isTokenOrAddressValid: !isTAInputValid()
+                                Layout.alignment: Qt.AlignTop
+                                id:               receiverTAError
+                                color:            isTokenOrAddressValid ? Style.validator_error : Style.content_secondary
+                                font.italic:      !isTokenOrAddressValid
+                                font.pixelSize:   12
+                                text:             isTokenOrAddressValid
+                                       //% "Invalid wallet address"
+                                      ? qsTrId("wallet-send-invalid-address-or-token")
+                                      : viewModel.tokenGeneratebByNewAppVersionMessage
+                                visible:          isTokenOrAddressValid || viewModel.isTokenGeneratebByNewAppVersion
                             }
                     
                             Binding {
