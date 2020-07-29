@@ -113,6 +113,7 @@ Control {
         }
 
         Control {
+            id: contentControl
             visible:             !control.folded
             Layout.fillWidth:    true
             Layout.topMargin:    connectionError ? 25 - errorRow.height : 25
@@ -129,7 +130,7 @@ Control {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
-            height: header.height + errorRow.height
+            height: header.height + errorRow.height + contentControl.Layout.topMargin
 
             cursorShape:  Qt.PointingHandCursor
             onClicked: {
