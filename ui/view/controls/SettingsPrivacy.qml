@@ -59,12 +59,11 @@ SettingsFoldable {
             }
 
             Item {
-                Layout.preferredWidth: 10
+                Layout.fillWidth: true
             }
 
             CustomSwitch {
                 id: allowBeamMWLinks
-                Layout.preferredWidth: 30
                 checked: viewModel.isAllowedBeamMWLinks
                 Binding {
                     target: viewModel
