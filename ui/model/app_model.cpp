@@ -362,16 +362,14 @@ void AppModel::startWallet()
         { Notification::Type::TransactionCompleted, m_settings.isTxStatusActive() }
     };
 
-    bool withAssets = false;
-
 #ifdef BEAM_LELANTUS_SUPPORT
-    additionalTxCreators->emplace(TxType::UnlinkFunds, std::make_shared<lelantus::UnlinkFundsTransaction::Creator>(withAssets));
-    additionalTxCreators->emplace(TxType::PushTransaction, std::make_shared<lelantus::PushTransaction::Creator>(m_db, withAssets));
-    additionalTxCreators->emplace(TxType::PullTransaction, std::make_shared<lelantus::PullTransaction::Creator>(withAssets));
+    additionalTxCreators->emplace(TxType::UnlinkFunds, std::make_shared<lelantus::UnlinkFundsTransaction::Creator>());
+    additionalTxCreators->emplace(TxType::PushTransaction, std::make_shared<lelantus::PushTransaction::Creator>(m_db));
+    additionalTxCreators->emplace(TxType::PullTransaction, std::make_shared<lelantus::PullTransaction::Creator>());
 #endif
 
     bool isSecondCurrencyEnabled = m_settings.getSecondCurrency().toStdString() != noSecondCurrencyStr;
-    m_wallet->start(activeNotifications, withAssets, isSecondCurrencyEnabled, additionalTxCreators);
+    m_wallet->start(activeNotifications, isSecondCurrencyEnabled, additionalTxCreators);
 }
 
 void AppModel::applySettingsChanges()
