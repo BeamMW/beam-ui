@@ -667,7 +667,7 @@ fee while you have transactions in progress."
                 leftPadding:  25
                 rightPadding: 25
                 text:         qsTrId("general-cancel")
-                icon.source:  "qrc:/assets/icon-cancel-white.svg"
+                icon.source:  enabled ? "qrc:/assets/icon-cancel-white.svg" : "qrc:/assets/icon-cancel.svg"
                 enabled:      isSettingsChanged()
                 onClicked:    restoreSettings()
             }

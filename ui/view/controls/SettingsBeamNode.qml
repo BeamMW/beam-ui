@@ -330,7 +330,7 @@ SettingsFoldable {
                 spacing: 12
                 //% "Cancel"
                 text: qsTrId("general-cancel")
-                icon.source: "qrc:/assets/icon-cancel-white.svg"
+                icon.source: enabled ? "qrc:/assets/icon-cancel-white.svg" : "qrc:/assets/icon-cancel.svg"
                 enabled: viewModel.isNodeChanged
                 onClicked: viewModel.undoChanges()
             }

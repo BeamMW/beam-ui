@@ -16,7 +16,9 @@ Button {
     property alias shadowRadius: drop_shadow.radius
     property bool allLowercase: !text.startsWith("I ")
     property bool showHandCursor: false
-    
+
+    property var disabledAlpha: 0.25
+    property var disalbedTextAlpha: 0.25
 
     font { 
         family: "SF Pro Display"
@@ -38,6 +40,11 @@ Button {
     icon.color: "transparent"
     icon.width: 16
     icon.height: 16
+
+    function getTextColor () {
+        var color = (control.checkable ?  (control.checked ? Style.content_opposite : Style.content_secondary) : control.palette.buttonText)
+        return control.enabled ? color : Qt.rgba(color.r, color.g, color.b, control.disalbedTextAlpha)
+    }
     
     contentItem: IconLabel {
         spacing: control.spacing
@@ -48,9 +55,7 @@ Button {
         text: control.text
         font: control.font
         
-        color: (control.checkable ?
-                (control.checked ? Style.content_opposite : Style.content_secondary) :
-                    control.palette.buttonText)
+        color: getTextColor()
         MouseArea {
             anchors.fill:  parent
             hoverEnabled: true
@@ -58,7 +63,6 @@ Button {
             cursorShape: control.showHandCursor ? Qt.PointingHandCursor : Qt.ArrowCursor
             propagateComposedEvents: true
         }
-        
     }
     
     Keys.onPressed: {
@@ -71,7 +75,7 @@ Button {
         color: (control.checkable ?
             (control.checked ? Style.active : "transparent") :
                 control.palette.button)
-        opacity: control.enabled ? 1.0 : 0.5
+        opacity: control.enabled ? 1.0 : control.disabledAlpha
         
         width: control.width
         height: control.height
