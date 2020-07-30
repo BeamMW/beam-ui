@@ -341,7 +341,7 @@ void SendViewModel::sendMoney()
 void SendViewModel::saveReceiverAddress(const QString& name)
 {
     using namespace beam::wallet;
-    QString trimmed = name;
+    QString trimmed = name.trimmed();
     WalletAddress address;
     address.m_walletID = _receiverWalletID;
     address.m_createTime = getTimestamp();
