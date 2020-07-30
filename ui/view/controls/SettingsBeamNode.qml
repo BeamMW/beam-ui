@@ -155,13 +155,11 @@ SettingsFoldable {
         //
         // Integrated node settings
         //
-        GridLayout {
+        RowLayout {
             Layout.fillWidth: true
             Layout.topMargin: 20
             visible: viewModel.localNodeRun
-            columnSpacing: 20
-            rowSpacing: 15
-            columns: 2
+            spacing: 20
 
             SFText {
                 //: settings tab, node section, port label
@@ -170,7 +168,6 @@ SettingsFoldable {
                 color: Style.content_secondary
                 font.pixelSize: 14
                 wrapMode: Text.NoWrap
-                Layout.fillWidth: true
             }
 
             ColumnLayout {
@@ -179,7 +176,6 @@ SettingsFoldable {
 
                 SFTextInput {
                     id: localNodePort
-                    Layout.alignment: Qt.AlignRight
                     Layout.preferredWidth: 100
                     topPadding: 0
                     activeFocusOnTab: true
