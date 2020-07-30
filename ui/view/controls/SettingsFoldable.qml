@@ -130,7 +130,10 @@ Control {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
-            height: header.height + errorRow.height + contentControl.Layout.topMargin
+            height: control.topPadding + header.height +
+                    ( control.folded ? control.bottomPadding : 0 ) +
+                    ( errorRow.visible ? errorRow.height : 0 ) +
+                    ( contentControl.visible ? contentControl.Layout.topMargin : 0 )
 
             cursorShape:  Qt.PointingHandCursor
             onClicked: {
