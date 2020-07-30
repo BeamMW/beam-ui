@@ -105,6 +105,7 @@ Dialog {
                 color:                  Style.content_disabled
                 //% "Transaction type"
                 text:                   qsTrId("token-info-transaction-type") + ":"
+                visible:                viewModel.transactionType.length
             }
             
             SFText {
@@ -114,6 +115,7 @@ Dialog {
                 color:                  Style.content_main
                 text:                   viewModel.transactionType
                 verticalAlignment:      Text.AlignBottom
+                visible:                viewModel.transactionType.length
             }
             
             // Address
@@ -166,25 +168,27 @@ Dialog {
                 color:                  Style.content_disabled
                 //% "Token"
                 text:                   qsTrId("token-info-token") + ":"
+                visible:                viewModel.token != viewModel.address
             }
             
             ScrollView {
-                Layout.fillWidth:       true
-                Layout.preferredWidth:  578
-                Layout.maximumHeight:   200
-                clip:                   true
-                ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-                ScrollBar.vertical.policy:   ScrollBar.AsNeeded
+                Layout.fillWidth:             true
+                Layout.preferredWidth:        578
+                Layout.maximumHeight:         200
+                clip:                         true
+                ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
+                ScrollBar.vertical.policy:    ScrollBar.AsNeeded
+                visible:                      viewModel.token != viewModel.address
                 SFLabel {
                     //Layout.fillWidth:       true
                     //Layout.preferredWidth:  578
-                    width:                  578
-                    copyMenuEnabled:        true
-                    wrapMode:               Text.Wrap
-                    font.pixelSize:         14
-                    color:                  Style.content_main
-                    text:                   viewModel.token
-                    onCopyText:             BeamGlobals.copyToClipboard(text)
+                    width:                    578
+                    copyMenuEnabled:          true
+                    wrapMode:                 Text.Wrap
+                    font.pixelSize:           14
+                    color:                    Style.content_main
+                    text:                     viewModel.token
+                    onCopyText:               BeamGlobals.copyToClipboard(text)
                 }
             }
         }

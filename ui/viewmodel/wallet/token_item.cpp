@@ -52,7 +52,7 @@ QString TokenInfoItem::getTransactionType() const
             break;
         }
     }
-    return "";
+    return qtTrId("tx-regular");;
 }
 
 QString TokenInfoItem::getAmount() const
