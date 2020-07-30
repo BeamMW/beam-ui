@@ -48,6 +48,10 @@ please review your settings and try again"
         validateCoin();
     }
 
+    function isValid () {
+        return receiveAmountInput.isValid && sendAmountInput.isValid;
+    }
+
     SwapNADialog {
         id:         swapna
         onRejected: sendSwapView.onClosed();
@@ -163,6 +167,11 @@ please review your settings and try again"
                         value:    sendAmountInput.fee
                     }
 
+                    Connections {
+                        target: viewModel
+                        onIsSendFeeOKChanged: sendAmountInput.error = sendAmountInput.getErrorText()
+                    }
+
                     //
                     // Comment
                     //
@@ -241,6 +250,11 @@ please review your settings and try again"
                         target:   viewModel
                         property: "receiveFee"
                         value:    receiveAmountInput.fee
+                    }
+
+                    Connections {
+                        target: viewModel
+                        onIsReceiveFeeOKChanged: receiveAmountInput.error = receiveAmountInput.getErrorText()
                     }
 
                     GridLayout {
@@ -389,7 +403,7 @@ please review your settings and try again"
                     palette.buttonText: Style.content_opposite
                     palette.button:     Style.accent_outgoing
                     icon.source:        "qrc:/assets/icon-send-blue.svg"
-                    enabled:            viewModel.canSend
+                    enabled:            viewModel.canSend && sendSwapView.isValid()
                     onClicked: {
                         if (!validateCoin()) return;
 

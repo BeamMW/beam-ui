@@ -177,6 +177,7 @@ please review your settings and try again"
                     Connections {
                         target: viewModel
                         onSentFeeChanged: sentAmountInput.fee = viewModel.sentFee
+                        onIsSendFeeOKChanged: sentAmountInput.error = sentAmountInput.getErrorText()
                     }
 
                     //
@@ -330,6 +331,7 @@ please review your settings and try again"
                     Connections {
                         target: viewModel
                         onReceiveFeeChanged: receiveAmountInput.fee = viewModel.receiveFee
+                        onIsReceiveFeeOKChanged: receiveAmountInput.error = receiveAmountInput.getErrorText()
                     }
 
                     SFText {
