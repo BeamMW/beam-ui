@@ -933,10 +933,6 @@ Allow to open and proceed to the website? You can always update your choice in S
         <extracomment>general settings, label for alow open external links</extracomment>
         <translation type="unfinished">Autoriser l&apos;accès à %1 et à %2 (pour récupérer les échanges et les données de transaction)</translation>
     </message>
-    <message id="settings-report-problem-message-l0">
-        <source>To report a problem:</source>
-        <translation>Signaler un problème:</translation>
-    </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</source>
         <oldsource>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;1for log archive</oldsource>

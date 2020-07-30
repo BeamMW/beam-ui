@@ -932,10 +932,6 @@ Allow to open and proceed to the website? You can always update your choice in S
         <extracomment>general settings, label for alow open external links</extracomment>
         <translation type="unfinished">Tillåt åtkomst till %1 och %2(för att hämta exchanges och transaktions-data)</translation>
     </message>
-    <message id="settings-report-problem-message-l0">
-        <source>To report a problem:</source>
-        <translation>För att apportera ett problem:</translation>
-    </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</source>
         <oldsource>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;1for log archive</oldsource>

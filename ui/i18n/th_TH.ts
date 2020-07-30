@@ -932,10 +932,6 @@ Allow to open and proceed to the website? You can always update your choice in S
         <extracomment>general settings, label for alow open external links</extracomment>
         <translation type="unfinished">อนุญาตให้เข้าถึง %1 และ %2 (สำหรับการดึงข้อมูลแลกเปลี่ยนและข้อมูลธุรกรรม)</translation>
     </message>
-    <message id="settings-report-problem-message-l0">
-        <source>To report a problem:</source>
-        <translation>การรายงานปัญหา:</translation>
-    </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</source>
         <oldsource>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;1for log archive</oldsource>

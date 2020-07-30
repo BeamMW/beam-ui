@@ -320,7 +320,7 @@
     <message id="settings-report-problem-title">
         <source>Report a problem</source>
         <oldsource>Report problem</oldsource>
-        <translation type="unfinished">Report problem</translation>
+        <translation type="unfinished">Report a problem</translation>
     </message>
     <message id="settings-wallet-location-label">
         <source>Wallet folder location</source>
@@ -923,10 +923,6 @@ or send this address to the sender over secure channel</translation>
         <oldsource>Allow access to %1 and %2 (to fetch exchanges and transaction data)</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
         <translation type="unfinished">Allow access to %1 and %2 (to fetch exchanges and transaction data)</translation>
-    </message>
-    <message id="settings-report-problem-message-l0">
-        <source>To report a problem:</source>
-        <translation>To report a problem:</translation>
     </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</source>
