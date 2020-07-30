@@ -160,8 +160,6 @@ ColumnLayout {
                         port:                modelData.nodePort
                         username:            modelData.nodeUser
                         password:            modelData.nodePass
-                        feeRate:             modelData.feeRate
-                        minFeeRate:          modelData.minFeeRate
 
                         //
                         // Electrum
@@ -176,7 +174,6 @@ ColumnLayout {
 
                         Connections {
                             target: modelData
-                            onFeeRateChanged:        settingsControl.feeRate = modelData.feeRate
                             onCanEditChanged:        settingsControl.canEdit = modelData.canEdit
                             onConnectionTypeChanged: {
                                 settingsControl.isConnected          = modelData.isConnected;
@@ -250,12 +247,6 @@ ColumnLayout {
                             target:   modelData
                             property: "nodePass"
                             value:    settingsControl.password
-                        }
-
-                        Binding {
-                            target:   modelData
-                            property: "feeRate"
-                            value:    settingsControl.feeRate
                         }
 
                         Binding {

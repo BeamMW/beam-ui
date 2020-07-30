@@ -65,8 +65,6 @@ class SwapCoinSettingsItem : public QObject
     Q_PROPERTY(QString  showSeedDialogTitle      READ getShowSeedDialogTitle                  CONSTANT)
     Q_PROPERTY(QString  showAddressesDialogTitle READ getShowAddressesDialogTitle             CONSTANT)
     Q_PROPERTY(QString  title                    READ getTitle                                NOTIFY titleChanged)
-    Q_PROPERTY(int      feeRate                  READ getFeeRate      WRITE setFeeRate        NOTIFY feeRateChanged)
-    Q_PROPERTY(int      minFeeRate               READ getMinFeeRate                           CONSTANT)
     Q_PROPERTY(QString  coinID                   READ getCoinID                               CONSTANT)
     Q_PROPERTY(bool     folded                   READ getFolded       WRITE setFolded         NOTIFY foldedChanged)
 
@@ -106,9 +104,6 @@ public:
 
     bool getFolded() const;
     void setFolded(bool value);
-    int getFeeRate() const;
-    void setFeeRate(int value);
-    int getMinFeeRate() const;
     QString getNodeUser() const;
     void setNodeUser(const QString& value);
     QString getNodePass() const;
@@ -163,7 +158,6 @@ signals:
 
     void foldedChanged();
     void titleChanged();
-    void feeRateChanged();
     void nodeUserChanged();
     void nodePassChanged();
     void nodeAddressChanged();

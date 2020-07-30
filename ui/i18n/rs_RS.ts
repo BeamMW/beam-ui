@@ -1127,8 +1127,9 @@ Allow to open and proceed to the website? You can always update your choice in S
         <translation type="unfinished">Swap</translation>
     </message>
     <message id="settings-node-address">
-        <source>Node Address</source>
-        <translation>Адреса Чвора</translation>
+        <source>Node address</source>
+        <oldsource>Node Address</oldsource>
+        <translation type="unfinished">Адреса Чвора</translation>
     </message>
     <message id="settings-username">
         <source>Username</source>
@@ -1137,10 +1138,6 @@ Allow to open and proceed to the website? You can always update your choice in S
     <message id="settings-password">
         <source>Password</source>
         <translation type="unfinished">Password</translation>
-    </message>
-    <message id="settings-fee-rate">
-        <source>Default fee</source>
-        <translation>Уобичајена такса</translation>
     </message>
     <message id="swap-beta-message">
         <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
@@ -1411,11 +1408,12 @@ please review your settings and try again</oldsource>
         <translation type="unfinished">Received</translation>
     </message>
     <message id="settings-progress-na">
-        <source>You cannot disconnect wallet, edit seed phrase or change default
-fee while you have transactions in progress.</source>
+        <source>You can�t disconnect wallet, edit seed phrase or change default fee 
+while you have transactions in progress. Please wait untill 
+transactions are completed and try again.</source>
         <oldsource>You cannot disconnect wallet, edit seed phrase or change default
 fee while you have transactions in progress.</oldsource>
-        <translation>Не можете да дисконектујете новчаник, мењате seed фразу или мењате уобичајену
+        <translation type="unfinished">Не можете да дисконектујете новчаник, мењате seed фразу или мењате уобичајену
 таксу док је трансакција у току.</translation>
     </message>
     <message id="atomic-no-offers">
@@ -1736,10 +1734,6 @@ to complete.</translation>
         <source>Paste token here</source>
         <translation>Налепи токен овде</translation>
     </message>
-    <message id="settings-swap-connect">
-        <source>connect</source>
-        <translation>повежи</translation>
-    </message>
     <message id="swap-tx-state-initial">
         <source>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</source>
         <oldsource>If nobody accepts the offer in %1, the offer will be automatically canceled</oldsource>
@@ -1882,16 +1876,19 @@ deploy the key at the node you trust completely.</oldsource>
         <translation>Ако друга страна не потпише трансакцију за %1, понуда ће аутоматски бити отказана.</translation>
     </message>
     <message id="swap-invalid-credentials-error">
-        <source>Invalid credentials</source>
-        <translation>Неисправни подаци</translation>
+        <source>Cannot connect to node. Invalid credentials</source>
+        <oldsource>Invalid credentials</oldsource>
+        <translation type="unfinished">Неисправни подаци</translation>
     </message>
     <message id="swap-connection-error">
-        <source>Cannot connect to node</source>
+        <source>Cannot connect to node. Please check your network connection.</source>
+        <oldsource>Cannot connect to node</oldsource>
         <translation type="unfinished">Cannot connect to node</translation>
     </message>
     <message id="swap-invalid-genesis-block-error">
-        <source>Invalid genesis block</source>
-        <translation>Неисправан genesis блок</translation>
+        <source>Cannot connect to node. Invalid genesis block</source>
+        <oldsource>Invalid genesis block</oldsource>
+        <translation type="unfinished">Неисправан genesis блок</translation>
     </message>
     <message id="tx-state-initial-sender">
         <source>If the receiver doesn&apos;t get online in %1, the transaction will be canceled</source>
@@ -2516,6 +2513,33 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="send-regular-fee">
         <source>Fee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-clear">
+        <source>clear</source>
+        <oldsource>disconnect</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-confirm-clear-seed-title">
+        <source>Clear seed phrase</source>
+        <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-confirm-clear-seed-message">
+        <source>Enter your wallet password to clear seed phrase</source>
+        <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-connect-to-electrum">
+        <source>connect to electrum node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-connect-to-node">
+        <source>connect to node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-disconnect">
+        <source>disconnect</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

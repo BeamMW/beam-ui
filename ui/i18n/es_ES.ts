@@ -1127,8 +1127,9 @@ Escanee este código QR o envíe esta dirección al remitente a través de un ca
         <translation>Intercambiar</translation>
     </message>
     <message id="settings-node-address">
-        <source>Node Address</source>
-        <translation>Dirección del nodo</translation>
+        <source>Node address</source>
+        <oldsource>Node Address</oldsource>
+        <translation type="unfinished">Dirección del nodo</translation>
     </message>
     <message id="settings-username">
         <source>Username</source>
@@ -1137,10 +1138,6 @@ Escanee este código QR o envíe esta dirección al remitente a través de un ca
     <message id="settings-password">
         <source>Password</source>
         <translation>Contraseña</translation>
-    </message>
-    <message id="settings-fee-rate">
-        <source>Default fee</source>
-        <translation>Tarifa por defecto</translation>
     </message>
     <message id="swap-beta-message">
         <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
@@ -1409,11 +1406,12 @@ please review your settings and try again</oldsource>
         <translation>Recibido</translation>
     </message>
     <message id="settings-progress-na">
-        <source>You cannot disconnect wallet, edit seed phrase or change default
-fee while you have transactions in progress.</source>
+        <source>You can�t disconnect wallet, edit seed phrase or change default fee 
+while you have transactions in progress. Please wait untill 
+transactions are completed and try again.</source>
         <oldsource>You cannot disconnect wallet, edit seed phrase or change default
 fee while you have transactions in progress.</oldsource>
-        <translation>No puedes desconectar la wallet, edita la frase semilla o cambia la comisión predeterminada\nmientras tienes transacciones en curso.</translation>
+        <translation type="unfinished">No puedes desconectar la wallet, edita la frase semilla o cambia la comisión predeterminada\nmientras tienes transacciones en curso.</translation>
     </message>
     <message id="atomic-no-offers">
         <source>There are no active offers at the moment.
@@ -1730,10 +1728,6 @@ to complete.</oldsource>
         <source>Paste token here</source>
         <translation>Pegar token aquí</translation>
     </message>
-    <message id="settings-swap-connect">
-        <source>connect</source>
-        <translation>conectar</translation>
-    </message>
     <message id="swap-tx-state-initial">
         <source>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</source>
         <oldsource>If nobody accepts the offer in %1, the offer will be automatically canceled</oldsource>
@@ -1876,16 +1870,19 @@ despliegue la clave en el nodo en el que confía completamente.</translation>
         <translation>Si el otro lado no firmará la transacción en %1, la oferta se cancelará automáticamente.</translation>
     </message>
     <message id="swap-invalid-credentials-error">
-        <source>Invalid credentials</source>
-        <translation>Credenciales inválidas</translation>
+        <source>Cannot connect to node. Invalid credentials</source>
+        <oldsource>Invalid credentials</oldsource>
+        <translation type="unfinished">Credenciales inválidas</translation>
     </message>
     <message id="swap-connection-error">
-        <source>Cannot connect to node</source>
-        <translation>No se puede conectar al nodo</translation>
+        <source>Cannot connect to node. Please check your network connection.</source>
+        <oldsource>Cannot connect to node</oldsource>
+        <translation type="unfinished">No se puede conectar al nodo</translation>
     </message>
     <message id="swap-invalid-genesis-block-error">
-        <source>Invalid genesis block</source>
-        <translation>Bloque de génesis inválido</translation>
+        <source>Cannot connect to node. Invalid genesis block</source>
+        <oldsource>Invalid genesis block</oldsource>
+        <translation type="unfinished">Bloque de génesis inválido</translation>
     </message>
     <message id="tx-state-initial-sender">
         <source>If the receiver doesn&apos;t get online in %1, the transaction will be canceled</source>
@@ -2510,6 +2507,33 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="send-regular-fee">
         <source>Fee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-clear">
+        <source>clear</source>
+        <oldsource>disconnect</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-confirm-clear-seed-title">
+        <source>Clear seed phrase</source>
+        <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-confirm-clear-seed-message">
+        <source>Enter your wallet password to clear seed phrase</source>
+        <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-connect-to-electrum">
+        <source>connect to electrum node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-connect-to-node">
+        <source>connect to node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-disconnect">
+        <source>disconnect</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -312,25 +312,6 @@ void SwapCoinSettingsItem::setFolded(bool value)
     m_isFolded = value;
 }
 
-int SwapCoinSettingsItem::getFeeRate() const
-{
-    return m_feeRate;
-}
-
-void SwapCoinSettingsItem::setFeeRate(int value)
-{
-    if (value != m_feeRate)
-    {
-        m_feeRate = value;
-        emit feeRateChanged();
-    }
-}
-
-int SwapCoinSettingsItem::getMinFeeRate() const
-{
-    return m_settings->GetMinFeeRate();
-}
-
 QString SwapCoinSettingsItem::getNodeUser() const
 {
     return m_nodeUser;
@@ -550,15 +531,15 @@ QString SwapCoinSettingsItem::getConnectionErrorMsg() const
     switch (m_coinClient.getConnectionError())
     {
         case IBridge::ErrorType::InvalidCredentials:
-            //% "Invalid credentials"
+            //% "Cannot connect to node. Invalid credentials"
             return qtTrId("swap-invalid-credentials-error");
 
         case IBridge::ErrorType::IOError:
-            //% "Cannot connect to node"
+            //% "Cannot connect to node. Please check your network connection."
             return qtTrId("swap-connection-error");
 
         case IBridge::ErrorType::InvalidGenesisBlock:
-            //% "Invalid genesis block"
+            //% "Cannot connect to node. Invalid genesis block"
             return qtTrId("swap-invalid-genesis-block-error");
 
         default:
@@ -683,7 +664,6 @@ void SwapCoinSettingsItem::LoadSettings()
 
     m_settings = m_coinClient.GetSettings();
 
-    setFeeRate(m_settings->GetFeeRate());
     setConnectionType(m_settings->GetCurrentConnectionType());
 
     if (auto options = m_settings->GetConnectionOptions(); options.IsInitialized())

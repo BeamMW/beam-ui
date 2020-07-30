@@ -1126,8 +1126,9 @@ Allow to open and proceed to the website? You can always update your choice in S
         <translation>Wisselen</translation>
     </message>
     <message id="settings-node-address">
-        <source>Node Address</source>
-        <translation>Node adres</translation>
+        <source>Node address</source>
+        <oldsource>Node Address</oldsource>
+        <translation type="unfinished">Node adres</translation>
     </message>
     <message id="settings-username">
         <source>Username</source>
@@ -1136,10 +1137,6 @@ Allow to open and proceed to the website? You can always update your choice in S
     <message id="settings-password">
         <source>Password</source>
         <translation>Wachtwoord</translation>
-    </message>
-    <message id="settings-fee-rate">
-        <source>Default fee</source>
-        <translation>Standaard vergoeding</translation>
     </message>
     <message id="swap-beta-message">
         <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
@@ -1408,8 +1405,9 @@ please review your settings and try again</oldsource>
         <translation>Ontvangen</translation>
     </message>
     <message id="settings-progress-na">
-        <source>You cannot disconnect wallet, edit seed phrase or change default
-fee while you have transactions in progress.</source>
+        <source>You can�t disconnect wallet, edit seed phrase or change default fee 
+while you have transactions in progress. Please wait untill 
+transactions are completed and try again.</source>
         <oldsource>You cannot disconnect wallet, edit seed phrase or change default
 fee while you have transactions in progress.</oldsource>
         <translation type="unfinished">U kunt de wallet niet loskoppelen, bewerk herstelzin of wijzig de standaard\nfee terwijl u transacties in uitvoering hebt.</translation>
@@ -1729,10 +1727,6 @@ to complete.</oldsource>
         <source>Paste token here</source>
         <translation>Plak token hier</translation>
     </message>
-    <message id="settings-swap-connect">
-        <source>connect</source>
-        <translation>maak verbinding</translation>
-    </message>
     <message id="swap-tx-state-initial">
         <source>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</source>
         <oldsource>If nobody accepts the offer in %1, the offer will be automatically canceled</oldsource>
@@ -1873,16 +1867,19 @@ deploy the key at the node you trust completely.</oldsource>
         <translation>Indien de tegenpartij de transactie niet binnen %1 ondertekent wordt de aanbieding automatisch geannuleerd.</translation>
     </message>
     <message id="swap-invalid-credentials-error">
-        <source>Invalid credentials</source>
-        <translation>Ongeldige inloggegevens</translation>
+        <source>Cannot connect to node. Invalid credentials</source>
+        <oldsource>Invalid credentials</oldsource>
+        <translation type="unfinished">Ongeldige inloggegevens</translation>
     </message>
     <message id="swap-connection-error">
-        <source>Cannot connect to node</source>
-        <translation>Kan geen verbinding maken met node</translation>
+        <source>Cannot connect to node. Please check your network connection.</source>
+        <oldsource>Cannot connect to node</oldsource>
+        <translation type="unfinished">Kan geen verbinding maken met node</translation>
     </message>
     <message id="swap-invalid-genesis-block-error">
-        <source>Invalid genesis block</source>
-        <translation>Ongeldig genesis block</translation>
+        <source>Cannot connect to node. Invalid genesis block</source>
+        <oldsource>Invalid genesis block</oldsource>
+        <translation type="unfinished">Ongeldig genesis block</translation>
     </message>
     <message id="tx-state-initial-sender">
         <source>If the receiver doesn&apos;t get online in %1, the transaction will be canceled</source>
@@ -2507,6 +2504,33 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="send-regular-fee">
         <source>Fee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-clear">
+        <source>clear</source>
+        <oldsource>disconnect</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-confirm-clear-seed-title">
+        <source>Clear seed phrase</source>
+        <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-confirm-clear-seed-message">
+        <source>Enter your wallet password to clear seed phrase</source>
+        <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-connect-to-electrum">
+        <source>connect to electrum node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-connect-to-node">
+        <source>connect to node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-disconnect">
+        <source>disconnect</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
