@@ -216,6 +216,10 @@ void ReceiveViewModel::updateTransactionToken()
     {
         _txParameters.SetParameter(TxParameterID::Amount, _amountToReceiveGrothes);
     }
+    else
+    {
+        _txParameters.DeleteParameter(TxParameterID::Amount);
+    }
     _txParameters.SetParameter(TxParameterID::PeerID, _receiverAddress.m_walletID);
     _txParameters.SetParameter(TxParameterID::PeerWalletIdentity, _receiverAddress.m_Identity);
     _txParameters.SetParameter(TxParameterID::IsPermanentPeerID, isPermanentAddress());
