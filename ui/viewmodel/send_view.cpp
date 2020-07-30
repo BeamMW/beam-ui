@@ -342,16 +342,13 @@ void SendViewModel::saveReceiverAddress(const QString& name)
 {
     using namespace beam::wallet;
     QString trimmed = name;
-    if (!trimmed.isEmpty())
-    {
-        WalletAddress address;
-        address.m_walletID = _receiverWalletID;
-        address.m_createTime = getTimestamp();
-        address.m_Identity = _receiverIdentity;
-        address.m_label = trimmed.toStdString();
-        address.m_duration = WalletAddress::AddressExpirationNever;
-        _walletModel.getAsync()->saveAddress(address, false);
-    }
+    WalletAddress address;
+    address.m_walletID = _receiverWalletID;
+    address.m_createTime = getTimestamp();
+    address.m_Identity = _receiverIdentity;
+    address.m_label = trimmed.toStdString();
+    address.m_duration = WalletAddress::AddressExpirationNever;
+    _walletModel.getAsync()->saveAddress(address, false);
 }
 
 void SendViewModel::extractParameters()
