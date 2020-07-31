@@ -94,8 +94,9 @@ Item {
         SvgImage {
             Layout.alignment: Qt.AlignLeft | Qt.AlignHCenter
             Layout.maximumHeight: 15
-            Layout.maximumWidth: 42
-            source: "qrc:/assets/beta-label.svg"
+            Layout.maximumWidth: 51
+            Layout.topMargin: 8
+            source: "qrc:/assets/beta2-label.svg"
         }
     }
 
@@ -255,14 +256,15 @@ Item {
                     gradLeft: Style.swapCurrencyPaneGrLeftBTC
                     currencyIcon: "qrc:/assets/icon-btc.svg"
                     amount: viewModel.hasBtcTx ? "" : viewModel.btcAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrBtc)
+                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrBitcoin)
                     valueSecondaryStr: parent.btcActiveTxStr()
                     isOk: viewModel.btcOK
                     isConnecting: viewModel.btcConnecting
                     visible: BeamGlobals.haveBtc()
+                    swapSettingsPane: "BTC"
                     //% "Connecting..."
                     textConnecting: qsTrId("swap-connecting")
-                    //% "Cannot connect to peer. Please check the address and retry."
+                    //% "Cannot connect to peer. Please check the address in Settings and try again."
                     textConnectionError: qsTrId("swap-beta-connection-error")
                 }
 
@@ -270,11 +272,12 @@ Item {
                     gradLeft: Style.swapCurrencyPaneGrLeftLTC
                     currencyIcon: "qrc:/assets/icon-ltc.svg"
                     amount: viewModel.hasLtcTx ? "" : viewModel.ltcAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrLtc)
+                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrLitecoin)
                     valueSecondaryStr: parent.ltcActiveTxStr()
                     isOk: viewModel.ltcOK
                     isConnecting: viewModel.ltcConnecting
                     visible: BeamGlobals.haveLtc()
+                    swapSettingsPane: "LTC"
                     textConnecting: qsTrId("swap-connecting")
                     textConnectionError: qsTrId("swap-beta-connection-error")
                 }
@@ -288,6 +291,7 @@ Item {
                     isOk: viewModel.qtumOK
                     isConnecting: viewModel.qtumConnecting
                     visible: BeamGlobals.haveQtum()
+                    swapSettingsPane: "QTUM"
                     textConnecting: qsTrId("swap-connecting")
                     textConnectionError: qsTrId("swap-beta-connection-error")
                 }

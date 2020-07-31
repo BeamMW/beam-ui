@@ -166,18 +166,18 @@ QString TxObject::getSecondCurrencyRate() const
 
 QString TxObject::getStatus() const
 {
-    if (m_tx.m_txType == wallet::TxType::Simple)
+    if (m_tx.m_txType == wallet::TxType::Simple || m_tx.m_txType == wallet::TxType::PushTransaction)
     {
         SimpleTxStatusInterpreter interpreter(m_tx);
         return interpreter.getStatus().c_str();
     }
     else if (m_tx.m_txType >= wallet::TxType::AssetIssue && m_tx.m_txType <= wallet::TxType::AssetInfo)
-        {
+    {
         AssetTxStatusInterpreter interpreter(m_tx);
         return interpreter.getStatus().c_str();
-        }
+    }
     else
-        {
+    {
         BOOST_ASSERT_MSG(false, kErrorUnknownTxType);
         return "unknown";
     }
@@ -361,8 +361,7 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
 
 QString TxObject::getFailureReason() const
 {
-    // TODO: add support for other transactions
-    if (getTxDescription().m_status == wallet::TxStatus::Failed && getTxDescription().m_txType == beam::wallet::TxType::Simple)
+    if (getTxDescription().m_status == wallet::TxStatus::Failed)
     {
         return getReasonString(getTxDescription().m_failureReason);
     }

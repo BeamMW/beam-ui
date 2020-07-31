@@ -13,27 +13,21 @@ Q_DECLARE_METATYPE(ECC::uintBig)
 namespace beamui
 {
     // UI labels all for Currencies elements
-    constexpr std::string_view currencyBeamLabel =      "BEAM";
-    constexpr std::string_view currencyBitcoinLabel =   "BTC";
-    constexpr std::string_view currencyLitecoinLabel =  "LTC";
-    constexpr std::string_view currencyQtumLabel =      "QTUM";
-    constexpr std::string_view currencyUsdLabel =       "USD";
-    constexpr std::string_view currencyUnknownLabel =   "";
 
-    constexpr std::string_view currencyBeamFeeRateLabel =       "GROTH";
-    constexpr std::string_view currencyBitcoinFeeRateLabel =    "sat/kB";
-    constexpr std::string_view currencyLitecoinFeeRateLabel =   "ph/kB";
-    constexpr std::string_view currencyQtumFeeRateLabel =       "qsat/kB";
-    constexpr std::string_view currencyUnknownFeeRateLabel =    "";
+#define CURRENCY_MAP(macro) \
+    /*    name         label         short label      subunit     fee unit   decimal places*/ \
+    macro(Beam,        "BEAM",      "BEAM",          "GROTH",    "GROTH",     8) \
+    macro(Bitcoin,     "Bitcoin",   "BTC",           "satoshi",  "sat/kB",    8) \
+    macro(Litecoin,    "Litecoin",  "LTC",           "photon",   "ph/kB",     8) \
+    macro(Qtum,        "QTUM",      "QTUM",          "qsatoshi", "qsat/kB",   8) \
+    macro(Usd,         "USD",       "USD",           "cent",     "",          2) \
+    macro(Unknown,     "",          "",              "",         "",          0)
 
     enum class Currencies
     {
-        Beam,
-        Bitcoin,
-        Litecoin,
-        Qtum,
-        Usd,
-        Unknown
+#define MACRO(name, label, slabel, subUnit, feeLabel, dec) name,
+        CURRENCY_MAP(MACRO)
+#undef MACRO
     };
 
     QString toString(Currencies currency);
@@ -42,6 +36,8 @@ namespace beamui
     QString getCurrencyLabel(Currencies);
     QString getCurrencyLabel(beam::wallet::ExchangeRate::Currency);
     QString getFeeRateLabel(Currencies);
+    QString getCurrencySubunitLabel(Currencies);
+    QString getCurrencySubunitFromLabel(const QString& currLabel);
 
     /// Convert amount to ui string with "." as a separator. With the default @coinType, no currency label added.
     QString AmountToUIString(const beam::Amount& value, Currencies coinType = Currencies::Unknown);

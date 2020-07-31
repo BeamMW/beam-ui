@@ -4,10 +4,11 @@ import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.0
 import Beam.Wallet 1.0
+import "../utils.js" as Utils
 import "."
 
 SettingsFoldable {
-    id: utilitiesBlock
+    id: control
     property var viewModel
 
     //% "Utilities"
@@ -28,17 +29,17 @@ SettingsFoldable {
             linkColor: "#ffffff"
             semibold: true
             onClicked: {
-                // TODO:SETTINGS
+                Utils.openExternalWithConfirmation(Style.faucetUrl);
             }
         }
 
-        LinkButton {
+        /*LinkButton {
             //% "Export wallet data"
             text: qsTrId("settings-export")
             linkColor: "#ffffff"
             semibold: true
             onClicked: {
-                // TODO:SETTINGS
+                viewModel.exportData()
             }
         }
 
@@ -48,9 +49,9 @@ SettingsFoldable {
             linkColor: "#ffffff"
             semibold: true
             onClicked: {
-                // TODO:SETTINGS
+                viewModel.importData()
             }
-        }
+        }*/
 
         LinkButton {
             //% "Rescan"

@@ -26,19 +26,14 @@ Control {
         clip:    true
 
         Item {
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
+            Layout.fillWidth:  true
+            Layout.alignment:  Qt.AlignTop
             height: header.height
 
             RowLayout {
                 id:      header
                 width:   parent.width
                 spacing: 0
-
-                Item {
-                    width:   statusIndicator.radius
-                    visible: hasStatusIndicatior
-                }
 
                 ExternalNodeStatus {
                     id:               statusIndicator
@@ -51,41 +46,31 @@ Control {
                     visible: hasStatusIndicatior
                 }
 
-                ColumnLayout
-                {
-                    SFText {
-                        horizontalAlignment: Text.AlignLeft
-                        verticalAlignment:   Text.AlignVCenter
-                        text:  control.title
-                        color: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
-                        Layout.fillWidth: true
-
-                        font {
-                            styleName:      "Medium"
-                            weight:         Font.Medium
-                            pixelSize:      14
-                            letterSpacing:  3.11
-                            capitalization: Font.AllUppercase
-                        }
-                    }
-                }
-
                 SFText {
-                    text: "^"
-                    horizontalAlignment: Text.AlignRight
-                    verticalAlignment:   Text.AlignVCenter
-                    rotation: control.folded ? "180" : 0
+                    text:  control.title
                     color: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
 
                     font {
-                        styleName:      "Medium"
-                        weight:         Font.Medium
+                        styleName:      "Bold"
+                        weight:         Font.Bold
                         pixelSize:      14
                         letterSpacing:  3.11
                         capitalization: Font.AllUppercase
                     }
                 }
+
+                Item {
+                    Layout.fillWidth: true
+                }
+
+                SvgImage {
+                    id:     originalSizeImage
+                    Layout.maximumHeight:   8
+                    Layout.maximumWidth:    13
+                    source: control.folded ? "qrc:/assets/icon-grey-arrow-down.svg" : "qrc:/assets/icon-grey-arrow-up.svg"
+                }
             }
+
             MouseArea {
                 anchors.fill: parent
                 cursorShape:  Qt.PointingHandCursor
@@ -128,17 +113,33 @@ Control {
         }
 
         Control {
-            visible:           !control.folded
-            Layout.fillWidth:  true
-            Layout.topMargin:  connectionError ? 25 - errorRow.height : 25
-            Layout.alignment:  Qt.AlignTop
-            contentItem:       content
+            id: contentControl
+            visible:             !control.folded
+            Layout.fillWidth:    true
+            Layout.topMargin:    connectionError ? 25 - errorRow.height : 25
+            Layout.alignment:    Qt.AlignTop
+            contentItem:         content
         }
     }
 
     background: Rectangle {
         radius:  10
         color:   Style.background_second
+
+        MouseArea {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+            height: control.topPadding + header.height +
+                    ( control.folded ? control.bottomPadding : 0 ) +
+                    ( errorRow.visible ? errorRow.height : 0 ) +
+                    ( contentControl.visible ? contentControl.Layout.topMargin : 0 )
+
+            cursorShape:  Qt.PointingHandCursor
+            onClicked: {
+                control.folded = !control.folded;
+            }
+        }
     }
 
     leftPadding:   20

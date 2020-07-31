@@ -166,6 +166,8 @@ set(UI_SRC
     viewmodel/send_swap_view.cpp
     viewmodel/el_seed_validator.h
     viewmodel/el_seed_validator.cpp
+    viewmodel/wallet/token_item.h
+    viewmodel/wallet/token_item.cpp
 
     model/wallet_model.h
     model/wallet_model.cpp
@@ -230,6 +232,7 @@ file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/icon_${BEAM_ICON_SUFFIX}.ico ${CMAKE_CUR
 file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/beam_${BEAM_ICON_SUFFIX}.png ${CMAKE_CURRENT_SOURCE_DIR}/beam.png)
 file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/beam_${BEAM_ICON_SUFFIX}.icns ${CMAKE_CURRENT_SOURCE_DIR}/beam.icns)
 
+string(REPLACE "." "," PROJECT_VERSION_VERSIONINFO "${PROJECT_VERSION}")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/beam.rc.in ${CMAKE_CURRENT_SOURCE_DIR}/beam.rc)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/beam.desktop.in ${CMAKE_CURRENT_SOURCE_DIR}/beam.desktop)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist)

@@ -129,12 +129,13 @@ class StartViewModel : public QObject
     Q_PROPERTY(QList<QObject*> checkPhrases READ getCheckPhrases NOTIFY checkPhrasesChanged)
     Q_PROPERTY(QChar phrasesSeparator READ getPhrasesSeparator CONSTANT)
     Q_PROPERTY(bool isTrezorEnabled READ isTrezorEnabled CONSTANT)
+    Q_PROPERTY(bool useHWWallet READ useHWWallet WRITE setUseHWWallet NOTIFY isUseHWWalletChanged)
 
 #if defined(BEAM_HW_WALLET)
     Q_PROPERTY(bool isTrezorConnected READ isTrezorConnected NOTIFY isTrezorConnectedChanged)
     Q_PROPERTY(QString trezorDeviceName READ getTrezorDeviceName NOTIFY trezorDeviceNameChanged)
     Q_PROPERTY(bool isOwnerKeyImported READ isOwnerKeyImported NOTIFY isOwnerKeyImportedChanged)
-    Q_PROPERTY(bool useHWWallet READ useHWWallet WRITE setUseHWWallet NOTIFY isUseHWWalletChanged)
+
 #endif
 
     Q_PROPERTY(int localPort READ getLocalPort CONSTANT)
@@ -153,13 +154,14 @@ public:
 
     bool walletExists() const;
     bool isTrezorEnabled() const;
+    bool useHWWallet() const;
+    void setUseHWWallet(bool value);
 
 #if defined(BEAM_HW_WALLET)
     bool isTrezorConnected() const;
     QString getTrezorDeviceName() const;
     bool isOwnerKeyImported() const;
-    bool useHWWallet() const;
-    void setUseHWWallet(bool value);
+
 #endif
 
     bool getIsRecoveryMode() const;
@@ -206,12 +208,12 @@ signals:
     void isRecoveryModeChanged();
     void capsLockStateMayBeChanged();
     void validateDictionaryChanged();
+    void isUseHWWalletChanged();
 
 #if defined(BEAM_HW_WALLET)
     void isTrezorConnectedChanged();
     void trezorDeviceNameChanged();
     void isOwnerKeyImportedChanged();
-    void isUseHWWalletChanged();
 #endif
 
 public slots:
@@ -241,6 +243,8 @@ private:
     bool m_validateDictionary = true;
     QJSValue m_callback;
 
+    bool m_useHWWallet;
+
 #if defined(BEAM_HW_WALLET)
     std::shared_ptr<beam::wallet::HWWallet> m_hwWallet;
     QTimer m_trezorTimer;
@@ -249,6 +253,5 @@ private:
     friend TrezorThread;
     TrezorThread m_trezorThread;
     beam::wallet::IPrivateKeyKeeper2::Ptr m_HWKeyKeeper;
-    bool m_useHWWallet = false;
 #endif
 };

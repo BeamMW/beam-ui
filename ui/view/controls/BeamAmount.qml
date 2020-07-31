@@ -29,12 +29,12 @@ Control {
     property string  prefix:          ""
 
     function getAmountInSecondCurrency() {
-        var secondCurrencyAmount = Utils.uiStringToLocale(
-            BeamGlobals.calcAmountInSecondCurrency(
+        var secondCurrencyAmount = 
+            Utils.formatAmountToSecondCurrency(
                 control.amount,
                 control.secondCurrencyRateValue,
-                control.secondCurrencyLabel));
-        return control.prefix + (secondCurrencyAmount == "" ? "-" : secondCurrencyAmount) + " " + control.secondCurrencyLabel;
+                control.secondCurrencyLabel);
+        return control.prefix + (secondCurrencyAmount == "" ? "-" : secondCurrencyAmount);
     }
 
     contentItem: RowLayout{
@@ -79,9 +79,9 @@ Control {
                 id:              secondCurrencyAmountText
                 visible:         secondCurrencyLabel != ""
                 font.pixelSize:  10
-                font.styleName:  "Light"
+                font.styleName:  "Regular"
                 font.weight:     Font.Normal
-                color:           Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.7)
+                color:           Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
                 text:            getAmountInSecondCurrency()
                 onCopyText:      BeamGlobals.copyToClipboard(secondCurrencyAmountText.text)
                 copyMenuEnabled: true

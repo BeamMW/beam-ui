@@ -14,12 +14,19 @@
 
 #include "app_model.h"
 #include "wallet/transactions/swaps/swap_transaction.h"
+#ifdef BEAM_LELANTUS_SUPPORT
+#include "wallet/transactions/lelantus/unlink_transaction.h"
+#include "wallet/transactions/lelantus/push_transaction.h"
+#include "wallet/transactions/lelantus/pull_transaction.h"
+#endif
 #include "utility/common.h"
 #include "utility/logger.h"
 #include "utility/fsutils.h"
 #include <boost/filesystem.hpp>
 #include <QApplication>
 #include <QTranslator>
+#include <QFileDialog>
+#include <QStandardPaths>
 
 #include "wallet/transactions/swaps/bridges/bitcoin/bitcoin.h"
 #include "wallet/transactions/swaps/bridges/litecoin/litecoin.h"
@@ -200,6 +207,62 @@ void AppModel::onWalledOpened(const beam::SecString& pass)
     start();
 }
 
+bool AppModel::exportData()
+{
+    try
+    {
+        const auto fileName = beam::wallet::TimestampFile("export.dat");
+        const auto path = QFileDialog::getSaveFileName(nullptr, "Export wallet data",
+                QDir(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)).filePath(fileName.c_str()),
+                "Wallet data (*.dat)");
+
+        const auto jsonData = storage::ExportDataToJson(*m_db);
+
+        FStream fStream;
+        return fStream.Open(path.toStdString().c_str(), false) &&
+               fStream.write(jsonData.data(), jsonData.size()) == jsonData.size();
+    }
+    catch(const std::runtime_error&)
+    {
+        return false;
+    }
+}
+
+bool AppModel::importData()
+{
+    try
+    {
+        const auto path = QFileDialog::getOpenFileName(nullptr, "Import wallet data",
+                QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+                "Wallet data (*.dat)");
+
+        FStream f;
+        ByteBuffer buffer;
+
+        if (!f.Open(path.toStdString().c_str(), true))
+        {
+            return false;
+        }
+        const auto size = static_cast<size_t>(f.get_Remaining());
+        if (size > 0)
+        {
+            buffer.resize(size);
+            if (f.read(buffer.data(), buffer.size()) != size) 
+            {
+                return false;
+            }
+        }
+        
+        m_wallet->getAsync()->importDataFromJson(std::string(reinterpret_cast<const char*>(buffer.data()), buffer.size()));
+
+        return true;
+    }
+    catch(const std::runtime_error&)
+    {
+        return false;
+    }
+}
+
 void AppModel::resetWallet()
 {
     if (m_nodeModel.isNodeRunning())
@@ -293,14 +356,20 @@ void AppModel::startWallet()
 
         { Notification::Type::SoftwareUpdateAvailable, false },
         { Notification::Type::WalletImplUpdateAvailable, m_settings.isNewVersionActive() },
-        { Notification::Type::AddressStatusChanged, m_settings.isTxStatusActive() },    // no own switcher in UI for address expiration notifications
+        { Notification::Type::AddressStatusChanged, false },    // turned off
         { Notification::Type::BeamNews, m_settings.isBeamNewsActive() },
         { Notification::Type::TransactionFailed, m_settings.isTxStatusActive() },
         { Notification::Type::TransactionCompleted, m_settings.isTxStatusActive() }
     };
 
+#ifdef BEAM_LELANTUS_SUPPORT
+    additionalTxCreators->emplace(TxType::UnlinkFunds, std::make_shared<lelantus::UnlinkFundsTransaction::Creator>());
+    additionalTxCreators->emplace(TxType::PushTransaction, std::make_shared<lelantus::PushTransaction::Creator>(m_db));
+    additionalTxCreators->emplace(TxType::PullTransaction, std::make_shared<lelantus::PullTransaction::Creator>());
+#endif
+
     bool isSecondCurrencyEnabled = m_settings.getSecondCurrency().toStdString() != noSecondCurrencyStr;
-    m_wallet->start(activeNotifications, false, isSecondCurrencyEnabled, additionalTxCreators);
+    m_wallet->start(activeNotifications, isSecondCurrencyEnabled, additionalTxCreators);
 }
 
 void AppModel::applySettingsChanges()

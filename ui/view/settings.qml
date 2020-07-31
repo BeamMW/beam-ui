@@ -11,7 +11,14 @@ ColumnLayout {
     id: settingsView
     Layout.fillWidth: true
     state: "general"
-    property string linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
+
+    property string  linkStyle:  "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
+    property string  swapMode:   ""
+    property bool    creating:   true
+
+    Component.onCompleted: {
+        settingsView.creating = false
+    }
 
     SettingsViewModel {
         id: viewModel
@@ -127,6 +134,7 @@ ColumnLayout {
                 }
 
                 Repeater {
+                    id: swapSettingsList
                     model: viewModel.swapCoinSettingsList
                     SwapNodeSettings {
                         id:                       settingsControl
@@ -141,6 +149,7 @@ ColumnLayout {
                         connectionStatus:         modelData.connectionStatus
                         connectionErrorMsg:       modelData.connectionErrorMsg
                         getAddressesElectrum:     modelData.getAddressesElectrum
+                        folded:                   creating ? (swapMode == modelData.coinID ? false : (swapMode == "ALL" ? modelData.isConnected : true)) : modelData.folded
                         mainSettingsViewModel:    viewModel
                         hasStatusIndicatior:      true
 
@@ -151,14 +160,13 @@ ColumnLayout {
                         port:                modelData.nodePort
                         username:            modelData.nodeUser
                         password:            modelData.nodePass
-                        feeRate:             modelData.feeRate
 
                         //
                         // Electrum
                         //
                         addressElectrum:                     modelData.nodeAddressElectrum
                         portElectrum:                        modelData.nodePortElectrum
-                        isSelectServerAutomatcally:          modelData.selectServerAutomatically
+                        useRandomElectrumNode:               modelData.selectServerAutomatically
                         seedPhrasesElectrum:                 modelData.electrumSeedPhrases
                         phrasesSeparatorElectrum:            modelData.phrasesSeparatorElectrum
                         isCurrentElectrumSeedValid:          modelData.isCurrentSeedValid
@@ -166,7 +174,6 @@ ColumnLayout {
 
                         Connections {
                             target: modelData
-                            onFeeRateChanged:        settingsControl.feeRate = modelData.feeRate
                             onCanEditChanged:        settingsControl.canEdit = modelData.canEdit
                             onConnectionTypeChanged: {
                                 settingsControl.isConnected          = modelData.isConnected;
@@ -194,7 +201,7 @@ ColumnLayout {
                             //
                             onNodeAddressElectrumChanged: settingsControl.addressElectrum = modelData.nodeAddressElectrum
                             onNodePortElectrumChanged: settingsControl.portElectrum = modelData.nodePortElectrum
-                            onSelectServerAutomaticallyChanged: settingsControl.isSelectServerAutomatcally = modelData.selectServerAutomatically
+                            onSelectServerAutomaticallyChanged: settingsControl.useRandomElectrumNode = modelData.selectServerAutomatically
                             onElectrumSeedPhrasesChanged: settingsControl.seedPhrasesElectrum = modelData.electrumSeedPhrases
                             onIsCurrentSeedValidChanged:  settingsControl.isCurrentElectrumSeedValid = modelData.isCurrentSeedValid
                             onIsCurrentSeedSegwitChanged: settingsControl.isCurrentElectrumSeedSegwitAndValid = modelData.isCurrentSeedSegwit
@@ -211,6 +218,12 @@ ColumnLayout {
                         onConnectToElectrum:         modelData.connectToElectrum()
                         onCopySeedElectrum:          modelData.copySeedElectrum()
                         onValidateCurrentSeedPhrase: modelData.validateCurrentElectrumSeedPhrase()
+
+                        Binding {
+                            target:   modelData
+                            property: "folded"
+                            value:    settingsControl.folded
+                        }
 
                         Binding {
                             target:   modelData
@@ -238,12 +251,6 @@ ColumnLayout {
 
                         Binding {
                             target:   modelData
-                            property: "feeRate"
-                            value:    settingsControl.feeRate
-                        }
-
-                        Binding {
-                            target:   modelData
                             property: "nodeAddressElectrum"
                             value:    settingsControl.addressElectrum
                         }
@@ -257,7 +264,7 @@ ColumnLayout {
                         Binding {
                             target:   modelData
                             property: "selectServerAutomatically"
-                            value:    settingsControl.isSelectServerAutomatcally
+                            value:    settingsControl.useRandomElectrumNode
                         }
                     }
                 }

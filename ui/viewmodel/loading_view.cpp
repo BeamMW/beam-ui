@@ -130,7 +130,7 @@ void LoadingViewModel::updateProgress()
 {
     double progress = 0.;
 	QString progressMessage = "";
-    //% "Estimate time: %s"
+    //% "Estimated time: %s"
     QString estimateStr = qtTrId("loading-view-estimate-time");
     //% "calculating..."
     QString calculating = qtTrId("loading-view-estimate-calculating");

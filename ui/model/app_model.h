@@ -56,6 +56,8 @@ public:
     void applySettingsChanges();
     void nodeSettingsChanged();
     void resetWallet();
+    bool exportData();
+    bool importData();
 
     WalletModel::Ptr getWallet() const;
     WalletSettings& getSettings() const;

@@ -2094,15 +2094,17 @@ Item
                 }
 
                 ColumnLayout {
+                    id: openColumn
                     anchors.fill: parent
                     spacing: 0
                     Item {
-                        Layout.preferredHeight: Utils.getLogoTopGapSize(parent.height)
+                        Layout.preferredHeight: Utils.getLogoTopGapSize(openColumn.height)
                     }
 
                     LogoComponent {
                         id: logoComponent
                         Layout.alignment: Qt.AlignHCenter
+                        isSqueezedHeight: Utils.isSqueezedHeight(openColumn.height)
                     }
 
                     Item {
@@ -2123,7 +2125,7 @@ Item
                             }
 
                             Item {
-                                Layout.preferredHeight: 48
+                                Layout.preferredHeight: Utils.isSqueezedHeight(openColumn.height) ? 18 : 48
                             }
 
                             ColumnLayout {
@@ -2193,25 +2195,16 @@ Item
                                 PrimaryButton {
                                     anchors.verticalCenter: parent.verticalCenter
                                     id: btnCurrentWallet
-                                    //% "Show my wallet"
-                                    text: qsTrId("open-show-wallet-button")
+                                    enabled: !viewModel.useHWWallet || viewModel.isTrezorConnected
+                                    text: (viewModel.useHWWallet == false)
+                                        ?
+                                        //% "Show my wallet"
+                                        qsTrId("open-show-wallet-button")
+                                        :
+                                        //% "Show my wallet with Trezor"
+                                        qsTrId("open-show-wallet-button-hw")
                                     icon.source: "qrc:/assets/icon-wallet-small.svg"
                                     onClicked: {
-                                        parent.tryOpenWallet();
-                                    }
-                                }
-
-                                PrimaryButton {
-                                    visible: viewModel.isTrezorEnabled
-                                    //enabled: viewModel.isOwnerKeyImported
-                                    id: createNewTrezorWallet
-                                    //% "Show my wallet with Trezor"
-                                    text: qsTrId("open-show-wallet-button-hw")
-                                    Layout.preferredHeight: 38
-                                    Layout.alignment: Qt.AlignHCenter
-                                    icon.source: "qrc:/assets/icon-wallet-small.svg"
-                                    onClicked: {
-                                        viewModel.useHWWallet = true;
                                         parent.tryOpenWallet();
                                     }
                                 }
@@ -2220,7 +2213,7 @@ Item
                             Item {
                                 Layout.alignment: Qt.AlignHCenter
                                 Layout.preferredHeight: 36
-                                Layout.topMargin: 20
+                                Layout.topMargin: Utils.isSqueezedHeight(openColumn.height) ? 9 : 20
                                 Layout.bottomMargin: 9
                                 Rectangle {
                                     id: capsWarning
@@ -2263,7 +2256,7 @@ Item
 
                             Item {
                                 Layout.fillHeight: true
-                                Layout.minimumHeight: 40
+                                Layout.minimumHeight: Utils.isSqueezedHeight(openColumn.height) ? 15 : 40
                             }
 
                             SFText {

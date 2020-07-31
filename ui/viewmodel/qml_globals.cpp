@@ -35,6 +35,9 @@ namespace
 {
     const int kDefaultFeeInGroth = 10;
     const int kFeeInGroth_Fork1 = 100;
+    const int kFeeInGroth_Shielded = 1001000;
+    constexpr uint8_t kBTCDecimalPlaces = libbitcoin::btc_decimal_places;
+    constexpr uint8_t kUSDDecimalPlaces = 2;
 
     template <char C>
     bool char_is(const char c)
@@ -42,10 +45,9 @@ namespace
         return c == C;
     }
 
-    template<uint8_t N>
-    QString rountWithPrecision(const QString& number)
+    QString roundWithPrecision(const QString& number, uint8_t precision)
     {
-        //TODO rounding percision
+        //TODO rounding precision
         const char delimeter = '.';
         auto parts = string_helpers::split(number.toStdString(), delimeter);
 
@@ -56,7 +58,7 @@ namespace
             cpp_dec_float_50 afterPoint("0." + parts[1]);
 
             std::ostringstream afterPointOss;
-            afterPointOss.precision(N);
+            afterPointOss.precision(precision);
             afterPointOss << std::fixed << afterPoint;
 
             auto afterPointParts = string_helpers::split(afterPointOss.str(), delimeter);
@@ -74,8 +76,7 @@ namespace
         return QString::fromStdString(result);
     }
 
-    template<uint8_t N>
-    QString multiplyWithPrecision(const QString& first, const QString& second)
+    QString multiplyWithPrecision(const QString& first, const QString& second, uint8_t precision)
     {
         cpp_dec_float_50 dec_first(first.toStdString().c_str());
         cpp_dec_float_50 dec_second(second.toStdString().c_str());
@@ -87,7 +88,7 @@ namespace
         oss << std::fixed << product;
 
         QString result = QString::fromStdString(oss.str());
-        return rountWithPrecision<N>(result);
+        return roundWithPrecision(result, precision);
     }
 
     beamui::Currencies convertUiCurrencyToCurrencies(WalletCurrency::Currency currency)
@@ -97,10 +98,10 @@ namespace
             case Currency::CurrBeam:
                 return beamui::Currencies::Beam;
 
-            case Currency::CurrBtc:
+            case Currency::CurrBitcoin:
                 return beamui::Currencies::Bitcoin;
 
-            case Currency::CurrLtc:
+            case Currency::CurrLitecoin:
                 return beamui::Currencies::Litecoin;
 
             case Currency::CurrQtum:
@@ -140,7 +141,7 @@ bool QMLGlobals::isTAValid(const QString& text)
 
 bool QMLGlobals::isAddress(const QString& text)
 {
-    return beam::wallet::check_receiver_address(text.toStdString());
+    return beam::wallet::CheckReceiverAddress(text.toStdString());
 }
 
 bool QMLGlobals::isTransactionToken(const QString& text)
@@ -167,13 +168,13 @@ int QMLGlobals::maxCommentLength()
     return 1024;
 }
 
-bool QMLGlobals::isFeeOK(uint32_t fee, Currency currency)
+bool QMLGlobals::isFeeOK(uint32_t fee, Currency currency, bool isShielded)
 {
     switch (currency)
     {
-    case Currency::CurrBeam: return fee >= minFeeBeam();
-    case Currency::CurrBtc:  return true;
-    case Currency::CurrLtc:  return true;
+    case Currency::CurrBeam: return fee >= minFeeBeam(isShielded);
+    case Currency::CurrBitcoin:  return true;
+    case Currency::CurrLitecoin:  return true;
     case Currency::CurrQtum: return true;
     default:
         assert(false);
@@ -181,10 +182,11 @@ bool QMLGlobals::isFeeOK(uint32_t fee, Currency currency)
     }
 }
 
-uint32_t QMLGlobals::minFeeBeam()
+uint32_t QMLGlobals::minFeeBeam(bool isShielded)
 {
     assert(AppModel::getInstance().getWallet());
-    return AppModel::getInstance().getWallet()->isFork1() ? kFeeInGroth_Fork1 : kDefaultFeeInGroth;
+    assert(AppModel::getInstance().getWallet()->isFork1());
+    return isShielded ? kFeeInGroth_Shielded : kFeeInGroth_Fork1;
 }
 
 bool QMLGlobals::needPasswordToSpend()
@@ -212,11 +214,11 @@ QString QMLGlobals::calcTotalFee(Currency currency, unsigned int feeRate)
         case Currency::CurrBeam: {
             return QString::fromStdString(std::to_string(feeRate));
         }
-        case Currency::CurrBtc: {
+        case Currency::CurrBitcoin: {
             auto total = beam::wallet::BitcoinSide::CalcTotalFee(feeRate);
             return QString::fromStdString(std::to_string(total)) + " sat";
         }
-        case Currency::CurrLtc: {
+        case Currency::CurrLitecoin: {
             auto total = beam::wallet::LitecoinSide::CalcTotalFee(feeRate);
             return QString::fromStdString(std::to_string(total)) + " ph";
         }
@@ -231,17 +233,10 @@ QString QMLGlobals::calcTotalFee(Currency currency, unsigned int feeRate)
     }
 }
 
-QString QMLGlobals::calcFeeInSecondCurrency(int fee, Currency originalCurrency, const QString& exchangeRate, const QString& secondCurrencyLabel)
+QString QMLGlobals::calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyLabel)
 {
-    // originalCurrency is needed to convert fee to string
-    // possible use uint64_t UnitsPerCoin(AtomicSwapCoin swapCoin);
-    if (exchangeRate == "0")
-    {
-        return "- " + secondCurrencyLabel;
-    }
-
     QString feeInOriginalCurrency = beamui::AmountToUIString(fee);
-    return multiplyWithPrecision<2>(feeInOriginalCurrency, exchangeRate) + " " + secondCurrencyLabel;
+    return calcAmountInSecondCurrency(feeInOriginalCurrency, exchangeRate, secondCurrencyLabel);
 }
 
 QString QMLGlobals::calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel)
@@ -252,10 +247,15 @@ QString QMLGlobals::calcAmountInSecondCurrency(const QString& amount, const QStr
     }
     else
     {
-        return (secondCurrLabel == beamui::getCurrencyLabel(beamui::Currencies::Bitcoin))
-               ? multiplyWithPrecision<8>(amount, exchangeRate)     // Btc
-               : multiplyWithPrecision<2>(amount, exchangeRate);    // All other currencies
+#define MACRO(name, label, slabel, subunit, feeLabel, dec) \
+        if (slabel == secondCurrLabel) \
+        { \
+            return multiplyWithPrecision(amount, exchangeRate, dec); \
+        } 
+        CURRENCY_MAP(MACRO)
+#undef MACRO
     }
+    return "";
 }
 
 bool QMLGlobals::canSwap()
@@ -296,13 +296,13 @@ bool QMLGlobals::canReceive(Currency currency)
     {
         return true;
     }
-    case Currency::CurrBtc:
+    case Currency::CurrBitcoin:
     {
         auto client = AppModel::getInstance().getBitcoinClient();
         return client->GetSettings().IsActivated() &&
                client->getStatus() == beam::bitcoin::Client::Status::Connected;
     }
-    case Currency::CurrLtc:
+    case Currency::CurrLitecoin:
     {
         auto client = AppModel::getInstance().getLitecoinClient();
         return client->GetSettings().IsActivated() &&
@@ -337,12 +337,12 @@ QString QMLGlobals::getCurrencyName(Currency currency)
         //% "BEAM"
         return qtTrId("general-beam");
     }
-    case Currency::CurrBtc:
+    case Currency::CurrBitcoin:
     {
         //% "Bitcoin"
         return qtTrId("general-bitcoin");
     }
-    case Currency::CurrLtc:
+    case Currency::CurrLitecoin:
     {
         //% "Litecoin"
         return qtTrId("general-litecoin");
@@ -366,21 +366,26 @@ QString QMLGlobals::getFeeRateLabel(Currency currency)
     return beamui::getFeeRateLabel(currencyCommon);
 }
 
-unsigned int QMLGlobals::getMinimalFee(Currency currency)
+QString QMLGlobals::getCurrencySubunitFromLabel(const QString& currLabel)
+{
+    return beamui::getCurrencySubunitFromLabel(currLabel);
+}
+
+unsigned int QMLGlobals::getMinimalFee(Currency currency, bool isShielded)
 {
     switch (currency)
     {
         case Currency::CurrBeam:
-            return minFeeBeam();
+            return minFeeBeam(isShielded);
         
-        case Currency::CurrBtc:
-            return 0;
+        case Currency::CurrBitcoin:
+            return AppModel::getInstance().getBitcoinClient()->GetSettings().GetMinFeeRate();
 
-        case Currency::CurrLtc:
-            return 0;
+        case Currency::CurrLitecoin:
+            return AppModel::getInstance().getLitecoinClient()->GetSettings().GetMinFeeRate();
         
         case Currency::CurrQtum:
-            return 0;
+            return AppModel::getInstance().getQtumClient()->GetSettings().GetMinFeeRate();
 
         default:
             return 0;
@@ -394,13 +399,13 @@ unsigned int QMLGlobals::getDefaultFee(Currency currency)
         case Currency::CurrBeam:
             return minFeeBeam();
         
-        case Currency::CurrBtc:
+        case Currency::CurrBitcoin:
         {
             const auto btcSettings = AppModel::getInstance().getBitcoinClient()->GetSettings();
             return btcSettings.GetFeeRate();
         }
 
-        case Currency::CurrLtc:
+        case Currency::CurrLitecoin:
         {
             const auto ltcSettings = AppModel::getInstance().getLitecoinClient()->GetSettings();
             return ltcSettings.GetFeeRate();
@@ -420,10 +425,10 @@ bool QMLGlobals::isSwapFeeOK(unsigned int amount, unsigned int fee, Currency cur
         case Currency::CurrBeam: {
             return amount > fee && fee >= QMLGlobals::minFeeBeam();
         }
-        case Currency::CurrBtc: {
+        case Currency::CurrBitcoin: {
             return beam::wallet::BitcoinSide::CheckAmount(amount, fee);
         }
-        case Currency::CurrLtc: {
+        case Currency::CurrLitecoin: {
             return beam::wallet::LitecoinSide::CheckAmount(amount, fee);
         }
         case Currency::CurrQtum: {
@@ -448,15 +453,15 @@ QString QMLGlobals::divideWithPrecision8(const QString& dividend, const QString&
     oss << std::fixed << quotient;
 
     QString result = QString::fromStdString(oss.str());
-    return QMLGlobals::rountWithPrecision8(result);
+    return QMLGlobals::roundWithPrecision8(result);
 }
 
 QString QMLGlobals::multiplyWithPrecision8(const QString& first, const QString& second)
 {
-    return multiplyWithPrecision<8>(first, second);
+    return multiplyWithPrecision(first, second, kBTCDecimalPlaces);
 }
 
-QString QMLGlobals::rountWithPrecision8(const QString& number)
+QString QMLGlobals::roundWithPrecision8(const QString& number)
 {
-    return rountWithPrecision<libbitcoin::btc_decimal_places>(number);
+    return roundWithPrecision(number, kBTCDecimalPlaces);
 }

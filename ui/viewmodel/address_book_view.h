@@ -32,6 +32,7 @@ class AddressItem : public QObject
     Q_PROPERTY(QDateTime expirationDate READ getExpirationDate  CONSTANT)
     Q_PROPERTY(QDateTime createDate     READ getCreateDate      CONSTANT)
     Q_PROPERTY(bool neverExpired        READ isNeverExpired     CONSTANT)
+    Q_PROPERTY(bool isExpired           READ isExpired          CONSTANT)
 
 public:
 
@@ -61,6 +62,7 @@ class ContactItem : public QObject
     Q_PROPERTY(QString name          READ getName       CONSTANT)
     Q_PROPERTY(QString category      READ getCategory   CONSTANT)
     Q_PROPERTY(QString identity      READ getIdentity   CONSTANT)
+    Q_PROPERTY(QString token         READ getToken      CONSTANT)
 
 public:
     ContactItem() = default;
@@ -70,6 +72,7 @@ public:
     QString getName() const;
     QString getCategory() const;
     QString getIdentity() const;
+    QString getToken() const;
 
 private:
     beam::wallet::WalletAddress m_walletAddress;
@@ -162,9 +165,9 @@ private:
     QList<ContactItem*> m_contacts;
     QList<AddressItem*> m_activeAddresses;
     QList<AddressItem*> m_expiredAddresses;
-    Qt::SortOrder m_activeAddrSortOrder;
-    Qt::SortOrder m_expiredAddrSortOrder;
-    Qt::SortOrder m_contactSortOrder;
+    Qt::SortOrder m_activeAddrSortOrder = Qt::AscendingOrder;
+    Qt::SortOrder m_expiredAddrSortOrder = Qt::AscendingOrder;
+    Qt::SortOrder m_contactSortOrder = Qt::AscendingOrder;
     QString m_activeAddrSortRole;
     QString m_expiredAddrSortRole;
     QString m_contactSortRole;

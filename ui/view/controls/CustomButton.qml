@@ -15,16 +15,22 @@ Button {
     property alias shadowSamples: drop_shadow.samples
     property alias shadowRadius: drop_shadow.radius
     property bool allLowercase: !text.startsWith("I ")
+    property bool showHandCursor: false
+
+    property var disabledAlpha: 0.25
+    property var disalbedTextAlpha: 0.25
 
     font { 
         family: "SF Pro Display"
         pixelSize: 14
-        styleName: "Bold"; weight: Font.Bold
-        capitalization: allLowercase ? Font.AllLowercase : Font.MixedCase
+        styleName: control.checkable ? "Regular" : "Bold"
+        weight: control.checkable ? Font.Normal : Font.Bold
+        capitalization: allLowercase && !control.checkable ? Font.AllLowercase : Font.MixedCase
     }
 
 //    width: 122
     height: 38
+    Layout.preferredHeight: 38
     leftPadding: 30
     rightPadding: 30
     
@@ -34,6 +40,11 @@ Button {
     icon.color: "transparent"
     icon.width: 16
     icon.height: 16
+
+    function getTextColor () {
+        var color = (control.checkable ?  (control.checked ? Style.content_opposite : Style.content_secondary) : control.palette.buttonText)
+        return control.enabled ? color : Qt.rgba(color.r, color.g, color.b, control.disalbedTextAlpha)
+    }
     
     contentItem: IconLabel {
         spacing: control.spacing
@@ -44,7 +55,14 @@ Button {
         text: control.text
         font: control.font
         
-        color: control.enabled ? control.palette.buttonText : Style.content_disabled
+        color: getTextColor()
+        MouseArea {
+            anchors.fill:  parent
+            hoverEnabled: true
+            enabled:      false
+            cursorShape: control.showHandCursor ? Qt.PointingHandCursor : Qt.ArrowCursor
+            propagateComposedEvents: true
+        }
     }
     
     Keys.onPressed: {
@@ -53,9 +71,11 @@ Button {
 
     background: Rectangle {
         id: rect
-        radius: 50
-        color: control.enabled ? control.palette.button : Style.content_disabled
-        opacity: control.enabled ? 1.0 : 0.6
+        radius: control.checkable ? 10 : 50
+        color: (control.checkable ?
+            (control.checked ? Style.active : "transparent") :
+                control.palette.button)
+        opacity: control.enabled ? 1.0 : control.disabledAlpha
         
         width: control.width
         height: control.height
@@ -68,6 +88,6 @@ Button {
         samples: 9
         color: Style.content_main
         source: rect
-        visible: control.visualFocus || control.hovered
+        visible: control.visualFocus || control.hovered || control.checked
     }
 }

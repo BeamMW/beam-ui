@@ -18,7 +18,7 @@ SettingsFoldable {
         rowSpacing:    30
         columnSpacing: 10
 
-        SFText {
+        /*SFText {
             Layout.preferredWidth: parent.width / 2 - parent.columnSpacing / 2
             //% "Keep wallet logs"
             text: qsTrId("settings-keep-logs")
@@ -49,7 +49,7 @@ SettingsFoldable {
             onActivated: {
                 viewModel.logsTimeout = logsTimeoutControl.currentIndex
             }
-        }
+        }*/
 
 
         SFText {

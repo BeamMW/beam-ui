@@ -340,12 +340,16 @@ Rectangle {
         update(indexOrID)
     }
 
-	function openSendDialog() {
-		updateItem("wallet", {"toSend": true})
-	}
+    function openSendDialog(receiver) {
+        updateItem("wallet", {"toSend": true, "token" : receiver})
+    }
 
-	function openSwapSettings() {
-        updateItem("settings", {swapMode:true})
+    function openReceiveDialog(token) {
+        updateItem("wallet", {"openReceive": true, "token" : token})
+    }
+
+    function openSwapSettings(coinID) {
+        updateItem("settings", {swapMode: typeof(coinID) == "string" ? coinID : "ALL"})
     }
 
     function openSwapActiveTransactionsList() {

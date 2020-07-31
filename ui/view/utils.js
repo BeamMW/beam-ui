@@ -14,6 +14,32 @@ function formatDateTime(datetime, localeName) {
          + ")";
 }
 
+function formatSecondCurrency(convertedAmount, amount,  exchangeRate, secondCurrLabel) {
+    if (convertedAmount == "0" && amount != "0") { 
+        var subLabel = BeamGlobals.getCurrencySubunitFromLabel(secondCurrLabel);
+        //% "< 1 %1"
+        return qsTrId("format-small-amount").arg(subLabel); 
+    }
+    if (convertedAmount != "") {
+        //% "%1 %2"
+        return qsTrId("format-amount").arg(Utils.uiStringToLocale(convertedAmount)).arg(secondCurrLabel);
+    }
+    return "";
+}
+
+function formatAmountToSecondCurrency(amount, exchangeRate, secondCurrLabel) {
+    var convertedAmount = BeamGlobals.calcAmountInSecondCurrency(amount, exchangeRate, secondCurrLabel);
+    return formatSecondCurrency(convertedAmount, amount, exchangeRate, secondCurrLabel);
+}
+
+function formatFeeToSecondCurrency(amount, exchangeRate, secondCurrLabel) {
+    if (exchangeRate == "0") {
+        return "- " + secondCurrLabel;
+    }
+    var convertedAmount = BeamGlobals.calcFeeInSecondCurrency(amount, exchangeRate, secondCurrLabel);
+    return formatSecondCurrency(convertedAmount, amount, exchangeRate, secondCurrLabel);
+}
+
 // @arg amount - any number or float string in "C" locale
 function uiStringToLocale (amount) {
     var locale = Qt.locale();
@@ -36,8 +62,12 @@ function localeDecimalToCString(amount) {
         .join('.');
 }
 
+function isSqueezedHeight(parentHeight) {
+    return parentHeight <= 768;
+}
+
 function getLogoTopGapSize(parentHeight) {
-    return parentHeight * (parentHeight < 768 ? 0.13 : 0.18)
+    return parentHeight * (isSqueezedHeight(parentHeight) ? 0.13 : 0.18)
 }
 
 function openExternal(externalLink, settings, dialog, onFinish) {
@@ -77,13 +107,13 @@ function navigateToDownloads() {
 function currenciesList() {
     return [
         BeamGlobals.getCurrencyLabel(Currency.CurrBeam),
-        BeamGlobals.getCurrencyLabel(Currency.CurrBtc),
-        BeamGlobals.getCurrencyLabel(Currency.CurrLtc),
+        BeamGlobals.getCurrencyLabel(Currency.CurrBitcoin),
+        BeamGlobals.getCurrencyLabel(Currency.CurrLitecoin),
         BeamGlobals.getCurrencyLabel(Currency.CurrQtum)
     ]
 }
 
-const maxAmount   = "254000000";
+const maxAmount   = "262799999";
 const minAmount   = "0.00000001";
 
 function createObject(component, parent, props) {

@@ -177,6 +177,24 @@ QString SwapCoinSettingsItem::getTitle() const
     }
 }
 
+ QString SwapCoinSettingsItem::getCoinID() const
+ {
+    switch (m_swapCoin)
+    {
+         case beam::wallet::AtomicSwapCoin::Bitcoin:
+            return "BTC";
+        case beam::wallet::AtomicSwapCoin::Litecoin:
+            return "LTC";
+        case beam::wallet::AtomicSwapCoin::Qtum:
+            return "QTUM";
+        default:
+        {
+            assert(false && "unexpected swap coin!");
+            return QString();
+        }
+    }
+ }
+
 QString SwapCoinSettingsItem::getShowSeedDialogTitle() const
 {
     switch (m_swapCoin)
@@ -284,18 +302,14 @@ QString SwapCoinSettingsItem::getConnectedElectrumTitle() const
     }
 }
 
-int SwapCoinSettingsItem::getFeeRate() const
+bool SwapCoinSettingsItem::getFolded() const
 {
-    return m_feeRate;
+    return m_isFolded;
 }
 
-void SwapCoinSettingsItem::setFeeRate(int value)
+void SwapCoinSettingsItem::setFolded(bool value)
 {
-    if (value != m_feeRate)
-    {
-        m_feeRate = value;
-        emit feeRateChanged();
-    }
+    m_isFolded = value;
 }
 
 QString SwapCoinSettingsItem::getNodeUser() const
@@ -418,6 +432,7 @@ void SwapCoinSettingsItem::setSelectServerAutomatically(bool value)
         if (!m_selectServerAutomatically)
         {
             setNodeAddressElectrum("");
+            setNodePortElectrum("");
         }
         else
         {
@@ -516,15 +531,15 @@ QString SwapCoinSettingsItem::getConnectionErrorMsg() const
     switch (m_coinClient.getConnectionError())
     {
         case IBridge::ErrorType::InvalidCredentials:
-            //% "Invalid credentials"
+            //% "Cannot connect to node. Invalid credentials"
             return qtTrId("swap-invalid-credentials-error");
 
         case IBridge::ErrorType::IOError:
-            //% "Cannot connect to node"
+            //% "Cannot connect to node. Please check your network connection."
             return qtTrId("swap-connection-error");
 
         case IBridge::ErrorType::InvalidGenesisBlock:
-            //% "Invalid genesis block"
+            //% "Cannot connect to node. Invalid genesis block"
             return qtTrId("swap-invalid-genesis-block-error");
 
         default:
@@ -649,7 +664,6 @@ void SwapCoinSettingsItem::LoadSettings()
 
     m_settings = m_coinClient.GetSettings();
 
-    setFeeRate(m_settings->GetFeeRate());
     setConnectionType(m_settings->GetCurrentConnectionType());
 
     if (auto options = m_settings->GetConnectionOptions(); options.IsInitialized())
@@ -711,6 +725,7 @@ void SwapCoinSettingsItem::SetDefaultElectrumSettings()
 {
     setNodePortElectrum(0);
     setNodeAddressElectrum("");
+    setNodePortElectrum("");
     setSelectServerAutomatically(true);
     SetSeedElectrum({});
 }
@@ -1018,6 +1033,11 @@ uint SettingsViewModel::coreAmount() const
     return std::thread::hardware_concurrency();
 }
 
+bool SettingsViewModel::hasPeer(const QString& peer) const
+{
+    return m_localNodePeers.contains(peer, Qt::CaseInsensitive);
+}
+
 void SettingsViewModel::addLocalNodePeer(const QString& localNodePeer)
 {
     m_localNodePeers.push_back(localNodePeer);
@@ -1119,6 +1139,16 @@ void SettingsViewModel::undoChanges()
 void SettingsViewModel::reportProblem()
 {
     m_settings.reportProblem();
+}
+
+bool SettingsViewModel::exportData() const
+{
+    return AppModel::getInstance().exportData();
+}
+
+bool SettingsViewModel::importData() const
+{
+    return AppModel::getInstance().importData();
 }
 
 void SettingsViewModel::changeWalletPassword(const QString& pass)

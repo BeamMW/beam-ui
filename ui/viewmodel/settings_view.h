@@ -65,7 +65,9 @@ class SwapCoinSettingsItem : public QObject
     Q_PROPERTY(QString  showSeedDialogTitle      READ getShowSeedDialogTitle                  CONSTANT)
     Q_PROPERTY(QString  showAddressesDialogTitle READ getShowAddressesDialogTitle             CONSTANT)
     Q_PROPERTY(QString  title                    READ getTitle                                NOTIFY titleChanged)
-    Q_PROPERTY(int      feeRate                  READ getFeeRate      WRITE setFeeRate        NOTIFY feeRateChanged)
+    Q_PROPERTY(QString  coinID                   READ getCoinID                               CONSTANT)
+    Q_PROPERTY(bool     folded                   READ getFolded       WRITE setFolded         NOTIFY foldedChanged)
+
     // node settings
     Q_PROPERTY(QString  nodeUser     READ getNodeUser     WRITE setNodeUser       NOTIFY nodeUserChanged)
     Q_PROPERTY(QString  nodePass     READ getNodePass     WRITE setNodePass       NOTIFY nodePassChanged)
@@ -98,9 +100,10 @@ public:
     QString getTitle() const;
     QString getShowSeedDialogTitle() const;
     QString getShowAddressesDialogTitle() const;
+    QString getCoinID() const;
 
-    int getFeeRate() const;
-    void setFeeRate(int value);
+    bool getFolded() const;
+    void setFolded(bool value);
     QString getNodeUser() const;
     void setNodeUser(const QString& value);
     QString getNodePass() const;
@@ -153,8 +156,8 @@ private:
 
 signals:
 
+    void foldedChanged();
     void titleChanged();
-    void feeRateChanged();
     void nodeUserChanged();
     void nodePassChanged();
     void nodeAddressChanged();
@@ -212,6 +215,7 @@ private:
     bool m_isCurrentSeedValid = false;
     // "true" if current seed valid and segwit type
     bool m_isCurrentSeedSegwit = false;
+    bool m_isFolded = true;
 };
 
 
@@ -289,11 +293,15 @@ public:
     Q_INVOKABLE void openFolder(const QString& path);
     Q_INVOKABLE bool checkWalletPassword(const QString& password) const;
     Q_INVOKABLE QString getOwnerKey(const QString& password) const;
+    Q_INVOKABLE bool exportData() const;
+    Q_INVOKABLE bool importData() const;
+    Q_INVOKABLE bool hasPeer(const QString& peer) const;
 
 public slots:
     void applyChanges();
     void undoChanges();
 	void reportProblem();
+
     void changeWalletPassword(const QString& pass);
     void onNodeStarted();
     void onNodeStopped();

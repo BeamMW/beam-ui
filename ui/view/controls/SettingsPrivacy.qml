@@ -5,6 +5,7 @@ import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.0
 import Beam.Wallet 1.0
 import "."
+import "../utils.js" as Utils
 
 SettingsFoldable {
     id: privacyBlock
@@ -58,12 +59,11 @@ SettingsFoldable {
             }
 
             Item {
-                Layout.preferredWidth: 10
+                Layout.fillWidth: true
             }
 
             CustomSwitch {
                 id: allowBeamMWLinks
-                Layout.preferredWidth: 30
                 checked: viewModel.isAllowedBeamMWLinks
                 Binding {
                     target: viewModel
@@ -110,16 +110,6 @@ SettingsFoldable {
         }
 
         LinkButton {
-            //% "Complete wallet verification"
-            text: qsTrId("settings-wallet-verification")
-            linkColor: "#ffffff"
-            semibold: true
-            onClicked: {
-                // TODO:SETTINGS
-            }
-        }
-
-        LinkButton {
             //: settings tab, general section, Show owner key button and dialog title
             //% "Show owner key"
             text: qsTrId("settings-general-require-pwd-to-show-owner-key")
@@ -155,7 +145,7 @@ SettingsFoldable {
             }
         }
 
-        LinkButton {
+        /*LinkButton {
             //% "Clear local wallet data"
             text: qsTrId("settings-clear-local-data")
             linkColor: "#ffffff"
@@ -163,6 +153,6 @@ SettingsFoldable {
             onClicked: {
                 // TODO:SETTINGS
             }
-        }
+        }*/
     }
 }

@@ -29,18 +29,17 @@ ColumnLayout {
     }
 
     function getFeeInSecondCurrency(feeValue) {
-        return BeamGlobals.calcFeeInSecondCurrency(
+        return Utils.formatFeeToSecondCurrency(
             feeValue,
-            control.currency,
             control.secondCurrencyRateValue,
             control.secondCurrencyLabel);
     }
 
     function getAmountInSecondCurrency() {
-        return BeamGlobals.calcAmountInSecondCurrency(
+        return Utils.formatAmountToSecondCurrency(
             control.amountIn,
             control.secondCurrencyRateValue,
-            control.secondCurrencyLabel) + " " + control.secondCurrencyLabel;
+            control.secondCurrencyLabel);
     }
 
     readonly property bool     isValidFee:     hasFee ? feeInput.isValid : true
@@ -76,6 +75,7 @@ ColumnLayout {
         font.weight:      Font.Bold
         color:            Style.content_main
         text:             control.title
+        visible:          text.length > 0
     }
 
     RowLayout {
@@ -96,18 +96,19 @@ ColumnLayout {
 
             onTextChanged: {
                 // if nothing then "0", remove insignificant zeroes and "." in floats
-                if (ainput.focus) {
+                errmsg.text = "";
+                if (ainput.activeFocus) {
                     control.amount = text ? text.replace(/\.0*$|(\.\d*[1-9])0+$/,'$1') : "0"
                 }
             }
 
-            onFocusChanged: {
+            onActiveFocusChanged: {
                 text = formatDisplayedAmount()
                 if (focus) cursorPosition = positionAt(ainput.getMousePos().x, ainput.getMousePos().y)
             }
 
             function formatDisplayedAmount() {
-                return control.amountIn == "0" ? "" : (ainput.focus ? control.amountIn : Utils.uiStringToLocale(control.amountIn))
+                return control.amountIn == "0" ? "" : (ainput.activeFocus ? control.amountIn : Utils.uiStringToLocale(control.amountIn))
             }
 
             Connections {
@@ -194,32 +195,36 @@ ColumnLayout {
         }
     }
 
-    Item {
-        Layout.fillWidth: true
-        SFText {
-            id:              errmsg
-            color:           Style.validator_error
-            font.pixelSize:  12
-            font.styleName:  "Italic"
-            width:           parent.width
-            visible:         error.length
-        }
-        SFText {
-            id:             amountSecondCurrencyText
-            visible:        control.showSecondCurrency && !errmsg.visible && !showTotalFee  // show only on send side
-            font.pixelSize: 14
-            opacity:        isExchangeRateAvailable ? 0.5 : 0.7
-            color:          isExchangeRateAvailable ? Style.content_secondary : Style.accent_fail
-            text:           isExchangeRateAvailable
-                            ? getAmountInSecondCurrency()
-                            //% "Exchange rate to %1 is not available"
-                            : qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
-        }
+    //
+    // Exchange rate
+    //
+    SFText {
+        id:              errmsg
+        color:           Style.validator_error
+        font.pixelSize:  12
+        font.styleName:  "Italic"
+        width:           parent.width
+        visible:         error.length
+    }
+    SFText {
+        id:             amountSecondCurrencyText
+        visible:        control.showSecondCurrency && !errmsg.visible && !showTotalFee  // show only on send side
+        font.pixelSize: 14
+        opacity:        isExchangeRateAvailable ? 0.5 : 0.7
+        color:          isExchangeRateAvailable ? Style.content_secondary : Style.accent_fail
+        text:           isExchangeRateAvailable
+                        ? getAmountInSecondCurrency()
+                        //% "Exchange rate to %1 is not available"
+                        : qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
     }
 
+    //
+    // Fee
+    //
     GridLayout {
         columns:       2
         Layout.topMargin: 50
+        visible:       control.hasFee
         ColumnLayout {
             Layout.maximumWidth:  198
             Layout.alignment:     Qt.AlignTop
@@ -235,7 +240,7 @@ ColumnLayout {
                 id:               feeInput
                 Layout.fillWidth: true
                 fee:              control.fee
-                minFee:           BeamGlobals.getMinimalFee(control.currency)
+                minFee:           BeamGlobals.getMinimalFee(control.currency, false)
                 feeLabel:         BeamGlobals.getFeeRateLabel(control.currency)
                 color:            control.color
                 readOnly:         control.readOnlyF

@@ -105,6 +105,7 @@ SettingsFoldable {
             }
         }
 
+        /*
         LinkButton {
             //% "Remove current wallet"
             text: qsTrId("settings-remove-wallet")
@@ -114,5 +115,6 @@ SettingsFoldable {
                 // TODO:SETTINGS
             }
         }
+        */
     }
 }

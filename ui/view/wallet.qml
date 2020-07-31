@@ -24,7 +24,10 @@ Item {
         id: viewModel
     }
 
-    property bool toSend: false
+    property bool toSend:               false
+    property bool openReceive:          false
+    property string token:              ""
+
 
     ConfirmationDialog {
         id: deleteTransactionDialog
@@ -102,6 +105,22 @@ Item {
             Layout.fillHeight: true
             spacing: 0
             state: "all"
+            function navigateSend() {
+                walletStackView.push(Qt.createComponent("send_regular.qml"),
+                                             {"onAccepted":      onAccepted,
+                                              "onClosed":        onClosed,
+                                              "onSwapToken":     onSwapToken,
+                                              "receiverAddress": token});
+                token = "";
+            }
+
+            function navigateReceive() {
+                walletStackView.push(Qt.createComponent("receive_regular.qml"), 
+                                                {"onClosed": onClosed,
+                                                 "token":    token
+                                                });
+                token = "";
+            }
 
             Row {
                 Layout.alignment: Qt.AlignTop | Qt.AlignRight
@@ -120,10 +139,7 @@ Item {
                     //font.capitalization: Font.AllUppercase
 
                     onClicked: {
-                        walletStackView.push(Qt.createComponent("send_regular.qml"),
-                                             {"onAccepted":  onAccepted,
-                                              "onClosed":    onClosed,
-                                              "onSwapToken": onSwapToken})
+                        navigateSend();
                     }
                 }
 
@@ -138,7 +154,7 @@ Item {
                     //font.capitalization: Font.AllUppercase
 
                     onClicked: {
-                        walletStackView.push(Qt.createComponent("receive_regular.qml"), {"onClosed": onClosed});
+                        navigateReceive();
                     }
                 }
             }
@@ -687,9 +703,19 @@ Item {
 
     Component.onCompleted: {
         if (root.toSend) {
-            sendButton.clicked();
-            root.toSend = false;
+            var item = walletStackView.currentItem;
+            if (item && item.navigateSend && typeof item.navigateSend == "function" ) {
+                item.navigateSend();
+                root.toSend = false;
+            }
+        } else if (root.openReceive) {
+            var item = walletStackView.currentItem;
+            if (item && item.navigateReceive && typeof item.navigateReceive == "function" ) {
+                item.navigateReceive();
+                root.openReceive = false;
+            }
         }
+
     }
 
     Component.onDestruction: {

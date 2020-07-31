@@ -25,6 +25,7 @@ Rectangle {
     property string textConnecting: "connectring..."
     property alias amountWrapMode: amountField.wrapMode
     property var onClick: function() {}
+    property string swapSettingsPane: ""
    
     id: control
     Layout.fillWidth: true
@@ -131,6 +132,15 @@ Rectangle {
             wrapMode: Text.Wrap
             text: textConnectionError
             visible: !isOk && !isConnecting
+
+             MouseArea {
+                id:                clickArea
+                anchors.fill:      parent
+                acceptedButtons:   Qt.LeftButton
+                onClicked:         main.openSwapSettings(swapSettingsPane)
+                hoverEnabled:      true
+                onPositionChanged: clickArea.cursorShape = Qt.PointingHandCursor;
+            }
         }
 
         SFText {

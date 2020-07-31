@@ -23,8 +23,20 @@
 #include <regex>
 #include <QLocale>
 
+namespace
+{
+    void CopyParameter(beam::wallet::TxParameterID paramID, const beam::wallet::TxParameters& input, beam::wallet::TxParameters& dest)
+    {
+        beam::wallet::ByteBuffer buf;
+        if (input.GetParameter(paramID, buf))
+        {
+            dest.SetParameter(paramID, buf);
+        }
+    }
+}
+
 SendViewModel::SendViewModel()
-    : _feeGrothes(0)
+    : _feeGrothes(100)
     , _sendAmountGrothes(0)
     , _changeGrothes(0)
     , _walletModel(*AppModel::getInstance().getWallet())
@@ -33,6 +45,7 @@ SendViewModel::SendViewModel()
     connect(&_walletModel, SIGNAL(sendMoneyVerified()), this, SIGNAL(sendMoneyVerified()));
     connect(&_walletModel, SIGNAL(cantSendToExpired()), this, SIGNAL(cantSendToExpired()));
     connect(&_walletModel, SIGNAL(availableChanged()), this, SIGNAL(availableChanged()));
+    connect(&_walletModel, &WalletModel::getAddressReturned, this, &SendViewModel::onGetAddressReturned);
     connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyLabelChanged()));
     connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
 }
@@ -97,6 +110,11 @@ void SendViewModel::setReceiverTA(const QString& value)
     {
         _tokenGeneratebByNewAppVersionMessage.clear();
         _receiverTA = value;
+        if (_receiverTA.isEmpty())
+        {
+            _canChangeTxType = true;
+            emit canChangeTxTypeChanged();
+        }
         emit receiverTAChanged();
         emit canSendChanged();
 
@@ -113,7 +131,11 @@ void SendViewModel::setReceiverTA(const QString& value)
             }
             else
             {
-                // Just ignore, UI will display error automatically
+                setIsToken(false);
+                setIsShieldedTx(false);
+                setIsNonInteractive(false);
+                setIsPermanentAddress(false);
+                setComment("");
             }
         }
     }
@@ -127,6 +149,67 @@ bool SendViewModel::getRreceiverTAValid() const
 QString SendViewModel::getReceiverAddress() const
 {
     return _receiverAddress;
+}
+
+QString SendViewModel::getReceiverIdentity() const
+{
+    return _receiverIdentityStr;
+}
+
+bool SendViewModel::isShieldedTx() const
+{
+    return _isShieldedTx;
+}
+
+void SendViewModel::setIsShieldedTx(bool value)
+{
+    if (_isShieldedTx != value)
+    {
+        _isShieldedTx = value;
+        emit isShieldedTxChanged();
+        setFeeGrothes(QMLGlobals::getMinimalFee(Currency::CurrBeam, isShieldedTx()));
+    }
+}
+
+bool SendViewModel::isPermanentAddress() const
+{
+    return _isPermanentAddress;
+}
+
+void SendViewModel::setIsPermanentAddress(bool value)
+{
+    if (_isPermanentAddress != value)
+    {
+        _isPermanentAddress = value;
+        emit isPermanentAddressChanged();
+    }
+}
+
+bool SendViewModel::canChangeTxType() const
+{
+    return _canChangeTxType;
+}
+void SendViewModel::setCanChangeTxType(bool value)
+{
+    if (_canChangeTxType != value)
+    {
+        _canChangeTxType = value;
+        emit canChangeTxTypeChanged();
+    }
+}
+
+bool SendViewModel::isNonInteractive() const
+{
+    return _isNonInteractive;
+}
+
+void SendViewModel::setIsNonInteractive(bool value)
+{
+    if (_isNonInteractive != value)
+    {
+        _isNonInteractive = value;
+        emit isNonInteractiveChanged();
+    }
 }
 
 beam::Amount SendViewModel::calcTotalAmount() const
@@ -162,9 +245,27 @@ void SendViewModel::onChangeCalculated(beam::Amount change)
     emit isEnoughChanged();
 }
 
+void SendViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address)
+{
+    if (id == _receiverWalletID && address)
+    {
+        setWalletAddress(address);
+        setComment(QString::fromStdString(address->m_label));
+    }
+    else
+    {
+        setWalletAddress({});
+    }
+}
+
 QString SendViewModel::getChange() const
 {
     return beamui::AmountToUIString(_changeGrothes);
+}
+
+QString SendViewModel::getFee() const
+{
+    return beamui::AmountToUIString(_feeGrothes);
 }
 
 QString SendViewModel::getTotalUTXO() const
@@ -183,12 +284,21 @@ bool SendViewModel::canSend() const
 {
     return !QMLGlobals::isSwapToken(_receiverTA) && getRreceiverTAValid()
            && _sendAmountGrothes > 0 && isEnough()
-           && QMLGlobals::isFeeOK(_feeGrothes, Currency::CurrBeam);
+           && QMLGlobals::isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx());
 }
 
 bool SendViewModel::isToken() const
 {
     return _isToken;
+}
+
+void SendViewModel::setIsToken(bool value)
+{
+    if (_isToken != value)
+    {
+        _isToken = value;
+        emit isTokenChanged();
+    }
 }
 
 void SendViewModel::setMaxAvailableAmount()
@@ -198,36 +308,53 @@ void SendViewModel::setMaxAvailableAmount()
 
 void SendViewModel::sendMoney()
 {
+    using namespace beam::wallet;
     assert(canSend());
     if(canSend())
     {
         // TODO:SWAP show 'operation in process' animation here?
         auto messageString = _comment.toStdString();
+        saveReceiverAddress(_comment);
 
-        auto p = beam::wallet::CreateSimpleTransactionParameters()
-            .SetParameter(beam::wallet::TxParameterID::PeerID, *_txParameters.GetParameter<beam::wallet::WalletID>(beam::wallet::TxParameterID::PeerID))
-            .SetParameter(beam::wallet::TxParameterID::Amount, _sendAmountGrothes)
-            .SetParameter(beam::wallet::TxParameterID::Fee, _feeGrothes)
-            .SetParameter(beam::wallet::TxParameterID::Message, beam::ByteBuffer(messageString.begin(), messageString.end()));
+        auto p = CreateSimpleTransactionParameters()
+            .SetParameter(TxParameterID::Amount, _sendAmountGrothes)
+            .SetParameter(TxParameterID::Fee, _feeGrothes)
+            .SetParameter(TxParameterID::Message, beam::ByteBuffer(messageString.begin(), messageString.end()));
+
+        CopyParameter(TxParameterID::PeerID, _txParameters, p);
+        CopyParameter(TxParameterID::PeerWalletIdentity, _txParameters, p);
+        if (isShieldedTx())
+        {
+            CopyParameter(TxParameterID::TransactionType, _txParameters, p);
+        }
+        CopyParameter(TxParameterID::ShieldedVoucherList, _txParameters, p);
 
         if (isToken())
         {
-            p.SetParameter(beam::wallet::TxParameterID::OriginalToken, _receiverTA.toStdString());
-        }
-
-        auto identity = _txParameters.GetParameter<beam::PeerID>(beam::wallet::TxParameterID::PeerWalletIdentity);
-        if (identity)
-        {
-            p.SetParameter(beam::wallet::TxParameterID::PeerWalletIdentity, *identity);
+            p.SetParameter(TxParameterID::OriginalToken, _receiverTA.toStdString());
         }
 
         _walletModel.getAsync()->startTransaction(std::move(p));
     }
 }
 
+void SendViewModel::saveReceiverAddress(const QString& name)
+{
+    using namespace beam::wallet;
+    QString trimmed = name.trimmed();
+    WalletAddress address;
+    address.m_walletID = _receiverWalletID;
+    address.m_createTime = getTimestamp();
+    address.m_Identity = _receiverIdentity;
+    address.m_label = trimmed.toStdString();
+    address.m_duration = WalletAddress::AddressExpirationNever;
+    _walletModel.getAsync()->saveAddress(address, false);
+}
+
 void SendViewModel::extractParameters()
 {
-    auto txParameters = beam::wallet::ParseParameters(_receiverTA.toStdString());
+    using namespace beam::wallet;
+    auto txParameters = ParseParameters(_receiverTA.toStdString());
     if (!txParameters)
     {
         return;
@@ -235,22 +362,65 @@ void SendViewModel::extractParameters()
 
     _txParameters = *txParameters;
 
-    if (auto peerID = _txParameters.GetParameter<beam::wallet::WalletID>(beam::wallet::TxParameterID::PeerID); peerID)
+    if (auto peerID = _txParameters.GetParameter<WalletID>(TxParameterID::PeerID); peerID)
     {
+        _receiverWalletID = *peerID;
         _receiverAddress = QString::fromStdString(std::to_string(*peerID));
-        _isToken = _receiverTA != _receiverAddress;
+        setIsToken(_receiverTA != _receiverAddress);
+        emit receiverAddressChanged();
+        _walletModel.getAsync()->getAddress(_receiverWalletID);
+    }
+    else
+    {
+        _receiverWalletID = Zero;
+        _receiverAddress = "";
+        setIsToken(true);
         emit receiverAddressChanged();
     }
 
-    if (auto amount = _txParameters.GetParameter<beam::Amount>(beam::wallet::TxParameterID::Amount); amount && *amount > 0)
+    if (auto peerIdentity = _txParameters.GetParameter<beam::PeerID>(TxParameterID::PeerWalletIdentity); peerIdentity)
+    {
+        _receiverIdentity = *peerIdentity;
+        _receiverIdentityStr = QString::fromStdString(std::to_string(*peerIdentity));
+        emit receiverIdentityChanged();
+    }
+
+    if (auto isPermanent = _txParameters.GetParameter<bool>(TxParameterID::IsPermanentPeerID); isPermanent)
+    {
+        setIsPermanentAddress(*isPermanent);
+    }
+    else
+    {
+        setIsPermanentAddress(false);
+    }
+
+
+    if (auto txType = _txParameters.GetParameter<TxType>(TxParameterID::TransactionType); txType)
+    {
+        if (*txType == TxType::PushTransaction)
+        {
+            setCanChangeTxType(false);
+            setIsShieldedTx(true);
+            setIsNonInteractive(_receiverAddress.isEmpty());
+        } // ignore other types
+        else
+        {
+            setIsShieldedTx(false);
+            setIsNonInteractive(false);
+            setCanChangeTxType(true);
+        }
+    }
+
+
+    if (auto amount = _txParameters.GetParameter<beam::Amount>(TxParameterID::Amount); amount && *amount > 0)
     {
         setSendAmount(beamui::AmountToUIString(*amount));
     }
-    if (auto fee = _txParameters.GetParameter<beam::Amount>(beam::wallet::TxParameterID::Fee); fee)
+    if (auto fee = _txParameters.GetParameter<beam::Amount>(TxParameterID::Fee); fee)
     {
         setFeeGrothes(*fee);
     }
-    if (auto comment = _txParameters.GetParameter(beam::wallet::TxParameterID::Message); comment)
+    if (auto comment = _txParameters.GetParameter(TxParameterID::Message); comment)
     {
         std::string s(comment->begin(), comment->end());
         setComment(QString::fromStdString(s));
@@ -259,7 +429,7 @@ void SendViewModel::extractParameters()
     _tokenGeneratebByNewAppVersionMessage.clear();
 
 #ifdef BEAM_LIB_VERSION
-    if (auto libVersion = _txParameters.GetParameter(beam::wallet::TxParameterID::LibraryVersion); libVersion)
+    if (auto libVersion = _txParameters.GetParameter(TxParameterID::LibraryVersion); libVersion)
     {
         std::string libVersionStr;
         beam::wallet::fromByteBuffer(*libVersion, libVersionStr);
@@ -285,7 +455,7 @@ Your version is: %2. Please, check for updates."
 #endif // BEAM_LIB_VERSION
 
 #ifdef BEAM_CLIENT_VERSION
-    if (auto clientVersion = _txParameters.GetParameter(beam::wallet::TxParameterID::ClientVersion); clientVersion)
+    if (auto clientVersion = _txParameters.GetParameter(TxParameterID::ClientVersion); clientVersion)
     {
         std::string clientVersionStr;
         beam::wallet::fromByteBuffer(*clientVersion, clientVersionStr);
@@ -337,4 +507,18 @@ bool SendViewModel::isTokenGeneratebByNewAppVersion() const
 QString SendViewModel::tokenGeneratebByNewAppVersionMessage() const
 {
     return _tokenGeneratebByNewAppVersionMessage;
+}
+
+bool SendViewModel::hasAddress() const
+{
+    return _receiverWalletAddress.is_initialized();
+}
+
+void SendViewModel::setWalletAddress(const boost::optional<beam::wallet::WalletAddress>& value)
+{
+    if (_receiverWalletAddress != value)
+    {
+        _receiverWalletAddress = value;
+        emit hasAddressChanged();
+    }
 }

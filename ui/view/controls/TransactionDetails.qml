@@ -3,6 +3,7 @@ import QtQuick.Controls 2.4
 
 import QtQuick.Layouts 1.11
 import Beam.Wallet 1.0
+import "../utils.js" as Utils
 import "."
 
 RowLayout {
@@ -66,7 +67,7 @@ RowLayout {
 
     function getAmountInSecondCurrency() {
         if (root.amount !== "") {
-            var amountInSecondCurrency = BeamGlobals.calcAmountInSecondCurrency(
+            var amountInSecondCurrency = Utils.formatAmountToSecondCurrency(
                 root.amount,
                 root.secondCurrencyRate,
                 root.secondCurrencyLabel);
@@ -76,10 +77,18 @@ RowLayout {
             }
             else {
                 //% "(for the day of transaction)"
-                return root.amountPrefix + " " + amountInSecondCurrency + " " + root.secondCurrencyLabel + " " + qsTrId("tx-details-second-currency-notification");
+                return root.amountPrefix + " " + amountInSecondCurrency + " " + qsTrId("tx-details-second-currency-notification");
             }
         }
         else return "";
+    }
+
+    function isZeroed(s) {
+        for (var i = 0; i < s.length; ++i) {
+            if (s[i] != '0')
+                return false;
+        }
+        return true;
     }
 
     GridLayout {
@@ -120,7 +129,7 @@ RowLayout {
             elide: Text.ElideMiddle
             text: getHighlitedText(root.sendAddress)
             onCopyText: textCopied(root.sendAddress)
-            visible: isTextFieldVisible(root.sendAddress)
+            visible: isTextFieldVisible(root.sendAddress) && root.sendAddress.length
         }
 
         SFText {
@@ -160,7 +169,7 @@ RowLayout {
             elide: Text.ElideMiddle
             text: getHighlitedText(root.receiveAddress)
             onCopyText: textCopied(root.receiveAddress)
-            visible: isTextFieldVisible(root.receiveAddress)
+            visible: isTextFieldVisible(root.receiveAddress) && root.receiveAddress.length
         }
 
         SFText {
@@ -230,7 +239,7 @@ RowLayout {
             color: Style.content_secondary
             //% "Transaction fee"
             text: qsTrId("general-fee") + ":"
-            visible: root.isFieldVisible()
+            visible: root.isFieldVisible() && root.fee.length
         }
         SFLabel {
             Layout.fillWidth: true
@@ -239,7 +248,7 @@ RowLayout {
             color: Style.content_main
             text: root.fee
             onCopyText: textCopied(text)
-            visible: root.isFieldVisible()
+            visible: root.isFieldVisible() && root.fee.length
         }
         
         SFText {
@@ -269,7 +278,7 @@ RowLayout {
             color: Style.content_secondary
             //% "Transaction ID"
             text: qsTrId("tx-details-tx-id-label") + ":"
-            visible: transactionID.visible
+            visible: transactionID.visible 
         }
         SFLabel {
             Layout.fillWidth: true
@@ -281,7 +290,7 @@ RowLayout {
             font.styleName: "Italic"
             elide: Text.ElideMiddle
             onCopyText: textCopied(root.txID)
-            visible: isTextFieldVisible(root.txID)
+            visible: isTextFieldVisible(root.txID) && !isZeroed(root.txID)
         }
         SFText {
             Layout.alignment: Qt.AlignTop
@@ -302,7 +311,7 @@ RowLayout {
             font.styleName: "Italic"
             elide: Text.ElideMiddle
             onCopyText: textCopied(root.kernelID)
-            visible: isTextFieldVisible(root.kernelID)
+            visible: isTextFieldVisible(root.kernelID) && !isZeroed(root.kernelID)
         }
 
         SFText {
@@ -340,12 +349,12 @@ RowLayout {
         
         Item {
             Layout.preferredHeight: 16
-            visible: parent.canOpenInBlockchainExplorer(root.status) && root.isFieldVisible()
+            visible: parent.canOpenInBlockchainExplorer(root.status) && root.isFieldVisible() && kernelID.visible
         }
         Item {
             Layout.preferredWidth: openInExplorer.width + 10 + openInExplorerIcon.width
             Layout.preferredHeight: 16
-            visible: parent.canOpenInBlockchainExplorer(root.status) && root.isFieldVisible()
+            visible: parent.canOpenInBlockchainExplorer(root.status) && root.isFieldVisible() && kernelID.visible
         
             SFText {
                 id: openInExplorer

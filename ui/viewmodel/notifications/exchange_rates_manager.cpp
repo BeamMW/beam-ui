@@ -114,9 +114,9 @@ ExchangeRate::Currency ExchangeRatesManager::convertCurrencyToExchangeCurrency(W
     {
     case Currency::CurrBeam:
         return ExchangeRate::Currency::Beam;
-    case Currency::CurrBtc:
+    case Currency::CurrBitcoin:
         return ExchangeRate::Currency::Bitcoin;
-    case Currency::CurrLtc:
+    case Currency::CurrLitecoin:
         return ExchangeRate::Currency::Litecoin;
     case Currency::CurrQtum:
         return ExchangeRate::Currency::Qtum;

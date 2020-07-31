@@ -46,6 +46,7 @@ WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, b
     qRegisterMetaType<beam::wallet::VersionInfo>("beam::wallet::VersionInfo");
     qRegisterMetaType<beam::wallet::WalletImplVerInfo>("beam::wallet::WalletImplVerInfo");
     qRegisterMetaType<ECC::uintBig>("ECC::uintBig");
+    qRegisterMetaType<boost::optional<beam::wallet::WalletAddress>>("boost::optional<beam::wallet::WalletAddress>");
 
     connect(this, SIGNAL(walletStatus(const beam::wallet::WalletStatus&)), this, SLOT(setStatus(const beam::wallet::WalletStatus&)));
     connect(this, SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
@@ -213,6 +214,11 @@ void WalletModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& walle
     emit generatedNewAddress(walletAddr);
 }
 
+void WalletModel::onGetAddress(const WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address)
+{
+    emit getAddressReturned(id, address);
+}
+
 void WalletModel::onNewAddressFailed()
 {
     emit newAddressFailed();
@@ -302,7 +308,7 @@ uint32_t WalletModel::getClientRevision() const
 
 beam::Amount WalletModel::getAvailable() const
 {
-    return m_status.available;
+    return m_status.available + m_status.shielded;
 }
 
 beam::Amount WalletModel::getReceiving() const
@@ -347,9 +353,10 @@ beam::Block::SystemState::ID WalletModel::getCurrentStateID() const
 
 void WalletModel::setStatus(const beam::wallet::WalletStatus& status)
 {
-    if (m_status.available != status.available)
+    if (m_status.available != status.available || m_status.shielded != status.shielded)
     {
         m_status.available = status.available;
+        m_status.shielded = status.shielded;
         emit availableChanged();
     }
 

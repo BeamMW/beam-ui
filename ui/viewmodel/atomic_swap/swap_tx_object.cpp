@@ -291,8 +291,8 @@ QString SwapTxObject::getSwapCoinFee() const
 
     switch (m_swapTx.getSwapCoin())
     {
-        case AtomicSwapCoin::Bitcoin:   coinTypeQt = Currency::CurrBtc; break;
-        case AtomicSwapCoin::Litecoin:  coinTypeQt = Currency::CurrLtc; break;
+        case AtomicSwapCoin::Bitcoin:   coinTypeQt = Currency::CurrBitcoin; break;
+        case AtomicSwapCoin::Litecoin:  coinTypeQt = Currency::CurrLitecoin; break;
         case AtomicSwapCoin::Qtum:      coinTypeQt = Currency::CurrQtum; break;
         default:                        coinTypeQt = Currency::CurrStart; break;
     }

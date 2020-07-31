@@ -5,6 +5,7 @@ import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.0
 import Beam.Wallet 1.0
 import "."
+import "../utils.js" as Utils
 
 SettingsFoldable {
     id: reportBlock
@@ -14,27 +15,23 @@ SettingsFoldable {
 
     content:  ColumnLayout {
         spacing: 25
-        height:  reportText.height + spacing + reportButton.height
 
         SFText {
             id: reportText
             Layout.alignment: Qt.AlignTop
             property string beamEmail: "<a href='mailto:support@beam.mw'>support@beam.mw</a>"
             property string beamGithub: "<a href='https://github.com/BeamMW'>Github</a>"
-            //% "To report a problem:"
-            property string rpm0: qsTrId("settings-report-problem-message-l0")
-            //% "1. Click “Save wallet logs” and choose a destination folder for log archive"
+            //% "1. Click “Save wallet logs” and choose a destination folder<br />for log archive"
             property string rpm1: qsTrId("settings-report-problem-message-l1")
             //% "2. Send email to %1 or open a ticket in %2"
             property string rpm2: qsTrId("settings-report-problem-message-l2").arg(beamEmail).arg(beamGithub)
             //% "3. Don’t forget to attach logs archive"
             property string rpm3: qsTrId("settings-report-problem-message-l3")
             Layout.preferredWidth: parent.width
-            text: Style.linkStyle + rpm0 + "<br />" + rpm1 + "<br />" + rpm2 + "<br />" + rpm3
+            text: Style.linkStyle + rpm1 + "<br />" + rpm2 + "<br />" + rpm3
             textFormat: Text.RichText
             color: Style.content_main
             font.pixelSize: 14
-            wrapMode: Text.WordWrap
             linkEnabled: true
             onLinkActivated: {
                 Utils.openExternalWithConfirmation(link)

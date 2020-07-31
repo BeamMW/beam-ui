@@ -15,10 +15,6 @@
         <source>Comment</source>
         <translation>Kommentar</translation>
     </message>
-    <message id="general-contact">
-        <source>Contact</source>
-        <translation>Kontakt</translation>
-    </message>
     <message id="general-actions">
         <source>Actions</source>
         <translation>Åtgärder</translation>
@@ -26,14 +22,6 @@
     <message id="general-address">
         <source>Address</source>
         <translation>Adress</translation>
-    </message>
-    <message id="general-exp-date">
-        <source>Expiration date</source>
-        <translation>Utgångsdatum</translation>
-    </message>
-    <message id="general-created">
-        <source>Created</source>
-        <translation>Skapad</translation>
     </message>
     <message id="general-send">
         <source>Send</source>
@@ -235,8 +223,9 @@
         <translation>okänd</translation>
     </message>
     <message id="addresses-tittle">
-        <source>Addresses</source>
-        <translation>Adresser</translation>
+        <source>Address Book</source>
+        <oldsource>Addresses</oldsource>
+        <translation type="unfinished">Adresser</translation>
     </message>
     <message id="addresses-tab-active">
         <source>My active addresses</source>
@@ -346,8 +335,8 @@
         <translation type="unfinished">Tillämpa</translation>
     </message>
     <message id="logo-description">
-        <source>Scalable confidential cryptocurrency</source>
-        <translation>Skalbar konfidentiell kryptovaluta</translation>
+        <source>Confidential, fast, easy to use</source>
+        <translation>Konfidentiellt, snabbt, enkelt att använda</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>
@@ -505,51 +494,6 @@
     <message id="wallet-title">
         <source>Wallet</source>
         <translation>Plånbok</translation>
-    </message>
-    <message id="wallet-receive-title">
-        <source>Receive</source>
-        <translation>Ta emot</translation>
-    </message>
-    <message id="wallet-receive-expires-label">
-        <source>Expires in</source>
-        <translation>Utgår om</translation>
-    </message>
-    <message id="wallet-receive-expires-24">
-        <source>24 hours</source>
-        <translation>24 timmar</translation>
-    </message>
-    <message id="wallet-receive-expires-never">
-        <source>Never</source>
-        <translation>Aldrig</translation>
-    </message>
-    <message id="wallet-receive-qr-label">
-        <source>Scan to send</source>
-        <translation>Scanna för att skicka</translation>
-    </message>
-    <message id="send-title">
-        <source>Send</source>
-        <translation>Skicka</translation>
-    </message>
-    <message id="send-send-to-label">
-        <source>Transaction token or contact</source>
-        <translation>Transaktions-token eller kontakt</translation>
-    </message>
-    <message id="send-contact-placeholder">
-        <source>Please specify contact or transaction token</source>
-        <translation>Vänligen verifiera kontakt eller transaktionstoken</translation>
-    </message>
-    <message id="send-amount-label">
-        <source>Amount to send</source>
-        <oldsource>Send</oldsource>
-        <translation type="unfinished">Transaktionsbelopp</translation>
-    </message>
-    <message id="send-founds-fail">
-        <source>Insufficient funds: you would need %1 to complete the transaction</source>
-        <translation>Otillräckliga medel; du behöver %1 för att slutföra transaktionen</translation>
-    </message>
-    <message id="send-remaining-label">
-        <source>Remaining</source>
-        <translation>Återstående</translation>
     </message>
     <message id="start-restore-confirm-button">
         <source>I agree</source>
@@ -897,17 +841,9 @@
         <source>1 hour</source>
         <translation>1 timme</translation>
     </message>
-    <message id="receive-amount-label">
-        <source>Receive amount (optional)</source>
-        <translation>Begär betalning(valfritt)</translation>
-    </message>
     <message id="appmodel-failed-time-not-synced">
         <source>Failed to start the integrated node: the timezone settings of your machine are out of sync. Please fix them and restart the wallet.</source>
         <translation>Misslyckades att starta den integrerade noden; tids-zonsinställningarna på din dator är osynkroniserade. Vänligen åtgärda detta och starta om plånboken.</translation>
-    </message>
-    <message id="can-not-generate-new-address-message">
-        <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
-        <translation>Du kan inte generera en ny adress. Din plånbok har ingen master-nyckel.</translation>
     </message>
     <message id="settings-general-language">
         <source>Language</source>
@@ -996,13 +932,10 @@ Allow to open and proceed to the website? You can always update your choice in S
         <extracomment>general settings, label for alow open external links</extracomment>
         <translation type="unfinished">Tillåt åtkomst till %1 och %2(för att hämta exchanges och transaktions-data)</translation>
     </message>
-    <message id="settings-report-problem-message-l0">
-        <source>To report a problem:</source>
-        <translation>För att apportera ett problem:</translation>
-    </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
-        <translation>1. Klicka på &quot;Spara plånbokens loggar&quot; och välj destinationskatalog för logg-arkivet</translation>
+        <source>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</source>
+        <oldsource>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;1for log archive</oldsource>
+        <translation type="unfinished">1. Klicka på &quot;Spara plånbokens loggar&quot; och välj destinationskatalog för logg-arkivet</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send email to %1 or open a ticket in %2</source>
@@ -1172,8 +1105,9 @@ Allow to open and proceed to the website? You can always update your choice in S
         <translation>sekund</translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>Estimate time: %s</source>
-        <translation>Uppskattad tid %s</translation>
+        <source>Estimated time: %s</source>
+        <oldsource>Estimate time: %s</oldsource>
+        <translation type="unfinished">Uppskattad tid %s</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
@@ -1191,13 +1125,10 @@ Allow to open and proceed to the website? You can always update your choice in S
         <source>Swap</source>
         <translation>Swappa</translation>
     </message>
-    <message id="settings-reset">
-        <source>Clear</source>
-        <translation>Rensa</translation>
-    </message>
     <message id="settings-node-address">
-        <source>Node Address</source>
-        <translation>Nod-adress</translation>
+        <source>Node address</source>
+        <oldsource>Node Address</oldsource>
+        <translation type="unfinished">Nod-adress</translation>
     </message>
     <message id="settings-username">
         <source>Username</source>
@@ -1206,10 +1137,6 @@ Allow to open and proceed to the website? You can always update your choice in S
     <message id="settings-password">
         <source>Password</source>
         <translation>Lösenord</translation>
-    </message>
-    <message id="settings-fee-rate">
-        <source>Default fee</source>
-        <translation>Standardavgift</translation>
     </message>
     <message id="swap-beta-message">
         <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
@@ -1229,11 +1156,6 @@ Update your settings and try again.</oldsource>
     <message id="wallet-receive-swap-title">
         <source>Create a Swap Offer</source>
         <translation>Skapa ett swap-erbjudande</translation>
-    </message>
-    <message id="wallet-receive-addr-message">
-        <source>Send this address to the sender over an external secure channel or scan the QR code</source>
-        <oldsource>Send this token to the sender over an external secure channel or scan the QR code</oldsource>
-        <translation type="unfinished">Skicka denna adress till sändaren över en extern säker kanal eller scanna QR-koden</translation>
     </message>
     <message id="receive-amount-swap-label">
         <source>Receive amount</source>
@@ -1271,17 +1193,9 @@ Update your settings and try again.</oldsource>
         <source>Invalid swap token</source>
         <translation>Ogiltig swaptoken</translation>
     </message>
-    <message id="wallet-send-invalid-address-or-token">
-        <source>Invalid wallet address</source>
-        <translation>Invalid wallet address or swap token</translation>
-    </message>
     <message id="general-comment-local">
         <source>Comments are local and won&apos;t be shared</source>
         <translation>Kommentarer är lokala och kommer ej att delas</translation>
-    </message>
-    <message id="send-total-label">
-        <source>Total UTXO value</source>
-        <translation>Totalt UTXO-värde</translation>
     </message>
     <message id="general-bitcoin">
         <source>Bitcoin</source>
@@ -1430,10 +1344,6 @@ please review your settings and try again</oldsource>
         <source>Create new Trezor wallet</source>
         <translation>Skapa ny Trezor-plånbok</translation>
     </message>
-    <message id="wallet-receive-text-online-time">
-        <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
-        <translation>För att transaktionen ska lyckas måste plånboken vara online inom 12 timmar efter Beam har skickats.</translation>
-    </message>
     <message id="send-confirmation-pwd-text-online-time">
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
         <translation>För att transaktionen skall gå igenom måste mottagaren komma online inom 12 timmar och du bör vara online inom 2 timmar efteråt.</translation>
@@ -1495,8 +1405,9 @@ please review your settings and try again</oldsource>
         <translation>Mottaget</translation>
     </message>
     <message id="settings-progress-na">
-        <source>You cannot disconnect wallet, edit seed phrase or change default
-fee while you have transactions in progress.</source>
+        <source>You can�t disconnect wallet, edit seed phrase or change default fee 
+while you have transactions in progress. Please wait untill 
+transactions are completed and try again.</source>
         <oldsource>You cannot disconnect wallet, edit seed phrase or change default
 fee while you have transactions in progress.</oldsource>
         <translation type="unfinished">You cannot disconnect wallet, edit seed phrase or change default\nfee while you have transactions in progress.</translation>
@@ -1557,8 +1468,9 @@ Please try again later or create an offer yourself.</oldsource>
         <translation>Ansluter...</translation>
     </message>
     <message id="swap-beta-connection-error">
-        <source>Cannot connect to peer. Please check the address and retry.</source>
-        <translation>Kan inte ansluta mot peer. Vänligen kontrollera adressen och försök igen.</translation>
+        <source>Cannot connect to peer. Please check the address in Settings and try again.</source>
+        <oldsource>Cannot connect to peer. Please check the address and retry.</oldsource>
+        <translation type="unfinished">Kan inte ansluta mot peer. Vänligen kontrollera adressen och försök igen.</translation>
     </message>
     <message id="swap-alert-confirm-button">
         <source>I understand</source>
@@ -1643,10 +1555,6 @@ Please try again later or create an offer yourself.</oldsource>
     <message id="swap-details-tx-fee-rate">
         <source>%1 Transaction fee rate</source>
         <translation>Transaktionsavgiftens kurs</translation>
-    </message>
-    <message id="settings-swap-disconnect">
-        <source>Disconnect</source>
-        <translation>Koppla från</translation>
     </message>
     <message id="settings-swap-bitcoin-node">
         <source>Bitcoin node</source>
@@ -1793,16 +1701,6 @@ Please check the swap token and try again.</oldsource>
         <extracomment>electrum settings, ask password to show seed phrase, dialog message</extracomment>
         <translation>Mata in ditt plånbokslösenord för att se seed phrase</translation>
     </message>
-    <message id="settings-swap-confirm-clear-seed-title">
-        <source>Clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
-        <translation>Rensa seed phrase</translation>
-    </message>
-    <message id="settings-swap-confirm-clear-seed-message">
-        <source>Enter your wallet password to clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
-        <translation>Mata in ditt plånbokslösenord för att rensa seed phrase</translation>
-    </message>
     <message id="wallet-receive-swap-your-token">
         <source>Your swap token</source>
         <translation type="unfinished">Your swap token</translation>
@@ -1828,10 +1726,6 @@ to complete.</oldsource>
     <message id="send-swap-token-hint">
         <source>Paste token here</source>
         <translation>Klistra in token här</translation>
-    </message>
-    <message id="settings-swap-connect">
-        <source>connect</source>
-        <translation>anslut</translation>
     </message>
     <message id="swap-tx-state-initial">
         <source>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</source>
@@ -1915,10 +1809,6 @@ to complete.</oldsource>
         <source>There is active transaction that uses this address, therefore the address expiration cannot be changed.</source>
         <translation type="unfinished">There is active transaction that uses this address, therefore the address expiration cannot be changed.</translation>
     </message>
-    <message id="select-server-automatically">
-        <source>Select server automatically</source>
-        <translation type="unfinished">Select server automatically</translation>
-    </message>
     <message id="settings-swap-seed-segwit-warning">
         <source>Segwit seed phrase is not supported yet.</source>
         <translation type="unfinished">Segwit seed phrase is not supported yet.</translation>
@@ -1979,15 +1869,18 @@ deploy the key at the node you trust completely.</translation>
         <translation type="unfinished">If the other side will not sign the transaction in %1, the offer will be canceled automatically.</translation>
     </message>
     <message id="swap-invalid-credentials-error">
-        <source>Invalid credentials</source>
+        <source>Cannot connect to node. Invalid credentials</source>
+        <oldsource>Invalid credentials</oldsource>
         <translation type="unfinished">Invalid credentials</translation>
     </message>
     <message id="swap-connection-error">
-        <source>Cannot connect to node</source>
-        <translation>Kunde inte ansluta till nod</translation>
+        <source>Cannot connect to node. Please check your network connection.</source>
+        <oldsource>Cannot connect to node</oldsource>
+        <translation type="unfinished">Kunde inte ansluta till nod</translation>
     </message>
     <message id="swap-invalid-genesis-block-error">
-        <source>Invalid genesis block</source>
+        <source>Cannot connect to node. Invalid genesis block</source>
+        <oldsource>Invalid genesis block</oldsource>
         <translation type="unfinished">Invalid genesis block</translation>
     </message>
     <message id="tx-state-initial-sender">
@@ -2016,14 +1909,6 @@ deploy the key at the node you trust completely.</translation>
         <source>Ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if unchecked</extracomment>
         <translation type="unfinished">Fråga efter lösenord för varje skickad transaktion</translation>
-    </message>
-    <message id="wallet-receive-your-token">
-        <source>Your receive token</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-regular-copy-token">
-        <source>Copy transaction token</source>
-        <translation type="unfinished"></translation>
     </message>
     <message id="tx-failure-kernel-min-height">
         <source>Kernel&apos;s min height is unacceptable</source>
@@ -2072,10 +1957,6 @@ deploy the key at the node you trust completely.</translation>
     <message id="settings-notifications-version">
         <source>Wallet update</source>
         <oldsource>Wallet version</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-notifications-news">
-        <source>News</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-notifications-tx-status">
@@ -2299,18 +2180,6 @@ deploy the key at the node you trust completely.</translation>
         <source>Error</source>
         <translation type="unfinished">Fel</translation>
     </message>
-    <message id="wallet-receive-my-addr-label">
-        <source>My address (auto-generated)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-addr-message-token">
-        <source>Send this token to the sender over an external secure channel or scan the QR code</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-copy-address">
-        <source>Copy transaction address</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
         <translation type="unfinished"></translation>
@@ -2350,10 +2219,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>12 hours</source>
         <translation type="unfinished">12 timmar</translation>
     </message>
-    <message id="settings-notifications-address-expiration">
-        <source>Address expiration</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
         <translation type="unfinished">Plånbok</translation>
@@ -2367,28 +2232,8 @@ Your version is: %2. Please, check for updates.</source>
         <oldsource>Connectivity</oldsource>
         <translation type="unfinished"></translation>
     </message>
-    <message id="settings-remove-wallet">
-        <source>Remove current wallet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-wallet-verification">
-        <source>Complete wallet verification</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-clear-local-data">
-        <source>Clear local wallet data</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="settings-get-beam">
         <source>Get Beams from Beam Community Faucet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-export">
-        <source>Export wallet data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-import">
-        <source>Import wallet data</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-privacy-title">
@@ -2397,34 +2242,6 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="settings-resources-title">
         <source>Resources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-keep-logs">
-        <source>Keep wallet logs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-logs-forever">
-        <source>For all time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-logs-6m">
-        <source>6 months</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-logs-3m">
-        <source>3 months</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-logs-1m">
-        <source>1 month</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-logs-1w">
-        <source>1 week</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-logs-1d">
-        <source>1 day</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-utilities-title">
@@ -2465,6 +2282,257 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="open-show-wallet-button-hw">
         <source>Show my wallet with Trezor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="overtop-beam-supply">
+        <source>Amount overtop total Beam supply.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="specific_node">
+        <source>Specific node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="random_node">
+        <source>Random node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-confirmation-identity-label">
+        <source>Identity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-max-privacy-note">
+        <source>Transaction is slower, receiver pays fees.</source>
+        <oldsource>Transaction is slower, fees are higher.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="can-not-generate-new-address-message">
+        <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-title">
+        <source>Receive</source>
+        <translation type="unfinished">Ta emot</translation>
+    </message>
+    <message id="wallet-receive-token-for-wallet">
+        <source>(for wallet)</source>
+        <oldsource>For wallet</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-addr-message">
+        <source>To spend the received Max privacy coins the min transaction fee will be 1200000 GROTH.</source>
+        <oldsource>To spend the received Max privacy coins the min transaction fee will be 1200000 GROTH</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-text-online-time">
+        <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="show-token">
+        <source>Show token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-copy-and-close">
+        <source>Copy and close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-token-for-exchange">
+        <source>(for exchange or mining pool)</source>
+        <oldsource>For exchange or mining pool</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-title">
+        <source>Transaction token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-transaction-type">
+        <source>Transaction type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-address">
+        <source>Address</source>
+        <translation type="unfinished">Adress</translation>
+    </message>
+    <message id="token-info-token">
+        <source>Token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-copy-token">
+        <source>Copy token</source>
+        <translation type="unfinished">Kopiera token</translation>
+    </message>
+    <message id="general-transaction-info">
+        <source>Transaction info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="receive-request">
+        <source>Request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-one-time">
+        <source>One-time use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-permanent">
+        <source>Permanent token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-regular">
+        <source>Regular</source>
+        <translation type="unfinished">Reguljär</translation>
+    </message>
+    <message id="tx-max-privacy">
+        <source>Max privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-non-interactive">
+        <source>Non-interactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-exchanges-not-supported2">
+        <source>Exchanges or mining pools support only regular transaction now.</source>
+        <oldsource>Non-interactive transaction is not supported by exchanges or mining pools yet.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-exchanges-one-time-not-supported">
+        <source>Exchanges or mining pools support only permanent token now.</source>
+        <oldsource>One-time uses token is not supported by exchanges or mining pools yet. Please switch to the permanent.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-non-int-note">
+        <source>Token good for 20 transactions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-save">
+        <source>save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="save-contact-title">
+        <source>Do you want to name the contact?</source>
+        <oldsource>Name the contact</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="switch-permanent">
+        <source>Switch to permanent token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="switch-regular">
+        <source>Switch to regular transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="contact-name-prompt">
+        <source>Enter the name to this contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="receive-request-optional">
+        <source>(optional)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="save-address-no-name">
+        <source>No name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-online-token">
+        <source>Online token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-offline-token">
+        <source>Offline token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="error-peer-exists">
+        <source>Peer already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-table-cm-receive">
+        <source>receive</source>
+        <extracomment>Entry in address table context menu to get receive token</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="format-small-amount">
+        <source>&lt; 1 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="format-amount">
+        <source>%1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="save-address-title">
+        <source>Do you want to name the contact?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-title">
+        <source>Send</source>
+        <translation type="unfinished">Skicka</translation>
+    </message>
+    <message id="send-contact-placeholder">
+        <source>Paste recipient token here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-invalid-address-or-token">
+        <source>Invalid wallet address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-permanent-note">
+        <source>Permanent token (you can save it to contacts after send).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-one-time-note">
+        <source>One-time use token (expire in 2 hours after succesfull transaction).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-max-privacy">
+        <source>Max privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-max-privacy-note-token">
+        <source>Receiver requested Max privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-founds-fail">
+        <source>Insufficient funds: you would need %1 to complete the transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="max-pivacy-fee-fail">
+        <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-amount-label">
+        <source>Amount to send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-remaining-label">
+        <source>Remaining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-regular-fee">
+        <source>Fee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-clear">
+        <source>clear</source>
+        <oldsource>disconnect</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-confirm-clear-seed-title">
+        <source>Clear seed phrase</source>
+        <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-confirm-clear-seed-message">
+        <source>Enter your wallet password to clear seed phrase</source>
+        <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-connect-to-electrum">
+        <source>connect to electrum node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-connect-to-node">
+        <source>connect to node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-disconnect">
+        <source>disconnect</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
