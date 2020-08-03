@@ -558,7 +558,7 @@ ColumnLayout {
                         if (viewModel.isPermanentAddress && !viewModel.hasAddress) {
                             // TODO: uncomment when UX will be ready
                             //saveAddressDialog.open();
-                            viewModel.saveReceiverAddress(viewModel.comment);
+                            //viewModel.saveReceiverAddress(viewModel.comment);
                             viewModel.sendMoney();
                         } else {
                             viewModel.sendMoney();
