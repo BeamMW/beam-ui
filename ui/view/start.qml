@@ -2167,7 +2167,7 @@ Item
 
                             Row {
                                 Layout.alignment: Qt.AlignHCenter
-                                Layout.topMargin: 18
+                                Layout.topMargin: Utils.isSqueezedHeight(openColumn.height) ? 8 : 18
                                 Layout.preferredHeight: 38
                                 spacing:          20
                                 

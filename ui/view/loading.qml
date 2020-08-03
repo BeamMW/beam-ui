@@ -221,7 +221,7 @@ Item
                         Layout.fillHeight: true
                         Layout.minimumHeight: {
                             if (Utils.isSqueezedHeight(rootLoading.height))
-                                return isRecoveryMode ? 27 : 47;
+                                return isRecoveryMode ? 37 : 57;
                             else
                                 return isRecoveryMode ? 47 : 67;
                         }
