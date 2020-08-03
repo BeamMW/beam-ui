@@ -180,7 +180,7 @@ SettingsFoldable {
         function restore() {
             isSeedChanged = false
             addressElectrum = initialAddress
-            porttElectrum = initialPort
+            portElectrum = initialPort
             useRandomElectrumNode = initialRandomNode
             control.restoreSeedElectrum()
         }
@@ -224,44 +224,6 @@ SettingsFoldable {
         internalNode.save();
         internalElectrum.save();
     }
-
-    /*
-    headerContent: RowLayout {
-        LinkButton {
-            Layout.alignment: Qt.AlignVCenter
-            linkStyle: "<style>a:link {color: '#f9605b'; text-decoration: none;}</style>"
-            //% "Clear"
-            text:       qsTrId("settings-reset")
-            visible:    canClear()
-            onClicked:  {
-                if (editElectrum) {
-                    //: electrum settings, ask password to clear seed phrase, dialog title
-                    //% "Clear seed phrase"
-                    confirmPasswordDialog.dialogTitle = qsTrId("settings-swap-confirm-clear-seed-title");
-                    //: electrum settings, ask password to clear seed phrase, dialog message
-                    //% "Enter your wallet password to clear seed phrase"
-                    confirmPasswordDialog.dialogMessage = qsTrId("settings-swap-confirm-clear-seed-message");
-                    confirmPasswordDialog.onDialogAccepted = function() {
-                        clear();
-                    };
-                    confirmPasswordDialog.open();
-                } else {
-                    clear();
-                }
-            }
-        }
-
-
-        LinkButton {
-            Layout.alignment: Qt.AlignVCenter
-            linkStyle: "<style>a:link {color: '#f9605b'; text-decoration: none;}</style>"
-            //% "Disconnect"
-            text:       qsTrId("settings-swap-disconnect")
-            visible:    canDisconnect()
-            onClicked:  disconnect()
-        }
-    }
-    */
 
     content: ColumnLayout {
         spacing: 0

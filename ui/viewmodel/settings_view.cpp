@@ -429,7 +429,10 @@ void SwapCoinSettingsItem::setSelectServerAutomatically(bool value)
         m_selectServerAutomatically = value;
         emit selectServerAutomaticallyChanged();
 
-        if (!m_selectServerAutomatically)
+        setNodeAddressElectrum("");
+        setNodePortElectrum("");
+
+        /*if (!m_selectServerAutomatically)
         {
             setNodeAddressElectrum("");
             setNodePortElectrum("");
@@ -442,7 +445,7 @@ void SwapCoinSettingsItem::setSelectServerAutomatically(bool value)
             {
                 applyNodeAddressElectrum(str2qstr(options.m_address));
             }
-        }
+        }*/
     }
 }
 
@@ -511,6 +514,7 @@ QString SwapCoinSettingsItem::getConnectionStatus() const
         case Client::Status::Uninitialized:
             return "uninitialized";
             
+        case Client::Status::Initialized:
         case Client::Status::Connecting:
             return "disconnected";
 
@@ -762,13 +766,16 @@ std::vector<std::string> SwapCoinSettingsItem::GetSeedPhraseFromSeedItems() cons
     assert(static_cast<size_t>(m_seedPhraseItems.size()) == WORD_COUNT);
 
     std::vector<std::string> seedElectrum;
-    seedElectrum.reserve(WORD_COUNT);
 
     for (const auto phraseItem : m_seedPhraseItems)
     {
         auto item = static_cast<ElectrumPhraseItem*>(phraseItem);
         auto word = item->getPhrase().toStdString();
-        seedElectrum.push_back(word);
+
+        // TODO need to wath this code. fixed ui bug #58
+        // secret word can not empty
+        if (!word.empty())
+            seedElectrum.push_back(word);
     }
 
     return seedElectrum;
