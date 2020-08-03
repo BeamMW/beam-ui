@@ -40,7 +40,7 @@ ColumnLayout {
     }
 
     TokenInfoDialog {
-        id:     tokenInfoDialog;
+        id:     tokenInfoDialog
         token:  viewModel.receiverTA
     }
 

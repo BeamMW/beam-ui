@@ -33,6 +33,13 @@ ColumnLayout {
         }
     }
 
+    SwapTokenInfoDialog {
+        id:             tokenInfoDialog
+        token:          viewModel.transactionToken
+        expirationTime: expiresCombo.displayText
+        rate:           rateStart.text + " " + rateInput.text + " " + rateEnd.text
+    }
+
     function isValid () {
         if (!viewModel.commentValid) return false;
         if (viewModel.receiveCurrency == viewModel.sentCurrency) return false;
@@ -545,6 +552,7 @@ please review your settings and try again"
                                     }
 
                                     SFText {
+                                        id:               rateStart
                                         font.pixelSize:   14
                             color:            rateRow.rateValid ? Style.content_secondary : Style.validator_error
                                         text:             viewModel.isSendBeam
@@ -602,6 +610,7 @@ please review your settings and try again"
                                     }
 
                                     SFText {
+                                        id:              rateEnd
                                         font.pixelSize:  14
                                         color:           rateRow.rateValid ? Style.content_main : Style.validator_error
                                         text:            viewModel.isSendBeam ? receiveAmountInput.currencyLabel : sentAmountInput.currencyLabel
@@ -643,7 +652,7 @@ please review your settings and try again"
                                         text: qsTrId("show-token")
                                         linkColor: Style.accent_incoming
                                         onClicked: {
-                                            //infoDialog.open();
+                                            tokenInfoDialog.open();
                                         }
                                     }
                                 }

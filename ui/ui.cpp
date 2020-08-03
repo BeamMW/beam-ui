@@ -29,6 +29,7 @@
 #include "viewmodel/utxo/utxo_view_status.h"
 #include "viewmodel/utxo/utxo_view_type.h"
 #include "viewmodel/atomic_swap/swap_offers_view.h"
+#include "viewmodel/atomic_swap/swap_token_item.h"
 #include "viewmodel/address_book_view.h"
 #include "viewmodel/wallet/wallet_view.h"
 #include "viewmodel/wallet/token_item.h"
@@ -247,6 +248,7 @@ int main (int argc, char* argv[])
             qmlRegisterType<WalletDBPathItem>("Beam.Wallet", 1, 0, "WalletDBPathItem");
             qmlRegisterType<SwapOfferItem>("Beam.Wallet", 1, 0, "SwapOfferItem");
             qmlRegisterType<SwapOffersList>("Beam.Wallet", 1, 0, "SwapOffersList");
+            qmlRegisterType<SwapTokenInfoItem>("Beam.Wallet", 1, 0, "SwapTokenInfoItem");
             qmlRegisterType<SwapTxObjectList>("Beam.Wallet", 1, 0, "SwapTxObjectList");
             qmlRegisterType<TxObjectList>("Beam.Wallet", 1, 0, "TxObjectList");
             qmlRegisterType<TokenInfoItem>("Beam.Wallet", 1, 0, "TokenInfoItem");

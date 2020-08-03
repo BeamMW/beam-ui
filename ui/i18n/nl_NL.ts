@@ -1177,10 +1177,6 @@ Update your settings and try again.</oldsource>
         <source>Exchange rate</source>
         <translation>Wisselkoers</translation>
     </message>
-    <message id="wallet-swap-token-message">
-        <source>Send this token to the sender over a secure external channel</source>
-        <translation>Stuur deze token naar de afzender via een extern beveiligd kanaal</translation>
-    </message>
     <message id="wallet-receive-swap-publish">
         <source>publish offer</source>
         <translation>publiceer transactietoken</translation>
@@ -1700,10 +1696,6 @@ Please check the swap token and try again.</oldsource>
         <source>Enter your wallet password to see the phrase</source>
         <extracomment>electrum settings, ask password to show seed phrase, dialog message</extracomment>
         <translation>Voer uw wallet wachtwoord in om de herstelzin te bekijken</translation>
-    </message>
-    <message id="wallet-receive-swap-your-token">
-        <source>Your swap token</source>
-        <translation>Uw swap token</translation>
     </message>
     <message id="send-swap-confirmation-title">
         <source>Confirm atomic swap</source>
@@ -2531,6 +2523,10 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="settings-swap-disconnect">
         <source>disconnect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-expiration-time">
+        <source>Expiration time</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

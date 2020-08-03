@@ -117,6 +117,7 @@ set(UI_SRC
     viewmodel/atomic_swap/swap_tx_object.cpp
     viewmodel/atomic_swap/swap_tx_object_list.cpp
     viewmodel/atomic_swap/swap_offers_view.cpp
+    viewmodel/atomic_swap/swap_token_item.cpp
     viewmodel/start_view.h
     viewmodel/start_view.cpp
     viewmodel/loading_view.h
