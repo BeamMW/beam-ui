@@ -167,6 +167,7 @@ Item
                 property Item defaultFocusItem: createNewWallet
 
                 ColumnLayout {
+                    id: startColumn
                     anchors.fill: parent
                     spacing: 0
                     Item {
@@ -176,6 +177,7 @@ Item
                     LogoComponent {
                         id: logoComponent
                         Layout.alignment: Qt.AlignHCenter
+                        isSqueezedHeight: Utils.isSqueezedHeight(startColumn.height)
                     }
 
                     Item {
@@ -299,6 +301,7 @@ Item
                 property Item defaultFocusItem: startMigration
 
                 ColumnLayout {
+                    id: migrateColumn
                     anchors.fill: parent
                     spacing: 0
                     Item {
@@ -308,6 +311,7 @@ Item
                     LogoComponent {
                         id: logoComponent
                         Layout.alignment: Qt.AlignHCenter
+                        isSqueezedHeight: Utils.isSqueezedHeight(migrateColumn.height)
                     }
 
                     Item {
