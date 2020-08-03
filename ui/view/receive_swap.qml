@@ -487,18 +487,22 @@ please review your settings and try again"
                                 rowSpacing:          20
                                 columns:             2
 
+                                property bool showEstimatedFee: viewModel.receiveCurrency != Currency.CurrBeam
+
                                 SFText {
                                     Layout.alignment:       Qt.AlignTop
                                     font.pixelSize:         14
                                     color:                  Style.content_secondary
                                     text:                   receiveAmountInput.getTotalFeeTitle() + ":"
+                                    visible:                parent.showEstimatedFee
                                 }
     
                                 SFText {
                                     id:               offered
                                     font.pixelSize:   14
                                     color:            Style.content_main
-                                    text:             receiveAmountInput.getTotalFeeAmount()
+                                    text:             BeamGlobals.calcTotalFee(viewModel.receiveCurrency, viewModel.receiveFee)
+                                    visible:          parent.showEstimatedFee
                                 }
 
                                 SFText {
@@ -510,8 +514,8 @@ please review your settings and try again"
                                 }
 
                                 RowLayout {
-                                    id: rateRow
-                                    Layout.fillWidth: true
+                                    id:                     rateRow
+                                    Layout.fillWidth:       true
 
                                     property double maxAmount: parseFloat(Utils.maxAmount)
                                     property double minAmount: parseFloat(Utils.minAmount)
