@@ -45,8 +45,8 @@ ColumnLayout {
         
         SFText {
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            color:              Style.content_main
+            anchors.verticalCenter:   parent.verticalCenter
+            color:                    Style.content_main
             font {
                 styleName:      "Bold"
                 weight:         Font.Bold
@@ -110,7 +110,7 @@ ColumnLayout {
                             font.pixelSize:   12
                             font.italic:      true
                             visible:          !isValid
-                                //% "Invalid swap token"
+                            //% "Invalid swap token"
                             text:             qsTrId("wallet-send-invalid-token")
                         }
                     }

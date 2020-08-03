@@ -12,6 +12,8 @@ Dialog {
     property alias token:           viewModel.token
     property alias expirationTime:  viewModel.expirationTime
     property string rate:           ""
+    property string offered:        ""
+    property string expires:        ""
     
     SwapTokenInfoItem {
         id:     viewModel
@@ -139,7 +141,46 @@ Dialog {
                 onCopyText:             BeamGlobals.copyToClipboard(text)
                 visible:                viewModel.expirationTime.length
             }
+
+            // Offered on:
+            SFText {
+                Layout.alignment:       Qt.AlignTop
+                font.pixelSize:         14
+                color:                  Style.content_disabled
+                text:                   qsTrId("wallet-send-swap-offered-label") + ":"
+                visible:                offered.length
+            }
             
+            SFLabel {
+                Layout.fillWidth:       true
+                copyMenuEnabled:        true
+                wrapMode:               Text.Wrap
+                font.pixelSize:         14
+                color:                  Style.content_main
+                text:                   offered
+                onCopyText:             BeamGlobals.copyToClipboard(text)
+                visible:                offered.length
+            }
+            
+            // Expires on:
+            SFText {
+                Layout.alignment:       Qt.AlignTop
+                font.pixelSize:         14
+                color:                  Style.content_disabled
+                text:                   qsTrId("wallet-send-swap-expires-label") + ":"
+                visible:                expires.length
+            }
+            
+            SFLabel {
+                Layout.fillWidth:       true
+                copyMenuEnabled:        true
+                wrapMode:               Text.Wrap
+                font.pixelSize:         14
+                color:                  Style.content_main
+                text:                   expires
+                onCopyText:             BeamGlobals.copyToClipboard(text)
+                visible:                expires.length
+            }
             
             // Token
             SFText {

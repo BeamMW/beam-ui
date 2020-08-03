@@ -466,7 +466,9 @@ please review your settings and try again"
                             onIsReceiveFeeOKChanged: receiveAmountInput.error = receiveAmountInput.getErrorText()
                         }
                     }
-
+                    //
+                    // Summary pane
+                    //
                     Pane {
                         Layout.fillWidth:        true
                         padding:                 20
@@ -554,7 +556,7 @@ please review your settings and try again"
                                     SFText {
                                         id:               rateStart
                                         font.pixelSize:   14
-                            color:            rateRow.rateValid ? Style.content_secondary : Style.validator_error
+                                        color:            rateRow.rateValid ? Style.content_secondary : Style.validator_error
                                         text:             viewModel.isSendBeam
                                             ? ["1", sentAmountInput.currencyLabel, "="].join(" ")
                                             : ["1", receiveAmountInput.currencyLabel, "="].join(" ") 

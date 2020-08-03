@@ -38,8 +38,8 @@ T.TextField {
     property alias underlineVisible : backgroundRect.visible
     backgroundColor: Style.content_main
 
-	selectByMouse: true
-	
+    selectByMouse: true
+
     PlaceholderText {
         id:                  placeholder
         x:                   control.leftPadding
@@ -60,11 +60,11 @@ T.TextField {
     }
 
     background: Rectangle {
-	    id: backgroundRect
+        id: backgroundRect
         y: control.height - height - control.bottomPadding + 4
         width: control.width - (control.leftPadding + control.rightPadding)
         height: control.activeFocus || control.hovered ? 1 : 1
-		opacity: (control.activeFocus || control.hovered)? 0.3 : 0.1
+        opacity: (control.activeFocus || control.hovered)? 0.3 : 0.1
     }
 
     MouseArea {
@@ -92,7 +92,7 @@ T.TextField {
             //% "Copy"
             text: qsTrId("general-copy")
             icon.source: "qrc:/assets/icon-copy.svg"
-            enabled: control.enabled && (control.echoMode === TextInput.Normal)
+            enabled: control.enabled && (control.echoMode === TextInput.Normal) && control.text.length
             onTriggered: {
                 if (control.selectedText.length > 0) {
                     control.copy();
