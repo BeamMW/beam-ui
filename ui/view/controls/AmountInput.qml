@@ -196,16 +196,8 @@ ColumnLayout {
     }
 
     //
-    // Exchange rate
+    // Second currency
     //
-    SFText {
-        id:              errmsg
-        color:           Style.validator_error
-        font.pixelSize:  12
-        font.styleName:  "Italic"
-        width:           parent.width
-        visible:         error.length
-    }
     SFText {
         id:             amountSecondCurrencyText
         visible:        control.showSecondCurrency && !errmsg.visible && !showTotalFee  // show only on send side
@@ -217,6 +209,19 @@ ColumnLayout {
                         //% "Exchange rate to %1 is not available"
                         : qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
     }
+
+    //
+    // error
+    //
+    SFText {
+        id:              errmsg
+        color:           Style.validator_error
+        font.pixelSize:  14
+        font.italic:     true
+        width:           parent.width
+        visible:         error.length
+    }
+
 
     //
     // Fee

@@ -72,20 +72,6 @@ ColumnLayout {
             }
         }
 
-
-        SFText {
-            id: minimumFeeNotification
-            text:            minimumFeeNotificationText.length ?
-                                minimumFeeNotificationText :
-                                //% "The minimum fee is %1 %2"
-                                qsTrId("general-fee-fail").arg(Utils.uiStringToLocale(control.minFee)).arg(control.feeLabel)
-            color:           Style.validator_error
-            font.pixelSize:  12
-            font.styleName:  "Italic"
-            Layout.fillWidth: true
-            wrapMode:        Text.WordWrap
-            visible:         !control.isValid
-        }
         SFText {
             id:               feeInSecondCurrency
             visible:          !minimumFeeNotification.visible && control.showSecondCurrency
@@ -98,4 +84,18 @@ ColumnLayout {
                                 : qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
         }
 
+
+        SFText {
+            id: minimumFeeNotification
+            text:             minimumFeeNotificationText.length ?
+                                 minimumFeeNotificationText :
+                                 //% "The minimum fee is %1 %2"
+                                 qsTrId("general-fee-fail").arg(Utils.uiStringToLocale(control.minFee)).arg(control.feeLabel)
+            color:            Style.validator_error
+            font.pixelSize:   14
+            font.italic:      true
+            Layout.fillWidth: true
+            wrapMode:         Text.WordWrap
+            visible:          !control.isValid
+        }
 }

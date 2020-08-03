@@ -330,16 +330,16 @@ please review your settings and try again"
                 Rectangle {
                     Layout.alignment:       Qt.AlignTop
                     Layout.topMargin:       60
-                    Layout.leftMargin:      -13
-                    Layout.rightMargin:     -13
-                    Layout.preferredHeight: 26
-                    Layout.preferredWidth:  26
+                    Layout.leftMargin:      -12
+                    Layout.rightMargin:     -12
+                    Layout.preferredHeight: 24
+                    Layout.preferredWidth:  24
                     color:                  Style.background_main
                     z:                      1
-                    radius:                 13
+                    radius:                 12
                     SvgImage {                 
-                        Layout.maximumHeight: 26
-                        Layout.maximumWidth:  26                    
+                        Layout.maximumHeight: 24
+                        Layout.maximumWidth:  24
                         source: "qrc:/assets/icon-swap-currencies.svg"
                         MouseArea {
                             anchors.fill: parent
@@ -394,7 +394,7 @@ please review your settings and try again"
                             resetAmount:                false
                             currColor:                  currencyError() || !BeamGlobals.canReceive(currency) ? Style.validator_error : Style.content_main
                             error:                      getErrorText()
-//                            showTotalFee:               true
+                            showTotalFee:               true
 
                             function getErrorText() {
                                 if(!BeamGlobals.canReceive(currency)) {
@@ -491,6 +491,20 @@ please review your settings and try again"
                                     Layout.alignment:       Qt.AlignTop
                                     font.pixelSize:         14
                                     color:                  Style.content_secondary
+                                    text:                   receiveAmountInput.getTotalFeeTitle() + ":"
+                                }
+    
+                                SFText {
+                                    id:               offered
+                                    font.pixelSize:   14
+                                    color:            Style.content_main
+                                    text:             receiveAmountInput.getTotalFeeAmount()
+                                }
+
+                                SFText {
+                                    Layout.alignment:       Qt.AlignTop
+                                    font.pixelSize:         14
+                                    color:                  Style.content_secondary
                                     //% "Exchange rate"
                                     text:                   qsTrId("general-rate") + ":"
                                 }
@@ -556,7 +570,7 @@ please review your settings and try again"
                                     SFText {
                                         id:               rateStart
                                         font.pixelSize:   14
-                                        color:            rateRow.rateValid ? Style.content_secondary : Style.validator_error
+                                        color:            rateRow.rateValid ? Style.content_main : Style.validator_error
                                         text:             viewModel.isSendBeam
                                             ? ["1", sentAmountInput.currencyLabel, "="].join(" ")
                                             : ["1", receiveAmountInput.currencyLabel, "="].join(" ") 
@@ -584,8 +598,8 @@ please review your settings and try again"
                                             notation: DoubleValidator.StandardNotation
                                         }
 
-                                        onFocusChanged: {
-                                            text = rate == "0" ? "" : (rateInput.focus ? rate : Utils.uiStringToLocale(Utils.localeDecimalToCString(rate)));
+                                        onActiveFocusChanged: {
+                                            text = rate == "0" ? "" : (rateInput.activeFocus ? rate : Utils.uiStringToLocale(Utils.localeDecimalToCString(rate)));
                                         }
 
                                         onTextEdited: {
