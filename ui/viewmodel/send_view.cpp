@@ -42,6 +42,7 @@ SendViewModel::SendViewModel()
     , _walletModel(*AppModel::getInstance().getWallet())
 {
     connect(&_walletModel, &WalletModel::changeCalculated, this, &SendViewModel::onChangeCalculated);
+    connect(&_walletModel, &WalletModel::needExtractShieldedCoins, this, &SendViewModel::needExtractShieldedCoins);
     connect(&_walletModel, SIGNAL(sendMoneyVerified()), this, SIGNAL(sendMoneyVerified()));
     connect(&_walletModel, SIGNAL(cantSendToExpired()), this, SIGNAL(cantSendToExpired()));
     connect(&_walletModel, SIGNAL(availableChanged()), this, SIGNAL(availableChanged()));
@@ -60,7 +61,7 @@ void SendViewModel::setFeeGrothes(unsigned int value)
     if (value != _feeGrothes)
     {
         _feeGrothes = value;
-        _walletModel.getAsync()->calcChange(calcTotalAmount());
+        _walletModel.getAsync()->calcChangeConsideringShielded(calcTotalAmount());
         emit feeGrothesChanged();
         emit canSendChanged();
     }
@@ -93,7 +94,7 @@ void SendViewModel::setSendAmount(QString value)
     {
         _sendAmountGrothes = amount;
         LOG_DEBUG() << "Send amount: " << _sendAmountGrothes << " Coins: " << (long double)_sendAmountGrothes / beam::Rules::Coin;
-        _walletModel.getAsync()->calcChange(calcTotalAmount());
+        _walletModel.getAsync()->calcChangeConsideringShielded(calcTotalAmount());
         emit sendAmountChanged();
         emit canSendChanged();
     }
@@ -167,7 +168,6 @@ void SendViewModel::setIsShieldedTx(bool value)
     {
         _isShieldedTx = value;
         emit isShieldedTxChanged();
-        setFeeGrothes(QMLGlobals::getMinimalFee(Currency::CurrBeam, isShieldedTx()));
     }
 }
 
@@ -245,6 +245,14 @@ void SendViewModel::onChangeCalculated(beam::Amount change)
     emit isEnoughChanged();
 }
 
+void SendViewModel::needExtractShieldedCoins(bool val)
+{
+    if (val != _isNeedExtractShieldedCoins)
+        _isNeedExtractShieldedCoins = val;
+    emit isNeedExtractShieldedCoinsChanged();
+    emit canSendChanged();
+}
+
 void SendViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address)
 {
     if (id == _receiverWalletID && address)
@@ -284,7 +292,7 @@ bool SendViewModel::canSend() const
 {
     return !QMLGlobals::isSwapToken(_receiverTA) && getRreceiverTAValid()
            && _sendAmountGrothes > 0 && isEnough()
-           && QMLGlobals::isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx());
+           && QMLGlobals::isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins);
 }
 
 bool SendViewModel::isToken() const
@@ -500,6 +508,11 @@ QString SendViewModel::getSecondCurrencyRateValue() const
 {
     auto rate = _exchangeRatesManager.getRate(beam::wallet::ExchangeRate::Currency::Beam);
     return beamui::AmountToUIString(rate);
+}
+
+bool SendViewModel::isNeedExtractShieldedCoins() const
+{
+    return _isNeedExtractShieldedCoins;
 }
 
 bool SendViewModel::isTokenGeneratebByNewAppVersion() const

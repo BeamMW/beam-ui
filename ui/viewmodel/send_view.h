@@ -50,6 +50,7 @@ class SendViewModel: public QObject
 
     Q_PROPERTY(bool     isTokenGeneratebByNewAppVersion      READ isTokenGeneratebByNewAppVersion      NOTIFY tokenGeneratebByNewAppVersion)
     Q_PROPERTY(QString  tokenGeneratebByNewAppVersionMessage READ tokenGeneratebByNewAppVersionMessage NOTIFY tokenGeneratebByNewAppVersion)
+    Q_PROPERTY(bool     isNeedExtractShieldedCoins           READ isNeedExtractShieldedCoins           NOTIFY isNeedExtractShieldedCoinsChanged)
 
 public:
     SendViewModel();
@@ -94,6 +95,8 @@ public:
     QString getSecondCurrencyLabel() const;
     QString getSecondCurrencyRateValue() const;
 
+    bool isNeedExtractShieldedCoins() const;
+
     bool isTokenGeneratebByNewAppVersion() const;
     QString tokenGeneratebByNewAppVersionMessage() const;
     bool hasAddress() const;
@@ -125,9 +128,11 @@ signals:
     void tokenGeneratebByNewAppVersion();
     void isTokenChanged();
     void hasAddressChanged();
+    void isNeedExtractShieldedCoinsChanged();
 
 public slots:
     void onChangeCalculated(beam::Amount change);
+    void needExtractShieldedCoins(bool val);
     void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address);
 
 private:
@@ -157,4 +162,5 @@ private:
     beam::wallet::TxParameters _txParameters;
 
     QString _tokenGeneratebByNewAppVersionMessage = "";
+    bool _isNeedExtractShieldedCoins = false;
 };

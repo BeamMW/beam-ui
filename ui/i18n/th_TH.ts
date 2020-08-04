@@ -2529,5 +2529,9 @@ Your version is: %2. Please, check for updates.</source>
         <source>Expiration time</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-send-need-extract-shielded-note">
+        <source>Transaction is slower, fees are higher.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

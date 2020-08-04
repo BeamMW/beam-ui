@@ -58,6 +58,7 @@ signals:
     void transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items);
     void syncProgressUpdated(int done, int total);
     void changeCalculated(beam::Amount change);
+    void needExtractShieldedCoins(bool val);
     void allUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
     void addressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>& addresses);
     void addressesChanged(bool own, const std::vector<beam::wallet::WalletAddress>& addresses);
@@ -96,6 +97,7 @@ private:
     void onTxStatus(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items) override;
     void onSyncProgressUpdated(int done, int total) override;
     void onChangeCalculated(beam::Amount change) override;
+    void onNeedExtractShieldedCoins(bool val) override;
     void onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos) override;
     void onAddressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>& items) override;
     void onAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addrs) override;

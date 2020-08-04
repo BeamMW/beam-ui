@@ -318,6 +318,18 @@ ColumnLayout {
                                 text:               qsTrId("wallet-send-max-privacy-note")
                                 visible:            viewModel.isShieldedTx
                             }
+                            SFText {
+                                height: 16
+                                Layout.alignment:   Qt.AlignTop
+                                Layout.topMargin:   10
+                                id:                 needExtractShieldedNote
+                                color:              Style.content_secondary
+                                font.italic:        true
+                                font.pixelSize:     14
+                                //% "Transaction is slower, fees are higher."
+                                text:               qsTrId("wallet-send-need-extract-shielded-note")
+                                visible:            viewModel.isNeedExtractShieldedCoins && !viewModel.isShieldedTx
+                            }
                         }
                     }
 
@@ -354,6 +366,7 @@ ColumnLayout {
                     // Fee
                     //
                     FoldablePanel {
+                        id: foldableFee
                         //% "Fee"
                         title:                   qsTrId("send-regular-fee")
                         Layout.fillWidth:        true
@@ -361,7 +374,7 @@ ColumnLayout {
                         content: FeeInput {
                             id:                         feeInput
                             fee:                        viewModel.feeGrothes
-                            minFee:                     BeamGlobals.getMinimalFee(Currency.CurrBeam, viewModel.isShieldedTx)
+                            minFee:                     BeamGlobals.getMinimalFee(Currency.CurrBeam, viewModel.isShieldedTx || viewModel.isNeedExtractShieldedCoins)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(Currency.CurrBeam)
                             color:                      Style.accent_outgoing
                             readOnly:                   false
@@ -370,7 +383,7 @@ ColumnLayout {
                             isExchangeRateAvailable:    sendAmountInput.isExchangeRateAvailable
                             secondCurrencyAmount:       getFeeInSecondCurrency(viewModel.fee)
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                            minimumFeeNotificationText: viewModel.isShieldedTx ?
+                            minimumFeeNotificationText: viewModel.isShieldedTx || viewModel.isNeedExtractShieldedCoins ?
                                 //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
                                 qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
                                 ""
@@ -386,6 +399,18 @@ ColumnLayout {
                             target: viewModel
                             onFeeGrothesChanged: {
                                 feeInput.fee = viewModel.feeGrothes;
+                            }
+                            onIsNeedExtractShieldedCoinsChanged: {
+                                if (foldableFee.folded)
+                                    feeInput.fee = BeamGlobals.getMinimalFee(Currency.CurrBeam, viewModel.isShieldedTx ||
+                                                                                                viewModel.isNeedExtractShieldedCoins);
+                                if (viewModel.isNeedExtractShieldedCoins)
+                                    foldableFee.folded = false;
+                            }
+
+                            onIsShieldedTxChanged: {
+                                feeInput.fee = BeamGlobals.getMinimalFee(Currency.CurrBeam, viewModel.isShieldedTx ||
+                                                                                            viewModel.isNeedExtractShieldedCoins);
                             }
                         }
                     }
