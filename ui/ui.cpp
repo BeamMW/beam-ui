@@ -105,7 +105,7 @@ int main (int argc, char* argv[])
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
     block_sigpipe();
-
+    //QLoggingCategory::setFilterRules(QStringLiteral("qt.qml.binding.removal.info=true"));
     QApplication app(argc, argv);
 
 	app.setWindowIcon(QIcon(Theme::iconPath()));

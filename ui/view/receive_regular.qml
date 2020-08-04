@@ -380,7 +380,6 @@ ColumnLayout {
                         headerText:         qsTrId("wallet-receive-token-for-exchange")
                         visible:            disabledLabel.text.length > 0
                         content: ColumnLayout {
-                            anchors.fill:   parent
                             spacing:        20
                             SFText {
                                 id:                     disabledLabel
