@@ -394,6 +394,7 @@ please review your settings and try again"
                             currColor:                  currencyError() || !BeamGlobals.canReceive(currency) ? Style.validator_error : Style.content_main
                             error:                      getErrorText()
                             showTotalFee:               true
+                            showSecondCurrency:         sentAmountInput.showSecondCurrency
 
                             function getErrorText() {
                                 if(!BeamGlobals.canReceive(currency)) {
@@ -629,10 +630,10 @@ please review your settings and try again"
                                     }
 
                                     SFText {
-                                        id:              rateEnd
-                                        font.pixelSize:  14
-                                        color:           rateRow.rateValid ? Style.content_main : Style.validator_error
-                                        text:            viewModel.isSendBeam ? receiveAmountInput.currencyLabel : sentAmountInput.currencyLabel
+                                        id:               rateEnd
+                                        font.pixelSize:   14
+                                        color:            rateRow.rateValid ? Style.content_main : Style.validator_error
+                                        text:             viewModel.isSendBeam ? receiveAmountInput.currencyLabel : sentAmountInput.currencyLabel
                                     }
                                     Item {
                                         Layout.leftMargin: rateInput.x

@@ -31,9 +31,8 @@ ColumnLayout {
                 Layout.fillWidth:      control.fillWidth && control.underlineVisible && !control.readOnly
                 Layout.preferredWidth: inputPreferredWidth
                 font.pixelSize:        14
-                font.styleName:        "Light"
-                font.weight:           Font.Light
-                font.italic:           !isValid
+                font.styleName:        "Regular"
+                font.weight:           Font.Normal
                 color:                 isValid ? control.color : Style.validator_error
                 backgroundColor:       isValid ? Style.content_main : Style.validator_error
                 selectByMouse:         true

@@ -200,14 +200,18 @@ ColumnLayout {
     //
     SFText {
         id:             amountSecondCurrencyText
-        visible:        control.showSecondCurrency && !errmsg.visible && !showTotalFee  // show only on send side
+        visible:        control.showSecondCurrency && !errmsg.visible /* && !showTotalFee*/  // show only on send side
         font.pixelSize: 14
         opacity:        isExchangeRateAvailable ? 0.5 : 0.7
         color:          isExchangeRateAvailable ? Style.content_secondary : Style.accent_fail
-        text:           isExchangeRateAvailable
-                        ? getAmountInSecondCurrency()
-                        //% "Exchange rate to %1 is not available"
-                        : qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
+        text:           {
+            if (showTotalFee)
+                return ""
+            if (isExchangeRateAvailable)
+                return getAmountInSecondCurrency()
+            //% "Exchange rate to %1 is not available"
+            return qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
+        }
     }
 
     //
