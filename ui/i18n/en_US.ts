@@ -1392,7 +1392,10 @@ please review your settings and try again</translation>
         <source>You can�t disconnect wallet, edit seed phrase or change default fee 
 while you have transactions in progress. Please wait untill 
 transactions are completed and try again.</source>
-        <translation type="unfinished">You can�t disconnect wallet, edit seed phrase or change default fee 
+        <oldsource>You can’t disconnect wallet, edit seed phrase or change default fee
+while you have transactions in progress. Please wait untill 
+transactions are completed and try again.</oldsource>
+        <translation type="unfinished">You can’t disconnect wallet, edit seed phrase or change default fee 
 while you have transactions in progress. Please wait untill 
 transactions are completed and try again.</translation>
     </message>

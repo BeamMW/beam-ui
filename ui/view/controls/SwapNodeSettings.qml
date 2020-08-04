@@ -564,10 +564,11 @@ transactions are completed and try again."
         // "cancel" "apply"
         // "connect to node" or "connect to electrum"
         RowLayout {
-            visible:          control.canEdit || (editElectrum && isSettingsChanged())
-            Layout.fillWidth: true
-            Layout.topMargin: 30
-            spacing:          15
+            visible:                control.canEdit || (editElectrum && isSettingsChanged())
+            Layout.preferredHeight: 52
+            Layout.fillWidth:       true
+            Layout.topMargin:       30
+            spacing:                15
 
             Item {
                 Layout.fillWidth: true
