@@ -215,7 +215,7 @@ please review your settings and try again"
                         folded:                  false
                         content: FeeInput {
                             id:                         sendFeeInput
-                            //fee:                        viewModel.feeGrothes
+                            currency:                   viewModel.sentCurrency
                             minFee:                     BeamGlobals.getMinimalFee(viewModel.sentCurrency, false)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(viewModel.sentCurrency)
                             color:                      Style.accent_outgoing
@@ -240,7 +240,6 @@ please review your settings and try again"
                         Connections {
                             target: viewModel
                             onSentFeeChanged: sendFeeInput.fee = viewModel.sentFee
-                            onIsSendFeeOKChanged: sentAmountInput.error = sentAmountInput.getErrorText()
                         }
                     }
 
@@ -384,8 +383,8 @@ please review your settings and try again"
                         Layout.fillWidth:        true
                         AmountInput {
                             id:                         receiveAmountInput
-//                            hasFee:           true
-                            currFeeTitle:     true
+                            //hasFee:                     true
+                            currFeeTitle:               true
                             currency:                   viewModel.receiveCurrency
                             amountIn:                   viewModel.amountToReceive
                             secondCurrencyRateValue:    viewModel.secondCurrencyReceiveRateValue
@@ -439,6 +438,7 @@ please review your settings and try again"
                         folded:                  false
                         content: FeeInput {
                             id:                         receiveFeeInput
+                            currency:                   viewModel.receiveCurrency
                             minFee:                     BeamGlobals.getMinimalFee(viewModel.receiveCurrency, false)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(viewModel.receiveCurrency)
                             color:                      Style.accent_outgoing
@@ -463,7 +463,6 @@ please review your settings and try again"
                         Connections {
                             target: viewModel
                             onReceiveFeeChanged: receiveFeeInput.fee = viewModel.receiveFee
-                            onIsReceiveFeeOKChanged: receiveAmountInput.error = receiveAmountInput.getErrorText()
                         }
                     }
                     //
@@ -522,7 +521,7 @@ please review your settings and try again"
                                     property bool rateValid:   true
 
                                     function changeRate() {
-                                        if (!rateInput.focus) {
+                                        if (!rateInput.activeFocus) {
                                             rateInput.rate = viewModel.rate;
                                             rateInput.text = rateInput.rate == "0" ? "" : Utils.uiStringToLocale(rateInput.rate);
                                             rateRow.checkIsRateValid();
@@ -607,7 +606,7 @@ please review your settings and try again"
                                         }
 
                                         onTextEdited: {
-                                            if (rateInput.focus) {
+                                            if (rateInput.activeFocus) {
                                                 if (text.match("^00*$")) {
                                                     text = "0";
                                                 }

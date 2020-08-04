@@ -7,19 +7,20 @@ import Beam.Wallet 1.0
 ColumnLayout {
         id: control
 
-        property bool    fillWidth: false
-        property bool    readOnly:  false
-        property int     minFee:    0
-        property int     fee:       0
-        property string  feeLabel:  undefined
-        property string  color:     Style.content_main
-        readonly property bool isValid: control.fee >= control.minFee
-        property alias underlineVisible: feeInput.underlineVisible
-        property int inputPreferredWidth: 150
-        property bool    showSecondCurrency:        false
-        property bool    isExchangeRateAvailable:   false
-        property string  secondCurrencyAmount:      ""
-        property string  secondCurrencyLabel:       ""
+        property bool    fillWidth:                  false
+        property bool    readOnly:                   false
+        property int     minFee:                     0
+        property int     currency:                   Currency.CurrBeam
+        property int     fee:                        BeamGlobals.getDefaultFee(control.currency)
+        property string  feeLabel:                   undefined
+        property string  color:                      Style.content_main
+        readonly property bool isValid:              control.fee >= control.minFee
+        property alias underlineVisible:             feeInput.underlineVisible
+        property int inputPreferredWidth:            150
+        property bool    showSecondCurrency:         false
+        property bool    isExchangeRateAvailable:    false
+        property string  secondCurrencyAmount:       ""
+        property string  secondCurrencyLabel:        ""
         property string  minimumFeeNotificationText: ""
 
         RowLayout {
@@ -56,6 +57,9 @@ ColumnLayout {
                     target: control
                     onFeeChanged: feeInput.text = feeInput.formatFee()
                     Component.onCompleted: feeInput.text = feeInput.formatFee()
+                    onCurrencyChanged: {
+                        control.fee = BeamGlobals.getDefaultFee(control.currency)
+                    }
                 }
             }
 
@@ -86,7 +90,7 @@ ColumnLayout {
 
 
         SFText {
-            id: minimumFeeNotification
+            id:               minimumFeeNotification
             text:             minimumFeeNotificationText.length ?
                                  minimumFeeNotificationText :
                                  //% "The minimum fee is %1 %2"

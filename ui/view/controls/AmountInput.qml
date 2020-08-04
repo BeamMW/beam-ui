@@ -103,8 +103,8 @@ ColumnLayout {
             }
 
             onActiveFocusChanged: {
-                text = formatDisplayedAmount()
-                if (focus) cursorPosition = positionAt(ainput.getMousePos().x, ainput.getMousePos().y)
+                //text = formatDisplayedAmount()
+                if (activeFocus) cursorPosition = positionAt(ainput.getMousePos().x, ainput.getMousePos().y)
             }
 
             function formatDisplayedAmount() {
