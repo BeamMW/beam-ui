@@ -2258,10 +2258,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Random node</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="send-confirmation-identity-label">
-        <source>Identity</source>
-        <translation type="unfinished">Identity</translation>
-    </message>
     <message id="wallet-send-max-privacy-note">
         <source>Transaction is slower, receiver pays fees.</source>
         <translation>Transaction is slower, receiver pays fees.</translation>
@@ -2330,11 +2326,13 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="token-one-time">
-        <source>One-time use</source>
+        <source>One time</source>
+        <oldsource>One-time use</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="token-permanent">
-        <source>Permanent token</source>
+        <source>Permanent</source>
+        <oldsource>Permanent token</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-regular">
@@ -2503,6 +2501,14 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="wallet-send-need-extract-shielded-note">
         <source>Transaction is slower, fees are higher.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-type">
+        <source>Token type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-confirmation-type-label">
+        <source>Type</source>
+        <translation type="unfinished">Type</translation>
     </message>
 </context>
 </TS>
