@@ -570,7 +570,7 @@ ColumnLayout {
                     const dialogObject = dialogComponent.createObject(sendRegularView,
                         {
                             addressText: viewModel.receiverAddress,
-                            identityText: viewModel.receiverIdentity,
+                            typeText: viewModel.isShieldedTx ? qsTrId("tx-max-privacy") : qsTrId("tx-regular"),
                             currency: Currency.CurrBeam,
                             amount: viewModel.sendAmount,
                             fee: viewModel.feeGrothes,

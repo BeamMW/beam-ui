@@ -500,6 +500,7 @@ please review your settings and try again"
                         {
                             swapMode: true,
                             addressText: viewModel.receiverAddress,
+                            typeText: qsTrId("general-swap"),
                             currency: viewModel.sendCurrency,
                             amount: viewModel.sendAmount,
                             fee: viewModel.sendFee,

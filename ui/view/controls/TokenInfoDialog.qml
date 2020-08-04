@@ -61,22 +61,26 @@ Dialog {
                 }
             }
         
-            //// Token type
-            //SFText {
-            //    Layout.alignment:       Qt.AlignTop
-            //    font.pixelSize:         14
-            //    color:                  Style.content_disabled
-            //    //% "Token type"
-            //    text:                   qsTrId("token-info-type") + ":"
-            //}
-            //
-            //SFText {
-            //    Layout.fillWidth:       true
-            //    wrapMode:               Text.Wrap
-            //    font.pixelSize:         14
-            //    text:                   viewModel.isPermanent ? "Permanent" : "One time"
-            //    color:                  Style.content_main
-            //}
+            // Token type
+            SFText {
+                Layout.alignment:       Qt.AlignTop
+                font.pixelSize:         14
+                color:                  Style.content_disabled
+                //% "Token type"
+                text:                   qsTrId("token-info-type") + ":"
+            }
+            
+            SFText {
+                Layout.fillWidth:       true
+                wrapMode:               Text.Wrap
+                font.pixelSize:         14
+                text:                   viewModel.isPermanent ? 
+                                        //% "Permanent" 
+                                        qsTrId("token-permanent")
+                                        //% "One time"
+                                        : qsTrId("token-one-time")
+                color:                  Style.content_main
+            }
             
             // Amount
             SFText {

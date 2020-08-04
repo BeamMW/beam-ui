@@ -25,6 +25,11 @@ TokenInfoItem::TokenInfoItem(QObject* parent /* = nullptr */)
 
 bool TokenInfoItem::isPermanent() const
 {
+    auto p = m_parameters.GetParameter<bool>(TxParameterID::IsPermanentPeerID);
+    if (p)
+    {
+        return *p;
+    }
     return false;
 }
 
