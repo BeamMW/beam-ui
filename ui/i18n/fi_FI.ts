@@ -1825,10 +1825,6 @@ to complete.</oldsource>
         <source>2 hours</source>
         <translation>2 tuntia</translation>
     </message>
-    <message id="accept-swap-token">
-        <source>Your swap token</source>
-        <translation>Swap-tunnisteesi</translation>
-    </message>
     <message id="settings-show-owner-key-title">
         <source>Owner key</source>
         <extracomment>settings tab, show owner key dialog title</extracomment>

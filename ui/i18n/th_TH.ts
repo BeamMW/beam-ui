@@ -1827,10 +1827,6 @@ to complete.</oldsource>
         <source>2 hours</source>
         <translation>2 ชั่วโมง</translation>
     </message>
-    <message id="accept-swap-token">
-        <source>Your swap token</source>
-        <translation type="unfinished">Your swap token</translation>
-    </message>
     <message id="settings-show-owner-key-title">
         <source>Owner key</source>
         <extracomment>settings tab, show owner key dialog title</extracomment>

@@ -1808,10 +1808,6 @@ Please check the swap token and try again.</translation>
         <source>2 hours</source>
         <translation>2 hours</translation>
     </message>
-    <message id="accept-swap-token">
-        <source>Your swap token</source>
-        <translation>Your swap token:</translation>
-    </message>
     <message id="settings-show-owner-key-title">
         <source>Owner key</source>
         <extracomment>settings tab, show owner key dialog title</extracomment>
