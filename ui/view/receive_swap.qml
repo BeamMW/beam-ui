@@ -498,7 +498,6 @@ please review your settings and try again"
                                 }
     
                                 SFText {
-                                    id:               offered
                                     font.pixelSize:   14
                                     color:            Style.content_main
                                     text:             BeamGlobals.calcTotalFee(viewModel.receiveCurrency, viewModel.receiveFee)

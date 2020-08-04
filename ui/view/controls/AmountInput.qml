@@ -202,7 +202,8 @@ ColumnLayout {
         id:             amountSecondCurrencyText
         visible:        control.showSecondCurrency && !errmsg.visible /* && !showTotalFee*/  // show only on send side
         font.pixelSize: 14
-        opacity:        isExchangeRateAvailable ? 0.5 : 0.7
+        font.italic:    !isExchangeRateAvailable
+        opacity:        isExchangeRateAvailable ? 0.5 : 1
         color:          isExchangeRateAvailable ? Style.content_secondary : Style.accent_fail
         text:           {
             if (showTotalFee)

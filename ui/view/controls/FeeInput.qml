@@ -79,7 +79,8 @@ ColumnLayout {
         id:               feeInSecondCurrency
         visible:          !minimumFeeNotification.visible && control.showSecondCurrency
         font.pixelSize:   14
-        opacity:          control.isExchangeRateAvailable ? 0.5 : 0.7
+        font.italic:      !control.isExchangeRateAvailable
+        opacity:          control.isExchangeRateAvailable ? 0.5 : 1
         color:            control.isExchangeRateAvailable ? Style.content_secondary : Style.accent_fail
         text:             control.isExchangeRateAvailable
                             ? control.secondCurrencyAmount
