@@ -689,8 +689,8 @@ Item
 
                     Item {
                         Layout.fillHeight: true
-                        Layout.minimumHeight: 60
-                        Layout.maximumHeight: 90
+                        Layout.minimumHeight: Utils.isSqueezedHeight(migrateColumn.height) ? 40 : 60
+                        Layout.maximumHeight: Utils.isSqueezedHeight(migrateColumn.height) ? 70 : 90
                     }
 
                     SFText {
