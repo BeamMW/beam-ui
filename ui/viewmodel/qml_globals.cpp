@@ -35,7 +35,7 @@ namespace
 {
     const int kDefaultFeeInGroth = 10;
     const int kFeeInGroth_Fork1 = 100;
-    const int kFeeInGroth_Shielded = 1001000;
+    const int kFeeInGroth_Shielded = 1200000;
     constexpr uint8_t kBTCDecimalPlaces = libbitcoin::btc_decimal_places;
     constexpr uint8_t kUSDDecimalPlaces = 2;
 
