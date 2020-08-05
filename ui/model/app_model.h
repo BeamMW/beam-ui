@@ -66,6 +66,10 @@ public:
     SwapCoinClientModel::Ptr getBitcoinClient() const;
     SwapCoinClientModel::Ptr getLitecoinClient() const;
     SwapCoinClientModel::Ptr getQtumClient() const;
+    SwapCoinClientModel::Ptr getDogecoinClient() const;
+    SwapCoinClientModel::Ptr getBitcoinCashClient() const;
+    SwapCoinClientModel::Ptr getBitcoinSVClient() const;
+    SwapCoinClientModel::Ptr getDashClient() const;
 
 public slots:
     void onStartedNode();
@@ -80,9 +84,15 @@ private:
     void start();
     void startNode();
     void startWallet();
+    void InitSwapClients();
     void InitBtcClient();
     void InitLtcClient();
     void InitQtumClient();
+    void InitDogeClient();
+    void InitBchClient();
+    void InitBsvClient();
+    void InitDashClient();
+    void ResetSwapClients();
     void onWalledOpened(const beam::SecString& pass);
     void backupDB(const std::string& dbFilePath);
     void restoreDBFromBackup(const std::string& dbFilePath);
@@ -92,10 +102,18 @@ private:
     SwapCoinClientModel::Ptr m_bitcoinClient;
     SwapCoinClientModel::Ptr m_litecoinClient;
     SwapCoinClientModel::Ptr m_qtumClient;
+    SwapCoinClientModel::Ptr m_dogeClient;
+    SwapCoinClientModel::Ptr m_bchClient;
+    SwapCoinClientModel::Ptr m_bsvClient;
+    SwapCoinClientModel::Ptr m_dashClient;
 
     beam::bitcoin::IBridgeHolder::Ptr m_btcBridgeHolder;
     beam::bitcoin::IBridgeHolder::Ptr m_ltcBridgeHolder;
     beam::bitcoin::IBridgeHolder::Ptr m_qtumBridgeHolder;
+    beam::bitcoin::IBridgeHolder::Ptr m_dogeBridgeHolder;
+    beam::bitcoin::IBridgeHolder::Ptr m_bchBridgeHolder;
+    beam::bitcoin::IBridgeHolder::Ptr m_bsvBridgeHolder;
+    beam::bitcoin::IBridgeHolder::Ptr m_dashBridgeHolder;
 
     WalletModel::Ptr m_wallet;
     NodeModel m_nodeModel;

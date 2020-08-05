@@ -58,6 +58,10 @@ public:
     Q_INVOKABLE static bool haveBtc();
     Q_INVOKABLE static bool haveLtc();
     Q_INVOKABLE static bool haveQtum();
+    Q_INVOKABLE static bool haveDash();
+    Q_INVOKABLE static bool haveBsv();
+    Q_INVOKABLE static bool haveBch();
+    Q_INVOKABLE static bool haveDoge();
 
     Q_INVOKABLE static QString rawTxParametrsToTokenStr(
             const QVariant& variantTxParams);

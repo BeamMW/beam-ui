@@ -29,12 +29,6 @@
 #include "mnemonic/mnemonic.h"
 #include "viewmodel/ui_helpers.h"
 
-#include "wallet/transactions/swaps/bridges/litecoin/settings.h"
-#include "wallet/transactions/swaps/bridges/qtum/settings.h"
-#include "wallet/transactions/swaps/bridges/bitcoin/common.h"
-#include "wallet/transactions/swaps/bridges/qtum/common.h"
-#include "wallet/transactions/swaps/bridges/litecoin/common.h"
-
 using namespace beam;
 using namespace ECC;
 using namespace std;
@@ -179,20 +173,7 @@ QString SwapCoinSettingsItem::getTitle() const
 
  QString SwapCoinSettingsItem::getCoinID() const
  {
-    switch (m_swapCoin)
-    {
-         case beam::wallet::AtomicSwapCoin::Bitcoin:
-            return "BTC";
-        case beam::wallet::AtomicSwapCoin::Litecoin:
-            return "LTC";
-        case beam::wallet::AtomicSwapCoin::Qtum:
-            return "QTUM";
-        default:
-        {
-            assert(false && "unexpected swap coin!");
-            return QString();
-        }
-    }
+     return beamui::getCurrencyLabel(beamui::convertSwapCoinToCurrency(m_swapCoin));
  }
 
 QString SwapCoinSettingsItem::getShowSeedDialogTitle() const
@@ -208,6 +189,18 @@ QString SwapCoinSettingsItem::getShowSeedDialogTitle() const
         case beam::wallet::AtomicSwapCoin::Qtum:
             //% "Qtum seed phrase"
             return qtTrId("qtum-show-seed-title");
+        case beam::wallet::AtomicSwapCoin::Dogecoin:
+            //% "Dogecoin sead phrase"
+            return qtTrId("dogecoin-show-seed-phrase");
+        case beam::wallet::AtomicSwapCoin::Bitcoin_Cash:
+            //% "Bitcoin Cash sead phrase"
+            return qtTrId("bitcoin-cash-show-seed-phrase");
+        case beam::wallet::AtomicSwapCoin::Bitcoin_SV:
+            //% "Bitcoin SV sead phrase"
+            return qtTrId("bitcoin-sv-show-seed-phrase");
+        case beam::wallet::AtomicSwapCoin::Dash:
+            //% "Dash sead phrase"
+            return qtTrId("dash-show-seed-phrase");
         default:
         {
             assert(false && "unexpected swap coin!");
@@ -229,6 +222,18 @@ QString SwapCoinSettingsItem::getShowAddressesDialogTitle() const
         case beam::wallet::AtomicSwapCoin::Qtum:
             //% "Qtum wallet addresses"
             return qtTrId("qtum-show-addresses-title");
+        case beam::wallet::AtomicSwapCoin::Dogecoin:
+            //% "Dogecoin wallet addresses"
+            return qtTrId("dogecoin-show-addresses-title");
+        case beam::wallet::AtomicSwapCoin::Bitcoin_Cash:
+            //% "Bitcoin Cash wallet addresses"
+            return qtTrId("bitcoin-cash-show-addresses-title");
+        case beam::wallet::AtomicSwapCoin::Bitcoin_SV:
+            //% "Bitcoin SV wallet addresses"
+            return qtTrId("bitcoin-sv-show-addresses-title");
+        case beam::wallet::AtomicSwapCoin::Dash:
+            //% "Dash wallet addresses"
+            return qtTrId("dash-show-addresses-title");
         default:
         {
             assert(false && "unexpected swap coin!");
@@ -250,6 +255,18 @@ QString SwapCoinSettingsItem::getGeneralTitle() const
         case wallet::AtomicSwapCoin::Qtum:
             //% "QTUM"
             return qtTrId("general-qtum");
+        case wallet::AtomicSwapCoin::Dogecoin:
+            //% "Dogecoin"
+            return qtTrId("general-dogecoin");
+        case wallet::AtomicSwapCoin::Bitcoin_Cash:
+            //% "Bitcoin Cash"
+            return qtTrId("general-bitcoin-cash");
+        case wallet::AtomicSwapCoin::Bitcoin_SV:
+            //% "Bitcoin SV"
+            return qtTrId("general-bitcoin-sv");
+        case wallet::AtomicSwapCoin::Dash:
+            //% "DASH"
+            return qtTrId("general-dash");
         default:
         {
             assert(false && "unexpected swap coin!");
@@ -272,6 +289,18 @@ QString SwapCoinSettingsItem::getConnectedNodeTitle() const
         case wallet::AtomicSwapCoin::Qtum:
             //% "Qtum node"
             return qtTrId("settings-swap-qtum-node");
+        case wallet::AtomicSwapCoin::Dogecoin:
+            //% "Dogecoin node"
+            return qtTrId("settings-swap-dogecoin-node");
+        case wallet::AtomicSwapCoin::Bitcoin_Cash:
+            //% "Bitcoin Cash node"
+            return qtTrId("settings-swap-bitcoin-cash-node");
+        case wallet::AtomicSwapCoin::Bitcoin_SV:
+            //% "Bitcoin SV node"
+            return qtTrId("settings-swap-bitcoin-sv-node");
+        case wallet::AtomicSwapCoin::Dash:
+            //% "Dash node"
+            return qtTrId("settings-swap-dash-node");
         default:
         {
             assert(false && "unexpected swap coin!");
@@ -294,6 +323,18 @@ QString SwapCoinSettingsItem::getConnectedElectrumTitle() const
         case wallet::AtomicSwapCoin::Qtum:
             //% "Qtum electrum"
             return qtTrId("settings-swap-qtum-electrum");
+        case wallet::AtomicSwapCoin::Dogecoin:
+            //% "Dogecoin electrum"
+            return qtTrId("settings-swap-dogecoin-electrum");
+        case wallet::AtomicSwapCoin::Bitcoin_Cash:
+            //% "Bitcoin Cash electrum"
+            return qtTrId("settings-swap-bitcoin-cash-electrum");
+        case wallet::AtomicSwapCoin::Bitcoin_SV:
+            //% "Bitcoin SV electrum"
+            return qtTrId("settings-swap-bitcoin-sv-electrum");
+        case wallet::AtomicSwapCoin::Dash:
+            //% "Dash electrum"
+            return qtTrId("settings-swap-dash-electrum");
         default:
         {
             assert(false && "unexpected swap coin!");
@@ -1175,6 +1216,10 @@ const QList<QObject*>& SettingsViewModel::getSwapCoinSettings()
         m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getBitcoinClient(), beam::wallet::AtomicSwapCoin::Bitcoin));
         m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getLitecoinClient(), beam::wallet::AtomicSwapCoin::Litecoin));
         m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getQtumClient(), beam::wallet::AtomicSwapCoin::Qtum));
+        m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getBitcoinCashClient(), beam::wallet::AtomicSwapCoin::Bitcoin_Cash));
+        m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getBitcoinSVClient(), beam::wallet::AtomicSwapCoin::Dash));
+        m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getDogecoinClient(), beam::wallet::AtomicSwapCoin::Dogecoin));
+        m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getDashClient(), beam::wallet::AtomicSwapCoin::Bitcoin_SV));
     }
     return m_swapSettings;
 }

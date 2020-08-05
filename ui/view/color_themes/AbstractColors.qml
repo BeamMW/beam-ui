@@ -41,6 +41,10 @@ QtObject {
     property color swapCurrencyPaneGrLeftBTC;
     property color swapCurrencyPaneGrLeftLTC;
     property color swapCurrencyPaneGrLeftQTUM;
+    property color swapCurrencyPaneGrLeftDash;
+    property color swapCurrencyPaneGrLeftDoge;
+    property color swapCurrencyPaneGrLeftBCH;
+    property color swapCurrencyPaneGrLeftBSV;
     property color swapCurrencyPaneGrLeftOther;
     property color swapCurrencyStateIndicator;
     property color swapCurrencyOptionsBorder;

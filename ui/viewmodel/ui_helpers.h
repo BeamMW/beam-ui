@@ -15,13 +15,17 @@ namespace beamui
     // UI labels all for Currencies elements
 
 #define CURRENCY_MAP(macro) \
-    /*    name         label         short label      subunit     fee unit   decimal places*/ \
-    macro(Beam,        "BEAM",      "BEAM",          "GROTH",    "GROTH",     8) \
-    macro(Bitcoin,     "Bitcoin",   "BTC",           "satoshi",  "sat/kB",    8) \
-    macro(Litecoin,    "Litecoin",  "LTC",           "photon",   "ph/kB",     8) \
-    macro(Qtum,        "QTUM",      "QTUM",          "qsatoshi", "qsat/kB",   8) \
-    macro(Usd,         "USD",       "USD",           "cent",     "",          2) \
-    macro(Unknown,     "",          "",              "",         "",          0)
+    /*    name         label            short label      subunit     fee unit   decimal places*/ \
+    macro(Beam,        "BEAM",          "BEAM",          "GROTH",    "GROTH",     8) \
+    macro(Bitcoin,     "Bitcoin",       "BTC",           "satoshi",  "sat/kB",    8) \
+    macro(Litecoin,    "Litecoin",      "LTC",           "photon",   "ph/kB",     8) \
+    macro(Qtum,        "QTUM",          "QTUM",          "qsatoshi", "qsat/kB",   8) \
+    macro(BitcoinCash, "Bitcoin Cash",  "BCH",           "satoshi",  "sat/kB",    8) \
+    macro(BitcoinSV,   "Bitcoin SV",    "BSV",           "satoshi",  "sat/kB",    8) \
+    macro(Dogecoin,    "Dogecoin",      "DOGE",          "satoshi",  "sat/kB",    8) \
+    macro(Dash,        "Dash",          "DASH",          "duff",     "duff/kB",   8) \
+    macro(Usd,         "USD",           "USD",           "cent",     "",          2) \
+    macro(Unknown,     "",              "",              "",         "",          0)
 
     enum class Currencies
     {

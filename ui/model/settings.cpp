@@ -22,7 +22,6 @@
 
 #include "model/app_model.h"
 
-#include "wallet/transactions/swaps/bridges/bitcoin/settings.h"
 #include "wallet/core/default_peers.h"
 
 #include "version.h"

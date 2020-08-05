@@ -105,6 +105,21 @@ ColumnLayout {
                     id: privacyBlock
                     viewModel: viewModel
                 }
+
+                SettingsTitle {
+                    //% "Troubleshooting"
+                    text:  qsTrId("settings-troubleshooting-title")
+                }
+
+                SettingsResources {
+                    id: resourcesBlock
+                    viewModel: viewModel
+                }
+
+                SettingsReport {
+                    id: reportBlock
+                    viewModel: viewModel
+                }
             }
 
             ColumnLayout {
@@ -267,21 +282,6 @@ ColumnLayout {
                             value:    settingsControl.useRandomElectrumNode
                         }
                     }
-                }
-
-                SettingsTitle {
-                    //% "Troubleshooting"
-                    text:  qsTrId("settings-troubleshooting-title")
-                }
-
-                SettingsResources {
-                    id: resourcesBlock
-                    viewModel: viewModel
-                }
-
-                SettingsReport {
-                    id: reportBlock
-                    viewModel: viewModel
                 }
             }
         }

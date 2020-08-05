@@ -43,6 +43,14 @@ int& SwapOffersViewModel::ActiveTxCounters::getCounter(AtomicSwapCoin swapCoinTy
         return ltc;
     case wallet::AtomicSwapCoin::Qtum:
         return qtum;
+    case wallet::AtomicSwapCoin::Bitcoin_Cash:
+        return bch;
+    case wallet::AtomicSwapCoin::Bitcoin_SV:
+        return bsv;
+    case wallet::AtomicSwapCoin::Dash:
+        return dash;
+    case wallet::AtomicSwapCoin::Dogecoin:
+        return doge;
     default:
         throw std::runtime_error("Unexpected coin type");
     }
@@ -50,14 +58,18 @@ int& SwapOffersViewModel::ActiveTxCounters::getCounter(AtomicSwapCoin swapCoinTy
 
 void SwapOffersViewModel::ActiveTxCounters::clear()
 {
-    btc = ltc = qtum = 0;
+    btc = ltc = qtum = bch = bsv = dash = doge = 0;
 }
 
 SwapOffersViewModel::SwapOffersViewModel()
     :   m_walletModel{*AppModel::getInstance().getWallet()},
         m_btcClient(AppModel::getInstance().getBitcoinClient()),
         m_ltcClient(AppModel::getInstance().getLitecoinClient()),
-        m_qtumClient(AppModel::getInstance().getQtumClient())
+        m_qtumClient(AppModel::getInstance().getQtumClient()),
+        m_bchClient(AppModel::getInstance().getBitcoinCashClient()),
+        m_bsvClient(AppModel::getInstance().getBitcoinSVClient()),
+        m_dashClient(AppModel::getInstance().getDashClient()),
+        m_dogeClient(AppModel::getInstance().getDogecoinClient())
 {
     connect(&m_walletModel, SIGNAL(availableChanged()), this, SIGNAL(beamAvailableChanged()));
     connect(&m_walletModel,
@@ -71,9 +83,18 @@ SwapOffersViewModel::SwapOffersViewModel()
     connect(m_btcClient.get(),  SIGNAL(balanceChanged()), this, SIGNAL(btcAvailableChanged()));
     connect(m_ltcClient.get(), SIGNAL(balanceChanged()), this, SIGNAL(ltcAvailableChanged()));
     connect(m_qtumClient.get(), SIGNAL(balanceChanged()), this, SIGNAL(qtumAvailableChanged()));
+    connect(m_bchClient.get(), SIGNAL(balanceChanged()), this, SIGNAL(bchAvailableChanged()));
+    connect(m_bsvClient.get(), SIGNAL(balanceChanged()), this, SIGNAL(bsvAvailableChanged()));
+    connect(m_dashClient.get(), SIGNAL(balanceChanged()), this, SIGNAL(dashAvailableChanged()));
+    connect(m_dogeClient.get(), SIGNAL(balanceChanged()), this, SIGNAL(dogeAvailableChanged()));
+
     connect(m_btcClient.get(), SIGNAL(statusChanged()), this, SIGNAL(btcOKChanged()));
     connect(m_ltcClient.get(), SIGNAL(statusChanged()), this, SIGNAL(ltcOKChanged()));
     connect(m_qtumClient.get(), SIGNAL(statusChanged()), this, SIGNAL(qtumOKChanged()));
+    connect(m_bchClient.get(), SIGNAL(statusChanged()), this, SIGNAL(bchOKChanged()));
+    connect(m_bsvClient.get(), SIGNAL(statusChanged()), this, SIGNAL(bsvOKChanged()));
+    connect(m_dashClient.get(), SIGNAL(statusChanged()), this, SIGNAL(dashOKChanged()));
+    connect(m_dogeClient.get(), SIGNAL(statusChanged()), this, SIGNAL(dogeOKChanged()));
 
     monitorAllOffersFitBalance();
 
@@ -83,10 +104,18 @@ SwapOffersViewModel::SwapOffersViewModel()
     m_minTxConfirmations.emplace(AtomicSwapCoin::Bitcoin, m_btcClient->GetSettings().GetTxMinConfirmations());
     m_minTxConfirmations.emplace(AtomicSwapCoin::Litecoin, m_ltcClient->GetSettings().GetTxMinConfirmations());
     m_minTxConfirmations.emplace(AtomicSwapCoin::Qtum, m_qtumClient->GetSettings().GetTxMinConfirmations());
+    m_minTxConfirmations.emplace(AtomicSwapCoin::Bitcoin_Cash, m_bchClient->GetSettings().GetTxMinConfirmations());
+    m_minTxConfirmations.emplace(AtomicSwapCoin::Bitcoin_SV, m_bsvClient->GetSettings().GetTxMinConfirmations());
+    m_minTxConfirmations.emplace(AtomicSwapCoin::Dash, m_dashClient->GetSettings().GetTxMinConfirmations());
+    m_minTxConfirmations.emplace(AtomicSwapCoin::Dogecoin, m_dogeClient->GetSettings().GetTxMinConfirmations());
 
     m_blocksPerHour.emplace(AtomicSwapCoin::Bitcoin, m_btcClient->GetSettings().GetBlocksPerHour());
     m_blocksPerHour.emplace(AtomicSwapCoin::Litecoin, m_ltcClient->GetSettings().GetBlocksPerHour());
     m_blocksPerHour.emplace(AtomicSwapCoin::Qtum, m_qtumClient->GetSettings().GetBlocksPerHour());
+    m_blocksPerHour.emplace(AtomicSwapCoin::Bitcoin_Cash, m_bchClient->GetSettings().GetBlocksPerHour());
+    m_blocksPerHour.emplace(AtomicSwapCoin::Bitcoin_SV, m_bsvClient->GetSettings().GetBlocksPerHour());
+    m_blocksPerHour.emplace(AtomicSwapCoin::Dash, m_dashClient->GetSettings().GetBlocksPerHour());
+    m_blocksPerHour.emplace(AtomicSwapCoin::Dogecoin, m_dogeClient->GetSettings().GetBlocksPerHour());
 }
 
 QAbstractItemModel* SwapOffersViewModel::getAllOffers()
@@ -119,6 +148,26 @@ QString SwapOffersViewModel::qtumAvailable() const
     return beamui::AmountToUIString(m_qtumClient->getAvailable());
 }
 
+QString SwapOffersViewModel::bchAvailable() const
+{
+    return beamui::AmountToUIString(m_bchClient->getAvailable());
+}
+
+QString SwapOffersViewModel::bsvAvailable() const
+{
+    return beamui::AmountToUIString(m_bsvClient->getAvailable());
+}
+
+QString SwapOffersViewModel::dashAvailable() const
+{
+    return beamui::AmountToUIString(m_dashClient->getAvailable());
+}
+
+QString SwapOffersViewModel::dogeAvailable() const
+{
+    return beamui::AmountToUIString(m_dogeClient->getAvailable());
+}
+
 bool SwapOffersViewModel::btcOK()  const
 {
     return m_btcClient->getStatus() == btc::Client::Status::Connected;
@@ -134,6 +183,26 @@ bool SwapOffersViewModel::qtumOK() const
     return m_qtumClient->getStatus() == btc::Client::Status::Connected;
 }
 
+bool SwapOffersViewModel::bchOK() const
+{
+    return m_bchClient->getStatus() == btc::Client::Status::Connected;
+}
+
+bool SwapOffersViewModel::bsvOK() const
+{
+    return m_bsvClient->getStatus() == btc::Client::Status::Connected;
+}
+
+bool SwapOffersViewModel::dashOK() const
+{
+    return m_dashClient->getStatus() == btc::Client::Status::Connected;
+}
+
+bool SwapOffersViewModel::dogeOK() const
+{
+    return m_dogeClient->getStatus() == btc::Client::Status::Connected;
+}
+
 bool SwapOffersViewModel::btcConnecting()  const
 {
     return m_btcClient->getStatus() == btc::Client::Status::Connecting;
@@ -147,6 +216,26 @@ bool SwapOffersViewModel::ltcConnecting()  const
 bool SwapOffersViewModel::qtumConnecting()  const
 {
     return m_qtumClient->getStatus() == btc::Client::Status::Connecting;
+}
+
+bool SwapOffersViewModel::bchConnecting()  const
+{
+    return m_bchClient->getStatus() == btc::Client::Status::Connecting;
+}
+
+bool SwapOffersViewModel::bsvConnecting()  const
+{
+    return m_bsvClient->getStatus() == btc::Client::Status::Connecting;
+}
+
+bool SwapOffersViewModel::dashConnecting()  const
+{
+    return m_dashClient->getStatus() == btc::Client::Status::Connecting;
+}
+
+bool SwapOffersViewModel::dogeConnecting()  const
+{
+    return m_dogeClient->getStatus() == btc::Client::Status::Connecting;
 }
 
 QAbstractItemModel* SwapOffersViewModel::getTransactions()
@@ -409,15 +498,43 @@ bool SwapOffersViewModel::hasQtumTx() const
     return m_activeTxCounters.qtum > 0;
 }
 
+bool SwapOffersViewModel::hasBchTx() const
+{
+    return m_activeTxCounters.bch > 0;
+}
+
+bool SwapOffersViewModel::hasBsvTx() const
+{
+    return m_activeTxCounters.bsv > 0;
+}
+
+bool SwapOffersViewModel::hasDashTx() const
+{
+    return m_activeTxCounters.dash > 0;
+}
+
+bool SwapOffersViewModel::hasDogeTx() const
+{
+    return m_activeTxCounters.doge > 0;
+}
+
 void SwapOffersViewModel::monitorAllOffersFitBalance()
 {
     connect(this, SIGNAL(beamAvailableChanged()), SLOT(resetAllOffersFitBalance()));
     connect(this, SIGNAL(btcAvailableChanged()), SLOT(resetAllOffersFitBalance()));
     connect(this, SIGNAL(ltcAvailableChanged()), SLOT(resetAllOffersFitBalance()));
     connect(this, SIGNAL(qtumAvailableChanged()), SLOT(resetAllOffersFitBalance()));
+    connect(this, SIGNAL(bchAvailableChanged()), SLOT(resetAllOffersFitBalance()));
+    connect(this, SIGNAL(bsvAvailableChanged()), SLOT(resetAllOffersFitBalance()));
+    connect(this, SIGNAL(dashAvailableChanged()), SLOT(resetAllOffersFitBalance()));
+    connect(this, SIGNAL(dogeAvailableChanged()), SLOT(resetAllOffersFitBalance()));
     connect(this, SIGNAL(btcOKChanged()), SLOT(resetAllOffersFitBalance()));
     connect(this, SIGNAL(ltcOKChanged()), SLOT(resetAllOffersFitBalance()));
     connect(this, SIGNAL(qtumOKChanged()), SLOT(resetAllOffersFitBalance()));
+    connect(this, SIGNAL(bchOKChanged()), SLOT(resetAllOffersFitBalance()));
+    connect(this, SIGNAL(bsvOKChanged()), SLOT(resetAllOffersFitBalance()));
+    connect(this, SIGNAL(dashOKChanged()), SLOT(resetAllOffersFitBalance()));
+    connect(this, SIGNAL(dogeOKChanged()), SLOT(resetAllOffersFitBalance()));
 }
 
 bool SwapOffersViewModel::isOfferFitBalance(const SwapOfferItem& offer)
@@ -452,7 +569,27 @@ bool SwapOffersViewModel::isOfferFitBalance(const SwapOfferItem& offer)
         auto myQtumAmount = qtumOK() ? m_qtumClient->getAvailable() : 0;
         return isSendBeam ? qtumOK() : swapCoinOfferAmount <= myQtumAmount;
     }
-    
+    else if (swapCoinName == toString(beamui::Currencies::BitcoinCash))
+    {
+        auto myBchAmount = bchOK() ? m_bchClient->getAvailable() : 0;
+        return isSendBeam ? bchOK() : swapCoinOfferAmount <= myBchAmount;
+    }
+    else if (swapCoinName == toString(beamui::Currencies::BitcoinSV))
+    {
+        auto myBsvAmount = bsvOK() ? m_bsvClient->getAvailable() : 0;
+        return isSendBeam ? bsvOK() : swapCoinOfferAmount <= myBsvAmount;
+    }
+    else if (swapCoinName == toString(beamui::Currencies::Dash))
+    {
+        auto myDashAmount = dashOK() ? m_dashClient->getAvailable() : 0;
+        return isSendBeam ? dashOK() : swapCoinOfferAmount <= myDashAmount;
+    }
+    else if (swapCoinName == toString(beamui::Currencies::Dogecoin))
+    {
+        auto myDogeAmount = dogeOK() ? m_dogeClient->getAvailable() : 0;
+        return isSendBeam ? dogeOK() : swapCoinOfferAmount <= myDogeAmount;
+    }
+
     return false;
 }
 

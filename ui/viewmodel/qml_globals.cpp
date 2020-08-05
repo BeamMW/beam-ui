@@ -23,6 +23,10 @@
 #include "wallet/transactions/swaps/bridges/bitcoin/bitcoin_side.h"
 #include "wallet/transactions/swaps/bridges/litecoin/litecoin_side.h"
 #include "wallet/transactions/swaps/bridges/qtum/qtum_side.h"
+#include "wallet/transactions/swaps/bridges/bitcoin_cash/bitcoin_cash_side.h"
+#include "wallet/transactions/swaps/bridges/bitcoin_sv/bitcoin_sv_side.h"
+#include "wallet/transactions/swaps/bridges/dash/dash_side.h"
+#include "wallet/transactions/swaps/bridges/dogecoin/dogecoin_side.h"
 #include "utility/string_helpers.h"
 
 #include <boost/algorithm/string.hpp>
@@ -106,7 +110,19 @@ namespace
 
             case Currency::CurrQtum:
                 return beamui::Currencies::Qtum;
-            
+
+            case Currency::CurrBitcoinCash:
+                return beamui::Currencies::BitcoinCash;
+
+            case Currency::CurrBitcoinSV:
+                return beamui::Currencies::BitcoinSV;
+
+            case Currency::CurrDash:
+                return beamui::Currencies::Dash;
+
+            case Currency::CurrDogecoin:
+                return beamui::Currencies::Dogecoin;
+
             default:
                 return beamui::Currencies::Unknown;
         }
@@ -176,6 +192,10 @@ bool QMLGlobals::isFeeOK(uint32_t fee, Currency currency, bool isShielded)
     case Currency::CurrBitcoin:  return true;
     case Currency::CurrLitecoin:  return true;
     case Currency::CurrQtum: return true;
+    case Currency::CurrBitcoinCash: return true;
+    case Currency::CurrBitcoinSV: return true;
+    case Currency::CurrDash: return true;
+    case Currency::CurrDogecoin: return true;
     default:
         assert(false);
         return false;
@@ -226,6 +246,22 @@ QString QMLGlobals::calcTotalFee(Currency currency, unsigned int feeRate)
             auto total = beam::wallet::QtumSide::CalcTotalFee(feeRate);
             return QString::fromStdString(std::to_string(total)) + " qsat";
         }
+        case Currency::CurrBitcoinCash: {
+            auto total = beam::wallet::BitcoinCashSide::CalcTotalFee(feeRate);
+            return QString::fromStdString(std::to_string(total)) + " sat";
+        }
+        case Currency::CurrBitcoinSV: {
+            auto total = beam::wallet::BitcoinSVSide::CalcTotalFee(feeRate);
+            return QString::fromStdString(std::to_string(total)) + " sat";
+        }
+        case Currency::CurrDash: {
+            auto total = beam::wallet::DashSide::CalcTotalFee(feeRate);
+            return QString::fromStdString(std::to_string(total)) + " duff";
+        }
+        case Currency::CurrDogecoin: {
+            auto total = beam::wallet::DogecoinSide::CalcTotalFee(feeRate);
+            return QString::fromStdString(std::to_string(total)) + " sat";
+        }
         default: {
             assert(false);
             return QString();
@@ -260,7 +296,7 @@ QString QMLGlobals::calcAmountInSecondCurrency(const QString& amount, const QStr
 
 bool QMLGlobals::canSwap()
 {
-    return haveBtc() || haveLtc() || haveQtum();
+    return haveBtc() || haveLtc() || haveQtum() || haveDash() || haveBsv() || haveBch() || haveDoge();
 }
 
 bool QMLGlobals::haveBtc()
@@ -276,6 +312,26 @@ bool QMLGlobals::haveLtc()
 bool QMLGlobals::haveQtum()
 {
     return AppModel::getInstance().getQtumClient()->GetSettings().IsActivated();
+}
+
+bool QMLGlobals::haveDash()
+{
+    return AppModel::getInstance().getDashClient()->GetSettings().IsActivated();
+}
+
+bool QMLGlobals::haveBsv()
+{
+    return AppModel::getInstance().getBitcoinSVClient()->GetSettings().IsActivated();
+}
+
+bool QMLGlobals::haveBch()
+{
+    return AppModel::getInstance().getBitcoinCashClient()->GetSettings().IsActivated();
+}
+
+bool QMLGlobals::haveDoge()
+{
+    return AppModel::getInstance().getDogecoinClient()->GetSettings().IsActivated();
 }
 
 QString QMLGlobals::rawTxParametrsToTokenStr(const QVariant& variantTxParams)
@@ -313,6 +369,30 @@ bool QMLGlobals::canReceive(Currency currency)
         auto client = AppModel::getInstance().getQtumClient();
         return client->GetSettings().IsActivated() &&
                client->getStatus() == beam::bitcoin::Client::Status::Connected;
+    }
+    case Currency::CurrBitcoinCash:
+    {
+        auto client = AppModel::getInstance().getBitcoinCashClient();
+        return client->GetSettings().IsActivated() &&
+            client->getStatus() == beam::bitcoin::Client::Status::Connected;
+    }
+    case Currency::CurrBitcoinSV:
+    {
+        auto client = AppModel::getInstance().getBitcoinSVClient();
+        return client->GetSettings().IsActivated() &&
+            client->getStatus() == beam::bitcoin::Client::Status::Connected;
+    }
+    case Currency::CurrDogecoin:
+    {
+        auto client = AppModel::getInstance().getDogecoinClient();
+        return client->GetSettings().IsActivated() &&
+            client->getStatus() == beam::bitcoin::Client::Status::Connected;
+    }
+    case Currency::CurrDash:
+    {
+        auto client = AppModel::getInstance().getDashClient();
+        return client->GetSettings().IsActivated() &&
+            client->getStatus() == beam::bitcoin::Client::Status::Connected;
     }
     default:
     {
@@ -352,6 +432,26 @@ QString QMLGlobals::getCurrencyName(Currency currency)
         //% "QTUM"
         return qtTrId("general-qtum");
     }
+    case Currency::CurrDogecoin:
+    {
+        //% "Dogecoin"
+        return qtTrId("general-dogecoin");
+    }
+    case Currency::CurrBitcoinCash:
+    {
+        //% "Bitcoin Cash"
+        return qtTrId("general-bitcoin-cash");
+    }
+    case Currency::CurrBitcoinSV:
+    {
+        //% "Bitcoin SV"
+        return qtTrId("general-bitcoin-sv");
+    }
+    case Currency::CurrDash:
+    {
+        //% "DASH"
+        return qtTrId("general-dash");
+    }
     default:
     {
         assert(false && "unexpected swap coin!");
@@ -387,6 +487,18 @@ unsigned int QMLGlobals::getMinimalFee(Currency currency, bool isShielded)
         case Currency::CurrQtum:
             return AppModel::getInstance().getQtumClient()->GetSettings().GetMinFeeRate();
 
+        case Currency::CurrBitcoinCash:
+            return AppModel::getInstance().getBitcoinCashClient()->GetSettings().GetMinFeeRate();
+
+        case Currency::CurrBitcoinSV:
+            return AppModel::getInstance().getBitcoinSVClient()->GetSettings().GetMinFeeRate();
+
+        case Currency::CurrDogecoin:
+            return AppModel::getInstance().getDogecoinClient()->GetSettings().GetMinFeeRate();
+
+        case Currency::CurrDash:
+            return AppModel::getInstance().getDashClient()->GetSettings().GetMinFeeRate();
+
         default:
             return 0;
     }
@@ -414,6 +526,18 @@ unsigned int QMLGlobals::getDefaultFee(Currency currency)
         case Currency::CurrQtum:
             return AppModel::getInstance().getQtumClient()->GetSettings().GetFeeRate();
 
+        case Currency::CurrBitcoinCash:
+            return AppModel::getInstance().getBitcoinCashClient()->GetSettings().GetFeeRate();
+
+        case Currency::CurrBitcoinSV:
+            return AppModel::getInstance().getBitcoinSVClient()->GetSettings().GetFeeRate();
+
+        case Currency::CurrDogecoin:
+            return AppModel::getInstance().getDogecoinClient()->GetSettings().GetFeeRate();
+
+        case Currency::CurrDash:
+            return AppModel::getInstance().getDashClient()->GetSettings().GetFeeRate();
+
         default:
             return 0;
     }
@@ -433,6 +557,18 @@ bool QMLGlobals::isSwapFeeOK(unsigned int amount, unsigned int fee, Currency cur
         }
         case Currency::CurrQtum: {
             return beam::wallet::QtumSide::CheckAmount(amount, fee);
+        }
+        case Currency::CurrBitcoinCash: {
+            return beam::wallet::BitcoinCashSide::CheckAmount(amount, fee);
+        }
+        case Currency::CurrBitcoinSV: {
+            return beam::wallet::BitcoinSVSide::CheckAmount(amount, fee);
+        }
+        case Currency::CurrDash: {
+            return beam::wallet::DashSide::CheckAmount(amount, fee);
+        }
+        case Currency::CurrDogecoin: {
+            return beam::wallet::DogecoinSide::CheckAmount(amount, fee);
         }
         default: {
             assert(false);

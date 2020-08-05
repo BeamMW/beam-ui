@@ -367,6 +367,26 @@ bool ReceiveSwapViewModel::isEnough() const
         beam::Amount total = _amountSentGrothes + _sentFeeGrothes;
         return AppModel::getInstance().getQtumClient()->getAvailable() > total;
     }
+    case Currency::CurrBitcoinCash:
+    {
+        beam::Amount total = _amountSentGrothes + _sentFeeGrothes;
+        return AppModel::getInstance().getBitcoinCashClient()->getAvailable() > total;
+    }
+    case Currency::CurrBitcoinSV:
+    {
+        beam::Amount total = _amountSentGrothes + _sentFeeGrothes;
+        return AppModel::getInstance().getBitcoinSVClient()->getAvailable() > total;
+    }
+    case Currency::CurrDash:
+    {
+        beam::Amount total = _amountSentGrothes + _sentFeeGrothes;
+        return AppModel::getInstance().getDashClient()->getAvailable() > total;
+    }
+    case Currency::CurrDogecoin:
+    {
+        beam::Amount total = _amountSentGrothes + _sentFeeGrothes;
+        return AppModel::getInstance().getDogecoinClient()->getAvailable() > total;
+    }
     default:
     {
         assert(false);
@@ -450,6 +470,14 @@ namespace
             return beam::wallet::AtomicSwapCoin::Litecoin;
         case Currency::CurrQtum:
             return beam::wallet::AtomicSwapCoin::Qtum;
+        case Currency::CurrBitcoinCash:
+            return beam::wallet::AtomicSwapCoin::Bitcoin_Cash;
+        case Currency::CurrBitcoinSV:
+            return beam::wallet::AtomicSwapCoin::Bitcoin_SV;
+        case Currency::CurrDash:
+            return beam::wallet::AtomicSwapCoin::Dash;
+        case Currency::CurrDogecoin:
+            return beam::wallet::AtomicSwapCoin::Dogecoin;
         default:
             return beam::wallet::AtomicSwapCoin::Unknown;
         }

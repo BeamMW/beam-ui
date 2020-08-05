@@ -175,14 +175,7 @@ bool SwapTxObject::isDeleteAvailable() const
 
 auto SwapTxObject::getSwapCoinName() const -> QString
 {
-    switch (m_swapTx.getSwapCoin())
-    {
-        case AtomicSwapCoin::Bitcoin:   return toString(beamui::Currencies::Bitcoin);
-        case AtomicSwapCoin::Litecoin:  return toString(beamui::Currencies::Litecoin);
-        case AtomicSwapCoin::Qtum:      return toString(beamui::Currencies::Qtum);
-        case AtomicSwapCoin::Unknown:   // no break
-        default:                        return toString(beamui::Currencies::Unknown);
-    }
+    return toString(beamui::convertSwapCoinToCurrency(m_swapTx.getSwapCoin()));
 }
 
 QString SwapTxObject::getSentAmountWithCurrency() const
@@ -291,10 +284,14 @@ QString SwapTxObject::getSwapCoinFee() const
 
     switch (m_swapTx.getSwapCoin())
     {
-        case AtomicSwapCoin::Bitcoin:   coinTypeQt = Currency::CurrBitcoin; break;
-        case AtomicSwapCoin::Litecoin:  coinTypeQt = Currency::CurrLitecoin; break;
-        case AtomicSwapCoin::Qtum:      coinTypeQt = Currency::CurrQtum; break;
-        default:                        coinTypeQt = Currency::CurrStart; break;
+        case AtomicSwapCoin::Bitcoin:       coinTypeQt = Currency::CurrBitcoin; break;
+        case AtomicSwapCoin::Litecoin:      coinTypeQt = Currency::CurrLitecoin; break;
+        case AtomicSwapCoin::Qtum:          coinTypeQt = Currency::CurrQtum; break;
+        case AtomicSwapCoin::Bitcoin_Cash:  coinTypeQt = Currency::CurrBitcoinCash; break;
+        case AtomicSwapCoin::Bitcoin_SV:    coinTypeQt = Currency::CurrBitcoinSV; break;
+        case AtomicSwapCoin::Dash:          coinTypeQt = Currency::CurrDash; break;
+        case AtomicSwapCoin::Dogecoin:      coinTypeQt = Currency::CurrDogecoin; break;
+        default:                            coinTypeQt = Currency::CurrStart; break;
     }
     return QMLGlobals::calcTotalFee(coinTypeQt, *feeRate);
 }
