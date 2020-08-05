@@ -76,9 +76,9 @@ Dialog {
                 font.pixelSize:         14
                 text:                   viewModel.isPermanent ? 
                                         //% "Permanent" 
-                                        qsTrId("token-permanent")
+                                        qsTrId("token-info-dialog-permanent")
                                         //% "One time"
-                                        : qsTrId("token-one-time")
+                                        : qsTrId("token-info-dialog-one-time")
                 color:                  Style.content_main
             }
             

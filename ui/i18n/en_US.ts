@@ -2326,14 +2326,14 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="token-one-time">
-        <source>One time</source>
-        <oldsource>One-time use</oldsource>
-        <translation type="unfinished"></translation>
+        <source>One-time use</source>
+        <oldsource>One time</oldsource>
+        <translation>One-time use</translation>
     </message>
     <message id="token-permanent">
-        <source>Permanent</source>
-        <oldsource>Permanent token</oldsource>
-        <translation type="unfinished"></translation>
+        <source>Permanent token</source>
+        <oldsource>Permanent</oldsource>
+        <translation>Permanent</translation>
     </message>
     <message id="tx-regular">
         <source>Regular</source>
@@ -2509,6 +2509,14 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="send-confirmation-type-label">
         <source>Type</source>
         <translation type="unfinished">Type</translation>
+    </message>
+    <message id="token-info-dialog-permanent">
+        <source>Permanent</source>
+        <translation>Permanent</translation>
+    </message>
+    <message id="token-info-dialog-one-time">
+        <source>One time</source>
+        <translation>One time</translation>
     </message>
 </context>
 </TS>

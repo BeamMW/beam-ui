@@ -2355,13 +2355,13 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="token-one-time">
-        <source>One time</source>
-        <oldsource>One-time use</oldsource>
+        <source>One-time use</source>
+        <oldsource>One time</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="token-permanent">
-        <source>Permanent</source>
-        <oldsource>Permanent token</oldsource>
+        <source>Permanent token</source>
+        <oldsource>Permanent</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-regular">
@@ -2538,6 +2538,14 @@ Your version is: %2. Please, check for updates.</source>
     <message id="send-confirmation-type-label">
         <source>Type</source>
         <translation type="unfinished">ประเภท</translation>
+    </message>
+    <message id="token-info-dialog-permanent">
+        <source>Permanent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="token-info-dialog-one-time">
+        <source>One time</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
