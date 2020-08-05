@@ -1217,9 +1217,9 @@ const QList<QObject*>& SettingsViewModel::getSwapCoinSettings()
         m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getLitecoinClient(), beam::wallet::AtomicSwapCoin::Litecoin));
         m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getQtumClient(), beam::wallet::AtomicSwapCoin::Qtum));
         m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getBitcoinCashClient(), beam::wallet::AtomicSwapCoin::Bitcoin_Cash));
-        m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getBitcoinSVClient(), beam::wallet::AtomicSwapCoin::Dash));
+        m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getBitcoinSVClient(), beam::wallet::AtomicSwapCoin::Bitcoin_SV));
         m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getDogecoinClient(), beam::wallet::AtomicSwapCoin::Dogecoin));
-        m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getDashClient(), beam::wallet::AtomicSwapCoin::Bitcoin_SV));
+        m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getDashClient(), beam::wallet::AtomicSwapCoin::Dash));
     }
     return m_swapSettings;
 }
