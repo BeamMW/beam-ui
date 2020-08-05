@@ -82,6 +82,11 @@ void SwapCoinClientModel::OnBalance(const bitcoin::Client::Balance& balance)
     emit gotBalance(balance);
 }
 
+void SwapCoinClientModel::OnEstimatedFeeRate(Amount feeRate)
+{
+    // TODO need to implement
+}
+
 void SwapCoinClientModel::OnCanModifySettingsChanged(bool canModify)
 {
     emit gotCanModifySettings(canModify);

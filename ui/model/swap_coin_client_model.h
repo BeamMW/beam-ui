@@ -49,6 +49,7 @@ signals:
 private:
     void OnStatus(Status status) override;
     void OnBalance(const Client::Balance& balance) override;
+    void OnEstimatedFeeRate(beam::Amount feeRate) override;
     void OnCanModifySettingsChanged(bool canModify) override;
     void OnChangedSettings() override;
     void OnConnectionError(beam::bitcoin::IBridge::ErrorType error) override;
