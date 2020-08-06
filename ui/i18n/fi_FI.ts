@@ -2553,5 +2553,9 @@ Your version is: %2. Please, check for updates.</source>
         <source>This type of address does not support max privacy transactions</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="from-shielded-pool">
+        <source>shielded pool</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
