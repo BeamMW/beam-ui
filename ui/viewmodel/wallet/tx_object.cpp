@@ -195,7 +195,7 @@ bool TxObject::isDeleteAvailable() const
 
 QString TxObject::getAddressFrom() const
 {
-    if (m_tx.m_txType == wallet::TxType::PushTransaction)
+    if (m_tx.m_txType == wallet::TxType::PushTransaction && !m_tx.m_sender)
     {
         //% "shielded pool"
         return qtTrId("from-shielded-pool");
