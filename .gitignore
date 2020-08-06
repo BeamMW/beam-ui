@@ -68,3 +68,18 @@ ui/translations.qrc
 beam_version.gen
 
 /beam_version.gen
+
+# linux CLion
+moc_*
+*_qml.cpp
+*_qmlcache.cpp
+*.qrc.depends
+CPackConfig.cmake
+CPackSourceConfig.cmake
+*_qmlcache.qrc
+/ui/beam-wallet-ui_autogen
+qmlcache_loader.cpp
+/ui/BeamWalletMasternet
+/ui/version.h
+beam-ui.cbp
+

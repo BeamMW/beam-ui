@@ -2248,9 +2248,10 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-remote-node-address">
-        <source>Remote node address</source>
+        <source>Node address</source>
+        <oldsource>Remote node address</oldsource>
         <extracomment>settings tab, node section, address label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Node Address</translation>
     </message>
     <message id="settings-peers-title">
         <source>Peers</source>

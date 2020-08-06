@@ -62,22 +62,22 @@ SettingsFoldable {
 
             SFText {
                 //: settings tab, node section, address label
-                //% "Remote node address"
+                //% "Node address"
                 text: qsTrId("settings-remote-node-address")
                 color: Style.content_secondary
-                Layout.fillWidth: true
                 font.pixelSize: 14
                 wrapMode: Text.NoWrap
             }
 
             ColumnLayout {
                 Layout.alignment: Qt.AlignTop
+                Layout.fillWidth: true
                 spacing: 0
 
                 SFTextInput {
                     id: nodeAddress
-                    Layout.preferredWidth: 100
-                    Layout.alignment: Qt.AlignRight
+                    Layout.preferredWidth: 170
+                    Layout.alignment: Qt.AlignLeft
                     topPadding: 0
                     focus: true
                     activeFocusOnTab: true
@@ -94,7 +94,7 @@ SettingsFoldable {
                 }
                 Item {
                     id: nodeAddressError
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 170
                     Layout.alignment: Qt.AlignRight
                     SFText {
                         color:          Style.validator_error
@@ -110,19 +110,19 @@ SettingsFoldable {
             SFText {
                 text: qsTrId("settings-local-node-port")
                 color: Style.content_secondary
-                Layout.fillWidth: true
                 font.pixelSize: 14
                 wrapMode: Text.NoWrap
             }
 
             ColumnLayout {
                 Layout.alignment: Qt.AlignTop
+                Layout.fillWidth: true
                 spacing: 0
 
                 SFTextInput {
                     id: remoteNodePort
                     Layout.alignment: Qt.AlignRight
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 170
                     activeFocusOnTab: true
                     font.pixelSize: 14
                     color: !remoteNodePort.acceptableInput ? Style.validator_error : Style.content_main
@@ -137,7 +137,7 @@ SettingsFoldable {
                 }
                 Item {
                     id: nodePortError
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 170
                     Layout.alignment: Qt.AlignRight
                     SFText {
                         color:          Style.validator_error
