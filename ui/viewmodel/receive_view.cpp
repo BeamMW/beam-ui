@@ -204,7 +204,7 @@ void ReceiveViewModel::saveAddress()
 
     if (getCommentValid()) {
         _receiverAddress.m_label = _addressComment.toStdString();
-        _receiverAddress.m_duration = isPermanentAddress() == false ? WalletAddress::AddressExpiration24h : WalletAddress::AddressExpirationNever;
+        _receiverAddress.setExpiration(isPermanentAddress() ? WalletAddress::ExpirationStatus::Never : WalletAddress::ExpirationStatus::OneDay);
         _walletModel.getAsync()->saveAddress(_receiverAddress, true);
     }
 }
