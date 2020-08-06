@@ -53,6 +53,9 @@ void UtxoViewModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const st
 
     for (const auto& t : utxos)
     {
+        if (t.isAsset()) {
+            continue;
+        }
         modifiedItems.push_back(make_shared<UtxoItem>(t));
     }
 
