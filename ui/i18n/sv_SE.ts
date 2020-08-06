@@ -2559,5 +2559,9 @@ Your version is: %2. Please, check for updates.</source>
         <source>shielded pool</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-receive-max-privacy-unsupported">
+        <source>Connect to integrated or own node to enable sending max privacy transactions</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

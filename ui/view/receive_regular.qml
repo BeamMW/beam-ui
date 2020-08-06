@@ -151,9 +151,10 @@ ColumnLayout {
                         content: 
                         ColumnLayout {
                             spacing: 20
-                    
+                            property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
                             Pane {
                                 padding:    2
+                                visible:    parent.isShieldedSupported
                                 background: Rectangle {
                                     color: Style.table_header
                                     radius: 10
@@ -252,6 +253,17 @@ ColumnLayout {
                                                         qsTrId("wallet-send-max-privacy-note")
                                 }
                             }
+                            SFText {
+                                Layout.fillWidth:   true
+                                visible:            !parent.isShieldedSupported
+                                color:              Style.content_secondary
+                                font.italic:        true
+                                font.pixelSize:     14
+                                wrapMode:           Text.WordWrap
+                                //% "Connect to integrated or own node to enable sending max privacy transactions"
+                                text:               qsTrId("wallet-receive-max-privacy-unsupported")
+                            }
+                            
                         }
                     }
                     //
