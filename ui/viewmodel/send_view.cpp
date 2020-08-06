@@ -189,6 +189,7 @@ bool SendViewModel::canChangeTxType() const
 {
     return _canChangeTxType;
 }
+
 void SendViewModel::setCanChangeTxType(bool value)
 {
     if (_canChangeTxType != value)

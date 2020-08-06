@@ -265,7 +265,7 @@ ColumnLayout {
                             RowLayout {
                                 spacing:            10
                                 Layout.topMargin:   20
-                                visible:            viewModel.canChangeTxType
+                                visible:            viewModel.isToken && viewModel.canChangeTxType
                                 SFText {
                                     //% "Max privacy"
                                     text: qsTrId("general-max-privacy")
@@ -293,7 +293,16 @@ ColumnLayout {
                                 }
                             }
                     
-
+                            SFText {
+                                Layout.alignment:   Qt.AlignTop
+                                Layout.topMargin:   10
+                                color:              Style.content_secondary
+                                font.italic:        true
+                                font.pixelSize:     14
+                                //% "This type of address does not support max privacy transactions"
+                                text:               qsTrId("wallet-send-max-privacy-unsupported")
+                                visible:            !viewModel.isToken && viewModel.receiverTAValid
+                            }
                             SFText {
                                 Layout.alignment:   Qt.AlignTop
                                 Layout.topMargin:   20

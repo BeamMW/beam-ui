@@ -2549,5 +2549,9 @@ Your version is: %2. Please, check for updates.</source>
         <source>Expired.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-send-max-privacy-unsupported">
+        <source>This type of address does not support max privacy transactions</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
