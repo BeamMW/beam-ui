@@ -27,8 +27,8 @@ ConfirmationDialog {
     readonly property bool      showSecondCurrency: secondCurrencyLabel != ""
     readonly property string    currencyLabel:  BeamGlobals.getCurrencyLabel(sendViewConfirm.currency)
     readonly property string    feeLabel:       !sendViewConfirm.swapMode
-                                                //% "Transaction fee"
-                                                ? (qsTrId("general-fee") + ":")
+                                                //% "Fee"
+                                                ? (qsTrId("send-regular-fee") + ":")
                                                 : (sendViewConfirm.currency == Currency.CurrBeam
                                                     //% "BEAM Transaction fee"
                                                     ? (qsTrId("beam-transaction-fee") + ":")

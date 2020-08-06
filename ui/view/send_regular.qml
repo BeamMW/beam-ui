@@ -514,7 +514,7 @@ ColumnLayout {
                                 Layout.fillWidth:       true
                                 font.pixelSize:         14
                                 color:                  Style.content_secondary
-                                text:                   qsTrId("general-fee") + ":"
+                                text:                   qsTrId("send-regular-fee") + ":"
                             }
                     
                             BeamAmount {
