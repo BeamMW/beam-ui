@@ -2466,7 +2466,8 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-send-one-time-note">
-        <source>One-time use token (expire in 2 hours after succesfull transaction).</source>
+        <source>One-time use token (expire in 12 hours after succesfull transaction).</source>
+        <oldsource>One-time use token (expire in 2 hours after succesfull transaction).</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="general-max-privacy">

@@ -257,7 +257,7 @@ ColumnLayout {
                                                     //% "Permanent token (you can save it to contacts after send)."
                                                     qsTrId("wallet-send-permanent-note") 
                                                     :
-                                                    //% "One-time use token (expire in 2 hours after succesfull transaction)."
+                                                    //% "One-time use token (expire in 12 hours after succesfull transaction)."
                                                     qsTrId("wallet-send-one-time-note")
                                 visible:            viewModel.isToken && !(viewModel.isShieldedTx && viewModel.isNonInteractive)
                             }
