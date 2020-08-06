@@ -49,7 +49,8 @@ please review your settings and try again"
     }
 
     function isValid () {
-        return receiveAmountInput.isValid && sendAmountInput.isValid;
+        return receiveAmountInput.isValid && sendAmountInput.isValid &&
+               receiveFeeInput.isValid && sendFeeInput.isValid;
     }
 
     SwapNADialog {
