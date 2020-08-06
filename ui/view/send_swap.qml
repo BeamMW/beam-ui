@@ -101,8 +101,8 @@ please review your settings and try again"
 
         onTriggered: {
             const expired = viewModel.expiresTime < (new Date())
-            expiresTitle.color = expired ? Style.validator_error : Style.content_secondary
             expires.color = expired ? Style.validator_error : Style.content_main
+            expiredLabel.visible = expired
         }
     }
 
@@ -223,6 +223,7 @@ please review your settings and try again"
                         content: FeeInput {
                             id:                         sendFeeInput
                             //fee:                        viewModel.sendFee
+                            currency:                   viewModel.sendCurrency
                             minFee:                     BeamGlobals.getMinimalFee(viewModel.sendCurrency, false)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(viewModel.sendCurrency)
                             color:                      Style.accent_outgoing
@@ -316,12 +317,6 @@ please review your settings and try again"
                             }
                         }
 
-                        Binding {
-                            target:   viewModel
-                            property: "receiveFee"
-                            value:    receiveAmountInput.fee
-                        }
-
                         Connections {
                             target: viewModel
                             onIsReceiveFeeOKChanged: receiveAmountInput.error = receiveAmountInput.getErrorText()
@@ -336,6 +331,7 @@ please review your settings and try again"
                         folded:                  false
                         content: FeeInput {
                             id:                         receiveFeeInput
+                            currency:                   viewModel.receiveCurrency
                             minFee:                     BeamGlobals.getMinimalFee(viewModel.receiveCurrency, false)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(viewModel.receiveCurrency)
                             color:                      Style.accent_outgoing
@@ -419,12 +415,21 @@ please review your settings and try again"
                                     //% "Expires on"
                                     text:                   qsTrId("wallet-send-swap-expires-label") + ":"
                                 }
-    
-                                SFText {
-                                    id:               expires
-                                    font.pixelSize:   14
-                                    color:            Style.content_main
-                                    text:             Utils.formatDateTime(viewModel.expiresTime, BeamGlobals.getLocaleName())
+                                ColumnLayout {
+                                    SFText {
+                                        id:               expires
+                                        font.pixelSize:   14
+                                        color:            Style.content_main
+                                        text:             Utils.formatDateTime(viewModel.expiresTime, BeamGlobals.getLocaleName())
+                                    }
+                                    SFText {
+                                        id:               expiredLabel
+                                        font.pixelSize:   14
+                                        color:            Style.validator_error
+                                        //% "Expired."
+                                        text:             qsTrId("swap-expired")
+                                        visible:          false
+                                    }
                                 }
 
                                 SFText {

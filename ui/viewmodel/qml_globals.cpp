@@ -177,7 +177,6 @@ bool QMLGlobals::isFeeOK(uint32_t fee, Currency currency, bool isShielded)
     case Currency::CurrLitecoin:  return true;
     case Currency::CurrQtum: return true;
     default:
-        assert(false);
         return false;
     }
 }
@@ -227,7 +226,6 @@ QString QMLGlobals::calcTotalFee(Currency currency, unsigned int feeRate)
             return QString::fromStdString(std::to_string(total)) + " qsat";
         }
         default: {
-            assert(false);
             return QString();
         }
     }

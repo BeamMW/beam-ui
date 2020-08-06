@@ -24,10 +24,10 @@
 SendSwapViewModel::SendSwapViewModel()
     : _sendAmountGrothes(0)
     , _sendFeeGrothes(0)
-    , _sendCurrency(Currency::CurrBeam)
+    , _sendCurrency(Currency::CurrStart)
     , _receiveAmountGrothes(0)
     , _receiveFeeGrothes(0)
-    , _receiveCurrency(Currency::CurrBitcoin)
+    , _receiveCurrency(Currency::CurrStart)
     , _changeGrothes(0)
     , _walletModel(*AppModel::getInstance().getWallet())
     , _isBeamSide(true)
@@ -373,8 +373,7 @@ bool SendSwapViewModel::isEnough() const
     }
     default:
     {
-        assert(false);
-        return true;
+        return false;
     }
     }
 }

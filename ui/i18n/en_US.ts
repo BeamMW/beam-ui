@@ -2518,5 +2518,9 @@ Your version is: %2. Please, check for updates.</translation>
         <source>One time</source>
         <translation>One time</translation>
     </message>
+    <message id="swap-expired">
+        <source>Expired.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -95,6 +95,12 @@ ColumnLayout {
                         //% "Paste token here"
                         placeholderText:  qsTrId("send-swap-token-hint")
 
+                        onTextPasted: {
+                            if (BeamGlobals.isSwapToken(text)) {
+                                onSwapToken(text)
+                            }
+                        }
+
                         onAccepted: {
                             if (BeamGlobals.isSwapToken(text)) {
                                 onSwapToken(text)
