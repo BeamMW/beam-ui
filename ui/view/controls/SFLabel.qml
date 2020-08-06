@@ -9,7 +9,6 @@ Label {
     property bool enableBackgroundRect: true
     property color selectionColor: control.palette.highlight
     property color selectedTextColor: control.palette.highlightedText
-    property color textColor: control.palette.text
 
     signal copyText()
 
@@ -53,6 +52,7 @@ Label {
             modal: true
             dim: false
             enabled: parent.copyMenuEnabled
+            property color prevColor
             Action {
                 //% "Copy"
                 text: qsTrId("general-copy")
@@ -63,16 +63,14 @@ Label {
             onOpened: {
                 if (parent.enableBackgroundRect)
                     parent.background.visible = true;
+                
+                prevColor = parent.color
                 parent.color = parent.selectedTextColor;
             }
             onClosed: {
-                parent.color = parent.textColor;
+                parent.color = prevColor;
                 parent.background.visible = false;
             }
         }
-    }
-
-    Component.onCompleted: {
-        control.textColor = control.color;
     }
 }
