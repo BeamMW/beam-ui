@@ -95,7 +95,7 @@ void SwapCoinClientModel::OnBalance(const bitcoin::Client::Balance& balance)
 
 void SwapCoinClientModel::OnEstimatedFeeRate(Amount feeRate)
 {
-    emit gotEstimateFeeRate(feeRate);
+    emit gotEstimatedFeeRate(feeRate);
 }
 
 void SwapCoinClientModel::OnCanModifySettingsChanged(bool canModify)

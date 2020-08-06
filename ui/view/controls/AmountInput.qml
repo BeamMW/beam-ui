@@ -240,6 +240,7 @@ ColumnLayout {
                 id:               feeInput
                 Layout.fillWidth: true
                 fee:              control.fee
+                recommendedFee:   BeamGlobals.getRecommendedFee(control.currency)
                 minFee:           BeamGlobals.getMinimalFee(control.currency, false)
                 feeLabel:         BeamGlobals.getFeeRateLabel(control.currency)
                 color:            control.color

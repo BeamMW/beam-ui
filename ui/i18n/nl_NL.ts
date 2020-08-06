@@ -2561,5 +2561,9 @@ Your version is: %2. Please, check for updates.</source>
         <source>Connect to integrated or own node to enable sending max privacy transactions</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="general-recommended-fee-fail">
+        <source>The minimum recommended fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

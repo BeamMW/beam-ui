@@ -390,28 +390,50 @@ unsigned int QMLGlobals::getMinimalFee(Currency currency, bool isShielded)
     }
 }
 
+unsigned int QMLGlobals::getRecommendedFee(Currency currency)
+{
+    switch (currency)
+    {
+    case Currency::CurrBitcoin:
+    {
+        return AppModel::getInstance().getBitcoinClient()->getEstimatedFeeRate();
+    }
+    case Currency::CurrLitecoin:
+    {
+        return AppModel::getInstance().getLitecoinClient()->getEstimatedFeeRate();
+    }
+    case Currency::CurrQtum:
+    {
+        return AppModel::getInstance().getQtumClient()->getEstimatedFeeRate();
+    }
+    default:
+        return 0;
+    }
+}
+
 unsigned int QMLGlobals::getDefaultFee(Currency currency)
 {
     switch (currency)
     {
         case Currency::CurrBeam:
+        {
             return minFeeBeam();
+        }
         
         case Currency::CurrBitcoin:
         {
-            const auto btcSettings = AppModel::getInstance().getBitcoinClient()->GetSettings();
-            return btcSettings.GetFeeRate();
+            return AppModel::getInstance().getBitcoinClient()->getEstimatedFeeRate();
         }
 
         case Currency::CurrLitecoin:
         {
-            const auto ltcSettings = AppModel::getInstance().getLitecoinClient()->GetSettings();
-            return ltcSettings.GetFeeRate();
+            return AppModel::getInstance().getLitecoinClient()->getEstimatedFeeRate();
         }
         
         case Currency::CurrQtum:
-            return AppModel::getInstance().getQtumClient()->GetSettings().GetFeeRate();
-
+        {
+            return AppModel::getInstance().getQtumClient()->getEstimatedFeeRate();
+        }
         default:
             return 0;
     }
@@ -420,19 +442,24 @@ unsigned int QMLGlobals::getDefaultFee(Currency currency)
 bool QMLGlobals::isSwapFeeOK(unsigned int amount, unsigned int fee, Currency currency)
 {
     switch (currency) {
-        case Currency::CurrBeam: {
+        case Currency::CurrBeam:
+        {
             return amount > fee && fee >= QMLGlobals::minFeeBeam();
         }
-        case Currency::CurrBitcoin: {
+        case Currency::CurrBitcoin:
+        {
             return beam::wallet::BitcoinSide::CheckAmount(amount, fee);
         }
-        case Currency::CurrLitecoin: {
+        case Currency::CurrLitecoin:
+        {
             return beam::wallet::LitecoinSide::CheckAmount(amount, fee);
         }
-        case Currency::CurrQtum: {
+        case Currency::CurrQtum:
+        {
             return beam::wallet::QtumSide::CheckAmount(amount, fee);
         }
-        default: {
+        default:
+        {
             assert(false);
             return true;
         }

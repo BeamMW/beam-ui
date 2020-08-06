@@ -39,7 +39,7 @@ public:
 signals:
     void gotStatus(beam::bitcoin::Client::Status status);
     void gotBalance(const beam::bitcoin::Client::Balance& balance);
-    void gotEstimateFeeRate(beam::Amount estimatedFeeRate);
+    void gotEstimatedFeeRate(beam::Amount estimatedFeeRate);
     void gotCanModifySettings(bool canModify);
     void gotConnectionError(const beam::bitcoin::IBridge::ErrorType& error);
 

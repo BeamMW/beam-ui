@@ -154,8 +154,15 @@ void ReceiveSwapViewModel::onSwapParamsLoaded(const beam::ByteBuffer& params)
 
             setReceiveCurrency(receiveCurrency);
             setSentCurrency(sentCurrency);
-            setReceiveFee(receiveFee);
-            setSentFee(sentFee);
+
+            if (receiveCurrency == Currency::CurrBeam)
+            {
+                setReceiveFee(receiveFee);
+            }
+            else
+            {
+                setSentFee(sentFee);
+            }
         }
         catch(...)
         {

@@ -10,11 +10,12 @@ ColumnLayout {
     property bool    fillWidth:                  false
     property bool    readOnly:                   false
     property int     minFee:                     0
+    property int     recommendedFee:             0
     property int     currency:                   Currency.CurrBeam
     property int     fee:                        BeamGlobals.getDefaultFee(control.currency)
     property string  feeLabel:                   undefined
     property string  color:                      Style.content_main
-    readonly property bool isValid:              control.fee >= control.minFee
+    readonly property bool isValid:              control.fee >= control.minFee && control.fee >= control.recommendedFee
     property alias underlineVisible:             feeInput.underlineVisible
     property int inputPreferredWidth:            150
     property bool    showSecondCurrency:         false
@@ -93,8 +94,11 @@ ColumnLayout {
         id:               minimumFeeNotification
         text:             minimumFeeNotificationText.length ?
                                 minimumFeeNotificationText :
-                                //% "The minimum fee is %1 %2"
-                                qsTrId("general-fee-fail").arg(Utils.uiStringToLocale(control.minFee)).arg(control.feeLabel)
+                                    control.recommendedFee > 0 ?
+                                        //% "The minimum recommended fee is %1 %2"
+                                        qsTrId("general-recommended-fee-fail").arg(Utils.uiStringToLocale(control.recommendedFee)).arg(control.feeLabel) :
+                                        //% "The minimum fee is %1 %2"
+                                        qsTrId("general-fee-fail").arg(Utils.uiStringToLocale(control.minFee)).arg(control.feeLabel)
         color:            Style.validator_error
         font.pixelSize:   14
         font.italic:      true
