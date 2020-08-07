@@ -240,14 +240,26 @@ QString NotificationItem::message() const
             case TxType::Simple:
             case TxType::PushTransaction:
             {
-                QString message = (isSender(p) ?
-                    //% "You sent <b>%1</b> BEAM to <b>%2</b>."
-                    qtTrId("notification-transaction-sent-message")
-                    :
-                    //% "You received <b>%1 BEAM</b> from <b>%2</b>."
-                    qtTrId("notification-transaction-received-message"));
-                //% "shielded pool"
-                return message.arg(getAmount(p)).arg(qtTrId("from-shielded-pool"));
+                QString message;
+                if (isSender(p))
+                {
+                    WalletID wid;
+                    getPeerID(p, wid);
+                    message =
+                        //% "You sent <b>%1</b> BEAM to <b>%2</b>."
+                        qtTrId("notification-transaction-sent-message").arg(getAmount(p))
+                        //% "shielded pool"
+                        .arg(std::to_string(wid).c_str());
+                }
+                else
+                {
+                    message =
+                        //% "You received <b>%1 BEAM</b> from <b>%2</b>."
+                        qtTrId("notification-transaction-received-message").arg(getAmount(p))
+                        //% "shielded pool"
+                        .arg(qtTrId("from-shielded-pool"));
+                }
+                return message;
             }
             case TxType::AtomicSwap:
             {
@@ -276,14 +288,26 @@ QString NotificationItem::message() const
             case TxType::Simple:
             case TxType::PushTransaction:
             {
-                QString message = (isSender(p) ?
-                    //% "Sending <b>%1 BEAM</b> to <b>%2</b> failed."
-                    qtTrId("notification-transaction-send-failed-message")
-                    :
-                    //% "Receiving <b>%1 BEAM</b> from <b>%2</b> failed."
-                    qtTrId("notification-transaction-receive-failed-message"));
-                //% "shielded pool"
-                return message.arg(getAmount(p)).arg(qtTrId("from-shielded-pool"));
+                QString message;
+                if (isSender(p))
+                {
+                    WalletID wid;
+                    getPeerID(p, wid);
+                    message =
+                        //% "Sending <b>%1 BEAM</b> to <b>%2</b> failed."
+                        qtTrId("notification-transaction-send-failed-message").arg(getAmount(p))
+                        //% "shielded pool"
+                        .arg(std::to_string(wid).c_str());
+                }
+                else
+                {
+                    message =
+                        //% "Receiving <b>%1 BEAM</b> from <b>%2</b> failed."
+                        qtTrId("notification-transaction-receive-failed-message").arg(getAmount(p))
+                        //% "shielded pool"
+                        .arg(qtTrId("from-shielded-pool"));
+                }
+                return message;
             }
             case TxType::AtomicSwap:
             {
