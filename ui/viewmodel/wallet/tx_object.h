@@ -53,6 +53,7 @@ public:
 
     bool isIncome() const;
     bool isSelfTx() const;
+    bool isMaxPrivacy() const;
     virtual bool isCancelAvailable() const;
     virtual bool isDeleteAvailable() const;
     virtual bool isInProgress() const;

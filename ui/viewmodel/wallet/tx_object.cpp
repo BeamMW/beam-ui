@@ -166,9 +166,14 @@ QString TxObject::getSecondCurrencyRate() const
 
 QString TxObject::getStatus() const
 {
-    if (m_tx.m_txType == wallet::TxType::Simple || m_tx.m_txType == wallet::TxType::PushTransaction)
+    if (m_tx.m_txType == wallet::TxType::Simple)
     {
         SimpleTxStatusInterpreter interpreter(m_tx);
+        return interpreter.getStatus().c_str();
+    }
+    else if (m_tx.m_txType == wallet::TxType::PushTransaction)
+    {
+        MaxPrivacyTxStatusInterpreter interpreter(m_tx);
         return interpreter.getStatus().c_str();
     }
     else if (m_tx.m_txType >= wallet::TxType::AssetIssue && m_tx.m_txType <= wallet::TxType::AssetInfo)
@@ -471,6 +476,11 @@ bool TxObject::isCompleted() const
 bool TxObject::isSelfTx() const
 {
     return m_tx.m_selfTx;
+}
+
+bool TxObject::isMaxPrivacy() const
+{
+    return m_tx.m_txType == TxType::PushTransaction;
 }
 
 bool TxObject::isCanceled() const

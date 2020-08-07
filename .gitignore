@@ -83,3 +83,5 @@ qmlcache_loader.cpp
 /ui/version.h
 beam-ui.cbp
 
+/CMakeLists.txt.user
+/ui/view/utils.jsc

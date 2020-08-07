@@ -57,7 +57,8 @@ public:
         StateDetails,
         Token,
         SenderIdentity,
-        ReceiverIdentity
+        ReceiverIdentity, 
+        IsMaxPrivacy
     };
 
     Q_ENUM(Roles)

@@ -2581,5 +2581,35 @@ Your version is: %2. Please, check for updates.</source>
         <source>Online</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-txs-status-in-progress-max">
+        <source>in progress
+max privacy</source>
+        <oldsource>in progress max privacy</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-sent-max">
+        <source>sent
+max privacy</source>
+        <oldsource>sent max privacy</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-received-max">
+        <source>received
+max privacy</source>
+        <oldsource>received max privacy</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-canceled-max">
+        <source>canceled
+max privacy</source>
+        <oldsource>canceled max privacy</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-failed-max">
+        <source>failed
+max privacy</source>
+        <oldsource>failed max privacy</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

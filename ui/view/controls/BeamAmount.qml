@@ -1,9 +1,8 @@
 import QtQuick 2.11
-import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.4
 import Beam.Wallet 1.0
 import "../utils.js" as Utils
 
@@ -21,14 +20,17 @@ Control {
     property bool    showDrop:        false
     property int     fontSize:        14
     property bool    lightFont:       true
+    property bool    boldFont:        false
     property string  iconSource:      ""
     property size    iconSize:        Qt.size(0, 0)
     property alias   copyMenuEnabled: amountText.copyMenuEnabled
     property alias   caption:         captionText.text
     property int     captionFontSize: 12
     property string  prefix:          ""
+    property alias   fontSizeMode:    amountText.fontSizeMode
 
     function getAmountInSecondCurrency() {
+        if (control.amount == "") return "-"
         var secondCurrencyAmount = 
             Utils.formatAmountToSecondCurrency(
                 control.amount,
@@ -41,14 +43,15 @@ Control {
         spacing: control.spacing
 
         SvgImage {
-            Layout.alignment:   Qt.AlignTop
-            Layout.topMargin:   12  
+            Layout.alignment:   Qt.AlignVCenter
             source:             control.iconSource
             sourceSize:         control.iconSize
             visible:            !!control.iconSource
         }
 
         ColumnLayout {
+            Layout.fillWidth:   true
+            Layout.alignment:   Qt.AlignVCenter
             SFLabel {
                 id:             captionText
                 visible:        text.length > 0
@@ -59,11 +62,13 @@ Control {
             }
 
             RowLayout {
+                Layout.fillWidth:   true
                 SFLabel {
+                    Layout.fillWidth:   true
                     id:              amountText
                     font.pixelSize:  fontSize
-                    font.styleName:  lightFont ? "Light" : "Regular"
-                    font.weight:     lightFont ? Font.Light : Font.Normal
+                    font.styleName:  lightFont ? "Light" : (boldFont ? "Bold" : "Regular")
+                    font.weight:     lightFont ? Font.Light : (boldFont ? Font.Bold : Font.Normal)
                     color:           control.error ? Style.validator_error : control.color
                     text:            parseFloat(amount) > 0 || showZero ? prefix + [Utils.uiStringToLocale(amount), control.currencySymbol].join(" ") : "-"
                     onCopyText:      BeamGlobals.copyToClipboard(amount)

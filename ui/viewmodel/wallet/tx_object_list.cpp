@@ -74,7 +74,36 @@ QString getStatusTextTranslated(const QString& status)
         //% "failed"
         return qtTrId("wallet-txs-status-failed");
     }
-
+    else if (status == "in progress max privacy")
+    {
+        /*% "in progress
+max privacy" */
+        return qtTrId("wallet-txs-status-in-progress-max");
+    }
+    else if (status == "sent max privacy")
+    {
+        /*% "sent
+max privacy"*/
+        return qtTrId("wallet-txs-status-sent-max");
+    }
+    else if (status == "received max privacy")
+    {
+        /*% "received
+max privacy" */
+        return qtTrId("wallet-txs-status-received-max");
+    }
+    else if (status == "canceled max privacy")
+    {
+        /*% "canceled
+max privacy"*/
+        return qtTrId("wallet-txs-status-canceled-max");
+    }
+    else if (status == "failed max privacy")
+    {
+        /*% "failed
+max privacy"*/
+        return qtTrId("wallet-txs-status-failed-max");
+    }
     else
     {
         //% "unknown"
@@ -127,6 +156,7 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::Token), "token" },
         { static_cast<int>(Roles::SenderIdentity), "senderIdentity"},
         { static_cast<int>(Roles::ReceiverIdentity), "receiverIdentity"},
+        { static_cast<int>(Roles::IsMaxPrivacy), "isMaxPrivacy"}
     };
     return roles;
 }
@@ -199,6 +229,9 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
 
         case Roles::IsSelfTransaction:
             return value->isSelfTx();
+
+        case Roles::IsMaxPrivacy:
+            return value->isMaxPrivacy();
 
         case Roles::IsIncome:
             return value->isIncome();
