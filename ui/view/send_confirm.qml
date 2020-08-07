@@ -130,13 +130,16 @@ ConfirmationDialog {
                 verticalAlignment:      Text.AlignTop
             }
 
+            property bool showMultiline: addressLabel.text.length < 68
+
             SFText {
                 id:                     addressLabel
                 Layout.fillWidth:       true
                 Layout.maximumWidth:    290
                 Layout.minimumHeight:   16
-                wrapMode:               Text.Wrap
+                wrapMode:               parent.showMultiline ? Text.Wrap : Text.NoWrap
                 maximumLineCount:       2
+                elide:                  parent.showMultiline ? Text.ElideNone : Text.ElideMiddle
                 font.pixelSize:         14
                 color:                  Style.content_main
             }

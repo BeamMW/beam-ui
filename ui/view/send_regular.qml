@@ -578,7 +578,7 @@ ColumnLayout {
                     const dialogComponent = Qt.createComponent("send_confirm.qml");
                     const dialogObject = dialogComponent.createObject(sendRegularView,
                         {
-                            addressText: viewModel.receiverAddress,
+                            addressText: viewModel.receiverTA,
                             typeText: viewModel.isShieldedTx ? qsTrId("tx-max-privacy") : qsTrId("tx-regular"),
                             currency: Currency.CurrBeam,
                             amount: viewModel.sendAmount,
