@@ -25,6 +25,7 @@ class TokenInfoItem : public QObject
     Q_PROPERTY(QString amountValue         READ getAmountValue         NOTIFY tokenChanged)
     Q_PROPERTY(QString address             READ getAddress             NOTIFY tokenChanged)
     Q_PROPERTY(QString identity            READ getIdentity            NOTIFY tokenChanged)
+    Q_PROPERTY(QString tokenType           READ getTokenType           NOTIFY tokenChanged)
     Q_PROPERTY(QString token               READ getToken               WRITE setToken   NOTIFY tokenChanged)
 
 public:
@@ -35,6 +36,7 @@ public:
     QString getAmountValue() const;
     QString getAddress() const;
     QString getIdentity() const;
+    QString getTokenType() const;
     QString getToken() const;
     void setToken(const QString& token);
 

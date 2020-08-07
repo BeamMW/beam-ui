@@ -60,28 +60,7 @@ Dialog {
                     text:               qsTrId("token-info-title")
                 }
             }
-        
-            // Token type
-            SFText {
-                Layout.alignment:       Qt.AlignTop
-                font.pixelSize:         14
-                color:                  Style.content_disabled
-                //% "Token type"
-                text:                   qsTrId("token-info-type") + ":"
-            }
-            
-            SFText {
-                Layout.fillWidth:       true
-                wrapMode:               Text.Wrap
-                font.pixelSize:         14
-                text:                   viewModel.isPermanent ? 
-                                        //% "Permanent" 
-                                        qsTrId("token-info-dialog-permanent")
-                                        //% "One time"
-                                        : qsTrId("token-info-dialog-one-time")
-                color:                  Style.content_main
-            }
-            
+
             // Amount
             SFText {
                 Layout.alignment:       Qt.AlignTop
@@ -101,7 +80,28 @@ Dialog {
                 text:                   viewModel.amount
                 visible:                viewModel.amount.length
             }
+        
+            // Token expiration
+            SFText {
+                Layout.alignment:       Qt.AlignTop
+                font.pixelSize:         14
+                color:                  Style.content_disabled
+                //% "Token expiration"
+                text:                   qsTrId("token-expiration") + ":"
+            }
             
+            SFText {
+                Layout.fillWidth:       true
+                wrapMode:               Text.Wrap
+                font.pixelSize:         14
+                text:                   viewModel.isPermanent ? 
+                                        //% "Permanent" 
+                                        qsTrId("token-info-dialog-permanent")
+                                        //% "One time"
+                                        : qsTrId("token-info-dialog-one-time")
+                color:                  Style.content_main
+            }
+
             // Transaction type:
             SFText {
                 Layout.alignment:       Qt.AlignTop
@@ -120,6 +120,25 @@ Dialog {
                 text:                   viewModel.transactionType
                 verticalAlignment:      Text.AlignBottom
                 visible:                viewModel.transactionType.length
+            }
+
+            // Token type
+            SFText {
+                Layout.alignment:       Qt.AlignTop
+                font.pixelSize:         14
+                color:                  Style.content_disabled
+                //% "Token type"
+                text:                   qsTrId("token-info-type") + ":"
+                visible:                viewModel.tokenType.length
+            }
+            
+            SFText {
+                Layout.fillWidth:       true
+                wrapMode:               Text.Wrap
+                font.pixelSize:         14
+                text:                   viewModel.tokenType
+                color:                  Style.content_main
+                visible:                viewModel.tokenType.length
             }
             
             // Address

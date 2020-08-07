@@ -57,7 +57,7 @@ QString TokenInfoItem::getTransactionType() const
             break;
         }
     }
-    return qtTrId("tx-regular");;
+    return qtTrId("tx-regular");
 }
 
 QString TokenInfoItem::getAmount() const
@@ -96,6 +96,31 @@ QString TokenInfoItem::getIdentity() const
     if (p)
     {
         return toString(*p);
+    }
+    return "";
+}
+
+QString TokenInfoItem::getTokenType() const
+{
+    auto p = m_parameters.GetParameter<TxType>(TxParameterID::TransactionType);
+    if (p)
+    {
+        switch (*p)
+        {
+        case TxType::PushTransaction:
+        {
+            auto vouchers = m_parameters.GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList);
+            if (vouchers && !vouchers->empty())
+            {
+                //% "Offline"
+                return qtTrId("tx-token-offline");
+            }
+            //% "Online"
+            return qtTrId("tx-tokne-online");
+        }
+        default:
+            break;
+        }
     }
     return "";
 }

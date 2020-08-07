@@ -2540,5 +2540,17 @@ Your version is: %2. Please, check for updates.</translation>
         <source>The minimum recommended fee is %1 %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="token-expiration">
+        <source>Token expiration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-token-offline">
+        <source>Offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-tokne-online">
+        <source>Online</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
