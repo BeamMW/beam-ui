@@ -434,7 +434,7 @@ QString TxObject::getReceiverIdentity() const
 
 bool TxObject::hasPaymentProof() const
 {
-    return !isIncome() && m_tx.m_status == wallet::TxStatus::Completed;
+    return !isIncome() && m_tx.m_status == wallet::TxStatus::Completed && m_tx.m_txType == TxType::Simple;
 }
 
 void TxObject::update(const beam::wallet::TxDescription& tx)
