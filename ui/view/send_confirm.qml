@@ -132,7 +132,7 @@ ConfirmationDialog {
 
             property bool showMultiline: addressLabel.text.length < 68
 
-            SFText {
+            SFLabel {
                 id:                     addressLabel
                 Layout.fillWidth:       true
                 Layout.maximumWidth:    290
@@ -142,6 +142,8 @@ ConfirmationDialog {
                 elide:                  parent.showMultiline ? Text.ElideNone : Text.ElideMiddle
                 font.pixelSize:         14
                 color:                  Style.content_main
+                copyMenuEnabled:        true
+                onCopyText:             BeamGlobals.copyToClipboard(text)
             }
 
             //
