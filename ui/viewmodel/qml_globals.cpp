@@ -228,6 +228,52 @@ int QMLGlobals::getMinFeeOrRate(Currency currency)
     }
 }
 
+beam::wallet::AtomicSwapCoin QMLGlobals::convertCurrencyToSwapCoin(Currency currency)
+{
+    switch (currency)
+    {
+        case Currency::CurrBitcoin:
+            return beam::wallet::AtomicSwapCoin::Bitcoin;
+        case Currency::CurrLitecoin:
+            return beam::wallet::AtomicSwapCoin::Litecoin;
+        case Currency::CurrQtum:
+            return beam::wallet::AtomicSwapCoin::Qtum;
+        case Currency::CurrBitcoinCash:
+            return beam::wallet::AtomicSwapCoin::Bitcoin_Cash;
+        case Currency::CurrBitcoinSV:
+            return beam::wallet::AtomicSwapCoin::Bitcoin_SV;
+        case Currency::CurrDash:
+            return beam::wallet::AtomicSwapCoin::Dash;
+        case Currency::CurrDogecoin:
+            return beam::wallet::AtomicSwapCoin::Dogecoin;
+        default:
+            return beam::wallet::AtomicSwapCoin::Unknown;
+    }
+}
+
+Currency QMLGlobals::convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin)
+{
+    switch (swapCoin)
+    {
+        case beam::wallet::AtomicSwapCoin::Bitcoin:
+            return Currency::CurrBitcoin;
+        case beam::wallet::AtomicSwapCoin::Litecoin:
+            return Currency::CurrLitecoin;
+        case beam::wallet::AtomicSwapCoin::Qtum:
+            return Currency::CurrQtum;
+        case beam::wallet::AtomicSwapCoin::Bitcoin_Cash:
+            return Currency::CurrBitcoinCash;
+        case beam::wallet::AtomicSwapCoin::Bitcoin_SV:
+            return Currency::CurrBitcoinSV;
+        case beam::wallet::AtomicSwapCoin::Dash:
+            return Currency::CurrDash;
+        case beam::wallet::AtomicSwapCoin::Dogecoin:
+            return Currency::CurrDogecoin;
+        default:
+            return Currency::CurrEnd;
+    }
+}
+
 QString QMLGlobals::calcTotalFee(Currency currency, unsigned int feeRate)
 {
     switch (currency) {
@@ -296,42 +342,15 @@ QString QMLGlobals::calcAmountInSecondCurrency(const QString& amount, const QStr
 
 bool QMLGlobals::canSwap()
 {
-    return haveBtc() || haveLtc() || haveQtum() || haveDash() || haveBsv() || haveBch() || haveDoge();
+    return haveSwapClient(Currency::CurrBitcoin) || haveSwapClient(Currency::CurrLitecoin) || haveSwapClient(Currency::CurrQtum)
+        || haveSwapClient(Currency::CurrBitcoinCash) || haveSwapClient(Currency::CurrBitcoinSV) || haveSwapClient(Currency::CurrDash)
+        || haveSwapClient(Currency::CurrDogecoin);
 }
 
-bool QMLGlobals::haveBtc()
+bool QMLGlobals::haveSwapClient(Currency currency)
 {
-    return AppModel::getInstance().getBitcoinClient()->GetSettings().IsActivated();
-}
-
-bool QMLGlobals::haveLtc()
-{
-    return AppModel::getInstance().getLitecoinClient()->GetSettings().IsActivated();
-}
-
-bool QMLGlobals::haveQtum()
-{
-    return AppModel::getInstance().getQtumClient()->GetSettings().IsActivated();
-}
-
-bool QMLGlobals::haveDash()
-{
-    return AppModel::getInstance().getDashClient()->GetSettings().IsActivated();
-}
-
-bool QMLGlobals::haveBsv()
-{
-    return AppModel::getInstance().getBitcoinSVClient()->GetSettings().IsActivated();
-}
-
-bool QMLGlobals::haveBch()
-{
-    return AppModel::getInstance().getBitcoinCashClient()->GetSettings().IsActivated();
-}
-
-bool QMLGlobals::haveDoge()
-{
-    return AppModel::getInstance().getDogecoinClient()->GetSettings().IsActivated();
+    auto swapCoin = convertCurrencyToSwapCoin(currency);
+    return AppModel::getInstance().getSwapCoinClient(swapCoin)->GetSettings().IsActivated();
 }
 
 QString QMLGlobals::rawTxParametrsToTokenStr(const QVariant& variantTxParams)
@@ -346,60 +365,14 @@ QString QMLGlobals::rawTxParametrsToTokenStr(const QVariant& variantTxParams)
 
 bool QMLGlobals::canReceive(Currency currency)
 {
-    switch(currency)
-    {
-    case Currency::CurrBeam:
+    if (Currency::CurrBeam == currency)
     {
         return true;
     }
-    case Currency::CurrBitcoin:
-    {
-        auto client = AppModel::getInstance().getBitcoinClient();
-        return client->GetSettings().IsActivated() &&
-               client->getStatus() == beam::bitcoin::Client::Status::Connected;
-    }
-    case Currency::CurrLitecoin:
-    {
-        auto client = AppModel::getInstance().getLitecoinClient();
-        return client->GetSettings().IsActivated() &&
-               client->getStatus() == beam::bitcoin::Client::Status::Connected;
-    }
-    case Currency::CurrQtum:
-    {
-        auto client = AppModel::getInstance().getQtumClient();
-        return client->GetSettings().IsActivated() &&
-               client->getStatus() == beam::bitcoin::Client::Status::Connected;
-    }
-    case Currency::CurrBitcoinCash:
-    {
-        auto client = AppModel::getInstance().getBitcoinCashClient();
-        return client->GetSettings().IsActivated() &&
-            client->getStatus() == beam::bitcoin::Client::Status::Connected;
-    }
-    case Currency::CurrBitcoinSV:
-    {
-        auto client = AppModel::getInstance().getBitcoinSVClient();
-        return client->GetSettings().IsActivated() &&
-            client->getStatus() == beam::bitcoin::Client::Status::Connected;
-    }
-    case Currency::CurrDogecoin:
-    {
-        auto client = AppModel::getInstance().getDogecoinClient();
-        return client->GetSettings().IsActivated() &&
-            client->getStatus() == beam::bitcoin::Client::Status::Connected;
-    }
-    case Currency::CurrDash:
-    {
-        auto client = AppModel::getInstance().getDashClient();
-        return client->GetSettings().IsActivated() &&
-            client->getStatus() == beam::bitcoin::Client::Status::Connected;
-    }
-    default:
-    {
-        assert(false);
-        return false;
-    }
-    }
+
+    auto swapCoin = convertCurrencyToSwapCoin(currency);
+    auto client = AppModel::getInstance().getSwapCoinClient(swapCoin);
+    return client->GetSettings().IsActivated() && client->getStatus() == beam::bitcoin::Client::Status::Connected;
 }
 
 QString QMLGlobals::getCurrencyLabel(Currency currency)
@@ -473,74 +446,24 @@ QString QMLGlobals::getCurrencySubunitFromLabel(const QString& currLabel)
 
 unsigned int QMLGlobals::getMinimalFee(Currency currency, bool isShielded)
 {
-    switch (currency)
+    if (Currency::CurrBeam == currency)
     {
-        case Currency::CurrBeam:
-            return minFeeBeam(isShielded);
-        
-        case Currency::CurrBitcoin:
-            return AppModel::getInstance().getBitcoinClient()->GetSettings().GetMinFeeRate();
-
-        case Currency::CurrLitecoin:
-            return AppModel::getInstance().getLitecoinClient()->GetSettings().GetMinFeeRate();
-        
-        case Currency::CurrQtum:
-            return AppModel::getInstance().getQtumClient()->GetSettings().GetMinFeeRate();
-
-        case Currency::CurrBitcoinCash:
-            return AppModel::getInstance().getBitcoinCashClient()->GetSettings().GetMinFeeRate();
-
-        case Currency::CurrBitcoinSV:
-            return AppModel::getInstance().getBitcoinSVClient()->GetSettings().GetMinFeeRate();
-
-        case Currency::CurrDogecoin:
-            return AppModel::getInstance().getDogecoinClient()->GetSettings().GetMinFeeRate();
-
-        case Currency::CurrDash:
-            return AppModel::getInstance().getDashClient()->GetSettings().GetMinFeeRate();
-
-        default:
-            return 0;
+        return minFeeBeam(isShielded);
     }
+
+    auto swapCoin = convertCurrencyToSwapCoin(currency);
+    return AppModel::getInstance().getSwapCoinClient(swapCoin)->GetSettings().GetMinFeeRate();
 }
 
 unsigned int QMLGlobals::getDefaultFee(Currency currency)
 {
-    switch (currency)
+    if (Currency::CurrBeam == currency)
     {
-        case Currency::CurrBeam:
-            return minFeeBeam();
-        
-        case Currency::CurrBitcoin:
-        {
-            const auto btcSettings = AppModel::getInstance().getBitcoinClient()->GetSettings();
-            return btcSettings.GetFeeRate();
-        }
-
-        case Currency::CurrLitecoin:
-        {
-            const auto ltcSettings = AppModel::getInstance().getLitecoinClient()->GetSettings();
-            return ltcSettings.GetFeeRate();
-        }
-        
-        case Currency::CurrQtum:
-            return AppModel::getInstance().getQtumClient()->GetSettings().GetFeeRate();
-
-        case Currency::CurrBitcoinCash:
-            return AppModel::getInstance().getBitcoinCashClient()->GetSettings().GetFeeRate();
-
-        case Currency::CurrBitcoinSV:
-            return AppModel::getInstance().getBitcoinSVClient()->GetSettings().GetFeeRate();
-
-        case Currency::CurrDogecoin:
-            return AppModel::getInstance().getDogecoinClient()->GetSettings().GetFeeRate();
-
-        case Currency::CurrDash:
-            return AppModel::getInstance().getDashClient()->GetSettings().GetFeeRate();
-
-        default:
-            return 0;
+        return minFeeBeam();
     }
+
+    auto swapCoin = convertCurrencyToSwapCoin(currency);
+    return AppModel::getInstance().getSwapCoinClient(swapCoin)->GetSettings().GetFeeRate();
 }
 
 bool QMLGlobals::isSwapFeeOK(unsigned int amount, unsigned int fee, Currency currency)

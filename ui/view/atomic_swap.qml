@@ -212,6 +212,7 @@ Item {
             }
 
             GridLayout {
+                id: amountPanes
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                 Layout.fillWidth: true
                 Layout.topMargin: 29
@@ -241,132 +242,69 @@ Item {
                 //% "Transaction is in progress"
                 property string kTxInProgress: qsTrId("swap-beta-tx-in-progress")
 
-                function btcActiveTxStr() {
-                    return viewModel.hasBtcTx ? kTxInProgress : "";
+                function getCurrencyIcon(currency) {
+                    switch(currency) {
+                        case Currency.CurrBitcoin:
+                            return "qrc:/assets/icon-btc.svg";
+                        case Currency.CurrLitecoin:
+                            return "qrc:/assets/icon-ltc.svg";
+                        case Currency.CurrQtum:
+                            return "qrc:/assets/icon-qtum.svg";
+                        // TODO: add icons
+                        case Currency.CurrBitcoinCash:
+                        case Currency.CurrBitcoinSV:
+                        case Currency.CurrDash:
+                        case Currency.CurrDogecoin:
+                            return "qrc:/assets/icon-btc.svg";
+
+                        default: return "";
+                    }
                 }
 
-                function ltcActiveTxStr() {
-                    return viewModel.hasLtcTx ? kTxInProgress : "";
+                function getSwapCurrencyPaneGradient(currency)  {
+                    switch(currency) {
+                        case Currency.CurrBitcoin:
+                            return Style.swapCurrencyPaneGrLeftBTC;
+                        case Currency.CurrLitecoin:
+                            return Style.swapCurrencyPaneGrLeftLTC;
+                        case Currency.CurrQtum:
+                            return Style.swapCurrencyPaneGrLeftQTUM;
+                        // TODO: change gradients
+                        case Currency.CurrBitcoinCash:
+                            return Style.swapCurrencyPaneGrLeftBCH;
+                        case Currency.CurrBitcoinSV:
+                            return Style.swapCurrencyPaneGrLeftBSV;
+                        case Currency.CurrDash:
+                            return Style.swapCurrencyPaneGrLeftDASH;
+                        case Currency.CurrDogecoin:
+                            return Style.swapCurrencyPaneGrLeftDOGE;
+                        default:
+                            return Style.swapCurrencyPaneGrLeftBTC;
+                    }
                 }
 
-                function qtumActiveTxStr() {
-                    return viewModel.hasQtumTx ? kTxInProgress : "";
-                }
+                Repeater {
+                    model: viewModel.swapClientList
 
-                function bchActiveTxStr() {
-                    return viewModel.hasBchTx ? kTxInProgress : "";
-                }
+                    SwapCurrencyAmountPane {
+                        gradLeft: amountPanes.getSwapCurrencyPaneGradient(modelData.currency)
+                        currencyIcon: amountPanes.getCurrencyIcon(modelData.currency)
+                        amount: modelData.hasActiveTx ? "" : modelData.available
+                        currencySymbol: BeamGlobals.getCurrencyLabel(modelData.currency)
+                        valueSecondaryStr: activeTxStr()
+                        isOk: modelData.isConnected
+                        isConnecting: modelData.isConnecting
+                        visible: BeamGlobals.haveSwapClient(modelData.currency)
+                        swapSettingsPane: BeamGlobals.getCurrencyLabel(modelData.currency)
+                        //% "Connecting..."
+                        textConnecting: qsTrId("swap-connecting")
+                        //% "Cannot connect to peer. Please check the address in Settings and try again."
+                        textConnectionError: qsTrId("swap-beta-connection-error")
 
-                function bsvActiveTxStr() {
-                    return viewModel.hasBsvTx ? kTxInProgress : "";
-                }
-
-                function dashActiveTxStr() {
-                    return viewModel.hasDashTx ? kTxInProgress : "";
-                }
-
-                function dogeActiveTxStr() {
-                    return viewModel.hasDogeTx ? kTxInProgress : "";
-                }
-
-                SwapCurrencyAmountPane {
-                    gradLeft: Style.swapCurrencyPaneGrLeftBTC
-                    currencyIcon: "qrc:/assets/icon-btc.svg"
-                    amount: viewModel.hasBtcTx ? "" : viewModel.btcAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrBitcoin)
-                    valueSecondaryStr: parent.btcActiveTxStr()
-                    isOk: viewModel.btcOK
-                    isConnecting: viewModel.btcConnecting
-                    visible: BeamGlobals.haveBtc()
-                    swapSettingsPane: "BTC"
-                    //% "Connecting..."
-                    textConnecting: qsTrId("swap-connecting")
-                    //% "Cannot connect to peer. Please check the address in Settings and try again."
-                    textConnectionError: qsTrId("swap-beta-connection-error")
-                }
-
-                SwapCurrencyAmountPane {
-                    gradLeft: Style.swapCurrencyPaneGrLeftLTC
-                    currencyIcon: "qrc:/assets/icon-ltc.svg"
-                    amount: viewModel.hasLtcTx ? "" : viewModel.ltcAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrLitecoin)
-                    valueSecondaryStr: parent.ltcActiveTxStr()
-                    isOk: viewModel.ltcOK
-                    isConnecting: viewModel.ltcConnecting
-                    visible: BeamGlobals.haveLtc()
-                    swapSettingsPane: "LTC"
-                    textConnecting: qsTrId("swap-connecting")
-                    textConnectionError: qsTrId("swap-beta-connection-error")
-                }
-
-                SwapCurrencyAmountPane {
-                    gradLeft: Style.swapCurrencyPaneGrLeftQTUM
-                    currencyIcon: "qrc:/assets/icon-qtum.svg"
-                    amount: viewModel.hasQtumTx ? "" : viewModel.qtumAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrQtum)
-                    valueSecondaryStr: parent.qtumActiveTxStr()
-                    isOk: viewModel.qtumOK
-                    isConnecting: viewModel.qtumConnecting
-                    visible: BeamGlobals.haveQtum()
-                    swapSettingsPane: "QTUM"
-                    textConnecting: qsTrId("swap-connecting")
-                    textConnectionError: qsTrId("swap-beta-connection-error")
-                }
-
-                SwapCurrencyAmountPane {
-                    gradLeft: Style.swapCurrencyPaneGrLeftBCH
-                    currencyIcon: "qrc:/assets/icon-btc.svg"
-                    amount: viewModel.hasBchTx ? "" : viewModel.bchAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrBitcoinCash)
-                    valueSecondaryStr: parent.bchActiveTxStr()
-                    isOk: viewModel.bchOK
-                    isConnecting: viewModel.bchConnecting
-                    visible: BeamGlobals.haveBch()
-                    swapSettingsPane: "BCH"
-                    textConnecting: qsTrId("swap-connecting")
-                    textConnectionError: qsTrId("swap-beta-connection-error")
-                }
-
-                SwapCurrencyAmountPane {
-                    gradLeft: Style.swapCurrencyPaneGrLeftBSV
-                    currencyIcon: "qrc:/assets/icon-btc.svg"
-                    amount: viewModel.hasBsvTx ? "" : viewModel.bsvAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrBitcoinSV)
-                    valueSecondaryStr: parent.bsvActiveTxStr()
-                    isOk: viewModel.bsvOK
-                    isConnecting: viewModel.bsvConnecting
-                    visible: BeamGlobals.haveBsv()
-                    swapSettingsPane: "BSV"
-                    textConnecting: qsTrId("swap-connecting")
-                    textConnectionError: qsTrId("swap-beta-connection-error")
-                }
-
-                SwapCurrencyAmountPane {
-                    gradLeft: Style.swapCurrencyPaneGrLeftDash
-                    currencyIcon: "qrc:/assets/icon-btc.svg"
-                    amount: viewModel.hasDashTx ? "" : viewModel.dashAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrDash)
-                    valueSecondaryStr: parent.dashActiveTxStr()
-                    isOk: viewModel.dashOK
-                    isConnecting: viewModel.dashConnecting
-                    visible: BeamGlobals.haveDash()
-                    swapSettingsPane: "DASH"
-                    textConnecting: qsTrId("swap-connecting")
-                    textConnectionError: qsTrId("swap-beta-connection-error")
-                }
-
-                SwapCurrencyAmountPane {
-                    gradLeft: Style.swapCurrencyPaneGrLeftDoge
-                    currencyIcon: "qrc:/assets/icon-btc.svg"
-                    amount: viewModel.hasDogeTx ? "" : viewModel.dogeAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrDogecoin)
-                    valueSecondaryStr: parent.dogeActiveTxStr()
-                    isOk: viewModel.dogeOK
-                    isConnecting: viewModel.dogeConnecting
-                    visible: BeamGlobals.haveDoge()
-                    swapSettingsPane: "DOGE"
-                    textConnecting: qsTrId("swap-connecting")
-                    textConnectionError: qsTrId("swap-beta-connection-error")
+                        function activeTxStr() {
+                            return modelData.hasActiveTx ? amountPanes.kTxInProgress : "";
+                        }
+                    }
                 }
 
                 SwapCurrencyAmountPane {
@@ -381,8 +319,7 @@ Item {
                     textColor: Style.active
                     isOk: true
                     borderSize: 1
-                    visible: !BeamGlobals.haveBtc() || !BeamGlobals.haveLtc() || !BeamGlobals.haveQtum() ||
-                             !BeamGlobals.haveBch() || !BeamGlobals.haveBsv() || !BeamGlobals.haveDash() || !BeamGlobals.haveDoge()
+                    visible: currencyIcons.length
                     MouseArea {
                         id:                clickArea
                         anchors.fill:      parent
@@ -394,22 +331,13 @@ Item {
                 }
                 Component.onCompleted: {
                     var currencyIcons = [];
-                    if (!BeamGlobals.haveBtc())
-                        currencyIcons.push("qrc:/assets/icon-btc.svg");
-                    if (!BeamGlobals.haveLtc())
-                        currencyIcons.push("qrc:/assets/icon-ltc.svg");
-                    if (!BeamGlobals.haveQtum())
-                        currencyIcons.push("qrc:/assets/icon-qtum.svg");
-                    // TODO: add icons
-                    if (!BeamGlobals.haveBch())
-                        currencyIcons.push("qrc:/assets/icon-btc.svg");
-                    if (!BeamGlobals.haveBsv())
-                        currencyIcons.push("qrc:/assets/icon-btc.svg");
-                    if (!BeamGlobals.haveDash())
-                        currencyIcons.push("qrc:/assets/icon-btc.svg");
-                    if (!BeamGlobals.haveDoge())
-                        currencyIcons.push("qrc:/assets/icon-btc.svg");
 
+                    for (var index = 0; index < viewModel.swapClientList.length; index++) {
+                        
+                        if (!BeamGlobals.haveSwapClient(viewModel.swapClientList[index].currency)) {
+                            currencyIcons.push(amountPanes.getCurrencyIcon(viewModel.swapClientList[index].currency));
+                        }                        
+                    }
 
                     swapOptions.currencyIcons = currencyIcons;
                 }

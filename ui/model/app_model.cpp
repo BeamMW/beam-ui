@@ -559,37 +559,47 @@ NodeModel& AppModel::getNode()
 
 SwapCoinClientModel::Ptr AppModel::getBitcoinClient() const
 {
-    return m_bitcoinClient;
+    return getSwapCoinClient(AtomicSwapCoin::Bitcoin);
 }
 
 SwapCoinClientModel::Ptr AppModel::getLitecoinClient() const
 {
-    return m_litecoinClient;
+    return getSwapCoinClient(AtomicSwapCoin::Litecoin);
 }
 
 SwapCoinClientModel::Ptr AppModel::getQtumClient() const
 {
-    return m_qtumClient;
+    return getSwapCoinClient(AtomicSwapCoin::Qtum);
 }
 
 SwapCoinClientModel::Ptr AppModel::getDogecoinClient() const
 {
-    return m_dogeClient;
+    return getSwapCoinClient(AtomicSwapCoin::Dogecoin);
 }
 
 SwapCoinClientModel::Ptr AppModel::getBitcoinCashClient() const
 {
-    return m_bchClient;
+    return getSwapCoinClient(AtomicSwapCoin::Bitcoin_Cash);
 }
 
 SwapCoinClientModel::Ptr AppModel::getBitcoinSVClient() const
 {
-    return m_bsvClient;
+    return getSwapCoinClient(AtomicSwapCoin::Bitcoin_SV);
 }
 
 SwapCoinClientModel::Ptr AppModel::getDashClient() const
 {
-    return m_dashClient;
+    return getSwapCoinClient(AtomicSwapCoin::Dash);
+}
+
+SwapCoinClientModel::Ptr AppModel::getSwapCoinClient(beam::wallet::AtomicSwapCoin swapCoin) const
+{
+    auto it = m_swapClients.find(swapCoin);
+    if (it != m_swapClients.end())
+    {
+        return it->second;
+    }
+    return nullptr;
 }
 
 void AppModel::InitSwapClients()
@@ -608,7 +618,8 @@ void AppModel::InitBtcClient()
     m_btcBridgeHolder = std::make_shared<bitcoin::BridgeHolder<bitcoin::Electrum, bitcoin::BitcoinCore017>>();
     auto settingsProvider = std::make_unique<bitcoin::SettingsProvider>(m_db);
     settingsProvider->Initialize();
-    m_bitcoinClient = std::make_shared<SwapCoinClientModel>(m_btcBridgeHolder, std::move(settingsProvider), *m_walletReactor);
+    auto client = std::make_shared<SwapCoinClientModel>(m_btcBridgeHolder, std::move(settingsProvider), *m_walletReactor);
+    m_swapClients.emplace(std::make_pair(AtomicSwapCoin::Bitcoin, client));
 }
 
 void AppModel::InitLtcClient()
@@ -616,7 +627,8 @@ void AppModel::InitLtcClient()
     m_ltcBridgeHolder = std::make_shared<bitcoin::BridgeHolder<litecoin::Electrum, litecoin::LitecoinCore017>>();
     auto settingsProvider = std::make_unique<litecoin::SettingsProvider>(m_db);
     settingsProvider->Initialize();
-    m_litecoinClient = std::make_shared<SwapCoinClientModel>(m_ltcBridgeHolder, std::move(settingsProvider), *m_walletReactor);
+    auto client = std::make_shared<SwapCoinClientModel>(m_ltcBridgeHolder, std::move(settingsProvider), *m_walletReactor);
+    m_swapClients.emplace(std::make_pair(AtomicSwapCoin::Litecoin, client));
 }
 
 void AppModel::InitQtumClient()
@@ -624,7 +636,8 @@ void AppModel::InitQtumClient()
     m_qtumBridgeHolder = std::make_shared<bitcoin::BridgeHolder<qtum::Electrum, qtum::QtumCore017>>();
     auto settingsProvider = std::make_unique<qtum::SettingsProvider>(m_db);
     settingsProvider->Initialize();
-    m_qtumClient = std::make_shared<SwapCoinClientModel>(m_qtumBridgeHolder, std::move(settingsProvider), *m_walletReactor);
+    auto client = std::make_shared<SwapCoinClientModel>(m_qtumBridgeHolder, std::move(settingsProvider), *m_walletReactor);
+    m_swapClients.emplace(std::make_pair(AtomicSwapCoin::Qtum, client));
 }
 
 void AppModel::InitDogeClient()
@@ -632,7 +645,8 @@ void AppModel::InitDogeClient()
     m_dogeBridgeHolder = std::make_shared<bitcoin::BridgeHolder<dogecoin::Electrum, dogecoin::DogecoinCore014>>();
     auto settingsProvider = std::make_unique<dogecoin::SettingsProvider>(m_db);
     settingsProvider->Initialize();
-    m_dogeClient = std::make_shared<SwapCoinClientModel>(m_dogeBridgeHolder, std::move(settingsProvider), *m_walletReactor);
+    auto client = std::make_shared<SwapCoinClientModel>(m_dogeBridgeHolder, std::move(settingsProvider), *m_walletReactor);
+    m_swapClients.emplace(std::make_pair(AtomicSwapCoin::Dogecoin, client));
 }
 
 void AppModel::InitBchClient()
@@ -640,7 +654,8 @@ void AppModel::InitBchClient()
     m_bchBridgeHolder = std::make_shared<bitcoin::BridgeHolder<bitcoin_cash::Electrum, bitcoin_cash::BitcoinCashCore>>();
     auto settingsProvider = std::make_unique<bitcoin_cash::SettingsProvider>(m_db);
     settingsProvider->Initialize();
-    m_bchClient = std::make_shared<SwapCoinClientModel>(m_bchBridgeHolder, std::move(settingsProvider), *m_walletReactor);
+    auto client = std::make_shared<SwapCoinClientModel>(m_bchBridgeHolder, std::move(settingsProvider), *m_walletReactor);
+    m_swapClients.emplace(std::make_pair(AtomicSwapCoin::Bitcoin_Cash, client));
 }
 
 void AppModel::InitBsvClient()
@@ -648,7 +663,8 @@ void AppModel::InitBsvClient()
     m_bsvBridgeHolder = std::make_shared<bitcoin::BridgeHolder<bitcoin_sv::Electrum, bitcoin_sv::BitcoinSVCore>>();
     auto settingsProvider = std::make_unique<bitcoin_sv::SettingsProvider>(m_db);
     settingsProvider->Initialize();
-    m_bsvClient = std::make_shared<SwapCoinClientModel>(m_bsvBridgeHolder, std::move(settingsProvider), *m_walletReactor);
+    auto client = std::make_shared<SwapCoinClientModel>(m_bsvBridgeHolder, std::move(settingsProvider), *m_walletReactor);
+    m_swapClients.emplace(std::make_pair(AtomicSwapCoin::Bitcoin_SV, client));
 }
 
 void AppModel::InitDashClient()
@@ -656,16 +672,11 @@ void AppModel::InitDashClient()
     m_dashBridgeHolder = std::make_shared<bitcoin::BridgeHolder<dash::Electrum, dash::DashCore014>>();
     auto settingsProvider = std::make_unique<dash::SettingsProvider>(m_db);
     settingsProvider->Initialize();
-    m_dashClient = std::make_shared<SwapCoinClientModel>(m_dashBridgeHolder, std::move(settingsProvider), *m_walletReactor);
+    auto client = std::make_shared<SwapCoinClientModel>(m_dashBridgeHolder, std::move(settingsProvider), *m_walletReactor);
+    m_swapClients.emplace(std::make_pair(AtomicSwapCoin::Dash, client));
 }
 
 void AppModel::ResetSwapClients()
 {
-    m_bitcoinClient.reset();
-    m_litecoinClient.reset();
-    m_qtumClient.reset();
-    m_dogeClient.reset();
-    m_bchClient.reset();
-    m_bsvClient.reset();
-    m_dashClient.reset();
+    m_swapClients.clear();
 }

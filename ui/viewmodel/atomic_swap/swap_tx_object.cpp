@@ -280,19 +280,7 @@ QString SwapTxObject::getSwapCoinFee() const
         return QString();
     }
 
-    Currency coinTypeQt;
-
-    switch (m_swapTx.getSwapCoin())
-    {
-        case AtomicSwapCoin::Bitcoin:       coinTypeQt = Currency::CurrBitcoin; break;
-        case AtomicSwapCoin::Litecoin:      coinTypeQt = Currency::CurrLitecoin; break;
-        case AtomicSwapCoin::Qtum:          coinTypeQt = Currency::CurrQtum; break;
-        case AtomicSwapCoin::Bitcoin_Cash:  coinTypeQt = Currency::CurrBitcoinCash; break;
-        case AtomicSwapCoin::Bitcoin_SV:    coinTypeQt = Currency::CurrBitcoinSV; break;
-        case AtomicSwapCoin::Dash:          coinTypeQt = Currency::CurrDash; break;
-        case AtomicSwapCoin::Dogecoin:      coinTypeQt = Currency::CurrDogecoin; break;
-        default:                            coinTypeQt = Currency::CurrStart; break;
-    }
+    Currency coinTypeQt = QMLGlobals::convertSwapCoinToCurrency(m_swapTx.getSwapCoin());
     return QMLGlobals::calcTotalFee(coinTypeQt, *feeRate);
 }
 

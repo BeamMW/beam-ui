@@ -71,6 +71,8 @@ public:
     SwapCoinClientModel::Ptr getBitcoinSVClient() const;
     SwapCoinClientModel::Ptr getDashClient() const;
 
+    SwapCoinClientModel::Ptr getSwapCoinClient(beam::wallet::AtomicSwapCoin swapCoin) const;
+
 public slots:
     void onStartedNode();
     void onFailedToStartNode(beam::wallet::ErrorType errorCode);
@@ -99,13 +101,7 @@ private:
 
 private:
     // SwapCoinClientModels must be destroyed after WalletModel
-    SwapCoinClientModel::Ptr m_bitcoinClient;
-    SwapCoinClientModel::Ptr m_litecoinClient;
-    SwapCoinClientModel::Ptr m_qtumClient;
-    SwapCoinClientModel::Ptr m_dogeClient;
-    SwapCoinClientModel::Ptr m_bchClient;
-    SwapCoinClientModel::Ptr m_bsvClient;
-    SwapCoinClientModel::Ptr m_dashClient;
+    std::map<beam::wallet::AtomicSwapCoin, SwapCoinClientModel::Ptr> m_swapClients;
 
     beam::bitcoin::IBridgeHolder::Ptr m_btcBridgeHolder;
     beam::bitcoin::IBridgeHolder::Ptr m_ltcBridgeHolder;
