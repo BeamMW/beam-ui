@@ -251,9 +251,9 @@
         <file>controls/SwapTokenInfoDialog.qml</file>
         <file>assets/icon-canceled-max-online.svg</file>
         <file>assets/icon-failed-max-online.svg</file>
-        <file>assets/icon-in-progress-max-online.svg</file>
-        <file>assets/icon-in-progress-receive-max-privacy-online.svg</file>
-        <file>assets/icon-received-max-privacy-online.svg</file>
+        <file>assets/icon-received-max-online.svg</file>
+        <file>assets/icon-receiving-max-online.svg</file>
         <file>assets/icon-sending-max-online.svg</file>
+        <file>assets/icon-sent-max-online.svg</file>
     </qresource>
 </RCC>
