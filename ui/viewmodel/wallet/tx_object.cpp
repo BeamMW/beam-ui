@@ -398,7 +398,7 @@ QString TxObject::getStateDetails() const
         case beam::wallet::TxStatus::Pending:
         case beam::wallet::TxStatus::InProgress:
         {
-            auto state = getTxDescription().GetParameter<wallet::SimpleTransaction::State>(TxParameterID::State);
+            auto state = tx.GetParameter<wallet::SimpleTransaction::State>(TxParameterID::State);
             if (state)
             {
                 switch (*state)
@@ -481,6 +481,16 @@ bool TxObject::isSelfTx() const
 bool TxObject::isMaxPrivacy() const
 {
     return m_tx.m_txType == TxType::PushTransaction;
+}
+
+bool TxObject::isOfflineToken() const
+{
+    if (!isMaxPrivacy())
+    {
+        return false;
+    }
+    auto vouchers = m_tx.GetParameter<ShieldedVoucherList>(wallet::TxParameterID::ShieldedVoucherList);
+    return vouchers && !vouchers->empty();
 }
 
 bool TxObject::isCanceled() const

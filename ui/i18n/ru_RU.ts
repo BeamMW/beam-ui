@@ -2608,5 +2608,30 @@ max privacy</source>
         <oldsource>failed max privacy</oldsource>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-txs-status-in-progress-max-offline">
+        <source>in progress
+max privacy (offline)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-sent-max-offline">
+        <source>sent
+max privacy (offline)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-received-max-offline">
+        <source>received
+max privacy (offline)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-canceled-max-offline">
+        <source>canceled
+max privacy (offline)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-failed-max-offline">
+        <source>failed
+max privacy (offline)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

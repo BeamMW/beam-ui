@@ -67,7 +67,6 @@ public:
     Q_INVOKABLE static QString divideWithPrecision8(const QString& dividend, const QString& divider);
     Q_INVOKABLE static QString multiplyWithPrecision8(const QString& first, const QString& second);
     Q_INVOKABLE static QString roundWithPrecision8(const QString& number);
-
 private:
     QQmlEngine& _engine;
 };

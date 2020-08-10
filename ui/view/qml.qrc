@@ -255,5 +255,11 @@
         <file>assets/icon-receiving-max-online.svg</file>
         <file>assets/icon-sending-max-online.svg</file>
         <file>assets/icon-sent-max-online.svg</file>
+        <file>assets/icon-received-max-offline.svg</file>
+        <file>assets/icon-receiving-max-offline.svg</file>
+        <file>assets/icon-failed-max-offline.svg</file>
+        <file>assets/icon-canceled-max-offline.svg</file>
+        <file>assets/icon-sent-max-offline.svg</file>
+        <file>assets/icon-sending-max-offline.svg</file>
     </qresource>
 </RCC>

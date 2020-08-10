@@ -554,16 +554,20 @@ Item {
                                                 return "qrc:/assets/icon-sending-own.svg";
                                             }
                                             return model.isIncome
-                                                ? !model.isMaxPrivacy ? "qrc:/assets/icon-receiving.svg" : "qrc:/assets/icon-receiving-max-online.svg"
-                                                : !model.isMaxPrivacy ? "qrc:/assets/icon-sending.svg" : "qrc:/assets/icon-sending-max-online.svg";
+                                                ? !model.isMaxPrivacy ? "qrc:/assets/icon-receiving.svg" : 
+                                                        model.isOfflineToken ? "qrc:/assets/icon-receiving-max-offline.svg" : "qrc:/assets/icon-receiving-max-online.svg"
+                                                : !model.isMaxPrivacy ? "qrc:/assets/icon-sending.svg" : 
+                                                        model.isOfflineToken ? "qrc:/assets/icon-sending-max-offline.svg" : "qrc:/assets/icon-sending-max-online.svg";
                                         }
                                         else if (model.isCompleted) {
                                             if (model.isSelfTransaction) {
                                                 return "qrc:/assets/icon-sent-own.svg";
                                             }
                                             return model.isIncome
-                                                ? !model.isMaxPrivacy ? "qrc:/assets/icon-received.svg" : "qrc:/assets/icon-received-max-online.svg"
-                                                : !model.isMaxPrivacy ? "qrc:/assets/icon-sent.svg" : "qrc:/assets/icon-sent-max-online.svg";
+                                                ? !model.isMaxPrivacy ? "qrc:/assets/icon-received.svg" : 
+                                                        model.isOfflineToken ? "qrc:/assets/icon-received-max-offline.svg" : "qrc:/assets/icon-received-max-online.svg"
+                                                : !model.isMaxPrivacy ? "qrc:/assets/icon-sent.svg" : 
+                                                        model.isOfflineToken ? "qrc:/assets/icon-sent-max-offline.svg" : "qrc:/assets/icon-sent-max-online.svg";
                                         }
                                         else if (model.isExpired) {
                                             return "qrc:/assets/icon-expired.svg" 
@@ -571,12 +575,14 @@ Item {
                                         else if (model.isFailed) {
                                             return model.isIncome
                                                 ? "qrc:/assets/icon-receive-failed.svg"
-                                                : !model.isMaxPrivacy ? "qrc:/assets/icon-send-failed.svg" : "qrc:/assets/icon-failed-max-online.svg";
+                                                : !model.isMaxPrivacy ? "qrc:/assets/icon-send-failed.svg" : 
+                                                        model.isOfflineToken ? "qrc:/assets/icon-failed-max-offline.svg" : "qrc:/assets/icon-failed-max-online.svg";
                                         }
                                         else {
                                             return model.isIncome
                                                 ? "qrc:/assets/icon-receive-canceled.svg"
-                                                : !model.isMaxPrivacy ? "qrc:/assets/icon-send-canceled.svg" : "qrc:/assets/icon-canceled-max-online.svg";
+                                                : !model.isMaxPrivacy ? "qrc:/assets/icon-send-canceled.svg" : 
+                                                        model.isOfflineToken ? "qrc:/assets/icon-canceled-max-offline.svg" : "qrc:/assets/icon-canceled-max-online.svg";
                                         }
                                     }
                                 }

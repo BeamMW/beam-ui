@@ -17,7 +17,7 @@
 namespace
 {
 
-QString getStatusTextTranslated(const QString& status)
+QString getStatusTextTranslated(const QString& status, bool isOfflineToken)
 {
     if (status == "pending")
     {
@@ -76,33 +76,53 @@ QString getStatusTextTranslated(const QString& status)
     }
     else if (status == "in progress max privacy")
     {
+        return !isOfflineToken ?
         /*% "in progress
 max privacy" */
-        return qtTrId("wallet-txs-status-in-progress-max");
+         qtTrId("wallet-txs-status-in-progress-max") : 
+        /*% "in progress
+max privacy (offline)" */
+        qtTrId("wallet-txs-status-in-progress-max-offline");
     }
     else if (status == "sent max privacy")
     {
+        return !isOfflineToken ?
         /*% "sent
 max privacy"*/
-        return qtTrId("wallet-txs-status-sent-max");
+        qtTrId("wallet-txs-status-sent-max") :
+        /*% "sent
+max privacy (offline)"*/
+        qtTrId("wallet-txs-status-sent-max-offline");
     }
     else if (status == "received max privacy")
     {
+        return !isOfflineToken ?
         /*% "received
 max privacy" */
-        return qtTrId("wallet-txs-status-received-max");
+        qtTrId("wallet-txs-status-received-max") :
+        /*% "received
+max privacy (offline)" */
+        qtTrId("wallet-txs-status-received-max-offline");
     }
     else if (status == "canceled max privacy")
     {
+        return !isOfflineToken ?
         /*% "canceled
 max privacy"*/
-        return qtTrId("wallet-txs-status-canceled-max");
+        qtTrId("wallet-txs-status-canceled-max") :
+        /*% "canceled
+max privacy (offline)"*/
+        qtTrId("wallet-txs-status-canceled-max-offline");
     }
     else if (status == "failed max privacy")
     {
+        return !isOfflineToken ?
         /*% "failed
 max privacy"*/
-        return qtTrId("wallet-txs-status-failed-max");
+        qtTrId("wallet-txs-status-failed-max") : 
+        /*% "failed
+max privacy (offline)"*/
+        qtTrId("wallet-txs-status-failed-max-offline");
     }
     else
     {
@@ -156,7 +176,8 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::Token), "token" },
         { static_cast<int>(Roles::SenderIdentity), "senderIdentity"},
         { static_cast<int>(Roles::ReceiverIdentity), "receiverIdentity"},
-        { static_cast<int>(Roles::IsMaxPrivacy), "isMaxPrivacy"}
+        { static_cast<int>(Roles::IsMaxPrivacy), "isMaxPrivacy"},
+        { static_cast<int>(Roles::IsOfflineToken), "isOfflineToken"}
     };
     return roles;
 }
@@ -204,7 +225,7 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
 
         case Roles::Status:
         case Roles::StatusSort:
-            return getStatusTextTranslated(value->getStatus());
+            return getStatusTextTranslated(value->getStatus(), value->isOfflineToken());
 
         case Roles::Fee:
             return value->getFee();
@@ -232,6 +253,9 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
 
         case Roles::IsMaxPrivacy:
             return value->isMaxPrivacy();
+
+        case Roles::IsOfflineToken:
+            return value->isOfflineToken();
 
         case Roles::IsIncome:
             return value->isIncome();
