@@ -2543,19 +2543,19 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dogecoin-show-seed-phrase">
-        <source>Dogecoin sead phrase</source>
+        <source>Dogecoin seed phrase</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="bitcoin-cash-show-seed-phrase">
-        <source>Bitcoin Cash sead phrase</source>
+        <source>Bitcoin Cash seed phrase</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="bitcoin-sv-show-seed-phrase">
-        <source>Bitcoin SV sead phrase</source>
+        <source>Bitcoin SV seed phrase</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dash-show-seed-phrase">
-        <source>Dash sead phrase</source>
+        <source>Dash seed phrase</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dogecoin-show-addresses-title">

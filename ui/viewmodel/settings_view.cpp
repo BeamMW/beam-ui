@@ -190,16 +190,16 @@ QString SwapCoinSettingsItem::getShowSeedDialogTitle() const
             //% "Qtum seed phrase"
             return qtTrId("qtum-show-seed-title");
         case beam::wallet::AtomicSwapCoin::Dogecoin:
-            //% "Dogecoin sead phrase"
+            //% "Dogecoin seed phrase"
             return qtTrId("dogecoin-show-seed-phrase");
         case beam::wallet::AtomicSwapCoin::Bitcoin_Cash:
-            //% "Bitcoin Cash sead phrase"
+            //% "Bitcoin Cash seed phrase"
             return qtTrId("bitcoin-cash-show-seed-phrase");
         case beam::wallet::AtomicSwapCoin::Bitcoin_SV:
-            //% "Bitcoin SV sead phrase"
+            //% "Bitcoin SV seed phrase"
             return qtTrId("bitcoin-sv-show-seed-phrase");
         case beam::wallet::AtomicSwapCoin::Dash:
-            //% "Dash sead phrase"
+            //% "Dash seed phrase"
             return qtTrId("dash-show-seed-phrase");
         default:
         {
