@@ -24,16 +24,17 @@ using namespace beam::wallet;
 using namespace std;
 namespace btc = beam::bitcoin;
 
-SwapCoinClientWrapper::SwapCoinClientWrapper(SwapCoinClientModel& coinClient, wallet::AtomicSwapCoin swapCoin)
-    : m_swapCoin(swapCoin)
-    , m_coinClient(coinClient)
+SwapCoinClientWrapper::SwapCoinClientWrapper(wallet::AtomicSwapCoin swapCoin)
+    : m_swapCoin(swapCoin),
+      m_coinClient(AppModel::getInstance().getSwapCoinClient(swapCoin))
 {
-    auto settings = m_coinClient.GetSettings();
+    auto coinClient = m_coinClient.lock();
+    auto settings = coinClient->GetSettings();
     m_minTxConfirmations = settings.GetTxMinConfirmations();
     m_blocksPerHour = settings.GetBlocksPerHour();
 
-    connect(&m_coinClient, SIGNAL(balanceChanged()), this, SIGNAL(availableChanged()));
-    connect(&m_coinClient, SIGNAL(statusChanged()), this, SIGNAL(statusChanged()));    
+    connect(coinClient.get(), SIGNAL(balanceChanged()), this, SIGNAL(availableChanged()));
+    connect(coinClient.get(), SIGNAL(statusChanged()), this, SIGNAL(statusChanged()));    
 }
 
 void SwapCoinClientWrapper::incrementActiveTxCounter()
@@ -58,17 +59,17 @@ void SwapCoinClientWrapper::resetActiveTxCounter()
 
 QString SwapCoinClientWrapper::getAvailableStr() const
 {
-    return beamui::AmountToUIString(m_coinClient.getAvailable());
+    return beamui::AmountToUIString(getAvailable());
 }
 
 bool SwapCoinClientWrapper::getIsConnected() const
 {
-    return m_coinClient.getStatus() == bitcoin::Client::Status::Connected;
+    return m_coinClient.lock()->getStatus() == bitcoin::Client::Status::Connected;
 }
 
 bool SwapCoinClientWrapper::getIsConnecting() const
 {
-    return m_coinClient.getStatus() == bitcoin::Client::Status::Connecting;
+    return m_coinClient.lock()->getStatus() == bitcoin::Client::Status::Connecting;
 }
 
 bool SwapCoinClientWrapper::hasActiveTx() const
@@ -103,7 +104,7 @@ double SwapCoinClientWrapper::getBlocksPerHour() const
 
 Amount SwapCoinClientWrapper::getAvailable() const
 {
-    return m_coinClient.getAvailable();
+    return m_coinClient.lock()->getAvailable();
 }
 
 SwapOffersViewModel::SwapOffersViewModel()
@@ -494,29 +495,29 @@ void SwapOffersViewModel::InitSwapClientWrappers()
 {
     if (m_swapClientWrappers.empty())
     {
-        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(*AppModel::getInstance().getBitcoinClient(), AtomicSwapCoin::Bitcoin));
-        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(*AppModel::getInstance().getLitecoinClient(), AtomicSwapCoin::Litecoin));
-        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(*AppModel::getInstance().getQtumClient(), AtomicSwapCoin::Qtum));
-        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(*AppModel::getInstance().getBitcoinCashClient(), AtomicSwapCoin::Bitcoin_Cash));
-        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(*AppModel::getInstance().getBitcoinSVClient(), AtomicSwapCoin::Bitcoin_SV));
-        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(*AppModel::getInstance().getDogecoinClient(), AtomicSwapCoin::Dogecoin));
-        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(*AppModel::getInstance().getDashClient(), AtomicSwapCoin::Dash));
+        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Bitcoin));
+        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Litecoin));
+        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Qtum));
+        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Bitcoin_Cash));
+        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Bitcoin_SV));
+        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Dogecoin));
+        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Dash));
     }
 }
 
-const QList<QObject*>& SwapOffersViewModel::getSwapClients()
+QQmlListProperty<SwapCoinClientWrapper> SwapOffersViewModel::getSwapClients()
 {
-    return m_swapClientWrappers;
+    return QQmlListProperty<SwapCoinClientWrapper>(this, m_swapClientWrappers);
 }
 
 SwapCoinClientWrapper* SwapOffersViewModel::getSwapCoinClientWrapper(AtomicSwapCoin swapCoinType) const
 {
     auto it = std::find_if(m_swapClientWrappers.cbegin(), m_swapClientWrappers.cend(),
-        [swapCoinType](QObject* wrapper)
+        [swapCoinType](SwapCoinClientWrapper* wrapper)
         {
-            return static_cast<SwapCoinClientWrapper*>(wrapper)->getSwapCoin() == swapCoinType;
+            return wrapper->getSwapCoin() == swapCoinType;
         });
-    return (it != m_swapClientWrappers.end()) ? static_cast<SwapCoinClientWrapper*>(*it) : nullptr;
+    return (it != m_swapClientWrappers.end()) ? (*it) : nullptr;
 }
 
 uint32_t SwapOffersViewModel::getTxMinConfirmations(AtomicSwapCoin swapCoinType) const
@@ -563,6 +564,6 @@ void SwapOffersViewModel::resetActiveTxCounters()
 {
     for (auto swapClientWrapper : m_swapClientWrappers)
     {
-        static_cast<SwapCoinClientWrapper*>(swapClientWrapper)->resetActiveTxCounter();
+        swapClientWrapper->resetActiveTxCounter();
     }
 }
