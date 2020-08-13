@@ -199,7 +199,6 @@ private:
     SwapCoinClientModel& m_coinClient;
 
     boost::optional<beam::bitcoin::Settings> m_settings;
-    int m_feeRate = 0;
 
     beam::bitcoin::ISettings::ConnectionType
         m_connectionType = beam::bitcoin::ISettings::ConnectionType::None;

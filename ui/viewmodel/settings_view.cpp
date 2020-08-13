@@ -565,7 +565,6 @@ void SwapCoinSettingsItem::applyNodeSettings()
     }
 
     m_settings->SetConnectionOptions(connectionSettings);
-    m_settings->SetFeeRate(m_feeRate);
 
     m_coinClient.SetSettings(*m_settings);
 }
@@ -583,7 +582,6 @@ void SwapCoinSettingsItem::applyElectrumSettings()
     electrumSettings.m_secretWords = GetSeedPhraseFromSeedItems();
     
     m_settings->SetElectrumConnectionOptions(electrumSettings);
-    m_settings->SetFeeRate(m_feeRate);
 
     m_coinClient.SetSettings(*m_settings);
 }
