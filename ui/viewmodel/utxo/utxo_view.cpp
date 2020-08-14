@@ -21,34 +21,36 @@ using namespace std;
 using namespace beamui;
 
 UtxoViewModel::UtxoViewModel()
-    : _model{*AppModel::getInstance().getWallet()}
+    : m_model{*AppModel::getInstance().getWallet()}
 {
-    connect(&_model, SIGNAL(allUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>&)),
+    connect(&m_model, SIGNAL(allUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>&)),
         SLOT(onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>&)));
-    connect(&_model, SIGNAL(stateIDChanged()), SIGNAL(stateChanged()));
+    connect(&m_model, SIGNAL(shieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>&)),
+        SLOT(onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>&)));
+    connect(&m_model, SIGNAL(stateIDChanged()), SIGNAL(stateChanged()));
 
-    _model.getAsync()->getUtxosStatus();
+    m_model.getAsync()->getUtxosStatus();
 }
 
 
 QAbstractItemModel* UtxoViewModel::getAllUtxos()
 {
-    return & _allUtxos;
+    return & m_allUtxos;
 }
 
 QString UtxoViewModel::getCurrentHeight() const
 {
-    return QString::fromStdString(to_string(_model.getCurrentStateID().m_Height));
+    return QString::fromStdString(to_string(m_model.getCurrentStateID().m_Height));
 }
 
 QString UtxoViewModel::getCurrentStateHash() const
 {
-    return QString(beam::to_hex(_model.getCurrentStateID().m_Hash.m_pData, 10).c_str());
+    return QString(beam::to_hex(m_model.getCurrentStateID().m_Hash.m_pData, 10).c_str());
 }
 
 void UtxoViewModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
-    vector<shared_ptr<UtxoItem>> modifiedItems;
+    vector<shared_ptr<BaseUtxoItem>> modifiedItems;
     modifiedItems.reserve(utxos.size());
 
     for (const auto& t : utxos)
@@ -63,25 +65,25 @@ void UtxoViewModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const st
     {
     case ChangeAction::Reset:
     {
-        _allUtxos.reset(modifiedItems);
+        m_allUtxos.reset(modifiedItems);
         break;
     }
 
     case ChangeAction::Removed:
     {
-        _allUtxos.remove(modifiedItems);
+        m_allUtxos.remove(modifiedItems);
         break;
     }
 
     case ChangeAction::Added:
     {
-        _allUtxos.insert(modifiedItems);
+        m_allUtxos.insert(modifiedItems);
         break;
     }
 
     case ChangeAction::Updated:
     {
-        _allUtxos.update(modifiedItems);
+        m_allUtxos.update(modifiedItems);
         break;
     }
 
@@ -92,3 +94,62 @@ void UtxoViewModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const st
 
     emit allUtxoChanged();
 }
+
+void UtxoViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::ShieldedCoin>& items)
+{
+    vector<shared_ptr<BaseUtxoItem>> modifiedItems;
+    modifiedItems.reserve(items.size());
+
+    for (const auto& t : items)
+    {
+        if (t.IsAsset()) {
+            continue;
+        }
+        modifiedItems.push_back(make_shared<ShieldedCoinItem>(t));
+    }
+
+    switch (action)
+    {
+    case ChangeAction::Reset:
+    {
+        // temporal hack
+        vector<shared_ptr<BaseUtxoItem>> toRemove;
+        for (const auto& item : m_allUtxos)
+        {
+            if (item->type() == UtxoViewType::EnType::Shielded)
+            {
+                toRemove.push_back(item);
+            }
+        }
+        m_allUtxos.remove(toRemove);
+        m_allUtxos.insert(modifiedItems);
+        break;
+    }
+
+    case ChangeAction::Removed:
+    {
+        m_allUtxos.remove(modifiedItems);
+        break;
+    }
+
+    case ChangeAction::Added:
+    {
+        m_allUtxos.insert(modifiedItems);
+        break;
+    }
+
+    case ChangeAction::Updated:
+    {
+        m_allUtxos.update(modifiedItems);
+        break;
+    }
+
+    default:
+        assert(false && "Unexpected action");
+        break;
+    }
+
+    emit allUtxoChanged();
+}
+
+

@@ -60,6 +60,9 @@ signals:
     void changeCalculated(beam::Amount change);
     void needExtractShieldedCoins(bool val);
     void allUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
+#ifdef BEAM_LELANTUS_SUPPORT
+    void shieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& coins);
+#endif // BEAM_LELANTUS_SUPPORT
     void addressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>& addresses);
     void addressesChanged(bool own, const std::vector<beam::wallet::WalletAddress>& addresses);
     void swapOffersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::SwapOffer>& offers);
@@ -99,6 +102,7 @@ private:
     void onChangeCalculated(beam::Amount change) override;
     void onNeedExtractShieldedCoins(bool val) override;
     void onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos) override;
+    void onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& items) override;
     void onAddressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>& items) override;
     void onAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addrs) override;
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT

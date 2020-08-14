@@ -6,8 +6,11 @@ import "controls"
 import Beam.Wallet 1.0;
 
 ColumnLayout {
-    anchors.fill: parent
-    UtxoViewModel {id: viewModel}
+    id:             root
+    anchors.fill:  parent
+    UtxoViewModel {
+        id: viewModel
+    }
 
     Title {
         //% "UTXO"
@@ -111,6 +114,45 @@ ColumnLayout {
             }
         }
     }
+
+    //RowLayout {
+    //    Layout.alignment: Qt.AlignTop
+    //    Layout.fillWidth: true
+    //    Layout.topMargin: 30
+    //    Layout.preferredHeight: 32
+    //    Layout.bottomMargin: 10
+    //
+    //    TxFilter {
+    //        id: regularTabSelector
+    //        Layout.alignment: Qt.AlignVCenter
+    //        //% "Regular"
+    //        label: qsTrId("wallet-utxo-regular-tab")
+    //        onClicked: root.state = "all"
+    //        capitalization: Font.AllUppercase
+    //    }
+    //    TxFilter {
+    //        id: shieldedTabSelector
+    //        Layout.alignment: Qt.AlignVCenter
+    //        //% "Shielded"
+    //        label: qsTrId("wallet-utxo-shielded-tab")
+    //        onClicked: root.state = "shielded"
+    //        capitalization: Font.AllUppercase
+    //    }
+    //}
+    //state: "all"
+    //states: [
+    //    State {
+    //        name: "all"
+    //        PropertyChanges { target: regularTabSelector; state: "active" }
+    //        //PropertyChanges { target: txProxyModel; filterRole: "status" }
+    //        //PropertyChanges { target: txProxyModel; filterString: "*" }
+    //    },
+    //    State {
+    //        name: "shielded"
+    //        PropertyChanges { target: shieldedTabSelector; state: "active" }
+    //    }
+    //]
+
 
     CustomTableView {
         id: tableView
@@ -303,6 +345,9 @@ ColumnLayout {
                         //% "Treasury"
                         //: UTXO type Treasury
                         case UtxoType.Treasury: return qsTrId("general-treasury");
+                        //% "Shielded"
+                        //: UTXO type Shielded
+                        case UtxoType.Shielded: return qsTrId("general-shielded");
                         default : return "";
                     }
                 }

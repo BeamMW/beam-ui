@@ -2641,5 +2641,10 @@ max privacy (offline)</source>
 max privacy (offline)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="general-shielded">
+        <source>Shielded</source>
+        <extracomment>UTXO type Shielded</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

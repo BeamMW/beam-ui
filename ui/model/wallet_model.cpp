@@ -35,6 +35,7 @@ WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, b
     qRegisterMetaType<vector<beam::wallet::SwapOffer>>("std::vector<beam::wallet::SwapOffer>");
     qRegisterMetaType<beam::Amount>("beam::Amount");
     qRegisterMetaType<vector<beam::wallet::Coin>>("std::vector<beam::wallet::Coin>");
+    qRegisterMetaType<vector<beam::wallet::ShieldedCoin>>("std::vector<beam::wallet::ShieldedCoin>");
     qRegisterMetaType<vector<beam::wallet::WalletAddress>>("std::vector<beam::wallet::WalletAddress>");
     qRegisterMetaType<beam::wallet::WalletID>("beam::wallet::WalletID");
     qRegisterMetaType<beam::wallet::WalletAddress>("beam::wallet::WalletAddress");
@@ -144,6 +145,13 @@ void WalletModel::onNeedExtractShieldedCoins(bool val)
 void WalletModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
     emit allUtxoChanged(action, utxos);
+}
+
+void WalletModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::ShieldedCoin>& items)
+{
+#ifdef BEAM_LELANTUS_SUPPORT
+    emit shieldedCoinChanged(action, items);
+#endif
 }
 
 void WalletModel::onAddressesChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::WalletAddress>& items)
