@@ -295,7 +295,7 @@ void AppModel::onResetWallet()
     assert(m_db);
 
     m_wallet.reset();
-    ResetSwapClients();
+    resetSwapClients();
 
     m_db.reset();
 
@@ -319,82 +319,13 @@ void AppModel::startWallet()
     auto additionalTxCreators = std::make_shared<std::unordered_map<TxType, BaseTransaction::Creator::Ptr>>();
     auto swapTransactionCreator = std::make_shared<beam::wallet::AtomicSwapTransaction::Creator>(m_db);
 
-    if (auto btcClient = getBitcoinClient(); btcClient)
-    {
-        auto bitcoinBridgeCreator = [bridgeHolder = m_btcBridgeHolder, reactor = m_walletReactor, settingsProvider = btcClient]() -> bitcoin::IBridge::Ptr
-        {
-            return bridgeHolder->Get(*reactor, *settingsProvider);
-        };
-
-        auto btcSecondSideFactory = beam::wallet::MakeSecondSideFactory<BitcoinSide, bitcoin::IBridge, bitcoin::ISettingsProvider>(bitcoinBridgeCreator, *btcClient);
-        swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Bitcoin, btcSecondSideFactory);
-    }
-
-    if (auto ltcClient = getLitecoinClient(); ltcClient)
-    {
-        auto litecoinBridgeCreator = [bridgeHolder = m_ltcBridgeHolder, reactor = m_walletReactor, settingsProvider = ltcClient]() -> bitcoin::IBridge::Ptr
-        {
-            return bridgeHolder->Get(*reactor, *settingsProvider);
-        };
-
-        auto ltcSecondSideFactory = beam::wallet::MakeSecondSideFactory<LitecoinSide, bitcoin::IBridge, litecoin::ISettingsProvider>(litecoinBridgeCreator, *ltcClient);
-        swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Litecoin, ltcSecondSideFactory);
-    }
-
-    if (auto qtumClient = getQtumClient(); qtumClient)
-    {
-        auto qtumBridgeCreator = [bridgeHolder = m_qtumBridgeHolder, reactor = m_walletReactor, settingsProvider = qtumClient]() -> bitcoin::IBridge::Ptr
-        {
-            return bridgeHolder->Get(*reactor, *settingsProvider);
-        };
-
-        auto qtumSecondSideFactory = wallet::MakeSecondSideFactory<QtumSide, qtum::Electrum, qtum::ISettingsProvider>(qtumBridgeCreator, *qtumClient);
-        swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Qtum, qtumSecondSideFactory);
-    }
-
-    if (auto client = getDogecoinClient(); client)
-    {
-        auto bridgeCreator = [bridgeHolder = m_dogeBridgeHolder, reactor = m_walletReactor, settingsProvider = client]() -> bitcoin::IBridge::Ptr
-        {
-            return bridgeHolder->Get(*reactor, *settingsProvider);
-        };
-
-        auto secondSideFactory = wallet::MakeSecondSideFactory<DogecoinSide, dogecoin::Electrum, dogecoin::ISettingsProvider>(bridgeCreator, *client);
-        swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Dogecoin, secondSideFactory);
-    }
-
-    if (auto client = getBitcoinCashClient(); client)
-    {
-        auto bridgeCreator = [bridgeHolder = m_bchBridgeHolder, reactor = m_walletReactor, settingsProvider = client]() -> bitcoin::IBridge::Ptr
-        {
-            return bridgeHolder->Get(*reactor, *settingsProvider);
-        };
-
-        auto secondSideFactory = wallet::MakeSecondSideFactory<BitcoinCashSide, bitcoin_cash::Electrum, bitcoin_cash::ISettingsProvider>(bridgeCreator, *client);
-        swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Bitcoin_Cash, secondSideFactory);
-    }
-
-    if (auto client = getBitcoinSVClient(); client)
-    {
-        auto bridgeCreator = [bridgeHolder = m_bsvBridgeHolder, reactor = m_walletReactor, settingsProvider = client]() -> bitcoin::IBridge::Ptr
-        {
-            return bridgeHolder->Get(*reactor, *settingsProvider);
-        };
-
-        auto secondSideFactory = wallet::MakeSecondSideFactory<BitcoinSVSide, bitcoin_sv::Electrum, bitcoin_sv::ISettingsProvider>(bridgeCreator, *client);
-        swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Bitcoin_SV, secondSideFactory);
-    }
-
-    if (auto client = getDashClient(); client)
-    {
-        auto bridgeCreator = [bridgeHolder = m_dashBridgeHolder, reactor = m_walletReactor, settingsProvider = client]() -> bitcoin::IBridge::Ptr
-        {
-            return bridgeHolder->Get(*reactor, *settingsProvider);
-        };
-
-        auto secondSideFactory = wallet::MakeSecondSideFactory<DashSide, dash::Electrum, dash::ISettingsProvider>(bridgeCreator, *client);
-        swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Dash, secondSideFactory);
-    }
+    registerSwapFactory<BitcoinSide, bitcoin::Electrum, bitcoin::ISettingsProvider>(AtomicSwapCoin::Bitcoin, *swapTransactionCreator);
+    registerSwapFactory<LitecoinSide, litecoin::Electrum, litecoin::ISettingsProvider>(AtomicSwapCoin::Litecoin, *swapTransactionCreator);
+    registerSwapFactory<QtumSide, qtum::Electrum, qtum::ISettingsProvider>(AtomicSwapCoin::Qtum, *swapTransactionCreator);
+    registerSwapFactory<BitcoinCashSide, bitcoin_cash::Electrum, bitcoin_cash::ISettingsProvider>(AtomicSwapCoin::Bitcoin_Cash, *swapTransactionCreator);
+    registerSwapFactory<BitcoinSVSide, bitcoin_sv::Electrum, bitcoin_sv::ISettingsProvider>(AtomicSwapCoin::Bitcoin_SV, *swapTransactionCreator);
+    registerSwapFactory<DogecoinSide, dogecoin::Electrum, dogecoin::ISettingsProvider>(AtomicSwapCoin::Dogecoin, *swapTransactionCreator);
+    registerSwapFactory<DashSide, dash::Electrum, dash::ISettingsProvider>(AtomicSwapCoin::Dash, *swapTransactionCreator);
 
     additionalTxCreators->emplace(TxType::AtomicSwap, swapTransactionCreator);
 
@@ -416,6 +347,22 @@ void AppModel::startWallet()
 
     bool isSecondCurrencyEnabled = m_settings.getSecondCurrency().toStdString() != noSecondCurrencyStr;
     m_wallet->start(activeNotifications, isSecondCurrencyEnabled, additionalTxCreators);
+}
+
+template<typename BridgeSide, typename Bridge, typename SettingsProvider>
+void AppModel::registerSwapFactory(AtomicSwapCoin swapCoin, beam::wallet::AtomicSwapTransaction::Creator& swapTxCreator)
+{
+    if (auto client = getSwapCoinClient(swapCoin); client)
+    {
+        auto bridgeHolder = m_swapBridgeHolders[swapCoin];
+        auto bridgeCreator = [bridgeHolder, reactor = m_walletReactor, settingsProvider = client]() -> bitcoin::IBridge::Ptr
+        {
+            return bridgeHolder->Get(*reactor, *settingsProvider);
+        };
+
+        auto secondSideFactory = wallet::MakeSecondSideFactory<BridgeSide, Bridge, SettingsProvider>(bridgeCreator, *client);
+        swapTxCreator.RegisterFactory(swapCoin, secondSideFactory);
+    }
 }
 
 void AppModel::applySettingsChanges()
@@ -500,7 +447,7 @@ void AppModel::start()
         nodeAddrStr = nodeAddr.str();
     }
 
-    InitSwapClients();
+    initSwapClients();
 
     m_wallet = std::make_shared<WalletModel>(m_db, nodeAddrStr, m_walletReactor);
 
@@ -557,41 +504,6 @@ NodeModel& AppModel::getNode()
     return m_nodeModel;
 }
 
-SwapCoinClientModel::Ptr AppModel::getBitcoinClient() const
-{
-    return getSwapCoinClient(AtomicSwapCoin::Bitcoin);
-}
-
-SwapCoinClientModel::Ptr AppModel::getLitecoinClient() const
-{
-    return getSwapCoinClient(AtomicSwapCoin::Litecoin);
-}
-
-SwapCoinClientModel::Ptr AppModel::getQtumClient() const
-{
-    return getSwapCoinClient(AtomicSwapCoin::Qtum);
-}
-
-SwapCoinClientModel::Ptr AppModel::getDogecoinClient() const
-{
-    return getSwapCoinClient(AtomicSwapCoin::Dogecoin);
-}
-
-SwapCoinClientModel::Ptr AppModel::getBitcoinCashClient() const
-{
-    return getSwapCoinClient(AtomicSwapCoin::Bitcoin_Cash);
-}
-
-SwapCoinClientModel::Ptr AppModel::getBitcoinSVClient() const
-{
-    return getSwapCoinClient(AtomicSwapCoin::Bitcoin_SV);
-}
-
-SwapCoinClientModel::Ptr AppModel::getDashClient() const
-{
-    return getSwapCoinClient(AtomicSwapCoin::Dash);
-}
-
 SwapCoinClientModel::Ptr AppModel::getSwapCoinClient(beam::wallet::AtomicSwapCoin swapCoin) const
 {
     auto it = m_swapClients.find(swapCoin);
@@ -602,81 +514,29 @@ SwapCoinClientModel::Ptr AppModel::getSwapCoinClient(beam::wallet::AtomicSwapCoi
     return nullptr;
 }
 
-void AppModel::InitSwapClients()
+void AppModel::initSwapClients()
 {
-    InitBtcClient();
-    InitLtcClient();
-    InitQtumClient();
-    InitDogeClient();
-    InitBchClient();
-    InitBsvClient();
-    InitDashClient();
+    initSwapClient<bitcoin::BitcoinCore017, bitcoin::Electrum, bitcoin::SettingsProvider>(AtomicSwapCoin::Bitcoin);
+    initSwapClient<litecoin::LitecoinCore017, litecoin::Electrum, litecoin::SettingsProvider>(AtomicSwapCoin::Litecoin);
+    initSwapClient<qtum::QtumCore017, qtum::Electrum, qtum::SettingsProvider>(AtomicSwapCoin::Qtum);
+    initSwapClient<dash::DashCore014, dash::Electrum, dash::SettingsProvider>(AtomicSwapCoin::Dash);
+    initSwapClient<bitcoin_cash::BitcoinCashCore, bitcoin_cash::Electrum, bitcoin_cash::SettingsProvider>(AtomicSwapCoin::Bitcoin_Cash);
+    initSwapClient<bitcoin_sv::BitcoinSVCore, bitcoin_sv::Electrum, bitcoin_sv::SettingsProvider>(AtomicSwapCoin::Bitcoin_SV);
+    initSwapClient<dogecoin::DogecoinCore014, dogecoin::Electrum, dogecoin::SettingsProvider>(AtomicSwapCoin::Dogecoin);
 }
 
-void AppModel::InitBtcClient()
+template<typename CoreBridge, typename ElectrumBridge, typename SettingsProvider>
+void AppModel::initSwapClient(beam::wallet::AtomicSwapCoin swapCoin)
 {
-    m_btcBridgeHolder = std::make_shared<bitcoin::BridgeHolder<bitcoin::Electrum, bitcoin::BitcoinCore017>>();
-    auto settingsProvider = std::make_unique<bitcoin::SettingsProvider>(m_db);
+    auto bridgeHolder = std::make_shared<bitcoin::BridgeHolder<ElectrumBridge, CoreBridge>>();
+    auto settingsProvider = std::make_unique<SettingsProvider>(m_db);
     settingsProvider->Initialize();
-    auto client = std::make_shared<SwapCoinClientModel>(m_btcBridgeHolder, std::move(settingsProvider), *m_walletReactor);
-    m_swapClients.emplace(std::make_pair(AtomicSwapCoin::Bitcoin, client));
+    auto client = std::make_shared<SwapCoinClientModel>(bridgeHolder, std::move(settingsProvider), *m_walletReactor);
+    m_swapClients.emplace(std::make_pair(swapCoin, client));
+    m_swapBridgeHolders.emplace(std::make_pair(swapCoin, bridgeHolder));
 }
 
-void AppModel::InitLtcClient()
-{
-    m_ltcBridgeHolder = std::make_shared<bitcoin::BridgeHolder<litecoin::Electrum, litecoin::LitecoinCore017>>();
-    auto settingsProvider = std::make_unique<litecoin::SettingsProvider>(m_db);
-    settingsProvider->Initialize();
-    auto client = std::make_shared<SwapCoinClientModel>(m_ltcBridgeHolder, std::move(settingsProvider), *m_walletReactor);
-    m_swapClients.emplace(std::make_pair(AtomicSwapCoin::Litecoin, client));
-}
-
-void AppModel::InitQtumClient()
-{
-    m_qtumBridgeHolder = std::make_shared<bitcoin::BridgeHolder<qtum::Electrum, qtum::QtumCore017>>();
-    auto settingsProvider = std::make_unique<qtum::SettingsProvider>(m_db);
-    settingsProvider->Initialize();
-    auto client = std::make_shared<SwapCoinClientModel>(m_qtumBridgeHolder, std::move(settingsProvider), *m_walletReactor);
-    m_swapClients.emplace(std::make_pair(AtomicSwapCoin::Qtum, client));
-}
-
-void AppModel::InitDogeClient()
-{
-    m_dogeBridgeHolder = std::make_shared<bitcoin::BridgeHolder<dogecoin::Electrum, dogecoin::DogecoinCore014>>();
-    auto settingsProvider = std::make_unique<dogecoin::SettingsProvider>(m_db);
-    settingsProvider->Initialize();
-    auto client = std::make_shared<SwapCoinClientModel>(m_dogeBridgeHolder, std::move(settingsProvider), *m_walletReactor);
-    m_swapClients.emplace(std::make_pair(AtomicSwapCoin::Dogecoin, client));
-}
-
-void AppModel::InitBchClient()
-{
-    m_bchBridgeHolder = std::make_shared<bitcoin::BridgeHolder<bitcoin_cash::Electrum, bitcoin_cash::BitcoinCashCore>>();
-    auto settingsProvider = std::make_unique<bitcoin_cash::SettingsProvider>(m_db);
-    settingsProvider->Initialize();
-    auto client = std::make_shared<SwapCoinClientModel>(m_bchBridgeHolder, std::move(settingsProvider), *m_walletReactor);
-    m_swapClients.emplace(std::make_pair(AtomicSwapCoin::Bitcoin_Cash, client));
-}
-
-void AppModel::InitBsvClient()
-{
-    m_bsvBridgeHolder = std::make_shared<bitcoin::BridgeHolder<bitcoin_sv::Electrum, bitcoin_sv::BitcoinSVCore>>();
-    auto settingsProvider = std::make_unique<bitcoin_sv::SettingsProvider>(m_db);
-    settingsProvider->Initialize();
-    auto client = std::make_shared<SwapCoinClientModel>(m_bsvBridgeHolder, std::move(settingsProvider), *m_walletReactor);
-    m_swapClients.emplace(std::make_pair(AtomicSwapCoin::Bitcoin_SV, client));
-}
-
-void AppModel::InitDashClient()
-{
-    m_dashBridgeHolder = std::make_shared<bitcoin::BridgeHolder<dash::Electrum, dash::DashCore014>>();
-    auto settingsProvider = std::make_unique<dash::SettingsProvider>(m_db);
-    settingsProvider->Initialize();
-    auto client = std::make_shared<SwapCoinClientModel>(m_dashBridgeHolder, std::move(settingsProvider), *m_walletReactor);
-    m_swapClients.emplace(std::make_pair(AtomicSwapCoin::Dash, client));
-}
-
-void AppModel::ResetSwapClients()
+void AppModel::resetSwapClients()
 {
     m_swapClients.clear();
 }

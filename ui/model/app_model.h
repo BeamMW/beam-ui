@@ -22,6 +22,7 @@
 #include "wallet/core/secstring.h"
 #include "wallet/core/private_key_keeper.h"
 #include "wallet/transactions/swaps/bridges/bitcoin/bridge_holder.h"
+#include "wallet/transactions/swaps/swap_transaction.h"
 #include <memory>
 
 #if defined(BEAM_HW_WALLET)
@@ -63,14 +64,6 @@ public:
     WalletSettings& getSettings() const;
     MessageManager& getMessages();
     NodeModel& getNode();
-    SwapCoinClientModel::Ptr getBitcoinClient() const;
-    SwapCoinClientModel::Ptr getLitecoinClient() const;
-    SwapCoinClientModel::Ptr getQtumClient() const;
-    SwapCoinClientModel::Ptr getDogecoinClient() const;
-    SwapCoinClientModel::Ptr getBitcoinCashClient() const;
-    SwapCoinClientModel::Ptr getBitcoinSVClient() const;
-    SwapCoinClientModel::Ptr getDashClient() const;
-
     SwapCoinClientModel::Ptr getSwapCoinClient(beam::wallet::AtomicSwapCoin swapCoin) const;
 
 public slots:
@@ -86,30 +79,21 @@ private:
     void start();
     void startNode();
     void startWallet();
-    void InitSwapClients();
-    void InitBtcClient();
-    void InitLtcClient();
-    void InitQtumClient();
-    void InitDogeClient();
-    void InitBchClient();
-    void InitBsvClient();
-    void InitDashClient();
-    void ResetSwapClients();
+    void initSwapClients();
+    template<typename CoreBridge, typename ElectrumBridge, typename SettingsProvider>
+    void initSwapClient(beam::wallet::AtomicSwapCoin swapCoin);
+    void resetSwapClients();
     void onWalledOpened(const beam::SecString& pass);
     void backupDB(const std::string& dbFilePath);
     void restoreDBFromBackup(const std::string& dbFilePath);
 
+    template<typename BridgeSide, typename Bridge, typename SettingsProvider>
+    void registerSwapFactory(beam::wallet::AtomicSwapCoin swapCoin, beam::wallet::AtomicSwapTransaction::Creator& swapTxCreator);
+
 private:
     // SwapCoinClientModels must be destroyed after WalletModel
     std::map<beam::wallet::AtomicSwapCoin, SwapCoinClientModel::Ptr> m_swapClients;
-
-    beam::bitcoin::IBridgeHolder::Ptr m_btcBridgeHolder;
-    beam::bitcoin::IBridgeHolder::Ptr m_ltcBridgeHolder;
-    beam::bitcoin::IBridgeHolder::Ptr m_qtumBridgeHolder;
-    beam::bitcoin::IBridgeHolder::Ptr m_dogeBridgeHolder;
-    beam::bitcoin::IBridgeHolder::Ptr m_bchBridgeHolder;
-    beam::bitcoin::IBridgeHolder::Ptr m_bsvBridgeHolder;
-    beam::bitcoin::IBridgeHolder::Ptr m_dashBridgeHolder;
+    std::map<beam::wallet::AtomicSwapCoin, beam::bitcoin::IBridgeHolder::Ptr> m_swapBridgeHolders;
 
     WalletModel::Ptr m_wallet;
     NodeModel m_nodeModel;

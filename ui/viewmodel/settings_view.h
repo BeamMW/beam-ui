@@ -92,7 +92,8 @@ class SwapCoinSettingsItem : public QObject
     Q_PROPERTY(QString connectionErrorMsg   READ getConnectionErrorMsg      NOTIFY connectionErrorMsgChanged)
 
 public:
-    SwapCoinSettingsItem(SwapCoinClientModel& coinClient, beam::wallet::AtomicSwapCoin swapCoin);
+    SwapCoinSettingsItem() = default;
+    SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin swapCoin);
     virtual ~SwapCoinSettingsItem();
 
     QString getFeeRateLabel() const;
@@ -196,7 +197,7 @@ private:
 
 private:
     beam::wallet::AtomicSwapCoin m_swapCoin;
-    SwapCoinClientModel& m_coinClient;
+    std::weak_ptr<SwapCoinClientModel> m_coinClient;
 
     boost::optional<beam::bitcoin::Settings> m_settings;
     int m_feeRate = 0;
