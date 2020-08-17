@@ -116,7 +116,7 @@ QString TokenInfoItem::getTokenType() const
                 return qtTrId("tx-token-offline");
             }
             //% "Online"
-            return qtTrId("tx-tokne-online");
+            return qtTrId("tx-token-online");
         }
         default:
             break;

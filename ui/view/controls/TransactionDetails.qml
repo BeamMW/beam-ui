@@ -30,6 +30,8 @@ RowLayout {
     property string searchFilter: ""
     property bool hideFiltered: false
     property var searchRegExp: function() { return new RegExp(root.searchFilter, "gi");}
+    property string transactionType
+    property string tokenType
 
     
     readonly property string amountPrefix: root.isIncome ? "+" : "-"
@@ -190,6 +192,45 @@ RowLayout {
             text: getHighlitedText(root.receiverIdentity)
             onCopyText: textCopied(root.receiverIdentity)
             visible: root.senderIdentity.length > 0 && root.receiverIdentity.length > 0 && isTextFieldVisible(root.receiverIdentity)
+        }
+
+        // Transaction type:
+        SFText {
+            Layout.alignment:       Qt.AlignTop
+            font.pixelSize:         14
+            color:                  Style.content_secondary
+            //% "Transaction type"
+            text:                   qsTrId("token-info-transaction-type") + ":"
+            visible:                isTextFieldVisible(root.transactionType)
+        }
+            
+        SFText {
+            Layout.fillWidth:       true
+            wrapMode:               Text.Wrap
+            font.pixelSize:         14
+            color:                  Style.content_main
+            text:                   root.transactionType
+            verticalAlignment:      Text.AlignBottom
+            visible:                isTextFieldVisible(root.transactionType)
+        }
+
+        // Token type
+        SFText {
+            Layout.alignment:       Qt.AlignTop
+            font.pixelSize:         14
+            color:                  Style.content_secondary
+            //% "Token type"
+            text:                   qsTrId("token-info-type") + ":"
+            visible:                isTextFieldVisible(root.tokenType)
+        }
+            
+        SFText {
+            Layout.fillWidth:       true
+            wrapMode:               Text.Wrap
+            font.pixelSize:         14
+            text:                   root.tokenType
+            color:                  Style.content_main
+            visible:                isTextFieldVisible(root.tokenType)
         }
 
         SFText {
