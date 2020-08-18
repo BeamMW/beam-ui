@@ -105,6 +105,7 @@ signals:
     void localeChanged();
     void beamMWLinksChanged();
     void secondCurrencyChanged();
+    void activeNotificationsChanged();
 
 private:
     QSettings m_data;
