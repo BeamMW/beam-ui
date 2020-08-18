@@ -78,7 +78,7 @@ ColumnLayout {
 
     SFText {
         id:               feeInSecondCurrency
-        visible:          !minimumFeeNotification.visible && control.showSecondCurrency
+        visible:          !minimumFeeNotification.visible && control.showSecondCurrency && !recommendedFeeAbsent.visible
         font.pixelSize:   14
         font.italic:      !control.isExchangeRateAvailable
         opacity:          control.isExchangeRateAvailable ? 0.5 : 1
@@ -104,12 +104,12 @@ ColumnLayout {
         font.italic:      true
         Layout.fillWidth: true
         wrapMode:         Text.WordWrap
-        visible:          !control.isValid
+        visible:          !control.isValid && !recommendedFeeAbsent.visible
     }
 
     SFText {
         Layout.fillWidth:      true
-        visible:               control.currency != Currency.CurrBeam
+        visible:               control.currency != Currency.CurrBeam && !recommendedFeeAbsent.visible
         font.pixelSize:        14
         font.italic:           true
         wrapMode:              Text.WordWrap
@@ -117,5 +117,21 @@ ColumnLayout {
         lineHeight:            1.1
         //% "Remember to validate the expected fee rate for the blockchain (as it varies with time)."
         text:                  qsTrId("settings-fee-rate-note")
+    }
+
+    SFText {
+        id:                    recommendedFeeAbsent
+        Layout.fillWidth:      true
+        visible:               control.currency != Currency.CurrBeam && control.recommendedFee == 0 && control.fee == 0
+        font.pixelSize:        14
+        font.italic:           true
+        wrapMode:              Text.WordWrap
+        color:                 Style.validator_error
+        lineHeight:            1.1
+/*% "Connection error: can’t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete. "
+*/
+        text:                  qsTrId("settings-recommended-fee-rate-absent").arg(BeamGlobals.getCurrencyName(control.currency))
     }
 }

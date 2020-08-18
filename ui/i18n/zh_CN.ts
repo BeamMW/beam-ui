@@ -2654,5 +2654,11 @@ max privacy (offline)</source>
         <source>Online</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settings-recommended-fee-rate-absent">
+        <source>Connection error: can�t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete. </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
