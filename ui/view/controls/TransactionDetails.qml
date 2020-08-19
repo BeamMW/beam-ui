@@ -32,6 +32,7 @@ RowLayout {
     property var searchRegExp: function() { return new RegExp(root.searchFilter, "gi");}
     property string transactionType
     property string tokenType
+    property bool isMaxPrivacy
 
     
     readonly property string amountPrefix: root.isIncome ? "+" : "-"
@@ -151,7 +152,7 @@ RowLayout {
             elide: Text.ElideMiddle
             text: getHighlitedText(root.senderIdentity)
             onCopyText: textCopied(root.senderIdentity)
-            visible: root.senderIdentity.length > 0 && root.receiverIdentity.length > 0 && isTextFieldVisible(root.senderIdentity)
+            visible: root.senderIdentity.length > 0 && (root.receiverIdentity.length > 0 || root.isMaxPrivacy ) && isTextFieldVisible(root.senderIdentity)
         }
 
         SFText {
