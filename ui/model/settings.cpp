@@ -423,7 +423,6 @@ void WalletSettings::setNewVersionActive(bool isActive)
         }
         Lock lock(m_mutex);
         m_data.setValue(kNewVersionActive, isActive);
-        emit activeNotificationsChanged();
     }
 }
 
@@ -440,7 +439,6 @@ void WalletSettings::setBeamNewsActive(bool isActive)
         }
         Lock lock(m_mutex);
         m_data.setValue(kBeamNewsActive, isActive);
-        emit activeNotificationsChanged();
     }
 }
 
@@ -461,7 +459,6 @@ void WalletSettings::setTxStatusActive(bool isActive)
         }
         Lock lock(m_mutex);
         m_data.setValue(kTxStatusActive, isActive);
-        emit activeNotificationsChanged();
     }
 }
 

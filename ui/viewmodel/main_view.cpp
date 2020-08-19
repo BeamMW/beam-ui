@@ -41,7 +41,6 @@ MainViewModel::MainViewModel()
 
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(lockWallet()));
     connect(&m_settings, SIGNAL(lockTimeoutChanged()), this, SLOT(onLockTimeoutChanged()));
-    connect(&m_settings, SIGNAL(activeNotificationsChanged()), this, SLOT(unreadNotificationsChanged()));
     connect(walletPtr, SIGNAL(stateIDChanged()), SIGNAL(unsafeTxCountChanged()));
     connect(walletPtr, SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SIGNAL(unsafeTxCountChanged()));
     connect(walletPtr, SIGNAL(notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)), SIGNAL(unreadNotificationsChanged()));
