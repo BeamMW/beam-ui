@@ -199,6 +199,20 @@ void SendViewModel::setCanChangeTxType(bool value)
     }
 }
 
+int SendViewModel::getOfflinePayments() const
+{
+    return _offlinePayments;
+}
+
+void SendViewModel::setOfflinePayments(int value)
+{
+    if (_offlinePayments != value)
+    {
+        _offlinePayments = value;
+        emit offlinePaymentsChanged();
+    }
+}
+
 bool SendViewModel::isNonInteractive() const
 {
     return _isNonInteractive;
@@ -254,16 +268,18 @@ void SendViewModel::needExtractShieldedCoins(bool val)
     emit canSendChanged();
 }
 
-void SendViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address)
+void SendViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
 {
     if (id == _receiverWalletID && address)
     {
         setWalletAddress(address);
         setComment(QString::fromStdString(address->m_label));
+        setOfflinePayments(offlinePayments);
     }
     else
     {
         setWalletAddress({});
+        setOfflinePayments(0);
     }
 }
 

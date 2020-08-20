@@ -170,7 +170,7 @@ void ReceiveViewModel::onTokenQRChanged()
     emit transactionTokenChanged();
 }
 
-void ReceiveViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address)
+void ReceiveViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
 {
     if (address)
     {

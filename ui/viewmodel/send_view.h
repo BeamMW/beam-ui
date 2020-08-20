@@ -31,6 +31,7 @@ class SendViewModel: public QObject
     Q_PROPERTY(bool     isNonInteractive   READ isNonInteractive      WRITE setIsNonInteractive        NOTIFY isNonInteractiveChanged)
     Q_PROPERTY(bool     isPermanentAddress READ isPermanentAddress    WRITE setIsPermanentAddress      NOTIFY isPermanentAddressChanged)
     Q_PROPERTY(bool     canChangeTxType    READ canChangeTxType       WRITE setCanChangeTxType         NOTIFY canChangeTxTypeChanged)
+    Q_PROPERTY(int      offlinePayments    READ getOfflinePayments    WRITE setOfflinePayments         NOTIFY offlinePaymentsChanged)
 
     Q_PROPERTY(QString  receiverAddress    READ getReceiverAddress                                     NOTIFY receiverAddressChanged)
     Q_PROPERTY(QString  receiverIdentity   READ getReceiverIdentity                                    NOTIFY receiverIdentityChanged)
@@ -75,6 +76,8 @@ public:
     void setIsPermanentAddress(bool value);
     bool canChangeTxType() const;
     void setCanChangeTxType(bool value);
+    int getOfflinePayments() const;
+    void setOfflinePayments(int value);
 
     bool isNonInteractive() const;
     void setIsNonInteractive(bool value);
@@ -115,6 +118,7 @@ signals:
     void isShieldedTxChanged();
     void isPermanentAddressChanged();
     void canChangeTxTypeChanged();
+    void offlinePaymentsChanged();
     void isNonInteractiveChanged();
     void availableChanged();
     void sendMoneyVerified();
@@ -133,7 +137,7 @@ signals:
 public slots:
     void onChangeCalculated(beam::Amount change);
     void needExtractShieldedCoins(bool val);
-    void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address);
+    void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
 
 private:
     beam::Amount calcTotalAmount() const;
@@ -156,6 +160,7 @@ private:
     bool _isNonInteractive = false;
     bool _isToken = false;
     boost::optional<beam::wallet::WalletAddress> _receiverWalletAddress;
+    int _offlinePayments = 0;
 
     WalletModel& _walletModel;
     ExchangeRatesManager _exchangeRatesManager;

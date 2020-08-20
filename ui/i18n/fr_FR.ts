@@ -2289,8 +2289,8 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-send-max-privacy-note">
-        <source>Transaction is slower, receiver pays fees.</source>
-        <oldsource>Transaction is slower, fees are higher.</oldsource>
+        <source>Transaction is slower, fees are higher.</source>
+        <oldsource>Transaction is slower, receiver pays fees.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="can-not-generate-new-address-message">
@@ -2575,7 +2575,8 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-token-offline">
-        <source>Offline</source>
+        <source>Offline (%1)</source>
+        <oldsource>Offline</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-in-progress-max">
@@ -2670,6 +2671,10 @@ much longer for a transaction to complete. </source>
     </message>
     <message id="tx-failure-cannot-get-vouchers">
         <source>The sender cannot get vouchers for max privacy transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-max-privacy-note-token-offline">
+        <source>Receiver requested Max privacy. Offline transactions remaining: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

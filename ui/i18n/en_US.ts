@@ -2248,8 +2248,9 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Random node</translation>
     </message>
     <message id="wallet-send-max-privacy-note">
-        <source>Transaction is slower, receiver pays fees.</source>
-        <translation>Transaction is slower, receiver pays fees.</translation>
+        <source>Transaction is slower, fees are higher.</source>
+        <oldsource>Transaction is slower, receiver pays fees.</oldsource>
+        <translation type="unfinished">Transaction is slower, receiver pays fees.</translation>
     </message>
     <message id="can-not-generate-new-address-message">
         <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
@@ -2625,6 +2626,10 @@ much longer for a transaction to complete. </translation>
     </message>
     <message id="tx-failure-cannot-get-vouchers">
         <source>The sender cannot get vouchers for max privacy transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-max-privacy-note-token-offline">
+        <source>Receiver requested Max privacy. Offline transactions remaining: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
