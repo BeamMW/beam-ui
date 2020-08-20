@@ -302,7 +302,6 @@
     </message>
     <message id="settings-general-title">
         <source>General</source>
-        <oldsource>General settings</oldsource>
         <extracomment>settings tab, general section, title</extracomment>
         <translation type="unfinished">General</translation>
     </message>
@@ -313,13 +312,11 @@
     </message>
     <message id="settings-general-require-pwd-to-spend">
         <source>Ask password on every Send</source>
-        <oldsource>Ask password for every sending transaction</oldsource>
         <extracomment>settings tab, general section, ask password to send label</extracomment>
         <translation type="unfinished">Ask password for every sending transaction</translation>
     </message>
     <message id="settings-report-problem-title">
         <source>Report a problem</source>
-        <oldsource>Report problem</oldsource>
         <translation type="unfinished">Report a problem</translation>
     </message>
     <message id="settings-wallet-location-label">
@@ -329,7 +326,6 @@
     </message>
     <message id="settings-apply">
         <source>Apply changes</source>
-        <oldsource>Apply</oldsource>
         <extracomment>settings tab, node section, apply button</extracomment>
         <translation type="unfinished">Apply changes</translation>
     </message>
@@ -920,13 +916,11 @@ or send this address to the sender over secure channel</translation>
     <message id="settings-general-allow-beammw-label">
         <source>Allow access to %1 and %2
 (to fetch exchanges and transaction data)</source>
-        <oldsource>Allow access to %1 and %2 (to fetch exchanges and transaction data)</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
         <translation type="unfinished">Allow access to %1 and %2 (to fetch exchanges and transaction data)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</source>
-        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
         <translation>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</translation>
     </message>
     <message id="settings-report-problem-message-l2">
@@ -1455,7 +1449,6 @@ Please try again later or create an offer yourself.</translation>
     </message>
     <message id="swap-beta-connection-error">
         <source>Cannot connect to peer. Please check the address in Settings and try again.</source>
-        <oldsource>Cannot connect to peer. Please check the address and retry.</oldsource>
         <translation>Cannot connect to peer. Please check the address in Settings and try again.</translation>
     </message>
     <message id="swap-alert-confirm-button">
@@ -1841,7 +1834,6 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="swap-invalid-credentials-error">
         <source>Cannot connect to node. Invalid credentials</source>
-        <oldsource>Invalid credentials</oldsource>
         <translation type="unfinished">Cannot connect to node. Invalid credentials</translation>
     </message>
     <message id="swap-connection-error">
@@ -1850,7 +1842,6 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="swap-invalid-genesis-block-error">
         <source>Cannot connect to node. Invalid genesis block</source>
-        <oldsource>Invalid genesis block</oldsource>
         <translation type="unfinished">Cannot connect to node. Invalid genesis block</translation>
     </message>
     <message id="tx-state-initial-sender">
@@ -1924,7 +1915,6 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="settings-notifications-version">
         <source>Wallet update</source>
-        <oldsource>Wallet version</oldsource>
         <translation type="unfinished">Wallet version</translation>
     </message>
     <message id="settings-notifications-tx-status">
@@ -2191,7 +2181,6 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-troubleshooting-title">
         <source>Troubleshooting</source>
-        <oldsource>Connectivity</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-get-beam">
@@ -2212,7 +2201,6 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-local-node-run-checkbox">
         <source>Integrated node</source>
-        <oldsource>Run integrated node</oldsource>
         <extracomment>settings tab, node section, run node label</extracomment>
         <translation type="unfinished"></translation>
     </message>
@@ -2223,7 +2211,6 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-remote-node-address">
         <source>Node address</source>
-        <oldsource>Remote node address</oldsource>
         <extracomment>settings tab, node section, address label</extracomment>
         <translation>Node address</translation>
     </message>
@@ -2273,12 +2260,10 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-receive-token-for-wallet">
         <source>(for wallet)</source>
-        <oldsource>For wallet</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-addr-message">
         <source>To spend the received Max privacy coins the min transaction fee will be 1200000 GROTH.</source>
-        <oldsource>To spend the received Max privacy coins the min transaction fee will be 1200000 GROTH</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-text-online-time">
@@ -2295,7 +2280,6 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-receive-token-for-exchange">
         <source>(for exchange or mining pool)</source>
-        <oldsource>For exchange or mining pool</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="token-info-title">
@@ -2328,12 +2312,10 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="token-one-time">
         <source>One-time use</source>
-        <oldsource>One time</oldsource>
         <translation>One-time use</translation>
     </message>
     <message id="token-permanent">
         <source>Permanent token</source>
-        <oldsource>Permanent</oldsource>
         <translation>Permanent</translation>
     </message>
     <message id="tx-regular">
@@ -2350,12 +2332,10 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-receive-exchanges-not-supported2">
         <source>Exchanges or mining pools support only regular transaction now.</source>
-        <oldsource>Non-interactive transaction is not supported by exchanges or mining pools yet.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-exchanges-one-time-not-supported">
         <source>Exchanges or mining pools support only permanent token now.</source>
-        <oldsource>One-time uses token is not supported by exchanges or mining pools yet. Please switch to the permanent.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-send-non-int-note">
@@ -2368,7 +2348,6 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="save-contact-title">
         <source>Do you want to name the contact?</source>
-        <oldsource>Name the contact</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="switch-permanent">
@@ -2438,7 +2417,6 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-send-one-time-note">
         <source>One-time use token (expire in 12 hours after succesfull transaction).</source>
-        <oldsource>One-time use token (expire in 2 hours after succesfull transaction).</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="general-max-privacy">
@@ -2471,7 +2449,6 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-swap-clear">
         <source>clear</source>
-        <oldsource>disconnect</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-swap-confirm-clear-seed-title">
@@ -2551,31 +2528,26 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="wallet-txs-status-in-progress-max">
         <source>in progress
 max privacy</source>
-        <oldsource>in progress max privacy</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-sent-max">
         <source>sent
 max privacy</source>
-        <oldsource>sent max privacy</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-received-max">
         <source>received
 max privacy</source>
-        <oldsource>received max privacy</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
 max privacy</source>
-        <oldsource>canceled max privacy</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-failed-max">
         <source>failed
 max privacy</source>
-        <oldsource>failed max privacy</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
