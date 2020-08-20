@@ -50,7 +50,7 @@ SettingsFoldable {
                 font.pixelSize: 14
                 color: allowBeamMWLinks.palette.text
                 wrapMode: Text.WordWrap
-                Layout.preferredWidth: generalBlock.width - 95
+                Layout.preferredWidth: privacyBlock.width - 97
                 Layout.preferredHeight: 32
                 linkEnabled: true
                 onLinkActivated:  {
