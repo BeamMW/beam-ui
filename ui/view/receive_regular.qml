@@ -175,6 +175,7 @@ ColumnLayout {
                                         checked: !viewModel.isShieldedTx
                                         onToggled: {
                                             viewModel.isShieldedTx = false;
+                                            viewModel.isPermanentAddress = false;
                                         }
                                     }
                                     CustomButton {
@@ -188,6 +189,7 @@ ColumnLayout {
                                         checked:            viewModel.isShieldedTx
                                         onToggled: {
                                             viewModel.isShieldedTx = true;
+                                            viewModel.isPermanentAddress = true;
                                         }
                                     }
                                 }
@@ -195,7 +197,7 @@ ColumnLayout {
 
                             RowLayout {
                                 spacing:    10
-                                visible:    !viewModel.isNonInteractive
+                                visible:    !viewModel.isNonInteractive && !viewModel.isShieldedTx;
                                 SFText {
                                     //% "One-time use"
                                     text:  qsTrId("token-one-time")
