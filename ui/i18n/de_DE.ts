@@ -742,8 +742,9 @@
         <translation>Fehler beim Senden der Transaktion</translation>
     </message>
     <message id="tx-failure-no-inputs">
-        <source>No inputs</source>
-        <translation>Keine Eingaben</translation>
+        <source>Not enough inputs to process the transaction</source>
+        <oldsource>No inputs</oldsource>
+        <translation type="unfinished">Keine Eingaben</translation>
     </message>
     <message id="tx-failure-addr-expired">
         <source>Address is expired</source>
@@ -1912,7 +1913,8 @@ deploy the key at the node you trust completely.</translation>
         <translation type="unfinished">Key keeper is not initialized</translation>
     </message>
     <message id="tx-failure-invalid-asset-id">
-        <source>No valid asset owner id/asset owner idx</source>
+        <source>No valid asset id/asset owner id</source>
+        <oldsource>No valid asset owner id/asset owner idx</oldsource>
         <translation type="unfinished">No valid asset owner id/asset owner idx</translation>
     </message>
     <message id="tx-failure-invalid-asset-amount">
@@ -2178,12 +2180,13 @@ deploy the key at the node you trust completely.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-failure-assets-disabled">
-        <source>Assets transactions are disabled</source>
+        <source></source>
+        <oldsource>Assets transactions are disabled</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-failure-no-vouchers">
-        <source>You have no vouchers to insert coins to lelantus</source>
-        <oldsource>You have no vouchers to insert coins to lelentus</oldsource>
+        <source>No voucher, no address to receive it</source>
+        <oldsource>You have no vouchers to insert coins to lelantus</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-failure-assets-fork2">
@@ -2644,6 +2647,30 @@ max privacy (offline)</source>
         <source>Connection error: can�t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-failure-out-of-slots">
+        <source>Key keeper out of slots</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-failure-shielded-coin-fee">
+        <source>Cannot extract shielded coin, fee is to big.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-failure-assets-disabled-receiver">
+        <source>Asset transactions are disabled in the receiver wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-failure-assets-disabled-blockchain">
+        <source>Asset transactions are disabled in blockchain configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-failure-identity-required">
+        <source>Peer Identity required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-failure-cannot-get-vouchers">
+        <source>The sender cannot get vouchers for max privacy transaction</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -737,8 +737,9 @@
         <translation>Failed to send Transaction parameters</translation>
     </message>
     <message id="tx-failure-no-inputs">
-        <source>No inputs</source>
-        <translation>No inputs</translation>
+        <source>Not enough inputs to process the transaction</source>
+        <oldsource>No inputs</oldsource>
+        <translation type="unfinished">No inputs</translation>
     </message>
     <message id="tx-failure-addr-expired">
         <source>Address is expired</source>
@@ -1880,8 +1881,9 @@ deploy the key at the node you trust completely.</translation>
         <translation>Key keeper is not initialized</translation>
     </message>
     <message id="tx-failure-invalid-asset-id">
-        <source>No valid asset owner id/asset owner idx</source>
-        <translation>No valid asset owner id/asset owner idx</translation>
+        <source>No valid asset id/asset owner id</source>
+        <oldsource>No valid asset owner id/asset owner idx</oldsource>
+        <translation type="unfinished">No valid asset owner id/asset owner idx</translation>
     </message>
     <message id="tx-failure-invalid-asset-amount">
         <source>Cannot issue/consume more than MAX_INT64 asset groth in one transaction</source>
@@ -2138,12 +2140,14 @@ deploy the key at the node you trust completely.</translation>
         <translation>Invalid asset owner id</translation>
     </message>
     <message id="tx-failure-assets-disabled">
-        <source>Assets transactions are disabled</source>
-        <translation>Assets transactions are disabled</translation>
+        <source></source>
+        <oldsource>Assets transactions are disabled</oldsource>
+        <translation type="unfinished">Assets transactions are disabled</translation>
     </message>
     <message id="tx-failure-no-vouchers">
-        <source>You have no vouchers to insert coins to lelantus</source>
-        <translation>You have no vouchers to insert coins to lelantus</translation>
+        <source>No voucher, no address to receive it</source>
+        <oldsource>You have no vouchers to insert coins to lelantus</oldsource>
+        <translation type="unfinished">You have no vouchers to insert coins to lelantus</translation>
     </message>
     <message id="tx-failure-assets-fork2">
         <source>Asset transactions are not available until fork2</source>
@@ -2599,6 +2603,30 @@ much longer for a transaction to complete. </source>
         <translation>Connection error: can’t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete. </translation>
+    </message>
+    <message id="tx-failure-out-of-slots">
+        <source>Key keeper out of slots</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-failure-shielded-coin-fee">
+        <source>Cannot extract shielded coin, fee is to big.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-failure-assets-disabled-receiver">
+        <source>Asset transactions are disabled in the receiver wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-failure-assets-disabled-blockchain">
+        <source>Asset transactions are disabled in blockchain configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-failure-identity-required">
+        <source>Peer Identity required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-failure-cannot-get-vouchers">
+        <source>The sender cannot get vouchers for max privacy transaction</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

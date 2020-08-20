@@ -400,7 +400,7 @@ Item {
                         searchFilter:       searchBox.text
                         hideFiltered:       rowItem.hideFiltered
                         token:              txRolesMap ? txRolesMap.token : ""
-                        isMaxPrivacy:       txRolesMap && txRolesMap.isMaxPrivacy
+                        isMaxPrivacy:       txRolesMap && txRolesMap.isMaxPrivacy ? true : false
 
                         onSearchFilterChanged: function(text) {
                             rowItem.collapsed = searchBox.text.length == 0;

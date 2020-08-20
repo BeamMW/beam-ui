@@ -260,7 +260,7 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
     // clang doesn't allow to make 'auto reasons' so for the moment assertions below are a bit pointles
     // let's wait until they fix template arg deduction and restore it back
     static const std::array<QString, TxFailureReason::Count> reasons = {
-        //% "Unexpected reason, please send wallet logs to Beam support"
+        //% "Unexpected reason, please send wallet logs to Beam support" 
         qtTrId("tx-failure-undefined"),
         //% "Transaction cancelled"
         qtTrId("tx-failure-cancelled"),
@@ -274,7 +274,7 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
         qtTrId("tx-failure-kernel-invalid"),
         //% "Failed to send Transaction parameters"
         qtTrId("tx-failure-parameters-not-sended"),
-        //% "No inputs"
+        //% "Not enough inputs to process the transaction"
         qtTrId("tx-failure-no-inputs"),
         //% "Address is expired"
         qtTrId("tx-failure-addr-expired"),
@@ -316,7 +316,7 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
         qtTrId("tx-failure-loopback"),
         //% "Key keeper is not initialized"
         qtTrId("tx-failure-key-keeper-no-initialized"),
-        //% "No valid asset owner id/asset owner idx"
+        //% "No valid asset id/asset owner id"
         qtTrId("tx-failure-invalid-asset-id"),
         //% "No asset info or asset info is not valid"
         qtTrId("tx-failure-asset-invalid-info"),
@@ -346,12 +346,24 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
         qtTrId("tx-failure-asset-exists"),
         //% "Invalid asset owner id"
         qtTrId("tx-failure-asset-invalid-owner-id"),
-        //% "Assets transactions are disabled"
+        //% ""Asset transactions are disabled in the wallet"
         qtTrId("tx-failure-assets-disabled"),
-        //% "You have no vouchers to insert coins to lelantus"
+        //% "No voucher, no address to receive it"
         qtTrId("tx-failure-no-vouchers"),
         //% "Asset transactions are not available until fork2"
-        qtTrId("tx-failure-assets-fork2")
+        qtTrId("tx-failure-assets-fork2"),
+        //% "Key keeper out of slots")
+        qtTrId("tx-failure-out-of-slots"),
+        //% "Cannot extract shielded coin, fee is to big.")
+        qtTrId("tx-failure-shielded-coin-fee"),
+        //% "Asset transactions are disabled in the receiver wallet")
+        qtTrId("tx-failure-assets-disabled-receiver"),
+        //% "Asset transactions are disabled in blockchain configuration")
+        qtTrId("tx-failure-assets-disabled-blockchain"),
+        //% "Peer Identity required")
+        qtTrId("tx-failure-identity-required"),
+        //% "The sender cannot get vouchers for max privacy transaction"
+        qtTrId("tx-failure-cannot-get-vouchers")
     };
 
     // ensure QString
