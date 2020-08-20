@@ -346,21 +346,21 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
         qtTrId("tx-failure-asset-exists"),
         //% "Invalid asset owner id"
         qtTrId("tx-failure-asset-invalid-owner-id"),
-        //% ""Asset transactions are disabled in the wallet"
+        //% "Asset transactions are disabled in the wallet"
         qtTrId("tx-failure-assets-disabled"),
         //% "No voucher, no address to receive it"
         qtTrId("tx-failure-no-vouchers"),
         //% "Asset transactions are not available until fork2"
         qtTrId("tx-failure-assets-fork2"),
-        //% "Key keeper out of slots")
+        //% "Key keeper out of slots"
         qtTrId("tx-failure-out-of-slots"),
-        //% "Cannot extract shielded coin, fee is to big.")
+        //% "Cannot extract shielded coin, fee is to big."
         qtTrId("tx-failure-shielded-coin-fee"),
-        //% "Asset transactions are disabled in the receiver wallet")
+        //% "Asset transactions are disabled in the receiver wallet"
         qtTrId("tx-failure-assets-disabled-receiver"),
-        //% "Asset transactions are disabled in blockchain configuration")
+        //% "Asset transactions are disabled in blockchain configuration"
         qtTrId("tx-failure-assets-disabled-blockchain"),
-        //% "Peer Identity required")
+        //% "Peer Identity required"
         qtTrId("tx-failure-identity-required"),
         //% "The sender cannot get vouchers for max privacy transaction"
         qtTrId("tx-failure-cannot-get-vouchers")

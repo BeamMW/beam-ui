@@ -2179,8 +2179,7 @@ znát všechny Vaše prostředky (UTXO). Ujistěte se, že jste vystavili klíč
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-failure-assets-disabled">
-        <source></source>
-        <oldsource>Assets transactions are disabled</oldsource>
+        <source>Asset transactions are disabled in the wallet</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-failure-no-vouchers">
