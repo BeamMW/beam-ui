@@ -251,7 +251,6 @@ ColumnLayout {
                                     text:               viewModel.isNonInteractive ?
                                                         //% "Token good for 20 transactions."
                                                         qsTrId("wallet-send-non-int-note") : 
-                                                        //% "Transaction is slower, fees are higher."
                                                         qsTrId("wallet-send-max-privacy-note")
                                 }
                             }

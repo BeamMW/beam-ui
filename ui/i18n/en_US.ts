@@ -2248,8 +2248,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Random node</translation>
     </message>
     <message id="wallet-send-max-privacy-note">
-        <source>Transaction is slower, fees are higher.</source>
-        <oldsource>Transaction is slower, receiver pays fees.</oldsource>
+        <source>Transaction is slower, receiver pays fees.</source>
+        <oldsource>Transaction is slower, fees are higher.</oldsource>
         <translation type="unfinished">Transaction is slower, receiver pays fees.</translation>
     </message>
     <message id="can-not-generate-new-address-message">

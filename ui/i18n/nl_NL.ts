@@ -2286,8 +2286,8 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-send-max-privacy-note">
-        <source>Transaction is slower, fees are higher.</source>
-        <oldsource>Transaction is slower, receiver pays fees.</oldsource>
+        <source>Transaction is slower, receiver pays fees.</source>
+        <oldsource>Transaction is slower, fees are higher.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="can-not-generate-new-address-message">
@@ -2572,8 +2572,8 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-token-offline">
-        <source>Offline (%1)</source>
-        <oldsource>Offline</oldsource>
+        <source>Offline</source>
+        <oldsource>Offline (%1)</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-in-progress-max">
