@@ -50,6 +50,10 @@ ReceiveViewModel::~ReceiveViewModel()
 
 void ReceiveViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& addr)
 {
+    if (_receiverAddress == addr)
+    {
+        return;
+    }
     _receiverAddress = addr;
     emit receiverAddressChanged();
     setIsPermanentAddress(addr.isPermanent());
@@ -175,10 +179,6 @@ void ReceiveViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, co
     if (address)
     {
         onGeneratedNewAddress(*address);
-    }
-    else
-    {
-        generateNewAddress();
     }
 }
 

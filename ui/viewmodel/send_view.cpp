@@ -270,10 +270,13 @@ void SendViewModel::needExtractShieldedCoins(bool val)
 
 void SendViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
 {
-    if (id == _receiverWalletID && address)
+    if (id == _receiverWalletID)
     {
-        setWalletAddress(address);
-        setComment(QString::fromStdString(address->m_label));
+        if (address)
+        {
+            setWalletAddress(address);
+            setComment(QString::fromStdString(address->m_label));
+        }
         setOfflinePayments(offlinePayments);
     }
     else
@@ -350,8 +353,6 @@ void SendViewModel::sendMoney()
         CopyParameter(TxParameterID::PeerWalletIdentity, _txParameters, p);
         p.SetParameter(TxParameterID::TransactionType, isShieldedTx() ? TxType::PushTransaction : TxType::Simple);
 
-        CopyParameter(TxParameterID::ShieldedVoucherList, _txParameters, p);
-
         if (isToken())
         {
             p.SetParameter(TxParameterID::OriginalToken, _receiverTA.toStdString());
@@ -418,6 +419,15 @@ void SendViewModel::extractParameters()
     else
     {
         setIsPermanentAddress(false);
+    }
+
+    ShieldedVoucherList vouchers;
+    if (_txParameters.GetParameter(TxParameterID::ShieldedVoucherList, vouchers))
+    {
+        if (_receiverWalletID != Zero)
+        {
+            _walletModel.getAsync()->saveVouchers(vouchers, _receiverWalletID);
+        }
     }
 
 

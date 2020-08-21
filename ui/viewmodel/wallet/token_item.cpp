@@ -13,6 +13,7 @@
 // limitations under the License.
 #include "token_item.h"
 #include "viewmodel/ui_helpers.h"
+#include "model/app_model.h"
 
 using namespace beam;
 using namespace beam::wallet;
@@ -21,6 +22,7 @@ using namespace beamui;
 TokenInfoItem::TokenInfoItem(QObject* parent /* = nullptr */)
         : QObject(parent)
 {
+    connect(AppModel::getInstance().getWallet().get(), &WalletModel::getAddressReturned, this, &TokenInfoItem::onGetAddressReturned);
 }
 
 bool TokenInfoItem::isPermanent() const
@@ -109,11 +111,17 @@ QString TokenInfoItem::getTokenType() const
         {
         case TxType::PushTransaction:
         {
+            auto offlinePayments = getOfflinePayments();
             auto vouchers = m_parameters.GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList);
             if (vouchers && !vouchers->empty())
             {
-                //% "Offline"
-                return qtTrId("tx-token-offline");
+                //% "Offline (%1)"
+                return qtTrId("tx-token-offline-count").arg(offlinePayments ? offlinePayments : (int)vouchers->size());
+            }
+            if (offlinePayments)
+            {
+                //% "Online (%1)"
+                return qtTrId("tx-token-online-count").arg(offlinePayments);
             }
             //% "Online"
             return qtTrId("tx-token-online");
@@ -147,5 +155,30 @@ void TokenInfoItem::setToken(const QString& token)
         }
         
         emit tokenChanged();
+        emit offlinePaymentsChanged();
+        auto peerID = m_parameters.GetParameter<WalletID>(TxParameterID::PeerID);
+        if (peerID)
+        {
+            AppModel::getInstance().getWallet()->getAsync()->getAddress(*peerID);
+        }
     }
+}
+
+int TokenInfoItem::getOfflinePayments() const
+{
+    return m_offlinePayments;
+}
+
+void TokenInfoItem::setOfflinePayments(int value)
+{
+    if (m_offlinePayments != value)
+    {
+        m_offlinePayments = value;
+        emit offlinePaymentsChanged();
+    }
+}
+
+void TokenInfoItem::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
+{
+    setOfflinePayments(offlinePayments);
 }
