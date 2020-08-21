@@ -13,10 +13,12 @@ SettingsFoldable {
     //
     // Common props
     //
+    property string generalTitle:             ""
     property alias  showSeedDialogTitle:      seedPhraseDialog.showSeedDialogTitle
     property alias  showAddressesDialogTitle: showAddressesDialog.showAddressesDialogTitle
     property string feeRateLabel:        ""
     property string color:               Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+    property string disabledColor:       Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.2)
     property alias  editElectrum:        useElectrumSwitch.checked
     property bool   canEdit:             true
 
@@ -141,7 +143,7 @@ SettingsFoldable {
     }
 
     function canDisconnect() {
-        return control.canEdit && isConnected && (editElectrum ? canDisconnectElectrum() : canDisconnectNode());
+        return isConnected && (editElectrum ? canDisconnectElectrum() : canDisconnectNode() && control.canEdit);
     }
 
     function canApplyNode() {
@@ -186,14 +188,16 @@ SettingsFoldable {
         }
 
         function save() {
-            initialAddress  = addressElectrum
-            initialPort     = portElectrum
+            if (!useRandomElectrumNode) {
+                initialAddress = addressElectrum
+                initialPort    = portElectrum
+            }
             initialRandomNode = useRandomElectrumNode
             isSeedChanged = false
         }
 
         function isChanged() {
-            return (!useRandomElectrumNode && initialAddress !== addressElectrum) || initialPort !== portElectrum || isSeedChanged || 
+            return (!useRandomElectrumNode && (initialAddress !== addressElectrum || initialPort !== portElectrum )) || isSeedChanged || 
                     useRandomElectrumNode !== initialRandomNode
         }
     }
@@ -220,7 +224,7 @@ SettingsFoldable {
     }
 
     Component.onCompleted: {
-        control.editElectrum = control.isElectrumConnection;
+        control.editElectrum = control.isElectrumConnection || !control.canEdit;
         internalNode.save();
         internalElectrum.save();
     }
@@ -236,13 +240,14 @@ SettingsFoldable {
             SFText {
                 //% "Node"
                 text:  qsTrId("settings-swap-node")
-                color: useElectrumSwitch.checked ? control.color : Style.active
+                color: useElectrumSwitch.checked ? useElectrumSwitch.enabled ? control.color : control.disabledColor : Style.active
                 font.pixelSize: 14
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton
                     onClicked: {
-                        useElectrumSwitch.checked = !useElectrumSwitch.checked;
+                        if (useElectrumSwitch.enabled)
+                            useElectrumSwitch.checked = !useElectrumSwitch.checked;
                     }
                 }
             }
@@ -251,18 +256,20 @@ SettingsFoldable {
                 id:          useElectrumSwitch
                 alwaysGreen: true
                 spacing:     0
+                enabled:     !(isConnected || !isConnected && !control.canEdit)
             }
 
             SFText {
                 //% "Electrum"
                 text: qsTrId("general-electrum")
-                color: useElectrumSwitch.checked ? Style.active : control.color
+                color: useElectrumSwitch.checked ? Style.active : useElectrumSwitch.enabled ? control.color : control.disabledColor
                 font.pixelSize: 14
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton
                     onClicked: {
-                        useElectrumSwitch.checked = !useElectrumSwitch.checked;
+                        if (useElectrumSwitch.enabled)
+                            useElectrumSwitch.checked = !useElectrumSwitch.checked;
                     }
                 }
             }
@@ -270,14 +277,15 @@ SettingsFoldable {
             SFText {
                 //% "Specific node"
                 text:  qsTrId("specific_node")
-                color: useRandomNode.checked ? control.color : Style.active
+                color: useRandomNode.checked ? useRandomNode.enabled ? control.color : control.disabledColor : Style.active
                 font.pixelSize: 14
                 visible: useElectrumSwitch.checked
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton
                     onClicked: {
-                        useRandomNode.checked = !useRandomNode.checked;
+                        if (useRandomNode.enabled)
+                            useRandomNode.checked = !useRandomNode.checked;
                     }
                 }
             }
@@ -286,20 +294,22 @@ SettingsFoldable {
                 id:          useRandomNode
                 alwaysGreen: true
                 spacing:     0
-                visible: useElectrumSwitch.checked
+                visible:     useElectrumSwitch.checked
+                enabled:     !isConnected
             }
 
             SFText {
                 //% "Random node"
                 text: qsTrId("random_node")
-                color: useRandomNode.checked ? Style.active : control.color
+                color: useRandomNode.checked ? Style.active : useRandomNode.enabled ? control.color : control.disabledColor
                 font.pixelSize: 14
                 visible: useElectrumSwitch.checked
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton
                     onClicked: {
-                        useRandomNode.checked = !useRandomNode.checked;
+                        if (useRandomNode.enabled)
+                            useRandomNode.checked = !useRandomNode.checked;
                     }
                 }
             }
@@ -310,6 +320,7 @@ SettingsFoldable {
         }
 
         GridLayout {
+            visible: !(editElectrum && useRandomNode.checked && !isElectrumConnection)
             Layout.topMargin: 20
             columns:          2
             columnSpacing:    30
@@ -432,6 +443,23 @@ SettingsFoldable {
             }
         }
 
+         SFText {
+            visible:               editElectrum && useRandomNode.checked && !disconnectButtonId.visible
+            Layout.topMargin:      30
+            Layout.preferredWidth: 390
+            Layout.alignment:      Qt.AlignVCenter | Qt.AlignHCenter
+            horizontalAlignment:   Text.AlignHCenter
+            verticalAlignment:     Text.AlignVCenter
+            font.pixelSize:        14
+            wrapMode:              Text.WordWrap
+            color:                 control.color
+            lineHeight:            1.1 
+/*% "Random node address and port will be displayed 
+when connection is established"
+*/
+            text:                  qsTrId("settings-random-node-text")
+        }
+
         // electrum settings - seed: new || edit
         RowLayout {
             visible:             editElectrum && canEditElectrum
@@ -468,6 +496,7 @@ SettingsFoldable {
                         editSeedPhrase();
                     }
                 }
+                enabled: control.canEdit
             }
 
             SFText {
@@ -502,6 +531,7 @@ SettingsFoldable {
                         generateSeedPhrase();
                     }
                 }
+                enabled: control.canEdit
             }
         }
 
@@ -543,7 +573,7 @@ SettingsFoldable {
 
         // alert text if we have active transactions
         SFText {
-            visible:               !control.canEdit && !(editElectrum && isSettingsChanged())
+            visible:               !control.canEdit && !editElectrum
             Layout.topMargin:      30
             Layout.preferredWidth: 390
             Layout.alignment:      Qt.AlignVCenter | Qt.AlignHCenter
@@ -553,18 +583,35 @@ SettingsFoldable {
             wrapMode:              Text.WordWrap
             color:                 control.color
             lineHeight:            1.1 
-/*% "You can’t disconnect wallet, edit seed phrase or change default fee 
-while you have transactions in progress. Please wait untill 
-transactions are completed and try again."
+/*% "Swap in progress, cannot disconnect, switch connection type to 
+%1 electrum, generate new or edit existing seed phrase."
 */
-            text:                  qsTrId("settings-progress-na")
+            text:                  qsTrId("settings-node-progress-na").arg(control.generalTitle)
+        }
+
+        SFText {
+            visible:               !control.canEdit && editElectrum && !disconnectButtonId.visible
+            //visible: false
+            Layout.topMargin:      30
+            Layout.preferredWidth: 390
+            Layout.alignment:      Qt.AlignVCenter | Qt.AlignHCenter
+            horizontalAlignment:   Text.AlignHCenter
+            verticalAlignment:     Text.AlignVCenter
+            font.pixelSize:        14
+            wrapMode:              Text.WordWrap
+            color:                 control.color
+            lineHeight:            1.1 
+/*% "Swap in progress, cannot switch connection type to %1 node, 
+generate new or edit existing seed phrase."
+*/
+            text:                  qsTrId("settings-electrum-progress-na").arg(control.generalTitle)
         }
 
         // buttons
         // "cancel" "apply"
         // "connect to node" or "connect to electrum"
         RowLayout {
-            visible:                control.canEdit || (editElectrum && isSettingsChanged())
+            visible:                control.canEdit || editElectrum
             Layout.preferredHeight: 52
             Layout.fillWidth:       true
             Layout.topMargin:       30

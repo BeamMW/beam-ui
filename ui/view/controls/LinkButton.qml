@@ -9,7 +9,7 @@ import "."
 Control {
     id: control
 
-    property string linkColor: "#00f6d2"
+    property string linkColor: control.enabled ? Style.active : Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.3)
     property string linkStyle: ["<style>a:link {color: '", linkColor, "'; text-decoration: none;}</style>"].join("")
     property string text
     property bool   semibold: false

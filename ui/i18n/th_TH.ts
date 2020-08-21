@@ -1401,15 +1401,6 @@ please review your settings and try again</oldsource>
         <source>Received</source>
         <translation>ได้​รับ​แล้ว</translation>
     </message>
-    <message id="settings-progress-na">
-        <source>You can�t disconnect wallet, edit seed phrase or change default fee 
-while you have transactions in progress. Please wait untill 
-transactions are completed and try again.</source>
-        <oldsource>You cannot disconnect wallet, edit seed phrase or change default
-fee while you have transactions in progress.</oldsource>
-        <translation type="unfinished">คุณไม่สามารถตัดการเชื่อมต่อกระเป๋า, แก้ไขกลุ่มคำลับหรือเปลี่ยนค่าธรรมเนียม\n
-ในขณะที่คุณมีธุรกรรมที่กำลังดำเนินการอยู่</translation>
-    </message>
     <message id="atomic-no-offers">
         <source>There are no active offers at the moment.
 Please try again later or create an offer yourself.</source>
@@ -2676,6 +2667,21 @@ much longer for a transaction to complete. </source>
     </message>
     <message id="wallet-send-max-privacy-note-token-offline">
         <source>Receiver requested Max privacy. Offline transactions remaining: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-random-node-text">
+        <source>Random node address and port will be displayed 
+when connection is established</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-node-progress-na">
+        <source>Swap in progress, cannot disconnect, switch connection type to 
+%1 electrum, generate new or edit existing seed phrase.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-electrum-progress-na">
+        <source>Swap in progress, cannot switch connection type to %1 node, 
+generate new or edit existing seed phrase.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

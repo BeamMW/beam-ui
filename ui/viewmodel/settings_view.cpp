@@ -428,24 +428,6 @@ void SwapCoinSettingsItem::setSelectServerAutomatically(bool value)
     {
         m_selectServerAutomatically = value;
         emit selectServerAutomaticallyChanged();
-
-        setNodeAddressElectrum("");
-        setNodePortElectrum("");
-
-        /*if (!m_selectServerAutomatically)
-        {
-            setNodeAddressElectrum("");
-            setNodePortElectrum("");
-        }
-        else
-        {
-            auto settings = m_coinClient.GetSettings();
-
-            if (auto options = settings.GetElectrumConnectionOptions(); options.IsInitialized())
-            {
-                applyNodeAddressElectrum(str2qstr(options.m_address));
-            }
-        }*/
     }
 }
 
@@ -476,11 +458,27 @@ void SwapCoinSettingsItem::onStatusChanged()
 
     if (m_selectServerAutomatically)
     {
-        auto settings = m_coinClient.GetSettings();
+        using beam::bitcoin::Client;
 
-        if (auto options = settings.GetElectrumConnectionOptions(); options.IsInitialized())
+        switch (m_coinClient.getStatus())
         {
-            applyNodeAddressElectrum(str2qstr(options.m_address));
+        case Client::Status::Connected:
+        case Client::Status::Failed:
+        case Client::Status::Unknown:
+        {
+            auto settings = m_coinClient.GetSettings();
+
+            if (auto options = settings.GetElectrumConnectionOptions(); options.IsInitialized())
+            {
+                applyNodeAddressElectrum(str2qstr(options.m_address));
+            }
+            break;
+        }
+        default:
+        {
+            setNodeAddressElectrum("");
+            setNodePortElectrum("");
+        }
         }
     }
 }
@@ -594,7 +592,8 @@ void SwapCoinSettingsItem::resetNodeSettings()
 
 void SwapCoinSettingsItem::resetElectrumSettings()
 {
-    SetDefaultElectrumSettings();
+    bool clearSeed = getCanEdit();
+    SetDefaultElectrumSettings(clearSeed);
     applyElectrumSettings();
 }
 
@@ -679,7 +678,11 @@ void SwapCoinSettingsItem::LoadSettings()
     {
         SetSeedElectrum(options.m_secretWords);
         setSelectServerAutomatically(options.m_automaticChooseAddress);
-        applyNodeAddressElectrum(str2qstr(options.m_address));
+
+        if (!options.m_automaticChooseAddress)
+        {
+            applyNodeAddressElectrum(str2qstr(options.m_address));
+        }
     }
 }
 
@@ -723,13 +726,16 @@ void SwapCoinSettingsItem::SetDefaultNodeSettings()
     setNodeUser("");
 }
 
-void SwapCoinSettingsItem::SetDefaultElectrumSettings()
+void SwapCoinSettingsItem::SetDefaultElectrumSettings(bool clearSeed)
 {
-    setNodePortElectrum(0);
     setNodeAddressElectrum("");
     setNodePortElectrum("");
     setSelectServerAutomatically(true);
-    SetSeedElectrum({});
+
+    if (clearSeed)
+    {
+        SetSeedElectrum({});
+    }
 }
 
 void SwapCoinSettingsItem::setConnectionType(beam::bitcoin::ISettings::ConnectionType type)

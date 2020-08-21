@@ -139,6 +139,7 @@ ColumnLayout {
                     SwapNodeSettings {
                         id:                       settingsControl
                         title:                    modelData.title
+                        generalTitle:             modelData.generalTitle
                         showSeedDialogTitle:      modelData.showSeedDialogTitle
                         showAddressesDialogTitle: modelData.showAddressesDialogTitle
                         feeRateLabel:             modelData.feeRateLabel
