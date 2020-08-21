@@ -2516,9 +2516,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Token expiration</translation>
     </message>
     <message id="tx-token-offline">
-        <source></source>
-        <oldsource>Offline</oldsource>
-        <translation type="unfinished">Offline</translation>
+        <source>Offline</source>
+        <translation>Offline</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max">
         <source>in progress

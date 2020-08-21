@@ -394,7 +394,10 @@ Item {
                         stateDetails:       txRolesMap && txRolesMap.stateDetails ? txRolesMap.stateDetails : ""
                         amount:             txRolesMap && txRolesMap.amountGeneral ? txRolesMap.amountGeneral : ""
                         transactionType:    txRolesMap && txRolesMap.isMaxPrivacy ? qsTrId("tx-max-privacy") : qsTrId("tx-regular")
-                        tokenType:          txRolesMap && txRolesMap.isOfflineToken ? qsTrId("tx-token-offline") : qsTrId("tx-token-online")
+                        tokenType:          txRolesMap && txRolesMap.isOfflineToken ?
+                            //% "Offline"
+                            qsTrId("tx-token-offline") :
+                            qsTrId("tx-token-online")
                         secondCurrencyRate: txRolesMap && txRolesMap.secondCurrencyRate ? txRolesMap.secondCurrencyRate : ""
                         secondCurrencyLabel: viewModel.secondCurrencyLabel
                         searchFilter:       searchBox.text

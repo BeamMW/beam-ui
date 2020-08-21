@@ -2565,8 +2565,7 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-token-offline">
-        <source></source>
-        <oldsource>Offline</oldsource>
+        <source>Offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-in-progress-max">
