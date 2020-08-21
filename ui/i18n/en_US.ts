@@ -2516,8 +2516,9 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Token expiration</translation>
     </message>
     <message id="tx-token-offline">
-        <source>Offline</source>
-        <translation>Offline</translation>
+        <source></source>
+        <oldsource>Offline</oldsource>
+        <translation type="unfinished">Offline</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max">
         <source>in progress
@@ -2637,6 +2638,14 @@ when connection is established</source>
     <message id="settings-electrum-progress-na">
         <source>Swap in progress, cannot switch connection type to %1 node, 
 generate new or edit existing seed phrase.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-token-offline-count">
+        <source>Offline (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-token-online-count">
+        <source>Online (%1)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
