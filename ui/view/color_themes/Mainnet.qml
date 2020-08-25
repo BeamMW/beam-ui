@@ -41,10 +41,10 @@ AbstractColors {
     property color swapCurrencyPaneGrLeftBTC:   "#fcaf38"
     property color swapCurrencyPaneGrLeftLTC:   "#bebebe"
     property color swapCurrencyPaneGrLeftQTUM:  "#2e9ad0"
-    property color swapCurrencyPaneGrLeftDASH:  "#3b8ae2"
-    property color swapCurrencyPaneGrLeftDOGE:  "#bfa744"
-    property color swapCurrencyPaneGrLeftBCH:   "#98c05c"
-    property color swapCurrencyPaneGrLeftBSV:   "#e2b632"
+    property color swapCurrencyPaneGrLeftDASH:  "#0092ff"
+    property color swapCurrencyPaneGrLeftDOGE:  "#e0cd81"
+    property color swapCurrencyPaneGrLeftBCH:   "#ff6700"
+    property color swapCurrencyPaneGrLeftBSV:   "#eab300"
     property color swapCurrencyPaneGrLeftOther: Qt.rgba(0, 246, 210, 0.1)
     property color swapCurrencyStateIndicator:  "#ff746b"
     property color swapCurrencyOptionsBorder:   Qt.rgba(0, 246, 210, 0.15)

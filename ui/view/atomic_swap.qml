@@ -250,13 +250,14 @@ Item {
                             return "qrc:/assets/icon-ltc.svg";
                         case Currency.CurrQtum:
                             return "qrc:/assets/icon-qtum.svg";
-                        // TODO: add icons
                         case Currency.CurrBitcoinCash:
+                            return "qrc:/assets/icon-bch.svg";
                         case Currency.CurrBitcoinSV:
+                            return "qrc:/assets/icon-bsv.svg";
                         case Currency.CurrDash:
+                            return "qrc:/assets/icon-dash.svg";
                         case Currency.CurrDogecoin:
-                            return "qrc:/assets/icon-btc.svg";
-
+                            return "qrc:/assets/icon-doge.svg";
                         default: return "";
                     }
                 }
@@ -269,7 +270,6 @@ Item {
                             return Style.swapCurrencyPaneGrLeftLTC;
                         case Currency.CurrQtum:
                             return Style.swapCurrencyPaneGrLeftQTUM;
-                        // TODO: change gradients
                         case Currency.CurrBitcoinCash:
                             return Style.swapCurrencyPaneGrLeftBCH;
                         case Currency.CurrBitcoinSV:
@@ -1163,11 +1163,10 @@ Please try again later or create an offer yourself."
             case "btc": return "qrc:/assets/icon-btc.svg";
             case "ltc": return "qrc:/assets/icon-ltc.svg";
             case "qtum": return "qrc:/assets/icon-qtum.svg";
-            // TODO: add icons
-            case "bch": return "qrc:/assets/icon-btc.svg";
-            case "bsv": return "qrc:/assets/icon-btc.svg";
-            case "dash": return "qrc:/assets/icon-btc.svg";
-            case "doge": return "qrc:/assets/icon-btc.svg";
+            case "bch": return "qrc:/assets/icon-bch.svg";
+            case "bsv": return "qrc:/assets/icon-bsv.svg";
+            case "dash": return "qrc:/assets/icon-dash.svg";
+            case "doge": return "qrc:/assets/icon-doge.svg";
 
             default: return "";
         }
