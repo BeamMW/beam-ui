@@ -20,6 +20,8 @@ SettingsFoldable {
             //% "Wallet update"
             text: qsTrId("settings-notifications-version")
             font.pixelSize: 14
+            font.styleName:  "Regular"
+            font.weight:     Font.Normal
             Layout.fillWidth: true
             checked: viewModel.notificationsSettings.isNewVersionActive
             Binding {
@@ -34,6 +36,8 @@ SettingsFoldable {
             //% "Transaction status"
             text: qsTrId("settings-notifications-tx-status")
             font.pixelSize: 14
+            font.styleName:  "Regular"
+            font.weight:     Font.Normal
             Layout.fillWidth: true
             checked: viewModel.notificationsSettings.isTxStatusActive
             Binding {

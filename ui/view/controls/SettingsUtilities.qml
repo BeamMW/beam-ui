@@ -27,7 +27,7 @@ SettingsFoldable {
             //% "Get Beams from Beam Community Faucet"
             text: qsTrId("settings-get-beam")
             linkColor: "#ffffff"
-            semibold: true
+            bold: true
             onClicked: {
                 Utils.openExternalWithConfirmation(Style.faucetUrl);
             }
@@ -37,7 +37,7 @@ SettingsFoldable {
             //% "Export wallet data"
             text: qsTrId("settings-export")
             linkColor: "#ffffff"
-            semibold: true
+            bold: true
             onClicked: {
                 viewModel.exportData()
             }
@@ -47,7 +47,7 @@ SettingsFoldable {
             //% "Import wallet data"
             text: qsTrId("settings-import")
             linkColor: "#ffffff"
-            semibold: true
+            bold: true
             onClicked: {
                 viewModel.importData()
             }
@@ -57,7 +57,7 @@ SettingsFoldable {
             //% "Rescan"
             text: qsTrId("general-rescan")
             linkColor: "#ffffff"
-            semibold: true
+            bold: true
             enabled: viewModel.localNodeRun && confirmRefreshDialog.canRefresh && viewModel.isLocalNodeRunning
             onClicked: {
                 confirmRefreshDialog.open()

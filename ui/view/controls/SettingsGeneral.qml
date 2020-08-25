@@ -110,7 +110,7 @@ SettingsFoldable {
             //% "Remove current wallet"
             text: qsTrId("settings-remove-wallet")
             linkColor: "#ff625c"
-            semibold: true
+            bold: true
             onClicked: {
                 // TODO:SETTINGS
             }

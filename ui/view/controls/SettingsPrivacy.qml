@@ -114,7 +114,7 @@ SettingsFoldable {
             //% "Show owner key"
             text: qsTrId("settings-general-require-pwd-to-show-owner-key")
             linkColor: "#ffffff"
-            semibold: true
+            bold: true
             onClicked: {
                 //: settings tab, general section, Show owner key button and dialog title
                 //% "Show owner key"
@@ -139,7 +139,7 @@ SettingsFoldable {
             //% "Change wallet password"
             text: qsTrId("general-change-pwd")
             linkColor: "#ffffff"
-            semibold: true
+            bold: true
             onClicked: {
                 changePasswordDialog.open()
             }
@@ -149,7 +149,7 @@ SettingsFoldable {
             //% "Clear local wallet data"
             text: qsTrId("settings-clear-local-data")
             linkColor: "#ffffff"
-            semibold: true
+            bold: true
             onClicked: {
                 // TODO:SETTINGS
             }
