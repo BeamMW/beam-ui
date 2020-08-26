@@ -341,6 +341,7 @@ SettingsFoldable {
                 color:            Style.content_main
                 underlineVisible: canEditNode
                 readOnly:         !canEditNode
+                ipOnly:           false
             }
 
             SFText {
