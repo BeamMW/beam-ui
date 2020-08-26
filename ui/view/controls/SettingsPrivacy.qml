@@ -80,7 +80,8 @@ SettingsFoldable {
             text: qsTrId("settings-general-require-pwd-to-spend")
             checked: viewModel.isPasswordReqiredToSpendMoney
             Layout.fillWidth: true
-
+            font.styleName:   "Regular"
+            font.weight:      Font.Normal
             function onDialogAccepted() {
                 viewModel.isPasswordReqiredToSpendMoney = checked;
             }
