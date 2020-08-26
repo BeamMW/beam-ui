@@ -323,7 +323,7 @@ SettingsFoldable {
             visible: !(editElectrum && useRandomNode.checked && !isElectrumConnection)
             Layout.topMargin: 20
             columns:          2
-            columnSpacing:    30
+            columnSpacing:    50
             rowSpacing:       13
 
             SFText {

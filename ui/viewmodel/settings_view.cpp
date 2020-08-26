@@ -679,7 +679,7 @@ void SwapCoinSettingsItem::LoadSettings()
         SetSeedElectrum(options.m_secretWords);
         setSelectServerAutomatically(options.m_automaticChooseAddress);
 
-        if (!options.m_automaticChooseAddress)
+        if (m_settings->IsElectrumActivated() || !options.m_automaticChooseAddress)
         {
             applyNodeAddressElectrum(str2qstr(options.m_address));
         }
