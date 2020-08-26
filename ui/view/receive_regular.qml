@@ -381,6 +381,7 @@ ColumnLayout {
                         qrCode:             viewModel.receiverAddressQR
                         isValidToken:       receiveView.isValid()
                         visible:            disabledLabel.text.length == 0
+                        defaultAddressType: true // permanent
                         onTokenCopied: {
                             receiveView.saveAddressAndClose();
                         }

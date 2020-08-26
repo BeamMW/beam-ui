@@ -8,15 +8,16 @@ import "."
 
 Panel {
     id: control
-    property alias title:       control.title
-    property var qrCode:        null
-    property alias token:       tokenLabel.text
-    property bool isValidToken: false
+    property alias title:              control.title
+    property var qrCode:               null
+    property alias token:              tokenLabel.text
+    property bool isValidToken:        false
+    property alias defaultAddressType: infoDialog.defaultAddressType
     signal tokenCopied;
 
     TokenInfoDialog {
-        id:     infoDialog;
-        token:  control.token
+        id:                     infoDialog
+        token:                  control.token
     }
 
     content: RowLayout {

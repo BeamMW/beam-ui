@@ -32,7 +32,16 @@ bool TokenInfoItem::isPermanent() const
     {
         return *p;
     }
+    if (m_defaultPermanent)
+    {
+        return *m_defaultPermanent;
+    }
     return false;
+}
+
+bool TokenInfoItem::hasAddressType() const
+{
+    return m_defaultPermanent.is_initialized() || m_parameters.GetParameter<bool>(TxParameterID::IsPermanentPeerID);
 }
 
 QString TokenInfoItem::getTransactionType() const
@@ -175,6 +184,20 @@ void TokenInfoItem::setOfflinePayments(int value)
     {
         m_offlinePayments = value;
         emit offlinePaymentsChanged();
+    }
+}
+
+bool TokenInfoItem::getDefaultPermanent() const
+{
+    return *m_defaultPermanent;
+}
+
+void TokenInfoItem::setDefaultPermanent(bool value)
+{
+    if (m_defaultPermanent != value)
+    {
+        m_defaultPermanent = value;
+        emit defaultPermanentChanged();
     }
 }
 

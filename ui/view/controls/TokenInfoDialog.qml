@@ -10,7 +10,7 @@ Dialog {
     modal: true
         
     property alias token:  viewModel.token
-    //property string token;
+    property alias defaultAddressType: viewModel.defaultPermanent
     
     TokenInfoItem {
         id:     viewModel
@@ -88,6 +88,7 @@ Dialog {
                 color:                  Style.content_disabled
                 //% "Token expiration"
                 text:                   qsTrId("token-expiration") + ":"
+                visible:                viewModel.hasAddressType
             }
             
             SFText {
@@ -100,6 +101,7 @@ Dialog {
                                         //% "One time"
                                         : qsTrId("token-info-dialog-one-time")
                 color:                  Style.content_main
+                visible:                viewModel.hasAddressType
             }
 
             // Transaction type:
