@@ -501,8 +501,13 @@ bool TxObject::isOfflineToken() const
     {
         return false;
     }
-    auto vouchers = m_tx.GetParameter<ShieldedVoucherList>(wallet::TxParameterID::ShieldedVoucherList);
-    return vouchers && !vouchers->empty();
+    auto p = ParseParameters(m_tx.getToken());
+    if (p)
+    {
+        auto vouchers = p->GetParameter<ShieldedVoucherList>(wallet::TxParameterID::ShieldedVoucherList);
+        return vouchers && !vouchers->empty();
+    }
+    return false;
 }
 
 bool TxObject::isCanceled() const
