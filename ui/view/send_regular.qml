@@ -372,7 +372,9 @@ ColumnLayout {
                             amountIn:                   viewModel.sendAmount
                             secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                            setMaxAvailableAmount:      function() { viewModel.setMaxAvailableAmount(); }
+                            setMaxAvailableAmount:      function() {
+                                viewModel.setMaxAvailableAmount();
+                            }
                             showAddAll:                 true
                             color:                      Style.accent_outgoing
                             error:                      showInsufficientBalanceWarning
@@ -400,7 +402,7 @@ ColumnLayout {
                         content: FeeInput {
                             id:                         feeInput
                             fee:                        viewModel.feeGrothes
-                            minFee:                     BeamGlobals.getMinimalFee(Currency.CurrBeam, viewModel.isShieldedTx || viewModel.isNeedExtractShieldedCoins)
+                            minFee:                     viewModel.minimalFeeGrothes
                             feeLabel:                   BeamGlobals.getFeeRateLabel(Currency.CurrBeam)
                             color:                      Style.accent_outgoing
                             readOnly:                   false
@@ -425,18 +427,6 @@ ColumnLayout {
                             target: viewModel
                             onFeeGrothesChanged: {
                                 feeInput.fee = viewModel.feeGrothes;
-                            }
-                            onIsNeedExtractShieldedCoinsChanged: {
-                                if (foldableFee.folded)
-                                    feeInput.fee = BeamGlobals.getMinimalFee(Currency.CurrBeam, viewModel.isShieldedTx ||
-                                                                                                viewModel.isNeedExtractShieldedCoins);
-                                if (viewModel.isNeedExtractShieldedCoins)
-                                    foldableFee.folded = false;
-                            }
-
-                            onIsShieldedTxChanged: {
-                                feeInput.fee = BeamGlobals.getMinimalFee(Currency.CurrBeam, viewModel.isShieldedTx ||
-                                                                                            viewModel.isNeedExtractShieldedCoins);
                             }
                         }
                     }
@@ -553,7 +543,7 @@ ColumnLayout {
                                 secondCurrencyLabel:     viewModel.secondCurrencyLabel
                                 secondCurrencyRateValue: viewModel.secondCurrencyRateValue
                             }
-                    
+
                             SFText {
                                 Layout.alignment:       Qt.AlignTop
                                 Layout.fillWidth:       true

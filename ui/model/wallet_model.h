@@ -52,13 +52,14 @@ public:
     beam::Height getCurrentHeight() const;
     beam::Timestamp getCurrentHeightTimestamp() const;
     beam::Block::SystemState::ID getCurrentStateID() const;
+    bool hasShielded() const;
 
 signals:
     void walletStatus(const beam::wallet::WalletStatus& status);
     void transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items);
     void syncProgressUpdated(int done, int total);
     void changeCalculated(beam::Amount change);
-    void needExtractShieldedCoins(bool val);
+    void minimalFeeCalculated(beam::Amount minimalFee, beam::Amount shieldedFee);
     void allUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
 #ifdef BEAM_LELANTUS_SUPPORT
     void shieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& coins);
@@ -91,7 +92,7 @@ signals:
     void showTrezorError(const QString& error);
 #endif
     void txHistoryExportedToCsv(const QString& data);
-    
+
     void exchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>&);
     void notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&);
 
@@ -100,7 +101,7 @@ private:
     void onTxStatus(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items) override;
     void onSyncProgressUpdated(int done, int total) override;
     void onChangeCalculated(beam::Amount change) override;
-    void onNeedExtractShieldedCoins(bool val) override;
+    void onMinFeeForShieldedCalculated(beam::Amount minimalFee, beam::Amount shieldedFee) override;
     void onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos) override;
     void onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& items) override;
     void onAddressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>& items) override;

@@ -146,7 +146,7 @@ ColumnLayout {
 
             function addAll(){
                 ainput.focus = false;                
-                if (control.setMaxAvailableAmount) {
+                if (typeof control.setMaxAvailableAmount == 'function') {
                     control.setMaxAvailableAmount();
                 }
             }

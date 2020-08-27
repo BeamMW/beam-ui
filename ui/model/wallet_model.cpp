@@ -137,9 +137,9 @@ void WalletModel::onChangeCalculated(beam::Amount change)
     emit changeCalculated(change);
 }
 
-void WalletModel::onNeedExtractShieldedCoins(bool val)
+void WalletModel::onMinFeeForShieldedCalculated(beam::Amount minimalFee, Amount shieldedFee)
 {
-    emit needExtractShieldedCoins(val);
+    emit minimalFeeCalculated(minimalFee, shieldedFee);
 }
 
 void WalletModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
@@ -362,6 +362,11 @@ beam::Height WalletModel::getCurrentHeightTimestamp() const
 beam::Block::SystemState::ID WalletModel::getCurrentStateID() const
 {
     return m_status.stateID;
+}
+
+bool WalletModel::hasShielded() const
+{
+    return !!m_status.shielded;
 }
 
 void WalletModel::setStatus(const beam::wallet::WalletStatus& status)

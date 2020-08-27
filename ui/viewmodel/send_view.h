@@ -37,7 +37,7 @@ class SendViewModel: public QObject
     Q_PROPERTY(QString  receiverIdentity   READ getReceiverIdentity                                    NOTIFY receiverIdentityChanged)
     Q_PROPERTY(QString  available          READ getAvailable                                           NOTIFY availableChanged)
     Q_PROPERTY(QString  change             READ getChange                                              NOTIFY availableChanged)
-    Q_PROPERTY(QString  fee                READ getFee                                                 NOTIFY availableChanged)
+    Q_PROPERTY(QString  fee                READ getFee                                                 NOTIFY feeGrothesChanged)
     Q_PROPERTY(QString  totalUTXO          READ getTotalUTXO                                           NOTIFY availableChanged)
     Q_PROPERTY(QString  missing            READ getMissing                                             NOTIFY availableChanged)
     Q_PROPERTY(bool     isZeroBalance      READ isZeroBalance                                          NOTIFY availableChanged)
@@ -52,12 +52,15 @@ class SendViewModel: public QObject
 
     Q_PROPERTY(bool     isTokenGeneratebByNewAppVersion      READ isTokenGeneratebByNewAppVersion      NOTIFY tokenGeneratebByNewAppVersion)
     Q_PROPERTY(QString  tokenGeneratebByNewAppVersionMessage READ tokenGeneratebByNewAppVersionMessage NOTIFY tokenGeneratebByNewAppVersion)
-    Q_PROPERTY(bool     isNeedExtractShieldedCoins           READ isNeedExtractShieldedCoins           NOTIFY isNeedExtractShieldedCoinsChanged)
+
+    Q_PROPERTY(bool         isNeedExtractShieldedCoins READ isNeedExtractShieldedCoins NOTIFY isNeedExtractShieldedCoinsChanged)
+    Q_PROPERTY(unsigned int minimalFeeGrothes          READ getMinimalFeeGrothes       NOTIFY minimalFeeGrothesChanged)
 
 public:
     SendViewModel();
 
     unsigned int getFeeGrothes() const;
+    unsigned int getMinimalFeeGrothes() const;
     void setFeeGrothes(unsigned int amount);
 
     void setComment(const QString& value);
@@ -88,7 +91,6 @@ public:
     QString getChange() const;
     QString getFee() const;
     QString getTotalUTXO() const;
-    QString getMaxAvailable() const;
 
     bool isZeroBalance() const;
     bool isEnough() const;
@@ -114,10 +116,10 @@ public:
 
 signals:
     void feeGrothesChanged();
+    void minimalFeeGrothesChanged();
     void commentChanged();
     void sendAmountChanged();
     void receiverTAChanged();
-    void isShieldedTxChanged();
     void isPermanentAddressChanged();
     void canChangeTxTypeChanged();
     void offlinePaymentsChanged();
@@ -134,16 +136,18 @@ signals:
     void tokenGeneratebByNewAppVersion();
     void isTokenChanged();
     void hasAddressChanged();
+    void isShieldedTxChanged();
     void isNeedExtractShieldedCoinsChanged();
 
 public slots:
     void onChangeCalculated(beam::Amount change);
-    void needExtractShieldedCoins(bool val);
+    void onMinFeeForShieldedCalculated(beam::Amount minimalFee, beam::Amount shieldedFee);
     void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
 
 private:
-    beam::Amount calcTotalAmount() const;
+    // beam::Amount calcTotalAmount() const;
     void extractParameters();
+    QString getMaxAvailable() const;
 
     beam::Amount _feeGrothes;
     beam::Amount _sendAmountGrothes;
@@ -155,7 +159,6 @@ private:
     beam::wallet::WalletID _receiverWalletID = beam::Zero;
     beam::wallet::PeerID _receiverIdentity = beam::Zero;
     QString _receiverIdentityStr;
-    bool _isShieldedTx = false;
     bool _isPermanentAddress = false;
     bool _canChangeTxType = true;
 
@@ -169,5 +172,11 @@ private:
     beam::wallet::TxParameters _txParameters;
 
     QString _tokenGeneratebByNewAppVersionMessage = "";
+
+    bool _isShieldedTx = false;
     bool _isNeedExtractShieldedCoins = false;
+    beam::Amount _beforehandMinimalFeeGrothes;
+    beam::Amount _minimalFeeGrothes;
+    beam::Amount _shieldedFee;
+    bool _feeChangedByUi = false;
 };
