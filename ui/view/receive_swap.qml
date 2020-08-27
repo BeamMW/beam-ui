@@ -43,7 +43,7 @@ ColumnLayout {
     function isValid () {
         if (!viewModel.commentValid) return false;
         if (viewModel.receiveCurrency == viewModel.sentCurrency) return false;
-        return receiveAmountInput.isValid && sentAmountInput.isValid && 
+        return receiveAmountInput.isValid && sentAmountInput.isValid && viewModel.isEnough
                receiveFeeInput.isValid && sendFeeInput.isValid && !currencyError() && rateRow.rateValid;
     }
 
