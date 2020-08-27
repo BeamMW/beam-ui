@@ -224,7 +224,7 @@ SettingsFoldable {
     }
 
     Component.onCompleted: {
-        control.editElectrum = control.isElectrumConnection || !control.canEdit;
+        control.editElectrum = control.isElectrumConnection || (!control.canEdit && !control.isNodeConnection);
         internalNode.save();
         internalElectrum.save();
     }

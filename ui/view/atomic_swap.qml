@@ -155,9 +155,10 @@ Item {
                         offersStackView.push(Qt.createComponent("send_swap.qml"),
                                             {
                                                 "onAccepted": atomicSwapLayout.onAccepted,
-                                                "onClosed": atomicSwapLayout.onClosed
+                                                "onClosed": atomicSwapLayout.onClosed,
+                                                "swapToken": token
                                             });
-                        offersStackView.currentItem.setToken(token);
+                        offersStackView.currentItem.validateCoin();
                     }
                     onTokenOwnGenerated: function(token) {
                         tokenDuplicateChecker.isOwn = true;

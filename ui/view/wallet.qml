@@ -73,9 +73,10 @@ Item {
                 walletStackView.push(Qt.createComponent("send_swap.qml"),
                                      {
                                          "onAccepted": tokenDuplicateChecker.onAccepted,
-                                         "onClosed": onClosed
+                                         "onClosed": onClosed,
+                                         "swapToken": token
                                      });
-                walletStackView.currentItem.setToken(token);
+                walletStackView.currentItem.validateCoin();
             }
             onTokenOwnGenerated: function(token) {
                 tokenDuplicateChecker.isOwn = true;

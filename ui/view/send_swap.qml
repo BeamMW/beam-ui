@@ -13,6 +13,7 @@ ColumnLayout {
     
     property var defaultFocusItem: commentInput
     property var predefinedTxParams: undefined
+    property alias swapToken: viewModel.token
 
     // callbacks set by parent
     property var onAccepted: undefined
