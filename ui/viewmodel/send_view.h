@@ -45,6 +45,7 @@ class SendViewModel: public QObject
     Q_PROPERTY(bool     canSend            READ canSend                                                NOTIFY canSendChanged)
     Q_PROPERTY(bool     isToken            READ isToken                                                NOTIFY isTokenChanged)
     Q_PROPERTY(bool     hasAddress         READ hasAddress                                             NOTIFY hasAddressChanged)
+    Q_PROPERTY(bool     isOwnAddress       READ isOwnAddress                                           NOTIFY receiverAddressChanged)
 
     Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                        NOTIFY secondCurrencyLabelChanged)
     Q_PROPERTY(QString  secondCurrencyRateValue     READ getSecondCurrencyRateValue                    NOTIFY secondCurrencyRateChanged)
@@ -94,6 +95,7 @@ public:
     bool canSend() const;
     bool isToken() const;
     void setIsToken(bool value);
+    bool isOwnAddress() const;
 
     QString getSecondCurrencyLabel() const;
     QString getSecondCurrencyRateValue() const;

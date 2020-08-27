@@ -2696,5 +2696,9 @@ generate new or edit existing seed phrase.</source>
         <source>Online (%1)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-send-max-privacy-to-yourself-unsupported">
+        <source>Can not sent max privacy transaction to own address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

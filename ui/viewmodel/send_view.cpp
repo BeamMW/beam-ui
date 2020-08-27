@@ -312,7 +312,8 @@ bool SendViewModel::canSend() const
 {
     return !QMLGlobals::isSwapToken(_receiverTA) && getRreceiverTAValid()
            && _sendAmountGrothes > 0 && isEnough()
-           && QMLGlobals::isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins);
+           && QMLGlobals::isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins)
+           && !(isShieldedTx() && isOwnAddress());
 }
 
 bool SendViewModel::isToken() const
@@ -327,6 +328,11 @@ void SendViewModel::setIsToken(bool value)
         _isToken = value;
         emit isTokenChanged();
     }
+}
+
+bool SendViewModel::isOwnAddress() const
+{
+    return _walletModel.isOwnAddress(_receiverWalletID);
 }
 
 void SendViewModel::setMaxAvailableAmount()

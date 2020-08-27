@@ -265,7 +265,7 @@ ColumnLayout {
                             RowLayout {
                                 spacing:            10
                                 Layout.topMargin:   20
-                                visible:            viewModel.isToken && viewModel.canChangeTxType
+                                visible:            viewModel.isToken && viewModel.canChangeTxType && !viewModel.isOwnAddress
                                 SFText {
                                     //% "Max privacy"
                                     text: qsTrId("general-max-privacy")
@@ -292,7 +292,19 @@ ColumnLayout {
                                     }
                                 }
                             }
-                    
+
+                            SFText {
+                                id:                 ownAddressUnsupportedMaxPrivacyText
+                                Layout.alignment:   Qt.AlignTop
+                                Layout.topMargin:   10
+                                color:              viewModel.isShieldedTx ? Style.validator_error : Style.content_secondary
+                                font.italic:        true
+                                font.pixelSize:     14
+                                //% "Can not sent max privacy transaction to own address"
+                                text:               qsTrId("wallet-send-max-privacy-to-yourself-unsupported")
+                                visible:            viewModel.isToken && viewModel.isOwnAddress
+                            }
+
                             SFText {
                                 Layout.alignment:   Qt.AlignTop
                                 Layout.topMargin:   10
@@ -317,7 +329,7 @@ ColumnLayout {
                                                     : 
                                                     //% "Receiver requested Max privacy"
                                                     qsTrId("wallet-send-max-privacy-note-token")
-                                visible:            !viewModel.canChangeTxType && viewModel.isShieldedTx && !viewModel.isNonInteractive && viewModel.isToken
+                                visible:            !viewModel.canChangeTxType && viewModel.isShieldedTx && !viewModel.isNonInteractive && viewModel.isToken && !viewModel.isOwnAddress
                             }
 
                             SFText {
@@ -330,7 +342,7 @@ ColumnLayout {
                                 font.pixelSize:     14
                                 //% "Transaction is slower, receiver pays fees."
                                 text:               qsTrId("wallet-send-max-privacy-note")
-                                visible:            viewModel.isShieldedTx
+                                visible:            viewModel.isShieldedTx && !ownAddressUnsupportedMaxPrivacyText.visible
                             }
                             SFText {
                                 height: 16
