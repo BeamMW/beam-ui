@@ -24,8 +24,8 @@ using namespace beam;
 
 namespace
 {
-    const int kUpdateInterval = 10000;
-    const int kInterval = 60 * 1000; // 1 minute
+    const int kBalanceUpdateInterval = 10 * 1000; // 10 seconds
+    const int kFeeRateUpdateInterval = 60 * 1000; // 1 minute
 }
 
 SwapCoinClientModel::SwapCoinClientModel(beam::bitcoin::IBridgeHolder::Ptr bridgeHolder,
@@ -52,8 +52,8 @@ SwapCoinClientModel::SwapCoinClientModel(beam::bitcoin::IBridgeHolder::Ptr bridg
     requestBalance();
     requestEstimatedFeeRate();
 
-    m_balanceTimer.start(kUpdateInterval);
-    m_feeRateTimer.start(kInterval);
+    m_balanceTimer.start(kBalanceUpdateInterval);
+    m_feeRateTimer.start(kFeeRateUpdateInterval);
 
     GetAsync()->GetStatus();
 }
