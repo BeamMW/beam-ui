@@ -70,9 +70,13 @@ void SendViewModel::setFeeGrothes(unsigned int value)
 {
     if (value != _feeGrothes)
     {
-        _feeChangedByUi = true;
         _feeGrothes = value;
         emit feeGrothesChanged();
+
+        if (!_sendAmountGrothes || !_feeGrothes) return;
+
+        _feeChangedByUi = true;
+
         if (_walletModel.hasShielded())
         {
             _walletModel.getAsync()->calcMinimalFee(_sendAmountGrothes, _feeGrothes);
@@ -260,12 +264,16 @@ void SendViewModel::setIsNonInteractive(bool value)
 
 QString SendViewModel::getAvailable() const
 {
-    return  beamui::AmountToUIString(isEnough() ? _walletModel.getAvailable() - _sendAmountGrothes - _feeGrothes - _changeGrothes : 0);
+    return  beamui::AmountToUIString(
+        isEnough() ? _walletModel.getAvailable() - _sendAmountGrothes - _feeGrothes - _changeGrothes : 0);
 }
 
 QString SendViewModel::getMissing() const
 {
-    return beamui::AmountToUIString(_sendAmountGrothes + _feeGrothes - _walletModel.getAvailable());
+    return beamui::AmountToUIString(
+        _changeGrothes != std::numeric_limits<beam::Amount>::max()
+            ? _sendAmountGrothes + _feeGrothes - _walletModel.getAvailable()
+            : 0);
 }
 
 bool SendViewModel::isZeroBalance() const
@@ -275,8 +283,8 @@ bool SendViewModel::isZeroBalance() const
 
 bool SendViewModel::isEnough() const
 {
-    return _changeGrothes != std::numeric_limits<beam::Amount>::max() &&
-        _walletModel.getAvailable() >= _sendAmountGrothes + _feeGrothes + _changeGrothes;
+    auto change = _changeGrothes != std::numeric_limits<beam::Amount>::max() ?_changeGrothes : 0;
+    return _walletModel.getAvailable() >= _sendAmountGrothes + _feeGrothes + change;
 }
 
 void SendViewModel::onChangeCalculated(beam::Amount change)
@@ -336,7 +344,7 @@ void SendViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const
 
 QString SendViewModel::getChange() const
 {
-    return beamui::AmountToUIString(_changeGrothes);
+    return beamui::AmountToUIString(_changeGrothes != std::numeric_limits<beam::Amount>::max() ? _changeGrothes : 0);
 }
 
 QString SendViewModel::getFee() const
