@@ -152,7 +152,6 @@ void SendViewModel::setReceiverTA(const QString& value)
             emit canChangeTxTypeChanged();
         }
         emit receiverTAChanged();
-        emit canSendChanged();
 
         if (QMLGlobals::isSwapToken(value))
         {
@@ -173,6 +172,7 @@ void SendViewModel::setReceiverTA(const QString& value)
                 setIsPermanentAddress(false);
                 setComment("");
             }
+            emit canSendChanged();
         }
     }
 }
@@ -245,6 +245,7 @@ void SendViewModel::setOfflinePayments(int value)
     {
         _offlinePayments = value;
         emit offlinePaymentsChanged();
+        emit canSendChanged();
     }
 }
 
@@ -382,7 +383,8 @@ bool SendViewModel::canSend() const
 {
     return !QMLGlobals::isSwapToken(_receiverTA) && getRreceiverTAValid()
            && _sendAmountGrothes > 0 && isEnough()
-           && QMLGlobals::isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins)
+           && QMLGlobals::isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins) 
+           && (!isShieldedTx() || !isNonInteractive() || getOfflinePayments() > 0)
            && !(isShieldedTx() && isOwnAddress());
 }
 
@@ -497,39 +499,36 @@ void SendViewModel::extractParameters()
         setIsPermanentAddress(false);
     }
 
-    ShieldedVoucherList vouchers;
-    if (_txParameters.GetParameter(TxParameterID::ShieldedVoucherList, vouchers))
+    bool isPushTx = false;
+    if (auto txType = _txParameters.GetParameter<TxType>(TxParameterID::TransactionType); txType && *txType == TxType::PushTransaction)
     {
-        if (_receiverWalletID != Zero)
+        setCanChangeTxType(false);
+        setIsShieldedTx(true);
+        ShieldedVoucherList vouchers;
+        auto hasVouchers = _txParameters.GetParameter(TxParameterID::ShieldedVoucherList, vouchers);
+        if (hasVouchers)
         {
-            _walletModel.getAsync()->saveVouchers(vouchers, _receiverWalletID);
+            if (_receiverWalletID != Zero)
+            {
+                _walletModel.getAsync()->saveVouchers(vouchers, _receiverWalletID);
+            }
         }
+        setIsNonInteractive(hasVouchers);
+        // ignore other types
+        isPushTx = true;
+    }
+    else
+    {
+        setIsShieldedTx(false);
+        setIsNonInteractive(false);
+        setCanChangeTxType(true);
     }
 
-
-    if (auto txType = _txParameters.GetParameter<TxType>(TxParameterID::TransactionType); txType)
-    {
-        bool isShielded = *txType == TxType::PushTransaction;
-        if (isShielded)
-        {
-            setCanChangeTxType(false);
-            setIsShieldedTx(true);
-            setIsNonInteractive(_receiverAddress.isEmpty());
-        } // ignore other types
-        else
-        {
-            setIsShieldedTx(false);
-            setIsNonInteractive(false);
-            setCanChangeTxType(true);
-        }
-
-        _beforehandMinimalFeeGrothes = QMLGlobals::getMinimalFee(Currency::CurrBeam, isShielded);
-        _minimalFeeGrothes = _beforehandMinimalFeeGrothes;
-        _feeGrothes = _beforehandMinimalFeeGrothes;
-        emit minimalFeeGrothesChanged();
-        emit feeGrothesChanged();
-    }
-
+    _beforehandMinimalFeeGrothes = QMLGlobals::getMinimalFee(Currency::CurrBeam, isPushTx);
+     _minimalFeeGrothes = _beforehandMinimalFeeGrothes;
+     _feeGrothes = _beforehandMinimalFeeGrothes;
+     emit minimalFeeGrothesChanged();
+     emit feeGrothesChanged();
 
     if (auto amount = _txParameters.GetParameter<beam::Amount>(TxParameterID::Amount); amount && *amount > 0)
     {

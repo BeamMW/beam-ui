@@ -501,13 +501,21 @@ bool TxObject::isOfflineToken() const
     {
         return false;
     }
-    auto p = ParseParameters(m_tx.getToken());
-    if (p)
+    if (!m_hasVouchers)
     {
-        auto vouchers = p->GetParameter<ShieldedVoucherList>(wallet::TxParameterID::ShieldedVoucherList);
-        return vouchers && !vouchers->empty();
+        auto p = ParseParameters(m_tx.getToken());
+        if (p)
+        {
+            auto vouchers = p->GetParameter<ShieldedVoucherList>(wallet::TxParameterID::ShieldedVoucherList);
+            m_hasVouchers = (vouchers && !vouchers->empty());
+        }
+        else
+        {
+            m_hasVouchers = false;
+        }
     }
-    return false;
+    
+    return *m_hasVouchers;
 }
 
 bool TxObject::isCanceled() const

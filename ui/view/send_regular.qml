@@ -259,7 +259,7 @@ ColumnLayout {
                                                     :
                                                     //% "One-time use token (expire in 12 hours after succesfull transaction)."
                                                     qsTrId("wallet-send-one-time-note")
-                                visible:            viewModel.isToken && !(viewModel.isShieldedTx && viewModel.isNonInteractive)
+                                visible:            viewModel.isToken
                             }
 
                             RowLayout {
@@ -323,13 +323,13 @@ ColumnLayout {
                                 font.italic:        true
                                 font.pixelSize:     14
                                 
-                                text:               viewModel.offlinePayments ? 
+                                text:               viewModel.isNonInteractive ? 
                                                     //% "Receiver requested Max privacy. Offline transactions remaining: %1"
                                                     qsTrId("wallet-send-max-privacy-note-token-offline").arg(viewModel.offlinePayments)
                                                     : 
                                                     //% "Receiver requested Max privacy"
                                                     qsTrId("wallet-send-max-privacy-note-token")
-                                visible:            !viewModel.canChangeTxType && viewModel.isShieldedTx && !viewModel.isNonInteractive && viewModel.isToken && !viewModel.isOwnAddress
+                                visible:            !viewModel.canChangeTxType && viewModel.isShieldedTx && viewModel.isToken && !viewModel.isOwnAddress
                             }
 
                             SFText {
