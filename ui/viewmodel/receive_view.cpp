@@ -245,9 +245,6 @@ void ReceiveViewModel::updateTransactionToken()
         {
             // add voucher parameter
             offlineParameters.SetParameter(TxParameterID::ShieldedVoucherList, vouchers);
-            //offlineParameters.DeleteParameter(TxParameterID::PeerID);
-            //offlineParameters.DeleteParameter(TxParameterID::PeerWalletIdentity);
-            //offlineParameters.DeleteParameter(TxParameterID::IsPermanentPeerID);
             setOfflineToken(QString::fromStdString(std::to_string(offlineParameters)));
         }
         else

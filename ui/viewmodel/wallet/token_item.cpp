@@ -125,12 +125,7 @@ QString TokenInfoItem::getTokenType() const
             if (vouchers && !vouchers->empty())
             {
                 //% "Offline (%1)"
-                return qtTrId("tx-token-offline-count").arg(offlinePayments ? offlinePayments : (int)vouchers->size());
-            }
-            if (offlinePayments)
-            {
-                //% "Online (%1)"
-                return qtTrId("tx-token-online-count").arg(offlinePayments);
+                return qtTrId("tx-token-offline-count").arg(offlinePayments);
             }
             //% "Online"
             return qtTrId("tx-token-online");
@@ -152,11 +147,11 @@ void TokenInfoItem::setToken(const QString& token)
     auto trimmed = token.trimmed();
     if (trimmed != m_token)
     {
+        m_token = trimmed;
         auto p = wallet::ParseParameters(trimmed.toStdString());
         if (p)
         {
             m_parameters = *p;
-            m_token = trimmed;
         }
         else
         {
