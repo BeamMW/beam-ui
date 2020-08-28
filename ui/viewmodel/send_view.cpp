@@ -297,6 +297,12 @@ void SendViewModel::onChangeCalculated(beam::Amount change)
 
 void SendViewModel::onMinFeeForShieldedCalculated(beam::Amount minimalFee, beam::Amount shieldedFee)
 {
+    if (_beforehandMinimalFeeGrothes > minimalFee)
+        minimalFee = _beforehandMinimalFeeGrothes;
+
+    if (_isShieldedTx)
+        minimalFee = shieldedFee + QMLGlobals::getMinimalFee(Currency::CurrBeam, true);
+
     if (!_sendAmountGrothes)
     {
         _sendAmountGrothes = _walletModel.getAvailable() - minimalFee;
@@ -503,7 +509,8 @@ void SendViewModel::extractParameters()
 
     if (auto txType = _txParameters.GetParameter<TxType>(TxParameterID::TransactionType); txType)
     {
-        if (*txType == TxType::PushTransaction)
+        bool isShielded = *txType == TxType::PushTransaction;
+        if (isShielded)
         {
             setCanChangeTxType(false);
             setIsShieldedTx(true);
@@ -515,6 +522,12 @@ void SendViewModel::extractParameters()
             setIsNonInteractive(false);
             setCanChangeTxType(true);
         }
+
+        _beforehandMinimalFeeGrothes = QMLGlobals::getMinimalFee(Currency::CurrBeam, isShielded);
+        _minimalFeeGrothes = _beforehandMinimalFeeGrothes;
+        _feeGrothes = _beforehandMinimalFeeGrothes;
+        emit minimalFeeGrothesChanged();
+        emit feeGrothesChanged();
     }
 
 
