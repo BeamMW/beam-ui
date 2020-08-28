@@ -83,4 +83,5 @@ protected:
     QString m_kernelID;
     beam::wallet::TxType m_type;
     beam::wallet::ExchangeRate::Currency m_secondCurrency;
+    mutable  boost::optional<bool> m_hasVouchers;
 };
