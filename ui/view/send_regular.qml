@@ -329,7 +329,7 @@ ColumnLayout {
                                                     : 
                                                     //% "Receiver requested Max privacy"
                                                     qsTrId("wallet-send-max-privacy-note-token")
-                                visible:            !viewModel.canChangeTxType && viewModel.isShieldedTx && !viewModel.isNonInteractive && viewModel.isToken && !viewModel.isOwnAddress
+                                visible:            !viewModel.canChangeTxType && viewModel.isShieldedTx && viewModel.isToken && !viewModel.isOwnAddress
                             }
 
                             SFText {
