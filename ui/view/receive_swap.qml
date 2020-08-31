@@ -683,7 +683,7 @@ please review your settings and try again"
                             CustomButton {
                                 Layout.alignment:    Qt.AlignHCenter
                                 //% "copy swap token"
-                                text:                qsTrId("wallet-receive-copy-token")
+                                text:                qsTrId("wallet-receive-swap-copy-token")
                                 palette.buttonText:  Style.content_main
                                 icon.color:          Style.content_main
                                 palette.button:      Style.background_button

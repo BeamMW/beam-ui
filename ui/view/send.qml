@@ -117,7 +117,7 @@ ColumnLayout {
                             font.italic:      true
                             visible:          !isValid
                             //% "Invalid swap token"
-                            text:             qsTrId("wallet-send-invalid-token")
+                            text:             qsTrId("wallet-send-swap-invalid-token")
                         }
                     }
                 }

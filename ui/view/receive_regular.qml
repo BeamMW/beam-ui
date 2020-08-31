@@ -200,7 +200,7 @@ ColumnLayout {
                                 visible:    !viewModel.isNonInteractive && !viewModel.isShieldedTx;
                                 SFText {
                                     //% "One-time use"
-                                    text:  qsTrId("token-one-time")
+                                    text:  qsTrId("address-one-time")
                                     color: permanentTokenSwitch.checked ? Style.content_secondary : Style.active
                                     font.pixelSize: 14
                                     MouseArea {
@@ -226,8 +226,8 @@ ColumnLayout {
                                 }
 
                                 SFText {
-                                    //% "Permanent token"
-                                    text: qsTrId("token-permanent")
+                                    //% "Permanent address"
+                                    text: qsTrId("address-permanent")
                                     color: permanentTokenSwitch.checked ? Style.active : Style.content_secondary
                                     font.pixelSize: 14
                                     MouseArea {
@@ -249,8 +249,9 @@ ColumnLayout {
                                     font.italic:        true
                                     font.pixelSize:     14
                                     text:               viewModel.isNonInteractive ?
-                                                        //% "Token good for 20 transactions."
-                                                        qsTrId("wallet-send-non-int-note") : 
+                                                        //% "Address good for 20 transactions."
+                                                        qsTrId("wallet-send-non-int-note") :
+                                                        //% "Transaction is slower, receiver pays fees."
                                                         qsTrId("wallet-send-max-privacy-note")
                                 }
                             }
@@ -346,10 +347,10 @@ ColumnLayout {
                     spacing:            10
                     TokenInfoPanel {
                         Layout.fillWidth:   true
-                        //% "Online token"
-                        title:              qsTrId("wallet-receive-online-token")
+                        //% "Online address"
+                        title:              qsTrId("wallet-receive-online-address")
                         //% "(for wallet)"
-                        headerText:         qsTrId("wallet-receive-token-for-wallet")
+                        headerText:         qsTrId("wallet-receive-address-for-wallet")
                         token:              viewModel.transactionToken
                         qrCode:             viewModel.isShieldedTx && viewModel.isNonInteractive ? "" : viewModel.transactionTokenQR
                         isValidToken:       receiveView.isValid()
@@ -359,10 +360,10 @@ ColumnLayout {
                     }
                     TokenInfoPanel {
                         Layout.fillWidth:   true
-                        //% "Offline token"
-                        title:              qsTrId("wallet-receive-offline-token")
+                        //% "Offline address"
+                        title:              qsTrId("wallet-receive-offline-address")
                         //% "(for wallet)"
-                        headerText:         qsTrId("wallet-receive-token-for-wallet")
+                        headerText:         qsTrId("wallet-receive-address-for-wallet")
                         token:              viewModel.offlineToken
                         qrCode:             ""
                         isValidToken:       receiveView.isValid()
@@ -373,10 +374,9 @@ ColumnLayout {
                     }
                     TokenInfoPanel {
                         Layout.fillWidth:   true
-                        //% "Online token"
-                        title:              qsTrId("wallet-receive-online-token")
+                        title:              qsTrId("wallet-receive-online-address")
                         //% "(for exchange or mining pool)"
-                        headerText:         qsTrId("wallet-receive-token-for-exchange")
+                        headerText:         qsTrId("wallet-receive-address-for-exchange")
                         token:              viewModel.receiverAddress
                         qrCode:             viewModel.receiverAddressQR
                         isValidToken:       receiveView.isValid()
@@ -388,10 +388,9 @@ ColumnLayout {
                     }
                     Panel {
                         Layout.fillWidth:   true
-                        //% "Online token"
-                        title:              qsTrId("wallet-receive-online-token")
+                        title:              qsTrId("wallet-receive-online-address")
                         //% "(for exchange or mining pool)"
-                        headerText:         qsTrId("wallet-receive-token-for-exchange")
+                        headerText:         qsTrId("wallet-receive-address-for-exchange")
                         visible:            disabledLabel.text.length > 0
                         content: ColumnLayout {
                             spacing:        20
@@ -404,7 +403,7 @@ ColumnLayout {
                                 wrapMode:               Text.WordWrap
                                 color:                  Style.content_secondary
                                 text:                   !viewModel.isPermanentAddress && !viewModel.isShieldedTx ?
-                                                            //% "Exchanges or mining pools support only permanent token now."
+                                                            //% "Exchanges or mining pools support only permanent address now."
                                                             qsTrId("wallet-receive-exchanges-one-time-not-supported")
                                                             :
                                                             viewModel.isShieldedTx ?
@@ -412,7 +411,7 @@ ColumnLayout {
                                                                     qsTrId("wallet-receive-exchanges-not-supported2") : ""
                             }
                             LinkButton {
-                                //% "Switch to permanent token"
+                                //% "Switch to permanent address"
                                 text:       qsTrId("switch-permanent")
                                 visible:    !viewModel.isPermanentAddress && !viewModel.isShieldedTx
                                 linkColor:  Style.active//Style.accent_incoming

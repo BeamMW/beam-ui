@@ -125,10 +125,10 @@ QString TokenInfoItem::getTokenType() const
             if (vouchers && !vouchers->empty())
             {
                 //% "Offline (%1)"
-                return qtTrId("tx-token-offline-count").arg(offlinePayments);
+                return qtTrId("tx-address-offline-count").arg(offlinePayments);
             }
             //% "Online"
-            return qtTrId("tx-token-online");
+            return qtTrId("tx-address-online");
         }
         default:
             break;

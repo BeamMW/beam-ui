@@ -157,11 +157,14 @@ ColumnLayout {
                                 validator:        RegExpValidator { regExp: /[0-9a-zA-Z]{1,}/ }
                                 selectByMouse:    true
                                 visible:          !receiverTAText.visible
-                                //% "Paste recipient token here"
-                                placeholderText:  qsTrId("send-contact-placeholder")
+                                property bool isSwap: BeamGlobals.isSwapToken(text)
+                                placeholderText:  isSwap ?
+                                    //% "Paste recipient token here"
+                                    qsTrId("send-contact-token-placeholder") :
+                                    //% "Paste recipient address here"
+                                    qsTrId("send-contact-address-placeholder")
                                 onTextChanged: {
-                                    if (BeamGlobals.isSwapToken(text)&&
-                                        typeof onSwapToken == "function") {
+                                    if (isSwap && typeof onSwapToken == "function") {
                                         onSwapToken(text);
                                     }
                                 }
@@ -254,10 +257,10 @@ ColumnLayout {
                                 font.italic:        true
                                 font.pixelSize:     14
                                 text:               viewModel.isPermanentAddress ? 
-                                                    //% "Permanent token (you can save it to contacts after send)."
+                                                    //% "Permanent address (you can save it to contacts after send)."
                                                     qsTrId("wallet-send-permanent-note") 
                                                     :
-                                                    //% "One-time use token (expire in 12 hours after succesfull transaction)."
+                                                    //% "One-time use address (expire in 12 hours after succesfull transaction)."
                                                     qsTrId("wallet-send-one-time-note")
                                 visible:            viewModel.isToken
                             }
@@ -325,10 +328,10 @@ ColumnLayout {
                                 
                                 text:               viewModel.isNonInteractive ? 
                                                     //% "Receiver requested Max privacy. Offline transactions remaining: %1"
-                                                    qsTrId("wallet-send-max-privacy-note-token-offline").arg(viewModel.offlinePayments)
+                                                    qsTrId("wallet-send-max-privacy-note-address-offline").arg(viewModel.offlinePayments)
                                                     : 
                                                     //% "Receiver requested Max privacy"
-                                                    qsTrId("wallet-send-max-privacy-note-token")
+                                                    qsTrId("wallet-send-max-privacy-note-address")
                                 visible:            !viewModel.canChangeTxType && viewModel.isShieldedTx && viewModel.isToken && !viewModel.isOwnAddress
                             }
 

@@ -397,8 +397,8 @@ Item {
                         transactionType:    txRolesMap && txRolesMap.isMaxPrivacy ? qsTrId("tx-max-privacy") : qsTrId("tx-regular")
                         tokenType:          txRolesMap && txRolesMap.isOfflineToken ?
                             //% "Offline"
-                            qsTrId("tx-token-offline") :
-                            qsTrId("tx-token-online")
+                            qsTrId("tx-address-offline") :
+                            qsTrId("tx-address-online")
                         secondCurrencyRate: txRolesMap && txRolesMap.secondCurrencyRate ? txRolesMap.secondCurrencyRate : ""
                         secondCurrencyLabel: viewModel.secondCurrencyLabel
                         searchFilter:       searchBox.text
