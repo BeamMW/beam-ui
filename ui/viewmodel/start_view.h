@@ -18,7 +18,10 @@
 
 #include <QObject>
 #include <QDateTime>
+#pragma warning (push)
+#pragma warning (disable: 4127)
 #include <QQmlListProperty>
+#pragma warning (pop)
 #include <QTimer>
 #include <QThread>
 #include <QJSValue>

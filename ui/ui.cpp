@@ -263,7 +263,7 @@ int main (int argc, char* argv[])
 
             if (engine.rootObjects().count() < 1)
             {
-                LOG_ERROR() << "Probmlem with QT";
+                LOG_ERROR() << "Problem with QT";
                 return -1;
             }
 
@@ -272,7 +272,7 @@ int main (int argc, char* argv[])
 
             if (!window)
             {
-                LOG_ERROR() << "Probmlem with QT";
+                LOG_ERROR() << "Problem with QT";
                 return -1;
             }
 

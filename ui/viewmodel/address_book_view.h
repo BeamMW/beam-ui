@@ -18,7 +18,10 @@
 #include <QObject>
 #include <QtCore/qvariant.h>
 #include <QDateTime>
+#pragma warning (push)
+#pragma warning (disable: 4127)
 #include <QQmlListProperty>
+#pragma warning (pop)
 #include "wallet/core/wallet_db.h"
 #include "model/wallet_model.h"
 
