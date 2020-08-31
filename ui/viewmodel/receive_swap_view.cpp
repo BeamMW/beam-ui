@@ -479,6 +479,8 @@ void ReceiveSwapViewModel::updateTransactionToken()
     auto beamFee = _isBeamSide ? _sentFeeGrothes : _receiveFeeGrothes;
     auto swapFeeRate = _isBeamSide ? _receiveFeeGrothes : _sentFeeGrothes;
 
+    _txParameters = beam::wallet::CreateSwapTransactionParameters();
+
     FillSwapTxParams(
         &_txParameters,
         _receiverAddress.m_walletID,
