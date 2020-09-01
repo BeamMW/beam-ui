@@ -18,10 +18,14 @@
 
 #include <QObject>
 #include <QDateTime>
+#if defined(_MSC_VER)
 #pragma warning (push)
 #pragma warning (disable: 4127)
+#endif
 #include <QQmlListProperty>
+#if defined(_MSC_VER)
 #pragma warning (pop)
+#endif
 #include <QTimer>
 #include <QThread>
 #include <QJSValue>
