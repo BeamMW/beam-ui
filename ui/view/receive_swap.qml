@@ -34,10 +34,11 @@ ColumnLayout {
     }
 
     SwapTokenInfoDialog {
-        id:             tokenInfoDialog
-        token:          viewModel.transactionToken
-        expirationTime: expiresCombo.displayText
-        rate:           rateStart.text + " " + rateInput.text + " " + rateEnd.text
+        id:               tokenInfoDialog
+        token:            viewModel.transactionToken
+        expirationTime:   expiresCombo.displayText
+        rate:             rateStart.text + " " + rateInput.text + " " + rateEnd.text
+        copyTokenEnabled: false
     }
 
     function isValid () {
@@ -660,6 +661,7 @@ please review your settings and try again"
                                 }
                                 RowLayout {
                                     Layout.fillWidth:        true
+                                    Layout.rightMargin:      showTokenLink.visible ? 0 : 40
                                     SFLabel {
                                         id:                  tokenLabel
                                         Layout.fillWidth:    true
@@ -670,30 +672,15 @@ please review your settings and try again"
                                     }
                                 
                                     LinkButton {
+                                        id: showTokenLink
                                         //% "Show token"
                                         text: qsTrId("show-token")
                                         linkColor: Style.accent_incoming
+                                        visible:  thisView.canSend()
                                         onClicked: {
                                             tokenInfoDialog.open();
                                         }
                                     }
-                                }
-                            }
-
-                            CustomButton {
-                                Layout.alignment:    Qt.AlignHCenter
-                                //% "copy swap token"
-                                text:                qsTrId("wallet-receive-swap-copy-token")
-                                palette.buttonText:  Style.content_main
-                                icon.color:          Style.content_main
-                                palette.button:      Style.background_button
-                                icon.source:         "qrc:/assets/icon-copy.svg"
-                                enabled:             thisView.canSend()
-                                onClicked: {
-                                    BeamGlobals.copyToClipboard(viewModel.transactionToken);
-                                    thisView.saveAddress();
-                                    viewModel.startListen();
-                                    onClosed();
                                 }
                             }
                         }
@@ -704,24 +691,44 @@ please review your settings and try again"
             //
             // Footers
             //
-            CustomButton {
+            RowLayout {
                 Layout.alignment:    Qt.AlignHCenter
                 Layout.topMargin:    30
                 Layout.bottomMargin: 30
-                //% "publish offer"
-                text:                qsTrId("wallet-receive-swap-publish")
-                palette.buttonText:  Style.content_opposite
-                icon.color:          Style.content_opposite
-                palette.button:      Style.active
-                icon.source:         "qrc:/assets/icon-share.svg"
-                enabled:             thisView.canSend()
-                onClicked: {
-                    thisView.saveAddress();
-                    viewModel.startListen();
-                    viewModel.publishToken();
-                    onClosed();
+                spacing:             30
+
+                CustomButton {
+                    //% "copy token and close"
+                    text:                qsTrId("wallet-receive-swap-copy-token-and-close")
+                    palette.buttonText:  Style.content_main
+                    icon.color:          Style.content_main
+                    palette.button:      Style.background_button
+                    icon.source:         "qrc:/assets/icon-copy.svg"
+                    enabled:             thisView.canSend()
+                    onClicked: {
+                        BeamGlobals.copyToClipboard(viewModel.transactionToken);
+                        thisView.saveAddress();
+                        viewModel.startListen();
+                        onClosed();
+                    }
                 }
-            }
+
+                CustomButton {
+                    //% "publish offer"
+                    text:                qsTrId("wallet-receive-swap-publish")
+                    palette.buttonText:  Style.content_opposite
+                    icon.color:          Style.content_opposite
+                    palette.button:      Style.active
+                    icon.source:         "qrc:/assets/icon-share.svg"
+                    enabled:             thisView.canSend()
+                    onClicked: {
+                        thisView.saveAddress();
+                        viewModel.startListen();
+                        viewModel.publishToken();
+                        onClosed();
+                    }
+                }
+            } // RowLayout
         }  // ColumnLayout
     }  // ScrollView
 }

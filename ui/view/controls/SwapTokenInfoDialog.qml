@@ -14,6 +14,7 @@ Dialog {
     property string rate:           ""
     property string offered:        ""
     property string expires:        ""
+    property bool copyTokenEnabled: true
     
     SwapTokenInfoItem {
         id:     viewModel
@@ -204,7 +205,7 @@ Dialog {
                     //Layout.fillWidth:       true
                     //Layout.preferredWidth:  578
                     width:                    578
-                    copyMenuEnabled:          true
+                    copyMenuEnabled:          dialog.copyTokenEnabled
                     wrapMode:                 Text.Wrap
                     font.pixelSize:           14
                     color:                    Style.content_main
@@ -232,6 +233,7 @@ Dialog {
             }
             
             PrimaryButton {
+                visible:            dialog.copyTokenEnabled
                 icon.source:        "qrc:/assets/icon-copy-blue.svg"
                 palette.buttonText: Style.content_opposite
                 icon.color:         Style.content_opposite

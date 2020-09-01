@@ -1377,10 +1377,6 @@ please review your settings and try again</oldsource>
         <source>There is no device connected, please, connect your hardware wallet.</source>
         <translation>연결된 디바이스 없음, 하드웨어 지갑을 연결해주세요.</translation>
     </message>
-    <message id="wallet-receive-swap-copy-token">
-        <source>copy swap token</source>
-        <translation type="unfinished">트랜잭션 토큰 복사</translation>
-    </message>
     <message id="wallet-model-device-not-connected">
         <source>There is no Trezor device connected. Please, connect and try again.</source>
         <translation>연결된 Trezor 장치가 없습니다. 연결후 재시도해주세요.</translation>
@@ -2706,6 +2702,10 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="send-remaining-label">
         <source>Remaining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-swap-copy-token-and-close">
+        <source>copy token and close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

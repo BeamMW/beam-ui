@@ -1359,10 +1359,6 @@ please review your settings and try again</translation>
         <source>There is no device connected, please, connect your hardware wallet.</source>
         <translation>There is no device connected, please, connect your hardware wallet.</translation>
     </message>
-    <message id="wallet-receive-swap-copy-token">
-        <source>copy swap token</source>
-        <translation>copy swap token</translation>
-    </message>
     <message id="wallet-model-device-not-connected">
         <source>There is no Trezor device connected. Please, connect and try again.</source>
         <translation>There is no Trezor device connected. Please, connect and try again.</translation>
@@ -2653,6 +2649,10 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="send-remaining-label">
         <source>Remaining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-swap-copy-token-and-close">
+        <source>copy token and close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
