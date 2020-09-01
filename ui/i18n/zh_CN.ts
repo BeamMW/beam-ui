@@ -2375,10 +2375,6 @@ Your version is: %2. Please, check for updates.</oldsource>
         <source>Max privacy</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="tx-non-interactive">
-        <source>Non-interactive</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="wallet-receive-exchanges-not-supported2">
         <source>Exchanges or mining pools support only regular transaction now.</source>
         <oldsource>Non-interactive transaction is not supported by exchanges or mining pools yet.</oldsource>

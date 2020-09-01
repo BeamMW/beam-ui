@@ -102,11 +102,23 @@ ColumnLayout {
             }
 
             onActiveFocusChanged: {
+                // we intentionally break binding here
+                text = formatDisplayedAmount()
                 if (activeFocus) cursorPosition = positionAt(ainput.getMousePos().x, ainput.getMousePos().y)
             }
 
             function formatDisplayedAmount() {
                 return control.amountIn == "0" ? "" : (ainput.activeFocus ? control.amountIn : Utils.uiStringToLocale(control.amountIn))
+            }
+
+            Connections {
+                target: control
+                onAmountInChanged: {
+                    if (!ainput.activeFocus) {
+                        // we intentionally break binding here
+                        ainput.text = ainput.formatDisplayedAmount()
+                    }
+                }
             }
         }
 

@@ -2308,10 +2308,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Max privacy</source>
         <translation>Max privacy</translation>
     </message>
-    <message id="tx-non-interactive">
-        <source>Non-interactive</source>
-        <translation>Non-interactive</translation>
-    </message>
     <message id="wallet-receive-exchanges-not-supported2">
         <source>Exchanges or mining pools support only regular transaction now.</source>
         <translation>Exchanges or mining pools support only regular transaction now.</translation>
