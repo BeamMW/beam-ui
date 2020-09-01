@@ -701,7 +701,7 @@ please review your settings and try again"
                     //% "copy token and close"
                     text:                qsTrId("wallet-receive-swap-copy-token-and-close")
                     palette.buttonText:  Style.content_main
-                    icon.color:          Style.content_main
+                    iconColor:           Style.content_main
                     palette.button:      Style.background_button
                     icon.source:         "qrc:/assets/icon-copy.svg"
                     enabled:             thisView.canSend()
