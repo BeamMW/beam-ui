@@ -8,11 +8,12 @@ import "."
 
 Panel {
     id: control
-    property alias title:              control.title
-    property var qrCode:               null
-    property alias token:              tokenLabel.text
-    property bool isValidToken:        false
-    property alias defaultAddressType: infoDialog.defaultAddressType
+    property alias title:               control.title
+    property var qrCode:                null
+    property alias token:               tokenLabel.text
+    property bool isValidToken:         false
+    property alias defaultAddressType:  infoDialog.defaultAddressType
+    property alias ignoreStoredVouchers:infoDialog.ignoreStoredVouchers
     signal tokenCopied;
 
     TokenInfoDialog {

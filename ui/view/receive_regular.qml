@@ -359,15 +359,16 @@ ColumnLayout {
                         }
                     }
                     TokenInfoPanel {
-                        Layout.fillWidth:   true
+                        Layout.fillWidth:     true
                         //% "Offline address"
-                        title:              qsTrId("wallet-receive-offline-address")
+                        title:                qsTrId("wallet-receive-offline-address")
                         //% "(for wallet)"
-                        headerText:         qsTrId("wallet-receive-address-for-wallet")
-                        token:              viewModel.offlineToken
-                        qrCode:             ""
-                        isValidToken:       receiveView.isValid()
-                        visible:            viewModel.isShieldedTx && viewModel.offlineToken.length > 0
+                        headerText:           qsTrId("wallet-receive-address-for-wallet")
+                        token:                viewModel.offlineToken
+                        qrCode:               ""
+                        isValidToken:         receiveView.isValid()
+                        visible:              viewModel.isShieldedTx && viewModel.offlineToken.length > 0
+                        ignoreStoredVouchers: true
                         onTokenCopied: {
                             receiveView.saveAddressAndClose();
                         }

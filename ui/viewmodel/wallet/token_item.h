@@ -23,6 +23,7 @@ class TokenInfoItem : public QObject
     Q_PROPERTY(bool    isPermanent           READ isPermanent                NOTIFY tokenChanged)
     Q_PROPERTY(bool    hasAddressType        READ hasAddressType             NOTIFY tokenChanged)
     Q_PROPERTY(bool    defaultPermanent      READ getDefaultPermanent        WRITE  setDefaultPermanent   NOTIFY defaultPermanentChanged)
+    Q_PROPERTY(bool    ignoreStoredVouchers  READ getIgnoreStoredVouchers    WRITE  setIgnoreStoredVouchers   NOTIFY ignoreStoredVouchersChanged)
     Q_PROPERTY(QString transactionType       READ getTransactionType         NOTIFY tokenChanged)
     Q_PROPERTY(QString amount                READ getAmount                  NOTIFY tokenChanged)
     Q_PROPERTY(QString amountValue           READ getAmountValue             NOTIFY tokenChanged)
@@ -50,11 +51,15 @@ public:
     void setOfflinePayments(int value);
     bool getDefaultPermanent() const;
     void setDefaultPermanent(bool value);
+    
+    bool getIgnoreStoredVouchers() const;
+    void setIgnoreStoredVouchers(bool value);
 
 signals:
     void tokenChanged();
     void offlinePaymentsChanged();
     void defaultPermanentChanged();
+    void ignoreStoredVouchersChanged();
 public slots:
     void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
 
@@ -63,5 +68,6 @@ private:
     beam::wallet::TxParameters m_parameters;
     int m_offlinePayments = 0;
     boost::optional<bool> m_defaultPermanent;
+    bool m_ignoreStoredVouchers = false;
 };
 

@@ -52,15 +52,6 @@ QString TokenInfoItem::getTransactionType() const
         switch (*p)
         {
         case TxType::PushTransaction:
-            {
-                auto vouchers = m_parameters.GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList);
-                if (vouchers && getAddress().isEmpty())
-                {
-                    //% "Non-interactive"
-                    return qtTrId("tx-non-interactive");
-                }
-            }
-
             return qtTrId("tx-max-privacy");
         case TxType::Simple:
             return qtTrId("tx-regular");
@@ -120,10 +111,10 @@ QString TokenInfoItem::getTokenType() const
         {
         case TxType::PushTransaction:
         {
-            auto offlinePayments = getOfflinePayments();
             auto vouchers = m_parameters.GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList);
             if (vouchers && !vouchers->empty())
             {
+                int offlinePayments = getIgnoreStoredVouchers() ? static_cast<int>(vouchers->size()) : getOfflinePayments();
                 //% "Offline (%1)"
                 return qtTrId("tx-address-offline-count").arg(offlinePayments);
             }
@@ -198,5 +189,23 @@ void TokenInfoItem::setDefaultPermanent(bool value)
 
 void TokenInfoItem::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
 {
-    setOfflinePayments(offlinePayments);
+    auto p = m_parameters.GetParameter<WalletID>(TxParameterID::PeerID);
+    if (p && *p == id)
+    {
+        setOfflinePayments(offlinePayments);
+    }
+}
+
+bool TokenInfoItem::getIgnoreStoredVouchers() const
+{
+    return m_ignoreStoredVouchers;
+}
+
+void TokenInfoItem::setIgnoreStoredVouchers(bool value)
+{
+    if (m_ignoreStoredVouchers != value)
+    {
+        m_ignoreStoredVouchers = value;
+        emit ignoreStoredVouchersChanged();
+    }
 }

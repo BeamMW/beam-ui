@@ -9,8 +9,9 @@ Dialog {
     id: dialog
     modal: true
         
-    property alias token:  viewModel.token
-    property alias defaultAddressType: viewModel.defaultPermanent
+    property alias token:                   viewModel.token
+    property alias defaultAddressType:      viewModel.defaultPermanent
+    property alias ignoreStoredVouchers:    viewModel.ignoreStoredVouchers
     
     TokenInfoItem {
         id:     viewModel
