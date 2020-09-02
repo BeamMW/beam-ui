@@ -121,7 +121,11 @@ void SendViewModel::setSendAmount(QString value)
         _sendAmountGrothes = amount;
         emit sendAmountChanged();
 
-        if (!_sendAmountGrothes) return;
+        if (_sendAmountGrothes == 0)
+        {
+            onChangeCalculated(0);
+            return;
+        }
 
         if (_walletModel.hasShielded())
         {
