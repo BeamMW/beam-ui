@@ -79,6 +79,7 @@ ColumnLayout {
             // Transaction token
             //
             Panel {
+                //% "Transaction token"
                 title:                   qsTrId("token-info-title")
                 Layout.fillWidth:        true
                 content:
@@ -92,7 +93,7 @@ ColumnLayout {
                         font.italic:      !isValid
                         validator:        RegExpValidator { regExp: /[0-9a-zA-Z]{1,}/ }
                         selectByMouse:    true
-                        //% "Paste token here"
+                        //% "Paste token or address here"
                         placeholderText:  qsTrId("send-swap-token-hint")
 
                         onTextPasted: {

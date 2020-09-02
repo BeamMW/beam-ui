@@ -216,13 +216,13 @@ RowLayout {
             visible:                isTextFieldVisible(root.transactionType)
         }
 
-        // Token type
+        // Address type
         SFText {
             Layout.alignment:       Qt.AlignTop
             font.pixelSize:         14
             color:                  Style.content_secondary
-            //% "Token type"
-            text:                   qsTrId("token-info-type") + ":"
+            //% "Address type"
+            text:                   qsTrId("address-info-type") + ":"
             visible:                isTextFieldVisible(root.tokenType)
         }
             

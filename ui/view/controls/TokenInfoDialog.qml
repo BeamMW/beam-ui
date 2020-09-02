@@ -57,8 +57,8 @@ Dialog {
                     font.styleName:     "Bold"
                     font.weight:        Font.Bold
                     color:              Style.content_main
-                    //% "Transaction token"
-                    text:               qsTrId("token-info-title")
+                    //% "Transaction address"
+                    text:               qsTrId("address-info-title")
                 }
             }
 
@@ -82,13 +82,13 @@ Dialog {
                 visible:                viewModel.amount.length
             }
         
-            // Token expiration
+            // Address expiration
             SFText {
                 Layout.alignment:       Qt.AlignTop
                 font.pixelSize:         14
                 color:                  Style.content_disabled
-                //% "Token expiration"
-                text:                   qsTrId("token-expiration") + ":"
+                //% "Address expiration"
+                text:                   qsTrId("address-expiration") + ":"
                 visible:                viewModel.hasAddressType
             }
             
@@ -98,7 +98,7 @@ Dialog {
                 font.pixelSize:         14
                 text:                   viewModel.isPermanent ? 
                                         //% "Permanent" 
-                                        qsTrId("token-info-dialog-permanent")
+                                        qsTrId("address-info-dialog-permanent")
                                         //% "One time"
                                         : qsTrId("token-info-dialog-one-time")
                 color:                  Style.content_main
@@ -111,7 +111,7 @@ Dialog {
                 font.pixelSize:         14
                 color:                  Style.content_disabled
                 //% "Transaction type"
-                text:                   qsTrId("token-info-transaction-type") + ":"
+                text:                   qsTrId("address-info-transaction-type") + ":"
                 visible:                viewModel.transactionType.length
             }
             
@@ -125,13 +125,13 @@ Dialog {
                 visible:                viewModel.transactionType.length
             }
 
-            // Token type
+            // Address type
             SFText {
                 Layout.alignment:       Qt.AlignTop
                 font.pixelSize:         14
                 color:                  Style.content_disabled
-                //% "Token type"
-                text:                   qsTrId("token-info-type") + ":"
+                //% "Address type"
+                text:                   qsTrId("address-info-type") + ":"
                 visible:                viewModel.tokenType.length
             }
             
@@ -149,8 +149,8 @@ Dialog {
                 Layout.alignment:       Qt.AlignTop
                 font.pixelSize:         14
                 color:                  Style.content_disabled
-                //% "Address"
-                text:                   qsTrId("token-info-address") + ":"
+                //% "SBBS Address"
+                text:                   qsTrId("address-info-sbbs-address") + ":"
                 visible:                viewModel.address.length
             }
             
@@ -187,13 +187,13 @@ Dialog {
             }
             
             
-            // Token
+            // Address
             SFText {
                 Layout.alignment:       Qt.AlignTop
                 font.pixelSize:         14
                 color:                  Style.content_disabled
-                //% "Token"
-                text:                   qsTrId("token-info-token") + ":"
+                //% "Address"
+                text:                   qsTrId("address-info-address") + ":"
                 visible:                viewModel.token != viewModel.address
             }
             
@@ -241,8 +241,8 @@ Dialog {
                 palette.buttonText: Style.content_opposite
                 icon.color:         Style.content_opposite
                 palette.button:     Style.accent_incoming
-                //% "Copy token"
-                text:               qsTrId("token-info-copy-token")
+                //% "Copy address"
+                text:               qsTrId("address-info-copy-address")
                 onClicked: {
                     BeamGlobals.copyToClipboard(viewModel.token);
                 }

@@ -210,8 +210,8 @@ ColumnLayout {
                                     }
                                 }
                                 LinkButton {
-                                    //% "Show token"
-                                    text:       qsTrId("show-token")
+                                    //% "Show address"
+                                    text:       qsTrId("show-address")
                                     linkColor:  Style.accent_outgoing
                                     visible:    viewModel.receiverTAValid
                                     onClicked: {

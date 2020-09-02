@@ -48,8 +48,8 @@ Panel {
                 }
         
                 LinkButton {
-                    //% "Show token"
-                    text: qsTrId("show-token")
+                    //% "Show address"
+                    text: qsTrId("show-address")
                     linkColor: Style.accent_incoming
                     onClicked: {
                         infoDialog.open();

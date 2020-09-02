@@ -1682,8 +1682,9 @@ Please check the swap token and try again.</translation>
         <translation>Swap token</translation>
     </message>
     <message id="send-swap-token-hint">
-        <source>Paste token here</source>
-        <translation>Paste token here</translation>
+        <source>Paste token or address here</source>
+        <oldsource>Paste token here</oldsource>
+        <translation type="unfinished">Paste token here</translation>
     </message>
     <message id="swap-tx-state-initial">
         <source>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</source>
@@ -2272,10 +2273,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Transaction type</source>
         <translation>Transaction type</translation>
     </message>
-    <message id="token-info-address">
-        <source>Address</source>
-        <translation>Address</translation>
-    </message>
     <message id="token-info-token">
         <source>Token</source>
         <translation>Token</translation>
@@ -2407,17 +2404,9 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Expiration time</source>
         <translation>Expiration time</translation>
     </message>
-    <message id="token-info-type">
-        <source>Token type</source>
-        <translation>Token type</translation>
-    </message>
     <message id="send-confirmation-type-label">
         <source>Type</source>
         <translation>Type</translation>
-    </message>
-    <message id="token-info-dialog-permanent">
-        <source>Permanent</source>
-        <translation>Permanent</translation>
     </message>
     <message id="token-info-dialog-one-time">
         <source>One time</source>
@@ -2438,10 +2427,6 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>
         <translation>The minimum recommended fee is %1 %2</translation>
-    </message>
-    <message id="token-expiration">
-        <source>Token expiration</source>
-        <translation>Token expiration</translation>
     </message>
     <message id="tx-address-offline">
         <source>Offline</source>
@@ -2649,6 +2634,42 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="wallet-receive-swap-copy-token-and-close">
         <source>copy token and close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-title">
+        <source>Transaction address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-expiration">
+        <source>Address expiration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-dialog-permanent">
+        <source>Permanent</source>
+        <translation type="unfinished">Permanent</translation>
+    </message>
+    <message id="address-info-transaction-type">
+        <source>Transaction type</source>
+        <translation type="unfinished">Transaction type</translation>
+    </message>
+    <message id="address-info-type">
+        <source>Address type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-sbbs-address">
+        <source>SBBS Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-address">
+        <source>Address</source>
+        <translation type="unfinished">Address</translation>
+    </message>
+    <message id="address-info-copy-address">
+        <source>Copy address</source>
+        <translation type="unfinished">Copy address</translation>
+    </message>
+    <message id="show-address">
+        <source>Show address</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
