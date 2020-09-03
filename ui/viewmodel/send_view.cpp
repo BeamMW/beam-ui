@@ -435,6 +435,10 @@ void SendViewModel::sendMoney()
         CopyParameter(TxParameterID::PeerWalletIdentity, _txParameters, p);
         p.SetParameter(TxParameterID::TransactionType, isShieldedTx() ? TxType::PushTransaction : TxType::Simple);
 
+        if (isShieldedTx())
+        {
+            CopyParameter(TxParameterID::ShieldedVoucherList, _txParameters, p);
+        }
         if (isToken())
         {
             p.SetParameter(TxParameterID::OriginalToken, _receiverTA.toStdString());

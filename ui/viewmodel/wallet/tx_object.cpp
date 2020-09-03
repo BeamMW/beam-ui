@@ -497,22 +497,14 @@ bool TxObject::isMaxPrivacy() const
 
 bool TxObject::isOfflineToken() const
 {
-    if (!isMaxPrivacy())
+    if (!isMaxPrivacy() || isIncome())
     {
         return false;
     }
     if (!m_hasVouchers)
     {
-        auto p = ParseParameters(m_tx.getToken());
-        if (p)
-        {
-            auto vouchers = p->GetParameter<ShieldedVoucherList>(wallet::TxParameterID::ShieldedVoucherList);
-            m_hasVouchers = (vouchers && !vouchers->empty());
-        }
-        else
-        {
-            m_hasVouchers = false;
-        }
+        auto vouchers = m_tx.GetParameter<ShieldedVoucherList>(wallet::TxParameterID::ShieldedVoucherList);
+        m_hasVouchers = (vouchers && !vouchers->empty());
     }
     
     return *m_hasVouchers;
