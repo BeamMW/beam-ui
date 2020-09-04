@@ -151,7 +151,7 @@ Dialog {
                 color:                  Style.content_disabled
                 //% "SBBS Address"
                 text:                   qsTrId("address-info-sbbs-address") + ":"
-                visible:                viewModel.address.length
+                visible:                viewModel.address.length && !viewModel.isMaxPrivacy
             }
             
             SFLabel {
@@ -162,7 +162,7 @@ Dialog {
                 color:                  Style.content_main
                 text:                   viewModel.address
                 onCopyText:             BeamGlobals.copyToClipboard(text)
-                visible:                viewModel.address.length
+                visible:                viewModel.address.length && !viewModel.isMaxPrivacy
             }
 
             // Identity

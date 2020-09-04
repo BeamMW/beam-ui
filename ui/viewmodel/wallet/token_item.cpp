@@ -39,6 +39,12 @@ bool TokenInfoItem::isPermanent() const
     return false;
 }
 
+bool TokenInfoItem::isMaxPrivacy() const
+{
+    auto p = m_parameters.GetParameter<TxType>(TxParameterID::TransactionType);
+    return p && *p == TxType::PushTransaction;
+}
+
 bool TokenInfoItem::hasAddressType() const
 {
     return m_defaultPermanent.is_initialized() || m_parameters.GetParameter<bool>(TxParameterID::IsPermanentPeerID);

@@ -21,6 +21,7 @@ class TokenInfoItem : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool    isPermanent           READ isPermanent                NOTIFY tokenChanged)
+    Q_PROPERTY(bool    isMaxPrivacy          READ isMaxPrivacy               NOTIFY tokenChanged)
     Q_PROPERTY(bool    hasAddressType        READ hasAddressType             NOTIFY tokenChanged)
     Q_PROPERTY(bool    defaultPermanent      READ getDefaultPermanent        WRITE  setDefaultPermanent   NOTIFY defaultPermanentChanged)
     Q_PROPERTY(bool    ignoreStoredVouchers  READ getIgnoreStoredVouchers    WRITE  setIgnoreStoredVouchers   NOTIFY ignoreStoredVouchersChanged)
@@ -37,6 +38,7 @@ class TokenInfoItem : public QObject
 public:
     TokenInfoItem(QObject* parent = nullptr);
     bool isPermanent() const;
+    bool isMaxPrivacy() const;
     bool hasAddressType() const;
     QString getTransactionType() const;
     QString getAmount() const;
