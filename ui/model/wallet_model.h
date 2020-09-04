@@ -59,7 +59,8 @@ signals:
     void transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items);
     void syncProgressUpdated(int done, int total);
     void changeCalculated(beam::Amount change);
-    void minimalFeeCalculated(beam::Amount minimalFee, beam::Amount shieldedFee);
+    void shieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes);
+    void needExtractShieldedCoins(bool val);
     void allUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
 #ifdef BEAM_LELANTUS_SUPPORT
     void shieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& coins);
@@ -101,7 +102,8 @@ private:
     void onTxStatus(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items) override;
     void onSyncProgressUpdated(int done, int total) override;
     void onChangeCalculated(beam::Amount change) override;
-    void onMinFeeForShieldedCalculated(beam::Amount minimalFee, beam::Amount shieldedFee) override;
+    void onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes) override;
+    void onNeedExtractShieldedCoins(bool val) override;
     void onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos) override;
     void onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& items) override;
     void onAddressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>& items) override;

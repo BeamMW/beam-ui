@@ -141,13 +141,13 @@ signals:
 
 public slots:
     void onChangeCalculated(beam::Amount change);
-    void onMinFeeForShieldedCalculated(beam::Amount minimalFee, beam::Amount shieldedFee);
+    void onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes);
+    void onNeedExtractShieldedCoins(bool val);
     void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
 
 private:
-    // beam::Amount calcTotalAmount() const;
     void extractParameters();
-    QString getMaxAvailable() const;
+    void resetMinimalFee();
 
     beam::Amount _feeGrothes;
     beam::Amount _sendAmountGrothes;
@@ -175,8 +175,8 @@ private:
 
     bool _isShieldedTx = false;
     bool _isNeedExtractShieldedCoins = false;
-    beam::Amount _beforehandMinimalFeeGrothes;
     beam::Amount _minimalFeeGrothes;
     beam::Amount _shieldedFee;
     bool _feeChangedByUi = false;
+    bool _maxAvailable = false;
 };

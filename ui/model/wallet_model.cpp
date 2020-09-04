@@ -48,6 +48,7 @@ WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, b
     qRegisterMetaType<beam::wallet::WalletImplVerInfo>("beam::wallet::WalletImplVerInfo");
     qRegisterMetaType<ECC::uintBig>("ECC::uintBig");
     qRegisterMetaType<boost::optional<beam::wallet::WalletAddress>>("boost::optional<beam::wallet::WalletAddress>");
+    qRegisterMetaType<beam::wallet::ShieldedCoinsSelectionInfo>("beam::wallet::ShieldedCoinsSelectionInfo");
 
     connect(this, SIGNAL(walletStatus(const beam::wallet::WalletStatus&)), this, SLOT(setStatus(const beam::wallet::WalletStatus&)));
     connect(this, SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
@@ -137,9 +138,14 @@ void WalletModel::onChangeCalculated(beam::Amount change)
     emit changeCalculated(change);
 }
 
-void WalletModel::onMinFeeForShieldedCalculated(beam::Amount minimalFee, Amount shieldedFee)
+void WalletModel::onShieldedCoinsSelectionCalculated(const ShieldedCoinsSelectionInfo& selectionRes)
 {
-    emit minimalFeeCalculated(minimalFee, shieldedFee);
+    emit shieldedCoinsSelectionCalculated(selectionRes);
+}
+
+void WalletModel::onNeedExtractShieldedCoins(bool val)
+{
+    emit needExtractShieldedCoins(val);
 }
 
 void WalletModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
