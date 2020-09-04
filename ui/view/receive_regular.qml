@@ -447,8 +447,8 @@ ColumnLayout {
                 color:                 Style.content_main
                 wrapMode:              Text.WordWrap
                 horizontalAlignment:   Text.AlignHCenter
-                //% "To spend the received Max privacy coins the min transaction fee will be 1200000 GROTH."
-                text: qsTrId("wallet-receive-addr-message")
+                //% "To spend the received Max privacy coins the min transaction fee will be %1 GROTH."
+                text: qsTrId("wallet-receive-addr-message").arg(BeamGlobals.minFeeBeam(true))
                 visible:               viewModel.isShieldedTx
             }
 

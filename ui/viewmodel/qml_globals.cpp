@@ -33,9 +33,6 @@ using boost::multiprecision::cpp_dec_float_50;
 
 namespace
 {
-    const int kDefaultFeeInGroth = 10;
-    const int kFeeInGroth_Fork1 = 100;
-    const int kFeeInGroth_Shielded = 1200000;
     constexpr uint8_t kBTCDecimalPlaces = libbitcoin::btc_decimal_places;
     constexpr uint8_t kUSDDecimalPlaces = 2;
 
@@ -183,9 +180,7 @@ bool QMLGlobals::isFeeOK(uint32_t fee, Currency currency, bool isShielded)
 
 uint32_t QMLGlobals::minFeeBeam(bool isShielded)
 {
-    assert(AppModel::getInstance().getWallet());
-    assert(AppModel::getInstance().getWallet()->isFork1());
-    return isShielded ? kFeeInGroth_Shielded : kFeeInGroth_Fork1;
+    return isShielded ? beam::wallet::kShieldedTxMinFeeInGroth : beam::wallet::kMinFeeInGroth;
 }
 
 bool QMLGlobals::needPasswordToSpend()

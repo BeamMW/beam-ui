@@ -2246,8 +2246,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>(for wallet)</translation>
     </message>
     <message id="wallet-receive-addr-message">
-        <source>To spend the received Max privacy coins the min transaction fee will be 1200000 GROTH.</source>
-        <translation>To spend the received Max privacy coins the min transaction fee will be 1200000 GROTH.</translation>
+        <source>To spend the received Max privacy coins the min transaction fee will be %1 GROTH.</source>
+        <translation>To spend the received Max privacy coins the min transaction fee will be %1 GROTH.</translation>
     </message>
     <message id="wallet-receive-text-online-time">
         <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
