@@ -450,23 +450,6 @@ unsigned int QMLGlobals::getMinimalFee(Currency currency, bool isShielded)
 
 unsigned int QMLGlobals::getRecommendedFee(Currency currency)
 {
-    /*switch (currency)
-    {
-    case Currency::CurrBitcoin:
-    {
-        return AppModel::getInstance().getBitcoinClient()->getEstimatedFeeRate();
-    }
-    case Currency::CurrLitecoin:
-    {
-        return AppModel::getInstance().getLitecoinClient()->getEstimatedFeeRate();
-    }
-    case Currency::CurrQtum:
-    {
-        return AppModel::getInstance().getQtumClient()->getEstimatedFeeRate();
-    }
-    default:
-        return 0;
-    }*/
     auto swapCoin = convertCurrencyToSwapCoin(currency);
     return AppModel::getInstance().getSwapCoinClient(swapCoin)->getEstimatedFeeRate();
 }
