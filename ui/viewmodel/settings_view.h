@@ -75,6 +75,7 @@ class SwapCoinSettingsItem : public QObject
     Q_PROPERTY(QString  nodeAddress  READ getNodeAddress  WRITE setNodeAddress    NOTIFY nodeAddressChanged)
     Q_PROPERTY(QString  nodePort     READ getNodePort     WRITE setNodePort       NOTIFY nodePortChanged)
     // electrum settings
+    Q_PROPERTY(bool            isSupportedElectrum      READ isSupportedElectrum                                  CONSTANT)
     Q_PROPERTY(QChar           phrasesSeparatorElectrum READ getPhrasesSeparatorElectrum                          CONSTANT)
     Q_PROPERTY(bool            isCurrentSeedValid       READ getIsCurrentSeedValid                                NOTIFY isCurrentSeedValidChanged)
     Q_PROPERTY(bool            isCurrentSeedSegwit      READ getIsCurrentSeedSegwit                               NOTIFY isCurrentSeedSegwitChanged)
@@ -125,6 +126,7 @@ public:
     void setNodePortElectrum(const QString& value);
     bool getSelectServerAutomatically() const;
     void setSelectServerAutomatically(bool value);
+    bool isSupportedElectrum() const;
 
     bool getCanEdit() const;
 

@@ -21,6 +21,7 @@ SettingsFoldable {
     property string disabledColor:       Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.2)
     property alias  editElectrum:        useElectrumSwitch.checked
     property bool   canEdit:             true
+    property bool   isSupportedElectrum: true
 
     property bool   isConnected:            false
     property bool   isNodeConnection:       false
@@ -236,6 +237,7 @@ SettingsFoldable {
         RowLayout {
             height:   20
             spacing:  10
+            visible:  isSupportedElectrum
 
             SFText {
                 //% "Node"
@@ -321,7 +323,7 @@ SettingsFoldable {
 
         GridLayout {
             visible: !(editElectrum && useRandomNode.checked && !isElectrumConnection)
-            Layout.topMargin: 20
+            Layout.topMargin: isSupportedElectrum ? 20 : 0
             columns:          2
             columnSpacing:    50
             rowSpacing:       13

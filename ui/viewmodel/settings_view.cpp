@@ -473,6 +473,11 @@ void SwapCoinSettingsItem::setSelectServerAutomatically(bool value)
     }
 }
 
+bool SwapCoinSettingsItem::isSupportedElectrum() const
+{
+    return m_settings->IsSupportedElectrum();
+}
+
 QStringList SwapCoinSettingsItem::getAddressesElectrum() const
 {
     auto electrumSettings = m_settings->GetElectrumConnectionOptions();
