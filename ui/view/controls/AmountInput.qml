@@ -220,12 +220,14 @@ ColumnLayout {
     // error
     //
     SFText {
-        id:              errmsg
-        color:           Style.validator_error
-        font.pixelSize:  14
-        font.italic:     true
-        width:           parent.width
-        visible:         error.length
+        Layout.fillWidth:     true
+        Layout.minimumHeight: 35
+        id:                   errmsg
+        color:                Style.validator_error
+        font.pixelSize:       14
+        font.italic:          true
+        visible:              error.length
+        wrapMode:             "WordWrap"
     }
 
 
