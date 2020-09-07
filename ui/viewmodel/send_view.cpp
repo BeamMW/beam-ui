@@ -111,7 +111,7 @@ QString SendViewModel::getSendAmount() const
 void SendViewModel::setSendAmount(QString value)
 {
     beam::Amount amount = beamui::UIStringToAmount(value);
-    if (amount != _sendAmountGrothes)
+    if (amount != _sendAmountGrothes || _maxAvailable)
     {
         if (!amount)
         {
