@@ -518,7 +518,6 @@ void SendViewModel::extractParameters()
         setIsPermanentAddress(false);
     }
 
-    bool isPushTx = false;
     if (auto txType = _txParameters.GetParameter<TxType>(TxParameterID::TransactionType); txType && *txType == TxType::PushTransaction)
     {
         setCanChangeTxType(false);
@@ -534,7 +533,6 @@ void SendViewModel::extractParameters()
         }
         setIsNonInteractive(hasVouchers);
         // ignore other types
-        isPushTx = true;
     }
     else
     {
