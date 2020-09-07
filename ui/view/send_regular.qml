@@ -40,7 +40,7 @@ ColumnLayout {
     }
 
     TokenInfoDialog {
-        id:     tokenInfoDialog;
+        id:     tokenInfoDialog
         token:  viewModel.receiverTA
     }
 
@@ -157,11 +157,14 @@ ColumnLayout {
                                 validator:        RegExpValidator { regExp: /[0-9a-zA-Z]{1,}/ }
                                 selectByMouse:    true
                                 visible:          !receiverTAText.visible
-                                //% "Paste recipient token here"
-                                placeholderText:  qsTrId("send-contact-placeholder")
+                                property bool isSwap: BeamGlobals.isSwapToken(text)
+                                placeholderText:  isSwap ?
+                                    //% "Paste recipient token here"
+                                    qsTrId("send-contact-token-placeholder") :
+                                    //% "Paste recipient address here"
+                                    qsTrId("send-contact-address-placeholder")
                                 onTextChanged: {
-                                    if (BeamGlobals.isSwapToken(text)&&
-                                        typeof onSwapToken == "function") {
+                                    if (isSwap && typeof onSwapToken == "function") {
                                         onSwapToken(text);
                                     }
                                 }
@@ -207,8 +210,8 @@ ColumnLayout {
                                     }
                                 }
                                 LinkButton {
-                                    //% "Show token"
-                                    text:       qsTrId("show-token")
+                                    //% "Show address"
+                                    text:       qsTrId("show-address")
                                     linkColor:  Style.accent_outgoing
                                     visible:    viewModel.receiverTAValid
                                     onClicked: {
@@ -254,18 +257,18 @@ ColumnLayout {
                                 font.italic:        true
                                 font.pixelSize:     14
                                 text:               viewModel.isPermanentAddress ? 
-                                                    //% "Permanent token (you can save it to contacts after send)."
+                                                    //% "Permanent address (you can save it to contacts after send)."
                                                     qsTrId("wallet-send-permanent-note") 
                                                     :
-                                                    //% "One-time use token (expire in 2 hours after succesfull transaction)."
+                                                    //% "One-time use address (expire in 12 hours after succesfull transaction)."
                                                     qsTrId("wallet-send-one-time-note")
-                                visible:            viewModel.isToken && !(viewModel.isShieldedTx && viewModel.isNonInteractive)
+                                visible:            viewModel.isToken
                             }
 
                             RowLayout {
                                 spacing:            10
                                 Layout.topMargin:   20
-                                visible:            viewModel.canChangeTxType
+                                visible:            viewModel.isToken && viewModel.canChangeTxType && !viewModel.isOwnAddress
                                 SFText {
                                     //% "Max privacy"
                                     text: qsTrId("general-max-privacy")
@@ -292,8 +295,29 @@ ColumnLayout {
                                     }
                                 }
                             }
-                    
 
+                            SFText {
+                                id:                 ownAddressUnsupportedMaxPrivacyText
+                                Layout.alignment:   Qt.AlignTop
+                                Layout.topMargin:   10
+                                color:              viewModel.isShieldedTx ? Style.validator_error : Style.content_secondary
+                                font.italic:        true
+                                font.pixelSize:     14
+                                //% "Can not sent max privacy transaction to own address"
+                                text:               qsTrId("wallet-send-max-privacy-to-yourself-unsupported")
+                                visible:            viewModel.isToken && viewModel.isOwnAddress
+                            }
+
+                            SFText {
+                                Layout.alignment:   Qt.AlignTop
+                                Layout.topMargin:   10
+                                color:              Style.content_secondary
+                                font.italic:        true
+                                font.pixelSize:     14
+                                //% "This type of address does not support max privacy transactions"
+                                text:               qsTrId("wallet-send-max-privacy-unsupported")
+                                visible:            !viewModel.isToken && viewModel.receiverTAValid
+                            }
                             SFText {
                                 Layout.alignment:   Qt.AlignTop
                                 Layout.topMargin:   20
@@ -301,9 +325,14 @@ ColumnLayout {
                                 color:              Style.content_main
                                 font.italic:        true
                                 font.pixelSize:     14
-                                //% "Receiver requested Max privacy"
-                                text:               qsTrId("wallet-send-max-privacy-note-token")
-                                visible:            !viewModel.canChangeTxType && viewModel.isShieldedTx && !viewModel.isNonInteractive && viewModel.isToken
+                                
+                                text:               viewModel.isNonInteractive ? 
+                                                    //% "Receiver requested Max privacy. Offline transactions remaining: %1"
+                                                    qsTrId("wallet-send-max-privacy-note-address-offline").arg(viewModel.offlinePayments)
+                                                    : 
+                                                    //% "Receiver requested Max privacy"
+                                                    qsTrId("wallet-send-max-privacy-note-address")
+                                visible:            !viewModel.canChangeTxType && viewModel.isShieldedTx && viewModel.isToken && !viewModel.isOwnAddress
                             }
 
                             SFText {
@@ -316,7 +345,19 @@ ColumnLayout {
                                 font.pixelSize:     14
                                 //% "Transaction is slower, receiver pays fees."
                                 text:               qsTrId("wallet-send-max-privacy-note")
-                                visible:            viewModel.isShieldedTx
+                                visible:            viewModel.isShieldedTx && !ownAddressUnsupportedMaxPrivacyText.visible
+                            }
+                            SFText {
+                                height: 16
+                                Layout.alignment:   Qt.AlignTop
+                                Layout.topMargin:   10
+                                id:                 needExtractShieldedNote
+                                color:              Style.content_secondary
+                                font.italic:        true
+                                font.pixelSize:     14
+                                //% "Transaction is slower, fees are higher."
+                                text:               qsTrId("wallet-send-need-extract-shielded-note")
+                                visible:            viewModel.isNeedExtractShieldedCoins && !viewModel.isShieldedTx
                             }
                         }
                     }
@@ -334,7 +375,9 @@ ColumnLayout {
                             amountIn:                   viewModel.sendAmount
                             secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                            setMaxAvailableAmount:      function() { viewModel.setMaxAvailableAmount(); }
+                            setMaxAvailableAmount:      function() {
+                                viewModel.setMaxAvailableAmount();
+                            }
                             showAddAll:                 true
                             color:                      Style.accent_outgoing
                             error:                      showInsufficientBalanceWarning
@@ -354,6 +397,7 @@ ColumnLayout {
                     // Fee
                     //
                     FoldablePanel {
+                        id: foldableFee
                         //% "Fee"
                         title:                   qsTrId("send-regular-fee")
                         Layout.fillWidth:        true
@@ -361,7 +405,7 @@ ColumnLayout {
                         content: FeeInput {
                             id:                         feeInput
                             fee:                        viewModel.feeGrothes
-                            minFee:                     BeamGlobals.getMinimalFee(Currency.CurrBeam, viewModel.isShieldedTx)
+                            minFee:                     viewModel.minimalFeeGrothes
                             feeLabel:                   BeamGlobals.getFeeRateLabel(Currency.CurrBeam)
                             color:                      Style.accent_outgoing
                             readOnly:                   false
@@ -370,7 +414,7 @@ ColumnLayout {
                             isExchangeRateAvailable:    sendAmountInput.isExchangeRateAvailable
                             secondCurrencyAmount:       getFeeInSecondCurrency(viewModel.fee)
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                            minimumFeeNotificationText: viewModel.isShieldedTx ?
+                            minimumFeeNotificationText: viewModel.isShieldedTx || viewModel.isNeedExtractShieldedCoins ?
                                 //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
                                 qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
                                 ""
@@ -489,7 +533,7 @@ ColumnLayout {
                                 Layout.fillWidth:       true
                                 font.pixelSize:         14
                                 color:                  Style.content_secondary
-                                text:                   qsTrId("general-fee") + ":"
+                                text:                   qsTrId("send-regular-fee") + ":"
                             }
                     
                             BeamAmount {
@@ -502,7 +546,7 @@ ColumnLayout {
                                 secondCurrencyLabel:     viewModel.secondCurrencyLabel
                                 secondCurrencyRateValue: viewModel.secondCurrencyRateValue
                             }
-                    
+
                             SFText {
                                 Layout.alignment:       Qt.AlignTop
                                 Layout.fillWidth:       true
@@ -544,8 +588,8 @@ ColumnLayout {
                     const dialogComponent = Qt.createComponent("send_confirm.qml");
                     const dialogObject = dialogComponent.createObject(sendRegularView,
                         {
-                            addressText: viewModel.receiverAddress,
-                            identityText: viewModel.receiverIdentity,
+                            addressText: viewModel.receiverTA,
+                            typeText: viewModel.isShieldedTx ? qsTrId("tx-max-privacy") : qsTrId("tx-regular"),
                             currency: Currency.CurrBeam,
                             amount: viewModel.sendAmount,
                             fee: viewModel.feeGrothes,
@@ -558,7 +602,7 @@ ColumnLayout {
                         if (viewModel.isPermanentAddress && !viewModel.hasAddress) {
                             // TODO: uncomment when UX will be ready
                             //saveAddressDialog.open();
-                            viewModel.saveReceiverAddress(viewModel.comment);
+                            //viewModel.saveReceiverAddress(viewModel.comment);
                             viewModel.sendMoney();
                         } else {
                             viewModel.sendMoney();
@@ -572,4 +616,4 @@ ColumnLayout {
             }
         }  // ColumnLayout
     }  // ScrollView
-}
+} // ColumnLayout

@@ -11,8 +11,9 @@ import "./utils.js" as Utils
 ColumnLayout {
     id: sendSwapView
     
-    property var defaultFocusItem: comment_input
+    property var defaultFocusItem: commentInput
     property var predefinedTxParams: undefined
+    property alias swapToken: viewModel.token
 
     // callbacks set by parent
     property var onAccepted: undefined
@@ -49,7 +50,8 @@ please review your settings and try again"
     }
 
     function isValid () {
-        return receiveAmountInput.isValid && sendAmountInput.isValid;
+        return receiveAmountInput.isValid && sendAmountInput.isValid &&
+               receiveFeeInput.isValid && sendFeeInput.isValid;
     }
 
     SwapNADialog {
@@ -59,7 +61,7 @@ please review your settings and try again"
     }
 
     Component.onCompleted: {
-        comment_input.forceActiveFocus();
+        commentInput.forceActiveFocus();
         if (predefinedTxParams != undefined) {
             viewModel.setParameters(predefinedTxParams);
             validateCoin();
@@ -85,6 +87,15 @@ please review your settings and try again"
         */
     }
 
+    SwapTokenInfoDialog {
+        id:             tokenInfoDialog
+        token:          viewModel.token
+        //expirationTime: expiresCombo.displayText
+        rate:           rate.text
+        offered:        offered.text
+        expires:        expires.text
+    }
+
     Timer {
         interval: 1000
         repeat:   true
@@ -92,24 +103,47 @@ please review your settings and try again"
 
         onTriggered: {
             const expired = viewModel.expiresTime < (new Date())
-            expiresTitle.color = expired ? Style.validator_error : Style.content_main
-            expires.color = expired ? Style.validator_error : Style.content_secondary
+            expires.color = expired ? Style.validator_error : Style.content_main
+            expiredLabel.visible = expired
         }
     }
 
-    Row {
-        Layout.alignment:    Qt.AlignHCenter
-        Layout.topMargin:    75
-        Layout.bottomMargin: 40
+    //
+    // Title row
+    //
+    Item {
+        Layout.fillWidth:    true
+        Layout.topMargin:    100
+        Layout.bottomMargin: 30
+        CustomButton {
+            anchors.left:   parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            palette.button: "transparent"
+            leftPadding:    0
+            showHandCursor: true
+            //% "Back"
+            text:           qsTrId("general-back")
+            icon.source:    "qrc:/assets/icon-back.svg"
+            onClicked:      {
+                onClosed();
+            }
+        }
 
         SFText {
-            font.pixelSize:  18
-            font.styleName:  "Bold"; font.weight: Font.Bold
-            color:           Style.content_main
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            color:              Style.content_main
+            font {
+                styleName:      "Bold"
+                weight:         Font.Bold
+                pixelSize:      14
+                letterSpacing:  4
+                capitalization: Font.AllUppercase
+            }
             //% "Accept Swap Offer"
-            text:            qsTrId("wallet-send-swap-title")
+            text:               qsTrId("wallet-send-swap-title")
         }
-    }
+    } // Item
 
     ScrollView {
         id:                  scrollView
@@ -123,310 +157,373 @@ please review your settings and try again"
         ColumnLayout {
             width: scrollView.availableWidth
 
-            Grid  {
-                Layout.fillWidth: true
-                columnSpacing:    70
-                columns:          2
+            //
+            // Content row
+            //
+            RowLayout {
+                Layout.fillWidth:   true
+                spacing:  10
 
+                //
+                // Left column
+                //
                 ColumnLayout {
-                    width: parent.width / 2 - parent.columnSpacing / 2
+                    Layout.alignment:       Qt.AlignTop
+                    Layout.fillWidth:       true
+                    Layout.preferredWidth:  400
+                    spacing:                10
 
-                    AmountInput {
-                        Layout.topMargin: 25
+                    //
+                    // Send amount
+                    //
+                    Panel {
                         //% "Send amount"
-                        title:            qsTrId("sent-amount-label")
-                        id:               sendAmountInput
-                        hasFee:           true
-                        currFeeTitle:     true
-                        amountIn:         viewModel.sendAmount
-                        currency:         viewModel.sendCurrency
-                        secondCurrencyRateValue:    viewModel.secondCurrencySendRateValue
-                        secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                        readOnlyA:        true
-                        multi:            false
-                        color:            Style.accent_outgoing
-                        currColor:        viewModel.receiveCurrency == viewModel.sendCurrency || getErrorText().length ? Style.validator_error : Style.content_main
-                        error:            getErrorText()
+                        title:                   qsTrId("sent-amount-label")
+                        Layout.fillWidth:        true
 
-                        function getErrorText () {
-                            if(!viewModel.isSendFeeOK) {
-                                //% "The swap amount must be greater than the transaction fee"
-                                return qsTrId("send-less-than-fee")
+                        content:
+                        AmountInput {
+                            id:               sendAmountInput
+                            //hasFee:           true
+                            currFeeTitle:     true
+                            amountIn:         viewModel.sendAmount
+                            currency:         viewModel.sendCurrency
+                            secondCurrencyRateValue:    viewModel.secondCurrencySendRateValue
+                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            readOnlyA:        true
+                            multi:            false
+                            color:            Style.accent_outgoing
+                            currColor:        viewModel.receiveCurrency == viewModel.sendCurrency || getErrorText().length ? Style.validator_error : Style.content_main
+                            error:            getErrorText()
+
+                            function getErrorText() {
+                                if(!viewModel.isSendFeeOK) {
+                                    //% "The swap amount must be greater than the transaction fee"
+                                    return qsTrId("send-less-than-fee")
+                                }
+                                if(!viewModel.isEnough) {
+                                    //% "There is not enough funds to complete the transaction"
+                                    return qsTrId("send-not-enough")
+                                }
+                                return ""
                             }
-                            if(!viewModel.isEnough) {
-                                //% "There is not enough funds to complete the transaction"
-                                return qsTrId("send-not-enough")
-                            }
-                            return ""
+                        }
+
+                        Connections {
+                            target: viewModel
+                            onIsSendFeeOKChanged: sendAmountInput.error = sendAmountInput.getErrorText()
                         }
                     }
 
-                    Binding {
-                        target:   viewModel
-                        property: "sendFee"
-                        value:    sendAmountInput.fee
-                    }
+                    //
+                    // Send Fee
+                    //
+                    FoldablePanel {
+                        title:                   sendAmountInput.getFeeTitle()
+                        Layout.fillWidth:        true
+                        folded:                  false
+                        content: FeeInput {
+                            id:                         sendFeeInput
+                            //fee:                        viewModel.sendFee
+                            currency:                   viewModel.sendCurrency
+                            minFee:                     BeamGlobals.getMinimalFee(viewModel.sendCurrency, false)
+                            recommendedFee:             BeamGlobals.getRecommendedFee(viewModel.sendCurrency)
+                            feeLabel:                   BeamGlobals.getFeeRateLabel(viewModel.sendCurrency)
+                            color:                      Style.accent_outgoing
+                            readOnly:                   false
+                            fillWidth:                  true
+                            showSecondCurrency:         sendAmountInput.showSecondCurrency
+                            isExchangeRateAvailable:    sendAmountInput.isExchangeRateAvailable
+                            secondCurrencyAmount:       sendAmountInput.getFeeInSecondCurrency(viewModel.sendFee)
+                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            //minimumFeeNotificationText: viewModel.isShieldedTx ?
+                            //    //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
+                            //    qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
+                            //    ""
+                        }
 
-                    Connections {
-                        target: viewModel
-                        onIsSendFeeOKChanged: sendAmountInput.error = sendAmountInput.getErrorText()
+                        Binding {
+                            target:   viewModel
+                            property: "sendFee"
+                            value:    sendFeeInput.fee
+                        }
                     }
 
                     //
                     // Comment
                     //
-                    SFText {
-                        Layout.topMargin: 25
-                        font.pixelSize:   14
-                        font.styleName:   "Bold"; font.weight: Font.Bold
-                        color:            Style.content_main
+                    FoldablePanel {
                         //% "Comment"
-                        text:             qsTrId("general-comment")
-                    }
+                        title:             qsTrId("general-comment")
+                        Layout.fillWidth:        true
 
-                    SFTextInput {
-                        id:               comment_input
-                        Layout.fillWidth: true
-                        font.pixelSize:   14
-                        color:            Style.content_main
-                        selectByMouse:    true
-                        maximumLength:    BeamGlobals.maxCommentLength()
-                    }
+                        content:
+                        ColumnLayout {
+                            SFTextInput {
+                                id:               commentInput
+                                Layout.fillWidth: true
+                                font.pixelSize:   14
+                                color:            Style.content_main
+                                selectByMouse:    true
+                                maximumLength:    BeamGlobals.maxCommentLength()
+                                //% "Comments are local and won't be shared"
+                                placeholderText:  qsTrId("general-comment-local")
+                            }
 
-                    Item {
-                        Layout.fillWidth: true
-                        SFText {
-                            Layout.alignment: Qt.AlignTop
-                            color:            Style.content_secondary
-                            font.italic:      true
-                            font.pixelSize:   12
-                            //% "Comments are local and won't be shared"
-                            text:             qsTrId("general-comment-local")
+                            Binding {
+                                target:   viewModel
+                                property: "comment"
+                                value:    commentInput.text
+                            }
                         }
-                    }
-
-                    Binding {
-                        target:   viewModel
-                        property: "comment"
-                        value:    comment_input.text
                     }
                 }
 
+                //
+                // Right column
+                //
                 ColumnLayout {
-                    Layout.alignment: Qt.AlignTop
-                    width: parent.width / 2 - parent.columnSpacing / 2
-
+                    Layout.alignment:       Qt.AlignTop
+                    Layout.fillWidth:       true
+                    Layout.preferredWidth:  400
+                    spacing:                10
                     //
-                    // Receive Amount
+                    // Receive amount
                     //
-                    AmountInput {
-                        Layout.topMargin: 25
+                    Panel {
                         //% "Receive amount"
-                        title:            qsTrId("receive-amount-swap-label")
-                        id:               receiveAmountInput
-                        hasFee:           true
-                        currFeeTitle:     true
-                        amountIn:         viewModel.receiveAmount
-                        currency:         viewModel.receiveCurrency
-                        secondCurrencyRateValue:    viewModel.secondCurrencyReceiveRateValue
-                        secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                        readOnlyA:        true
-                        multi:            false
-                        color:            Style.accent_incoming
-                        currColor:        viewModel.receiveCurrency == viewModel.sendCurrency || getErrorText().length ? Style.validator_error : Style.content_main
-                        error:            getErrorText()
-                        showTotalFee:     true
+                        title:                   qsTrId("receive-amount-swap-label")
+                        Layout.fillWidth:        true
+                        content:
 
-                        function getErrorText() {
-                            if(!viewModel.isReceiveFeeOK) {
-                                //% "The swap amount must be greater than the transaction fee"
-                                return qsTrId("send-less-than-fee")
+                        AmountInput {
+                            id:                         receiveAmountInput
+                            //hasFee:           true
+                            currFeeTitle:               true
+                            amountIn:                   viewModel.receiveAmount
+                            currency:                   viewModel.receiveCurrency
+                            secondCurrencyRateValue:    viewModel.secondCurrencyReceiveRateValue
+                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            readOnlyA:                  true
+                            multi:                      false
+                            color:                      Style.accent_incoming
+                            currColor:                  viewModel.receiveCurrency == viewModel.sendCurrency || getErrorText().length ? Style.validator_error : Style.content_main
+                            error:                      getErrorText()
+                            showTotalFee:               true
+
+                            function getErrorText() {
+                                if(!viewModel.isReceiveFeeOK) {
+                                    //% "The swap amount must be greater than the transaction fee"
+                                    return qsTrId("send-less-than-fee")
+                                }
+                                return ""
                             }
-                            return ""
+                        }
+
+                        Connections {
+                            target: viewModel
+                            onIsReceiveFeeOKChanged: receiveAmountInput.error = receiveAmountInput.getErrorText()
+                        }
+                    }
+                    //
+                    // Fee
+                    //
+                    FoldablePanel {
+                        title:                   receiveAmountInput.getFeeTitle()
+                        Layout.fillWidth:        true
+                        folded:                  false
+                        content: FeeInput {
+                            id:                         receiveFeeInput
+                            currency:                   viewModel.receiveCurrency
+                            minFee:                     BeamGlobals.getMinimalFee(viewModel.receiveCurrency, false)
+                            recommendedFee:             BeamGlobals.getRecommendedFee(viewModel.receiveCurrency)
+                            feeLabel:                   BeamGlobals.getFeeRateLabel(viewModel.receiveCurrency)
+                            color:                      Style.accent_outgoing
+                            readOnly:                   false
+                            fillWidth:                  true
+                            showSecondCurrency:         receiveAmountInput.showSecondCurrency
+                            isExchangeRateAvailable:    receiveAmountInput.isExchangeRateAvailable
+                            secondCurrencyAmount:       receiveAmountInput.getFeeInSecondCurrency(viewModel.receiveFee)
+                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            //minimumFeeNotificationText: viewModel.isShieldedTx ?
+                            //    //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
+                            //    qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
+                            //    ""
+                        }
+
+                        Binding {
+                            target:   viewModel
+                            property: "receiveFee"
+                            value:    receiveFeeInput.fee
                         }
                     }
 
-                    Binding {
-                        target:   viewModel
-                        property: "receiveFee"
-                        value:    receiveAmountInput.fee
-                    }
+                    //
+                    // Summary pane
+                    //
+                    Pane {
+                        Layout.fillWidth:        true
+                        padding:                 20
 
-                    Connections {
-                        target: viewModel
-                        onIsReceiveFeeOKChanged: receiveAmountInput.error = receiveAmountInput.getErrorText()
-                    }
-
-                    GridLayout {
-                        Layout.fillWidth: true
-                        Layout.topMargin: 25
-                        columnSpacing:    30
-                        columns:          2
+                        background: Rectangle {
+                            radius: 10
+                            color:  Style.background_button
+                        }
 
                         ColumnLayout {
-                            SFText {
-                                font.pixelSize:   14
-                                font.styleName:   "Bold"; font.weight: Font.Bold
-                                color:            Style.content_main
-                                //% "Offered on"
-                                text:             qsTrId("wallet-send-swap-offered-label")
-                            }
+                            anchors.fill:        parent
+                            spacing:             20
+                            GridLayout {
+                                Layout.fillWidth:    true
+                                columnSpacing:       20
+                                rowSpacing:          20
+                                columns:             2
 
-                            SFText {
-                                Layout.topMargin: 10
-                                id:               offered
-                                font.pixelSize:   14
-                                color:            Style.content_secondary
-                                text:             Utils.formatDateTime(viewModel.offeredTime, BeamGlobals.getLocaleName())
-                            }
-                        }
+                                property bool showEstimatedFee: viewModel.receiveCurrency != Currency.CurrBeam
 
-                        ColumnLayout {
-                            SFText {
-                                id:               expiresTitle
-                                font.pixelSize:   14
-                                font.styleName:   "Bold"; font.weight: Font.Bold
-                                color:            Style.content_main
-                                //% "Expires on"
-                                text:             qsTrId("wallet-send-swap-expires-label")
-                            }
+                                SFText {
+                                    Layout.alignment:       Qt.AlignTop
+                                    font.pixelSize:         14
+                                    color:                  Style.content_secondary
+                                    text:                   receiveAmountInput.getTotalFeeTitle() + ":"
+                                    visible:                parent.showEstimatedFee
+                                }
+    
+                                SFText {
+                                    font.pixelSize:   14
+                                    color:            Style.content_main
+                                    text:             BeamGlobals.calcTotalFee(viewModel.receiveCurrency, viewModel.receiveFee)
+                                    visible:          parent.showEstimatedFee
+                                }
 
-                            SFText {
-                                id:               expires
-                                Layout.topMargin: 10
-                                font.pixelSize:   14
-                                color:            Style.content_secondary
-                                text:             Utils.formatDateTime(viewModel.expiresTime, BeamGlobals.getLocaleName())
-                            }
-                        }
+                                SFText {
+                                    Layout.alignment:       Qt.AlignTop
+                                    font.pixelSize:         14
+                                    color:                  Style.content_secondary
+                                    //% "Offered on"
+                                    text:                   qsTrId("wallet-send-swap-offered-label") + ":"
+                                }
+    
+                                SFText {
+                                    id:               offered
+                                    font.pixelSize:   14
+                                    color:            Style.content_main
+                                    text:             Utils.formatDateTime(viewModel.offeredTime, BeamGlobals.getLocaleName())
+                                }
+
+                                SFText {
+                                    id:                     expiresTitle
+                                    Layout.alignment:       Qt.AlignTop
+                                    font.pixelSize:         14
+                                    color:                  Style.content_secondary
+                                    //% "Expires on"
+                                    text:                   qsTrId("wallet-send-swap-expires-label") + ":"
+                                }
+                                ColumnLayout {
+                                    SFText {
+                                        id:               expires
+                                        font.pixelSize:   14
+                                        color:            Style.content_main
+                                        text:             Utils.formatDateTime(viewModel.expiresTime, BeamGlobals.getLocaleName())
+                                    }
+                                    SFText {
+                                        id:               expiredLabel
+                                        font.pixelSize:   14
+                                        color:            Style.validator_error
+                                        //% "Expired."
+                                        text:             qsTrId("swap-expired")
+                                        visible:          false
+                                    }
+                                }
+
+                                SFText {
+                                    Layout.alignment:       Qt.AlignTop
+                                    font.pixelSize:         14
+                                    color:                  Style.content_secondary
+                                    //% "Exchange rate"
+                                    text:                   qsTrId("general-rate") + ":"
+                                }
+            
+                                SFText {
+                                    id:               rate
+                                    font.pixelSize:   14
+                                    color:            Style.content_main
+                                    text:             viewModel.isSendBeam
+                                        ? ["1", sendAmountInput.currencyLabel, "=", Utils.uiStringToLocale(viewModel.rate), receiveAmountInput.currencyLabel].join(" ")
+                                        : ["1", receiveAmountInput.currencyLabel, "=", Utils.uiStringToLocale(viewModel.rate), sendAmountInput.currencyLabel].join(" ")
+                                }
+
+
+                                SFText {
+                                    Layout.alignment:       Qt.AlignTop
+                                    font.pixelSize:         14
+                                    color:                  Style.content_secondary
+                                    //% "Swap token"
+                                    text:                   qsTrId("send-swap-token") + ":"
+                                }
+                                RowLayout {
+                                    Layout.fillWidth:        true
+                                    SFLabel {
+                                        id:                  tokenLabel
+                                        Layout.fillWidth:    true
+                                        font.pixelSize:      14
+                                        color:               Style.content_main
+                                        elide:               Text.ElideMiddle
+                                        text:                viewModel.token
+                                    }
+                                
+                                    LinkButton {
+                                        //% "Show token"
+                                        text: qsTrId("show-token")
+                                        linkColor: Style.accent_outgoing
+                                        onClicked: {
+                                            tokenInfoDialog.open();
+                                        }
+                                    }
+                                }
+
+                            } // GridLayoyut
+                        } // ColumnLayout
                     }
+                } // ColumnLayout
+            } // RowLayout
 
-                    SFText {
-                        Layout.topMargin: 18
-                        font.pixelSize:   14
-                        font.weight:      Font.Bold
-                        color:            Style.content_main
-                        //% "Exchange rate"
-                        text:             qsTrId("general-rate")
-                    }
+            //
+            // Footers
+            //
+            CustomButton {
+                Layout.alignment:    Qt.AlignHCenter
+                Layout.topMargin:    30
+                Layout.bottomMargin: 30
+                //% "Swap"
+                text:                qsTrId("general-swap")
+                palette.buttonText:  Style.content_opposite
+                palette.button:      Style.accent_outgoing
+                icon.source:         "qrc:/assets/icon-create-offer.svg"
+                enabled:             viewModel.canSend && sendSwapView.isValid()
+                onClicked: {
+                    if (!validateCoin()) return;
 
-                    SFText {
-                        id:               rate
-                        Layout.topMargin: 3
-                        font.pixelSize:   14
-                        color:            Style.content_secondary
-                        text:             viewModel.isSendBeam
-                            ? ["1", sendAmountInput.currencyLabel, "=", Utils.uiStringToLocale(viewModel.rate), receiveAmountInput.currencyLabel].join(" ")
-                            : ["1", receiveAmountInput.currencyLabel, "=", Utils.uiStringToLocale(viewModel.rate), sendAmountInput.currencyLabel].join(" ")
-                    }
-                }
-            }
-            ColumnLayout {
-                Layout.fillWidth: true
-                Layout.topMargin: 30
-                Layout.alignment: Qt.AlignHCenter
-                
-                Row {
-                    Layout.alignment: Qt.AlignHCenter
-                    SFText {
-                        font.pixelSize:  14
-                        font.styleName:  "Bold"; font.weight: Font.Bold
-                        color:           Style.content_main
-                        //% "Your swap token"
-                        text:            qsTrId("accept-swap-token")
-                    }
+                    const dialogComponent = Qt.createComponent("send_confirm.qml");
+                    var dialogObject = dialogComponent.createObject(sendSwapView,
+                        {
+                            swapMode: true,
+                            addressText: viewModel.receiverAddress,
+                            typeText: qsTrId("general-swap"),
+                            currency: viewModel.sendCurrency,
+                            amount: viewModel.sendAmount,
+                            fee: viewModel.sendFee,
+                            onAcceptedCallback: acceptedCallback,
+                            secondCurrencyRate: viewModel.secondCurrencySendRateValue,
+                            secondCurrencyLabel: viewModel.secondCurrencyLabel
+                        }).open();
 
-                    Item {
-                        width:  17
-                        height: 1
-                    }
-
-                    SvgImage {
-                        source:  tokenRow.visible ? "qrc:/assets/icon-grey-arrow-down.svg" : "qrc:/assets/icon-grey-arrow-up.svg"
-                        anchors.verticalCenter: parent.verticalCenter
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.LeftButton
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: {
-                                tokenRow.visible = !tokenRow.visible;
-                            }
-                        }
-                    }
-                }
-
-                Row {
-                    id:      tokenRow
-                    visible: false
-                    Layout.topMargin: 10
-                    SFLabel {
-                        horizontalAlignment: Text.AlignHCenter
-                        width:               392
-                        font.pixelSize:      14
-                        text:                viewModel.token
-                        copyMenuEnabled:     true
-                        onCopyText:          BeamGlobals.copyToClipboard(text)
-                        wrapMode:            Text.WrapAnywhere
-                        color:               Style.content_secondary
-                    }
-                }
-
-                Row {
-                    id:      tokenGeneratedByNewVersionRow
-                    visible: viewModel.isTokenGeneratedByNewVersion
-                    SFLabel {
-                        horizontalAlignment: Text.AlignHCenter
-                        font.italic:         true
-                        font.pixelSize:      12
-                        text:                viewModel.tokenGeneratedByNewVersionMessage
-                        copyMenuEnabled:     true
-                        color:               Style.content_secondary
-                    }
-                }
-            }
-
-            Row {
-                Layout.alignment: Qt.AlignHCenter
-                Layout.topMargin: viewModel.isTokenGeneratedByNewVersion ? 5 : 30
-                spacing:          25
-
-                CustomButton {
-                    text:                qsTrId("general-close")
-                    palette.buttonText:  Style.content_main
-                    icon.source:         "qrc:/assets/icon-cancel-white.svg"
-                    onClicked:           sendSwapView.onClosed();
-                }
-
-                CustomButton {
-                    //% "Swap"
-                    text:               qsTrId("general-swap")
-                    palette.buttonText: Style.content_opposite
-                    palette.button:     Style.accent_outgoing
-                    icon.source:        "qrc:/assets/icon-send-blue.svg"
-                    enabled:            viewModel.canSend && sendSwapView.isValid()
-                    onClicked: {
-                        if (!validateCoin()) return;
-
-                        const dialogComponent = Qt.createComponent("send_confirm.qml");
-                        var dialogObject = dialogComponent.createObject(sendSwapView,
-                            {
-                                swapMode: true,
-                                addressText: viewModel.receiverAddress,
-                                currency: viewModel.sendCurrency,
-                                amount: viewModel.sendAmount,
-                                fee: viewModel.sendFee,
-                                onAcceptedCallback: acceptedCallback,
-                                secondCurrencyRate: viewModel.secondCurrencySendRateValue,
-                                secondCurrencyLabel: viewModel.secondCurrencyLabel
-                            }).open();
-
-                        function acceptedCallback() {
-                            viewModel.sendMoney();
-                            sendSwapView.onAccepted();
-                        }
+                    function acceptedCallback() {
+                        viewModel.sendMoney();
+                        sendSwapView.onAccepted();
                     }
                 }
             }
-        }
-    }
-}
+        }  // ColumnLayout
+    }  // ScrollView
+} // ColumnLayout

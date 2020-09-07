@@ -151,8 +151,15 @@ void ReceiveSwapViewModel::onSwapParamsLoaded(const beam::ByteBuffer& params)
 
             setReceiveCurrency(receiveCurrency);
             setSentCurrency(sentCurrency);
-            setReceiveFee(receiveFee);
-            setSentFee(sentFee);
+
+            if (receiveCurrency == Currency::CurrBeam)
+            {
+                setReceiveFee(receiveFee);
+            }
+            else
+            {
+                setSentFee(sentFee);
+            }
         }
         catch(...)
         {
@@ -431,6 +438,8 @@ void ReceiveSwapViewModel::updateTransactionToken()
         _isBeamSide ? _amountToReceiveGrothes : _amountSentGrothes;
     auto beamFee = _isBeamSide ? _sentFeeGrothes : _receiveFeeGrothes;
     auto swapFeeRate = _isBeamSide ? _receiveFeeGrothes : _sentFeeGrothes;
+
+    _txParameters = beam::wallet::CreateSwapTransactionParameters();
 
     FillSwapTxParams(
         &_txParameters,

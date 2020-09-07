@@ -20,6 +20,10 @@ Button {
     property var disabledAlpha: 0.25
     property var disalbedTextAlpha: 0.25
 
+    property color iconColor: "transparent"
+
+    property bool isCompleted: false
+
     font { 
         family: "SF Pro Display"
         pixelSize: 14
@@ -37,7 +41,6 @@ Button {
     activeFocusOnTab: true
 
     spacing: 15
-    icon.color: "transparent"
     icon.width: 16
     icon.height: 16
 
@@ -46,6 +49,12 @@ Button {
         return control.enabled ? color : Qt.rgba(color.r, color.g, color.b, control.disalbedTextAlpha)
     }
     
+    function updateIconColor() {
+        if (control.isCompleted) {
+            icon.color = enabled ? control.iconColor : Qt.rgba(control.iconColor.r, control.iconColor.g, control.iconColor.b, disabledAlpha);
+        }
+    }
+
     contentItem: IconLabel {
         spacing: control.spacing
         mirrored: control.mirrored
@@ -89,5 +98,23 @@ Button {
         color: Style.content_main
         source: rect
         visible: control.visualFocus || control.hovered || control.checked
+    }
+
+    onEnabledChanged: {
+       updateIconColor();
+    }
+
+    Component.onCompleted: {
+        if (control.iconColor != "#00000000") {    // ARGB fully transparent
+            icon.color = control.iconColor;
+        }
+        else {
+            // copy color from icon object to correct handling 'onEnabledChanged' signal:
+            // shadow the icon if the button is disabled
+            control.iconColor = icon.color;
+        }
+
+        control.isCompleted = true;
+        updateIconColor();
     }
 }

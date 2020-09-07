@@ -470,21 +470,6 @@ void SwapCoinSettingsItem::setSelectServerAutomatically(bool value)
     {
         m_selectServerAutomatically = value;
         emit selectServerAutomaticallyChanged();
-
-        if (!m_selectServerAutomatically)
-        {
-            setNodeAddressElectrum("");
-            setNodePortElectrum("");
-        }
-        else
-        {
-            auto settings = m_coinClient.lock()->GetSettings();
-
-            if (auto options = settings.GetElectrumConnectionOptions(); options.IsInitialized())
-            {
-                applyNodeAddressElectrum(str2qstr(options.m_address));
-            }
-        }
     }
 }
 
@@ -515,11 +500,27 @@ void SwapCoinSettingsItem::onStatusChanged()
 
     if (m_selectServerAutomatically)
     {
-        auto settings = m_coinClient.lock()->GetSettings();
+        using beam::bitcoin::Client;
 
-        if (auto options = settings.GetElectrumConnectionOptions(); options.IsInitialized())
+        switch (m_coinClient.lock()->getStatus())
         {
-            applyNodeAddressElectrum(str2qstr(options.m_address));
+        case Client::Status::Connected:
+        case Client::Status::Failed:
+        case Client::Status::Unknown:
+        {
+            auto settings = m_coinClient.lock()->GetSettings();
+
+            if (auto options = settings.GetElectrumConnectionOptions(); options.IsInitialized())
+            {
+                applyNodeAddressElectrum(str2qstr(options.m_address));
+            }
+            break;
+        }
+        default:
+        {
+            setNodeAddressElectrum("");
+            setNodePortElectrum("");
+        }
         }
     }
 }
@@ -553,6 +554,7 @@ QString SwapCoinSettingsItem::getConnectionStatus() const
         case Client::Status::Uninitialized:
             return "uninitialized";
             
+        case Client::Status::Initialized:
         case Client::Status::Connecting:
             return "disconnected";
 
@@ -604,7 +606,6 @@ void SwapCoinSettingsItem::applyNodeSettings()
     }
 
     m_settings->SetConnectionOptions(connectionSettings);
-    m_settings->SetFeeRate(m_feeRate);
 
     coinClient->SetSettings(*m_settings);
 }
@@ -623,7 +624,6 @@ void SwapCoinSettingsItem::applyElectrumSettings()
     electrumSettings.m_secretWords = GetSeedPhraseFromSeedItems();
     
     m_settings->SetElectrumConnectionOptions(electrumSettings);
-    m_settings->SetFeeRate(m_feeRate);
 
     coinClient->SetSettings(*m_settings);
 }
@@ -636,7 +636,8 @@ void SwapCoinSettingsItem::resetNodeSettings()
 
 void SwapCoinSettingsItem::resetElectrumSettings()
 {
-    SetDefaultElectrumSettings();
+    bool clearSeed = getCanEdit();
+    SetDefaultElectrumSettings(clearSeed);
     applyElectrumSettings();
 }
 
@@ -721,7 +722,11 @@ void SwapCoinSettingsItem::LoadSettings()
     {
         SetSeedElectrum(options.m_secretWords);
         setSelectServerAutomatically(options.m_automaticChooseAddress);
-        applyNodeAddressElectrum(str2qstr(options.m_address));
+
+        if (m_settings->IsElectrumActivated() || !options.m_automaticChooseAddress)
+        {
+            applyNodeAddressElectrum(str2qstr(options.m_address));
+        }
     }
 }
 
@@ -765,13 +770,16 @@ void SwapCoinSettingsItem::SetDefaultNodeSettings()
     setNodeUser("");
 }
 
-void SwapCoinSettingsItem::SetDefaultElectrumSettings()
+void SwapCoinSettingsItem::SetDefaultElectrumSettings(bool clearSeed)
 {
-    setNodePortElectrum(0);
     setNodeAddressElectrum("");
     setNodePortElectrum("");
     setSelectServerAutomatically(true);
-    SetSeedElectrum({});
+
+    if (clearSeed)
+    {
+        SetSeedElectrum({});
+    }
 }
 
 void SwapCoinSettingsItem::setConnectionType(beam::bitcoin::ISettings::ConnectionType type)
@@ -806,13 +814,16 @@ std::vector<std::string> SwapCoinSettingsItem::GetSeedPhraseFromSeedItems() cons
     assert(static_cast<size_t>(m_seedPhraseItems.size()) == WORD_COUNT);
 
     std::vector<std::string> seedElectrum;
-    seedElectrum.reserve(WORD_COUNT);
 
     for (const auto phraseItem : m_seedPhraseItems)
     {
         auto item = static_cast<ElectrumPhraseItem*>(phraseItem);
         auto word = item->getPhrase().toStdString();
-        seedElectrum.push_back(word);
+
+        // TODO need to wath this code. fixed ui bug #58
+        // secret word can not empty
+        if (!word.empty())
+            seedElectrum.push_back(word);
     }
 
     return seedElectrum;

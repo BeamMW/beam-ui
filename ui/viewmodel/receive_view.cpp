@@ -50,6 +50,10 @@ ReceiveViewModel::~ReceiveViewModel()
 
 void ReceiveViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& addr)
 {
+    if (_receiverAddress == addr)
+    {
+        return;
+    }
     _receiverAddress = addr;
     emit receiverAddressChanged();
     setIsPermanentAddress(addr.isPermanent());
@@ -170,15 +174,11 @@ void ReceiveViewModel::onTokenQRChanged()
     emit transactionTokenChanged();
 }
 
-void ReceiveViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address)
+void ReceiveViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
 {
     if (address)
     {
         onGeneratedNewAddress(*address);
-    }
-    else
-    {
-        generateNewAddress();
     }
 }
 
@@ -204,7 +204,7 @@ void ReceiveViewModel::saveAddress()
 
     if (getCommentValid()) {
         _receiverAddress.m_label = _addressComment.toStdString();
-        _receiverAddress.m_duration = isPermanentAddress() == false ? WalletAddress::AddressExpiration24h : WalletAddress::AddressExpirationNever;
+        _receiverAddress.setExpiration(isPermanentAddress() ? WalletAddress::ExpirationStatus::Never : WalletAddress::ExpirationStatus::OneDay);
         _walletModel.getAsync()->saveAddress(_receiverAddress, true);
     }
 }
@@ -245,9 +245,6 @@ void ReceiveViewModel::updateTransactionToken()
         {
             // add voucher parameter
             offlineParameters.SetParameter(TxParameterID::ShieldedVoucherList, vouchers);
-            //offlineParameters.DeleteParameter(TxParameterID::PeerID);
-            //offlineParameters.DeleteParameter(TxParameterID::PeerWalletIdentity);
-            //offlineParameters.DeleteParameter(TxParameterID::IsPermanentPeerID);
             setOfflineToken(QString::fromStdString(std::to_string(offlineParameters)));
         }
         else

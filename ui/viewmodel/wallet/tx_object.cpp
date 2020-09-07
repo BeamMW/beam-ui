@@ -166,9 +166,14 @@ QString TxObject::getSecondCurrencyRate() const
 
 QString TxObject::getStatus() const
 {
-    if (m_tx.m_txType == wallet::TxType::Simple || m_tx.m_txType == wallet::TxType::PushTransaction)
+    if (m_tx.m_txType == wallet::TxType::Simple)
     {
         SimpleTxStatusInterpreter interpreter(m_tx);
+        return interpreter.getStatus().c_str();
+    }
+    else if (m_tx.m_txType == wallet::TxType::PushTransaction)
+    {
+        MaxPrivacyTxStatusInterpreter interpreter(m_tx);
         return interpreter.getStatus().c_str();
     }
     else if (m_tx.m_txType >= wallet::TxType::AssetIssue && m_tx.m_txType <= wallet::TxType::AssetInfo)
@@ -195,6 +200,11 @@ bool TxObject::isDeleteAvailable() const
 
 QString TxObject::getAddressFrom() const
 {
+    if (m_tx.m_txType == wallet::TxType::PushTransaction && !m_tx.m_sender)
+    {
+        //% "shielded pool"
+        return qtTrId("from-shielded-pool");
+    }
     return toString(m_tx.m_sender ? m_tx.m_myId : m_tx.m_peerId);
 }
 
@@ -207,6 +217,15 @@ QString TxObject::getFee() const
 {
     if (m_tx.m_fee)
     {
+        std::vector<TxKernel::Ptr> shieldedInputs;
+        m_tx.GetParameter(TxParameterID::InputsShielded, shieldedInputs);
+        if (shieldedInputs.size())
+        {
+            Transaction::FeeSettings fs;
+            Amount shieldedFee = shieldedInputs.size() * (fs.m_Kernel + fs.m_ShieldedInput);
+            return AmountInGrothToUIString(shieldedFee + m_tx.m_fee);
+        }
+
         return AmountInGrothToUIString(m_tx.m_fee);
     }
     return QString{};
@@ -250,7 +269,7 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
     // clang doesn't allow to make 'auto reasons' so for the moment assertions below are a bit pointles
     // let's wait until they fix template arg deduction and restore it back
     static const std::array<QString, TxFailureReason::Count> reasons = {
-        //% "Unexpected reason, please send wallet logs to Beam support"
+        //% "Unexpected reason, please send wallet logs to Beam support" 
         qtTrId("tx-failure-undefined"),
         //% "Transaction cancelled"
         qtTrId("tx-failure-cancelled"),
@@ -264,7 +283,7 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
         qtTrId("tx-failure-kernel-invalid"),
         //% "Failed to send Transaction parameters"
         qtTrId("tx-failure-parameters-not-sended"),
-        //% "No inputs"
+        //% "Not enough inputs to process the transaction"
         qtTrId("tx-failure-no-inputs"),
         //% "Address is expired"
         qtTrId("tx-failure-addr-expired"),
@@ -306,7 +325,7 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
         qtTrId("tx-failure-loopback"),
         //% "Key keeper is not initialized"
         qtTrId("tx-failure-key-keeper-no-initialized"),
-        //% "No valid asset owner id/asset owner idx"
+        //% "No valid asset id/asset owner id"
         qtTrId("tx-failure-invalid-asset-id"),
         //% "No asset info or asset info is not valid"
         qtTrId("tx-failure-asset-invalid-info"),
@@ -336,12 +355,24 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
         qtTrId("tx-failure-asset-exists"),
         //% "Invalid asset owner id"
         qtTrId("tx-failure-asset-invalid-owner-id"),
-        //% "Assets transactions are disabled"
+        //% "Asset transactions are disabled in the wallet"
         qtTrId("tx-failure-assets-disabled"),
-        //% "You have no vouchers to insert coins to lelantus"
+        //% "No voucher, no address to receive it"
         qtTrId("tx-failure-no-vouchers"),
         //% "Asset transactions are not available until fork2"
-        qtTrId("tx-failure-assets-fork2")
+        qtTrId("tx-failure-assets-fork2"),
+        //% "Key keeper out of slots"
+        qtTrId("tx-failure-out-of-slots"),
+        //% "Cannot extract shielded coin, fee is to big."
+        qtTrId("tx-failure-shielded-coin-fee"),
+        //% "Asset transactions are disabled in the receiver wallet"
+        qtTrId("tx-failure-assets-disabled-receiver"),
+        //% "Asset transactions are disabled in blockchain configuration"
+        qtTrId("tx-failure-assets-disabled-blockchain"),
+        //% "Peer Identity required"
+        qtTrId("tx-failure-identity-required"),
+        //% "The sender cannot get vouchers for max privacy transaction"
+        qtTrId("tx-failure-cannot-get-vouchers")
     };
 
     // ensure QString
@@ -388,7 +419,7 @@ QString TxObject::getStateDetails() const
         case beam::wallet::TxStatus::Pending:
         case beam::wallet::TxStatus::InProgress:
         {
-            auto state = getTxDescription().GetParameter<wallet::SimpleTransaction::State>(TxParameterID::State);
+            auto state = tx.GetParameter<wallet::SimpleTransaction::State>(TxParameterID::State);
             if (state)
             {
                 switch (*state)
@@ -429,7 +460,7 @@ QString TxObject::getReceiverIdentity() const
 
 bool TxObject::hasPaymentProof() const
 {
-    return !isIncome() && m_tx.m_status == wallet::TxStatus::Completed;
+    return !isIncome() && m_tx.m_status == wallet::TxStatus::Completed && m_tx.m_txType == TxType::Simple;
 }
 
 void TxObject::update(const beam::wallet::TxDescription& tx)
@@ -466,6 +497,26 @@ bool TxObject::isCompleted() const
 bool TxObject::isSelfTx() const
 {
     return m_tx.m_selfTx;
+}
+
+bool TxObject::isMaxPrivacy() const
+{
+    return m_tx.m_txType == TxType::PushTransaction;
+}
+
+bool TxObject::isOfflineToken() const
+{
+    if (!isMaxPrivacy() || isIncome())
+    {
+        return false;
+    }
+    if (!m_hasVouchers)
+    {
+        auto vouchers = m_tx.GetParameter<ShieldedVoucherList>(wallet::TxParameterID::ShieldedVoucherList);
+        m_hasVouchers = (vouchers && !vouchers->empty());
+    }
+    
+    return *m_hasVouchers;
 }
 
 bool TxObject::isCanceled() const

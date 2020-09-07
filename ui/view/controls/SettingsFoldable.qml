@@ -90,10 +90,6 @@ Control {
                 width: parent.width
                 spacing: 0
 
-                Item {
-                    width: statusIndicator.radius + statusIndicator.width + control.spacing
-                }
-
                 SFText {
                     Layout.fillWidth:  true
                     id:                statusErrorMsg

@@ -95,7 +95,7 @@ private slots:
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onReceiverQRChanged();
     void onTokenQRChanged();
-    void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address);
+    void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
 private:
     beam::Amount _amountToReceiveGrothes;
     int          _addressExpires;

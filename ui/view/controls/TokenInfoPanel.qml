@@ -8,15 +8,17 @@ import "."
 
 Panel {
     id: control
-    property alias title:       control.title
-    property var qrCode:        null
-    property alias token:       tokenLabel.text
-    property bool isValidToken: false
+    property alias title:               control.title
+    property var qrCode:                null
+    property alias token:               tokenLabel.text
+    property bool isValidToken:         false
+    property alias defaultAddressType:  infoDialog.defaultAddressType
+    property alias ignoreStoredVouchers:infoDialog.ignoreStoredVouchers
     signal tokenCopied;
 
     TokenInfoDialog {
-        id:     infoDialog;
-        token:  control.token
+        id:                     infoDialog
+        token:                  control.token
     }
 
     content: RowLayout {
@@ -46,8 +48,8 @@ Panel {
                 }
         
                 LinkButton {
-                    //% "Show token"
-                    text: qsTrId("show-token")
+                    //% "Show address"
+                    text: qsTrId("show-address")
                     linkColor: Style.accent_incoming
                     onClicked: {
                         infoDialog.open();

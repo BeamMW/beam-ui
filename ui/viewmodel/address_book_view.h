@@ -18,7 +18,14 @@
 #include <QObject>
 #include <QtCore/qvariant.h>
 #include <QDateTime>
+#if defined(_MSC_VER)
+#pragma warning (push)
+#pragma warning (disable: 4127)
+#endif
 #include <QQmlListProperty>
+#if defined(_MSC_VER)
+#pragma warning (pop)
+#endif
 #include "wallet/core/wallet_db.h"
 #include "model/wallet_model.h"
 

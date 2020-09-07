@@ -35,6 +35,7 @@ WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, b
     qRegisterMetaType<vector<beam::wallet::SwapOffer>>("std::vector<beam::wallet::SwapOffer>");
     qRegisterMetaType<beam::Amount>("beam::Amount");
     qRegisterMetaType<vector<beam::wallet::Coin>>("std::vector<beam::wallet::Coin>");
+    qRegisterMetaType<vector<beam::wallet::ShieldedCoin>>("std::vector<beam::wallet::ShieldedCoin>");
     qRegisterMetaType<vector<beam::wallet::WalletAddress>>("std::vector<beam::wallet::WalletAddress>");
     qRegisterMetaType<beam::wallet::WalletID>("beam::wallet::WalletID");
     qRegisterMetaType<beam::wallet::WalletAddress>("beam::wallet::WalletAddress");
@@ -47,6 +48,7 @@ WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, b
     qRegisterMetaType<beam::wallet::WalletImplVerInfo>("beam::wallet::WalletImplVerInfo");
     qRegisterMetaType<ECC::uintBig>("ECC::uintBig");
     qRegisterMetaType<boost::optional<beam::wallet::WalletAddress>>("boost::optional<beam::wallet::WalletAddress>");
+    qRegisterMetaType<beam::wallet::ShieldedCoinsSelectionInfo>("beam::wallet::ShieldedCoinsSelectionInfo");
 
     connect(this, SIGNAL(walletStatus(const beam::wallet::WalletStatus&)), this, SLOT(setStatus(const beam::wallet::WalletStatus&)));
     connect(this, SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
@@ -136,9 +138,26 @@ void WalletModel::onChangeCalculated(beam::Amount change)
     emit changeCalculated(change);
 }
 
+void WalletModel::onShieldedCoinsSelectionCalculated(const ShieldedCoinsSelectionInfo& selectionRes)
+{
+    emit shieldedCoinsSelectionCalculated(selectionRes);
+}
+
+void WalletModel::onNeedExtractShieldedCoins(bool val)
+{
+    emit needExtractShieldedCoins(val);
+}
+
 void WalletModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
     emit allUtxoChanged(action, utxos);
+}
+
+void WalletModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::ShieldedCoin>& items)
+{
+#ifdef BEAM_LELANTUS_SUPPORT
+    emit shieldedCoinChanged(action, items);
+#endif
 }
 
 void WalletModel::onAddressesChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::WalletAddress>& items)
@@ -214,9 +233,9 @@ void WalletModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& walle
     emit generatedNewAddress(walletAddr);
 }
 
-void WalletModel::onGetAddress(const WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address)
+void WalletModel::onGetAddress(const WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments)
 {
-    emit getAddressReturned(id, address);
+    emit getAddressReturned(id, address, (int)offlinePayments);
 }
 
 void WalletModel::onNewAddressFailed()
@@ -349,6 +368,11 @@ beam::Height WalletModel::getCurrentHeightTimestamp() const
 beam::Block::SystemState::ID WalletModel::getCurrentStateID() const
 {
     return m_status.stateID;
+}
+
+bool WalletModel::hasShielded() const
+{
+    return !!m_status.shielded;
 }
 
 void WalletModel::setStatus(const beam::wallet::WalletStatus& status)

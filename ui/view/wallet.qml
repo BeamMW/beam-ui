@@ -73,9 +73,10 @@ Item {
                 walletStackView.push(Qt.createComponent("send_swap.qml"),
                                      {
                                          "onAccepted": tokenDuplicateChecker.onAccepted,
-                                         "onClosed": onClosed
+                                         "onClosed": onClosed,
+                                         "swapToken": token
                                      });
-                walletStackView.currentItem.setToken(token);
+                walletStackView.currentItem.validateCoin();
             }
             onTokenOwnGenerated: function(token) {
                 tokenDuplicateChecker.isOwn = true;
@@ -393,11 +394,17 @@ Item {
                         rawTxID:            txRolesMap && txRolesMap.rawTxID ? txRolesMap.rawTxID : null
                         stateDetails:       txRolesMap && txRolesMap.stateDetails ? txRolesMap.stateDetails : ""
                         amount:             txRolesMap && txRolesMap.amountGeneral ? txRolesMap.amountGeneral : ""
+                        transactionType:    txRolesMap && txRolesMap.isMaxPrivacy ? qsTrId("tx-max-privacy") : qsTrId("tx-regular")
+                        tokenType:          txRolesMap && txRolesMap.isOfflineToken ?
+                            //% "Offline"
+                            qsTrId("tx-address-offline") :
+                            qsTrId("tx-address-online")
                         secondCurrencyRate: txRolesMap && txRolesMap.secondCurrencyRate ? txRolesMap.secondCurrencyRate : ""
                         secondCurrencyLabel: viewModel.secondCurrencyLabel
                         searchFilter:       searchBox.text
                         hideFiltered:       rowItem.hideFiltered
                         token:              txRolesMap ? txRolesMap.token : ""
+                        isMaxPrivacy:       txRolesMap && txRolesMap.isMaxPrivacy ? true : false
 
                         onSearchFilterChanged: function(text) {
                             rowItem.collapsed = searchBox.text.length == 0;
@@ -480,6 +487,7 @@ Item {
                     resizable: false
                 }
                 TableViewColumn {
+                    //role: "amountGeneral"
                     role: "amountGeneralWithCurrency"
                     //% "Amount"
                     title: qsTrId("general-amount")
@@ -500,6 +508,20 @@ Item {
                                 color: parent.isIncome ? Style.accent_incoming : Style.accent_outgoing
                                 onCopyText: BeamGlobals.copyToClipboard(!!model ? model.amountGeneral : "")
                             }
+                            //BeamAmount {
+                            //    anchors.verticalCenter:  parent.verticalCenter
+                            //    anchors.left:            parent.left
+                            //    anchors.right:           parent.right
+                            //    anchors.leftMargin:      20
+                            //    prefix:                  (parent.isIncome ? "+ " : "- ")
+                            //    color:                   parent.isIncome ? Style.accent_incoming : Style.accent_outgoing
+                            //    amount:                  styleData.value
+                            //    lightFont:               false
+                            //    boldFont:                true
+                            //    fontSizeMode:            Text.Fit
+                            //    secondCurrencyLabel:     viewModel.secondCurrencyLabel
+                            //    secondCurrencyRateValue: viewModel.secondCurrencyRateValue
+                            //}
                         }
                     }
                 }
@@ -539,16 +561,20 @@ Item {
                                                 return "qrc:/assets/icon-sending-own.svg";
                                             }
                                             return model.isIncome
-                                                ? "qrc:/assets/icon-receiving.svg"
-                                                : "qrc:/assets/icon-sending.svg";
+                                                ? !model.isMaxPrivacy ? "qrc:/assets/icon-receiving.svg" : 
+                                                        model.isOfflineToken ? "qrc:/assets/icon-receiving-max-offline.svg" : "qrc:/assets/icon-receiving-max-online.svg"
+                                                : !model.isMaxPrivacy ? "qrc:/assets/icon-sending.svg" : 
+                                                        model.isOfflineToken ? "qrc:/assets/icon-sending-max-offline.svg" : "qrc:/assets/icon-sending-max-online.svg";
                                         }
                                         else if (model.isCompleted) {
                                             if (model.isSelfTransaction) {
                                                 return "qrc:/assets/icon-sent-own.svg";
                                             }
                                             return model.isIncome
-                                                ? "qrc:/assets/icon-received.svg"
-                                                : "qrc:/assets/icon-sent.svg";
+                                                ? !model.isMaxPrivacy ? "qrc:/assets/icon-received.svg" : 
+                                                        model.isOfflineToken ? "qrc:/assets/icon-received-max-offline.svg" : "qrc:/assets/icon-received-max-online.svg"
+                                                : !model.isMaxPrivacy ? "qrc:/assets/icon-sent.svg" : 
+                                                        model.isOfflineToken ? "qrc:/assets/icon-sent-max-offline.svg" : "qrc:/assets/icon-sent-max-online.svg";
                                         }
                                         else if (model.isExpired) {
                                             return "qrc:/assets/icon-expired.svg" 
@@ -556,17 +582,19 @@ Item {
                                         else if (model.isFailed) {
                                             return model.isIncome
                                                 ? "qrc:/assets/icon-receive-failed.svg"
-                                                : "qrc:/assets/icon-send-failed.svg";
+                                                : !model.isMaxPrivacy ? "qrc:/assets/icon-send-failed.svg" : 
+                                                        model.isOfflineToken ? "qrc:/assets/icon-failed-max-offline.svg" : "qrc:/assets/icon-failed-max-online.svg";
                                         }
                                         else {
                                             return model.isIncome
                                                 ? "qrc:/assets/icon-receive-canceled.svg"
-                                                : "qrc:/assets/icon-send-canceled.svg";
+                                                : !model.isMaxPrivacy ? "qrc:/assets/icon-send-canceled.svg" : 
+                                                        model.isOfflineToken ? "qrc:/assets/icon-canceled-max-offline.svg" : "qrc:/assets/icon-canceled-max-online.svg";
                                         }
                                     }
                                 }
                                 SFLabel {
-                                    Layout.alignment: Qt.AlignLeft
+                                    Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                                     Layout.fillWidth: true
                                     font.pixelSize: 14
                                     font.italic: true

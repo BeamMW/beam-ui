@@ -96,15 +96,15 @@ ColumnLayout {
 
             onTextChanged: {
                 // if nothing then "0", remove insignificant zeroes and "." in floats
-                errmsg.text = "";
                 if (ainput.activeFocus) {
                     control.amount = text ? text.replace(/\.0*$|(\.\d*[1-9])0+$/,'$1') : "0"
                 }
             }
 
             onActiveFocusChanged: {
+                // we intentionally break binding here
                 text = formatDisplayedAmount()
-                if (focus) cursorPosition = positionAt(ainput.getMousePos().x, ainput.getMousePos().y)
+                if (activeFocus) cursorPosition = positionAt(ainput.getMousePos().x, ainput.getMousePos().y)
             }
 
             function formatDisplayedAmount() {
@@ -114,7 +114,8 @@ ColumnLayout {
             Connections {
                 target: control
                 onAmountInChanged: {
-                    if (!ainput.focus) {
+                    if (!ainput.activeFocus) {
+                        // we intentionally break binding here
                         ainput.text = ainput.formatDisplayedAmount()
                     }
                 }
@@ -157,7 +158,7 @@ ColumnLayout {
 
             function addAll(){
                 ainput.focus = false;                
-                if (control.setMaxAvailableAmount) {
+                if (typeof control.setMaxAvailableAmount == 'function') {
                     control.setMaxAvailableAmount();
                 }
             }
@@ -196,27 +197,39 @@ ColumnLayout {
     }
 
     //
-    // Exchange rate
+    // Second currency
     //
     SFText {
-        id:              errmsg
-        color:           Style.validator_error
-        font.pixelSize:  12
-        font.styleName:  "Italic"
-        width:           parent.width
-        visible:         error.length
-    }
-    SFText {
         id:             amountSecondCurrencyText
-        visible:        control.showSecondCurrency && !errmsg.visible && !showTotalFee  // show only on send side
+        visible:        control.showSecondCurrency && !errmsg.visible /* && !showTotalFee*/  // show only on send side
         font.pixelSize: 14
-        opacity:        isExchangeRateAvailable ? 0.5 : 0.7
+        font.italic:    !isExchangeRateAvailable
+        opacity:        isExchangeRateAvailable ? 0.5 : 1
         color:          isExchangeRateAvailable ? Style.content_secondary : Style.accent_fail
-        text:           isExchangeRateAvailable
-                        ? getAmountInSecondCurrency()
-                        //% "Exchange rate to %1 is not available"
-                        : qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
+        text:           {
+            if (showTotalFee)
+                return ""
+            if (isExchangeRateAvailable)
+                return getAmountInSecondCurrency()
+            //% "Exchange rate to %1 is not available"
+            return qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
+        }
     }
+
+    //
+    // error
+    //
+    SFText {
+        Layout.fillWidth:     true
+        Layout.minimumHeight: 35
+        id:                   errmsg
+        color:                Style.validator_error
+        font.pixelSize:       14
+        font.italic:          true
+        visible:              error.length
+        wrapMode:             "WordWrap"
+    }
+
 
     //
     // Fee
@@ -240,6 +253,7 @@ ColumnLayout {
                 id:               feeInput
                 Layout.fillWidth: true
                 fee:              control.fee
+                recommendedFee:   BeamGlobals.getRecommendedFee(control.currency)
                 minFee:           BeamGlobals.getMinimalFee(control.currency, false)
                 feeLabel:         BeamGlobals.getFeeRateLabel(control.currency)
                 color:            control.color

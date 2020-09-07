@@ -64,6 +64,7 @@ class SwapCoinSettingsItem : public QObject
     Q_PROPERTY(QString  feeRateLabel             READ getFeeRateLabel                         CONSTANT)
     Q_PROPERTY(QString  showSeedDialogTitle      READ getShowSeedDialogTitle                  CONSTANT)
     Q_PROPERTY(QString  showAddressesDialogTitle READ getShowAddressesDialogTitle             CONSTANT)
+    Q_PROPERTY(QString  generalTitle             READ getGeneralTitle                         CONSTANT)
     Q_PROPERTY(QString  title                    READ getTitle                                NOTIFY titleChanged)
     Q_PROPERTY(QString  coinID                   READ getCoinID                               CONSTANT)
     Q_PROPERTY(bool     folded                   READ getFolded       WRITE setFolded         NOTIFY foldedChanged)
@@ -188,7 +189,7 @@ private:
     void LoadSettings();
     void SetSeedElectrum(const std::vector<std::string>& secretWords);
     void SetDefaultNodeSettings();
-    void SetDefaultElectrumSettings();
+    void SetDefaultElectrumSettings(bool clearSeed = true);
     void setConnectionType(beam::bitcoin::ISettings::ConnectionType type);
     void setIsCurrentSeedValid(bool value);
     void setIsCurrentSeedSegwit(bool value);
@@ -200,7 +201,6 @@ private:
     std::weak_ptr<SwapCoinClientModel> m_coinClient;
 
     boost::optional<beam::bitcoin::Settings> m_settings;
-    int m_feeRate = 0;
 
     beam::bitcoin::ISettings::ConnectionType
         m_connectionType = beam::bitcoin::ISettings::ConnectionType::None;
