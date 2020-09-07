@@ -137,7 +137,7 @@ void SendViewModel::setSendAmount(QString value)
         }
         else
         {
-            _sendAmountGrothes = amount;
+            _sendAmountGrothes = amount - _feeGrothes;
             emit sendAmountChanged();
             _walletModel.getAsync()->calcChange(_sendAmountGrothes + _feeGrothes);
             emit canSendChanged();
