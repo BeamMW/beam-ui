@@ -451,6 +451,12 @@ unsigned int QMLGlobals::getMinimalFee(Currency currency, bool isShielded)
 
 unsigned int QMLGlobals::getRecommendedFee(Currency currency)
 {
+    if (Currency::CurrBeam == currency)
+    {
+        // TODO roman.strilets need to investigate
+        return 0;
+    }
+
     auto swapCoin = convertCurrencyToSwapCoin(currency);
     return AppModel::getInstance().getSwapCoinClient(swapCoin)->getEstimatedFeeRate();
 }
@@ -468,6 +474,11 @@ unsigned int QMLGlobals::getDefaultFee(Currency currency)
 
 bool QMLGlobals::isSwapFeeOK(unsigned int amount, unsigned int fee, Currency currency)
 {
+    if (Currency::CurrBeam == currency)
+    {
+        return amount > fee && fee >= QMLGlobals::minFeeBeam();
+    }
+
     // TODO roman.strilets maybe need to process exception?
     return beam::wallet::IsSwapAmountValid(convertCurrencyToSwapCoin(currency), amount, fee);
 }
