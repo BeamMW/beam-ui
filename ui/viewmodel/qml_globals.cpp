@@ -27,6 +27,7 @@
 #include "wallet/transactions/swaps/bridges/bitcoin_sv/bitcoin_sv_side.h"
 #include "wallet/transactions/swaps/bridges/dash/dash_side.h"
 #include "wallet/transactions/swaps/bridges/dogecoin/dogecoin_side.h"
+#include "wallet/transactions/swaps/utils.h"
 #include "utility/string_helpers.h"
 
 #include <boost/algorithm/string.hpp>
@@ -467,44 +468,8 @@ unsigned int QMLGlobals::getDefaultFee(Currency currency)
 
 bool QMLGlobals::isSwapFeeOK(unsigned int amount, unsigned int fee, Currency currency)
 {
-    switch (currency) {
-        case Currency::CurrBeam:
-        {
-            return amount > fee && fee >= QMLGlobals::minFeeBeam();
-        }
-        case Currency::CurrBitcoin:
-        {
-            return beam::wallet::BitcoinSide::CheckAmount(amount, fee);
-        }
-        case Currency::CurrLitecoin:
-        {
-            return beam::wallet::LitecoinSide::CheckAmount(amount, fee);
-        }
-        case Currency::CurrQtum:
-        {
-            return beam::wallet::QtumSide::CheckAmount(amount, fee);
-        }
-        case Currency::CurrBitcoinCash:
-        {
-            return beam::wallet::BitcoinCashSide::CheckAmount(amount, fee);
-        }
-        case Currency::CurrBitcoinSV:
-        {
-            return beam::wallet::BitcoinSVSide::CheckAmount(amount, fee);
-        }
-        case Currency::CurrDash:
-        {
-            return beam::wallet::DashSide::CheckAmount(amount, fee);
-        }
-        case Currency::CurrDogecoin:
-        {
-            return beam::wallet::DogecoinSide::CheckAmount(amount, fee);
-        }
-        default: {
-            assert(false);
-            return true;
-        }
-    }
+    // TODO roman.strilets maybe need to process exception?
+    return beam::wallet::IsSwapAmountValid(convertCurrencyToSwapCoin(currency), amount, fee);
 }
 
 QString QMLGlobals::divideWithPrecision8(const QString& dividend, const QString& divider)
