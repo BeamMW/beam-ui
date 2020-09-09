@@ -137,10 +137,11 @@ void SendViewModel::setSendAmount(QString value)
         }
         else
         {
-            _sendAmountGrothes = amount - _feeGrothes;
+            _sendAmountGrothes = amount - (_maxAvailable ? _feeGrothes : 0);
             emit sendAmountChanged();
             _walletModel.getAsync()->calcChange(_sendAmountGrothes + _feeGrothes);
             emit canSendChanged();
+            _maxAvailable = false;
         }
     }
 }
