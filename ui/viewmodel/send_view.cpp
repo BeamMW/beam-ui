@@ -41,7 +41,7 @@ SendViewModel::SendViewModel()
     , _changeGrothes(0)
     , _walletModel(*AppModel::getInstance().getWallet())
     , _minimalFeeGrothes(QMLGlobals::getMinimalFee(Currency::CurrBeam, false))
-    , _shieldedFee(0)
+    , _shieldedInputsFee(0)
 {
     connect(&_walletModel, &WalletModel::changeCalculated, this, &SendViewModel::onChangeCalculated);
     connect(&_walletModel, SIGNAL(sendMoneyVerified()), this, SIGNAL(sendMoneyVerified()));
@@ -315,24 +315,7 @@ void SendViewModel::onChangeCalculated(beam::Amount change)
 
 void SendViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes)
 {
-    _shieldedFee = selectionRes.shieldedFee;
-    if (_shieldedFee && !_feeChangedByUi)
-    {
-        if (selectionRes.requestedFee < QMLGlobals::getMinimalFee(Currency::CurrBeam, true))
-        {
-            _minimalFeeGrothes = QMLGlobals::getMinimalFee(Currency::CurrBeam, true);
-            emit minimalFeeGrothesChanged();
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _minimalFeeGrothes);
-            return;
-        }
-        else if (_isShieldedTx && selectionRes.requestedFee < selectionRes.shieldedFee + QMLGlobals::getMinimalFee(Currency::CurrBeam, true))
-        {
-            _minimalFeeGrothes = selectionRes.shieldedFee + QMLGlobals::getMinimalFee(Currency::CurrBeam, true);
-            emit minimalFeeGrothesChanged();
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _minimalFeeGrothes);
-            return;
-        }
-    }
+    _shieldedInputsFee = selectionRes.shieldedInputsFee;
 
     if (selectionRes.selectedSum < selectionRes.requestedSum + selectionRes.requestedFee && _maxAvailable)
     {
@@ -439,7 +422,7 @@ void SendViewModel::sendMoney()
 
         auto p = CreateSimpleTransactionParameters()
             .SetParameter(TxParameterID::Amount, _sendAmountGrothes)
-            .SetParameter(TxParameterID::Fee, !!_shieldedFee ? _feeGrothes - _shieldedFee : _feeGrothes)
+            .SetParameter(TxParameterID::Fee, !!_shieldedInputsFee ? _feeGrothes - _shieldedInputsFee : _feeGrothes)
             .SetParameter(TxParameterID::Message, beam::ByteBuffer(messageString.begin(), messageString.end()));
 
         CopyParameter(TxParameterID::PeerID, _txParameters, p);
@@ -661,5 +644,5 @@ void SendViewModel::resetMinimalFee()
 {
     _minimalFeeGrothes = QMLGlobals::getMinimalFee(Currency::CurrBeam, _isShieldedTx);
     emit minimalFeeGrothesChanged();
-    _shieldedFee = 0;
+    _shieldedInputsFee = 0;
 }
