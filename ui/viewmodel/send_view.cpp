@@ -216,7 +216,7 @@ void SendViewModel::setIsShieldedTx(bool value)
         emit isShieldedTxChanged();
         resetMinimalFee();
 
-        if (_walletModel.hasShielded())
+        if (_walletModel.hasShielded() && _sendAmountGrothes)
         {
             if (_walletModel.getAvailable() - _sendAmountGrothes - _feeGrothes == 0) _maxAvailable = true;
             _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _minimalFeeGrothes, _isShieldedTx);
@@ -423,6 +423,7 @@ void SendViewModel::sendMoney()
 
         auto p = CreateSimpleTransactionParameters()
             .SetParameter(TxParameterID::Amount, _sendAmountGrothes)
+            // fee for shielded inputs included automaticaly
             .SetParameter(TxParameterID::Fee, !!_shieldedInputsFee ? _feeGrothes - _shieldedInputsFee : _feeGrothes)
             .SetParameter(TxParameterID::Message, beam::ByteBuffer(messageString.begin(), messageString.end()));
 
