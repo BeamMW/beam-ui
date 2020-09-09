@@ -77,7 +77,7 @@ void SendViewModel::setFeeGrothes(unsigned int value)
 
         if (_walletModel.hasShielded())
         {
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes, _isShieldedTx);
         }
         else
         {
@@ -133,7 +133,7 @@ void SendViewModel::setSendAmount(QString value)
             }
             _sendAmountGrothes = amount;
             emit sendAmountChanged();
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes, _isShieldedTx);
         }
         else
         {
@@ -218,7 +218,7 @@ void SendViewModel::setIsShieldedTx(bool value)
         if (_walletModel.hasShielded())
         {
             if (_walletModel.getAvailable() - _sendAmountGrothes - _feeGrothes == 0) _maxAvailable = true;
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _minimalFeeGrothes);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _minimalFeeGrothes, _isShieldedTx);
         }
         else
         {
