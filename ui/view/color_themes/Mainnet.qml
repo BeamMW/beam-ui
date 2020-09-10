@@ -26,15 +26,9 @@ AbstractColors {
     property color row_selected:          "#085469"
     property color separator:             "#33566b"
     property color table_header:          Qt.rgba(0, 246, 210, 0.1)
-
     property color active :               "#00f6d2" // bright-teal
     property color passive:               "#d6d9e0"  // silver
-        
     property color caps_warning:          "#000000"
-
-    property string linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
-    property string explorerUrl: "https://explorer.beam.mw/"
-    property string faucetUrl: "https://faucet.beamprivacy.community/"
 
     property color swapCurrencyPaneGrRight:     "#00458f"
     property color swapCurrencyPaneGrLeftBEAM:  "#00f6d2"
@@ -45,4 +39,9 @@ AbstractColors {
     property color swapCurrencyStateIndicator:  "#ff746b"
     property color swapCurrencyOptionsBorder:   Qt.rgba(0, 246, 210, 0.15)
     property color swapDisconnectNode:          "#f9605b"
+
+    property string linkStyle:   "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
+    property string explorerUrl: "https://explorer.beam.mw/"
+    property string faucetUrl:   "https://faucet.beamprivacy.community/"
+    property string appsUrl:     "http://127.0.0.1:80/"
 }

@@ -61,6 +61,7 @@
 #include "utility/string_helpers.h"
 #include "utility/helpers.h"
 #include "model/translator.h"
+#include "viewmodel/applications/public.h"
 
 #if defined(BEAM_USE_STATIC)
 
@@ -101,34 +102,19 @@ static const char* AppName = "Beam Wallet Masternet";
 
 int main (int argc, char* argv[])
 {
-#if defined Q_OS_WIN
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
+    QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+
     block_sigpipe();
-    //QLoggingCategory::setFilterRules(QStringLiteral("qt.qml.binding.removal.info=true"));
     QApplication app(argc, argv);
-
-	app.setWindowIcon(QIcon(Theme::iconPath()));
-
-    QApplication::setApplicationName(AppName);
-
     QDir appDataDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
+
+    QApplication::setWindowIcon(QIcon(Theme::iconPath()));
+    QApplication::setApplicationName(AppName);
 
     try
     {
-
-        // TODO: ugly temporary fix for unused variable, GCC only
-#if defined(__GNUC__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-variable"
-#endif
-
         auto [options, visibleOptions] = createOptionsDescription(GENERAL_OPTIONS | UI_OPTIONS | WALLET_OPTIONS);
-
-#if defined(__GNUC__)
-#pragma GCC diagnostic pop
-#endif
-
         po::variables_map vm;
 
         try
@@ -240,7 +226,6 @@ int main (int argc, char* argv[])
             qmlRegisterType<SendViewModel>("Beam.Wallet", 1, 0, "SendViewModel");
             qmlRegisterType<SendSwapViewModel>("Beam.Wallet", 1, 0, "SendSwapViewModel");
             qmlRegisterType<ELSeedValidator>("Beam.Wallet", 1, 0, "ELSeedValidator");
-
             qmlRegisterType<AddressItem>("Beam.Wallet", 1, 0, "AddressItem");
             qmlRegisterType<ContactItem>("Beam.Wallet", 1, 0, "ContactItem");
             qmlRegisterType<UtxoItem>("Beam.Wallet", 1, 0, "UtxoItem");
@@ -252,23 +237,21 @@ int main (int argc, char* argv[])
             qmlRegisterType<SwapTxObjectList>("Beam.Wallet", 1, 0, "SwapTxObjectList");
             qmlRegisterType<TxObjectList>("Beam.Wallet", 1, 0, "TxObjectList");
             qmlRegisterType<TokenInfoItem>("Beam.Wallet", 1, 0, "TokenInfoItem");
-            
             qmlRegisterType<TokenBootstrapManager>("Beam.Wallet", 1, 0, "TokenBootstrapManager");
             qmlRegisterType<PushNotificationManager>("Beam.Wallet", 1, 0, "PushNotificationManager");
             qmlRegisterType<ExchangeRatesManager>("Beam.Wallet", 1, 0, "ExchangeRatesManager");
-            
             qmlRegisterType<SortFilterProxyModel>("Beam.Wallet", 1, 0, "SortFilterProxyModel");
+            beamui::applications::RegisterQMLTypes();
 
             engine.load(QUrl("qrc:/root.qml"));
-
             if (engine.rootObjects().count() < 1)
             {
                 LOG_ERROR() << "Problem with QT";
                 return -1;
             }
 
-            QObject* topLevel = engine.rootObjects().value(0);
-            QQuickWindow* window = qobject_cast<QQuickWindow*>(topLevel);
+            auto topLevel = engine.rootObjects().value(0);
+            auto window = qobject_cast<QQuickWindow*>(topLevel);
 
             if (!window)
             {
@@ -276,11 +259,10 @@ int main (int argc, char* argv[])
                 return -1;
             }
 
-            //window->setMinimumSize(QSize(768, 540));
             window->setFlag(Qt::WindowFullscreenButtonHint);
             window->show();
 
-            return app.exec();
+            return QApplication::exec();
         }
         catch (const po::error& e)
         {

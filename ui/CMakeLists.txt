@@ -61,7 +61,7 @@ else()
 endif()
 set (CMAKE_PREFIX_PATH $ENV{QT5_ROOT_DIR})
 
-find_package(Qt5 COMPONENTS Qml Quick Svg PrintSupport REQUIRED)
+find_package(Qt5 COMPONENTS Qml Quick Svg PrintSupport WebEngine WebEngineWidgets REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -106,6 +106,12 @@ list(APPEND SUPPORTED_LANGS "rs_RS")
 set(UI_SRC
     ui.cpp
 
+    viewmodel/applications/apps_view.h
+    viewmodel/applications/apps_view.cpp
+    viewmodel/applications/webapi_beam.h
+    viewmodel/applications/webapi_beam.cpp
+    viewmodel/applications/public.cpp
+    viewmodel/applications/public.h
     viewmodel/helpers/list_model.h
     viewmodel/helpers/sortfilterproxymodel.cpp
     viewmodel/helpers/token_bootstrap_manager.cpp
@@ -288,6 +294,8 @@ target_link_libraries(${TARGET_NAME}
         Qt5::Quick 
         Qt5::Svg
         Qt5::PrintSupport
+        Qt5::WebEngine
+        Qt5::WebEngineWidgets
 )
 
 if (BEAM_SIGN_PACKAGE AND WIN32)

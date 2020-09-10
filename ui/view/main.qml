@@ -123,7 +123,9 @@ Rectangle {
 		"addresses",
         "notifications",
 		"utxo",
+		"applications",
 		"settings"]
+
     property int selectedItem
 
     Item {
@@ -409,5 +411,4 @@ Rectangle {
     Component.onDestruction: {
         main.Window.window.closing.disconnect(onClosing)
     }
-
 }

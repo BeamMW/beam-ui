@@ -78,6 +78,7 @@
         <file>wallet.qml</file>
         <file>settings.qml</file>
         <file>addresses.qml</file>
+        <file>applications.qml</file>
         <file>utxo.qml</file>
         <file>atomic_swap.qml</file>
         <file>notifications.qml</file>
@@ -123,6 +124,8 @@
         <file>assets/icon-attention.svg</file>
         <file>assets/icon-dashboard.svg</file>
         <file>assets/icon-dashboard-active.svg</file>
+        <file>assets/icon-applications.svg</file>
+        <file>assets/icon-applications-active.svg</file>
         <file>assets/icon-addresses.svg</file>
         <file>assets/icon-addresses-active.svg</file>
         <file>assets/icon-wallet.svg</file>

@@ -28,13 +28,8 @@ QtObject {
 
     property color active;
     property color passive;
-        
     property color caps_warning;
-
 	property color white: "#ffffff";
-    property string linkStyle;
-    property string explorerUrl;
-    property string faucetUrl;
 
     property color swapCurrencyPaneGrRight;
     property color swapCurrencyPaneGrLeftBEAM;
@@ -45,4 +40,9 @@ QtObject {
     property color swapCurrencyStateIndicator;
     property color swapCurrencyOptionsBorder;
     property color swapDisconnectNode;
+
+    property string linkStyle;
+    property string explorerUrl;
+    property string faucetUrl;
+    property string appsUrl;
 }
