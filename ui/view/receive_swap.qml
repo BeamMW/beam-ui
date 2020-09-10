@@ -443,7 +443,7 @@ please review your settings and try again"
                         content: FeeInput {
                             id:                         receiveFeeInput
                             currency:                   viewModel.receiveCurrency
-                            minFee:                     currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(viewModel.receiveCurrency, false)
+                            minFee:                     BeamGlobals.getMinimalFee(viewModel.receiveCurrency, false)
                             recommendedFee:             BeamGlobals.getRecommendedFee(viewModel.receiveCurrency)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(viewModel.receiveCurrency)
                             color:                      Style.accent_outgoing

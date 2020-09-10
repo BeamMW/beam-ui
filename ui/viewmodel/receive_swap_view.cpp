@@ -177,23 +177,19 @@ void ReceiveSwapViewModel::onSwapParamsLoaded(const beam::ByteBuffer& params)
 
 void ReceiveSwapViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes)
 {
-    _minimalBeamFeeGrothes = selectionRes.minimalFee;
-    emit minimalBeamFeeGrothesChanged();
-
-    if (_feeChangedByUI)
-    {
-        _feeChangedByUI = false;
-        return;
-    }
     if (_sentCurrency == Currency::CurrBeam)
     {
+        _minimalBeamFeeGrothes = selectionRes.minimalFee;
+        emit minimalBeamFeeGrothesChanged();
+
+        if (_feeChangedByUI)
+        {
+            _feeChangedByUI = false;
+            return;
+        }
+
         _sentFeeGrothes = selectionRes.selectedFee;
         emit sentFeeChanged();
-    }
-    else if (_receiveCurrency == Currency::CurrBeam)
-    {
-        _receiveFeeGrothes = selectionRes.selectedFee;
-        emit receiveFeeChanged();
     }
 }
 
@@ -207,23 +203,10 @@ void ReceiveSwapViewModel::setAmountToReceive(QString value)
     auto amount = beamui::UIStringToAmount(value);
     if (amount != _amountToReceiveGrothes)
     {
-        bool isPreviouseGreaterThanNow = _amountSentGrothes > amount;
         _amountToReceiveGrothes = amount;
         emit amountReceiveChanged();
         emit rateChanged();
         updateTransactionToken();
-        if (_receiveCurrency == Currency::CurrBeam && _walletModel.hasShielded())
-        {
-            if (isPreviouseGreaterThanNow)
-            {
-                _minimalBeamFeeGrothes = QMLGlobals::getMinimalFee(Currency::CurrBeam, false);
-                _sentFeeGrothes = _minimalBeamFeeGrothes;
-                emit minimalBeamFeeGrothesChanged();
-                emit sentFeeChanged();
-            }
-            if (_amountToReceiveGrothes)
-                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountToReceiveGrothes, _receiveFeeGrothes);
-        }
     }
 }
 
@@ -335,12 +318,6 @@ void ReceiveSwapViewModel::setReceiveFee(unsigned int value)
         updateTransactionToken();
         emit secondCurrencyRateChanged();
         storeSwapParams();
-
-        if (_receiveCurrency == Currency::CurrBeam && _walletModel.hasShielded() && _amountToReceiveGrothes)
-        {
-            _feeChangedByUI = true;
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountToReceiveGrothes, _receiveFeeGrothes);
-        }
     }
 }
 

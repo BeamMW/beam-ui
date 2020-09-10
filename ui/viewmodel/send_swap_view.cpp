@@ -278,9 +278,6 @@ void SendSwapViewModel::setReceiveAmount(QString value)
         _receiveAmountGrothes = amount;
         emit receiveAmountChanged();
         emit isReceiveFeeOKChanged();
-
-        if (_receiveCurrency == Currency::CurrBeam && _walletModel.hasShielded())
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_receiveAmountGrothes, _receiveFeeGrothes);
     }
 }
 
@@ -297,12 +294,6 @@ void SendSwapViewModel::setReceiveFee(unsigned int value)
         emit receiveFeeChanged();
         emit canSendChanged();
         emit isReceiveFeeOKChanged();
-
-        if (_receiveCurrency == Currency::CurrBeam && _walletModel.hasShielded() && _receiveAmountGrothes)
-        {
-            _feeChangedByUI = true;
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_receiveAmountGrothes, _receiveFeeGrothes);
-        }
     }
 }
 
@@ -374,23 +365,18 @@ void SendSwapViewModel::onChangeCalculated(beam::Amount change)
 
 void SendSwapViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes)
 {
-    _minimalBeamFeeGrothes = selectionRes.minimalFee;
-    emit minimalBeamFeeGrothesChanged();
-
-    if (_feeChangedByUI)
-    {
-        _feeChangedByUI = false;
-        return;
-    }
     if (_sendCurrency == Currency::CurrBeam)
     {
+        _minimalBeamFeeGrothes = selectionRes.minimalFee;
+        emit minimalBeamFeeGrothesChanged();
+
+        if (_feeChangedByUI)
+        {
+            _feeChangedByUI = false;
+            return;
+        }
         _sendFeeGrothes = selectionRes.selectedFee;
         emit sendFeeChanged();
-    }
-    else if (_receiveCurrency == Currency::CurrBeam)
-    {
-        _receiveFeeGrothes = selectionRes.selectedFee;
-        emit receiveFeeChanged();
     }
 }
 
