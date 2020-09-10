@@ -60,6 +60,9 @@ matrix:
       install:
         - export TZ=GMT-3
         - sudo systemsetup -gettimezone
+        - travis_retry wget --no-check-certificate https://builds.beam.mw/QT5/qt5.12.9-static.tar.gz
+        - mkdir /usr/local/qt5-static
+        - tar -xf qt5.12.9-static.tar.gz -C /usr/local/qt5-static
         - brew update
         - brew unlink cmake
         - brew install cmake
@@ -72,9 +75,7 @@ matrix:
         - brew uninstall --ignore-dependencies node
         - brew uninstall --ignore-dependencies postgresql
         - brew uninstall --ignore-dependencies postgis
-        - travis_retry wget --no-check-certificate https://builds.beam.mw/QT5/qt5.12.9-static.tar.gz
-        - mkdir /usr/local/qt5-static
-        - tar -xf qt5.12.9-static.tar.gz -C /usr/local/qt5-static
+        
         #- sudo git clone --depth=1 https://github.com/nesbox/qt5-static-mac.git /usr/local/qt5-static
         - brew uninstall --ignore-dependencies qt boost
         - curl -O https://raw.githubusercontent.com/Homebrew/homebrew-core/5da5895add2f6b9320d654dd844d4827f6876c8b/Formula/boost.rb
