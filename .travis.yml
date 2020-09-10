@@ -61,8 +61,8 @@ matrix:
         - export TZ=GMT-3
         - sudo systemsetup -gettimezone
         - travis_retry wget --no-check-certificate https://builds.beam.mw/QT5/qt5.12.9-static.tar.gz
-        - mkdir /usr/local/qt5-static
-        - tar -xf qt5.12.9-static.tar.gz -C /usr/local/qt5-static
+        - sudo mkdir /usr/local/qt5-static
+        - sudo tar -xf qt5.12.9-static.tar.gz -C /usr/local/qt5-static
         - brew update
         - brew unlink cmake
         - brew install cmake
