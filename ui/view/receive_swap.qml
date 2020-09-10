@@ -218,7 +218,7 @@ please review your settings and try again"
                         content: FeeInput {
                             id:                         sendFeeInput
                             currency:                   viewModel.sentCurrency
-                            minFee:                     BeamGlobals.getMinimalFee(viewModel.sentCurrency, false)
+                            minFee:                     currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(viewModel.sentCurrency, false)
                             recommendedFee:             BeamGlobals.getRecommendedFee(viewModel.sentCurrency)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(viewModel.sentCurrency)
                             color:                      Style.accent_outgoing
@@ -443,7 +443,7 @@ please review your settings and try again"
                         content: FeeInput {
                             id:                         receiveFeeInput
                             currency:                   viewModel.receiveCurrency
-                            minFee:                     BeamGlobals.getMinimalFee(viewModel.receiveCurrency, false)
+                            minFee:                     currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(viewModel.receiveCurrency, false)
                             recommendedFee:             BeamGlobals.getRecommendedFee(viewModel.receiveCurrency)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(viewModel.receiveCurrency)
                             color:                      Style.accent_outgoing

@@ -226,7 +226,7 @@ please review your settings and try again"
                             id:                         sendFeeInput
                             //fee:                        viewModel.sendFee
                             currency:                   viewModel.sendCurrency
-                            minFee:                     BeamGlobals.getMinimalFee(viewModel.sendCurrency, false)
+                            minFee:                     currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(viewModel.sentCurrency, false)
                             recommendedFee:             BeamGlobals.getRecommendedFee(viewModel.sendCurrency)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(viewModel.sendCurrency)
                             color:                      Style.accent_outgoing
@@ -246,6 +246,11 @@ please review your settings and try again"
                             target:   viewModel
                             property: "sendFee"
                             value:    sendFeeInput.fee
+                        }
+
+                        Connections {
+                            target: viewModel
+                            onSendFeeChanged: sendFeeInput.fee = viewModel.sendFee
                         }
                     }
 
@@ -335,7 +340,7 @@ please review your settings and try again"
                         content: FeeInput {
                             id:                         receiveFeeInput
                             currency:                   viewModel.receiveCurrency
-                            minFee:                     BeamGlobals.getMinimalFee(viewModel.receiveCurrency, false)
+                            minFee:                     currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(viewModel.receiveCurrency, false)
                             recommendedFee:             BeamGlobals.getRecommendedFee(viewModel.receiveCurrency)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(viewModel.receiveCurrency)
                             color:                      Style.accent_outgoing
@@ -355,6 +360,11 @@ please review your settings and try again"
                             target:   viewModel
                             property: "receiveFee"
                             value:    receiveFeeInput.fee
+                        }
+
+                        Connections {
+                            target: viewModel
+                            onReceiveFeeChanged: receiveFeeInput.fee = viewModel.receiveFee
                         }
                     }
 
