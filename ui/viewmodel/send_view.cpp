@@ -124,7 +124,7 @@ void SendViewModel::setSendAmount(QString value)
 
         if (_walletModel.hasShielded())
         {
-            if (amount < _sendAmountGrothes)
+            if (amount < _sendAmountGrothes || _maxAvailable)
             {
                 resetMinimalFee();
                 onChangeCalculated(0);
@@ -218,8 +218,14 @@ void SendViewModel::setIsShieldedTx(bool value)
 
         if (_walletModel.hasShielded() && _sendAmountGrothes)
         {
-            if (_walletModel.getAvailable() - _sendAmountGrothes - _feeGrothes == 0) _maxAvailable = true;
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _minimalFeeGrothes, _isShieldedTx);
+            if (_walletModel.getAvailable() - _sendAmountGrothes - _feeGrothes == 0)
+            {
+                setMaxAvailableAmount();
+            }
+            else
+            {
+                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _minimalFeeGrothes, _isShieldedTx);
+            }
         }
         else
         {
