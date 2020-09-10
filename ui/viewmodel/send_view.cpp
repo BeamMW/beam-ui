@@ -119,6 +119,8 @@ void SendViewModel::setSendAmount(QString value)
             emit sendAmountChanged();
             resetMinimalFee();
             onChangeCalculated(0);
+            _feeGrothes = _minimalFeeGrothes;
+            emit feeGrothesChanged();
             return;
         }
 
