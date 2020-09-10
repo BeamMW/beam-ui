@@ -229,6 +229,11 @@ void SendViewModel::setIsShieldedTx(bool value)
         }
         else
         {
+            if (_walletModel.getAvailable() - _sendAmountGrothes - _feeGrothes == 0)
+            {
+                _sendAmountGrothes -= _minimalFeeGrothes;
+                emit sendAmountChanged();
+            }
             setFeeGrothes(_minimalFeeGrothes);
         }
     }
