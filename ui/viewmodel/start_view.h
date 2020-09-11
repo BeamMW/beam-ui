@@ -148,7 +148,7 @@ class StartViewModel : public QObject
     Q_PROPERTY(int localPort READ getLocalPort CONSTANT)
     Q_PROPERTY(QString remoteNodeAddress READ getRemoteNodeAddress CONSTANT)
     Q_PROPERTY(QString localNodePeer READ getLocalNodePeer CONSTANT)
-    Q_PROPERTY(QQmlListProperty<WalletDBPathItem> walletDBpaths READ getWalletDBpaths CONSTANT)
+    Q_PROPERTY(QList<QObject*> walletDBpaths READ getWalletDBpaths CONSTANT)
     Q_PROPERTY(bool isCapsLockOn READ isCapsLockOn NOTIFY capsLockStateMayBeChanged)
     Q_PROPERTY(bool validateDictionary READ getValidateDictionary WRITE setValidateDictionary NOTIFY validateDictionaryChanged)
 
@@ -179,7 +179,7 @@ public:
     int getLocalPort() const;
     QString getRemoteNodeAddress() const;
     QString getLocalNodePeer() const;
-    QQmlListProperty<WalletDBPathItem> getWalletDBpaths();
+    const QList<QObject*>& getWalletDBpaths();
     bool isCapsLockOn() const;
     bool getValidateDictionary() const;
     void setValidateDictionary(bool value);

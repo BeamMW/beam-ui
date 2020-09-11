@@ -498,6 +498,7 @@ void StartViewModel::setIsRecoveryMode(bool value)
     if (value != m_isRecoveryMode)
     {
         m_isRecoveryMode = value;
+        qDeleteAll(m_recoveryPhrases);
         m_recoveryPhrases.clear();
         emit isRecoveryModeChanged();
     }
@@ -584,9 +585,9 @@ QString StartViewModel::getLocalNodePeer() const
     return !peers.empty() ? peers.first() : "";
 }
 
-QQmlListProperty<WalletDBPathItem> StartViewModel::getWalletDBpaths()
+const QList<QObject*>& StartViewModel::getWalletDBpaths()
 {
-    return QQmlListProperty<WalletDBPathItem>(this, m_walletDBpaths);
+    return *reinterpret_cast<QList<QObject*>*>(&m_walletDBpaths);
 }
 
 bool StartViewModel::isCapsLockOn() const
@@ -704,8 +705,10 @@ void StartViewModel::printRecoveryPhrases(QVariant viewData )
 
 void StartViewModel::resetPhrases()
 {
+    qDeleteAll(m_recoveryPhrases);
     m_recoveryPhrases.clear();
     m_generatedPhrases.clear();
+    qDeleteAll(m_checkPhrases);
     m_checkPhrases.clear();
     emit recoveryPhrasesChanged();
 }
