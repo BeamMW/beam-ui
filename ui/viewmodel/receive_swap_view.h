@@ -41,6 +41,7 @@ class ReceiveSwapViewModel: public QObject
 
     Q_PROPERTY(WalletCurrency::Currency  receiveCurrency    READ getReceiveCurrency    WRITE  setReceiveCurrency  NOTIFY  receiveCurrencyChanged)
     Q_PROPERTY(WalletCurrency::Currency  sentCurrency       READ getSentCurrency       WRITE  setSentCurrency     NOTIFY  sentCurrencyChanged)
+    Q_PROPERTY(unsigned int minimalBeamFeeGrothes          READ getMinimalBeamFeeGrothes       NOTIFY minimalBeamFeeGrothesChanged)
 
 public:
     ReceiveSwapViewModel();
@@ -64,6 +65,7 @@ signals:
     void rateChanged();
     void secondCurrencyRateChanged();
     void secondCurrencyLabelChanged();
+    void minimalBeamFeeGrothesChanged();
 
 public:
     Q_INVOKABLE void generateNewAddress();
@@ -117,9 +119,12 @@ private:
     QString getSecondCurrencySendRateValue() const;
     QString getSecondCurrencyReceiveRateValue() const;
 
+    unsigned int getMinimalBeamFeeGrothes() const;
+
 private slots:
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onSwapParamsLoaded(const beam::ByteBuffer& token);
+    void onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes);
 
 private:
     beam::Amount _amountToReceiveGrothes;
@@ -139,4 +144,7 @@ private:
     ExchangeRatesManager _exchangeRatesManager;
     beam::wallet::TxParameters _txParameters;
     bool _isBeamSide;
+
+    beam::Amount _minimalBeamFeeGrothes;
+    bool _feeChangedByUI = false;
 };

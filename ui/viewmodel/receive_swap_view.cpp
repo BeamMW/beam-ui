@@ -72,6 +72,7 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     , _walletModel(*AppModel::getInstance().getWallet())
     , _txParameters(beam::wallet::CreateSwapTransactionParameters())
     , _isBeamSide(false)
+    , _minimalBeamFeeGrothes(QMLGlobals::getMinimalFee(Currency::CurrBeam, false))
 {
     connect(&_walletModel, &WalletModel::generatedNewAddress, this, &ReceiveSwapViewModel::onGeneratedNewAddress);
     connect(&_walletModel, &WalletModel::swapParamsLoaded, this, &ReceiveSwapViewModel::onSwapParamsLoaded);
@@ -79,6 +80,7 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     connect(&_walletModel, &WalletModel::stateIDChanged, this, &ReceiveSwapViewModel::updateTransactionToken);
     connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyLabelChanged()));
     connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
+    connect(&_walletModel, &WalletModel::shieldedCoinsSelectionCalculated, this, &ReceiveSwapViewModel::onShieldedCoinsSelectionCalculated);
 
     generateNewAddress();
     updateTransactionToken();
@@ -173,6 +175,24 @@ void ReceiveSwapViewModel::onSwapParamsLoaded(const beam::ByteBuffer& params)
    _saveParamsAllowed = true;
 }
 
+void ReceiveSwapViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes)
+{
+    if (_sentCurrency == Currency::CurrBeam)
+    {
+        _minimalBeamFeeGrothes = selectionRes.minimalFee;
+        emit minimalBeamFeeGrothesChanged();
+
+        if (_feeChangedByUI)
+        {
+            _feeChangedByUI = false;
+            return;
+        }
+
+        _sentFeeGrothes = selectionRes.selectedFee;
+        emit sentFeeChanged();
+    }
+}
+
 QString ReceiveSwapViewModel::getAmountToReceive() const
 {
     return beamui::AmountToUIString(_amountToReceiveGrothes);
@@ -206,10 +226,23 @@ void ReceiveSwapViewModel::setAmountSent(QString value)
     if (amount != _amountSentGrothes)
     {
         bool isPreviouseSendWasZero = _amountSentGrothes == 0;
+        bool isPreviouseGreaterThanNow = _amountSentGrothes > amount;
         _amountSentGrothes = amount;
         if (isPreviouseSendWasZero && _amountToReceiveGrothes) emit rateChanged();
         emit amountSentChanged();
         updateTransactionToken();
+        if (_sentCurrency == Currency::CurrBeam && _walletModel.hasShielded())
+        {
+            if (isPreviouseGreaterThanNow)
+            {
+                _minimalBeamFeeGrothes = QMLGlobals::getMinimalFee(Currency::CurrBeam, false);
+                _sentFeeGrothes = _minimalBeamFeeGrothes;
+                emit minimalBeamFeeGrothesChanged();
+                emit sentFeeChanged();
+            }
+            if (_amountSentGrothes)
+                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes);
+        }
     }
 }
 
@@ -227,6 +260,12 @@ void ReceiveSwapViewModel::setSentFee(unsigned int value)
         updateTransactionToken();
         emit secondCurrencyRateChanged();
         storeSwapParams();
+
+        if (_sentCurrency == Currency::CurrBeam && _walletModel.hasShielded() && _amountSentGrothes)
+        {
+            _feeChangedByUI = true;
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes);
+        }
     }
 }
 
@@ -520,6 +559,11 @@ QString ReceiveSwapViewModel::getSecondCurrencyReceiveRateValue() const
     auto receiveCurrency = ExchangeRatesManager::convertCurrencyToExchangeCurrency(getReceiveCurrency());
     auto rate = _exchangeRatesManager.getRate(receiveCurrency);
     return beamui::AmountToUIString(rate);
+}
+
+unsigned int ReceiveSwapViewModel::getMinimalBeamFeeGrothes() const
+{
+    return _minimalBeamFeeGrothes;
 }
 
 QString ReceiveSwapViewModel::getSecondCurrencyLabel() const
