@@ -244,7 +244,7 @@ private:
     beam::WordList m_generatedPhrases;
     std::string m_password;
 
-    QList<WalletDBPathItem*> m_walletDBpaths;
+    QList<QObject*> m_walletDBpaths;
 
     bool m_isRecoveryMode;
     bool m_validateDictionary = true;
