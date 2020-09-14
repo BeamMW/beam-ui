@@ -70,6 +70,7 @@ void SendViewModel::setFeeGrothes(unsigned int value)
     {
         _feeGrothes = value;
         emit feeGrothesChanged();
+        resetMinimalFee();
 
         if (!_sendAmountGrothes || !_feeGrothes) return;
 
