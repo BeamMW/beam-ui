@@ -72,13 +72,17 @@ void SendViewModel::setFeeGrothes(unsigned int value)
         emit feeGrothesChanged();
         resetMinimalFee();
 
-        if (!_sendAmountGrothes || !_feeGrothes) return;
+        if (!_sendAmountGrothes) return;
 
         _feeChangedByUi = true;
 
         if (_walletModel.hasShielded())
         {
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes, _isShieldedTx);
+            auto defaultMinFeeForMaxPrivacy = QMLGlobals::getMinimalFee(Currency::CurrBeam, true);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(
+                _sendAmountGrothes,
+                (_isShieldedTx && _feeGrothes > defaultMinFeeForMaxPrivacy) ? (_feeGrothes - defaultMinFeeForMaxPrivacy) : _feeGrothes,
+                _isShieldedTx);
         }
         else
         {
@@ -136,7 +140,12 @@ void SendViewModel::setSendAmount(QString value)
             }
             _sendAmountGrothes = amount;
             emit sendAmountChanged();
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes, _isShieldedTx);
+
+            auto defaultMinFeeForMaxPrivacy = QMLGlobals::getMinimalFee(Currency::CurrBeam, true);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(
+                _sendAmountGrothes,
+                (_isShieldedTx && _feeGrothes > defaultMinFeeForMaxPrivacy) ? (_feeGrothes - defaultMinFeeForMaxPrivacy) : _feeGrothes,
+                _isShieldedTx);
         }
         else
         {
