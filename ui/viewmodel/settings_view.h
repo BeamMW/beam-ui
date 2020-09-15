@@ -75,6 +75,7 @@ class SwapCoinSettingsItem : public QObject
     Q_PROPERTY(QString  nodeAddress  READ getNodeAddress  WRITE setNodeAddress    NOTIFY nodeAddressChanged)
     Q_PROPERTY(QString  nodePort     READ getNodePort     WRITE setNodePort       NOTIFY nodePortChanged)
     // electrum settings
+    Q_PROPERTY(bool            isSupportedElectrum      READ isSupportedElectrum                                  CONSTANT)
     Q_PROPERTY(QChar           phrasesSeparatorElectrum READ getPhrasesSeparatorElectrum                          CONSTANT)
     Q_PROPERTY(bool            isCurrentSeedValid       READ getIsCurrentSeedValid                                NOTIFY isCurrentSeedValidChanged)
     Q_PROPERTY(bool            isCurrentSeedSegwit      READ getIsCurrentSeedSegwit                               NOTIFY isCurrentSeedSegwitChanged)
@@ -93,7 +94,8 @@ class SwapCoinSettingsItem : public QObject
     Q_PROPERTY(QString connectionErrorMsg   READ getConnectionErrorMsg      NOTIFY connectionErrorMsgChanged)
 
 public:
-    SwapCoinSettingsItem(SwapCoinClientModel& coinClient, beam::wallet::AtomicSwapCoin swapCoin);
+    SwapCoinSettingsItem() = default;
+    SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin swapCoin);
     virtual ~SwapCoinSettingsItem();
 
     QString getFeeRateLabel() const;
@@ -124,6 +126,7 @@ public:
     void setNodePortElectrum(const QString& value);
     bool getSelectServerAutomatically() const;
     void setSelectServerAutomatically(bool value);
+    bool isSupportedElectrum() const;
 
     bool getCanEdit() const;
 
@@ -197,7 +200,7 @@ private:
 
 private:
     beam::wallet::AtomicSwapCoin m_swapCoin;
-    SwapCoinClientModel& m_coinClient;
+    std::weak_ptr<SwapCoinClientModel> m_coinClient;
 
     boost::optional<beam::bitcoin::Settings> m_settings;
 

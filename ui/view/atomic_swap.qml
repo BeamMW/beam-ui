@@ -212,11 +212,13 @@ Item {
                 }
             }
 
-            RowLayout {
+            GridLayout {
+                id: amountPanes
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                 Layout.fillWidth: true
                 Layout.topMargin: 29
-                spacing: 10
+                columnSpacing: 10
+                columns: 4
 
                 SwapCurrencyAmountPane {
                     function activeTxCountStr() {
@@ -241,60 +243,69 @@ Item {
                 //% "Transaction is in progress"
                 property string kTxInProgress: qsTrId("swap-beta-tx-in-progress")
 
-                function btcActiveTxStr() {
-                    return viewModel.hasBtcTx ? kTxInProgress : "";
+                function getCurrencyIcon(currency) {
+                    switch(currency) {
+                        case Currency.CurrBitcoin:
+                            return "qrc:/assets/icon-btc.svg";
+                        case Currency.CurrLitecoin:
+                            return "qrc:/assets/icon-ltc.svg";
+                        case Currency.CurrQtum:
+                            return "qrc:/assets/icon-qtum.svg";
+                        case Currency.CurrBitcoinCash:
+                            return "qrc:/assets/icon-bch.svg";
+                        case Currency.CurrBitcoinSV:
+                            return "qrc:/assets/icon-bsv.svg";
+                        case Currency.CurrDash:
+                            return "qrc:/assets/icon-dash.svg";
+                        case Currency.CurrDogecoin:
+                            return "qrc:/assets/icon-doge.svg";
+                        default: return "";
+                    }
                 }
 
-                function ltcActiveTxStr() {
-                    return viewModel.hasLtcTx ? kTxInProgress : "";
+                function getSwapCurrencyPaneGradient(currency)  {
+                    switch(currency) {
+                        case Currency.CurrBitcoin:
+                            return Style.swapCurrencyPaneGrLeftBTC;
+                        case Currency.CurrLitecoin:
+                            return Style.swapCurrencyPaneGrLeftLTC;
+                        case Currency.CurrQtum:
+                            return Style.swapCurrencyPaneGrLeftQTUM;
+                        case Currency.CurrBitcoinCash:
+                            return Style.swapCurrencyPaneGrLeftBCH;
+                        case Currency.CurrBitcoinSV:
+                            return Style.swapCurrencyPaneGrLeftBSV;
+                        case Currency.CurrDash:
+                            return Style.swapCurrencyPaneGrLeftDASH;
+                        case Currency.CurrDogecoin:
+                            return Style.swapCurrencyPaneGrLeftDOGE;
+                        default:
+                            return Style.swapCurrencyPaneGrLeftBTC;
+                    }
                 }
 
-                function qtumActiveTxStr() {
-                    return viewModel.hasQtumTx ? kTxInProgress : "";
-                }
+                Repeater {
+                    model: viewModel.swapClientList
 
-                SwapCurrencyAmountPane {
-                    gradLeft: Style.swapCurrencyPaneGrLeftBTC
-                    currencyIcon: "qrc:/assets/icon-btc.svg"
-                    amount: viewModel.hasBtcTx ? "" : viewModel.btcAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrBitcoin)
-                    valueSecondaryStr: parent.btcActiveTxStr()
-                    isOk: viewModel.btcOK
-                    isConnecting: viewModel.btcConnecting
-                    visible: BeamGlobals.haveBtc()
-                    swapSettingsPane: "BTC"
-                    //% "Connecting..."
-                    textConnecting: qsTrId("swap-connecting")
-                    //% "Cannot connect to peer. Please check the address in Settings and try again."
-                    textConnectionError: qsTrId("swap-beta-connection-error")
-                }
+                    SwapCurrencyAmountPane {
+                        gradLeft: amountPanes.getSwapCurrencyPaneGradient(modelData.currency)
+                        currencyIcon: amountPanes.getCurrencyIcon(modelData.currency)
+                        amount: modelData.hasActiveTx ? "" : modelData.available
+                        currencySymbol: BeamGlobals.getCurrencyLabel(modelData.currency)
+                        valueSecondaryStr: activeTxStr()
+                        isOk: modelData.isConnected
+                        isConnecting: modelData.isConnecting
+                        visible: BeamGlobals.haveSwapClient(modelData.currency)
+                        swapSettingsPane: BeamGlobals.getCurrencyLabel(modelData.currency)
+                        //% "Connecting..."
+                        textConnecting: qsTrId("swap-connecting")
+                        //% "Cannot connect to peer. Please check the address in Settings and try again."
+                        textConnectionError: qsTrId("swap-beta-connection-error")
 
-                SwapCurrencyAmountPane {
-                    gradLeft: Style.swapCurrencyPaneGrLeftLTC
-                    currencyIcon: "qrc:/assets/icon-ltc.svg"
-                    amount: viewModel.hasLtcTx ? "" : viewModel.ltcAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrLitecoin)
-                    valueSecondaryStr: parent.ltcActiveTxStr()
-                    isOk: viewModel.ltcOK
-                    isConnecting: viewModel.ltcConnecting
-                    visible: BeamGlobals.haveLtc()
-                    swapSettingsPane: "LTC"
-                    textConnecting: qsTrId("swap-connecting")
-                    textConnectionError: qsTrId("swap-beta-connection-error")
-                }
-
-                SwapCurrencyAmountPane {
-                    gradLeft: Style.swapCurrencyPaneGrLeftQTUM
-                    currencyIcon: "qrc:/assets/icon-qtum.svg"
-                    amount: viewModel.hasQtumTx ? "" : viewModel.qtumAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrQtum)
-                    valueSecondaryStr: parent.qtumActiveTxStr()
-                    isOk: viewModel.qtumOK
-                    isConnecting: viewModel.qtumConnecting
-                    visible: BeamGlobals.haveQtum()
-                    swapSettingsPane: "QTUM"
-                    textConnecting: qsTrId("swap-connecting")
-                    textConnectionError: qsTrId("swap-beta-connection-error")
+                        function activeTxStr() {
+                            return modelData.hasActiveTx ? amountPanes.kTxInProgress : "";
+                        }
+                    }
                 }
 
                 SwapCurrencyAmountPane {
@@ -309,7 +320,7 @@ Item {
                     textColor: Style.active
                     isOk: true
                     borderSize: 1
-                    visible: !BeamGlobals.haveBtc() || !BeamGlobals.haveLtc() || !BeamGlobals.haveQtum()
+                    visible: currencyIcons.length
                     MouseArea {
                         id:                clickArea
                         anchors.fill:      parent
@@ -321,12 +332,13 @@ Item {
                 }
                 Component.onCompleted: {
                     var currencyIcons = [];
-                    if (!BeamGlobals.haveBtc())
-                        currencyIcons.push("qrc:/assets/icon-btc.svg");
-                    if (!BeamGlobals.haveLtc())
-                        currencyIcons.push("qrc:/assets/icon-ltc.svg");
-                    if (!BeamGlobals.haveQtum())
-                        currencyIcons.push("qrc:/assets/icon-qtum.svg");
+
+                    for (var index = 0; index < viewModel.swapClientList.length; index++) {
+                        
+                        if (!BeamGlobals.haveSwapClient(viewModel.swapClientList[index].currency)) {
+                            currencyIcons.push(amountPanes.getCurrencyIcon(viewModel.swapClientList[index].currency));
+                        }                        
+                    }
 
                     swapOptions.currencyIcons = currencyIcons;
                 }
@@ -460,9 +472,17 @@ Item {
                                     ListElement{text: "BEAM->BTC"; pair: "beambtc"}
                                     ListElement{text: "BEAM->LTC"; pair: "beamltc"}
                                     ListElement{text: "BEAM->QTUM"; pair: "beamqtum"}
+                                    ListElement{text: "BEAM->BCH"; pair: "beambch"}
+                                    ListElement{text: "BEAM->DASH"; pair: "beamdash"}
+                                    ListElement{text: "BEAM->DOGE"; pair: "beamdoge"}
+                                    ListElement{text: "BEAM->BSV"; pair: "beambsv"}
                                     ListElement{text: "BTC->BEAM"; pair: "btcbeam"}
                                     ListElement{text: "LTC->BEAM"; pair: "ltcbeam"}
                                     ListElement{text: "QTUM->BEAM"; pair: "qtumbeam"}
+                                    ListElement{text: "BCH->BEAM"; pair: "bchbeam"}
+                                    ListElement{text: "DASH->BEAM"; pair: "dashbeam"}
+                                    ListElement{text: "DOGE->BEAM"; pair: "dogebeam"}
+                                    ListElement{text: "BSV->BEAM"; pair: "bsvbeam"}
                                 }
                         }
                     }   // RowLayout
@@ -1139,20 +1159,16 @@ Please try again later or create an offer yourself."
         }
     }
     
-    function getCoinName(idx) {
-        switch(idx) {
-            case 0: return "btc";
-            case 1: return "ltc";
-            case 2: return "qtum";
-            default: return "";
-        }
-    }
-
     function getCoinIcon(coin) {
         switch(coin) {
             case "btc": return "qrc:/assets/icon-btc.svg";
             case "ltc": return "qrc:/assets/icon-ltc.svg";
             case "qtum": return "qrc:/assets/icon-qtum.svg";
+            case "bch": return "qrc:/assets/icon-bch.svg";
+            case "bsv": return "qrc:/assets/icon-bsv.svg";
+            case "dash": return "qrc:/assets/icon-dash.svg";
+            case "doge": return "qrc:/assets/icon-doge.svg";
+
             default: return "";
         }
     }

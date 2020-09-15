@@ -16,9 +16,6 @@
 #include "ui_helpers.h"
 #include "model/app_model.h"
 #include "wallet/transactions/swaps/utils.h"
-#include "wallet/transactions/swaps/bridges/bitcoin/bitcoin_side.h"
-#include "wallet/transactions/swaps/bridges/litecoin/litecoin_side.h"
-#include "wallet/transactions/swaps/bridges/qtum/qtum_side.h"
 #include <QClipboard>
 #include "qml_globals.h"
 
@@ -390,35 +387,16 @@ bool ReceiveSwapViewModel::isEnough() const
     if (_amountSentGrothes == 0)
         return true;
 
-    switch (_sentCurrency)
+    auto total = _amountSentGrothes + _sentFeeGrothes;
+
+    if (_sentCurrency == Currency::CurrBeam)
     {
-    case Currency::CurrBeam:
-    {
-        auto total = _amountSentGrothes + _sentFeeGrothes;
         return _walletModel.getAvailable() >= total;
     }
-    case Currency::CurrBitcoin:
-    {
-        // TODO sentFee is fee rate. should be corrected
-        beam::Amount total = _amountSentGrothes + _sentFeeGrothes;
-        return AppModel::getInstance().getBitcoinClient()->getAvailable() > total;
-    }
-    case Currency::CurrLitecoin:
-    {
-        beam::Amount total = _amountSentGrothes + _sentFeeGrothes;
-        return AppModel::getInstance().getLitecoinClient()->getAvailable() > total;
-    }
-    case Currency::CurrQtum:
-    {
-        beam::Amount total = _amountSentGrothes + _sentFeeGrothes;
-        return AppModel::getInstance().getQtumClient()->getAvailable() > total;
-    }
-    default:
-    {
-        assert(false);
-        return true;
-    }
-    }
+
+    // TODO sentFee is fee rate. should be corrected
+    auto swapCoin = QMLGlobals::convertCurrencyToSwapCoin(_sentCurrency);
+    return AppModel::getInstance().getSwapCoinClient(swapCoin)->getAvailable() > total;
 }
 
 bool ReceiveSwapViewModel::isSendFeeOK() const
@@ -484,24 +462,6 @@ void ReceiveSwapViewModel::publishToken()
     }
 }
 
-namespace
-{
-    beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(Currency currency)
-    {
-        switch (currency)
-        {
-        case Currency::CurrBitcoin:
-            return beam::wallet::AtomicSwapCoin::Bitcoin;
-        case Currency::CurrLitecoin:
-            return beam::wallet::AtomicSwapCoin::Litecoin;
-        case Currency::CurrQtum:
-            return beam::wallet::AtomicSwapCoin::Qtum;
-        default:
-            return beam::wallet::AtomicSwapCoin::Unknown;
-        }
-    }
-}
-
 void ReceiveSwapViewModel::updateTransactionToken()
 {
     emit enoughChanged();
@@ -509,7 +469,7 @@ void ReceiveSwapViewModel::updateTransactionToken()
     emit isReceiveFeeOKChanged();
 
     _isBeamSide = (_sentCurrency == Currency::CurrBeam);
-    auto swapCoin   = convertCurrencyToSwapCoin(
+    auto swapCoin   = QMLGlobals::convertCurrencyToSwapCoin(
         _isBeamSide ? _receiveCurrency : _sentCurrency);
     auto beamAmount =
         _isBeamSide ? _amountSentGrothes : _amountToReceiveGrothes;

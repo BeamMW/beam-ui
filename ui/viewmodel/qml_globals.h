@@ -16,6 +16,7 @@
 #include <QObject>
 #include <QQmlApplicationEngine>
 #include "currencies.h"
+#include "wallet/transactions/swaps/common.h"
 
 class QMLGlobals : public QObject
 {
@@ -39,6 +40,8 @@ public:
     static bool isFeeOK(unsigned int fee, Currency currency, bool isShielded);
     static bool isSwapFeeOK(unsigned int amount, unsigned int fee, Currency currency);
     static int  getMinFeeOrRate(Currency currency);
+    static beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(Currency currency);
+    static Currency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin);
     Q_INVOKABLE static QString calcTotalFee(Currency currency, unsigned int feeRate);
     Q_INVOKABLE static QString calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyLabel);
     Q_INVOKABLE static QString calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel);
@@ -56,12 +59,9 @@ public:
 
     // Swap & other currencies utils
     Q_INVOKABLE static bool canSwap();
-    Q_INVOKABLE static bool haveBtc();
-    Q_INVOKABLE static bool haveLtc();
-    Q_INVOKABLE static bool haveQtum();
+    Q_INVOKABLE static bool haveSwapClient(Currency);
 
-    Q_INVOKABLE static QString rawTxParametrsToTokenStr(
-            const QVariant& variantTxParams);
+    Q_INVOKABLE static QString rawTxParametrsToTokenStr(const QVariant& variantTxParams);
 
     Q_INVOKABLE static bool canReceive(Currency currency);
     Q_INVOKABLE static QString divideWithPrecision8(const QString& dividend, const QString& divider);

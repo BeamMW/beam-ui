@@ -2731,5 +2731,85 @@ Your version is: %2. Please, check for updates.</source>
         <source>Show address</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="dogecoin-show-seed-phrase">
+        <source>Dogecoin seed phrase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="bitcoin-cash-show-seed-phrase">
+        <source>Bitcoin Cash seed phrase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="bitcoin-sv-show-seed-phrase">
+        <source>Bitcoin SV seed phrase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dash-show-seed-phrase">
+        <source>Dash seed phrase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dogecoin-show-addresses-title">
+        <source>Dogecoin wallet addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="bitcoin-cash-show-addresses-title">
+        <source>Bitcoin Cash wallet addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="bitcoin-sv-show-addresses-title">
+        <source>Bitcoin SV wallet addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dash-show-addresses-title">
+        <source>Dash wallet addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-dogecoin">
+        <source>Dogecoin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-bitcoin-cash">
+        <source>Bitcoin Cash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-bitcoin-sv">
+        <source>Bitcoin SV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-dash">
+        <source>DASH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-dogecoin-node">
+        <source>Dogecoin node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-bitcoin-cash-node">
+        <source>Bitcoin Cash node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-bitcoin-sv-node">
+        <source>Bitcoin SV node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-dash-node">
+        <source>Dash node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-dogecoin-electrum">
+        <source>Dogecoin electrum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-bitcoin-cash-electrum">
+        <source>Bitcoin Cash electrum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-bitcoin-sv-electrum">
+        <source>Bitcoin SV electrum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-dash-electrum">
+        <source>Dash electrum</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
