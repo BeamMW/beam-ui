@@ -440,7 +440,7 @@ SettingsFoldable {
                 color:              Style.content_main
                 readOnly:           useRandomNode.checked
                 underlineVisible:   !useRandomNode.checked
-                validator:          RegExpValidator {regExp: /^([1-9]|[1-5]?[0-9]{2,4}|6[1-4][0-9]{3}|65[1-4][0-9]{2}|655[1-2][0-9]|6553[1-5])$/g}
+                validator:          RegExpValidator {regExp: /^([1-9][0-9]{0,3}|[1-5][0-9]{2,4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/g}
             }
         }
 
@@ -904,7 +904,7 @@ generate new or edit existing seed phrase."
 
                                 Connections {
                                     target: modelData
-                                    onValueChanged: {
+                                    function onValueChanged() {
                                         seedPhraseDialog.updateIsSeedChanged();
                                         seedPhraseDialog.validateFullSeedPhrase()
                                         seedPhraseDialog.updateIsAllWordsAllowed()

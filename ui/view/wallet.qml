@@ -64,11 +64,11 @@ Item {
         }
         Connections {
             target: tokenDuplicateChecker.model
-            onTokenPreviousAccepted: function(token) {
+            function onTokenPreviousAccepted(token) {
                 tokenDuplicateChecker.isOwn = false;
                 tokenDuplicateChecker.open();
             }
-            onTokenFirstTimeAccepted: function(token) {
+            function onTokenFirstTimeAccepted(token) {
                 walletStackView.pop();
                 walletStackView.push(Qt.createComponent("send_swap.qml"),
                                      {
@@ -78,7 +78,7 @@ Item {
                                      });
                 walletStackView.currentItem.validateCoin();
             }
-            onTokenOwnGenerated: function(token) {
+            function onTokenOwnGenerated(token) {
                 tokenDuplicateChecker.isOwn = true;
                 tokenDuplicateChecker.open();
             }
@@ -689,7 +689,7 @@ Item {
                     }
                     Connections {
                         target: deleteTransactionDialog
-                        onAccepted: {
+                        function onAccepted() {
                             viewModel.deleteTx(txContextMenu.txID);
                         }
                     }

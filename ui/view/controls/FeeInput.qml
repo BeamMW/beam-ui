@@ -48,6 +48,7 @@ ColumnLayout {
                 control.fee = text ? parseInt(text) : 0
                 feeInput.text = control.fee
             }
+
             onActiveFocusChanged: {
                 text = formatFee()
                 if (activeFocus) cursorPosition = positionAt(feeInput.getMousePos().x, feeInput.getMousePos().y)
@@ -55,11 +56,14 @@ ColumnLayout {
 
             Connections {
                 target: control
-                onFeeChanged: feeInput.text = feeInput.formatFee()
-                Component.onCompleted: feeInput.text = feeInput.formatFee()
-                onCurrencyChanged: {
+                function onFeeChanged() {
+                    feeInput.text = feeInput.formatFee()
+                }
+                function onCurrencyChanged() {
                     control.fee = BeamGlobals.getDefaultFee(control.currency)
                 }
+
+                Component.onCompleted: feeInput.text = feeInput.formatFee()
             }
         }
 
@@ -128,7 +132,7 @@ ColumnLayout {
         wrapMode:              Text.WordWrap
         color:                 Style.validator_error
         lineHeight:            1.1
-/*% "Connection error: can’t calculate the recommended fee rate. 
+/*% "Connection error: canï¿½t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete. "
 */
