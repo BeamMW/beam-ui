@@ -270,7 +270,8 @@ RowLayout {
             copyMenuEnabled: true
             font.pixelSize: 14
             color: Style.content_main
-            elide: Text.ElideMiddle
+            wrapMode: Text.Wrap
+            elide: Text.ElideRight
             text: root.secondCurrencyAmount
             onCopyText: textCopied(secondCurrencyAmountField.text)
             visible: isTextFieldVisible(secondCurrencyAmountField.text) && root.secondCurrencyLabel != ""
