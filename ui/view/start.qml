@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 1.2
+import QtQuick.Controls 1.4
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
@@ -419,9 +419,7 @@ Item
 
         Component {
             id: selectWalletDBView
-            Rectangle
-            {
-                color: Style.background_main
+            Item {
                 function next() {
                     if (nextButton.enabled) {
                         nextButton.clicked();
@@ -434,7 +432,14 @@ Item
                     next();
                 }
 
+                Rectangle {
+                    id: selectBackground
+                    color: Style.background_main
+                    anchors.fill: parent
+                }
+
                 ColumnLayout {
+                    id: selectDBColumn
                     anchors.fill: parent
                     anchors.topMargin: 50
 
@@ -449,6 +454,7 @@ Item
 
                     CustomTableView {
                         id: tableView
+                        mainBackgroundRect: selectBackground
                         property int rowHeight: 44
                         property int minWidth: 894
                         property int textLeftMargin: 20
@@ -461,27 +467,10 @@ Item
                         Layout.maximumHeight: headerHeight + 5*rowHeight
                         Layout.minimumWidth: minWidth
                         Layout.maximumWidth: minWidth
-
                         frameVisible: false
                         selectionMode: SelectionMode.SingleSelection
                         backgroundVisible: false
                         model: viewModel.walletDBpaths
-
-                        headerDelegate: Rectangle {
-                            height: tableView.headerHeight
-                            color: Style.background_second
-
-                            SFLabel {
-                                anchors.verticalCenter: parent.verticalCenter
-                                anchors.left: parent.left
-                                anchors.leftMargin: tableView.textLeftMargin
-                                horizontalAlignment: Qt.AlignHCenter
-                                font.pixelSize: tableView.headerTextFontSize
-                                color: Style.content_secondary
-                                font.weight: Font.Normal
-                                text: styleData.value
-                            }
-                        }
 
                         TableViewColumn {
                             role: "fullPath"
@@ -576,8 +565,9 @@ Item
                         }
 
                         TableViewColumn {
+                            id: actionColumn
                             role: "fullPath"
-                            width: 150
+                            width: tableView.getAdjustedColumnWidth(actionColumn)
                             movable: false
                             delegate: Item {
                                 width: parent.width
@@ -689,8 +679,8 @@ Item
 
                     Item {
                         Layout.fillHeight: true
-                        Layout.minimumHeight: Utils.isSqueezedHeight(migrateColumn.height) ? 40 : 60
-                        Layout.maximumHeight: Utils.isSqueezedHeight(migrateColumn.height) ? 70 : 90
+                        Layout.minimumHeight: Utils.isSqueezedHeight(selectDBColumn.height) ? 40 : 60
+                        Layout.maximumHeight: Utils.isSqueezedHeight(selectDBColumn.height) ? 70 : 90
                     }
 
                     SFText {

@@ -362,6 +362,8 @@ if(BEAM_USE_STATIC)
             "-framework Carbon"
             "-framework Cocoa"
             "-framework IOKit"
+            "-framework IOSurface"
+            "-framework Metal"
             "-framework QuartzCore"
             "-framework Security"
             "-framework SystemConfiguration"

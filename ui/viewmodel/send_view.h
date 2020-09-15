@@ -176,7 +176,7 @@ private:
     bool _isShieldedTx = false;
     bool _isNeedExtractShieldedCoins = false;
     beam::Amount _minimalFeeGrothes;
-    beam::Amount _shieldedFee;
+    beam::Amount _shieldedInputsFee;
     bool _feeChangedByUi = false;
     bool _maxAvailable = false;
 };

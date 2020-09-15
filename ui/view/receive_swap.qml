@@ -218,7 +218,7 @@ please review your settings and try again"
                         content: FeeInput {
                             id:                         sendFeeInput
                             currency:                   viewModel.sentCurrency
-                            minFee:                     BeamGlobals.getMinimalFee(viewModel.sentCurrency, false)
+                            minFee:                     currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(viewModel.sentCurrency, false)
                             recommendedFee:             BeamGlobals.getRecommendedFee(viewModel.sentCurrency)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(viewModel.sentCurrency)
                             color:                      Style.accent_outgoing
@@ -242,7 +242,9 @@ please review your settings and try again"
 
                         Connections {
                             target: viewModel
-                            onSentFeeChanged: sendFeeInput.fee = viewModel.sentFee
+                            function onSentFeeChanged() {
+                                sendFeeInput.fee = viewModel.sentFee
+                            }
                         }
                     }
 
@@ -467,7 +469,9 @@ please review your settings and try again"
 
                         Connections {
                             target: viewModel
-                            onReceiveFeeChanged: receiveFeeInput.fee = viewModel.receiveFee
+                            function onReceiveFeeChanged() {
+                                receiveFeeInput.fee = viewModel.receiveFee
+                            }
                         }
                     }
                     //

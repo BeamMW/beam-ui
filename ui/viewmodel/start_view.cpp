@@ -498,6 +498,7 @@ void StartViewModel::setIsRecoveryMode(bool value)
     if (value != m_isRecoveryMode)
     {
         m_isRecoveryMode = value;
+        qDeleteAll(m_recoveryPhrases);
         m_recoveryPhrases.clear();
         emit isRecoveryModeChanged();
     }
@@ -584,9 +585,9 @@ QString StartViewModel::getLocalNodePeer() const
     return !peers.empty() ? peers.first() : "";
 }
 
-QQmlListProperty<WalletDBPathItem> StartViewModel::getWalletDBpaths()
+const QList<QObject*>& StartViewModel::getWalletDBpaths()
 {
-    return QQmlListProperty<WalletDBPathItem>(this, m_walletDBpaths);
+    return *&m_walletDBpaths;
 }
 
 bool StartViewModel::isCapsLockOn() const
@@ -704,8 +705,10 @@ void StartViewModel::printRecoveryPhrases(QVariant viewData )
 
 void StartViewModel::resetPhrases()
 {
+    qDeleteAll(m_recoveryPhrases);
     m_recoveryPhrases.clear();
     m_generatedPhrases.clear();
+    qDeleteAll(m_checkPhrases);
     m_checkPhrases.clear();
     emit recoveryPhrasesChanged();
 }
@@ -791,6 +794,7 @@ void StartViewModel::findExistingWalletDB()
         walletDBs.insert(std::end(walletDBs), std::begin(additionnalWalletDBs), std::end(additionnalWalletDBs));
     }
 
+    QList<WalletDBPathItem*> walletDBpaths;
     for (auto& walletDBPath : walletDBs)
     {
 #ifdef WIN32
@@ -801,7 +805,7 @@ void StartViewModel::findExistingWalletDB()
         QString absoluteFilePath = fileInfo.absoluteFilePath();
         bool isDefaultLocated = absoluteFilePath.contains(
             QString::fromStdString(defaultAppDataPath));
-        m_walletDBpaths.push_back(new WalletDBPathItem(
+        walletDBpaths.push_back(new WalletDBPathItem(
                 absoluteFilePath,
                 fileInfo.size(),
                 fileInfo.lastModified(),
@@ -809,7 +813,7 @@ void StartViewModel::findExistingWalletDB()
                 isDefaultLocated));
     }
 
-    std::sort(m_walletDBpaths.begin(), m_walletDBpaths.end(),
+    std::sort(walletDBpaths.begin(), walletDBpaths.end(),
               [] (WalletDBPathItem* left, WalletDBPathItem* right) {
                   if (left->locatedByDefault() && !right->locatedByDefault()) {
                       return false;
@@ -817,9 +821,10 @@ void StartViewModel::findExistingWalletDB()
                   return left->getLastWriteDate() > right->getLastWriteDate();
               });
 
-    if (!m_walletDBpaths.empty()) {
-        m_walletDBpaths.first()->setPreferred();
+    if (!walletDBpaths.empty()) {
+        walletDBpaths.first()->setPreferred();
     }
+    std::copy(walletDBpaths.begin(), walletDBpaths.end(), std::back_inserter(m_walletDBpaths));
 }
 
 bool StartViewModel::isFindExistingWalletDB()

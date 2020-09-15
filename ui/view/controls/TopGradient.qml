@@ -6,8 +6,8 @@ Item {
     property var mainRoot
     property color topColor
 
-    property color mainTopColor: null
-    property color mainTopGradientColor: null
+    property var mainTopColor: null
+    property var mainTopGradientColor: null
 
     Component.onCompleted: {
         mainTopColor = mainRoot.topColor;
