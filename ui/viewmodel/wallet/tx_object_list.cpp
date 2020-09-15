@@ -299,6 +299,8 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             r.append(value->getSenderIdentity());
             r.append(" ");
             r.append(value->getReceiverIdentity());
+            r.append(" ");
+            r.append(value->getToken());
             return r;
         }
         case Roles::StateDetails:

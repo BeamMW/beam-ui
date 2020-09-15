@@ -29,7 +29,8 @@ RowLayout {
     property string secondCurrencyLabel
     property string searchFilter: ""
     property bool hideFiltered: false
-    property var searchRegExp: function() { return new RegExp(root.searchFilter, "gi");}
+    property var searchRegExp: new RegExp("("+root.searchFilter+")", "gi")
+    property var searchRegExp2:  new RegExp("("+root.searchFilter+")", "i")
     property string transactionType
     property string tokenType
     property bool isMaxPrivacy
@@ -51,20 +52,19 @@ RowLayout {
 
     function isTextFieldVisible(text) {
         return isFieldVisible()
-        || (root.searchFilter.length > 0 && text.search(root.searchFilter) >= 0);
+        || (root.searchFilter.length > 0 && text.search(root.searchRegExp2) >= 0);
     }
 
     function getHighlitedText(text) {
+        
         if (root.searchFilter.length == 0)
             return text;
 
-        var start = text.search(root.searchFilter);
+        var start = text.search(root.searchRegExp2);
         if (start == -1)
             return text;
 
-        var s = text.substr(start, root.searchFilter.length);
-        
-        return text.replace(root.searchRegExp, "<font color=\"" + Style.active.toString() + "\">" + s + "</font>");
+        return text.replace(root.searchRegExp, '<font color="' + Style.active.toString() + '">$1</font>');
     }
 
     function getAmountInSecondCurrency() {
@@ -93,7 +93,7 @@ RowLayout {
         return true;
     }
 
-    property bool hasToken: token.length > 0 && isTextFieldVisible(token)
+    property bool hasToken: token.length > 0 
 
     GridLayout {
         Layout.fillWidth: true
@@ -165,15 +165,16 @@ RowLayout {
             visible: receiveAddressField.visible
         }
         SFLabel {
+            property var receiveAddressOrToken : hasToken ? root.token : root.receiveAddress
             id: receiveAddressField
             Layout.fillWidth: true
             copyMenuEnabled: true
             font.pixelSize: 14
             color: Style.content_main
             elide: Text.ElideMiddle
-            text: getHighlitedText(hasToken ? root.token : root.receiveAddress)
-            onCopyText: textCopied(hasToken ? root.token : root.receiveAddress)
-            visible: hasToken || (isTextFieldVisible(root.receiveAddress) && root.receiveAddress.length)
+            text: getHighlitedText(receiveAddressOrToken)
+            onCopyText: textCopied(receiveAddressOrToken)
+            visible: receiveAddressOrToken.length && isTextFieldVisible(receiveAddressOrToken)
         }
 
         SFText {
