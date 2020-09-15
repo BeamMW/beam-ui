@@ -105,11 +105,10 @@ auto SwapTxObjectList::data(const QModelIndex &index, int role) const -> QVarian
 
         case Roles::AmountGeneralWithCurrency:
             return value->getAmountWithCurrency();
-        case Roles::AmountGeneralWithCurrencySort:
-            return static_cast<qulonglong>(value->getAmountValue());
         case Roles::AmountGeneral:
             return value->getAmount();
         case Roles::AmountGeneralSort:
+        case Roles::AmountGeneralWithCurrencySort:
             return static_cast<qulonglong>(value->getAmountValue());
 
         case Roles::AddressFrom:
@@ -202,24 +201,18 @@ auto SwapTxObjectList::data(const QModelIndex &index, int role) const -> QVarian
             
         case Roles::AmountSendWithCurrency:
             return value->getSentAmountWithCurrency();
-        case Roles::AmountSendWithCurrencySort:
-            return value->isBeamSideSwap()
-                ? static_cast<qulonglong>(value->getSentAmountValue())
-                : static_cast<qulonglong>(value->getReceivedAmountValue());
         case Roles::AmountSend:
             return value->getSentAmount();
         case Roles::AmountSendSort:
+        case Roles::AmountSendWithCurrencySort:
             return static_cast<qulonglong>(value->getSentAmountValue());
 
         case Roles::AmountReceiveWithCurrency:
             return value->getReceivedAmountWithCurrency();
-        case Roles::AmountReceiveWithCurrencySort:
-            return value->isBeamSideSwap()
-                    ? static_cast<qulonglong>(value->getSentAmountValue())
-                    : static_cast<qulonglong>(value->getReceivedAmountValue());
         case Roles::AmountReceive:
             return value->getReceivedAmount();
         case Roles::AmountReceiveSort:
+        case Roles::AmountReceiveWithCurrencySort:
             return static_cast<qulonglong>(value->getReceivedAmountValue());
 
         case Roles::Token:
