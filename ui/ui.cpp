@@ -138,7 +138,7 @@ int main (int argc, char* argv[])
             if (t.dirName() == "MacOS" && t.cdUp() && t.dirName() == "Contents" && t.cdUp())
             {
                 t.cdUp(); // Go up to the bundle parent directory
-                QDir::setCurrent(t.currentPath());
+                QDir::setCurrent(t.absolutePath());
             }
             
 #endif
