@@ -134,7 +134,13 @@ int main (int argc, char* argv[])
         try
         {
 #ifdef Q_OS_DARWIN // on Big Sur we have broken current dir, let's restore it
-            QDir::setCurrent(app.applicationDirPath());
+            QDir t = app.applicationDirPath();
+            if (t.dirName() == "MacOS" && t.cdUp() && t.dirName() == "Contents" && t.cdUp())
+            {
+                t.cdUp(); // Go up to the bundle parent directory
+                QDir::setCurrent(t.currentPath());
+            }
+            
 #endif
             vm = getOptions(argc, argv, WalletSettings::WalletCfg, options, true);
         }
