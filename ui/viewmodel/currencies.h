@@ -13,6 +13,7 @@
 // limitations under the License.
 #pragma once
 #include <QObject>
+#include "ui_helpers.h"
 
 class WalletCurrency: public QObject
 {
@@ -20,11 +21,10 @@ class WalletCurrency: public QObject
 public:
     enum class Currency {
         CurrStart = -1,
-        CurrBeam  = 0,
-        CurrBtc   = 1,
-        CurrLtc   = 2,
-        CurrQtum  = 3,
-        CurrEnd   = 4
+#define MACRO(name, label, slabel, subunut, feeLabel, dec) Curr##name,
+        CURRENCY_MAP(MACRO)
+#undef MACRO
+        CurrEnd
     };
     Q_ENUMS(Currency)
 };

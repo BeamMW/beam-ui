@@ -46,6 +46,7 @@ public:
 #if defined(BEAM_HW_WALLET)
     bool createTrezorWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper);
     std::shared_ptr<beam::wallet::HWWallet> getHardwareWalletClient() const;
+    beam::io::Reactor::Ptr getWalletReactor() const;
 #endif
 
     bool openWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper = {});
@@ -55,6 +56,8 @@ public:
     void applySettingsChanges();
     void nodeSettingsChanged();
     void resetWallet();
+    bool exportData();
+    bool importData();
 
     WalletModel::Ptr getWallet() const;
     WalletSettings& getSettings() const;

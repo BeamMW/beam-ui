@@ -29,8 +29,10 @@
 #include "viewmodel/utxo/utxo_view_status.h"
 #include "viewmodel/utxo/utxo_view_type.h"
 #include "viewmodel/atomic_swap/swap_offers_view.h"
+#include "viewmodel/atomic_swap/swap_token_item.h"
 #include "viewmodel/address_book_view.h"
 #include "viewmodel/wallet/wallet_view.h"
+#include "viewmodel/wallet/token_item.h"
 #include "viewmodel/help_view.h"
 #include "viewmodel/settings_view.h"
 #include "viewmodel/messages_view.h"
@@ -103,7 +105,7 @@ int main (int argc, char* argv[])
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
     block_sigpipe();
-
+    //QLoggingCategory::setFilterRules(QStringLiteral("qt.qml.binding.removal.info=true"));
     QApplication app(argc, argv);
 
 	app.setWindowIcon(QIcon(Theme::iconPath()));
@@ -131,6 +133,15 @@ int main (int argc, char* argv[])
 
         try
         {
+#ifdef Q_OS_DARWIN // on Big Sur we have broken current dir, let's restore it
+            QDir t = app.applicationDirPath();
+            if (t.dirName() == "MacOS" && t.cdUp() && t.dirName() == "Contents" && t.cdUp())
+            {
+                t.cdUp(); // Go up to the bundle parent directory
+                QDir::setCurrent(t.absolutePath());
+            }
+            
+#endif
             vm = getOptions(argc, argv, WalletSettings::WalletCfg, options, true);
         }
         catch (const po::error& e)
@@ -246,8 +257,10 @@ int main (int argc, char* argv[])
             qmlRegisterType<WalletDBPathItem>("Beam.Wallet", 1, 0, "WalletDBPathItem");
             qmlRegisterType<SwapOfferItem>("Beam.Wallet", 1, 0, "SwapOfferItem");
             qmlRegisterType<SwapOffersList>("Beam.Wallet", 1, 0, "SwapOffersList");
+            qmlRegisterType<SwapTokenInfoItem>("Beam.Wallet", 1, 0, "SwapTokenInfoItem");
             qmlRegisterType<SwapTxObjectList>("Beam.Wallet", 1, 0, "SwapTxObjectList");
             qmlRegisterType<TxObjectList>("Beam.Wallet", 1, 0, "TxObjectList");
+            qmlRegisterType<TokenInfoItem>("Beam.Wallet", 1, 0, "TokenInfoItem");
             
             qmlRegisterType<TokenBootstrapManager>("Beam.Wallet", 1, 0, "TokenBootstrapManager");
             qmlRegisterType<PushNotificationManager>("Beam.Wallet", 1, 0, "PushNotificationManager");
@@ -259,7 +272,7 @@ int main (int argc, char* argv[])
 
             if (engine.rootObjects().count() < 1)
             {
-                LOG_ERROR() << "Probmlem with QT";
+                LOG_ERROR() << "Problem with QT";
                 return -1;
             }
 
@@ -268,7 +281,7 @@ int main (int argc, char* argv[])
 
             if (!window)
             {
-                LOG_ERROR() << "Probmlem with QT";
+                LOG_ERROR() << "Problem with QT";
                 return -1;
             }
 

@@ -31,6 +31,7 @@ public:
         beam::io::Reactor& reactor);
 
     beam::Amount getAvailable();
+    beam::Amount getEstimatedFeeRate();
     beam::bitcoin::Client::Status getStatus() const;
     bool canModifySettings() const;
     beam::bitcoin::IBridge::ErrorType getConnectionError() const;
@@ -38,31 +39,38 @@ public:
 signals:
     void gotStatus(beam::bitcoin::Client::Status status);
     void gotBalance(const beam::bitcoin::Client::Balance& balance);
+    void gotEstimatedFeeRate(beam::Amount estimatedFeeRate);
     void gotCanModifySettings(bool canModify);
     void gotConnectionError(const beam::bitcoin::IBridge::ErrorType& error);
 
     void canModifySettingsChanged();
     void balanceChanged();
+    void estimatedFeeRateChanged();
     void statusChanged();
     void connectionErrorChanged();
 
 private:
     void OnStatus(Status status) override;
     void OnBalance(const Client::Balance& balance) override;
+    void OnEstimatedFeeRate(beam::Amount feeRate) override;
     void OnCanModifySettingsChanged(bool canModify) override;
     void OnChangedSettings() override;
     void OnConnectionError(beam::bitcoin::IBridge::ErrorType error) override;
 
 private slots:
     void requestBalance();
+    void requestEstimatedFeeRate();
     void setBalance(const beam::bitcoin::Client::Balance& balance);
+    void setEstimatedFeeRate(const beam::Amount estimatedFeeRate);
     void setStatus(beam::bitcoin::Client::Status status);
     void setCanModifySettings(bool canModify);
     void setConnectionError(beam::bitcoin::IBridge::ErrorType error);
 
 private:
-    QTimer m_timer;
+    QTimer m_balanceTimer;
+    QTimer m_feeRateTimer;
     Client::Balance m_balance;
+    beam::Amount m_estimatedFeeRate = 0;
     Status m_status = Status::Unknown;
     bool m_canModifySettings = true;
     beam::bitcoin::IBridge::ErrorType m_connectionError = beam::bitcoin::IBridge::ErrorType::None;

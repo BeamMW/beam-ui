@@ -127,6 +127,20 @@ QString ContactItem::getIdentity() const
     return QString();
 }
 
+QString ContactItem::getToken() const
+{
+    using namespace beam::wallet;
+    TxParameters params;
+    params.SetParameter(TxParameterID::TransactionType, TxType::Simple);
+    params.SetParameter(TxParameterID::PeerID, m_walletAddress.m_walletID);
+    if (m_walletAddress.m_Identity != Zero)
+    {
+        params.SetParameter(TxParameterID::PeerWalletIdentity, m_walletAddress.m_Identity);
+    }
+    params.SetParameter(TxParameterID::IsPermanentPeerID, m_walletAddress.isPermanent());
+    return QString::fromStdString(std::to_string(params));
+}
+
 AddressBookViewModel::AddressBookViewModel()
     : m_model{*AppModel::getInstance().getWallet()}
 {
@@ -207,20 +221,29 @@ Qt::SortOrder AddressBookViewModel::contactSortOrder() const
 
 void AddressBookViewModel::setActiveAddrSortOrder(Qt::SortOrder value)
 {
-    m_activeAddrSortOrder = value;
-    sortActiveAddresses();
+    if (m_activeAddrSortOrder != value)
+    {
+        m_activeAddrSortOrder = value;
+        sortActiveAddresses();
+    }
 }
 
 void AddressBookViewModel::setExpiredAddrSortOrder(Qt::SortOrder value)
 {
-    m_expiredAddrSortOrder = value;
-    sortExpiredAddresses();
+    if (m_expiredAddrSortOrder != value)
+    {
+        m_expiredAddrSortOrder = value;
+        sortExpiredAddresses();
+    }
 }
 
 void AddressBookViewModel::setContactSortOrder(Qt::SortOrder value)
 {
-    m_contactSortOrder = value;
-    sortContacts();
+    if (m_contactSortOrder != value)
+    {
+        m_contactSortOrder = value;
+        sortContacts();
+    }
 }
 
 QString AddressBookViewModel::activeAddrSortRole() const
@@ -240,20 +263,29 @@ QString AddressBookViewModel::contactSortRole() const
 
 void AddressBookViewModel::setActiveAddrSortRole(QString value)
 {
-    m_activeAddrSortRole = value;
-    sortActiveAddresses();
+    if (m_activeAddrSortRole != value)
+    {
+        m_activeAddrSortRole = value;
+        sortActiveAddresses();
+    }
 }
 
 void AddressBookViewModel::setExpiredAddrSortRole(QString value)
 {
-    m_expiredAddrSortRole = value;
-    sortExpiredAddresses();
+    if (m_expiredAddrSortRole != value)
+    {
+        m_expiredAddrSortRole = value;
+        sortExpiredAddresses();
+    }
 }
 
 void AddressBookViewModel::setContactSortRole(QString value)
 {
-    m_contactSortRole = value;
-    sortContacts();
+    if (m_contactSortRole != value)
+    {
+        m_contactSortRole = value;
+        sortContacts();
+    }
 }
 
 bool AddressBookViewModel::isAddressBusy(const QString& addr)

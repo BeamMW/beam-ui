@@ -36,8 +36,8 @@ Dialog {
     y: (parent.height - height) / 2
     visible: false
     
-    leftPadding: 32
-    rightPadding: 32
+    leftPadding: 30
+    rightPadding: 30
 
     background: Rectangle {
         radius: 10

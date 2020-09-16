@@ -22,25 +22,29 @@ class NotificationsSettings : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool    isNewVersionActive  READ isNewVersionActive  WRITE setNewVersionActive  NOTIFY newVersionActiveChanged)
-    Q_PROPERTY(bool    isBeamNewsActive    READ isBeamNewsActive    WRITE setBeamNewsActive    NOTIFY beamNewsActiveChanged)
-    Q_PROPERTY(bool    isTxStatusActive    READ isTxStatusActive    WRITE setTxStatusActive    NOTIFY txStatusActiveChanged)
+    Q_PROPERTY(bool    isNewVersionActive           READ isNewVersionActive         WRITE setNewVersionActive           NOTIFY newVersionActiveChanged)
+    Q_PROPERTY(bool    isBeamNewsActive             READ isBeamNewsActive           WRITE setBeamNewsActive             NOTIFY beamNewsActiveChanged)
+    Q_PROPERTY(bool    isTxStatusActive             READ isTxStatusActive           WRITE setTxStatusActive             NOTIFY txStatusActiveChanged)
+    Q_PROPERTY(bool    isAddressExpirationActive    READ isAddressExpirationActive  WRITE setAddressExpirationActive    NOTIFY addressExpirationActiveChanged)
 
 public:
     NotificationsSettings(WalletSettings&);
 
-    bool isNewVersionActive();
-    bool isBeamNewsActive();
-    bool isTxStatusActive();
+    bool isNewVersionActive() const;
+    bool isBeamNewsActive() const;
+    bool isTxStatusActive() const;
+    bool isAddressExpirationActive() const;
 
     void setNewVersionActive(bool);
     void setBeamNewsActive(bool);
     void setTxStatusActive(bool);
+    void setAddressExpirationActive(bool);
 
 signals:
     void newVersionActiveChanged();
     void beamNewsActiveChanged();
     void txStatusActiveChanged();
+    void addressExpirationActiveChanged();
 
 public slots:
     void loadFromStorage();

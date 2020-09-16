@@ -24,30 +24,36 @@ using namespace beam;
 
 namespace
 {
-    const int kUpdateInterval = 10000;
+    const int kBalanceUpdateInterval = 10 * 1000; // 10 seconds
+    const int kFeeRateUpdateInterval = 60 * 1000; // 1 minute
 }
 
 SwapCoinClientModel::SwapCoinClientModel(beam::bitcoin::IBridgeHolder::Ptr bridgeHolder,
     std::unique_ptr<beam::bitcoin::SettingsProvider> settingsProvider,
     io::Reactor& reactor)
     : bitcoin::Client(bridgeHolder, std::move(settingsProvider), reactor)
-    , m_timer(this)
+    , m_balanceTimer(this)
+    , m_feeRateTimer(this)
 {
     qRegisterMetaType<beam::bitcoin::Client::Status>("beam::bitcoin::Client::Status");
     qRegisterMetaType<beam::bitcoin::Client::Balance>("beam::bitcoin::Client::Balance");
     qRegisterMetaType<beam::bitcoin::IBridge::ErrorType>("beam::bitcoin::IBridge::ErrorType");
 
-    connect(&m_timer, SIGNAL(timeout()), this, SLOT(requestBalance()));
+    connect(&m_balanceTimer, SIGNAL(timeout()), this, SLOT(requestBalance()));
+    connect(&m_feeRateTimer, SIGNAL(timeout()), this, SLOT(requestEstimatedFeeRate()));
 
     // connect to myself for save values in UI(main) thread
     connect(this, SIGNAL(gotBalance(const beam::bitcoin::Client::Balance&)), this, SLOT(setBalance(const beam::bitcoin::Client::Balance&)));
+    connect(this, SIGNAL(gotEstimatedFeeRate(beam::Amount)), this, SLOT(setEstimatedFeeRate(beam::Amount)));
     connect(this, SIGNAL(gotStatus(beam::bitcoin::Client::Status)), this, SLOT(setStatus(beam::bitcoin::Client::Status)));
     connect(this, SIGNAL(gotCanModifySettings(bool)), this, SLOT(setCanModifySettings(bool)));
     connect(this, SIGNAL(gotConnectionError(beam::bitcoin::IBridge::ErrorType)), this, SLOT(setConnectionError(beam::bitcoin::IBridge::ErrorType)));
 
     requestBalance();
+    requestEstimatedFeeRate();
 
-    m_timer.start(kUpdateInterval);
+    m_balanceTimer.start(kBalanceUpdateInterval);
+    m_feeRateTimer.start(kFeeRateUpdateInterval);
 
     GetAsync()->GetStatus();
 }
@@ -55,6 +61,11 @@ SwapCoinClientModel::SwapCoinClientModel(beam::bitcoin::IBridgeHolder::Ptr bridg
 beam::Amount SwapCoinClientModel::getAvailable()
 {
     return m_balance.m_available;
+}
+
+beam::Amount SwapCoinClientModel::getEstimatedFeeRate()
+{
+    return m_estimatedFeeRate;
 }
 
 void SwapCoinClientModel::OnStatus(Status status)
@@ -82,6 +93,11 @@ void SwapCoinClientModel::OnBalance(const bitcoin::Client::Balance& balance)
     emit gotBalance(balance);
 }
 
+void SwapCoinClientModel::OnEstimatedFeeRate(Amount feeRate)
+{
+    emit gotEstimatedFeeRate(feeRate);
+}
+
 void SwapCoinClientModel::OnCanModifySettingsChanged(bool canModify)
 {
     emit gotCanModifySettings(canModify);
@@ -90,6 +106,7 @@ void SwapCoinClientModel::OnCanModifySettingsChanged(bool canModify)
 void SwapCoinClientModel::OnChangedSettings()
 {
     requestBalance();
+    requestEstimatedFeeRate();
 }
 
 void SwapCoinClientModel::OnConnectionError(beam::bitcoin::IBridge::ErrorType error)
@@ -106,12 +123,30 @@ void SwapCoinClientModel::requestBalance()
     }
 }
 
+void SwapCoinClientModel::requestEstimatedFeeRate()
+{
+    if (GetSettings().IsActivated())
+    {
+        // update estimated fee rate
+        GetAsync()->EstimateFeeRate();
+    }
+}
+
 void SwapCoinClientModel::setBalance(const beam::bitcoin::Client::Balance& balance)
 {
     if (m_balance != balance)
     {
         m_balance = balance;
         emit balanceChanged();
+    }
+}
+
+void SwapCoinClientModel::setEstimatedFeeRate(const beam::Amount estimatedFeeRate)
+{
+    if (m_estimatedFeeRate != estimatedFeeRate)
+    {
+        m_estimatedFeeRate = estimatedFeeRate;
+        emit estimatedFeeRateChanged();
     }
 }
 

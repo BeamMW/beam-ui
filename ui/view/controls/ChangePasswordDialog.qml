@@ -121,7 +121,7 @@ Dialog {
 			SFText {
 				id: error
 				color: Style.validator_error
-				font.pixelSize: 10
+				font.pixelSize: 12
 			}			
 		}    	
 
@@ -154,6 +154,11 @@ Dialog {
 						//% "Please, confirm new password"
 						error.text = qsTrId("change-pwd-confirm-empty");
 					}
+					else if(!settingsViewModel.checkWalletPassword(oldPass.text))
+					{
+						//% "The old password you have entered is incorrect"
+						error.text = qsTrId("change-pwd-old-fail");
+					}
 					else if(newPass.text == oldPass.text)
 					{
 						//% "New password cannot be the same as old"
@@ -163,11 +168,6 @@ Dialog {
 					{
 						//% "New password doesn't match the confirm password"
 						error.text = qsTrId("change-pwd-confirm-fail");
-					}
-					else if(!settingsViewModel.checkWalletPassword(oldPass.text))
-					{
-						//% "The old password you have entered is incorrect"
-						error.text = qsTrId("change-pwd-old-fail");
 					}
 					else
 					{

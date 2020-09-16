@@ -233,10 +233,14 @@ bool WalletDBPathItem::isPreferred() const
 StartViewModel::StartViewModel()
     : m_isRecoveryMode{false}
 #if defined(BEAM_HW_WALLET)
+    , m_useHWWallet(wallet::WalletDB::isInitialized(AppModel::getInstance().getSettings().getTrezorWalletStorage()))
     , m_hwWallet(AppModel::getInstance().getHardwareWalletClient())
     , m_trezorTimer(this)
     , m_trezorThread(*this)
+#else 
+    , m_useHWWallet(false)
 #endif
+
 {
     if (!walletExists())
     {
@@ -245,7 +249,7 @@ StartViewModel::StartViewModel()
     }
 
 #if defined(BEAM_HW_WALLET)
-    connect(&m_trezorThread, SIGNAL(ownerKeyImported(const QString&)), this, SLOT(onTrezorOwnerKeyImported(const QString&)));
+    connect(&m_trezorThread, SIGNAL(ownerKeyImported()), this, SLOT(onTrezorOwnerKeyImported()));
     connect(&m_trezorTimer, SIGNAL(timeout()), this, SLOT(checkTrezor()));
     m_trezorTimer.start(1000);
 #endif
@@ -272,6 +276,20 @@ bool StartViewModel::isTrezorEnabled() const
 #else
     return false;
 #endif
+}
+
+bool StartViewModel::useHWWallet() const
+{
+    return m_useHWWallet;
+}
+
+void StartViewModel::setUseHWWallet(bool value)
+{
+    if (m_useHWWallet != value)
+    {
+        m_useHWWallet = value;
+        emit isUseHWWalletChanged();
+    }
 }
 
 #if defined(BEAM_HW_WALLET)
@@ -301,7 +319,7 @@ QString StartViewModel::getTrezorDeviceName() const
 
 bool StartViewModel::isOwnerKeyImported() const
 {
-    return !m_ownerKeyEncrypted.empty();
+    return bool(m_HWKeyKeeper);
 }
 
 TrezorThread::TrezorThread(StartViewModel& vm)
@@ -312,43 +330,135 @@ TrezorThread::TrezorThread(StartViewModel& vm)
 
 void TrezorThread::run()
 {
-    auto reactor = io::Reactor::create();
-    io::Reactor::Scope s(*reactor); // do it in main thread
-    auto keyKeeper = m_vm.m_hwWallet->getKeyKeeper(m_vm.m_hwWallet->getDevices().front());
-    using namespace beam::wallet;
-    struct MyHandler : IPrivateKeyKeeper2::Handler
+    auto reactor = AppModel::getInstance().getWalletReactor();
+    io::Reactor::Scope s(*reactor); 
+    auto hwWallet = std::make_shared<beam::wallet::HWWallet>();//AppModel::AppModel::getInstance().getHardwareWalletClient();//std::make_shared<beam::wallet::HWWallet>();
+    struct UIHandlerProxy : public beam::wallet::HWWallet::IHandler
     {
-        StartViewModel* m_ViewModel;
-        IPrivateKeyKeeper2::Ptr m_KeyKeeper;
-        io::Reactor::Ptr m_Reactor;
-
-        MyHandler(StartViewModel* vm, IPrivateKeyKeeper2::Ptr keyKeeper, io::Reactor::Ptr reactor)
-            : m_ViewModel(vm)
-            , m_KeyKeeper(keyKeeper)
-            , m_Reactor(reactor)
-        {}
-
-        void OnDone(IPrivateKeyKeeper2::Status::Type s) override
+        beam::wallet::HWWallet::IHandler::Ptr getHandler()
         {
-            if (s == IPrivateKeyKeeper2::Status::Success)
+            return std::static_pointer_cast<beam::wallet::HWWallet::IHandler>(AppModel::getInstance().getWallet());
+        }
+
+        void ShowKeyKeeperMessage() override
+        {
+            if (auto h = getHandler(); h)
             {
-                m_ViewModel->m_HWKeyKeeper = m_KeyKeeper;
+                h->ShowKeyKeeperMessage();
             }
-            m_Reactor->stop();
+        }
+
+        void HideKeyKeeperMessage() override
+        {
+            if (auto h = getHandler(); h)
+            {
+                h->HideKeyKeeperMessage();
+            }
+        }
+
+        void ShowKeyKeeperError(const std::string& m) override
+        {
+            if (auto h = getHandler(); h)
+            {
+                h->ShowKeyKeeperError(m);
+            }
         }
     };
+    auto proxy = std::make_shared<UIHandlerProxy>();
+    beam::wallet::HWWallet::IHandler::Ptr p = std::static_pointer_cast<beam::wallet::HWWallet::IHandler>(proxy);
+    auto keyKeeper = hwWallet->getKeyKeeper(hwWallet->getDevices().front(), p);
+    using namespace beam::wallet;
+    
+    {
+        // cache sbbs kdf
+        struct MyHandler : IPrivateKeyKeeper2::Handler
+        {
+            io::Reactor::Ptr m_Reactor;
+            IPrivateKeyKeeper2::Method::get_Kdf m_Method;
+            MyHandler(io::Reactor::Ptr reactor)
+                : m_Reactor(reactor)
+            {}
+    
+            void OnDone(IPrivateKeyKeeper2::Status::Type s) override
+            {
+                if (s != IPrivateKeyKeeper2::Status::Success)
+                {
+                    m_Reactor->stop();
+                }
+            }
+        };
+        auto handler = std::make_shared<MyHandler>(reactor);
+        beam::wallet::IPrivateKeyKeeper2::Method::get_Kdf& m = handler->m_Method;
+        m.m_Root = false;
+        m.m_iChild = Key::Index(-1);
+        keyKeeper->InvokeAsync(m, handler);
+    }
 
-    beam::wallet::IPrivateKeyKeeper2::Method::get_Kdf m;
-    m.m_Root = true;
-    keyKeeper->InvokeAsync(m, std::make_shared<MyHandler>(&m_vm, keyKeeper, reactor));
+    {
+        // cache slots
+        struct MyHandler : IPrivateKeyKeeper2::Handler
+        {
+            io::Reactor::Ptr m_Reactor;
+            IPrivateKeyKeeper2::Method::get_NumSlots m_Method;
+            MyHandler(io::Reactor::Ptr reactor)
+                : m_Reactor(reactor)
+            {}
+
+            virtual ~MyHandler()
+            {
+
+            }
+
+            void OnDone(IPrivateKeyKeeper2::Status::Type s) override
+            {
+                if (s != IPrivateKeyKeeper2::Status::Success)
+                {
+                    m_Reactor->stop();
+                }
+            }
+        };
+        auto handler = std::make_shared<MyHandler>(reactor);
+        keyKeeper->InvokeAsync(handler->m_Method, handler);
+    }
+    
+    {
+        // cache master kdf
+        struct MyHandler : IPrivateKeyKeeper2::Handler
+        {
+            StartViewModel* m_ViewModel;
+            IPrivateKeyKeeper2::Ptr m_KeyKeeper;
+            io::Reactor::Ptr m_Reactor;
+            IPrivateKeyKeeper2::Method::get_Kdf m_Method;
+    
+            MyHandler(StartViewModel* vm, IPrivateKeyKeeper2::Ptr keyKeeper, io::Reactor::Ptr reactor)
+                : m_ViewModel(vm)
+                , m_KeyKeeper(keyKeeper)
+                , m_Reactor(reactor)
+            {}
+    
+            void OnDone(IPrivateKeyKeeper2::Status::Type s) override
+            {
+                if (s == IPrivateKeyKeeper2::Status::Success)
+                {
+                    m_ViewModel->m_HWKeyKeeper = m_KeyKeeper;
+                }
+                m_Reactor->stop();
+            }
+        };
+    
+        auto handler = std::make_shared<MyHandler>(&m_vm, keyKeeper, reactor);
+        IPrivateKeyKeeper2::Method::get_Kdf& m = handler->m_Method;
+        m.m_Root = true;
+        keyKeeper->InvokeAsync(m, handler);
+    }
+    
     reactor->run();
-    emit ownerKeyImported("");
+    emit ownerKeyImported();
 }
 
-void StartViewModel::onTrezorOwnerKeyImported(const QString& key)
+void StartViewModel::onTrezorOwnerKeyImported()
 {
-    //m_ownerKeyEncrypted = key.toStdString();
-    LOG_INFO() << "Trezor Key imported";// << m_ownerKeyEncrypted;
+    LOG_INFO() << "Trezor Key imported";
 
     SecString secretPass = m_password;
     if (m_creating)
@@ -366,30 +476,15 @@ void StartViewModel::onTrezorOwnerKeyImported(const QString& key)
 void StartViewModel::startOwnerKeyImporting(bool creating)
 {
     m_creating = creating;
-    //if(m_ownerKeyEncrypted.empty())
     if (!m_HWKeyKeeper)
+    {
         m_trezorThread.start();
+    }
+    else
+    {
+        onTrezorOwnerKeyImported();
+    }
 }
-
-//bool StartViewModel::isPasswordValid(const QString& pass)
-//{
-//    if (pass.isEmpty())
-//        return false;
-//
-//    KeyString ks;
-//    ks.SetPassword(pass.toStdString());
-//
-//    ks.m_sRes = m_ownerKeyEncrypted;
-//
-//    std::shared_ptr<ECC::HKdfPub> pKdf = std::make_shared<ECC::HKdfPub>();
-//
-//    return ks.Import(*pKdf);
-//}
-//
-//void StartViewModel::setOwnerKeyPassword(const QString& pass)
-//{
-//    m_ownerKeyPass = pass.toStdString();
-//}
 
 #endif
 
@@ -403,6 +498,7 @@ void StartViewModel::setIsRecoveryMode(bool value)
     if (value != m_isRecoveryMode)
     {
         m_isRecoveryMode = value;
+        qDeleteAll(m_recoveryPhrases);
         m_recoveryPhrases.clear();
         emit isRecoveryModeChanged();
     }
@@ -489,9 +585,9 @@ QString StartViewModel::getLocalNodePeer() const
     return !peers.empty() ? peers.first() : "";
 }
 
-QQmlListProperty<WalletDBPathItem> StartViewModel::getWalletDBpaths()
+const QList<QObject*>& StartViewModel::getWalletDBpaths()
 {
-    return QQmlListProperty<WalletDBPathItem>(this, m_walletDBpaths);
+    return *&m_walletDBpaths;
 }
 
 bool StartViewModel::isCapsLockOn() const
@@ -609,8 +705,10 @@ void StartViewModel::printRecoveryPhrases(QVariant viewData )
 
 void StartViewModel::resetPhrases()
 {
+    qDeleteAll(m_recoveryPhrases);
     m_recoveryPhrases.clear();
     m_generatedPhrases.clear();
+    qDeleteAll(m_checkPhrases);
     m_checkPhrases.clear();
     emit recoveryPhrasesChanged();
 }
@@ -647,9 +745,17 @@ void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
 {
     m_callback = callback;
 #if defined(BEAM_HW_WALLET)
-    if (m_hwWallet->isConnected())
+    if (m_useHWWallet)
     {
-        startOwnerKeyImporting(false);
+        if (m_hwWallet->isConnected())
+        {
+            setPassword(pass);
+            startOwnerKeyImporting(false);
+        }
+        else
+        {
+            DoJSCallback(m_callback, false);
+        }
         return;
     }
 #endif
@@ -688,6 +794,7 @@ void StartViewModel::findExistingWalletDB()
         walletDBs.insert(std::end(walletDBs), std::begin(additionnalWalletDBs), std::end(additionnalWalletDBs));
     }
 
+    QList<WalletDBPathItem*> walletDBpaths;
     for (auto& walletDBPath : walletDBs)
     {
 #ifdef WIN32
@@ -698,7 +805,7 @@ void StartViewModel::findExistingWalletDB()
         QString absoluteFilePath = fileInfo.absoluteFilePath();
         bool isDefaultLocated = absoluteFilePath.contains(
             QString::fromStdString(defaultAppDataPath));
-        m_walletDBpaths.push_back(new WalletDBPathItem(
+        walletDBpaths.push_back(new WalletDBPathItem(
                 absoluteFilePath,
                 fileInfo.size(),
                 fileInfo.lastModified(),
@@ -706,7 +813,7 @@ void StartViewModel::findExistingWalletDB()
                 isDefaultLocated));
     }
 
-    std::sort(m_walletDBpaths.begin(), m_walletDBpaths.end(),
+    std::sort(walletDBpaths.begin(), walletDBpaths.end(),
               [] (WalletDBPathItem* left, WalletDBPathItem* right) {
                   if (left->locatedByDefault() && !right->locatedByDefault()) {
                       return false;
@@ -714,9 +821,10 @@ void StartViewModel::findExistingWalletDB()
                   return left->getLastWriteDate() > right->getLastWriteDate();
               });
 
-    if (!m_walletDBpaths.empty()) {
-        m_walletDBpaths.first()->setPreferred();
+    if (!walletDBpaths.empty()) {
+        walletDBpaths.first()->setPreferred();
     }
+    std::copy(walletDBpaths.begin(), walletDBpaths.end(), std::back_inserter(m_walletDBpaths));
 }
 
 bool StartViewModel::isFindExistingWalletDB()

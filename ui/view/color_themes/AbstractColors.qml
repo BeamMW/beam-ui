@@ -34,6 +34,7 @@ QtObject {
 	property color white: "#ffffff";
     property string linkStyle;
     property string explorerUrl;
+    property string faucetUrl;
 
     property color swapCurrencyPaneGrRight;
     property color swapCurrencyPaneGrLeftBEAM;
@@ -43,4 +44,5 @@ QtObject {
     property color swapCurrencyPaneGrLeftOther;
     property color swapCurrencyStateIndicator;
     property color swapCurrencyOptionsBorder;
+    property color swapDisconnectNode;
 }

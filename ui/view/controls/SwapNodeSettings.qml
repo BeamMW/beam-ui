@@ -7,31 +7,25 @@ import Beam.Wallet 1.0
 import "."
 import "../utils.js" as Utils
 
-Control {
+SettingsFoldable {
     id:            control
-    leftPadding:   25
-    rightPadding:  25
-    topPadding:    20
-    bottomPadding: 20
     height:        362
     //
     // Common props
     //
-    property alias  title:                    controlTitle.text
+    property string generalTitle:             ""
     property alias  showSeedDialogTitle:      seedPhraseDialog.showSeedDialogTitle
     property alias  showAddressesDialogTitle: showAddressesDialog.showAddressesDialogTitle
     property string feeRateLabel:        ""
     property string color:               Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+    property string disabledColor:       Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.2)
     property alias  editElectrum:        useElectrumSwitch.checked
     property bool   canEdit:             true
 
     property bool   isConnected:            false
     property bool   isNodeConnection:       false
     property bool   isElectrumConnection:   false
-    property alias  connectionStatus:       statusIndicator.status
-    property alias  connectionErrorMsg:     connectionErrorMsg.text
-
-    property var    mainSettingsViewModel: undefined
+    property var    mainSettingsViewModel:  undefined
 
     //
     // Node props
@@ -40,7 +34,6 @@ Control {
     property alias  port:         portInput.text
     property alias  username:     usernameInput.text
     property alias  password:     passwordInput.text
-    property alias  feeRate:      feeRateInput.fee
     property bool   canEditNode:  !control.isNodeConnection
 
     //
@@ -48,7 +41,7 @@ Control {
     //
     property alias addressElectrum:                     addressInputElectrum.address
     property alias portElectrum:                        portInputElectrum.text
-    property alias isSelectServerAutomatcally:          selectServerAutomatically.checked
+    property alias useRandomElectrumNode:               useRandomNode.checked
     property alias seedPhrasesElectrum:                 seedPhraseDialog.seedPhrasesElectrum
     property alias phrasesSeparatorElectrum:            seedPhraseDialog.phrasesSeparatorElectrum
     property bool  isCurrentElectrumSeedValid:          false
@@ -82,27 +75,11 @@ Control {
     signal validateCurrentSeedPhrase
 
     QtObject {
-        id: internalCommon
-        property int    initialFeeRate
-        function restore() {
-            feeRate  = initialFeeRate
-        }
-
-        function save() {
-            initialFeeRate  = feeRate
-        }
-
-        function isChanged() {
-            return initialFeeRate !== feeRate
-        }
-    }
-
-    QtObject {
         id: internalNode
         property string initialAddress
         property string initialPort
         property string initialUsername
-        property string initialPassword        
+        property string initialPassword
 
         function restore() {
             address  = initialAddress
@@ -127,7 +104,7 @@ Control {
     }
 
     function isSettingsChanged() {
-        return  internalCommon.isChanged() || (editElectrum ? internalElectrum.isChanged() : internalNode.isChanged());
+        return editElectrum ? internalElectrum.isChanged() : internalNode.isChanged();
     }
 
     function canApplySettings() {
@@ -135,12 +112,10 @@ Control {
     }
 
     function applyChanges() {
-        internalCommon.save();
         return editElectrum ? applyChangesElectrum() : applyChangesNode();
     }
 
     function restoreSettings() {
-        internalCommon.restore();
         return editElectrum ? internalElectrum.restore() : internalNode.restore();
     }
 
@@ -149,7 +124,6 @@ Control {
     }
 
     function clear() {
-        internalCommon.save();
         if (editElectrum) {
             control.clearElectrum();
             internalElectrum.save();
@@ -164,8 +138,12 @@ Control {
         return control.canEdit && (editElectrum ? canClearElectrum() : canClearNode());
     }
 
+    function canConnect() {
+        return !isSettingsChanged() && haveSettings() && (editElectrum ? !isElectrumConnection : !isNodeConnection);
+    }
+
     function canDisconnect() {
-        return control.canEdit && isConnected && (editElectrum ? canDisconnectElectrum() : canDisconnectNode());
+        return isConnected && (editElectrum ? canDisconnectElectrum() : canDisconnectNode() && control.canEdit);
     }
 
     function canApplyNode() {
@@ -197,33 +175,35 @@ Control {
         id: internalElectrum
         property string initialAddress
         property string initialPort
-        property bool   initialSelectServerAutomatically
+        property bool   initialRandomNode
         property string initialSeed
         property bool   isSeedChanged: false
 
         function restore() {
             isSeedChanged = false
             addressElectrum = initialAddress
-            porttElectrum = initialPort
-            isSelectServerAutomatcally = initialSelectServerAutomatically
+            portElectrum = initialPort
+            useRandomElectrumNode = initialRandomNode
             control.restoreSeedElectrum()
         }
 
         function save() {
-            initialAddress  = addressElectrum
-            initialPort     = portElectrum
-            initialSelectServerAutomatically = isSelectServerAutomatcally
+            if (!useRandomElectrumNode) {
+                initialAddress = addressElectrum
+                initialPort    = portElectrum
+            }
+            initialRandomNode = useRandomElectrumNode
             isSeedChanged = false
         }
 
         function isChanged() {
-            return (!isSelectServerAutomatcally && initialAddress !== addressElectrum) || initialPort !== portElectrum || isSeedChanged || 
-                    isSelectServerAutomatcally !== initialSelectServerAutomatically
+            return (!useRandomElectrumNode && (initialAddress !== addressElectrum || initialPort !== portElectrum )) || isSeedChanged || 
+                    useRandomElectrumNode !== initialRandomNode
         }
     }
 
     function canApplyElectrum() {
-        return isCurrentElectrumSeedValid && ((addressInputElectrum.isValid && portInputElectrum.acceptableInput) || isSelectServerAutomatcally)
+        return isCurrentElectrumSeedValid && ((addressInputElectrum.isValid && portInputElectrum.acceptableInput) || useRandomElectrumNode)
     }
 
     function canClearElectrum() {
@@ -240,73 +220,34 @@ Control {
     }
 
     function haveElectrumSettings() {
-        return isCurrentElectrumSeedValid && ((addressInputElectrum.isValid && portInputElectrum.acceptableInput) || isSelectServerAutomatcally);
+        return isCurrentElectrumSeedValid && ((addressInputElectrum.isValid && portInputElectrum.acceptableInput) || useRandomElectrumNode);
     }
 
     Component.onCompleted: {
-        control.editElectrum = control.isElectrumConnection;
-        internalCommon.save();
+        control.editElectrum = control.isElectrumConnection || (!control.canEdit && !control.isNodeConnection);
         internalNode.save();
         internalElectrum.save();
     }
 
-    background: Rectangle {
-        radius:  10
-        color:   Style.background_second
-    }
-
-    contentItem: ColumnLayout {
+    content: ColumnLayout {
         spacing: 0
-
-        // indicator & status
-        RowLayout {
-            width:   parent.width
-            spacing: 0
-
-            ExternalNodeStatus {
-                id:                     statusIndicator
-                width:                  10
-                height:                 10
-                Layout.rightMargin:     20
-            }
-
-            SFText {
-                id:                     controlTitle
-                Layout.topMargin:       3
-                color:                  control.color
-                font.pixelSize:         14
-                font.weight:            Font.Bold
-                font.capitalization:    Font.AllUppercase
-                font.letterSpacing:     3.11
-            }
-
-            SFText {
-                id:                connectionErrorMsg
-                Layout.topMargin:  3
-                Layout.leftMargin: 20
-                color:             Style.validator_error
-                font.pixelSize:    14
-                font.italic:       true
-                visible:           statusIndicator.status == "error"
-            }
-        }
 
         // Node & Electrum switch
         RowLayout {
-            Layout.topMargin: 20
-            height:           20
-            spacing:          10
+            height:   20
+            spacing:  10
 
             SFText {
                 //% "Node"
                 text:  qsTrId("settings-swap-node")
-                color: useElectrumSwitch.checked ? control.color : Style.active
+                color: useElectrumSwitch.checked ? useElectrumSwitch.enabled ? control.color : control.disabledColor : Style.active
                 font.pixelSize: 14
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton
                     onClicked: {
-                        useElectrumSwitch.checked = !useElectrumSwitch.checked;
+                        if (useElectrumSwitch.enabled)
+                            useElectrumSwitch.checked = !useElectrumSwitch.checked;
                     }
                 }
             }
@@ -315,18 +256,60 @@ Control {
                 id:          useElectrumSwitch
                 alwaysGreen: true
                 spacing:     0
+                enabled:     !(isConnected || !isConnected && !control.canEdit)
             }
 
             SFText {
                 //% "Electrum"
                 text: qsTrId("general-electrum")
-                color: useElectrumSwitch.checked ? Style.active : control.color
+                color: useElectrumSwitch.checked ? Style.active : useElectrumSwitch.enabled ? control.color : control.disabledColor
                 font.pixelSize: 14
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton
                     onClicked: {
-                        useElectrumSwitch.checked = !useElectrumSwitch.checked;
+                        if (useElectrumSwitch.enabled)
+                            useElectrumSwitch.checked = !useElectrumSwitch.checked;
+                    }
+                }
+            }
+
+            SFText {
+                //% "Specific node"
+                text:  qsTrId("specific_node")
+                color: useRandomNode.checked ? useRandomNode.enabled ? control.color : control.disabledColor : Style.active
+                font.pixelSize: 14
+                visible: useElectrumSwitch.checked
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    onClicked: {
+                        if (useRandomNode.enabled)
+                            useRandomNode.checked = !useRandomNode.checked;
+                    }
+                }
+            }
+
+            CustomSwitch {
+                id:          useRandomNode
+                alwaysGreen: true
+                spacing:     0
+                visible:     useElectrumSwitch.checked
+                enabled:     !isConnected
+            }
+
+            SFText {
+                //% "Random node"
+                text: qsTrId("random_node")
+                color: useRandomNode.checked ? Style.active : useRandomNode.enabled ? control.color : control.disabledColor
+                font.pixelSize: 14
+                visible: useElectrumSwitch.checked
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    onClicked: {
+                        if (useRandomNode.enabled)
+                            useRandomNode.checked = !useRandomNode.checked;
                     }
                 }
             }
@@ -334,52 +317,20 @@ Control {
             Item {
                 Layout.fillWidth: true
             }
-
-            LinkButton {
-                Layout.alignment: Qt.AlignVCenter
-                linkStyle: "<style>a:link {color: '#f9605b'; text-decoration: none;}</style>"
-                //% "Clear"
-                text:       qsTrId("settings-reset")
-                visible:    canClear()
-                onClicked:  {
-                    if (editElectrum) {
-                        //: electrum settings, ask password to clear seed phrase, dialog title
-                        //% "Clear seed phrase"
-                        confirmPasswordDialog.dialogTitle = qsTrId("settings-swap-confirm-clear-seed-title");
-                        //: electrum settings, ask password to clear seed phrase, dialog message
-                        //% "Enter your wallet password to clear seed phrase"
-                        confirmPasswordDialog.dialogMessage = qsTrId("settings-swap-confirm-clear-seed-message");
-                        confirmPasswordDialog.onDialogAccepted = function() {
-                            clear();
-                        };
-                        confirmPasswordDialog.open();
-                    } else {
-                        clear();
-                    }
-                }
-            }
-
-            LinkButton {
-                Layout.alignment: Qt.AlignVCenter
-                linkStyle: "<style>a:link {color: '#f9605b'; text-decoration: none;}</style>"
-                //% "Disconnect"
-                text:       qsTrId("settings-swap-disconnect")
-                visible:    canDisconnect()
-                onClicked:  disconnect()
-            }
         }
 
         GridLayout {
+            visible: !(editElectrum && useRandomNode.checked && !isElectrumConnection)
             Layout.topMargin: 20
             columns:          2
-            columnSpacing:    30
+            columnSpacing:    50
             rowSpacing:       13
 
             SFText {
                 visible:        !editElectrum
                 font.pixelSize: 14
                 color:          control.color
-                //% "Node Address"
+                //% "Node address"
                 text:           qsTrId("settings-node-address")
             }
 
@@ -390,6 +341,7 @@ Control {
                 color:            Style.content_main
                 underlineVisible: canEditNode
                 readOnly:         !canEditNode
+                ipOnly:           false
             }
 
             SFText {
@@ -454,21 +406,11 @@ Control {
             }
 
             // electrum settings
-            CustomCheckBox {
-                id: selectServerAutomatically
-                visible:        editElectrum
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
-                //% "Select server automatically"
-                text: qsTrId("select-server-automatically")
-            }
-
             SFText {
                 visible:        editElectrum
                 font.pixelSize: 14
                 color:          control.color
-                //% "Node Address"
+                //% "Node address"
                 text:           qsTrId("settings-node-address")
             }
 
@@ -478,8 +420,8 @@ Control {
                 Layout.fillWidth: true
                 color:            Style.content_main
                 ipOnly:           false
-                readOnly:         selectServerAutomatically.checked
-                underlineVisible: !selectServerAutomatically.checked
+                readOnly:         useRandomNode.checked
+                underlineVisible: !useRandomNode.checked
             }
 
             SFText {
@@ -496,43 +438,29 @@ Control {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
-                readOnly:           selectServerAutomatically.checked
-                underlineVisible:   !selectServerAutomatically.checked
+                readOnly:           useRandomNode.checked
+                underlineVisible:   !useRandomNode.checked
                 validator:          RegExpValidator {regExp: /^([1-9]|[1-5]?[0-9]{2,4}|6[1-4][0-9]{3}|65[1-4][0-9]{2}|655[1-2][0-9]|6553[1-5])$/g}
-            }
-
-            // common fee rate
-            SFText {
-                font.pixelSize: 14
-                color:          control.color
-                //% "Default fee"
-                text:           qsTrId("settings-fee-rate")
-            }
-
-            FeeInput {
-                id:                  feeRateInput
-                Layout.fillWidth:    true
-                fillWidth:           true
-                inputPreferredWidth: -1
-                minFee:              0
-                feeLabel:            control.feeRateLabel
-                color:               Style.content_main
-                spacing:             0
-                underlineVisible:    canEdit
-                readOnly:            !canEdit
             }
         }
 
-        SFText {
+         SFText {
+            visible:               editElectrum && useRandomNode.checked && !disconnectButtonId.visible
+            Layout.topMargin:      30
             Layout.preferredWidth: 390
+            Layout.alignment:      Qt.AlignVCenter | Qt.AlignHCenter
+            horizontalAlignment:   Text.AlignHCenter
+            verticalAlignment:     Text.AlignVCenter
             font.pixelSize:        14
             wrapMode:              Text.WordWrap
             color:                 control.color
             lineHeight:            1.1 
-            //% "Remember to validate the expected fee rate for the blockchain (as it varies with time)."
-            text:                  qsTrId("settings-fee-rate-note")
+/*% "Random node address and port will be displayed 
+when connection is established"
+*/
+            text:                  qsTrId("settings-random-node-text")
         }
-       
+
         // electrum settings - seed: new || edit
         RowLayout {
             visible:             editElectrum && canEditElectrum
@@ -569,6 +497,7 @@ Control {
                         editSeedPhrase();
                     }
                 }
+                enabled: control.canEdit
             }
 
             SFText {
@@ -603,6 +532,7 @@ Control {
                         generateSeedPhrase();
                     }
                 }
+                enabled: control.canEdit
             }
         }
 
@@ -644,7 +574,7 @@ Control {
 
         // alert text if we have active transactions
         SFText {
-            visible:               !control.canEdit && !(editElectrum && isSettingsChanged())
+            visible:               !control.canEdit && !editElectrum
             Layout.topMargin:      30
             Layout.preferredWidth: 390
             Layout.alignment:      Qt.AlignVCenter | Qt.AlignHCenter
@@ -654,39 +584,99 @@ Control {
             wrapMode:              Text.WordWrap
             color:                 control.color
             lineHeight:            1.1 
-/*% "You cannot disconnect wallet, edit seed phrase or change default
-fee while you have transactions in progress."
+/*% "Swap in progress, cannot disconnect, switch connection type to 
+%1 electrum, generate new or edit existing seed phrase."
 */
-            text:                  qsTrId("settings-progress-na")
+            text:                  qsTrId("settings-node-progress-na").arg(control.generalTitle)
+        }
+
+        SFText {
+            visible:               !control.canEdit && editElectrum && !disconnectButtonId.visible
+            //visible: false
+            Layout.topMargin:      30
+            Layout.preferredWidth: 390
+            Layout.alignment:      Qt.AlignVCenter | Qt.AlignHCenter
+            horizontalAlignment:   Text.AlignHCenter
+            verticalAlignment:     Text.AlignVCenter
+            font.pixelSize:        14
+            wrapMode:              Text.WordWrap
+            color:                 control.color
+            lineHeight:            1.1 
+/*% "Swap in progress, cannot switch connection type to %1 node, 
+generate new or edit existing seed phrase."
+*/
+            text:                  qsTrId("settings-electrum-progress-na").arg(control.generalTitle)
         }
 
         // buttons
         // "cancel" "apply"
         // "connect to node" or "connect to electrum"
         RowLayout {
-            visible:          control.canEdit || (editElectrum && isSettingsChanged())
-            Layout.fillWidth: true
-            Layout.topMargin: 30
-            spacing:          15
+            visible:                control.canEdit || editElectrum
+            Layout.preferredHeight: 52
+            Layout.fillWidth:       true
+            Layout.topMargin:       30
+            spacing:                15
 
             Item {
                 Layout.fillWidth: true
             }
 
             CustomButton {
-                visible:                !connectButtonId.visible
+                visible:                applySettingsButtonId.visible
                 Layout.preferredHeight: 38
                 Layout.preferredWidth:  130
                 leftPadding:  25
                 rightPadding: 25
                 text:         qsTrId("general-cancel")
-                icon.source:  "qrc:/assets/icon-cancel-white.svg"
+                icon.source:  enabled ? "qrc:/assets/icon-cancel-white.svg" : "qrc:/assets/icon-cancel.svg"
                 enabled:      isSettingsChanged()
                 onClicked:    restoreSettings()
             }
 
+            CustomButton {
+                id:                     disconnectButtonId
+                visible:                canDisconnect()
+                Layout.preferredHeight: 38
+                Layout.preferredWidth:  164
+                palette.button:         Style.swapDisconnectNode
+                palette.buttonText:     Style.content_opposite
+                //% "disconnect"
+                text:                   qsTrId("settings-swap-disconnect")
+                icon.source:            "qrc:/assets/icon-delete-blue.svg"
+                onClicked:              disconnect()
+            }
+
+            CustomButton {
+                visible:                connectButtonId.visible
+                Layout.preferredHeight: 38
+                Layout.preferredWidth:  124
+                leftPadding:            25
+                rightPadding:           25
+                //% "clear"
+                text:                   qsTrId("settings-swap-clear")
+                icon.source:            "qrc:/assets/icon-delete.svg"
+                onClicked:  {
+                    if (editElectrum) {
+                        //: electrum settings, ask password to clear seed phrase, dialog title
+                        //% "Clear seed phrase"
+                        confirmPasswordDialog.dialogTitle = qsTrId("settings-swap-confirm-clear-seed-title");
+                        //: electrum settings, ask password to clear seed phrase, dialog message
+                        //% "Enter your wallet password to clear seed phrase"
+                        confirmPasswordDialog.dialogMessage = qsTrId("settings-swap-confirm-clear-seed-message");
+                        confirmPasswordDialog.onDialogAccepted = function() {
+                            clear();
+                        };
+                        confirmPasswordDialog.open();
+                    } else {
+                        clear();
+                    }
+                }
+            }
+
             PrimaryButton {
-                visible:                !connectButtonId.visible
+                id:                     applySettingsButtonId
+                visible:                !connectButtonId.visible && !disconnectButtonId.visible
                 leftPadding:            25
                 rightPadding:           25
                 text:                   qsTrId("settings-apply")
@@ -694,20 +684,22 @@ fee while you have transactions in progress."
                 enabled:                isSettingsChanged() && canApplySettings()
                 onClicked:              applyChanges()
                 Layout.preferredHeight: 38
-                Layout.preferredWidth:  130
             }
 
             PrimaryButton {
                 id:                     connectButtonId
-                visible:                !isSettingsChanged() && haveSettings() && (editElectrum ? !isElectrumConnection : !isNodeConnection)
+                visible:                canConnect()
                 leftPadding:            25
                 rightPadding:           25
-                //% "connect"
-                text:                   qsTrId("settings-swap-connect")
+                text:                   editElectrum
+                                            //% "connect to electrum node"
+                                            ? qsTrId("settings-swap-connect-to-electrum")
+                                            //% "connect to node"
+                                            : qsTrId("settings-swap-connect-to-node")
                 icon.source:            "qrc:/assets/icon-done.svg"
                 onClicked:              editElectrum ? connectToElectrum() : connectToNode();
                 Layout.preferredHeight: 38
-                Layout.preferredWidth:  195
+                Layout.preferredWidth:  editElectrum ? 253 : 193
             }
 
             Item {

@@ -20,7 +20,7 @@ AbstractColors {
     property color background_row_even:   "#07ffffff"
     property color background_row_odd:    "#0cffffff"
     property color background_details:    "#3e384a"
-    property color background_button:     "#708090"
+    property color background_button:     Qt.rgba(255, 255, 255, 0.1)
     property color background_popup:      "#342e41"
     property color row_selected:          "#534e5e"
     property color separator:             "#342e41"
@@ -33,6 +33,7 @@ AbstractColors {
 
     property string linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
     property string explorerUrl: "https://testnet.explorer.beam.mw/"
+    property string faucetUrl: "https://faucet.beamprivacy.community/"
 
     property color swapCurrencyPaneGrRight:     "#45316c"
     property color swapCurrencyPaneGrLeftBEAM:  "#00f6d2"
@@ -42,4 +43,5 @@ AbstractColors {
     property color swapCurrencyPaneGrLeftOther: Qt.rgba(0, 246, 210, 0.1)
     property color swapCurrencyStateIndicator:  "#ff746b"
     property color swapCurrencyOptionsBorder:   Qt.rgba(0, 246, 210, 0.15)
+    property color swapDisconnectNode:          "#f9605b"
 }

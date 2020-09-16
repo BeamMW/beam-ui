@@ -28,6 +28,7 @@ public:
         Regular,
         Change,
         Treasury,
+        Shielded
     };
     Q_ENUMS(EnType)
 };
