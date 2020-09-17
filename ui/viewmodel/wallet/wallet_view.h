@@ -14,7 +14,6 @@
 #pragma once
 
 #include <QObject>
-#include <QQmlListProperty>
 #include <QQueue>
 #include <QString>
 #include "wallet/transactions/swaps/bridges/bitcoin/client.h"

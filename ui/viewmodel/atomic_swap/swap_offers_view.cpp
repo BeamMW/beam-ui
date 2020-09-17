@@ -507,7 +507,7 @@ void SwapOffersViewModel::InitSwapClientWrappers()
 
 QQmlListProperty<SwapCoinClientWrapper> SwapOffersViewModel::getSwapClients()
 {
-    return QQmlListProperty<SwapCoinClientWrapper>(this, m_swapClientWrappers);
+    return QQmlListProperty<SwapCoinClientWrapper>(this, &m_swapClientWrappers);
 }
 
 SwapCoinClientWrapper* SwapOffersViewModel::getSwapCoinClientWrapper(AtomicSwapCoin swapCoinType) const

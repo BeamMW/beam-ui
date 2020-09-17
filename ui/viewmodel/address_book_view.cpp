@@ -161,17 +161,17 @@ AddressBookViewModel::AddressBookViewModel()
 
 QQmlListProperty<ContactItem> AddressBookViewModel::getContacts()
 {
-    return QQmlListProperty<ContactItem>(this, m_contacts);
+    return QQmlListProperty<ContactItem>(this, &m_contacts);
 }
 
 QQmlListProperty<AddressItem> AddressBookViewModel::getActiveAddresses()
 {
-    return QQmlListProperty<AddressItem>(this, m_activeAddresses);
+    return QQmlListProperty<AddressItem>(this, &m_activeAddresses);
 }
 
 QQmlListProperty<AddressItem> AddressBookViewModel::getExpiredAddresses()
 {
-    return QQmlListProperty<AddressItem>(this, m_expiredAddresses);
+    return QQmlListProperty<AddressItem>(this, &m_expiredAddresses);
 }
 
 QString AddressBookViewModel::nameRole() const
