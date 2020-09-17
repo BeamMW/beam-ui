@@ -411,7 +411,7 @@ bool SendViewModel::canSend() const
 {
     return !QMLGlobals::isSwapToken(_receiverTA) && getRreceiverTAValid()
            && _sendAmountGrothes > 0 && isEnough()
-           && QMLGlobals::isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins) 
+           && _feeGrothes >= _minimalFeeGrothes
            && (!isShieldedTx() || !isNonInteractive() || getOfflinePayments() > 0)
            && !(isShieldedTx() && isOwnAddress());
 }
