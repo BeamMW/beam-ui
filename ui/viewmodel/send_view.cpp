@@ -250,10 +250,13 @@ void SendViewModel::setIsShieldedTx(bool value)
         {
             if (_walletModel.getAvailable() - _sendAmountGrothes - _feeGrothes == 0)
             {
-                _sendAmountGrothes -= _minimalFeeGrothes;
-                emit sendAmountChanged();
+                setFeeGrothes(_minimalFeeGrothes);
+                setMaxAvailableAmount();
             }
-            setFeeGrothes(_minimalFeeGrothes);
+            else
+            {
+                setFeeGrothes(_minimalFeeGrothes);
+            }
         }
     }
 }
@@ -411,7 +414,7 @@ bool SendViewModel::canSend() const
 {
     return !QMLGlobals::isSwapToken(_receiverTA) && getRreceiverTAValid()
            && _sendAmountGrothes > 0 && isEnough()
-           && QMLGlobals::isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins) 
+           && _feeGrothes >= _minimalFeeGrothes
            && (!isShieldedTx() || !isNonInteractive() || getOfflinePayments() > 0)
            && !(isShieldedTx() && isOwnAddress());
 }
