@@ -268,7 +268,7 @@ ColumnLayout {
                             RowLayout {
                                 spacing:            10
                                 Layout.topMargin:   20
-                                visible:            viewModel.isToken && viewModel.canChangeTxType && !viewModel.isOwnAddress
+                                visible:            false//viewModel.isToken && viewModel.canChangeTxType && !viewModel.isOwnAddress
                                 SFText {
                                     //% "Max privacy"
                                     text: qsTrId("general-max-privacy")
@@ -303,9 +303,9 @@ ColumnLayout {
                                 color:              viewModel.isShieldedTx ? Style.validator_error : Style.content_secondary
                                 font.italic:        true
                                 font.pixelSize:     14
-                                //% "Can not sent max privacy transaction to own address"
+                                //% "Can not sent offline transaction to own address"
                                 text:               qsTrId("wallet-send-max-privacy-to-yourself-unsupported")
-                                visible:            viewModel.isToken && viewModel.isOwnAddress
+                                visible:            viewModel.isShieldedTx && viewModel.isOwnAddress//viewModel.isToken && viewModel.isOwnAddress
                             }
 
                             SFText {
@@ -314,7 +314,7 @@ ColumnLayout {
                                 color:              Style.content_secondary
                                 font.italic:        true
                                 font.pixelSize:     14
-                                //% "This type of address does not support max privacy transactions"
+                                //% "This type of address does not support offline transactions"
                                 text:               qsTrId("wallet-send-max-privacy-unsupported")
                                 visible:            !viewModel.isToken && viewModel.receiverTAValid
                             }
@@ -327,7 +327,7 @@ ColumnLayout {
                                 font.pixelSize:     14
                                 
                                 text:               viewModel.isNonInteractive ? 
-                                                    //% "Receiver requested Max privacy. Offline transactions remaining: %1"
+                                                    //% "Offline transactions remaining: %1"
                                                     qsTrId("wallet-send-max-privacy-note-address-offline").arg(viewModel.offlinePayments)
                                                     : 
                                                     //% "Receiver requested Max privacy"
@@ -415,7 +415,7 @@ ColumnLayout {
                             secondCurrencyAmount:       getFeeInSecondCurrency(viewModel.fee)
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
                             minimumFeeNotificationText: viewModel.isShieldedTx || viewModel.isNeedExtractShieldedCoins ?
-                                //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
+                                //% "Coins were automatically selected to maximize privacy and minimal transaction fee of %1 %2"
                                 qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
                                 ""
                         }

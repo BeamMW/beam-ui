@@ -6,6 +6,7 @@ import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
 import Beam.Wallet 1.0
 import "controls"
+import "./utils.js" as Utils
 
 ColumnLayout {
     id: receiveView
@@ -181,7 +182,7 @@ ColumnLayout {
                                     CustomButton {
                                         Layout.preferredHeight: 18
                                         id:                 maxPrivacyCheck
-                                        //% "Max privacy"
+                                        //% "Offline"
                                         text:               qsTrId("tx-max-privacy")
                                         palette.buttonText: Style.content_main
                                         ButtonGroup.group:  txTypeGroup
@@ -197,7 +198,7 @@ ColumnLayout {
 
                             RowLayout {
                                 spacing:    10
-                                visible:    !viewModel.isNonInteractive && !viewModel.isShieldedTx;
+                                visible:    !viewModel.isShieldedTx;
                                 SFText {
                                     //% "One-time use"
                                     text:  qsTrId("address-one-time")
@@ -248,11 +249,8 @@ ColumnLayout {
                                     color:              Style.content_secondary
                                     font.italic:        true
                                     font.pixelSize:     14
-                                    text:               viewModel.isNonInteractive ?
-                                                        //% "Address good for 20 transactions."
-                                                        qsTrId("wallet-send-non-int-note") :
-                                                        //% "Transaction is slower, receiver pays fees."
-                                                        qsTrId("wallet-send-max-privacy-note")
+                                    //% "The receiver pays fees."
+                                    text:               qsTrId("wallet-send-max-privacy-note")
                                 }
                             }
                             SFText {
@@ -262,7 +260,7 @@ ColumnLayout {
                                 font.italic:        true
                                 font.pixelSize:     14
                                 wrapMode:           Text.WordWrap
-                                //% "Connect to integrated or own node to enable sending max privacy transactions"
+                                //% "Connect to integrated or own node to enable sending offline transactions"
                                 text:               qsTrId("wallet-receive-max-privacy-unsupported")
                             }
                             
@@ -349,11 +347,12 @@ ColumnLayout {
                         Layout.fillWidth:   true
                         //% "Online address"
                         title:              qsTrId("wallet-receive-online-address")
-                        //% "(for wallet)"
+                        //% "(for wallets)"
                         headerText:         qsTrId("wallet-receive-address-for-wallet")
                         token:              viewModel.transactionToken
-                        qrCode:             viewModel.isShieldedTx && viewModel.isNonInteractive ? "" : viewModel.transactionTokenQR
+                        qrCode:             viewModel.isShieldedTx ? "" : viewModel.transactionTokenQR
                         isValidToken:       receiveView.isValid()
+                        visible:            !viewModel.isShieldedTx
                         onTokenCopied: {
                             receiveView.saveAddressAndClose();
                         }
@@ -381,7 +380,7 @@ ColumnLayout {
                         token:              viewModel.receiverAddress
                         qrCode:             viewModel.receiverAddressQR
                         isValidToken:       receiveView.isValid()
-                        visible:            disabledLabel.text.length == 0
+                        visible:            viewModel.isPermanentAddress && !viewModel.isShieldedTx //disabledLabel.text.length == 0
                         defaultAddressType: true // permanent
                         onTokenCopied: {
                             receiveView.saveAddressAndClose();
@@ -392,7 +391,7 @@ ColumnLayout {
                         title:              qsTrId("wallet-receive-online-address")
                         //% "(for exchange or mining pool)"
                         headerText:         qsTrId("wallet-receive-address-for-exchange")
-                        visible:            disabledLabel.text.length > 0
+                        visible:            false //disabledLabel.text.length > 0
                         content: ColumnLayout {
                             spacing:        20
                             SFText {
@@ -427,7 +426,6 @@ ColumnLayout {
                                 linkColor:  Style.active//Style.accent_incoming
                                 onClicked: {
                                     viewModel.isShieldedTx = false;
-                                    viewModel.isNonInteractive= false;
                                 }
                             }
                         }
@@ -447,8 +445,8 @@ ColumnLayout {
                 color:                 Style.content_main
                 wrapMode:              Text.WordWrap
                 horizontalAlignment:   Text.AlignHCenter
-                //% "To spend the received Max privacy coins the min transaction fee will be %1 GROTH."
-                text: qsTrId("wallet-receive-addr-message").arg(BeamGlobals.minFeeBeam(true))
+                //% "To spend the received coins the min transaction fee will be %1."
+                text: qsTrId("wallet-receive-addr-message").arg(Utils.formatFeeToSecondCurrency(BeamGlobals.minFeeBeam(true), "1", "BEAM"))
                 visible:               viewModel.isShieldedTx
             }
 
@@ -464,7 +462,7 @@ ColumnLayout {
                 horizontalAlignment:   Text.AlignHCenter
                 //% "For the transaction to complete, you should get online during the 12 hours after Beams are sent."
                 text: qsTrId("wallet-receive-text-online-time")
-                visible:               !viewModel.isNonInteractive
+                visible:               !viewModel.isShieldedTx
             }
 
             Item {
