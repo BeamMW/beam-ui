@@ -81,7 +81,7 @@ QString getStatusTextTranslated(const QString& status, bool isOfflineToken)
 max privacy" */
          qtTrId("wallet-txs-status-in-progress-max") : 
         /*% "in progress
-max privacy (offline)" */
+(offline)" */
         qtTrId("wallet-txs-status-in-progress-max-offline");
     }
     else if (status == "sent max privacy")
@@ -91,17 +91,17 @@ max privacy (offline)" */
 max privacy"*/
         qtTrId("wallet-txs-status-sent-max") :
         /*% "sent
-max privacy (offline)"*/
+(offline)"*/
         qtTrId("wallet-txs-status-sent-max-offline");
     }
     else if (status == "received max privacy")
     {
         return !isOfflineToken ?
         /*% "received
-max privacy" */
+(offline)" */
         qtTrId("wallet-txs-status-received-max") :
         /*% "received
-max privacy (offline)" */
+(offline)" */
         qtTrId("wallet-txs-status-received-max-offline");
     }
     else if (status == "canceled max privacy")
@@ -111,7 +111,7 @@ max privacy (offline)" */
 max privacy"*/
         qtTrId("wallet-txs-status-canceled-max") :
         /*% "canceled
-max privacy (offline)"*/
+(offline)"*/
         qtTrId("wallet-txs-status-canceled-max-offline");
     }
     else if (status == "failed max privacy")
@@ -121,7 +121,7 @@ max privacy (offline)"*/
 max privacy"*/
         qtTrId("wallet-txs-status-failed-max") : 
         /*% "failed
-max privacy (offline)"*/
+(offline)"*/
         qtTrId("wallet-txs-status-failed-max-offline");
     }
     else

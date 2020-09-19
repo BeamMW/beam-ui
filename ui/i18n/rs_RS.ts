@@ -2283,7 +2283,8 @@ Your version is: %2. Please, check for updates.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-send-max-privacy-note">
-        <source>Transaction is slower, receiver pays fees.</source>
+        <source>The receiver pays fees.</source>
+        <oldsource>Transaction is slower, receiver pays fees.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="can-not-generate-new-address-message">
@@ -2295,13 +2296,13 @@ Your version is: %2. Please, check for updates.</oldsource>
         <translation type="unfinished">Receive</translation>
     </message>
     <message id="wallet-receive-address-for-wallet">
-        <source>(for wallet)</source>
-        <oldsource>For wallet</oldsource>
+        <source>(for wallets)</source>
+        <oldsource>(for wallet)</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-addr-message">
-        <source>To spend the received Max privacy coins the min transaction fee will be %1 GROTH.</source>
-        <oldsource>To spend the received Max privacy coins the min transaction fee will be 1200000 GROTH.</oldsource>
+        <source>To spend the received coins the min transaction fee will be %1.</source>
+        <oldsource>To spend the received Max privacy coins the min transaction fee will be %1 GROTH.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-text-online-time">
@@ -2352,7 +2353,7 @@ Your version is: %2. Please, check for updates.</oldsource>
     </message>
     <message id="address-permanent">
         <source>Permanent address</source>
-        <oldsource>Permanent token</oldsource>
+        <oldsource>For exchange or mining pool</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-regular">
@@ -2360,7 +2361,8 @@ Your version is: %2. Please, check for updates.</oldsource>
         <translation type="unfinished">Regular</translation>
     </message>
     <message id="tx-max-privacy">
-        <source>Max privacy</source>
+        <source>Offline</source>
+        <oldsource>Max privacy</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-exchanges-not-supported2">
@@ -2371,11 +2373,6 @@ Your version is: %2. Please, check for updates.</oldsource>
     <message id="wallet-receive-exchanges-one-time-not-supported">
         <source>Exchanges or mining pools support only permanent address now.</source>
         <oldsource>Exchanges or mining pools support only permanent token now.</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-send-non-int-note">
-        <source>Address good for 20 transactions.</source>
-        <oldsource>Token good for 20 transactions.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="address-save">
@@ -2487,7 +2484,8 @@ Your version is: %2. Please, check for updates.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable sending max privacy transactions</source>
+        <source>Connect to integrated or own node to enable sending offline transactions</source>
+        <oldsource>Connect to integrated or own node to enable sending max privacy transactions</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="general-recommended-fee-fail">
@@ -2512,8 +2510,9 @@ max privacy</source>
     </message>
     <message id="wallet-txs-status-received-max">
         <source>received
-max privacy</source>
-        <oldsource>received max privacy</oldsource>
+(offline)</source>
+        <oldsource>received
+max privacy</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-canceled-max">
@@ -2530,27 +2529,37 @@ max privacy</source>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
         <source>in progress
-max privacy (offline)</source>
+(offline)</source>
+        <oldsource>in progress
+max privacy (offline)</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
         <source>sent
-max privacy (offline)</source>
+(offline)</source>
+        <oldsource>sent
+max privacy (offline)</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
         <source>received
-max privacy (offline)</source>
+(offline)</source>
+        <oldsource>received
+max privacy (offline)</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
         <source>canceled
-max privacy (offline)</source>
+(offline)</source>
+        <oldsource>canceled
+max privacy (offline)</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
         <source>failed
-max privacy (offline)</source>
+(offline)</source>
+        <oldsource>failed
+max privacy (offline)</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="general-shielded">
@@ -2656,15 +2665,18 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-send-max-privacy-to-yourself-unsupported">
-        <source>Can not sent max privacy transaction to own address</source>
+        <source>Can not sent offline transaction to own address</source>
+        <oldsource>Can not sent max privacy transaction to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-send-max-privacy-unsupported">
-        <source>This type of address does not support max privacy transactions</source>
+        <source>This type of address does not support offline transactions</source>
+        <oldsource>This type of address does not support max privacy transactions</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-send-max-privacy-note-address-offline">
-        <source>Receiver requested Max privacy. Offline transactions remaining: %1</source>
+        <source>Offline transactions remaining: %1</source>
+        <oldsource>Receiver requested Max privacy. Offline transactions remaining: %1</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-send-max-privacy-note-address">
@@ -2680,7 +2692,8 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="max-pivacy-fee-fail">
-        <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
+        <source>Coins were automatically selected to maximize privacy and minimal transaction fee of %1 %2</source>
+        <oldsource>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-amount-label">
