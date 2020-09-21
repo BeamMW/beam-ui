@@ -445,7 +445,8 @@ ColumnLayout {
                 color:                 Style.content_main
                 wrapMode:              Text.WordWrap
                 horizontalAlignment:   Text.AlignHCenter
-                //% "To spend the received coins the min transaction fee will be %1."
+                /*% "To spend the received coins
+the min transaction fee will be %1."*/
                 text: qsTrId("wallet-receive-addr-message").arg("~%1 BEAM".arg(Utils.uiStringToLocale("0.01")))
                 //hardcoded ~0.01 beam (bigromanov requested), text: qsTrId("wallet-receive-addr-message").arg(Utils.formatFeeToSecondCurrency(BeamGlobals.minFeeBeam(true), "1", "BEAM"))
                 visible:               viewModel.isShieldedTx

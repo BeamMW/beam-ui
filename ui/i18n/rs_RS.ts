@@ -2301,8 +2301,9 @@ Your version is: %2. Please, check for updates.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-addr-message">
-        <source>To spend the received coins the min transaction fee will be %1.</source>
-        <oldsource>To spend the received Max privacy coins the min transaction fee will be %1 GROTH.</oldsource>
+        <source>To spend the received coins
+the min transaction fee will be %1.</source>
+        <oldsource>To spend the received coins the min transaction fee will be %1.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-text-online-time">

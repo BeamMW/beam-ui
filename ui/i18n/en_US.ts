@@ -2246,8 +2246,10 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>(for wallets)</translation>
     </message>
     <message id="wallet-receive-addr-message">
-        <source>To spend the received coins the min transaction fee will be %1.</source>
-        <translation>To spend the received coins the min transaction fee will be %1.</translation>
+        <source>To spend the received coins
+the min transaction fee will be %1.</source>
+        <translation>To spend the received coins
+the min transaction fee will be %1.</translation>
     </message>
     <message id="wallet-receive-text-online-time">
         <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
