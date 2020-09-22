@@ -1,10 +1,12 @@
 #pragma once
 #include <QObject>
+#include <QQmlListProperty>
 #include "wallet/core/common.h"
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
 #include "wallet/transactions/swaps/common.h"
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 #include "wallet/client/extensions/news_channels/interface.h"
+#include <type_traits>
 
 Q_DECLARE_METATYPE(beam::wallet::TxID)
 Q_DECLARE_METATYPE(beam::wallet::TxParameters)
@@ -12,6 +14,24 @@ Q_DECLARE_METATYPE(ECC::uintBig)
 
 namespace beamui
 {
+    template<typename, typename = std::void_t<>>
+    struct QmlListPropertyHasNewerConstructor : std::false_type
+    {};
+
+    template<typename T>
+    struct QmlListPropertyHasNewerConstructor<T, std::void_t<decltype(T(nullptr, nullptr))>> : std::true_type
+    {};
+
+    template<typename T>
+    QQmlListProperty<T> CreateQmlListProperty(QObject* obj, QList<T*>& list)
+    {
+        if constexpr (QmlListPropertyHasNewerConstructor<QQmlListProperty<T>>::value)
+        {
+            return QQmlListProperty<T>(obj, &list);
+        }
+        return QQmlListProperty<T>(obj, list);
+    }
+
     // UI labels all for Currencies elements
 
 #define CURRENCY_MAP(macro) \
