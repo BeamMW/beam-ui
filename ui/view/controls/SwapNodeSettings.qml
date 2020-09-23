@@ -456,8 +456,7 @@ SettingsFoldable {
             color:                 control.color
             lineHeight:            1.1 
 /*% "Random node address and port will be displayed 
-when connection is established"
-*/
+when connection is established"*/
             text:                  qsTrId("settings-random-node-text")
         }
 
