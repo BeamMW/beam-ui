@@ -359,7 +359,6 @@ Item {
                     font {
                         pixelSize: 14
                         letterSpacing: 4
-                        capitalization: Font.AllUppercase
                     }
                 }
 
@@ -374,7 +373,6 @@ Item {
                     font {
                         pixelSize: 14
                         letterSpacing: 4
-                        capitalization: Font.AllUppercase
                     }
                 }
 
@@ -392,7 +390,6 @@ Item {
                     font {
                         pixelSize: 14
                         letterSpacing: 4
-                        capitalization: Font.AllUppercase
                     }
                 }
             }
@@ -750,7 +747,6 @@ Please try again later or create an offer yourself."
                             //% "All"
                             label: qsTrId("atomic-swap-all-transactions-tab")
                             onClicked: transactionsTab.state = "filterAllTransactions"
-                            capitalization: Font.AllUppercase
                         }
 
                         TxFilter {
@@ -758,7 +754,6 @@ Please try again later or create an offer yourself."
                             //% "In progress"
                             label: qsTrId("atomic-swap-in-progress-transactions-tab")
                             onClicked: transactionsTab.state = "filterInProgressTransactions"
-                            capitalization: Font.AllUppercase
                         }
 
                         Item {

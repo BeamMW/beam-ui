@@ -193,7 +193,6 @@ ColumnLayout {
             //% "My active addresses"
             label: qsTrId("addresses-tab-active")
             onClicked: addressRoot.state = "active"
-            capitalization: Font.AllUppercase
         }
 
         TxFilter{
@@ -201,7 +200,6 @@ ColumnLayout {
             //% "My expired addresses"
             label: qsTrId("addresses-tab-expired")
             onClicked: addressRoot.state = "expired"
-            capitalization: Font.AllUppercase
         }
 
         TxFilter{
@@ -209,7 +207,6 @@ ColumnLayout {
             //% "Contacts"
             label: qsTrId("addresses-tab-contacts")
             onClicked: addressRoot.state = "contacts"
-            capitalization: Font.AllUppercase
         }
 
         Item {

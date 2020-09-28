@@ -324,7 +324,7 @@ Rectangle {
         var update = function(index) {
             selectedItem = index
             controls.itemAt(index).focus = true;
-            content.setSource("qrc:/" + contentItems[index] + ".qml", Object.assign({"toSend": false}, props))
+            content.setSource("qrc:/" + contentItems[index] + ".qml", Object.assign({"openSend": false}, props))
             viewModel.update(index)
         }
 
@@ -341,7 +341,7 @@ Rectangle {
     }
 
     function openSendDialog(receiver) {
-        updateItem("wallet", {"toSend": true, "token" : receiver})
+        updateItem("wallet", {"openSend": true, "token" : receiver})
     }
 
     function openReceiveDialog(token) {
@@ -409,5 +409,4 @@ Rectangle {
     Component.onDestruction: {
         main.Window.window.closing.disconnect(onClosing)
     }
-
 }

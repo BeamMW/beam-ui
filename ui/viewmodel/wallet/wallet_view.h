@@ -14,14 +14,9 @@
 #pragma once
 
 #include <QObject>
-#include <QQueue>
-#include <QString>
-#include "wallet/transactions/swaps/bridges/bitcoin/client.h"
 #include "model/wallet_model.h"
 #include "model/settings.h"
-#include "viewmodel/messages_view.h"
 #include "viewmodel/notifications/exchange_rates_manager.h"
-#include "tx_object_list.h"
 
 class WalletViewModel : public QObject
 {
@@ -36,7 +31,6 @@ class WalletViewModel : public QObject
     Q_PROPERTY(QString secondCurrencyLabel           READ getSecondCurrencyLabel     NOTIFY secondCurrencyLabelChanged)
     Q_PROPERTY(QString secondCurrencyRateValue       READ getSecondCurrencyRateValue NOTIFY secondCurrencyRateChanged)
     Q_PROPERTY(bool isAllowedBeamMWLinks             READ isAllowedBeamMWLinks       WRITE allowBeamMWLinks      NOTIFY beamMWLinksAllowed)
-    Q_PROPERTY(QAbstractItemModel* transactions      READ getTransactions            NOTIFY transactionsChanged)
 
 public:
     WalletViewModel();
@@ -48,42 +42,27 @@ public:
     QString beamLockedMaturing() const;
     QString beamReceivingChange() const;
     QString beamReceivingIncoming() const;
-
     QString getSecondCurrencyLabel() const;
     QString getSecondCurrencyRateValue() const;
 
-    QAbstractItemModel* getTransactions();
     bool getIsOfflineStatus() const;
     bool getIsFailedStatus() const;
     QString getWalletStatusErrorMsg() const;
     void allowBeamMWLinks(bool value);
 
-    Q_INVOKABLE void cancelTx(const QVariant& variantTxID);
-    Q_INVOKABLE void deleteTx(const QVariant& variantTxID);
-    Q_INVOKABLE PaymentInfoItem* getPaymentInfo(const QVariant& variantTxID);
     Q_INVOKABLE bool isAllowedBeamMWLinks() const;
-    Q_INVOKABLE void exportTxHistoryToCsv();
-
-public slots:
-    void onTransactionsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& items);
-    void onTxHistoryExportedToCsv(const QString& data);
 
 signals:
     void beamAvailableChanged();
     void beamReceivingChanged();
     void beamSendingChanged();
     void beamLockedChanged();
-
     void secondCurrencyLabelChanged();
     void secondCurrencyRateChanged();
-
-    void transactionsChanged();
     void beamMWLinksAllowed();
 
 private:
     WalletModel& _model;
     WalletSettings& _settings;
-    ExchangeRatesManager _exchangeRatesManager;
-    TxObjectList _transactionsList;
-    QQueue<QString> _txHistoryToCsvPaths;
+    ExchangeRatesManager _exchangeRatesManager1;
 };
