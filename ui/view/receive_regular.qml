@@ -361,7 +361,7 @@ ColumnLayout {
                         Layout.fillWidth:     true
                         //% "Offline address"
                         title:                qsTrId("wallet-receive-offline-address")
-                        //% "(for wallet)"
+                        //% "(for wallets)"
                         headerText:           qsTrId("wallet-receive-address-for-wallet")
                         token:                viewModel.offlineToken
                         qrCode:               ""

@@ -343,7 +343,7 @@ ColumnLayout {
                                 color:              Style.content_secondary
                                 font.italic:        true
                                 font.pixelSize:     14
-                                //% "Transaction is slower, receiver pays fees."
+                                //% "The receiver pays fees."
                                 text:               qsTrId("wallet-send-max-privacy-note")
                                 visible:            viewModel.isShieldedTx && !ownAddressUnsupportedMaxPrivacyText.visible
                             }
