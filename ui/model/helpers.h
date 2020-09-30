@@ -48,7 +48,7 @@ inline std::string vec2str(const std::vector<std::string>& vec, char separator)
 {
     return std::accumulate(
         std::next(vec.begin()), vec.end(), *vec.begin(),
-        [separator](std::string a, std::string b)
+        [separator](const std::string& a, const std::string& b)
     {
         return a + separator + b;
     });

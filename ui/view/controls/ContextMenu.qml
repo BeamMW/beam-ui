@@ -21,11 +21,11 @@ T.Menu {
     delegate: MenuItem {
         id: itemControl
 		icon.color: Style.content_main
-		icon.width: 12
-		icon.height: 12
+		icon.width: 16
+		icon.height: 16
 		font.pixelSize: 14
         font.capitalization: Font.AllLowercase
-
+        padding: 0
 		spacing: 14
 
 		contentItem: IconLabel {

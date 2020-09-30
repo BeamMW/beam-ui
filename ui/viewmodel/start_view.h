@@ -18,7 +18,14 @@
 
 #include <QObject>
 #include <QDateTime>
+#if defined(_MSC_VER)
+#pragma warning (push)
+#pragma warning (disable: 4127)
+#endif
 #include <QQmlListProperty>
+#if defined(_MSC_VER)
+#pragma warning (pop)
+#endif
 #include <QTimer>
 #include <QThread>
 #include <QJSValue>
@@ -111,7 +118,7 @@ public:
     void run() override;
 
 signals:
-    void ownerKeyImported(const QString& key);
+    void ownerKeyImported();
 
 private:
     StartViewModel& m_vm;
@@ -129,17 +136,19 @@ class StartViewModel : public QObject
     Q_PROPERTY(QList<QObject*> checkPhrases READ getCheckPhrases NOTIFY checkPhrasesChanged)
     Q_PROPERTY(QChar phrasesSeparator READ getPhrasesSeparator CONSTANT)
     Q_PROPERTY(bool isTrezorEnabled READ isTrezorEnabled CONSTANT)
+    Q_PROPERTY(bool useHWWallet READ useHWWallet WRITE setUseHWWallet NOTIFY isUseHWWalletChanged)
 
 #if defined(BEAM_HW_WALLET)
     Q_PROPERTY(bool isTrezorConnected READ isTrezorConnected NOTIFY isTrezorConnectedChanged)
     Q_PROPERTY(QString trezorDeviceName READ getTrezorDeviceName NOTIFY trezorDeviceNameChanged)
     Q_PROPERTY(bool isOwnerKeyImported READ isOwnerKeyImported NOTIFY isOwnerKeyImportedChanged)
+
 #endif
 
     Q_PROPERTY(int localPort READ getLocalPort CONSTANT)
     Q_PROPERTY(QString remoteNodeAddress READ getRemoteNodeAddress CONSTANT)
     Q_PROPERTY(QString localNodePeer READ getLocalNodePeer CONSTANT)
-    Q_PROPERTY(QQmlListProperty<WalletDBPathItem> walletDBpaths READ getWalletDBpaths CONSTANT)
+    Q_PROPERTY(QList<QObject*> walletDBpaths READ getWalletDBpaths CONSTANT)
     Q_PROPERTY(bool isCapsLockOn READ isCapsLockOn NOTIFY capsLockStateMayBeChanged)
     Q_PROPERTY(bool validateDictionary READ getValidateDictionary WRITE setValidateDictionary NOTIFY validateDictionaryChanged)
 
@@ -152,11 +161,14 @@ public:
 
     bool walletExists() const;
     bool isTrezorEnabled() const;
+    bool useHWWallet() const;
+    void setUseHWWallet(bool value);
 
 #if defined(BEAM_HW_WALLET)
     bool isTrezorConnected() const;
     QString getTrezorDeviceName() const;
     bool isOwnerKeyImported() const;
+
 #endif
 
     bool getIsRecoveryMode() const;
@@ -167,7 +179,7 @@ public:
     int getLocalPort() const;
     QString getRemoteNodeAddress() const;
     QString getLocalNodePeer() const;
-    QQmlListProperty<WalletDBPathItem> getWalletDBpaths();
+    const QList<QObject*>& getWalletDBpaths();
     bool isCapsLockOn() const;
     bool getValidateDictionary() const;
     void setValidateDictionary(bool value);
@@ -193,8 +205,6 @@ public:
 
 #if defined(BEAM_HW_WALLET)
     Q_INVOKABLE void startOwnerKeyImporting(bool creating);
-    //Q_INVOKABLE bool isPasswordValid(const QString& pass);
-    //Q_INVOKABLE void setOwnerKeyPassword(const QString& pass);
 #endif
 
 signals:
@@ -205,6 +215,7 @@ signals:
     void isRecoveryModeChanged();
     void capsLockStateMayBeChanged();
     void validateDictionaryChanged();
+    void isUseHWWalletChanged();
 
 #if defined(BEAM_HW_WALLET)
     void isTrezorConnectedChanged();
@@ -220,7 +231,7 @@ public slots:
     void onNodeSettingsChanged();
 
 #if defined(BEAM_HW_WALLET)
-    void onTrezorOwnerKeyImported(const QString& key);
+    void onTrezorOwnerKeyImported();
     void checkTrezor();
 #endif
 
@@ -233,11 +244,13 @@ private:
     beam::WordList m_generatedPhrases;
     std::string m_password;
 
-    QList<WalletDBPathItem*> m_walletDBpaths;
+    QList<QObject*> m_walletDBpaths;
 
     bool m_isRecoveryMode;
     bool m_validateDictionary = true;
     QJSValue m_callback;
+
+    bool m_useHWWallet;
 
 #if defined(BEAM_HW_WALLET)
     std::shared_ptr<beam::wallet::HWWallet> m_hwWallet;
@@ -246,8 +259,6 @@ private:
     bool m_creating = false;
     friend TrezorThread;
     TrezorThread m_trezorThread;
-    std::string m_ownerKeyEncrypted;
-    std::string m_ownerKeyPass;
     beam::wallet::IPrivateKeyKeeper2::Ptr m_HWKeyKeeper;
 #endif
 };

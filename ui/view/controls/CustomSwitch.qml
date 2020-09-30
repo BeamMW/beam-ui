@@ -19,6 +19,7 @@ T.Switch {
     font.pixelSize: 14
     property bool colored: true
     property bool alwaysGreen: false
+    property bool inverted: true
 
     contentItem: SFText {
         rightPadding: control.indicator.width + control.spacing

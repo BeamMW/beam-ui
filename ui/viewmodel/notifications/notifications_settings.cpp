@@ -20,19 +20,25 @@ NotificationsSettings::NotificationsSettings(WalletSettings& walletSettings)
     loadFromStorage();
 }
 
-bool NotificationsSettings::isNewVersionActive()
+bool NotificationsSettings::isNewVersionActive() const
 {
     return m_isNewVersionActive;
 }
 
-bool NotificationsSettings::isBeamNewsActive()
+bool NotificationsSettings::isBeamNewsActive() const
 {
     return m_isBeamNewsActive;
 }
 
-bool NotificationsSettings::isTxStatusActive()
+bool NotificationsSettings::isTxStatusActive() const
 {
     return m_isTxStatusActive;
+}
+
+bool NotificationsSettings::isAddressExpirationActive() const
+{
+    // TODO:SETTINGS implement
+    return false;
 }
 
 void NotificationsSettings::setNewVersionActive(bool isActive)
@@ -63,6 +69,11 @@ void NotificationsSettings::setTxStatusActive(bool isActive)
         m_storage.setTxStatusActive(isActive);
         emit txStatusActiveChanged();
     }
+}
+
+void NotificationsSettings::setAddressExpirationActive(bool)
+{
+    // TODO:SETTINGS implement
 }
 
 void NotificationsSettings::loadFromStorage()

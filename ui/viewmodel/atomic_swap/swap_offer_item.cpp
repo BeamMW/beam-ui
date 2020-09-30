@@ -20,40 +20,47 @@
 
 using namespace beam::wallet;
 
+SwapOfferItem::SwapOfferItem(QObject* parent /* = nullptr*/)
+    : QObject(parent)
+{
+
+}
+
 SwapOfferItem::SwapOfferItem(const SwapOffer& offer,
                              const QDateTime& timeExpiration)
     : m_offer{offer}
     , m_isBeamSide{offer.isBeamSide()}
-    , m_timeExpiration{timeExpiration} {}
+    , m_timeExpiration{timeExpiration} 
+{}
 
 bool SwapOfferItem::operator==(const SwapOfferItem& other) const
 {
     return getTxID() == other.getTxID();
 }
 
-auto SwapOfferItem::timeCreated() const -> QDateTime
+QDateTime SwapOfferItem::timeCreated() const
 {
     QDateTime datetime;
     datetime.setTime_t(m_offer.timeCreated());
     return datetime;
 }
 
-auto SwapOfferItem::timeExpiration() const -> QDateTime
+QDateTime SwapOfferItem::timeExpiration() const
 {
     return m_timeExpiration;
 }
 
-auto SwapOfferItem::rawAmountSend() const -> beam::Amount
+beam::Amount SwapOfferItem::rawAmountSend() const
 {
     return isSendBeam() ? m_offer.amountBeam() : m_offer.amountSwapCoin(); 
 }
 
-auto SwapOfferItem::rawAmountReceive() const -> beam::Amount
+beam::Amount SwapOfferItem::rawAmountReceive() const
 {
     return isSendBeam() ? m_offer.amountSwapCoin() : m_offer.amountBeam(); 
 }
 
-auto SwapOfferItem::rate() const -> QString
+QString SwapOfferItem::rate() const
 {
     beam::Amount otherCoinAmount =
         isSendBeam() ? rawAmountReceive() : rawAmountSend();
@@ -65,44 +72,50 @@ auto SwapOfferItem::rate() const -> QString
     return QMLGlobals::divideWithPrecision8(beamui::AmountToUIString(otherCoinAmount), beamui::AmountToUIString(beamAmount));
 }
 
-auto SwapOfferItem::amountSend() const -> QString
+QString SwapOfferItem::amountSend() const
 {
     auto coinType = isSendBeam() ? beamui::Currencies::Beam : getSwapCoinType();
     return beamui::AmountToUIString(rawAmountSend(), coinType);
 }
 
-auto SwapOfferItem::amountReceive() const -> QString
+QString SwapOfferItem::amountReceive() const
 {
     auto coinType = isSendBeam() ? getSwapCoinType() : beamui::Currencies::Beam;
     return beamui::AmountToUIString(rawAmountReceive(), coinType);
 }
 
-auto SwapOfferItem::isOwnOffer() const -> bool
+bool SwapOfferItem::isOwnOffer() const
 {
     return m_offer.m_isOwn;
 }
 
-auto SwapOfferItem::isSendBeam() const -> bool
+bool SwapOfferItem::isSendBeam() const
 {
     return m_offer.m_isOwn ? !m_isBeamSide : m_isBeamSide;
 }
 
-auto SwapOfferItem::getTxParameters() const -> beam::wallet::TxParameters
+beam::wallet::TxParameters SwapOfferItem::getTxParameters() const
 {
     return m_offer;
 }
 
-auto SwapOfferItem::getTxID() const -> TxID
+TxID SwapOfferItem::getTxID() const
 {
     return m_offer.m_txId;    
 }
 
-auto SwapOfferItem::getSwapCoinType() const -> beamui::Currencies
+beamui::Currencies SwapOfferItem::getSwapCoinType() const
 {
     return beamui::convertSwapCoinToCurrency(m_offer.swapCoinType());
 }
 
-auto SwapOfferItem::getSwapCoinName() const -> QString
+QString SwapOfferItem::getSwapCoinName() const
 {
     return toString(getSwapCoinType());
+}
+
+void SwapOfferItem::reset(const SwapOffer& offer)
+{
+    m_offer = offer;
+    m_isBeamSide = offer.isBeamSide();
 }

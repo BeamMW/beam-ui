@@ -26,31 +26,33 @@ class SwapOfferItem : public QObject
     Q_OBJECT
 
 public:
-    SwapOfferItem() = default;
+    SwapOfferItem(QObject* parent = nullptr);
     SwapOfferItem(const SwapOffer& offer, const QDateTime& timeExpiration);
     bool operator==(const SwapOfferItem& other) const;
 
-    auto timeCreated() const -> QDateTime;
-    auto timeExpiration() const -> QDateTime;
-    auto amountSend() const -> QString;
-    auto amountReceive() const -> QString;
-    auto rate() const -> QString;
-    auto isOwnOffer() const -> bool;
-    auto isSendBeam() const -> bool;
+    QDateTime timeCreated() const;
+    QDateTime timeExpiration() const;
+    QString amountSend() const;
+    QString amountReceive() const;
+    QString rate() const;
+    bool isOwnOffer() const;
+    bool isSendBeam() const;
 
-    auto rawAmountSend() const -> beam::Amount;
-    auto rawAmountReceive() const -> beam::Amount;
+    beam::Amount rawAmountSend() const;
+    beam::Amount rawAmountReceive() const;
 
-    auto getTxParameters() const -> TxParameters;
-    auto getTxID() const -> TxID;
-    auto getSwapCoinName() const -> QString;
+    TxParameters getTxParameters() const;
+    TxID getTxID() const;
+    QString getSwapCoinName() const;
+protected:
+    void reset(const SwapOffer& offer);
 
 signals:
 
 private:
-    auto getSwapCoinType() const -> beamui::Currencies;
+    beamui::Currencies getSwapCoinType() const;
 
     beam::wallet::SwapOffer m_offer;          /// TxParameters subclass
-    bool m_isBeamSide;          /// pay beam to receive other coin
+    bool m_isBeamSide;                        /// pay beam to receive other coin
     QDateTime m_timeExpiration;
 };

@@ -9,14 +9,18 @@ import "."
 Control {
     id: control
 
-    property string linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
+    property string linkColor: control.enabled ? Style.active : Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.3)
+    property string linkStyle: ["<style>a:link {color: '", linkColor, "'; text-decoration: none;}</style>"].join("")
     property string text
+    property bool   bold: false
     signal   clicked
 
     contentItem: SFText {
         text:           [linkStyle, "<a href='#'>", control.text, "</a>"].join("")
         textFormat:     Text.RichText
         font.pixelSize: 14
+        font.styleName: bold ? "Bold" : "Regular"
+        font.weight:    bold ? Font.Bold : Font.Normal
 
         MouseArea {
             id:                area

@@ -22,9 +22,9 @@ class UtxoViewModel : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QAbstractItemModel* allUtxos  READ getAllUtxos          NOTIFY allUtxoChanged)
-    Q_PROPERTY(QString currentHeight         READ getCurrentHeight     NOTIFY stateChanged)
-    Q_PROPERTY(QString currentStateHash      READ getCurrentStateHash  NOTIFY stateChanged)
+    Q_PROPERTY(QAbstractItemModel* allUtxos       READ getAllUtxos          NOTIFY allUtxoChanged)
+    Q_PROPERTY(QString currentHeight              READ getCurrentHeight     NOTIFY stateChanged)
+    Q_PROPERTY(QString currentStateHash           READ getCurrentStateHash  NOTIFY stateChanged)
 
 public:
     UtxoViewModel();
@@ -33,10 +33,12 @@ public:
     QString getCurrentStateHash() const;
 public slots:
     void onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
+    void onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& items);
 signals:
     void allUtxoChanged();
+    void shieldedCoinsChanged();
     void stateChanged();
 private:
-    UtxoItemList _allUtxos;
-    WalletModel& _model;
+    UtxoItemList m_allUtxos;
+    WalletModel& m_model;
 };

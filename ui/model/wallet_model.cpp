@@ -35,6 +35,7 @@ WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, b
     qRegisterMetaType<vector<beam::wallet::SwapOffer>>("std::vector<beam::wallet::SwapOffer>");
     qRegisterMetaType<beam::Amount>("beam::Amount");
     qRegisterMetaType<vector<beam::wallet::Coin>>("std::vector<beam::wallet::Coin>");
+    qRegisterMetaType<vector<beam::wallet::ShieldedCoin>>("std::vector<beam::wallet::ShieldedCoin>");
     qRegisterMetaType<vector<beam::wallet::WalletAddress>>("std::vector<beam::wallet::WalletAddress>");
     qRegisterMetaType<beam::wallet::WalletID>("beam::wallet::WalletID");
     qRegisterMetaType<beam::wallet::WalletAddress>("beam::wallet::WalletAddress");
@@ -46,6 +47,8 @@ WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, b
     qRegisterMetaType<beam::wallet::VersionInfo>("beam::wallet::VersionInfo");
     qRegisterMetaType<beam::wallet::WalletImplVerInfo>("beam::wallet::WalletImplVerInfo");
     qRegisterMetaType<ECC::uintBig>("ECC::uintBig");
+    qRegisterMetaType<boost::optional<beam::wallet::WalletAddress>>("boost::optional<beam::wallet::WalletAddress>");
+    qRegisterMetaType<beam::wallet::ShieldedCoinsSelectionInfo>("beam::wallet::ShieldedCoinsSelectionInfo");
 
     connect(this, SIGNAL(walletStatus(const beam::wallet::WalletStatus&)), this, SLOT(setStatus(const beam::wallet::WalletStatus&)));
     connect(this, SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
@@ -135,9 +138,26 @@ void WalletModel::onChangeCalculated(beam::Amount change)
     emit changeCalculated(change);
 }
 
+void WalletModel::onShieldedCoinsSelectionCalculated(const ShieldedCoinsSelectionInfo& selectionRes)
+{
+    emit shieldedCoinsSelectionCalculated(selectionRes);
+}
+
+void WalletModel::onNeedExtractShieldedCoins(bool val)
+{
+    emit needExtractShieldedCoins(val);
+}
+
 void WalletModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
     emit allUtxoChanged(action, utxos);
+}
+
+void WalletModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::ShieldedCoin>& items)
+{
+#ifdef BEAM_LELANTUS_SUPPORT
+    emit shieldedCoinChanged(action, items);
+#endif
 }
 
 void WalletModel::onAddressesChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::WalletAddress>& items)
@@ -186,26 +206,22 @@ void WalletModel::onImportRecoveryProgress(uint64_t done, uint64_t total)
 {
 }
 
-void WalletModel::onShowKeyKeeperMessage()
-{
 #if defined(BEAM_HW_WALLET)
+void WalletModel::ShowKeyKeeperMessage()
+{
     emit showTrezorMessage();
-#endif
 }
 
-void WalletModel::onHideKeyKeeperMessage()
+void WalletModel::HideKeyKeeperMessage()
 {
-#if defined(BEAM_HW_WALLET)
     emit hideTrezorMessage();
-#endif
 }
 
-void WalletModel::onShowKeyKeeperError(const std::string& error)
+void WalletModel::ShowKeyKeeperError(const std::string& error)
 {
-#if defined(BEAM_HW_WALLET)
     emit showTrezorError(QString::fromStdString(error));
-#endif
 }
+#endif
 
 void WalletModel::onSwapParamsLoaded(const beam::ByteBuffer& params)
 {
@@ -215,6 +231,11 @@ void WalletModel::onSwapParamsLoaded(const beam::ByteBuffer& params)
 void WalletModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr)
 {
     emit generatedNewAddress(walletAddr);
+}
+
+void WalletModel::onGetAddress(const WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments)
+{
+    emit getAddressReturned(id, address, (int)offlinePayments);
 }
 
 void WalletModel::onNewAddressFailed()
@@ -306,7 +327,7 @@ uint32_t WalletModel::getClientRevision() const
 
 beam::Amount WalletModel::getAvailable() const
 {
-    return m_status.available;
+    return m_status.available + m_status.shielded;
 }
 
 beam::Amount WalletModel::getReceiving() const
@@ -349,11 +370,17 @@ beam::Block::SystemState::ID WalletModel::getCurrentStateID() const
     return m_status.stateID;
 }
 
+bool WalletModel::hasShielded() const
+{
+    return !!m_status.shielded;
+}
+
 void WalletModel::setStatus(const beam::wallet::WalletStatus& status)
 {
-    if (m_status.available != status.available)
+    if (m_status.available != status.available || m_status.shielded != status.shielded)
     {
         m_status.available = status.available;
+        m_status.shielded = status.shielded;
         emit availableChanged();
     }
 

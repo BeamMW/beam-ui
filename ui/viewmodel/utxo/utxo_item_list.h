@@ -17,7 +17,7 @@
 #include "utxo_item.h"
 #include "viewmodel/helpers/list_model.h"
 
-class UtxoItemList : public ListModel<std::shared_ptr<UtxoItem>>
+class UtxoItemList : public ListModel<std::shared_ptr<BaseUtxoItem>>
 {
 
     Q_OBJECT

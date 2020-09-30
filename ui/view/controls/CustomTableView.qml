@@ -11,6 +11,8 @@ TableView {
     property int headerHeight: 46
     property int headerTextFontSize: 14
     property int headerTextLeftMargin: 20
+    property var mainBackgroundRect: null
+    property var backgroundRect: mainBackgroundRect != null ? mainBackgroundRect : main.backgroundRect
 
     style: TableViewStyle {
         transientScrollBars: true
@@ -50,13 +52,13 @@ TableView {
             id: shaderSrc
             objectName: "renderRect"
 
-            sourceRect.x: rect.mapToItem(main.backgroundRect, rect.x, rect.y).x
-            sourceRect.y: rect.mapToItem(main.backgroundRect, rect.x, rect.y).y
+            sourceRect.x: rect.mapToItem(backgroundRect, rect.x, rect.y).x
+            sourceRect.y: rect.mapToItem(backgroundRect, rect.x, rect.y).y
             sourceRect.width: rect.width
             sourceRect.height: rect.height
             width: rect.width
             height: rect.height
-            sourceItem: main.backgroundRect//backRect
+            sourceItem: backgroundRect
             visible: true
         }
 

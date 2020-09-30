@@ -49,6 +49,7 @@ class SendSwapViewModel: public QObject
 
     Q_PROPERTY(bool isTokenGeneratedByNewVersion            READ isTokenGeneratedByNewVersion       NOTIFY  tokenGeneratebByNewAppVersion)
     Q_PROPERTY(QString tokenGeneratedByNewVersionMessage    READ tokenGeneratedByNewVersionMessage  NOTIFY  tokenGeneratebByNewAppVersion)
+    Q_PROPERTY(unsigned int minimalBeamFeeGrothes          READ getMinimalBeamFeeGrothes       NOTIFY minimalBeamFeeGrothesChanged)
 
 public:
     SendSwapViewModel();
@@ -101,6 +102,7 @@ public:
 
     bool isTokenGeneratedByNewVersion() const;
     QString tokenGeneratedByNewVersionMessage() const;
+    unsigned int getMinimalBeamFeeGrothes() const;
 
 public:
     Q_INVOKABLE void setParameters(const QVariant& parameters);    /// used to pass TxParameters directly without Token generation
@@ -125,9 +127,11 @@ signals:
     void secondCurrencyLabelChanged();
     void secondCurrencyRateChanged();
     void tokenGeneratebByNewAppVersion();
+    void minimalBeamFeeGrothesChanged();
 
 public slots:
     void onChangeCalculated(beam::Amount change);
+    void onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes);
 
 private:
     void fillParameters(const beam::wallet::TxParameters& parameters);
@@ -151,4 +155,7 @@ private:
     bool _isBeamSide;
 
     QString _tokenGeneratebByNewAppVersionMessage = "";
+
+    beam::Amount _minimalBeamFeeGrothes;
+    bool _feeChangedByUI = false;
 };

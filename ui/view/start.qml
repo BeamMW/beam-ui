@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 1.2
+import QtQuick.Controls 1.4
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
@@ -167,6 +167,7 @@ Item
                 property Item defaultFocusItem: createNewWallet
 
                 ColumnLayout {
+                    id: startColumn
                     anchors.fill: parent
                     spacing: 0
                     Item {
@@ -176,6 +177,7 @@ Item
                     LogoComponent {
                         id: logoComponent
                         Layout.alignment: Qt.AlignHCenter
+                        isSqueezedHeight: Utils.isSqueezedHeight(startColumn.height)
                     }
 
                     Item {
@@ -211,7 +213,7 @@ Item
                                     visible: startWizzardView.depth > 1
                                 }
 
-                                ColumnLayout {
+                                Row {
                                     spacing: 20
 
                                     PrimaryButton {
@@ -241,7 +243,7 @@ Item
                                             viewModel.isRecoveryMode = false;
                                             startWizzardView.push(createTrezorWalletEntry);
                                         }
-                                    }                                
+                                    }
                                 }
                             }
 
@@ -299,6 +301,7 @@ Item
                 property Item defaultFocusItem: startMigration
 
                 ColumnLayout {
+                    id: migrateColumn
                     anchors.fill: parent
                     spacing: 0
                     Item {
@@ -308,6 +311,7 @@ Item
                     LogoComponent {
                         id: logoComponent
                         Layout.alignment: Qt.AlignHCenter
+                        isSqueezedHeight: Utils.isSqueezedHeight(migrateColumn.height)
                     }
 
                     Item {
@@ -415,9 +419,7 @@ Item
 
         Component {
             id: selectWalletDBView
-            Rectangle
-            {
-                color: Style.background_main
+            Item {
                 function next() {
                     if (nextButton.enabled) {
                         nextButton.clicked();
@@ -430,7 +432,14 @@ Item
                     next();
                 }
 
+                Rectangle {
+                    id: selectBackground
+                    color: Style.background_main
+                    anchors.fill: parent
+                }
+
                 ColumnLayout {
+                    id: selectDBColumn
                     anchors.fill: parent
                     anchors.topMargin: 50
 
@@ -445,6 +454,7 @@ Item
 
                     CustomTableView {
                         id: tableView
+                        mainBackgroundRect: selectBackground
                         property int rowHeight: 44
                         property int minWidth: 894
                         property int textLeftMargin: 20
@@ -457,27 +467,10 @@ Item
                         Layout.maximumHeight: headerHeight + 5*rowHeight
                         Layout.minimumWidth: minWidth
                         Layout.maximumWidth: minWidth
-
                         frameVisible: false
                         selectionMode: SelectionMode.SingleSelection
                         backgroundVisible: false
                         model: viewModel.walletDBpaths
-
-                        headerDelegate: Rectangle {
-                            height: tableView.headerHeight
-                            color: Style.background_second
-
-                            SFLabel {
-                                anchors.verticalCenter: parent.verticalCenter
-                                anchors.left: parent.left
-                                anchors.leftMargin: tableView.textLeftMargin
-                                horizontalAlignment: Qt.AlignHCenter
-                                font.pixelSize: tableView.headerTextFontSize
-                                color: Style.content_secondary
-                                font.weight: Font.Normal
-                                text: styleData.value
-                            }
-                        }
 
                         TableViewColumn {
                             role: "fullPath"
@@ -572,8 +565,9 @@ Item
                         }
 
                         TableViewColumn {
+                            id: actionColumn
                             role: "fullPath"
-                            width: 150
+                            width: tableView.getAdjustedColumnWidth(actionColumn)
                             movable: false
                             delegate: Item {
                                 width: parent.width
@@ -685,8 +679,8 @@ Item
 
                     Item {
                         Layout.fillHeight: true
-                        Layout.minimumHeight: 60
-                        Layout.maximumHeight: 90
+                        Layout.minimumHeight: Utils.isSqueezedHeight(selectDBColumn.height) ? 40 : 60
+                        Layout.maximumHeight: Utils.isSqueezedHeight(selectDBColumn.height) ? 70 : 90
                     }
 
                     SFText {
@@ -2094,15 +2088,17 @@ Item
                 }
 
                 ColumnLayout {
+                    id: openColumn
                     anchors.fill: parent
                     spacing: 0
                     Item {
-                        Layout.preferredHeight: Utils.getLogoTopGapSize(parent.height)
+                        Layout.preferredHeight: Utils.getLogoTopGapSize(openColumn.height)
                     }
 
                     LogoComponent {
                         id: logoComponent
                         Layout.alignment: Qt.AlignHCenter
+                        isSqueezedHeight: Utils.isSqueezedHeight(openColumn.height)
                     }
 
                     Item {
@@ -2123,7 +2119,7 @@ Item
                             }
 
                             Item {
-                                Layout.preferredHeight: 48
+                                Layout.preferredHeight: Utils.isSqueezedHeight(openColumn.height) ? 18 : 48
                             }
 
                             ColumnLayout {
@@ -2161,38 +2157,49 @@ Item
 
                             Row {
                                 Layout.alignment: Qt.AlignHCenter
-                                Layout.topMargin: 18
+                                Layout.topMargin: Utils.isSqueezedHeight(openColumn.height) ? 8 : 18
                                 Layout.preferredHeight: 38
+                                spacing:          20
                                 
+                                function tryOpenWallet() {
+                                    if(openPassword.text.length == 0)
+                                    {
+                                        //% "Please, enter password"
+                                        openPasswordError.text = qsTrId("general-pwd-empty-error");
+                                        openPassword.focus = true;
+                                    }
+                                    else
+                                    {
+                                        openWallet(openPassword.text, function (opened) {
+                                            if(!opened)
+                                            {
+                                                //% "Invalid password provided"
+                                                openPasswordError.text = qsTrId("general-pwd-invalid");
+                                                openPassword.selectAll();
+                                                openPassword.focus = true;
+                                            }
+                                            else
+                                            {
+                                                loadWallet();
+                                            }
+                                        })
+                                    }
+                                }
+
                                 PrimaryButton {
                                     anchors.verticalCenter: parent.verticalCenter
                                     id: btnCurrentWallet
-                                    //% "Show my wallet"
-                                    text: qsTrId("open-show-wallet-button")
+                                    enabled: !viewModel.useHWWallet || viewModel.isTrezorConnected
+                                    text: (viewModel.useHWWallet == false)
+                                        ?
+                                        //% "Show my wallet"
+                                        qsTrId("open-show-wallet-button")
+                                        :
+                                        //% "Show my wallet with Trezor"
+                                        qsTrId("open-show-wallet-button-hw")
                                     icon.source: "qrc:/assets/icon-wallet-small.svg"
                                     onClicked: {
-                                        if(openPassword.text.length == 0)
-                                        {
-                                            //% "Please, enter password"
-                                            openPasswordError.text = qsTrId("general-pwd-empty-error");
-                                            openPassword.focus = true;
-                                        }
-                                        else
-                                        {
-                                            openWallet(openPassword.text, function (opened) {
-                                                if(!opened)
-                                                {
-                                                    //% "Invalid password provided"
-                                                    openPasswordError.text = qsTrId("general-pwd-invalid");
-                                                    openPassword.selectAll();
-                                                    openPassword.focus = true;
-                                                }
-                                                else
-                                                {
-                                                    loadWallet();
-                                                }
-                                            })
-                                        }
+                                        parent.tryOpenWallet();
                                     }
                                 }
                             }
@@ -2200,7 +2207,7 @@ Item
                             Item {
                                 Layout.alignment: Qt.AlignHCenter
                                 Layout.preferredHeight: 36
-                                Layout.topMargin: 20
+                                Layout.topMargin: Utils.isSqueezedHeight(openColumn.height) ? 9 : 20
                                 Layout.bottomMargin: 9
                                 Rectangle {
                                     id: capsWarning
@@ -2243,7 +2250,7 @@ Item
 
                             Item {
                                 Layout.fillHeight: true
-                                Layout.minimumHeight: 40
+                                Layout.minimumHeight: Utils.isSqueezedHeight(openColumn.height) ? 15 : 40
                             }
 
                             SFText {

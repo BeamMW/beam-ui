@@ -97,6 +97,39 @@ namespace
     {
         return beamui::toString(getWalletAddressRaw(notification).m_walletID);
     }
+
+    QString getTxCompletedMessage(const QString& amount, const QString& peer, bool isSender)
+    {
+        return (isSender ? 
+                //% "You sent <b>%1</b> BEAM to <b>%2</b>."
+                qtTrId("notification-transaction-sent-message")
+                : 
+                //% "You received <b>%1 BEAM</b> from <b>%2</b>."
+                qtTrId("notification-transaction-received-message")).arg(amount).arg(peer);
+    }
+
+    QString getTxFailedMessage(const QString& amount, const QString& peer, bool isSender)
+    {
+        return (isSender ?
+            //% "Sending <b>%1 BEAM</b> to <b>%2</b> failed."
+            qtTrId("notification-transaction-send-failed-message")
+            :
+            //% "Receiving <b>%1 BEAM</b> from <b>%2</b> failed."
+            qtTrId("notification-transaction-receive-failed-message")).arg(amount).arg(peer);
+    }
+
+
+    QString getPushTxPeer(const TxParameters& p, bool isSender)
+    {
+        if (isSender)
+        {
+            WalletID wid;
+            getPeerID(p, wid);
+            return std::to_string(wid).c_str();
+        }
+        //% "shielded pool"
+        return qtTrId("from-shielded-pool");
+    }
 }
 
 NotificationItem::NotificationItem(const Notification& notification)
@@ -134,21 +167,6 @@ QString NotificationItem::title() const
 {
     switch(m_notification.m_type)
     {
-        case Notification::Type::SoftwareUpdateAvailable: // TODO(sergey.zavarza): deprecated 
-        {
-            VersionInfo info;
-            if (fromByteBuffer(m_notification.m_content, info))
-            {
-                QString ver = QString::fromStdString(info.m_version.to_string());
-                //% "New version v %1 is available"
-                return qtTrId("notification-update-title").arg(ver);
-            }
-            else
-            {
-                LOG_ERROR() << "Software update notification deserialization error";
-                return QString();
-            }
-        }
         case Notification::Type::WalletImplUpdateAvailable:
         {
             WalletImplVerInfo info;
@@ -156,6 +174,7 @@ QString NotificationItem::title() const
             {
                 QString ver = QString::fromStdString(
                     info.m_version.to_string() + "." + std::to_string(info.m_UIrevision));
+                //% "New version v %1 is available"
                 return qtTrId("notification-update-title").arg(ver);
             }
             else
@@ -173,6 +192,7 @@ QString NotificationItem::title() const
             switch (getTxType(p))
             {
             case TxType::Simple:
+            case TxType::PushTransaction:
                 if (isSender(p))
                 {
                     //% "Transaction was sent"
@@ -193,6 +213,7 @@ QString NotificationItem::title() const
             switch (getTxType(p))
             {
             case TxType::Simple:
+            case TxType::PushTransaction:
                 //% "Transaction failed"
                 return qtTrId("notification-transaction-failed");
             case TxType::AtomicSwap:
@@ -218,23 +239,6 @@ QString NotificationItem::message() const
 {
     switch(m_notification.m_type)
     {
-        case Notification::Type::SoftwareUpdateAvailable: // TODO(sergey.zavarza): deprecated 
-        {
-            VersionInfo info;
-            if (fromByteBuffer(m_notification.m_content, info))
-            {
-                QString currentVer = QString::fromStdString(beamui::getCurrentLibVersion().to_string());
-                QString message("Your current version is v");
-                message.append(currentVer);
-                message.append(". Please update to get the most of your Beam wallet.");
-                return message;
-            }
-            else
-            {
-                LOG_ERROR() << "Software update notification deserialization error";
-                return QString();
-            }
-        }
         case Notification::Type::WalletImplUpdateAvailable:
         {
             WalletImplVerInfo info;
@@ -269,13 +273,12 @@ QString NotificationItem::message() const
             {
                 WalletID wid;
                 getPeerID(p, wid);
-                QString message = (isSender(p) ?
-                    //% "You sent <b>%1</b> BEAM to <b>%2</b>."
-                    qtTrId("notification-transaction-sent-message")
-                    :
-                    //% "You received <b>%1 BEAM</b> from <b>%2</b>."
-                    qtTrId("notification-transaction-received-message"));
-                return message.arg(getAmount(p)).arg(std::to_string(wid).c_str());
+                return getTxCompletedMessage(getAmount(p), std::to_string(wid).c_str(), isSender(p));
+            }
+            case TxType::PushTransaction:
+            {
+                bool sender = isSender(p);
+                return getTxCompletedMessage(getAmount(p), getPushTxPeer(p, sender), sender);
             }
             case TxType::AtomicSwap:
             {
@@ -305,13 +308,12 @@ QString NotificationItem::message() const
             {
                 WalletID wid;
                 getPeerID(p, wid);
-                QString message = (isSender(p) ?
-                    //% "Sending <b>%1 BEAM</b> to <b>%2</b> failed."
-                    qtTrId("notification-transaction-send-failed-message")
-                    :
-                    //% "Receiving <b>%1 BEAM</b> from <b>%2</b> failed."
-                    qtTrId("notification-transaction-receive-failed-message"));
-                return message.arg(getAmount(p)).arg(std::to_string(wid).c_str());
+                return getTxFailedMessage(getAmount(p), std::to_string(wid).c_str(), isSender(p));
+            }
+            case TxType::PushTransaction:
+            {
+                bool sender = isSender(p);
+                return getTxFailedMessage(getAmount(p), getPushTxPeer(p, sender), sender);
             }
             case TxType::AtomicSwap:
             {
@@ -369,6 +371,7 @@ QString NotificationItem::type() const
             switch (getTxType(p))
             {
             case TxType::Simple:
+            case TxType::PushTransaction:
                 return (isSender(p) ? "sent" : "received");
             case TxType::AtomicSwap:
                 return "swapCompleted";
@@ -383,6 +386,8 @@ QString NotificationItem::type() const
             {
             case TxType::Simple:
                 return (isSender(p) ? "failedToSend" : "failedToReceive");
+            case TxType::PushTransaction:
+                return "failedToSend";
             case TxType::AtomicSwap:
                 return isSwapTxExpired(p) ? "swapExpired" : "swapFailed";
             default:

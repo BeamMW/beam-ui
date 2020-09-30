@@ -35,7 +35,7 @@ namespace
         auto responseTime = tx.getResponseTime();
 
         QString time = beamui::convertBeamHeightDiffToTime(minHeight + responseTime - currentHeight);
-        //% "If nobody accepts the offer in %1, the offer will be automatically canceled"
+        //% "If nobody accepts the offer in %1 at most, the offer will be automatically canceled"
         return qtTrId("swap-tx-state-initial").arg(time);
     }
 
@@ -291,8 +291,8 @@ QString SwapTxObject::getSwapCoinFee() const
 
     switch (m_swapTx.getSwapCoin())
     {
-        case AtomicSwapCoin::Bitcoin:   coinTypeQt = Currency::CurrBtc; break;
-        case AtomicSwapCoin::Litecoin:  coinTypeQt = Currency::CurrLtc; break;
+        case AtomicSwapCoin::Bitcoin:   coinTypeQt = Currency::CurrBitcoin; break;
+        case AtomicSwapCoin::Litecoin:  coinTypeQt = Currency::CurrLitecoin; break;
         case AtomicSwapCoin::Qtum:      coinTypeQt = Currency::CurrQtum; break;
         default:                        coinTypeQt = Currency::CurrStart; break;
     }

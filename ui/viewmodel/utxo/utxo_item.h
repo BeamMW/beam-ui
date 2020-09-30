@@ -18,33 +18,66 @@
 #include "utxo_view_status.h"
 #include "utxo_view_type.h"
 
-class UtxoItem : public QObject
+class BaseUtxoItem : public QObject
 {
     Q_OBJECT
-        Q_PROPERTY(QString amount       READ getAmountWithCurrency     NOTIFY changed)
-        Q_PROPERTY(QString maturity     READ maturity                  NOTIFY changed)
-        Q_PROPERTY(int status           READ status                    NOTIFY changed)
-        Q_PROPERTY(int type             READ type                      NOTIFY changed)
+        Q_PROPERTY(QString amount       READ getAmountWithCurrency     CONSTANT)
+        Q_PROPERTY(QString maturity     READ maturity                  CONSTANT)
+        Q_PROPERTY(int status           READ status                    CONSTANT)
+        Q_PROPERTY(int type             READ type                      CONSTANT)
+public:
+
+    BaseUtxoItem() = default;
+    bool operator==(const BaseUtxoItem& other) const;
+
+    virtual uint64_t getHash() const = 0;
+    virtual QString getAmountWithCurrency() const = 0;
+    virtual QString getAmount() const = 0;
+    virtual QString maturity() const = 0;
+    virtual UtxoViewStatus::EnStatus status() const = 0;
+    virtual UtxoViewType::EnType type() const = 0;
+
+    virtual beam::Amount rawAmount() const = 0;
+    virtual beam::Height rawMaturity() const = 0;
+};
+
+class UtxoItem : public BaseUtxoItem
+{
 public:
 
     UtxoItem() = default;
     UtxoItem(const beam::wallet::Coin& coin);
-    bool operator==(const UtxoItem& other) const;
+    uint64_t getHash() const override;
 
-    QString getAmountWithCurrency() const;
-    QString getAmount() const;
-    QString maturity() const;
-    UtxoViewStatus::EnStatus status() const;
-    UtxoViewType::EnType type() const;
+    QString getAmountWithCurrency() const override;
+    QString getAmount() const override;
+    QString maturity() const override;
+    UtxoViewStatus::EnStatus status() const override;
+    UtxoViewType::EnType type() const override;
 
-    beam::Amount rawAmount() const;
-    beam::Height rawMaturity() const;
+    beam::Amount rawAmount() const override;
+    beam::Height rawMaturity() const override;
     const beam::wallet::Coin::ID& get_ID() const;
-
-signals:
-    void changed();
-
 private:
     beam::wallet::Coin _coin;
 };
 
+class ShieldedCoinItem : public BaseUtxoItem
+{
+public:
+
+    ShieldedCoinItem() = default;
+    ShieldedCoinItem(const beam::wallet::ShieldedCoin& coin);
+    uint64_t getHash() const override;
+
+    QString getAmountWithCurrency() const override;
+    QString getAmount() const override;
+    QString maturity() const override;
+    UtxoViewStatus::EnStatus status() const override;
+    UtxoViewType::EnType type() const override;
+
+    beam::Amount rawAmount() const override;
+    beam::Height rawMaturity() const override;
+private:
+    beam::wallet::ShieldedCoin _coin;
+};

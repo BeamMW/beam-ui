@@ -114,14 +114,15 @@ void WalletViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, c
             case TxType::AssetReg:
             case TxType::AssetUnreg:
             case TxType::AssetInfo:
-            case TxType::PushTransaction:
             case TxType::PullTransaction:
+            case TxType::UnlinkFunds:
             case TxType::VoucherRequest:
             case TxType::VoucherResponse:
                 continue;
             case TxType::ALL:
                 assert(!"This should not happen");
                 continue;
+            case TxType::PushTransaction:
             case TxType::Simple:
                 break;
             }

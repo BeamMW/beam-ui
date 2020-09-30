@@ -1,20 +1,19 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.0
-import "."
 import Beam.Wallet 1.0
+import "."
 
 Dialog {
-	id: control
-
 	property var settingsViewModel: function() {
 		return {
 			checkWalletPassword: function() {
-				console.log("settingsViewModel::checkWalletPassword undefined");
-				return false;
+				console.log("settingsViewModel::checkWalletPassword undefined")
+				return false
 			}
-		};
+		}
 	}
+
 	property string dialogTitle: "title"
 	property string dialogMessage: "message"
 	property alias okButtonText: okButton.text

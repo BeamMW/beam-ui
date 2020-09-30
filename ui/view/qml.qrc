@@ -59,6 +59,17 @@
         <file>controls/NotificationPopup.qml</file>
         <file>controls/SeedInput.qml</file>
         <file>controls/CustomTripleSwitch.qml</file>
+        <file>controls/ConfirmRefreshDialog.qml</file>
+        <file>controls/OwnerKeyDialog.qml</file>
+        <file>controls/SettingsFoldable.qml</file>
+        <file>controls/SettingsGeneral.qml</file>
+        <file>controls/SettingsNotifications.qml</file>
+        <file>controls/SettingsUtilities.qml</file>
+        <file>controls/SettingsPrivacy.qml</file>
+        <file>controls/SettingsReport.qml</file>
+        <file>controls/SettingsResources.qml</file>
+        <file>controls/SettingsBeamNode.qml</file>
+        <file>controls/SettingsTitle.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
@@ -220,15 +231,35 @@
         <file>assets/icon-details.svg</file>
         <file>assets/icon-activate.svg</file>
         <file>assets/beta-label.svg</file>
+        <file>assets/beta2-label.svg</file>
         <file>assets/icon-accept-offer.svg</file>
         <file>assets/icon-create-offer.svg</file>
         <file>assets/atomic-empty-state.svg</file>
         <file>assets/icon-trusted-node-status.svg</file>
+        <file>assets/icon-delete-blue.svg</file>
         <file>utils.js</file>
         <file>qmldir</file>
         <file>assets/icon-notifications-swap-completed.svg</file>
         <file>assets/icon-notifications-swap-failed.svg</file>
         <file>assets/icon-notifications-receiving-failed.svg</file>
         <file>assets/icon-notifications-sending-failed.svg</file>
+        <file>controls/Panel.qml</file>
+        <file>controls/TokenInfoPanel.qml</file>
+        <file>controls/TokenInfoDialog.qml</file>
+        <file>controls/SaveAddressDialog.qml</file>
+        <file>controls/FoldablePanel.qml</file>
+        <file>controls/SwapTokenInfoDialog.qml</file>
+        <file>assets/icon-canceled-max-online.svg</file>
+        <file>assets/icon-failed-max-online.svg</file>
+        <file>assets/icon-received-max-online.svg</file>
+        <file>assets/icon-receiving-max-online.svg</file>
+        <file>assets/icon-sending-max-online.svg</file>
+        <file>assets/icon-sent-max-online.svg</file>
+        <file>assets/icon-received-max-offline.svg</file>
+        <file>assets/icon-receiving-max-offline.svg</file>
+        <file>assets/icon-failed-max-offline.svg</file>
+        <file>assets/icon-canceled-max-offline.svg</file>
+        <file>assets/icon-sent-max-offline.svg</file>
+        <file>assets/icon-sending-max-offline.svg</file>
     </qresource>
 </RCC>

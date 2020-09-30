@@ -177,6 +177,24 @@ QString SwapCoinSettingsItem::getTitle() const
     }
 }
 
+ QString SwapCoinSettingsItem::getCoinID() const
+ {
+    switch (m_swapCoin)
+    {
+         case beam::wallet::AtomicSwapCoin::Bitcoin:
+            return "BTC";
+        case beam::wallet::AtomicSwapCoin::Litecoin:
+            return "LTC";
+        case beam::wallet::AtomicSwapCoin::Qtum:
+            return "QTUM";
+        default:
+        {
+            assert(false && "unexpected swap coin!");
+            return QString();
+        }
+    }
+ }
+
 QString SwapCoinSettingsItem::getShowSeedDialogTitle() const
 {
     switch (m_swapCoin)
@@ -284,18 +302,14 @@ QString SwapCoinSettingsItem::getConnectedElectrumTitle() const
     }
 }
 
-int SwapCoinSettingsItem::getFeeRate() const
+bool SwapCoinSettingsItem::getFolded() const
 {
-    return m_feeRate;
+    return m_isFolded;
 }
 
-void SwapCoinSettingsItem::setFeeRate(int value)
+void SwapCoinSettingsItem::setFolded(bool value)
 {
-    if (value != m_feeRate)
-    {
-        m_feeRate = value;
-        emit feeRateChanged();
-    }
+    m_isFolded = value;
 }
 
 QString SwapCoinSettingsItem::getNodeUser() const
@@ -414,20 +428,6 @@ void SwapCoinSettingsItem::setSelectServerAutomatically(bool value)
     {
         m_selectServerAutomatically = value;
         emit selectServerAutomaticallyChanged();
-
-        if (!m_selectServerAutomatically)
-        {
-            setNodeAddressElectrum("");
-        }
-        else
-        {
-            auto settings = m_coinClient.GetSettings();
-
-            if (auto options = settings.GetElectrumConnectionOptions(); options.IsInitialized())
-            {
-                applyNodeAddressElectrum(str2qstr(options.m_address));
-            }
-        }
     }
 }
 
@@ -458,11 +458,27 @@ void SwapCoinSettingsItem::onStatusChanged()
 
     if (m_selectServerAutomatically)
     {
-        auto settings = m_coinClient.GetSettings();
+        using beam::bitcoin::Client;
 
-        if (auto options = settings.GetElectrumConnectionOptions(); options.IsInitialized())
+        switch (m_coinClient.getStatus())
         {
-            applyNodeAddressElectrum(str2qstr(options.m_address));
+        case Client::Status::Connected:
+        case Client::Status::Failed:
+        case Client::Status::Unknown:
+        {
+            auto settings = m_coinClient.GetSettings();
+
+            if (auto options = settings.GetElectrumConnectionOptions(); options.IsInitialized())
+            {
+                applyNodeAddressElectrum(str2qstr(options.m_address));
+            }
+            break;
+        }
+        default:
+        {
+            setNodeAddressElectrum("");
+            setNodePortElectrum("");
+        }
         }
     }
 }
@@ -496,6 +512,7 @@ QString SwapCoinSettingsItem::getConnectionStatus() const
         case Client::Status::Uninitialized:
             return "uninitialized";
             
+        case Client::Status::Initialized:
         case Client::Status::Connecting:
             return "disconnected";
 
@@ -516,15 +533,15 @@ QString SwapCoinSettingsItem::getConnectionErrorMsg() const
     switch (m_coinClient.getConnectionError())
     {
         case IBridge::ErrorType::InvalidCredentials:
-            //% "Invalid credentials"
+            //% "Cannot connect to node. Invalid credentials"
             return qtTrId("swap-invalid-credentials-error");
 
         case IBridge::ErrorType::IOError:
-            //% "Cannot connect to node"
+            //% "Cannot connect to node. Please check your network connection."
             return qtTrId("swap-connection-error");
 
         case IBridge::ErrorType::InvalidGenesisBlock:
-            //% "Invalid genesis block"
+            //% "Cannot connect to node. Invalid genesis block"
             return qtTrId("swap-invalid-genesis-block-error");
 
         default:
@@ -546,7 +563,6 @@ void SwapCoinSettingsItem::applyNodeSettings()
     }
 
     m_settings->SetConnectionOptions(connectionSettings);
-    m_settings->SetFeeRate(m_feeRate);
 
     m_coinClient.SetSettings(*m_settings);
 }
@@ -564,7 +580,6 @@ void SwapCoinSettingsItem::applyElectrumSettings()
     electrumSettings.m_secretWords = GetSeedPhraseFromSeedItems();
     
     m_settings->SetElectrumConnectionOptions(electrumSettings);
-    m_settings->SetFeeRate(m_feeRate);
 
     m_coinClient.SetSettings(*m_settings);
 }
@@ -577,7 +592,8 @@ void SwapCoinSettingsItem::resetNodeSettings()
 
 void SwapCoinSettingsItem::resetElectrumSettings()
 {
-    SetDefaultElectrumSettings();
+    bool clearSeed = getCanEdit();
+    SetDefaultElectrumSettings(clearSeed);
     applyElectrumSettings();
 }
 
@@ -649,7 +665,6 @@ void SwapCoinSettingsItem::LoadSettings()
 
     m_settings = m_coinClient.GetSettings();
 
-    setFeeRate(m_settings->GetFeeRate());
     setConnectionType(m_settings->GetCurrentConnectionType());
 
     if (auto options = m_settings->GetConnectionOptions(); options.IsInitialized())
@@ -663,7 +678,11 @@ void SwapCoinSettingsItem::LoadSettings()
     {
         SetSeedElectrum(options.m_secretWords);
         setSelectServerAutomatically(options.m_automaticChooseAddress);
-        applyNodeAddressElectrum(str2qstr(options.m_address));
+
+        if (m_settings->IsElectrumActivated() || !options.m_automaticChooseAddress)
+        {
+            applyNodeAddressElectrum(str2qstr(options.m_address));
+        }
     }
 }
 
@@ -707,12 +726,16 @@ void SwapCoinSettingsItem::SetDefaultNodeSettings()
     setNodeUser("");
 }
 
-void SwapCoinSettingsItem::SetDefaultElectrumSettings()
+void SwapCoinSettingsItem::SetDefaultElectrumSettings(bool clearSeed)
 {
-    setNodePortElectrum(0);
     setNodeAddressElectrum("");
+    setNodePortElectrum("");
     setSelectServerAutomatically(true);
-    SetSeedElectrum({});
+
+    if (clearSeed)
+    {
+        SetSeedElectrum({});
+    }
 }
 
 void SwapCoinSettingsItem::setConnectionType(beam::bitcoin::ISettings::ConnectionType type)
@@ -747,13 +770,16 @@ std::vector<std::string> SwapCoinSettingsItem::GetSeedPhraseFromSeedItems() cons
     assert(static_cast<size_t>(m_seedPhraseItems.size()) == WORD_COUNT);
 
     std::vector<std::string> seedElectrum;
-    seedElectrum.reserve(WORD_COUNT);
 
     for (const auto phraseItem : m_seedPhraseItems)
     {
         auto item = static_cast<ElectrumPhraseItem*>(phraseItem);
         auto word = item->getPhrase().toStdString();
-        seedElectrum.push_back(word);
+
+        // TODO need to wath this code. fixed ui bug #58
+        // secret word can not empty
+        if (!word.empty())
+            seedElectrum.push_back(word);
     }
 
     return seedElectrum;
@@ -864,7 +890,7 @@ void SettingsViewModel::setNodeAddress(const QString& value)
         }
 
         emit nodeAddressChanged();
-        emit propertiesChanged();
+        emit nodeSettingsChanged();
     }
 }
 
@@ -891,7 +917,7 @@ void SettingsViewModel::setLocalNodeRun(bool value)
         }
 
         emit localNodeRunChanged();
-        emit propertiesChanged();
+        emit nodeSettingsChanged();
     }
 }
 
@@ -906,7 +932,7 @@ void SettingsViewModel::setLocalNodePort(const QString& value)
     {
         m_localNodePort = value;
         emit localNodePortChanged();
-        emit propertiesChanged();
+        emit nodeSettingsChanged();
     }
 }
 
@@ -921,7 +947,7 @@ void SettingsViewModel::setRemoteNodePort(const QString& value)
     {
         m_remoteNodePort = value;
         emit remoteNodePortChanged();
-        emit propertiesChanged();
+        emit nodeSettingsChanged();
     }
 }
 
@@ -1018,18 +1044,23 @@ uint SettingsViewModel::coreAmount() const
     return std::thread::hardware_concurrency();
 }
 
+bool SettingsViewModel::hasPeer(const QString& peer) const
+{
+    return m_localNodePeers.contains(peer, Qt::CaseInsensitive);
+}
+
 void SettingsViewModel::addLocalNodePeer(const QString& localNodePeer)
 {
     m_localNodePeers.push_back(localNodePeer);
     emit localNodePeersChanged();
-    emit propertiesChanged();
+    emit nodeSettingsChanged();
 }
 
 void SettingsViewModel::deleteLocalNodePeer(int index)
 {
     m_localNodePeers.removeAt(index);
     emit localNodePeersChanged();
-    emit propertiesChanged();
+    emit nodeSettingsChanged();
 }
 
 void SettingsViewModel::openUrl(const QString& url)
@@ -1061,7 +1092,7 @@ QString SettingsViewModel::getOwnerKey(const QString& password) const
     return QString::fromStdString(ownerKey);
 }
 
-bool SettingsViewModel::isChanged() const
+bool SettingsViewModel::isNodeChanged() const
 {
     return formatAddress(m_nodeAddress, m_remoteNodePort) != m_settings.getNodeAddress()
         || m_localNodeRun != m_settings.getRunLocalNode()
@@ -1082,7 +1113,7 @@ void SettingsViewModel::applyChanges()
     m_settings.setLocalNodePort(m_localNodePort.toInt());
     m_settings.setLocalNodePeers(m_localNodePeers);
     m_settings.applyChanges();
-    emit propertiesChanged();
+    emit nodeSettingsChanged();
 }
 
 QStringList SettingsViewModel::getLocalNodePeers() const
@@ -1094,7 +1125,7 @@ void SettingsViewModel::setLocalNodePeers(const QStringList& localNodePeers)
 {
     m_localNodePeers = localNodePeers;
     emit localNodePeersChanged();
-    emit propertiesChanged();
+    emit nodeSettingsChanged();
 }
 
 QString SettingsViewModel::getWalletLocation() const
@@ -1119,6 +1150,16 @@ void SettingsViewModel::undoChanges()
 void SettingsViewModel::reportProblem()
 {
     m_settings.reportProblem();
+}
+
+bool SettingsViewModel::exportData() const
+{
+    return AppModel::getInstance().exportData();
+}
+
+bool SettingsViewModel::importData() const
+{
+    return AppModel::getInstance().importData();
 }
 
 void SettingsViewModel::changeWalletPassword(const QString& pass)

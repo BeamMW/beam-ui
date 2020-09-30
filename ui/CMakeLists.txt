@@ -117,6 +117,7 @@ set(UI_SRC
     viewmodel/atomic_swap/swap_tx_object.cpp
     viewmodel/atomic_swap/swap_tx_object_list.cpp
     viewmodel/atomic_swap/swap_offers_view.cpp
+    viewmodel/atomic_swap/swap_token_item.cpp
     viewmodel/start_view.h
     viewmodel/start_view.cpp
     viewmodel/loading_view.h
@@ -166,6 +167,8 @@ set(UI_SRC
     viewmodel/send_swap_view.cpp
     viewmodel/el_seed_validator.h
     viewmodel/el_seed_validator.cpp
+    viewmodel/wallet/token_item.h
+    viewmodel/wallet/token_item.cpp
 
     model/wallet_model.h
     model/wallet_model.cpp
@@ -359,6 +362,8 @@ if(BEAM_USE_STATIC)
             "-framework Carbon"
             "-framework Cocoa"
             "-framework IOKit"
+            "-framework IOSurface"
+            "-framework Metal"
             "-framework QuartzCore"
             "-framework Security"
             "-framework SystemConfiguration"
