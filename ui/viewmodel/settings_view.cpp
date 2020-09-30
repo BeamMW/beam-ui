@@ -874,6 +874,7 @@ SettingsViewModel::SettingsViewModel()
     connect(&AppModel::getInstance().getNode(), SIGNAL(startedNode()), SLOT(onNodeStarted()));
     connect(&AppModel::getInstance().getNode(), SIGNAL(stoppedNode()), SLOT(onNodeStopped()));
     connect(AppModel::getInstance().getWallet().get(), SIGNAL(addressChecked(const QString&, bool)), SLOT(onAddressChecked(const QString&, bool)));
+    connect(AppModel::getInstance().getWallet().get(), SIGNAL(publicAddressChanged(const QString&)), SLOT(onPublicAddressChanged(const QString&)));
     connect(&m_settings, SIGNAL(beamMWLinksChanged()), SIGNAL(beamMWLinksPermissionChanged()));
 
     m_timerId = startTimer(CHECK_INTERVAL);
@@ -908,6 +909,15 @@ void SettingsViewModel::onAddressChecked(const QString& addr, bool isValid)
 
             m_isNeedToApplyChanges = false;
         }
+    }
+}
+
+void SettingsViewModel::onPublicAddressChanged(const QString& publicAddr)
+{
+    if (m_publicAddress != publicAddr)
+    {
+        m_publicAddress = publicAddr;
+        emit publicAddressChanged();
     }
 }
 
@@ -1086,6 +1096,15 @@ void SettingsViewModel::setSecondCurrency(const QString& value)
     m_secondCurrency = value;
     m_settings.setSecondCurrency(value);
     emit secondCurrencyChanged();
+}
+
+const QString& SettingsViewModel::getPublicAddress() const
+{
+    if (m_publicAddress.isEmpty())
+    {
+        AppModel::getInstance().getWallet()->getAsync()->getPublicAddress();
+    }
+    return m_publicAddress;
 }
 
 uint SettingsViewModel::coreAmount() const

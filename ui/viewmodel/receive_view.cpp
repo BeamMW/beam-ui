@@ -229,9 +229,7 @@ void ReceiveViewModel::updateTransactionToken()
         TxParameterID::ClientVersion,
         AppModel::getMyName() + " " + std::string(BEAM_CLIENT_VERSION));
 #endif // BEAM_CLIENT_VERSION
-#ifdef BEAM_LIB_VERSION
-    _txParameters.SetParameter(TxParameterID::LibraryVersion, std::string(BEAM_LIB_VERSION));
-#endif // BEAM_LIB_VERSION
+    AppendLibraryVersion(_txParameters);
 
     if (isShieldedTx())
     {

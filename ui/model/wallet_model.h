@@ -96,7 +96,7 @@ signals:
 
     void exchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>&);
     void notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&);
-
+    void publicAddressChanged(const QString& publicAddr);
 private:
     void onStatus(const beam::wallet::WalletStatus& status) override;
     void onTxStatus(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items) override;
@@ -130,6 +130,7 @@ private:
     void onExportTxHistoryToCsv(const std::string& data) override;
     void onExchangeRates(const std::vector<beam::wallet::ExchangeRate>&) override;
     void onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&) override;
+    void onPublicAddress(const std::string& publicAddr) override;
 #ifdef BEAM_HW_WALLET
     void ShowKeyKeeperMessage() override;
     void HideKeyKeeperMessage() override;

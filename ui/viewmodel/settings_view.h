@@ -243,6 +243,7 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(QString  currentLanguage         READ getCurrentLanguage         WRITE setCurrentLanguage)
     Q_PROPERTY(bool     isValidNodeAddress      READ isValidNodeAddress         NOTIFY validNodeAddressChanged)
     Q_PROPERTY(QString  secondCurrency  READ getSecondCurrency  WRITE setSecondCurrency NOTIFY secondCurrencyChanged)
+    Q_PROPERTY(QString  publicAddress   READ getPublicAddress                           NOTIFY publicAddressChanged)
 
     Q_PROPERTY(QList<QObject*> swapCoinSettingsList READ getSwapCoinSettings    CONSTANT)
     Q_PROPERTY(QObject* notificationsSettings   READ getNotificationsSettings   CONSTANT)
@@ -277,6 +278,8 @@ public:
     QString getSecondCurrency() const;
     void setSecondCurrency(const QString&);
 
+    const QString& getPublicAddress() const;
+
     QStringList getLocalNodePeers() const;
     void setLocalNodePeers(const QStringList& localNodePeers);
     QString getWalletLocation() const;
@@ -309,6 +312,8 @@ public slots:
     void onNodeStarted();
     void onNodeStopped();
     void onAddressChecked(const QString& addr, bool isValid);
+private slots:
+    void onPublicAddressChanged(const QString& publicAddr);
 
 signals:
     void nodeAddressChanged();
@@ -324,7 +329,7 @@ signals:
     void currentLanguageIndexChanged();
     void secondCurrencyChanged();
     void beamMWLinksPermissionChanged();
-
+    void publicAddressChanged();
 protected:
     void timerEvent(QTimerEvent *event) override;
 
@@ -349,6 +354,7 @@ private:
     int m_currentLanguageIndex;
     QString m_secondCurrency;
     int m_timerId;
+    QString m_publicAddress;
 
     const int CHECK_INTERVAL = 1000;
 };

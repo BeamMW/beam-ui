@@ -314,6 +314,11 @@ void WalletModel::onNotificationsChanged(beam::wallet::ChangeAction action, cons
     emit notificationsChanged(action, notifications);
 }
 
+void WalletModel::onPublicAddress(const std::string& publicAddr)
+{
+    emit publicAddressChanged(QString::fromStdString(publicAddr));
+}
+
 beam::Version WalletModel::getLibVersion() const
 {
     beam::Version ver;
