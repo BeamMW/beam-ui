@@ -232,7 +232,7 @@ Item {
                                 .arg(viewModel.activeTxCount)
                             : "";
                     }
-                    gradLeft: Style.swapCurrencyPaneGrLeftBEAM
+                    gradLeft: Style.currencyPaneLeftBEAM
                     currencyIcon: "qrc:/assets/icon-beam.svg"
                     amount: viewModel.beamAvailable
                     currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
@@ -266,21 +266,21 @@ Item {
                 function getSwapCurrencyPaneGradient(currency)  {
                     switch(currency) {
                         case Currency.CurrBitcoin:
-                            return Style.swapCurrencyPaneGrLeftBTC;
+                            return Style.currencyPaneLeftBTC;
                         case Currency.CurrLitecoin:
-                            return Style.swapCurrencyPaneGrLeftLTC;
+                            return Style.currencyPaneLeftLTC;
                         case Currency.CurrQtum:
-                            return Style.swapCurrencyPaneGrLeftQTUM;
+                            return Style.currencyPaneLeftQTUM;
                         case Currency.CurrBitcoinCash:
-                            return Style.swapCurrencyPaneGrLeftBCH;
+                            return Style.currencyPaneLeftBCH;
                         case Currency.CurrBitcoinSV:
-                            return Style.swapCurrencyPaneGrLeftBSV;
+                            return Style.currencyPaneLeftBSV;
                         case Currency.CurrDash:
-                            return Style.swapCurrencyPaneGrLeftDASH;
+                            return Style.currencyPaneLeftDASH;
                         case Currency.CurrDogecoin:
-                            return Style.swapCurrencyPaneGrLeftDOGE;
+                            return Style.currencyPaneLeftDOGE;
                         default:
-                            return Style.swapCurrencyPaneGrLeftBTC;
+                            return Style.currencyPaneLeftBTC;
                     }
                 }
 
@@ -310,11 +310,10 @@ Item {
 
                 SwapCurrencyAmountPane {
                     id: swapOptions
-                    gradLeft: Style.swapCurrencyPaneGrLeftOther
-                    gradRight: Style.swapCurrencyPaneGrLeftOther
+                    gradLeft: Style.currencyPaneLeftOther
+                    gradRight: Style.currencyPaneLeftOther
                     //% "Connect other currency wallet to start trading"
                     amount: qsTrId("atomic-swap-connect-other")
-                    amountWrapMode: Text.Wrap
                     textSize: 14
                     rectOpacity: 1.0
                     textColor: Style.active

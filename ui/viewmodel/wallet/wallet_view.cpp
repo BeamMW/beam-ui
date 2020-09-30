@@ -68,7 +68,7 @@ QString WalletViewModel::getSecondCurrencyLabel() const
     return beamui::getCurrencyLabel(_exchangeRatesManager1.getRateUnitRaw());
 }
 
-QString WalletViewModel::getSecondCurrencyRateValue() const
+QString WalletViewModel::getSecondCurrencyRate() const
 {
     auto rate = _exchangeRatesManager1.getRate(beam::wallet::ExchangeRate::Currency::Beam);
     return beamui::AmountToUIString(rate);

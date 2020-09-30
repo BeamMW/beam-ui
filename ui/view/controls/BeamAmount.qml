@@ -10,31 +10,31 @@ Control {
     id: control
     spacing: 8
 
-    property string  amount:          "0"
-    property string  currencySymbol:  BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-    property string  secondCurrencyLabel:       ""
-    property string  secondCurrencyRateValue:   "0"
-    property string  color:           Style.content_main
-    property bool    error:           false
-    property bool    showZero:        true
-    property bool    showDrop:        false
-    property int     fontSize:        14
-    property bool    lightFont:       true
-    property bool    boldFont:        false
-    property string  iconSource:      ""
-    property size    iconSize:        Qt.size(0, 0)
-    property alias   copyMenuEnabled: amountText.copyMenuEnabled
-    property alias   caption:         captionText.text
-    property int     captionFontSize: 12
-    property string  prefix:          ""
-    property alias   fontSizeMode:    amountText.fontSizeMode
+    property string  amount:              "0"
+    property string  currencySymbol:      BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+    property string  secondCurrencyLabel: ""
+    property string  secondCurrencyRate:  "0"
+    property string  color:               Style.content_main
+    property bool    error:               false
+    property bool    showZero:            true
+    property bool    showDrop:            false
+    property int     fontSize:            14
+    property bool    lightFont:           true
+    property bool    boldFont:            false
+    property string  iconSource:          ""
+    property size    iconSize:            Qt.size(0, 0)
+    property alias   copyMenuEnabled:     amountText.copyMenuEnabled
+    property alias   caption:             captionText.text
+    property int     captionFontSize:     12
+    property string  prefix:              ""
+    property alias   fontSizeMode:        amountText.fontSizeMode
 
     function getAmountInSecondCurrency() {
         if (control.amount == "") return "-"
         var secondCurrencyAmount = 
             Utils.formatAmountToSecondCurrency(
                 control.amount,
-                control.secondCurrencyRateValue,
+                control.secondCurrencyRate,
                 control.secondCurrencyLabel);
         return control.prefix + (secondCurrencyAmount == "" ? "-" : secondCurrencyAmount);
     }

@@ -6,6 +6,7 @@ import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
 import Beam.Wallet 1.0
 import "controls"
+import "wallet"
 import "utils.js" as Utils
 
 Item {
@@ -133,23 +134,38 @@ Item {
                 Layout.topMargin:      29
                 Layout.maximumHeight:  80
                 Layout.minimumHeight:  80
-                Layout.preferredWidth: parseFloat(viewModel.beamSending) > 0 || parseFloat(viewModel.beamReceiving) > 0 ? parent.width : (parent.width / 2)
+                Layout.preferredWidth: parent.width //parseFloat(viewModel.beamSending) > 0 || parseFloat(viewModel.beamReceiving) > 0 ? parent.width : (parent.width / 2)
 
-                available:                  viewModel.beamAvailable
-                locked:                     viewModel.beamLocked
-                lockedMaturing:             viewModel.beamLockedMaturing
-                sending:                    viewModel.beamSending
-                receiving:                  viewModel.beamReceiving
-                receivingChange:            viewModel.beamReceivingChange
-                receivingIncoming:          viewModel.beamReceivingIncoming
-                secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
+                available:             "10" // viewModel.beamAvailable
+                locked:                "20" // viewModel.beamLocked
+                lockedMaturing:        "30" // viewModel.beamLockedMaturing
+                sending:               "40" // viewModel.beamSending
+                receiving:             "50" // viewModel.beamReceiving
+                receivingChange:       "25" // viewModel.beamReceivingChange
+                receivingIncoming:     "25" // viewModel.beamReceivingIncoming
+                secondCurrencyLabel:   "USD" // viewModel.secondCurrencyLabel
+                secondCurrencyRate:    "0.25" // viewModel.secondCurrencyRate
+            }
+
+            FoldablePanel {
+                //% "Assets"
+                title: qsTrId("wallet-assets-title")
+
+                Layout.topMargin: 45
+                Layout.fillWidth: true
+
+                padding:    0
+                background: null
+                fillHeader: false
+                folded:     false
+
+                content: AssetsPanel {
+                }
             }
 
             SFText {
                 Layout.topMargin: 45
-                Layout.alignment: Qt.AlignTop
-                Layout.fillWidth : true
+                Layout.fillWidth: true
 
                 font {
                     pixelSize: 14

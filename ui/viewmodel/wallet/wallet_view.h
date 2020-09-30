@@ -29,7 +29,7 @@ class WalletViewModel : public QObject
     Q_PROPERTY(QString beamReceivingChange           READ beamReceivingChange        NOTIFY beamReceivingChanged)
     Q_PROPERTY(QString beamReceivingIncoming         READ beamReceivingIncoming      NOTIFY beamReceivingChanged)
     Q_PROPERTY(QString secondCurrencyLabel           READ getSecondCurrencyLabel     NOTIFY secondCurrencyLabelChanged)
-    Q_PROPERTY(QString secondCurrencyRateValue       READ getSecondCurrencyRateValue NOTIFY secondCurrencyRateChanged)
+    Q_PROPERTY(QString secondCurrencyRate            READ getSecondCurrencyRate      NOTIFY secondCurrencyRateChanged)
     Q_PROPERTY(bool isAllowedBeamMWLinks             READ isAllowedBeamMWLinks       WRITE allowBeamMWLinks      NOTIFY beamMWLinksAllowed)
 
 public:
@@ -43,7 +43,7 @@ public:
     QString beamReceivingChange() const;
     QString beamReceivingIncoming() const;
     QString getSecondCurrencyLabel() const;
-    QString getSecondCurrencyRateValue() const;
+    QString getSecondCurrencyRate() const;
 
     bool getIsOfflineStatus() const;
     bool getIsFailedStatus() const;

@@ -21,19 +21,19 @@ class QR;
 class ReceiveViewModel: public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString  amountToReceive    READ getAmountToReceive    WRITE  setAmountToReceive   NOTIFY  amountReceiveChanged)
-    Q_PROPERTY(int      addressExpires     READ getAddressExpires     WRITE  setAddressExpires    NOTIFY  addressExpiresChanged)
-    Q_PROPERTY(QString  addressComment     READ getAddressComment     WRITE  setAddressComment    NOTIFY  addressCommentChanged)
-    Q_PROPERTY(QString  receiverAddress    READ getReceiverAddress                                NOTIFY  receiverAddressChanged)
-    Q_PROPERTY(QString  receiverAddressQR  READ getReceiverAddressQR                              NOTIFY  receiverAddressChanged)
-    Q_PROPERTY(QString  transactionTokenQR READ getTransactionTokenQR                             NOTIFY  transactionTokenChanged)
-    Q_PROPERTY(QString  transactionToken   READ getTransactionToken   WRITE  setTranasctionToken  NOTIFY  transactionTokenChanged)
-    Q_PROPERTY(QString  offlineToken       READ getOfflineToken       WRITE  setOfflineToken      NOTIFY  offlineTokenChanged)
-    Q_PROPERTY(bool     commentValid       READ getCommentValid                                   NOTIFY  commentValidChanged)
-    Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                   NOTIFY secondCurrencyLabelChanged)
-    Q_PROPERTY(QString  secondCurrencyRateValue     READ getSecondCurrencyRateValue               NOTIFY secondCurrencyRateChanged)
-    Q_PROPERTY(bool     isShieldedTx       READ isShieldedTx          WRITE setIsShieldedTx       NOTIFY isShieldedTxChanged)
-    Q_PROPERTY(bool     isPermanentAddress READ isPermanentAddress    WRITE setIsPermanentAddress NOTIFY isPermanentAddressChanged)
+    Q_PROPERTY(QString  amountToReceive      READ getAmountToReceive      WRITE  setAmountToReceive    NOTIFY  amountReceiveChanged)
+    Q_PROPERTY(int      addressExpires       READ getAddressExpires       WRITE  setAddressExpires     NOTIFY  addressExpiresChanged)
+    Q_PROPERTY(QString  addressComment       READ getAddressComment       WRITE  setAddressComment     NOTIFY  addressCommentChanged)
+    Q_PROPERTY(QString  receiverAddress      READ getReceiverAddress                                   NOTIFY  receiverAddressChanged)
+    Q_PROPERTY(QString  receiverAddressQR    READ getReceiverAddressQR                                 NOTIFY  receiverAddressChanged)
+    Q_PROPERTY(QString  transactionTokenQR   READ getTransactionTokenQR                                NOTIFY  transactionTokenChanged)
+    Q_PROPERTY(QString  transactionToken     READ getTransactionToken     WRITE  setTranasctionToken   NOTIFY  transactionTokenChanged)
+    Q_PROPERTY(QString  offlineToken         READ getOfflineToken         WRITE  setOfflineToken       NOTIFY  offlineTokenChanged)
+    Q_PROPERTY(bool     commentValid         READ getCommentValid                                      NOTIFY  commentValidChanged)
+    Q_PROPERTY(QString  secondCurrencyLabel  READ getSecondCurrencyLabel                               NOTIFY  secondCurrencyLabelChanged)
+    Q_PROPERTY(QString  secondCurrencyRate   READ getSecondCurrencyRate                                NOTIFY  secondCurrencyRateChanged)
+    Q_PROPERTY(bool     isShieldedTx         READ isShieldedTx            WRITE setIsShieldedTx        NOTIFY  isShieldedTxChanged)
+    Q_PROPERTY(bool     isPermanentAddress   READ isPermanentAddress      WRITE setIsPermanentAddress  NOTIFY  isPermanentAddressChanged)
         
 
 public:
@@ -83,7 +83,7 @@ private:
     void updateTransactionToken();
 
     QString getSecondCurrencyLabel() const;
-    QString getSecondCurrencyRateValue() const;
+    QString getSecondCurrencyRate() const;
 
     bool    isShieldedTx() const;
     void    setIsShieldedTx(bool value);

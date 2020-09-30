@@ -161,7 +161,7 @@ QString TxTableViewModel::getSecondCurrencyLabel() const
     return beamui::getCurrencyLabel(_exchangeRatesManager.getRateUnitRaw());
 }
 
-QString TxTableViewModel::getSecondCurrencyRateValue() const
+QString TxTableViewModel::getSecondCurrencyRate() const
 {
     auto rate = _exchangeRatesManager.getRate(beam::wallet::ExchangeRate::Currency::Beam);
     return beamui::AmountToUIString(rate);

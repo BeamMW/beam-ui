@@ -22,9 +22,9 @@
 
 class TxTableViewModel: public QObject {
     Q_OBJECT
-    Q_PROPERTY(QAbstractItemModel* transactions  READ getTransactions             NOTIFY transactionsChanged)
-    Q_PROPERTY(QString secondCurrencyLabel      READ getSecondCurrencyLabel      NOTIFY secondCurrencyLabelChanged)
-    Q_PROPERTY(QString secondCurrencyRateValue   READ getSecondCurrencyRateValue  NOTIFY secondCurrencyRateChanged)
+    Q_PROPERTY(QAbstractItemModel* transactions READ getTransactions        NOTIFY transactionsChanged)
+    Q_PROPERTY(QString secondCurrencyLabel      READ getSecondCurrencyLabel NOTIFY secondCurrencyLabelChanged)
+    Q_PROPERTY(QString secondCurrencyRate       READ getSecondCurrencyRate  NOTIFY secondCurrencyRateChanged)
 
 public:
     TxTableViewModel();
@@ -32,7 +32,7 @@ public:
 
     QAbstractItemModel* getTransactions();
     QString getSecondCurrencyLabel() const;
-    QString getSecondCurrencyRateValue() const;
+    QString getSecondCurrencyRate() const;
 
     Q_INVOKABLE void exportTxHistoryToCsv();
     Q_INVOKABLE void cancelTx(const QVariant& variantTxID);

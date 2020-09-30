@@ -11,30 +11,24 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#pragma once
 
-#include "theme.h"
+#include <QString>
 
-// static
-QString Theme::name()
+class AssetObject
 {
-    return "mainnet";/*
-#ifdef BEAM_TESTNET
-    return "testnet";
-#elif defined(BEAM_MAINNET)
-    return "mainnet";
-#else
-    return "masternet";
-#endif*/
-}
+public:
+    AssetObject(uint64_t id, const QString& name, uint64_t amount);
+    bool operator==(const AssetObject& other) const;
 
-// static
-QString Theme::iconPath() 
-{
-#ifdef BEAM_TESTNET
-    return ":/assets/icon_testnet.png";
-#elif defined(BEAM_MAINNET)
-    return ":/assets/icon.png";
-#else
-    return ":/assets/icon_masternet.png";
-#endif
-}
+    [[nodiscard]] uint64_t id() const;
+    [[nodiscard]] uint64_t amount() const;
+    [[nodiscard]] uint32_t inTxCnt() const;
+    [[nodiscard]] uint32_t outTxCnt() const;
+    [[nodiscard]] QString  name() const;
+
+protected:
+    uint64_t  _id;
+    uint64_t  _amount;
+    QString   _name;
+};

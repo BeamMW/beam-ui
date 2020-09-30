@@ -31,14 +31,14 @@ ColumnLayout {
     function getFeeInSecondCurrency(feeValue) {
         return Utils.formatFeeToSecondCurrency(
             feeValue,
-            control.secondCurrencyRateValue,
+            control.secondCurrencyRate,
             control.secondCurrencyLabel);
     }
 
     function getAmountInSecondCurrency() {
         return Utils.formatAmountToSecondCurrency(
             control.amountIn,
-            control.secondCurrencyRateValue,
+            control.secondCurrencyRate,
             control.secondCurrencyLabel);
     }
 
@@ -63,11 +63,11 @@ ColumnLayout {
     property var      amountInput:  ainput
     property bool     showTotalFee: false
     property bool     showAddAll:   false
-    property string   secondCurrencyRateValue:  "0"
-    property string   secondCurrencyLabel:      ""
+    property string   secondCurrencyRate:  "0"
+    property string   secondCurrencyLabel: ""
     property var      setMaxAvailableAmount:    {} // callback function to set amount from viewmodel
     property bool     showSecondCurrency:       control.secondCurrencyLabel != "" && control.secondCurrencyLabel != control.currencyLabel
-    readonly property bool  isExchangeRateAvailable:    control.secondCurrencyRateValue != "0"
+    readonly property bool  isExchangeRateAvailable:    control.secondCurrencyRate != "0"
 
     SFText {
         font.pixelSize:   14

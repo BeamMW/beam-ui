@@ -2,13 +2,14 @@ import QtQuick 2.11
 import QtQuick.Layouts 1.3
 import "../utils.js" as Utils
 import Beam.Wallet 1.0
+import "."
 
 Rectangle {
     property color borderColor: Style.swapCurrencyOptionsBorder
     property int borderSize: 0
     property alias rectOpacity: rect.opacity
-    property color gradLeft: Style.swapCurrencyPaneGrLeftBEAM
-    property color gradRight: Style.swapCurrencyPaneGrRight
+    property color gradLeft: Style.currencyPaneLeftBEAM
+    property color gradRight: Style.currencyPaneRight
     property string currencyIcon: ""
     property var currencyIcons: []
     property color stateIndicatorColor: Style.swapCurrencyStateIndicator
@@ -32,24 +33,18 @@ Rectangle {
     height: 67
     color: "transparent"
 
-    Rectangle {
+   PanelGradient {
         id: rect
-        width:  parent.height
-        height: parent.width
-        anchors.centerIn: parent
-        anchors.alignWhenCentered: false
-        rotation: 90
-        radius:   10
-        opacity: 0.3
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: gradRight }
-            GradientStop { position: 1.0; color: gradLeft }
-        }
+
+        leftColor:  control.gradLeft
+        rightColor: control.gradRight
+
         border {
-            width: borderSize
-            color: borderColor
+            color: control.borderColor
+            width: control.borderSize
         }
-    }
+   }
+
     Item {
         anchors.fill: parent
 

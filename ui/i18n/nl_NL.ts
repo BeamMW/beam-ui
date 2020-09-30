@@ -2803,5 +2803,22 @@ Your version is: %2. Please, check for updates.</source>
         <source>Dash electrum</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-assets-title">
+        <source>Assets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="asset-incoming-tip">
+        <source>%1% incoming transactions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="asset-outgoing-tip">
+        <source>%1% outgoing transactions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="asset-inout-tip">
+        <source>%1% active transactions
+(%2% incoming, %3% outgoing)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

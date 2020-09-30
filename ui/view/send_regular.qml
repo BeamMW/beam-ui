@@ -67,7 +67,7 @@ ColumnLayout {
     function getFeeInSecondCurrency(feeValue) {
         return Utils.formatAmountToSecondCurrency(
             feeValue,
-            viewModel.secondCurrencyRateValue ,
+            viewModel.secondCurrencyRate,
             viewModel.secondCurrencyLabel)
     }
 
@@ -373,7 +373,7 @@ ColumnLayout {
                         content: AmountInput {
                             id:                         sendAmountInput
                             amountIn:                   viewModel.sendAmount
-                            secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
+                            secondCurrencyRate:         viewModel.secondCurrencyRate
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
                             setMaxAvailableAmount:      function() {
                                 viewModel.setMaxAvailableAmount();
@@ -506,7 +506,7 @@ ColumnLayout {
                                 lightFont:               false
                                 currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
                                 secondCurrencyLabel:     viewModel.secondCurrencyLabel
-                                secondCurrencyRateValue: viewModel.secondCurrencyRateValue
+                                secondCurrencyRate:      viewModel.secondCurrencyRate
                             }
                     
                             SFText {
@@ -525,7 +525,7 @@ ColumnLayout {
                                 lightFont:               false
                                 currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
                                 secondCurrencyLabel:     viewModel.secondCurrencyLabel
-                                secondCurrencyRateValue: viewModel.secondCurrencyRateValue
+                                secondCurrencyRate:      viewModel.secondCurrencyRate
                             }
 
                             SFText {
@@ -544,7 +544,7 @@ ColumnLayout {
                                 lightFont:               false
                                 currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
                                 secondCurrencyLabel:     viewModel.secondCurrencyLabel
-                                secondCurrencyRateValue: viewModel.secondCurrencyRateValue
+                                secondCurrencyRate:      viewModel.secondCurrencyRate
                             }
 
                             SFText {
@@ -564,7 +564,7 @@ ColumnLayout {
                                 lightFont:               false
                                 currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
                                 secondCurrencyLabel:     viewModel.secondCurrencyLabel
-                                secondCurrencyRateValue: viewModel.secondCurrencyRateValue
+                                secondCurrencyRate:      viewModel.secondCurrencyRate
                             }
                         }
                     }
@@ -594,7 +594,7 @@ ColumnLayout {
                             amount: viewModel.sendAmount,
                             fee: viewModel.feeGrothes,
                             onAcceptedCallback: acceptedCallback,
-                            secondCurrencyRate: viewModel.secondCurrencyRateValue,
+                            secondCurrencyRate: viewModel.secondCurrencyRate,
                             secondCurrencyLabel: viewModel.secondCurrencyLabel
                         }).open();
 

@@ -14,7 +14,6 @@
         <file>controls/AvailablePanel.qml</file>
         <file>controls/Led.qml</file>
         <file>controls/TxFilter.qml</file>
-        <file>controls/TxTable.qml</file>
         <file>controls/TableItem.qml</file>
         <file>controls/ContextMenu.qml</file>
         <file>controls/DefaultButton.qml</file>
@@ -71,6 +70,11 @@
         <file>controls/SettingsResources.qml</file>
         <file>controls/SettingsBeamNode.qml</file>
         <file>controls/SettingsTitle.qml</file>
+        <file>controls/PanelGradient.qml</file>
+        <file>controls/AlphaTip.qml</file>
+        <file>wallet/TxTable.qml</file>
+        <file>wallet/AssetsPanel.qml</file>
+        <file>wallet/AssetInfo.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
@@ -266,5 +270,8 @@
         <file>assets/icon-canceled-max-offline.svg</file>
         <file>assets/icon-sent-max-offline.svg</file>
         <file>assets/icon-sending-max-offline.svg</file>
+        <file>assets/icon-inout-transactions.svg</file>
+        <file>assets/icon-incoming-transaction.svg</file>
+        <file>assets/icon-outgoing-transaction.svg</file>
     </qresource>
 </RCC>

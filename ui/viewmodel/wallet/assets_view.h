@@ -1,4 +1,4 @@
-// Copyright 2019 The Beam Team
+// Copyright 2018 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,30 +11,25 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#pragma once
 
-#include "theme.h"
+#include <QObject>
+#include <QAbstractItemModel>
+#include "assets_list.h"
 
-// static
-QString Theme::name()
-{
-    return "mainnet";/*
-#ifdef BEAM_TESTNET
-    return "testnet";
-#elif defined(BEAM_MAINNET)
-    return "mainnet";
-#else
-    return "masternet";
-#endif*/
-}
+class AssetsViewModel : public QObject {
+    Q_OBJECT
+    Q_PROPERTY(QAbstractItemModel* assets READ getAssets NOTIFY assetsChanged)
 
-// static
-QString Theme::iconPath() 
-{
-#ifdef BEAM_TESTNET
-    return ":/assets/icon_testnet.png";
-#elif defined(BEAM_MAINNET)
-    return ":/assets/icon.png";
-#else
-    return ":/assets/icon_masternet.png";
-#endif
-}
+public:
+    AssetsViewModel();
+    ~AssetsViewModel() override = default;
+
+    QAbstractItemModel* getAssets();
+
+signals:
+    void assetsChanged();
+
+private:
+    AssetsList _assets;
+};

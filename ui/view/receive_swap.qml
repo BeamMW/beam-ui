@@ -162,7 +162,7 @@ Update your settings and try again."
                             currFeeTitle:       true
                             currency:                   viewModel.sentCurrency
                             amountIn:                   viewModel.amountSent
-                            secondCurrencyRateValue:    viewModel.secondCurrencySendRateValue
+                            secondCurrencyRate:         viewModel.secondCurrencySendRate
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
                             multi:                      true
                             resetAmount:                false
@@ -392,7 +392,7 @@ please review your settings and try again"
                             currFeeTitle:               true
                             currency:                   viewModel.receiveCurrency
                             amountIn:                   viewModel.amountToReceive
-                            secondCurrencyRateValue:    viewModel.secondCurrencyReceiveRateValue
+                            secondCurrencyRate:         viewModel.secondCurrencyReceiveRate
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
                             multi:                      true
                             resetAmount:                false

@@ -188,8 +188,8 @@ please review your settings and try again"
                             currFeeTitle:     true
                             amountIn:         viewModel.sendAmount
                             currency:         viewModel.sendCurrency
-                            secondCurrencyRateValue:    viewModel.secondCurrencySendRateValue
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            secondCurrencyRate:    viewModel.secondCurrencySendRate
+                            secondCurrencyLabel:   viewModel.secondCurrencyLabel
                             readOnlyA:        true
                             multi:            false
                             color:            Style.accent_outgoing
@@ -307,7 +307,7 @@ please review your settings and try again"
                             currFeeTitle:               true
                             amountIn:                   viewModel.receiveAmount
                             currency:                   viewModel.receiveCurrency
-                            secondCurrencyRateValue:    viewModel.secondCurrencyReceiveRateValue
+                            secondCurrencyRate:         viewModel.secondCurrencyReceiveRate
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
                             readOnlyA:                  true
                             multi:                      false

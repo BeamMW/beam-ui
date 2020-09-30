@@ -5,7 +5,7 @@ import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
 import Beam.Wallet 1.0
-import "."
+import "../controls"
 
 Control {
     id: control
@@ -361,7 +361,7 @@ Control {
                         //    boldFont:                true
                         //    fontSizeMode:            Text.Fit
                         //    secondCurrencyLabel:     tableViewModel.secondCurrencyLabel
-                        //    secondCurrencyRateValue: tableViewModel.secondCurrencyRateValue
+                        //    secondCurrencyRate:      tableViewModel.secondCurrencyRate
                         //}
                     }
                 }

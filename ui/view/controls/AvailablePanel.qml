@@ -17,28 +17,14 @@ Control {
     property string receivingChange
     property string receivingIncoming
     property string secondCurrencyLabel
-    property string secondCurrencyRateValue
+    property string secondCurrencyRate
 
     property var onOpenExternal: null
     signal copyValueText()
 
-    background: Rectangle {
-        id:       panel
-        color:    "transparent"
-
-        Rectangle {
-            width:  parent.height
-            height: parent.width
-            anchors.centerIn: parent
-            anchors.alignWhenCentered: false
-            rotation: 90
-            radius:   10
-            opacity:  0.3
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: Style.swapCurrencyPaneGrRight }
-                GradientStop { position: 1.0; color: Style.swapCurrencyPaneGrLeftBEAM }
-            }
-        }
+    background: PanelGradient {
+        leftColor:  Style.currencyPaneLeftBEAM
+        rightColor: Style.currencyPaneRight
     }
 
     leftPadding:   20
@@ -46,22 +32,11 @@ Control {
     topPadding:    8
     bottomPadding: 12
 
-    Control {
+    AlphaTip {
         id:            lockedTip
         visible:       lockedArea.containsMouse && parseFloat(locked) > 0
         x:             lockedAmount.x + lockedAmount.parent.x + lockedAmount.parent.parent.x + lockedAmount.width / 2 - lockedTip.width / 2
         y:             lockedAmount.y + lockedAmount.parent.y + lockedAmount.height + 15
-
-        leftPadding:   14
-        rightPadding:  14
-        topPadding:    13
-        bottomPadding: 13
-
-        background: Rectangle {
-            anchors.fill: parent
-            color:  Qt.rgba(255, 255, 255, 0.15)
-            radius: 10
-        }
 
         contentItem:  GridLayout {
             columnSpacing: 15
@@ -73,7 +48,7 @@ Control {
                 font.pixelSize: 12
                 font.styleName: "Light"
                 font.weight:    Font.Light
-                color:          Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+                color:          lockedTip.defTextColor
                 //% "Maturing"
                 text:           qsTrId("available-panel-maturing")
             }
@@ -88,22 +63,11 @@ Control {
         }
     }
 
-    Control {
+    AlphaTip {
         id:            receivingTip
         visible:       receivingArea.containsMouse && parseFloat(receiving) > 0
         x:             receivingAmount.x + receivingAmount.parent.x + receivingAmount.parent.parent.x + receivingAmount.width / 2 - receivingTip.width / 2
         y:             receivingAmount.y + receivingAmount.parent.y + receivingAmount.height + 15
-
-        leftPadding:   14
-        rightPadding:  14
-        topPadding:    13
-        bottomPadding: 13
-
-        background: Rectangle {
-            anchors.fill: parent
-            color:  Qt.rgba(255, 255, 255, 0.15)
-            radius: 10
-        }
 
         contentItem:  GridLayout {
             columnSpacing: 15
@@ -115,7 +79,7 @@ Control {
                 font.pixelSize: 12
                 font.styleName: "Light"
                 font.weight:    Font.Light
-                color:          Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+                color:          lockedTip.defTextColor
                 //% "Change"
                 text:           qsTrId("available-panel-change")
             }
@@ -153,13 +117,13 @@ Control {
 
     contentItem: RowLayout {
         spacing: 0
-        RowLayout{
+        RowLayout {
             Layout.preferredWidth: parseFloat(receiving) > 0 || parseFloat(sending) > 0 ? parent.width / 2 : parent.width
             BeamAmount {
                 amount:            available
                 currencySymbol:    BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                secondCurrencyLabel:        control.secondCurrencyLabel
-                secondCurrencyRateValue:    control.secondCurrencyRateValue
+                secondCurrencyLabel:   control.secondCurrencyLabel
+                secondCurrencyRate:    control.secondCurrencyRate
                 spacing:           15
                 lightFont:         false
                 fontSize:          16
@@ -178,8 +142,8 @@ Control {
                 id:                lockedAmount
                 amount:            locked
                 currencySymbol:    BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                secondCurrencyLabel:        control.secondCurrencyLabel
-                secondCurrencyRateValue:    control.secondCurrencyRateValue
+                secondCurrencyLabel: control.secondCurrencyLabel
+                secondCurrencyRate:  control.secondCurrencyRate
                 lightFont:         false
                 fontSize:          16
                 copyMenuEnabled:   true
@@ -214,8 +178,8 @@ Control {
                 Layout.leftMargin: 20
                 amount:            sending
                 currencySymbol:    BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                secondCurrencyLabel:        control.secondCurrencyLabel
-                secondCurrencyRateValue:    control.secondCurrencyRateValue
+                secondCurrencyLabel:   control.secondCurrencyLabel
+                secondCurrencyRate:    control.secondCurrencyRate
                 color:             Style.accent_outgoing
                 lightFont:         false
                 fontSize:          16
@@ -234,8 +198,8 @@ Control {
                 id:                receivingAmount
                 amount:            receiving
                 currencySymbol:    BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                secondCurrencyLabel:        control.secondCurrencyLabel
-                secondCurrencyRateValue:    control.secondCurrencyRateValue
+                secondCurrencyLabel:   control.secondCurrencyLabel
+                secondCurrencyRate:    control.secondCurrencyRate
                 color:             Style.accent_incoming
                 lightFont:         false
                 fontSize:          16
