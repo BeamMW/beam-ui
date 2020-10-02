@@ -266,6 +266,5 @@
         <file>assets/icon-canceled-max-offline.svg</file>
         <file>assets/icon-sent-max-offline.svg</file>
         <file>assets/icon-sending-max-offline.svg</file>
-        <file>controls/PublicOfflineAddressDialog.qml</file>
     </qresource>
 </RCC>

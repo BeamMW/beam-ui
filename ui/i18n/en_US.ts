@@ -2756,13 +2756,5 @@ Your version is: %2. Please, check for updates.</source>
         <source>Show public offline address</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="public-address-title">
-        <source>Public offline address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="public-offline-address-note">
-        <source>Publishing this address will allow you to be identified</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 </TS>
