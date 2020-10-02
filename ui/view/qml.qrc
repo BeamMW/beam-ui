@@ -71,6 +71,7 @@
         <file>controls/SettingsResources.qml</file>
         <file>controls/SettingsBeamNode.qml</file>
         <file>controls/SettingsTitle.qml</file>
+        <file>controls/PublicOfflineAddressDialog.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
