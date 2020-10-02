@@ -17,6 +17,7 @@
 WalletViewModel::WalletViewModel()
     : _model(*AppModel::getInstance().getWallet())
     , _settings(AppModel::getInstance().getSettings())
+    , _selectedAsset(0)
 {
     connect(&_model, SIGNAL(availableChanged()), this, SIGNAL(beamAvailableChanged()));
     connect(&_model, SIGNAL(receivingChanged()), this, SIGNAL(beamReceivingChanged()));
@@ -82,4 +83,15 @@ bool WalletViewModel::isAllowedBeamMWLinks() const
 void WalletViewModel::allowBeamMWLinks(bool value)
 {
     _settings.setAllowedBeamMWLinks(value);
+}
+
+int WalletViewModel::getSelectedAsset() const
+{
+    return _selectedAsset;
+}
+
+void WalletViewModel::setSelectedAsset(int val)
+{
+    _selectedAsset = val;
+    emit setSelectedAssetChanged();
 }

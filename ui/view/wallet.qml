@@ -136,20 +136,21 @@ Item {
                 Layout.minimumHeight:  80
                 Layout.preferredWidth: parent.width //parseFloat(viewModel.beamSending) > 0 || parseFloat(viewModel.beamReceiving) > 0 ? parent.width : (parent.width / 2)
 
-                available:             "10" // viewModel.beamAvailable
-                locked:                "20" // viewModel.beamLocked
-                lockedMaturing:        "30" // viewModel.beamLockedMaturing
-                sending:               "40" // viewModel.beamSending
-                receiving:             "50" // viewModel.beamReceiving
-                receivingChange:       "25" // viewModel.beamReceivingChange
-                receivingIncoming:     "25" // viewModel.beamReceivingIncoming
-                secondCurrencyLabel:   "USD" // viewModel.secondCurrencyLabel
-                secondCurrencyRate:    "0.25" // viewModel.secondCurrencyRate
+                available:             viewModel.assetAvailable
+                locked:                viewModel.beamLocked
+                lockedMaturing:        viewModel.beamLockedMaturing
+                sending:               viewModel.beamSending
+                receiving:             viewModel.beamReceiving
+                receivingChange:       viewModel.beamReceivingChange
+                receivingIncoming:     viewModel.beamReceivingIncoming
+                secondCurrencyLabel:   viewModel.secondCurrencyLabel
+                secondCurrencyRate:    viewModel.secondCurrencyRate
             }
 
             AssetsPanel {
                 Layout.topMargin: 45
                 Layout.fillWidth: true
+                selection: viewModel.selectedAsset
             }
 
             SFText {

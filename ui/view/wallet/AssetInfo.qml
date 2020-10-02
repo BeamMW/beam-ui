@@ -10,12 +10,14 @@ Control {
 
     property int inTxCnt
     property int outTxCnt
-    property alias amount:  amountCtrl.amount
-    property alias symbol:  amountCtrl.currencySymbol
-    property alias symbol2: amountCtrl.secondCurrencyLabel
-    property alias rate:    amountCtrl.secondCurrencyRate
-    property alias icon:    amountCtrl.iconSource
-    property var   onTip:   null
+    property alias amount:    amountCtrl.amount
+    property alias symbol:    amountCtrl.currencySymbol
+    property alias symbol2:   amountCtrl.secondCurrencyLabel
+    property alias rate:      amountCtrl.secondCurrencyRate
+    property alias icon:      amountCtrl.iconSource
+    property bool  selected:  false
+    property var   onTip:     null
+    property var   onClicked: null
 
     padding: 0
     leftPadding:  20
@@ -24,9 +26,9 @@ Control {
     background: PanelGradient {
         leftColor:        Style.currencyPaneLeftBEAM
         rightColor:       Style.currencyPaneRight
-        leftBorderColor:  "red" //Qt.rgba( 0 / 255, 242 / 255, 209 / 255, 0.99)
-        rightBorderColor: "yellow" //Qt.rgba( 0 / 255, 89 / 134, 209 / 255, 0.99)
-        borderWidth:      1
+        leftBorderColor:  Qt.rgba( 0 / 255, 242 / 255, 209 / 255, 0.99)
+        rightBorderColor: Qt.rgba( 0 / 255, 89 / 134, 209 / 255, 0.4)
+        borderWidth:      control.selected ? 1 : 0
 
         implicitWidth:    control.width
         implicitHeight:   control.height
@@ -57,20 +59,21 @@ Control {
         spacing: 15
 
         BeamAmount {
-            id:                   amountCtrl
-            Layout.fillWidth:     true
-            spacing:              15
-            lightFont:            false
-            fontSize:             16
-            iconSize:             Qt.size(22, 22)
-            copyMenuEnabled:      true
+            id:                amountCtrl
+            Layout.fillWidth:  true
+            spacing:           15
+            lightFont:         false
+            fontSize:          16
+            iconSize:          Qt.size(22, 22)
+            copyMenuEnabled:   true
         }
 
         SvgImage
         {
-            id: txIcon
-            source: control.outTxCnt && control.inTxCnt ? "qrc:/assets/icon-inout-transactions.svg" : control.outTxCnt ? "qrc:/assets/icon-outgoing-transaction.svg" :  "qrc:/assets/icon-incoming-transaction.svg"
+            id:      txIcon
+            source:  control.outTxCnt && control.inTxCnt ? "qrc:/assets/icon-inout-transactions.svg" : control.outTxCnt ? "qrc:/assets/icon-outgoing-transaction.svg" :  "qrc:/assets/icon-incoming-transaction.svg"
             visible: control.outTxCnt || control.inTxCnt
+
             Layout.preferredWidth: 17
             Layout.preferredHeight: 17
 
@@ -87,6 +90,15 @@ Control {
                         )
                     }
                 }
+            }
+        }
+    }
+
+    MouseArea {
+        anchors.fill: control
+        onClicked: {
+            if (control.onClicked) {
+                control.onClicked()
             }
         }
     }

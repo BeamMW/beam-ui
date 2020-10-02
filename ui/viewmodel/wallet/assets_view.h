@@ -24,7 +24,6 @@ class AssetsViewModel : public QObject {
 public:
     AssetsViewModel();
     ~AssetsViewModel() override = default;
-
     QAbstractItemModel* getAssets();
 
 signals:

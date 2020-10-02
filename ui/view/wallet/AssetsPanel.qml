@@ -19,6 +19,7 @@ Control {
     property int hSpacing:       10
     property int vSpacing:       10
     property int maxVisibleRows: 3
+    property int selection:      0
 
     function gridColumns () {
         var avail = control.availableWidth
@@ -121,6 +122,8 @@ Control {
                             outTxCnt:  model.outTxCnt
                             amount:    model.amount
                             symbol:    model.name
+                            selected:  model.index == control.selection
+                            opacity:   model.index == control.selection ? 1 : 0.6
 
                             onTip: function (show, text, iRight, iBtm) {
                                 tip.visible = show
@@ -135,6 +138,10 @@ Control {
                                     tip.y += pr.y
                                     pr = pr.parent
                                 }
+                            }
+
+                            onClicked: function () {
+                                control.selection = model.index
                             }
 
                             rate:      "0.25"

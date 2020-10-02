@@ -34,13 +34,13 @@ AssetsViewModel::AssetsViewModel()
     _assets.insert(asset3);
     _assets.insert(asset4);
     _assets.insert(asset5);
-    /*_assets.insert(asset5);
+    _assets.insert(asset5);
     _assets.insert(asset6);
     _assets.insert(asset7);
     _assets.insert(asset8);
     _assets.insert(asset9);
     _assets.insert(asset10);
-    _assets.insert(asset11);*/
+    _assets.insert(asset11);
 
     emit assetsChanged();
 }
@@ -49,3 +49,4 @@ QAbstractItemModel* AssetsViewModel::getAssets()
 {
     return &_assets;
 }
+

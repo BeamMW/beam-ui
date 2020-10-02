@@ -31,6 +31,7 @@ class WalletViewModel : public QObject
     Q_PROPERTY(QString secondCurrencyLabel           READ getSecondCurrencyLabel     NOTIFY secondCurrencyLabelChanged)
     Q_PROPERTY(QString secondCurrencyRate            READ getSecondCurrencyRate      NOTIFY secondCurrencyRateChanged)
     Q_PROPERTY(bool isAllowedBeamMWLinks             READ isAllowedBeamMWLinks       WRITE allowBeamMWLinks      NOTIFY beamMWLinksAllowed)
+    Q_PROPERTY(int     selectedAsset                 READ getSelectedAsset           WRITE setSelectedAsset      NOTIFY setSelectedAssetChanged)
 
 public:
     WalletViewModel();
@@ -44,6 +45,9 @@ public:
     QString beamReceivingIncoming() const;
     QString getSecondCurrencyLabel() const;
     QString getSecondCurrencyRate() const;
+
+    int  getSelectedAsset() const;
+    void setSelectedAsset(int val);
 
     bool getIsOfflineStatus() const;
     bool getIsFailedStatus() const;
@@ -60,9 +64,11 @@ signals:
     void secondCurrencyLabelChanged();
     void secondCurrencyRateChanged();
     void beamMWLinksAllowed();
+    void setSelectedAssetChanged();
 
 private:
     WalletModel& _model;
     WalletSettings& _settings;
     ExchangeRatesManager _exchangeRatesManager1;
+    int _selectedAsset;
 };
