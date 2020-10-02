@@ -37,7 +37,7 @@ QString AssetObject::name() const {
 }
 
 uint32_t AssetObject::inTxCnt() const {
-    if (_id == 1 || _id == 3) return 1;
+    if (_id == 1 || _id == 3 || _id == 7 || _id == 10) return 1;
     if (_id == 2) return 0;
     return 0;
 }

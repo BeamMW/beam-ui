@@ -273,10 +273,10 @@ ColumnLayout {
                     //
                     FoldablePanel {
                         //% "Request"
-                        title:                   qsTrId("receive-request")
+                        title:                 qsTrId("receive-request")
                         //% "(optional)"
-                        headerText:              qsTrId("receive-request-optional")
-                        Layout.fillWidth:        true
+                        titleTip:              qsTrId("receive-request-optional")
+                        Layout.fillWidth:      true
                         //
                         // Amount
                         //
@@ -350,7 +350,7 @@ ColumnLayout {
                         //% "Online address"
                         title:              qsTrId("wallet-receive-online-address")
                         //% "(for wallet)"
-                        headerText:         qsTrId("wallet-receive-address-for-wallet")
+                        titleTip:           qsTrId("wallet-receive-address-for-wallet")
                         token:              viewModel.transactionToken
                         qrCode:             viewModel.isShieldedTx && viewModel.isNonInteractive ? "" : viewModel.transactionTokenQR
                         isValidToken:       receiveView.isValid()
@@ -363,7 +363,7 @@ ColumnLayout {
                         //% "Offline address"
                         title:                qsTrId("wallet-receive-offline-address")
                         //% "(for wallet)"
-                        headerText:           qsTrId("wallet-receive-address-for-wallet")
+                        titleTip:             qsTrId("wallet-receive-address-for-wallet")
                         token:                viewModel.offlineToken
                         qrCode:               ""
                         isValidToken:         receiveView.isValid()
@@ -377,7 +377,7 @@ ColumnLayout {
                         Layout.fillWidth:   true
                         title:              qsTrId("wallet-receive-online-address")
                         //% "(for exchange or mining pool)"
-                        headerText:         qsTrId("wallet-receive-address-for-exchange")
+                        titleTip:           qsTrId("wallet-receive-address-for-exchange")
                         token:              viewModel.receiverAddress
                         qrCode:             viewModel.receiverAddressQR
                         isValidToken:       receiveView.isValid()
@@ -391,7 +391,7 @@ ColumnLayout {
                         Layout.fillWidth:   true
                         title:              qsTrId("wallet-receive-online-address")
                         //% "(for exchange or mining pool)"
-                        headerText:         qsTrId("wallet-receive-address-for-exchange")
+                        titleTip:           qsTrId("wallet-receive-address-for-exchange")
                         visible:            disabledLabel.text.length > 0
                         content: ColumnLayout {
                             spacing:        20

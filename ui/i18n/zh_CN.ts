@@ -2352,6 +2352,7 @@ Your version is: %2. Please, check for updates.</oldsource>
     </message>
     <message id="receive-request">
         <source>Request</source>
+        <oldsource>REQUEST</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="address-one-time">
@@ -2825,16 +2826,24 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="asset-incoming-tip">
-        <source>%1% incoming transactions</source>
+        <source>%1 incoming transactions</source>
+        <oldsource>%1% incoming transactions</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="asset-outgoing-tip">
-        <source>%1% outgoing transactions</source>
+        <source>%1 outgoing transactions</source>
+        <oldsource>%1% outgoing transactions</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="asset-inout-tip">
-        <source>%1% active transactions
-(%2% incoming, %3% outgoing)</source>
+        <source>%1 active transactions
+(%2 incoming, %3 outgoing)</source>
+        <oldsource>%1% active transactions
+(%2% incoming, %3% outgoing)</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-search-asset">
+        <source>Asset name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

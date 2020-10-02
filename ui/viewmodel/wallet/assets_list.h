@@ -23,7 +23,8 @@ public:
 
     enum class Roles
     {
-        RId = Qt::UserRole + 1,
+        Search = Qt::UserRole + 1,
+        RId,
         RName,
         RAmount,
         RInTxCnt,

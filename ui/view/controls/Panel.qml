@@ -8,9 +8,10 @@ import "."
 Pane {
     id: control
 
-    property alias title:            headerTitle.text
-    property alias headerText:       headerTextLabel.text
-    property alias content:          placeholder.contentItem
+    property alias title:         headerTitle.text
+    property alias titleTip:      headerTextLabel.text
+    property alias content:       placeholder.contentItem
+
     spacing: 0
     padding: 20
 
@@ -20,8 +21,8 @@ Pane {
         RowLayout {
             Layout.alignment: Qt.AlignTop
             SFText {
-                id:    headerTitle
-                    Layout.fillWidth:   headerTextLabel.text.length == 0
+                id: headerTitle
+                Layout.fillWidth: headerTextLabel.text.length == 0
                 color: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
             
                 font {

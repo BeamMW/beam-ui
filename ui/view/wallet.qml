@@ -147,24 +147,13 @@ Item {
                 secondCurrencyRate:    "0.25" // viewModel.secondCurrencyRate
             }
 
-            FoldablePanel {
-                //% "Assets"
-                title: qsTrId("wallet-assets-title")
-
+            AssetsPanel {
                 Layout.topMargin: 45
                 Layout.fillWidth: true
-
-                padding:    0
-                background: null
-                fillHeader: false
-                folded:     false
-
-                content: AssetsPanel {
-                }
             }
 
             SFText {
-                Layout.topMargin: 45
+                Layout.topMargin: 25
                 Layout.fillWidth: true
 
                 font {

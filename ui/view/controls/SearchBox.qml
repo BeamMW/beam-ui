@@ -7,10 +7,10 @@ import "."
 FocusScope {
     id: control
 
-    property alias placeholderText:     input.placeholderText
-    property alias text:                input.text
+    property alias placeholderText:  input.placeholderText
+    property alias text:             input.text
     implicitHeight: 32
-    implicitWidth:  400
+    implicitWidth: searcIconBtn.implicitWidth + (input.visible ? input.implicitWidth : 0)
 
     Rectangle {
         id: rect

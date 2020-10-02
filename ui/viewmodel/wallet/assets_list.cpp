@@ -14,6 +14,7 @@ QHash<int, QByteArray> AssetsList::roleNames() const
 {
     static const auto roles = QHash<int, QByteArray>
     {
+        {static_cast<int>(Roles::Search), "search"},
         {static_cast<int>(Roles::RId), "id"},
         {static_cast<int>(Roles::RName), "name"},
         {static_cast<int>(Roles::RAmount), "amount"},
@@ -44,6 +45,8 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
             return static_cast<qint32>(asset->inTxCnt());
         case Roles::ROutTxCnt:
             return static_cast<qint32>(asset->outTxCnt());
+        case Roles::Search:
+            return asset->name();
         default:
             assert(false);
             return QVariant();

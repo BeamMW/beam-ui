@@ -1,6 +1,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.4
+import QtGraphicalEffects 1.1
 import Beam.Wallet 1.0
 import "../controls"
 
@@ -14,55 +15,45 @@ Control {
     property alias symbol2: amountCtrl.secondCurrencyLabel
     property alias rate:    amountCtrl.secondCurrencyRate
     property alias icon:    amountCtrl.iconSource
+    property var   onTip:   null
 
+    padding: 0
     leftPadding:  20
     rightPadding: 20
 
     background: PanelGradient {
-        leftColor:      Style.currencyPaneLeftBEAM
-        rightColor:     Style.currencyPaneRight
-        implicitWidth:  control.width
-        implicitHeight: control.height
+        leftColor:        Style.currencyPaneLeftBEAM
+        rightColor:       Style.currencyPaneRight
+        leftBorderColor:  "red" //Qt.rgba( 0 / 255, 242 / 255, 209 / 255, 0.99)
+        rightBorderColor: "yellow" //Qt.rgba( 0 / 255, 89 / 134, 209 / 255, 0.99)
+        borderWidth:      1
+
+        implicitWidth:    control.width
+        implicitHeight:   control.height
     }
 
-    AlphaTip {
-        id: tip
-        visible: txIconArea.containsMouse
+    function formTipText () {
+        //% "%1 incoming transactions"
+        var inf = qsTrId("asset-incoming-tip")
 
-        x: txIcon.parent.x + txIcon.x + txIcon.width - tip.width
-        y: txIcon.y + txIcon.height + 6
+        //% "%1 outgoing transactions"
+        var outf = qsTrId("asset-outgoing-tip")
 
-        contentItem: SFText {
-            text: formTipText()
-            font.pixelSize: 12
-            font.styleName: "Light"
-            font.weight:    Font.Light
-            color:          tip.defTextColor
+        //% "%1 active transactions\n(%2 incoming, %3 outgoing)"
+        var inoutf = qsTrId("asset-inout-tip")
+
+        if (control.inTxCnt && control.outTxCnt) {
+            return inoutf.arg(control.inTxCnt + control.outTxCnt).arg(control.inTxCnt).arg(control.outTxCnt)
         }
 
-        function formTipText () {
-            //% "%1 incoming transactions"
-            var inf = qsTrId("asset-incoming-tip")
-
-            //% "%1 outgoing transactions"
-            var outf = qsTrId("asset-outgoing-tip")
-
-            //% "%1 active transactions\n(%2 incoming, %3 outgoing)"
-            var inoutf = qsTrId("asset-inout-tip")
-
-            if (control.inTxCnt && control.outTxCnt) {
-                return inoutf.arg(control.inTxCnt + control.outTxCnt).arg(control.inTxCnt).arg(control.outTxCnt)
-            }
-
-            if (control.inTxCnt) {
-                return inf.arg(control.inTxCnt)
-            }
-
-            return outf.arg(control.outTxCnt)
+        if (control.inTxCnt) {
+            return inf.arg(control.inTxCnt)
         }
+
+        return outf.arg(control.outTxCnt)
     }
 
-    contentItem: RowLayout{
+    contentItem: RowLayout {
         spacing: 15
 
         BeamAmount {
@@ -87,6 +78,15 @@ Control {
                 id: txIconArea
                 anchors.fill: parent
                 hoverEnabled: true
+
+                onContainsMouseChanged: {
+                    if (onTip) {
+                        onTip(containsMouse, formTipText(),
+                              txIcon.parent.x + txIcon.x + txIcon.width,
+                              txIcon.parent.y + txIcon.y + txIcon.height,
+                        )
+                    }
+                }
             }
         }
     }
