@@ -23,7 +23,6 @@ Control {
 
     contentItem: ColumnLayout {
         spacing: 0
-        clip:    true
 
         Item {
             Layout.fillWidth:  true
@@ -83,7 +82,7 @@ Control {
         Item {
             Layout.fillWidth:  true
             visible: connectionError
-            height:  errorRow.height
+            implicitHeight:  errorRow.height
 
             RowLayout {
                 id: errorRow
@@ -96,6 +95,7 @@ Control {
                     color:             Style.validator_error
                     font.pixelSize:    12
                     font.italic:       true
+                    wrapMode:          Text.Wrap
                 }
             }
 
@@ -112,7 +112,7 @@ Control {
             id: contentControl
             visible:             !control.folded
             Layout.fillWidth:    true
-            Layout.topMargin:    connectionError ? 25 - errorRow.height : 25
+            Layout.topMargin:    connectionError ? Math.max(5, 25 - errorRow.height) : 25
             Layout.alignment:    Qt.AlignTop
             contentItem:         content
         }
