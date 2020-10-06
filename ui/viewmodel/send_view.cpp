@@ -435,26 +435,21 @@ void SendViewModel::sendMoney()
         auto messageString = _comment.toStdString();
         saveReceiverAddress(_comment);
 
-        auto p = CreateSimpleTransactionParameters()
-            .SetParameter(TxParameterID::Amount, _sendAmountGrothes)
-            // fee for shielded inputs included automaticaly
-            .SetParameter(TxParameterID::Fee, !!_shieldedInputsFee ? _feeGrothes - _shieldedInputsFee : _feeGrothes)
-            .SetParameter(TxParameterID::Message, beam::ByteBuffer(messageString.begin(), messageString.end()));
+        auto params = CreateSimpleTransactionParameters();
+        LoadReceiverParams(_txParameters, params);
+        params.SetParameter(TxParameterID::Amount, _sendAmountGrothes)
+              // fee for shielded inputs included automaticaly
+              .SetParameter(TxParameterID::Fee, !!_shieldedInputsFee ? _feeGrothes - _shieldedInputsFee : _feeGrothes)
+              .SetParameter(TxParameterID::Message, beam::ByteBuffer(messageString.begin(), messageString.end()));
 
-        CopyParameter(TxParameterID::PeerID, _txParameters, p);
-        CopyParameter(TxParameterID::PeerWalletIdentity, _txParameters, p);
-        p.SetParameter(TxParameterID::TransactionType, isShieldedTx() ? TxType::PushTransaction : TxType::Simple);
+        params.SetParameter(TxParameterID::TransactionType, isShieldedTx() ? TxType::PushTransaction : TxType::Simple);
 
-        if (isShieldedTx())
-        {
-            CopyParameter(TxParameterID::ShieldedVoucherList, _txParameters, p);
-        }
         if (isToken())
         {
-            p.SetParameter(TxParameterID::OriginalToken, _receiverTA.toStdString());
+            params.SetParameter(TxParameterID::OriginalToken, _receiverTA.toStdString());
         }
 
-        _walletModel.getAsync()->startTransaction(std::move(p));
+        _walletModel.getAsync()->startTransaction(std::move(params));
     }
 }
 

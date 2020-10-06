@@ -2762,7 +2762,7 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="public-offline-address-note">
         <source>Publishing this address will allow you to be identified</source>
-        <translation>Public offline address</translation>
+        <translation>Publishing this address will allow you to be identified</translation>
     </message>
 </context>
 </TS>
