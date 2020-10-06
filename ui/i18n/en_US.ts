@@ -2286,8 +2286,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Transaction info</translation>
     </message>
     <message id="receive-request">
-        <source>Request</source>
-        <translation>Request</translation>
+        <source>Request amount</source>
+        <translation>Request amount</translation>
     </message>
     <message id="address-one-time">
         <source>One-time use</source>

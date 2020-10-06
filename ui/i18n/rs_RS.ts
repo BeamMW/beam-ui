@@ -2342,7 +2342,8 @@ Your version is: %2. Please, check for updates.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="receive-request">
-        <source>Request</source>
+        <source>Request amount</source>
+        <oldsource>Request</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="address-one-time">
