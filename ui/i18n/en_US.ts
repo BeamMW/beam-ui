@@ -1684,7 +1684,7 @@ Please check the swap token and try again.</translation>
     <message id="send-swap-token-hint">
         <source>Paste token or address here</source>
         <oldsource>Paste token here</oldsource>
-        <translation type="unfinished">Paste token here</translation>
+        <translation>Paste token or address here</translation>
     </message>
     <message id="swap-tx-state-initial">
         <source>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</source>
@@ -1692,11 +1692,11 @@ Please check the swap token and try again.</translation>
     </message>
     <message id="swap-tx-state-in-progress-normal">
         <source>The swap is expected to complete in %1 at most.</source>
-        <translation>The swap is expected to complete in %1 at most</translation>
+        <translation>The swap is expected to complete in %1 at most.</translation>
     </message>
     <message id="swap-tx-state-in-progress-refunding">
         <source>Swap failed: the refund of your %2 will start in %1. The refund duration depends on the transaction fee you specified for %2.</source>
-        <translation>The refund of your %2 will start in %1. Refund duration depends on the transaction fee you specified for %2</translation>
+        <translation>Swap failed: the refund of your %2 will start in %1. The refund duration depends on the transaction fee you specified for %2.</translation>
     </message>
     <message id="atomic-swap-tx-cancel">
         <source>Cancel atomic swap</source>
@@ -2124,7 +2124,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="tx-failure-assets-disabled">
         <source>Asset transactions are disabled in the wallet</source>
-        <translation type="unfinished">Assets transactions are disabled</translation>
+        <translation>Asset transactions are disabled in the wallet</translation>
     </message>
     <message id="tx-failure-no-vouchers">
         <source>No voucher, no address to receive it</source>
@@ -2235,7 +2235,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-send-max-privacy-note">
         <source>Transaction is slower, receiver pays fees.</source>
-        <translation type="unfinished">Transaction is slower, receiver pays fees.</translation>
+        <translation>Transaction is slower, receiver pays fees.</translation>
     </message>
     <message id="can-not-generate-new-address-message">
         <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
@@ -2515,19 +2515,19 @@ much longer for a transaction to complete. </translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
-        <translation type="unfinished"></translation>
+        <translation>Key keeper out of slots</translation>
     </message>
     <message id="tx-failure-shielded-coin-fee">
         <source>Cannot extract shielded coin, fee is to big.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cannot extract shielded coin, fee is to big.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
         <source>Asset transactions are disabled in the receiver wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>Asset transactions are disabled in the receiver wallet</translation>
     </message>
     <message id="tx-failure-assets-disabled-blockchain">
         <source>Asset transactions are disabled in blockchain configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Asset transactions are disabled in blockchain configuration</translation>
     </message>
     <message id="tx-failure-identity-required">
         <source>Peer Identity required</source>
