@@ -140,7 +140,15 @@ void SendViewModel::setSendAmount(QString value)
         }
         else
         {
-            _sendAmountGrothes = amount - (_maxAvailable ? _feeGrothes : 0);
+            if(amount < _feeGrothes)
+            if (_maxAvailable) 
+            {
+                if(amount < _feeGrothes)
+                    amount = 0;
+                else
+                    amount -= _feeGrothes;
+            }
+            _sendAmountGrothes = amount;
             emit sendAmountChanged();
             _walletModel.getAsync()->calcChange(_sendAmountGrothes + _feeGrothes);
             emit canSendChanged();
