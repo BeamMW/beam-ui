@@ -29,7 +29,10 @@ namespace beamui
         {
             return QQmlListProperty<T>(obj, &list);
         }
-        return QQmlListProperty<T>(obj, list);
+        else
+        {
+            return QQmlListProperty<T>(obj, list);
+        }
     }
 
     // UI labels all for Currencies elements

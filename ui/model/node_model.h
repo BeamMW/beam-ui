@@ -63,10 +63,11 @@ protected:
     void onNodeCreated() override;
     void onNodeDestroyed() override;
 
-    uint16_t getLocalNodePort() override;
-    std::string getLocalNodeStorage() override;
-    std::string getTempDir() override;
-    std::vector<std::string> getLocalNodePeers() override;
+    uint16_t getLocalNodePort() const override;
+    std::string getLocalNodeStorage() const override;
+    std::string getTempDir() const override;
+    std::vector<std::string> getLocalNodePeers() const override;
+    bool getPeersPersistent() const override;
 
     void onNodeThreadFinished() override;
 

@@ -411,7 +411,7 @@ RowLayout {
         RowLayout {
             Layout.columnSpan: 2
             Layout.fillWidth: true
-            visible: root.stateDetails != ""
+            visible: root.stateDetails != "" && root.isFieldVisible()
             SvgImage {
                 Layout.alignment: Qt.AlignTop
                 sourceSize: Qt.size(16, 16)

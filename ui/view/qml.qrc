@@ -69,6 +69,7 @@
         <file>controls/SettingsResources.qml</file>
         <file>controls/SettingsBeamNode.qml</file>
         <file>controls/SettingsTitle.qml</file>
+        <file>controls/PublicOfflineAddressDialog.qml</file>
         <file>controls/PanelGradient.qml</file>
         <file>controls/AlphaTip.qml</file>
         <file>wallet/TxTable.qml</file>

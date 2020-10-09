@@ -124,6 +124,11 @@ QString TokenInfoItem::getTokenType() const
                 //% "Offline (%1)"
                 return qtTrId("tx-address-offline-count").arg(offlinePayments);
             }
+            else if (auto gen = m_parameters.GetParameter<ShieldedTxo::PublicGen>(TxParameterID::PublicAddreessGen); gen)
+            {
+                //% "Offline"
+                return qtTrId("tx-address-offline");
+            }
             //% "Online"
             return qtTrId("tx-address-online");
         }

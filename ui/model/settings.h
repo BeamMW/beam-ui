@@ -62,6 +62,8 @@ public:
     QStringList getLocalNodePeers();
     void setLocalNodePeers(const QStringList& qPeers);
 
+    bool getPeersPersistent() const;
+
     QString getLocale() const;
     QString getLanguageName() const;
     void setLocaleByLanguageName(const QString& language);

@@ -272,8 +272,8 @@ ColumnLayout {
                     // Request
                     //
                     FoldablePanel {
-                        //% "Request"
-                        title:                 qsTrId("receive-request")
+                        //% "Requested amount"
+                        title:                   qsTrId("receive-request")
                         //% "(optional)"
                         titleTip:              qsTrId("receive-request-optional")
                         Layout.fillWidth:      true

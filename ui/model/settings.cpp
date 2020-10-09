@@ -45,6 +45,7 @@ namespace
     const char* kLocalNodeRun = "localnode/run";
     const char* kLocalNodePort = "localnode/port";
     const char* kLocalNodePeers = "localnode/peers";
+    const char* kLocalNodePeersPersistent = "localnode/peers_persistent";
 
     const char* kDefaultLocale = "en_US";
     const char* kDefaultAmountUnit = beam::wallet::usdCurrencyStr.data();
@@ -310,6 +311,12 @@ void WalletSettings::setLocalNodePeers(const QStringList& qPeers)
         m_data.setValue(kLocalNodePeers, QVariant::fromValue(qPeers));
     }
     emit localNodePeersChanged();
+}
+
+bool WalletSettings::getPeersPersistent() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kLocalNodePeersPersistent, false).toBool();
 }
 
 QString WalletSettings::getLocale() const

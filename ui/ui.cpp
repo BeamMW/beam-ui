@@ -60,6 +60,7 @@
 #include "version.h"
 #include "utility/helpers.h"
 #include "model/translator.h"
+#include "model/qr.h"
 
 #if defined(BEAM_USE_STATIC)
 
@@ -263,6 +264,7 @@ int main (int argc, char* argv[])
             qmlRegisterType<ExchangeRatesManager>("Beam.Wallet", 1, 0, "ExchangeRatesManager");
             
             qmlRegisterType<SortFilterProxyModel>("Beam.Wallet", 1, 0, "SortFilterProxyModel");
+            qmlRegisterType<QR>("Beam.Wallet", 1, 0, "QR");
 
             engine.load(QUrl("qrc:/root.qml"));
 
