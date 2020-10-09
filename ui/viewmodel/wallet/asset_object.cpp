@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "asset_object.h"
+#include "../ui_helpers.h"
 
  AssetObject::AssetObject(uint64_t id, const QString& name, uint64_t amount)
     : _id(id)
@@ -28,8 +29,8 @@ uint64_t AssetObject::id() const {
     return _id;
 }
 
-uint64_t AssetObject::amount() const {
-    return _amount;
+QString AssetObject::amount() const {
+    return beamui::AmountToUIString(_amount);
 }
 
 QString AssetObject::name() const {

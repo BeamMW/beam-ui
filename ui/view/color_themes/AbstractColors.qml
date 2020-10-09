@@ -43,9 +43,9 @@ QtObject {
     property color currencyPaneLeftDOGE;
     property color currencyPaneLeftBCH;
     property color currencyPaneLeftBSV;
-    property color currencyPaneLeftOther;
+    property color currencyPaneConnect;
+    property color currencyPaneBorder;
 
     property color swapCurrencyStateIndicator;
-    property color swapCurrencyOptionsBorder;
     property color swapDisconnectNode;
 }

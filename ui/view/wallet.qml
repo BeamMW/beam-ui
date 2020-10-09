@@ -130,31 +130,46 @@ Item {
                 }
             }
 
-            AvailablePanel {
+            /* AvailablePanel {
                 Layout.topMargin:      29
                 Layout.maximumHeight:  80
                 Layout.minimumHeight:  80
-                Layout.preferredWidth: parent.width //parseFloat(viewModel.beamSending) > 0 || parseFloat(viewModel.beamReceiving) > 0 ? parent.width : (parent.width / 2)
 
-                available:             viewModel.assetAvailable
                 locked:                viewModel.beamLocked
                 lockedMaturing:        viewModel.beamLockedMaturing
                 sending:               viewModel.beamSending
                 receiving:             viewModel.beamReceiving
                 receivingChange:       viewModel.beamReceivingChange
                 receivingIncoming:     viewModel.beamReceivingIncoming
-                secondCurrencyLabel:   viewModel.secondCurrencyLabel
-                secondCurrencyRate:    viewModel.secondCurrencyRate
+            } */
+
+            MainInfoPanel {
+                Layout.topMargin: 30
+                Layout.fillWidth: true
+
+                icon:                    viewModel.selectedAsset < 0 ? viewModel.beamIcon : viewModel.assetIcon
+                unitName:                viewModel.selectedAsset < 0 ? BeamGlobals.getCurrencyUnitName(Currency.CurrBeam) : viewModel.assetUnitName
+                assetName:               viewModel.selectedAsset < 0 ? viewModel.beamName : viewModel.assetName
+                available:               viewModel.selectedAsset < 0 ? viewModel.beamAvailable : viewModel.assetAvailable
+                secondCurrencyUnitName:  viewModel.secondCurrencyUnitName
+                secondCurrencyRate:      viewModel.selectedAsset > 0 ? "" : viewModel.secondCurrencyRate
             }
 
             AssetsPanel {
-                Layout.topMargin: 45
+                id: assets
+                Layout.topMargin: 20
                 Layout.fillWidth: true
                 selection: viewModel.selectedAsset
+
+                Binding {
+                    target:   viewModel
+                    property: "selectedAsset"
+                    value:    assets.selection
+                }
             }
 
             SFText {
-                Layout.topMargin: 25
+                Layout.topMargin: assets.folded ? 25 : 35
                 Layout.fillWidth: true
 
                 font {

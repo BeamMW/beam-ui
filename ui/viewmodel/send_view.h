@@ -47,7 +47,7 @@ class SendViewModel: public QObject
     Q_PROPERTY(bool     hasAddress         READ hasAddress                                             NOTIFY hasAddressChanged)
     Q_PROPERTY(bool     isOwnAddress       READ isOwnAddress                                           NOTIFY receiverAddressChanged)
 
-    Q_PROPERTY(QString  secondCurrencyLabel    READ getSecondCurrencyLabel                   NOTIFY secondCurrencyLabelChanged)
+    Q_PROPERTY(QString  secondCurrencyUnitName    READ getSecondCurrencyUnitName                  NOTIFY secondCurrencyUnitNameChanged)
     Q_PROPERTY(QString  secondCurrencyRate     READ getSecondCurrencyRate                    NOTIFY secondCurrencyRateChanged)
 
     Q_PROPERTY(bool     isTokenGeneratebByNewAppVersion      READ isTokenGeneratebByNewAppVersion      NOTIFY tokenGeneratebByNewAppVersion)
@@ -99,7 +99,7 @@ public:
     void setIsToken(bool value);
     bool isOwnAddress() const;
 
-    QString getSecondCurrencyLabel() const;
+    QString getSecondCurrencyUnitName() const;
     QString getSecondCurrencyRate() const;
 
     bool isNeedExtractShieldedCoins() const;
@@ -129,7 +129,7 @@ signals:
     void cantSendToExpired();
     void canSendChanged();
     void isEnoughChanged();
-    void secondCurrencyLabelChanged();
+    void secondCurrencyUnitNameChanged();
     void secondCurrencyRateChanged();
     void receiverAddressChanged();
     void receiverIdentityChanged();

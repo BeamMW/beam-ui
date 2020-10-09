@@ -15,7 +15,7 @@ function formatDateTime(datetime, localeName) {
 }
 
 function formatSecondCurrency(convertedAmount, amount,  exchangeRate, secondCurrLabel) {
-    if (convertedAmount == "0" && amount != "0") { 
+    if (convertedAmount == "0" && amount != "0") {
         var subLabel = BeamGlobals.getCurrencySubunitFromLabel(secondCurrLabel);
         //% "< 1 %1"
         return qsTrId("format-small-amount").arg(subLabel); 
@@ -106,14 +106,14 @@ function navigateToDownloads() {
 
 function currenciesList() {
     return [
-        BeamGlobals.getCurrencyLabel(Currency.CurrBeam),
-        BeamGlobals.getCurrencyLabel(Currency.CurrBitcoin),
-        BeamGlobals.getCurrencyLabel(Currency.CurrLitecoin),
-        BeamGlobals.getCurrencyLabel(Currency.CurrQtum),
-        BeamGlobals.getCurrencyLabel(Currency.CurrBitcoinCash),
-        BeamGlobals.getCurrencyLabel(Currency.CurrBitcoinSV),
-        BeamGlobals.getCurrencyLabel(Currency.CurrDogecoin),
-        BeamGlobals.getCurrencyLabel(Currency.CurrDash)
+        BeamGlobals.getCurrencyUnitName(Currency.CurrBeam),
+        BeamGlobals.getCurrencyUnitName(Currency.CurrBitcoin),
+        BeamGlobals.getCurrencyUnitName(Currency.CurrLitecoin),
+        BeamGlobals.getCurrencyUnitName(Currency.CurrQtum),
+        BeamGlobals.getCurrencyUnitName(Currency.CurrBitcoinCash),
+        BeamGlobals.getCurrencyUnitName(Currency.CurrBitcoinSV),
+        BeamGlobals.getCurrencyUnitName(Currency.CurrDogecoin),
+        BeamGlobals.getCurrencyUnitName(Currency.CurrDash)
     ]
 }
 

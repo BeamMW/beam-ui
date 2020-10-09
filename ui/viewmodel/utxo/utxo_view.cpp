@@ -27,11 +27,10 @@ UtxoViewModel::UtxoViewModel()
         SLOT(onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>&)));
     connect(&m_model, SIGNAL(shieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>&)),
         SLOT(onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>&)));
-    connect(&m_model, SIGNAL(stateIDChanged()), SIGNAL(stateChanged()));
 
+    connect(&m_model, &WalletModel::walletStatusChanged, this, &UtxoViewModel::stateChanged);
     m_model.getAsync()->getUtxosStatus();
 }
-
 
 QAbstractItemModel* UtxoViewModel::getAllUtxos()
 {

@@ -16,6 +16,7 @@
 #include <QObject>
 #include <QAbstractItemModel>
 #include "assets_list.h"
+#include "model/wallet_model.h"
 
 class AssetsViewModel : public QObject {
     Q_OBJECT
@@ -30,5 +31,6 @@ signals:
     void assetsChanged();
 
 private:
-    AssetsList _assets;
+    AssetsList   _assets;
+    WalletModel& _wallet;
 };

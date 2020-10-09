@@ -284,7 +284,7 @@ ColumnLayout {
                             id:                    receiveAmountInput
                             amountIn:              viewModel.amountToReceive
                             secondCurrencyRate:    viewModel.secondCurrencyRate
-                            secondCurrencyLabel:   viewModel.secondCurrencyLabel
+                            secondCurrencyUnitName: viewModel.secondCurrencyUnitName
                         }
                 
                         Binding {

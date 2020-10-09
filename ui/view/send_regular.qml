@@ -68,7 +68,7 @@ ColumnLayout {
         return Utils.formatAmountToSecondCurrency(
             feeValue,
             viewModel.secondCurrencyRate,
-            viewModel.secondCurrencyLabel)
+            viewModel.secondCurrencyUnitName)
     }
 
     //
@@ -374,7 +374,7 @@ ColumnLayout {
                             id:                         sendAmountInput
                             amountIn:                   viewModel.sendAmount
                             secondCurrencyRate:         viewModel.secondCurrencyRate
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            secondCurrencyUnitName:     viewModel.secondCurrencyUnitName
                             setMaxAvailableAmount:      function() {
                                 viewModel.setMaxAvailableAmount();
                             }
@@ -413,7 +413,7 @@ ColumnLayout {
                             showSecondCurrency:         sendAmountInput.showSecondCurrency
                             isExchangeRateAvailable:    sendAmountInput.isExchangeRateAvailable
                             secondCurrencyAmount:       getFeeInSecondCurrency(viewModel.fee)
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            secondCurrencyUnitName:     viewModel.secondCurrencyUnitName
                             minimumFeeNotificationText: viewModel.isShieldedTx || viewModel.isNeedExtractShieldedCoins ?
                                 //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
                                 qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
@@ -504,8 +504,8 @@ ColumnLayout {
                                 error:                   showInsufficientBalanceWarning
                                 amount:                  viewModel.sendAmount
                                 lightFont:               false
-                                currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                                secondCurrencyLabel:     viewModel.secondCurrencyLabel
+                                unitName:                BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
+                                secondCurrencyUnitName:  viewModel.secondCurrencyUnitName
                                 secondCurrencyRate:      viewModel.secondCurrencyRate
                             }
                     
@@ -523,8 +523,8 @@ ColumnLayout {
                                 error:                   showInsufficientBalanceWarning
                                 amount:                  viewModel.change
                                 lightFont:               false
-                                currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                                secondCurrencyLabel:     viewModel.secondCurrencyLabel
+                                unitName:                BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
+                                secondCurrencyUnitName:  viewModel.secondCurrencyUnitName
                                 secondCurrencyRate:      viewModel.secondCurrencyRate
                             }
 
@@ -542,8 +542,8 @@ ColumnLayout {
                                 error:                   showInsufficientBalanceWarning
                                 amount:                  viewModel.fee
                                 lightFont:               false
-                                currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                                secondCurrencyLabel:     viewModel.secondCurrencyLabel
+                                unitName:                BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
+                                secondCurrencyUnitName:  viewModel.secondCurrencyUnitName
                                 secondCurrencyRate:      viewModel.secondCurrencyRate
                             }
 
@@ -562,8 +562,8 @@ ColumnLayout {
                                 error:                   showInsufficientBalanceWarning
                                 amount:                  viewModel.available
                                 lightFont:               false
-                                currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                                secondCurrencyLabel:     viewModel.secondCurrencyLabel
+                                unitName:                BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
+                                secondCurrencyUnitName:  viewModel.secondCurrencyUnitName
                                 secondCurrencyRate:      viewModel.secondCurrencyRate
                             }
                         }
@@ -595,7 +595,7 @@ ColumnLayout {
                             fee: viewModel.feeGrothes,
                             onAcceptedCallback: acceptedCallback,
                             secondCurrencyRate: viewModel.secondCurrencyRate,
-                            secondCurrencyLabel: viewModel.secondCurrencyLabel
+                            secondCurrencyUnitName: viewModel.secondCurrencyUnitName
                         }).open();
 
                     function acceptedCallback() {

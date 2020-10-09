@@ -26,7 +26,7 @@ RowLayout {
     property string token
     property string amount
     property string secondCurrencyRate
-    property string secondCurrencyLabel
+    property string secondCurrencyUnitName
     property string searchFilter: ""
     property bool hideFiltered: false
     property var searchRegExp: new RegExp("("+root.searchFilter+")", "gi")
@@ -36,7 +36,7 @@ RowLayout {
     property bool isMaxPrivacy
 
     readonly property string amountPrefix: root.isIncome ? "+" : "-"
-    readonly property string amountWithLabel: amountPrefix + " " + root.amount + " " + BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+    readonly property string amountWithLabel: amountPrefix + " " + root.amount + " " + BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
     readonly property string secondCurrencyAmount: getAmountInSecondCurrency()
 
     property var onOpenExternal: null
@@ -72,10 +72,10 @@ RowLayout {
             var amountInSecondCurrency = Utils.formatAmountToSecondCurrency(
                 root.amount,
                 root.secondCurrencyRate,
-                root.secondCurrencyLabel);
+                root.secondCurrencyUnitName);
             if (amountInSecondCurrency == "") {
                 //% "Exchange rate to %1 was not available at the time of transaction"
-                return  qsTrId("tx-details-exchange-rate-not-available").arg(root.secondCurrencyLabel);
+                return  qsTrId("tx-details-exchange-rate-not-available").arg(root.secondCurrencyUnitName);
             }
             else {
                 //% "(for the day of transaction)"
@@ -275,7 +275,7 @@ RowLayout {
             elide: Text.ElideRight
             text: root.secondCurrencyAmount
             onCopyText: textCopied(secondCurrencyAmountField.text)
-            visible: isTextFieldVisible(secondCurrencyAmountField.text) && root.secondCurrencyLabel != ""
+            visible: isTextFieldVisible(secondCurrencyAmountField.text) && root.secondCurrencyUnitName != ""
         }
         
         SFText {

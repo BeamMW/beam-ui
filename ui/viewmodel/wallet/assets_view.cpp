@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "assets_view.h"
+#include "model/app_model.h"
 
 AssetsViewModel::AssetsViewModel()
+    : _wallet (*AppModel::getInstance().getWallet())
 {
-    auto asset0  = std::make_shared<AssetObject>(0, "CA0", 0);
-    auto asset1  = std::make_shared<AssetObject>(1, "CA1", 11);
+    auto asset0  = std::make_shared<AssetObject>(0, "BEAM", 7023392592300);
+    auto asset1  = std::make_shared<AssetObject>(1, "COIN1", 11);
     auto asset2  = std::make_shared<AssetObject>(2, "CA2", 22);
     auto asset3  = std::make_shared<AssetObject>(3, "CA3", 32);
     auto asset4  = std::make_shared<AssetObject>(4, "CA4", 42);
@@ -29,10 +31,14 @@ AssetsViewModel::AssetsViewModel()
     auto asset11 = std::make_shared<AssetObject>(11, "CA11", 112);
 
     _assets.insert(asset0);
-    _assets.insert(asset1);
-    _assets.insert(asset2);
-    _assets.insert(asset3);
-    _assets.insert(asset4);
+     _assets.insert(asset1);
+
+
+
+/*
+ _assets.insert(asset2);
+ _assets.insert(asset3);
+ _assets.insert(asset4);
     _assets.insert(asset5);
     _assets.insert(asset5);
     _assets.insert(asset6);
@@ -41,6 +47,7 @@ AssetsViewModel::AssetsViewModel()
     _assets.insert(asset9);
     _assets.insert(asset10);
     _assets.insert(asset11);
+    */
 
     emit assetsChanged();
 }
@@ -49,4 +56,3 @@ QAbstractItemModel* AssetsViewModel::getAssets()
 {
     return &_assets;
 }
-

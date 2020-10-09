@@ -165,9 +165,9 @@ Control {
             Layout.fillHeight : true
             Layout.bottomMargin: 9
 
-            property int rowHeight: 56
-            property double resizableWidth: transactionsTable.width - actionsColumn.width
-            property double columnResizeRatio: resizableWidth / 810
+            property real rowHeight: 56
+            property real resizableWidth: transactionsTable.width - actionsColumn.width
+            property real columnResizeRatio: resizableWidth / 810
 
             selectionMode: SelectionMode.NoSelection
             sortIndicatorVisible: true
@@ -241,7 +241,7 @@ Control {
                         qsTrId("tx-address-offline") :
                         qsTrId("tx-address-online")
                     secondCurrencyRate: txRolesMap && txRolesMap.secondCurrencyRate ? txRolesMap.secondCurrencyRate : ""
-                    secondCurrencyLabel: tableViewModel.secondCurrencyLabel
+                    secondCurrencyUnitName: tableViewModel.secondCurrencyUnitName
                     searchFilter:       searchBox.text
                     hideFiltered:       rowItem.hideFiltered
                     token:              txRolesMap ? txRolesMap.token : ""
@@ -360,7 +360,7 @@ Control {
                         //    lightFont:               false
                         //    boldFont:                true
                         //    fontSizeMode:            Text.Fit
-                        //    secondCurrencyLabel:     tableViewModel.secondCurrencyLabel
+                        //    secondCurrencyUnitName:     tableViewModel.secondCurrencyUnitName
                         //    secondCurrencyRate:      tableViewModel.secondCurrencyRate
                         //}
                     }

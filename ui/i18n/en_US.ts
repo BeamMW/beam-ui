@@ -2778,5 +2778,18 @@ Your version is: %2. Please, check for updates.</source>
         <source>Asset name</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="assets-connect-other">
+        <source>Connect other assets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-beam-available">
+        <source>%1 Available</source>
+        <oldsource>Beam Available</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-total-available">
+        <source>Total Available</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -34,8 +34,8 @@ SendSwapViewModel::SendSwapViewModel()
     , _minimalBeamFeeGrothes(QMLGlobals::getMinimalFee(Currency::CurrBeam, false))
 {
     connect(&_walletModel, &WalletModel::changeCalculated,  this,  &SendSwapViewModel::onChangeCalculated);
-    connect(&_walletModel, &WalletModel::availableChanged, this, &SendSwapViewModel::recalcAvailable);
-    connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyLabelChanged()));
+    connect(&_walletModel, &WalletModel::walletStatusChanged, this, &SendSwapViewModel::recalcAvailable);
+    connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyUnitNameChanged()));
     connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
     connect(&_walletModel, &WalletModel::shieldedCoinsSelectionCalculated, this, &SendSwapViewModel::onShieldedCoinsSelectionCalculated);
 }
@@ -202,7 +202,7 @@ void SendSwapViewModel::setSendAmount(QString value)
         emit isSendFeeOKChanged();
         recalcAvailable();
 
-        if (_sendCurrency == Currency::CurrBeam && _walletModel.hasShielded())
+        if (_sendCurrency == Currency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID))
             _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes);
     }
 }
@@ -221,7 +221,7 @@ void SendSwapViewModel::setSendFee(unsigned int value)
         emit isSendFeeOKChanged();
         recalcAvailable();
 
-        if (_sendCurrency == Currency::CurrBeam && _walletModel.hasShielded() && _sendAmountGrothes)
+        if (_sendCurrency == Currency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID) && _sendAmountGrothes)
         {
             _feeChangedByUI = true;
             _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes);
@@ -367,7 +367,7 @@ bool SendSwapViewModel::isEnough() const
     const auto total = _sendAmountGrothes + _sendFeeGrothes + _changeGrothes;
     if (Currency::CurrBeam == _sendCurrency)
     {
-        return _walletModel.getAvailable() >= total;
+        return _walletModel.getAvailable(beam::Asset::s_BeamID) >= total;
     }
 
     // TODO sentFee is fee rate. should be corrected
@@ -493,9 +493,9 @@ QString SendSwapViewModel::getSecondCurrencyReceiveRateValue() const
     return beamui::AmountToUIString(rate);
 }
 
-QString SendSwapViewModel::getSecondCurrencyLabel() const
+QString SendSwapViewModel::getSecondCurrencyUnitName() const
 {
-    return beamui::getCurrencyLabel(_exchangeRatesManager.getRateUnitRaw());
+    return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateUnitRaw());
 }
 
 bool SendSwapViewModel::isTokenGeneratedByNewVersion() const

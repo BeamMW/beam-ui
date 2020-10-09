@@ -40,7 +40,7 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
         case Roles::RName:
             return asset->name();
         case Roles::RAmount:
-            return QString(std::to_string(asset->amount()).c_str());
+            return asset->amount();
         case Roles::RInTxCnt:
             return static_cast<qint32>(asset->inTxCnt());
         case Roles::ROutTxCnt:

@@ -33,9 +33,7 @@ class WalletModel
 {
     Q_OBJECT
 public:
-
     using Ptr = std::shared_ptr<WalletModel>;
-
     WalletModel(beam::wallet::IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor);
     ~WalletModel() override;
 
@@ -43,19 +41,26 @@ public:
     bool isOwnAddress(const beam::wallet::WalletID& walletID) const;
     bool isAddressWithCommentExist(const std::string& comment) const;
 
-    beam::Amount getAvailable() const;
-    beam::Amount getReceiving() const;
-    beam::Amount getReceivingIncoming() const;
-    beam::Amount getReceivingChange() const;
-    beam::Amount getSending() const;
-    beam::Amount getMaturing() const;
+    beam::Amount getAvailable(beam::Asset::ID) const;
+    beam::Amount getReceiving(beam::Asset::ID) const;
+    beam::Amount getReceivingIncoming(beam::Asset::ID) const;
+    beam::Amount getReceivingChange(beam::Asset::ID) const;
+    beam::Amount getSending(beam::Asset::ID) const;
+    beam::Amount getMaturing(beam::Asset::ID) const;
+    bool hasShielded(beam::Asset::ID) const;
+
     beam::Height getCurrentHeight() const;
     beam::Timestamp getCurrentHeightTimestamp() const;
     beam::Block::SystemState::ID getCurrentStateID() const;
-    bool hasShielded() const;
 
 signals:
-    void walletStatus(const beam::wallet::WalletStatus& status);
+    // INTERNAL SIGNALS, DO NOT SUBSCRIBE IN OTHER UI OBJECTS.
+    // Subscribe to non-internal counterparts
+    // These are used to redirect from reactor thread to the UI thread
+    void walletStatusInternal(const beam::wallet::WalletStatus& status);
+    void walletStatusChanged();
+
+signals:
     void transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items);
     void syncProgressUpdated(int done, int total);
     void changeCalculated(beam::Amount change);
@@ -78,14 +83,6 @@ signals:
     void cantSendToExpired();
     void paymentProofExported(const beam::wallet::TxID& txID, const QString& proof);
     void addressChecked(const QString& addr, bool isValid);
-
-    void availableChanged();
-    void receivingChanged();
-    void receivingIncomingChanged();
-    void receivingChangeChanged();
-    void sendingChanged();
-    void maturingChanged();
-    void stateIDChanged();
     void functionPosted(const std::function<void()>&);
 #if defined(BEAM_HW_WALLET)
     void showTrezorMessage();
@@ -140,7 +137,7 @@ private:
     uint32_t getClientRevision() const override;
 
 private slots:
-    void setStatus(const beam::wallet::WalletStatus& status);
+    void onWalletStatusInternal(const beam::wallet::WalletStatus& status);
     void setAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addrs);
     void doFunction(const std::function<void()>& func);
 

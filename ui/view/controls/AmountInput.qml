@@ -16,12 +16,12 @@ ColumnLayout {
                 qsTrId("general-fee")
         }
         //% "%1 Transaction fee rate"
-        return qsTrId("general-fee-rate").arg(control.currencyLabel)
+        return qsTrId("general-fee-rate").arg(control.currencyUnitName)
     }
 
     function getTotalFeeTitle() {
         //% "%1 Transaction fee (est)"
-        return qsTrId("general-fee-total").arg(control.currencyLabel)
+        return qsTrId("general-fee-total").arg(control.currencyUnitName)
     }
 
     function getTotalFeeAmount() {
@@ -32,19 +32,19 @@ ColumnLayout {
         return Utils.formatFeeToSecondCurrency(
             feeValue,
             control.secondCurrencyRate,
-            control.secondCurrencyLabel);
+            control.secondCurrencyUnitName);
     }
 
     function getAmountInSecondCurrency() {
         return Utils.formatAmountToSecondCurrency(
             control.amountIn,
             control.secondCurrencyRate,
-            control.secondCurrencyLabel);
+            control.secondCurrencyUnitName);
     }
 
     readonly property bool     isValidFee:     hasFee ? feeInput.isValid : true
     readonly property bool     isValid:        error.length == 0 && isValidFee
-    readonly property string   currencyLabel:  BeamGlobals.getCurrencyLabel(control.currency)
+    readonly property string   currencyUnitName:  BeamGlobals.getCurrencyUnitName(control.currency)
 
     property string   title
     property string   color:        Style.accent_incoming
@@ -64,9 +64,9 @@ ColumnLayout {
     property bool     showTotalFee: false
     property bool     showAddAll:   false
     property string   secondCurrencyRate:  "0"
-    property string   secondCurrencyLabel: ""
+    property string   secondCurrencyUnitName: ""
     property var      setMaxAvailableAmount:    {} // callback function to set amount from viewmodel
-    property bool     showSecondCurrency:       control.secondCurrencyLabel != "" && control.secondCurrencyLabel != control.currencyLabel
+    property bool     showSecondCurrency:       control.secondCurrencyUnitName != "" && control.secondCurrencyUnitName != control.currencyUnitName
     readonly property bool  isExchangeRateAvailable:    control.secondCurrencyRate != "0"
 
     SFText {
@@ -127,7 +127,7 @@ ColumnLayout {
             font.pixelSize:     24
             font.letterSpacing: 0.6
             color:              control.currColor
-            text:               control.currencyLabel
+            text:               control.currencyUnitName
             visible:            !multi
         }
 
@@ -212,7 +212,7 @@ ColumnLayout {
             if (isExchangeRateAvailable)
                 return getAmountInSecondCurrency()
             //% "Exchange rate to %1 is not available"
-            return qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
+            return qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyUnitName)
         }
     }
 
@@ -261,7 +261,7 @@ ColumnLayout {
                 showSecondCurrency:         control.showSecondCurrency
                 isExchangeRateAvailable:    control.isExchangeRateAvailable
                 secondCurrencyAmount:       getFeeInSecondCurrency(control.fee)
-                secondCurrencyLabel:        control.secondCurrencyLabel
+                secondCurrencyUnitName:     control.secondCurrencyUnitName
                 Connections {
                     target: control
                     function onFeeChanged() {

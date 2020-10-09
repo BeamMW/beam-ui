@@ -21,17 +21,32 @@
 class WalletViewModel : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString beamAvailable                 READ beamAvailable              NOTIFY beamAvailableChanged)
-    Q_PROPERTY(QString beamReceiving                 READ beamReceiving              NOTIFY beamReceivingChanged)
-    Q_PROPERTY(QString beamSending                   READ beamSending                NOTIFY beamSendingChanged)
-    Q_PROPERTY(QString beamLocked                    READ beamLocked                 NOTIFY beamLockedChanged)
-    Q_PROPERTY(QString beamLockedMaturing            READ beamLockedMaturing         NOTIFY beamLockedChanged)
-    Q_PROPERTY(QString beamReceivingChange           READ beamReceivingChange        NOTIFY beamReceivingChanged)
-    Q_PROPERTY(QString beamReceivingIncoming         READ beamReceivingIncoming      NOTIFY beamReceivingChanged)
-    Q_PROPERTY(QString secondCurrencyLabel           READ getSecondCurrencyLabel     NOTIFY secondCurrencyLabelChanged)
-    Q_PROPERTY(QString secondCurrencyRate            READ getSecondCurrencyRate      NOTIFY secondCurrencyRateChanged)
-    Q_PROPERTY(bool isAllowedBeamMWLinks             READ isAllowedBeamMWLinks       WRITE allowBeamMWLinks      NOTIFY beamMWLinksAllowed)
-    Q_PROPERTY(int     selectedAsset                 READ getSelectedAsset           WRITE setSelectedAsset      NOTIFY setSelectedAssetChanged)
+    Q_PROPERTY(QString beamAvailable                 READ beamAvailable              NOTIFY beamChanged)
+    Q_PROPERTY(QString beamReceiving                 READ beamReceiving              NOTIFY beamChanged)
+    Q_PROPERTY(QString beamSending                   READ beamSending                NOTIFY beamChanged)
+    Q_PROPERTY(QString beamLocked                    READ beamLocked                 NOTIFY beamChanged)
+    Q_PROPERTY(QString beamLockedMaturing            READ beamLockedMaturing         NOTIFY beamChanged)
+    Q_PROPERTY(QString beamReceivingChange           READ beamReceivingChange        NOTIFY beamChanged)
+    Q_PROPERTY(QString beamReceivingIncoming         READ beamReceivingIncoming      NOTIFY beamChanged)
+    Q_PROPERTY(QString beamIcon                      READ beamIcon                   CONSTANT)
+    Q_PROPERTY(QString beamName                      READ beamName                   CONSTANT)
+
+    Q_PROPERTY(int selectedAsset                      READ getSelectedAsset         WRITE setSelectedAsset   NOTIFY assetChanged)
+    Q_PROPERTY(QString assetAvailable                 READ assetAvailable                                    NOTIFY assetChanged)
+    Q_PROPERTY(QString assetReceiving                 READ assetReceiving                                    NOTIFY assetChanged)
+    Q_PROPERTY(QString assetSending                   READ assetSending                                      NOTIFY assetChanged)
+    Q_PROPERTY(QString assetLocked                    READ assetLocked                                       NOTIFY assetChanged)
+    Q_PROPERTY(QString assetLockedMaturing            READ assetLockedMaturing                               NOTIFY assetChanged)
+    Q_PROPERTY(QString assetReceivingChange           READ assetReceivingChange                              NOTIFY assetChanged)
+    Q_PROPERTY(QString assetReceivingIncoming         READ assetReceivingIncoming                            NOTIFY assetChanged)
+    Q_PROPERTY(QString assetIcon                      READ assetIcon                                         NOTIFY assetChanged)
+    Q_PROPERTY(QString assetUnitName                  READ assetUnitName                                     NOTIFY assetChanged)
+    Q_PROPERTY(QString assetName                      READ assetName                                         NOTIFY assetChanged)
+
+    Q_PROPERTY(QString secondCurrencyUnitName        READ getSecondCurrencyUnitName     NOTIFY secondCurrencyUnitNameChanged)
+    Q_PROPERTY(QString secondCurrencyRate            READ getSecondCurrencyRate         NOTIFY secondCurrencyRateChanged)
+    Q_PROPERTY(bool isAllowedBeamMWLinks             READ isAllowedBeamMWLinks          WRITE allowBeamMWLinks      NOTIFY beamMWLinksAllowed)
+
 
 public:
     WalletViewModel();
@@ -43,7 +58,19 @@ public:
     QString beamLockedMaturing() const;
     QString beamReceivingChange() const;
     QString beamReceivingIncoming() const;
-    QString getSecondCurrencyLabel() const;
+    QString beamIcon() const;
+    QString beamName() const;
+    QString assetAvailable() const;
+    QString assetReceiving() const;
+    QString assetSending() const;
+    QString assetLocked() const;
+    QString assetLockedMaturing() const;
+    QString assetReceivingChange() const;
+    QString assetReceivingIncoming() const;
+    QString assetIcon() const;
+    QString assetUnitName() const;
+    QString assetName() const;
+    QString getSecondCurrencyUnitName() const;
     QString getSecondCurrencyRate() const;
 
     int  getSelectedAsset() const;
@@ -57,18 +84,15 @@ public:
     Q_INVOKABLE bool isAllowedBeamMWLinks() const;
 
 signals:
-    void beamAvailableChanged();
-    void beamReceivingChanged();
-    void beamSendingChanged();
-    void beamLockedChanged();
-    void secondCurrencyLabelChanged();
+    void beamChanged();
+    void assetChanged();
+    void secondCurrencyUnitNameChanged();
     void secondCurrencyRateChanged();
     void beamMWLinksAllowed();
-    void setSelectedAssetChanged();
 
 private:
-    WalletModel& _model;
-    WalletSettings& _settings;
+    WalletModel&         _model;
+    WalletSettings&      _settings;
     ExchangeRatesManager _exchangeRatesManager1;
-    int _selectedAsset;
+    beam::Asset::ID      _selectedAsset;
 };

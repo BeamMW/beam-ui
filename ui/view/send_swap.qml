@@ -189,7 +189,7 @@ please review your settings and try again"
                             amountIn:         viewModel.sendAmount
                             currency:         viewModel.sendCurrency
                             secondCurrencyRate:    viewModel.secondCurrencySendRate
-                            secondCurrencyLabel:   viewModel.secondCurrencyLabel
+                            secondCurrencyUnitName:   viewModel.secondCurrencyUnitName
                             readOnlyA:        true
                             multi:            false
                             color:            Style.accent_outgoing
@@ -235,7 +235,7 @@ please review your settings and try again"
                             showSecondCurrency:         sendAmountInput.showSecondCurrency
                             isExchangeRateAvailable:    sendAmountInput.isExchangeRateAvailable
                             secondCurrencyAmount:       sendAmountInput.getFeeInSecondCurrency(viewModel.sendFee)
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            secondCurrencyUnitName:     viewModel.secondCurrencyUnitName
                             //minimumFeeNotificationText: viewModel.isShieldedTx ?
                             //    //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
                             //    qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
@@ -308,7 +308,7 @@ please review your settings and try again"
                             amountIn:                   viewModel.receiveAmount
                             currency:                   viewModel.receiveCurrency
                             secondCurrencyRate:         viewModel.secondCurrencyReceiveRate
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            secondCurrencyUnitName:     viewModel.secondCurrencyUnitName
                             readOnlyA:                  true
                             multi:                      false
                             color:                      Style.accent_incoming
@@ -349,7 +349,7 @@ please review your settings and try again"
                             showSecondCurrency:         receiveAmountInput.showSecondCurrency
                             isExchangeRateAvailable:    receiveAmountInput.isExchangeRateAvailable
                             secondCurrencyAmount:       receiveAmountInput.getFeeInSecondCurrency(viewModel.receiveFee)
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            secondCurrencyUnitName:     viewModel.secondCurrencyUnitName
                             //minimumFeeNotificationText: viewModel.isShieldedTx ?
                             //    //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
                             //    qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
@@ -454,8 +454,8 @@ please review your settings and try again"
                                     font.pixelSize:   14
                                     color:            Style.content_main
                                     text:             viewModel.isSendBeam
-                                        ? ["1", sendAmountInput.currencyLabel, "=", Utils.uiStringToLocale(viewModel.rate), receiveAmountInput.currencyLabel].join(" ")
-                                        : ["1", receiveAmountInput.currencyLabel, "=", Utils.uiStringToLocale(viewModel.rate), sendAmountInput.currencyLabel].join(" ")
+                                        ? ["1", sendAmountInput.currencyUnitName, "=", Utils.uiStringToLocale(viewModel.rate), receiveAmountInput.currencyUnitName].join(" ")
+                                        : ["1", receiveAmountInput.currencyUnitName, "=", Utils.uiStringToLocale(viewModel.rate), sendAmountInput.currencyUnitName].join(" ")
                                 }
 
 
@@ -520,7 +520,7 @@ please review your settings and try again"
                             fee: viewModel.sendFee,
                             onAcceptedCallback: acceptedCallback,
                             secondCurrencyRate: viewModel.secondCurrencySendRateValue,
-                            secondCurrencyLabel: viewModel.secondCurrencyLabel
+                            secondCurrencyUnitName: viewModel.secondCurrencyUnitName
                         }).open();
 
                     function acceptedCallback() {

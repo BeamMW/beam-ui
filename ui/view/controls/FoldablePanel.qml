@@ -28,6 +28,7 @@ Pane {
 
             RowLayout {
                 Layout.fillHeight: true
+                spacing: 0
 
                 SFText {
                     id:         headerTitle
@@ -52,9 +53,25 @@ Pane {
                     }
                 }
 
+                Item {
+                    width: 5
+                    Layout.fillHeight: true
+                    visible: titleTip.length != 0
+
+                    MouseArea {
+                        anchors.fill:     parent
+                        acceptedButtons:  Qt.LeftButton
+                        cursorShape:      Qt.PointingHandCursor
+                        onClicked: {
+                            control.folded = !control.folded;
+                        }
+                    }
+                }
+
                 SFText {
                     color:              Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
                     text:               titleTip
+                    visible:            titleTip.length != 0
 
                     font {
                         styleName:      "Bold"
@@ -62,14 +79,14 @@ Pane {
                         pixelSize:      14
                         letterSpacing:  0.35
                     }
-                }
 
-                MouseArea {
-                    anchors.fill:     parent
-                    acceptedButtons:  Qt.LeftButton
-                    cursorShape:      Qt.PointingHandCursor
-                    onClicked: {
-                        control.folded = !control.folded;
+                    MouseArea {
+                        anchors.fill:     parent
+                        acceptedButtons:  Qt.LeftButton
+                        cursorShape:      Qt.PointingHandCursor
+                        onClicked: {
+                            control.folded = !control.folded;
+                        }
                     }
                 }
             }
@@ -121,7 +138,7 @@ Pane {
             Item {
                 Layout.fillHeight: true
                 Layout.fillWidth:  true
-                visible: headerPlaceholder
+                visible: headerPlaceholder != null
 
                 MouseArea {
                     anchors.fill:      parent
@@ -138,20 +155,6 @@ Pane {
                 visible: headerContent && !folded
                 contentItem: headerContent
             }
-
-            /* Item {
-                visible: !fillHeader
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-                MouseArea {
-                    anchors.fill:       parent
-                    acceptedButtons:    Qt.LeftButton
-                    cursorShape:        Qt.PointingHandCursor
-                    onClicked: {
-                        control.folded = !control.folded;
-                    }
-                }
-            } */
         }
 
         Control {

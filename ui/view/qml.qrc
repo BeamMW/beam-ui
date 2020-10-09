@@ -11,7 +11,6 @@
         <file>controls/SFLabel.qml</file>
         <file>controls/SFText.qml</file>
         <file>controls/SFTextInput.qml</file>
-        <file>controls/AvailablePanel.qml</file>
         <file>controls/Led.qml</file>
         <file>controls/TxFilter.qml</file>
         <file>controls/TableItem.qml</file>
@@ -75,6 +74,11 @@
         <file>wallet/TxTable.qml</file>
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>
+        <file>wallet/AssetsConnect.qml</file>
+        <file>wallet/AvailablePanel.qml</file>
+        <file>wallet/AvailablePanelNew.qml</file>
+        <file>wallet/InProgressPanelNew.qml</file>
+        <file>wallet/MainInfoPanel.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
@@ -273,5 +277,15 @@
         <file>assets/icon-inout-transactions.svg</file>
         <file>assets/icon-incoming-transaction.svg</file>
         <file>assets/icon-outgoing-transaction.svg</file>
+        <file>assets/asset-0.svg</file>
+        <file>assets/asset-1.svg</file>
+        <file>assets/asset-2.svg</file>
+        <file>assets/asset-3.svg</file>
+        <file>assets/asset-4.svg</file>
+        <file>assets/icon-usd.svg</file>
+        <file>assets/graph-teal-small.svg</file>
+        <file>assets/graph-white-small.svg</file>
+        <file>assets/graph-teal-big.svg</file>
+        <file>assets/graph-white-big.svg</file>
     </qresource>
 </RCC>

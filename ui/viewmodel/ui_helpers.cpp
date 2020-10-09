@@ -37,7 +37,7 @@ namespace beamui
         return QString::fromStdString(id);
     }
     
-    QString getCurrencyLabel(Currencies currency)
+    QString getCurrencyUnitName(Currencies currency)
     {
         switch (currency)
         {
@@ -51,9 +51,9 @@ namespace beamui
         }
     }
 
-    QString getCurrencyLabel(beam::wallet::ExchangeRate::Currency currency)
+    QString getCurrencyUnitName(beam::wallet::ExchangeRate::Currency currency)
     {
-        return getCurrencyLabel(convertExchangeRateCurrencyToUiCurrency(currency));
+        return getCurrencyUnitName(convertExchangeRateCurrencyToUiCurrency(currency));
     }
 
     QString getFeeRateLabel(Currencies currency)
@@ -118,7 +118,7 @@ namespace beamui
         }
 
         QString amount = QString::fromStdString(amountString);
-        QString coinLabel = getCurrencyLabel(coinType);
+        QString coinLabel = getCurrencyUnitName(coinType);
 
         if (coinLabel.isEmpty())
         {

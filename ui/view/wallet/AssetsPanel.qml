@@ -1,8 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
-import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
 import Beam.Wallet 1.0
 import "../controls"
@@ -14,14 +11,30 @@ Control {
         id: viewModel
     }
 
-    property int itemHeight:     67
-    property int itemWidth:      220
-    property int hSpacing:       10
-    property int vSpacing:       10
-    property int maxVisibleRows: 3
-    property int selection:      0
+    property real   hSpacing:       10
+    property real   vSpacing:       10
+    property int    maxVisibleRows: 3
+    property int    selection:      0
+    property alias  folded:         foldable.folded
 
-    function gridColumns () {
+    readonly property int   assetsCount:     viewModel.assets.rowCount()
+    readonly property bool  connectVisible:  assetsCount < 3
+    readonly property real itemHeight:       67
+
+    readonly property real itemWidth: {
+        if (assetsCount == 1) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
+        return 220
+    }
+
+    readonly property real connectWidth: {
+        return control.availableWidth - (control.itemWidth + control.hSpacing) * control.assetsCount
+    }
+
+    readonly property int gridColumns: {
+        if (control.connectVisible) {
+            return control.assetsCount + 1
+        }
+
         var avail = control.availableWidth
         var cnt = 0
 
@@ -33,18 +46,19 @@ Control {
         return cnt
     }
 
-    function gridRows () {
+    readonly property int gridRows: {
         var modelLength = viewModel.assets.rowCount()
-        var gridCols = gridColumns()
-        return Math.floor(modelLength / gridCols) + (modelLength % gridCols ? 1 : 0)
+        var gridCols    = control.gridColumns
+        var rowsCnt     = Math.floor(modelLength / gridCols) + (modelLength % gridCols ? 1 : 0)
+        return rowsCnt
     }
 
-    function hasScroll () {
-        return gridRows() > control.maxVisibleRows
+    readonly property bool hasScroll: {
+        return control.gridRows > control.maxVisibleRows
     }
 
-    function scrollViewHeight () {
-        return hasScroll() ? control.itemHeight * 3 + control.vSpacing * 2 : grid.implicitHeight
+    readonly property real scrollViewHeight: {
+        return control.hasScroll ? control.itemHeight * 3 + control.vSpacing * 2 : grid.implicitHeight
     }
 
     AlphaTip {
@@ -86,9 +100,9 @@ Control {
         content: ScrollView {
             id: scroll
 
-            implicitHeight: scrollViewHeight()
+            implicitHeight: control.scrollViewHeight
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-            ScrollBar.vertical.policy: hasScroll() && hovered ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+            ScrollBar.vertical.policy: control.hasScroll && hovered ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
 
             clip: true
             hoverEnabled: true
@@ -99,7 +113,7 @@ Control {
                 Layout.fillWidth: true
                 columnSpacing:    control.hSpacing
                 rowSpacing:       control.vSpacing
-                columns:          gridColumns()
+                columns:          control.gridColumns
 
                 Repeater {
                     model: SortFilterProxyModel {
@@ -115,15 +129,15 @@ Control {
                         spacing: 0
 
                         AssetInfo {
-                            height: control.itemHeight
-                            width:  control.itemWidth
+                            implicitHeight: control.itemHeight
+                            implicitWidth:  control.itemWidth
 
                             inTxCnt:   model.inTxCnt
                             outTxCnt:  model.outTxCnt
                             amount:    model.amount
-                            symbol:    model.name
+                            unitName:  model.name
                             selected:  model.index == control.selection
-                            opacity:   model.index == control.selection ? 1 : 0.6
+                            opacity:   control.selection < 0  ? 1 : (model.index == control.selection ? 1 : 0.6)
 
                             onTip: function (show, text, iRight, iBtm) {
                                 tip.visible = show
@@ -141,17 +155,33 @@ Control {
                             }
 
                             onClicked: function () {
-                                control.selection = model.index
+                                if (control.selection == model.index) {
+                                    control.selection = -1
+                                } else {
+                                    control.selection = model.index
+                                }
                             }
 
                             rate:      "0.25"
-                            symbol2:   "USD"
-                            icon:      "qrc:/assets/icon-beam.svg"
-                         }
+                            unitName2: "USD"
+                            icon:      index == 0 ? "qrc:/assets/icon-beam.svg" : "qrc:/assets/asset-1.svg"
+                            color:     index == 0 ? Qt.rgba( 0 / 255, 242 / 255, 209 / 255, 0.99) : Qt.rgba( 0 / 85, 242 / 52, 100 / 255, 0.99)
+                        }
 
                         Item {
-                            Layout.fillWidth: true
+                           Layout.fillWidth: true
+                           visible: viewModel.assets.rowCount() > 1
                         }
+                    }
+                }
+
+                AssetsConnect {
+                    Layout.preferredWidth:   control.connectWidth
+                    Layout.preferredHeight:  control.itemHeight
+                    visible:                 control.connectVisible
+
+                    onClicked: function () {
+                        BeamGlobals.showMessage("'Connect asset' action is not implemented yet")
                     }
                 }
             }

@@ -42,13 +42,13 @@ public:
     static int  getMinFeeOrRate(Currency currency);
     static beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(Currency currency);
     static Currency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin);
-    Q_INVOKABLE static QString calcTotalFee(Currency currency, unsigned int feeRate);
-    Q_INVOKABLE static QString calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyLabel);
-    Q_INVOKABLE static QString calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel);
 
+    Q_INVOKABLE static QString calcTotalFee(Currency currency, unsigned int feeRate);
+    Q_INVOKABLE static QString calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyUnitName);
+    Q_INVOKABLE static QString calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrUnitName);
     Q_INVOKABLE static unsigned int minFeeBeam(bool isShielded = false);
-    
-    Q_INVOKABLE static QString getCurrencyLabel(Currency);
+    Q_INVOKABLE static QString roundUp(const QString& amount);
+    Q_INVOKABLE static QString getCurrencyUnitName(Currency);
     Q_INVOKABLE static QString getCurrencyName(Currency);
     Q_INVOKABLE static QString getFeeRateLabel(Currency);
     Q_INVOKABLE static QString getCurrencySubunitFromLabel(const QString& currLabel);
@@ -60,9 +60,7 @@ public:
     // Swap & other currencies utils
     Q_INVOKABLE static bool canSwap();
     Q_INVOKABLE static bool haveSwapClient(Currency);
-
     Q_INVOKABLE static QString rawTxParametrsToTokenStr(const QVariant& variantTxParams);
-
     Q_INVOKABLE static bool canReceive(Currency currency);
     Q_INVOKABLE static QString divideWithPrecision8(const QString& dividend, const QString& divider);
     Q_INVOKABLE static QString multiplyWithPrecision8(const QString& first, const QString& second);

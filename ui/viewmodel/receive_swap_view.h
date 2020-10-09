@@ -35,7 +35,7 @@ class ReceiveSwapViewModel: public QObject
     Q_PROPERTY(bool          isReceiveFeeOK           READ isReceiveFeeOK                                    NOTIFY  isReceiveFeeOKChanged)
     Q_PROPERTY(bool          isSendBeam               READ isSendBeam                                        NOTIFY  transactionTokenChanged)
     Q_PROPERTY(QString       rate                     READ getRate                                           NOTIFY  rateChanged)
-    Q_PROPERTY(QString       secondCurrencyLabel      READ getSecondCurrencyLabel                   NOTIFY secondCurrencyLabelChanged)
+    Q_PROPERTY(QString       secondCurrencyUnitName      READ getSecondCurrencyUnitName                   NOTIFY secondCurrencyUnitNameChanged)
     Q_PROPERTY(QString       secondCurrencySendRateValue    READ getSecondCurrencySendRateValue     NOTIFY secondCurrencyRateChanged)
     Q_PROPERTY(QString       secondCurrencyReceiveRateValue READ getSecondCurrencyReceiveRateValue  NOTIFY secondCurrencyRateChanged)
 
@@ -64,7 +64,7 @@ signals:
     void isReceiveFeeOKChanged();
     void rateChanged();
     void secondCurrencyRateChanged();
-    void secondCurrencyLabelChanged();
+    void secondCurrencyUnitNameChanged();
     void minimalBeamFeeGrothesChanged();
 
 public:
@@ -115,7 +115,7 @@ private:
     bool isSendBeam() const;
     QString getRate() const;
 
-    QString getSecondCurrencyLabel() const;
+    QString getSecondCurrencyUnitName() const;
     QString getSecondCurrencySendRateValue() const;
     QString getSecondCurrencyReceiveRateValue() const;
 

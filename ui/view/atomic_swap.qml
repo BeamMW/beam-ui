@@ -235,7 +235,7 @@ Item {
                     gradLeft: Style.currencyPaneLeftBEAM
                     currencyIcon: "qrc:/assets/icon-beam.svg"
                     amount: viewModel.beamAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+                    unitName: BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
                     valueSecondaryStr: activeTxCountStr()
                     visible: true
                 }
@@ -291,12 +291,12 @@ Item {
                         gradLeft: amountPanes.getSwapCurrencyPaneGradient(modelData.currency)
                         currencyIcon: amountPanes.getCurrencyIcon(modelData.currency)
                         amount: modelData.hasActiveTx ? "" : modelData.available
-                        currencySymbol: BeamGlobals.getCurrencyLabel(modelData.currency)
+                        unitName: BeamGlobals.getCurrencyUnitName(modelData.currency)
                         valueSecondaryStr: activeTxStr()
                         isOk: modelData.isConnected
                         isConnecting: modelData.isConnecting
                         visible: BeamGlobals.haveSwapClient(modelData.currency)
-                        swapSettingsPane: BeamGlobals.getCurrencyLabel(modelData.currency)
+                        swapSettingsPane: BeamGlobals.getCurrencyUnitName(modelData.currency)
                         //% "Connecting..."
                         textConnecting: qsTrId("swap-connecting")
                         //% "Cannot connect to peer. Please check the address in Settings and try again."
@@ -310,12 +310,11 @@ Item {
 
                 SwapCurrencyAmountPane {
                     id: swapOptions
-                    gradLeft: Style.currencyPaneLeftOther
-                    gradRight: Style.currencyPaneLeftOther
+                    gradLeft: Style.currencyPaneConnect
+                    gradRight: Style.currencyPaneConnect
                     //% "Connect other currency wallet to start trading"
                     amount: qsTrId("atomic-swap-connect-other")
                     textSize: 14
-                    rectOpacity: 1.0
                     textColor: Style.active
                     isOk: true
                     borderSize: 1

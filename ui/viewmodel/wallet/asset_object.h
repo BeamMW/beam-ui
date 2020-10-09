@@ -22,7 +22,7 @@ public:
     bool operator==(const AssetObject& other) const;
 
     [[nodiscard]] uint64_t id() const;
-    [[nodiscard]] uint64_t amount() const;
+    [[nodiscard]] QString  amount() const;
     [[nodiscard]] uint32_t inTxCnt() const;
     [[nodiscard]] uint32_t outTxCnt() const;
     [[nodiscard]] QString  name() const;

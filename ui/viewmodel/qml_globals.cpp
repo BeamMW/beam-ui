@@ -309,10 +309,10 @@ QString QMLGlobals::calcTotalFee(Currency currency, unsigned int feeRate)
     }
 }
 
-QString QMLGlobals::calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyLabel)
+QString QMLGlobals::calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyUnitName)
 {
     QString feeInOriginalCurrency = beamui::AmountToUIString(fee);
-    return calcAmountInSecondCurrency(feeInOriginalCurrency, exchangeRate, secondCurrencyLabel);
+    return calcAmountInSecondCurrency(feeInOriginalCurrency, exchangeRate, secondCurrencyUnitName);
 }
 
 QString QMLGlobals::calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel)
@@ -332,6 +332,24 @@ QString QMLGlobals::calcAmountInSecondCurrency(const QString& amount, const QStr
 #undef MACRO
     }
     return "";
+}
+
+QString QMLGlobals::roundUp(const QString& amount)
+{
+    const auto point = amount.indexOf('.');
+    if (point == -1) return amount;
+
+    const auto targetDecimals = amount.length() - point - 2;
+    const auto scale = pow(cpp_dec_float_50(10), targetDecimals);
+
+    const cpp_dec_float_50 original(amount.toStdString().c_str());
+    const cpp_dec_float_50 rounded = ceil(original * scale)/scale;
+
+    auto roundedStr = rounded.str(targetDecimals, std::ios_base::fixed);
+    boost::algorithm::trim_right_if(roundedStr, char_is<'0'>);
+    boost::algorithm::trim_right_if(roundedStr, char_is<'.'>);
+
+    return QString(roundedStr.c_str());
 }
 
 bool QMLGlobals::canSwap()
@@ -369,10 +387,10 @@ bool QMLGlobals::canReceive(Currency currency)
     return client->GetSettings().IsActivated() && client->getStatus() == beam::bitcoin::Client::Status::Connected;
 }
 
-QString QMLGlobals::getCurrencyLabel(Currency currency)
+QString QMLGlobals::getCurrencyUnitName(Currency currency)
 {
     beamui::Currencies currencyCommon = convertUiCurrencyToCurrencies(currency);
-    return beamui::getCurrencyLabel(currencyCommon);
+    return beamui::getCurrencyUnitName(currencyCommon);
 }
 
 QString QMLGlobals::getCurrencyName(Currency currency)

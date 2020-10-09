@@ -5,16 +5,15 @@ import Beam.Wallet 1.0
 import "."
 
 Rectangle {
-    property color borderColor: Style.swapCurrencyOptionsBorder
+    property color borderColor: Style.currencyPaneBorder
     property int borderSize: 0
-    property alias rectOpacity: rect.opacity
     property color gradLeft: Style.currencyPaneLeftBEAM
     property color gradRight: Style.currencyPaneRight
     property string currencyIcon: ""
     property var currencyIcons: []
     property color stateIndicatorColor: Style.swapCurrencyStateIndicator
     property string amount: ""
-    property string currencySymbol: ""
+    property string unitName: ""
     property string valueSecondaryStr: ""
     property bool isOk: true
     property bool isConnecting: false
@@ -38,11 +37,11 @@ Rectangle {
 
         leftColor:  control.gradLeft
         rightColor: control.gradRight
+        anchors.fill: parent
 
-        border {
-            color: control.borderColor
-            width: control.borderSize
-        }
+        borderWidth:      control.borderSize
+        leftBorderColor:  control.borderColor
+        rightBorderColor: control.borderColor
    }
 
     Item {
@@ -90,11 +89,11 @@ Rectangle {
                     font.pixelSize: textSize
                     color: control.textColor
                     elide: Text.ElideRight
-                    text: currencySymbol.length ? [Utils.uiStringToLocale(amount), currencySymbol].join(" ") : Utils.uiStringToLocale(amount)
+                    text: unitName.length ? [Utils.uiStringToLocale(amount), unitName].join(" ") : Utils.uiStringToLocale(amount)
                     fontSizeMode: Text.Fit
                     visible: amount.length
                     verticalAlignment: Text.AlignVCenter
-                    copyMenuEnabled: currencySymbol.length
+                    copyMenuEnabled: unitName.length
                     onCopyText: BeamGlobals.copyToClipboard(amount)
                 }
                 Item {width:20}

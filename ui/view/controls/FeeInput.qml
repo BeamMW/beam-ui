@@ -21,7 +21,7 @@ ColumnLayout {
     property bool    showSecondCurrency:         false
     property bool    isExchangeRateAvailable:    false
     property string  secondCurrencyAmount:       ""
-    property string  secondCurrencyLabel:        ""
+    property string  secondCurrencyUnitName:     ""
     property string  minimumFeeNotificationText: ""
 
     RowLayout {
@@ -90,7 +90,7 @@ ColumnLayout {
         text:             control.isExchangeRateAvailable
                             ? control.secondCurrencyAmount
                             //% "Exchange rate to %1 is not available"
-                            : qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
+                            : qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyUnitName)
     }
 
 

@@ -163,7 +163,7 @@ Update your settings and try again."
                             currency:                   viewModel.sentCurrency
                             amountIn:                   viewModel.amountSent
                             secondCurrencyRate:         viewModel.secondCurrencySendRate
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            secondCurrencyUnitName:     viewModel.secondCurrencyUnitName
                             multi:                      true
                             resetAmount:                false
                             currColor:                  currencyError() || !BeamGlobals.canReceive(currency) ? Style.validator_error : Style.content_main
@@ -227,7 +227,7 @@ please review your settings and try again"
                             showSecondCurrency:         sentAmountInput.showSecondCurrency
                             isExchangeRateAvailable:    sentAmountInput.isExchangeRateAvailable
                             secondCurrencyAmount:       sentAmountInput.getFeeInSecondCurrency(viewModel.sentFee)
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            secondCurrencyUnitName:     viewModel.secondCurrencyUnitName
                             //minimumFeeNotificationText: viewModel.isShieldedTx ?
                             //    //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
                             //    qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
@@ -393,7 +393,7 @@ please review your settings and try again"
                             currency:                   viewModel.receiveCurrency
                             amountIn:                   viewModel.amountToReceive
                             secondCurrencyRate:         viewModel.secondCurrencyReceiveRate
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            secondCurrencyUnitName:     viewModel.secondCurrencyUnitName
                             multi:                      true
                             resetAmount:                false
                             currColor:                  currencyError() || !BeamGlobals.canReceive(currency) ? Style.validator_error : Style.content_main
@@ -454,7 +454,7 @@ please review your settings and try again"
                             showSecondCurrency:         receiveAmountInput.showSecondCurrency
                             isExchangeRateAvailable:    receiveAmountInput.isExchangeRateAvailable
                             secondCurrencyAmount:       receiveAmountInput.getFeeInSecondCurrency(viewModel.receiveFee)
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            secondCurrencyUnitName:     viewModel.secondCurrencyUnitName
                             //minimumFeeNotificationText: viewModel.isShieldedTx ?
                             //    //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
                             //    qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
@@ -583,8 +583,8 @@ please review your settings and try again"
                                         font.pixelSize:   14
                                         color:            rateRow.rateValid ? Style.content_main : Style.validator_error
                                         text:             viewModel.isSendBeam
-                                            ? ["1", sentAmountInput.currencyLabel, "="].join(" ")
-                                            : ["1", receiveAmountInput.currencyLabel, "="].join(" ") 
+                                            ? ["1", sentAmountInput.currencyUnitName, "="].join(" ")
+                                            : ["1", receiveAmountInput.currencyUnitName, "="].join(" ")
                                     }
 
                                     SFTextInput {
@@ -640,7 +640,7 @@ please review your settings and try again"
                                         id:               rateEnd
                                         font.pixelSize:   14
                                         color:            rateRow.rateValid ? Style.content_main : Style.validator_error
-                                        text:             viewModel.isSendBeam ? receiveAmountInput.currencyLabel : sentAmountInput.currencyLabel
+                                        text:             viewModel.isSendBeam ? receiveAmountInput.currencyUnitName : sentAmountInput.currencyUnitName
                                     }
                                     Item {
                                         Layout.leftMargin: rateInput.x

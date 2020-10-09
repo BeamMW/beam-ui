@@ -11,10 +11,11 @@ Control {
     property int inTxCnt
     property int outTxCnt
     property alias amount:    amountCtrl.amount
-    property alias symbol:    amountCtrl.currencySymbol
-    property alias symbol2:   amountCtrl.secondCurrencyLabel
+    property alias unitName:  amountCtrl.unitName
+    property alias unitName2: amountCtrl.secondCurrencyUnitName
     property alias rate:      amountCtrl.secondCurrencyRate
     property alias icon:      amountCtrl.iconSource
+    property alias color:     back.leftColor
     property bool  selected:  false
     property var   onTip:     null
     property var   onClicked: null
@@ -24,6 +25,7 @@ Control {
     rightPadding: 20
 
     background: PanelGradient {
+        id: back
         leftColor:        Style.currencyPaneLeftBEAM
         rightColor:       Style.currencyPaneRight
         leftBorderColor:  Qt.rgba( 0 / 255, 242 / 255, 209 / 255, 0.99)
@@ -55,7 +57,12 @@ Control {
         return outf.arg(control.outTxCnt)
     }
 
+    function calcMaxWidth () {
+        return control.availableWidth - (txIcon.visible ? txIcon.width + contentRow.spacing : 0)
+    }
+
     contentItem: RowLayout {
+        id: contentRow
         spacing: 15
 
         BeamAmount {
@@ -66,6 +73,7 @@ Control {
             fontSize:          16
             iconSize:          Qt.size(22, 22)
             copyMenuEnabled:   true
+            maxPaintedWidth:   calcMaxWidth()
         }
 
         SvgImage

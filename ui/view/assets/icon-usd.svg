@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22" viewBox="0 0 22 22">
+    <defs>
+        <radialGradient id="19adr1rmta" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+            <stop offset=".082%" stop-color="#627C97"/>
+            <stop offset="100%" stop-color="#0B2B4D"/>
+        </radialGradient>
+        <path id="baxulrs53b" d="M4.342 11.803v-.756c1.84-.158 2.877-1.084 2.877-2.572 0-1.272-.75-2.051-2.25-2.38l-.627-.122V3.787c.627.088 1.072.545 1.09 1.102H7.06C7.037 3.54 5.982 2.58 4.34 2.434v-.809h-.825v.803C1.758 2.568.726 3.494.726 4.93c0 1.218.756 2.033 2.169 2.361l.62.146v2.286c-.744-.082-1.247-.528-1.288-1.137H.55c.006 1.435 1.125 2.361 2.965 2.467v.75h.826zm-.826-6C2.8 5.65 2.42 5.299 2.42 4.783c0-.556.457-.967 1.096-1.002v2.022zm.826 3.926V7.584c.832.164 1.219.51 1.219 1.078 0 .621-.452 1.02-1.22 1.067z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g fill-rule="nonzero">
+            <g>
+                <g transform="translate(-87 -75) translate(87 75) translate(1 1)">
+                    <circle cx="10" cy="10" r="9.8" fill="url(#19adr1rmta)" stroke="#FFF" stroke-width="2"/>
+                    <g>
+                        <g transform="translate(6 3)">
+                            <use fill="#000" xlink:href="#baxulrs53b"/>
+                            <use fill="#FFF" xlink:href="#baxulrs53b"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

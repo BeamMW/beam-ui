@@ -32,7 +32,7 @@ TxTableViewModel::TxTableViewModel()
 {
     connect(&_model, SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SLOT(onTransactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
     connect(&_model, SIGNAL(txHistoryExportedToCsv(const QString&)), this, SLOT(onTxHistoryExportedToCsv(const QString&)));
-    connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyLabelChanged()));
+    connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyUnitNameChanged()));
     connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
     _model.getAsync()->getTransactions();
 }
@@ -110,13 +110,14 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
             }
 
             // Even simple transactions can be on assets, we do not support these in UI at the moment
-            if(const auto assetId = t.GetParameter<Asset::ID>(TxParameterID::AssetID))
+            /*if(const auto assetId = t.GetParameter<Asset::ID>(TxParameterID::AssetID))
             {
                 if (*assetId != Asset::s_InvalidID)
                 {
                     continue;
                 }
             }
+             */
 
             modifiedTransactions.push_back(std::make_shared<TxObject>(t, secondCurrency));
         }
@@ -156,9 +157,9 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
     emit transactionsChanged();
 }
 
-QString TxTableViewModel::getSecondCurrencyLabel() const
+QString TxTableViewModel::getSecondCurrencyUnitName() const
 {
-    return beamui::getCurrencyLabel(_exchangeRatesManager.getRateUnitRaw());
+    return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateUnitRaw());
 }
 
 QString TxTableViewModel::getSecondCurrencyRate() const

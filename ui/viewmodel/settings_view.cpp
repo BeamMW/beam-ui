@@ -174,7 +174,7 @@ QString SwapCoinSettingsItem::getTitle() const
 
  QString SwapCoinSettingsItem::getCoinID() const
  {
-     return beamui::getCurrencyLabel(beamui::convertSwapCoinToCurrency(m_swapCoin));
+     return beamui::getCurrencyUnitName(beamui::convertSwapCoinToCurrency(m_swapCoin));
  }
 
 QString SwapCoinSettingsItem::getShowSeedDialogTitle() const

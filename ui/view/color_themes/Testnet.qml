@@ -44,9 +44,9 @@ AbstractColors {
     property color currencyPaneLeftDOGE:  "#e0cd81"
     property color currencyPaneLeftBCH:   "#ff6700"
     property color currencyPaneLeftBSV:   "#eab300"
-    property color currencyPaneLeftOther: Qt.rgba(0, 246, 210, 0.1)
+    property color currencyPaneConnect:   Qt.rgba(0, 246, 210, 0.1)
+    property color currencyPaneBorder:    Qt.rgba(0, 246, 210, 0.15)
 
     property color swapCurrencyStateIndicator:  "#ff746b"
-    property color swapCurrencyOptionsBorder:   Qt.rgba(0, 246, 210, 0.15)
     property color swapDisconnectNode:          "#f9605b"
 }

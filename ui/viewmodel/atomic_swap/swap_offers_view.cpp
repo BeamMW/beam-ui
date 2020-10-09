@@ -79,7 +79,7 @@ bool SwapCoinClientWrapper::hasActiveTx() const
 
 QString SwapCoinClientWrapper::getCoinLabel() const
 {
-    return beamui::getCurrencyLabel(beamui::convertSwapCoinToCurrency(m_swapCoin)).toUpper();
+    return beamui::getCurrencyUnitName(beamui::convertSwapCoinToCurrency(m_swapCoin)).toUpper();
 }
 
 Currency SwapCoinClientWrapper::getCurrency() const
@@ -112,7 +112,7 @@ SwapOffersViewModel::SwapOffersViewModel()
 {
     InitSwapClientWrappers();
 
-    connect(&m_walletModel, SIGNAL(availableChanged()), this, SIGNAL(beamAvailableChanged()));
+    connect(&m_walletModel, &WalletModel::walletStatusChanged, this, &SwapOffersViewModel::beamAvailableChanged);
     connect(&m_walletModel,
             SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)),
             SLOT(onTransactionsDataModelChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
@@ -144,7 +144,7 @@ QAbstractItemModel* SwapOffersViewModel::getAllOffersFitBalance()
 
 QString SwapOffersViewModel::beamAvailable() const
 {
-    return beamui::AmountToUIString(m_walletModel.getAvailable());
+    return beamui::AmountToUIString(m_walletModel.getAvailable(beam::Asset::s_BeamID));
 }
 
 QAbstractItemModel* SwapOffersViewModel::getTransactions()
@@ -413,7 +413,7 @@ bool SwapOffersViewModel::isOfferFitBalance(const SwapOfferItem& offer)
     bool isSendBeam = offer.isSendBeam();
     auto beamOfferAmount = isSendBeam ? offer.rawAmountSend() : offer.rawAmountReceive();
 
-    if (beamOfferAmount > m_walletModel.getAvailable())
+    if (beamOfferAmount > m_walletModel.getAvailable(beam::Asset::s_BeamID))
         return false;
     
     auto swapCoinOfferAmount = isSendBeam ? offer.rawAmountReceive() : offer.rawAmountSend();

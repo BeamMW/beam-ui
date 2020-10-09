@@ -3,7 +3,7 @@ import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.0
 import Beam.Wallet 1.0
-import "."
+import "../controls"
 import "../utils.js" as Utils
 
 Control {
@@ -16,7 +16,7 @@ Control {
     property string receiving
     property string receivingChange
     property string receivingIncoming
-    property string secondCurrencyLabel
+    property string secondCurrencyUnitName
     property string secondCurrencyRate
 
     property var onOpenExternal: null
@@ -55,7 +55,7 @@ Control {
 
             BeamAmount {
                 amount:            lockedMaturing
-                currencySymbol:    BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+                unitName:          BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
                 spacing:           15
                 lightFont:         false
                 fontSize:          12
@@ -86,7 +86,7 @@ Control {
 
             BeamAmount {
                 amount:            receivingChange
-                currencySymbol:    BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+                unitName:          BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
                 spacing:           15
                 lightFont:         false
                 fontSize:          12
@@ -105,7 +105,7 @@ Control {
 
             BeamAmount {
                 amount:            receivingIncoming
-                currencySymbol:    BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+                unitName:          BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
                 spacing:           15
                 lightFont:         false
                 fontSize:          12
@@ -121,8 +121,8 @@ Control {
             Layout.preferredWidth: parseFloat(receiving) > 0 || parseFloat(sending) > 0 ? parent.width / 2 : parent.width
             BeamAmount {
                 amount:            available
-                currencySymbol:    BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                secondCurrencyLabel:   control.secondCurrencyLabel
+                unitName:          BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
+                secondCurrencyUnitName:   control.secondCurrencyUnitName
                 secondCurrencyRate:    control.secondCurrencyRate
                 spacing:           15
                 lightFont:         false
@@ -141,8 +141,8 @@ Control {
             BeamAmount {
                 id:                lockedAmount
                 amount:            locked
-                currencySymbol:    BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                secondCurrencyLabel: control.secondCurrencyLabel
+                unitName:          BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
+                secondCurrencyUnitName: control.secondCurrencyUnitName
                 secondCurrencyRate:  control.secondCurrencyRate
                 lightFont:         false
                 fontSize:          16
@@ -175,19 +175,20 @@ Control {
             }
 
             BeamAmount {
-                Layout.leftMargin: 20
-                amount:            sending
-                currencySymbol:    BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                secondCurrencyLabel:   control.secondCurrencyLabel
+                Layout.leftMargin:     20
+                amount:                sending
+                unitName:              BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
+                secondCurrencyUnitName:   control.secondCurrencyUnitName
                 secondCurrencyRate:    control.secondCurrencyRate
-                color:             Style.accent_outgoing
-                lightFont:         false
-                fontSize:          16
-                copyMenuEnabled:   true
+                color:                 Style.accent_outgoing
+                lightFont:             false
+                fontSize:              16
+                copyMenuEnabled:       true
+
                 //% "Sending"
-                caption:           qsTrId("available-panel-sending")
-                showZero:          false
-                prefix:            "-"
+                caption:    qsTrId("available-panel-sending")
+                showZero:   false
+                prefix:     "-"
             }
 
             Item {
@@ -195,15 +196,16 @@ Control {
             }
 
             BeamAmount {
-                id:                receivingAmount
-                amount:            receiving
-                currencySymbol:    BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                secondCurrencyLabel:   control.secondCurrencyLabel
+                id:                    receivingAmount
+                amount:                receiving
+                unitName:              BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
+                secondCurrencyUnitName:   control.secondCurrencyUnitName
                 secondCurrencyRate:    control.secondCurrencyRate
-                color:             Style.accent_incoming
-                lightFont:         false
-                fontSize:          16
-                copyMenuEnabled:   true
+                color:                 Style.accent_incoming
+                lightFont:             false
+                fontSize:              16
+                copyMenuEnabled:       true
+
                 //% "Receiving"
                 caption:           qsTrId("available-panel-receiving")
                 showZero:          false
