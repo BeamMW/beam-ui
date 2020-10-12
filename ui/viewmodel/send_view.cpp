@@ -140,7 +140,6 @@ void SendViewModel::setSendAmount(QString value)
         }
         else
         {
-            if(amount < _feeGrothes)
             if (_maxAvailable) 
             {
                 if(amount < _feeGrothes)
