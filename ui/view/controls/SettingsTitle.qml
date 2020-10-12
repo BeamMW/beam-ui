@@ -18,8 +18,8 @@ Control {
         color: Style.content_main
 
         font {
-            styleName:      "Medium"
-            weight:         Font.Medium
+            styleName:      "Bold"
+            weight:         Font.Bold
             pixelSize:      14
             letterSpacing:  3.11
             capitalization: Font.AllUppercase
@@ -29,5 +29,5 @@ Control {
     leftPadding:   20
     rightPadding:  20
     topPadding:    25
-    bottomPadding: 20
+    bottomPadding: 10
 }
