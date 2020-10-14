@@ -22,7 +22,6 @@ using namespace beamui;
 TokenInfoItem::TokenInfoItem(QObject* parent /* = nullptr */)
         : QObject(parent)
 {
-    connect(AppModel::getInstance().getWallet().get(), &WalletModel::getAddressReturned, this, &TokenInfoItem::onGetAddressReturned);
 }
 
 bool TokenInfoItem::isPermanent() const
@@ -165,7 +164,10 @@ void TokenInfoItem::setToken(const QString& token)
         auto peerID = m_parameters.GetParameter<WalletID>(TxParameterID::PeerID);
         if (peerID)
         {
-            AppModel::getInstance().getWallet()->getAsync()->getAddress(*peerID);
+            AppModel::getInstance().getWallet()->getAsync()->getAddress(*peerID, [this](const auto& addr, auto count) 
+            {
+                onGetAddressReturned(addr, count);
+            });
         }
     }
 }
@@ -198,12 +200,12 @@ void TokenInfoItem::setDefaultPermanent(bool value)
     }
 }
 
-void TokenInfoItem::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
+void TokenInfoItem::onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments)
 {
     auto p = m_parameters.GetParameter<WalletID>(TxParameterID::PeerID);
-    if (p && *p == id)
+    if (p)
     {
-        setOfflinePayments(offlinePayments);
+        setOfflinePayments((int)offlinePayments);
     }
 }
 

@@ -12,6 +12,7 @@ Dialog {
     property alias token:                   viewModel.token
     property alias defaultAddressType:      viewModel.defaultPermanent
     property alias ignoreStoredVouchers:    viewModel.ignoreStoredVouchers
+    signal addressCopied
     
     TokenInfoItem {
         id:     viewModel
@@ -210,7 +211,10 @@ Dialog {
                     font.pixelSize:           14
                     color:                    Style.content_main
                     text:                     viewModel.token
-                    onCopyText:               BeamGlobals.copyToClipboard(text)
+                    onCopyText:               {
+                        BeamGlobals.copyToClipboard(text)
+                        dialog.addressCopied();
+                    }
                 }
             }
         }
@@ -241,6 +245,7 @@ Dialog {
                 text:               qsTrId("address-info-copy-address")
                 onClicked: {
                     BeamGlobals.copyToClipboard(viewModel.token);
+                    dialog.addressCopied();
                 }
             }
         }

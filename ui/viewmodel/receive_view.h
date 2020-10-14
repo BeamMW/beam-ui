@@ -56,7 +56,8 @@ signals:
 public:
     Q_INVOKABLE void initialize(const QString& address);
     Q_INVOKABLE void generateNewReceiverAddress();
-    Q_INVOKABLE void saveAddress();
+    Q_INVOKABLE void saveReceiverAddress();
+    Q_INVOKABLE void saveExchangeAddress();
 
 private:
     QString getAmountToReceive() const;
@@ -91,12 +92,8 @@ private:
 
     void onGeneratedReceiverAddress(const beam::wallet::WalletAddress& addr);
     void onGeneratedExchangeAddress(const beam::wallet::WalletAddress& addr);
-
-private slots:
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
-    void onReceiverQRChanged();
-    void onTokenQRChanged();
-    void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
+    void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments);
 private:
     beam::Amount _amountToReceiveGrothes;
     int          _addressExpires;

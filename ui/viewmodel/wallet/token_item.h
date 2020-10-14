@@ -56,14 +56,13 @@ public:
     
     bool getIgnoreStoredVouchers() const;
     void setIgnoreStoredVouchers(bool value);
-
+private:
+    void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments);
 signals:
     void tokenChanged();
     void offlinePaymentsChanged();
     void defaultPermanentChanged();
     void ignoreStoredVouchersChanged();
-public slots:
-    void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
 
 private:
     QString m_token;
