@@ -922,11 +922,6 @@ Allow to open and proceed to the website? You can always update your choice in S
         <extracomment>show qr dialog address label</extracomment>
         <translation>Votre adresse</translation>
     </message>
-    <message id="show-qr-message">
-        <source>Scan this QR code or send this address to the sender over secure channel</source>
-        <extracomment>show QR dialog message, how to use this QR</extracomment>
-        <translation>Scannez ce code QR ou envoyez cette adresse à l&apos;expéditeur via un canal sécurisé</translation>
-    </message>
     <message id="settings-general-allow-beammw-label">
         <source>Allow access to %1 and %2
 (to fetch exchanges and transaction data)</source>
@@ -2295,8 +2290,8 @@ Your version is: %2. Please, check for updates.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-addr-message">
-        <source>To spend the received Max privacy coins the min transaction fee will be %1 GROTH.</source>
-        <oldsource>To spend the received Max privacy coins the min transaction fee will be 1200000 GROTH.</oldsource>
+        <source>Min transaction fee to send Max privacy coins is %1.</source>
+        <oldsource>To spend the received Max privacy coins the min transaction fee will be %1 GROTH.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-text-online-time">
@@ -2347,8 +2342,8 @@ Your version is: %2. Please, check for updates.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="address-permanent">
-        <source>Permanent address</source>
-        <oldsource>Permanent token</oldsource>
+        <source>Permanent</source>
+        <oldsource>Permanent address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-regular">
@@ -2357,16 +2352,6 @@ Your version is: %2. Please, check for updates.</oldsource>
     </message>
     <message id="tx-max-privacy">
         <source>Max privacy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-exchanges-not-supported2">
-        <source>Exchanges or mining pools support only regular transaction now.</source>
-        <oldsource>Non-interactive transaction is not supported by exchanges or mining pools yet.</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-exchanges-one-time-not-supported">
-        <source>Exchanges or mining pools support only permanent address now.</source>
-        <oldsource>Exchanges or mining pools support only permanent token now.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-send-non-int-note">
@@ -2383,15 +2368,6 @@ Your version is: %2. Please, check for updates.</oldsource>
         <oldsource>Name the contact</oldsource>
         <translation type="unfinished"></translation>
     </message>
-    <message id="switch-permanent">
-        <source>Switch to permanent address</source>
-        <oldsource>Switch to permanent token</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="switch-regular">
-        <source>Switch to regular transaction</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="contact-name-prompt">
         <source>Enter the name to this contact</source>
         <translation type="unfinished"></translation>
@@ -2405,8 +2381,8 @@ Your version is: %2. Please, check for updates.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-online-address">
-        <source>Online address</source>
-        <oldsource>Online token</oldsource>
+        <source>Online addressOnline address</source>
+        <oldsource>Online address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-offline-address">
@@ -2727,10 +2703,6 @@ Your version is: %2. Please, check for updates.</oldsource>
         <source>Copy address</source>
         <translation type="unfinished">Copier adresse</translation>
     </message>
-    <message id="show-address">
-        <source>Show address</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="dogecoin-show-seed-phrase">
         <source>Dogecoin seed phrase</source>
         <translation type="unfinished"></translation>
@@ -2821,6 +2793,30 @@ Your version is: %2. Please, check for updates.</oldsource>
     </message>
     <message id="public-offline-address-note">
         <source>Publishing this address will allow you to be identified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="more-details">
+        <source>More details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-address-type">
+        <source>Address Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="qr-code">
+        <source>QR Code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-address-for-wallet-label">
+        <source>Online address (for wallet)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-address-for-exchange-label">
+        <source>Online address (for exchange or mining pool)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-max-privacy-address">
+        <source>Max Privacy Address</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -154,14 +154,12 @@ Dialog {
                 visible:                viewModel.address.length && !viewModel.isMaxPrivacy
             }
             
-            SFLabel {
+            SFText {
                 Layout.fillWidth:       true
-                copyMenuEnabled:        true
                 wrapMode:               Text.Wrap
                 font.pixelSize:         14
                 color:                  Style.content_main
                 text:                   viewModel.address
-                onCopyText:             BeamGlobals.copyToClipboard(text)
                 visible:                viewModel.address.length && !viewModel.isMaxPrivacy
             }
 
@@ -175,14 +173,12 @@ Dialog {
                 visible:                viewModel.identity.length
             }
             
-            SFLabel {
+            SFText {
                 Layout.fillWidth:       true
-                copyMenuEnabled:        true
                 wrapMode:               Text.Wrap
                 font.pixelSize:         14
                 color:                  Style.content_main
                 text:                   viewModel.identity
-                onCopyText:             BeamGlobals.copyToClipboard(text)
                 visible:                viewModel.identity.length
             }
             
