@@ -17,42 +17,42 @@
 AssetsViewModel::AssetsViewModel()
     : _wallet (*AppModel::getInstance().getWallet())
 {
-    auto asset0  = std::make_shared<AssetObject>(0, "BEAM", 7023392592300);
-    auto asset1  = std::make_shared<AssetObject>(1, "COIN1", 11);
-    auto asset2  = std::make_shared<AssetObject>(2, "CA2", 22);
-    auto asset3  = std::make_shared<AssetObject>(3, "CA3", 32);
-    auto asset4  = std::make_shared<AssetObject>(4, "CA4", 42);
-    auto asset5  = std::make_shared<AssetObject>(5, "CA5", 52);
-    auto asset6  = std::make_shared<AssetObject>(6, "CA6", 62);
-    auto asset7  = std::make_shared<AssetObject>(7, "CA7", 72);
-    auto asset8  = std::make_shared<AssetObject>(8, "CA8", 82);
-    auto asset9  = std::make_shared<AssetObject>(9, "CA9", 92);
-    auto asset10 = std::make_shared<AssetObject>(10, "CA10", 102);
-    auto asset11 = std::make_shared<AssetObject>(11, "CA11", 112);
+    connect(&_wallet, &WalletModel::walletStatusChanged, this, &AssetsViewModel::onWalletStatus);
 
-    _assets.insert(asset0);
-     _assets.insert(asset1);
+    auto assetBEAM  = std::make_shared<AssetObject>(0);
+    _assets.insert(assetBEAM);
 
-
-
-/*
- _assets.insert(asset2);
- _assets.insert(asset3);
- _assets.insert(asset4);
-    _assets.insert(asset5);
-    _assets.insert(asset5);
-    _assets.insert(asset6);
-    _assets.insert(asset7);
-    _assets.insert(asset8);
-    _assets.insert(asset9);
-    _assets.insert(asset10);
-    _assets.insert(asset11);
-    */
-
+    formAssetsList();
     emit assetsChanged();
 }
 
 QAbstractItemModel* AssetsViewModel::getAssets()
 {
     return &_assets;
+}
+
+void AssetsViewModel::formAssetsList()
+{
+    const auto assets = _wallet.getAssetsNZ();
+    for (auto assetId: assets)
+    {
+        bool found = false;
+        for (const auto& asset: _assets)
+        {
+            if((found = asset->id() == assetId)) {
+                break;
+            }
+        }
+
+        if(!found)
+        {
+            _assets.insert(std::make_shared<AssetObject>(assetId));
+        }
+    }
+}
+
+void AssetsViewModel::onWalletStatus()
+{
+    formAssetsList();
+    emit assetsChanged();
 }

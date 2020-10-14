@@ -141,6 +141,18 @@ public:
         return m_list.end();
     }
 
+    bool touch(int index)
+    {
+        if (index < 0 || index >= m_list.size())
+        {
+            return false;
+        }
+
+        const auto qindex = createIndex(index, 0);
+        emit dataChanged(qindex, qindex);
+        return true;
+    }
+
 protected:
     QList<T> m_list;
 };

@@ -68,6 +68,7 @@ namespace beamui
 
     /// Convert amount to ui string with "." as a separator. With the default @coinType, no currency label added.
     QString AmountToUIString(const beam::Amount& value, Currencies coinType = Currencies::Unknown);
+    QString AmountToUIString(const beam::Amount& value, const QString& unitName, uint8_t decimalPlaces = 0);
     QString AmountInGrothToUIString(const beam::Amount& value);
 
     /// expects ui string with a "." as a separator

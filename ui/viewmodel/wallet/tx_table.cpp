@@ -108,17 +108,6 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
             case TxType::Simple:
                 break;
             }
-
-            // Even simple transactions can be on assets, we do not support these in UI at the moment
-            /*if(const auto assetId = t.GetParameter<Asset::ID>(TxParameterID::AssetID))
-            {
-                if (*assetId != Asset::s_InvalidID)
-                {
-                    continue;
-                }
-            }
-             */
-
             modifiedTransactions.push_back(std::make_shared<TxObject>(t, secondCurrency));
         }
     }

@@ -72,7 +72,6 @@ void ExchangeRatesManager::onExchangeRatesUpdate(const std::vector<beam::wallet:
     if (m_rateUnit == ExchangeRate::Currency::Unknown) return;  /// Second currency is turned OFF
 
     bool isActiveRateChanged = false;
-
     for (const auto& rate : rates)
     {
         {
@@ -83,9 +82,12 @@ void ExchangeRatesManager::onExchangeRatesUpdate(const std::vector<beam::wallet:
 
         if (rate.m_unit != m_rateUnit) continue;
         m_rates[rate.m_currency] = rate.m_rate;
-        if (!isActiveRateChanged) isActiveRateChanged = true;
+        isActiveRateChanged = true;
     }
-    if (isActiveRateChanged) emit activeRateChanged();
+
+    if (isActiveRateChanged) {
+        emit activeRateChanged();
+    }
 }
 
 void ExchangeRatesManager::onRateUnitChanged()

@@ -16,6 +16,7 @@
 
 #include "tx_object.h"
 #include "viewmodel/helpers/list_model.h"
+#include "assets_manager.h"
 
 class TxObjectList : public ListModel<std::shared_ptr<TxObject>>
 {
@@ -59,7 +60,9 @@ public:
         SenderIdentity,
         ReceiverIdentity, 
         IsMaxPrivacy,
-        IsOfflineToken
+        IsOfflineToken,
+        UnitName,
+        Icon,
     };
 
     Q_ENUM(Roles)
@@ -68,4 +71,10 @@ public:
 
     QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
+
+private slots:
+    void onAssetInfo(beam::Asset::ID assetId);
+
+private:
+    mutable AssetsManager _amgr;
 };

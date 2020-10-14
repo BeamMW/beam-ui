@@ -10,15 +10,16 @@ Control {
 
     property int inTxCnt
     property int outTxCnt
-    property alias amount:    amountCtrl.amount
-    property alias unitName:  amountCtrl.unitName
-    property alias unitName2: amountCtrl.secondCurrencyUnitName
-    property alias rate:      amountCtrl.secondCurrencyRate
-    property alias icon:      amountCtrl.iconSource
-    property alias color:     back.leftColor
-    property bool  selected:  false
-    property var   onTip:     null
-    property var   onClicked: null
+    property alias amount:      amountCtrl.amount
+    property alias unitName:    amountCtrl.unitName
+    property alias unitName2:   amountCtrl.secondCurrencyUnitName
+    property alias rate:        amountCtrl.secondCurrencyRate
+    property alias icon:        amountCtrl.iconSource
+    property alias color:       back.leftColor
+    property alias borderColor: back.leftBorderColor
+    property bool  selected:    false
+    property var   onTip:       null
+    property var   onClicked:   null
 
     padding: 0
     leftPadding:  20

@@ -51,7 +51,6 @@
         <file>controls/StatusBar.qml</file>
         <file>controls/Title.qml</file>
         <file>controls/SearchBox.qml</file>
-        <file>controls/TransactionDetails.qml</file>
         <file>controls/SwapTransactionDetails.qml</file>
         <file>controls/PaymentInfoDialog.qml</file>
         <file>controls/OpenExternalLinkConfirmation.qml</file>
@@ -80,6 +79,7 @@
         <file>wallet/AvailablePanelNew.qml</file>
         <file>wallet/InProgressPanelNew.qml</file>
         <file>wallet/MainInfoPanel.qml</file>
+        <file>wallet/TransactionDetails.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
@@ -282,7 +282,7 @@
         <file>assets/asset-1.svg</file>
         <file>assets/asset-2.svg</file>
         <file>assets/asset-3.svg</file>
-        <file>assets/asset-4.svg</file>
+        <file>assets/asset-err.svg</file>
         <file>assets/icon-usd.svg</file>
         <file>assets/graph-teal-small.svg</file>
         <file>assets/graph-white-small.svg</file>

@@ -33,7 +33,6 @@ public:
 
     beam::Timestamp timeCreated() const;
     beam::wallet::TxID getTxID() const;
-    QString getAmountWithCurrency() const;
     QString getAmount() const;
     beam::Amount getAmountValue() const;
     QString getSecondCurrencyRate() const;
@@ -50,6 +49,7 @@ public:
     QString getToken() const;
     QString getSenderIdentity() const;
     QString getReceiverIdentity() const;
+    beam::Asset::ID getAssetId() const;
 
     bool isIncome() const;
     bool isSelfTx() const;

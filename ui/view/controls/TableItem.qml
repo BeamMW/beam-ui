@@ -6,13 +6,14 @@ import Beam.Wallet 1.0
 import "."
 
 Item {
-	property alias text: itemText.text
-    property alias elide: itemText.elide
-    property alias color: itemText.color
-    property alias fontWeight: itemText.font.weight
-    property alias fontStyleName: itemText.font.styleName
+	property alias text:            itemText.text
+    property alias elide:           itemText.elide
+    property alias color:           itemText.color
+    property alias fontWeight:      itemText.font.weight
+    property alias fontStyleName:   itemText.font.styleName
     property alias copyMenuEnabled: itemText.copyMenuEnabled
-    property alias fontSizeMode: itemText.fontSizeMode
+    property alias fontSizeMode:    itemText.fontSizeMode
+
     signal copyText
     anchors.fill: parent
 

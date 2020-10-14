@@ -41,6 +41,7 @@ public:
     bool isOwnAddress(const beam::wallet::WalletID& walletID) const;
     bool isAddressWithCommentExist(const std::string& comment) const;
 
+    std::vector<beam::Asset::ID> getAssetsNZ() const;
     beam::Amount getAvailable(beam::Asset::ID) const;
     beam::Amount getReceiving(beam::Asset::ID) const;
     beam::Amount getReceivingIncoming(beam::Asset::ID) const;
@@ -57,8 +58,13 @@ signals:
     // INTERNAL SIGNALS, DO NOT SUBSCRIBE IN OTHER UI OBJECTS.
     // Subscribe to non-internal counterparts
     // These are used to redirect from reactor thread to the UI thread
+    // and cache some data. Due to old designed getters (getAvailable &c.).
+    // Better to avoid such internal signals
     void walletStatusInternal(const beam::wallet::WalletStatus& status);
+
+    // Public Signal
     void walletStatusChanged();
+    void assetInfoChanged(beam::Asset::ID assetId, const beam::wallet::WalletAsset& info);
 
 signals:
     void transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items);
@@ -128,6 +134,7 @@ private:
     void onExchangeRates(const std::vector<beam::wallet::ExchangeRate>&) override;
     void onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&) override;
     void onPublicAddress(const std::string& publicAddr) override;
+    void onAssetInfo(beam::Asset::ID, const beam::wallet::WalletAsset&) override;
 #ifdef BEAM_HW_WALLET
     void ShowKeyKeeperMessage() override;
     void HideKeyKeeperMessage() override;

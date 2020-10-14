@@ -147,10 +147,10 @@ Item {
                 Layout.topMargin: 30
                 Layout.fillWidth: true
 
-                icon:                    viewModel.selectedAsset < 0 ? viewModel.beamIcon : viewModel.assetIcon
-                unitName:                viewModel.selectedAsset < 0 ? BeamGlobals.getCurrencyUnitName(Currency.CurrBeam) : viewModel.assetUnitName
-                assetName:               viewModel.selectedAsset < 0 ? viewModel.beamName : viewModel.assetName
-                available:               viewModel.selectedAsset < 0 ? viewModel.beamAvailable : viewModel.assetAvailable
+                icon:                    viewModel.assetIcon
+                unitName:                viewModel.assetUnitName
+                assetName:               viewModel.assetName
+                available:               viewModel.assetAvailable
                 secondCurrencyUnitName:  viewModel.secondCurrencyUnitName
                 secondCurrencyRate:      viewModel.selectedAsset > 0 ? "" : viewModel.secondCurrencyRate
             }
@@ -159,12 +159,11 @@ Item {
                 id: assets
                 Layout.topMargin: 20
                 Layout.fillWidth: true
-                selection: viewModel.selectedAsset
 
                 Binding {
                     target:   viewModel
                     property: "selectedAsset"
-                    value:    assets.selection
+                    value:    assets.selectedId
                 }
             }
 

@@ -318,6 +318,11 @@ void WalletModel::onPublicAddress(const std::string& publicAddr)
     emit publicAddressChanged(QString::fromStdString(publicAddr));
 }
 
+void WalletModel::onAssetInfo(beam::Asset::ID assetId, const WalletAsset& info)
+{
+    emit assetInfoChanged(assetId, info);
+}
+
 beam::Version WalletModel::getLibVersion() const
 {
     beam::Version ver;
@@ -327,6 +332,16 @@ beam::Version WalletModel::getLibVersion() const
 uint32_t WalletModel::getClientRevision() const
 {
     return VERSION_REVISION;
+}
+
+std::vector<beam::Asset::ID> WalletModel::getAssetsNZ() const
+{
+    std::vector<beam::Asset::ID> assets;
+    for(const auto status: m_status.all)
+    {
+        assets.push_back(status.first);
+    }
+    return assets;
 }
 
 beam::Amount WalletModel::getAvailable(beam::Asset::ID id) const

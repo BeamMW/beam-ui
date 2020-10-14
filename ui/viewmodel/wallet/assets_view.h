@@ -30,7 +30,12 @@ public:
 signals:
     void assetsChanged();
 
+private slots:
+    void onWalletStatus();
+
 private:
+    void formAssetsList();
+
     AssetsList   _assets;
     WalletModel& _wallet;
 };

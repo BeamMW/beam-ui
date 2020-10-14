@@ -14,7 +14,8 @@ Control {
     property real   hSpacing:       10
     property real   vSpacing:       10
     property int    maxVisibleRows: 3
-    property int    selection:      0
+    property int    selectedId:     -1
+    property int    selectedIdx:    -1
     property alias  folded:         foldable.folded
 
     readonly property int   assetsCount:     viewModel.assets.rowCount()
@@ -132,12 +133,17 @@ Control {
                             implicitHeight: control.itemHeight
                             implicitWidth:  control.itemWidth
 
-                            inTxCnt:   model.inTxCnt
-                            outTxCnt:  model.outTxCnt
-                            amount:    model.amount
-                            unitName:  model.name
-                            selected:  model.index == control.selection
-                            opacity:   control.selection < 0  ? 1 : (model.index == control.selection ? 1 : 0.6)
+                            inTxCnt:      model.inTxCnt
+                            outTxCnt:     model.outTxCnt
+                            amount:       model.amount
+                            unitName:     model.unitName
+                            selected:     model.index == control.selectedIdx
+                            icon:         model.icon
+                            color:        model.color
+                            borderColor:  model.selectionColor
+                            unitName2:    model.unitName2
+                            rate:         model.rate
+                            opacity:      control.selectedIdx < 0  ? 1 : (model.index == control.selectedIdx ? 1 : 0.6)
 
                             onTip: function (show, text, iRight, iBtm) {
                                 tip.visible = show
@@ -155,17 +161,14 @@ Control {
                             }
 
                             onClicked: function () {
-                                if (control.selection == model.index) {
-                                    control.selection = -1
+                                if (control.selectedIdx == model.index) {
+                                    control.selectedIdx = -1
+                                    control.selectedId = -1
                                 } else {
-                                    control.selection = model.index
+                                    control.selectedIdx = model.index
+                                    control.selectedId = model.id
                                 }
                             }
-
-                            rate:      "0.25"
-                            unitName2: "USD"
-                            icon:      index == 0 ? "qrc:/assets/icon-beam.svg" : "qrc:/assets/asset-1.svg"
-                            color:     index == 0 ? Qt.rgba( 0 / 255, 242 / 255, 209 / 255, 0.99) : Qt.rgba( 0 / 85, 242 / 52, 100 / 255, 0.99)
                         }
 
                         Item {

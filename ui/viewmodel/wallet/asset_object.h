@@ -18,17 +18,13 @@
 class AssetObject
 {
 public:
-    AssetObject(uint64_t id, const QString& name, uint64_t amount);
+    AssetObject(uint64_t id);
     bool operator==(const AssetObject& other) const;
 
     [[nodiscard]] uint64_t id() const;
-    [[nodiscard]] QString  amount() const;
     [[nodiscard]] uint32_t inTxCnt() const;
     [[nodiscard]] uint32_t outTxCnt() const;
-    [[nodiscard]] QString  name() const;
 
 protected:
     uint64_t  _id;
-    uint64_t  _amount;
-    QString   _name;
 };

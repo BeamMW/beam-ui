@@ -17,19 +17,11 @@
 #include "model/wallet_model.h"
 #include "model/settings.h"
 #include "viewmodel/notifications/exchange_rates_manager.h"
+#include "assets_manager.h"
 
 class WalletViewModel : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString beamAvailable                 READ beamAvailable              NOTIFY beamChanged)
-    Q_PROPERTY(QString beamReceiving                 READ beamReceiving              NOTIFY beamChanged)
-    Q_PROPERTY(QString beamSending                   READ beamSending                NOTIFY beamChanged)
-    Q_PROPERTY(QString beamLocked                    READ beamLocked                 NOTIFY beamChanged)
-    Q_PROPERTY(QString beamLockedMaturing            READ beamLockedMaturing         NOTIFY beamChanged)
-    Q_PROPERTY(QString beamReceivingChange           READ beamReceivingChange        NOTIFY beamChanged)
-    Q_PROPERTY(QString beamReceivingIncoming         READ beamReceivingIncoming      NOTIFY beamChanged)
-    Q_PROPERTY(QString beamIcon                      READ beamIcon                   CONSTANT)
-    Q_PROPERTY(QString beamName                      READ beamName                   CONSTANT)
 
     Q_PROPERTY(int selectedAsset                      READ getSelectedAsset         WRITE setSelectedAsset   NOTIFY assetChanged)
     Q_PROPERTY(QString assetAvailable                 READ assetAvailable                                    NOTIFY assetChanged)
@@ -51,15 +43,6 @@ class WalletViewModel : public QObject
 public:
     WalletViewModel();
 
-    QString beamAvailable() const;
-    QString beamReceiving() const;
-    QString beamSending() const;
-    QString beamLocked() const;
-    QString beamLockedMaturing() const;
-    QString beamReceivingChange() const;
-    QString beamReceivingIncoming() const;
-    QString beamIcon() const;
-    QString beamName() const;
     QString assetAvailable() const;
     QString assetReceiving() const;
     QString assetSending() const;
@@ -67,9 +50,10 @@ public:
     QString assetLockedMaturing() const;
     QString assetReceivingChange() const;
     QString assetReceivingIncoming() const;
-    QString assetIcon() const;
-    QString assetUnitName() const;
-    QString assetName() const;
+    QString assetIcon();
+    QString assetUnitName();
+    QString assetName();
+
     QString getSecondCurrencyUnitName() const;
     QString getSecondCurrencyRate() const;
 
@@ -80,7 +64,6 @@ public:
     bool getIsFailedStatus() const;
     QString getWalletStatusErrorMsg() const;
     void allowBeamMWLinks(bool value);
-
     Q_INVOKABLE bool isAllowedBeamMWLinks() const;
 
 signals:
@@ -90,9 +73,13 @@ signals:
     void secondCurrencyRateChanged();
     void beamMWLinksAllowed();
 
+private slots:
+    void onAssetInfo(beam::Asset::ID assetId);
+
 private:
     WalletModel&         _model;
     WalletSettings&      _settings;
-    ExchangeRatesManager _exchangeRatesManager1;
-    beam::Asset::ID      _selectedAsset;
+    ExchangeRatesManager _ermgr;
+    AssetsManager        _amgr;
+    int                  _selectedAssetID; // can be -1
 };

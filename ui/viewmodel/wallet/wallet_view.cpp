@@ -14,62 +14,33 @@
 #include "wallet_view.h"
 #include "model/app_model.h"
 
+namespace {
+    inline beam::Asset::ID assetIdxToId(int idx) {
+        return idx < 1 ? beam::Asset::s_BeamID : beam::Asset::ID(idx);
+    }
+}
+
 WalletViewModel::WalletViewModel()
     : _model(*AppModel::getInstance().getWallet())
     , _settings(AppModel::getInstance().getSettings())
-    , _selectedAsset(-1)
+    , _selectedAssetID(-1)
 {
     connect(&_model, &WalletModel::walletStatusChanged, this, &WalletViewModel::beamChanged);
     connect(&_model, &WalletModel::walletStatusChanged, this, &WalletViewModel::assetChanged);
+    connect(&_amgr, &AssetsManager::assetInfo, this, &WalletViewModel::onAssetInfo);
 
-    connect(&_exchangeRatesManager1, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyUnitNameChanged()));
-    connect(&_exchangeRatesManager1, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
-}
-
-QString WalletViewModel::beamAvailable() const
-{
-    return beamui::AmountToUIString(_model.getAvailable(beam::Asset::s_BeamID));
-}
-
-QString WalletViewModel::beamReceiving() const
-{
-    const auto id = beam::Asset::s_BeamID;
-    return beamui::AmountToUIString(_model.getReceivingChange(id) + _model.getReceivingIncoming(id));
-}
-
-QString WalletViewModel::beamSending() const
-{
-    return beamui::AmountToUIString(_model.getSending(beam::Asset::s_BeamID));
-}
-
-QString WalletViewModel::beamReceivingChange() const
-{
-     return beamui::AmountToUIString(_model.getReceivingChange(beam::Asset::s_BeamID));
-}
-
-QString WalletViewModel::beamReceivingIncoming() const
-{
-    return beamui::AmountToUIString(_model.getReceivingIncoming(beam::Asset::s_BeamID));
-}
-
-QString WalletViewModel::beamLocked() const
-{
-    return beamLockedMaturing();
-}
-
-QString WalletViewModel::beamLockedMaturing() const
-{
-    return beamui::AmountToUIString(_model.getMaturing(beam::Asset::s_BeamID));
+    connect(&_ermgr, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyUnitNameChanged()));
+    connect(&_ermgr, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
 }
 
 QString WalletViewModel::getSecondCurrencyUnitName() const
 {
-    return beamui::getCurrencyUnitName(_exchangeRatesManager1.getRateUnitRaw());
+    return beamui::getCurrencyUnitName(_ermgr.getRateUnitRaw());
 }
 
 QString WalletViewModel::getSecondCurrencyRate() const
 {
-    auto rate = _exchangeRatesManager1.getRate(beam::wallet::ExchangeRate::Currency::Beam);
+    auto rate = _ermgr.getRate(beam::wallet::ExchangeRate::Currency::Beam);
     return beamui::AmountToUIString(rate);
 }
 
@@ -85,39 +56,51 @@ void WalletViewModel::allowBeamMWLinks(bool value)
 
 int WalletViewModel::getSelectedAsset() const
 {
-    return _selectedAsset;
+    return _selectedAssetID;
 }
 
-void WalletViewModel::setSelectedAsset(int val)
+void WalletViewModel::setSelectedAsset(int newAsset)
 {
-    _selectedAsset = beam::Asset::ID(val);
-    emit assetChanged();
+    if (_selectedAssetID != newAsset)
+    {
+        _selectedAssetID = newAsset;
+        _amgr.collectAssetInfo(assetIdxToId(_selectedAssetID));
+        emit assetChanged();
+    }
+}
+
+void WalletViewModel::onAssetInfo(beam::Asset::ID assetId)
+{
+    if (assetId == beam::Asset::ID(_selectedAssetID))
+    {
+        emit assetChanged();
+    }
 }
 
 QString WalletViewModel::assetAvailable() const
 {
-    return beamui::AmountToUIString(_model.getAvailable(_selectedAsset));
+    return beamui::AmountToUIString(_model.getAvailable(assetIdxToId(_selectedAssetID)));
 }
 
 QString WalletViewModel::assetReceiving() const
 {
-    const auto id = _selectedAsset;
+    const auto id = assetIdxToId(_selectedAssetID);
     return beamui::AmountToUIString(_model.getReceivingChange(id) + _model.getReceivingIncoming(id));
 }
 
 QString WalletViewModel::assetSending() const
 {
-    return beamui::AmountToUIString(_model.getSending(_selectedAsset));
+    return beamui::AmountToUIString(_model.getSending(assetIdxToId(_selectedAssetID)));
 }
 
 QString WalletViewModel::assetReceivingChange() const
 {
-     return beamui::AmountToUIString(_model.getReceivingChange(_selectedAsset));
+     return beamui::AmountToUIString(_model.getReceivingChange(assetIdxToId(_selectedAssetID)));
 }
 
 QString WalletViewModel::assetReceivingIncoming() const
 {
-    return beamui::AmountToUIString(_model.getReceivingIncoming(_selectedAsset));
+    return beamui::AmountToUIString(_model.getReceivingIncoming(assetIdxToId(_selectedAssetID)));
 }
 
 QString WalletViewModel::assetLocked() const
@@ -127,30 +110,20 @@ QString WalletViewModel::assetLocked() const
 
 QString WalletViewModel::assetLockedMaturing() const
 {
-    return beamui::AmountToUIString(_model.getMaturing(_selectedAsset));
+    return beamui::AmountToUIString(_model.getMaturing(assetIdxToId(_selectedAssetID)));
 }
 
-QString WalletViewModel::beamIcon() const
+QString WalletViewModel::assetIcon()
 {
-    return "qrc:/assets/icon-beam.svg";
+    return _amgr.getIcon(assetIdxToId(_selectedAssetID));
 }
 
-QString WalletViewModel::assetIcon() const
+QString WalletViewModel::assetUnitName()
 {
-    return _selectedAsset == 0 ? beamIcon() : "qrc:/assets/asset-0.svg";
+    return _amgr.getUnitName(assetIdxToId(_selectedAssetID));
 }
 
-QString WalletViewModel::assetUnitName() const
+QString WalletViewModel::assetName()
 {
-    return _selectedAsset == 0 ? "BEAM" : "COIN1";
-}
-
-QString WalletViewModel::beamName() const
-{
-    return "Beam";
-}
-
-QString WalletViewModel::assetName() const
-{
-    return _selectedAsset == 0 ? beamName() : "Coin One";
+    return _amgr.getName(assetIdxToId(_selectedAssetID));
 }

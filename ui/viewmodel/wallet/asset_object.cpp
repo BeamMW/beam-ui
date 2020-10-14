@@ -14,27 +14,17 @@
 #include "asset_object.h"
 #include "../ui_helpers.h"
 
- AssetObject::AssetObject(uint64_t id, const QString& name, uint64_t amount)
-    : _id(id)
-    , _amount(amount)
-    , _name(name)
- {
- }
+AssetObject::AssetObject(uint64_t id)
+   : _id(id)
+{
+}
 
- bool AssetObject::operator==(const AssetObject& other) const {
-    return _id == other._id;
+bool AssetObject::operator==(const AssetObject& other) const {
+   return _id == other._id;
 }
 
 uint64_t AssetObject::id() const {
     return _id;
-}
-
-QString AssetObject::amount() const {
-    return beamui::AmountToUIString(_amount);
-}
-
-QString AssetObject::name() const {
-    return _name;
 }
 
 uint32_t AssetObject::inTxCnt() const {

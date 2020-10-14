@@ -10,29 +10,48 @@
 // limitations under the License.
 #pragma once
 
+#include <memory>
 #include "asset_object.h"
 #include "viewmodel/helpers/list_model.h"
-#include <memory>
+#include "assets_manager.h"
+#include "viewmodel/notifications/exchange_rates_manager.h"
 
 class AssetsList : public ListModel<std::shared_ptr<AssetObject>>
 {
     Q_OBJECT
 public:
-    AssetsList() = default;
+    AssetsList();
     ~AssetsList() override = default;
 
     enum class Roles
     {
         Search = Qt::UserRole + 1,
         RId,
-        RName,
+        RUnitName,
         RAmount,
         RInTxCnt,
         ROutTxCnt,
+        RIcon,
+        RColor,
+        RSelectionColor,
+        RUnitName2,
+        RRate,
     };
 
     Q_ENUM(Roles)
 
     [[nodiscard]] QHash<int, QByteArray> roleNames() const override;
     [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
+
+private slots:
+    void onNewRates();
+    void onWalletStatus();
+    void onAssetInfo(beam::Asset::ID assetId);
+
+private:
+    void touch(beam::Asset::ID id);
+
+    mutable AssetsManager _amgr;
+    mutable ExchangeRatesManager _ermgr;
+    WalletModel& _wallet;
 };

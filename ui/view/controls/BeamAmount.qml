@@ -86,6 +86,10 @@ Control {
         if (maxPaintedWidth) amountText.text = fitText()
     }
 
+    onUnitNameChanged: {
+        if (maxPaintedWidth) amountText.text = fitText()
+    }
+
     onMaxPaintedWidthChanged: {
         if (maxPaintedWidth) amountText.text = fitText()
         else amountText.text = Qt.binding(function () {

@@ -222,6 +222,8 @@ int main (int argc, char* argv[])
                     });
 
             qRegisterMetaType<Currency>("Currency");
+            qRegisterMetaType<beam::Asset::ID>("beam::Asset::ID");
+            qRegisterMetaType<beam::wallet::WalletAsset>("beam::wallet::WalletAsset");
             qmlRegisterUncreatableType<WalletCurrency>("Beam.Wallet", 1, 0, "Currency", "Not creatable as it is an enum type.");
             qmlRegisterType<StartViewModel>("Beam.Wallet", 1, 0, "StartViewModel");
             qmlRegisterType<LoadingViewModel>("Beam.Wallet", 1, 0, "LoadingViewModel");
@@ -244,7 +246,6 @@ int main (int argc, char* argv[])
             qmlRegisterType<SendViewModel>("Beam.Wallet", 1, 0, "SendViewModel");
             qmlRegisterType<SendSwapViewModel>("Beam.Wallet", 1, 0, "SendSwapViewModel");
             qmlRegisterType<ELSeedValidator>("Beam.Wallet", 1, 0, "ELSeedValidator");
-
             qmlRegisterType<AddressItem>("Beam.Wallet", 1, 0, "AddressItem");
             qmlRegisterType<ContactItem>("Beam.Wallet", 1, 0, "ContactItem");
             qmlRegisterType<UtxoItem>("Beam.Wallet", 1, 0, "UtxoItem");
@@ -258,16 +259,13 @@ int main (int argc, char* argv[])
             qmlRegisterType<AssetsList>("Beam.Wallet", 1, 0, "AssetsList");
             qmlRegisterType<TokenInfoItem>("Beam.Wallet", 1, 0, "TokenInfoItem");
             qmlRegisterType<SwapCoinClientWrapper>("Beam.Wallet", 1, 0, "SwapCoinClientWrapper");
-            
             qmlRegisterType<TokenBootstrapManager>("Beam.Wallet", 1, 0, "TokenBootstrapManager");
             qmlRegisterType<PushNotificationManager>("Beam.Wallet", 1, 0, "PushNotificationManager");
             qmlRegisterType<ExchangeRatesManager>("Beam.Wallet", 1, 0, "ExchangeRatesManager");
-            
             qmlRegisterType<SortFilterProxyModel>("Beam.Wallet", 1, 0, "SortFilterProxyModel");
             qmlRegisterType<QR>("Beam.Wallet", 1, 0, "QR");
 
             engine.load(QUrl("qrc:/root.qml"));
-
             if (engine.rootObjects().count() < 1)
             {
                 LOG_ERROR() << "Problem with QT";

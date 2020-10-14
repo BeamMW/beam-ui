@@ -176,6 +176,8 @@ set(UI_SRC
     viewmodel/wallet/assets_list.cpp
     viewmodel/wallet/asset_object.h
     viewmodel/wallet/asset_object.cpp
+    viewmodel/wallet/assets_manager.h
+    viewmodel/wallet/assets_manager.cpp
 
     model/wallet_model.h
     model/wallet_model.cpp
