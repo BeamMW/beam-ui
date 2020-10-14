@@ -113,7 +113,7 @@ ColumnLayout {
 
             Connections {
                 target: control
-                function onAmountInChanged() {
+                onAmountInChanged: {
                     if (!ainput.activeFocus) {
                         // we intentionally break binding here
                         ainput.text = ainput.formatDisplayedAmount()
@@ -264,12 +264,8 @@ ColumnLayout {
                 secondCurrencyLabel:        control.secondCurrencyLabel
                 Connections {
                     target: control
-                    function onFeeChanged() {
-                        feeInput.fee = control.fee
-                    }
-                    function onCurrencyChanged() {
-                        feeInput.fee = BeamGlobals.getDefaultFee(control.currency)
-                    }
+                    onFeeChanged: feeInput.fee = control.fee
+                    onCurrencyChanged: feeInput.fee = BeamGlobals.getDefaultFee(control.currency)
                 }
             }
         }

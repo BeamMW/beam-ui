@@ -906,7 +906,7 @@ generate new or edit existing seed phrase."
 
                                 Connections {
                                     target: modelData
-                                    function onValueChanged() {
+                                    onValueChanged: {
                                         seedPhraseDialog.updateIsSeedChanged();
                                         seedPhraseDialog.validateFullSeedPhrase()
                                         seedPhraseDialog.updateIsAllWordsAllowed()
