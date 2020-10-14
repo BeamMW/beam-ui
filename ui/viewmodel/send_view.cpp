@@ -241,7 +241,10 @@ void SendViewModel::setIsShieldedTx(bool value)
         {
             if (_walletModel.getAvailable() - _sendAmountGrothes - _feeGrothes == 0)
             {
-                _sendAmountGrothes -= _minimalFeeGrothes;
+                if (_sendAmountGrothes >= _minimalFeeGrothes)
+                {
+                    _sendAmountGrothes -= _minimalFeeGrothes;
+                }
                 emit sendAmountChanged();
             }
             setFeeGrothes(_minimalFeeGrothes);
