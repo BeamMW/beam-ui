@@ -96,6 +96,7 @@ QString ReceiveViewModel::getReceiverAddressForExchange() const
 
 void ReceiveViewModel::initialize(const QString& address)
 {
+    using namespace beam::wallet;
     beam::wallet::WalletID walletID;
     if (address.isEmpty() || !walletID.FromHex(address.toStdString()))
     {
@@ -110,6 +111,23 @@ void ReceiveViewModel::initialize(const QString& address)
         _receiverAddressForExchange = addr;
         _receiverAddressForExchange.setExpiration(beam::wallet::WalletAddress::ExpirationStatus::Never);
         emit receiverAddressForExchangeChanged();
+
+        TxParameters offlineParameters;
+        offlineParameters.SetParameter(TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
+        // add a vouchers
+        auto vouchers = _walletModel.generateVouchers(_receiverAddressForExchange.m_OwnID, 10);
+        if (!vouchers.empty())
+        {
+            // add voucher parameter
+            offlineParameters.SetParameter(TxParameterID::ShieldedVoucherList, vouchers);
+            offlineParameters.SetParameter(TxParameterID::PeerID, _receiverAddressForExchange.m_walletID);
+            offlineParameters.SetParameter(TxParameterID::PeerWalletIdentity, _receiverAddressForExchange.m_Identity);
+            setOfflineToken(QString::fromStdString(std::to_string(offlineParameters)));
+        }
+        else
+        {
+            setOfflineToken("");
+        }
     });
 }
 
@@ -222,24 +240,6 @@ void ReceiveViewModel::updateTransactionToken()
     {
         // change tx type
         _txParameters.SetParameter(TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
-        setOfflineToken("");
-    }
-    else
-    {
-        TxParameters offlineParameters = _txParameters;
-        offlineParameters.SetParameter(TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
-        // add a vouchers
-        auto vouchers = _walletModel.generateVouchers(_receiverAddress.m_OwnID, 10);
-        if (!vouchers.empty())
-        {
-            // add voucher parameter
-            offlineParameters.SetParameter(TxParameterID::ShieldedVoucherList, vouchers);
-            setOfflineToken(QString::fromStdString(std::to_string(offlineParameters)));
-        }
-        else
-        {
-            setOfflineToken("");
-        }
     }
 
     setTranasctionToken(QString::fromStdString(std::to_string(_txParameters)));
