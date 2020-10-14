@@ -191,61 +191,37 @@ ColumnLayout {
 
                         Connections {
                             target: modelData
-                            function onCanEditChanged() {
-                                settingsControl.canEdit = modelData.canEdit
-                            }
-
-                            function onConnectionTypeChanged() {
+                            onCanEditChanged:        settingsControl.canEdit = modelData.canEdit
+                            onConnectionTypeChanged: {
                                 settingsControl.isConnected          = modelData.isConnected;
                                 settingsControl.isNodeConnection     = modelData.isNodeConnection;
                                 settingsControl.isElectrumConnection = modelData.isElectrumConnection;
                                 settingsControl.title                = modelData.title;
                             }
-
-                            function onConnectionStatusChanged() {
+                            onConnectionStatusChanged: {
                                 settingsControl.connectionStatus     = modelData.connectionStatus;
                             }
 
-                            function onConnectionErrorMsgChanged() {
+                            onConnectionErrorMsgChanged: {
                                 settingsControl.connectionErrorMsg   = modelData.connectionErrorMsg;
                             }
 
                             //
                             // Node
                             //
-                            function onNodeAddressChanged() {
-                                settingsControl.address  = modelData.nodeAddress
-                            }
-                            function onNodePortChanged() {
-                                settingsControl.port     = modelData.nodePort
-                            }
-                            function onNodeUserChanged() { 
-                                settingsControl.username = modelData.nodeUser
-                            }
-                            function onNodePassChanged() {
-                                settingsControl.password = modelData.nodePass
-                            }
+                            onNodeAddressChanged: settingsControl.address  = modelData.nodeAddress
+                            onNodePortChanged:    settingsControl.port     = modelData.nodePort
+                            onNodeUserChanged:    settingsControl.username = modelData.nodeUser
+                            onNodePassChanged:    settingsControl.password = modelData.nodePass
                             //
                             // Electrum
                             //
-                            function onNodeAddressElectrumChanged() {
-                                settingsControl.addressElectrum = modelData.nodeAddressElectrum
-                            }
-                            function onNodePortElectrumChanged() {
-                                settingsControl.portElectrum = modelData.nodePortElectrum
-                            }
-                            function onSelectServerAutomaticallyChanged() {
-                                settingsControl.useRandomElectrumNode = modelData.selectServerAutomatically
-                            }
-                            function onElectrumSeedPhrasesChanged() {
-                                settingsControl.seedPhrasesElectrum = modelData.electrumSeedPhrases
-                            }
-                            function onIsCurrentSeedValidChanged() {
-                                settingsControl.isCurrentElectrumSeedValid = modelData.isCurrentSeedValid
-                            }
-                            function onIsCurrentSeedSegwitChanged() {
-                                settingsControl.isCurrentElectrumSeedSegwitAndValid = modelData.isCurrentSeedSegwit
-                            }
+                            onNodeAddressElectrumChanged: settingsControl.addressElectrum = modelData.nodeAddressElectrum
+                            onNodePortElectrumChanged: settingsControl.portElectrum = modelData.nodePortElectrum
+                            onSelectServerAutomaticallyChanged: settingsControl.useRandomElectrumNode = modelData.selectServerAutomatically
+                            onElectrumSeedPhrasesChanged: settingsControl.seedPhrasesElectrum = modelData.electrumSeedPhrases
+                            onIsCurrentSeedValidChanged:  settingsControl.isCurrentElectrumSeedValid = modelData.isCurrentSeedValid
+                            onIsCurrentSeedSegwitChanged: settingsControl.isCurrentElectrumSeedSegwitAndValid = modelData.isCurrentSeedSegwit
                         }
 
                         onApplyNode:                 modelData.applyNodeSettings()

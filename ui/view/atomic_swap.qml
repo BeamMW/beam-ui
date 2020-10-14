@@ -52,7 +52,7 @@ Item {
         }
         Connections {
             target: viewModel
-            function onOfferRemovedFromTable(txId) {
+            onOfferRemovedFromTable: function(txId) {
                 if (cancelOfferDialog.txId == txId) {
                     cancelOfferDialog.cancelButton.onClicked();
                 }
@@ -146,11 +146,11 @@ Item {
                 }
                 Connections {
                     target: tokenDuplicateChecker.model
-                    function onTokenPreviousAccepted(token) {
+                    onTokenPreviousAccepted: function(token) {
                         tokenDuplicateChecker.isOwn = false;
                         tokenDuplicateChecker.open();
                     }
-                    function onTokenFirstTimeAccepted(token) {
+                    onTokenFirstTimeAccepted: function(token) {
                         offersStackView.pop();
                         offersStackView.push(Qt.createComponent("send_swap.qml"),
                                             {
@@ -160,7 +160,7 @@ Item {
                                             });
                         offersStackView.currentItem.validateCoin();
                     }
-                    function onTokenOwnGenerated(token) {
+                    onTokenOwnGenerated: function(token) {
                         tokenDuplicateChecker.isOwn = true;
                         tokenDuplicateChecker.open();
                     }
@@ -1112,7 +1112,7 @@ Please try again later or create an offer yourself."
                         }
                         Connections {
                             target: deleteTransactionDialog
-                            function onAccepted() {
+                            onAccepted: {
                                 viewModel.deleteTx(txContextMenu.txID);
                             }
                         }

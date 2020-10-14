@@ -428,7 +428,7 @@ ColumnLayout {
 
                         Connections {
                             target: viewModel
-                            function onFeeGrothesChanged() {
+                            onFeeGrothesChanged: {
                                 feeInput.fee = viewModel.feeGrothes;
                             }
                         }
