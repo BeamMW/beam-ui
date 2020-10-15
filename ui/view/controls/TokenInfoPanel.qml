@@ -17,7 +17,9 @@ Panel {
     property alias defaultAddressType:  infoDialog.defaultAddressType
     property alias ignoreStoredVouchers:infoDialog.ignoreStoredVouchers
     property alias headerItem:          headerPlaceholder.contentItem
+    property alias headerVisible:       headerPlaceholder.visible
     property alias footerItem:          footerPlaceholder.contentItem
+    property alias footerVisible:       footerPlaceholder.visible
     signal tokenCopied;
     signal closed
 
@@ -35,7 +37,8 @@ Panel {
         Control {
             id:                          headerPlaceholder
             Layout.fillWidth:            true
-            visible:                     contentItem != null ? contentItem.visible : false
+            visible:                     false
+            bottomPadding:               20
         }
         RowLayout {
             Layout.fillWidth:         true
@@ -92,6 +95,8 @@ Panel {
         Control {
             id:                          footerPlaceholder
             Layout.fillWidth:            true
+            visible:                     false
+            topPadding:                  6
         }
         CustomButton {
             Layout.topMargin:       20

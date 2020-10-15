@@ -331,10 +331,10 @@ ColumnLayout {
                             receiveView.saveReceiverAddress();
                         }
                         onClosed: receiveView.onClosed()
+
+                        headerVisible:  !viewModel.isShieldedTx
                         headerItem: RowLayout {
-                            anchors.bottomMargin: 20
                             spacing:    10
-                            visible:    !viewModel.isShieldedTx
                             SFText {
                                 //% "One-time use"
                                 text:  qsTrId("address-one-time")
@@ -403,6 +403,14 @@ ColumnLayout {
                         title:                qsTrId("wallet-receive-offline-address")
                         //% "(for wallet)"
                         headerText:           qsTrId("wallet-receive-address-for-wallet")
+                        footerVisible:        true
+                        footerItem: SFText {
+                            font.pixelSize:        14
+                            font.italic:           true
+                            color:                 Style.content_disabled
+                            /*% "Supports %1 payments."*/
+                            text: qsTrId("wallet-receive-offline-payments").arg(10)
+                        }
                         token:                viewModel.offlineToken
                         showQrCode:           false
                         isValidToken:         receiveView.isValid()
