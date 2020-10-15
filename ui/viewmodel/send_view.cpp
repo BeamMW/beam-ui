@@ -167,11 +167,6 @@ void SendViewModel::setReceiverTA(const QString& value)
     {
         _tokenGeneratebByNewAppVersionMessage.clear();
         _receiverTA = value;
-        if (_receiverTA.isEmpty())
-        {
-            _canChangeTxType = true;
-            emit canChangeTxTypeChanged();
-        }
         emit receiverTAChanged();
 
         if (QMLGlobals::isSwapToken(value))
@@ -187,10 +182,7 @@ void SendViewModel::setReceiverTA(const QString& value)
             }
             else
             {
-                setIsToken(false);
-                setIsShieldedTx(false);
-                setIsNonInteractive(false);
-                setIsPermanentAddress(false);
+                resetAddress();
                 setComment("");
             }
             emit canSendChanged();
@@ -266,20 +258,6 @@ void SendViewModel::setIsPermanentAddress(bool value)
     }
 }
 
-bool SendViewModel::canChangeTxType() const
-{
-    return _canChangeTxType;
-}
-
-void SendViewModel::setCanChangeTxType(bool value)
-{
-    if (_canChangeTxType != value)
-    {
-        _canChangeTxType = value;
-        emit canChangeTxTypeChanged();
-    }
-}
-
 int SendViewModel::getOfflinePayments() const
 {
     return _offlinePayments;
@@ -295,17 +273,31 @@ void SendViewModel::setOfflinePayments(int value)
     }
 }
 
-bool SendViewModel::isNonInteractive() const
+bool SendViewModel::isOffline() const
 {
-    return _isNonInteractive;
+    return _isOffline;
 }
 
-void SendViewModel::setIsNonInteractive(bool value)
+void SendViewModel::setIsOffline(bool value)
 {
-    if (_isNonInteractive != value)
+    if (_isOffline != value)
     {
-        _isNonInteractive = value;
-        emit isNonInteractiveChanged();
+        _isOffline = value;
+        emit isOfflineChanged();
+    }
+}
+
+bool SendViewModel::isMaxPrivacy() const
+{
+    return _isMaxPrivacy;
+}
+
+void SendViewModel::setIsMaxPrivacy(bool value)
+{
+    if (_isMaxPrivacy != value)
+    {
+        _isMaxPrivacy = value;
+        emit isMaxPrivacyChanged();
     }
 }
 
@@ -364,8 +356,11 @@ void SendViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::Shiel
 
 void SendViewModel::onNeedExtractShieldedCoins(bool val)
 {
-    _isNeedExtractShieldedCoins = val;
-    emit isNeedExtractShieldedCoinsChanged();
+    if (_isNeedExtractShieldedCoins != val)
+    {
+        _isNeedExtractShieldedCoins = val;
+        emit isNeedExtractShieldedCoinsChanged();
+    }
 }
 
 void SendViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
@@ -406,7 +401,7 @@ bool SendViewModel::canSend() const
     return !QMLGlobals::isSwapToken(_receiverTA) && getRreceiverTAValid()
            && _sendAmountGrothes > 0 && isEnough()
            && QMLGlobals::isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins) 
-           && (!isShieldedTx() || !isNonInteractive() || getOfflinePayments() > 0)
+           && (!isShieldedTx() || !isOffline() || getOfflinePayments() > 0)
            && !(isShieldedTx() && isOwnAddress());
 }
 
@@ -490,6 +485,8 @@ void SendViewModel::extractParameters()
 
     _txParameters = *txParameters;
 
+    resetAddress();
+
     if (auto peerID = _txParameters.GetParameter<WalletID>(TxParameterID::PeerID); peerID)
     {
         _receiverWalletID = *peerID;
@@ -524,7 +521,6 @@ void SendViewModel::extractParameters()
 
     if (auto txType = _txParameters.GetParameter<TxType>(TxParameterID::TransactionType); txType && *txType == TxType::PushTransaction)
     {
-        setCanChangeTxType(false);
         setIsShieldedTx(true);
         ShieldedVoucherList vouchers;
         auto hasVouchers = _txParameters.GetParameter(TxParameterID::ShieldedVoucherList, vouchers);
@@ -535,14 +531,10 @@ void SendViewModel::extractParameters()
                 _walletModel.getAsync()->saveVouchers(vouchers, _receiverWalletID);
             }
         }
-        setIsNonInteractive(hasVouchers);
-        // ignore other types
-    }
-    else
-    {
-        setIsShieldedTx(false);
-        setIsNonInteractive(false);
-        setCanChangeTxType(true);
+        setIsOffline(hasVouchers);
+        
+        ShieldedTxo::Voucher voucher;
+        setIsMaxPrivacy(_txParameters.GetParameter(TxParameterID::Voucher, voucher) && _receiverIdentity != Zero);
     }
 
     if (auto amount = _txParameters.GetParameter<beam::Amount>(TxParameterID::Amount); amount && *amount > 0)
@@ -631,4 +623,14 @@ void SendViewModel::resetMinimalFee()
     _minimalFeeGrothes = QMLGlobals::getMinimalFee(Currency::CurrBeam, _isShieldedTx);
     emit minimalFeeGrothesChanged();
     _shieldedInputsFee = 0;
+}
+
+void SendViewModel::resetAddress()
+{
+    setIsToken(false);
+    setIsShieldedTx(false);
+    setIsOffline(false);
+    setIsMaxPrivacy(false);
+    setIsPermanentAddress(false);
+    onNeedExtractShieldedCoins(false);
 }

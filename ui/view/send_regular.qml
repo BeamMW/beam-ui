@@ -40,8 +40,9 @@ ColumnLayout {
     }
 
     TokenInfoDialog {
-        id:     tokenInfoDialog
-        token:  viewModel.receiverTA
+        id:         tokenInfoDialog
+        token:      viewModel.receiverTA
+        incoming:   false
     }
 
     SaveAddressDialog {
@@ -257,82 +258,31 @@ ColumnLayout {
                                 font.italic:        true
                                 font.pixelSize:     14
                                 text:               viewModel.isPermanentAddress ? 
-                                                    //% "Permanent address (you can save it to contacts after send)."
+                                                    //% "Permanent address"
                                                     qsTrId("wallet-send-permanent-note") 
                                                     :
                                                     //% "One-time use address (expire in 12 hours after succesfull transaction)."
                                                     qsTrId("wallet-send-one-time-note")
-                                visible:            viewModel.isToken
-                            }
-
-                            RowLayout {
-                                spacing:            10
-                                Layout.topMargin:   20
-                                visible:            viewModel.isToken && viewModel.canChangeTxType && !viewModel.isOwnAddress
-                                SFText {
-                                    //% "Max privacy"
-                                    text: qsTrId("general-max-privacy")
-                                    color: isShieldedTxSwitch.checked && viewModel.receiverAddress.length? Style.active : Style.content_secondary
-                                    font.pixelSize: 14
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        acceptedButtons: Qt.LeftButton
-                                        onClicked: {
-                                            isShieldedTxSwitch.checked = !isShieldedTxSwitch.checked;
-                                        }
-                                    }
-                                }
-                    
-                                CustomSwitch {
-                                    id:          isShieldedTxSwitch
-                                    spacing:     0
-                    
-                                    checked: viewModel.isShieldedTx
-                                    Binding {
-                                        target:   viewModel
-                                        property: "isShieldedTx"
-                                        value:    isShieldedTxSwitch.checked
-                                    }
-                                }
-                            }
-
-                            SFText {
-                                id:                 ownAddressUnsupportedMaxPrivacyText
-                                Layout.alignment:   Qt.AlignTop
-                                Layout.topMargin:   10
-                                color:              viewModel.isShieldedTx ? Style.validator_error : Style.content_secondary
-                                font.italic:        true
-                                font.pixelSize:     14
-                                //% "Can not sent max privacy transaction to own address"
-                                text:               qsTrId("wallet-send-max-privacy-to-yourself-unsupported")
-                                visible:            viewModel.isToken && viewModel.isOwnAddress
+                                visible:            viewModel.isToken && !viewModel.isOffline && !viewModel.isMaxPrivacy
                             }
 
                             SFText {
                                 Layout.alignment:   Qt.AlignTop
                                 Layout.topMargin:   10
+                                id:                 maxPrivacyNoteToken
                                 color:              Style.content_secondary
                                 font.italic:        true
                                 font.pixelSize:     14
-                                //% "This type of address does not support max privacy transactions"
-                                text:               qsTrId("wallet-send-max-privacy-unsupported")
-                                visible:            !viewModel.isToken && viewModel.receiverTAValid
-                            }
-                            SFText {
-                                Layout.alignment:   Qt.AlignTop
-                                Layout.topMargin:   20
-                                id:                 maxPrivacyNoteToken
-                                color:              Style.content_main
-                                font.italic:        true
-                                font.pixelSize:     14
                                 
-                                text:               viewModel.isNonInteractive ? 
-                                                    //% "Receiver requested Max privacy. Offline transactions remaining: %1"
+                                text:               viewModel.isOffline ? 
+                                                    //% "Offline address. Payments left: %1"
                                                     qsTrId("wallet-send-max-privacy-note-address-offline").arg(viewModel.offlinePayments)
                                                     : 
-                                                    //% "Receiver requested Max privacy"
-                                                    qsTrId("wallet-send-max-privacy-note-address")
-                                visible:            !viewModel.canChangeTxType && viewModel.isShieldedTx && viewModel.isToken && !viewModel.isOwnAddress
+                                                        viewModel.isMaxPrivacy ?
+                                                        //% "Max privacy address"
+                                                        qsTrId("wallet-send-max-privacy-note-address")
+                                                        : ""
+                                visible:            viewModel.isShieldedTx && viewModel.isToken && !viewModel.isOwnAddress
                             }
 
                             SFText {
