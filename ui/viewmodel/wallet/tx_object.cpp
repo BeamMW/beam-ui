@@ -431,6 +431,13 @@ QString TxObject::getStateDetails() const
             break;
         }
     }
+
+    if (tx.m_txType == beam::wallet::TxType::PushTransaction &&
+        (tx.m_status == beam::wallet::TxStatus::InProgress || tx.m_status == beam::wallet::TxStatus::Registering))
+    {
+        //% "The transaction is usually expected to complete in a few minutes."
+        return qtTrId("tx-state-in-progress-normal");
+    }
     return "";
 }
 
