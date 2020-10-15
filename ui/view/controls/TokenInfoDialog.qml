@@ -194,25 +194,40 @@ Dialog {
                 visible:                viewModel.token != viewModel.address
             }
             
-            ScrollView {
+            RowLayout {
                 Layout.fillWidth:             true
-                Layout.preferredWidth:        578
-                Layout.maximumHeight:         200
-                clip:                         true
-                ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
-                ScrollBar.vertical.policy:    ScrollBar.AsNeeded
                 visible:                      viewModel.token != viewModel.address
-                SFLabel {
-                    //Layout.fillWidth:       true
-                    //Layout.preferredWidth:  578
-                    width:                    578
-                    copyMenuEnabled:          true
-                    wrapMode:                 Text.Wrap
-                    font.pixelSize:           14
-                    color:                    Style.content_main
-                    text:                     viewModel.token
-                    onCopyText:               {
-                        BeamGlobals.copyToClipboard(text)
+                ScrollView {
+                    Layout.fillWidth:             true
+                    Layout.preferredWidth:        578
+                    Layout.maximumHeight:         200
+                    clip:                         true
+                    ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
+                    ScrollBar.vertical.policy:    ScrollBar.AsNeeded
+                    SFLabel {
+                        //Layout.fillWidth:       true
+                        //Layout.preferredWidth:  578
+                        width:                    578
+                        copyMenuEnabled:          true
+                        wrapMode:                 Text.Wrap
+                        font.pixelSize:           14
+                        color:                    Style.content_main
+                        text:                     viewModel.token
+                        onCopyText:               {
+                            BeamGlobals.copyToClipboard(text)
+                            dialog.addressCopied();
+                        }
+                    }
+                }
+
+                CustomToolButton {
+                    Layout.alignment:       Qt.AlignTop
+                    Layout.leftMargin:      4
+                    icon.source:            "qrc:/assets/icon-copy-blue.svg"
+                    //% "Copy"
+                    ToolTip.text:           qsTrId("general-copy")
+                    onClicked: {
+                        BeamGlobals.copyToClipboard(viewModel.token)
                         dialog.addressCopied();
                     }
                 }
