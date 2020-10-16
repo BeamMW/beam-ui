@@ -192,7 +192,7 @@ private:
     void SetSeedElectrum(const std::vector<std::string>& secretWords);
     void SetDefaultNodeSettings();
     void SetDefaultElectrumSettings(bool clearSeed = true);
-    void setConnectionType(beam::bitcoin::ISettings::ConnectionType type);
+    void setConnectionType(beam::bitcoin::Settings::ConnectionType type);
     void setIsCurrentSeedValid(bool value);
     void setIsCurrentSeedSegwit(bool value);
 
@@ -204,8 +204,8 @@ private:
 
     boost::optional<beam::bitcoin::Settings> m_settings;
 
-    beam::bitcoin::ISettings::ConnectionType
-        m_connectionType = beam::bitcoin::ISettings::ConnectionType::None;
+    beam::bitcoin::Settings::ConnectionType
+        m_connectionType = beam::bitcoin::Settings::ConnectionType::None;
     QString m_nodeUser;
     QString m_nodePass;
     QString m_nodeAddress;

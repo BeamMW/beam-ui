@@ -158,11 +158,11 @@ QString SwapCoinSettingsItem::getTitle() const
 {
     switch (m_settings->GetCurrentConnectionType())
     {
-        case beam::bitcoin::ISettings::ConnectionType::None:
+        case beam::bitcoin::Settings::ConnectionType::None:
             return getGeneralTitle();
-        case beam::bitcoin::ISettings::ConnectionType::Core:
+        case beam::bitcoin::Settings::ConnectionType::Core:
             return getConnectedNodeTitle();
-        case beam::bitcoin::ISettings::ConnectionType::Electrum:
+        case beam::bitcoin::Settings::ConnectionType::Electrum:
             return getConnectedElectrumTitle();
         default:
         {
@@ -537,17 +537,17 @@ bool SwapCoinSettingsItem::getCanEdit() const
 
 bool SwapCoinSettingsItem::getIsConnected() const
 {
-    return m_connectionType != beam::bitcoin::ISettings::ConnectionType::None;
+    return m_connectionType != beam::bitcoin::Settings::ConnectionType::None;
 }
 
 bool SwapCoinSettingsItem::getIsNodeConnection() const
 {
-    return m_connectionType == beam::bitcoin::ISettings::ConnectionType::Core;
+    return m_connectionType == beam::bitcoin::Settings::ConnectionType::Core;
 }
 
 bool SwapCoinSettingsItem::getIsElectrumConnection() const
 {
-    return m_connectionType == beam::bitcoin::ISettings::ConnectionType::Electrum;
+    return m_connectionType == beam::bitcoin::Settings::ConnectionType::Electrum;
 }
 
 QString SwapCoinSettingsItem::getConnectionStatus() const
@@ -659,7 +659,7 @@ void SwapCoinSettingsItem::restoreSeedElectrum()
 
 void SwapCoinSettingsItem::disconnect()
 {
-    auto connectionType = bitcoin::ISettings::ConnectionType::None;
+    auto connectionType = bitcoin::Settings::ConnectionType::None;
 
     m_settings->ChangeConnectionType(connectionType);
     m_coinClient.lock()->SetSettings(*m_settings);
@@ -668,7 +668,7 @@ void SwapCoinSettingsItem::disconnect()
 
 void SwapCoinSettingsItem::connectToNode()
 {
-    auto connectionType = bitcoin::ISettings::ConnectionType::Core;
+    auto connectionType = bitcoin::Settings::ConnectionType::Core;
 
     m_settings->ChangeConnectionType(connectionType);
     m_coinClient.lock()->SetSettings(*m_settings);
@@ -677,7 +677,7 @@ void SwapCoinSettingsItem::connectToNode()
 
 void SwapCoinSettingsItem::connectToElectrum()
 {
-    auto connectionType = bitcoin::ISettings::ConnectionType::Electrum;
+    auto connectionType = bitcoin::Settings::ConnectionType::Electrum;
 
     m_settings->ChangeConnectionType(connectionType);
     m_coinClient.lock()->SetSettings(*m_settings);
@@ -787,7 +787,7 @@ void SwapCoinSettingsItem::SetDefaultElectrumSettings(bool clearSeed)
     }
 }
 
-void SwapCoinSettingsItem::setConnectionType(beam::bitcoin::ISettings::ConnectionType type)
+void SwapCoinSettingsItem::setConnectionType(beam::bitcoin::Settings::ConnectionType type)
 {
     if (type != m_connectionType)
     {
