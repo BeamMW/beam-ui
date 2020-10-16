@@ -67,6 +67,7 @@ void ReceiveViewModel::setAmountToReceive(QString value)
         _amountToReceiveGrothes = amount;
         emit amountReceiveChanged();
         updateTransactionToken();
+        generateOfflineAddress();
     }
 }
 
@@ -111,25 +112,9 @@ void ReceiveViewModel::initialize(const QString& address)
         _receiverAddressForExchange = addr;
         _receiverAddressForExchange.setExpiration(beam::wallet::WalletAddress::ExpirationStatus::Never);
         emit receiverAddressForExchangeChanged();
-
-        TxParameters offlineParameters;
-        offlineParameters.SetParameter(TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
-        // add a vouchers
-        auto vouchers = _walletModel.generateVouchers(_receiverAddressForExchange.m_OwnID, 10);
-        if (!vouchers.empty())
-        {
-            // add voucher parameter
-            offlineParameters.SetParameter(TxParameterID::ShieldedVoucherList, vouchers);
-            offlineParameters.SetParameter(TxParameterID::PeerID, _receiverAddressForExchange.m_walletID);
-            offlineParameters.SetParameter(TxParameterID::PeerWalletIdentity, _receiverAddressForExchange.m_Identity);
-            offlineParameters.SetParameter(TxParameterID::IsPermanentPeerID, _receiverAddressForExchange.isPermanent());
-            setOfflineToken(QString::fromStdString(std::to_string(offlineParameters)));
-        }
-        else
-        {
-            setOfflineToken("");
-        }
     });
+
+    generateOfflineAddress();
 }
 
 void ReceiveViewModel::generateNewReceiverAddress()
@@ -215,6 +200,11 @@ void ReceiveViewModel::saveExchangeAddress()
     _walletModel.getAsync()->saveAddress(_receiverAddressForExchange, true);
 }
 
+void ReceiveViewModel::saveOfflineAddress()
+{
+    _walletModel.getAsync()->saveAddress(_receiverOfflineAddress, true);
+}
+
 void ReceiveViewModel::updateTransactionToken()
 {
     using namespace beam::wallet;
@@ -295,4 +285,38 @@ void ReceiveViewModel::setIsPermanentAddress(bool value)
         emit isPermanentAddressChanged();
         updateTransactionToken();
     }
+}
+
+void ReceiveViewModel::generateOfflineAddress()
+{
+    using namespace beam::wallet;
+    _walletModel.getAsync()->generateNewAddress([this](const auto& addr)
+    {
+        _receiverOfflineAddress = addr;
+        _receiverOfflineAddress.setExpiration(beam::wallet::WalletAddress::ExpirationStatus::Never);
+
+        // add a vouchers
+        _walletModel.getAsync()->generateVouchers(_receiverOfflineAddress.m_OwnID, 10, [this](ShieldedVoucherList vouchers)
+        {
+            if (!vouchers.empty())
+            {
+                TxParameters offlineParameters;
+                offlineParameters.SetParameter(TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
+                // add voucher parameter
+                offlineParameters.SetParameter(TxParameterID::ShieldedVoucherList, vouchers);
+                offlineParameters.SetParameter(TxParameterID::PeerID, _receiverOfflineAddress.m_walletID);
+                offlineParameters.SetParameter(TxParameterID::PeerWalletIdentity, _receiverOfflineAddress.m_Identity);
+                offlineParameters.SetParameter(TxParameterID::IsPermanentPeerID, _receiverOfflineAddress.isPermanent());
+                if (_amountToReceiveGrothes > 0)
+                {
+                    offlineParameters.SetParameter(TxParameterID::Amount, _amountToReceiveGrothes);
+                }
+                setOfflineToken(QString::fromStdString(std::to_string(offlineParameters)));
+            }
+            else
+            {
+                setOfflineToken("");
+            }
+        });
+    });
 }

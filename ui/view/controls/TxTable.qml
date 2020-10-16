@@ -239,6 +239,7 @@ Control {
                     tokenType:          txRolesMap && txRolesMap.isOfflineToken ?
                         //% "Offline"
                         qsTrId("tx-address-offline") :
+                        //% "Online"
                         qsTrId("tx-address-online")
                     secondCurrencyRate: txRolesMap && txRolesMap.secondCurrencyRate ? txRolesMap.secondCurrencyRate : ""
                     secondCurrencyLabel: tableViewModel.secondCurrencyLabel
