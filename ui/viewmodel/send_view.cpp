@@ -448,6 +448,10 @@ void SendViewModel::sendMoney()
               .SetParameter(TxParameterID::Message, beam::ByteBuffer(messageString.begin(), messageString.end()));
 
         params.SetParameter(TxParameterID::TransactionType, isShieldedTx() ? TxType::PushTransaction : TxType::Simple);
+        if (isMaxPrivacy())
+        {
+            CopyParameter(TxParameterID::Voucher, _txParameters, params);
+        }
 
         if (isToken())
         {
