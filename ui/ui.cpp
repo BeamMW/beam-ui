@@ -35,6 +35,7 @@
 #include "viewmodel/wallet/token_item.h"
 #include "viewmodel/wallet/assets_view.h"
 #include "viewmodel/wallet/tx_table.h"
+#include "viewmodel/wallet/info_view.h"
 #include "viewmodel/help_view.h"
 #include "viewmodel/settings_view.h"
 #include "viewmodel/messages_view.h"
@@ -224,6 +225,8 @@ int main (int argc, char* argv[])
             qRegisterMetaType<Currency>("Currency");
             qRegisterMetaType<beam::Asset::ID>("beam::Asset::ID");
             qRegisterMetaType<beam::wallet::WalletAsset>("beam::wallet::WalletAsset");
+            qRegisterMetaType<InProgress>("InProgress");
+            qRegisterMetaType<QList<InProgress>>("InProgressList");
             qmlRegisterUncreatableType<WalletCurrency>("Beam.Wallet", 1, 0, "Currency", "Not creatable as it is an enum type.");
             qmlRegisterType<StartViewModel>("Beam.Wallet", 1, 0, "StartViewModel");
             qmlRegisterType<LoadingViewModel>("Beam.Wallet", 1, 0, "LoadingViewModel");
@@ -231,6 +234,7 @@ int main (int argc, char* argv[])
             qmlRegisterType<WalletViewModel>("Beam.Wallet", 1, 0, "WalletViewModel");
             qmlRegisterType<TxTableViewModel>("Beam.Wallet", 1, 0, "TxTableViewModel");
             qmlRegisterType<AssetsViewModel>("Beam.Wallet", 1, 0, "AssetsViewModel");
+            qmlRegisterType<InfoViewModel>("Beam.Wallet", 1, 0, "InfoViewModel");
             qmlRegisterUncreatableType<UtxoViewStatus>("Beam.Wallet", 1, 0, "UtxoStatus", "Not creatable as it is an enum type.");
             qmlRegisterUncreatableType<UtxoViewType>("Beam.Wallet", 1, 0, "UtxoType", "Not creatable as it is an enum type.");
             qmlRegisterType<UtxoViewModel>("Beam.Wallet", 1, 0, "UtxoViewModel");

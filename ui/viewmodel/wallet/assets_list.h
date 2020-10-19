@@ -47,11 +47,16 @@ private slots:
     void onNewRates();
     void onWalletStatus();
     void onAssetInfo(beam::Asset::ID assetId);
+    void onTransactionsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& items);
 
 private:
     void touch(beam::Asset::ID id);
+    std::shared_ptr<AssetObject> get(beam::Asset::ID id);
 
     mutable AssetsManager _amgr;
     mutable ExchangeRatesManager _ermgr;
     WalletModel& _wallet;
+
+    typedef std::vector<beam::wallet::TxDescription> TxList;
+    TxList _txlist;
 };

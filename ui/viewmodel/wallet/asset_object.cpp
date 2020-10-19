@@ -16,25 +16,43 @@
 
 AssetObject::AssetObject(uint64_t id)
    : _id(id)
+   , _inTxCnt(0)
+   , _outTxCnt(0)
 {
 }
 
-bool AssetObject::operator==(const AssetObject& other) const {
+bool AssetObject::operator==(const AssetObject& other) const
+{
    return _id == other._id;
 }
 
-uint64_t AssetObject::id() const {
+uint64_t AssetObject::id() const
+{
     return _id;
 }
 
-uint32_t AssetObject::inTxCnt() const {
-    if (_id == 1 || _id == 3 || _id == 7 || _id == 10) return 1;
-    if (_id == 2) return 0;
-    return 0;
+uint32_t AssetObject::inTxCnt() const
+{
+    return _inTxCnt;
 }
 
-uint32_t AssetObject::outTxCnt() const {
-    if (_id == 1) return 0;
-    if (_id == 2 || _id == 3) return 1;
-    return 0;
+uint32_t AssetObject::outTxCnt() const
+{
+    return _outTxCnt;
+}
+
+void AssetObject::resetTxCnt()
+{
+    _inTxCnt = 0;
+    _outTxCnt = 0;
+}
+
+void AssetObject::addIntTx()
+{
+    _inTxCnt++;
+}
+
+void AssetObject::addOutTx()
+{
+    _outTxCnt++;
 }

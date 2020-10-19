@@ -130,29 +130,10 @@ Item {
                 }
             }
 
-            /* AvailablePanel {
-                Layout.topMargin:      29
-                Layout.maximumHeight:  80
-                Layout.minimumHeight:  80
-
-                locked:                viewModel.beamLocked
-                lockedMaturing:        viewModel.beamLockedMaturing
-                sending:               viewModel.beamSending
-                receiving:             viewModel.beamReceiving
-                receivingChange:       viewModel.beamReceivingChange
-                receivingIncoming:     viewModel.beamReceivingIncoming
-            } */
-
             MainInfoPanel {
+                id: infoPanel
                 Layout.topMargin: 30
                 Layout.fillWidth: true
-
-                icon:                    viewModel.assetIcon
-                unitName:                viewModel.assetUnitName
-                assetName:               viewModel.assetName
-                available:               viewModel.assetAvailable
-                secondCurrencyUnitName:  viewModel.secondCurrencyUnitName
-                secondCurrencyRate:      viewModel.selectedAsset > 0 ? "" : viewModel.secondCurrencyRate
             }
 
             AssetsPanel {
@@ -161,7 +142,7 @@ Item {
                 Layout.fillWidth: true
 
                 Binding {
-                    target:   viewModel
+                    target:   infoPanel
                     property: "selectedAsset"
                     value:    assets.selectedId
                 }
@@ -238,4 +219,3 @@ Item {
         }
     }
 }
-

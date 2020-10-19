@@ -9,13 +9,13 @@ Control {
     id: control
     padding: 20
 
-    property alias   icon: avctrl.iconSource
-    property alias   unitName: avctrl.unitName
+    property alias   icon:      avctrl.iconSource
+    property alias   unitName:  avctrl.unitName
     property alias   available: avctrl.amount
-    property alias   secondCurrencyUnitName: totalctrl.unitName
-    property string  secondCurrencyRate:  "0"
+    property string  rateUnit:  ""
+    property string  rate:      "0"
     property string  assetName: ""
-    property bool    compact: true
+    property bool    compact:   true
 
     contentItem: ColumnLayout {
         spacing: 0
@@ -97,7 +97,8 @@ Control {
                     showZero:           false
                     //% "Total Available"
                     caption:           qsTrId("wallet-total-available")
-                    amount:            BeamGlobals.calcAmountInSecondCurrency(control.available, control.secondCurrencyRate, control.secondCurrencyUnitName)
+                    amount:            BeamGlobals.calcAmountInSecondCurrency(control.available, control.rate, control.rateUnit)
+                    unitName:          control.rateUnit
                     maxPaintedWidth:   control.compact ? control.availableWidth / 2 : 0
                 }
             }

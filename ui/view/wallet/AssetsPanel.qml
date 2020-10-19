@@ -16,7 +16,14 @@ Control {
     property int    maxVisibleRows: 3
     property int    selectedId:     -1
     property int    selectedIdx:    -1
-    property alias  folded:         foldable.folded
+    property alias  folded:         viewModel.folded
+
+    /* Binding {
+        target:   viewModel
+        property: "folded"
+        value:    control.folded
+    }
+    */
 
     readonly property int   assetsCount:     viewModel.assets.rowCount()
     readonly property bool  connectVisible:  assetsCount < 3

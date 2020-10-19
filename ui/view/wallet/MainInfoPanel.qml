@@ -7,43 +7,43 @@ import "../controls"
 Control {
     id: control
 
-    property alias available:              avctrl.available
-    property alias secondCurrencyUnitName: avctrl.secondCurrencyUnitName
-    property alias secondCurrencyRate:     avctrl.secondCurrencyRate
-    property alias icon:                   avctrl.icon
-    property alias unitName:               avctrl.unitName
-    property alias assetName:              avctrl.assetName
-    property bool  showDetails:            true
+    InfoViewModel {
+        id: viewModel
+    }
+
+    property alias selectedAsset: viewModel.selectedAsset
+    property bool  showDetails:   viewModel.progress.length > 0
 
     spacing: 10
+    height:  showDetails ? 200 : 130
+
     property real itemWidth: {
         return control.showDetails ? (control.availableWidth - control.spacing) / 2 : control.availableWidth
     }
-
-    height: showDetails ? 200 : 130
 
     contentItem: Row {
         spacing: 10
 
         AvailablePanelNew {
-            id:      avctrl
-            width:   control.itemWidth
-            height:  control.availableHeight
-            compact: control.showDetails
+            id:         avctrl
+            width:      control.itemWidth
+            height:     control.availableHeight
+            compact:    control.showDetails
+            available:  viewModel.assetAvailable
+            rateUnit:   viewModel.rateUnit
+            rate:       viewModel.rate
+            icon:       viewModel.assetIcon
+            unitName:   viewModel.assetUnitName
+            assetName:  viewModel.assetName
         }
 
         InProgressPanelNew {
-            id: ipctrl
-            width:   control.itemWidth
-            height:  control.availableHeight
-            visible: showDetails
-        }
-    }
-
-    MouseArea {
-        anchors.fill: control
-        onClicked: {
-            control.showDetails = !control.showDetails
+            id:        ipctrl
+            width:     control.itemWidth
+            height:    control.availableHeight
+            visible:   showDetails
+            progress:  viewModel.progress
+            totals:    viewModel.progressTotal
         }
     }
 }

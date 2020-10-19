@@ -28,6 +28,7 @@ Control {
     property string  prefix:              ""
     property alias   fontSizeMode:        amountText.fontSizeMode
     property real    maxPaintedWidth:     0
+    property real    vSpacing:            5
 
     function getAmountInSecondCurrency() {
         if (control.amount == "") return "-"
@@ -113,7 +114,7 @@ Control {
         }
 
         Column {
-            spacing: 5
+            spacing: control.vSpacing
 
             SFLabel {
                 id:             captionText

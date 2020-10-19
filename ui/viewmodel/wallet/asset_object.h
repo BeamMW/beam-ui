@@ -25,6 +25,12 @@ public:
     [[nodiscard]] uint32_t inTxCnt() const;
     [[nodiscard]] uint32_t outTxCnt() const;
 
+    void resetTxCnt();
+    void addIntTx();
+    void addOutTx();
+
 protected:
     uint64_t  _id;
+    uint64_t  _inTxCnt;
+    uint64_t  _outTxCnt;
 };

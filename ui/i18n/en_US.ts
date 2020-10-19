@@ -2802,5 +2802,9 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Total Available</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="inprogress-assets">
+        <source>Assets</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

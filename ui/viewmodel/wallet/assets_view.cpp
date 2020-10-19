@@ -56,3 +56,16 @@ void AssetsViewModel::onWalletStatus()
     formAssetsList();
     emit assetsChanged();
 }
+
+
+bool AssetsViewModel::getFolded() const
+{
+    return _folded;
+}
+
+void AssetsViewModel::setFolded(bool val)
+{
+    _folded = val;
+    emit foldedChanged();
+}
+

@@ -80,6 +80,7 @@
         <file>wallet/InProgressPanelNew.qml</file>
         <file>wallet/MainInfoPanel.qml</file>
         <file>wallet/TransactionDetails.qml</file>
+        <file>wallet/AmountTip.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>

@@ -17,7 +17,9 @@ AssetsList::AssetsList()
     connect(&_ermgr, &ExchangeRatesManager::rateUnitChanged, this, &AssetsList::onNewRates);
     connect(&_ermgr, &ExchangeRatesManager::activeRateChanged, this, &AssetsList::onNewRates);
     connect(&_wallet, &WalletModel::walletStatusChanged, this, &AssetsList::onWalletStatus);
+    connect(&_wallet, &WalletModel::transactionsChanged, this, &AssetsList::onTransactionsChanged);
     connect(&_amgr, &AssetsManager::assetInfo, this, &AssetsList::onAssetInfo);
+    _wallet.getAsync()->getTransactions();
 }
 
 QHash<int, QByteArray> AssetsList::roleNames() const
@@ -87,6 +89,18 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
     }
 }
 
+std::shared_ptr<AssetObject> AssetsList::get(beam::Asset::ID id)
+{
+     for (auto obj: m_list)
+     {
+         if (obj->id() == id)
+         {
+             return obj;
+         }
+     }
+     return std::shared_ptr<AssetObject>();
+}
+
 void AssetsList::touch(beam::Asset::ID id)
 {
     for (auto it = m_list.begin(); it != m_list.end(); ++it) {
@@ -113,4 +127,82 @@ void AssetsList::onWalletStatus()
 void AssetsList::onAssetInfo(beam::Asset::ID assetId)
 {
     touch(assetId);
+}
+
+void AssetsList::onTransactionsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& items)
+{
+    using namespace beam::wallet;
+
+    TxList modified;
+
+    for (const auto& tx : items)
+    {
+        if(const auto txType = tx.GetParameter<TxType>(TxParameterID::TransactionType))
+        {
+            if (txType == TxType::Simple || txType == TxType::PushTransaction)
+            {
+                modified.push_back(tx);
+            }
+        }
+    }
+
+    switch(action)
+    {
+    case ChangeAction::Reset:
+        _txlist.swap(modified);
+        break;
+
+    case ChangeAction::Removed:
+        for(auto del: modified)
+        {
+            std::remove_if(_txlist.begin(), _txlist.end(), [&del](const TxDescription& t) {
+                return t.m_txId == del.m_txId;
+            });
+        }
+        break;
+
+    case ChangeAction::Added:
+        _txlist.insert(std::end(_txlist), std::begin(modified), std::end(modified));
+        break;
+
+    case ChangeAction::Updated:
+        for(auto repl: modified)
+        {
+            std::replace_if(_txlist.begin(), _txlist.end(), [&repl](const TxDescription& t) {
+                return t.m_txId == repl.m_txId;
+            }, repl);
+        }
+        break;
+
+    default:
+        assert(false && "Unexpected action");
+        break;
+    }
+
+    for(auto& obj: m_list) {
+        obj->resetTxCnt();
+    }
+
+    for(const auto& tx: _txlist) {
+        if (auto obj = get(tx.m_assetId))
+        {
+            if(tx.m_status == wallet::TxStatus::Pending ||
+               tx.m_status == wallet::TxStatus::InProgress ||
+               tx.m_status == wallet::TxStatus::Registering)
+            {
+                if (tx.m_sender)
+                {
+                    obj->addOutTx();
+                }
+                else
+                {
+                    obj->addIntTx();
+                }
+            }
+        }
+    }
+
+     for(auto& obj: m_list) {
+         touch(obj->id());
+     }
 }

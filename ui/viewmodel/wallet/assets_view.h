@@ -21,14 +21,18 @@
 class AssetsViewModel : public QObject {
     Q_OBJECT
     Q_PROPERTY(QAbstractItemModel* assets READ getAssets NOTIFY assetsChanged)
-
+    Q_PROPERTY(bool folded  READ getFolded  WRITE setFolded  NOTIFY foldedChanged)
 public:
     AssetsViewModel();
     ~AssetsViewModel() override = default;
+
     QAbstractItemModel* getAssets();
+    bool getFolded() const;
+    void setFolded(bool val);
 
 signals:
     void assetsChanged();
+    void foldedChanged();
 
 private slots:
     void onWalletStatus();
@@ -36,6 +40,7 @@ private slots:
 private:
     void formAssetsList();
 
+    bool         _folded;
     AssetsList   _assets;
     WalletModel& _wallet;
 };
