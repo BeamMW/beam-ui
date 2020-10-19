@@ -360,6 +360,11 @@ beam::Amount WalletModel::getMaturing() const
     return m_status.maturing;
 }
 
+beam::Amount WalletModel::getMaturingMP() const
+{
+    return m_status.maturingMP;
+}
+
 beam::Height WalletModel::getCurrentHeight() const
 {
     return m_status.stateID.m_Height;
@@ -416,6 +421,12 @@ void WalletModel::setStatus(const beam::wallet::WalletStatus& status)
     if (m_status.maturing != status.maturing)
     {
         m_status.maturing = status.maturing;
+        emit maturingChanged();
+    }
+
+    if (m_status.maturingMP != status.maturingMP)
+    {
+        m_status.maturingMP = status.maturingMP;
         emit maturingChanged();
     }
 

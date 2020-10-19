@@ -2801,5 +2801,13 @@ Your version is: %2. Please, check for updates.</oldsource>
         <source>Payments</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="available-panel-maturing-mp">
+        <source>Max privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-maturing-mp">
+        <source>Maturing%1(max privacy)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

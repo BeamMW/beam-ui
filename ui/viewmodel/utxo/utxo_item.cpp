@@ -150,7 +150,7 @@ UtxoViewStatus::EnStatus ShieldedCoinItem::status() const
     case ShieldedCoin::Available:
         return UtxoViewStatus::Available;
     case ShieldedCoin::Maturing:
-        return UtxoViewStatus::Maturing;
+        return UtxoViewStatus::MaturingMP;
     case ShieldedCoin::Unavailable:
         return UtxoViewStatus::Unavailable;
     case ShieldedCoin::Outgoing:

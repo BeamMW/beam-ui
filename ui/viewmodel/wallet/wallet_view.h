@@ -26,6 +26,7 @@ class WalletViewModel : public QObject
     Q_PROPERTY(QString beamSending                   READ beamSending                NOTIFY beamSendingChanged)
     Q_PROPERTY(QString beamLocked                    READ beamLocked                 NOTIFY beamLockedChanged)
     Q_PROPERTY(QString beamLockedMaturing            READ beamLockedMaturing         NOTIFY beamLockedChanged)
+    Q_PROPERTY(QString beamLockedMaturingMP          READ beamLockedMaturingMP       NOTIFY beamLockedChanged)
     Q_PROPERTY(QString beamReceivingChange           READ beamReceivingChange        NOTIFY beamReceivingChanged)
     Q_PROPERTY(QString beamReceivingIncoming         READ beamReceivingIncoming      NOTIFY beamReceivingChanged)
     Q_PROPERTY(QString secondCurrencyLabel           READ getSecondCurrencyLabel     NOTIFY secondCurrencyLabelChanged)
@@ -40,6 +41,7 @@ public:
     QString beamSending() const;
     QString beamLocked() const;
     QString beamLockedMaturing() const;
+    QString beamLockedMaturingMP() const;
     QString beamReceivingChange() const;
     QString beamReceivingIncoming() const;
     QString getSecondCurrencyLabel() const;

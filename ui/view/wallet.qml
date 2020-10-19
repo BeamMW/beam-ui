@@ -138,6 +138,7 @@ Item {
                 available:                  viewModel.beamAvailable
                 locked:                     viewModel.beamLocked
                 lockedMaturing:             viewModel.beamLockedMaturing
+                lockedMaturingMP:           viewModel.beamLockedMaturingMP
                 sending:                    viewModel.beamSending
                 receiving:                  viewModel.beamReceiving
                 receivingChange:            viewModel.beamReceivingChange
