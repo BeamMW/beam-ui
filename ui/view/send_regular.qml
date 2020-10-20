@@ -263,7 +263,7 @@ ColumnLayout {
                                                     :
                                                     //% "One-time use address (expire in 12 hours after succesfull transaction)."
                                                     qsTrId("wallet-send-one-time-note")
-                                visible:            viewModel.isToken && !viewModel.isOffline && !viewModel.isMaxPrivacy
+                                visible:            viewModel.isToken && !viewModel.isShieldedTx
                             }
 
                             SFText {
@@ -282,7 +282,7 @@ ColumnLayout {
                                                         //% "Max privacy address"
                                                         qsTrId("wallet-send-max-privacy-note-address")
                                                         : ""
-                                visible:            viewModel.isShieldedTx && viewModel.isToken && !viewModel.isOwnAddress
+                                visible:            viewModel.isShieldedTx && viewModel.isToken && !viewModel.isOwnAddress && !viewModel.isPublicOffline
                             }
 
                             SFText {

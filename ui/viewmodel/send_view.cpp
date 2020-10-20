@@ -301,6 +301,20 @@ void SendViewModel::setIsMaxPrivacy(bool value)
     }
 }
 
+bool SendViewModel::isPublicOffline() const
+{
+    return _isPublicOffline;
+}
+
+void SendViewModel::setIsPublicOffline(bool value)
+{
+    if (_isPublicOffline != value)
+    {
+        _isPublicOffline = value;
+        emit isPublicOfflineChanged();
+    }
+}
+
 QString SendViewModel::getAvailable() const
 {
     return  beamui::AmountToUIString(
@@ -527,16 +541,23 @@ void SendViewModel::extractParameters()
     if (auto txType = _txParameters.GetParameter<TxType>(TxParameterID::TransactionType); txType && *txType == TxType::PushTransaction)
     {
         setIsShieldedTx(true);
-        ShieldedVoucherList vouchers;
-        auto hasVouchers = _txParameters.GetParameter(TxParameterID::ShieldedVoucherList, vouchers);
-        if (hasVouchers)
+        auto vouchers = _txParameters.GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList);
+        if (vouchers && !vouchers->empty())
         {
             if (_receiverWalletID != Zero)
             {
-                _walletModel.getAsync()->saveVouchers(vouchers, _receiverWalletID);
+                _walletModel.getAsync()->saveVouchers(*vouchers, _receiverWalletID);
+            }
+            setIsOffline(true);
+        }
+        else
+        {
+            auto gen = _txParameters.GetParameter<ShieldedTxo::PublicGen>(TxParameterID::PublicAddreessGen);
+            if (gen)
+            {
+                setIsPublicOffline(true);
             }
         }
-        setIsOffline(hasVouchers);
         
         ShieldedTxo::Voucher voucher;
         setIsMaxPrivacy(_txParameters.GetParameter(TxParameterID::Voucher, voucher) && _receiverIdentity != Zero);
@@ -636,6 +657,7 @@ void SendViewModel::resetAddress()
     setIsShieldedTx(false);
     setIsOffline(false);
     setIsMaxPrivacy(false);
+    setIsPublicOffline(false);
     setIsPermanentAddress(false);
     onNeedExtractShieldedCoins(false);
 }

@@ -40,16 +40,13 @@ Dialog {
     }
 
     contentItem: ColumnLayout {
-        //anchors.fill:   parent
         spacing:        0
         RowLayout {
             SFText {
                 Layout.fillWidth:       true
                 Layout.leftMargin:      30
                 horizontalAlignment:    Text.AlignHCenter
-                font.pixelSize:         18
-                font.styleName:         "Bold"
-                font.weight:            Font.Bold
+                font.pixelSize:         24
                 color:                  Style.content_main
                 //: show QR dialog title
                 //% "QR code"
@@ -76,7 +73,7 @@ Dialog {
             source:                 qrCode.data
             visible:                qrCode.data.length > 0
         }
-        
+
         SFText {
             Layout.alignment:       Qt.AlignHCenter
             text:                   addressLabelText + ":"
