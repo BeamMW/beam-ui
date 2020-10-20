@@ -232,12 +232,12 @@ Item {
                                 .arg(viewModel.activeTxCount)
                             : "";
                     }
-                    gradLeft: Style.currencyPaneLeftBEAM
-                    currencyIcon: "qrc:/assets/icon-beam.svg"
-                    amount: viewModel.beamAvailable
-                    unitName: BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
-                    valueSecondaryStr: activeTxCountStr()
-                    visible: true
+                    gradLeft:           Style.currencyPaneLeftBEAM
+                    currencyIcon:       "qrc:/assets/icon-beam.svg"
+                    amount:             viewModel.beamAvailable
+                    unitName:           BeamGlobals.beamUnit
+                    valueSecondaryStr:  activeTxCountStr()
+                    visible:            true
                 }
 
                 //% "Transaction is in progress"
