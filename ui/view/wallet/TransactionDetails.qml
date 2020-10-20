@@ -28,8 +28,8 @@ RowLayout {
 
     property string token
     property string amount
-    property string secondCurrencyRate
-    property string secondCurrencyUnitName
+    property string rate
+    property string rateUnit
     property string searchFilter: ""
     property bool   hideFiltered: false
     property string transactionType
@@ -73,11 +73,11 @@ RowLayout {
         if (root.amount !== "") {
             var amountInSecondCurrency = Utils.formatAmountToSecondCurrency(
                 root.amount,
-                root.secondCurrencyRate,
-                root.secondCurrencyUnitName);
+                root.rate,
+                root.rateUnit);
             if (amountInSecondCurrency == "") {
                 //% "Exchange rate to %1 was not available at the time of transaction"
-                return  qsTrId("tx-details-exchange-rate-not-available").arg(root.secondCurrencyUnitName);
+                return  qsTrId("tx-details-exchange-rate-not-available").arg(root.rateUnit);
             }
             else {
                 //% "(for the day of transaction)"
@@ -277,7 +277,7 @@ RowLayout {
             elide: Text.ElideRight
             text: root.secondCurrencyAmount
             onCopyText: textCopied(secondCurrencyAmountField.text)
-            visible: isTextFieldVisible(secondCurrencyAmountField.text) && root.secondCurrencyUnitName != ""
+            visible: isTextFieldVisible(secondCurrencyAmountField.text) && root.rateUnit != ""
         }
         
         SFText {

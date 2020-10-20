@@ -36,7 +36,15 @@ public:
     Q_INVOKABLE static bool needPasswordToSpend();
     Q_INVOKABLE static bool isPasswordValid(const QString& value);
 
+    // new currency utils
+    Q_PROPERTY(QString beamUnit     READ getBeamUnit    CONSTANT)
+    Q_PROPERTY(QString beamFeeUnit  READ getBeamFeeUnit CONSTANT)
+
+    [[nodiscard]] QString getBeamUnit() const;
+    [[nodiscard]] QString getBeamFeeUnit() const;
+
     // Currency utils
+    // TODO: need to refactor all this stuff with fees & currencies
     static bool isFeeOK(unsigned int fee, Currency currency, bool isShielded);
     static bool isSwapFeeOK(unsigned int amount, unsigned int fee, Currency currency);
     static int  getMinFeeOrRate(Currency currency);

@@ -46,8 +46,8 @@ Item {
                 walletStackView.push(Qt.createComponent("send_swap.qml"),
                                      {
                                          "onAccepted": tokenDuplicateChecker.onAccepted,
-                                         "onClosed": onClosed,
-                                         "swapToken": token
+                                         "onClosed":   onClosed,
+                                         "swapToken":  token
                                      });
                 walletStackView.currentItem.validateCoin();
             }
@@ -78,12 +78,14 @@ Item {
             Layout.fillHeight: true
             spacing: 0
 
-            function navigateSend() {
+            function navigateSend(assetId) {
+                assetId = assetId && assetId >= 0 ? assetId : 0
                 walletStackView.push(Qt.createComponent("send_regular.qml"),
                                              {"onAccepted":      onAccepted,
                                               "onClosed":        onClosed,
                                               "onSwapToken":     onSwapToken,
-                                              "receiverAddress": token});
+                                              "receiverAddress": token,
+                                              "selectedAsset":   assetId});
                 token = "";
             }
 
@@ -111,7 +113,7 @@ Item {
                     font.pixelSize: 12
                     //font.capitalization: Font.AllUppercase
                     onClicked: {
-                        navigateSend();
+                        navigateSend(assets.selectedId);
                     }
                 }
 

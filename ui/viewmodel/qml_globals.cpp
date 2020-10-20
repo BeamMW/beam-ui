@@ -387,6 +387,16 @@ bool QMLGlobals::canReceive(Currency currency)
     return client->GetSettings().IsActivated() && client->getStatus() == beam::bitcoin::Client::Status::Connected;
 }
 
+QString QMLGlobals::getBeamUnit() const
+{
+    return beamui::getCurrencyUnitName(beamui::Currencies::Beam);
+}
+
+QString QMLGlobals::getBeamFeeUnit() const
+{
+    return beamui::getFeeRateLabel(beamui::Currencies::Beam);
+}
+
 QString QMLGlobals::getCurrencyUnitName(Currency currency)
 {
     beamui::Currencies currencyCommon = convertUiCurrencyToCurrencies(currency);

@@ -144,14 +144,14 @@ Control {
                 }
 
                 BeamAmount {
-                    id:                      lockedCtrl
-                    amount:                  control.totals.locked
-                    unitName:                control.totals.unitName
-                    secondCurrencyUnitName:  control.totals.rateUnit
-                    secondCurrencyRate:      control.totals.rate
-                    lightFont:               false
-                    fontSize:                16
-                    copyMenuEnabled:         true
+                    id:               lockedCtrl
+                    amount:           control.totals.locked
+                    unitName:         control.totals.unitName
+                    rateUnit:         control.totals.rateUnit
+                    rate:             control.totals.rate
+                    lightFont:        false
+                    fontSize:         16
+                    copyMenuEnabled:  true
 
                     //% "Locked"
                     caption:     qsTrId("available-panel-locked")
@@ -188,17 +188,17 @@ Control {
                 Layout.topMargin: parseFloat(control.rate) ? 0 : 15
 
                 BeamAmount {
-                    id:                       sendingCtrl
-                    amount:                   control.totals.sending
-                    unitName:                 control.totals.unitName
-                    secondCurrencyUnitName:   control.totals.rateUnit
-                    secondCurrencyRate:       control.totals.rate
-                    color:                    Style.accent_outgoing
-                    lightFont:                false
-                    fontSize:                 16
-                    copyMenuEnabled:          true
-                    maxPaintedWidth:          control.availableWidth / 2 - separator.width - filler.width
-                    showDrop:                 parseFloat(control.totals.sending) > 0 && control.progress.length > 1
+                    id:               sendingCtrl
+                    amount:           control.totals.sending
+                    unitName:         control.totals.unitName
+                    rateUnit:         control.totals.rateUnit
+                    rate:             control.totals.rate
+                    color:            Style.accent_outgoing
+                    lightFont:        false
+                    fontSize:         16
+                    copyMenuEnabled:  true
+                    maxPaintedWidth:  control.availableWidth / 2 - separator.width - filler.width
+                    showDrop:         parseFloat(control.totals.sending) > 0 && control.progress.length > 1
 
                     //% "Sending"
                     caption:    qsTrId("available-panel-sending")
@@ -213,17 +213,17 @@ Control {
                 }
 
                 BeamAmount {
-                    id:                       receivingCtrl
-                    amount:                   control.totals.receiving
-                    unitName:                 control.totals.unitName
-                    secondCurrencyUnitName:   control.totals.rateUnit
-                    secondCurrencyRate:       control.totals.rate
-                    color:                    Style.accent_incoming
-                    lightFont:                false
-                    fontSize:                 16
-                    copyMenuEnabled:          true
-                    showDrop:                 parseFloat(control.totals.receiving) > 0
-                    maxPaintedWidth:          control.availableWidth / 2 - separator.width - filler.width
+                    id:               receivingCtrl
+                    amount:           control.totals.receiving
+                    unitName:         control.totals.unitName
+                    rateUnit:         control.totals.rateUnit
+                    rate:             control.totals.rate
+                    color:            Style.accent_incoming
+                    lightFont:        false
+                    fontSize:         16
+                    copyMenuEnabled:  true
+                    showDrop:         parseFloat(control.totals.receiving) > 0
+                    maxPaintedWidth:  control.availableWidth / 2 - separator.width - filler.width
 
                     //% "Receiving"
                     caption:    qsTrId("available-panel-receiving")

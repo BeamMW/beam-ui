@@ -33,16 +33,16 @@ AlphaTip {
         }
 
         BeamAmount {
-            amount:                  control.displayProp2.length ? control.totals[control.displayProp2] : ""
-            unitName:                control.totals.unitName
-            secondCurrencyUnitName:  control.totals.rateUnit
-            secondCurrencyRate:      control.totals.rate
-            spacing:                 15
-            lightFont:               false
-            fontSize:                12
-            vSpacing:                1
-            visible:                 control.title2.length
-            Layout.bottomMargin:     5
+            amount:               control.displayProp2.length ? control.totals[control.displayProp2] : ""
+            unitName:             control.totals.unitName
+            rateUnit:             control.totals.rateUnit
+            rate:                 control.totals.rate
+            spacing:              15
+            lightFont:            false
+            fontSize:             12
+            vSpacing:             1
+            visible:              control.title2.length
+            Layout.bottomMargin:  5
         }
 
         SFText {
@@ -56,15 +56,15 @@ AlphaTip {
         }
 
         BeamAmount {
-            amount:                  control.totals[control.displayProp]
-            unitName:                control.totals.unitName
-            secondCurrencyUnitName:  control.totals.rateUnit
-            secondCurrencyRate:      control.totals.rate
-            spacing:                 15
-            lightFont:               false
-            fontSize:                12
-            vSpacing:                1
-            visible:                 control.title.length
+            amount:    control.totals[control.displayProp]
+            unitName:  control.totals.unitName
+            rateUnit:  control.totals.rateUnit
+            rate:      control.totals.rate
+            spacing:   15
+            lightFont: false
+            fontSize:  12
+            vSpacing:  1
+            visible:   control.title.length
         }
 
         Repeater {
@@ -75,25 +75,25 @@ AlphaTip {
                 Layout.row:        index + (control.title2.length ? 2 : 1)
                 Layout.alignment:  Qt.AlignHCenter | Qt.AlignVCenter
                 source:            control.progress[index].icon
-                sourceSize:        Qt.Size(20, 20)
+                sourceSize:        Qt.size(20, 20)
             }
         }
 
         Repeater {
            model: control.progress.length
            BeamAmount {
-               Layout.column:           1
-               Layout.row:              index + (control.title2.length ? 2 : 1)
-               Layout.alignment:        Qt.AlignLeft | Qt.AlignVCenter
-               visible:                 control.progress.length > 1 && parseFloat(control.progress[index][control.displayProp])
-               amount:                  control.progress[index][control.displayProp]
-               unitName:                control.progress[index].unitName
-               secondCurrencyUnitName:  control.progress[index].rateUnit
-               secondCurrencyRate:      control.progress[index].rate
-               spacing:                 15
-               lightFont:               false
-               fontSize:                12
-               vSpacing:                1
+               Layout.column:     1
+               Layout.row:        index + (control.title2.length ? 2 : 1)
+               Layout.alignment:  Qt.AlignLeft | Qt.AlignVCenter
+               visible:           control.progress.length > 1 && parseFloat(control.progress[index][control.displayProp])
+               amount:            control.progress[index][control.displayProp]
+               unitName:          control.progress[index].unitName
+               rateUnit:          control.progress[index].rateUnit
+               rate:              control.progress[index].rate
+               spacing:           15
+               lightFont:         false
+               fontSize:          12
+               vSpacing:          1
            }
         }
     }

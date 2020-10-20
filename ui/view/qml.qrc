@@ -75,7 +75,6 @@
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>
         <file>wallet/AssetsConnect.qml</file>
-        <file>wallet/AvailablePanel.qml</file>
         <file>wallet/AvailablePanelNew.qml</file>
         <file>wallet/InProgressPanelNew.qml</file>
         <file>wallet/MainInfoPanel.qml</file>
