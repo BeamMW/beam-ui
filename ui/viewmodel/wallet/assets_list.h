@@ -34,7 +34,7 @@ public:
         RIcon,
         RColor,
         RSelectionColor,
-        RUnitName2,
+        RRateUnit,
         RRate,
     };
 

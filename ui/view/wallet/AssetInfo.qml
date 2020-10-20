@@ -12,8 +12,8 @@ Control {
     property int outTxCnt
     property alias amount:      amountCtrl.amount
     property alias unitName:    amountCtrl.unitName
-    property alias unitName2:   amountCtrl.secondCurrencyUnitName
-    property alias rate:        amountCtrl.secondCurrencyRate
+    property alias rateUnit:    amountCtrl.rateUnit
+    property alias rate:        amountCtrl.rate
     property alias icon:        amountCtrl.iconSource
     property alias color:       back.leftColor
     property alias borderColor: back.leftBorderColor

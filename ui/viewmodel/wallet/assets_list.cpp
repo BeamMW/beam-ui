@@ -26,16 +26,16 @@ QHash<int, QByteArray> AssetsList::roleNames() const
 {
     static const auto roles = QHash<int, QByteArray>
     {
-        {static_cast<int>(Roles::Search),         "search"},
-        {static_cast<int>(Roles::RId),            "id"},
-        {static_cast<int>(Roles::RUnitName),      "unitName"},
-        {static_cast<int>(Roles::RAmount),        "amount"},
-        {static_cast<int>(Roles::RInTxCnt),       "inTxCnt"},
-        {static_cast<int>(Roles::ROutTxCnt),      "outTxCnt"},
-        {static_cast<int>(Roles::RIcon),          "icon"},
-        {static_cast<int>(Roles::RColor),         "color"},
+        {static_cast<int>(Roles::Search),          "search"},
+        {static_cast<int>(Roles::RId),             "id"},
+        {static_cast<int>(Roles::RUnitName),       "unitName"},
+        {static_cast<int>(Roles::RAmount),         "amount"},
+        {static_cast<int>(Roles::RInTxCnt),        "inTxCnt"},
+        {static_cast<int>(Roles::ROutTxCnt),       "outTxCnt"},
+        {static_cast<int>(Roles::RIcon),           "icon"},
+        {static_cast<int>(Roles::RColor),          "color"},
         {static_cast<int>(Roles::RSelectionColor), "selectionColor"},
-        {static_cast<int>(Roles::RUnitName2),      "unitName2"},
+        {static_cast<int>(Roles::RRateUnit),       "rateUnit"},
         {static_cast<int>(Roles::RRate),           "rate"},
     };
     return roles;
@@ -72,7 +72,7 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
             return _amgr.getColor(assetId);
         case Roles::RSelectionColor:
             return _amgr.getSelectionColor(assetId);
-        case Roles::RUnitName2:
+        case Roles::RRateUnit:
             return assetId < 1 ? beamui::getCurrencyUnitName(_ermgr.getRateUnitRaw()) : "";
         case Roles::RRate:
             {

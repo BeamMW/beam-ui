@@ -148,7 +148,7 @@ Control {
                             icon:         model.icon
                             color:        model.color
                             borderColor:  model.selectionColor
-                            unitName2:    model.unitName2
+                            rateUnit:     model.rateUnit
                             rate:         model.rate
                             opacity:      control.selectedIdx < 0  ? 1 : (model.index == control.selectedIdx ? 1 : 0.6)
 
@@ -173,7 +173,7 @@ Control {
                                     control.selectedId = -1
                                 } else {
                                     control.selectedIdx = model.index
-                                    control.selectedId = model.id
+                                    control.selectedId  = model.id
                                 }
                             }
                         }

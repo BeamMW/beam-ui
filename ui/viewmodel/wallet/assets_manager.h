@@ -17,10 +17,7 @@
 #include <QColor>
 #include "model/wallet_model.h"
 
-struct UIAssetInfo {
-
-};
-
+// TODO: consider singleton for AssetsManager
 class AssetsManager: public QObject
 {
     Q_OBJECT
