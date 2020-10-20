@@ -47,6 +47,7 @@ namespace beamui
     macro(BitcoinSV,   "Bitcoin SV",    "BSV",           "satoshi",  "sat/kB",    8) \
     macro(Dogecoin,    "Dogecoin",      "DOGE",          "satoshi",  "sat/kB",    8) \
     macro(Dash,        "Dash",          "DASH",          "duff",     "duff/kB",   8) \
+    macro(Ethereum,    "Ethereum",      "ETH",           "wei",      "duff/kB",   8) \
     macro(Usd,         "USD",           "USD",           "cent",     "",          2) \
     macro(Unknown,     "",              "",              "",         "",          0)
 

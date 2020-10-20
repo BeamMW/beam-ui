@@ -335,6 +335,11 @@ bool SendSwapViewModel::isEnough() const
         return _walletModel.getAvailable() >= total;
     }
 
+    if (_sendCurrency == Currency::CurrEthereum)
+    {
+        return AppModel::getInstance().getSwapEthClient()->getAvailable() > total;
+    }
+
     // TODO sentFee is fee rate. should be corrected
     auto swapCoin = QMLGlobals::convertCurrencyToSwapCoin(_sendCurrency);
 

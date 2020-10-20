@@ -2815,5 +2815,9 @@ Your version is: %2. Please, check for updates.</oldsource>
         <source>Supports %1 payments.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="general-ethereum">
+        <source>ETHEREUM</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

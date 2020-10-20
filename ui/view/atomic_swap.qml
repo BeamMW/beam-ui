@@ -259,6 +259,9 @@ Item {
                             return "qrc:/assets/icon-dash.svg";
                         case Currency.CurrDogecoin:
                             return "qrc:/assets/icon-doge.svg";
+                        // TODO roman.strilets
+                        case Currency.CurrEthereum:
+                            return "qrc:/assets/icon-doge.svg";
                         default: return "";
                     }
                 }
@@ -278,6 +281,9 @@ Item {
                         case Currency.CurrDash:
                             return Style.swapCurrencyPaneGrLeftDASH;
                         case Currency.CurrDogecoin:
+                            return Style.swapCurrencyPaneGrLeftDOGE;
+                        // TODO roman.strilets
+                        case Currency.CurrEthereum:
                             return Style.swapCurrencyPaneGrLeftDOGE;
                         default:
                             return Style.swapCurrencyPaneGrLeftBTC;

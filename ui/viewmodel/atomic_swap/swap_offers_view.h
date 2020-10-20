@@ -20,6 +20,7 @@
 
 #include "model/wallet_model.h"
 #include "model/swap_coin_client_model.h"
+#include "model/swap_eth_client_model.h"
 #include "swap_offers_list.h"
 #include "swap_tx_object_list.h"
 #include "viewmodel/currencies.h"
@@ -65,6 +66,7 @@ signals:
 private:
     beam::wallet::AtomicSwapCoin m_swapCoin;
     std::weak_ptr<SwapCoinClientModel> m_coinClient;
+    std::weak_ptr<SwapEthClientModel> m_ethClient;
     int m_activeTxCounter = 0;
     uint16_t m_minTxConfirmations = 0;
     double m_blocksPerHour = 0;

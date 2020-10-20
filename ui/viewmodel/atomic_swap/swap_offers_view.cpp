@@ -25,16 +25,31 @@ using namespace std;
 namespace btc = beam::bitcoin;
 
 SwapCoinClientWrapper::SwapCoinClientWrapper(wallet::AtomicSwapCoin swapCoin)
-    : m_swapCoin(swapCoin),
-      m_coinClient(AppModel::getInstance().getSwapCoinClient(swapCoin))
+    : m_swapCoin(swapCoin)
+    , m_coinClient(swapCoin != wallet::AtomicSwapCoin::Ethereum ? AppModel::getInstance().getSwapCoinClient(swapCoin) : nullptr)
+    , m_ethClient(swapCoin == wallet::AtomicSwapCoin::Ethereum ? AppModel::getInstance().getSwapEthClient() : nullptr)
 {
-    auto coinClient = m_coinClient.lock();
-    auto settings = coinClient->GetSettings();
-    m_minTxConfirmations = settings.GetTxMinConfirmations();
-    m_blocksPerHour = settings.GetBlocksPerHour();
+    if (swapCoin == wallet::AtomicSwapCoin::Ethereum)
+    {
+        auto coinClient = m_ethClient.lock();
+        auto settings = coinClient->GetSettings();
+        m_minTxConfirmations = settings.GetTxMinConfirmations();
+        m_blocksPerHour = settings.GetBlocksPerHour();
 
-    connect(coinClient.get(), SIGNAL(balanceChanged()), this, SIGNAL(availableChanged()));
-    connect(coinClient.get(), SIGNAL(statusChanged()), this, SIGNAL(statusChanged()));    
+        connect(coinClient.get(), SIGNAL(balanceChanged()), this, SIGNAL(availableChanged()));
+        connect(coinClient.get(), SIGNAL(statusChanged()), this, SIGNAL(statusChanged()));
+    }
+    else
+    {
+        auto coinClient = m_coinClient.lock();
+        auto settings = coinClient->GetSettings();
+        m_minTxConfirmations = settings.GetTxMinConfirmations();
+        m_blocksPerHour = settings.GetBlocksPerHour();
+
+        connect(coinClient.get(), SIGNAL(balanceChanged()), this, SIGNAL(availableChanged()));
+        connect(coinClient.get(), SIGNAL(statusChanged()), this, SIGNAL(statusChanged()));
+    }
+
 }
 
 void SwapCoinClientWrapper::incrementActiveTxCounter()
@@ -59,16 +74,31 @@ void SwapCoinClientWrapper::resetActiveTxCounter()
 
 QString SwapCoinClientWrapper::getAvailableStr() const
 {
+    if (m_swapCoin == wallet::AtomicSwapCoin::Ethereum)
+    {
+        return beamui::AmountToUIString(getAvailable() / 10);
+    }
+
     return beamui::AmountToUIString(getAvailable());
 }
 
 bool SwapCoinClientWrapper::getIsConnected() const
 {
+    if (m_swapCoin == wallet::AtomicSwapCoin::Ethereum)
+    {
+        return m_ethClient.lock()->getStatus() == ethereum::Client::Status::Connected;
+    }
+
     return m_coinClient.lock()->getStatus() == bitcoin::Client::Status::Connected;
 }
 
 bool SwapCoinClientWrapper::getIsConnecting() const
 {
+    if (m_swapCoin == wallet::AtomicSwapCoin::Ethereum)
+    {
+        return m_ethClient.lock()->getStatus() == ethereum::Client::Status::Connecting;
+    }
+
     return m_coinClient.lock()->getStatus() == bitcoin::Client::Status::Connecting;
 }
 
@@ -104,6 +134,10 @@ double SwapCoinClientWrapper::getBlocksPerHour() const
 
 Amount SwapCoinClientWrapper::getAvailable() const
 {
+    if (m_swapCoin == wallet::AtomicSwapCoin::Ethereum)
+    {
+        return m_ethClient.lock()->getAvailable();
+    }
     return m_coinClient.lock()->getAvailable();
 }
 
@@ -502,6 +536,7 @@ void SwapOffersViewModel::InitSwapClientWrappers()
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Bitcoin_SV));
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Dogecoin));
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Dash));
+        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Ethereum));
     }
 }
 

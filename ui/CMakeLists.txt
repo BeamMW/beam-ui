@@ -190,6 +190,8 @@ set(UI_SRC
     model/translator.h
     model/swap_coin_client_model.cpp
     model/swap_coin_client_model.h
+    model/swap_eth_client_model.cpp
+    model/swap_eth_client_model.h
 )
 
 beam_translations_update_ts("${SUPPORTED_LANGS}" TS_FILES)
