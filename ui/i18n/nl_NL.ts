@@ -1223,11 +1223,11 @@ please review your settings and try again</oldsource>
     </message>
     <message id="wallet-send-swap-offered-label">
         <source>Offered on</source>
-        <translation>Aangeboden op</translation>
+        <translation type="unfinished">Aangeboden op</translation>
     </message>
     <message id="wallet-send-swap-expires-label">
         <source>Expires on</source>
-        <translation>Verloopt op</translation>
+        <translation type="unfinished">Verloopt op</translation>
     </message>
     <message id="general-address-from">
         <source>From</source>
@@ -1690,12 +1690,6 @@ Please check the swap token and try again.</oldsource>
         <source>Confirm atomic swap</source>
         <translation>Bevestig atomic swap</translation>
     </message>
-    <message id="send-swap-sconfirmation-online-time">
-        <source>Keep your wallet online. The swap normally takes about 1 hour to complete.</source>
-        <oldsource>Keep your wallet online. The swap normally takes about 1 hour
-to complete.</oldsource>
-        <translation>Houd uw portemonnee online. Het duurt normaal gesproken ongeveer 1 uur om de swap te voltooien.</translation>
-    </message>
     <message id="beam-transaction-fee">
         <source>BEAM Transaction fee</source>
         <translation>Transactiekosten</translation>
@@ -1746,10 +1740,6 @@ to complete.</oldsource>
         <source>waiting for counterparty</source>
         <translation>wachten op tegenpartij</translation>
     </message>
-    <message id="send-swap-fee-warning">
-        <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
-        <translation>Zodra de aanbieding door de andere partij is geaccepteerd worden de %1 transactiekosten in rekening gebracht, zelfs als de aanbieding wordt geannuleerd.</translation>
-    </message>
     <message id="app-close-title">
         <source>Beam wallet close</source>
         <translation>Beam wallet dicht</translation>
@@ -1774,10 +1764,6 @@ to complete.</oldsource>
     <message id="addresses-delete-warning-text">
         <source>There is active transaction that uses this address, therefore the address cannot be deleted.</source>
         <translation>Er is een actieve transactie die dit adres gebruikt. Het adres kan daarom niet worden verwijderd.</translation>
-    </message>
-    <message id="general-fee-total">
-        <source>%1 Transaction fee (est)</source>
-        <translation>%1 Transactiekosten (est)</translation>
     </message>
     <message id="settings-fee-rate-note">
         <source>Remember to validate the expected fee rate for the blockchain (as it varies with time).</source>
@@ -1876,10 +1862,6 @@ deploy the key at the node you trust completely.</oldsource>
     <message id="tx-state-in-progress-long">
         <source>It is taking longer than usual. In case the transaction could not be completed it will be canceled automatically in %1.</source>
         <translation>Het duurt langer dan gebruikelijk. Als de transactie niet kan worden voltooid wordt deze automatisch geannuleerd in %1.</translation>
-    </message>
-    <message id="amount-input-add-all">
-        <source>add all</source>
-        <translation type="unfinished"></translation>
     </message>
     <message id="settings-general-no-require-pwd-to-spend-confirm-pwd-title">
         <source>Ask password on every Send</source>
@@ -2471,10 +2453,6 @@ Your version is: %2. Please, check for updates.</oldsource>
         <source>One time</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="swap-expired">
-        <source>Expired.</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="from-shielded-pool">
         <source>shielded pool</source>
         <translation type="unfinished"></translation>
@@ -2860,6 +2838,30 @@ Your version is: %2. Please, check for updates.</oldsource>
     </message>
     <message id="inprogress-assets">
         <source>Assets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-fee-total">
+        <source>%1 Transaction fee (est)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="amount-input-add-all">
+        <source>add all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-flat-fee">
+        <source>%1 Transaction fee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-expired">
+        <source>Expired.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-swap-sconfirmation-online-time">
+        <source>Keep your wallet online. The swap normally takes about 1 hour to complete.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-swap-fee-warning">
+        <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
