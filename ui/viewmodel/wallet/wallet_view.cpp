@@ -65,7 +65,7 @@ QString WalletViewModel::beamLockedMaturing() const
 
 QString WalletViewModel::beamLockedMaturingMP() const
 {
-    return beamui::AmountToUIString(_model.getMaturingMP());;
+    return beamui::AmountToUIString(_model.getMaturingMP());
 }
 
 QString WalletViewModel::getSecondCurrencyLabel() const

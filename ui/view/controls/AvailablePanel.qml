@@ -71,6 +71,7 @@ Control {
             rows:          2
 
             SFText {
+                id:             maturingLabel
                 font.pixelSize: 12
                 font.styleName: "Light"
                 font.weight:    Font.Light
@@ -89,10 +90,11 @@ Control {
                 spacing:           15
                 lightFont:         false
                 fontSize:          12
-                visible:           parseFloat(lockedMaturing) > 0
+                visible:           maturingLabel.visible
             }
 
             SFText {
+                id:             maxPrivacyLabel
                 font.pixelSize: 12
                 font.styleName: "Light"
                 font.weight:    Font.Light
@@ -111,7 +113,7 @@ Control {
                 spacing:           15
                 lightFont:         false
                 fontSize:          12
-                visible:           parseFloat(lockedMaturingMP) > 0
+                visible:           maxPrivacyLabel.visible
             }
         }
     }
