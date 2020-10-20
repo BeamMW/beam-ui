@@ -1340,10 +1340,6 @@ please review your settings and try again</oldsource>
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
         <translation>Jotta maksutapahtuma onnistuu, tulee saajan avata lompakkonsa 12 tunnin sisällä lähetyksestä, minkä jälkeen sinun tulee vielä avata lompakko 2 tunnin sisällä.</translation>
     </message>
-    <message id="atomic-swap-connect-other">
-        <source>Connect other currency wallet to start trading</source>
-        <translation>Yhdistä toisen valuutan lompakko aloittaaksesi vaihdanta</translation>
-    </message>
     <message id="trezor-message">
         <source>Please, look at your Trezor device to complete actions...</source>
         <translation>Suorita loppuun Trezor-laitteessasi näkyvät toiminnot...</translation>
@@ -2806,6 +2802,10 @@ Your version is: %2. Please, check for updates.</oldsource>
     </message>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(max privacy)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-more-currency">
+        <source>Connect more currencies</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
