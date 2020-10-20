@@ -7,9 +7,11 @@ import "./utils.js" as Utils
 
 ColumnLayout {
     id: sendRegularView
+    spacing: 0
 
     property var defaultFocusItem: receiverTAInput
-    spacing: 0
+    property int selectedAsset: 0
+
     // callbacks set by parent
     property var onAccepted:        undefined
     property var onClosed:          undefined
@@ -67,8 +69,8 @@ ColumnLayout {
     function getFeeInSecondCurrency(feeValue) {
         return Utils.formatAmountToSecondCurrency(
             feeValue,
-            viewModel.secondCurrencyRate,
-            viewModel.secondCurrencyUnitName)
+            viewModel.rate,
+            viewModel.rateUnit)
     }
 
     //
@@ -85,7 +87,7 @@ ColumnLayout {
             leftPadding:    0
             showHandCursor: true
             //% "Back"
-            text:           qsTrId("general-back")
+            text:           qsTrId("general-back") + "; asset: " + sendRegularView.selectedAsset
             icon.source:    "qrc:/assets/icon-back.svg"
             onClicked:      onClosed();
         }
@@ -370,20 +372,52 @@ ColumnLayout {
                         title:                   qsTrId("general-amount")
                         Layout.fillWidth:        true
 
-                        content: AmountInput {
-                            id:                         sendAmountInput
-                            amountIn:                   viewModel.sendAmount
-                            secondCurrencyRate:         viewModel.secondCurrencyRate
-                            secondCurrencyUnitName:     viewModel.secondCurrencyUnitName
-                            setMaxAvailableAmount:      function() {
-                                viewModel.setMaxAvailableAmount();
+                        content: RowLayout {
+                            AmountInput {
+                                id:                sendAmountInput
+                                amountIn:          viewModel.sendAmount
+                                rate:              viewModel.rate
+                                rateUnit:          viewModel.rateUnit
+                                color:             Style.accent_outgoing
+                                Layout.fillWidth:  true
+                                error:             showInsufficientBalanceWarning
+                                                   //% "Insufficient funds: you would need %1 to complete the transaction"
+                                                   ? qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.missing))
+                                                   : ""
                             }
-                            showAddAll:                 true
-                            color:                      Style.accent_outgoing
-                            error:                      showInsufficientBalanceWarning
-                                                        //% "Insufficient funds: you would need %1 to complete the transaction"
-                                                        ? qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.missing))
-                                                        : ""
+
+                            SvgImage {
+                                source: "qrc:/assets/icon-send-blue-copy-2.svg"
+                                sourceSize: Qt.size(16, 16)
+                                Layout.leftMargin: 25
+                                MouseArea {
+                                    anchors.fill:    parent
+                                    acceptedButtons: Qt.LeftButton
+                                    cursorShape:     Qt.PointingHandCursor
+                                    onClicked:       function () {
+                                        sendAmountInput.clearFocus()
+                                        viewModel.setMaxAvailableAmount()
+                                    }
+                                }
+                            }
+
+                            SFText {
+                                font.pixelSize:   14
+                                font.styleName:   "Bold";
+                                font.weight:      Font.Bold
+                                color:            Style.accent_outgoing
+                                //% "add all"
+                                text:             qsTrId("amount-input-add-all")
+                                MouseArea {
+                                    anchors.fill:    parent
+                                    acceptedButtons: Qt.LeftButton
+                                    cursorShape:     Qt.PointingHandCursor
+                                    onClicked:       function () {
+                                        sendAmountInput.clearFocus()
+                                        viewModel.setMaxAvailableAmount()
+                                    }
+                                }
+                            }
                         }
      
                         Binding {
@@ -406,14 +440,14 @@ ColumnLayout {
                             id:                         feeInput
                             fee:                        viewModel.feeGrothes
                             minFee:                     viewModel.minimalFeeGrothes
-                            feeLabel:                   BeamGlobals.getFeeRateLabel(Currency.CurrBeam)
+                            feeLabel:                   BeamGlobals.beamUnit
                             color:                      Style.accent_outgoing
                             readOnly:                   false
                             fillWidth:                  true
                             showSecondCurrency:         sendAmountInput.showSecondCurrency
                             isExchangeRateAvailable:    sendAmountInput.isExchangeRateAvailable
-                            secondCurrencyAmount:       getFeeInSecondCurrency(viewModel.fee)
-                            secondCurrencyUnitName:     viewModel.secondCurrencyUnitName
+                            rateAmount:                 getFeeInSecondCurrency(viewModel.fee)
+                            rateUnit:                   viewModel.rateUnit
                             minimumFeeNotificationText: viewModel.isShieldedTx || viewModel.isNeedExtractShieldedCoins ?
                                 //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
                                 qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
@@ -499,14 +533,14 @@ ColumnLayout {
                             }
                     
                             BeamAmount {
-                                Layout.alignment:        Qt.AlignTop
-                                Layout.fillWidth:        true
-                                error:                   showInsufficientBalanceWarning
-                                amount:                  viewModel.sendAmount
-                                lightFont:               false
-                                unitName:                BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
-                                secondCurrencyUnitName:  viewModel.secondCurrencyUnitName
-                                secondCurrencyRate:      viewModel.secondCurrencyRate
+                                Layout.alignment:  Qt.AlignTop
+                                Layout.fillWidth:  true
+                                error:             showInsufficientBalanceWarning
+                                amount:            viewModel.sendAmount
+                                lightFont:         false
+                                unitName:          BeamGlobals.beamUnit
+                                rateUnit:          viewModel.rateUnit
+                                rate:              viewModel.rate
                             }
                     
                             SFText {
@@ -518,14 +552,14 @@ ColumnLayout {
                             }
                     
                             BeamAmount {
-                                Layout.alignment:        Qt.AlignTop
-                                Layout.fillWidth:        true
-                                error:                   showInsufficientBalanceWarning
-                                amount:                  viewModel.change
-                                lightFont:               false
-                                unitName:                BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
-                                secondCurrencyUnitName:  viewModel.secondCurrencyUnitName
-                                secondCurrencyRate:      viewModel.secondCurrencyRate
+                                Layout.alignment:  Qt.AlignTop
+                                Layout.fillWidth:  true
+                                error:             showInsufficientBalanceWarning
+                                amount:            viewModel.change
+                                lightFont:         false
+                                unitName:          BeamGlobals.beamUnit
+                                rateUnit:          viewModel.rateUnit
+                                rate:              viewModel.rate
                             }
 
                             SFText {
@@ -537,14 +571,14 @@ ColumnLayout {
                             }
                     
                             BeamAmount {
-                                Layout.alignment:        Qt.AlignTop
-                                Layout.fillWidth:        true
-                                error:                   showInsufficientBalanceWarning
-                                amount:                  viewModel.fee
-                                lightFont:               false
-                                unitName:                BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
-                                secondCurrencyUnitName:  viewModel.secondCurrencyUnitName
-                                secondCurrencyRate:      viewModel.secondCurrencyRate
+                                Layout.alignment:  Qt.AlignTop
+                                Layout.fillWidth:  true
+                                error:             showInsufficientBalanceWarning
+                                amount:            viewModel.fee
+                                lightFont:         false
+                                unitName:          BeamGlobals.beamUnit
+                                rateUnit:          viewModel.rateUnit
+                                rate:              viewModel.rate
                             }
 
                             SFText {
@@ -557,14 +591,14 @@ ColumnLayout {
                             }
                     
                             BeamAmount {
-                                Layout.alignment:        Qt.AlignTop
-                                Layout.fillWidth:        true
-                                error:                   showInsufficientBalanceWarning
-                                amount:                  viewModel.available
-                                lightFont:               false
-                                unitName:                BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
-                                secondCurrencyUnitName:  viewModel.secondCurrencyUnitName
-                                secondCurrencyRate:      viewModel.secondCurrencyRate
+                                Layout.alignment:  Qt.AlignTop
+                                Layout.fillWidth:  true
+                                error:             showInsufficientBalanceWarning
+                                amount:            viewModel.available
+                                lightFont:         false
+                                unitName:          BeamGlobals.beamUnit
+                                rateUnit:          viewModel.rateUnit
+                                rate:              viewModel.rate
                             }
                         }
                     }
@@ -585,18 +619,20 @@ ColumnLayout {
                 icon.source:         "qrc:/assets/icon-send-blue.svg"
                 enabled:             viewModel.canSend
                 onClicked: {                
-                    const dialogComponent = Qt.createComponent("send_confirm.qml");
-                    const dialogObject = dialogComponent.createObject(sendRegularView,
+                    const dialog = Qt.createComponent("send_confirm.qml")
+                    const instance = dialog.createObject(sendRegularView,
                         {
                             addressText: viewModel.receiverTA,
-                            typeText: viewModel.isShieldedTx ? qsTrId("tx-max-privacy") : qsTrId("tx-regular"),
-                            currency: Currency.CurrBeam,
-                            amount: viewModel.sendAmount,
-                            fee: viewModel.feeGrothes,
-                            onAcceptedCallback: acceptedCallback,
-                            secondCurrencyRate: viewModel.secondCurrencyRate,
-                            secondCurrencyUnitName: viewModel.secondCurrencyUnitName
-                        }).open();
+                            typeText:    viewModel.isShieldedTx ? qsTrId("tx-max-privacy") : qsTrId("tx-regular"),
+                            amount:      viewModel.sendAmount,
+                            fee:         viewModel.feeGrothes,
+                            flatFee:     true,
+                            unitName:    BeamGlobals.beamUnit,
+                            rate:        viewModel.rate,
+                            rateUnit:    viewModel.rateUnit,
+                            onAccepted:  acceptedCallback(),
+                        })
+                    instance.open()
 
                     function acceptedCallback() {
                         if (viewModel.isPermanentAddress && !viewModel.hasAddress) {

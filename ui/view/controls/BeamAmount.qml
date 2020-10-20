@@ -10,9 +10,9 @@ Control {
     spacing: 8
 
     property string  amount:              "0"
-    property string  unitName:            BeamGlobals.getCurrencyUnitName(Currency.CurrBeam)
-    property string  secondCurrencyUnitName: ""
-    property string  secondCurrencyRate:  "0"
+    property string  unitName:            BeamGlobals.beamUnit
+    property string  rateUnit:            ""
+    property string  rate:                "0"
     property string  color:               Style.content_main
     property bool    error:               false
     property bool    showZero:            true
@@ -30,14 +30,10 @@ Control {
     property real    maxPaintedWidth:     0
     property real    vSpacing:            5
 
-    function getAmountInSecondCurrency() {
+    function formatRate () {
         if (control.amount == "") return "-"
-        var secondCurrencyAmount = 
-            Utils.formatAmountToSecondCurrency(
-                control.amount,
-                control.secondCurrencyRate,
-                control.secondCurrencyUnitName);
-        return control.prefix + (secondCurrencyAmount == "" ? "-" : secondCurrencyAmount);
+        var formatted = Utils.formatAmountToSecondCurrency(control.amount, control.rate, control.rateUnit);
+        return control.prefix + (formatted == "" ? "-" : formatted);
     }
 
     TextMetrics {
@@ -149,12 +145,12 @@ Control {
 
             SFLabel {
                 id:              secondCurrencyAmountText
-                visible:         secondCurrencyUnitName != ""
+                visible:         rateUnit.length > 0
                 font.pixelSize:  10
                 font.styleName:  "Regular"
                 font.weight:     Font.Normal
                 color:           Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
-                text:            getAmountInSecondCurrency()
+                text:            formatRate()
                 onCopyText:      BeamGlobals.copyToClipboard(secondCurrencyAmountText.text)
                 copyMenuEnabled: true
             }

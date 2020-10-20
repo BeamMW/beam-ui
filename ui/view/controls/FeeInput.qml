@@ -20,8 +20,8 @@ ColumnLayout {
     property int inputPreferredWidth:            150
     property bool    showSecondCurrency:         false
     property bool    isExchangeRateAvailable:    false
-    property string  secondCurrencyAmount:       ""
-    property string  secondCurrencyUnitName:     ""
+    property string  rateAmount:                 ""
+    property string  rateUnit:                   ""
     property string  minimumFeeNotificationText: ""
 
     RowLayout {
@@ -88,9 +88,9 @@ ColumnLayout {
         opacity:          control.isExchangeRateAvailable ? 0.5 : 1
         color:            control.isExchangeRateAvailable ? Style.content_secondary : Style.accent_fail
         text:             control.isExchangeRateAvailable
-                            ? control.secondCurrencyAmount
+                            ? control.rateAmount
                             //% "Exchange rate to %1 is not available"
-                            : qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyUnitName)
+                            : qsTrId("general-exchange-rate-not-available").arg(control.rateUnit)
     }
 
 

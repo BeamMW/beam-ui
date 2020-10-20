@@ -31,15 +31,19 @@ ColumnLayout {
     function getFeeInSecondCurrency(feeValue) {
         return Utils.formatFeeToSecondCurrency(
             feeValue,
-            control.secondCurrencyRate,
-            control.secondCurrencyUnitName);
+            control.rate,
+            control.rateUnit);
     }
 
     function getAmountInSecondCurrency() {
         return Utils.formatAmountToSecondCurrency(
             control.amountIn,
-            control.secondCurrencyRate,
-            control.secondCurrencyUnitName);
+            control.rate,
+            control.rateUnit);
+    }
+
+    function clearFocus() {
+        ainput.focus = false
     }
 
     readonly property bool     isValidFee:     hasFee ? feeInput.isValid : true
@@ -62,12 +66,10 @@ ColumnLayout {
     property bool     resetAmount:  true
     property var      amountInput:  ainput
     property bool     showTotalFee: false
-    property bool     showAddAll:   false
-    property string   secondCurrencyRate:  "0"
-    property string   secondCurrencyUnitName: ""
-    property var      setMaxAvailableAmount:    {} // callback function to set amount from viewmodel
-    property bool     showSecondCurrency:       control.secondCurrencyUnitName != "" && control.secondCurrencyUnitName != control.currencyUnitName
-    readonly property bool  isExchangeRateAvailable:    control.secondCurrencyRate != "0"
+    property string   rate:         "0"
+    property string   rateUnit:     ""
+    property bool     showSecondCurrency:  control.rateUnit != "" && control.rateUnit != control.currencyUnitName
+    readonly property bool  isExchangeRateAvailable: control.rate != "0"
 
     SFText {
         font.pixelSize:   14
@@ -148,52 +150,6 @@ ColumnLayout {
                 if (resetAmount) control.amount = 0
             }
         }
-
-        RowLayout {
-            id:                  addAllButton
-            Layout.alignment:    Qt.AlignBottom
-            Layout.bottomMargin: 7
-            Layout.leftMargin:   25
-            visible:             control.showAddAll
-
-            function addAll(){
-                ainput.focus = false;                
-                if (typeof control.setMaxAvailableAmount == 'function') {
-                    control.setMaxAvailableAmount();
-                }
-            }
-
-            SvgImage {
-                Layout.maximumHeight: 16
-                Layout.maximumWidth:  16
-                source: "qrc:/assets/icon-send-blue-copy-2.svg"
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        addAllButton.addAll();
-                    }
-                }
-            }
-
-            SFText {
-                font.pixelSize:   14
-                font.styleName:   "Bold";
-                font.weight:      Font.Bold
-                color:            control.color
-                //% "add all"
-                text:             qsTrId("amount-input-add-all")
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        addAllButton.addAll();
-                    }
-                }
-            }
-        }
     }
 
     //
@@ -212,7 +168,7 @@ ColumnLayout {
             if (isExchangeRateAvailable)
                 return getAmountInSecondCurrency()
             //% "Exchange rate to %1 is not available"
-            return qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyUnitName)
+            return qsTrId("general-exchange-rate-not-available").arg(control.rateUnit)
         }
     }
 
@@ -260,8 +216,8 @@ ColumnLayout {
                 readOnly:         control.readOnlyF
                 showSecondCurrency:         control.showSecondCurrency
                 isExchangeRateAvailable:    control.isExchangeRateAvailable
-                secondCurrencyAmount:       getFeeInSecondCurrency(control.fee)
-                secondCurrencyUnitName:     control.secondCurrencyUnitName
+                rateAmount:                 getFeeInSecondCurrency(control.fee)
+                rateUnit:                   control.rateUnit
                 Connections {
                     target: control
                     function onFeeChanged() {
