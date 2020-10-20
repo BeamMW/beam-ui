@@ -158,12 +158,11 @@ Update your settings and try again."
                         AmountInput {
                             id:                         sentAmountInput
                             color:                      Style.accent_outgoing
-//                            hasFee:           true
-                            currFeeTitle:       true
+                            currFeeTitle:               true
                             currency:                   viewModel.sentCurrency
                             amountIn:                   viewModel.amountSent
-                            secondCurrencyRate:         viewModel.secondCurrencySendRate
-                            secondCurrencyUnitName:     viewModel.secondCurrencyUnitName
+                            rate:                       viewModel.secondCurrencySendRate
+                            rateUnit:                   viewModel.secondCurrencyUnitName
                             multi:                      true
                             resetAmount:                false
                             currColor:                  currencyError() || !BeamGlobals.canReceive(currency) ? Style.validator_error : Style.content_main
@@ -226,12 +225,8 @@ please review your settings and try again"
                             fillWidth:                  true
                             showSecondCurrency:         sentAmountInput.showSecondCurrency
                             isExchangeRateAvailable:    sentAmountInput.isExchangeRateAvailable
-                            secondCurrencyAmount:       sentAmountInput.getFeeInSecondCurrency(viewModel.sentFee)
-                            secondCurrencyUnitName:     viewModel.secondCurrencyUnitName
-                            //minimumFeeNotificationText: viewModel.isShieldedTx ?
-                            //    //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
-                            //    qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
-                            //    ""
+                            rateAmount:                 sentAmountInput.getFeeInSecondCurrency(viewModel.sentFee)
+                            rateUnit:                   viewModel.secondCurrencyUnitName
                         }
 
                         Binding {
@@ -388,12 +383,11 @@ please review your settings and try again"
                         Layout.fillWidth:        true
                         AmountInput {
                             id:                         receiveAmountInput
-                            //hasFee:                     true
                             currFeeTitle:               true
                             currency:                   viewModel.receiveCurrency
                             amountIn:                   viewModel.amountToReceive
-                            secondCurrencyRate:         viewModel.secondCurrencyReceiveRate
-                            secondCurrencyUnitName:     viewModel.secondCurrencyUnitName
+                            rate:                       viewModel.secondCurrencyReceiveRate
+                            rateUnit:                   viewModel.secondCurrencyUnitName
                             multi:                      true
                             resetAmount:                false
                             currColor:                  currencyError() || !BeamGlobals.canReceive(currency) ? Style.validator_error : Style.content_main
@@ -453,12 +447,8 @@ please review your settings and try again"
                             fillWidth:                  true
                             showSecondCurrency:         receiveAmountInput.showSecondCurrency
                             isExchangeRateAvailable:    receiveAmountInput.isExchangeRateAvailable
-                            secondCurrencyAmount:       receiveAmountInput.getFeeInSecondCurrency(viewModel.receiveFee)
-                            secondCurrencyUnitName:     viewModel.secondCurrencyUnitName
-                            //minimumFeeNotificationText: viewModel.isShieldedTx ?
-                            //    //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
-                            //    qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
-                            //    ""
+                            rateAmount:                 receiveAmountInput.getFeeInSecondCurrency(viewModel.receiveFee)
+                            rateUnit:                   viewModel.secondCurrencyUnitName
                         }
 
                         Binding {
