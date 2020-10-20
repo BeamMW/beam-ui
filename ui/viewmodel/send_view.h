@@ -16,6 +16,7 @@
 #include <QObject>
 #include "model/wallet_model.h"
 #include "notifications/exchange_rates_manager.h"
+#include "wallet/assets_manager.h"
 
 class SendViewModel: public QObject
 {
@@ -47,8 +48,8 @@ class SendViewModel: public QObject
     Q_PROPERTY(bool     hasAddress         READ hasAddress                                             NOTIFY hasAddressChanged)
     Q_PROPERTY(bool     isOwnAddress       READ isOwnAddress                                           NOTIFY receiverAddressChanged)
 
-    Q_PROPERTY(QString  secondCurrencyUnitName    READ getSecondCurrencyUnitName                  NOTIFY secondCurrencyUnitNameChanged)
-    Q_PROPERTY(QString  secondCurrencyRate     READ getSecondCurrencyRate                    NOTIFY secondCurrencyRateChanged)
+    Q_PROPERTY(QString  rateUnit  READ getRateUnit   NOTIFY rateChanged)
+    Q_PROPERTY(QString  rate      READ getRate       NOTIFY rateChanged)
 
     Q_PROPERTY(bool     isTokenGeneratebByNewAppVersion      READ isTokenGeneratebByNewAppVersion      NOTIFY tokenGeneratebByNewAppVersion)
     Q_PROPERTY(QString  tokenGeneratebByNewAppVersionMessage READ tokenGeneratebByNewAppVersionMessage NOTIFY tokenGeneratebByNewAppVersion)
@@ -99,8 +100,8 @@ public:
     void setIsToken(bool value);
     bool isOwnAddress() const;
 
-    QString getSecondCurrencyUnitName() const;
-    QString getSecondCurrencyRate() const;
+    QString getRateUnit() const;
+    QString getRate() const;
 
     bool isNeedExtractShieldedCoins() const;
 
@@ -115,6 +116,7 @@ public:
     Q_INVOKABLE void saveReceiverAddress(const QString& name);
 
 signals:
+    void assetChanged();
     void feeGrothesChanged();
     void minimalFeeGrothesChanged();
     void commentChanged();
@@ -129,8 +131,7 @@ signals:
     void cantSendToExpired();
     void canSendChanged();
     void isEnoughChanged();
-    void secondCurrencyUnitNameChanged();
-    void secondCurrencyRateChanged();
+    void rateChanged();
     void receiverAddressChanged();
     void receiverIdentityChanged();
     void tokenGeneratebByNewAppVersion();
@@ -144,6 +145,7 @@ public slots:
     void onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes);
     void onNeedExtractShieldedCoins(bool val);
     void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
+    void onAssetInfo(beam::Asset::ID assetId);
 
 private:
     void extractParameters();
@@ -179,4 +181,7 @@ private:
     beam::Amount _shieldedInputsFee;
     bool _feeChangedByUi = false;
     bool _maxAvailable = false;
+
+    int _selectedAsset;
+    AssetsManager _amgr;
 };

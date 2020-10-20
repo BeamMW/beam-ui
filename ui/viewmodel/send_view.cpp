@@ -42,16 +42,18 @@ SendViewModel::SendViewModel()
     , _walletModel(*AppModel::getInstance().getWallet())
     , _minimalFeeGrothes(QMLGlobals::getMinimalFee(Currency::CurrBeam, false))
     , _shieldedInputsFee(0)
+    , _selectedAsset(0)
 {
     connect(&_walletModel, &WalletModel::changeCalculated,    this, &SendViewModel::onChangeCalculated);
     connect(&_walletModel, SIGNAL(sendMoneyVerified()),    this, SIGNAL(sendMoneyVerified()));
     connect(&_walletModel, SIGNAL(cantSendToExpired()),    this, SIGNAL(cantSendToExpired()));
     connect(&_walletModel, &WalletModel::walletStatusChanged, this, &SendViewModel::availableChanged);
     connect(&_walletModel, &WalletModel::getAddressReturned,  this, &SendViewModel::onGetAddressReturned);
-    connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyUnitNameChanged()));
-    connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
+    connect(&_exchangeRatesManager, &ExchangeRatesManager::rateUnitChanged, this, &SendViewModel::rateChanged);
+    connect(&_exchangeRatesManager, &ExchangeRatesManager::activeRateChanged, this, &SendViewModel::rateChanged);
     connect(&_walletModel, &WalletModel::shieldedCoinsSelectionCalculated, this, &SendViewModel::onShieldedCoinsSelectionCalculated);
     connect(&_walletModel, &WalletModel::needExtractShieldedCoins, this, &SendViewModel::onNeedExtractShieldedCoins);
+    connect(&_amgr, &AssetsManager::assetInfo, this, &SendViewModel::onAssetInfo);
 }
 
 unsigned int SendViewModel::getFeeGrothes() const
@@ -584,12 +586,12 @@ Your version is: %2. Please, check for updates."
 #endif // BEAM_CLIENT_VERSION
 }
 
-QString SendViewModel::getSecondCurrencyUnitName() const
+QString SendViewModel::getRateUnit() const
 {
     return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateUnitRaw());
 }
 
-QString SendViewModel::getSecondCurrencyRate() const
+QString SendViewModel::getRate() const
 {
     auto rate = _exchangeRatesManager.getRate(beam::wallet::ExchangeRate::Currency::Beam);
     return beamui::AmountToUIString(rate);
@@ -629,4 +631,12 @@ void SendViewModel::resetMinimalFee()
     _minimalFeeGrothes = QMLGlobals::getMinimalFee(Currency::CurrBeam, _isShieldedTx);
     emit minimalFeeGrothesChanged();
     _shieldedInputsFee = 0;
+}
+
+void SendViewModel::onAssetInfo(beam::Asset::ID assetId)
+{
+    if (assetId != static_cast<beam::Asset::ID>(_selectedAsset)) {
+        return;
+    }
+    emit assetChanged();
 }
