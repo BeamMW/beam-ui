@@ -296,7 +296,7 @@ void ReceiveViewModel::generateOfflineAddress()
         _receiverOfflineAddress.setExpiration(beam::wallet::WalletAddress::ExpirationStatus::Never);
 
         // add a vouchers
-        _walletModel.getAsync()->generateVouchers(_receiverOfflineAddress.m_OwnID, 10, [this](ShieldedVoucherList vouchers)
+        _walletModel.getAsync()->generateVouchers(_receiverOfflineAddress.m_OwnID, 1, [this](ShieldedVoucherList vouchers)
         {
             if (!vouchers.empty())
             {

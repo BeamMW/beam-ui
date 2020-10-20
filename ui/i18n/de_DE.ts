@@ -2669,10 +2669,6 @@ Your version is: %2. Please, check for updates.</oldsource>
         <source>Address</source>
         <translation type="unfinished">Adresse</translation>
     </message>
-    <message id="address-info-copy-address">
-        <source>Copy address</source>
-        <translation type="unfinished">Adresse kopieren</translation>
-    </message>
     <message id="dogecoin-show-seed-phrase">
         <source>Dogecoin seed phrase</source>
         <translation type="unfinished"></translation>
@@ -2807,6 +2803,10 @@ Your version is: %2. Please, check for updates.</oldsource>
     </message>
     <message id="atomic-swap-more-currency">
         <source>Connect more currencies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-copy-close">
+        <source>copy and close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

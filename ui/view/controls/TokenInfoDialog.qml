@@ -260,11 +260,12 @@ Dialog {
                 palette.buttonText: Style.content_opposite
                 icon.color:         Style.content_opposite
                 palette.button:     dialog.incoming ? Style.accent_incoming : Style.accent_outgoing
-                //% "Copy address"
-                text:               qsTrId("address-info-copy-address")
+                //% "copy and close"
+                text:               qsTrId("address-info-copy-close")
                 onClicked: {
                     BeamGlobals.copyToClipboard(viewModel.token);
                     dialog.addressCopied();
+                    dialog.close();
                 }
             }
         }
