@@ -30,8 +30,8 @@ class ReceiveViewModel: public QObject
     Q_PROPERTY(QString  transactionToken     READ getTransactionToken     WRITE  setTranasctionToken   NOTIFY  transactionTokenChanged)
     Q_PROPERTY(QString  offlineToken         READ getOfflineToken         WRITE  setOfflineToken       NOTIFY  offlineTokenChanged)
     Q_PROPERTY(bool     commentValid         READ getCommentValid                                      NOTIFY  commentValidChanged)
-    Q_PROPERTY(QString  secondCurrencyUnitName  READ getSecondCurrencyUnitName                         NOTIFY  secondCurrencyUnitNameChanged)
-    Q_PROPERTY(QString  secondCurrencyRate      READ getSecondCurrencyRate                             NOTIFY  secondCurrencyRateChanged)
+    Q_PROPERTY(QString  rateUnit             READ getRateUnit                                          NOTIFY  rateChanged)
+    Q_PROPERTY(QString  rate                 READ getRate                                              NOTIFY  rateChanged)
     Q_PROPERTY(bool     isShieldedTx         READ isShieldedTx            WRITE setIsShieldedTx        NOTIFY  isShieldedTxChanged)
     Q_PROPERTY(bool     isPermanentAddress   READ isPermanentAddress      WRITE setIsPermanentAddress  NOTIFY  isPermanentAddressChanged)
         
@@ -49,10 +49,9 @@ signals:
     void offlineTokenChanged();
     void newAddressFailed();
     void commentValidChanged();
-    void secondCurrencyUnitNameChanged();
-    void secondCurrencyRateChanged();
     void isShieldedTxChanged();
     void isPermanentAddressChanged();
+    void rateChanged();
 
 public:
     Q_INVOKABLE void initialize(const QString& address);
@@ -82,8 +81,8 @@ private:
 
     void updateTransactionToken();
 
-    QString getSecondCurrencyUnitName() const;
-    QString getSecondCurrencyRate() const;
+    QString getRateUnit() const;
+    QString getRate() const;
 
     bool    isShieldedTx() const;
     void    setIsShieldedTx(bool value);

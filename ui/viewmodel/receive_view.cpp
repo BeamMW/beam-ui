@@ -37,8 +37,8 @@ ReceiveViewModel::ReceiveViewModel()
     connect(&_walletModel, &WalletModel::generatedNewAddress, this, &ReceiveViewModel::onGeneratedNewAddress);
     connect(&_walletModel, &WalletModel::getAddressReturned, this, &ReceiveViewModel::onGetAddressReturned);
     connect(&_walletModel, &WalletModel::newAddressFailed, this, &ReceiveViewModel::newAddressFailed);
-    connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyUnitNameChanged()));
-    connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
+    connect(&_exchangeRatesManager, &ExchangeRatesManager::rateUnitChanged, this, &ReceiveViewModel::rateChanged);
+    connect(&_exchangeRatesManager, &ExchangeRatesManager::activeRateChanged, this, &ReceiveViewModel::rateChanged);
     updateTransactionToken();
 }
 
@@ -257,12 +257,12 @@ void ReceiveViewModel::updateTransactionToken()
     setTranasctionToken(QString::fromStdString(std::to_string(_txParameters)));
 }
 
-QString ReceiveViewModel::getSecondCurrencyUnitName() const
+QString ReceiveViewModel::getRateUnit() const
 {
     return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateUnitRaw());
 }
 
-QString ReceiveViewModel::getSecondCurrencyRate() const
+QString ReceiveViewModel::getRate() const
 {
     auto rate = _exchangeRatesManager.getRate(beam::wallet::ExchangeRate::Currency::Beam);
     return beamui::AmountToUIString(rate);
