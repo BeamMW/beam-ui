@@ -138,7 +138,7 @@ Pane {
             Item {
                 Layout.fillHeight: true
                 Layout.fillWidth:  true
-                visible: headerPlaceholder != null
+                visible: headerPlaceholder.visible
 
                 MouseArea {
                     anchors.fill:      parent

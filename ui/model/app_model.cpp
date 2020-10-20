@@ -343,8 +343,8 @@ void AppModel::startWallet()
     additionalTxCreators->emplace(TxType::PushTransaction, std::make_shared<lelantus::PushTransaction::Creator>(m_db));
 #endif
 
-    bool isSecondCurrencyEnabled = m_settings.getSecondCurrency().toStdString() != noSecondCurrencyStr;
-    m_wallet->start(activeNotifications, isSecondCurrencyEnabled, additionalTxCreators);
+    bool displayRate = m_settings.getSecondCurrency().toStdString() != exchangeRateOffStr;
+    m_wallet->start(activeNotifications, displayRate, additionalTxCreators);
 }
 
 template<typename BridgeSide, typename Bridge, typename SettingsProvider>

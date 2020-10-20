@@ -17,7 +17,7 @@ Pane {
 
     contentItem: ColumnLayout {
         spacing: 0
-        //clip:    true
+
         RowLayout {
             Layout.alignment: Qt.AlignTop
             SFText {
@@ -49,10 +49,10 @@ Pane {
                 visible:              text.length > 0
             }
         }
+
         Control {
             id:                placeholder
             Layout.fillWidth:  true
-            Layout.fillHeight: true
             Layout.topMargin:  20
             Layout.alignment:  Qt.AlignTop
         }
