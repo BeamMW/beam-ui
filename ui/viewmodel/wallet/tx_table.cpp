@@ -32,8 +32,8 @@ TxTableViewModel::TxTableViewModel()
 {
     connect(&_model, SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SLOT(onTransactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
     connect(&_model, SIGNAL(txHistoryExportedToCsv(const QString&)), this, SLOT(onTxHistoryExportedToCsv(const QString&)));
-    connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyUnitNameChanged()));
-    connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
+    connect(&_exchangeRatesManager, &ExchangeRatesManager::rateUnitChanged, this, &TxTableViewModel::rateChanged);
+    connect(&_exchangeRatesManager, &ExchangeRatesManager::activeRateChanged, this, &TxTableViewModel::rateChanged);
     _model.getAsync()->getTransactions();
 }
 
@@ -146,12 +146,12 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
     emit transactionsChanged();
 }
 
-QString TxTableViewModel::getSecondCurrencyUnitName() const
+QString TxTableViewModel::getRateUnit() const
 {
     return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateUnitRaw());
 }
 
-QString TxTableViewModel::getSecondCurrencyRate() const
+QString TxTableViewModel::getRate() const
 {
     auto rate = _exchangeRatesManager.getRate(beam::wallet::ExchangeRate::Currency::Beam);
     return beamui::AmountToUIString(rate);

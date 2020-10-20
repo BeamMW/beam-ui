@@ -35,7 +35,7 @@ public:
     beam::wallet::TxID getTxID() const;
     QString getAmount() const;
     beam::Amount getAmountValue() const;
-    QString getSecondCurrencyRate() const;
+    QString getRate() const;
     QString getComment() const;
     QString getAddressFrom() const;
     QString getAddressTo() const;

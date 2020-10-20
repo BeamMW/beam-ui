@@ -241,8 +241,8 @@ Control {
                         //% "Offline"
                         qsTrId("tx-address-offline") :
                         qsTrId("tx-address-online")
-                    secondCurrencyRate: txRolesMap && txRolesMap.secondCurrencyRate ? txRolesMap.secondCurrencyRate : ""
-                    secondCurrencyUnitName: tableViewModel.secondCurrencyUnitName
+                    rate:               txRolesMap && txRolesMap.rate ? txRolesMap.rate : ""
+                    rateUnit:           tableViewModel.rateUnit
                     searchFilter:       searchBox.text
                     hideFiltered:       rowItem.hideFiltered
                     token:              txRolesMap ? txRolesMap.token : ""

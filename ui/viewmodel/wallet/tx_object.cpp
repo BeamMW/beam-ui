@@ -136,7 +136,7 @@ beam::Amount TxObject::getAmountValue() const
     return m_tx.m_amount;
 }
 
-QString TxObject::getSecondCurrencyRate() const
+QString TxObject::getRate() const
 {
     if (m_tx.m_assetId != Asset::s_BeamID)
     {

@@ -23,16 +23,16 @@
 class TxTableViewModel: public QObject {
     Q_OBJECT
     Q_PROPERTY(QAbstractItemModel* transactions READ getTransactions           NOTIFY transactionsChanged)
-    Q_PROPERTY(QString secondCurrencyUnitName   READ getSecondCurrencyUnitName NOTIFY secondCurrencyUnitNameChanged)
-    Q_PROPERTY(QString secondCurrencyRate       READ getSecondCurrencyRate     NOTIFY secondCurrencyRateChanged)
+    Q_PROPERTY(QString rateUnit  READ getRateUnit  NOTIFY rateChanged)
+    Q_PROPERTY(QString rate      READ getRate      NOTIFY rateChanged)
 
 public:
     TxTableViewModel();
     ~TxTableViewModel() override = default;
 
     QAbstractItemModel* getTransactions();
-    QString getSecondCurrencyUnitName() const;
-    QString getSecondCurrencyRate() const;
+    QString getRateUnit() const;
+    QString getRate() const;
 
     Q_INVOKABLE void exportTxHistoryToCsv();
     Q_INVOKABLE void cancelTx(const QVariant& variantTxID);
@@ -45,8 +45,7 @@ public slots:
 
 signals:
     void transactionsChanged();
-    void secondCurrencyUnitNameChanged();
-    void secondCurrencyRateChanged();
+    void rateChanged();
 
 private:
     WalletModel&         _model;
