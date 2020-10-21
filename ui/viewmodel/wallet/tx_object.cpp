@@ -202,15 +202,18 @@ QString TxObject::getAddressFrom() const
 {
     if (m_tx.m_txType == wallet::TxType::PushTransaction && !m_tx.m_sender)
     {
-        //% "shielded pool"
-        return qtTrId("from-shielded-pool");
+        return getSenderIdentity();
     }
     return toString(m_tx.m_sender ? m_tx.m_myId : m_tx.m_peerId);
 }
 
 QString TxObject::getAddressTo() const
 {
-    return toString(!m_tx.m_sender ? m_tx.m_myId : m_tx.m_peerId);
+    if (m_tx.m_sender)
+    {
+        return getToken();
+    }
+    return toString(m_tx.m_myId);
 }
 
 QString TxObject::getFee() const
