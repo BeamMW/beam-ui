@@ -527,7 +527,14 @@ ColumnLayout {
                     const dialogObject = dialogComponent.createObject(sendRegularView,
                         {
                             addressText: viewModel.receiverTA,
-                            typeText: viewModel.isShieldedTx ? qsTrId("tx-max-privacy") : qsTrId("tx-regular"),
+                            typeText: viewModel.isShieldedTx ? 
+                                    viewModel.isMaxPrivacy ? qsTrId("tx-max-privacy") 
+                                        : viewModel.isOffline ? qsTrId("tx-address-offline") 
+                                            //% "Public offline"
+                                            : viewModel.isPublicOffline ? qsTrId("tx-address-public-offline") 
+                                                //% "Unknown"
+                                                : qsTrId("tx-address-unknown")
+                                    : qsTrId("tx-regular"),
                             currency: Currency.CurrBeam,
                             amount: viewModel.sendAmount,
                             fee: viewModel.feeGrothes,
