@@ -131,7 +131,10 @@ QString ReceiveSwapViewModel::getRate() const
 
     if (!beamAmount) return QString();
 
-    return QMLGlobals::divideWithPrecision8(beamui::AmountToUIString(otherCoinAmount), beamui::AmountToUIString(beamAmount));
+    Currency otherCurrency =
+        isSendBeam() ? _receiveCurrency : _sentCurrency;
+
+    return QMLGlobals::divideWithPrecision8(beamui::AmountToUIString(otherCoinAmount, convertCurrency(otherCurrency), false), beamui::AmountToUIString(beamAmount));
 }
 
 void ReceiveSwapViewModel::onSwapParamsLoaded(const beam::ByteBuffer& params)
@@ -192,12 +195,12 @@ void ReceiveSwapViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet
 
 QString ReceiveSwapViewModel::getAmountToReceive() const
 {
-    return beamui::AmountToUIString(_amountToReceiveGrothes);
+    return beamui::AmountToUIString(_amountToReceiveGrothes, convertCurrency(_receiveCurrency), false);
 }
 
 void ReceiveSwapViewModel::setAmountToReceive(QString value)
 {
-    auto amount = beamui::UIStringToAmount(value);
+    auto amount = beamui::UIStringToAmount(value, convertCurrency(_receiveCurrency));
     if (amount != _amountToReceiveGrothes)
     {
         _amountToReceiveGrothes = amount;
@@ -209,7 +212,7 @@ void ReceiveSwapViewModel::setAmountToReceive(QString value)
 
 QString ReceiveSwapViewModel::getAmountSent() const
 {
-    return beamui::AmountToUIString(_amountSentGrothes);
+    return beamui::AmountToUIString(_amountSentGrothes, convertCurrency(_sentCurrency), false);
 }
 
 unsigned int ReceiveSwapViewModel::getReceiveFee() const
@@ -219,7 +222,7 @@ unsigned int ReceiveSwapViewModel::getReceiveFee() const
 
 void ReceiveSwapViewModel::setAmountSent(QString value)
 {
-    auto amount = beamui::UIStringToAmount(value);
+    auto amount = beamui::UIStringToAmount(value, convertCurrency(_sentCurrency));
     if (amount != _amountSentGrothes)
     {
         bool isPreviouseSendWasZero = _amountSentGrothes == 0;

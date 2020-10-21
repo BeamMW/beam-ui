@@ -47,7 +47,7 @@ namespace beamui
     macro(BitcoinSV,   "Bitcoin SV",    "BSV",           "satoshi",  "sat/kB",    8) \
     macro(Dogecoin,    "Dogecoin",      "DOGE",          "satoshi",  "sat/kB",    8) \
     macro(Dash,        "Dash",          "DASH",          "duff",     "duff/kB",   8) \
-    macro(Ethereum,    "Ethereum",      "ETH",           "wei",      "duff/kB",   8) \
+    macro(Ethereum,    "Ethereum",      "ETH",           "wei",      "wei",       9) \
     macro(Usd,         "USD",           "USD",           "cent",     "",          2) \
     macro(Unknown,     "",              "",              "",         "",          0)
 
@@ -67,12 +67,13 @@ namespace beamui
     QString getCurrencySubunitLabel(Currencies);
     QString getCurrencySubunitFromLabel(const QString& currLabel);
 
+    // TODO roman.strilets
     /// Convert amount to ui string with "." as a separator. With the default @coinType, no currency label added.
-    QString AmountToUIString(const beam::Amount& value, Currencies coinType = Currencies::Unknown);
+    QString AmountToUIString(const beam::Amount& value, Currencies coinType = Currencies::Unknown, bool currencyLabel = true);
     QString AmountInGrothToUIString(const beam::Amount& value);
 
     /// expects ui string with a "." as a separator
-    beam::Amount UIStringToAmount(const QString& value);
+    beam::Amount UIStringToAmount(const QString& value, Currencies currency = Currencies::Unknown);
 
     Currencies convertExchangeRateCurrencyToUiCurrency(beam::wallet::ExchangeRate::Currency);
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT

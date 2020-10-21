@@ -1,4 +1,4 @@
-// Copyright 2018 The Beam Team
+// Copyright 2020 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,24 +11,20 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#pragma once
-#include <QObject>
-#include "ui_helpers.h"
 
-class WalletCurrency: public QObject
+#include "currencies.h"
+
+
+beamui::Currencies convertCurrency(Currency value)
 {
-    Q_OBJECT
-public:
-    enum class Currency {
-        CurrStart = -1,
-#define MACRO(name, label, slabel, subunut, feeLabel, dec) Curr##name,
+    switch (value)
+    {
+#define MACRO(name, label, slabel, subunite, feeLabel, dec) \
+    case Currency::Curr##name:\
+        return beamui::Currencies::name;
         CURRENCY_MAP(MACRO)
 #undef MACRO
-        CurrEnd
-    };
-    Q_ENUMS(Currency)
-};
-
-typedef WalletCurrency::Currency Currency;
-
-beamui::Currencies convertCurrency(Currency value);
+    default:
+        return beamui::Currencies::Unknown;
+    }
+}

@@ -69,13 +69,13 @@ void SendSwapViewModel::fillParameters(const beam::wallet::TxParameters& paramet
             setSendCurrency(Currency::CurrBeam);
             setSendAmount(beamui::AmountToUIString(*beamAmount));
             setReceiveCurrency(QMLGlobals::convertSwapCoinToCurrency(*swapCoin));
-            setReceiveAmount(beamui::AmountToUIString(*swapAmount));
+            setReceiveAmount(beamui::AmountToUIString(*swapAmount, beamui::convertSwapCoinToCurrency(*swapCoin), false));
         }
         else
         {
             // Do not set fee, it is set automatically based on the currency param
             setSendCurrency(QMLGlobals::convertSwapCoinToCurrency(*swapCoin));
-            setSendAmount(beamui::AmountToUIString(*swapAmount));
+            setSendAmount(beamui::AmountToUIString(*swapAmount, beamui::convertSwapCoinToCurrency(*swapCoin), false));
             setReceiveCurrency(Currency::CurrBeam);
             setReceiveAmount(beamui::AmountToUIString(*beamAmount));
         }
@@ -154,12 +154,12 @@ bool SendSwapViewModel::getParametersValid() const
 
 QString SendSwapViewModel::getSendAmount() const
 {
-    return beamui::AmountToUIString(_sendAmountGrothes);
+    return beamui::AmountToUIString(_sendAmountGrothes, convertCurrency(_sendCurrency), false);
 }
 
 void SendSwapViewModel::setSendAmount(QString value)
 {
-    const auto amount = beamui::UIStringToAmount(value);
+    const auto amount = beamui::UIStringToAmount(value, convertCurrency(_sendCurrency));
     if (amount != _sendAmountGrothes)
     {
         _sendAmountGrothes = amount;
@@ -214,12 +214,12 @@ void SendSwapViewModel::setSendCurrency(Currency value)
 
 QString SendSwapViewModel::getReceiveAmount() const
 {
-    return beamui::AmountToUIString(_receiveAmountGrothes);
+    return beamui::AmountToUIString(_receiveAmountGrothes, convertCurrency(_receiveCurrency), false);
 }
 
 void SendSwapViewModel::setReceiveAmount(QString value)
 {
-    const auto amount = beamui::UIStringToAmount(value);
+    const auto amount = beamui::UIStringToAmount(value, convertCurrency(_receiveCurrency));
     if (amount != _receiveAmountGrothes)
     {
         _receiveAmountGrothes = amount;
@@ -446,7 +446,10 @@ QString SendSwapViewModel::getRate() const
 
     if (!beamAmount) return QString();
 
-    return QMLGlobals::divideWithPrecision8(beamui::AmountToUIString(otherCoinAmount), beamui::AmountToUIString(beamAmount));
+    Currency otherCurrency =
+        isSendBeam() ? _receiveCurrency : _sendCurrency;
+
+    return QMLGlobals::divideWithPrecision8(beamui::AmountToUIString(otherCoinAmount, convertCurrency(otherCurrency), false), beamui::AmountToUIString(beamAmount));
 }
 
 QString SendSwapViewModel::getSecondCurrencySendRateValue() const

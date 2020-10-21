@@ -74,12 +74,7 @@ void SwapCoinClientWrapper::resetActiveTxCounter()
 
 QString SwapCoinClientWrapper::getAvailableStr() const
 {
-    if (m_swapCoin == wallet::AtomicSwapCoin::Ethereum)
-    {
-        return beamui::AmountToUIString(getAvailable() / 10);
-    }
-
-    return beamui::AmountToUIString(getAvailable());
+    return beamui::AmountToUIString(getAvailable(), beamui::convertSwapCoinToCurrency(m_swapCoin), false);
 }
 
 bool SwapCoinClientWrapper::getIsConnected() const

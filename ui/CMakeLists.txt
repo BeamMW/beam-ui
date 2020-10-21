@@ -164,6 +164,7 @@ set(UI_SRC
     viewmodel/receive_swap_view.h
     viewmodel/receive_swap_view.cpp
     viewmodel/currencies.h
+    viewmodel/currencies.cpp
     viewmodel/send_swap_view.h
     viewmodel/send_swap_view.cpp
     viewmodel/el_seed_validator.h

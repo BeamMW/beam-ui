@@ -103,7 +103,7 @@ namespace beamui
      *              Decimal point position depends on @coinType.
      *  @coinType   Specify coint type.
      */
-    QString AmountToUIString(const Amount& value, Currencies coinType)
+    QString AmountToUIString(const Amount& value, Currencies coinType, bool currencyLabel)
     {
         static uint8_t beamDecimals = static_cast<uint8_t>(std::log10(Rules::Coin));
         std::string amountString;
@@ -113,6 +113,10 @@ namespace beamui
             case Currencies::Beam:
                 amountString = libbitcoin::encode_base10(value, beamDecimals);
                 break;
+            case Currencies::Ethereum:
+                // TODO roman.strilets
+                amountString = libbitcoin::encode_base10(value, 9);
+                break;
             default:
                 amountString = libbitcoin::satoshi_to_btc(value);
         }
@@ -120,7 +124,7 @@ namespace beamui
         QString amount = QString::fromStdString(amountString);
         QString coinLabel = getCurrencyLabel(coinType);
 
-        if (coinLabel.isEmpty())
+        if (coinLabel.isEmpty() || !currencyLabel)
         {
             return amount;
         }
@@ -136,10 +140,17 @@ namespace beamui
         return QString("%1 %2").arg(value).arg(qtTrId("general-groth"));
     }
 
-    beam::Amount UIStringToAmount(const QString& value)
+    beam::Amount UIStringToAmount(const QString& value, Currencies currency)
     {
         beam::Amount amount = 0;
-        libbitcoin::btc_to_satoshi(amount, value.toStdString());
+        if (currency == Currencies::Ethereum)
+        {
+            libbitcoin::decode_base10(amount, value.toStdString(), 9);
+        }
+        else
+        {
+            libbitcoin::btc_to_satoshi(amount, value.toStdString());
+        }
         return amount;
     }
 
@@ -170,6 +181,8 @@ namespace beamui
             return beamui::Currencies::Dash;
         case wallet::AtomicSwapCoin::Dogecoin:
             return beamui::Currencies::Dogecoin;
+        case wallet::AtomicSwapCoin::Ethereum:
+            return beamui::Currencies::Ethereum;
         case wallet::AtomicSwapCoin::Unknown:
         default:
             return beamui::Currencies::Unknown;
@@ -328,6 +341,7 @@ namespace beamui
             case Currencies::Dash: return "dash";
             case Currencies::Dogecoin: return "doge";
             case Currencies::Usd: return "usd";
+            case Currencies::Ethereum: return "eth";
             default: return "unknown";
         }
     }
