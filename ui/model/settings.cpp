@@ -67,7 +67,7 @@ namespace
         { "it_IT", "Italiano"},
         { "ja_JP", "日本語"},
         { "ru_RU", "Русский" },
-        { "rs_RS", "Српски" },
+        { "sr_SR", "Српски" },
         { "fi_FI", "Suomi" },
         { "sv_SE", "Svenska"},
         { "th_TH", "ภาษาไทย"},
