@@ -533,10 +533,6 @@ void SendViewModel::extractParameters()
     {
         setIsPermanentAddress(*isPermanent);
     }
-    else
-    {
-        setIsPermanentAddress(false);
-    }
 
     if (auto txType = _txParameters.GetParameter<TxType>(TxParameterID::TransactionType); txType && *txType == TxType::PushTransaction)
     {
@@ -660,4 +656,14 @@ void SendViewModel::resetAddress()
     setIsPublicOffline(false);
     setIsPermanentAddress(false);
     onNeedExtractShieldedCoins(false);
+    setWalletAddress({});
+    setOfflinePayments(0);
+
+    _receiverAddress.clear();
+    _receiverWalletID = beam::Zero;
+    _receiverIdentity = beam::Zero;
+    _receiverIdentityStr.clear();
+
+    emit receiverAddressChanged();
+    emit receiverIdentityChanged();
 }
