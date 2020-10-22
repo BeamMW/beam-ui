@@ -915,8 +915,8 @@ Toestaan om te openen en door te gaan naar de website? U kunt uw keuze altijd wi
 (om exchanges- en transactiegegevens op te halen)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</source>
-        <translation>1. Klik op &apos;Wallet logs opslaan&apos; en kies een doelmap&lt;br /&gt;voor logarchief</translation>
+        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
+        <translation>1. Klik op &apos;Wallet logs opslaan&apos; en kies een doelmap voor logarchief</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send email to %1 or open a ticket in %2</source>

@@ -343,8 +343,6 @@ Item
                                 
                                 PrimaryButton {
                                     id: startMigration
-                                    Layout.preferredHeight: 38
-                                    Layout.preferredWidth: 220
 
                                     //: migration screen, start auto migration button
                                     //% "Start auto migration"
@@ -361,8 +359,6 @@ Item
                                 }
 
                                 CustomButton {
-                                    Layout.preferredHeight: 38
-                                    Layout.preferredWidth: 320
                                     //: migration screen, select db file button
                                     //% "Select wallet database file manually"
                                     text: qsTrId("start-migration-select-file-button")

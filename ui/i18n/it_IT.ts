@@ -915,7 +915,8 @@ Allow to open and proceed to the website? You can always update your choice in S
 (to fetch exchanges and transaction data)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</source>
+        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
+        <oldsource>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</oldsource>
         <translation type="unfinished">1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</translation>
     </message>
     <message id="settings-report-problem-message-l2">
