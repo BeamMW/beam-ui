@@ -104,7 +104,7 @@ Dialog {
                                         //% "One time"
                                         : qsTrId("token-info-dialog-one-time")
                 color:                  Style.content_main
-                visible:                !viewModel.isMaxPrivacy && !viewModel.isOffline
+                visible:                !viewModel.isMaxPrivacy && !viewModel.isOffline && !viewModel.isPublicOffline
             }
 
             // Payments

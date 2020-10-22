@@ -23,6 +23,7 @@ class TokenInfoItem : public QObject
     Q_PROPERTY(bool    isPermanent           READ isPermanent                NOTIFY tokenChanged)
     Q_PROPERTY(bool    isMaxPrivacy          READ isMaxPrivacy               NOTIFY tokenChanged)
     Q_PROPERTY(bool    isOffline             READ isOffline                  NOTIFY tokenChanged)
+    Q_PROPERTY(bool    isPublicOffline       READ isPublicOffline            NOTIFY tokenChanged)
     Q_PROPERTY(bool    ignoreStoredVouchers  READ getIgnoreStoredVouchers    WRITE  setIgnoreStoredVouchers   NOTIFY ignoreStoredVouchersChanged)
     Q_PROPERTY(QString transactionType       READ getTransactionType         NOTIFY tokenChanged)
     Q_PROPERTY(QString amount                READ getAmount                  NOTIFY tokenChanged)
@@ -38,6 +39,7 @@ public:
     bool isPermanent() const;
     bool isMaxPrivacy() const;
     bool isOffline() const;
+    bool isPublicOffline() const;
     QString getTransactionType() const;
     QString getAmount() const;
     QString getAmountValue() const;
@@ -63,6 +65,7 @@ private:
     bool m_isPermanent = false;
     bool m_isMaxPrivacy = false;
     bool m_isOffline = false;
+    bool m_isPublicOffline = false;
     beam::Amount m_amountValue = 0;
     beam::wallet::WalletID m_addressSBBS = beam::Zero;
     beam::PeerID m_identity;

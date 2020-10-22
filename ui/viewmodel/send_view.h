@@ -149,9 +149,8 @@ public slots:
     void onChangeCalculated(beam::Amount change);
     void onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes);
     void onNeedExtractShieldedCoins(bool val);
-    void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
-
 private:
+    void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
     void extractParameters();
     void resetMinimalFee();
     void resetAddress();

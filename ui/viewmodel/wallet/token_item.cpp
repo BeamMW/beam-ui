@@ -39,6 +39,11 @@ bool TokenInfoItem::isOffline() const
     return m_isOffline;
 }
 
+bool TokenInfoItem::isPublicOffline() const
+{
+    return m_isPublicOffline;
+}
+
 QString TokenInfoItem::getTransactionType() const
 {
     if (isOffline())
@@ -49,6 +54,10 @@ QString TokenInfoItem::getTransactionType() const
     if (isMaxPrivacy())
     {
         return qtTrId("tx-max-privacy");
+    }
+    if (isPublicOffline())
+    {
+        return qtTrId("tx-address-public-offline");
     }
 
     return qtTrId("tx-regular");
@@ -146,7 +155,7 @@ void TokenInfoItem::setToken(const QString& token)
                         auto gen = params.GetParameter<ShieldedTxo::PublicGen>(TxParameterID::PublicAddreessGen);
                         if (gen)
                         {
-                            m_isOffline = true;
+                            m_isPublicOffline = true;
                         }
                     }
                 }
@@ -216,6 +225,7 @@ void TokenInfoItem::reset()
     m_isPermanent = false;
     m_isMaxPrivacy = false;
     m_isOffline = false;
+    m_isPublicOffline = false;
     m_amountValue = 0;
     m_addressSBBS = Zero;
     m_identity = Zero;
