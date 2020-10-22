@@ -59,8 +59,13 @@ QString TokenInfoItem::getTransactionType() const
     {
         return qtTrId("tx-address-public-offline");
     }
-
-    return qtTrId("tx-regular");
+    if (m_token == beamui::toString(m_addressSBBS))
+    {
+        //% "Regular (for exchange or mining pool)"
+        return qtTrId("tx-address-regular-exchange");
+    }
+    //% "Regular (for wallet)"
+    return qtTrId("tx-address-regular-wallet");
 }
 
 QString TokenInfoItem::getAmount() const
