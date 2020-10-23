@@ -18,6 +18,7 @@ ConfirmationDialog {
     property var    onAcceptedCallback: undefined
     property alias  addressText:        addressLabel.text
     property alias  typeText:           typeLabel.text
+    property alias  isOnline:           onlineMessage.visible
     property bool   swapMode:           false
     property int    currency:           Currency.CurrBeam
     property string amount:             "0"
@@ -281,6 +282,7 @@ ConfirmationDialog {
             // Wait online message
             //
             SFText {
+                id:                     onlineMessage
                 Layout.columnSpan:      2
                 Layout.topMargin:       0//15
                 Layout.bottomMargin:    15

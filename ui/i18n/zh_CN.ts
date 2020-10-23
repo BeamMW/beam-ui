@@ -2780,5 +2780,9 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Regular (for wallet)</source>
         <translation type="unfinished">Regular (for wallet)</translation>
     </message>
+    <message id="wallet-send-public-offline-address">
+        <source>Public offline address</source>
+        <translation type="unfinished">Public offline address</translation>
+    </message>
 </context>
 </TS>

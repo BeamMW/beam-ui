@@ -2767,5 +2767,9 @@ Your version is: %2. Please, check for updates.</source>
         <source>Regular (for wallet)</source>
         <translation>Обычный (для кошелька)</translation>
     </message>
+    <message id="wallet-send-public-offline-address">
+        <source>Public offline address</source>
+        <translation type="unfinished">Публичный оффлайн адрес</translation>
+    </message>
 </context>
 </TS>

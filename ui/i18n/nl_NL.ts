@@ -2763,5 +2763,9 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>Regular (for wallet)</source>
         <translation>Normaal (voor wallet)</translation>
     </message>
+    <message id="wallet-send-public-offline-address">
+        <source>Public offline address</source>
+        <translation type="unfinished">Openbaar offline adres</translation>
+    </message>
 </context>
 </TS>
