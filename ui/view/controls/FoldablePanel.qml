@@ -21,6 +21,7 @@ Pane {
 
     contentItem: ColumnLayout {
         spacing: 0
+        clip:    folded
         RowLayout {
             Layout.alignment: Qt.AlignTop
             Layout.minimumHeight: minHeaderHeight
@@ -159,11 +160,21 @@ Pane {
 
         Control {
             Layout.fillWidth:       true
-            Layout.fillHeight:      true
-            Layout.topMargin:       20
+            Layout.topMargin:       folded ? 0 : 20
             Layout.alignment:       Qt.AlignTop
-            visible:                !control.folded
-            contentItem:            content
+
+            Layout.preferredHeight: folded ? 0 : placeholder.implicitHeight
+            opacity:                folded ? 0.0 : 1.0
+
+            Behavior on Layout.preferredHeight {
+                NumberAnimation { duration:  100 }
+            }
+            Behavior on Layout.topMargin {
+                NumberAnimation { duration:  100 }
+            }
+            Behavior on opacity {
+                NumberAnimation { duration:  200 }
+            }
         }
     }
 

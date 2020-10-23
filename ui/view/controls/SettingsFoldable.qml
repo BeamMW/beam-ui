@@ -22,8 +22,8 @@ Control {
     property bool   connectionError: connectionStatus == "error"
 
     contentItem: ColumnLayout {
-        spacing: 0
-
+        spacing:    0
+        clip:       folded
         Item {
             Layout.fillWidth:  true
             Layout.alignment:  Qt.AlignTop
@@ -109,12 +109,24 @@ Control {
         }
 
         Control {
-            id: contentControl
-            visible:             !control.folded
-            Layout.fillWidth:    true
-            Layout.topMargin:    connectionError ? Math.max(5, 25 - errorRow.height) : 25
-            Layout.alignment:    Qt.AlignTop
-            contentItem:         content
+            id:                     contentControl
+            //visible:                !control.folded
+            Layout.fillWidth:       true
+            Layout.topMargin:       folded ? 0 : connectionError ? Math.max(5, 25 - errorRow.height) : 25
+            Layout.alignment:       Qt.AlignTop
+            contentItem:            content
+            Layout.preferredHeight: folded ? 0 : contentControl.implicitHeight
+            opacity:                folded ? 0.0 : 1.0
+
+            Behavior on Layout.preferredHeight {
+                NumberAnimation { duration:  200 }
+            }
+            Behavior on Layout.topMargin {
+                NumberAnimation { duration:  200 }
+            }
+            Behavior on opacity {
+                NumberAnimation { duration:  200 }
+            }
         }
     }
 
