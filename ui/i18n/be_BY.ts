@@ -2348,8 +2348,8 @@ Your version is: %2. Please, check for updates.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-online-address">
-        <source>Online addressOnline address</source>
-        <oldsource>Online address</oldsource>
+        <source>Online address</source>
+        <oldsource>Online addressOnline address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-offline-address">

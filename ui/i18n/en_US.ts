@@ -2295,9 +2295,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>No name</translation>
     </message>
     <message id="wallet-receive-online-address">
-        <source>Online addressOnline address</source>
-        <oldsource>Online address</oldsource>
-        <translation type="unfinished">Online address</translation>
+        <source>Online address</source>
+        <translation>Online address</translation>
     </message>
     <message id="wallet-receive-offline-address">
         <source>Offline address</source>

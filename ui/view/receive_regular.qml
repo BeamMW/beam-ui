@@ -296,7 +296,6 @@ ColumnLayout {
                     spacing:            10
                     TokenInfoPanel {
                         Layout.fillWidth:   true
-                        //% "Online address"
                         title:              !viewModel.isShieldedTx ? 
                             //% "Online address"
                             qsTrId("wallet-receive-online-address")
