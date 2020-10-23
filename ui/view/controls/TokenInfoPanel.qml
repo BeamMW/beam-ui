@@ -19,10 +19,14 @@ Panel {
     property alias headerItem:          headerPlaceholder.contentItem
     property alias footerItem:          footerPlaceholder.contentItem
     signal tokenCopied;
+    signal closed
 
     TokenInfoDialog {
         id:                     infoDialog
         token:                  control.token
+        onAddressCopied: {
+            control.tokenCopied()
+        }
     }
 
     content: ColumnLayout {
@@ -53,6 +57,7 @@ Panel {
                 ToolTip.text:           qsTrId("general-copy")
                 onClicked: {
                     BeamGlobals.copyToClipboard(control.token);
+                    control.tokenCopied();
                 }
             }
             CustomToolButton {
@@ -65,7 +70,10 @@ Panel {
                     var popup = Qt.createComponent("AddressQRDialog.qml").createObject(main)
                     popup.address = control.token;
                     popup.addressLabelText = control.addressLabel;
-                    popup.amount = control.amount;                 
+                    popup.amount = control.amount;
+                    popup.addressCopied.connect(function(){
+                        control.tokenCopied();
+                    })
                     popup.open();
                 }
             }
@@ -97,6 +105,7 @@ Panel {
             onClicked: {
                 BeamGlobals.copyToClipboard(control.token);
                 control.tokenCopied();
+                control.closed();
             }
             enabled:                control.isValidToken
         }

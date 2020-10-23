@@ -30,8 +30,6 @@ ReceiveViewModel::ReceiveViewModel()
     , _addressExpires(AddressExpires)
     , _walletModel(*AppModel::getInstance().getWallet())
 {
-    connect(&_walletModel, &WalletModel::generatedNewAddress, this, &ReceiveViewModel::onGeneratedNewAddress);
-    connect(&_walletModel, &WalletModel::getAddressReturned, this, &ReceiveViewModel::onGetAddressReturned);
     connect(&_walletModel, &WalletModel::newAddressFailed, this, &ReceiveViewModel::newAddressFailed);
     connect(&_exchangeRatesManager, &ExchangeRatesManager::rateUnitChanged, this, &ReceiveViewModel::rateChanged);
     connect(&_exchangeRatesManager, &ExchangeRatesManager::activeRateChanged, this, &ReceiveViewModel::rateChanged);
@@ -96,11 +94,6 @@ QString ReceiveViewModel::getReceiverAddressForExchange() const
     return beamui::toString(_receiverAddressForExchange.m_walletID);
 }
 
-void ReceiveViewModel::onReceiverQRChanged()
-{
-    emit receiverAddressChanged();
-}
-
 void ReceiveViewModel::initialize(const QString& address)
 {
     beam::wallet::WalletID walletID;
@@ -110,8 +103,14 @@ void ReceiveViewModel::initialize(const QString& address)
     }
     else
     {
-        _walletModel.getAsync()->getAddress(walletID);
+        _walletModel.getAsync()->getAddress(walletID, [this](const auto& addr, size_t count) { onGetAddressReturned(addr, count); });
     }
+    _walletModel.getAsync()->generateNewAddress([this](const auto& addr) 
+    {
+        _receiverAddressForExchange = addr;
+        _receiverAddressForExchange.setExpiration(beam::wallet::WalletAddress::ExpirationStatus::Never);
+        emit receiverAddressForExchangeChanged();
+    });
 }
 
 void ReceiveViewModel::generateNewReceiverAddress()
@@ -120,7 +119,7 @@ void ReceiveViewModel::generateNewReceiverAddress()
     emit receiverAddressChanged();
 
     setAddressComment("");
-    _walletModel.getAsync()->generateNewAddress();
+    _walletModel.getAsync()->generateNewAddress([this](const auto& addr){ onGeneratedNewAddress(addr); });
 }
 
 QString ReceiveViewModel::getAddressComment() const
@@ -156,12 +155,7 @@ void ReceiveViewModel::setOfflineToken(const QString& value)
     }
 }
 
-void ReceiveViewModel::onTokenQRChanged()
-{
-    emit transactionTokenChanged();
-}
-
-void ReceiveViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
+void ReceiveViewModel::onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments)
 {
     if (address)
     {
@@ -185,15 +179,21 @@ void ReceiveViewModel::setAddressComment(const QString& value)
     }
 }
 
-void ReceiveViewModel::saveAddress()
+void ReceiveViewModel::saveReceiverAddress()
 {
     using namespace beam::wallet;
 
-    if (getCommentValid()) {
+    if (getCommentValid())
+    {
         _receiverAddress.m_label = _addressComment.toStdString();
         _receiverAddress.setExpiration(isPermanentAddress() ? WalletAddress::ExpirationStatus::Never : WalletAddress::ExpirationStatus::OneDay);
         _walletModel.getAsync()->saveAddress(_receiverAddress, true);
     }
+}
+
+void ReceiveViewModel::saveExchangeAddress()
+{
+    _walletModel.getAsync()->saveAddress(_receiverAddressForExchange, true);
 }
 
 void ReceiveViewModel::updateTransactionToken()

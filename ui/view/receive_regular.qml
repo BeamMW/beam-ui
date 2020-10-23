@@ -59,9 +59,17 @@ ColumnLayout {
     }
 
     function saveAddressWithNameAndClose(name) {
-        viewModel.addressComment = name;
-        viewModel.saveAddress();
+        saveAddressWithName(name);
         receiveView.onClosed();
+    }
+
+    function saveAddressWithName(name) {
+        viewModel.addressComment = name;
+        viewModel.saveReceiverAddress();
+    }
+
+    function saveReceiverAddress() {
+        saveAddressWithName(viewModel.addressComment)
     }
 
     function saveAddressAndClose() {
@@ -76,7 +84,7 @@ ColumnLayout {
 
     function saveAddress() {
         if (receiveView.isValid()) 
-            viewModel.saveAddress();
+            viewModel.saveReceiverAddress();
     }
 
     //
@@ -320,8 +328,9 @@ ColumnLayout {
                         token:              viewModel.transactionToken
                         isValidToken:       receiveView.isValid()
                         onTokenCopied: {
-                            receiveView.saveAddressAndClose();
+                            receiveView.saveReceiverAddress();
                         }
+                        onClosed: receiveView.onClosed()
                         headerItem: RowLayout {
                             anchors.bottomMargin: 20
                             spacing:    10
@@ -378,14 +387,15 @@ ColumnLayout {
                         headerText:           qsTrId("wallet-receive-address-for-exchange")
                         //% "Online address (for exchange or mining pool)"
                         addressLabel:         qsTrId("wallet-receive-address-for-exchange-label")
-                        token:                viewModel.receiverAddress//ForExchange
+                        token:                viewModel.receiverAddressForExchange
                         amount:               viewModel.amountToReceive
                         isValidToken:         receiveView.isValid()
                         visible:              !viewModel.isShieldedTx
                         defaultAddressType:   true // permanent
                         onTokenCopied: {
-                            receiveView.saveAddressAndClose();
+                            viewModel.saveExchangeAddress();
                         }
+                        onClosed: receiveView.onClosed()
                     }
                     TokenInfoPanel {
                         Layout.fillWidth:     true
@@ -399,8 +409,8 @@ ColumnLayout {
                         visible:              viewModel.offlineToken.length > 0
                         ignoreStoredVouchers: true
                         onTokenCopied: {
-                            receiveView.saveAddressAndClose();
                         }
+                        onClosed: receiveView.onClosed()
                     }
                 }
             }

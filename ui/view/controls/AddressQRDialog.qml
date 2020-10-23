@@ -11,6 +11,7 @@ Dialog {
     property alias address:                 addressField.text
     property string addressLabelText:       ""
     property alias amount:                  qrCode.amount
+    signal addressCopied;
 
     QR {
         id:         qrCode
@@ -96,7 +97,10 @@ Dialog {
             font.pixelSize:         14
             wrapMode:               Text.WrapAnywhere 
             copyMenuEnabled:        true
-            onCopyText:             BeamGlobals.copyToClipboard(text)
+            onCopyText:             {
+                BeamGlobals.copyToClipboard(text)
+                addressCopied();
+            }
         }
 
         CustomButton {
