@@ -310,6 +310,7 @@ Item {
                 }
 
                 Rectangle {
+                    id:                         swapOptions
                     Layout.fillWidth:           true
                     Layout.preferredHeight:     67
                     
@@ -379,6 +380,16 @@ Item {
                         hoverEnabled:      true
                         onPositionChanged: clickArea.cursorShape = Qt.PointingHandCursor;
                     }
+                }
+                Component.onCompleted: {
+                    var enabledCurrencies = 0;
+
+                    for (var index = 0; index < viewModel.swapClientList.length; index++) {
+                        if (BeamGlobals.haveSwapClient(viewModel.swapClientList[index].currency)) {
+                            ++enabledCurrencies;
+                        }
+                    }
+                    swapOptions.visible = enabledCurrencies < viewModel.swapClientList.length;
                 }
             }
 
