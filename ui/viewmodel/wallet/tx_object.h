@@ -55,6 +55,8 @@ public:
     bool isSelfTx() const;
     bool isMaxPrivacy() const;
     bool isOfflineToken() const;
+    bool isSent() const;
+    bool isReceived() const;
     virtual bool isCancelAvailable() const;
     virtual bool isDeleteAvailable() const;
     virtual bool isInProgress() const;

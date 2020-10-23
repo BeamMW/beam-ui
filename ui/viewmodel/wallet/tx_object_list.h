@@ -63,6 +63,8 @@ public:
         IsOfflineToken,
         UnitName,
         Icon,
+        IsSent,
+        IsReceived
     };
 
     Q_ENUM(Roles)

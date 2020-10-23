@@ -181,6 +181,8 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::IsOfflineToken), "isOfflineToken"},
         { static_cast<int>(Roles::UnitName), "unitName"},
         { static_cast<int>(Roles::Icon), "icon"}
+        { static_cast<int>(Roles::IsSent), "isSent"},
+        { static_cast<int>(Roles::IsReceived), "isReceived"}
     };
     return roles;
 }
@@ -254,6 +256,13 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return value->isPending();
         case Roles::IsCompleted:
             return value->isCompleted();
+
+        case Roles::IsSent:
+            return value->isSent();
+
+        case Roles::IsReceived:
+            return value->isReceived();
+
         case Roles::IsCanceled:
             return value->isCanceled();
         case Roles::IsFailed:
