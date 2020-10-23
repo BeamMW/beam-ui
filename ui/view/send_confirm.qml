@@ -154,13 +154,13 @@ ConfirmationDialog {
             }
 
             //
-            // Transaction type
+            // Address type
             //
             SFText {
                 Layout.fillWidth:       true
                 font.pixelSize:         14
                 color:                  Style.content_disabled
-                //% "Type"
+                //% "Address type"
                 text:                   qsTrId("send-confirmation-type-label") + ":"
                 verticalAlignment:      Text.AlignTop
                 visible:                typeLabel.text.length > 0

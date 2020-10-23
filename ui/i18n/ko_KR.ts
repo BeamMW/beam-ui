@@ -2410,7 +2410,8 @@ Your version is: %2. Please, check for updates.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-confirmation-type-label">
-        <source>Type</source>
+        <source>Address type</source>
+        <oldsource>Type</oldsource>
         <translation type="unfinished">타입</translation>
     </message>
     <message id="token-info-dialog-one-time">
@@ -2635,7 +2636,7 @@ Your version is: %2. Please, check for updates.</oldsource>
     </message>
     <message id="address-info-type">
         <source>Address type</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">타입</translation>
     </message>
     <message id="address-info-sbbs-address">
         <source>SBBS Address</source>
@@ -2853,6 +2854,15 @@ Your version is: %2. Please, check for updates.</oldsource>
     </message>
     <message id="address-info-copy-close">
         <source>copy and close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-address-public-offline">
+        <source>Public offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-address-unknown">
+        <source>Unknown</source>
+        <oldsource>Public offline</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -2355,8 +2355,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Expiration time</translation>
     </message>
     <message id="send-confirmation-type-label">
-        <source>Type</source>
-        <translation>Type</translation>
+        <source>Address type</source>
+        <translation>Address type</translation>
     </message>
     <message id="token-info-dialog-one-time">
         <source>One time</source>
@@ -2799,6 +2799,14 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="address-info-copy-close">
         <source>copy and close</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-address-public-offline">
+        <source>Public offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-address-unknown">
+        <source>Unknown</source>
+        <translation>Unknown</translation>
     </message>
 </context>
 </TS>
