@@ -915,8 +915,8 @@ Povolit otevření a pokračovat na web? Vždy můžete aktualizovat svou volbu 
 (pro načtení burz a transakcí)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</source>
-        <translation>1. Klikněte na &quot;Uložit protokoly peněženky&quot; a vyberte cílovou složku&lt;br /&gt;pro archiv protokolů</translation>
+        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
+        <translation type="unfinished">1. Klikněte na &quot;Uložit protokoly peněženky&quot; a vyberte cílovou složku pro archiv protokolů</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send email to %1 or open a ticket in %2</source>

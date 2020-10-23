@@ -45,6 +45,7 @@ Dialog {
 	x: (parent.width - width) / 2
 	y: (parent.height - height) / 2
 	visible: false
+	parent:         Overlay.overlay
 
 	background: Rectangle {
 		radius: 10

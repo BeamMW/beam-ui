@@ -54,7 +54,6 @@ SettingsFoldable {
 
     ConfirmPasswordDialog {
         id: confirmPasswordDialog
-        parent: control.parent
         settingsViewModel: mainSettingsViewModel 
     }
 
@@ -238,7 +237,7 @@ SettingsFoldable {
             height:   20
             spacing:  10
             visible:  isSupportedElectrum
-
+            Layout.fillWidth:   true
             SFText {
                 //% "Node"
                 text:  qsTrId("settings-swap-node")
@@ -446,7 +445,7 @@ SettingsFoldable {
             }
         }
 
-         SFText {
+        SFText {
             visible:               editElectrum && useRandomNode.checked && !disconnectButtonId.visible
             Layout.topMargin:      30
             Layout.preferredWidth: 390
@@ -616,31 +615,21 @@ generate new or edit existing seed phrase."
         RowLayout {
             visible:                control.canEdit || editElectrum
             Layout.preferredHeight: 52
-            Layout.fillWidth:       true
+            Layout.alignment:       Qt.AlignHCenter
             Layout.topMargin:       30
-            spacing:                15
-
-            Item {
-                Layout.fillWidth: true
-            }
+            spacing:                20
 
             CustomButton {
                 visible:                applySettingsButtonId.visible
-                Layout.preferredHeight: 38
-                Layout.preferredWidth:  130
-                leftPadding:  25
-                rightPadding: 25
-                text:         qsTrId("general-cancel")
-                icon.source:  enabled ? "qrc:/assets/icon-cancel-white.svg" : "qrc:/assets/icon-cancel.svg"
-                enabled:      isSettingsChanged()
-                onClicked:    restoreSettings()
+                text:                   qsTrId("general-cancel")
+                icon.source:            enabled ? "qrc:/assets/icon-cancel-white.svg" : "qrc:/assets/icon-cancel.svg"
+                enabled:                isSettingsChanged()
+                onClicked:              restoreSettings()
             }
 
             CustomButton {
                 id:                     disconnectButtonId
                 visible:                canDisconnect()
-                Layout.preferredHeight: 38
-                Layout.preferredWidth:  164
                 palette.button:         Style.swapDisconnectNode
                 palette.buttonText:     Style.content_opposite
                 //% "disconnect"
@@ -651,10 +640,6 @@ generate new or edit existing seed phrase."
 
             CustomButton {
                 visible:                connectButtonId.visible
-                Layout.preferredHeight: 38
-                Layout.preferredWidth:  124
-                leftPadding:            25
-                rightPadding:           25
                 //% "clear"
                 text:                   qsTrId("settings-swap-clear")
                 icon.source:            "qrc:/assets/icon-delete.svg"
@@ -679,20 +664,15 @@ generate new or edit existing seed phrase."
             PrimaryButton {
                 id:                     applySettingsButtonId
                 visible:                !connectButtonId.visible && !disconnectButtonId.visible
-                leftPadding:            25
-                rightPadding:           25
                 text:                   qsTrId("settings-apply")
                 icon.source:            "qrc:/assets/icon-done.svg"
                 enabled:                isSettingsChanged() && canApplySettings()
                 onClicked:              applyChanges()
-                Layout.preferredHeight: 38
             }
 
             PrimaryButton {
                 id:                     connectButtonId
                 visible:                canConnect()
-                leftPadding:            25
-                rightPadding:           25
                 text:                   editElectrum
                                             //% "connect to electrum node"
                                             ? qsTrId("settings-swap-connect-to-electrum")
@@ -700,12 +680,6 @@ generate new or edit existing seed phrase."
                                             : qsTrId("settings-swap-connect-to-node")
                 icon.source:            "qrc:/assets/icon-done.svg"
                 onClicked:              editElectrum ? connectToElectrum() : connectToNode();
-                Layout.preferredHeight: 38
-                Layout.preferredWidth:  editElectrum ? 253 : 193
-            }
-
-            Item {
-                Layout.fillWidth: true
             }
         }
     }
@@ -1183,8 +1157,6 @@ generate new or edit existing seed phrase."
             CustomButton {
                 Layout.topMargin:       24
                 Layout.alignment:       Qt.AlignHCenter
-                Layout.preferredHeight: 38
-                Layout.preferredWidth:  125
                 text:             qsTrId("general-close")
                 icon.source:      "qrc:/assets/icon-cancel-white.svg"
                 onClicked:        showAddressesDialog.close()

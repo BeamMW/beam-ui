@@ -19,17 +19,18 @@ SettingsFoldable {
         SFText {
             id: reportText
             Layout.alignment: Qt.AlignTop
+            Layout.fillWidth: true
             property string beamEmail: "<a href='mailto:support@beam.mw'>support@beam.mw</a>"
             property string beamGithub: "<a href='https://github.com/BeamMW'>Github</a>"
-            //% "1. Click “Save wallet logs” and choose a destination folder<br />for log archive"
+            //% "1. Click “Save wallet logs” and choose a destination folder for log archive"
             property string rpm1: qsTrId("settings-report-problem-message-l1")
             //% "2. Send email to %1 or open a ticket in %2"
             property string rpm2: qsTrId("settings-report-problem-message-l2").arg(beamEmail).arg(beamGithub)
             //% "3. Don’t forget to attach logs archive"
             property string rpm3: qsTrId("settings-report-problem-message-l3")
-            Layout.preferredWidth: parent.width
             text: Style.linkStyle + rpm1 + "<br />" + rpm2 + "<br />" + rpm3
             textFormat: Text.RichText
+            wrapMode:   Text.WordWrap
             color: Style.content_main
             font.pixelSize: 14
             linkEnabled: true
