@@ -775,7 +775,6 @@ void SendViewModel::resetAddress()
     _receiverAddress.clear();
     _receiverWalletID = beam::Zero;
     _receiverIdentity = beam::Zero;
-    _receiverIdentityStr.clear();
 
     emit receiverAddressChanged();
     emit receiverIdentityChanged();
