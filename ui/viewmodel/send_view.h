@@ -40,6 +40,7 @@ class SendViewModel: public QObject
     Q_PROPERTY(bool     isShieldedTx       READ isShieldedTx          WRITE setIsShieldedTx            NOTIFY isShieldedTxChanged)
     Q_PROPERTY(bool     isOffline          READ isOffline             WRITE setIsOffline               NOTIFY isOfflineChanged)
     Q_PROPERTY(bool     isMaxPrivacy       READ isMaxPrivacy          WRITE setIsMaxPrivacy            NOTIFY isMaxPrivacyChanged)
+    Q_PROPERTY(bool     isPublicOffline    READ isPublicOffline       WRITE setIsPublicOffline         NOTIFY isPublicOfflineChanged)
     Q_PROPERTY(bool     isPermanentAddress READ isPermanentAddress    WRITE setIsPermanentAddress      NOTIFY isPermanentAddressChanged)
     Q_PROPERTY(int      offlinePayments    READ getOfflinePayments    WRITE setOfflinePayments         NOTIFY offlinePaymentsChanged)
 
@@ -104,6 +105,8 @@ public:
     QString getChangeAsset() const;
     bool isMaxPrivacy() const;
     void setIsMaxPrivacy(bool value);
+    bool isPublicOffline() const;
+    void setIsPublicOffline(bool value);
     QString getFee() const;
 
     bool isZeroBalance() const;
@@ -142,6 +145,7 @@ signals:
     void offlinePaymentsChanged();
     void isOfflineChanged();
     void isMaxPrivacyChanged();
+    void isPublicOfflineChanged();
     void availableChanged();
     void sendMoneyVerified();
     void cantSendToExpired();
@@ -186,6 +190,7 @@ private:
 
     bool _isOffline = false;
     bool _isMaxPrivacy = false;
+    bool _isPublicOffline = false;
     bool _isToken = false;
     boost::optional<beam::wallet::WalletAddress> _receiverWalletAddress;
     int _offlinePayments = 0;
