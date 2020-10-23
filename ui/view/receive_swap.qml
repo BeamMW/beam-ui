@@ -570,8 +570,8 @@ please review your settings and try again"
                                         font.pixelSize:   14
                                         color:            rateRow.rateValid ? Style.content_main : Style.validator_error
                                         text:             viewModel.isSendBeam
-                                            ? ["1", sentAmountInput.currencyUnitName, "="].join(" ")
-                                            : ["1", receiveAmountInput.currencyUnitName, "="].join(" ")
+                                            ? ["1", sentAmountInput.currencyUnit, "="].join(" ")
+                                            : ["1", receiveAmountInput.currencyUnit, "="].join(" ")
                                     }
 
                                     SFTextInput {
@@ -627,7 +627,7 @@ please review your settings and try again"
                                         id:               rateEnd
                                         font.pixelSize:   14
                                         color:            rateRow.rateValid ? Style.content_main : Style.validator_error
-                                        text:             viewModel.isSendBeam ? receiveAmountInput.currencyUnitName : sentAmountInput.currencyUnitName
+                                        text:             viewModel.isSendBeam ? receiveAmountInput.currencyUnit : sentAmountInput.currencyUnit
                                     }
                                     Item {
                                         Layout.leftMargin: rateInput.x

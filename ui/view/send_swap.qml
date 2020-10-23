@@ -443,8 +443,8 @@ please review your settings and try again"
                                     font.pixelSize:   14
                                     color:            Style.content_main
                                     text:             viewModel.isSendBeam
-                                        ? ["1", sendAmountInput.currencyUnitName, "=", Utils.uiStringToLocale(viewModel.rate), receiveAmountInput.currencyUnitName].join(" ")
-                                        : ["1", receiveAmountInput.currencyUnitName, "=", Utils.uiStringToLocale(viewModel.rate), sendAmountInput.currencyUnitName].join(" ")
+                                        ? ["1", sendAmountInput.currencyUnit, "=", Utils.uiStringToLocale(viewModel.rate), receiveAmountInput.currencyUnit].join(" ")
+                                        : ["1", receiveAmountInput.currencyUnit, "=", Utils.uiStringToLocale(viewModel.rate), sendAmountInput.currencyUnit].join(" ")
                                 }
 
 
