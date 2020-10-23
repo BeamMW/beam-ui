@@ -504,10 +504,6 @@ void SendViewModel::extractParameters()
     _txParameters = *txParameters;
 
     resetAddress();
-    _walletModel.getAsync()->getAddress(_receiverTA.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
-    {
-        onGetAddressReturned(addr, (int)c);
-    });
 
     if (auto peerID = _txParameters.GetParameter<WalletID>(TxParameterID::PeerID); peerID)
     {
@@ -515,7 +511,6 @@ void SendViewModel::extractParameters()
         _receiverAddress = QString::fromStdString(std::to_string(*peerID));
         setIsToken(_receiverTA != _receiverAddress);
         emit receiverAddressChanged();
-        
     }
     else
     {
@@ -575,6 +570,22 @@ void SendViewModel::extractParameters()
         std::string s(comment->begin(), comment->end());
         setComment(QString::fromStdString(s));
     }
+
+    if (_receiverWalletID != Zero)
+    {
+        _walletModel.getAsync()->getAddress(_receiverWalletID, [this](const boost::optional<WalletAddress>& addr, size_t c)
+        {
+            onGetAddressReturned(addr, (int)c);
+        });
+    }
+    else
+    {
+        _walletModel.getAsync()->getAddress(_receiverTA.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
+        {
+            onGetAddressReturned(addr, (int)c);
+        });
+    }
+    
 
     _tokenGeneratebByNewAppVersionMessage.clear();
 
