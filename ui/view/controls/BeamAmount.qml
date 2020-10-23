@@ -134,11 +134,11 @@ Control {
                     copyMenuEnabled:  true
                     text:             control.maxPaintedWidth ? fitText() : formatText(control.amount)
                 }
-
-                Image {
+                SvgImage {
+                    visible:    showDrop
+                    source:     "qrc:/assets/icon-down.svg"
+                    sourceSize: Qt.size(5, 3)
                     id: drop
-                    visible: showDrop
-                    source:  "qrc:/assets/icon-down.svg"
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
