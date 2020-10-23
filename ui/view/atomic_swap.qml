@@ -3,6 +3,7 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.3
+import QtQuick.Shapes 1.11
 import "controls"
 import "utils.js" as Utils
 import Beam.Wallet 1.0
@@ -308,17 +309,68 @@ Item {
                     }
                 }
 
-                SwapCurrencyAmountPane {
-                    id: swapOptions
-                    gradLeft: Style.currencyPaneConnect
-                    gradRight: Style.currencyPaneConnect
-                    //% "Connect other currency wallet to start trading"
-                    amount: qsTrId("atomic-swap-connect-other")
-                    textSize: 14
-                    textColor: Style.active
-                    isOk: true
-                    borderSize: 1
-                    visible: currencyIcons.length
+                Rectangle {
+                    Layout.fillWidth:           true
+                    Layout.preferredHeight:     67
+                    
+                    Rectangle {
+                        anchors.fill:           parent
+                        opacity:                0.3
+                        radius:                 10
+                        border {
+                            width:      1
+                            color:      "#1af6d6"
+                        }
+                         color: "transparent"
+                    }
+                    color: "transparent"
+                    // TODO: Shape doesn't work on 5.11 correctly. Need to investigate
+                    //Shape {
+                    //    id:             moreShape
+                    //    asynchronous:   true
+                    //    opacity:        0.3
+                    //    anchors.fill:   parent
+                    //    ShapePath {
+                    //        id: shapePath
+                    //        property var radius:    10
+                    //        property var width2:    moreShape.width - 2*radius
+                    //        property var height2:   moreShape.height - 2*radius
+                    //        strokeWidth: 1
+                    //        strokeColor: "#1af6d6"
+                    //        fillColor: "transparent" // ignored with the gradient set
+                    //        strokeStyle:    ShapePath.SolidLine //DashLine
+                    //        dashPattern:    [ 4, 6 ]
+                    //        startX:         shapePath.radius
+                    //        startY:         0
+                    //        PathLine { relativeX: shapePath.width2; relativeY: 0 }
+                    //        PathArc  { relativeX: shapePath.radius; y: shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
+                    //        PathLine { relativeX: 0; relativeY: shapePath.height2 }
+                    //        PathArc  { relativeX: -shapePath.radius; relativeY: shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
+                    //        PathLine { relativeX: -shapePath.width2; relativeY: 0 }
+                    //        PathArc  { relativeX: -shapePath.radius; relativeY: -shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
+                    //        PathLine { relativeX: 0; relativeY: -shapePath.height2 }
+                    //        PathArc  { relativeX: shapePath.radius; relativeY: -shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
+                    //    }
+                    //}
+                    RowLayout {
+                        anchors.fill:   parent
+                        SvgImage {
+                            Layout.alignment:       Qt.AlignVCenter
+                            Layout.leftMargin:      20
+                            source:                 "qrc:/assets/icon-add-green.svg"
+                            sourceSize:             Qt.size(16, 16)
+                        }
+                        SFText {
+                            Layout.alignment:       Qt.AlignVCenter
+                            Layout.fillWidth:       true
+                            Layout.rightMargin:     20
+                            font.pixelSize:         14
+                            color:                  Style.active
+                            wrapMode:               Text.WordWrap
+                            //% "Connect more currencies"
+                            text:                   qsTrId("atomic-swap-more-currency")
+                        }
+                    }
                     MouseArea {
                         id:                clickArea
                         anchors.fill:      parent
@@ -327,18 +379,6 @@ Item {
                         hoverEnabled:      true
                         onPositionChanged: clickArea.cursorShape = Qt.PointingHandCursor;
                     }
-                }
-                Component.onCompleted: {
-                    var currencyIcons = [];
-
-                    for (var index = 0; index < viewModel.swapClientList.length; index++) {
-                        
-                        if (!BeamGlobals.haveSwapClient(viewModel.swapClientList[index].currency)) {
-                            currencyIcons.push(amountPanes.getCurrencyIcon(viewModel.swapClientList[index].currency));
-                        }                        
-                    }
-
-                    swapOptions.currencyIcons = currencyIcons;
                 }
             }
 
