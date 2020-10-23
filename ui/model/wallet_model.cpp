@@ -132,9 +132,9 @@ void WalletModel::onSyncProgressUpdated(int done, int total)
     emit syncProgressUpdated(done, total);
 }
 
-void WalletModel::onChangeCalculated(beam::Amount change)
+void WalletModel::onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId)
 {
-    emit changeCalculated(change);
+    emit changeCalculated(changeAsset, changeBeam, assetId);
 }
 
 void WalletModel::onShieldedCoinsSelectionCalculated(const ShieldedCoinsSelectionInfo& selectionRes)

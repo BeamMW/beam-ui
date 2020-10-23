@@ -303,9 +303,13 @@ void SendSwapViewModel::setExpiresTime(const QDateTime& value)
     }
 }
 
-void SendSwapViewModel::onChangeCalculated(beam::Amount change)
+void SendSwapViewModel::onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetID)
 {
-    _changeGrothes = change;
+    // only BEAM used in swap for the moment
+    assert(assetID == beam::Asset::s_BeamID);
+    assert(changeBeam == changeAsset);
+
+    _changeGrothes = changeBeam;
     emit enoughChanged();
     emit canSendChanged();
 }
@@ -347,7 +351,7 @@ void SendSwapViewModel::recalcAvailable()
     {
     case Currency::CurrBeam:
         _changeGrothes = 0;
-        _walletModel.getAsync()->calcChange(_sendAmountGrothes + _sendFeeGrothes);
+        _walletModel.getAsync()->calcChange(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
         return;
     default:
         // TODO:SWAP implement for all currencies

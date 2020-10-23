@@ -186,7 +186,7 @@ please review your settings and try again"
                             id:           sendAmountInput
                             currFeeTitle: true
                             amountIn:     viewModel.sendAmount
-                            currency:     viewModel.sendCurrency
+                            currencyIdx:  viewModel.sendCurrency
                             rate:         viewModel.secondCurrencySendRate
                             rateUnit:     viewModel.secondCurrencyUnitName
                             readOnlyA:    true
@@ -223,7 +223,6 @@ please review your settings and try again"
                         folded:                  false
                         content: FeeInput {
                             id:                         sendFeeInput
-                            //fee:                        viewModel.sendFee
                             currency:                   viewModel.sendCurrency
                             minFee:                     currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(viewModel.sentCurrency, false)
                             recommendedFee:             BeamGlobals.getRecommendedFee(viewModel.sendCurrency)
@@ -300,7 +299,7 @@ please review your settings and try again"
                             id:            receiveAmountInput
                             currFeeTitle:  true
                             amountIn:      viewModel.receiveAmount
-                            currency:      viewModel.receiveCurrency
+                            currencyIdx:   viewModel.receiveCurrency
                             rate:          viewModel.secondCurrencyReceiveRate
                             rateUnit:      viewModel.secondCurrencyUnitName
                             readOnlyA:     true
@@ -510,16 +509,16 @@ please review your settings and try again"
                     const dialogComponent = Qt.createComponent("send_confirm.qml");
                     var dialogObject = dialogComponent.createObject(sendSwapView,
                         {
-                            swapMode:    true,
-                            addressText: viewModel.receiverAddress,
-                            typeText:    qsTrId("general-swap"),
-                            amount:      viewModel.sendAmount,
-                            unitName:    unitName,
-                            fee:         viewModel.sendFee,
-                            flatFee:     viewModel.sendCurrency == Currency.CurrBeam,
-                            onAccepted:  acceptedCallback,
-                            rate:        viewModel.secondCurrencySendRateValue,
-                            rateUnit:    viewModel.secondCurrencyUnitName,
+                            swapMode:       true,
+                            addressText:    viewModel.receiverAddress,
+                            typeText:       qsTrId("general-swap"),
+                            amount:         viewModel.sendAmount,
+                            unitName:       unitName,
+                            fee:            viewModel.sendFee,
+                            flatFee:        viewModel.sendCurrency == Currency.CurrBeam,
+                            acceptHandler:  acceptedCallback,
+                            rate:           viewModel.secondCurrencySendRateValue,
+                            rateUnit:       viewModel.secondCurrencyUnitName,
                         }).open();
 
                     function acceptedCallback() {

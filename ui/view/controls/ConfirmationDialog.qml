@@ -5,6 +5,7 @@ import "."
 
 Dialog {
     id: control
+
     property alias text: messageText.text
     property alias okButton: okButton
     property alias okButtonEnable: okButton.enabled
@@ -20,6 +21,7 @@ Dialog {
     property alias cancelButtonVisible: cancelButton.visible
     property alias cancelButtonColor: cancelButton.palette.button
     property alias cancelButtonAllLowercase: cancelButton.allLowercase
+    property var   acceptHandler
 
     function confirmationHandler() {
         accepted();
@@ -114,5 +116,9 @@ Dialog {
 
     onOpened: {
         openHandler();
+    }
+
+    onAccepted: {
+        acceptHandler();
     }
 }

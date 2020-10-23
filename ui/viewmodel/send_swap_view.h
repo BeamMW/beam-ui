@@ -130,7 +130,7 @@ signals:
     void minimalBeamFeeGrothesChanged();
 
 public slots:
-    void onChangeCalculated(beam::Amount change);
+    void onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId);
     void onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes);
 
 private:

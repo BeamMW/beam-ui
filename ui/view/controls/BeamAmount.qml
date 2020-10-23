@@ -149,7 +149,7 @@ Control {
                 font.pixelSize:  10
                 font.styleName:  "Regular"
                 font.weight:     Font.Normal
-                color:           Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+                color:           control.error ? Style.validator_error : Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
                 text:            formatRate()
                 onCopyText:      BeamGlobals.copyToClipboard(secondCurrencyAmountText.text)
                 copyMenuEnabled: true
