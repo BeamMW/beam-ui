@@ -168,7 +168,7 @@ Item {
             }
 
             TxTable {
-                Layout.topMargin:  20
+                Layout.topMargin:  12
                 Layout.fillWidth:  true
                 Layout.fillHeight: true
             }
