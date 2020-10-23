@@ -1339,10 +1339,6 @@ please review your settings and try again</oldsource>
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
         <translation>เพื่อให้ธุรกรรมเสร็จสมบูรณ์ ผู้รับโอนจะต้องออนไลน์ภายใน 12 ชั่วโมงและคุณควรจะออนไลน์หลังจากนั้นภายใน 2 ชั่วโมง</translation>
     </message>
-    <message id="atomic-swap-connect-other">
-        <source>Connect other currency wallet to start trading</source>
-        <translation>เชื่อมต่อกระเป๋าของอีกสกุลเงินเพื่อเริ่มการซื้อขาย</translation>
-    </message>
     <message id="trezor-message">
         <source>Please, look at your Trezor device to complete actions...</source>
         <translation>กรุณาดูที่ Trezor ของคุณเพื่อดำเนินการคำสั่ง...</translation>
@@ -2858,6 +2854,10 @@ Your version is: %2. Please, check for updates.</oldsource>
     </message>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(max privacy)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-more-currency">
+        <source>Connect more currencies</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
