@@ -1,7 +1,6 @@
 function formatDateTime(datetime, localeName) {
     var maxTime = new Date(4294967295000);
     if (datetime >= maxTime) {
-        //: time never string
         //% "Never"
         return qsTrId("time-never");
     }
@@ -102,37 +101,4 @@ function openExternalWithConfirmation(externalLink, onFinish) {
 
 function navigateToDownloads() {
     openExternalWithConfirmation("https://www.beam.mw/downloads")
-}
-
-function currenciesList() {
-    return [
-        BeamGlobals.getCurrencyUnitName(Currency.CurrBeam),
-        BeamGlobals.getCurrencyUnitName(Currency.CurrBitcoin),
-        BeamGlobals.getCurrencyUnitName(Currency.CurrLitecoin),
-        BeamGlobals.getCurrencyUnitName(Currency.CurrQtum),
-        BeamGlobals.getCurrencyUnitName(Currency.CurrBitcoinCash),
-        BeamGlobals.getCurrencyUnitName(Currency.CurrBitcoinSV),
-        BeamGlobals.getCurrencyUnitName(Currency.CurrDogecoin),
-        BeamGlobals.getCurrencyUnitName(Currency.CurrDash)
-    ]
-}
-
-const maxAmount   = "262799999";
-const minAmount   = "0.00000001";
-
-function createObject(component, parent, props) {
-    return Qt.createComponent(component)
-             .createObject(parent, props);
-}
-
-function createControl(component, parent, props) {
-    return createObject(["controls/", component, ".qml"].join(""), parent, props)
-}
-
-function createDialog(component, props) {
-    return createControl([component, "Dialog"].join(''), main, props)
-}
-
-function openDialog(component, props) {
-    createDialog(component, props).open()
 }

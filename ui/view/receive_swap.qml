@@ -159,21 +159,21 @@ Update your settings and try again."
                             id:                         sentAmountInput
                             color:                      Style.accent_outgoing
                             currFeeTitle:               true
-                            currency:                   viewModel.sentCurrency
+                            currencyIdx:                viewModel.sentCurrency
                             amountIn:                   viewModel.amountSent
-                            rate:                       viewModel.secondCurrencySendRate
+                            rate:                       viewModel.secondCurrencySendRateValue
                             rateUnit:                   viewModel.secondCurrencyUnitName
                             multi:                      true
                             resetAmount:                false
-                            currColor:                  currencyError() || !BeamGlobals.canReceive(currency) ? Style.validator_error : Style.content_main
+                            currColor:                  currencyError() || !BeamGlobals.canReceive(currencyIdx) ? Style.validator_error : Style.content_main
                             error:                      getErrorText()
 
                             function getErrorText() {
-                                if(!BeamGlobals.canReceive(currency)) {
+                                if(!BeamGlobals.canReceive(currencyIdx)) {
 /*% "%1 is not connected, 
 please review your settings and try again"
 */
-                                    return qsTrId("swap-currency-na-message").arg(BeamGlobals.getCurrencyName(currency)).replace("\n", "")
+                                    return qsTrId("swap-currency-na-message").arg(BeamGlobals.getCurrencyName(currencyIdx)).replace("\n", "")
                                 }
                                 if(!viewModel.isSendFeeOK) {
                                     //% "The swap amount must be greater than the transaction fee"
@@ -186,10 +186,10 @@ please review your settings and try again"
                                 return ""
                             }
 
-                            onCurrencyChanged: {
-                                if(sentAmountInput.currency != Currency.CurrBeam &&
-                                   receiveAmountInput.currency != Currency.CurrBeam) {
-                                    receiveAmountInput.currency = Currency.CurrBeam
+                            onCurrencyIdxChanged: {
+                                if(sentAmountInput.currencyIdx != Currency.CurrBeam &&
+                                   receiveAmountInput.currencyIdx != Currency.CurrBeam) {
+                                    receiveAmountInput.currencyIdx = Currency.CurrBeam
                                 }
                             }
                         }
@@ -203,7 +203,7 @@ please review your settings and try again"
                         Binding {
                             target:   viewModel
                             property: "sentCurrency"
-                            value:    sentAmountInput.currency
+                            value:    sentAmountInput.currencyIdx
                         }
                     }
 
@@ -351,9 +351,9 @@ please review your settings and try again"
                                     rateWasInFocus = true;
                                     rateInput.focus = false;
                                 }
-                                var sentCurency = sentAmountInput.currency;
-                                sentAmountInput.currency = receiveAmountInput.currency;
-                                receiveAmountInput.currency = sentCurency;
+                                var sentCurency = sentAmountInput.currencyIdx;
+                                sentAmountInput.currencyIdx = receiveAmountInput.currencyIdx;
+                                receiveAmountInput.currencyIdx = sentCurency;
                                 if (rateWasInFocus) {
                                     rateInput.focus = true;
                                     rateInput.text = rate;
@@ -379,28 +379,29 @@ please review your settings and try again"
                     //
                     Panel {
                         //% "Receive amount"
-                        title:                   qsTrId("receive-amount-swap-label")
-                        Layout.fillWidth:        true
+                        title: qsTrId("receive-amount-swap-label")
+                        Layout.fillWidth: true
+
                         AmountInput {
-                            id:                         receiveAmountInput
-                            currFeeTitle:               true
-                            currency:                   viewModel.receiveCurrency
-                            amountIn:                   viewModel.amountToReceive
-                            rate:                       viewModel.secondCurrencyReceiveRate
-                            rateUnit:                   viewModel.secondCurrencyUnitName
-                            multi:                      true
-                            resetAmount:                false
-                            currColor:                  currencyError() || !BeamGlobals.canReceive(currency) ? Style.validator_error : Style.content_main
-                            error:                      getErrorText()
-                            showTotalFee:               true
-                            showSecondCurrency:         sentAmountInput.showSecondCurrency
+                            id:                  receiveAmountInput
+                            currFeeTitle:        true
+                            currencyIdx:         viewModel.receiveCurrency
+                            amountIn:            viewModel.amountToReceive
+                            rate:                viewModel.secondCurrencyReceiveRateValue
+                            rateUnit:            viewModel.secondCurrencyUnitName
+                            multi:               true
+                            resetAmount:         false
+                            currColor:           currencyError() || !BeamGlobals.canReceive(currencyIdx) ? Style.validator_error : Style.content_main
+                            error:               getErrorText()
+                            showTotalFee:        true
+                            showSecondCurrency:  sentAmountInput.showSecondCurrency
 
                             function getErrorText() {
-                                if(!BeamGlobals.canReceive(currency)) {
+                                if(!BeamGlobals.canReceive(currencyIdx)) {
 /*% "%1 is not connected, 
 please review your settings and try again"
 */
-                                    return qsTrId("swap-currency-na-message").arg(BeamGlobals.getCurrencyName(currency)).replace("\n", "")
+                                    return qsTrId("swap-currency-na-message").arg(BeamGlobals.getCurrencyName(currencyIdx)).replace("\n", "")
                                 }
                                 if(!viewModel.isReceiveFeeOK) {
                                     //% "The swap amount must be greater than the transaction fee"
@@ -409,10 +410,10 @@ please review your settings and try again"
                                 return ""
                             }
 
-                            onCurrencyChanged: {
-                                if(receiveAmountInput.currency != Currency.CurrBeam &&
-                                   sentAmountInput.currency != Currency.CurrBeam) {
-                                    sentAmountInput.currency = Currency.CurrBeam
+                            onCurrencyIdxChanged: {
+                                if(receiveAmountInput.currencyIdx != Currency.CurrBeam &&
+                                   sentAmountInput.currencyIdx != Currency.CurrBeam) {
+                                    sentAmountInput.currencyIdx = Currency.CurrBeam
                                 }
                             }
                         }
@@ -426,7 +427,7 @@ please review your settings and try again"
                         Binding {
                             target:   viewModel
                             property: "receiveCurrency"
-                            value:    receiveAmountInput.currency
+                            value:    receiveAmountInput.currencyIdx
                         }
                     }
                     //
@@ -529,7 +530,7 @@ please review your settings and try again"
                                     function checkReceive() {
                                         receiveAmountInput.amountInput.onTextChanged();
                                         if (parseFloat(receiveAmountInput.amount) >= rateRow.maxAmount) {
-                                            if (receiveAmountInput.currency == Currency.CurrBeam) {
+                                            if (receiveAmountInput.currencyIdx == Currency.CurrBeam) {
                                                 //% "Amount overtop total Beam supply."
                                                 receiveAmountInput.error = qsTrId("overtop-beam-supply");
                                             }
@@ -558,7 +559,7 @@ please review your settings and try again"
                                             rateValid = true;
                                             return;
                                         }
-                                        if (receiveAmountInput.currency == Currency.CurrBeam) {
+                                        if (receiveAmountInput.currencyIdx == Currency.CurrBeam) {
                                             rateValid =
                                                 parseFloat(receiveAmountInput.amount) <= rateRow.maxAmount &&
                                                 parseFloat(receiveAmountInput.amount) >= rateRow.minAmount;
