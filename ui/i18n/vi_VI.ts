@@ -992,7 +992,6 @@ Allow to open and proceed to the website? You can always update your choice in S
     </message>
     <message id="time-never">
         <source>Never</source>
-        <extracomment>time never string</extracomment>
         <translation>Không bao giờ</translation>
     </message>
     <message id="start-pwd-difficulty-very-weak">
@@ -2864,6 +2863,14 @@ Your version is: %2. Please, check for updates.</oldsource>
     </message>
     <message id="send-swap-fee-warning">
         <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-no-funds">
+        <source>Insufficient funds to complete the transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-remaining-beam-label">
+        <source>BEAM Remaining</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
