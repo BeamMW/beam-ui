@@ -2866,5 +2866,13 @@ Your version is: %2. Please, check for updates.</oldsource>
         <oldsource>Public offline</oldsource>
         <translation type="unfinished"></translation>
     </message>
+    <message id="tx-address-regular-exchange">
+        <source>Regular (for exchange or mining pool)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-address-regular-wallet">
+        <source>Regular (for wallet)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
