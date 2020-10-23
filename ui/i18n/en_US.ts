@@ -2766,35 +2766,43 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="more-details">
         <source>More details</source>
-        <translation type="unfinished"></translation>
+        <translation>More details</translation>
     </message>
     <message id="general-address-type">
         <source>Address Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Address Type</translation>
     </message>
     <message id="qr-code">
         <source>QR Code</source>
-        <translation type="unfinished"></translation>
+        <translation>QR Code</translation>
     </message>
     <message id="wallet-receive-address-for-wallet-label">
         <source>Online address (for wallet)</source>
-        <translation type="unfinished"></translation>
+        <translation>Online address (for wallet)</translation>
     </message>
     <message id="wallet-receive-address-for-exchange-label">
         <source>Online address (for exchange or mining pool)</source>
-        <translation type="unfinished"></translation>
+        <translation>Online address (for exchange or mining pool)</translation>
     </message>
     <message id="wallet-receive-max-privacy-address">
         <source>Max Privacy Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Max Privacy Address</translation>
     </message>
     <message id="wallet-receive-offline-payments">
         <source>Supports %1 payments.</source>
-        <translation type="unfinished"></translation>
+        <translation>Supports %1 payments.</translation>
     </message>
     <message id="address-info-payments">
         <source>Payments</source>
-        <translation type="unfinished"></translation>
+        <translation>Payments</translation>
+    </message>
+    <message id="available-panel-maturing-mp">
+        <source>Max privacy</source>
+        <translation>Max privacy</translation>
+    </message>
+    <message id="utxo-status-maturing-mp">
+        <source>Maturing%1(max privacy)</source>
+        <translation>Maturing%1(max privacy)</translation>
     </message>
 </context>
 </TS>

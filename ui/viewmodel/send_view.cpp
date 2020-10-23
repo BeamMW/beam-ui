@@ -528,6 +528,7 @@ void SendViewModel::sendMoney()
         if (isMaxPrivacy())
         {
             CopyParameter(TxParameterID::Voucher, _txParameters, params);
+            params.SetParameter(TxParameterID::MaxPrivacyMinAnonimitySet, uint8_t(64));
         }
 
         if (isToken())

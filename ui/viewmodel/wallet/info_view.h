@@ -13,6 +13,7 @@
 // limitations under the License.
 #pragma once
 
+// TODO: add LockedMaturingMP support to the tooltip
 #include <QObject>
 #include "model/wallet_model.h"
 #include "assets_manager.h"
@@ -26,6 +27,7 @@ public:
     Q_PROPERTY(QString sending            READ getSending)
     Q_PROPERTY(QString locked             READ getLocked)
     Q_PROPERTY(QString lockedMaturing     READ getLockedMaturing)
+    Q_PROPERTY(QString lockedMaturingMP   READ getLockedMaturingMP)
     Q_PROPERTY(QString receivingChange    READ getReceivingChange)
     Q_PROPERTY(QString receivingIncoming  READ getReceivingIncoming)
     Q_PROPERTY(QString icon               READ getIcon)
@@ -73,10 +75,16 @@ public:
         return rateUnit;
     }
 
+    QString getLockedMaturingMP() const
+    {
+        return lockedMaturingMP;
+    }
+
     QString receiving;
     QString sending;
     QString locked;
     QString lockedMaturing;
+    QString lockedMaturingMP;
     QString receivingChange;
     QString receivingIncoming;
     QString icon;

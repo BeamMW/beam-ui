@@ -116,24 +116,26 @@ void InfoViewModel::updateProgress()
     _progress.clear();
     _progressTotals = InProgress();
 
-    Amount sendingTotal   = 0;
-    Amount receivingTotal = 0;
-    Amount changeTotal    = 0;
-    Amount incomingTotal  = 0;
-    Amount lockedTotal    = 0;
-    Amount maturingTotal  = 0;
+    Amount sendingTotal    = 0;
+    Amount receivingTotal  = 0;
+    Amount changeTotal     = 0;
+    Amount incomingTotal   = 0;
+    Amount lockedTotal     = 0;
+    Amount maturingTotal   = 0;
+    Amount maturingMPTotal = 0;
 
     auto assets = _wallet.getAssetsNZ();
     for(auto& asset: assets)
     {
         InProgress progress;
 
-        Amount sending   = _wallet.getSending(asset);
-        Amount receiving = _wallet.getReceiving(asset);
-        Amount change    = _wallet.getReceivingChange(asset);
-        Amount incoming  = _wallet.getReceivingIncoming(asset);
-        Amount locked    = _wallet.getMaturing(asset);
-        Amount maturing  = _wallet.getMaturing(asset);
+        Amount sending    = _wallet.getSending(asset);
+        Amount receiving  = _wallet.getReceiving(asset);
+        Amount change     = _wallet.getReceivingChange(asset);
+        Amount incoming   = _wallet.getReceivingIncoming(asset);
+        Amount locked     = _wallet.getMaturing(asset);
+        Amount maturing   = _wallet.getMaturing(asset);
+        Amount maturingMP = _wallet.getMatutingMP(asset);
 
         if (sending  > 0 || receiving > 0 || change > 0 || incoming > 0 || locked > 0 || maturing > 0)
         {
@@ -157,12 +159,13 @@ void InfoViewModel::updateProgress()
             }
 
             _progress.push_back(progress);
-            sendingTotal   += sending;
-            receivingTotal += receiving;
-            changeTotal    += change;
-            incomingTotal  += incoming;
-            lockedTotal    += locked;
-            maturingTotal  += maturing;
+            sendingTotal    += sending;
+            receivingTotal  += receiving;
+            changeTotal     += change;
+            incomingTotal   += incoming;
+            lockedTotal     += locked;
+            maturingTotal   += maturing;
+            maturingMPTotal += maturingMP;
         }
     }
 
@@ -172,6 +175,7 @@ void InfoViewModel::updateProgress()
     _progressTotals.receivingIncoming = beamui::AmountToUIString(incomingTotal);
     _progressTotals.locked            = beamui::AmountToUIString(lockedTotal);
     _progressTotals.lockedMaturing    = beamui::AmountToUIString(maturingTotal);
+    _progressTotals.lockedMaturingMP  = beamui::AmountToUIString(maturingMPTotal);
     _progressTotals.unitName          = _progress.length() == 1 ? _progress[0].unitName : "ASSETS";
     _progressTotals.rate              = _progress.length() == 1 ? _progress[0].rate : "0";
     _progressTotals.icon              = _progress.length() == 1 ? _progress[0].icon : "";

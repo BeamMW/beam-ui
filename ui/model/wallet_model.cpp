@@ -362,6 +362,12 @@ beam::Amount WalletModel::getReceivingIncoming(beam::Asset::ID id) const
     return status.receivingIncoming;
 }
 
+beam::Amount WalletModel::getMatutingMP(beam::Asset::ID id) const
+{
+    const auto& status = m_status.GetStatus(id);
+    return status.maturingMP;
+}
+
 beam::Amount WalletModel::getReceivingChange(beam::Asset::ID id) const
 {
     const auto& status = m_status.GetStatus(id);
