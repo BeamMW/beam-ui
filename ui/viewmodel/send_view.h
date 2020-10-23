@@ -168,6 +168,7 @@ public slots:
     void onAssetInfo(beam::Asset::ID assetId);
 
 private:
+    void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
     void extractParameters();
     void resetMinimalFee();
     void resetAddress();

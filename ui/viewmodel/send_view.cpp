@@ -448,22 +448,21 @@ void SendViewModel::onNeedExtractShieldedCoins(bool val)
     }
 }
 
-void SendViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
+void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
 {
-    if (id == _receiverWalletID)
+    if (address)
     {
-        if (address)
-        {
-            setWalletAddress(address);
-            setComment(QString::fromStdString(address->m_label));
-        }
-        setOfflinePayments(offlinePayments);
+        setComment(QString::fromStdString(address->m_label));
     }
     else
     {
-        setWalletAddress({});
-        setOfflinePayments(0);
+        setComment("");
     }
+
+    setWalletAddress(address);
+    setOfflinePayments(offlinePayments);
+
+
 }
 
 QString SendViewModel::getChangeBeam() const
@@ -567,6 +566,7 @@ void SendViewModel::saveReceiverAddress(const QString& name)
     address.m_Identity = _receiverIdentity;
     address.m_label = trimmed.toStdString();
     address.m_duration = WalletAddress::AddressExpirationNever;
+    address.m_Address = _receiverTA.toStdString();
     _walletModel.getAsync()->saveAddress(address, false);
 }
 
@@ -582,6 +582,10 @@ void SendViewModel::extractParameters()
     _txParameters = *txParameters;
 
     resetAddress();
+    _walletModel.getAsync()->getAddress(_receiverTA.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
+    {
+        onGetAddressReturned(addr, (int)c);
+    });
 
     if (auto peerID = _txParameters.GetParameter<WalletID>(TxParameterID::PeerID); peerID)
     {
@@ -589,7 +593,7 @@ void SendViewModel::extractParameters()
         _receiverAddress = QString::fromStdString(std::to_string(*peerID));
         setIsToken(_receiverTA != _receiverAddress);
         emit receiverAddressChanged();
-        _walletModel.getAsync()->getAddress(_receiverWalletID);
+        
     }
     else
     {
