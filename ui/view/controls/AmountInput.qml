@@ -136,7 +136,7 @@ ColumnLayout {
 
             Connections {
                 target: control
-                function onAmountInChanged() {
+                onAmountInChanged: {
                     if (!ainput.activeFocus) {
                         // we intentionally break binding here
                         ainput.text = ainput.formatDisplayedAmount()
@@ -254,12 +254,8 @@ ColumnLayout {
                 rateUnit:                 control.rateUnit
                 Connections {
                     target: control
-                    function onFeeChanged() {
-                        feeInput.fee = control.fee
-                    }
-                    function onCurrencyIdxChanged() {
-                        feeInput.fee = control.defaultFee
-                    }
+                    onFeeChanged: feeInput.fee = control.fee
+                    onCurrencyChanged: feeInput.fee = control.defaultFee
                 }
             }
         }
