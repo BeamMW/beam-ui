@@ -605,14 +605,14 @@ ColumnLayout {
                     const instance = dialog.createObject(sendRegularView,
                         {
                             addressText:   viewModel.receiverTA,
-                            viewModel.isShieldedTx ?
-                                    viewModel.isMaxPrivacy ? qsTrId("tx-max-privacy")
-                                        : viewModel.isOffline ? qsTrId("tx-address-offline")
-                                            //% "Public offline"
-                                            : viewModel.isPublicOffline ? qsTrId("tx-address-public-offline")
-                                                //% "Unknown"
-                                                : qsTrId("tx-address-unknown")
-                                    : qsTrId("tx-regular"),
+                            typeText:      viewModel.isShieldedTx ?
+                                                viewModel.isMaxPrivacy ? qsTrId("tx-max-privacy")
+                                                    : viewModel.isOffline ? qsTrId("tx-address-offline")
+                                                        //% "Public offline"
+                                                        : viewModel.isPublicOffline ? qsTrId("tx-address-public-offline")
+                                                            //% "Unknown"
+                                                            : qsTrId("tx-address-unknown")
+                                                : qsTrId("tx-regular"),
                             amount:        viewModel.sendAmount,
                             fee:           viewModel.feeGrothes,
                             flatFee:       true,

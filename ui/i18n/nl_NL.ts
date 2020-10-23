@@ -1822,10 +1822,6 @@ deploy the key at the node you trust completely.</source>
         <source>It is taking longer than usual. In case the transaction could not be completed it will be canceled automatically in %1.</source>
         <translation>Het duurt langer dan gebruikelijk. Als de transactie niet kan worden voltooid wordt deze automatisch geannuleerd in %1.</translation>
     </message>
-    <message id="amount-input-add-all">
-        <source>add all</source>
-        <translation>alles toevoegen</translation>
-    </message>
     <message id="settings-general-no-require-pwd-to-spend-confirm-pwd-title">
         <source>Ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if unchecked</extracomment>
@@ -2252,10 +2248,6 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>Copy token</source>
         <translation>Kopieer token</translation>
     </message>
-    <message id="general-transaction-info">
-        <source>Transaction info</source>
-        <translation>Transactie informatie</translation>
-    </message>
     <message id="receive-request">
         <source>Requested amount</source>
         <translation>Gevraagd bedrag</translation>
@@ -2514,62 +2506,6 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Dit adres is gegenereerd door nieuwere Beam client versie(%1)
 Uw versie is: %2. Controleer op updates.</translation>
     </message>
-    <message id="save-address-title">
-        <source>Do you want to name the contact?</source>
-        <translation>Wilt u het contact een naam geven?</translation>
-    </message>
-    <message id="send-title">
-        <source>Send</source>
-        <translation>Verzend</translation>
-    </message>
-    <message id="send-contact-token-placeholder">
-        <source>Paste recipient token here</source>
-        <translation>Plak ontvanger token hier</translation>
-    </message>
-    <message id="send-contact-address-placeholder">
-        <source>Paste recipient address here</source>
-        <translation>Plak het adres van de ontvanger hier</translation>
-    </message>
-    <message id="wallet-send-invalid-address-or-token">
-        <source>Invalid wallet address</source>
-        <translation>Ongeldig wallet adres of swaptoken</translation>
-    </message>
-    <message id="wallet-send-permanent-note">
-        <source>Permanent address</source>
-        <translation>Permanent adres</translation>
-    </message>
-    <message id="wallet-send-one-time-note">
-        <source>One-time use address (expire in 12 hours after succesfull transaction).</source>
-        <translation>Adres voor eenmalig gebruik (vervalt binnen 12 uur na succesvolle transactie).</translation>
-    </message>
-    <message id="wallet-send-max-privacy-note-address-offline">
-        <source>Offline address. Payments left: %1</source>
-        <translation>Offline adres. Resterende betalingen: %1</translation>
-    </message>
-    <message id="wallet-send-max-privacy-note-address">
-        <source>Max privacy address</source>
-        <translation>Max privacy adres</translation>
-    </message>
-    <message id="wallet-send-need-extract-shielded-note">
-        <source>Transaction is slower, fees are higher.</source>
-        <translation>De transactie is trager, de kosten zijn hoger.</translation>
-    </message>
-    <message id="send-founds-fail">
-        <source>Insufficient funds: you would need %1 to complete the transaction</source>
-        <translation>Onvoldoende saldo: u heeft %1 nodig om de transactie te voltooien</translation>
-    </message>
-    <message id="max-pivacy-fee-fail">
-        <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <translation>Voor de beste privacy is Max privacy coins geselecteerd. Min. transactiekosten zijn %1 %2</translation>
-    </message>
-    <message id="send-amount-label">
-        <source>Amount to send</source>
-        <translation>Te verzenden bedrag</translation>
-    </message>
-    <message id="send-remaining-label">
-        <source>Remaining</source>
-        <translation>Resterende</translation>
-    </message>
     <message id="wallet-receive-swap-copy-token-and-close">
         <source>copy token and close</source>
         <translation>kopieer token en sluit</translation>
@@ -2736,32 +2672,12 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>%1 Transaction fee (est)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="amount-input-add-all">
-        <source>add all</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="send-flat-fee">
         <source>%1 Transaction fee</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="swap-expired">
-        <source>Expired.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-swap-sconfirmation-online-time">
-        <source>Keep your wallet online. The swap normally takes about 1 hour to complete.</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="send-swap-fee-warning">
         <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-no-funds">
-        <source>Insufficient funds to complete the transaction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-remaining-beam-label">
-        <source>BEAM Remaining</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="more-details">
@@ -2796,10 +2712,6 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>Payments</source>
         <translation>Betalingen</translation>
     </message>
-    <message id="available-panel-maturing-mp">
-        <source>Max privacy</source>
-        <translation>Maximale privacy</translation>
-    </message>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(max privacy)</source>
         <translation>Maturing%1(max privacy)</translation>
@@ -2813,12 +2725,9 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>kopieer en sluit</translation>
     </message>
     <message id="tx-address-public-offline">
-        <source>Public offline</source>
-        <translation>Openbaar offline</translation>
-    </message>
-    <message id="tx-address-unknown">
-        <source>Unknown</source>
-        <translation>Onbekend</translation>
+        <source></source>
+        <oldsource>Public offline</oldsource>
+        <translation type="unfinished">Openbaar offline</translation>
     </message>
     <message id="tx-address-regular-exchange">
         <source>Regular (for exchange or mining pool)</source>
