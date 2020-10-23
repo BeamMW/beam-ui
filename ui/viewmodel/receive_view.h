@@ -27,7 +27,6 @@ class ReceiveViewModel: public QObject
     Q_PROPERTY(QString  receiverAddress              READ getReceiverAddress                                  NOTIFY  receiverAddressChanged)
     Q_PROPERTY(QString  receiverAddressForExchange   READ getReceiverAddressForExchange                       NOTIFY  receiverAddressForExchangeChanged)
     Q_PROPERTY(QString  transactionToken             READ getTransactionToken   WRITE  setTranasctionToken    NOTIFY  transactionTokenChanged)
-    Q_PROPERTY(QString  transactionTokenQR           READ getTransactionTokenQR                               NOTIFY  transactionTokenChanged)
     Q_PROPERTY(QString  offlineToken                 READ getOfflineToken       WRITE  setOfflineToken        NOTIFY  offlineTokenChanged)
     Q_PROPERTY(bool     commentValid                 READ getCommentValid                                     NOTIFY  commentValidChanged)
     Q_PROPERTY(QString  rateUnit                     READ getRateUnit                                         NOTIFY  rateChanged)
