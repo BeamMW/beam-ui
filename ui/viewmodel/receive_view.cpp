@@ -197,12 +197,20 @@ void ReceiveViewModel::saveReceiverAddress()
 
 void ReceiveViewModel::saveExchangeAddress()
 {
-    _walletModel.getAsync()->saveAddress(_receiverAddressForExchange, true);
+    if (getCommentValid())
+    {
+        _receiverAddressForExchange.m_label = _addressComment.toStdString();
+        _walletModel.getAsync()->saveAddress(_receiverAddressForExchange, true);
+    }
 }
 
 void ReceiveViewModel::saveOfflineAddress()
 {
-    _walletModel.getAsync()->saveAddress(_receiverOfflineAddress, true);
+    if (getCommentValid())
+    {
+        _receiverOfflineAddress.m_label = _addressComment.toStdString();
+        _walletModel.getAsync()->saveAddress(_receiverOfflineAddress, true);
+    }
 }
 
 void ReceiveViewModel::updateTransactionToken()
