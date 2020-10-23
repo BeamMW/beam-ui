@@ -204,21 +204,6 @@ ColumnLayout {
                                 }
                             }
 
-                            RowLayout {
-                                Layout.preferredHeight: 20
-                                visible:                viewModel.isShieldedTx
-                                SFText {
-                                    id:                 maxPrivacyNote
-                                    color:              Style.content_secondary
-                                    font.italic:        true
-                                    font.pixelSize:     14
-                                    text:               viewModel.isNonInteractive ?
-                                                        //% "Address good for 20 transactions."
-                                                        qsTrId("wallet-send-non-int-note") :
-                                                        //% "Transaction is slower, receiver pays fees."
-                                                        qsTrId("wallet-send-max-privacy-note")
-                                }
-                            }
                             SFText {
                                 Layout.fillWidth:   true
                                 visible:            !parent.isShieldedSupported

@@ -104,5 +104,4 @@ private:
     bool _isPermanentAddress = false;
     WalletModel& _walletModel;
     ExchangeRatesManager _exchangeRatesManager;
-    beam::wallet::TxParameters _txParameters;
 };

@@ -46,11 +46,15 @@ Button {
 
     function getTextColor () {
         var color = (control.checkable ?  (control.checked ? Style.content_opposite : Style.content_secondary) : control.palette.buttonText)
+        if (color == Style.content_opposite)
+            return color;
         return control.enabled ? color : Qt.rgba(color.r, color.g, color.b, control.disalbedTextAlpha)
     }
     
     function updateIconColor() {
         if (control.isCompleted) {
+            if (control.iconColor == Style.content_opposite)
+                return control.iconColor;
             icon.color = enabled ? control.iconColor : Qt.rgba(control.iconColor.r, control.iconColor.g, control.iconColor.b, disabledAlpha);
         }
     }

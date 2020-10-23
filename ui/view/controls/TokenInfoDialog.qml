@@ -12,6 +12,7 @@ Dialog {
     property alias token:                   viewModel.token
     property alias defaultAddressType:      viewModel.defaultPermanent
     property alias ignoreStoredVouchers:    viewModel.ignoreStoredVouchers
+    property bool incoming:                 true
     signal addressCopied
     
     TokenInfoItem {
@@ -58,9 +59,29 @@ Dialog {
                     font.styleName:     "Bold"
                     font.weight:        Font.Bold
                     color:              Style.content_main
-                    //% "Transaction address"
+                    //% "Address details"
                     text:               qsTrId("address-info-title")
                 }
+            }
+
+            // Address type:
+            SFText {
+                Layout.alignment:       Qt.AlignTop
+                font.pixelSize:         14
+                color:                  Style.content_disabled
+                //% "Address type"
+                text:                   qsTrId("address-info-type") + ":"
+                visible:                viewModel.transactionType.length
+            }
+            
+            SFText {
+                Layout.fillWidth:       true
+                wrapMode:               Text.Wrap
+                font.pixelSize:         14
+                color:                  Style.content_main
+                text:                   viewModel.transactionType
+                verticalAlignment:      Text.AlignBottom
+                visible:                viewModel.transactionType.length
             }
 
             // Amount
@@ -106,44 +127,24 @@ Dialog {
                 visible:                viewModel.hasAddressType
             }
 
-            // Transaction type:
-            SFText {
-                Layout.alignment:       Qt.AlignTop
-                font.pixelSize:         14
-                color:                  Style.content_disabled
-                //% "Transaction type"
-                text:                   qsTrId("address-info-transaction-type") + ":"
-                visible:                viewModel.transactionType.length
-            }
-            
-            SFText {
-                Layout.fillWidth:       true
-                wrapMode:               Text.Wrap
-                font.pixelSize:         14
-                color:                  Style.content_main
-                text:                   viewModel.transactionType
-                verticalAlignment:      Text.AlignBottom
-                visible:                viewModel.transactionType.length
-            }
-
-            // Address type
-            SFText {
-                Layout.alignment:       Qt.AlignTop
-                font.pixelSize:         14
-                color:                  Style.content_disabled
-                //% "Address type"
-                text:                   qsTrId("address-info-type") + ":"
-                visible:                viewModel.tokenType.length
-            }
-            
-            SFText {
-                Layout.fillWidth:       true
-                wrapMode:               Text.Wrap
-                font.pixelSize:         14
-                text:                   viewModel.tokenType
-                color:                  Style.content_main
-                visible:                viewModel.tokenType.length
-            }
+            //// Address type
+            //SFText {
+            //    Layout.alignment:       Qt.AlignTop
+            //    font.pixelSize:         14
+            //    color:                  Style.content_disabled
+            //    //% "Address type"
+            //    text:                   qsTrId("address-info-type") + ":"
+            //    visible:                viewModel.tokenType.length
+            //}
+            //
+            //SFText {
+            //    Layout.fillWidth:       true
+            //    wrapMode:               Text.Wrap
+            //    font.pixelSize:         14
+            //    text:                   viewModel.tokenType
+            //    color:                  Style.content_main
+            //    visible:                viewModel.tokenType.length
+            //}
             
             // Address
             SFText {
@@ -255,7 +256,7 @@ Dialog {
                 icon.source:        "qrc:/assets/icon-copy-blue.svg"
                 palette.buttonText: Style.content_opposite
                 icon.color:         Style.content_opposite
-                palette.button:     Style.accent_incoming
+                palette.button:     dialog.incoming ? Style.accent_incoming : Style.accent_outgoing
                 //% "Copy address"
                 text:               qsTrId("address-info-copy-address")
                 onClicked: {

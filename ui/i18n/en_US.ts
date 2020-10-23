@@ -2206,10 +2206,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Random node</source>
         <translation>Random node</translation>
     </message>
-    <message id="wallet-send-max-privacy-note">
-        <source>Transaction is slower, receiver pays fees.</source>
-        <translation>Transaction is slower, receiver pays fees.</translation>
-    </message>
     <message id="can-not-generate-new-address-message">
         <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
         <translation>You cannot generate new address. Your wallet doesn&apos;t have a master key.</translation>
@@ -2281,10 +2277,6 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="tx-max-privacy">
         <source>Max privacy</source>
         <translation>Max privacy</translation>
-    </message>
-    <message id="wallet-send-non-int-note">
-        <source>Address good for 20 transactions.</source>
-        <translation>Address good for 20 transactions.</translation>
     </message>
     <message id="address-save">
         <source>save</source>
@@ -2543,32 +2535,20 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-send-permanent-note">
-        <source>Permanent address (you can save it to contacts after send).</source>
-        <translation>Permanent address (you can save it to contacts after send).</translation>
+        <source>Permanent address</source>
+        <translation>Permanent address</translation>
     </message>
     <message id="wallet-send-one-time-note">
         <source>One-time use address (expire in 12 hours after succesfull transaction).</source>
         <translation>One-time use address (expire in 12 hours after succesfull transaction).</translation>
     </message>
-    <message id="general-max-privacy">
-        <source>Max privacy</source>
-        <translation type="unfinished">Max privacy</translation>
-    </message>
-    <message id="wallet-send-max-privacy-to-yourself-unsupported">
-        <source>Can not sent max privacy transaction to own address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-send-max-privacy-unsupported">
-        <source>This type of address does not support max privacy transactions</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="wallet-send-max-privacy-note-address-offline">
-        <source>Receiver requested Max privacy. Offline transactions remaining: %1</source>
-        <translation type="unfinished"></translation>
+        <source>Offline address. Payments left: %1</source>
+        <translation>Offline address. Payments left: %1</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address">
-        <source>Receiver requested Max privacy</source>
-        <translation type="unfinished"></translation>
+        <source>Max privacy address</source>
+        <translation>Max privacy address</translation>
     </message>
     <message id="wallet-send-need-extract-shielded-note">
         <source>Transaction is slower, fees are higher.</source>
@@ -2595,8 +2575,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="address-info-title">
-        <source>Transaction address</source>
-        <translation type="unfinished"></translation>
+        <source>Address details</source>
+        <translation>Address details</translation>
     </message>
     <message id="address-expiration">
         <source>Address expiration</source>
@@ -2606,13 +2586,9 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Permanent</source>
         <translation type="unfinished">Permanent</translation>
     </message>
-    <message id="address-info-transaction-type">
-        <source>Transaction type</source>
-        <translation type="unfinished">Transaction type</translation>
-    </message>
     <message id="address-info-type">
         <source>Address type</source>
-        <translation type="unfinished"></translation>
+        <translation>Address type</translation>
     </message>
     <message id="address-info-sbbs-address">
         <source>SBBS Address</source>
