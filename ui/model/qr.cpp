@@ -38,11 +38,18 @@ QR::~QR()
 
 }
 
-void QR::setAmount(beam::Amount amount)
+QString QR::getAmount() const
 {
+    return beamui::AmountInGrothToUIString(m_amountGrothes);
+}
+
+void QR::setAmount(const QString& value)
+{
+    auto amount = beamui::UIStringToAmount(value);
     if (m_amountGrothes != amount)
     {
         m_amountGrothes = amount;
+        emit amountChanged();
         update();
     }
 }

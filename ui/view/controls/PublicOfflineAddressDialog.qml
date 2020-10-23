@@ -21,13 +21,9 @@ Dialog {
 
     
     parent: Overlay.overlay
-    padding: 0
+    padding: 30
 
     closePolicy: Popup.NoAutoClose | Popup.CloseOnEscape
-
-    onClosed: {
-        
-    }
 
     onOpened: {
         forceActiveFocus();
@@ -40,20 +36,29 @@ Dialog {
 
     contentItem: ColumnLayout {
         spacing:                0
+        RowLayout {
+            SFText {
+                Layout.fillWidth:       true
+                Layout.leftMargin:      30
+                horizontalAlignment:    Text.AlignHCenter
+                font.pixelSize:         18
+                font.styleName:         "Bold"
+                font.weight:            Font.Bold
+                color:                  Style.content_main
+                //% "Public offline address"
+                text:                   qsTrId("public-address-title")
+            }
 
-        SFText {
-            Layout.fillWidth:       true
-            Layout.topMargin:       30
-            Layout.leftMargin:      30
-            Layout.rightMargin:     30
-            Layout.bottomMargin:    14
-            horizontalAlignment:    Text.AlignHCenter
-            font.pixelSize:         18
-            font.styleName:         "Bold"
-            font.weight:            Font.Bold
-            color:                  Style.content_main
-            //% "Public offline address"
-            text:                   qsTrId("public-address-title")
+            CustomToolButton {
+                icon.source:            "qrc:/assets/icon-cancel.svg"
+                icon.width:             12
+                icon.height:            12
+                //% "Close"
+                ToolTip.text:           qsTrId("general-close")
+                onClicked: {
+                    dialog.close();
+                }
+            }
         }
 
         // Address
@@ -74,8 +79,6 @@ Dialog {
             Layout.alignment:       Qt.AlignHCenter
             Layout.preferredWidth:  120
             Layout.preferredHeight: 120
-            Layout.leftMargin:      30
-            Layout.rightMargin:     30
             Layout.bottomMargin:    20
             fillMode:               Image.PreserveAspectFit
             source:                 qrCode.data
@@ -87,8 +90,6 @@ Dialog {
             id:                     note
             Layout.fillWidth:       true
             Layout.maximumWidth:    400
-            Layout.leftMargin:      30
-            Layout.rightMargin:     30
             Layout.bottomMargin:    30
             horizontalAlignment:    Text.AlignHCenter
             wrapMode:               Text.Wrap
@@ -103,9 +104,6 @@ Dialog {
             id:                     buttonsLayout
             Layout.fillHeight:      true
             Layout.alignment:       Qt.AlignHCenter
-            Layout.leftMargin:      30
-            Layout.rightMargin:     30
-            Layout.bottomMargin:    30
             spacing:                20
         
             CustomButton {

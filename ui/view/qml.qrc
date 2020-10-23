@@ -288,5 +288,6 @@
         <file>assets/graph-white-small.svg</file>
         <file>assets/graph-teal-big.svg</file>
         <file>assets/graph-white-big.svg</file>
+        <file>controls/AddressQRDialog.qml</file>
     </qresource>
 </RCC>

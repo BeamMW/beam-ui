@@ -28,12 +28,8 @@ namespace {
 ReceiveViewModel::ReceiveViewModel()
     : _amountToReceiveGrothes(0)
     , _addressExpires(AddressExpires)
-    , _qr(std::make_unique<QR>())
-    , _tokenQr(std::make_unique<QR>())
     , _walletModel(*AppModel::getInstance().getWallet())
 {
-    connect(_qr.get(), &QR::qrDataChanged, this, &ReceiveViewModel::onReceiverQRChanged);
-    connect(_tokenQr.get(), &QR::qrDataChanged, this, &ReceiveViewModel::onTokenQRChanged);
     connect(&_walletModel, &WalletModel::generatedNewAddress, this, &ReceiveViewModel::onGeneratedNewAddress);
     connect(&_walletModel, &WalletModel::getAddressReturned, this, &ReceiveViewModel::onGetAddressReturned);
     connect(&_walletModel, &WalletModel::newAddressFailed, this, &ReceiveViewModel::newAddressFailed);
@@ -44,8 +40,7 @@ ReceiveViewModel::ReceiveViewModel()
 
 ReceiveViewModel::~ReceiveViewModel()
 {
-    disconnect(_tokenQr.get(), &QR::qrDataChanged, this, &ReceiveViewModel::onTokenQRChanged);
-    disconnect(_qr.get(), &QR::qrDataChanged, this, &ReceiveViewModel::onReceiverQRChanged);
+
 }
 
 void ReceiveViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& addr)
@@ -58,7 +53,6 @@ void ReceiveViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& 
     emit receiverAddressChanged();
     setIsPermanentAddress(addr.isPermanent());
     setAddressComment(QString::fromStdString(addr.m_label));
-    _qr->setAddr(beamui::toString(_receiverAddress.m_walletID));
     updateTransactionToken();
 }
 
@@ -73,7 +67,6 @@ void ReceiveViewModel::setAmountToReceive(QString value)
     if (amount != _amountToReceiveGrothes)
     {
         _amountToReceiveGrothes = amount;
-        _qr->setAmount(_amountToReceiveGrothes);
         emit amountReceiveChanged();
         updateTransactionToken();
     }
@@ -98,9 +91,9 @@ QString ReceiveViewModel::getReceiverAddress() const
     return beamui::toString(_receiverAddress.m_walletID);
 }
 
-QString ReceiveViewModel::getReceiverAddressQR() const
+QString ReceiveViewModel::getReceiverAddressForExchange() const
 {
-    return _qr->getEncoded();
+    return beamui::toString(_receiverAddressForExchange.m_walletID);
 }
 
 void ReceiveViewModel::onReceiverQRChanged()
@@ -113,7 +106,7 @@ void ReceiveViewModel::initialize(const QString& address)
     beam::wallet::WalletID walletID;
     if (address.isEmpty() || !walletID.FromHex(address.toStdString()))
     {
-        generateNewAddress();
+        generateNewReceiverAddress();
     }
     else
     {
@@ -121,7 +114,7 @@ void ReceiveViewModel::initialize(const QString& address)
     }
 }
 
-void ReceiveViewModel::generateNewAddress()
+void ReceiveViewModel::generateNewReceiverAddress()
 {
     _receiverAddress = {};
     emit receiverAddressChanged();
@@ -140,7 +133,6 @@ void ReceiveViewModel::setTranasctionToken(const QString& value)
     if (_token != value)
     {
         _token = value;
-        _tokenQr->setAddr(value);
         emit transactionTokenChanged();
     }
 }
@@ -148,11 +140,6 @@ void ReceiveViewModel::setTranasctionToken(const QString& value)
 QString ReceiveViewModel::getTransactionToken() const
 {
     return _token;
-}
-
-QString ReceiveViewModel::getTransactionTokenQR() const
-{
-    return _tokenQr->getEncoded();
 }
 
 QString ReceiveViewModel::getOfflineToken() const
@@ -235,9 +222,13 @@ void ReceiveViewModel::updateTransactionToken()
     {
         // change tx type
         _txParameters.SetParameter(TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
-
+        setOfflineToken("");
+    }
+    else
+    {
         TxParameters offlineParameters = _txParameters;
-            // add a vouchers
+        offlineParameters.SetParameter(TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
+        // add a vouchers
         auto vouchers = _walletModel.generateVouchers(_receiverAddress.m_OwnID, 10);
         if (!vouchers.empty())
         {
@@ -250,10 +241,7 @@ void ReceiveViewModel::updateTransactionToken()
             setOfflineToken("");
         }
     }
-    else
-    {
-        setOfflineToken("");
-    }
+
     setTranasctionToken(QString::fromStdString(std::to_string(_txParameters)));
 }
 

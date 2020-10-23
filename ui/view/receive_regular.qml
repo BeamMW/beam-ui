@@ -6,6 +6,7 @@ import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
 import Beam.Wallet 1.0
 import "controls"
+import "./utils.js" as Utils
 
 ColumnLayout {
     id: receiveView
@@ -145,8 +146,8 @@ ColumnLayout {
                     Layout.preferredWidth: 400
                     spacing:            10
                     Panel {
-                        //% "Transaction info"
-                        title:                   qsTrId("general-transaction-info")
+                        //% "Address Type"
+                        title:                   qsTrId("general-address-type")
                         Layout.fillWidth:        true
                         content: 
                         ColumnLayout {
@@ -196,51 +197,6 @@ ColumnLayout {
                             }
 
                             RowLayout {
-                                spacing:    10
-                                visible:    !viewModel.isNonInteractive && !viewModel.isShieldedTx;
-                                SFText {
-                                    //% "One-time use"
-                                    text:  qsTrId("address-one-time")
-                                    color: permanentTokenSwitch.checked ? Style.content_secondary : Style.active
-                                    font.pixelSize: 14
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        acceptedButtons: Qt.LeftButton
-                                        onClicked: {
-                                            permanentTokenSwitch.checked = !permanentTokenSwitch.checked;
-                                        }
-                                    }
-                                }
-
-                                CustomSwitch {
-                                    id:          permanentTokenSwitch
-                                    alwaysGreen: true
-                                    spacing:     0
-                                    padding:     0
-                                    checked:     viewModel.isPermanentAddress
-                                    Binding {
-                                        target:   viewModel
-                                        property: "isPermanentAddress"
-                                        value:    permanentTokenSwitch.checked
-                                    }
-                                }
-
-                                SFText {
-                                    //% "Permanent address"
-                                    text: qsTrId("address-permanent")
-                                    color: permanentTokenSwitch.checked ? Style.active : Style.content_secondary
-                                    font.pixelSize: 14
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        acceptedButtons: Qt.LeftButton
-                                        onClicked: {
-                                            permanentTokenSwitch.checked = !permanentTokenSwitch.checked;
-                                        }
-                                    }
-                                }
-                            }
-
-                            RowLayout {
                                 Layout.preferredHeight: 20
                                 visible:                viewModel.isShieldedTx
                                 SFText {
@@ -269,7 +225,7 @@ ColumnLayout {
                         }
                     }
                     //
-                    // Request
+                    // Requested amount
                     //
                     FoldablePanel {
                         //% "Requested amount"
@@ -348,12 +304,85 @@ ColumnLayout {
                     TokenInfoPanel {
                         Layout.fillWidth:   true
                         //% "Online address"
-                        title:              qsTrId("wallet-receive-online-address")
-                        //% "(for wallet)"
-                        titleTip:           qsTrId("wallet-receive-address-for-wallet")
+                        title:              !viewModel.isShieldedTx ? 
+                            //% "Online address"
+                            qsTrId("wallet-receive-online-address")
+                            :
+                            //% "Max Privacy Address"
+                            qsTrId("wallet-receive-max-privacy-address")
+                        headerText:         !viewModel.isShieldedTx ? 
+                            //% "(for wallet)"
+                            qsTrId("wallet-receive-address-for-wallet")
+                            :
+                            ""
+                        //% "Online address (for wallet)"
+                        addressLabel:       qsTrId("wallet-receive-address-for-wallet-label")
                         token:              viewModel.transactionToken
-                        qrCode:             viewModel.isShieldedTx && viewModel.isNonInteractive ? "" : viewModel.transactionTokenQR
                         isValidToken:       receiveView.isValid()
+                        onTokenCopied: {
+                            receiveView.saveAddressAndClose();
+                        }
+                        headerItem: RowLayout {
+                            anchors.bottomMargin: 20
+                            spacing:    10
+                            visible:    !viewModel.isShieldedTx
+                            SFText {
+                                //% "One-time use"
+                                text:  qsTrId("address-one-time")
+                                color: permanentTokenSwitch.checked ? Style.content_secondary : Style.active
+                                font.pixelSize: 14
+                                MouseArea {
+                                    anchors.fill: parent
+                                    acceptedButtons: Qt.LeftButton
+                                    onClicked: {
+                                        permanentTokenSwitch.checked = !permanentTokenSwitch.checked;
+                                    }
+                                }
+                            }
+                            
+                            CustomSwitch {
+                                id:          permanentTokenSwitch
+                                alwaysGreen: true
+                                spacing:     0
+                                padding:     0
+                                checked:     viewModel.isPermanentAddress
+                                Binding {
+                                    target:   viewModel
+                                    property: "isPermanentAddress"
+                                    value:    permanentTokenSwitch.checked
+                                }
+                            }
+                            
+                            SFText {
+                                //% "Permanent"
+                                text: qsTrId("address-permanent")
+                                color: permanentTokenSwitch.checked ? Style.active : Style.content_secondary
+                                font.pixelSize: 14
+                                MouseArea {
+                                    anchors.fill: parent
+                                    acceptedButtons: Qt.LeftButton
+                                    onClicked: {
+                                        permanentTokenSwitch.checked = !permanentTokenSwitch.checked;
+                                    }
+                                }
+                            }
+                            Item {
+                                Layout.fillWidth:   true
+                            }
+                        }
+                    }
+                    TokenInfoPanel {
+                        Layout.fillWidth:     true
+                        title:                qsTrId("wallet-receive-online-address")
+                        //% "(for exchange or mining pool)"
+                        headerText:           qsTrId("wallet-receive-address-for-exchange")
+                        //% "Online address (for exchange or mining pool)"
+                        addressLabel:         qsTrId("wallet-receive-address-for-exchange-label")
+                        token:                viewModel.receiverAddress//ForExchange
+                        amount:               viewModel.amountToReceive
+                        isValidToken:         receiveView.isValid()
+                        visible:              !viewModel.isShieldedTx
+                        defaultAddressType:   true // permanent
                         onTokenCopied: {
                             receiveView.saveAddressAndClose();
                         }
@@ -365,71 +394,12 @@ ColumnLayout {
                         //% "(for wallet)"
                         titleTip:             qsTrId("wallet-receive-address-for-wallet")
                         token:                viewModel.offlineToken
-                        qrCode:               ""
+                        showQrCode:           false
                         isValidToken:         receiveView.isValid()
-                        visible:              viewModel.isShieldedTx && viewModel.offlineToken.length > 0
+                        visible:              viewModel.offlineToken.length > 0
                         ignoreStoredVouchers: true
                         onTokenCopied: {
                             receiveView.saveAddressAndClose();
-                        }
-                    }
-                    TokenInfoPanel {
-                        Layout.fillWidth:   true
-                        title:              qsTrId("wallet-receive-online-address")
-                        //% "(for exchange or mining pool)"
-                        titleTip:           qsTrId("wallet-receive-address-for-exchange")
-                        token:              viewModel.receiverAddress
-                        qrCode:             viewModel.receiverAddressQR
-                        isValidToken:       receiveView.isValid()
-                        visible:            disabledLabel.text.length == 0
-                        defaultAddressType: true // permanent
-                        onTokenCopied: {
-                            receiveView.saveAddressAndClose();
-                        }
-                    }
-                    Panel {
-                        Layout.fillWidth:   true
-                        title:              qsTrId("wallet-receive-online-address")
-                        //% "(for exchange or mining pool)"
-                        titleTip:           qsTrId("wallet-receive-address-for-exchange")
-                        visible:            disabledLabel.text.length > 0
-                        content: ColumnLayout {
-                            spacing:        20
-                            SFText {
-                                id:                     disabledLabel
-                                Layout.fillWidth:       true
-                                Layout.preferredWidth:  332
-                                font.pixelSize:         14
-                                font.italic:            true
-                                wrapMode:               Text.WordWrap
-                                color:                  Style.content_secondary
-                                text:                   !viewModel.isPermanentAddress && !viewModel.isShieldedTx ?
-                                                            //% "Exchanges or mining pools support only permanent address now."
-                                                            qsTrId("wallet-receive-exchanges-one-time-not-supported")
-                                                            :
-                                                            viewModel.isShieldedTx ?
-                                                                    //% "Exchanges or mining pools support only regular transaction now."
-                                                                    qsTrId("wallet-receive-exchanges-not-supported2") : ""
-                            }
-                            LinkButton {
-                                //% "Switch to permanent address"
-                                text:       qsTrId("switch-permanent")
-                                visible:    !viewModel.isPermanentAddress && !viewModel.isShieldedTx
-                                linkColor:  Style.active//Style.accent_incoming
-                                onClicked: {
-                                    viewModel.isPermanentAddress = true;
-                                }
-                            }
-                            LinkButton {
-                                //% "Switch to regular transaction"
-                                text:       qsTrId("switch-regular")
-                                visible:    viewModel.isShieldedTx 
-                                linkColor:  Style.active//Style.accent_incoming
-                                onClicked: {
-                                    viewModel.isShieldedTx = false;
-                                    viewModel.isNonInteractive= false;
-                                }
-                            }
                         }
                     }
                 }
@@ -440,22 +410,22 @@ ColumnLayout {
             //
             SFText {
                 Layout.alignment:      Qt.AlignHCenter
-                Layout.preferredWidth: 298
+                Layout.preferredWidth: 428
                 Layout.topMargin:      30
                 font.pixelSize:        14
                 font.italic:           true
-                color:                 Style.content_main
+                color:                 Style.content_disabled
                 wrapMode:              Text.WordWrap
                 horizontalAlignment:   Text.AlignHCenter
-                //% "To spend the received Max privacy coins the min transaction fee will be %1 GROTH."
-                text: qsTrId("wallet-receive-addr-message").arg(BeamGlobals.minFeeBeam(true))
+                /*% "Min transaction fee to send Max privacy coins is %1."*/
+                text: qsTrId("wallet-receive-addr-message").arg("~%1 BEAM".arg(Utils.uiStringToLocale("0.01")))
                 visible:               viewModel.isShieldedTx
             }
 
             SFText {
                 Layout.alignment:      Qt.AlignHCenter
                 Layout.preferredWidth: 338
-                Layout.topMargin:      20
+                Layout.topMargin:      30
                 Layout.bottomMargin:   50
                 font.pixelSize:        14
                 font.italic:           true
@@ -464,7 +434,7 @@ ColumnLayout {
                 horizontalAlignment:   Text.AlignHCenter
                 //% "For the transaction to complete, you should get online during the 12 hours after Beams are sent."
                 text: qsTrId("wallet-receive-text-online-time")
-                visible:               !viewModel.isNonInteractive
+                visible:               !viewModel.isShieldedTx
             }
 
             Item {
