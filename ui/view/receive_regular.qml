@@ -318,7 +318,7 @@ ColumnLayout {
                             :
                             //% "Max Privacy Address"
                             qsTrId("wallet-receive-max-privacy-address")
-                        headerText:         !viewModel.isShieldedTx ? 
+                        titleTip:         !viewModel.isShieldedTx ?
                             //% "(for wallet)"
                             qsTrId("wallet-receive-address-for-wallet")
                             :
@@ -384,7 +384,7 @@ ColumnLayout {
                         Layout.fillWidth:     true
                         title:                qsTrId("wallet-receive-online-address")
                         //% "(for exchange or mining pool)"
-                        headerText:           qsTrId("wallet-receive-address-for-exchange")
+                        titleTip:           qsTrId("wallet-receive-address-for-exchange")
                         //% "Online address (for exchange or mining pool)"
                         addressLabel:         qsTrId("wallet-receive-address-for-exchange-label")
                         token:                viewModel.receiverAddressForExchange
@@ -402,7 +402,7 @@ ColumnLayout {
                         //% "Offline address"
                         title:                qsTrId("wallet-receive-offline-address")
                         //% "(for wallet)"
-                        headerText:           qsTrId("wallet-receive-address-for-wallet")
+                        titleTip:             qsTrId("wallet-receive-address-for-wallet")
                         footerVisible:        true
                         footerItem: SFText {
                             font.pixelSize:        14
