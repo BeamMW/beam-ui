@@ -74,9 +74,9 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     connect(&_walletModel, &WalletModel::generatedNewAddress, this, &ReceiveSwapViewModel::onGeneratedNewAddress);
     connect(&_walletModel, &WalletModel::swapParamsLoaded, this, &ReceiveSwapViewModel::onSwapParamsLoaded);
     connect(&_walletModel, SIGNAL(newAddressFailed()), this, SIGNAL(newAddressFailed()));
-    connect(&_walletModel, &WalletModel::stateIDChanged, this, &ReceiveSwapViewModel::updateTransactionToken);
-    connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyLabelChanged()));
-    connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
+    connect(&_walletModel, &WalletModel::walletStatusChanged, this, &ReceiveSwapViewModel::updateTransactionToken);
+    connect(&_exchangeRatesManager, &ExchangeRatesManager::rateUnitChanged, this, &ReceiveSwapViewModel::secondCurrencyUnitNameChanged);
+    connect(&_exchangeRatesManager, &ExchangeRatesManager::activeRateChanged, this, &ReceiveSwapViewModel::secondCurrencyRateChanged);
     connect(&_walletModel, &WalletModel::shieldedCoinsSelectionCalculated, this, &ReceiveSwapViewModel::onShieldedCoinsSelectionCalculated);
 
     generateNewAddress();
@@ -228,7 +228,7 @@ void ReceiveSwapViewModel::setAmountSent(QString value)
         if (isPreviouseSendWasZero && _amountToReceiveGrothes) emit rateChanged();
         emit amountSentChanged();
         updateTransactionToken();
-        if (_sentCurrency == Currency::CurrBeam && _walletModel.hasShielded())
+        if (_sentCurrency == Currency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID))
         {
             if (isPreviouseGreaterThanNow)
             {
@@ -258,7 +258,7 @@ void ReceiveSwapViewModel::setSentFee(unsigned int value)
         emit secondCurrencyRateChanged();
         storeSwapParams();
 
-        if (_sentCurrency == Currency::CurrBeam && _walletModel.hasShielded() && _amountSentGrothes)
+        if (_sentCurrency == Currency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID) && _amountSentGrothes)
         {
             _feeChangedByUI = true;
             _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes);
@@ -391,7 +391,7 @@ bool ReceiveSwapViewModel::isEnough() const
 
     if (_sentCurrency == Currency::CurrBeam)
     {
-        return _walletModel.getAvailable() >= total;
+        return _walletModel.getAvailable(beam::Asset::s_BeamID) >= total;
     }
 
     // TODO sentFee is fee rate. should be corrected
@@ -526,7 +526,7 @@ unsigned int ReceiveSwapViewModel::getMinimalBeamFeeGrothes() const
     return _minimalBeamFeeGrothes;
 }
 
-QString ReceiveSwapViewModel::getSecondCurrencyLabel() const
+QString ReceiveSwapViewModel::getSecondCurrencyUnitName() const
 {
-    return beamui::getCurrencyLabel(_exchangeRatesManager.getRateUnitRaw());
+    return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateUnitRaw());
 }

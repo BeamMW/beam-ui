@@ -170,6 +170,16 @@ set(UI_SRC
     viewmodel/el_seed_validator.cpp
     viewmodel/wallet/token_item.h
     viewmodel/wallet/token_item.cpp
+    viewmodel/wallet/assets_view.h
+    viewmodel/wallet/assets_view.cpp
+    viewmodel/wallet/assets_list.h
+    viewmodel/wallet/assets_list.cpp
+    viewmodel/wallet/asset_object.h
+    viewmodel/wallet/asset_object.cpp
+    viewmodel/wallet/assets_manager.h
+    viewmodel/wallet/assets_manager.cpp
+    viewmodel/wallet/info_view.cpp
+    viewmodel/wallet/info_view.h
 
     model/wallet_model.h
     model/wallet_model.cpp

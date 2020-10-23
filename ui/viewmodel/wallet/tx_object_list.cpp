@@ -135,6 +135,7 @@ max privacy (offline)"*/
 
 TxObjectList::TxObjectList()
 {
+    connect(&_amgr, &AssetsManager::assetInfo, this, &TxObjectList::onAssetInfo);
 }
 
 QHash<int, QByteArray> TxObjectList::roleNames() const
@@ -147,7 +148,7 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::AmountGeneralWithCurrencySort), "amountGeneralWithCurrencySort" },
         { static_cast<int>(Roles::AmountGeneral), "amountGeneral" },
         { static_cast<int>(Roles::AmountGeneralSort), "amountGeneralSort" },
-        { static_cast<int>(Roles::SecondCurrencyRate), "secondCurrencyRate" },
+        { static_cast<int>(Roles::Rate), "rate" },
         { static_cast<int>(Roles::AddressFrom), "addressFrom" },
         { static_cast<int>(Roles::AddressFromSort), "addressFromSort" },
         { static_cast<int>(Roles::AddressTo), "addressTo" },
@@ -178,6 +179,8 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::ReceiverIdentity), "receiverIdentity"},
         { static_cast<int>(Roles::IsMaxPrivacy), "isMaxPrivacy"},
         { static_cast<int>(Roles::IsOfflineToken), "isOfflineToken"},
+        { static_cast<int>(Roles::UnitName), "unitName"},
+        { static_cast<int>(Roles::Icon), "icon"},
         { static_cast<int>(Roles::IsSent), "isSent"},
         { static_cast<int>(Roles::IsReceived), "isReceived"}
     };
@@ -207,67 +210,50 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
         }
 
         case Roles::AmountGeneralWithCurrency:
-            return value->getAmountWithCurrency();
+            return beamui::AmountToUIString(value->getAmountValue(), _amgr.getUnitName(value->getAssetId()));
         case Roles::AmountGeneralWithCurrencySort:
             return static_cast<qulonglong>(value->getAmountValue());
         case Roles::AmountGeneral:
             return value->getAmount();
         case Roles::AmountGeneralSort:
             return static_cast<qulonglong>(value->getAmountValue());
-        case Roles::SecondCurrencyRate:
-            return value->getSecondCurrencyRate();
-            
+        case Roles::Rate:
+            return value->getRate();
         case Roles::AddressFrom:
         case Roles::AddressFromSort:
             return value->getAddressFrom();
-
         case Roles::AddressTo:
         case Roles::AddressToSort:
             return value->getAddressTo();
-
         case Roles::Status:
         case Roles::StatusSort:
             return getStatusTextTranslated(value->getStatus(), value->isOfflineToken());
-
         case Roles::Fee:
             return value->getFee();
-
         case Roles::Comment:
             return value->getComment();
-
         case Roles::TxID:
             return value->getTransactionID();
-
         case Roles::KernelID:
             return value->getKernelID();
-
         case Roles::FailureReason:
             return value->getFailureReason();
-
         case Roles::IsCancelAvailable:
             return value->isCancelAvailable();
-
         case Roles::IsDeleteAvailable:
             return value->isDeleteAvailable();
-
         case Roles::IsSelfTransaction:
             return value->isSelfTx();
-
         case Roles::IsMaxPrivacy:
             return value->isMaxPrivacy();
-
         case Roles::IsOfflineToken:
             return value->isOfflineToken();
-
         case Roles::IsIncome:
             return value->isIncome();
-
         case Roles::IsInProgress:
             return value->isInProgress();
-
         case Roles::IsPending:
             return value->isPending();
-
         case Roles::IsCompleted:
             return value->isCompleted();
 
@@ -279,19 +265,14 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
 
         case Roles::IsCanceled:
             return value->isCanceled();
-
         case Roles::IsFailed:
             return value->isFailed();
-
         case Roles::IsExpired:
             return value->isExpired();
-
         case Roles::HasPaymentProof:
             return value->hasPaymentProof();
-
         case Roles::RawTxID:
             return QVariant::fromValue(value->getTxID());
-
         case Roles::Search: 
         {
             QString r = value->getTransactionID();
@@ -319,8 +300,21 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return value->getSenderIdentity();
         case Roles::ReceiverIdentity:
             return value->getReceiverIdentity();
-
+        case Roles::UnitName:
+            return _amgr.getUnitName(value->getAssetId());
+        case Roles::Icon:
+            return _amgr.getIcon(value->getAssetId());
         default:
             return QVariant();
+    }
+}
+
+void TxObjectList::onAssetInfo(beam::Asset::ID assetId)
+{
+    for (auto it = m_list.begin(); it != m_list.end(); ++it) {
+        if ((*it)->getAssetId() == assetId) {
+           const auto idx = it - m_list.begin();
+           ListModel::touch(idx);
+        }
     }
 }

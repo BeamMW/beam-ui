@@ -8,10 +8,14 @@ import "."
 Pane {
     id: control
 
-    property alias title:      headerTitle.text
-    property alias headerText: headerTextLabel.text
-    property alias content:    placeholder.contentItem
-    property bool  folded:     true
+    property string title
+    property string titleTip
+
+    property bool  folded:          true
+    property var   content:         null
+    property var   headerContent:   null
+    property int   minHeaderHeight: 0
+
     spacing: 0
     padding: 20
 
@@ -20,53 +24,103 @@ Pane {
         clip:    folded
         RowLayout {
             Layout.alignment: Qt.AlignTop
-            SFText {
-                id:                 headerTitle
-                Layout.fillWidth:   headerTextLabel.text.length == 0
-                color:              Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
-        
-                font {
-                    styleName:      "Bold"
-                    weight:         Font.Bold
-                    pixelSize:      14
-                    letterSpacing:  3.11
-                    capitalization: Font.AllUppercase
+            Layout.minimumHeight: minHeaderHeight
+            spacing: 0
+
+            RowLayout {
+                Layout.fillHeight: true
+                spacing: 0
+
+                SFText {
+                    id:         headerTitle
+                    text:       title
+                    color:      Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+
+                    font {
+                        styleName:      "Bold"
+                        weight:         Font.Bold
+                        pixelSize:      14
+                        letterSpacing:  3.11
+                        capitalization: Font.AllUppercase
+                    }
+
+                    MouseArea {
+                        anchors.fill:     parent
+                        acceptedButtons:  Qt.LeftButton
+                        cursorShape:      Qt.PointingHandCursor
+                        onClicked: {
+                            control.folded = !control.folded;
+                        }
+                    }
                 }
-        
-                visible:              text.length > 0
+
+                Item {
+                    width: 5
+                    Layout.fillHeight: true
+                    visible: titleTip.length != 0
+
+                    MouseArea {
+                        anchors.fill:     parent
+                        acceptedButtons:  Qt.LeftButton
+                        cursorShape:      Qt.PointingHandCursor
+                        onClicked: {
+                            control.folded = !control.folded;
+                        }
+                    }
+                }
+
+                SFText {
+                    color:              Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+                    text:               titleTip
+                    visible:            titleTip.length != 0
+
+                    font {
+                        styleName:      "Bold"
+                        weight:         Font.Bold
+                        pixelSize:      14
+                        letterSpacing:  0.35
+                    }
+
+                    MouseArea {
+                        anchors.fill:     parent
+                        acceptedButtons:  Qt.LeftButton
+                        cursorShape:      Qt.PointingHandCursor
+                        onClicked: {
+                            control.folded = !control.folded;
+                        }
+                    }
+                }
+            }
+
+            Item {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                visible: !headerContent
 
                 MouseArea {
-                    anchors.fill:       parent
-                    acceptedButtons:    Qt.LeftButton
-                    cursorShape:        Qt.PointingHandCursor
+                    anchors.fill:     parent
+                    acceptedButtons:  Qt.LeftButton
+                    cursorShape:      Qt.PointingHandCursor
                     onClicked: {
                         control.folded = !control.folded;
                     }
                 }
             }
-            SFText {
-                id:                 headerTextLabel
-                Layout.fillWidth:   true
-                color:              Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
-        
-                font {
-                    styleName:      "Bold"
-                    weight:         Font.Bold
-                    pixelSize:      14
-                    letterSpacing:  0.35
-                }
-        
-                visible:              text.length > 0
+
+            Item {
+                width: 5
+                Layout.fillHeight: true
 
                 MouseArea {
-                    anchors.fill:       parent
-                    acceptedButtons:    Qt.LeftButton
-                    cursorShape:        Qt.PointingHandCursor
+                    anchors.fill:     parent
+                    acceptedButtons:  Qt.LeftButton
+                    cursorShape:      Qt.PointingHandCursor
                     onClicked: {
                         control.folded = !control.folded;
                     }
                 }
             }
+
             SvgImage {
                 Layout.alignment:       Qt.AlignCenter
                 Layout.maximumHeight:   8
@@ -80,11 +134,31 @@ Pane {
                         control.folded = !control.folded;
                     }
                 }
-            } 
+            }
+
+            Item {
+                Layout.fillHeight: true
+                Layout.fillWidth:  true
+                visible: headerPlaceholder.visible
+
+                MouseArea {
+                    anchors.fill:      parent
+                    acceptedButtons:   Qt.LeftButton
+                    cursorShape:       Qt.PointingHandCursor
+                    onClicked: {
+                        control.folded = !control.folded;
+                    }
+                }
+            }
+
+            Control {
+                id:  headerPlaceholder
+                visible: headerContent && !folded
+                contentItem: headerContent
+            }
         }
 
         Control {
-            id:                     placeholder
             Layout.fillWidth:       true
             Layout.topMargin:       folded ? 0 : 20
             Layout.alignment:       Qt.AlignTop

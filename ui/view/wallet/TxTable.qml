@@ -5,7 +5,7 @@ import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
 import Beam.Wallet 1.0
-import "."
+import "../controls"
 
 Control {
     id: control
@@ -165,17 +165,17 @@ Control {
             Layout.fillHeight : true
             Layout.bottomMargin: 9
 
-            property int rowHeight: 56
-            property double resizableWidth: transactionsTable.width - actionsColumn.width
-            property double columnResizeRatio: resizableWidth / 810
+            property real rowHeight: 56
+            property real resizableWidth: transactionsTable.width - actionsColumn.width
+            property real columnResizeRatio: resizableWidth / 810
 
             selectionMode: SelectionMode.NoSelection
             sortIndicatorVisible: true
-            sortIndicatorColumn: 0
+            sortIndicatorColumn: 1
             sortIndicatorOrder: Qt.DescendingOrder
 
             onSortIndicatorColumnChanged: {
-                sortIndicatorOrder = sortIndicatorColumn != 0
+                sortIndicatorOrder = sortIndicatorColumn != 1
                     ? Qt.AscendingOrder
                     : Qt.DescendingOrder;
             }
@@ -207,6 +207,7 @@ Control {
                 backgroundColor: styleData.selected ? Style.row_selected : (styleData.alternate ? Style.background_row_even : Style.background_row_odd)
                 property var myModel: parent.model
                 property bool hideFiltered: true
+
                 onLeftClick: function() {
                     if (!collapsed && searchBox.text.length && hideFiltered) {
                         hideFiltered = false;
@@ -241,12 +242,13 @@ Control {
                         qsTrId("tx-address-offline") :
                         //% "Online"
                         qsTrId("tx-address-online")
-                    secondCurrencyRate: txRolesMap && txRolesMap.secondCurrencyRate ? txRolesMap.secondCurrencyRate : ""
-                    secondCurrencyLabel: tableViewModel.secondCurrencyLabel
+                    rate:               txRolesMap && txRolesMap.rate ? txRolesMap.rate : ""
+                    rateUnit:           tableViewModel.rateUnit
                     searchFilter:       searchBox.text
                     hideFiltered:       rowItem.hideFiltered
                     token:              txRolesMap ? txRolesMap.token : ""
                     isMaxPrivacy:       txRolesMap && txRolesMap.isMaxPrivacy ? true : false
+                    unitName:           txRolesMap ? txRolesMap.unitName: ""
 
                     onSearchFilterChanged: function(text) {
                         rowItem.collapsed = searchBox.text.length == 0;
@@ -302,6 +304,27 @@ Control {
             }
 
             TableViewColumn {
+                role:      "icon"
+                width:     30
+                movable:   false
+                resizable: false
+
+                delegate: Item {
+                    width:  35
+                    height: transactionsTable.rowHeight
+
+                    SvgImage {
+                        id: assetIcon
+                        source: model ? model.icon : ""
+                        x: 15
+                        y: transactionsTable.rowHeight / 2 - this.height / 2
+                        width:  20
+                        height: 20
+                    }
+                }
+            }
+
+            TableViewColumn {
                 role: "timeCreated"
                 //% "Created on"
                 title: qsTrId("wallet-txs-date-time")
@@ -310,6 +333,7 @@ Control {
                 movable: false
                 resizable: false
             }
+
             TableViewColumn {
                 role: "addressFrom"
                 //% "From"
@@ -319,6 +343,7 @@ Control {
                 movable: false
                 resizable: false
             }
+
             TableViewColumn {
                 role: "addressTo"
                 //% "To"
@@ -328,6 +353,7 @@ Control {
                 movable: false
                 resizable: false
             }
+
             TableViewColumn {
                 //role: "amountGeneral"
                 role: "amountGeneralWithCurrency"
@@ -350,23 +376,10 @@ Control {
                             color: parent.isIncome ? Style.accent_incoming : Style.accent_outgoing
                             onCopyText: BeamGlobals.copyToClipboard(!!model ? model.amountGeneral : "")
                         }
-                        //BeamAmount {
-                        //    anchors.verticalCenter:  parent.verticalCenter
-                        //    anchors.left:            parent.left
-                        //    anchors.right:           parent.right
-                        //    anchors.leftMargin:      20
-                        //    prefix:                  (parent.isIncome ? "+ " : "- ")
-                        //    color:                   parent.isIncome ? Style.accent_incoming : Style.accent_outgoing
-                        //    amount:                  styleData.value
-                        //    lightFont:               false
-                        //    boldFont:                true
-                        //    fontSizeMode:            Text.Fit
-                        //    secondCurrencyLabel:     tableViewModel.secondCurrencyLabel
-                        //    secondCurrencyRateValue: tableViewModel.secondCurrencyRateValue
-                        //}
                     }
                 }
             }
+
             TableViewColumn {
                 id: statusColumn
                 role: "status"
@@ -464,6 +477,7 @@ Control {
                     }
                 }
             }
+
             TableViewColumn {
                 id: actionsColumn
                 elideMode: Text.ElideRight

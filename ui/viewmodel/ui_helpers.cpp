@@ -37,7 +37,7 @@ namespace beamui
         return QString::fromStdString(id);
     }
     
-    QString getCurrencyLabel(Currencies currency)
+    QString getCurrencyUnitName(Currencies currency)
     {
         switch (currency)
         {
@@ -51,9 +51,9 @@ namespace beamui
         }
     }
 
-    QString getCurrencyLabel(beam::wallet::ExchangeRate::Currency currency)
+    QString getCurrencyUnitName(beam::wallet::ExchangeRate::Currency currency)
     {
-        return getCurrencyLabel(convertExchangeRateCurrencyToUiCurrency(currency));
+        return getCurrencyUnitName(convertExchangeRateCurrencyToUiCurrency(currency));
     }
 
     QString getFeeRateLabel(Currencies currency)
@@ -96,38 +96,29 @@ namespace beamui
         return "";
     }
 
+    int beamDecimals()
+    {
+         static auto beamDecimals = static_cast<uint8_t>(std::log10(Rules::Coin));
+         return beamDecimals;
+    }
+
+    QString AmountToUIString(const Amount& value, const QString& unitName, uint8_t decimalPlaces)
+    {
+        const auto samount = libbitcoin::encode_base10(value, decimalPlaces ? decimalPlaces : beamDecimals());
+        return QString::fromStdString(samount) + (unitName.isEmpty() ? "" : " " + unitName);
+    }
+
     /**
      *  Convert amount value to printable format.
-     *  @value      Value in coin quants (satoshi, groth and s.o.). 
+     *  @value      Value in coin quants (satoshi, groth and s.o.).
      *              Unsigned integer with the fixed decimal point.
      *              Decimal point position depends on @coinType.
      *  @coinType   Specify coint type.
      */
     QString AmountToUIString(const Amount& value, Currencies coinType)
     {
-        static uint8_t beamDecimals = static_cast<uint8_t>(std::log10(Rules::Coin));
-        std::string amountString;
-        switch (coinType)
-        {
-            case Currencies::Usd:
-            case Currencies::Beam:
-                amountString = libbitcoin::encode_base10(value, beamDecimals);
-                break;
-            default:
-                amountString = libbitcoin::satoshi_to_btc(value);
-        }
-
-        QString amount = QString::fromStdString(amountString);
-        QString coinLabel = getCurrencyLabel(coinType);
-
-        if (coinLabel.isEmpty())
-        {
-            return amount;
-        }
-        else
-        {
-            return amount + " " + coinLabel;
-        }
+        const auto decimals = (coinType == Currencies::Usd || coinType == Currencies::Beam) ? beamDecimals() : libbitcoin::btc_decimal_places;
+        return AmountToUIString(value, getCurrencyUnitName(coinType), decimals);
     }
 
     QString AmountInGrothToUIString(const beam::Amount& value)

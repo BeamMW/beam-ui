@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include <QAbstractListModel>
 Q_DECLARE_METATYPE(QModelIndex)
 template <typename T>
@@ -47,6 +49,14 @@ public:
             return 0;
         }
         return m_list.size();
+    }
+
+    void insert(const T& item)
+    {
+        int row = m_list.size();
+        beginInsertRows(QModelIndex(), row,row + 1);
+        m_list.push_back(item);
+        endInsertRows();
     }
 
     void insert(const std::vector<T>& items)
@@ -129,6 +139,18 @@ public:
     auto end()
     {
         return m_list.end();
+    }
+
+    bool touch(int index)
+    {
+        if (index < 0 || index >= m_list.size())
+        {
+            return false;
+        }
+
+        const auto qindex = createIndex(index, 0);
+        emit dataChanged(qindex, qindex);
+        return true;
     }
 
 protected:

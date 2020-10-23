@@ -126,11 +126,6 @@ QString TxObject::getComment() const
     return QString(str.c_str()).trimmed();
 }
 
-QString TxObject::getAmountWithCurrency() const
-{
-    return AmountToUIString(m_tx.m_amount, Currencies::Beam);
-}
-
 QString TxObject::getAmount() const
 {
     return AmountToUIString(m_tx.m_amount);
@@ -141,10 +136,14 @@ beam::Amount TxObject::getAmountValue() const
     return m_tx.m_amount;
 }
 
-QString TxObject::getSecondCurrencyRate() const
+QString TxObject::getRate() const
 {
-    auto exchangeRatesOptional = getTxDescription().GetParameter<std::vector<ExchangeRate>>(TxParameterID::ExchangeRates);
+    if (m_tx.m_assetId != Asset::s_BeamID)
+    {
+        return "0";
+    }
 
+    auto exchangeRatesOptional = getTxDescription().GetParameter<std::vector<ExchangeRate>>(TxParameterID::ExchangeRates);
     if (exchangeRatesOptional)
     {
         std::vector<ExchangeRate>& rates = *exchangeRatesOptional;
@@ -161,6 +160,7 @@ QString TxObject::getSecondCurrencyRate() const
             return AmountToUIString(search->m_rate);
         }
     }
+
     return "0";
 }
 
@@ -458,6 +458,11 @@ QString TxObject::getSenderIdentity() const
 QString TxObject::getReceiverIdentity() const
 {
     return QString::fromStdString(m_tx.getReceiverIdentity());
+}
+
+beam::Asset::ID TxObject::getAssetId() const
+{
+    return m_tx.m_assetId;
 }
 
 bool TxObject::hasPaymentProof() const

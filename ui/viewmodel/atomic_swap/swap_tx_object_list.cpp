@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "swap_tx_object_list.h"
+#include "viewmodel/ui_helpers.h"
 
 SwapTxObjectList::SwapTxObjectList()
 {
@@ -104,13 +105,12 @@ auto SwapTxObjectList::data(const QModelIndex &index, int role) const -> QVarian
         }
 
         case Roles::AmountGeneralWithCurrency:
-            return value->getAmountWithCurrency();
+            return beamui::AmountToUIString(value->getAmountValue(), beamui::Currencies::Beam);
         case Roles::AmountGeneral:
             return value->getAmount();
         case Roles::AmountGeneralSort:
         case Roles::AmountGeneralWithCurrencySort:
             return static_cast<qulonglong>(value->getAmountValue());
-
         case Roles::AddressFrom:
         case Roles::AddressFromSort:
             return value->getAddressFrom();

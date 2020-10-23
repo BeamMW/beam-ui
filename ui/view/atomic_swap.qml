@@ -233,12 +233,12 @@ Item {
                                 .arg(viewModel.activeTxCount)
                             : "";
                     }
-                    gradLeft: Style.swapCurrencyPaneGrLeftBEAM
-                    currencyIcon: "qrc:/assets/icon-beam.svg"
-                    amount: viewModel.beamAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                    valueSecondaryStr: activeTxCountStr()
-                    visible: true
+                    gradLeft:           Style.currencyPaneLeftBEAM
+                    currencyIcon:       "qrc:/assets/icon-beam.svg"
+                    amount:             viewModel.beamAvailable
+                    unitName:           BeamGlobals.beamUnit
+                    valueSecondaryStr:  activeTxCountStr()
+                    visible:            true
                 }
 
                 //% "Transaction is in progress"
@@ -267,21 +267,21 @@ Item {
                 function getSwapCurrencyPaneGradient(currency)  {
                     switch(currency) {
                         case Currency.CurrBitcoin:
-                            return Style.swapCurrencyPaneGrLeftBTC;
+                            return Style.currencyPaneLeftBTC;
                         case Currency.CurrLitecoin:
-                            return Style.swapCurrencyPaneGrLeftLTC;
+                            return Style.currencyPaneLeftLTC;
                         case Currency.CurrQtum:
-                            return Style.swapCurrencyPaneGrLeftQTUM;
+                            return Style.currencyPaneLeftQTUM;
                         case Currency.CurrBitcoinCash:
-                            return Style.swapCurrencyPaneGrLeftBCH;
+                            return Style.currencyPaneLeftBCH;
                         case Currency.CurrBitcoinSV:
-                            return Style.swapCurrencyPaneGrLeftBSV;
+                            return Style.currencyPaneLeftBSV;
                         case Currency.CurrDash:
-                            return Style.swapCurrencyPaneGrLeftDASH;
+                            return Style.currencyPaneLeftDASH;
                         case Currency.CurrDogecoin:
-                            return Style.swapCurrencyPaneGrLeftDOGE;
+                            return Style.currencyPaneLeftDOGE;
                         default:
-                            return Style.swapCurrencyPaneGrLeftBTC;
+                            return Style.currencyPaneLeftBTC;
                     }
                 }
 
@@ -292,12 +292,12 @@ Item {
                         gradLeft: amountPanes.getSwapCurrencyPaneGradient(modelData.currency)
                         currencyIcon: amountPanes.getCurrencyIcon(modelData.currency)
                         amount: modelData.hasActiveTx ? "" : modelData.available
-                        currencySymbol: BeamGlobals.getCurrencyLabel(modelData.currency)
+                        unitName: BeamGlobals.getCurrencyUnitName(modelData.currency)
                         valueSecondaryStr: activeTxStr()
                         isOk: modelData.isConnected
                         isConnecting: modelData.isConnecting
                         visible: BeamGlobals.haveSwapClient(modelData.currency)
-                        swapSettingsPane: BeamGlobals.getCurrencyLabel(modelData.currency)
+                        swapSettingsPane: BeamGlobals.getCurrencyUnitName(modelData.currency)
                         //% "Connecting..."
                         textConnecting: qsTrId("swap-connecting")
                         //% "Cannot connect to peer. Please check the address in Settings and try again."

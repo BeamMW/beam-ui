@@ -183,18 +183,17 @@ please review your settings and try again"
 
                         content:
                         AmountInput {
-                            id:               sendAmountInput
-                            //hasFee:           true
-                            currFeeTitle:     true
-                            amountIn:         viewModel.sendAmount
-                            currency:         viewModel.sendCurrency
-                            secondCurrencyRateValue:    viewModel.secondCurrencySendRateValue
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                            readOnlyA:        true
-                            multi:            false
-                            color:            Style.accent_outgoing
-                            currColor:        viewModel.receiveCurrency == viewModel.sendCurrency || getErrorText().length ? Style.validator_error : Style.content_main
-                            error:            getErrorText()
+                            id:           sendAmountInput
+                            currFeeTitle: true
+                            amountIn:     viewModel.sendAmount
+                            currencyIdx:  viewModel.sendCurrency
+                            rate:         viewModel.secondCurrencySendRate
+                            rateUnit:     viewModel.secondCurrencyUnitName
+                            readOnlyA:    true
+                            multi:        false
+                            color:        Style.accent_outgoing
+                            currColor:    viewModel.receiveCurrency == viewModel.sendCurrency || getErrorText().length ? Style.validator_error : Style.content_main
+                            error:        getErrorText()
 
                             function getErrorText() {
                                 if(!viewModel.isSendFeeOK) {
@@ -224,7 +223,6 @@ please review your settings and try again"
                         folded:                  false
                         content: FeeInput {
                             id:                         sendFeeInput
-                            //fee:                        viewModel.sendFee
                             currency:                   viewModel.sendCurrency
                             minFee:                     currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(viewModel.sentCurrency, false)
                             recommendedFee:             BeamGlobals.getRecommendedFee(viewModel.sendCurrency)
@@ -234,12 +232,8 @@ please review your settings and try again"
                             fillWidth:                  true
                             showSecondCurrency:         sendAmountInput.showSecondCurrency
                             isExchangeRateAvailable:    sendAmountInput.isExchangeRateAvailable
-                            secondCurrencyAmount:       sendAmountInput.getFeeInSecondCurrency(viewModel.sendFee)
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                            //minimumFeeNotificationText: viewModel.isShieldedTx ?
-                            //    //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
-                            //    qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
-                            //    ""
+                            rateAmount:                 sendAmountInput.getFeeInSecondCurrency(viewModel.sendFee)
+                            rateUnit:                   viewModel.secondCurrencyUnitName
                         }
 
                         Binding {
@@ -302,19 +296,18 @@ please review your settings and try again"
                         content:
 
                         AmountInput {
-                            id:                         receiveAmountInput
-                            //hasFee:           true
-                            currFeeTitle:               true
-                            amountIn:                   viewModel.receiveAmount
-                            currency:                   viewModel.receiveCurrency
-                            secondCurrencyRateValue:    viewModel.secondCurrencyReceiveRateValue
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                            readOnlyA:                  true
-                            multi:                      false
-                            color:                      Style.accent_incoming
-                            currColor:                  viewModel.receiveCurrency == viewModel.sendCurrency || getErrorText().length ? Style.validator_error : Style.content_main
-                            error:                      getErrorText()
-                            showTotalFee:               true
+                            id:            receiveAmountInput
+                            currFeeTitle:  true
+                            amountIn:      viewModel.receiveAmount
+                            currencyIdx:   viewModel.receiveCurrency
+                            rate:          viewModel.secondCurrencyReceiveRate
+                            rateUnit:      viewModel.secondCurrencyUnitName
+                            readOnlyA:     true
+                            multi:         false
+                            color:         Style.accent_incoming
+                            currColor:     viewModel.receiveCurrency == viewModel.sendCurrency || getErrorText().length ? Style.validator_error : Style.content_main
+                            error:         getErrorText()
+                            showTotalFee:  true
 
                             function getErrorText() {
                                 if(!viewModel.isReceiveFeeOK) {
@@ -348,12 +341,8 @@ please review your settings and try again"
                             fillWidth:                  true
                             showSecondCurrency:         receiveAmountInput.showSecondCurrency
                             isExchangeRateAvailable:    receiveAmountInput.isExchangeRateAvailable
-                            secondCurrencyAmount:       receiveAmountInput.getFeeInSecondCurrency(viewModel.receiveFee)
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                            //minimumFeeNotificationText: viewModel.isShieldedTx ?
-                            //    //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
-                            //    qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
-                            //    ""
+                            rateAmount:                 receiveAmountInput.getFeeInSecondCurrency(viewModel.receiveFee)
+                            rateUnit:                   viewModel.secondCurrencyUnitName
                         }
 
                         Binding {
@@ -454,8 +443,8 @@ please review your settings and try again"
                                     font.pixelSize:   14
                                     color:            Style.content_main
                                     text:             viewModel.isSendBeam
-                                        ? ["1", sendAmountInput.currencyLabel, "=", Utils.uiStringToLocale(viewModel.rate), receiveAmountInput.currencyLabel].join(" ")
-                                        : ["1", receiveAmountInput.currencyLabel, "=", Utils.uiStringToLocale(viewModel.rate), sendAmountInput.currencyLabel].join(" ")
+                                        ? ["1", sendAmountInput.currencyUnit, "=", Utils.uiStringToLocale(viewModel.rate), receiveAmountInput.currencyUnit].join(" ")
+                                        : ["1", receiveAmountInput.currencyUnit, "=", Utils.uiStringToLocale(viewModel.rate), sendAmountInput.currencyUnit].join(" ")
                                 }
 
 
@@ -509,18 +498,27 @@ please review your settings and try again"
                 onClicked: {
                     if (!validateCoin()) return;
 
+                    var unitName = BeamGlobals.getCurrencyUnitName(viewModel.sendCurrency)
+                    var onlineMessage =
+                        //% "Keep your wallet online. The swap normally takes about 1 hour to complete."
+                        qsTrId("send-swap-sconfirmation-online-time") + (viewModel.sendCurrency !== Currency.CurrBeam ?
+                        //% " Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled."
+                        qsTrId("send-swap-fee-warning").arg(unitName)
+                        : "")
+
                     const dialogComponent = Qt.createComponent("send_confirm.qml");
                     var dialogObject = dialogComponent.createObject(sendSwapView,
                         {
-                            swapMode: true,
-                            addressText: viewModel.receiverAddress,
-                            typeText: qsTrId("general-swap"),
-                            currency: viewModel.sendCurrency,
-                            amount: viewModel.sendAmount,
-                            fee: viewModel.sendFee,
-                            onAcceptedCallback: acceptedCallback,
-                            secondCurrencyRate: viewModel.secondCurrencySendRateValue,
-                            secondCurrencyLabel: viewModel.secondCurrencyLabel
+                            swapMode:       true,
+                            addressText:    viewModel.receiverAddress,
+                            typeText:       qsTrId("general-swap"),
+                            amount:         viewModel.sendAmount,
+                            unitName:       unitName,
+                            fee:            viewModel.sendFee,
+                            flatFee:        viewModel.sendCurrency == Currency.CurrBeam,
+                            acceptHandler:  acceptedCallback,
+                            rate:           viewModel.secondCurrencySendRateValue,
+                            rateUnit:       viewModel.secondCurrencyUnitName,
                         }).open();
 
                     function acceptedCallback() {

@@ -2,18 +2,18 @@ import QtQuick 2.11
 import QtQuick.Layouts 1.3
 import "../utils.js" as Utils
 import Beam.Wallet 1.0
+import "."
 
 Rectangle {
-    property color borderColor: Style.swapCurrencyOptionsBorder
+    property color borderColor: Style.currencyPaneBorder
     property int borderSize: 0
-    property alias rectOpacity: rect.opacity
-    property color gradLeft: Style.swapCurrencyPaneGrLeftBEAM
-    property color gradRight: Style.swapCurrencyPaneGrRight
+    property color gradLeft: Style.currencyPaneLeftBEAM
+    property color gradRight: Style.currencyPaneRight
     property string currencyIcon: ""
     property var currencyIcons: []
     property color stateIndicatorColor: Style.swapCurrencyStateIndicator
     property string amount: ""
-    property string currencySymbol: ""
+    property string unitName: ""
     property string valueSecondaryStr: ""
     property bool isOk: true
     property bool isConnecting: false
@@ -32,24 +32,18 @@ Rectangle {
     height: 67
     color: "transparent"
 
-    Rectangle {
+   PanelGradient {
         id: rect
-        width:  parent.height
-        height: parent.width
-        anchors.centerIn: parent
-        anchors.alignWhenCentered: false
-        rotation: 90
-        radius:   10
-        opacity: 0.3
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: gradRight }
-            GradientStop { position: 1.0; color: gradLeft }
-        }
-        border {
-            width: borderSize
-            color: borderColor
-        }
-    }
+
+        leftColor:  control.gradLeft
+        rightColor: control.gradRight
+        anchors.fill: parent
+
+        borderWidth:      control.borderSize
+        leftBorderColor:  control.borderColor
+        rightBorderColor: control.borderColor
+   }
+
     Item {
         anchors.fill: parent
 
@@ -95,11 +89,11 @@ Rectangle {
                     font.pixelSize: textSize
                     color: control.textColor
                     elide: Text.ElideRight
-                    text: currencySymbol.length ? [Utils.uiStringToLocale(amount), currencySymbol].join(" ") : Utils.uiStringToLocale(amount)
+                    text: unitName.length ? [Utils.uiStringToLocale(amount), unitName].join(" ") : Utils.uiStringToLocale(amount)
                     fontSizeMode: Text.Fit
                     visible: amount.length
                     verticalAlignment: Text.AlignVCenter
-                    copyMenuEnabled: currencySymbol.length
+                    copyMenuEnabled: unitName.length
                     onCopyText: BeamGlobals.copyToClipboard(amount)
                 }
                 Item {width:20}

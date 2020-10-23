@@ -60,14 +60,15 @@ namespace beamui
     QString toString(Currencies currency);
     std::string toStdString(Currencies currency);
 
-    QString getCurrencyLabel(Currencies);
-    QString getCurrencyLabel(beam::wallet::ExchangeRate::Currency);
+    QString getCurrencyUnitName(Currencies);
+    QString getCurrencyUnitName(beam::wallet::ExchangeRate::Currency);
     QString getFeeRateLabel(Currencies);
     QString getCurrencySubunitLabel(Currencies);
     QString getCurrencySubunitFromLabel(const QString& currLabel);
 
     /// Convert amount to ui string with "." as a separator. With the default @coinType, no currency label added.
     QString AmountToUIString(const beam::Amount& value, Currencies coinType = Currencies::Unknown);
+    QString AmountToUIString(const beam::Amount& value, const QString& unitName, uint8_t decimalPlaces = 0);
     QString AmountInGrothToUIString(const beam::Amount& value);
 
     /// expects ui string with a "." as a separator

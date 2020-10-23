@@ -7,23 +7,7 @@ import "./utils.js" as Utils
 
 ColumnLayout {
     id: sendRegularView
-
-    property var defaultFocusItem: receiverTAInput
     spacing: 0
-    // callbacks set by parent
-    property var onAccepted:        undefined
-    property var onClosed:          undefined
-    property var onSwapToken:       undefined
-    property alias receiverAddress: viewModel.receiverTA
-
-    readonly property bool showInsufficientBalanceWarning:
-        !viewModel.isEnough &&
-        !(viewModel.isZeroBalance && (viewModel.sendAmount == "" || viewModel.sendAmount == "0"))  // not shown if available is 0 and no value entered to send
-
-    TopGradient {
-        mainRoot: main
-        topColor: Style.accent_outgoing
-    }
 
     SendViewModel {
         id: viewModel
@@ -37,6 +21,24 @@ ColumnLayout {
                 .createObject(sendRegularView)
                 .open();
         }
+    }
+
+    property var   defaultFocusItem: receiverTAInput
+    property alias selectedAsset: viewModel.selectedAsset
+
+    // callbacks set by parent
+    property var onAccepted:        undefined
+    property var onClosed:          undefined
+    property var onSwapToken:       undefined
+    property alias receiverAddress: viewModel.receiverTA
+
+    readonly property bool showInsufficientBalanceWarning:
+        !viewModel.isEnough &&
+        !(viewModel.isZeroBalance && (viewModel.sendAmount == "" || viewModel.sendAmount == "0"))  // not shown if available is 0 and no value entered to send
+
+    TopGradient {
+        mainRoot: main
+        topColor: Style.accent_outgoing
     }
 
     TokenInfoDialog {
@@ -63,13 +65,6 @@ ColumnLayout {
 
     function isTAInputValid() {
         return viewModel.receiverTA.length == 0 || viewModel.receiverTAValid
-    }
-
-    function getFeeInSecondCurrency(feeValue) {
-        return Utils.formatAmountToSecondCurrency(
-            feeValue,
-            viewModel.secondCurrencyRateValue ,
-            viewModel.secondCurrencyLabel)
     }
 
     //
@@ -240,8 +235,8 @@ ColumnLayout {
                                 text:             isTokenOrAddressValid
                                        //% "Invalid wallet address"
                                       ? qsTrId("wallet-send-invalid-address-or-token")
-                                      : viewModel.tokenGeneratebByNewAppVersionMessage
-                                visible:          isTokenOrAddressValid || viewModel.isTokenGeneratebByNewAppVersion
+                                      : viewModel.newTokenMsg
+                                visible: isTokenOrAddressValid || viewModel.isNewToken
                             }
                     
                             Binding {
@@ -308,26 +303,93 @@ ColumnLayout {
                         title:                   qsTrId("general-amount")
                         Layout.fillWidth:        true
 
-                        content: AmountInput {
-                            id:                         sendAmountInput
-                            amountIn:                   viewModel.sendAmount
-                            secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                            setMaxAvailableAmount:      function() {
-                                viewModel.setMaxAvailableAmount();
+                        content: RowLayout {
+                            spacing: 7
+
+                            AmountInput {
+                                id:                sendAmountInput
+                                amountIn:          viewModel.sendAmount
+                                rate:              viewModel.rate
+                                rateUnit:          viewModel.rateUnit
+                                color:             Style.accent_outgoing
+                                Layout.fillWidth:  true
+
+                                // TODO: make real list
+                                currencies: [{
+                                      "isBEAM":         viewModel.selectedAsset == 0,
+                                      "unitName":       viewModel.sendUnit,
+                                      "defaultFee":     BeamGlobals.getDefaultFee(Currency.CurrBeam),
+                                      "recommededFee":  BeamGlobals.getRecommendedFee(Currency.CurrBeam),
+                                      "minimumFee":     BeamGlobals.getMinimalFee(Currency.CurrBeam, false),
+                                      "feeLabel":       BeamGlobals.getFeeRateLabel(Currency.CurrBeam, false),
+                                      "calcTotalFee":   function(fee) {return BeamGlobals.calcTotalFee(Currency.CurrBeam, fee)}
+                                }]
+
+                                error: {
+                                    if (showInsufficientBalanceWarning)
+                                    {
+                                        if (viewModel.selectedAsset == 0)
+                                        {
+                                            //% "Insufficient funds: you would need %1 to complete the transaction"
+                                            return qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.assetMissing))
+                                        }
+                                        else
+                                        {
+                                            //% "Insufficient funds to complete the transaction"
+                                            return qsTrId("send-no-funds")
+                                        }
+                                    }
+                                    return ""
+                                }
                             }
-                            showAddAll:                 true
-                            color:                      Style.accent_outgoing
-                            error:                      showInsufficientBalanceWarning
-                                                        //% "Insufficient funds: you would need %1 to complete the transaction"
-                                                        ? qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.missing))
-                                                        : ""
-                        }
-     
-                        Binding {
-                            target:   viewModel
-                            property: "sendAmount"
-                            value:    sendAmountInput.amount
+
+                            Binding {
+                                target:   viewModel
+                                property: "sendAmount"
+                                value:    sendAmountInput.amount
+                            }
+
+                            Row {
+                                Layout.leftMargin: 10
+                                Layout.fillHeight: true
+                                spacing:           0
+
+                                SvgImage {
+                                    source:     "qrc:/assets/icon-send-blue-copy-2.svg"
+                                    sourceSize: Qt.size(16, 16)
+                                    y:          30
+
+                                    MouseArea {
+                                        anchors.fill:    parent
+                                        acceptedButtons: Qt.LeftButton
+                                        cursorShape:     Qt.PointingHandCursor
+                                        onClicked:       function () {
+                                            sendAmountInput.clearFocus()
+                                            viewModel.setMaxAvailableAmount()
+                                        }
+                                    }
+                                }
+
+                                SFText {
+                                    font.pixelSize:   14
+                                    font.styleName:   "Bold";
+                                    font.weight:      Font.Bold
+                                    color:            Style.accent_outgoing
+                                    y:                30
+                                    //% "add all"
+                                    text:             " " + qsTrId("amount-input-add-all")
+
+                                    MouseArea {
+                                        anchors.fill:    parent
+                                        acceptedButtons: Qt.LeftButton
+                                        cursorShape:     Qt.PointingHandCursor
+                                        onClicked:       function () {
+                                            sendAmountInput.clearFocus()
+                                            viewModel.setMaxAvailableAmount()
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
 
@@ -343,15 +405,15 @@ ColumnLayout {
                         content: FeeInput {
                             id:                         feeInput
                             fee:                        viewModel.feeGrothes
-                            minFee:                     viewModel.minimalFeeGrothes
-                            feeLabel:                   BeamGlobals.getFeeRateLabel(Currency.CurrBeam)
+                            minFee:                     viewModel.minFee
+                            feeLabel:                   sendAmountInput.currencies[0].feeLabel
                             color:                      Style.accent_outgoing
                             readOnly:                   false
                             fillWidth:                  true
-                            showSecondCurrency:         sendAmountInput.showSecondCurrency
-                            isExchangeRateAvailable:    sendAmountInput.isExchangeRateAvailable
-                            secondCurrencyAmount:       getFeeInSecondCurrency(viewModel.fee)
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                            showSecondCurrency:         viewModel.feeRateUnit.length > 0
+                            isExchangeRateAvailable:    parseFloat(viewModel.feeRate) > 0
+                            rateAmount:                 Utils.formatAmountToSecondCurrency(viewModel.fee, viewModel.feeRate, viewModel.feeRateUnit)
+                            rateUnit:                   viewModel.feeRateUnit
                             minimumFeeNotificationText: viewModel.isShieldedTx || viewModel.isNeedExtractShieldedCoins ?
                                 //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
                                 qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
@@ -377,11 +439,10 @@ ColumnLayout {
                     //
                     FoldablePanel {
                         //% "Comment"
-                        title:             qsTrId("general-comment")
-                        Layout.fillWidth:        true
+                        title: qsTrId("general-comment")
+                        Layout.fillWidth: true
 
-                        content:
-                        ColumnLayout {
+                        content: ColumnLayout {
                             SFTextInput {
                                 id:               addressComment
                                 font.pixelSize:   14
@@ -422,72 +483,68 @@ ColumnLayout {
                         }
 
                         GridLayout {
-                            anchors.fill:        parent
-                            columnSpacing:       20
-                            rowSpacing:          14
-                            columns:             2
+                            anchors.fill:   parent
+                            columnSpacing:  35
+                            rowSpacing:     14
+                            columns:        2
 
                             SFText {
-                                Layout.alignment:       Qt.AlignTop
-                                Layout.fillWidth:       true
-                                font.pixelSize:         14
-                                color:                  Style.content_secondary
+                                Layout.alignment:  Qt.AlignTop
+                                font.pixelSize:    14
+                                color:             Style.content_secondary
                                 //% "Amount to send"
-                                text:                   qsTrId("send-amount-label") + ":"
+                                text:              qsTrId("send-amount-label") + ":"
                             }
                     
                             BeamAmount {
-                                Layout.alignment:        Qt.AlignTop
-                                Layout.fillWidth:        true
-                                error:                   showInsufficientBalanceWarning
-                                amount:                  viewModel.sendAmount
-                                lightFont:               false
-                                currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                                secondCurrencyLabel:     viewModel.secondCurrencyLabel
-                                secondCurrencyRateValue: viewModel.secondCurrencyRateValue
+                                Layout.alignment:  Qt.AlignTop
+                                Layout.fillWidth:  true
+                                error:             showInsufficientBalanceWarning
+                                amount:            viewModel.sendAmount
+                                lightFont:         false
+                                unitName:          viewModel.sendUnit
+                                rateUnit:          viewModel.rateUnit
+                                rate:              viewModel.rate
                             }
                     
                             SFText {
                                 Layout.alignment:       Qt.AlignTop
-                                Layout.fillWidth:       true
                                 font.pixelSize:         14
                                 color:                  Style.content_secondary
                                 text:                   qsTrId("general-change") + ":"
                             }
                     
                             BeamAmount {
-                                Layout.alignment:        Qt.AlignTop
-                                Layout.fillWidth:        true
-                                error:                   showInsufficientBalanceWarning
-                                amount:                  viewModel.change
-                                lightFont:               false
-                                currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                                secondCurrencyLabel:     viewModel.secondCurrencyLabel
-                                secondCurrencyRateValue: viewModel.secondCurrencyRateValue
+                                Layout.alignment:  Qt.AlignTop
+                                Layout.fillWidth:  true
+                                error:             showInsufficientBalanceWarning
+                                amount:            viewModel.changeAsset
+                                lightFont:         false
+                                unitName:          viewModel.sendUnit
+                                rateUnit:          viewModel.rateUnit
+                                rate:              viewModel.rate
                             }
 
                             SFText {
                                 Layout.alignment:       Qt.AlignTop
-                                Layout.fillWidth:       true
                                 font.pixelSize:         14
                                 color:                  Style.content_secondary
                                 text:                   qsTrId("send-regular-fee") + ":"
                             }
                     
                             BeamAmount {
-                                Layout.alignment:        Qt.AlignTop
-                                Layout.fillWidth:        true
-                                error:                   showInsufficientBalanceWarning
-                                amount:                  viewModel.fee
-                                lightFont:               false
-                                currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                                secondCurrencyLabel:     viewModel.secondCurrencyLabel
-                                secondCurrencyRateValue: viewModel.secondCurrencyRateValue
+                                Layout.alignment:  Qt.AlignTop
+                                Layout.fillWidth:  true
+                                error:             showInsufficientBalanceWarning
+                                amount:            viewModel.fee
+                                lightFont:         false
+                                unitName:          BeamGlobals.beamUnit
+                                rateUnit:          viewModel.feeRateUnit
+                                rate:              viewModel.feeRate
                             }
 
                             SFText {
                                 Layout.alignment:       Qt.AlignTop
-                                Layout.fillWidth:       true
                                 font.pixelSize:         14
                                 color:                  Style.content_secondary
                                 //% "Remaining"
@@ -495,14 +552,35 @@ ColumnLayout {
                             }
                     
                             BeamAmount {
-                                Layout.alignment:        Qt.AlignTop
-                                Layout.fillWidth:        true
-                                error:                   showInsufficientBalanceWarning
-                                amount:                  viewModel.available
-                                lightFont:               false
-                                currencySymbol:          BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                                secondCurrencyLabel:     viewModel.secondCurrencyLabel
-                                secondCurrencyRateValue: viewModel.secondCurrencyRateValue
+                                Layout.alignment:  Qt.AlignTop | Qt.AlignLeft
+                                Layout.fillWidth:  true
+                                error:             showInsufficientBalanceWarning
+                                amount:            viewModel.assetAvailable
+                                lightFont:         false
+                                unitName:          viewModel.sendUnit
+                                rateUnit:          viewModel.rateUnit
+                                rate:              viewModel.rate
+                            }
+
+                            SFText {
+                                Layout.alignment:       Qt.AlignTop
+                                font.pixelSize:         14
+                                color:                  Style.content_secondary
+                                visible:                viewModel.selectedAsset != 0
+                                //% "BEAM Remaining"
+                                text:                   qsTrId("send-remaining-beam-label") + ":"
+                            }
+
+                            BeamAmount {
+                                Layout.alignment:  Qt.AlignTop | Qt.AlignLeft
+                                Layout.fillWidth:  true
+                                error:             showInsufficientBalanceWarning
+                                amount:            viewModel.beamAvailable
+                                lightFont:         false
+                                unitName:          BeamGlobals.beamUnit
+                                rateUnit:          viewModel.feeRateUnit
+                                rate:              viewModel.feeRate
+                                visible:           viewModel.selectedAsset != 0
                             }
                         }
                     }
@@ -523,25 +601,27 @@ ColumnLayout {
                 icon.source:         "qrc:/assets/icon-send-blue.svg"
                 enabled:             viewModel.canSend
                 onClicked: {                
-                    const dialogComponent = Qt.createComponent("send_confirm.qml");
-                    const dialogObject = dialogComponent.createObject(sendRegularView,
+                    const dialog = Qt.createComponent("send_confirm.qml")
+                    const instance = dialog.createObject(sendRegularView,
                         {
-                            addressText: viewModel.receiverTA,
-                            typeText: viewModel.isShieldedTx ? 
-                                    viewModel.isMaxPrivacy ? qsTrId("tx-max-privacy") 
-                                        : viewModel.isOffline ? qsTrId("tx-address-offline") 
-                                            //% "Public offline"
-                                            : viewModel.isPublicOffline ? qsTrId("tx-address-public-offline") 
-                                                //% "Unknown"
-                                                : qsTrId("tx-address-unknown")
-                                    : qsTrId("tx-regular"),
-                            currency: Currency.CurrBeam,
-                            amount: viewModel.sendAmount,
-                            fee: viewModel.feeGrothes,
-                            onAcceptedCallback: acceptedCallback,
-                            secondCurrencyRate: viewModel.secondCurrencyRateValue,
-                            secondCurrencyLabel: viewModel.secondCurrencyLabel
-                        }).open();
+                            addressText:   viewModel.receiverTA,
+                            typeText:      viewModel.isShieldedTx ?
+                                                viewModel.isMaxPrivacy ? qsTrId("tx-max-privacy")
+                                                    : viewModel.isOffline ? qsTrId("tx-address-offline")
+                                                        //% "Public offline"
+                                                        : viewModel.isPublicOffline ? qsTrId("tx-address-public-offline")
+                                                            //% "Unknown"
+                                                            : qsTrId("tx-address-unknown")
+                                                : qsTrId("tx-regular"),
+                            amount:        viewModel.sendAmount,
+                            fee:           viewModel.feeGrothes,
+                            flatFee:       true,
+                            unitName:      viewModel.sendUnit,
+                            rate:          viewModel.rate,
+                            rateUnit:      viewModel.rateUnit,
+                            acceptHandler: acceptedCallback,
+                        })
+                    instance.open()
 
                     function acceptedCallback() {
                         if (viewModel.isPermanentAddress && !viewModel.hasAddress) {

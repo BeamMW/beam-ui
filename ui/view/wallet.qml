@@ -6,6 +6,7 @@ import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
 import Beam.Wallet 1.0
 import "controls"
+import "wallet"
 import "utils.js" as Utils
 
 Item {
@@ -45,8 +46,8 @@ Item {
                 walletStackView.push(Qt.createComponent("send_swap.qml"),
                                      {
                                          "onAccepted": tokenDuplicateChecker.onAccepted,
-                                         "onClosed": onClosed,
-                                         "swapToken": token
+                                         "onClosed":   onClosed,
+                                         "swapToken":  token
                                      });
                 walletStackView.currentItem.validateCoin();
             }
@@ -77,12 +78,14 @@ Item {
             Layout.fillHeight: true
             spacing: 0
 
-            function navigateSend() {
+            function navigateSend(assetId) {
+                assetId = assetId && assetId >= 0 ? assetId : 0
                 walletStackView.push(Qt.createComponent("send_regular.qml"),
                                              {"onAccepted":      onAccepted,
                                               "onClosed":        onClosed,
                                               "onSwapToken":     onSwapToken,
-                                              "receiverAddress": token});
+                                              "receiverAddress": token,
+                                              "selectedAsset":   assetId});
                 token = "";
             }
 
@@ -110,7 +113,7 @@ Item {
                     font.pixelSize: 12
                     //font.capitalization: Font.AllUppercase
                     onClicked: {
-                        navigateSend();
+                        navigateSend(assets.selectedId);
                     }
                 }
 
@@ -129,28 +132,27 @@ Item {
                 }
             }
 
-            AvailablePanel {
-                Layout.topMargin:      29
-                Layout.maximumHeight:  80
-                Layout.minimumHeight:  80
-                Layout.preferredWidth: parseFloat(viewModel.beamSending) > 0 || parseFloat(viewModel.beamReceiving) > 0 ? parent.width : (parent.width / 2)
+            MainInfoPanel {
+                id: infoPanel
+                Layout.topMargin: 30
+                Layout.fillWidth: true
+            }
 
-                available:                  viewModel.beamAvailable
-                locked:                     viewModel.beamLocked
-                lockedMaturing:             viewModel.beamLockedMaturing
-                lockedMaturingMP:           viewModel.beamLockedMaturingMP
-                sending:                    viewModel.beamSending
-                receiving:                  viewModel.beamReceiving
-                receivingChange:            viewModel.beamReceivingChange
-                receivingIncoming:          viewModel.beamReceivingIncoming
-                secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
+            AssetsPanel {
+                id: assets
+                Layout.topMargin: 20
+                Layout.fillWidth: true
+
+                Binding {
+                    target:   infoPanel
+                    property: "selectedAsset"
+                    value:    assets.selectedId
+                }
             }
 
             SFText {
-                Layout.topMargin: 45
-                Layout.alignment: Qt.AlignTop
-                Layout.fillWidth : true
+                Layout.topMargin: assets.folded ? 25 : 35
+                Layout.fillWidth: true
 
                 font {
                     pixelSize: 14
@@ -219,4 +221,3 @@ Item {
         }
     }
 }
-

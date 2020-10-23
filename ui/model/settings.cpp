@@ -77,7 +77,7 @@ namespace
     };
 
     const std::vector<QString> kSupportedAmountUnits {
-        beam::wallet::noSecondCurrencyStr.data(),
+        beam::wallet::exchangeRateOffStr.data(),
         beam::wallet::usdCurrencyStr.data(),
         beam::wallet::btcCurrencyStr.data()
     };

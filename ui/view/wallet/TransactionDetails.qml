@@ -1,9 +1,9 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-
 import QtQuick.Layouts 1.11
 import Beam.Wallet 1.0
 import "../utils.js" as Utils
+import "../controls"
 import "."
 
 RowLayout {
@@ -23,20 +23,22 @@ RowLayout {
     property var isSelfTx
     property var rawTxID
     property var stateDetails
-    property string token
-    property string amount
-    property string secondCurrencyRate
-    property string secondCurrencyLabel
-    property string searchFilter: ""
-    property bool hideFiltered: false
     property var searchRegExp: new RegExp("("+root.searchFilter+")", "gi")
     property var searchRegExp2:  new RegExp("("+root.searchFilter+")", "i")
+
+    property string token
+    property string amount
+    property string rate
+    property string rateUnit
+    property string searchFilter: ""
+    property bool   hideFiltered: false
     property string transactionType
     property string tokenType
-    property bool isMaxPrivacy
+    property bool   isMaxPrivacy
+    property string unitName
 
     readonly property string amountPrefix: root.isIncome ? "+" : "-"
-    readonly property string amountWithLabel: amountPrefix + " " + root.amount + " " + BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+    readonly property string amountWithLabel: [amountPrefix, root.amount, root.unitName].join(" ")
     readonly property string secondCurrencyAmount: getAmountInSecondCurrency()
 
     property var onOpenExternal: null
@@ -71,11 +73,11 @@ RowLayout {
         if (root.amount !== "") {
             var amountInSecondCurrency = Utils.formatAmountToSecondCurrency(
                 root.amount,
-                root.secondCurrencyRate,
-                root.secondCurrencyLabel);
+                root.rate,
+                root.rateUnit);
             if (amountInSecondCurrency == "") {
                 //% "Exchange rate to %1 was not available at the time of transaction"
-                return  qsTrId("tx-details-exchange-rate-not-available").arg(root.secondCurrencyLabel);
+                return  qsTrId("tx-details-exchange-rate-not-available").arg(root.rateUnit);
             }
             else {
                 //% "(for the day of transaction)"
@@ -275,7 +277,7 @@ RowLayout {
             elide: Text.ElideRight
             text: root.secondCurrencyAmount
             onCopyText: textCopied(secondCurrencyAmountField.text)
-            visible: isTextFieldVisible(secondCurrencyAmountField.text) && root.secondCurrencyLabel != ""
+            visible: isTextFieldVisible(secondCurrencyAmountField.text) && root.rateUnit != ""
         }
         
         SFText {

@@ -25,28 +25,27 @@ QtObject {
     property color row_selected;
     property color separator;
     property color table_header;
-
     property color active;
     property color passive;
-        
     property color caps_warning;
 
-	property color white: "#ffffff";
+	property color  white: "#ffffff";
     property string linkStyle;
     property string explorerUrl;
     property string faucetUrl;
 
-    property color swapCurrencyPaneGrRight;
-    property color swapCurrencyPaneGrLeftBEAM;
-    property color swapCurrencyPaneGrLeftBTC;
-    property color swapCurrencyPaneGrLeftLTC;
-    property color swapCurrencyPaneGrLeftQTUM;
-    property color swapCurrencyPaneGrLeftDASH;
-    property color swapCurrencyPaneGrLeftDOGE;
-    property color swapCurrencyPaneGrLeftBCH;
-    property color swapCurrencyPaneGrLeftBSV;
-    property color swapCurrencyPaneGrLeftOther;
+    property color currencyPaneRight;
+    property color currencyPaneLeftBEAM;
+    property color currencyPaneLeftBTC;
+    property color currencyPaneLeftLTC;
+    property color currencyPaneLeftQTUM;
+    property color currencyPaneLeftDASH;
+    property color currencyPaneLeftDOGE;
+    property color currencyPaneLeftBCH;
+    property color currencyPaneLeftBSV;
+    property color currencyPaneConnect;
+    property color currencyPaneBorder;
+
     property color swapCurrencyStateIndicator;
-    property color swapCurrencyOptionsBorder;
     property color swapDisconnectNode;
 }

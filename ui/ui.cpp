@@ -33,7 +33,9 @@
 #include "viewmodel/address_book_view.h"
 #include "viewmodel/wallet/wallet_view.h"
 #include "viewmodel/wallet/token_item.h"
+#include "viewmodel/wallet/assets_view.h"
 #include "viewmodel/wallet/tx_table.h"
+#include "viewmodel/wallet/info_view.h"
 #include "viewmodel/help_view.h"
 #include "viewmodel/settings_view.h"
 #include "viewmodel/messages_view.h"
@@ -47,7 +49,6 @@
 #include "viewmodel/currencies.h"
 #include "model/app_model.h"
 #include "viewmodel/qml_globals.h"
-#include "viewmodel/helpers/list_model.h"
 #include "viewmodel/helpers/sortfilterproxymodel.h"
 #include "viewmodel/helpers/token_bootstrap_manager.h"
 #include "viewmodel/notifications/notifications_view.h"
@@ -57,9 +58,7 @@
 #include "utility/log_rotation.h"
 #include "core/ecc_native.h"
 #include "utility/cli/options.h"
-#include <QtCore/QtPlugin>
 #include "version.h"
-#include "utility/string_helpers.h"
 #include "utility/helpers.h"
 #include "model/translator.h"
 #include "model/qr.h"
@@ -103,6 +102,8 @@ static const char* AppName = "Beam Wallet Masternet";
 
 int main (int argc, char* argv[])
 {
+    wallet::g_AssetsEnabled = true;
+
 #if defined Q_OS_WIN
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
@@ -230,12 +231,18 @@ int main (int argc, char* argv[])
                     });
 
             qRegisterMetaType<Currency>("Currency");
+            qRegisterMetaType<beam::Asset::ID>("beam::Asset::ID");
+            qRegisterMetaType<beam::wallet::WalletAsset>("beam::wallet::WalletAsset");
+            qRegisterMetaType<InProgress>("InProgress");
+            qRegisterMetaType<QList<InProgress>>("InProgressList");
             qmlRegisterUncreatableType<WalletCurrency>("Beam.Wallet", 1, 0, "Currency", "Not creatable as it is an enum type.");
             qmlRegisterType<StartViewModel>("Beam.Wallet", 1, 0, "StartViewModel");
             qmlRegisterType<LoadingViewModel>("Beam.Wallet", 1, 0, "LoadingViewModel");
             qmlRegisterType<MainViewModel>("Beam.Wallet", 1, 0, "MainViewModel");
             qmlRegisterType<WalletViewModel>("Beam.Wallet", 1, 0, "WalletViewModel");
             qmlRegisterType<TxTableViewModel>("Beam.Wallet", 1, 0, "TxTableViewModel");
+            qmlRegisterType<AssetsViewModel>("Beam.Wallet", 1, 0, "AssetsViewModel");
+            qmlRegisterType<InfoViewModel>("Beam.Wallet", 1, 0, "InfoViewModel");
             qmlRegisterUncreatableType<UtxoViewStatus>("Beam.Wallet", 1, 0, "UtxoStatus", "Not creatable as it is an enum type.");
             qmlRegisterUncreatableType<UtxoViewType>("Beam.Wallet", 1, 0, "UtxoType", "Not creatable as it is an enum type.");
             qmlRegisterType<UtxoViewModel>("Beam.Wallet", 1, 0, "UtxoViewModel");
@@ -251,7 +258,6 @@ int main (int argc, char* argv[])
             qmlRegisterType<SendViewModel>("Beam.Wallet", 1, 0, "SendViewModel");
             qmlRegisterType<SendSwapViewModel>("Beam.Wallet", 1, 0, "SendSwapViewModel");
             qmlRegisterType<ELSeedValidator>("Beam.Wallet", 1, 0, "ELSeedValidator");
-
             qmlRegisterType<AddressItem>("Beam.Wallet", 1, 0, "AddressItem");
             qmlRegisterType<ContactItem>("Beam.Wallet", 1, 0, "ContactItem");
             qmlRegisterType<UtxoItem>("Beam.Wallet", 1, 0, "UtxoItem");
@@ -262,18 +268,16 @@ int main (int argc, char* argv[])
             qmlRegisterType<SwapTokenInfoItem>("Beam.Wallet", 1, 0, "SwapTokenInfoItem");
             qmlRegisterType<SwapTxObjectList>("Beam.Wallet", 1, 0, "SwapTxObjectList");
             qmlRegisterType<TxObjectList>("Beam.Wallet", 1, 0, "TxObjectList");
+            qmlRegisterType<AssetsList>("Beam.Wallet", 1, 0, "AssetsList");
             qmlRegisterType<TokenInfoItem>("Beam.Wallet", 1, 0, "TokenInfoItem");
             qmlRegisterType<SwapCoinClientWrapper>("Beam.Wallet", 1, 0, "SwapCoinClientWrapper");
-            
             qmlRegisterType<TokenBootstrapManager>("Beam.Wallet", 1, 0, "TokenBootstrapManager");
             qmlRegisterType<PushNotificationManager>("Beam.Wallet", 1, 0, "PushNotificationManager");
             qmlRegisterType<ExchangeRatesManager>("Beam.Wallet", 1, 0, "ExchangeRatesManager");
-            
             qmlRegisterType<SortFilterProxyModel>("Beam.Wallet", 1, 0, "SortFilterProxyModel");
             qmlRegisterType<QR>("Beam.Wallet", 1, 0, "QR");
 
             engine.load(QUrl("qrc:/root.qml"));
-
             if (engine.rootObjects().count() < 1)
             {
                 LOG_ERROR() << "Problem with QT";

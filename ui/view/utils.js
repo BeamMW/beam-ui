@@ -1,7 +1,6 @@
 function formatDateTime(datetime, localeName) {
     var maxTime = new Date(4294967295000);
     if (datetime >= maxTime) {
-        //: time never string
         //% "Never"
         return qsTrId("time-never");
     }
@@ -15,7 +14,7 @@ function formatDateTime(datetime, localeName) {
 }
 
 function formatSecondCurrency(convertedAmount, amount,  exchangeRate, secondCurrLabel) {
-    if (convertedAmount == "0" && amount != "0") { 
+    if (convertedAmount == "0" && amount != "0") {
         var subLabel = BeamGlobals.getCurrencySubunitFromLabel(secondCurrLabel);
         //% "< 1 %1"
         return qsTrId("format-small-amount").arg(subLabel); 
@@ -102,37 +101,4 @@ function openExternalWithConfirmation(externalLink, onFinish) {
 
 function navigateToDownloads() {
     openExternalWithConfirmation("https://www.beam.mw/downloads")
-}
-
-function currenciesList() {
-    return [
-        BeamGlobals.getCurrencyLabel(Currency.CurrBeam),
-        BeamGlobals.getCurrencyLabel(Currency.CurrBitcoin),
-        BeamGlobals.getCurrencyLabel(Currency.CurrLitecoin),
-        BeamGlobals.getCurrencyLabel(Currency.CurrQtum),
-        BeamGlobals.getCurrencyLabel(Currency.CurrBitcoinCash),
-        BeamGlobals.getCurrencyLabel(Currency.CurrBitcoinSV),
-        BeamGlobals.getCurrencyLabel(Currency.CurrDogecoin),
-        BeamGlobals.getCurrencyLabel(Currency.CurrDash)
-    ]
-}
-
-const maxAmount   = "262799999";
-const minAmount   = "0.00000001";
-
-function createObject(component, parent, props) {
-    return Qt.createComponent(component)
-             .createObject(parent, props);
-}
-
-function createControl(component, parent, props) {
-    return createObject(["controls/", component, ".qml"].join(""), parent, props)
-}
-
-function createDialog(component, props) {
-    return createControl([component, "Dialog"].join(''), main, props)
-}
-
-function openDialog(component, props) {
-    createDialog(component, props).open()
 }

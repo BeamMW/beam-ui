@@ -19,7 +19,12 @@ ComboBox {
         id: itemDelegate
         width: control.width
         contentItem: SFText {
-            text: control.textRole ? (Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]) : modelData
+            text: {
+                if (control.textRole) {
+                    return Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]
+                }
+                return modelData
+            }
             color: Style.content_main
             elide: Text.ElideMiddle
             verticalAlignment: Text.AlignVCenter

@@ -187,6 +187,11 @@ QString SwapTxObject::getSentAmountWithCurrency() const
     return m_tx.m_sender ? getAmountWithCurrency() : "";
 }
 
+QString SwapTxObject::getAmountWithCurrency() const
+{
+    return AmountToUIString(m_tx.m_amount, beamui::Currencies::Beam);
+}
+
 QString SwapTxObject::getSentAmount() const
 {
     QString amount = beamui::AmountToUIString(getSentAmountValue());

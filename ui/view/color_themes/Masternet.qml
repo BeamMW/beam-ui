@@ -27,25 +27,26 @@ AbstractColors {
     property color table_header:          "#323232"
 
     property color active :               "#00f6d2" // bright-teal
-    property color passive:               "#d6d9e0"  // silver
+    property color passive:               "#d6d9e0" // silver
         
     property color caps_warning:          "#ffffff"
 
-    property string linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
+    property string linkStyle:   "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
     property string explorerUrl: "https://master-net.explorer.beam.mw/"
-    property string faucetUrl: "https://faucet.beamprivacy.community/"
+    property string faucetUrl:   "https://faucet.beamprivacy.community/"
 
-    property color swapCurrencyPaneGrRight:     "#3b3b3b"
-    property color swapCurrencyPaneGrLeftBEAM:  "#00f6d2"
-    property color swapCurrencyPaneGrLeftBTC:   "#fcaf38"
-    property color swapCurrencyPaneGrLeftLTC:   "#bebebe"
-    property color swapCurrencyPaneGrLeftQTUM:  "#2e9ad0"
-    property color swapCurrencyPaneGrLeftDASH:  "#0092ff"
-    property color swapCurrencyPaneGrLeftDOGE:  "#e0cd81"
-    property color swapCurrencyPaneGrLeftBCH:   "#ff6700"
-    property color swapCurrencyPaneGrLeftBSV:   "#eab300"
-    property color swapCurrencyPaneGrLeftOther: Qt.rgba(0, 246, 210, 0.1)
+    property color currencyPaneRight:     "#3b3b3b"
+    property color currencyPaneLeftBEAM:  "#00f6d2"
+    property color currencyPaneLeftBTC:   "#fcaf38"
+    property color currencyPaneLeftLTC:   "#bebebe"
+    property color currencyPaneLeftQTUM:  "#2e9ad0"
+    property color currencyPaneLeftDASH:  "#0092ff"
+    property color currencyPaneLeftDOGE:  "#e0cd81"
+    property color currencyPaneLeftBCH:   "#ff6700"
+    property color currencyPaneLeftBSV:   "#eab300"
+    property color currencyPaneConnect:   Qt.rgba(0, 246, 210, 0.1)
+    property color currencyPaneBorder:    Qt.rgba(0, 246, 210, 0.15)
+
     property color swapCurrencyStateIndicator:  "#ff746b"
-    property color swapCurrencyOptionsBorder:   Qt.rgba(0, 246, 210, 0.15)
     property color swapDisconnectNode:          "#f9605b"
 }
