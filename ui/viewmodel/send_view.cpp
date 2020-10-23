@@ -46,7 +46,6 @@ SendViewModel::SendViewModel()
     connect(&_walletModel,           SIGNAL(sendMoneyVerified()),                 this,  SIGNAL(sendMoneyVerified()));
     connect(&_walletModel,           SIGNAL(cantSendToExpired()),                 this,  SIGNAL(cantSendToExpired()));
     connect(&_walletModel,           &WalletModel::walletStatusChanged,              this,  &SendViewModel::availableChanged);
-    connect(&_walletModel,           &WalletModel::getAddressReturned,               this,  &SendViewModel::onGetAddressReturned);
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,         this,  &SendViewModel::rateChanged);
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged,       this,  &SendViewModel::rateChanged);
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,         this,  &SendViewModel::feeRateChanged);
@@ -461,8 +460,6 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
 
     setWalletAddress(address);
     setOfflinePayments(offlinePayments);
-
-
 }
 
 QString SendViewModel::getChangeBeam() const

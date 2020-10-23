@@ -180,7 +180,7 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::IsMaxPrivacy), "isMaxPrivacy"},
         { static_cast<int>(Roles::IsOfflineToken), "isOfflineToken"},
         { static_cast<int>(Roles::UnitName), "unitName"},
-        { static_cast<int>(Roles::Icon), "icon"}
+        { static_cast<int>(Roles::Icon), "icon"},
         { static_cast<int>(Roles::IsSent), "isSent"},
         { static_cast<int>(Roles::IsReceived), "isReceived"}
     };
