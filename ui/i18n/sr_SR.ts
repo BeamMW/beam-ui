@@ -1,226 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fi" sourcelanguage="en">
+<TS version="2.1" language="sr" sourcelanguage="en">
 <context>
     <name></name>
     <message id="general-beam">
         <source>BEAM</source>
-        <translation>BEAM</translation>
+        <translation type="unfinished">BEAM</translation>
     </message>
     <message id="general-groth">
         <source>GROTH</source>
-        <translation>GROTH</translation>
+        <translation type="unfinished">GROTH</translation>
     </message>
     <message id="general-comment">
         <source>Comment</source>
-        <translation>Kommentti</translation>
+        <translation type="unfinished">Comment</translation>
     </message>
     <message id="general-actions">
         <source>Actions</source>
-        <translation>Toiminnot</translation>
+        <translation>Акције</translation>
     </message>
     <message id="general-address">
         <source>Address</source>
-        <translation>Osoite</translation>
+        <translation type="unfinished">Address</translation>
     </message>
     <message id="general-send">
         <source>Send</source>
-        <translation>Lähetä</translation>
+        <translation type="unfinished">Send</translation>
     </message>
     <message id="general-amount">
         <source>Amount</source>
-        <translation>Summa</translation>
+        <translation type="unfinished">Amount</translation>
     </message>
     <message id="general-status">
         <source>Status</source>
-        <translation>Tila</translation>
+        <translation>Статус</translation>
     </message>
     <message id="general-cancel">
         <source>Cancel</source>
         <extracomment>Edit address dialog, cancel button</extracomment>
-        <translation>Peruuta</translation>
+        <translation type="unfinished">Cancel</translation>
     </message>
     <message id="general-delete">
         <source>Delete</source>
-        <translation>Poista</translation>
+        <translation type="unfinished">Delete</translation>
     </message>
     <message id="general-rescan">
         <source>Rescan</source>
-        <translation>Skannaa uudelleen</translation>
+        <translation>Поново скенирај</translation>
     </message>
     <message id="general-change-pwd">
         <source>Change wallet password</source>
-        <translation>Vaihda lompakon salasana</translation>
+        <translation type="unfinished">Change wallet password</translation>
     </message>
     <message id="general-pwd-empty-error">
         <source>Please, enter password</source>
-        <translation>Kirjoita salasana</translation>
+        <translation>Унесите лозинку, молим,</translation>
     </message>
     <message id="general-pwd-invalid">
         <source>Invalid password provided</source>
-        <translation>Virheellinen salasana</translation>
+        <translation>Погрешна лозинка је унета</translation>
     </message>
     <message id="general-payment-proof">
         <source>Payment proof</source>
-        <translation>Maksutodistus</translation>
+        <translation type="unfinished">Payment proof</translation>
     </message>
     <message id="general-close">
         <source>Close</source>
-        <translation>Sulje</translation>
+        <translation type="unfinished">Close</translation>
     </message>
     <message id="general-details">
         <source>Details</source>
-        <translation>Tiedot</translation>
+        <translation type="unfinished">Details</translation>
     </message>
     <message id="general-kernel-id">
         <source>Kernel ID</source>
-        <translation>Kernel ID</translation>
+        <translation type="unfinished">Kernel ID</translation>
     </message>
     <message id="general-copy">
         <source>Copy</source>
-        <translation>Kopioi</translation>
+        <translation type="unfinished">Copy</translation>
     </message>
     <message id="general-paste">
         <source>Paste</source>
-        <translation>Liitä</translation>
+        <translation>Налепи</translation>
     </message>
     <message id="general-fee">
         <source>Transaction fee</source>
         <extracomment>UTXO type fee</extracomment>
-        <translation>Siirtomaksu</translation>
+        <translation type="unfinished">Transaction fee</translation>
     </message>
     <message id="general-ok">
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation type="unfinished">Ok</translation>
     </message>
     <message id="general-invalid-address">
         <source>Invalid address</source>
-        <translation>Virheellinen osoite</translation>
+        <translation type="unfinished">Invalid address</translation>
     </message>
     <message id="general-coinbase">
         <source>Coinbase</source>
         <extracomment>UTXO type Coinbase</extracomment>
-        <translation>Coinbase</translation>
+        <translation type="unfinished">Coinbase</translation>
     </message>
     <message id="general-regular">
         <source>Regular</source>
         <extracomment>UTXO type Regular</extracomment>
-        <translation>Normaali</translation>
+        <translation type="unfinished">Regular</translation>
     </message>
     <message id="general-change">
         <source>Change</source>
         <extracomment>UTXO type Change</extracomment>
-        <translation>Vaihda</translation>
+        <translation type="unfinished">Change</translation>
     </message>
     <message id="general-treasury">
         <source>Treasury</source>
         <extracomment>UTXO type Treasury</extracomment>
-        <translation>Rahasto</translation>
+        <translation type="unfinished">Treasury</translation>
     </message>
     <message id="general-back">
         <source>Back</source>
-        <translation>Takaisin</translation>
+        <translation>Назад</translation>
     </message>
     <message id="general-next">
         <source>Next</source>
-        <translation>Seuraava</translation>
+        <translation type="unfinished">Next</translation>
     </message>
     <message id="general-create-wallet">
         <source>Create new wallet</source>
-        <translation>Luo uusi lompakko</translation>
+        <translation type="unfinished">Create new wallet</translation>
     </message>
     <message id="general-restore-or-create-wallet">
         <source>Restore wallet or create a new one</source>
-        <translation>Palauta vanha lompakko tai luo uusi</translation>
+        <translation>Опорави новчаник или креирај нови</translation>
     </message>
     <message id="general-select-db">
         <source>Select the wallet database file</source>
-        <translation>Valitse lompakon tietokantatiedosto</translation>
+        <translation>Изабери фајл базе података новчаника</translation>
     </message>
     <message id="general-restore-wallet">
         <source>Restore wallet</source>
-        <translation>Palauta vanha lompakko</translation>
+        <translation type="unfinished">Restore wallet</translation>
     </message>
     <message id="general-start-using">
         <source>Start using your wallet</source>
-        <translation>Aloita lompakon käyttö</translation>
+        <translation type="unfinished">Start using your wallet</translation>
     </message>
     <message id="general-open-wallet">
         <source>Open my wallet</source>
-        <translation>Avaa lompakko</translation>
+        <translation>Отвори мој новчаник</translation>
     </message>
     <message id="general-proceed">
         <source>Proceed</source>
         <extracomment>confirm password dialog, ok button</extracomment>
-        <translation>Jatka</translation>
+        <translation type="unfinished">Proceed</translation>
     </message>
     <message id="general-show-in-folder">
         <source>Show in folder</source>
-        <translation>Näytä kansiossa</translation>
+        <translation>Прикажи у фолдеру</translation>
     </message>
     <message id="general-addr-comment-error">
         <source>Address with the same comment already exists</source>
-        <translation>Kommentti on jo käytössä toisessa osoitteessa</translation>
+        <translation>Адреса са идентичним коментаром већ постоји</translation>
     </message>
     <message id="wallet-receive-button">
         <source>Receive</source>
-        <translation>Vastaanota</translation>
+        <translation type="unfinished">Receive</translation>
     </message>
     <message id="wallet-transactions-title">
         <source>Transactions</source>
-        <translation>Tapahtumat</translation>
+        <translation type="unfinished">Transactions</translation>
     </message>
     <message id="wallet-verify-payment">
         <source>Verify payment</source>
-        <translation>Vahvista maksu</translation>
+        <translation>Верификуј исплату</translation>
     </message>
     <message id="wallet-txs-date-time">
         <source>Created on</source>
-        <translation>Luotu</translation>
+        <translation>Датум | Време</translation>
     </message>
     <message id="wallet-txs-delete-message">
         <source>The transaction will be deleted. This operation can not be undone</source>
-        <translation>Tapahtuman tiedot poistetaan. Tätä toimintoa ei voida peruuttaa</translation>
+        <translation>Трансакција ће бити обрисана. Ова оперција се не може повратити</translation>
     </message>
     <message id="wallet-txs-status-pending">
         <source>pending</source>
-        <translation>odottaa</translation>
+        <translation>на чекању</translation>
     </message>
     <message id="wallet-txs-status-waiting-sender">
         <source>waiting for sender</source>
-        <translation>odottaa lähettäjää</translation>
+        <translation>чека се пошиљаоц</translation>
     </message>
     <message id="wallet-txs-status-waiting-receiver">
         <source>waiting for receiver</source>
-        <translation>odottaa saajaa</translation>
+        <translation>чека се прималац</translation>
     </message>
     <message id="wallet-txs-status-completed">
         <source>completed</source>
-        <translation>valmis</translation>
+        <translation>комплетирано</translation>
     </message>
     <message id="wallet-txs-status-received">
         <source>received</source>
-        <translation>vastaanotettu</translation>
+        <translation>примљено</translation>
     </message>
     <message id="wallet-txs-status-sent">
         <source>sent</source>
-        <translation>lähetetty</translation>
+        <translation>послато</translation>
     </message>
     <message id="wallet-txs-status-cancelled">
         <source>cancelled</source>
-        <translation>peruutettu</translation>
+        <translation>отказано</translation>
     </message>
     <message id="wallet-txs-status-expired">
         <source>expired</source>
-        <translation>vanhentunut</translation>
+        <translation>истекло</translation>
     </message>
     <message id="wallet-txs-status-failed">
         <source>failed</source>
-        <translation>epäonnistui</translation>
+        <translation>неуспешно</translation>
     </message>
     <message id="wallet-txs-status-unknown">
         <source>unknown</source>
-        <translation>tuntematon</translation>
+        <translation>непознато</translation>
     </message>
     <message id="addresses-tittle">
         <source>Address Book</source>
@@ -228,101 +228,101 @@
     </message>
     <message id="addresses-tab-active">
         <source>My active addresses</source>
-        <translation>Omat aktiiviset osoitteet</translation>
+        <translation type="unfinished">My active addresses</translation>
     </message>
     <message id="addresses-tab-expired">
         <source>My expired addresses</source>
-        <translation>Omat vanhentuneet osoitteet</translation>
+        <translation>Моје истекле адресе</translation>
     </message>
     <message id="addresses-tab-contacts">
         <source>Contacts</source>
-        <translation>Yhteystiedot</translation>
+        <translation type="unfinished">Contacts</translation>
     </message>
     <message id="address-table-cm-show-qr">
         <source>Show QR code</source>
         <extracomment>Entry in address table context menu to show QR</extracomment>
-        <translation>Näytä QR-koodi</translation>
+        <translation type="unfinished">Show QR code</translation>
     </message>
     <message id="address-table-cm-edit">
         <source>Edit address</source>
         <extracomment>Entry in address table context menu to edit</extracomment>
-        <translation>Muokkaa osoitetta</translation>
+        <translation type="unfinished">Edit address</translation>
     </message>
     <message id="address-table-cm-delete">
         <source>Delete address</source>
         <extracomment>Entry in address table context menu to delete</extracomment>
-        <translation>Poista osoite</translation>
+        <translation type="unfinished">Delete address</translation>
     </message>
     <message id="address-table-cm-delete-contact">
         <source>Delete contact</source>
-        <translation>Poista yhteystieto</translation>
+        <translation type="unfinished">Delete contact</translation>
     </message>
     <message id="available-panel-available">
         <source>Available</source>
-        <translation>Käytettävissä</translation>
+        <translation type="unfinished">Available</translation>
     </message>
     <message id="available-panel-locked">
         <source>Locked</source>
-        <translation>Lukittu</translation>
+        <translation>Закључано</translation>
     </message>
     <message id="available-panel-sending">
         <source>Sending</source>
-        <translation>Lähettää</translation>
+        <translation type="unfinished">Sending</translation>
     </message>
     <message id="available-panel-receiving">
         <source>Receiving</source>
-        <translation>Vastaanottaa</translation>
+        <translation type="unfinished">Receiving</translation>
     </message>
     <message id="available-panel-maturing">
         <source>Maturing</source>
-        <translation>Odottaa</translation>
+        <translation type="unfinished">Maturing</translation>
     </message>
     <message id="available-panel-change">
         <source>Change</source>
-        <translation>Vaihda</translation>
+        <translation type="unfinished">Change</translation>
     </message>
     <message id="available-panel-incoming">
         <source>Incoming</source>
-        <translation>Saapuva</translation>
+        <translation type="unfinished">Incoming</translation>
     </message>
     <message id="settings-version">
         <source>Version</source>
         <extracomment>settings tab, version label</extracomment>
-        <translation>Versio</translation>
+        <translation>Верзија</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
         <extracomment>settings tab, node section, port label</extracomment>
-        <translation>Portti</translation>
+        <translation>Порт</translation>
     </message>
     <message id="settings-rescan-confirmation-message">
         <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</source>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation>Uudelleenskannaus synkronoi tapahtuma- ja UTXO-tiedot lohkoketjun viimeisimpien tietojen kanssa. Skannaus voi kestää pitkään.</translation>
+        <translation>ПОновно скенирање ће синхронизовати трансакције и UTXO податке са најновијим информација на блокчеину. Процес може да траје дуго.</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
         <extracomment>settings tab, general section, title</extracomment>
-        <translation>Yleiset</translation>
+        <translation type="unfinished">General</translation>
     </message>
     <message id="settings-general-lock-screen">
         <source>Lock screen</source>
         <extracomment>settings tab, general section, lock screen label</extracomment>
-        <translation>Lukitusnäyttö</translation>
+        <translation type="unfinished">Lock screen</translation>
     </message>
     <message id="settings-general-require-pwd-to-spend">
         <source>Ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send label</extracomment>
-        <translation type="unfinished">Ask password on every Send</translation>
+        <translation>Питај за лозинку приликом сваког слања</translation>
     </message>
     <message id="settings-report-problem-title">
         <source>Report a problem</source>
-        <translation>Ilmoita ongelmasta (englanniksi)</translation>
+        <translation type="unfinished">Report a problem</translation>
     </message>
     <message id="settings-wallet-location-label">
         <source>Wallet folder location</source>
         <extracomment>settings tab, general section, wallet data folder location label</extracomment>
-        <translation>Lompakon tallennuskansion sijainti</translation>
+        <translation>Локација фолдера новчаника</translation>
     </message>
     <message id="settings-apply">
         <source>Apply changes</source>
@@ -335,406 +335,406 @@
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>
-        <translation>Kirjoita vanha salasanasi</translation>
+        <translation>Унесите стару лозинку, молим</translation>
     </message>
     <message id="change-pwd-new-empty">
         <source>Please, enter new password</source>
-        <translation>Anna uusi salasana</translation>
+        <translation>Унесите нову лозинку, молим</translation>
     </message>
     <message id="change-pwd-confirm-empty">
         <source>Please, confirm new password</source>
-        <translation>Vahvista uusi salasana</translation>
+        <translation>Потврдите нову лозинку, молим</translation>
     </message>
     <message id="change-pwd-new-same-as-old">
         <source>New password cannot be the same as old</source>
-        <translation>Uusi salasana ei voi olla sama kuin vanha salasanasi</translation>
+        <translation type="unfinished">New password cannot be the same as old</translation>
     </message>
     <message id="change-pwd-confirm-fail">
         <source>New password doesn&apos;t match the confirm password</source>
-        <translation>Salasanat eivät täsmää</translation>
+        <translation>Нова лозинка се не слаже са лозинком за конфирмацију</translation>
     </message>
     <message id="change-pwd-old-fail">
         <source>The old password you have entered is incorrect</source>
-        <translation>Kirjoittamasi vanha salasana on virheellinen</translation>
+        <translation>Стара лозинка коју сте унели је погрешна</translation>
     </message>
     <message id="change-pwd-old-pwd-label">
         <source>Enter old password</source>
-        <translation>Kirjoita vanha salasanasi</translation>
+        <translation>Унесите стару лозинку</translation>
     </message>
     <message id="change-pwd-new-pwd-label">
         <source>Enter new password</source>
-        <translation>Anna uusi salasana</translation>
+        <translation>Унесите нову лозинку</translation>
     </message>
     <message id="change-pwd-confirm-pwd-label">
         <source>Confirm new password</source>
-        <translation>Vahvista uusi salasana</translation>
+        <translation>Потврдите нову лозинку</translation>
     </message>
     <message id="change-pwd-ok">
         <source>Сhange password</source>
-        <translation>Vaihda salasana</translation>
+        <translation>Промените лозинку</translation>
     </message>
     <message id="loading-loading">
         <source>Loading wallet...</source>
-        <translation>Ladataan lompakkoa...</translation>
+        <translation>Учитавање новчаника...</translation>
     </message>
     <message id="loading-restoring">
         <source>Restoring wallet...</source>
-        <translation>Palautetaan lompakkoa...</translation>
+        <translation>Опорављање новчаника...</translation>
     </message>
     <message id="loading-creating">
         <source>Creating wallet...</source>
-        <translation>Luodaan lompakkoa...</translation>
+        <translation>Креирање новчаника...</translation>
     </message>
     <message id="start-open-pwd-invitation">
         <source>Enter your password to access the wallet</source>
-        <translation>Kirjoita salasanasi avataksesi lompakon</translation>
+        <translation type="unfinished">Enter your password to access the wallet</translation>
     </message>
     <message id="open-show-wallet-button">
         <source>Show my wallet</source>
-        <translation>Näytä lompakko</translation>
+        <translation>Прикажи мој новчаник</translation>
     </message>
     <message id="edit-addr-title">
         <source>Edit address</source>
         <extracomment>Edit address dialog title</extracomment>
-        <translation>Muokkaa osoitetta</translation>
+        <translation type="unfinished">Edit address</translation>
     </message>
     <message id="edit-addr-addr-id">
         <source>Address ID</source>
         <extracomment>Edit address dialog, address label</extracomment>
-        <translation>Osoitteen ID</translation>
+        <translation type="unfinished">Address ID</translation>
     </message>
     <message id="edit-addr-save-button">
         <source>Save</source>
         <extracomment>Edit address dialog, save button</extracomment>
-        <translation>Tallenna</translation>
+        <translation type="unfinished">Save</translation>
     </message>
     <message id="payment-info-proof-verification">
         <source>Payment proof verification</source>
-        <translation>Maksutodistuksen varmennus</translation>
+        <translation type="unfinished">Payment proof verification</translation>
     </message>
     <message id="payment-info-proof-label">
         <source>Paste your payment proof here</source>
-        <translation>Liitä maksutodistuksen koodi tähän</translation>
+        <translation type="unfinished">Paste your payment proof here</translation>
     </message>
     <message id="payment-info-proof-decode-fail">
         <source>Cannot decode a proof, illegal sequence.</source>
-        <translation>Maksutodistusta ei voida käsitellä, virheellinen koodi.</translation>
+        <translation type="unfinished">Cannot decode a proof, illegal sequence.</translation>
     </message>
     <message id="payment-info-proof-code-label">
         <source>Code</source>
-        <translation>Koodi</translation>
+        <translation type="unfinished">Code</translation>
     </message>
     <message id="payment-info-proof-sender-label">
         <source>Sender</source>
-        <translation>Lähettäjä</translation>
+        <translation type="unfinished">Sender</translation>
     </message>
     <message id="payment-info-proof-receiver-label">
         <source>Receiver</source>
-        <translation>Saaja</translation>
+        <translation type="unfinished">Receiver</translation>
     </message>
     <message id="payment-info-copy-details-button">
         <source>Copy details</source>
-        <translation>Kopioi tiedot</translation>
+        <translation type="unfinished">Copy details</translation>
     </message>
     <message id="payment-info-copy-code-button">
         <source>Copy code</source>
-        <translation>Kopioi koodi</translation>
+        <translation type="unfinished">Copy code</translation>
     </message>
     <message id="loading-try-again-button">
         <source>Try again</source>
-        <translation>Yritä uudelleen</translation>
+        <translation type="unfinished">Try again</translation>
     </message>
     <message id="status-connecting">
         <source>connecting</source>
-        <translation>yhdistetään</translation>
+        <translation>повезивање</translation>
     </message>
     <message id="status-online">
         <source>online</source>
-        <translation>yhdistetty</translation>
+        <translation>повезан на мрежу</translation>
     </message>
     <message id="status-updating">
         <source>updating</source>
-        <translation>päivittää</translation>
+        <translation>ажурирање</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
         <extracomment>settings tab, report problem section, save logs button</extracomment>
-        <translation>Tallenna lompakon lokitiedot</translation>
+        <translation>Сачувај логове новчаника</translation>
     </message>
     <message id="settings-rescan-confirmation-message-line-2">
         <source>Are you sure?</source>
         <extracomment>settings tab, confirm rescan dialog additional message</extracomment>
-        <translation>Oletko varma?</translation>
+        <translation>Да ли си сигуран?</translation>
     </message>
     <message id="settings-title">
         <source>Settings</source>
-        <translation>Asetukset</translation>
+        <translation type="unfinished">Settings</translation>
     </message>
     <message id="cant-send-to-expired-message">
         <source>Can&apos;t send to the expired address.</source>
-        <translation>Vanhentuneeseen osoitteen ei voida lähettää.</translation>
+        <translation>Не могу да пошаљем на истеклу адресу.</translation>
     </message>
     <message id="send-confirmation-title">
         <source>Confirm transaction details</source>
-        <translation>Vahvista maksun tiedot</translation>
+        <translation type="unfinished">Confirm transaction details</translation>
     </message>
     <message id="send-confirmation-recipient-label">
         <source>Recipient</source>
-        <translation>Saaja</translation>
+        <translation type="unfinished">Recipient</translation>
     </message>
     <message id="send-confirmation-pwd-require-message">
         <source>To broadcast your transaction please enter your password</source>
-        <translation>Suorittaaksesi maksutapahtuman kirjoita salasanasi</translation>
+        <translation type="unfinished">To broadcast your transaction please enter your password</translation>
     </message>
     <message id="wallet-title">
         <source>Wallet</source>
-        <translation>Lompakko</translation>
+        <translation type="unfinished">Wallet</translation>
     </message>
     <message id="start-restore-confirm-button">
         <source>I agree</source>
-        <translation>Hyväksy</translation>
+        <translation type="unfinished">I agree</translation>
     </message>
     <message id="start-restore-message-line">
         <source>You are trying to restore an existing Beam Wallet. Please notice that if you use your wallet on another device, your balance will be up to date, but  transaction history and addresses will be kept separately on each device.</source>
-        <translation>Olet palauttamassa vanhaa lompakkoa. Huomioithan, että jos olet jo käyttänyt lompakkoa toisella laitteella, historiatiedot tilitapahtumista sekä tallentamasi osoitteet eivät siirry uudelle laitteelle palautuksen yhteydessä. Tilitapahtumat sekä osoitteet tallennetaan erikseen kullekin laitteelle. Lompakkosi saldo kuitenkin palautetaan ja on käytettävissä ajantasaisena uudessa laitteessa.</translation>
+        <translation type="unfinished">You are trying to restore an existing Beam Wallet. Please notice that if you use your wallet on another device, your balance will be up to date, but  transaction history and addresses will be kept separately on each device.</translation>
     </message>
     <message id="start-migration-message">
         <source>Your wallet will be migrated to v.</source>
-        <translation>Lompakkosi päivitetään uuteen versioon</translation>
+        <translation>Ваш новчаник ће бити мигриран на v.</translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>
         <extracomment>migration screen, start auto migration button</extracomment>
-        <translation>Aloita automaattinen päivitys</translation>
+        <translation>Започни ауто миграцију</translation>
     </message>
     <message id="start-select-db-thead-name">
         <source>Name</source>
-        <translation>Nimi</translation>
+        <translation type="unfinished">Name</translation>
     </message>
     <message id="start-select-db-thead-size">
         <source>Size</source>
-        <translation>Koko</translation>
+        <translation>Величина</translation>
     </message>
     <message id="kb-unit">
         <source>kb</source>
-        <translation>kb</translation>
+        <translation type="unfinished">kb</translation>
     </message>
     <message id="start-select-db-thead-modified">
         <source>Date modified</source>
         <extracomment>start screen, select db for migration, Date modified column title</extracomment>
-        <translation>Muokkauspäivämäärä</translation>
+        <translation>Датум модификовања</translation>
     </message>
     <message id="start-create-new-message-line-1">
         <source>Create new wallet with generating seed phrase.</source>
-        <translation>Luo uusi lompakko generoimalla seed phrase.</translation>
+        <translation>Креирај нови новчаник са генерисаном seed фразом.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
-        <translation>Mikäli joskus kadotat laitteesi tai salasanasi, tarvitset tämän seed phrasen lompakkosi saldon palauttamiseksi!</translation>
+        <translation>Ако икада изгубите ваш уређај, биће вам потребна ова фраза за опоравак вашег новчаника!</translation>
     </message>
     <message id="start-create-new-securiry-note-1">
         <source>Do not let anyone see your seed phrase</source>
-        <translation>Älä anna kenenkään nähdä palautusavaintasi</translation>
+        <translation type="unfinished">Do not let anyone see your seed phrase</translation>
     </message>
     <message id="start-create-new-securiry-note-2">
         <source>Never type your seed phrase into password managers or elsewhere</source>
-        <translation>Älä koskaan tallenna palautusavaintasi salasananhallintaohjelmiin tai muuhunkaan vastaavaan digitaaliseen muotoon</translation>
+        <translation type="unfinished">Never type your seed phrase into password managers or elsewhere</translation>
     </message>
     <message id="start-create-new-securiry-note-3">
         <source>Keep the copies of your seed phrase in a safe place</source>
-        <translation>Säilytä kirjoittamiasi kopioita seed phrasestasi turvallisessa paikassa</translation>
+        <translation>Чувајте копије ваше seed фразе на сигурном месту</translation>
     </message>
     <message id="start-generate-seed-phrase-button">
         <source>Generate seed phrase</source>
-        <translation>Generoi seed phrase</translation>
+        <translation type="unfinished">Generate seed phrase</translation>
     </message>
     <message id="start-generate-seed-phrase-message">
         <source>Your seed phrase is the access key to all the cryptocurrencies in your wallet. Write down the phrase to keep it in a safe or in a locked vault. Without the phrase you will not be able to recover your money.</source>
-        <translation>Seed phrase -palautusavaimellasi pääsee käsiksi kaikkeen lompakon varallisuuteen. Tulosta tai kirjoita se huolellisesti ylös, sekä pidä se tallessa esimerkiksi kassakaapissa, pankkiholvissa tai muussa turvallisesti lukitussa tilassa. Ilman seed phrasea et voi palauttaa lompakkosi saldoa tarvittaessa.</translation>
+        <translation>Ваша seed фраза је приступни кључ за све крипто валуте у вашем новчанику. Запишите ову фразу да би сте је чували на сигурном или у сефу. Без ове фразе нећете бити у могућности да опоравите свој новац.</translation>
     </message>
     <message id="start-confirm-seed-phrase-button">
         <source>I understand</source>
-        <translation>Ymmärrän</translation>
+        <translation type="unfinished">I understand</translation>
     </message>
     <message id="start-confirm-seed-phrase-message">
         <source>It is strictly recommended to write down the seed phrase on a paper. Storing it in a file makes it prone to cyber attacks and, therefore, less secure.</source>
-        <translation>On erittäin suositeltavaa kirjoittaa seed phrase huolellisesti talteen paperille. Jos tallennat seed phrasen laitteellesi tai muulla vastaavalla tavalla digitaalisesti, esimerkiksi pilvipalveluun, se asettaa seed phrasen alttiiksi hakkeroinnille ja vähentää lompakon turvallisuutta.</translation>
+        <translation>Строго је препоручљиво да запишете seed фразу на папир. Чување фразе у рачунару чини је доступно кибер нападачима, па стога, мање сигурном.</translation>
     </message>
     <message id="start-check-seed-phrase-message">
         <source>To ensure the seed phrase is written down, please fill-in the specific words below</source>
-        <translation>Varmistaaksesi, että seed phrase on kirjoitettu talteen oikein, täytä alla olevat kentät</translation>
+        <translation>Да би сте били сигурни да је добро записана, молим попуните одређене речи испод</translation>
     </message>
     <message id="start-restore-message">
         <source>Type in or paste your seed phrase</source>
-        <translation>Kirjoita tai liitä seed phrase</translation>
+        <translation>Укуцај или налепи своју seed фразу</translation>
     </message>
     <message id="start-create-pwd-message">
         <source>Create password to access your wallet</source>
-        <translation>Luo lompakkoosi uusi salasana</translation>
+        <translation type="unfinished">Create password to access your wallet</translation>
     </message>
     <message id="start-pwd-label">
         <source>Password</source>
-        <translation>Salasana</translation>
+        <translation type="unfinished">Password</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Confirm password</source>
-        <translation>Vahvista salasana</translation>
+        <translation type="unfinished">Confirm password</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
         <source>Passwords do not match</source>
-        <translation>Salasanat eivät täsmää</translation>
+        <translation type="unfinished">Passwords do not match</translation>
     </message>
     <message id="start-node-title">
         <source>Setup node connectivity</source>
-        <translation>Palvelimen (node) asetukset</translation>
+        <translation>Подеси повезивање чвора</translation>
     </message>
     <message id="start-node-integrated-radio">
         <source>Run integrated node (recommended)</source>
-        <translation>Käytä laitteen omaa palvelinta (integrated node) (suositeltu asetus)</translation>
+        <translation>Покрени интегрисани чвор (препоручљиво)</translation>
     </message>
     <message id="start-node-port-label">
         <source>Enter port to listen</source>
-        <translation>Aseta palvelimen portti</translation>
+        <translation>Унеси порт за слушање</translation>
     </message>
     <message id="start-node-peer-label">
         <source>Peer</source>
-        <translation>Vertaisverkko (peer)</translation>
+        <translation type="unfinished">Peer</translation>
     </message>
     <message id="start-node-random-radio">
         <source>Connect to random remote node</source>
-        <translation>Yhdistä satunnaiseen ulkoiseen palvelimeen (random remote node)</translation>
+        <translation>Конектуј се на случајни удаљени чвор</translation>
     </message>
     <message id="start-node-remote-radio">
         <source>Connect to specific remote node</source>
-        <translation>Yhdistä tiedossa olevaan ulkoiseen palvelimeen (specific remote node)</translation>
+        <translation>Конектуј се на одређени удаљени чвор</translation>
     </message>
     <message id="start-node-port-empty-error">
         <source>Please specify port</source>
-        <translation>Määritä portti</translation>
+        <translation>Молим прецизирајте порт</translation>
     </message>
     <message id="start-node-port-value-error">
         <source>Port must be a number between 1 and 65535</source>
-        <translation>Portin numeron tulee olla välillä 1–65535</translation>
+        <translation>Порт мора бити број између 1 и 65535</translation>
     </message>
     <message id="start-node-peer-empty-error">
         <source>Please specify peer</source>
-        <translation>Määritä vertaisverkko</translation>
+        <translation>Молим прецизирајте peer</translation>
     </message>
     <message id="start-node-peer-error">
         <source>Incorrect address</source>
-        <translation>Virheellinen osoite</translation>
+        <translation type="unfinished">Incorrect address</translation>
     </message>
     <message id="start-node-empty-error">
         <source>Please specify address of the remote node</source>
-        <translation>Määritä ulkoisen palvelimen (remote node) osoite</translation>
+        <translation>Молим прецзирајте адресу удаљеног чвора</translation>
     </message>
     <message id="appmodel-failed-start-node">
         <source>Failed to start node. Please check your node configuration</source>
-        <translation>Palvelimen (node) käynnistäminen epäonnistui. Ole hyvä ja tarkista palvelimen asetukset</translation>
+        <translation>Покретање чвора није успело. Молим проверите подешавања вашег чвора</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
         <source>Node protocol error!</source>
-        <translation>Virhe: Node protocol error!</translation>
+        <translation>Грешка у протоколу чвора!</translation>
     </message>
     <message id="wallet-model-incompatible-peer-error">
         <source>You are trying to connect to incompatible peer.</source>
-        <translation>Yrität liittyä vertaisverkkoon, joka ei ole yhteensopiva.</translation>
+        <translation>Покушавате да се повежете на некомпатибилни peer.</translation>
     </message>
     <message id="wallet-model-connection-base-error">
         <source>Connection error</source>
-        <translation>Yhteysvirhe</translation>
+        <translation>Грешка у конекцији</translation>
     </message>
     <message id="wallet-model-connection-time-out-error">
         <source>Connection timed out</source>
-        <translation>Yhteyden muodostaminen epäonnistui</translation>
+        <translation>Конекцији је истекло време</translation>
     </message>
     <message id="wallet-model-connection-refused-error">
         <source>Cannot connect to node</source>
-        <translation>Palvelimeen (node) ei saada yhteyttä</translation>
+        <translation type="unfinished">Cannot connect to node</translation>
     </message>
     <message id="wallet-model-connection-host-unreach-error">
         <source>Node is unreachable</source>
-        <translation>Palvelimeen (node) ei saada yhteyttä</translation>
+        <translation>Чвор је недоступан</translation>
     </message>
     <message id="wallet-model-connection-addr-in-use-error">
         <source>The port %1 is already in use. Check if a wallet is already running on this machine or change the port settings.</source>
-        <translation>Portti %1 on jo käytössä. Tarkista, onko tällä laitteella jo käytössä oleva lompakko, tai muuta portin asetuksia.</translation>
+        <translation>Порт %1 је већ у употреби. Проверите да ли је новчаник већ покренут или промените подешавања порта.</translation>
     </message>
     <message id="wallet-model-time-sync-error">
         <source>System time not synchronized</source>
-        <translation>Järjestelmän aika ei yhdenmukainen</translation>
+        <translation>Системско време није синхронизовано</translation>
     </message>
     <message id="wallet-model-host-unresolved-error">
         <source>Incorrect node name or no Internet connection.</source>
-        <translation>Palvelimen (node) osoite virheellinen tai ei internetyhteyttä.</translation>
+        <translation>Погрешно име чвора или нема Интернет конекције.</translation>
     </message>
     <message id="wallet-model-undefined-error">
         <source>Unexpected error!</source>
-        <translation>Odottamaton virhe!</translation>
+        <translation>Неочекивана грешка!</translation>
     </message>
     <message id="wallet-model-data-location-error">
         <source>Failed to start wallet. Please check your wallet data location</source>
-        <translation>Lompakon käynnistäminen epäonnistui. Ole hyvä ja tarkista tallennuskansion sijainti</translation>
+        <translation>Неуспешно покретање новчаника. Молим проверите локацију података вашег новчаника</translation>
     </message>
     <message id="loading-view-download-blocks">
         <source>Syncing with blockchain</source>
-        <translation>Synkronoidaan lohkoketjun kanssa</translation>
+        <translation>Синхронизовање са блокчеином</translation>
     </message>
     <message id="loading-view-scaning-utxo">
         <source>Loading wallet data %d/%d</source>
-        <translation>Ladataan lompakon tietoja %d/%d</translation>
+        <translation>Учитавање података новчаника %d/%d</translation>
     </message>
     <message id="loading-view-protocol-error">
         <source>Incompatible peer</source>
-        <translation>Yhteensopimaton vertaisverkko (peer)</translation>
+        <translation>Некомпатибилни peer</translation>
     </message>
     <message id="loading-view-connection-error">
         <source>Connection error</source>
-        <translation>Yhteysvirhe</translation>
+        <translation>Грешка у конекцији</translation>
     </message>
     <message id="start-view-printer-not-found-error">
         <source>Printer is not found. Please, check your printer preferences.</source>
-        <translation>Tulostinta ei löydy. Tarkista laitteesi tulostinasetukset.</translation>
+        <translation>Принтер није пронађен. Молим, проверите подешавања принтера.</translation>
     </message>
     <message id="start-view-printer-error">
         <source>Failed to print seed phrase. Please, check your printer.</source>
-        <translation>Seed phrasen tulostus epäonnistui. Ole hyvä ja tarkista tulostin.</translation>
+        <translation>Неуспешно штампање seed фразе. Молим, прроверите ваш принтер.</translation>
     </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
-        <translation>SQLiten tietokantatiedosto (*.db)</translation>
+        <translation>фајл SQLite базе података (*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
         <source>Wallet is not connected to the node</source>
-        <translation>Lompakkoa ei ole yhdistetty palvelimeen (node)</translation>
+        <translation>Новчаник није повезан на чвор</translation>
     </message>
     <message id="tx-failure-undefined">
         <source>Unexpected reason, please send wallet logs to Beam support</source>
-        <translation>Odottamaton virheen syy, ole hyvä ja lähetä lompakon lokitiedostot Beam-tukeen (palvelu englanniksi)</translation>
+        <translation>Неочекивани разлог, молим пошаљите логове новчаника Beam подршци</translation>
     </message>
     <message id="tx-failure-cancelled">
         <source>Transaction cancelled</source>
-        <translation>Maksutapahtuma peruutettu</translation>
+        <translation>Трансакција отказана</translation>
     </message>
     <message id="tx-failure-receiver-signature-invalid">
         <source>Receiver signature in not valid, please send wallet logs to Beam support</source>
-        <translation>Saajan allekirjoitus ei ole pätevä, ole hyvä ja lähetä lompakon lokitiedostot Beam-tukeen (palvelu englanniksi)</translation>
+        <translation>Потпис примаоца није валидан, молим пошаљите логове новчаника Beam подршци</translation>
     </message>
     <message id="tx-failure-not-registered-in-blockchain">
         <source>Failed to register transaction with the blockchain, see node logs for details</source>
-        <translation>Virhe rekisteröitäessä maksutapahtumaa lohkoketjuun, tarkista palvelimen lokitiedostot (node logs)</translation>
+        <translation>Неуспешно регистровање трансакције на блокчеину, погледајте логове чвора за детаље</translation>
     </message>
     <message id="tx-failure-not-valid">
         <source>Transaction is not valid, please send wallet logs to Beam support</source>
-        <translation>Maksutapahtuma ei ole pätevä, ole hyvä ja lähetä lompakon lokitiedostot Beam-tukeen (palvelu englanniksi)</translation>
+        <translation>Трансакција није валидна, молим пошаљите логове новчаника Beam подршци</translation>
     </message>
     <message id="tx-failure-kernel-invalid">
         <source>Invalid kernel proof provided</source>
-        <translation>Kernel-varmennus virheellinen</translation>
+        <translation type="unfinished">Invalid kernel proof provided</translation>
     </message>
     <message id="tx-failure-parameters-not-sended">
         <source>Failed to send Transaction parameters</source>
-        <translation>Maksutapahtuman parametrien lähettäminen epäonnistui</translation>
+        <translation>Неуспешно слање параметара Трансакције</translation>
     </message>
     <message id="tx-failure-no-inputs">
         <source>Not enough inputs to process the transaction</source>
@@ -742,108 +742,108 @@
     </message>
     <message id="tx-failure-addr-expired">
         <source>Address is expired</source>
-        <translation>Osoite on vanhentunut</translation>
+        <translation type="unfinished">Address is expired</translation>
     </message>
     <message id="tx-failure-parameters-not-readed">
         <source>Failed to get transaction parameters</source>
-        <translation>Maksutapahtuman parametrien vastaanottaminen epäonnistui</translation>
+        <translation>Неуспешно преузимање параметара Трансакције</translation>
     </message>
     <message id="tx-failure-time-out">
         <source>Transaction timed out</source>
-        <translation>Maksutapahtuma aikakatkaistiin</translation>
+        <translation>Трансакцији је истекло време</translation>
     </message>
     <message id="tx-failure-not-signed-by-receiver">
         <source>Payment not signed by the receiver, please send wallet logs to Beam support</source>
-        <translation>Saaja ei allekirjoittanut maksutapahtumaa, ole hyvä ja lähetä lompakon lokitiedostot Beam-tukeen (palvelu englanniksi)</translation>
+        <translation>Исплата није потписана од стране примаоца, молим пошаљите логове новчаника Beam подршци</translation>
     </message>
     <message id="tx-failure-max-height-to-high">
         <source>Kernel maximum height is too high</source>
-        <translation>Virhe: Kernel maximum height is too high</translation>
+        <translation>Максимална висина језгра је превелика</translation>
     </message>
     <message id="tx-failure-invalid-state">
         <source>Transaction has invalid state</source>
-        <translation>Tapahtuman tila on virheellinen</translation>
+        <translation>Трансакција је у не важећем стању</translation>
     </message>
     <message id="utxo-utxo">
         <source>UTXO</source>
-        <translation>UTXO</translation>
+        <translation type="unfinished">UTXO</translation>
     </message>
     <message id="utxo-blockchain-height">
         <source>Blockchain Height</source>
-        <translation>Lohkoketjun pituus</translation>
+        <translation type="unfinished">Blockchain Height</translation>
     </message>
     <message id="utxo-last-block-hash">
         <source>Last block hash</source>
-        <translation>Viim. lohkon tiiviste</translation>
+        <translation type="unfinished">Last block hash</translation>
     </message>
     <message id="utxo-head-maturity">
         <source>Maturity</source>
-        <translation>Erääntymishetki</translation>
+        <translation>Зрелост</translation>
     </message>
     <message id="utxo-head-type">
         <source>Type</source>
-        <translation>Tyyppi</translation>
+        <translation>Тип</translation>
     </message>
     <message id="utxo-status-available">
         <source>Available</source>
-        <translation>Käytettävissä</translation>
+        <translation type="unfinished">Available</translation>
     </message>
     <message id="utxo-status-maturing">
         <source>Maturing%1(till block height %2)</source>
-        <translation>Erääntyy%1(lohkon tasolla %2)</translation>
+        <translation>Сазревање%1(до висине блока %2)</translation>
     </message>
     <message id="utxo-status-unavailable">
         <source>Unavailable%1(mining result rollback)</source>
-        <translation>Ei käytettävissä%1(louhintatulos peruttu)</translation>
+        <translation>Недоступно%1(враћање резултата мајновања)</translation>
     </message>
     <message id="utxo-status-outgoing">
         <source>In progress%1(outgoing)</source>
-        <translation>Käsitellään%1(lähtevä)</translation>
+        <translation>У току%1(одлазеће)</translation>
     </message>
     <message id="utxo-status-change">
         <source>In progress%1(change)</source>
-        <translation>Käsitellään%1(palautus)</translation>
+        <translation>У току%1(промена)</translation>
     </message>
     <message id="utxo-status-incoming">
         <source>In progress%1(incoming)</source>
-        <translation>Käsitellään%1(saapuva)</translation>
+        <translation>У току%1(долазеће)</translation>
     </message>
     <message id="utxo-status-spent">
         <source>Spent</source>
-        <translation>Käytetty</translation>
+        <translation type="unfinished">Spent</translation>
     </message>
     <message id="settings-general-lock-screen-never">
         <source>Never</source>
-        <translation>Ei koskaan</translation>
+        <translation type="unfinished">Never</translation>
     </message>
     <message id="settings-general-lock-screen-1m">
         <source>1 minute</source>
-        <translation>1 minuutti</translation>
+        <translation>1 минут</translation>
     </message>
     <message id="settings-general-lock-screen-5m">
         <source>5 minutes</source>
-        <translation>5 minuuttia</translation>
+        <translation>5 минута</translation>
     </message>
     <message id="settings-general-lock-screen-15m">
         <source>15 minutes</source>
-        <translation>15 minuuttia</translation>
+        <translation>15 минута</translation>
     </message>
     <message id="settings-general-lock-screen-30m">
         <source>30 minutes</source>
-        <translation>30 minuuttia</translation>
+        <translation>30 минута</translation>
     </message>
     <message id="settings-general-lock-screen-1h">
         <source>1 hour</source>
-        <translation>1 tunti</translation>
+        <translation>1 сат</translation>
     </message>
     <message id="appmodel-failed-time-not-synced">
         <source>Failed to start the integrated node: the timezone settings of your machine are out of sync. Please fix them and restart the wallet.</source>
-        <translation>Laitteen oman palvelimen (integrated node) käynnistäminen epäonnistui: laitteesi aikavyöhykkeen asetukset ovat virheelliset. Korjaa laitteesi asetukset ja käynnistä lompakko uudelleen.</translation>
+        <translation>Покретање интегрисаног чвора није успело: подешена временска зона вашег уређаја није синхронизована. Молим поправите је и рестартујте новчаник.</translation>
     </message>
     <message id="settings-general-language">
         <source>Language</source>
         <extracomment>settings tab, general section, language label</extracomment>
-        <translation>Kieli</translation>
+        <translation type="unfinished">Language</translation>
     </message>
     <message id="open-external-open">
         <source>proceed</source>
@@ -863,23 +863,23 @@ Allow to open and proceed to the website? You can always update your choice in S
     </message>
     <message id="start-open-change-wallet-message">
         <source>If you&apos;ll restore a wallet all transaction history and addresses will be lost.</source>
-        <translation>Jos haluat palauttaa vanhan lompakon, tapahtumahistoria ja tallennetut osoitteet katoavat pysyvästi.</translation>
+        <translation>Ако опорављате новчаник изгубићете комплетну историју транскација и адреса.</translation>
     </message>
     <message id="loading-restore-message-line1">
         <source>Please wait for synchronization and do not close or minimize the application.</source>
-        <translation>Ole hyvä ja odota kunnes synkronointi on valmis. Älä myöskään sulje sovellusta tai pienennä ikkunaa.</translation>
+        <translation>Молим сачекајте да се синхронизација заврши и не затварајте нити минимизујте апликацију.</translation>
     </message>
     <message id="loading-restore-message-line2">
         <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
-        <translation>Ainoastaan lompakon saldo (UTXO) voidaan palauttaa. Tapahtumatiedot ja osoitteet pysyvät aina salassa, eivätkä ne tallennu lohkoketjuun.</translation>
+        <translation>Само баланс новчаника (UTXO) може бити опорављен, информације о трансакцијама и адресама су увек приватне и никада се не чувају на блокчеину.</translation>
     </message>
     <message id="start-recovery-title">
         <source>Create new password</source>
-        <translation>Luo uusi salasana</translation>
+        <translation>Креирај нову лозинку</translation>
     </message>
     <message id="start-recovery-pwd-message">
         <source>Create new password to access your wallet</source>
-        <translation>Luo lompakkoosi uusi salasana</translation>
+        <translation type="unfinished">Create new password to access your wallet</translation>
     </message>
     <message id="start-create-pwd-strength-message">
         <source>Strong password needs to meet the following requirements:
@@ -887,25 +887,25 @@ Allow to open and proceed to the website? You can always update your choice in S
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
 •  must contain at least one number</source>
-        <translation>Vahvan salasanan tulee täyttää seuraavat kriteerit:
-•  salasanassa täytyy olla vähintään 10 merkkiä
-•  vähintään yksi kirjain pienellä
-•  vähintään yksi kirjain isolla
-•  vähintään yksi numero</translation>
+        <translation type="unfinished">Strong password needs to meet the following requirements:
+•  the length must be at least 10 characters
+•  must contain at least one lowercase letter
+•  must contain at least one uppercase letter
+•  must contain at least one number</translation>
     </message>
     <message id="start-open-caps-warning">
         <source>Caps lock is on!</source>
-        <translation>Caps Lock on käytössä!</translation>
+        <translation>Caps lock је укључен!</translation>
     </message>
     <message id="show-qr-title">
         <source>QR code</source>
         <extracomment>show QR dialog title</extracomment>
-        <translation>QR-koodi</translation>
+        <translation type="unfinished">QR code</translation>
     </message>
     <message id="show-qr-tx-token-label">
         <source>Your address</source>
         <extracomment>show qr dialog address label</extracomment>
-        <translation>Sinun osoite</translation>
+        <translation>Ваша адреса</translation>
     </message>
     <message id="settings-general-allow-beammw-label">
         <source>Allow access to %1 and %2
@@ -920,169 +920,170 @@ Allow to open and proceed to the website? You can always update your choice in S
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send email to %1 or open a ticket in %2</source>
-        <translation>2. Lähetä sähköpostia osoitteeseen %1 tai avaa korjausehdotustiketti osoitteessa %2</translation>
+        <translation>2. Пошаљи електронску пошту %1 или отвори тикет у %2</translation>
     </message>
     <message id="settings-report-problem-message-l3">
         <source>3. Don’t forget to attach logs archive</source>
-        <translation>3. Huom. kirjoita viestisi ainoastaan englanniksi ja älä unohda liittää viestiisi lompakon lokitiedostoja</translation>
+        <translation>3. Не заборавите да прикачите архиву логова</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
-        <translation>blockchain explorer</translation>
+        <translation>блокчеин претраживач</translation>
     </message>
     <message id="edit-addr-24-option">
         <source>In 24 hours from now</source>
         <extracomment>Edit address dialog, expiration option, in 24 hours from now</extracomment>
-        <translation>24 tunnin kuluttua</translation>
+        <translation type="unfinished">In 24 hours from now</translation>
     </message>
     <message id="edit-addr-never-option">
         <source>Never</source>
         <extracomment>Edit address dialog, expiration option, never</extracomment>
-        <translation>Ei koskaan</translation>
+        <translation type="unfinished">Never</translation>
     </message>
     <message id="edit-addr-as-is-option">
         <source>Within 24 hours</source>
         <extracomment>Edit address dialog, expiration option, do not change</extracomment>
-        <translation>24 tunnissa</translation>
+        <translation>Наредна 24 сата</translation>
     </message>
     <message id="edit-addr-expires-label">
         <source>Expires</source>
         <extracomment>Edit address dialog, expires label</extracomment>
-        <translation>Vanhentuu</translation>
+        <translation type="unfinished">Expires</translation>
     </message>
     <message id="edit-addr-expire-now-label">
         <source>Now</source>
         <extracomment>Edit address dialog, expire now label</extracomment>
-        <translation>Nyt</translation>
+        <translation type="unfinished">Now</translation>
     </message>
     <message id="edit-addr-expire-now-switch">
         <source>Expire address now</source>
         <extracomment>Edit address dialog, expire now switch</extracomment>
-        <translation>Vanhenna osoite heti</translation>
+        <translation type="unfinished">Expire address now</translation>
     </message>
     <message id="edit-addr-expiration-time-label">
         <source>Expired on </source>
         <extracomment>Edit address dialog, expiration time label</extracomment>
-        <translation>Vanhentui </translation>
+        <translation>Истекла </translation>
     </message>
     <message id="edit-addr-activate-addr-switch">
         <source>Activate address</source>
         <extracomment>Edit address dialog, expiration time label</extracomment>
-        <translation>Aktivoi osoite</translation>
+        <translation type="unfinished">Activate address</translation>
     </message>
     <message id="time-never">
         <source>Never</source>
-        <translation>Ei koskaan</translation>
+        <extracomment>time never string</extracomment>
+        <translation type="unfinished">Never</translation>
     </message>
     <message id="start-pwd-difficulty-very-weak">
         <source>Very weak password</source>
         <extracomment>set passwort, difficulty message, very weak</extracomment>
-        <translation>Erittäin heikko salasana</translation>
+        <translation>Веома слаба лозинка</translation>
     </message>
     <message id="start-pwd-difficulty-weak">
         <source>Weak password</source>
         <extracomment>set passwort, difficulty message, weak</extracomment>
-        <translation>Heikko salasana</translation>
+        <translation>Слаба лозинка</translation>
     </message>
     <message id="start-pwd-difficulty-medium">
         <source>Medium strength password</source>
         <extracomment>set passwort, difficulty message, medium</extracomment>
-        <translation>Keskivahva salasana</translation>
+        <translation>Средње јака лозинка</translation>
     </message>
     <message id="start-pwd-difficulty-strong">
         <source>Strong password</source>
         <extracomment>set passwort, difficulty message, strong</extracomment>
-        <translation>Vahva salasana</translation>
+        <translation>Јака лозинка</translation>
     </message>
     <message id="start-pwd-difficulty-very-strong">
         <source>Very strong password</source>
         <extracomment>set passwort, difficulty message, very strong</extracomment>
-        <translation>Erittäin vahva salasana</translation>
+        <translation>Веома јака лозинка</translation>
     </message>
     <message id="start-migration-select-file-button">
         <source>Select wallet database file manually</source>
         <extracomment>migration screen, select db file button</extracomment>
-        <translation>Valitse lompakon tietokantatiedosto manuaalisesti</translation>
+        <translation>Изаберите ручно фајл базе података новчаника</translation>
     </message>
     <message id="start-select-db-best-match-label">
         <source>(best match)</source>
         <extracomment>start screen, select db for migration, best match label</extracomment>
-        <translation>(paras osuma)</translation>
+        <translation>(најбољи кандидат)</translation>
     </message>
     <message id="start-select-db-thead-created">
         <source>Date created</source>
         <extracomment>start screen, select db for migration, Date created column title</extracomment>
-        <translation>Luomispäivämäärä</translation>
+        <translation>Датум креирања</translation>
     </message>
     <message id="settings-general-require-pwd-to-spend-confirm-pwd-title">
         <source>Don&apos;t ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if checked</extracomment>
-        <translation>Älä kysy salasanaa ennen lähettämistä</translation>
+        <translation>Не питај за лозинку приликом сваког Слања</translation>
     </message>
     <message id="settings-general-require-pwd-to-spend-confirm-pwd-message">
         <source>Password verification is required to change that setting</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
-        <translation>Muuttaaksesi asetuksia sinun tulee tunnistautua salasanalla</translation>
+        <translation>Верификација лозинке је обавезна да би променили то подешавање</translation>
     </message>
     <message id="restore-finish-alert-button">
         <source>I understand</source>
-        <translation>Ymmärrän</translation>
+        <translation type="unfinished">I understand</translation>
     </message>
     <message id="restore-finish-alert-title">
         <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>Älä käytä samaan aikaan kahta lompakkoa, jotka on luotu samasta seed phrasesta</translation>
+        <translation type="unfinished">Do not simultaneously run two wallets initiated from the same seed phrase</translation>
     </message>
     <message id="restore-finish-alert-message-line">
         <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>Älä käytä samaa seed phrasea usealla laitteella, sillä saldosi ja tapahtumasi eivät synkronoidu.</translation>
+        <translation>Не користите исту seed фразу на више уређаја, ваш баланс и листа трансакција неће бити синхронизоване.</translation>
     </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
-        <translation>Alitransaktio epäonnistui</translation>
+        <translation>Подтрансакција није успела</translation>
     </message>
     <message id="tx-failure-invalid-contract-amount">
         <source>Contract&apos;s amount is not valid</source>
-        <translation>Sopimuksen summa on virheellinen</translation>
+        <translation>Износ у Уговору није валидан</translation>
     </message>
     <message id="tx-failure-invalid-sidechain-contract">
         <source>Side chain has invalid contract</source>
-        <translation>Sivuketjun sopimus on pätemätön</translation>
+        <translation>Споредни ланац има не валидан уговор</translation>
     </message>
     <message id="tx-failure-sidechain-internal-error">
         <source>Side chain bridge has internal error</source>
-        <translation>Sivuketjun sillassa on sisäinen virhe</translation>
+        <translation>Мост ка споредном ланцу има интерну грешку</translation>
     </message>
     <message id="tx-failure-sidechain-network-error">
         <source>Side chain bridge has network error</source>
-        <translation>Sivuketjun sillassa on yhteysvirhe</translation>
+        <translation>Мост ка споредном ланцу има мрежну грешку</translation>
     </message>
     <message id="tx-failure-invalid-sidechain-response-format">
         <source>Side chain bridge has response format error</source>
-        <translation>Sivuketjun sillassa on vastausmuodon virhe</translation>
+        <translation>Мост ка споредном ланцу има грешку у формату одговора</translation>
     </message>
     <message id="tx-failure-invalid-side-chain-credentials">
         <source>Invalid credentials of Side chain</source>
-        <translation>Sivuketjun pääsytiedot virheelliset</translation>
+        <translation>Неважећи акредитиви Споредног ланца</translation>
     </message>
     <message id="tx-failure-not-enough-time-btc-lock">
         <source>Not enough time to finish btc lock transaction</source>
-        <translation>Aika loppui kesken BTC:n lukitsemissiirron suorittamiseksi</translation>
+        <translation>Нема довољно времена за завршетак btc закључавања трансакције</translation>
     </message>
     <message id="tx-failure-create-multisig">
         <source>Failed to create multi-signature</source>
-        <translation>Moniallekirjoituksen luonti epäonnistui</translation>
+        <translation>Неуспешно креирање вишеструког потписа</translation>
     </message>
     <message id="tx-failure-fee-too-small">
         <source>Fee is too small</source>
-        <translation>Siirtomaksu on liian pieni</translation>
+        <translation>Такса је сувише мала</translation>
     </message>
     <message id="loading-view-estimate-minutes">
         <source>min</source>
-        <translation>min</translation>
+        <translation>мин</translation>
     </message>
     <message id="loading-view-estimate-seconds">
         <source>sec</source>
-        <translation>s</translation>
+        <translation type="unfinished">sec</translation>
     </message>
     <message id="loading-view-estimate-time">
         <source>Estimated time: %s</source>
@@ -1090,334 +1091,337 @@ Allow to open and proceed to the website? You can always update your choice in S
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
-        <translation>Vaihtomaksu</translation>
+        <translation>%1 стопа таксе Трансакције</translation>
     </message>
     <message id="general-fee-fail">
         <source>The minimum fee is %1 %2</source>
-        <translation>Minimisiirtomaksu on %1 %2</translation>
+        <translation>минимална такса је %1 %2</translation>
     </message>
     <message id="general-change-settings">
         <source>Change settings</source>
-        <translation>Muuta asetuksia</translation>
+        <translation type="unfinished">Change settings</translation>
     </message>
     <message id="general-swap">
         <source>Swap</source>
-        <translation>Swap</translation>
+        <translation type="unfinished">Swap</translation>
     </message>
     <message id="settings-node-address">
         <source>Node address</source>
-        <translation>Palvelimen (node) osoite</translation>
+        <translation type="unfinished">Node address</translation>
     </message>
     <message id="settings-username">
         <source>Username</source>
-        <translation>Käyttäjänimi</translation>
+        <translation>Корисничко име</translation>
     </message>
     <message id="settings-password">
         <source>Password</source>
-        <translation>Salasana</translation>
+        <translation type="unfinished">Password</translation>
     </message>
     <message id="swap-beta-message">
         <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>Atomic Swap -toiminto on beetaversio tällä hetkellä. Emme suosittele vaihtamaan suuria summia.</translation>
+        <translation>Функционалност Атомске Размене је у Бета фази трнутно. Препоручујемо да не шаљете велике износе.</translation>
     </message>
     <message id="swap-beta-title">
         <source>Atomic Swaps are in BETA</source>
-        <translation>Atomic Swap on BETA-vaiheessa</translation>
+        <translation>Атомске Размене су у БЕТА фази</translation>
     </message>
     <message id="swap-na-message">
         <source>You do not have any 3rd-party currencies connected.
 Update your settings and try again.</source>
-        <translation>Sinulla ei ole ulkoisia valuuttoja yhdistettynä.\nPäivitä asetuksesi ja yritä uudelleen.</translation>
+        <translation>Немате повезану ниједну 3rd-party валуту.
+Ажурирајте ваша подешавања и пробајте поново.</translation>
     </message>
     <message id="wallet-receive-swap-title">
         <source>Create a Swap Offer</source>
-        <translation>Tee swap-tarjous</translation>
+        <translation>Креирај Понуду за Размену</translation>
     </message>
     <message id="receive-amount-swap-label">
         <source>Receive amount</source>
-        <translation>Vastaanotettava summa</translation>
+        <translation>Износ који примате</translation>
     </message>
     <message id="sent-amount-label">
         <source>Send amount</source>
-        <translation>Summa</translation>
+        <translation>Износ који шаљете</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
         <source>Offer expiration time</source>
-        <translation>Tarjouksen vanhentumisaika</translation>
+        <translation>Предложи време истека</translation>
     </message>
     <message id="wallet-receive-expires-6">
         <source>6 hours</source>
-        <translation>6 tuntia</translation>
+        <translation>6 сати</translation>
     </message>
     <message id="general-rate">
         <source>Exchange rate</source>
-        <translation>Vaihtokurssi</translation>
+        <translation>Стопа Мењачнице</translation>
     </message>
     <message id="wallet-receive-swap-publish">
         <source>publish offer</source>
-        <translation>julkaise tapahtuman tunniste</translation>
+        <translation>објави понуду</translation>
     </message>
     <message id="wallet-send-swap-title">
         <source>Accept Swap Offer</source>
-        <translation>Vaihda valuutat</translation>
+        <translation>Прихвати Понуду за Размену</translation>
     </message>
     <message id="wallet-send-swap-invalid-token">
         <source>Invalid swap token</source>
-        <translation>Virheellinen swap-tunniste</translation>
+        <translation>Погрешан токен за размену</translation>
     </message>
     <message id="general-comment-local">
         <source>Comments are local and won&apos;t be shared</source>
-        <translation>Kommentit ovat paikallisia eivätkä ne näy muille</translation>
+        <translation>Коментари су локални и неће бити дељени</translation>
     </message>
     <message id="general-bitcoin">
         <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <translation type="unfinished">Bitcoin</translation>
     </message>
     <message id="general-litecoin">
         <source>Litecoin</source>
-        <translation>Litecoin</translation>
+        <translation type="unfinished">Litecoin</translation>
     </message>
     <message id="general-qtum">
         <source>QTUM</source>
-        <translation>QTUM</translation>
+        <translation type="unfinished">QTUM</translation>
     </message>
     <message id="general-electrum">
         <source>Electrum</source>
-        <translation>Electrum</translation>
+        <translation type="unfinished">Electrum</translation>
     </message>
     <message id="swap-currency-na-message">
         <source>%1 is not connected, 
 please review your settings and try again</source>
-        <translation>%1 ei ole yhdistetty. \nTarkista asetuksesi ja yritä uudelleen.</translation>
+        <translation>%1 није повезан,
+молим проверите подешавања и пробајте поново</translation>
     </message>
     <message id="send-not-enough">
         <source>There is not enough funds to complete the transaction</source>
-        <translation>Saldo ei riitä tapahtuman suorittamiseksi</translation>
+        <translation>Нема довољно средстава за комплетирање трансакције</translation>
     </message>
     <message id="wallet-send-swap-offered-label">
         <source>Offered on</source>
-        <translation type="unfinished">Tarjous tehty</translation>
+        <translation>Понуђено</translation>
     </message>
     <message id="wallet-send-swap-expires-label">
         <source>Expires on</source>
-        <translation type="unfinished">Vanhentuu</translation>
+        <translation>Истиче</translation>
     </message>
     <message id="general-address-from">
         <source>From</source>
-        <translation>Lähettäjä</translation>
+        <translation>Од</translation>
     </message>
     <message id="general-address-to">
         <source>To</source>
-        <translation>Saaja</translation>
+        <translation>За</translation>
     </message>
     <message id="loading-view-estimate-calculating">
         <source>calculating...</source>
-        <translation>lasketaan...</translation>
+        <translation>рачунам...</translation>
     </message>
     <message id="loading-view-rebuild-utxos">
         <source>Rebuilding wallet data</source>
-        <translation>Rakennetaan uudelleen lompakon tietoja</translation>
+        <translation>Поновно прављење података новчаника</translation>
     </message>
     <message id="loading-view-estimate-hours">
         <source>h</source>
-        <translation>t</translation>
+        <translation type="unfinished">h</translation>
     </message>
     <message id="loading-view-net-problems">
         <source>It may take longer than usual. Please, check your network.</source>
-        <translation>Tämä voi kestää kauemmin kuin tavallisesti. Tarkista verkkoyhteytesi.</translation>
+        <translation>Може да потраје дуже него обично. Молим, проверите мрежу.</translation>
     </message>
     <message id="atomic-swap-title">
         <source>Atomic Swaps</source>
-        <translation>Atomic Swap</translation>
+        <translation>Атомске Размене</translation>
     </message>
     <message id="atomic-swap-create">
         <source>Create offer</source>
-        <translation>Tee tarjous</translation>
+        <translation>Креирај понуду</translation>
     </message>
     <message id="atomic-swap-active-offers-tab">
         <source>Active offers</source>
-        <translation>Avoimet tarjoukset</translation>
+        <translation>Активне понуде</translation>
     </message>
     <message id="atomic-swap-transactions-tab">
         <source>Transactions</source>
-        <translation>Tapahtumat</translation>
+        <translation type="unfinished">Transactions</translation>
     </message>
     <message id="atomic-swap-fit-current-balance">
         <source>Fit my current balance</source>
-        <translation>Omaan saldoon sopivat</translation>
+        <translation>Оспособи текући баланс</translation>
     </message>
     <message id="atomic-swap-currency">
         <source>Currency</source>
-        <translation>Valuutta</translation>
+        <translation>Валута</translation>
     </message>
     <message id="atomic-swap-time-created">
         <source>Created on</source>
-        <translation>Luotu</translation>
+        <translation>Датум | Време</translation>
     </message>
     <message id="atomic-swap-amount-send">
         <source>Send</source>
-        <translation>Lähetä</translation>
+        <translation type="unfinished">Send</translation>
     </message>
     <message id="atomic-swap-amount-receive">
         <source>Receive</source>
-        <translation>Vastaanota</translation>
+        <translation type="unfinished">Receive</translation>
     </message>
     <message id="atomic-swap-rate">
         <source>Rate</source>
-        <translation>Vaihtomaksu</translation>
+        <translation>Курс</translation>
     </message>
     <message id="atomic-swap-expiration">
         <source>Expiration</source>
-        <translation>Vanhentuminen</translation>
+        <translation>Истиче</translation>
     </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
-        <translation>Peruuta tarjous</translation>
+        <translation>Откажи понуду</translation>
     </message>
     <message id="atomic-swap-accept">
         <source>Accept offer</source>
-        <translation>Hyväksy tarjous</translation>
+        <translation>Прихвати понуду</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
-        <translation>Kaikki</translation>
+        <translation type="unfinished">All</translation>
     </message>
     <message id="atomic-swap-in-progress-transactions-tab">
         <source>In progress</source>
-        <translation>Käsittelyssä</translation>
+        <translation type="unfinished">In progress</translation>
     </message>
     <message id="atomic-swap-tx-table-created">
         <source>Created on</source>
-        <translation>Luotu</translation>
+        <translation>Датум | Време</translation>
     </message>
     <message id="atomic-swap-tx-table-from">
         <source>From</source>
-        <translation>Lähettäjä</translation>
+        <translation>Од</translation>
     </message>
     <message id="atomic-swap-tx-table-to">
         <source>To</source>
-        <translation>Saaja</translation>
+        <translation>За</translation>
     </message>
     <message id="atomic-swap-tx-table-sent">
         <source>Sent</source>
-        <translation>Lähetetty</translation>
+        <translation type="unfinished">Sent</translation>
     </message>
     <message id="atomic-swap-tx-table-received">
         <source>Received</source>
-        <translation>Vastaanotettu</translation>
+        <translation type="unfinished">Received</translation>
     </message>
     <message id="atomic-swap-tx-table-status">
         <source>Status</source>
-        <translation>Tila</translation>
+        <translation>Статус</translation>
     </message>
     <message id="general-create-trezor-wallet">
         <source>Create new Trezor wallet</source>
-        <translation>Luo uusi Trezor-lompakko</translation>
+        <translation>Креирај нови Трезор новчаник</translation>
     </message>
     <message id="send-confirmation-pwd-text-online-time">
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>Jotta maksutapahtuma onnistuu, tulee saajan avata lompakkonsa 12 tunnin sisällä lähetyksestä, minkä jälkeen sinun tulee vielä avata lompakko 2 tunnin sisällä.</translation>
+        <translation type="unfinished">For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</translation>
     </message>
     <message id="trezor-message">
         <source>Please, look at your Trezor device to complete actions...</source>
-        <translation>Suorita loppuun Trezor-laitteessasi näkyvät toiminnot...</translation>
+        <translation>Молим, погледајте ваш Трезор уређај да би довршили акције...</translation>
     </message>
     <message id="start-init-wallet-with-trezor">
         <source>Init wallet with Trezor</source>
-        <translation>Asenna Trezor-yhteensopiva lompakko</translation>
+        <translation>Иницирај новчаник Трезор-ом</translation>
     </message>
     <message id="start-import-trezor-owner-key">
         <source>Import Trezor Owner Key</source>
-        <translation>Tuo Trezorin Owner Key -omistusavain</translation>
+        <translation>Учитај Трезор-ов Власнички Кључ </translation>
     </message>
     <message id="start-owner-key-imported">
         <source>Owner Key imported. Please, enter the password you saw on device to decrypt your Owner Key.</source>
-        <translation>Owner Key -omistusavain tuotu. Kirjoita laitteessasi näkynyt salasana purkaaksesi omistusavaimen salauksen.</translation>
+        <translation>Власнички Кључ учитан. Молим, унесите лозинку коју сте видели на уређају да би дешивровали Власнички Кључ.</translation>
     </message>
     <message id="start-look-at-trezor-to-complete-actions">
         <source>Please, look at your Trezor to complete actions...</source>
-        <translation>Suorita loppuun Trezorissa näkyvät toiminnot...</translation>
+        <translation>Молим, погледајте ваш Трезор да би довршили акције...</translation>
     </message>
     <message id="start-found-trezor-device">
         <source>Found device:</source>
-        <translation>Laite löydetty:</translation>
+        <translation>Пронађен уређај:</translation>
     </message>
     <message id="start-no-trezor-device-connected">
         <source>There is no device connected, please, connect your hardware wallet.</source>
-        <translation>Sopivaa laitetta ei ole yhdistetty. Ole hyvä ja yhdistä hardware-lompakkosi.</translation>
+        <translation>Нема повезаних уређаја, молим, повежите ваш хардверски новчаник .</translation>
     </message>
     <message id="wallet-model-device-not-connected">
         <source>There is no Trezor device connected. Please, connect and try again.</source>
-        <translation>Trezor-laitetta ei ole yhdistetty. Yhdistä Trezor ja yritä uudelleen.</translation>
+        <translation>Трезор уређај није повезан. Молим, повежите и пробајте поново.</translation>
     </message>
     <message id="wallet-transactions-all-tab">
         <source>All</source>
-        <translation>Kaikki</translation>
+        <translation type="unfinished">All</translation>
     </message>
     <message id="wallet-transactions-in-progress-tab">
         <source>In progress</source>
-        <translation>Käsittelyssä</translation>
+        <translation type="unfinished">In progress</translation>
     </message>
     <message id="wallet-transactions-sent-tab">
         <source>Sent</source>
-        <translation>Lähetetty</translation>
+        <translation type="unfinished">Sent</translation>
     </message>
     <message id="wallet-transactions-received-tab">
         <source>Received</source>
-        <translation>Vastaanotettu</translation>
+        <translation type="unfinished">Received</translation>
     </message>
     <message id="atomic-no-offers">
         <source>There are no active offers at the moment.
 Please try again later or create an offer yourself.</source>
-        <translation>Ei yhtään voimassa olevaa tarjousta.\nTee oma tarjous tai yritä myöhemmin uudelleen.</translation>
+        <translation>Тренутно нема активних понуда.
+Молим проверите поново касније или сами креирајте понуду.</translation>
     </message>
     <message id="send-less-than-fee">
         <source>The swap amount must be greater than the transaction fee</source>
-        <translation>Vaihtosumman täytyy olla vaihtomaksua suurempi</translation>
+        <translation>Износ за размену мора бити већи од износа таксе за трансакцију</translation>
     </message>
     <message id="wallet-txs-status-in-progress">
         <source>in progress</source>
-        <translation>käsittelyssä</translation>
+        <translation>у току</translation>
     </message>
     <message id="wallet-txs-status-own-sent">
         <source>sent to own address</source>
-        <translation>lähetetty (oma osoite)</translation>
+        <translation>послато на своју адресу</translation>
     </message>
     <message id="wallet-txs-status-own-sending">
         <source>sending to own address</source>
-        <translation>lähettää omaan osoitteeseen</translation>
+        <translation>слање на своју адресу</translation>
     </message>
     <message id="wallet-search-transactions-placeholder">
         <source>Transaction or kernel ID, comment, address or contact</source>
-        <translation>Tapahtuman ID, kernel ID, kommentti, osoite tai yhteystieto</translation>
+        <translation>Трансакција или ИД језгра, коментар, адреса или контакт</translation>
     </message>
     <message id="settings-swap-node">
         <source>Node</source>
-        <translation>Palvelin (node)</translation>
+        <translation type="unfinished">Node</translation>
     </message>
     <message id="wallet-clear-search">
         <source>Clear search</source>
-        <translation>Tyhjennä haku</translation>
+        <translation>Очисти претрагу</translation>
     </message>
     <message id="wallet-search">
         <source>Search</source>
-        <translation>Etsi</translation>
+        <translation type="unfinished">Search</translation>
     </message>
     <message id="atomic-swap-1active-tx-count">
         <source>1 active transaction</source>
-        <translation>1 aktiivinen tapahtuma</translation>
+        <translation>1 активна трансакција</translation>
     </message>
     <message id="atomic-swap-active-tx-count">
         <source>%1 active transactions</source>
-        <translation>%1 aktiivista tapahtumaa</translation>
+        <translation>%1 активне трансакције</translation>
     </message>
     <message id="swap-beta-tx-in-progress">
         <source>Transaction is in progress</source>
-        <translation>Tapahtumaa käsitellään</translation>
+        <translation>Трансакције у току</translation>
     </message>
     <message id="swap-connecting">
         <source>Connecting...</source>
-        <translation>Yhdistetään...</translation>
+        <translation type="unfinished">Connecting...</translation>
     </message>
     <message id="swap-beta-connection-error">
         <source>Cannot connect to peer. Please check the address in Settings and try again.</source>
@@ -1425,246 +1429,248 @@ Please try again later or create an offer yourself.</source>
     </message>
     <message id="swap-alert-confirm-button">
         <source>I understand</source>
-        <translation>Ymmärrän</translation>
+        <translation type="unfinished">I understand</translation>
     </message>
     <message id="accept-own-offer-allert-head">
         <source>You cannot accept your own offer</source>
-        <translation>Omaa tarjousta ei voi hyväksyä</translation>
+        <translation>Не можете да прихватите сопствену понуду</translation>
     </message>
     <message id="accept-own-offer-allert-body">
         <source>The swap token was generated by you, and therefore cannot be accepted.</source>
-        <translation>Olet itse luonut kyseisen tapahtuman tunnisteen, eikä omaa tarjousta voida hyväksyä.\nTarkista swap-tunniste ja yritä uudelleen.</translation>
+        <translation>Токен за размену је генерисан од стране вас, па због тога не може да буде прихваћен.</translation>
     </message>
     <message id="swap-copy-token">
         <source>Copy token</source>
-        <translation>Kopioi tunniste</translation>
+        <translation>Копирај токен</translation>
     </message>
     <message id="atomic-swap-cancel-text">
         <source>Are you sure you want to cancel your offer?</source>
-        <translation>Haluatko varmasti peruuttaa tarjouksen?</translation>
+        <translation>Да ли сте сигурни да желите да откажете понуду?</translation>
     </message>
     <message id="atomic-swap-cancel-button">
         <source>cancel offer</source>
-        <translation>peruuta tarjous</translation>
+        <translation>откажи понуду</translation>
     </message>
     <message id="atomic-swap-back-button">
         <source>back</source>
-        <translation>takaisin</translation>
+        <translation>назад</translation>
     </message>
     <message id="swap-details-lock-tx-id">
         <source>lock transaction ID</source>
-        <translation type="unfinished">lock transaction ID</translation>
+        <translation>ИД закључане трансакције</translation>
     </message>
     <message id="swap-details-lock-tx-conf">
         <source>lock transaction confirmations</source>
-        <translation type="unfinished">lock transaction confirmations</translation>
+        <translation>конфирмације закључане трансакције</translation>
     </message>
     <message id="swap-details-beam-lock-kernel-id">
         <source>BEAM lock transaction kernel ID</source>
-        <translation type="unfinished">BEAM lock transaction kernel ID</translation>
+        <translation>BEAM ИД језгра закључане трансакције</translation>
     </message>
     <message id="swap-details-beam-redeem-kernel-id">
         <source>BEAM redeem transaction kernel ID</source>
-        <translation type="unfinished">BEAM redeem transaction kernel ID</translation>
+        <translation>BEAM ИД redeem језгра закључане трансакције</translation>
     </message>
     <message id="swap-details-redeem-tx-id">
         <source>redeem transaction ID</source>
-        <translation type="unfinished">redeem transaction ID</translation>
+        <translation>ИД redeem трансакције</translation>
     </message>
     <message id="swap-details-redeem-tx-conf">
         <source>redeem transaction confirmations</source>
-        <translation type="unfinished">redeem transaction confirmations</translation>
+        <translation>конфирмације redeem трансакције</translation>
     </message>
     <message id="swap-details-beam-refund-kernel-id">
         <source>BEAM refund transaction kernel ID</source>
-        <translation>BEAM-palautustapahtuman kernel ID</translation>
+        <translation>BEAM ИД језгра рефундирајуће трансакције</translation>
     </message>
     <message id="swap-details-refund-tx-id">
         <source>refund transaction ID</source>
-        <translation>palautustapahtuman ID</translation>
+        <translation>ИД рефундирајуће трансакције</translation>
     </message>
     <message id="swap-details-refund-tx-conf">
         <source>refund transaction confirmations</source>
-        <translation>palautustapahtuman vahvistukset</translation>
+        <translation>конфирмације рефундирајуће трансакције</translation>
     </message>
     <message id="swap-invalid-rate">
         <source>Invalid rate</source>
-        <translation>Virheellinen kurssi</translation>
+        <translation>Погрешан Курс</translation>
     </message>
     <message id="swap-details-tx-id">
         <source>Transaction ID</source>
-        <translation>Tapahtuman ID</translation>
+        <translation type="unfinished">Transaction ID</translation>
     </message>
     <message id="swap-details-tx-fee">
         <source>BEAM Transaction fee</source>
-        <translation>Siirtomaksu</translation>
+        <translation>BEAM такса за Трансакцију</translation>
     </message>
     <message id="swap-details-tx-comment">
         <source>Comment</source>
-        <translation>Kommentti</translation>
+        <translation type="unfinished">Comment</translation>
     </message>
     <message id="swap-details-tx-fee-rate">
         <source>%1 Transaction fee rate</source>
-        <translation>Vaihtomaksu</translation>
+        <translation>%1 стопа таксе Трансакције</translation>
     </message>
     <message id="settings-swap-bitcoin-node">
         <source>Bitcoin node</source>
-        <translation>Bitcoin palvelin (node)</translation>
+        <translation>Bitcoin чвор</translation>
     </message>
     <message id="settings-swap-litecoin-node">
         <source>Litecoin node</source>
-        <translation>Litecoin palvelin (node)</translation>
+        <translation>Litecoin чвор</translation>
     </message>
     <message id="settings-swap-qtum-node">
         <source>Qtum node</source>
-        <translation>Qtum palvelin (node)</translation>
+        <translation>Qtum чвор</translation>
     </message>
     <message id="settings-swap-bitcoin-electrum">
         <source>Bitcoin electrum</source>
-        <translation>Bitcoin Electrum</translation>
+        <translation type="unfinished">Bitcoin electrum</translation>
     </message>
     <message id="settings-swap-litecoin-electrum">
         <source>Litecoin electrum</source>
-        <translation>Litecoin Electrum</translation>
+        <translation type="unfinished">Litecoin electrum</translation>
     </message>
     <message id="settings-swap-qtum-electrum">
         <source>Qtum electrum</source>
-        <translation>Qtum Electrum</translation>
+        <translation type="unfinished">Qtum electrum</translation>
     </message>
     <message id="swap-offer-duplicate-message">
         <source>The offer with this transaction token is already accepted.
 Please check the swap token and try again.</source>
-        <translation>Tarjous tällä tapahtuman tunnisteella on jo hyväksytty.\nTarkista swap-tunniste ja yritä uudelleen.</translation>
+        <translation>Понуда за трансакцију овог токена је већ прихваћена.
+МОлим проверите токен за размену и покушајте поново.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
         <source>Оffer is already accepted</source>
-        <translation>Tarjous on jo hyväksytty</translation>
+        <translation>Понуда је већ прихваћена</translation>
     </message>
     <message id="swap-offer-duplicate-confirm-button">
         <source>ok</source>
-        <translation>ok</translation>
+        <translation type="unfinished">ok</translation>
     </message>
     <message id="swap-details-failure-reason">
         <source>Error</source>
-        <translation>Virhe</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message id="swap-tx-failure-refunded">
         <source>Refunded</source>
-        <translation>Palautettu</translation>
+        <translation>Рефундирано</translation>
     </message>
     <message id="settings-swap-edit-seed">
         <source>Edit your seed phrase</source>
-        <translation>Muokkaa seed phraseasi</translation>
+        <translation>Промените своју seed фразу</translation>
     </message>
     <message id="settings-swap-enter-seed">
         <source>Enter your seed phrase</source>
-        <translation>Kirjoita seed phrasesi</translation>
+        <translation>Унесите своју seed фразу</translation>
     </message>
     <message id="settings-swap-label-or">
         <source>or</source>
-        <translation>tai</translation>
+        <translation>или</translation>
     </message>
     <message id="settings-swap-new-seed">
         <source>Generate new seed phrase</source>
-        <translation>Generoi uusi seed phrase</translation>
+        <translation>Генериши нову seed фразу</translation>
     </message>
     <message id="settings-swap-show-seed">
         <source>Show seed phrase</source>
-        <translation>Näytä seed phrase</translation>
+        <translation type="unfinished">Show seed phrase</translation>
     </message>
     <message id="settings-swap-show-addresses">
         <source>Show wallet addresses</source>
-        <translation>Näytä osoitteet</translation>
+        <translation>Прикажи адресу новчаника</translation>
     </message>
     <message id="swap-seed-info-message">
         <source>Your seed phrase is the access key to all the funds! Print or write down the phrase and keep it in a safe or in a locked vault. Without the phrase you will not be able to recover your money.</source>
-        <translation>Seed phrase -palautusavaimellasi pääsee käsiksi kaikkeen lompakon varallisuuteen. Tulosta tai kirjoita se huolellisesti ylös, sekä pidä se tallessa esimerkiksi kassakaapissa, pankkiholvissa tai muussa turvallisesti lukitussa tilassa.\nIlman seed phrasea et voi palauttaa lompakkosi saldoa tarvittaessa.</translation>
+        <translation>Ваша seed фраза је приступни кључ за сва ваша средства! Одштампајте или запишите фразу и чувајте је на сигурном или у закључаном сефу. Без фразе нећете моћи да повратите свој новац.</translation>
     </message>
     <message id="settings-swap-seed-generate">
         <source>generate another seed phrase</source>
-        <translation>generoi toinen seed phrase</translation>
+        <translation>Генериши другу seed фразу</translation>
     </message>
     <message id="swap-seed-new">
         <source>New seed phrase</source>
-        <translation>Uusi seed phrase</translation>
+        <translation>Нова seed фраза</translation>
     </message>
     <message id="swap-seed-edit">
         <source>Enter your seed phrase</source>
-        <translation>Kirjoita seed phrasesi</translation>
+        <translation>Унесите своју seed фразу</translation>
     </message>
     <message id="bitcoin-show-seed-title">
         <source>Bitcoin seed phrase</source>
-        <translation>Bitcoinin seed phrase</translation>
+        <translation>Bitcoin seed фраза</translation>
     </message>
     <message id="litecoin-show-seed-title">
         <source>Litecoin seed phrase</source>
-        <translation>Litecoinin seed phrase</translation>
+        <translation>Litecoin seed фраза</translation>
     </message>
     <message id="qtum-show-seed-title">
         <source>Qtum seed phrase</source>
-        <translation>Qtumin seed phrase</translation>
+        <translation>Qtum seed фраза</translation>
     </message>
     <message id="bitcoin-show-addresses-title">
         <source>Bitcoin wallet addresses</source>
-        <translation>Bitcoin-lompakon osoitteet</translation>
+        <translation>Bitcoin адреса новчаника</translation>
     </message>
     <message id="litecoin-show-addresses-title">
         <source>Litecoin wallet addresses</source>
-        <translation>Litecoin-lompakon osoitteet</translation>
+        <translation>Litecoin адреса новчаника</translation>
     </message>
     <message id="qtum-show-addresses-title">
         <source>Qtum wallet addresses</source>
-        <translation>Qtum-lompakon osoitteet</translation>
+        <translation>Qtum адреса новчаника</translation>
     </message>
     <message id="settings-swap-copy-address">
         <source>Copy address</source>
-        <translation>Kopioi osoite</translation>
+        <translation type="unfinished">Copy address</translation>
     </message>
     <message id="settings-swap-confirm-edit-seed-title">
         <source>Edit seed phrase</source>
         <extracomment>electrum settings, ask password to edit seed phrase, dialog title</extracomment>
-        <translation>Muokkaa seed phrasea</translation>
+        <translation>Промени seed фразу</translation>
     </message>
     <message id="settings-swap-confirm-edit-seed-message">
         <source>Enter your wallet password to edit the phrase</source>
         <extracomment>electrum settings, ask password to edit seed phrase, dialog message</extracomment>
-        <translation>Kirjoita lompakkosi salasana muokataksesi seed phrasea</translation>
+        <translation>Унесите лозинку вашег новчаника да би променили seed фразу</translation>
     </message>
     <message id="settings-swap-confirm-generate-seed-title">
         <source>Generate new seed phrase</source>
         <extracomment>electrum settings, ask password to generate new seed phrase, dialog title</extracomment>
-        <translation>Generoi uusi seed phrase</translation>
+        <translation>Генериши нову seed фразу</translation>
     </message>
     <message id="settings-swap-confirm-generate-seed-message">
         <source>Enter your wallet password to generate new seed phrase</source>
         <extracomment>electrum settings, ask password to generate new seed phrase, dialog message</extracomment>
-        <translation>Kirjoita lompakkosi salasana generoidaksesi uuden seed phrasen</translation>
+        <translation>Унесите лозинку вашег новчаника да би генерисали нову seed фразу</translation>
     </message>
     <message id="settings-swap-confirm-show-seed-title">
         <source>Show seed phrase</source>
         <extracomment>electrum settings, ask password to show seed phrase, dialog title</extracomment>
-        <translation>Näytä seed phrase</translation>
+        <translation type="unfinished">Show seed phrase</translation>
     </message>
     <message id="settings-swap-confirm-show-seed-message">
         <source>Enter your wallet password to see the phrase</source>
         <extracomment>electrum settings, ask password to show seed phrase, dialog message</extracomment>
-        <translation>Kirjoita lompakkosi salasana nähdäksesi seed phrasen</translation>
+        <translation>Унесите лозинку вашег новчаника да би видели seed фразу</translation>
     </message>
     <message id="send-swap-confirmation-title">
         <source>Confirm atomic swap</source>
-        <translation>Hyväksy atomic swap</translation>
+        <translation>Потврди атомску размену</translation>
     </message>
     <message id="send-swap-sconfirmation-online-time">
         <source>Keep your wallet online. The swap normally takes about 1 hour to complete.</source>
-        <translation>Pidä lompakkosi yhdistettynä. Swap-tapahtuma kestää normaalisti noin 1 tunnin.</translation>
+        <translation>Држите ваш новчаник он-лајн. Размена обично траје 1 сат
+to complete.</translation>
     </message>
     <message id="beam-transaction-fee">
         <source>BEAM Transaction fee</source>
-        <translation>Siirtomaksu</translation>
+        <translation>BEAM такса за Трансакцију</translation>
     </message>
     <message id="send-swap-token">
         <source>Swap token</source>
-        <translation>Swap-tunniste</translation>
+        <translation>Размени токен</translation>
     </message>
     <message id="send-swap-token-hint">
         <source>Paste token or address here</source>
@@ -1677,124 +1683,132 @@ Please check the swap token and try again.</source>
     </message>
     <message id="swap-tx-state-in-progress-normal">
         <source>The swap is expected to complete in %1 at most.</source>
-        <translation>Swap-tapahtuman arvioitu suoritusaika on korkeintaan %1.</translation>
+        <translation>Очекивано време завршетка размене за %1 највише</translation>
     </message>
     <message id="swap-tx-state-in-progress-refunding">
         <source>Swap failed: the refund of your %2 will start in %1. The refund duration depends on the transaction fee you specified for %2.</source>
-        <translation>Swap epäonnistui: palautusprosessi (%2) alkaa hetken kuluttua (%1). Palautusprosessin kesto riippuu siirtomaksusta, jonka määrittelit arvolle %2.</translation>
+        <translation>Рефундирање вашег %2 ће почети за %1. Трајање рефундирања зависи од таксе за трансакцију коју сте навели за %2</translation>
     </message>
     <message id="atomic-swap-tx-cancel">
         <source>Cancel atomic swap</source>
-        <translation>Peruuta atomic swap</translation>
+        <translation>Откажи атомску размену</translation>
     </message>
     <message id="atomic-swap-tx-cancel-text">
         <source>Are you sure you want to cancel?</source>
-        <translation>Haluatko varmasti peruuttaa?</translation>
+        <translation>Дали сте сигурни да желите да одустанете?</translation>
     </message>
     <message id="atomic-swap-tx-yes-button">
         <source>yes</source>
-        <translation>kyllä</translation>
+        <translation>да</translation>
     </message>
     <message id="atomic-swap-no-button">
         <source>no</source>
-        <translation>ei</translation>
+        <translation>не</translation>
     </message>
     <message id="swap-tx-state-refunding">
         <source>Swap failed, the money is being released back to your wallet</source>
-        <translation>Swap epäonnistui. Summa palautetaan lompakkoosi</translation>
+        <translation>Размена неуспешна, новац је враћен у ваш новчаник</translation>
     </message>
     <message id="wallet-txs-status-waiting-peer">
         <source>waiting for counterparty</source>
-        <translation>odotetaan vastapuolta</translation>
+        <translation>чека се друга страна</translation>
+    </message>
+    <message id="send-swap-fee-warning">
+        <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
+        <translation> Оног тренутка када понуда буде прихваћена, %1 такса за трансакцију ће бити наплаћена чак и ако понуда буде отказана.</translation>
     </message>
     <message id="app-close-title">
         <source>Beam wallet close</source>
-        <translation>Sulje Beam-lompakko</translation>
+        <translation>Затвори Beam новчаник</translation>
     </message>
     <message id="app-close-text">
         <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
-        <translation>Sinulla on aktiivisia tapahtumia (%1 kpl), jotka voivat epäonnistua, jos lompakon yhteys katkeaa. Oletko varma, että haluat sulkea lompakon?</translation>
+        <translation>Постоји %1 активна трансакција која може да буде неуспешна ако новчаник буде оф-лајн. Да ли сте сигурни да желите да затворите новчаник сада?</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transactions history</source>
         <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Vie tapahtumahistoria</translation>
+        <translation>Извези историју трансакција</translation>
     </message>
     <message id="atomic-swap-my-offers-tab">
         <source>My offers</source>
-        <translation>Omat tarjoukset</translation>
+        <translation>Моје понуде</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
-        <translation>Poista osoite</translation>
+        <translation type="unfinished">Delete address</translation>
     </message>
     <message id="addresses-delete-warning-text">
         <source>There is active transaction that uses this address, therefore the address cannot be deleted.</source>
-        <translation>Sinulla on aktiivinen tapahtuma, joka käyttää tätä osoitetta. Siksi tätä osoitetta ei voida poistaa.</translation>
+        <translation>Постоји активна транскација која користи ову адресу, због тога ова адреса не може да се обрише.</translation>
+    </message>
+    <message id="general-fee-total">
+        <source>%1 Transaction fee (est)</source>
+        <translation>%1 Такса за трансакцију (процењена)</translation>
     </message>
     <message id="settings-fee-rate-note">
         <source>Remember to validate the expected fee rate for the blockchain (as it varies with time).</source>
-        <translation>Muista tarkistaa vaihtomaksu, sillä se vaihtelee ajoittain.</translation>
+        <translation>Не заборавите да потврдите очекивану стопу таксе за блокчеин (јер варира током времена).</translation>
     </message>
     <message id="addresses-edit-warning-title">
         <source>Edit address</source>
-        <translation>Muokkaa osoitetta</translation>
+        <translation type="unfinished">Edit address</translation>
     </message>
     <message id="addresses-edit-warning-text">
         <source>There is active transaction that uses this address, therefore the address expiration cannot be changed.</source>
-        <translation>Sinulla on aktiivinen tapahtuma, joka käyttää tätä osoitetta. Siksi tämän osoitteen voimassaoloaikaa ei voida muuttaa.</translation>
+        <translation>Постоји активна транскација која користи ову адресу, због тога време трајања адресе не може да се промени.</translation>
     </message>
     <message id="settings-swap-seed-segwit-warning">
         <source>Segwit seed phrase is not supported yet.</source>
-        <translation>Segwit -seed phrasea ei tueta tällä hetkellä.</translation>
+        <translation>Segwit seed фраза још увек није подржана.</translation>
     </message>
     <message id="settings-swap-seed-invali-warning">
         <source>Invalid seed phrase. Please check again and resubmit.</source>
-        <translation>Virheellinen seed phrase. Yritä uudelleen.</translation>
+        <translation>Погрешна seed фраза. Молим проверите и пошаљите поново.</translation>
     </message>
     <message id="swap-details-tx-fee-estimated">
         <source>%1 Estimated transaction fee</source>
-        <translation>Arvioitu vaihtomaksu %1</translation>
+        <translation>%1 Процењена такса за трансакцију</translation>
     </message>
     <message id="wallet-receive-expires-30m">
         <source>30 minutes</source>
-        <translation>30 minuuttia</translation>
+        <translation>30 минута</translation>
     </message>
     <message id="wallet-receive-expires-1">
         <source>1 hour</source>
-        <translation>1 tunti</translation>
+        <translation>1 сат</translation>
     </message>
     <message id="wallet-receive-expires-2">
         <source>2 hours</source>
-        <translation>2 tuntia</translation>
+        <translation>2 сата</translation>
     </message>
     <message id="settings-show-owner-key-title">
         <source>Owner key</source>
         <extracomment>settings tab, show owner key dialog title</extracomment>
-        <translation>Omistusavain</translation>
+        <translation type="unfinished">Owner key</translation>
     </message>
     <message id="settings-show-owner-key-message">
         <source>Please notice, that knowing your owner key allows to
 know all your funds (UTXO). Make sure that you
 deploy the key at the node you trust completely.</source>
         <extracomment>settings tab, show owner key message</extracomment>
-        <translation>Huomioithan, että omistusavain antaa mahdollisuuden
-nähdä koko saldosi (UTXO). Varmista, että sijoitat
-avaimen palvelimeen (node), johon luotat täysin.</translation>
+        <translation>Молим обратите пажњу, да познавање вашег власничког кључа омогућава
+увид у сва ваша средства (UTXO). Будите сигурни да
+кључ шаљете само чвору коме у потпуности верујете.</translation>
     </message>
     <message id="settings-general-require-pwd-to-show-owner-key">
         <source>Show owner key</source>
         <extracomment>settings tab, general section, Show owner key button and dialog title</extracomment>
-        <translation>Näytä omistusavain</translation>
+        <translation type="unfinished">Show owner key</translation>
     </message>
     <message id="settings-general-require-pwd-to-show-owner-key-message">
         <source>Password verification is required to see the owner key</source>
         <extracomment>settings tab, general section, ask password to Show owner key, message</extracomment>
-        <translation>Nähdäksesi omistusavaimen sinun tulee tunnistautua salasanalla</translation>
+        <translation>Верификација лозинке је обавезна да би се власнички кључ Приказао</translation>
     </message>
     <message id="swap-tx-state-in-progress-negotiation">
         <source>If the other side will not sign the transaction in %1, the offer will be canceled automatically.</source>
-        <translation>Tarjous peruutetaan automaattisesti, jos vastapuoli ei hyväksy tapahtumaa seuraavan ajan kuluessa: %1.</translation>
+        <translation>Ако друга страна не потпише трансакцију за %1, понуда ће аутоматски бити отказана.</translation>
     </message>
     <message id="swap-invalid-credentials-error">
         <source>Cannot connect to node. Invalid credentials</source>
@@ -1818,32 +1832,32 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
     </message>
     <message id="tx-state-in-progress-normal">
         <source>The transaction is usually expected to complete in a few minutes.</source>
-        <translation>Tapahtuma kestää tavallisesti muutaman minuutin, ennen kuin se on valmis.</translation>
+        <translation>Трансакција се обично завршава за неколико минута.</translation>
     </message>
     <message id="tx-state-in-progress-long">
         <source>It is taking longer than usual. In case the transaction could not be completed it will be canceled automatically in %1.</source>
-        <translation>Tapahtumassa kestää kauemmin kuin tavallisesti. Jos tapahtuma ei onnistu, se peruutetaan automaattisesti seuraavassa ajassa: %1</translation>
+        <translation>Траје дуже него уобичајено. У случају да трансакција не буде комплетирана аутоматски ће бити отказана за %1.</translation>
     </message>
     <message id="amount-input-add-all">
         <source>add all</source>
-        <translation>lisää kaikki</translation>
+        <translation>додај све</translation>
     </message>
     <message id="settings-general-no-require-pwd-to-spend-confirm-pwd-title">
         <source>Ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if unchecked</extracomment>
-        <translation type="unfinished">Ask password on every Send</translation>
+        <translation>Питај за лозинку приликом сваког слања</translation>
     </message>
     <message id="tx-failure-kernel-min-height">
         <source>Kernel&apos;s min height is unacceptable</source>
-        <translation>Kernel&apos;s min height is unacceptable</translation>
+        <translation>Минимална висина Језгра је неприхватљива</translation>
     </message>
     <message id="tx-failure-loopback">
         <source>Not a loopback transaction</source>
-        <translation type="unfinished">Not a loopback transaction</translation>
+        <translation>Трансакција није повратна</translation>
     </message>
     <message id="tx-failure-key-keeper-no-initialized">
         <source>Key keeper is not initialized</source>
-        <translation type="unfinished">Key keeper is not initialized</translation>
+        <translation>Чувар кључа није иницијализован</translation>
     </message>
     <message id="tx-failure-invalid-asset-id">
         <source>No valid asset id/asset owner id</source>
@@ -1851,31 +1865,31 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
     </message>
     <message id="tx-failure-invalid-asset-amount">
         <source>Cannot issue/consume more than MAX_INT64 asset groth in one transaction</source>
-        <translation type="unfinished">Cannot issue/consume more than MAX_INT64 asset groth in one transaction</translation>
+        <translation>Не можете издати/конзумирати више од MAX_INT64 асета groth у једној трансакцији</translation>
     </message>
     <message id="tx-failure-invalid-data-for-payment-proof">
         <source>Some mandatory data for payment proof is missing</source>
-        <translation type="unfinished">Some mandatory data for payment proof is missing</translation>
+        <translation>Недостају неки обавезни подаци за доказ плаћања</translation>
     </message>
     <message id="tx-failure-there-is-no-master-key">
         <source>Master key is needed for this transaction, but unavailable</source>
-        <translation type="unfinished">Master key is needed for this transaction, but unavailable</translation>
+        <translation>Мастер кључ је неопходан за ову трансакцију, али није доступан</translation>
     </message>
     <message id="tx-failure-keeper-malfunctioned">
         <source>Key keeper malfunctioned</source>
-        <translation type="unfinished">Key keeper malfunctioned</translation>
+        <translation>Чувар кључева је у квару</translation>
     </message>
     <message id="tx-failure-aborted-by-user">
         <source>Aborted by the user</source>
-        <translation type="unfinished">Aborted by the user</translation>
+        <translation>Прекинуто од стране корисника</translation>
     </message>
     <message id="tx-failure-asset-small-fee">
         <source>Asset registration fee is too small</source>
-        <translation type="unfinished">Asset registration fee is too small</translation>
+        <translation>Такса за регистрацију асета је сувише мала</translation>
     </message>
     <message id="settings-notifications-title">
         <source>Notifications</source>
-        <translation>Ilmoitukset</translation>
+        <translation type="unfinished">Notifications</translation>
     </message>
     <message id="settings-notifications-version">
         <source>Wallet update</source>
@@ -1883,35 +1897,35 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
     </message>
     <message id="settings-notifications-tx-status">
         <source>Transaction status</source>
-        <translation type="unfinished">Transaction status</translation>
+        <translation>Статус трансакције</translation>
     </message>
     <message id="tx-failure-fee-too-large">
         <source>Fee is too large</source>
-        <translation type="unfinished">Fee is too large</translation>
+        <translation>Такса је сувише велика</translation>
     </message>
     <message id="tx-failure-asset-invalid-info">
         <source>No asset info or asset info is not valid</source>
-        <translation type="unfinished">No asset info or asset info is not valid</translation>
+        <translation>Нема информација о асету или информација није валидна</translation>
     </message>
     <message id="tx-failure-asset-invalid-metadata">
         <source>No asset metadata or asset metadata is not valid</source>
-        <translation type="unfinished">No asset metadata or asset metadata is not valid</translation>
+        <translation>Нема метаподатака о асету или метаподаци нису валидни</translation>
     </message>
     <message id="tx-failure-asset-invalid-id">
         <source>Invalid asset id</source>
-        <translation type="unfinished">Invalid asset id</translation>
+        <translation>Погрешан ИД асета</translation>
     </message>
     <message id="tx-failure-asset-confirmation">
         <source>Failed to receive asset confirmation</source>
-        <translation type="unfinished">Failed to receive asset confirmation</translation>
+        <translation>Неуспешно преузимање конфирмације асета</translation>
     </message>
     <message id="tx-failure-asset-in-use">
         <source>Asset is still in use (issued amount &gt; 0)</source>
-        <translation>Asset is still in use (issued amount &gt; 0)</translation>
+        <translation>Асет је још увек у употреби (захтевани износ &gt; 0)</translation>
     </message>
     <message id="tx-failure-asset-locked">
         <source>Asset is still locked</source>
-        <translation type="unfinished">Asset is still locked</translation>
+        <translation>Асет је још увек закључан</translation>
     </message>
     <message id="settings-general-amounts-unit">
         <source>Show amounts in</source>
@@ -1920,11 +1934,11 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
     </message>
     <message id="notifications-title">
         <source>Notifications</source>
-        <translation>Ilmoitukset</translation>
+        <translation type="unfinished">Notifications</translation>
     </message>
     <message id="notifications-clear-all">
         <source>clear all</source>
-        <translation type="unfinished">clear all</translation>
+        <translation>Обриши све</translation>
     </message>
     <message id="notifications-empty">
         <source>There are no notifications yet.</source>
@@ -1936,15 +1950,15 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
     </message>
     <message id="notifications-update-now">
         <source>update now</source>
-        <translation type="unfinished">update now</translation>
+        <translation>ажурирај сада</translation>
     </message>
     <message id="notifications-activate">
         <source>activate</source>
-        <translation type="unfinished">activate</translation>
+        <translation>активирај</translation>
     </message>
     <message id="notifications-details">
         <source>details</source>
-        <translation type="unfinished">details</translation>
+        <translation>детаљи</translation>
     </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
@@ -1964,7 +1978,7 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
     </message>
     <message id="notification-transaction-failed">
         <source>Transaction failed</source>
-        <translation>Ostotapahtuma epäonnistui</translation>
+        <translation type="unfinished">Transaction failed</translation>
     </message>
     <message id="notification-news">
         <source>BEAM in the press</source>
@@ -2037,7 +2051,7 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
     </message>
     <message id="general-identity">
         <source>Identity</source>
-        <translation>Identiteetti</translation>
+        <translation type="unfinished">Identity</translation>
     </message>
     <message id="notifications-activated">
         <source>activated</source>
@@ -2053,11 +2067,11 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
     </message>
     <message id="tx-details-title">
         <source>General transaction info</source>
-        <translation>Tapahtuman yleiset tiedot</translation>
+        <translation type="unfinished">General transaction info</translation>
     </message>
     <message id="tx-details-sending-addr-label">
         <source>Sending address</source>
-        <translation>Lähettäjän osoite</translation>
+        <translation type="unfinished">Sending address</translation>
     </message>
     <message id="tx-details-sender-identity">
         <source>Sender identity</source>
@@ -2065,7 +2079,7 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
-        <translation>Vastaanottajan osoite</translation>
+        <translation type="unfinished">Receiving address</translation>
     </message>
     <message id="tx-details-receiver-identity">
         <source>Receiver identity</source>
@@ -2073,23 +2087,23 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
-        <translation>Summa</translation>
+        <translation type="unfinished">Amount</translation>
     </message>
     <message id="tx-details-second-currency-amount-label">
         <source>Currency amount</source>
-        <translation>Summa</translation>
+        <translation type="unfinished">Currency amount</translation>
     </message>
     <message id="tx-details-tx-id-label">
         <source>Transaction ID</source>
-        <translation>Tapahtuman ID</translation>
+        <translation type="unfinished">Transaction ID</translation>
     </message>
     <message id="open-in-explorer">
         <source>Open in Blockchain Explorer</source>
-        <translation>Avaa Blockchain Explorerissa</translation>
+        <translation type="unfinished">Open in Blockchain Explorer</translation>
     </message>
     <message id="tx-details-error-label">
         <source>Error</source>
-        <translation>Virhe</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
@@ -2133,7 +2147,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
-        <translation>Lompakko</translation>
+        <translation type="unfinished">Wallet</translation>
     </message>
     <message id="settings-connectivity-title">
         <source>Connectivity</source>
@@ -2145,11 +2159,11 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-get-beam">
         <source>Get Beams from Beam Community Faucet</source>
-        <translation>Hanki Beamiä yhteisön testikäyttöön tarkoitetusta kassasta</translation>
+        <translation type="unfinished">Get Beams from Beam Community Faucet</translation>
     </message>
     <message id="settings-privacy-title">
         <source>Privacy</source>
-        <translation>Yksityisyys</translation>
+        <translation type="unfinished">Privacy</translation>
     </message>
     <message id="settings-resources-title">
         <source>Resources</source>
@@ -2157,7 +2171,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-utilities-title">
         <source>Utilities</source>
-        <translation>Ominaisuudet</translation>
+        <translation type="unfinished">Utilities</translation>
     </message>
     <message id="settings-local-node-run-checkbox">
         <source>Integrated node</source>
@@ -2167,16 +2181,16 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="general-invalid-port">
         <source>Port is mandatory</source>
         <extracomment>settings tab, node section, port error label</extracomment>
-        <translation type="unfinished">Port is mandatory</translation>
+        <translation>Порт је обавезан</translation>
     </message>
     <message id="settings-remote-node-address">
         <source>Node address</source>
         <extracomment>settings tab, node section, address label</extracomment>
-        <translation>Palvelimen (node) osoite</translation>
+        <translation type="unfinished">Node address</translation>
     </message>
     <message id="settings-peers-title">
         <source>Peers</source>
-        <translation>Vertaisverkot (peers)</translation>
+        <translation type="unfinished">Peers</translation>
     </message>
     <message id="settings-integrated-node-title">
         <source>Beam Integrated Node</source>
@@ -2208,11 +2222,11 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="can-not-generate-new-address-message">
         <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
-        <translation>Et voi luoda uutta osoitetta. Lompakossasi ei ole master key -hallinta-avainta.</translation>
+        <translation>Не можете да генеришете нову адресу. Ваш новчаник нема мастер кључ.</translation>
     </message>
     <message id="wallet-receive-title">
         <source>Receive</source>
-        <translation>Vastaanota</translation>
+        <translation type="unfinished">Receive</translation>
     </message>
     <message id="wallet-receive-address-for-wallet">
         <source>(for wallet)</source>
@@ -2224,7 +2238,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-receive-text-online-time">
         <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
-        <translation>Jotta maksutapahtuma onnistuu, tulee sinun avata lompakkosi 12 tunnin sisällä lähetyksestä.</translation>
+        <translation type="unfinished">For the transaction to complete, you should get online during the 12 hours after Beams are sent.</translation>
     </message>
     <message id="show-token">
         <source>Show token</source>
@@ -2252,7 +2266,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="token-info-copy-token">
         <source>Copy token</source>
-        <translation>Kopioi tunniste</translation>
+        <translation>Копирај токен</translation>
     </message>
     <message id="general-transaction-info">
         <source>Transaction info</source>
@@ -2260,7 +2274,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="receive-request">
         <source>Requested amount</source>
-        <translation>Pyydetty summa</translation>
+        <translation type="unfinished">Requested amount</translation>
     </message>
     <message id="address-one-time">
         <source>One-time use</source>
@@ -2272,7 +2286,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="tx-regular">
         <source>Regular</source>
-        <translation>Normaali</translation>
+        <translation type="unfinished">Regular</translation>
     </message>
     <message id="tx-max-privacy">
         <source>Max privacy</source>
@@ -2296,7 +2310,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="save-address-no-name">
         <source>No name</source>
-        <translation>Ei nimeä</translation>
+        <translation type="unfinished">No name</translation>
     </message>
     <message id="wallet-receive-online-address">
         <source>Online address</source>
@@ -2383,7 +2397,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="tx-address-offline">
         <source>Offline</source>
-        <translation>Offline-tilassa</translation>
+        <translation type="unfinished">Offline</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max">
         <source>in progress
@@ -2452,7 +2466,7 @@ max privacy (offline)</translation>
     </message>
     <message id="tx-address-online">
         <source>Online</source>
-        <translation>Yhdistetty</translation>
+        <translation type="unfinished">Online</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
         <source>Connection error: can�t calculate the recommended fee rate. 
@@ -2522,7 +2536,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="send-title">
         <source>Send</source>
-        <translation>Lähetä</translation>
+        <translation type="unfinished">Send</translation>
     </message>
     <message id="send-contact-token-placeholder">
         <source>Paste recipient token here</source>
@@ -2534,7 +2548,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-send-invalid-address-or-token">
         <source>Invalid wallet address</source>
-        <translation>Virheelinen osoite tai swap-tunniste</translation>
+        <translation>Покрешна адреса новчаника</translation>
     </message>
     <message id="wallet-send-permanent-note">
         <source>Permanent address</source>
@@ -2558,7 +2572,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
-        <translation>Saldo ei riitä: tarvitset vähintään summan %1 suorittaaksesi maksutapahtuman</translation>
+        <translation>Недовољна средства: потребан вам је %1 да би сте комплетирали транскацију</translation>
     </message>
     <message id="max-pivacy-fee-fail">
         <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
@@ -2566,11 +2580,11 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
-        <translation>Summa</translation>
+        <translation type="unfinished">Amount to send</translation>
     </message>
     <message id="send-remaining-label">
         <source>Remaining</source>
-        <translation>Käytettävissä</translation>
+        <translation>Преостало</translation>
     </message>
     <message id="wallet-receive-swap-copy-token-and-close">
         <source>copy token and close</source>
@@ -2578,7 +2592,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="address-info-title">
         <source>Address details</source>
-        <translation>Osoitetiedot</translation>
+        <translation type="unfinished">Address details</translation>
     </message>
     <message id="address-expiration">
         <source>Address expiration</source>
@@ -2598,7 +2612,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
-        <translation>Osoite</translation>
+        <translation type="unfinished">Address</translation>
     </message>
     <message id="dogecoin-show-seed-phrase">
         <source>Dogecoin seed phrase</source>
@@ -2692,80 +2706,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Publishing this address will allow you to be identified</source>
         <translation type="unfinished">Publishing this address will allow you to be identified</translation>
     </message>
-    <message id="wallet-assets-title">
-        <source>Assets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="asset-incoming-tip">
-        <source>%1 incoming transactions</source>
-        <oldsource>%1% incoming transactions</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="asset-outgoing-tip">
-        <source>%1 outgoing transactions</source>
-        <oldsource>%1% outgoing transactions</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="asset-inout-tip">
-        <source>%1 active transactions
-(%2 incoming, %3 outgoing)</source>
-        <oldsource>%1% active transactions
-(%2% incoming, %3% outgoing)</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-search-asset">
-        <source>Asset name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="assets-connect-other">
-        <source>Connect other assets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-beam-available">
-        <source>%1 Available</source>
-        <oldsource>Beam Available</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-total-available">
-        <source>Total Available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="inprogress-assets">
-        <source>Assets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="general-fee-total">
-        <source>%1 Transaction fee (est)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="amount-input-add-all">
-        <source>add all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-flat-fee">
-        <source>%1 Transaction fee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="swap-expired">
-        <source>Expired.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-swap-sconfirmation-online-time">
-        <source>Keep your wallet online. The swap normally takes about 1 hour to complete.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-swap-fee-warning">
-        <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-no-funds">
-        <source>Insufficient funds to complete the transaction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-remaining-beam-label">
-        <source>BEAM Remaining</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="more-details">
         <source>More details</source>
         <translation type="unfinished">More details</translation>
@@ -2820,7 +2760,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="tx-address-unknown">
         <source>Unknown</source>
-        <translation>Tuntematon</translation>
+        <translation type="unfinished">Unknown</translation>
     </message>
     <message id="tx-address-regular-exchange">
         <source>Regular (for exchange or mining pool)</source>

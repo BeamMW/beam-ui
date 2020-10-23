@@ -9,7 +9,7 @@
     </message>
     <message id="general-groth">
         <source>GROTH</source>
-        <translation type="unfinished">GROTH</translation>
+        <translation>GROTH</translation>
     </message>
     <message id="general-comment">
         <source>Comment</source>
@@ -110,7 +110,7 @@
     <message id="general-change">
         <source>Change</source>
         <extracomment>UTXO type Change</extracomment>
-        <translation>Изменить</translation>
+        <translation>Сдача</translation>
     </message>
     <message id="general-treasury">
         <source>Treasury</source>
@@ -184,7 +184,7 @@
     </message>
     <message id="wallet-txs-status-pending">
         <source>pending</source>
-        <translation>ожидание</translation>
+        <translation>ожидает</translation>
     </message>
     <message id="wallet-txs-status-waiting-sender">
         <source>waiting for sender</source>
@@ -224,8 +224,7 @@
     </message>
     <message id="addresses-tittle">
         <source>Address Book</source>
-        <oldsource>Addresses</oldsource>
-        <translation type="unfinished">Мои адреса</translation>
+        <translation>Адресная книга</translation>
     </message>
     <message id="addresses-tab-active">
         <source>My active addresses</source>
@@ -233,7 +232,7 @@
     </message>
     <message id="addresses-tab-expired">
         <source>My expired addresses</source>
-        <translation>Просроченные</translation>
+        <translation>Мои просроченные адреса</translation>
     </message>
     <message id="addresses-tab-contacts">
         <source>Contacts</source>
@@ -264,7 +263,7 @@
     </message>
     <message id="available-panel-locked">
         <source>Locked</source>
-        <translation type="unfinished">Locked</translation>
+        <translation>Заблокировано</translation>
     </message>
     <message id="available-panel-sending">
         <source>Sending</source>
@@ -294,7 +293,7 @@
     <message id="settings-local-node-port">
         <source>Port</source>
         <extracomment>settings tab, node section, port label</extracomment>
-        <translation type="unfinished">Порт</translation>
+        <translation>Порт</translation>
     </message>
     <message id="settings-rescan-confirmation-message">
         <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</source>
@@ -303,9 +302,8 @@
     </message>
     <message id="settings-general-title">
         <source>General</source>
-        <oldsource>General settings</oldsource>
         <extracomment>settings tab, general section, title</extracomment>
-        <translation type="unfinished">Основные настройки</translation>
+        <translation>Общие</translation>
     </message>
     <message id="settings-general-lock-screen">
         <source>Lock screen</source>
@@ -314,14 +312,12 @@
     </message>
     <message id="settings-general-require-pwd-to-spend">
         <source>Ask password on every Send</source>
-        <oldsource>Ask password for every sending transaction</oldsource>
         <extracomment>settings tab, general section, ask password to send label</extracomment>
-        <translation type="unfinished">Спрашивать пароль для каждой исходящей транзакции</translation>
+        <translation>Запрашивать пароль при каждом отправлении</translation>
     </message>
     <message id="settings-report-problem-title">
         <source>Report a problem</source>
-        <oldsource>Report problem</oldsource>
-        <translation type="unfinished">Сообщить о проблеме</translation>
+        <translation>Сообщить о проблеме</translation>
     </message>
     <message id="settings-wallet-location-label">
         <source>Wallet folder location</source>
@@ -330,13 +326,12 @@
     </message>
     <message id="settings-apply">
         <source>Apply changes</source>
-        <oldsource>Apply</oldsource>
         <extracomment>settings tab, node section, apply button</extracomment>
-        <translation type="unfinished">Применить</translation>
+        <translation>Применить изменения</translation>
     </message>
     <message id="logo-description">
         <source>Confidential, fast, easy to use</source>
-        <translation>Конфиденциально, быстро, просто в использовании</translation>
+        <translation>Конфиденциальный, быстрый, простой в использовании</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>
@@ -683,7 +678,7 @@
     </message>
     <message id="loading-view-download-blocks">
         <source>Syncing with blockchain</source>
-        <translation type="unfinished">Syncing with blockchain</translation>
+        <translation>Синхронизация с блокчейном</translation>
     </message>
     <message id="loading-view-scaning-utxo">
         <source>Loading wallet data %d/%d</source>
@@ -743,8 +738,7 @@
     </message>
     <message id="tx-failure-no-inputs">
         <source>Not enough inputs to process the transaction</source>
-        <oldsource>No inputs</oldsource>
-        <translation type="unfinished">Нет входов</translation>
+        <translation>Недостаточно входов для обработки транзакции</translation>
     </message>
     <message id="tx-failure-addr-expired">
         <source>Address is expired</source>
@@ -853,22 +847,19 @@
     </message>
     <message id="open-external-open">
         <source>proceed</source>
-        <oldsource>allow and open</oldsource>
-        <translation type="unfinished">Открыть</translation>
+        <translation>продолжить</translation>
     </message>
     <message id="open-external-title">
         <source>Open external link</source>
-        <oldsource>External link</oldsource>
-        <translation type="unfinished">Внешняя ссылка</translation>
+        <translation>Открыть внешнюю ссылку</translation>
     </message>
     <message id="open-external-message">
         <source>Beam Wallet app requires a permission to open external links to Beam website in your default browser. This action will expose your IP to the web server.
 
 Allow to open and proceed to the website? You can always update your choice in Settings.</source>
-        <oldsource>Beam Wallet app requires a permission to open external links to Beam website in your default browser. This action will expose your IP to the web server.
+        <translation>Приложение Beam Wallet требует разрешения на открытие внешних ссылок на сайт Beam в вашем браузере по умолчанию. Это действие выявит ваш IP на веб-сервер.
 
-Allow to open and proceed to the website? You can always update your choice in Settings.</oldsource>
-        <translation type="unfinished">Кошелек пытается открыть внешнюю ссылку в браузере. Это действие может раскрыть ваш IP адрес серверу. Чтобы избежать этого, нажмите &quot;отмена&quot;. Вы можете изменить свой выбор в настройках в любое время.</translation>
+Позволить открывать и перейти к сайту? Вы всегда можете поменять свой выбор в настройках.</translation>
     </message>
     <message id="start-open-change-wallet-message">
         <source>If you&apos;ll restore a wallet all transaction history and addresses will be lost.</source>
@@ -896,12 +887,7 @@ Allow to open and proceed to the website? You can always update your choice in S
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
 •  must contain at least one number</source>
-        <oldsource>Strong password needs to meet the following requirements:
-•  the length must be at least 10 characters
-•  must contain at least one lowercase letter
-•  must contain at least one uppercase letter
-•  must contain at least one number</oldsource>
-        <translation type="unfinished">Хороший пароль должен соответствовать следующим требованиям:
+        <translation>Хороший пароль должен соответствовать следующим требованиям:
         •  длина минимум 10 символов
         •  содержит хотя бы одну строчную букву
         •  содержит хотя бы одну прописную букву
@@ -924,14 +910,13 @@ Allow to open and proceed to the website? You can always update your choice in S
     <message id="settings-general-allow-beammw-label">
         <source>Allow access to %1 and %2
 (to fetch exchanges and transaction data)</source>
-        <oldsource>Allow access to %1 and %2 (to fetch exchanges and transaction data)</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
-        <translation type="unfinished">Разрешить доступ к %1 и %2 (обменники и информация о транзакциях)</translation>
+        <translation>Разрешить доступ к %1 и %2
+(для получения данных обменов и транзакций)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</source>
-        <oldsource>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;1for log archive</oldsource>
-        <translation type="unfinished">1. Нажмите “сохранить лог” и укажите где сохранить архив</translation>
+        <translation>1. Нажмите кнопку «Сохранить журналы кошельков» и выберите папку назначения&lt;br /&gt;для архива журнала</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send email to %1 or open a ticket in %2</source>
@@ -1032,7 +1017,7 @@ Allow to open and proceed to the website? You can always update your choice in S
     <message id="settings-general-require-pwd-to-spend-confirm-pwd-title">
         <source>Don&apos;t ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if checked</extracomment>
-        <translation type="unfinished">Don&apos;t ask password on every Send</translation>
+        <translation>Don&apos;t ask password on every Send</translation>
     </message>
     <message id="settings-general-require-pwd-to-spend-confirm-pwd-message">
         <source>Password verification is required to change that setting</source>
@@ -1093,7 +1078,7 @@ Allow to open and proceed to the website? You can always update your choice in S
     </message>
     <message id="loading-view-estimate-minutes">
         <source>min</source>
-        <translation type="unfinished">min</translation>
+        <translation>мин</translation>
     </message>
     <message id="loading-view-estimate-seconds">
         <source>sec</source>
@@ -1101,7 +1086,7 @@ Allow to open and proceed to the website? You can always update your choice in S
     </message>
     <message id="loading-view-estimate-time">
         <source>Estimated time: %s</source>
-        <translation>Осталось: %s</translation>
+        <translation>Оставшееся время: %s</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
@@ -1109,7 +1094,7 @@ Allow to open and proceed to the website? You can always update your choice in S
     </message>
     <message id="general-fee-fail">
         <source>The minimum fee is %1 %2</source>
-        <translation type="unfinished">The minimum fee is %1 %2</translation>
+        <translation>Минимальная комиссия %1 %2</translation>
     </message>
     <message id="general-change-settings">
         <source>Change settings</source>
@@ -1121,12 +1106,11 @@ Allow to open and proceed to the website? You can always update your choice in S
     </message>
     <message id="settings-node-address">
         <source>Node address</source>
-        <oldsource>Node Address</oldsource>
-        <translation type="unfinished">Node Address</translation>
+        <translation>Адрес узла</translation>
     </message>
     <message id="settings-username">
         <source>Username</source>
-        <translation type="unfinished">Username</translation>
+        <translation>Имя пользователя</translation>
     </message>
     <message id="settings-password">
         <source>Password</source>
@@ -1143,9 +1127,7 @@ Allow to open and proceed to the website? You can always update your choice in S
     <message id="swap-na-message">
         <source>You do not have any 3rd-party currencies connected.
 Update your settings and try again.</source>
-        <oldsource>You do not have any 3rd-party currencies connected.
-Update your settings and try again.</oldsource>
-        <translation type="unfinished">You do not have any 3rd-party currencies connected.\nUpdate your settings and try again.</translation>
+        <translation>You do not have any 3rd-party currencies connected.\nUpdate your settings and try again.</translation>
     </message>
     <message id="wallet-receive-swap-title">
         <source>Create a Swap Offer</source>
@@ -1153,15 +1135,15 @@ Update your settings and try again.</oldsource>
     </message>
     <message id="receive-amount-swap-label">
         <source>Receive amount</source>
-        <translation type="unfinished">Receive amount</translation>
+        <translation>Сумма к получению</translation>
     </message>
     <message id="sent-amount-label">
         <source>Send amount</source>
-        <translation type="unfinished">Send amount</translation>
+        <translation>Отправляемая сумма</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
         <source>Offer expiration time</source>
-        <translation type="unfinished">Offer expiration time</translation>
+        <translation>Срок действия своп-предложения</translation>
     </message>
     <message id="wallet-receive-expires-6">
         <source>6 hours</source>
@@ -1169,7 +1151,7 @@ Update your settings and try again.</oldsource>
     </message>
     <message id="general-rate">
         <source>Exchange rate</source>
-        <translation type="unfinished">Exchange rate</translation>
+        <translation>Обменный курс</translation>
     </message>
     <message id="wallet-receive-swap-publish">
         <source>publish offer</source>
@@ -1189,26 +1171,24 @@ Update your settings and try again.</oldsource>
     </message>
     <message id="general-bitcoin">
         <source>Bitcoin</source>
-        <translation type="unfinished">Bitcoin</translation>
+        <translation>Bitcoin</translation>
     </message>
     <message id="general-litecoin">
         <source>Litecoin</source>
-        <translation type="unfinished">Litecoin</translation>
+        <translation>Litecoin</translation>
     </message>
     <message id="general-qtum">
         <source>QTUM</source>
-        <translation type="unfinished">QTUM</translation>
+        <translation>QTUM</translation>
     </message>
     <message id="general-electrum">
         <source>Electrum</source>
-        <translation type="unfinished">Electrum</translation>
+        <translation>Electrum</translation>
     </message>
     <message id="swap-currency-na-message">
         <source>%1 is not connected, 
 please review your settings and try again</source>
-        <oldsource>%1 is not connected, 
-please review your settings and try again</oldsource>
-        <translation type="unfinished">You do not have %1 connected.\nUpdate your settings and try again.</translation>
+        <translation>You do not have %1 connected.\nUpdate your settings and try again.</translation>
     </message>
     <message id="send-not-enough">
         <source>There is not enough funds to complete the transaction</source>
@@ -1216,11 +1196,11 @@ please review your settings and try again</oldsource>
     </message>
     <message id="wallet-send-swap-offered-label">
         <source>Offered on</source>
-        <translation type="unfinished">Offered on</translation>
+        <translation>Предложен</translation>
     </message>
     <message id="wallet-send-swap-expires-label">
         <source>Expires on</source>
-        <translation type="unfinished">Expires on</translation>
+        <translation>Истекает</translation>
     </message>
     <message id="general-address-from">
         <source>From</source>
@@ -1228,7 +1208,7 @@ please review your settings and try again</oldsource>
     </message>
     <message id="general-address-to">
         <source>To</source>
-        <translation type="unfinished">To</translation>
+        <translation>Кому</translation>
     </message>
     <message id="loading-view-estimate-calculating">
         <source>calculating...</source>
@@ -1244,7 +1224,7 @@ please review your settings and try again</oldsource>
     </message>
     <message id="loading-view-net-problems">
         <source>It may take longer than usual. Please, check your network.</source>
-        <translation type="unfinished">It may take longer than usual. Please, check your network.</translation>
+        <translation>Это может занять больше времени, чем обычно. Проверьте подключение к сети.</translation>
     </message>
     <message id="atomic-swap-title">
         <source>Atomic Swaps</source>
@@ -1264,7 +1244,7 @@ please review your settings and try again</oldsource>
     </message>
     <message id="atomic-swap-fit-current-balance">
         <source>Fit my current balance</source>
-        <translation type="unfinished">Fit my current balance</translation>
+        <translation>Подогнать под текущий баланс</translation>
     </message>
     <message id="atomic-swap-currency">
         <source>Currency</source>
@@ -1316,7 +1296,7 @@ please review your settings and try again</oldsource>
     </message>
     <message id="atomic-swap-tx-table-to">
         <source>To</source>
-        <translation type="unfinished">To</translation>
+        <translation>Кому</translation>
     </message>
     <message id="atomic-swap-tx-table-sent">
         <source>Sent</source>
@@ -1332,7 +1312,7 @@ please review your settings and try again</oldsource>
     </message>
     <message id="general-create-trezor-wallet">
         <source>Create new Trezor wallet</source>
-        <translation type="unfinished">Create new Trezor wallet</translation>
+        <translation>Создать новый Trezor кошелек</translation>
     </message>
     <message id="send-confirmation-pwd-text-online-time">
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
@@ -1340,35 +1320,35 @@ please review your settings and try again</oldsource>
     </message>
     <message id="trezor-message">
         <source>Please, look at your Trezor device to complete actions...</source>
-        <translation type="unfinished">Please, look at your Trezor device to complete actions...</translation>
+        <translation>Пожалуйста, посмотрите на ваше устройство Trezor для завершения действий...</translation>
     </message>
     <message id="start-init-wallet-with-trezor">
         <source>Init wallet with Trezor</source>
-        <translation type="unfinished">Init wallet with Trezor</translation>
+        <translation>Проинициализировать кошелек с Trezor</translation>
     </message>
     <message id="start-import-trezor-owner-key">
         <source>Import Trezor Owner Key</source>
-        <translation type="unfinished">Import Trezor Owner Key</translation>
+        <translation>Импорт ключа владельца Trezor</translation>
     </message>
     <message id="start-owner-key-imported">
         <source>Owner Key imported. Please, enter the password you saw on device to decrypt your Owner Key.</source>
-        <translation type="unfinished">Owner Key imported. Please, enter the password you saw on device to decrypt your Owner Key.</translation>
+        <translation>Ключ владельца импортирован. Пожалуйста, введите пароль, который вы установили на устройстве, чтобы расшифровать ваш ключ владельца.</translation>
     </message>
     <message id="start-look-at-trezor-to-complete-actions">
         <source>Please, look at your Trezor to complete actions...</source>
-        <translation type="unfinished">Please, look at your Trezor to complete actions...</translation>
+        <translation>Пожалуйста, посмотрите на ваш Trezor для завершения действий...</translation>
     </message>
     <message id="start-found-trezor-device">
         <source>Found device:</source>
-        <translation type="unfinished">Found device:</translation>
+        <translation>Найденное устройство:</translation>
     </message>
     <message id="start-no-trezor-device-connected">
         <source>There is no device connected, please, connect your hardware wallet.</source>
-        <translation type="unfinished">There is no device connected, please, connect your hardware wallet.</translation>
+        <translation>Устройство не подключено, пожалуйста, подключите ваш аппаратный кошелек.</translation>
     </message>
     <message id="wallet-model-device-not-connected">
         <source>There is no Trezor device connected. Please, connect and try again.</source>
-        <translation type="unfinished">There is no Trezor device connected. Please, connect and try again.</translation>
+        <translation>Устройство Trezor не подключено. Пожалуйста, подключитесь и повторите попытку.</translation>
     </message>
     <message id="wallet-transactions-all-tab">
         <source>All</source>
@@ -1389,9 +1369,7 @@ please review your settings and try again</oldsource>
     <message id="atomic-no-offers">
         <source>There are no active offers at the moment.
 Please try again later or create an offer yourself.</source>
-        <oldsource>There are no active offers at the moment.
-Please try again later or create an offer yourself.</oldsource>
-        <translation type="unfinished">There are no active offers at the moment.\nPlease try again later or create an offer yourself.</translation>
+        <translation>There are no active offers at the moment.\nPlease try again later or create an offer yourself.</translation>
     </message>
     <message id="send-less-than-fee">
         <source>The swap amount must be greater than the transaction fee</source>
@@ -1399,19 +1377,19 @@ Please try again later or create an offer yourself.</oldsource>
     </message>
     <message id="wallet-txs-status-in-progress">
         <source>in progress</source>
-        <translation type="unfinished">in progress</translation>
+        <translation>в процессе</translation>
     </message>
     <message id="wallet-txs-status-own-sent">
         <source>sent to own address</source>
-        <translation type="unfinished">sent to own address</translation>
+        <translation>отправлено на собственный адрес</translation>
     </message>
     <message id="wallet-txs-status-own-sending">
         <source>sending to own address</source>
-        <translation type="unfinished">sending to own address</translation>
+        <translation>отправка на собственный адрес</translation>
     </message>
     <message id="wallet-search-transactions-placeholder">
         <source>Transaction or kernel ID, comment, address or contact</source>
-        <translation type="unfinished">Transaction or kernel ID, comment, address or contact</translation>
+        <translation>Транзакция или ID ядра, комментарий, адрес или контакт</translation>
     </message>
     <message id="settings-swap-node">
         <source>Node</source>
@@ -1419,7 +1397,7 @@ Please try again later or create an offer yourself.</oldsource>
     </message>
     <message id="wallet-clear-search">
         <source>Clear search</source>
-        <translation type="unfinished">Clear search</translation>
+        <translation>Очистить поиск</translation>
     </message>
     <message id="wallet-search">
         <source>Search</source>
@@ -1443,8 +1421,7 @@ Please try again later or create an offer yourself.</oldsource>
     </message>
     <message id="swap-beta-connection-error">
         <source>Cannot connect to peer. Please check the address in Settings and try again.</source>
-        <oldsource>Cannot connect to peer. Please check the address and retry.</oldsource>
-        <translation type="unfinished">Не удается подключиться к узлу. Пожалуйста, проверьте адрес и повторите попытку.</translation>
+        <translation>Не удается подключиться к пиру. Пожалуйста, проверьте адрес в Настройках и повторите попытку.</translation>
     </message>
     <message id="swap-alert-confirm-button">
         <source>I understand</source>
@@ -1464,55 +1441,55 @@ Please try again later or create an offer yourself.</oldsource>
     </message>
     <message id="atomic-swap-cancel-text">
         <source>Are you sure you want to cancel your offer?</source>
-        <translation type="unfinished">Are you sure you want to cancel your offer?</translation>
+        <translation>Вы уверены, что хотите отменить своп-предложение?</translation>
     </message>
     <message id="atomic-swap-cancel-button">
         <source>cancel offer</source>
-        <translation type="unfinished">cancel offer</translation>
+        <translation>отменить своп-предложение</translation>
     </message>
     <message id="atomic-swap-back-button">
         <source>back</source>
-        <translation type="unfinished">back</translation>
+        <translation>назад</translation>
     </message>
     <message id="swap-details-lock-tx-id">
         <source>lock transaction ID</source>
-        <translation type="unfinished">lock transaction ID</translation>
+        <translation>ID транзакции блокировки</translation>
     </message>
     <message id="swap-details-lock-tx-conf">
         <source>lock transaction confirmations</source>
-        <translation type="unfinished">lock transaction confirmations</translation>
+        <translation>подтверждения транзакции блокировки</translation>
     </message>
     <message id="swap-details-beam-lock-kernel-id">
         <source>BEAM lock transaction kernel ID</source>
-        <translation type="unfinished">BEAM lock transaction kernel ID</translation>
+        <translation>ID ядра транзакции блокировки BEAM</translation>
     </message>
     <message id="swap-details-beam-redeem-kernel-id">
         <source>BEAM redeem transaction kernel ID</source>
-        <translation type="unfinished">BEAM redeem transaction kernel ID</translation>
+        <translation>ID ядра транзакции траты BEAM</translation>
     </message>
     <message id="swap-details-redeem-tx-id">
         <source>redeem transaction ID</source>
-        <translation type="unfinished">redeem transaction ID</translation>
+        <translation>ID транзакции траты</translation>
     </message>
     <message id="swap-details-redeem-tx-conf">
         <source>redeem transaction confirmations</source>
-        <translation type="unfinished">redeem transaction confirmations</translation>
+        <translation>подтверждения транзакции траты</translation>
     </message>
     <message id="swap-details-beam-refund-kernel-id">
         <source>BEAM refund transaction kernel ID</source>
-        <translation type="unfinished">BEAM refund transaction kernel ID</translation>
+        <translation>ID ядра транзакции возврата BEAM</translation>
     </message>
     <message id="swap-details-refund-tx-id">
         <source>refund transaction ID</source>
-        <translation type="unfinished">refund transaction ID</translation>
+        <translation>ID транзакции возврата</translation>
     </message>
     <message id="swap-details-refund-tx-conf">
         <source>refund transaction confirmations</source>
-        <translation type="unfinished">refund transaction confirmations</translation>
+        <translation>подтверждения транзакции возврата</translation>
     </message>
     <message id="swap-invalid-rate">
         <source>Invalid rate</source>
-        <translation type="unfinished">Invalid rate</translation>
+        <translation>Недопустимая ставка </translation>
     </message>
     <message id="swap-details-tx-id">
         <source>Transaction ID</source>
@@ -1532,11 +1509,11 @@ Please try again later or create an offer yourself.</oldsource>
     </message>
     <message id="settings-swap-bitcoin-node">
         <source>Bitcoin node</source>
-        <translation type="unfinished">Bitcoin node</translation>
+        <translation>Узел Bitcoin</translation>
     </message>
     <message id="settings-swap-litecoin-node">
         <source>Litecoin node</source>
-        <translation type="unfinished">Litecoin node</translation>
+        <translation>Узел Litecoin</translation>
     </message>
     <message id="settings-swap-qtum-node">
         <source>Qtum node</source>
@@ -1544,22 +1521,20 @@ Please try again later or create an offer yourself.</oldsource>
     </message>
     <message id="settings-swap-bitcoin-electrum">
         <source>Bitcoin electrum</source>
-        <translation type="unfinished">Bitcoin electrum</translation>
+        <translation>Bitcoin electrum</translation>
     </message>
     <message id="settings-swap-litecoin-electrum">
         <source>Litecoin electrum</source>
-        <translation type="unfinished">Litecoin electrum</translation>
+        <translation>Litecoin electrum</translation>
     </message>
     <message id="settings-swap-qtum-electrum">
         <source>Qtum electrum</source>
-        <translation type="unfinished">Qtum electrum</translation>
+        <translation>Qtum electrum</translation>
     </message>
     <message id="swap-offer-duplicate-message">
         <source>The offer with this transaction token is already accepted.
 Please check the swap token and try again.</source>
-        <oldsource>The offer with this transaction token is already accepted.
-Please check the swap token and try again.</oldsource>
-        <translation type="unfinished">The offer with this transaction token is already accepted.\nPlease check the swap token and try again.</translation>
+        <translation>The offer with this transaction token is already accepted.\nPlease check the swap token and try again.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
         <source>Оffer is already accepted</source>
@@ -1567,7 +1542,7 @@ Please check the swap token and try again.</oldsource>
     </message>
     <message id="swap-offer-duplicate-confirm-button">
         <source>ok</source>
-        <translation type="unfinished">ok</translation>
+        <translation>ок</translation>
     </message>
     <message id="swap-details-failure-reason">
         <source>Error</source>
@@ -1591,7 +1566,7 @@ Please check the swap token and try again.</oldsource>
     </message>
     <message id="settings-swap-new-seed">
         <source>Generate new seed phrase</source>
-        <translation type="unfinished">Generate new seed phrase</translation>
+        <translation>Создать новую сид-фразу</translation>
     </message>
     <message id="settings-swap-show-seed">
         <source>Show seed phrase</source>
@@ -1607,11 +1582,11 @@ Please check the swap token and try again.</oldsource>
     </message>
     <message id="settings-swap-seed-generate">
         <source>generate another seed phrase</source>
-        <translation type="unfinished">generate another seed phrase</translation>
+        <translation>создать еще одну сид-фразу</translation>
     </message>
     <message id="swap-seed-new">
         <source>New seed phrase</source>
-        <translation type="unfinished">New seed phrase</translation>
+        <translation>Новая сид-фраза</translation>
     </message>
     <message id="swap-seed-edit">
         <source>Enter your seed phrase</source>
@@ -1619,27 +1594,27 @@ Please check the swap token and try again.</oldsource>
     </message>
     <message id="bitcoin-show-seed-title">
         <source>Bitcoin seed phrase</source>
-        <translation type="unfinished">Bitcoin seed phrase</translation>
+        <translation>Сид-фраза для Bitcoin</translation>
     </message>
     <message id="litecoin-show-seed-title">
         <source>Litecoin seed phrase</source>
-        <translation type="unfinished">Litecoin seed phrase</translation>
+        <translation>Сид-фраза для Litecoin</translation>
     </message>
     <message id="qtum-show-seed-title">
         <source>Qtum seed phrase</source>
-        <translation type="unfinished">Qtum seed phrase</translation>
+        <translation>Сид-фраза для Qtum</translation>
     </message>
     <message id="bitcoin-show-addresses-title">
         <source>Bitcoin wallet addresses</source>
-        <translation type="unfinished">Bitcoin wallet addresses</translation>
+        <translation>Адреса Bitcoin кошелька</translation>
     </message>
     <message id="litecoin-show-addresses-title">
         <source>Litecoin wallet addresses</source>
-        <translation type="unfinished">Litecoin wallet addresses</translation>
+        <translation>Адреса Litecoin кошелька</translation>
     </message>
     <message id="qtum-show-addresses-title">
         <source>Qtum wallet addresses</source>
-        <translation type="unfinished">Qtum wallet addresses</translation>
+        <translation>Адреса Qtum кошелька</translation>
     </message>
     <message id="settings-swap-copy-address">
         <source>Copy address</source>
@@ -1648,22 +1623,22 @@ Please check the swap token and try again.</oldsource>
     <message id="settings-swap-confirm-edit-seed-title">
         <source>Edit seed phrase</source>
         <extracomment>electrum settings, ask password to edit seed phrase, dialog title</extracomment>
-        <translation type="unfinished">Edit seed phrase</translation>
+        <translation>Редактировать сид-фразу</translation>
     </message>
     <message id="settings-swap-confirm-edit-seed-message">
         <source>Enter your wallet password to edit the phrase</source>
         <extracomment>electrum settings, ask password to edit seed phrase, dialog message</extracomment>
-        <translation type="unfinished">Enter your wallet password to edit the phrase</translation>
+        <translation>Введите пароль кошелька для редактирования сид-фразы</translation>
     </message>
     <message id="settings-swap-confirm-generate-seed-title">
         <source>Generate new seed phrase</source>
         <extracomment>electrum settings, ask password to generate new seed phrase, dialog title</extracomment>
-        <translation type="unfinished">Generate new seed phrase</translation>
+        <translation>Создать новую сид фразу</translation>
     </message>
     <message id="settings-swap-confirm-generate-seed-message">
         <source>Enter your wallet password to generate new seed phrase</source>
         <extracomment>electrum settings, ask password to generate new seed phrase, dialog message</extracomment>
-        <translation type="unfinished">Enter your wallet password to generate new seed phrase</translation>
+        <translation>Введите пароль кошелька для генерации новой сид-фразы</translation>
     </message>
     <message id="settings-swap-confirm-show-seed-title">
         <source>Show seed phrase</source>
@@ -1673,11 +1648,15 @@ Please check the swap token and try again.</oldsource>
     <message id="settings-swap-confirm-show-seed-message">
         <source>Enter your wallet password to see the phrase</source>
         <extracomment>electrum settings, ask password to show seed phrase, dialog message</extracomment>
-        <translation type="unfinished">Enter your wallet password to see the phrase</translation>
+        <translation>Введите пароль кошелька, чтобы увидеть сид-фразу</translation>
     </message>
     <message id="send-swap-confirmation-title">
         <source>Confirm atomic swap</source>
-        <translation type="unfinished">Confirm atomic swap</translation>
+        <translation>Подтверждение атомарного обмена</translation>
+    </message>
+    <message id="send-swap-sconfirmation-online-time">
+        <source>Keep your wallet online. The swap normally takes about 1 hour to complete.</source>
+        <translation>Держите ваш кошелек онлайн. Атомарный обмен обычно занимает около 1 часа.</translation>
     </message>
     <message id="beam-transaction-fee">
         <source>BEAM Transaction fee</source>
@@ -1685,66 +1664,69 @@ Please check the swap token and try again.</oldsource>
     </message>
     <message id="send-swap-token">
         <source>Swap token</source>
-        <translation type="unfinished">Swap token</translation>
+        <translation>Своп-токен</translation>
     </message>
     <message id="send-swap-token-hint">
         <source>Paste token or address here</source>
         <oldsource>Paste token here</oldsource>
-        <translation type="unfinished">Paste token here</translation>
+        <translation>Вставьте токен или адрес</translation>
     </message>
     <message id="swap-tx-state-initial">
         <source>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</source>
-        <oldsource>If nobody accepts the offer in %1, the offer will be automatically canceled</oldsource>
-        <translation type="unfinished">If nobody accepts the offer in %1, the offer will be automatically canceled</translation>
+        <translation>Если никто не принимет предложение в течение %1, предложение будет автоматически отменено</translation>
     </message>
     <message id="swap-tx-state-in-progress-normal">
         <source>The swap is expected to complete in %1 at most.</source>
-        <translation type="unfinished">The swap is expected to complete in %1 at most.</translation>
+        <translation>Максимально ожидаемое время завершения обмена %1.</translation>
     </message>
     <message id="swap-tx-state-in-progress-refunding">
         <source>Swap failed: the refund of your %2 will start in %1. The refund duration depends on the transaction fee you specified for %2.</source>
-        <translation type="unfinished">Swap failed: the refund of your %2 will start in %1. The refund duration depends on the transaction fee you specified for %2.</translation>
+        <translation>Обмен не удался: возврат средств вашей %2 начнется через %1. Продолжительность возврата зависит от комиссии за транзакцию, указанной вами для %2.</translation>
     </message>
     <message id="atomic-swap-tx-cancel">
         <source>Cancel atomic swap</source>
-        <translation type="unfinished">Cancel atomic swap</translation>
+        <translation>Отменить атомарный обмен</translation>
     </message>
     <message id="atomic-swap-tx-cancel-text">
         <source>Are you sure you want to cancel?</source>
-        <translation type="unfinished">Are you sure you want to cancel?</translation>
+        <translation>Вы уверены, что хотите отменить?</translation>
     </message>
     <message id="atomic-swap-tx-yes-button">
         <source>yes</source>
-        <translation type="unfinished">yes</translation>
+        <translation>да</translation>
     </message>
     <message id="atomic-swap-no-button">
         <source>no</source>
-        <translation type="unfinished">no</translation>
+        <translation>нет</translation>
     </message>
     <message id="swap-tx-state-refunding">
         <source>Swap failed, the money is being released back to your wallet</source>
-        <translation type="unfinished">Swap failed, the money is being released back to your wallet</translation>
+        <translation>Не удалось совершить атомарный обмен, деньги возвращаются на ваш кошелек</translation>
     </message>
     <message id="wallet-txs-status-waiting-peer">
         <source>waiting for counterparty</source>
-        <translation type="unfinished">waiting for counterparty</translation>
+        <translation>ожидание другой стороны</translation>
+    </message>
+    <message id="send-swap-fee-warning">
+        <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
+        <translation> Как только предложение будет принято другой стороной, %1 комиссия за транзакцию будет взиматься, даже если предложение будет отменено.</translation>
     </message>
     <message id="app-close-title">
         <source>Beam wallet close</source>
-        <translation type="unfinished">Beam wallet close</translation>
+        <translation>Закрытие кошелька Beam</translation>
     </message>
     <message id="app-close-text">
         <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
-        <translation type="unfinished">There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</translation>
+        <translation>Имеется %1 активных транзакций, которые могут не состояться, если кошелек выйдет в автономном режиме. Вы уверены, что хотите закрыть кошелек сейчас?</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transactions history</source>
         <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation type="unfinished">Export transactions history</translation>
+        <translation>Экспорт истории транзакций</translation>
     </message>
     <message id="atomic-swap-my-offers-tab">
         <source>My offers</source>
-        <translation type="unfinished">My offers</translation>
+        <translation>Мои предложения</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -1752,11 +1734,15 @@ Please check the swap token and try again.</oldsource>
     </message>
     <message id="addresses-delete-warning-text">
         <source>There is active transaction that uses this address, therefore the address cannot be deleted.</source>
-        <translation type="unfinished">There is active transaction that uses this address, therefore the address cannot be deleted.</translation>
+        <translation>Существует активная транзакция, использующая этот адрес, поэтому адрес не может быть удален.</translation>
+    </message>
+    <message id="general-fee-total">
+        <source>%1 Transaction fee (est)</source>
+        <translation>Комиссия за транзакцию %1 (приблиз.)</translation>
     </message>
     <message id="settings-fee-rate-note">
         <source>Remember to validate the expected fee rate for the blockchain (as it varies with time).</source>
-        <translation type="unfinished">Remember to validate the expected fee rate for the blockchain (as it varies with time).</translation>
+        <translation>Не забудьте проверить ожидаемую ставку комиссии для блокчейна (она меняется со временем).</translation>
     </message>
     <message id="addresses-edit-warning-title">
         <source>Edit address</source>
@@ -1764,19 +1750,19 @@ Please check the swap token and try again.</oldsource>
     </message>
     <message id="addresses-edit-warning-text">
         <source>There is active transaction that uses this address, therefore the address expiration cannot be changed.</source>
-        <translation type="unfinished">There is active transaction that uses this address, therefore the address expiration cannot be changed.</translation>
+        <translation>Существует активная транзакция, использующая этот адрес, поэтому срок действия адреса не может быть изменен.</translation>
     </message>
     <message id="settings-swap-seed-segwit-warning">
         <source>Segwit seed phrase is not supported yet.</source>
-        <translation type="unfinished">Segwit seed phrase is not supported yet.</translation>
+        <translation>Segwit сид-фраза не поддерживается.</translation>
     </message>
     <message id="settings-swap-seed-invali-warning">
         <source>Invalid seed phrase. Please check again and resubmit.</source>
-        <translation type="unfinished">Invalid seed phrase. Please check again and resubmit.</translation>
+        <translation>Неверная ключевая фраза. Пожалуйста, проверьте еще раз и повторите попытку.</translation>
     </message>
     <message id="swap-details-tx-fee-estimated">
         <source>%1 Estimated transaction fee</source>
-        <translation type="unfinished">%1 Estimated transaction fee</translation>
+        <translation>%1 примерная комиссия за транзакции</translation>
     </message>
     <message id="wallet-receive-expires-30m">
         <source>30 minutes</source>
@@ -1788,7 +1774,7 @@ Please check the swap token and try again.</oldsource>
     </message>
     <message id="wallet-receive-expires-2">
         <source>2 hours</source>
-        <translation type="unfinished">2 hours</translation>
+        <translation>2 часа</translation>
     </message>
     <message id="settings-show-owner-key-title">
         <source>Owner key</source>
@@ -1799,13 +1785,10 @@ Please check the swap token and try again.</oldsource>
         <source>Please notice, that knowing your owner key allows to
 know all your funds (UTXO). Make sure that you
 deploy the key at the node you trust completely.</source>
-        <oldsource>Please notice, that knowing your owner key allows to
-know all your funds (UTXO). Make sure that you
-deploy the key at the node you trust completely.</oldsource>
         <extracomment>settings tab, show owner key message</extracomment>
-        <translation type="unfinished">Please notice, that knowing your owner key allows to
-know all your funds (UTXO). Make sure that you
-deploy the key at the node you trust completely.</translation>
+        <translation>Пожалуйста, обратите внимание, что знание ключа владельца позволяет
+знать все ваши средства (UTXO). Убедитесь, что вы
+установили ключ на узел, которому вы полностью доверяете.</translation>
     </message>
     <message id="settings-general-require-pwd-to-show-owner-key">
         <source>Show owner key</source>
@@ -1815,355 +1798,342 @@ deploy the key at the node you trust completely.</translation>
     <message id="settings-general-require-pwd-to-show-owner-key-message">
         <source>Password verification is required to see the owner key</source>
         <extracomment>settings tab, general section, ask password to Show owner key, message</extracomment>
-        <translation type="unfinished">Password verification is required to see the owner key</translation>
+        <translation>Для просмотра ключа владельца требуется подтверждение пароля</translation>
     </message>
     <message id="swap-tx-state-in-progress-negotiation">
         <source>If the other side will not sign the transaction in %1, the offer will be canceled automatically.</source>
-        <translation type="unfinished">If the other side will not sign the transaction in %1, the offer will be canceled automatically.</translation>
+        <translation>Если другая сторона не подпишет транзакцию в %1, предложение будет отменено автоматически.</translation>
     </message>
     <message id="swap-invalid-credentials-error">
         <source>Cannot connect to node. Invalid credentials</source>
-        <oldsource>Invalid credentials</oldsource>
-        <translation type="unfinished">Invalid credentials</translation>
+        <translation>Не удается подключиться к узлу. Неверные учётные данные</translation>
     </message>
     <message id="swap-connection-error">
         <source>Cannot connect to node. Please check your network connection.</source>
-        <oldsource>Cannot connect to node</oldsource>
-        <translation type="unfinished">Невозможно подключиться к узлу</translation>
+        <translation>Не удается подключиться к узлу. Пожалуйста, проверьте сетевое подключение.</translation>
     </message>
     <message id="swap-invalid-genesis-block-error">
         <source>Cannot connect to node. Invalid genesis block</source>
-        <oldsource>Invalid genesis block</oldsource>
-        <translation type="unfinished">Invalid genesis block</translation>
+        <translation>Не удается подключиться к узлу. Неверный блок genesis</translation>
     </message>
     <message id="tx-state-initial-sender">
         <source>If the receiver doesn&apos;t get online in %1, the transaction will be canceled</source>
-        <oldsource>If the receiver won&apos;t get online in %1, the transaction will be canceled automatically</oldsource>
-        <translation type="unfinished">If the receiver won&apos;t get online in %1, the transaction will be canceled automatically</translation>
+        <translation>Если получатель не подключится к сети в течение %1, транзакция будет отменена</translation>
     </message>
     <message id="tx-state-initial-receiver">
         <source>If the sender doesn&apos;t get online in %1, the transaction will be canceled</source>
-        <oldsource>If the sender won&apos;t get online in %1, the transaction will be canceled automatically</oldsource>
-        <translation type="unfinished">If the sender won&apos;t get online in %1, the transaction will be canceled automatically</translation>
+        <translation>Если отправитель не войдет в сеть в течение %1, транзакция будет отменена</translation>
     </message>
     <message id="tx-state-in-progress-normal">
         <source>The transaction is usually expected to complete in a few minutes.</source>
-        <translation type="unfinished">The transaction is usually expected to complete in a few minutes.</translation>
+        <translation>Обычно транзакция завершается в течение нескольких минут.</translation>
     </message>
     <message id="tx-state-in-progress-long">
         <source>It is taking longer than usual. In case the transaction could not be completed it will be canceled automatically in %1.</source>
-        <translation type="unfinished">It is taking longer than usual. In case the transaction could not be completed it will be canceled automatically in %1.</translation>
+        <translation>Это занимает больше времени, чем обычно. В случае, если транзакция не может быть завершена, она будет автоматически отменена через %1.</translation>
+    </message>
+    <message id="amount-input-add-all">
+        <source>add all</source>
+        <translation>добавить всё</translation>
     </message>
     <message id="settings-general-no-require-pwd-to-spend-confirm-pwd-title">
         <source>Ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if unchecked</extracomment>
-        <translation type="unfinished">Спрашивать пароль для каждой исходящей транзакции</translation>
+        <translation>Запрашивать пароль при каждом отправлении</translation>
     </message>
     <message id="tx-failure-kernel-min-height">
         <source>Kernel&apos;s min height is unacceptable</source>
-        <translation type="unfinished"></translation>
+        <translation>Kernel&apos;s min height is unacceptable</translation>
     </message>
     <message id="tx-failure-loopback">
         <source>Not a loopback transaction</source>
-        <translation type="unfinished"></translation>
+        <translation>Транзакции самому себе запрещены</translation>
     </message>
     <message id="tx-failure-key-keeper-no-initialized">
         <source>Key keeper is not initialized</source>
-        <translation type="unfinished"></translation>
+        <translation>Хранитель ключей не инициализирован</translation>
     </message>
     <message id="tx-failure-invalid-asset-id">
         <source>No valid asset id/asset owner id</source>
-        <oldsource>No valid asset owner id/asset owner idx</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Недействительный идентификатор актива / ID владельца актива</translation>
     </message>
     <message id="tx-failure-invalid-asset-amount">
         <source>Cannot issue/consume more than MAX_INT64 asset groth in one transaction</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удаётся выпустить/сжечь более MAX_INT64 groth активов в одной транзакции</translation>
     </message>
     <message id="tx-failure-invalid-data-for-payment-proof">
         <source>Some mandatory data for payment proof is missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Отсутствуют обязательные для подтверждения платежа данные</translation>
     </message>
     <message id="tx-failure-there-is-no-master-key">
         <source>Master key is needed for this transaction, but unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation>Мастер-ключ необходим для этой транзакции, но недоступен</translation>
     </message>
     <message id="tx-failure-keeper-malfunctioned">
         <source>Key keeper malfunctioned</source>
-        <translation type="unfinished"></translation>
+        <translation>Неисправный хранитель ключей</translation>
     </message>
     <message id="tx-failure-aborted-by-user">
         <source>Aborted by the user</source>
-        <translation type="unfinished"></translation>
+        <translation>Прервано пользователем</translation>
     </message>
     <message id="tx-failure-asset-small-fee">
         <source>Asset registration fee is too small</source>
-        <translation type="unfinished"></translation>
+        <translation>Регистрационный взнос слишком мал</translation>
     </message>
     <message id="settings-notifications-title">
         <source>Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Оповещения</translation>
     </message>
     <message id="settings-notifications-version">
         <source>Wallet update</source>
-        <oldsource>Wallet version</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Обновление кошелька</translation>
     </message>
     <message id="settings-notifications-tx-status">
         <source>Transaction status</source>
-        <translation type="unfinished"></translation>
+        <translation>Статус транзакции</translation>
     </message>
     <message id="tx-failure-fee-too-large">
         <source>Fee is too large</source>
-        <translation type="unfinished"></translation>
+        <translation>Комиссия слишком велика</translation>
     </message>
     <message id="tx-failure-asset-invalid-info">
         <source>No asset info or asset info is not valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет информации об активе или информация о активах недопустима</translation>
     </message>
     <message id="tx-failure-asset-invalid-metadata">
         <source>No asset metadata or asset metadata is not valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Метаданные активов или метаданные активов не допустимы</translation>
     </message>
     <message id="tx-failure-asset-invalid-id">
         <source>Invalid asset id</source>
-        <translation type="unfinished"></translation>
+        <translation>Недопустимый идентификатор актива</translation>
     </message>
     <message id="tx-failure-asset-confirmation">
         <source>Failed to receive asset confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось получить подтверждение актива</translation>
     </message>
     <message id="tx-failure-asset-in-use">
         <source>Asset is still in use (issued amount &gt; 0)</source>
-        <translation type="unfinished"></translation>
+        <translation>Asset is still in use (issued amount &gt; 0)</translation>
     </message>
     <message id="tx-failure-asset-locked">
         <source>Asset is still locked</source>
-        <translation type="unfinished"></translation>
+        <translation>Актив по-прежнему заблокирован</translation>
     </message>
     <message id="settings-general-amounts-unit">
         <source>Show amounts in</source>
         <extracomment>settings tab, general section, amounts unit label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Показать суммы в</translation>
     </message>
     <message id="notifications-title">
         <source>Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Оповещения</translation>
     </message>
     <message id="notifications-clear-all">
         <source>clear all</source>
-        <translation type="unfinished"></translation>
+        <translation>очистить все</translation>
     </message>
     <message id="notifications-empty">
         <source>There are no notifications yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Пока нет уведомлений.</translation>
     </message>
     <message id="notifications-read">
         <source>read</source>
-        <translation type="unfinished"></translation>
+        <translation>прочитанные</translation>
     </message>
     <message id="notifications-update-now">
         <source>update now</source>
-        <translation type="unfinished"></translation>
+        <translation>обновить сейчас</translation>
     </message>
     <message id="notifications-activate">
         <source>activate</source>
-        <translation type="unfinished"></translation>
+        <translation>активировать</translation>
     </message>
     <message id="notifications-details">
         <source>details</source>
-        <translation type="unfinished"></translation>
+        <translation>подробности</translation>
     </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
-        <translation type="unfinished"></translation>
+        <translation>Доступна новая версия v %1</translation>
     </message>
     <message id="notification-address-expired">
         <source>Address expired</source>
-        <translation type="unfinished"></translation>
+        <translation>Срок действия адреса истек</translation>
     </message>
     <message id="notification-transaction-received">
         <source>Transaction was received</source>
-        <oldsource>Transaction received</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Транзакция получена</translation>
     </message>
     <message id="notification-transaction-sent-message">
         <source>You sent &lt;b&gt;%1&lt;/b&gt; BEAM to &lt;b&gt;%2&lt;/b&gt;.</source>
-        <oldsource>You sent %1 BEAM to %2.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>You sent &lt;b&gt;%1&lt;/b&gt; BEAM to &lt;b&gt;%2&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-failed">
         <source>Transaction failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Транзакция не прошла</translation>
     </message>
     <message id="notification-news">
         <source>BEAM in the press</source>
-        <translation type="unfinished"></translation>
+        <translation>BEAM в прессе</translation>
     </message>
     <message id="notification-address-expired-message">
         <source>&lt;b&gt;%1&lt;/b&gt; address expired.</source>
-        <oldsource>Address expired</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; address expired.</translation>
     </message>
     <message id="notification-transaction-received-message">
         <source>You received &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt;.</source>
-        <oldsource>You received %1 BEAM from %2.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>You received &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-send-failed-message">
         <source>Sending &lt;b&gt;%1 BEAM&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt; failed.</source>
-        <oldsource>Sending %1 BEAM to %2 failed.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Sending &lt;b&gt;%1 BEAM&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt; failed.</translation>
     </message>
     <message id="notification-transaction-receive-failed-message">
         <source>Receiving &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt; failed.</source>
-        <oldsource>Receiving %1 BEAM from %2 failed.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Receiving &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt; failed.</translation>
     </message>
     <message id="notification-transaction-sent">
         <source>Transaction was sent</source>
-        <oldsource>Transaction sent</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Транзакция отправлена</translation>
     </message>
     <message id="settings-update-wallet">
         <source>update wallet</source>
         <extracomment>settings update wallet button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>обновить кошелёк</translation>
     </message>
     <message id="general-exchange-rate-not-available">
         <source>Exchange rate to %1 is not available</source>
-        <translation type="unfinished"></translation>
+        <translation>Обменный курс %1 недоступен</translation>
     </message>
     <message id="notification-swap-completed">
         <source>Atomic Swap offer completed</source>
-        <translation type="unfinished"></translation>
+        <translation>Предложение атомарного обмена завершено</translation>
     </message>
     <message id="notification-swap-beam-completed-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</translation>
     </message>
     <message id="notification-swap-completed-message">
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</translation>
     </message>
     <message id="notification-swap-beam-failed-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</translation>
     </message>
     <message id="notification-swap-failed-message">
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</translation>
     </message>
     <message id="notification-swap-failed">
         <source>Atomic Swap offer failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Прдложение атомарного обмена не удалось</translation>
     </message>
     <message id="notification-swap-expired">
         <source>Atomic Swap offer expired</source>
-        <translation type="unfinished"></translation>
+        <translation>Предложение атомарного обмена истекло</translation>
     </message>
     <message id="notification-swap-beam-expired-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
-        <translation type="unfinished"></translation>
+        <translation>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</translation>
     </message>
     <message id="notification-swap-expired-message">
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
-        <translation type="unfinished"></translation>
+        <translation>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</translation>
     </message>
     <message id="general-identity">
         <source>Identity</source>
-        <translation type="unfinished"></translation>
+        <translation>Идентификатор</translation>
     </message>
     <message id="notifications-activated">
         <source>activated</source>
-        <translation type="unfinished"></translation>
+        <translation>активировано</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
         <source>Exchange rate to %1 was not available at the time of transaction</source>
-        <translation type="unfinished"></translation>
+        <translation>Обменный курс на %1 не был доступен во время транзакции</translation>
     </message>
     <message id="tx-details-second-currency-notification">
         <source>(for the day of transaction)</source>
-        <translation type="unfinished"></translation>
+        <translation>(в день транзакции)</translation>
     </message>
     <message id="tx-details-title">
         <source>General transaction info</source>
-        <translation type="unfinished"></translation>
+        <translation>Основная информация о транзакции</translation>
     </message>
     <message id="tx-details-sending-addr-label">
         <source>Sending address</source>
-        <translation type="unfinished"></translation>
+        <translation>Адрес отправителя</translation>
     </message>
     <message id="tx-details-sender-identity">
         <source>Sender identity</source>
-        <translation type="unfinished"></translation>
+        <translation>Идентификатор отправителя</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
-        <translation type="unfinished"></translation>
+        <translation>Адрес получателя</translation>
     </message>
     <message id="tx-details-receiver-identity">
         <source>Receiver identity</source>
-        <translation type="unfinished"></translation>
+        <translation>Идентификатор получателя</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
-        <translation type="unfinished">Сумма</translation>
+        <translation>Сумма</translation>
     </message>
     <message id="tx-details-second-currency-amount-label">
         <source>Currency amount</source>
-        <translation type="unfinished"></translation>
+        <translation>Сумма</translation>
     </message>
     <message id="tx-details-tx-id-label">
         <source>Transaction ID</source>
-        <translation type="unfinished">Идентификатор транзакции</translation>
+        <translation>Идентификатор транзакции</translation>
     </message>
     <message id="open-in-explorer">
         <source>Open in Blockchain Explorer</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть в Blockchain проводнике</translation>
     </message>
     <message id="tx-details-error-label">
         <source>Error</source>
-        <translation type="unfinished">Ошибка</translation>
+        <translation>Ошибка</translation>
     </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
-        <translation type="unfinished"></translation>
+        <translation>Актив уже зарегистрирован</translation>
     </message>
     <message id="tx-failure-asset-invalid-owner-id">
         <source>Invalid asset owner id</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный id владельца актива</translation>
     </message>
     <message id="tx-failure-assets-disabled">
         <source>Asset transactions are disabled in the wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>Транзакции с конфиденциальными активами отключены в кошельке</translation>
     </message>
     <message id="tx-failure-no-vouchers">
         <source>No voucher, no address to receive it</source>
-        <oldsource>You have no vouchers to insert coins to lelantus</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Нет ваучера, нет адреса для его получения</translation>
     </message>
     <message id="tx-failure-assets-fork2">
         <source>Asset transactions are not available until fork2</source>
-        <translation type="unfinished"></translation>
+        <translation>Транзакции с активами не доступны до fork2</translation>
     </message>
     <message id="address-newer-lib">
         <source>This address generated by newer Beam library version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <oldsource>This address generated by newer Beam library version(%1) 
-Your version is: %2. Please, check for updates.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Этот адрес сгенерирован новой версией библиотеки (%1)
+Ваша версия: %2. Пожалуйста, проверьте наличие обновлений.</translation>
     </message>
     <message id="address-newer-client">
         <source>This address generated by newer Beam client version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <oldsource>This address generated by newer Beam client version(%1) 
-Your version is: %2. Please, check for updates.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Этот адрес сгенерирован новой версией клиента Beam (%1)
+Ваша версия: %2. Пожалуйста, проверьте наличие обновлений.</translation>
     </message>
     <message id="wallet-txs-status-failing">
         <source>failing</source>
-        <translation type="unfinished"></translation>
+        <translation>аварийное завершение</translation>
     </message>
     <message id="wallet-receive-expires-12">
         <source>12 hours</source>
@@ -2171,571 +2141,566 @@ Your version is: %2. Please, check for updates.</oldsource>
     </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
-        <translation type="unfinished">Кошелек</translation>
+        <translation>Кошелек</translation>
     </message>
     <message id="settings-connectivity-title">
         <source>Connectivity</source>
-        <translation type="unfinished"></translation>
+        <translation>Подключение</translation>
     </message>
     <message id="settings-troubleshooting-title">
         <source>Troubleshooting</source>
-        <oldsource>Connectivity</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Устранение проблем</translation>
     </message>
     <message id="settings-get-beam">
         <source>Get Beams from Beam Community Faucet</source>
-        <translation type="unfinished"></translation>
+        <translation>Получить Beams от Beam сообщества</translation>
     </message>
     <message id="settings-privacy-title">
         <source>Privacy</source>
-        <translation type="unfinished"></translation>
+        <translation>Безопасность</translation>
     </message>
     <message id="settings-resources-title">
         <source>Resources</source>
-        <translation type="unfinished"></translation>
+        <translation>Ресурсы</translation>
     </message>
     <message id="settings-utilities-title">
         <source>Utilities</source>
-        <translation type="unfinished"></translation>
+        <translation>Утилиты</translation>
     </message>
     <message id="settings-local-node-run-checkbox">
         <source>Integrated node</source>
-        <oldsource>Run integrated node</oldsource>
         <extracomment>settings tab, node section, run node label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Интегрированный узел</translation>
     </message>
     <message id="general-invalid-port">
         <source>Port is mandatory</source>
         <extracomment>settings tab, node section, port error label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Порт обязателен</translation>
     </message>
     <message id="settings-remote-node-address">
         <source>Node address</source>
-        <oldsource>Remote node address</oldsource>
         <extracomment>settings tab, node section, address label</extracomment>
-        <translation type="unfinished">Node Address</translation>
+        <translation>Адрес узла</translation>
     </message>
     <message id="settings-peers-title">
         <source>Peers</source>
-        <translation type="unfinished"></translation>
+        <translation>Пиры</translation>
     </message>
     <message id="settings-integrated-node-title">
         <source>Beam Integrated Node</source>
-        <translation type="unfinished"></translation>
+        <translation>Интегрированный узел Beam</translation>
     </message>
     <message id="settings-remote-node-title">
         <source>Beam Remote Node</source>
-        <translation type="unfinished"></translation>
+        <translation>Удаленный узел Beam</translation>
     </message>
     <message id="settings-run-remote-node">
         <source>Remote node</source>
-        <translation type="unfinished"></translation>
+        <translation>Удаленный узел</translation>
     </message>
     <message id="open-show-wallet-button-hw">
         <source>Show my wallet with Trezor</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать мой кошелек с Trezor</translation>
     </message>
     <message id="overtop-beam-supply">
         <source>Amount overtop total Beam supply.</source>
-        <translation type="unfinished"></translation>
+        <translation>Сумма превышает общее количетво монет Beam.</translation>
     </message>
     <message id="specific_node">
         <source>Specific node</source>
-        <translation type="unfinished"></translation>
+        <translation>Конкретный узел</translation>
     </message>
     <message id="random_node">
         <source>Random node</source>
-        <translation type="unfinished"></translation>
+        <translation>Случайный узел</translation>
     </message>
     <message id="can-not-generate-new-address-message">
         <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы не можете сгенерировать новый адрес. В кошельке отсутствует мастер-ключ.</translation>
     </message>
     <message id="wallet-receive-title">
         <source>Receive</source>
-        <translation type="unfinished">Получить</translation>
+        <translation>Получить</translation>
     </message>
     <message id="wallet-receive-address-for-wallet">
         <source>(for wallet)</source>
-        <oldsource>For wallet</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>(для кошелька)</translation>
     </message>
     <message id="wallet-receive-addr-message">
         <source>Min transaction fee to send Max privacy coins is %1.</source>
-        <oldsource>To spend the received Max privacy coins the min transaction fee will be %1 GROTH.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Минимальная комиссия за отправку Макс. приватных монет %1.</translation>
     </message>
     <message id="wallet-receive-text-online-time">
         <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Для завершения транзакции вы должны быть онлайн в течение 12 часов после отправки.</translation>
     </message>
     <message id="show-token">
         <source>Show token</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать токен</translation>
     </message>
     <message id="wallet-receive-copy-and-close">
         <source>Copy and close</source>
-        <translation type="unfinished"></translation>
+        <translation>Скопировать и закрыть</translation>
     </message>
     <message id="wallet-receive-address-for-exchange">
         <source>(for exchange or mining pool)</source>
-        <oldsource>For exchange or mining pool</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>(для биржи или майнинг пула)</translation>
     </message>
     <message id="token-info-title">
         <source>Transaction token</source>
-        <translation type="unfinished"></translation>
+        <translation>Токен транзакции</translation>
     </message>
     <message id="token-info-transaction-type">
         <source>Transaction type</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип транзакции</translation>
     </message>
     <message id="token-info-token">
         <source>Token</source>
-        <translation type="unfinished"></translation>
+        <translation>Токен</translation>
     </message>
     <message id="token-info-copy-token">
         <source>Copy token</source>
-        <translation type="unfinished">Копировать токен</translation>
+        <translation>Копировать токен</translation>
     </message>
     <message id="general-transaction-info">
         <source>Transaction info</source>
-        <translation type="unfinished"></translation>
+        <translation>Информация о транзакции</translation>
     </message>
     <message id="receive-request">
         <source>Requested amount</source>
-        <oldsource>Request amount</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Запрашиваемая сумма</translation>
     </message>
     <message id="address-one-time">
         <source>One-time use</source>
-        <oldsource>One time</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Одноразовое использование</translation>
     </message>
     <message id="address-permanent">
         <source>Permanent</source>
-        <oldsource>Permanent address</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Постоянный</translation>
     </message>
     <message id="tx-regular">
         <source>Regular</source>
-        <translation type="unfinished">Обычная</translation>
+        <translation>Обычная</translation>
     </message>
     <message id="tx-max-privacy">
         <source>Max privacy</source>
-        <translation type="unfinished"></translation>
+        <translation>Макс. приватность</translation>
     </message>
     <message id="address-save">
         <source>save</source>
-        <translation type="unfinished"></translation>
+        <translation>сохранить</translation>
     </message>
     <message id="save-contact-title">
         <source>Do you want to name the contact?</source>
-        <oldsource>Name the contact</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Вы хотите дать контакту имя?</translation>
     </message>
     <message id="contact-name-prompt">
         <source>Enter the name to this contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите имя этого контакта</translation>
     </message>
     <message id="receive-request-optional">
         <source>(optional)</source>
-        <translation type="unfinished"></translation>
+        <translation>(опционально)</translation>
     </message>
     <message id="save-address-no-name">
         <source>No name</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя не указано</translation>
     </message>
     <message id="wallet-receive-online-address">
         <source>Online address</source>
-        <oldsource>Online addressOnline address</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Онлайн адрес</translation>
     </message>
     <message id="wallet-receive-offline-address">
         <source>Offline address</source>
-        <oldsource>Offline token</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Оффлайн адрес</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Адрес узла уже существует</translation>
     </message>
     <message id="address-table-cm-receive">
         <source>receive</source>
         <extracomment>Entry in address table context menu to get receive token</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>получить</translation>
     </message>
     <message id="format-small-amount">
         <source>&lt; 1 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt; 1 %1</translation>
     </message>
     <message id="format-amount">
         <source>%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 %2</translation>
     </message>
     <message id="send-regular-fee">
         <source>Fee</source>
-        <translation type="unfinished"></translation>
+        <translation>Комиссия</translation>
     </message>
     <message id="settings-swap-clear">
         <source>clear</source>
-        <oldsource>disconnect</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>очистить</translation>
     </message>
     <message id="settings-swap-confirm-clear-seed-title">
         <source>Clear seed phrase</source>
         <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Очистить сид-фразу</translation>
     </message>
     <message id="settings-swap-confirm-clear-seed-message">
         <source>Enter your wallet password to clear seed phrase</source>
         <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Введите пароль кошелька, чтобы очистить сид-фразу</translation>
     </message>
     <message id="settings-swap-connect-to-electrum">
         <source>connect to electrum node</source>
-        <translation type="unfinished"></translation>
+        <translation>подключиться к узлу electrum</translation>
     </message>
     <message id="settings-swap-connect-to-node">
         <source>connect to node</source>
-        <translation type="unfinished"></translation>
+        <translation>подключиться к узлу</translation>
     </message>
     <message id="settings-swap-disconnect">
         <source>disconnect</source>
-        <translation type="unfinished"></translation>
+        <translation>отключиться</translation>
     </message>
     <message id="swap-expiration-time">
         <source>Expiration time</source>
-        <translation type="unfinished"></translation>
+        <translation>Срок действия</translation>
     </message>
     <message id="send-confirmation-type-label">
         <source>Address type</source>
-        <oldsource>Type</oldsource>
-        <translation type="unfinished">Тип</translation>
+        <translation>Тип адреса</translation>
     </message>
     <message id="token-info-dialog-one-time">
         <source>One time</source>
-        <translation type="unfinished"></translation>
+        <translation>Один раз</translation>
+    </message>
+    <message id="swap-expired">
+        <source>Expired.</source>
+        <translation>Истeкший.</translation>
     </message>
     <message id="from-shielded-pool">
         <source>shielded pool</source>
-        <translation type="unfinished"></translation>
+        <translation>защищенный пул</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
         <source>Connect to integrated or own node to enable sending max privacy transactions</source>
-        <translation type="unfinished"></translation>
+        <translation>Подключитесь к интегрированному или собственному узлу, чтобы включить отправку транзакций с макс. конфиденциальностью</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Минимально рекомендуемая комиссия %1 %2</translation>
     </message>
     <message id="tx-address-offline">
         <source>Offline</source>
-        <translation type="unfinished"></translation>
+        <translation>Отключен от сети</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max">
         <source>in progress
 max privacy</source>
-        <oldsource>in progress max privacy</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>в процессе
+макс. конфиденциальность</translation>
     </message>
     <message id="wallet-txs-status-sent-max">
         <source>sent
 max privacy</source>
-        <oldsource>sent max privacy</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>отправлено
+макс. конфиденциальность</translation>
     </message>
     <message id="wallet-txs-status-received-max">
         <source>received
 max privacy</source>
-        <oldsource>received max privacy</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>получено
+макс. конфиденциальность
+</translation>
     </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
 max privacy</source>
-        <oldsource>canceled max privacy</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>отменено
+макс. конфиденциальность
+</translation>
     </message>
     <message id="wallet-txs-status-failed-max">
         <source>failed
 max privacy</source>
-        <oldsource>failed max privacy</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>не удалось
+макс. приватность</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
         <source>in progress
 max privacy (offline)</source>
-        <translation type="unfinished"></translation>
+        <translation>в процессе
+макс. приватность (оффлайн)</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
         <source>sent
 max privacy (offline)</source>
-        <translation type="unfinished"></translation>
+        <translation>отправлено
+макс. приватность (оффлайн)</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
         <source>received
 max privacy (offline)</source>
-        <translation type="unfinished"></translation>
+        <translation>получено
+макс. приватность (оффлайн)</translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
         <source>canceled
 max privacy (offline)</source>
-        <translation type="unfinished"></translation>
+        <translation>отменена
+макс. приватность (оффлайн)</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
         <source>failed
 max privacy (offline)</source>
-        <translation type="unfinished"></translation>
+        <translation>не удалось
+макс. приватность (оффлайн)</translation>
     </message>
     <message id="general-shielded">
         <source>Shielded</source>
         <extracomment>UTXO type Shielded</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Защищенная</translation>
     </message>
     <message id="tx-address-online">
         <source>Online</source>
-        <translation type="unfinished"></translation>
+        <translation>В сети</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
         <source>Connection error: can�t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete. </source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка соединения: невозможно рассчитать рекомендованную ставку комиссии. 
+Проверьте %1 блокчейн самостоятельно. Низкая комиссия может потребовать
+гораздо больше времени, чтобы завершить транзакцию. </translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
-        <translation type="unfinished"></translation>
+        <translation>У хранителя ключей закончились слоты для нонсов</translation>
     </message>
     <message id="tx-failure-shielded-coin-fee">
         <source>Cannot extract shielded coin, fee is to big.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно извлечь защищенные монеты, комиссия должна быть большой.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
         <source>Asset transactions are disabled in the receiver wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>Транзакции с конфиденциальными активами отключены в кошельке получателя</translation>
     </message>
     <message id="tx-failure-assets-disabled-blockchain">
         <source>Asset transactions are disabled in blockchain configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Транзакции с конфиденциальными активами отключены в конфигурации блокчейна</translation>
     </message>
     <message id="tx-failure-identity-required">
         <source>Peer Identity required</source>
-        <translation type="unfinished"></translation>
+        <translation>Требуется идентификатор другой стороны</translation>
     </message>
     <message id="tx-failure-cannot-get-vouchers">
         <source>The sender cannot get vouchers for max privacy transaction</source>
-        <translation type="unfinished"></translation>
+        <translation>Отправитель не может получить ваучеры для транзакции с макс. приватностью</translation>
     </message>
     <message id="settings-random-node-text">
         <source>Random node address and port will be displayed 
 when connection is established</source>
-        <translation type="unfinished"></translation>
+        <translation>Адрес и порт случайного узла будут показаны 
+при установлении соединения</translation>
     </message>
     <message id="settings-node-progress-na">
         <source>Swap in progress, cannot disconnect, switch connection type to 
 %1 electrum, generate new or edit existing seed phrase.</source>
-        <translation type="unfinished"></translation>
+        <translation>Выполняется обмен. Нельзя отключить, переключить тип соединения на 
+%1 electrum, создать новую или изменить существующую сид-фразу.</translation>
     </message>
     <message id="settings-electrum-progress-na">
         <source>Swap in progress, cannot switch connection type to %1 node, 
 generate new or edit existing seed phrase.</source>
-        <translation type="unfinished"></translation>
+        <translation>Выполняется обмен. Нельзя отключить, переключить тип соединения на 
+узел %1, создать новую или изменить существующую сид-фразу.</translation>
     </message>
     <message id="swap-token-newer-lib">
         <source>This address generated by newer Beam library version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <oldsource>This token generated by newer Beam library version(%1)
-Your version is: %2. Please, check for updates.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Этот адрес сгенерирован новой версией библиотеки (%1)
+Ваша версия: %2. Пожалуйста, проверьте наличие обновлений.</translation>
     </message>
     <message id="swap-swap-token-newer-client">
         <source>This address generated by newer Beam client version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <oldsource>This token generated by newer Beam client version(%1)
-Your version is: %2. Please, check for updates.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Этот адрес сгенерирован новой версией клиента Beam (%1)
+Ваша версия: %2. Пожалуйста, проверьте наличие обновлений.</translation>
     </message>
     <message id="save-address-title">
         <source>Do you want to name the contact?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы хотите дать контакту имя?</translation>
     </message>
     <message id="send-title">
         <source>Send</source>
-        <translation type="unfinished">Отправить</translation>
+        <translation>Отправить</translation>
     </message>
     <message id="send-contact-token-placeholder">
         <source>Paste recipient token here</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставьте здесь токен получателя</translation>
     </message>
     <message id="send-contact-address-placeholder">
         <source>Paste recipient address here</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставьте адрес получателя здесь</translation>
     </message>
     <message id="wallet-send-invalid-address-or-token">
         <source>Invalid wallet address</source>
-        <translation type="unfinished"></translation>
+        <translation>Invalid wallet address or swap token</translation>
     </message>
     <message id="wallet-send-permanent-note">
         <source>Permanent address</source>
-        <oldsource>Permanent address (you can save it to contacts after send).</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Постоянный адрес</translation>
     </message>
     <message id="wallet-send-one-time-note">
         <source>One-time use address (expire in 12 hours after succesfull transaction).</source>
-        <oldsource>One-time use token (expire in 12 hours after succesfull transaction).</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Одноразовый адрес (истекает через 12 часов после успешной транзакции).</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address-offline">
         <source>Offline address. Payments left: %1</source>
-        <oldsource>Receiver requested Max privacy. Offline transactions remaining: %1</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Оффлайн адрес. Осталось платежей: %1</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address">
         <source>Max privacy address</source>
-        <oldsource>Receiver requested Max privacy</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Макс. приватный адрес</translation>
     </message>
     <message id="wallet-send-need-extract-shielded-note">
         <source>Transaction is slower, fees are higher.</source>
-        <translation type="unfinished"></translation>
+        <translation>Транзакция медленнее, комиссия выше.</translation>
     </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
-        <translation type="unfinished"></translation>
+        <translation>Недостаточно средств: необходимо %1 для завершения транзакции</translation>
     </message>
     <message id="max-pivacy-fee-fail">
         <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Для лучшей приватности были выбраны защищенные монеты. Минимальная комиссия за транзакцию - %1 %2</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
-        <translation type="unfinished"></translation>
+        <translation>Сумма</translation>
     </message>
     <message id="send-remaining-label">
         <source>Remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>Остаток</translation>
     </message>
     <message id="wallet-receive-swap-copy-token-and-close">
         <source>copy token and close</source>
-        <translation type="unfinished"></translation>
+        <translation>скопировать токен и закрыть</translation>
     </message>
     <message id="address-info-title">
         <source>Address details</source>
-        <oldsource>Transaction address</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Подробности адреса</translation>
     </message>
     <message id="address-expiration">
         <source>Address expiration</source>
-        <translation type="unfinished"></translation>
+        <translation>Срок действия адреса</translation>
     </message>
     <message id="address-info-dialog-permanent">
         <source>Permanent</source>
-        <translation type="unfinished"></translation>
+        <translation>Постоянный</translation>
     </message>
     <message id="address-info-type">
         <source>Address type</source>
-        <translation type="unfinished">Тип</translation>
+        <translation>Тип адреса</translation>
     </message>
     <message id="address-info-sbbs-address">
         <source>SBBS Address</source>
-        <translation type="unfinished"></translation>
+        <translation>SBBS Адрес</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
-        <translation type="unfinished">Адрес</translation>
+        <translation>Адрес</translation>
     </message>
     <message id="dogecoin-show-seed-phrase">
         <source>Dogecoin seed phrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Сид-фраза Dogecoin</translation>
     </message>
     <message id="bitcoin-cash-show-seed-phrase">
         <source>Bitcoin Cash seed phrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Сид-фраза для Bitcoin Cash</translation>
     </message>
     <message id="bitcoin-sv-show-seed-phrase">
         <source>Bitcoin SV seed phrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Сид-фраза для Bitcoin SV</translation>
     </message>
     <message id="dash-show-seed-phrase">
         <source>Dash seed phrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Сид-фраза для Dash</translation>
     </message>
     <message id="dogecoin-show-addresses-title">
         <source>Dogecoin wallet addresses</source>
-        <translation type="unfinished"></translation>
+        <translation>Адреса кошелька Dogecoin</translation>
     </message>
     <message id="bitcoin-cash-show-addresses-title">
         <source>Bitcoin Cash wallet addresses</source>
-        <translation type="unfinished"></translation>
+        <translation>Адреса Bitcoin Cash кошелька</translation>
     </message>
     <message id="bitcoin-sv-show-addresses-title">
         <source>Bitcoin SV wallet addresses</source>
-        <translation type="unfinished"></translation>
+        <translation>Адреса кошелька Bitcoin SV</translation>
     </message>
     <message id="dash-show-addresses-title">
         <source>Dash wallet addresses</source>
-        <translation type="unfinished"></translation>
+        <translation>Адреса кошелька Dash</translation>
     </message>
     <message id="general-dogecoin">
         <source>Dogecoin</source>
-        <translation type="unfinished"></translation>
+        <translation>Dogecoin</translation>
     </message>
     <message id="general-bitcoin-cash">
         <source>Bitcoin Cash</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitcoin Cash</translation>
     </message>
     <message id="general-bitcoin-sv">
         <source>Bitcoin SV</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitcoin SV</translation>
     </message>
     <message id="general-dash">
         <source>DASH</source>
-        <translation type="unfinished"></translation>
+        <translation>DASH</translation>
     </message>
     <message id="settings-swap-dogecoin-node">
         <source>Dogecoin node</source>
-        <translation type="unfinished"></translation>
+        <translation>Узел Dogecoin</translation>
     </message>
     <message id="settings-swap-bitcoin-cash-node">
         <source>Bitcoin Cash node</source>
-        <translation type="unfinished"></translation>
+        <translation>Узел Bitcoin Cash</translation>
     </message>
     <message id="settings-swap-bitcoin-sv-node">
         <source>Bitcoin SV node</source>
-        <translation type="unfinished"></translation>
+        <translation>Узел Bitcoin SV</translation>
     </message>
     <message id="settings-swap-dash-node">
         <source>Dash node</source>
-        <translation type="unfinished"></translation>
+        <translation>Узел Dash</translation>
     </message>
     <message id="settings-swap-dogecoin-electrum">
         <source>Dogecoin electrum</source>
-        <translation type="unfinished"></translation>
+        <translation>Dogecoin electrum</translation>
     </message>
     <message id="settings-swap-bitcoin-cash-electrum">
         <source>Bitcoin Cash electrum</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitcoin Cash electrum</translation>
     </message>
     <message id="settings-swap-bitcoin-sv-electrum">
         <source>Bitcoin SV electrum</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitcoin SV electrum</translation>
     </message>
     <message id="settings-swap-dash-electrum">
         <source>Dash electrum</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash electrum</translation>
     </message>
     <message id="settings-show-public-offline-address">
         <source>Show public offline address</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать публичный оффлайн адрес</translation>
     </message>
     <message id="public-address-title">
         <source>Public offline address</source>
-        <translation type="unfinished"></translation>
+        <translation>Публичный оффлайн адрес</translation>
     </message>
     <message id="public-offline-address-note">
         <source>Publishing this address will allow you to be identified</source>
-        <translation type="unfinished"></translation>
+        <translation>Публикация этого адреса позволит вам быть опознанным</translation>
     </message>
     <message id="wallet-assets-title">
         <source>Assets</source>
@@ -2813,64 +2778,67 @@ Your version is: %2. Please, check for updates.</oldsource>
     </message>
     <message id="more-details">
         <source>More details</source>
-        <translation type="unfinished"></translation>
+        <translation>Подробнее</translation>
     </message>
     <message id="general-address-type">
         <source>Address Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип адреса</translation>
     </message>
     <message id="qr-code">
         <source>QR Code</source>
-        <translation type="unfinished"></translation>
+        <translation>QR Код</translation>
     </message>
     <message id="wallet-receive-address-for-wallet-label">
         <source>Online address (for wallet)</source>
-        <translation type="unfinished"></translation>
+        <translation>Онлайн-адрес (для кошелька)</translation>
     </message>
     <message id="wallet-receive-address-for-exchange-label">
         <source>Online address (for exchange or mining pool)</source>
-        <translation type="unfinished"></translation>
+        <translation>Онлайн-адрес (для биржи или майнинг пула)</translation>
     </message>
     <message id="wallet-receive-max-privacy-address">
         <source>Max Privacy Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Макс. приватный адрес</translation>
     </message>
     <message id="wallet-receive-offline-payments">
         <source>Supports %1 payments.</source>
-        <translation type="unfinished"></translation>
+        <translation>Поддерживает %1 платежей.</translation>
     </message>
     <message id="address-info-payments">
         <source>Payments</source>
-        <translation type="unfinished"></translation>
+        <translation>Платежи</translation>
+    </message>
+    <message id="available-panel-maturing-mp">
+        <source>Max privacy</source>
+        <translation>Макс. приватность</translation>
     </message>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(max privacy)</source>
-        <translation type="unfinished"></translation>
+        <translation>Созревание%1(макс. приватность)</translation>
     </message>
     <message id="atomic-swap-more-currency">
         <source>Connect more currencies</source>
-        <translation type="unfinished"></translation>
+        <translation>Подключить еще валюты</translation>
     </message>
     <message id="address-info-copy-close">
         <source>copy and close</source>
-        <translation type="unfinished"></translation>
+        <translation>копировать и закрыть</translation>
     </message>
     <message id="tx-address-public-offline">
         <source>Public offline</source>
-        <translation type="unfinished"></translation>
+        <translation>Публичный оффлайн</translation>
     </message>
     <message id="tx-address-unknown">
         <source>Unknown</source>
-        <oldsource>Public offline</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Не определено</translation>
     </message>
     <message id="tx-address-regular-exchange">
         <source>Regular (for exchange or mining pool)</source>
-        <translation type="unfinished"></translation>
+        <translation>Обычный (для биржи или майнинг пула)</translation>
     </message>
     <message id="tx-address-regular-wallet">
         <source>Regular (for wallet)</source>
-        <translation type="unfinished"></translation>
+        <translation>Обычный (для кошелька)</translation>
     </message>
 </context>
 </TS>
