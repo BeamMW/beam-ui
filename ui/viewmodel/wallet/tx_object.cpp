@@ -217,16 +217,8 @@ QString TxObject::getFee() const
 {
     if (m_tx.m_fee)
     {
-        std::vector<TxKernel::Ptr> shieldedInputs;
-        m_tx.GetParameter(TxParameterID::InputsShielded, shieldedInputs);
-        if (shieldedInputs.size())
-        {
-            Transaction::FeeSettings fs;
-            Amount shieldedFee = shieldedInputs.size() * (fs.m_Kernel + fs.m_ShieldedInput);
-            return AmountInGrothToUIString(shieldedFee + m_tx.m_fee);
-        }
-
-        return AmountInGrothToUIString(m_tx.m_fee);
+        Amount shieldedFee = GetShieldedFee(m_tx);
+        return AmountInGrothToUIString(shieldedFee + m_tx.m_fee);
     }
     return QString{};
 }
