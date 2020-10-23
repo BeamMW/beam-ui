@@ -88,7 +88,7 @@ void SendViewModel::setFeeGrothes(unsigned int value)
         else
         {
             _walletModel.getAsync()->calcChange(_sendAmount, _fee, _selectedAssetId);
-            _feeChangedByUi = false; // TODO: WTF???? rename _feeChangedByUi or be consistent
+            _feeChangedByUi = false; // TODO: rename _feeChangedByUi or be consistent
         }
 
         emit canSendChanged();
@@ -226,7 +226,7 @@ void SendViewModel::setIsShieldedTx(bool value)
 
         if (_walletModel.hasShielded(_selectedAssetId) && _sendAmount)
         {
-            // TODO: WTF? do we really need this? why not to wait for calc change?
+            // TODO: do we really need this? why not to wait for calc change?
             // Overflow??? when -?
             if (_walletModel.getAvailable(_selectedAssetId) - _sendAmount == 0 &&
                 _walletModel.getAvailable(beam::Asset::s_BeamID) - _fee == 0)
