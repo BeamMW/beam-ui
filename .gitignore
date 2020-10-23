@@ -85,3 +85,5 @@ beam-ui.cbp
 
 /CMakeLists.txt.user
 /ui/view/utils.jsc
+
+ui/view_utils_js.cpp
