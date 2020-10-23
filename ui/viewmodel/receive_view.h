@@ -56,6 +56,7 @@ public:
     Q_INVOKABLE void generateNewReceiverAddress();
     Q_INVOKABLE void saveReceiverAddress();
     Q_INVOKABLE void saveExchangeAddress();
+    Q_INVOKABLE void saveOfflineAddress();
 
 private:
     QString getAmountToReceive() const;
@@ -92,6 +93,7 @@ private:
     void onGeneratedExchangeAddress(const beam::wallet::WalletAddress& addr);
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments);
+    void generateOfflineAddress();
 private:
     beam::Amount _amountToReceiveGrothes;
     int          _addressExpires;
@@ -100,6 +102,7 @@ private:
     QString      _offlineToken;
     beam::wallet::WalletAddress _receiverAddress;
     beam::wallet::WalletAddress _receiverAddressForExchange;
+    beam::wallet::WalletAddress _receiverOfflineAddress;
     bool _isShieldedTx = false;
     bool _isPermanentAddress = false;
     WalletModel& _walletModel;

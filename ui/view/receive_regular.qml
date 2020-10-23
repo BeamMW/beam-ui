@@ -376,7 +376,6 @@ ColumnLayout {
                         amount:               viewModel.amountToReceive
                         isValidToken:         receiveView.isValid()
                         visible:              !viewModel.isShieldedTx
-                        defaultAddressType:   true // permanent
                         onTokenCopied: {
                             viewModel.saveExchangeAddress();
                         }
@@ -402,6 +401,7 @@ ColumnLayout {
                         visible:              !viewModel.isShieldedTx && viewModel.offlineToken.length > 0
                         ignoreStoredVouchers: true
                         onTokenCopied: {
+                            viewModel.saveOfflineAddress();
                         }
                         onClosed: receiveView.onClosed()
                     }

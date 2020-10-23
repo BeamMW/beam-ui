@@ -240,6 +240,7 @@ Control {
                     tokenType:          txRolesMap && txRolesMap.isOfflineToken ?
                         //% "Offline"
                         qsTrId("tx-address-offline") :
+                        //% "Online"
                         qsTrId("tx-address-online")
                     rate:               txRolesMap && txRolesMap.rate ? txRolesMap.rate : ""
                     rateUnit:           tableViewModel.rateUnit
