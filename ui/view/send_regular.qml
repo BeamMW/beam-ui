@@ -334,18 +334,6 @@ ColumnLayout {
                                 height: 16
                                 Layout.alignment:   Qt.AlignTop
                                 Layout.topMargin:   10
-                                id:                 maxPrivacyNote
-                                color:              Style.content_secondary
-                                font.italic:        true
-                                font.pixelSize:     14
-                                //% "Transaction is slower, receiver pays fees."
-                                text:               qsTrId("wallet-send-max-privacy-note")
-                                visible:            viewModel.isShieldedTx && !ownAddressUnsupportedMaxPrivacyText.visible
-                            }
-                            SFText {
-                                height: 16
-                                Layout.alignment:   Qt.AlignTop
-                                Layout.topMargin:   10
                                 id:                 needExtractShieldedNote
                                 color:              Style.content_secondary
                                 font.italic:        true
