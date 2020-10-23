@@ -250,13 +250,17 @@ void SendViewModel::setIsShieldedTx(bool value)
         }
         else
         {
-            // TODO: WTF??
-            //if (_walletModel.getAvailable(beam::Asset::s_BeamID) - _sendAmountGrothes - _feeGrothes == 0)
-            //{
-            //    _sendAmountGrothes -= _minFee;
-            //    emit sendAmountChanged();
-            //}
-            //setFeeGrothes(_minFee);
+            // TODO:
+            /*if (_walletModel.getAvailable() - _sendAmountGrothes - _feeGrothes == 0)
+            {
+                if (_sendAmountGrothes >= _minimalFeeGrothes)
+                {
+                    _sendAmountGrothes -= _minimalFeeGrothes;
+                }
+                emit sendAmountChanged();
+            }
+            setFeeGrothes(_minimalFeeGrothes);
+            */
         }
     }
 }
