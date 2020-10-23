@@ -525,6 +525,10 @@ void SendViewModel::sendMoney()
         {
             params.SetParameter(TxParameterID::TransactionType, TxType::PushTransaction);
         }
+        if (isMaxPrivacy())
+        {
+            CopyParameter(TxParameterID::Voucher, _txParameters, params);
+        }
 
         if (isToken())
         {
