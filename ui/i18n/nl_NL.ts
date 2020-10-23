@@ -2725,8 +2725,7 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>kopieer en sluit</translation>
     </message>
     <message id="tx-address-public-offline">
-        <source></source>
-        <oldsource>Public offline</oldsource>
+        <source>Public offline</source>
         <translation type="unfinished">Openbaar offline</translation>
     </message>
     <message id="tx-address-regular-exchange">
@@ -2736,6 +2735,82 @@ Uw versie is: %2. Controleer op updates.</translation>
     <message id="tx-address-regular-wallet">
         <source>Regular (for wallet)</source>
         <translation>Normaal (voor wallet)</translation>
+    </message>
+    <message id="save-address-title">
+        <source>Do you want to name the contact?</source>
+        <translation type="unfinished">Wilt u het contact een naam geven?</translation>
+    </message>
+    <message id="send-title">
+        <source>Send</source>
+        <translation type="unfinished">Verzend</translation>
+    </message>
+    <message id="general-transaction-info">
+        <source>Transaction info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-contact-token-placeholder">
+        <source>Paste recipient token here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-contact-address-placeholder">
+        <source>Paste recipient address here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-invalid-address-or-token">
+        <source>Invalid wallet address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-permanent-note">
+        <source>Permanent address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-one-time-note">
+        <source>One-time use address (expire in 12 hours after succesfull transaction).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-max-privacy-note-address-offline">
+        <source>Offline address. Payments left: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-max-privacy-note-address">
+        <source>Max privacy address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-need-extract-shielded-note">
+        <source>Transaction is slower, fees are higher.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-founds-fail">
+        <source>Insufficient funds: you would need %1 to complete the transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-no-funds">
+        <source>Insufficient funds to complete the transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="amount-input-add-all">
+        <source>add all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="max-pivacy-fee-fail">
+        <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-amount-label">
+        <source>Amount to send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-remaining-label">
+        <source>Remaining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-remaining-beam-label">
+        <source>BEAM Remaining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-address-unknown">
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
