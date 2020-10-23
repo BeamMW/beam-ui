@@ -521,6 +521,16 @@ bool TxObject::isOfflineToken() const
     return *m_hasVouchers;
 }
 
+bool TxObject::isSent() const
+{
+    return isCompleted() && !isIncome();
+}
+
+bool TxObject::isReceived() const
+{
+    return isCompleted() && isIncome();
+}
+
 bool TxObject::isCanceled() const
 {
     return m_tx.m_status == wallet::TxStatus::Canceled;

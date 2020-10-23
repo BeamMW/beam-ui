@@ -31,14 +31,14 @@ Control {
         State {
             name: "sent"
             PropertyChanges { target: sentTab; state: "active" }
-            PropertyChanges { target: txProxyModel; filterRole: "status" }
-            PropertyChanges { target: txProxyModel; filterString: "sent" }
+            PropertyChanges { target: txProxyModel; filterRole: "isSent" }
+            PropertyChanges { target: txProxyModel; filterString: "true" }
         },
         State {
             name: "received"
             PropertyChanges { target: receivedTab; state: "active" }
-            PropertyChanges { target: txProxyModel; filterRole: "status" }
-            PropertyChanges { target: txProxyModel; filterString: "received" }
+            PropertyChanges { target: txProxyModel; filterRole: "isReceived" }
+            PropertyChanges { target: txProxyModel; filterString: "true" }
         }
     ]
 
