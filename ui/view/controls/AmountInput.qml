@@ -256,7 +256,7 @@ ColumnLayout {
                 Connections {
                     target: control
                     onFeeChanged: feeInput.fee = control.fee
-                    onCurrencyChanged: feeInput.fee = control.defaultFee
+                    onCurrencyIdxChanged: feeInput.fee = control.defaultFee
                 }
             }
         }
