@@ -2812,5 +2812,9 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="available-panel-maturing-mp">
+        <source>Max Privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

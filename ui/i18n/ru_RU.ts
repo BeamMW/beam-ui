@@ -2816,5 +2816,9 @@ Your version is: %2. Please, check for updates.</source>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="available-panel-maturing-mp">
+        <source>Max Privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

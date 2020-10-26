@@ -44,10 +44,18 @@ Control {
         parent:       Overlay.overlay
         totals:       control.totals
         progress:     control.progress
-        displayProp: "lockedMaturing"
+        displayProp:  control.totals.lockedMaturingMP == "0" ? "lockedMaturing" : "lockedMaturingMP"
+        displayProp2: control.totals.lockedMaturingMP == "0" ? "lockedMaturingMP" : "lockedMaturing"
 
-        //% "Maturing"
-        title:  qsTrId("available-panel-maturing")
+        title: control.totals.lockedMaturingMP == "0" ?
+            //% "Maturing"
+            qsTrId("available-panel-maturing") :
+            //% "Max Privacy"
+            qsTrId("available-panel-maturing-mp")
+
+        title2: control.totals.lockedMaturingMP == "0" ?
+            qsTrId("available-panel-maturing-mp") :
+            qsTrId("available-panel-maturing")
     }
 
     AmountTip {
@@ -67,7 +75,9 @@ Control {
                   //% "Incoming"
                   qsTrId("available-panel-incoming")
 
-        title2: control.totals.receivingIncoming == "0" ? qsTrId("available-panel-incoming") : qsTrId("available-panel-change")
+        title2: control.totals.receivingIncoming == "0" ?
+            qsTrId("available-panel-incoming") :
+            qsTrId("available-panel-change")
     }
 
     AmountTip {

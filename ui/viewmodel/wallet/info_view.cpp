@@ -137,7 +137,7 @@ void InfoViewModel::updateProgress()
         Amount maturing   = _wallet.getMaturing(asset);
         Amount maturingMP = _wallet.getMatutingMP(asset);
 
-        if (sending  > 0 || receiving > 0 || change > 0 || incoming > 0 || locked > 0 || maturing > 0)
+        if (sending  > 0 || receiving > 0 || change > 0 || incoming > 0 || locked > 0 || maturing > 0 || maturingMP > 0)
         {
             progress.sending           = beamui::AmountToUIString(sending);
             progress.receiving         = beamui::AmountToUIString(receiving);
@@ -145,6 +145,7 @@ void InfoViewModel::updateProgress()
             progress.receivingIncoming = beamui::AmountToUIString(incoming);
             progress.locked            = beamui::AmountToUIString(locked);
             progress.lockedMaturing    = beamui::AmountToUIString(maturing);
+            progress.lockedMaturingMP  = beamui::AmountToUIString(maturingMP);
             progress.icon              = _amgr.getIcon(asset);
             progress.unitName          = _amgr.getUnitName(asset);
 
