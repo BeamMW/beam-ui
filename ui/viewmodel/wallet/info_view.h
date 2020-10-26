@@ -100,7 +100,7 @@ public:
     InfoViewModel();
     ~InfoViewModel() override;
 
-    Q_PROPERTY(int selectedAsset                      READ getSelectedAsset              WRITE  setSelectedAsset     NOTIFY assetChanged)
+    Q_PROPERTY(int selectedAsset                      READ getSelectedAsset              WRITE  setSelectedAsset   NOTIFY assetChanged)
     Q_PROPERTY(QString assetAvailable                 READ assetAvailable                NOTIFY assetChanged)
     Q_PROPERTY(QString assetIcon                      READ assetIcon                     NOTIFY assetChanged)
     Q_PROPERTY(QString assetUnitName                  READ assetUnitName                 NOTIFY assetChanged)

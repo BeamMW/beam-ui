@@ -18,12 +18,6 @@ Control {
     property int    selectedIdx:    -1
     property alias  folded:         viewModel.folded
 
-    /* Binding {
-        target:   viewModel
-        property: "folded"
-        value:    control.folded
-    }
-    */
 
     readonly property int   assetsCount:     viewModel.assets.rowCount()
     readonly property bool  connectVisible:  assetsCount < 3

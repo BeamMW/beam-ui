@@ -9,8 +9,10 @@ Control {
     id: control
     padding: 20
 
-    property var progress
-    property var totals
+    property var  progress
+    property var  totals
+    property real separatorWidth: 1
+    property real fillerWidth: 20
 
     function xUp(ctrl) {
         var x = 0
@@ -79,8 +81,6 @@ Control {
         displayProp:  "sending"
     }
 
-
-             //   text: qsTrId("available-panel-change")
     contentItem: ColumnLayout {
         spacing: 0
 
@@ -103,7 +103,7 @@ Control {
 
             ColumnLayout {
                 spacing: 20
-                Layout.preferredWidth: control.availableWidth / 2 - filler.width
+                Layout.preferredWidth: control.availableWidth / 2 - fillerWidth
                 Layout.alignment: Qt.AlignTop
                 Layout.topMargin: 15
 
@@ -183,7 +183,7 @@ Control {
 
             ColumnLayout {
                 spacing: 20
-                Layout.preferredWidth: control.availableWidth / 2 - separator.width - filler.width
+                Layout.preferredWidth: control.availableWidth / 2 - fillerWidth - separatorWidth
                 Layout.alignment: Qt.AlignTop
                 Layout.topMargin: parseFloat(control.rate) ? 0 : 15
 
@@ -197,8 +197,9 @@ Control {
                     lightFont:        false
                     fontSize:         16
                     copyMenuEnabled:  true
-                    maxPaintedWidth:  control.availableWidth / 2 - separator.width - filler.width
+                    maxPaintedWidth:  control.availableWidth / 2 - fillerWidth - separatorWidth
                     showDrop:         parseFloat(control.totals.sending) > 0 && control.progress.length > 1
+                    width:            150
 
                     //% "Sending"
                     caption:    qsTrId("available-panel-sending")
@@ -223,7 +224,7 @@ Control {
                     fontSize:         16
                     copyMenuEnabled:  true
                     showDrop:         parseFloat(control.totals.receiving) > 0
-                    maxPaintedWidth:  control.availableWidth / 2 - separator.width - filler.width
+                    maxPaintedWidth:  control.availableWidth / 2 - separator.width - fillerWidth - separatorWidth
 
                     //% "Receiving"
                     caption:    qsTrId("available-panel-receiving")
