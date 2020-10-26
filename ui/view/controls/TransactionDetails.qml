@@ -44,7 +44,7 @@ RowLayout {
     signal copyPaymentProof()
     signal showPaymentProof()
 
-    spacing: 30
+    spacing: 0
 
     function isFieldVisible() {
         return root.searchFilter.length == 0 || hideFiltered == false;
@@ -102,7 +102,7 @@ RowLayout {
         Layout.rightMargin: 30
         Layout.topMargin: 30
         Layout.bottomMargin: 30
-        columnSpacing: 44
+        columnSpacing: 40
         rowSpacing: 14
         columns: 2
 
