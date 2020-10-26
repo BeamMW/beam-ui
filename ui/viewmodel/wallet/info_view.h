@@ -91,6 +91,7 @@ public:
     QString unitName;
     QString rate;
     QString rateUnit;
+    beam::Asset::ID assetId;
 };
 
 class InfoViewModel : public QObject

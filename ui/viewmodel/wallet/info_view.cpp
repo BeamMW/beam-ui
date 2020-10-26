@@ -59,8 +59,13 @@ QString InfoViewModel::assetName() const
 
 void InfoViewModel::onAssetInfo(beam::Asset::ID assetId)
 {
-    if (assetId == beam::Asset::ID(_selectedAssetID))
+    bool found = std::find_if(_progress.begin(), _progress.end(), [&assetId](const auto& inp) {
+        return inp.assetId == assetId;
+    }) != _progress.end();
+
+    if (assetId == beam::Asset::ID(_selectedAssetID)  || found)
     {
+        updateProgress();
         emit assetChanged();
     }
 }
@@ -128,6 +133,7 @@ void InfoViewModel::updateProgress()
     for(auto& asset: assets)
     {
         InProgress progress;
+        progress.assetId = asset;
 
         Amount sending    = _wallet.getSending(asset);
         Amount receiving  = _wallet.getReceiving(asset);
