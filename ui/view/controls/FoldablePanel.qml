@@ -159,9 +159,11 @@ Pane {
         }
 
         Control {
+            id:                     placeholder
             Layout.fillWidth:       true
             Layout.topMargin:       folded ? 0 : 20
             Layout.alignment:       Qt.AlignTop
+            contentItem:            control.content
 
             Layout.preferredHeight: folded ? 0 : placeholder.implicitHeight
             opacity:                folded ? 0.0 : 1.0
