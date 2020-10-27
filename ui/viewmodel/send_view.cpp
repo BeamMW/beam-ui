@@ -18,6 +18,7 @@
 
 #include "ui_helpers.h"
 #include "qml_globals.h"
+#include "fee_helpers.h"
 
 #include <algorithm>
 #include <regex>
@@ -36,11 +37,11 @@ namespace
 }
 
 SendViewModel::SendViewModel()
-    : _feeGrothes(QMLGlobals::getMinimalFee(Currency::CurrBeam, false))
+    : _feeGrothes(minimalFee(Currency::CurrBeam, false))
     , _sendAmountGrothes(0)
     , _changeGrothes(0)
     , _walletModel(*AppModel::getInstance().getWallet())
-    , _minimalFeeGrothes(QMLGlobals::getMinimalFee(Currency::CurrBeam, false))
+    , _minimalFeeGrothes(minimalFee(Currency::CurrBeam, false))
     , _shieldedInputsFee(0)
 {
     connect(&_walletModel, &WalletModel::changeCalculated, this, &SendViewModel::onChangeCalculated);
@@ -412,7 +413,7 @@ bool SendViewModel::canSend() const
 {
     return !QMLGlobals::isSwapToken(_receiverTA) && getRreceiverTAValid()
            && _sendAmountGrothes > 0 && isEnough()
-           && QMLGlobals::isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins) 
+           && isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins) 
            && (!isShieldedTx() || !isOffline() || getOfflinePayments() > 0)
            && !(isShieldedTx() && isOwnAddress());
 }
@@ -656,7 +657,7 @@ void SendViewModel::setWalletAddress(const boost::optional<beam::wallet::WalletA
 
 void SendViewModel::resetMinimalFee()
 {
-    _minimalFeeGrothes = QMLGlobals::getMinimalFee(Currency::CurrBeam, _isShieldedTx);
+    _minimalFeeGrothes = minimalFee(Currency::CurrBeam, _isShieldedTx);
     emit minimalFeeGrothesChanged();
     _shieldedInputsFee = 0;
 }

@@ -84,7 +84,7 @@ QString SwapCoinClientWrapper::getCoinLabel() const
 
 Currency SwapCoinClientWrapper::getCurrency() const
 {
-    return QMLGlobals::convertSwapCoinToCurrency(m_swapCoin);
+    return convertSwapCoinToCurrency(m_swapCoin);
 }
 
 beam::wallet::AtomicSwapCoin SwapCoinClientWrapper::getSwapCoin() const

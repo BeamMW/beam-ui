@@ -145,6 +145,8 @@ set(UI_SRC
     viewmodel/settings_view.cpp
     viewmodel/address_book_view.h
     viewmodel/address_book_view.cpp
+    viewmodel/fee_helpers.h
+    viewmodel/fee_helpers.cpp
     viewmodel/ui_helpers.h
     viewmodel/ui_helpers.cpp
     viewmodel/messages_view.h
@@ -164,6 +166,7 @@ set(UI_SRC
     viewmodel/receive_swap_view.h
     viewmodel/receive_swap_view.cpp
     viewmodel/currencies.h
+    viewmodel/currencies.cpp
     viewmodel/send_swap_view.h
     viewmodel/send_swap_view.cpp
     viewmodel/el_seed_validator.h
