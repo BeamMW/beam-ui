@@ -31,9 +31,8 @@ RowLayout {
     property bool hideFiltered: false
     property var searchRegExp: new RegExp("("+root.searchFilter+")", "gi")
     property var searchRegExp2:  new RegExp("("+root.searchFilter+")", "i")
-    property string transactionType
-    property string tokenType
-    property bool isMaxPrivacy
+    property string addressType
+    property bool isShieldedTx
 
     readonly property string amountPrefix: root.isIncome ? "+" : "-"
     readonly property string amountWithLabel: amountPrefix + " " + root.amount + " " + BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
@@ -153,7 +152,7 @@ RowLayout {
             elide: Text.ElideMiddle
             text: getHighlitedText(root.senderIdentity)
             onCopyText: textCopied(root.senderIdentity)
-            visible: root.senderIdentity.length > 0 && (root.receiverIdentity.length > 0 || root.isMaxPrivacy ) && isTextFieldVisible(root.senderIdentity)
+            visible: root.senderIdentity.length > 0 && (root.receiverIdentity.length > 0 || root.isShieldedTx ) && isTextFieldVisible(root.senderIdentity)
         }
 
         SFText {
@@ -197,26 +196,6 @@ RowLayout {
             visible: root.senderIdentity.length > 0 && root.receiverIdentity.length > 0 && isTextFieldVisible(root.receiverIdentity)
         }
 
-        // Transaction type:
-        SFText {
-            Layout.alignment:       Qt.AlignTop
-            font.pixelSize:         14
-            color:                  Style.content_secondary
-            //% "Transaction type"
-            text:                   qsTrId("token-info-transaction-type") + ":"
-            visible:                isTextFieldVisible(root.transactionType)
-        }
-            
-        SFText {
-            Layout.fillWidth:       true
-            wrapMode:               Text.Wrap
-            font.pixelSize:         14
-            color:                  Style.content_main
-            text:                   root.transactionType
-            verticalAlignment:      Text.AlignBottom
-            visible:                isTextFieldVisible(root.transactionType)
-        }
-
         // Address type
         SFText {
             Layout.alignment:       Qt.AlignTop
@@ -224,16 +203,16 @@ RowLayout {
             color:                  Style.content_secondary
             //% "Address type"
             text:                   qsTrId("address-info-type") + ":"
-            visible:                isTextFieldVisible(root.tokenType)
+            visible:                isTextFieldVisible(root.addressType)
         }
             
         SFText {
             Layout.fillWidth:       true
             wrapMode:               Text.Wrap
             font.pixelSize:         14
-            text:                   root.tokenType
+            text:                   root.addressType
             color:                  Style.content_main
-            visible:                isTextFieldVisible(root.tokenType)
+            visible:                isTextFieldVisible(root.addressType)
         }
 
         SFText {

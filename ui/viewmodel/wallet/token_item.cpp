@@ -53,7 +53,7 @@ QString TokenInfoItem::getTransactionType() const
     }
     if (isMaxPrivacy())
     {
-        return qtTrId("tx-max-privacy");
+        return qtTrId("tx-address-max-privacy");
     }
     if (isPublicOffline())
     {

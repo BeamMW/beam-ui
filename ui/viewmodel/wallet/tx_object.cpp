@@ -506,24 +506,19 @@ bool TxObject::isSelfTx() const
     return m_tx.m_selfTx;
 }
 
-bool TxObject::isMaxPrivacy() const
+bool TxObject::isShieldedTx() const
 {
     return m_tx.m_txType == TxType::PushTransaction;
 }
 
-bool TxObject::isOfflineToken() const
+beam::wallet::TxAddressType TxObject::getAddressType()
 {
-    if (!isMaxPrivacy() || isIncome())
-    {
-        return false;
-    }
-    if (!m_hasVouchers)
-    {
-        auto vouchers = m_tx.GetParameter<ShieldedVoucherList>(wallet::TxParameterID::ShieldedVoucherList);
-        m_hasVouchers = (vouchers && !vouchers->empty());
-    }
-    
-    return *m_hasVouchers;
+    restoreAddressType();
+
+    if (m_addressType)
+        return *m_addressType;
+
+    return TxAddressType::Unknown;
 }
 
 bool TxObject::isSent() const
@@ -549,4 +544,20 @@ bool TxObject::isFailed() const
 bool TxObject::isExpired() const
 {
     return isFailed() && m_tx.m_failureReason == TxFailureReason::TransactionExpired;
+}
+
+void TxObject::restoreAddressType()
+{
+    auto storedType = m_tx.GetParameter<TxAddressType>(TxParameterID::AddressType);
+    if (storedType)
+    {
+        m_addressType = storedType;
+        return;
+    }
+
+    if (!m_tx.m_sender || m_addressType)
+        return;
+
+    m_addressType = GetAddressType(m_tx);
+    m_tx.SetParameter(TxParameterID::AddressType, *m_addressType);
 }

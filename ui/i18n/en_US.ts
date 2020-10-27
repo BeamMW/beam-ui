@@ -2255,10 +2255,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Transaction token</source>
         <translation>Transaction token</translation>
     </message>
-    <message id="token-info-transaction-type">
-        <source>Transaction type</source>
-        <translation>Transaction type</translation>
-    </message>
     <message id="token-info-token">
         <source>Token</source>
         <translation>Token</translation>
@@ -2416,56 +2412,25 @@ max privacy</source>
         <translation>received
 max privacy</translation>
     </message>
-    <message id="wallet-txs-status-canceled-max">
-        <source>canceled
-max privacy</source>
-        <translation>canceled
-max privacy</translation>
-    </message>
-    <message id="wallet-txs-status-failed-max">
-        <source>failed
-max privacy</source>
-        <translation>failed
-max privacy</translation>
-    </message>
     <message id="wallet-txs-status-in-progress-max-offline">
         <source>in progress
-max privacy (offline)</source>
-        <translation>in progress
-max privacy (offline)</translation>
+offline</source>
+        <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
         <source>sent
-max privacy (offline)</source>
-        <translation>sent
-max privacy (offline)</translation>
+offline</source>
+        <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
         <source>received
-max privacy (offline)</source>
-        <translation>received
-max privacy (offline)</translation>
-    </message>
-    <message id="wallet-txs-status-canceled-max-offline">
-        <source>canceled
-max privacy (offline)</source>
-        <translation>canceled
-max privacy (offline)</translation>
-    </message>
-    <message id="wallet-txs-status-failed-max-offline">
-        <source>failed
-max privacy (offline)</source>
-        <translation>failed
-max privacy (offline)</translation>
+offline</source>
+        <translation type="unfinished"></translation>
     </message>
     <message id="general-shielded">
         <source>Shielded</source>
         <extracomment>UTXO type Shielded</extracomment>
         <translation>Shielded</translation>
-    </message>
-    <message id="tx-address-online">
-        <source>Online</source>
-        <translation>Online</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
         <source>Connection error: can�t calculate the recommended fee rate. 
@@ -2769,6 +2734,61 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="wallet-send-public-offline-address">
         <source>Public offline address</source>
         <translation type="unfinished">Public offline address</translation>
+    </message>
+    <message id="tx-address-regular">
+        <source>Regular</source>
+        <translation type="unfinished">Regular</translation>
+    </message>
+    <message id="tx-address-max-privacy">
+        <source>Max privacy</source>
+        <translation type="unfinished">Max privacy</translation>
+    </message>
+    <message id="wallet-txs-status-in-progress-public-offline">
+        <source>in progress
+public offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-sent-public-offline">
+        <source>sent
+public offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-received-public-offline">
+        <source>received
+public offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-canceled-max">
+        <source>canceled
+max privacy</source>
+        <translation type="unfinished">canceled
+max privacy</translation>
+    </message>
+    <message id="wallet-txs-canceled-max-offline">
+        <source>canceled
+offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-canceled-public-offline">
+        <source>canceled
+public offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-failed-max">
+        <source>failed
+max privacy</source>
+        <translation type="unfinished">failed
+max privacy</translation>
+    </message>
+    <message id="wallet-txs-failed-max-offline">
+        <source>failed
+offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-failed-public-offline">
+        <source>failed
+public offline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
