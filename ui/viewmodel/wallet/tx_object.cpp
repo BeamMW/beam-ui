@@ -211,7 +211,11 @@ QString TxObject::getAddressTo() const
 {
     if (m_tx.m_sender)
     {
-        return getToken();
+        auto token = getToken();
+        if (token.isEmpty())
+            return toString(m_tx.m_peerId);
+
+        return token;
     }
     return toString(m_tx.m_myId);
 }
