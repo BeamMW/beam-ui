@@ -100,6 +100,7 @@ void PaymentInfoItem::setPaymentProof(const QString& value)
         {
             m_paymentInfo = beam::wallet::storage::PaymentInfo::FromByteBuffer(buffer);
             emit paymentProofChanged();
+            return;
         }
         catch (...)
         {
@@ -109,6 +110,7 @@ void PaymentInfoItem::setPaymentProof(const QString& value)
         {
             m_shieldedPaymentInfo = beam::wallet::storage::ShieldedPaymentInfo::FromByteBuffer(buffer);
             emit paymentProofChanged();
+            return;
         }
         catch (...)
         {
