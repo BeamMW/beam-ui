@@ -168,7 +168,7 @@ void SendSwapViewModel::setSendAmount(QString value)
         recalcAvailable();
 
         if (_sendCurrency == Currency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID))
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
     }
 }
 
@@ -189,7 +189,7 @@ void SendSwapViewModel::setSendFee(unsigned int value)
         if (_sendCurrency == Currency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID) && _sendAmountGrothes)
         {
             _feeChangedByUI = true;
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
         }
     }
 }

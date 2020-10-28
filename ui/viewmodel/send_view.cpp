@@ -23,8 +23,6 @@
 #include <regex>
 #include <QLocale>
 
-// TODO: receiving beam change is invalid
-
 namespace
 {
     void CopyParameter(beam::wallet::TxParameterID paramID, const beam::wallet::TxParameters& input, beam::wallet::TxParameters& dest)
@@ -69,9 +67,8 @@ void SendViewModel::setFeeGrothes(unsigned int value)
 {
     if (value != _fee)
     {
-        _feeChangedByUi = true;
         _fee = value;
-
+        _feeChangedByUi = true;
         emit feeGrothesChanged();
         resetMinimalFee();
 
@@ -82,13 +79,12 @@ void SendViewModel::setFeeGrothes(unsigned int value)
 
         if (_walletModel.hasShielded(_selectedAssetId))
         {
-            // TODO:
-            //_walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmount, _fee, _selectedAssetId, _isShielded);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmount, _fee, _selectedAssetId, _isShielded);
         }
         else
         {
             _walletModel.getAsync()->calcChange(_sendAmount, _fee, _selectedAssetId);
-            _feeChangedByUi = false; // TODO: rename _feeChangedByUi or be consistent
+            _feeChangedByUi = false;
         }
 
         emit canSendChanged();
@@ -142,8 +138,7 @@ void SendViewModel::setSendAmount(QString value)
 
             _sendAmount = amount;
             emit sendAmountChanged();
-            // TODO:
-            //_walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes, _isShieldedTx);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmount, _fee, _selectedAssetId, _isShielded);
         }
         else
         {
@@ -224,34 +219,35 @@ void SendViewModel::setIsShieldedTx(bool value)
         emit isShieldedTxChanged();
         resetMinimalFee();
 
+        beam::Amount avail =  _walletModel.getAvailable(_selectedAssetId);
+        bool isBeam = _selectedAssetId == beam::Asset::s_BeamID;
+
         if (_walletModel.hasShielded(_selectedAssetId) && _sendAmount)
         {
-            // TODO: do we really need this? why not to wait for calc change?
-            // Overflow??? when -?
-            if (_walletModel.getAvailable(_selectedAssetId) - _sendAmount == 0 &&
-                _walletModel.getAvailable(beam::Asset::s_BeamID) - _fee == 0)
+            if (avail < _sendAmount + (isBeam ? _fee : 0))
             {
                 setMaxAvailableAmount();
             }
             else
             {
-                // TODO:
-                // _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _minFee, _isShieldedTx);
+                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmount, _minFee, _selectedAssetId, _isShielded);
             }
         }
         else
         {
-            // TODO:
-            /*if (_walletModel.getAvailable() - _sendAmountGrothes - _feeGrothes == 0)
+            if (isBeam)
             {
-                if (_sendAmountGrothes >= _minimalFeeGrothes)
+                // TODO: ???
+                if (avail - _sendAmount - _fee == 0)
                 {
-                    _sendAmountGrothes -= _minimalFeeGrothes;
+                    if (_sendAmount >= _minFee)
+                    {
+                        _sendAmount -= _minFee;
+                    }
+                    emit sendAmountChanged();
                 }
-                emit sendAmountChanged();
             }
-            setFeeGrothes(_minimalFeeGrothes);
-            */
+            setFeeGrothes(_minFee);
         }
     }
 }
@@ -415,14 +411,17 @@ void SendViewModel::onChangeCalculated(beam::Amount changeAsset, beam::Amount ch
 
 void SendViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes)
 {
-    /* TODO:
-    _shieldedInputsFee = selectionRes.shieldedInputsFee;
+    _shieldedFee = selectionRes.shieldedInputsFee;
 
-    if (selectionRes.selectedSum < selectionRes.requestedSum + selectionRes.requestedFee && _maxAvailable)
+    if (selectionRes.assetID == beam::Asset::s_BeamID)
     {
-        _sendAmountGrothes = selectionRes.selectedSum - selectionRes.selectedFee;
-        emit sendAmountChanged();
-        _maxAvailable = false;
+        if (selectionRes.selectedSumBeam < selectionRes.requestedSum + selectionRes.requestedFee && _maxAvailable)
+        {
+            // TODO: ???
+            _sendAmount = selectionRes.selectedSumBeam - selectionRes.selectedFee;
+            emit sendAmountChanged();
+            _maxAvailable = false;
+        }
     }
 
     _minFee = std::max(_minFee, selectionRes.minimalFee);
@@ -430,12 +429,12 @@ void SendViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::Shiel
 
     if (!_feeChangedByUi)
     {
-        _feeGrothes = selectionRes.selectedFee;
+        _fee = selectionRes.selectedFee;
         emit feeGrothesChanged();
     }
-    _feeChangedByUi = false;
 
-    onChangeCalculated(selectionRes.change);*/
+    _feeChangedByUi = false;
+    onChangeCalculated(selectionRes.changeAsset, selectionRes.changeBeam, selectionRes.assetID);
 }
 
 void SendViewModel::onNeedExtractShieldedCoins(bool val)
@@ -730,9 +729,9 @@ void SendViewModel::setWalletAddress(const boost::optional<beam::wallet::WalletA
 
 void SendViewModel::resetMinimalFee()
 {
+    _shieldedFee = 0;
     _minFee = QMLGlobals::minFeeBeam(_isShielded);
     emit minFeeChanged();
-    _shieldedFee = 0;
 }
 
 QString SendViewModel::getSendUnitName()

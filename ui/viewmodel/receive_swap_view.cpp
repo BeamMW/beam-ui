@@ -238,7 +238,7 @@ void ReceiveSwapViewModel::setAmountSent(QString value)
                 emit sentFeeChanged();
             }
             if (_amountSentGrothes)
-                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes);
+                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes, beam::Asset::s_BeamID);
         }
     }
 }
@@ -261,7 +261,7 @@ void ReceiveSwapViewModel::setSentFee(unsigned int value)
         if (_sentCurrency == Currency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID) && _amountSentGrothes)
         {
             _feeChangedByUI = true;
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes, beam::Asset::s_BeamID);
         }
     }
 }
