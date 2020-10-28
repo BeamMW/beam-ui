@@ -1018,7 +1018,7 @@ Allow to open and proceed to the website? You can always update your choice in S
     <message id="settings-general-require-pwd-to-spend-confirm-pwd-title">
         <source>Don&apos;t ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if checked</extracomment>
-        <translation>Don&apos;t ask password on every Send</translation>
+        <translation>Не спрашивать пароль при каждом отправлении</translation>
     </message>
     <message id="settings-general-require-pwd-to-spend-confirm-pwd-message">
         <source>Password verification is required to change that setting</source>
@@ -1035,7 +1035,7 @@ Allow to open and proceed to the website? You can always update your choice in S
     </message>
     <message id="restore-finish-alert-message-line">
         <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>Не используйте одну и ту же сид фразу на разных устройствах, ваш баланс и список транзакций не будут синхронизированы.</translation>
+        <translation>Не используйте одну и ту же контрольную фразу на разных устройствах, ваш баланс и список транзакций не будут синхронизированы.</translation>
     </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
@@ -1091,7 +1091,7 @@ Allow to open and proceed to the website? You can always update your choice in S
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
-        <translation>Transaction fee rate</translation>
+        <translation>Комиссионная ставка для %1</translation>
     </message>
     <message id="general-fee-fail">
         <source>The minimum fee is %1 %2</source>
@@ -1148,7 +1148,7 @@ Update your settings and try again.</source>
     </message>
     <message id="wallet-receive-expires-6">
         <source>6 hours</source>
-        <translation>24 часа {6 ?}</translation>
+        <translation>6 часа</translation>
     </message>
     <message id="general-rate">
         <source>Exchange rate</source>
@@ -1168,7 +1168,7 @@ Update your settings and try again.</source>
     </message>
     <message id="general-comment-local">
         <source>Comments are local and won&apos;t be shared</source>
-        <translation>Comments are local and won&apos;t be shared</translation>
+        <translation>Комментарии хранятся локально и не передаются другой стороне</translation>
     </message>
     <message id="general-bitcoin">
         <source>Bitcoin</source>
@@ -1189,7 +1189,8 @@ Update your settings and try again.</source>
     <message id="swap-currency-na-message">
         <source>%1 is not connected, 
 please review your settings and try again</source>
-        <translation>You do not have %1 connected.\nUpdate your settings and try again.</translation>
+        <translation>%1 не подключен, 
+проверьте настройки и повторите попытку</translation>
     </message>
     <message id="send-not-enough">
         <source>There is not enough funds to complete the transaction</source>
@@ -1325,7 +1326,7 @@ please review your settings and try again</source>
     </message>
     <message id="start-init-wallet-with-trezor">
         <source>Init wallet with Trezor</source>
-        <translation>Проинициализировать кошелек с Trezor</translation>
+        <translation>Инициализировать кошелек с Trezor</translation>
     </message>
     <message id="start-import-trezor-owner-key">
         <source>Import Trezor Owner Key</source>
@@ -1370,11 +1371,12 @@ please review your settings and try again</source>
     <message id="atomic-no-offers">
         <source>There are no active offers at the moment.
 Please try again later or create an offer yourself.</source>
-        <translation>There are no active offers at the moment.\nPlease try again later or create an offer yourself.</translation>
+        <translation>В данный момент нет активных предложений.
+Пожалуйста, повторите попытку позже или создайте предложение самостоятельно.</translation>
     </message>
     <message id="send-less-than-fee">
         <source>The swap amount must be greater than the transaction fee</source>
-        <translation>The swap amount must be greater than the redemption fee.</translation>
+        <translation>Сумма обмена должна быть больше, чем комиссия транзакции</translation>
     </message>
     <message id="wallet-txs-status-in-progress">
         <source>in progress</source>
@@ -1490,7 +1492,7 @@ Please try again later or create an offer yourself.</source>
     </message>
     <message id="swap-invalid-rate">
         <source>Invalid rate</source>
-        <translation>Недопустимая ставка </translation>
+        <translation>Недопустимая ставка</translation>
     </message>
     <message id="swap-details-tx-id">
         <source>Transaction ID</source>
@@ -1506,7 +1508,7 @@ Please try again later or create an offer yourself.</source>
     </message>
     <message id="swap-details-tx-fee-rate">
         <source>%1 Transaction fee rate</source>
-        <translation>Transaction fee rate</translation>
+        <translation>Комиссионная ставка для %1</translation>
     </message>
     <message id="settings-swap-bitcoin-node">
         <source>Bitcoin node</source>
@@ -1567,7 +1569,7 @@ Please check the swap token and try again.</source>
     </message>
     <message id="settings-swap-new-seed">
         <source>Generate new seed phrase</source>
-        <translation>Создать новую сид-фразу</translation>
+        <translation>Создать новую контрольную фразу</translation>
     </message>
     <message id="settings-swap-show-seed">
         <source>Show seed phrase</source>
@@ -1583,11 +1585,11 @@ Please check the swap token and try again.</source>
     </message>
     <message id="settings-swap-seed-generate">
         <source>generate another seed phrase</source>
-        <translation>создать еще одну сид-фразу</translation>
+        <translation>создать еще одну контрольную фразу</translation>
     </message>
     <message id="swap-seed-new">
         <source>New seed phrase</source>
-        <translation>Новая сид-фраза</translation>
+        <translation>Новая контрольная фраза</translation>
     </message>
     <message id="swap-seed-edit">
         <source>Enter your seed phrase</source>
@@ -1595,15 +1597,15 @@ Please check the swap token and try again.</source>
     </message>
     <message id="bitcoin-show-seed-title">
         <source>Bitcoin seed phrase</source>
-        <translation>Сид-фраза для Bitcoin</translation>
+        <translation>Контрольная фраза для Bitcoin</translation>
     </message>
     <message id="litecoin-show-seed-title">
         <source>Litecoin seed phrase</source>
-        <translation>Сид-фраза для Litecoin</translation>
+        <translation>Контрольная фраза для Litecoin</translation>
     </message>
     <message id="qtum-show-seed-title">
         <source>Qtum seed phrase</source>
-        <translation>Сид-фраза для Qtum</translation>
+        <translation>Контрольная фраза для Qtum</translation>
     </message>
     <message id="bitcoin-show-addresses-title">
         <source>Bitcoin wallet addresses</source>
@@ -1624,7 +1626,7 @@ Please check the swap token and try again.</source>
     <message id="settings-swap-confirm-edit-seed-title">
         <source>Edit seed phrase</source>
         <extracomment>electrum settings, ask password to edit seed phrase, dialog title</extracomment>
-        <translation>Редактировать сид-фразу</translation>
+        <translation>Редактировать контрольную фразу</translation>
     </message>
     <message id="settings-swap-confirm-edit-seed-message">
         <source>Enter your wallet password to edit the phrase</source>
@@ -2388,50 +2390,43 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="tx-address-offline">
         <source>Offline</source>
-        <translation>Отключен от сети</translation>
+        <translation>Оффлайн</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max">
         <source>in progress
 max privacy</source>
         <translation>в процессе
-макс. конфиденциальность</translation>
+макс. приватность</translation>
     </message>
     <message id="wallet-txs-status-sent-max">
         <source>sent
 max privacy</source>
         <translation>отправлено
-макс. конфиденциальность</translation>
+макс. приватность</translation>
     </message>
     <message id="wallet-txs-status-received-max">
         <source>received
 max privacy</source>
         <translation>получено
-макс. конфиденциальность
-</translation>
+макс. приватность</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
         <source>in progress
 offline</source>
-        <oldsource>in progress
-max privacy (offline)</oldsource>
-        <translation type="unfinished">в процессе
-макс. приватность (оффлайн)</translation>
+        <translation>в процессе
+оффлайн</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
         <source>sent
 offline</source>
-        <oldsource>sent
-max privacy (offline)</oldsource>
-        <translation type="unfinished">отправлено
-макс. приватность (оффлайн)</translation>
+        <translation>отправлено
+оффлайн</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
         <source>received
 offline</source>
-        <oldsource>received
-max privacy (offline)</oldsource>
-        <translation type="unfinished">получено
-макс. приватность (оффлайн)</translation>
+        <translation>получено
+оффлайн</translation>
     </message>
     <message id="general-shielded">
         <source>Shielded</source>
@@ -2486,7 +2481,7 @@ when connection is established</source>
         <source>Swap in progress, cannot switch connection type to %1 node, 
 generate new or edit existing seed phrase.</source>
         <translation>Выполняется обмен. Нельзя отключить, переключить тип соединения на 
-узел %1, создать новую или изменить существующую сид-фразу.</translation>
+узел %1, создать новую или изменить существующую контрольную фразу.</translation>
     </message>
     <message id="swap-token-newer-lib">
         <source>This address generated by newer Beam library version(%1)
@@ -2586,19 +2581,19 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="dogecoin-show-seed-phrase">
         <source>Dogecoin seed phrase</source>
-        <translation>Сид-фраза Dogecoin</translation>
+        <translation>Контрольная фраза Dogecoin</translation>
     </message>
     <message id="bitcoin-cash-show-seed-phrase">
         <source>Bitcoin Cash seed phrase</source>
-        <translation>Сид-фраза для Bitcoin Cash</translation>
+        <translation>Контрольная фраза для Bitcoin Cash</translation>
     </message>
     <message id="bitcoin-sv-show-seed-phrase">
         <source>Bitcoin SV seed phrase</source>
-        <translation>Сид-фраза для Bitcoin SV</translation>
+        <translation>Контрольная фраза для Bitcoin SV</translation>
     </message>
     <message id="dash-show-seed-phrase">
         <source>Dash seed phrase</source>
-        <translation>Сид-фраза для Dash</translation>
+        <translation>Контрольная фраза для Dash</translation>
     </message>
     <message id="dogecoin-show-addresses-title">
         <source>Dogecoin wallet addresses</source>
@@ -2674,7 +2669,7 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="public-offline-address-note">
         <source>Publishing this address will allow you to be identified</source>
-        <translation>Публикация этого адреса позволит вам быть опознанным</translation>
+        <translation>Публикация этого адреса позволит опознать вас</translation>
     </message>
     <message id="more-details">
         <source>More details</source>
@@ -2742,63 +2737,70 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="wallet-send-public-offline-address">
         <source>Public offline address</source>
-        <translation type="unfinished">Публичный оффлайн адрес</translation>
+        <translation>Публичный оффлайн адрес</translation>
     </message>
     <message id="tx-address-regular">
         <source>Regular</source>
-        <translation type="unfinished">Обычная</translation>
+        <translation>Обычная</translation>
     </message>
     <message id="tx-address-max-privacy">
         <source>Max privacy</source>
-        <translation type="unfinished">Макс. приватность</translation>
+        <translation>Макс. приватность</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress
 public offline</source>
-        <translation type="unfinished"></translation>
+        <translation>в процессе
+публичный оффлайн</translation>
     </message>
     <message id="wallet-txs-status-sent-public-offline">
         <source>sent
 public offline</source>
-        <translation type="unfinished"></translation>
+        <translation>отправлено
+публичный оффлайн</translation>
     </message>
     <message id="wallet-txs-status-received-public-offline">
         <source>received
 public offline</source>
-        <translation type="unfinished"></translation>
+        <translation>получено
+публичный оффлайн</translation>
     </message>
     <message id="wallet-txs-canceled-max">
         <source>canceled
 max privacy</source>
-        <translation type="unfinished">отменено
+        <translation>отменено
 макс. конфиденциальность
 </translation>
     </message>
     <message id="wallet-txs-canceled-max-offline">
         <source>canceled
 offline</source>
-        <translation type="unfinished"></translation>
+        <translation>отменено
+оффлайн</translation>
     </message>
     <message id="wallet-txs-status-canceled-public-offline">
         <source>canceled
 public offline</source>
-        <translation type="unfinished"></translation>
+        <translation>отменено
+публичный оффлайн</translation>
     </message>
     <message id="wallet-txs-failed-max">
         <source>failed
 max privacy</source>
-        <translation type="unfinished">не удалось
+        <translation>не удалось
 макс. приватность</translation>
     </message>
     <message id="wallet-txs-failed-max-offline">
         <source>failed
 offline</source>
-        <translation type="unfinished"></translation>
+        <translation>ошибка
+оффлайн</translation>
     </message>
     <message id="wallet-txs-status-failed-public-offline">
         <source>failed
 public offline</source>
-        <translation type="unfinished"></translation>
+        <translation>ошибка
+публичный оффлайн</translation>
     </message>
 </context>
 </TS>

@@ -224,7 +224,7 @@
     </message>
     <message id="addresses-tittle">
         <source>Address Book</source>
-        <translation type="unfinished">Address Book</translation>
+        <translation>Adressbok</translation>
     </message>
     <message id="addresses-tab-active">
         <source>My active addresses</source>
@@ -327,11 +327,11 @@
     <message id="settings-apply">
         <source>Apply changes</source>
         <extracomment>settings tab, node section, apply button</extracomment>
-        <translation type="unfinished">Apply changes</translation>
+        <translation>Tillämpa ändringar</translation>
     </message>
     <message id="logo-description">
         <source>Confidential, fast, easy to use</source>
-        <translation type="unfinished">Confidential, fast, easy to use</translation>
+        <translation>Konfidentiell, snabb, lätt att använda</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>
@@ -678,7 +678,7 @@
     </message>
     <message id="loading-view-download-blocks">
         <source>Syncing with blockchain</source>
-        <translation type="unfinished">Syncing with blockchain</translation>
+        <translation>Synkar med blockkedjan</translation>
     </message>
     <message id="loading-view-scaning-utxo">
         <source>Loading wallet data %d/%d</source>
@@ -738,7 +738,7 @@
     </message>
     <message id="tx-failure-no-inputs">
         <source>Not enough inputs to process the transaction</source>
-        <translation type="unfinished">Not enough inputs to process the transaction</translation>
+        <translation>Inte tillräckligt med indata för att bearbeta transaktionen</translation>
     </message>
     <message id="tx-failure-addr-expired">
         <source>Address is expired</source>
@@ -847,19 +847,19 @@
     </message>
     <message id="open-external-open">
         <source>proceed</source>
-        <translation type="unfinished">proceed</translation>
+        <translation>fortsätt</translation>
     </message>
     <message id="open-external-title">
         <source>Open external link</source>
-        <translation type="unfinished">Open external link</translation>
+        <translation>Öppna extern länk</translation>
     </message>
     <message id="open-external-message">
         <source>Beam Wallet app requires a permission to open external links to Beam website in your default browser. This action will expose your IP to the web server.
 
 Allow to open and proceed to the website? You can always update your choice in Settings.</source>
-        <translation type="unfinished">Beam Wallet app requires a permission to open external links to Beam website in your default browser. This action will expose your IP to the web server.
+        <translation>Appen Beam Wallet kräver tillstånd att öppna externa länkar till Beam webbplats i din standardwebbläsare. Denna åtgärd kommer att exponera din IP för webbservern.
 
-Allow to open and proceed to the website? You can always update your choice in Settings.</translation>
+Tillåt att öppna och gå vidare till webbplatsen? Du kan alltid uppdatera ditt val i Inställningar.</translation>
     </message>
     <message id="start-open-change-wallet-message">
         <source>If you&apos;ll restore a wallet all transaction history and addresses will be lost.</source>
@@ -911,13 +911,11 @@ Allow to open and proceed to the website? You can always update your choice in S
         <source>Allow access to %1 and %2
 (to fetch exchanges and transaction data)</source>
         <extracomment>general settings, label for alow open external links</extracomment>
-        <translation type="unfinished">Allow access to %1 and %2
-(to fetch exchanges and transaction data)</translation>
+        <translation>Tillåt åtkomst till %1 och %2(för att hämta exchanges och transaktions-data)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
-        <oldsource>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</oldsource>
-        <translation type="unfinished">1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</translation>
+        <translation>1. Klicka på &quot;Spara plånbokens loggar&quot; och välj destinationskatalog för logg-arkivet</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send email to %1 or open a ticket in %2</source>
@@ -1080,7 +1078,7 @@ Allow to open and proceed to the website? You can always update your choice in S
     </message>
     <message id="loading-view-estimate-minutes">
         <source>min</source>
-        <translation type="unfinished">min</translation>
+        <translation>minut</translation>
     </message>
     <message id="loading-view-estimate-seconds">
         <source>sec</source>
@@ -1088,7 +1086,7 @@ Allow to open and proceed to the website? You can always update your choice in S
     </message>
     <message id="loading-view-estimate-time">
         <source>Estimated time: %s</source>
-        <translation type="unfinished">Estimated time: %s</translation>
+        <translation>Uppskattad tid %s</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
@@ -1226,7 +1224,7 @@ please review your settings and try again</source>
     </message>
     <message id="loading-view-net-problems">
         <source>It may take longer than usual. Please, check your network.</source>
-        <translation type="unfinished">It may take longer than usual. Please, check your network.</translation>
+        <translation>Detta kan ta längre tid än normalt. Vänligen kontrollera ditt nätverk.</translation>
     </message>
     <message id="atomic-swap-title">
         <source>Atomic Swaps</source>
@@ -1423,7 +1421,7 @@ Please try again later or create an offer yourself.</source>
     </message>
     <message id="swap-beta-connection-error">
         <source>Cannot connect to peer. Please check the address in Settings and try again.</source>
-        <translation type="unfinished">Cannot connect to peer. Please check the address in Settings and try again.</translation>
+        <translation>Kan inte ansluta mot peer. Vänligen kontrollera adressen under inställningar och försök igen.</translation>
     </message>
     <message id="swap-alert-confirm-button">
         <source>I understand</source>
@@ -1671,19 +1669,19 @@ Please check the swap token and try again.</source>
     <message id="send-swap-token-hint">
         <source>Paste token or address here</source>
         <oldsource>Paste token here</oldsource>
-        <translation type="unfinished">Paste token or address here</translation>
+        <translation>Klistra in token eller adress här</translation>
     </message>
     <message id="swap-tx-state-initial">
         <source>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</source>
-        <translation type="unfinished">If nobody accepts the offer in %1 at most, the offer will be automatically canceled</translation>
+        <translation>Om ingen accepterar erbjudandet inom %1, kommer erbjudandet att automatiskt avbrytas</translation>
     </message>
     <message id="swap-tx-state-in-progress-normal">
         <source>The swap is expected to complete in %1 at most.</source>
-        <translation type="unfinished">The swap is expected to complete in %1 at most.</translation>
+        <translation>Swapen förväntas att slutföras inom %1 som längst.</translation>
     </message>
     <message id="swap-tx-state-in-progress-refunding">
         <source>Swap failed: the refund of your %2 will start in %1. The refund duration depends on the transaction fee you specified for %2.</source>
-        <translation type="unfinished">Swap failed: the refund of your %2 will start in %1. The refund duration depends on the transaction fee you specified for %2.</translation>
+        <translation>Swap falerade: återbetalningen av dina %2 kommer att börja inom %1 den faktiska återbetalningstidtiden beror på transaktionsavgiften som specificerades för %2.</translation>
     </message>
     <message id="atomic-swap-tx-cancel">
         <source>Cancel atomic swap</source>
@@ -1703,11 +1701,11 @@ Please check the swap token and try again.</source>
     </message>
     <message id="swap-tx-state-refunding">
         <source>Swap failed, the money is being released back to your wallet</source>
-        <translation type="unfinished">Swap failed, the money is being released back to your wallet</translation>
+        <translation>Swap misslyckades, pengarna återbetalas till din plånbok</translation>
     </message>
     <message id="wallet-txs-status-waiting-peer">
         <source>waiting for counterparty</source>
-        <translation type="unfinished">waiting for counterparty</translation>
+        <translation>väntar på motpart</translation>
     </message>
     <message id="send-swap-fee-warning">
         <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
@@ -1724,11 +1722,11 @@ Please check the swap token and try again.</source>
     <message id="wallet-export-tx-history">
         <source>Export transactions history</source>
         <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation type="unfinished">Export transactions history</translation>
+        <translation>Exportera Transaktionshistoriken</translation>
     </message>
     <message id="atomic-swap-my-offers-tab">
         <source>My offers</source>
-        <translation type="unfinished">My offers</translation>
+        <translation>Mina erbjudanden</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -1736,15 +1734,15 @@ Please check the swap token and try again.</source>
     </message>
     <message id="addresses-delete-warning-text">
         <source>There is active transaction that uses this address, therefore the address cannot be deleted.</source>
-        <translation type="unfinished">There is active transaction that uses this address, therefore the address cannot be deleted.</translation>
+        <translation>Det finns aktiva transaktion som använder denna adress, därför kan inte adressen tas bort.</translation>
     </message>
     <message id="general-fee-total">
         <source>%1 Transaction fee (est)</source>
-        <translation type="unfinished">%1 Transaction fee (est)</translation>
+        <translation>%1Transaktionsavgift (ungefärlig)</translation>
     </message>
     <message id="settings-fee-rate-note">
         <source>Remember to validate the expected fee rate for the blockchain (as it varies with time).</source>
-        <translation type="unfinished">Remember to validate the expected fee rate for the blockchain (as it varies with time).</translation>
+        <translation>Kom ihåg att validera den förväntade avgiften för blockkedjan (eftersom det kan variera med tiden).</translation>
     </message>
     <message id="addresses-edit-warning-title">
         <source>Edit address</source>
@@ -1752,19 +1750,19 @@ Please check the swap token and try again.</source>
     </message>
     <message id="addresses-edit-warning-text">
         <source>There is active transaction that uses this address, therefore the address expiration cannot be changed.</source>
-        <translation type="unfinished">There is active transaction that uses this address, therefore the address expiration cannot be changed.</translation>
+        <translation>Det finns aktiva transaktion som använder denna adress, därför kan inte adressens utgångsdatum ändras.</translation>
     </message>
     <message id="settings-swap-seed-segwit-warning">
         <source>Segwit seed phrase is not supported yet.</source>
-        <translation type="unfinished">Segwit seed phrase is not supported yet.</translation>
+        <translation>Segwit seed phrase stöds ännu inte.</translation>
     </message>
     <message id="settings-swap-seed-invali-warning">
         <source>Invalid seed phrase. Please check again and resubmit.</source>
-        <translation type="unfinished">Invalid seed phrase. Please check again and resubmit.</translation>
+        <translation>Ogiltig seed phrase. Vänligen kontrollera igen och skicka igen.</translation>
     </message>
     <message id="swap-details-tx-fee-estimated">
         <source>%1 Estimated transaction fee</source>
-        <translation type="unfinished">%1 Estimated transaction fee</translation>
+        <translation>%1 Beräknad transaktionsavgift</translation>
     </message>
     <message id="wallet-receive-expires-30m">
         <source>30 minutes</source>
@@ -1776,7 +1774,7 @@ Please check the swap token and try again.</source>
     </message>
     <message id="wallet-receive-expires-2">
         <source>2 hours</source>
-        <translation type="unfinished">2 hours</translation>
+        <translation>2 timmar</translation>
     </message>
     <message id="settings-show-owner-key-title">
         <source>Owner key</source>
@@ -1788,9 +1786,7 @@ Please check the swap token and try again.</source>
 know all your funds (UTXO). Make sure that you
 deploy the key at the node you trust completely.</source>
         <extracomment>settings tab, show owner key message</extracomment>
-        <translation type="unfinished">Please notice, that knowing your owner key allows to
-know all your funds (UTXO). Make sure that you
-deploy the key at the node you trust completely.</translation>
+        <translation>Vänligen notera, att se ägarnyckeln möjliggör att se alla dina medel (UTXO). Var säker på att du litar på den nod du använder nyckeln mot till 100%.</translation>
     </message>
     <message id="settings-general-require-pwd-to-show-owner-key">
         <source>Show owner key</source>
@@ -1800,43 +1796,43 @@ deploy the key at the node you trust completely.</translation>
     <message id="settings-general-require-pwd-to-show-owner-key-message">
         <source>Password verification is required to see the owner key</source>
         <extracomment>settings tab, general section, ask password to Show owner key, message</extracomment>
-        <translation type="unfinished">Password verification is required to see the owner key</translation>
+        <translation>Lösenordsverifiering krävs för att se ägarnyckeln</translation>
     </message>
     <message id="swap-tx-state-in-progress-negotiation">
         <source>If the other side will not sign the transaction in %1, the offer will be canceled automatically.</source>
-        <translation type="unfinished">If the other side will not sign the transaction in %1, the offer will be canceled automatically.</translation>
+        <translation>Om den andra sidan inte kommer att signera transaktionen i %1kommer erbjudandet att avbrytas automatiskt.</translation>
     </message>
     <message id="swap-invalid-credentials-error">
         <source>Cannot connect to node. Invalid credentials</source>
-        <translation type="unfinished">Cannot connect to node. Invalid credentials</translation>
+        <translation>Kan inte ansluta till noden. Ogiltiga uppgifter</translation>
     </message>
     <message id="swap-connection-error">
         <source>Cannot connect to node. Please check your network connection.</source>
-        <translation type="unfinished">Cannot connect to node. Please check your network connection.</translation>
+        <translation>Kan inte ansluta till noden. Kontrollera din nätverksanslutning.</translation>
     </message>
     <message id="swap-invalid-genesis-block-error">
         <source>Cannot connect to node. Invalid genesis block</source>
-        <translation type="unfinished">Cannot connect to node. Invalid genesis block</translation>
+        <translation>Kan inte ansluta till nod. Ogiltig genesis block</translation>
     </message>
     <message id="tx-state-initial-sender">
         <source>If the receiver doesn&apos;t get online in %1, the transaction will be canceled</source>
-        <translation type="unfinished">If the receiver doesn&apos;t get online in %1, the transaction will be canceled</translation>
+        <translation>Om mottagaren inte&apos;t kommer online inom %1kommer transaktionen att avbrytas</translation>
     </message>
     <message id="tx-state-initial-receiver">
         <source>If the sender doesn&apos;t get online in %1, the transaction will be canceled</source>
-        <translation type="unfinished">If the sender doesn&apos;t get online in %1, the transaction will be canceled</translation>
+        <translation>Om avsändaren inte&apos;t kommer online inom %1kommer transaktionen att avbrytas</translation>
     </message>
     <message id="tx-state-in-progress-normal">
         <source>The transaction is usually expected to complete in a few minutes.</source>
-        <translation type="unfinished">The transaction is usually expected to complete in a few minutes.</translation>
+        <translation>Transaktionen förväntas vanligtvis slutföras inom några minuter.</translation>
     </message>
     <message id="tx-state-in-progress-long">
         <source>It is taking longer than usual. In case the transaction could not be completed it will be canceled automatically in %1.</source>
-        <translation type="unfinished">It is taking longer than usual. In case the transaction could not be completed it will be canceled automatically in %1.</translation>
+        <translation>Det tar längre tid än vanligt. Om transaktionen inte kunde slutföras kommer den att avbrytas automatiskt om %1.</translation>
     </message>
     <message id="amount-input-add-all">
         <source>add all</source>
-        <translation type="unfinished">add all</translation>
+        <translation>lägg till alla</translation>
     </message>
     <message id="settings-general-no-require-pwd-to-spend-confirm-pwd-title">
         <source>Ask password on every Send</source>
@@ -1857,7 +1853,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="tx-failure-invalid-asset-id">
         <source>No valid asset id/asset owner id</source>
-        <translation type="unfinished">No valid asset id/asset owner id</translation>
+        <translation>Inget giltigt Id för tillgångsinnehavare</translation>
     </message>
     <message id="tx-failure-invalid-asset-amount">
         <source>Cannot issue/consume more than MAX_INT64 asset groth in one transaction</source>
@@ -1889,7 +1885,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="settings-notifications-version">
         <source>Wallet update</source>
-        <translation type="unfinished">Wallet update</translation>
+        <translation>Uppdatering av plånbok</translation>
     </message>
     <message id="settings-notifications-tx-status">
         <source>Transaction status</source>
@@ -1926,7 +1922,7 @@ deploy the key at the node you trust completely.</translation>
     <message id="settings-general-amounts-unit">
         <source>Show amounts in</source>
         <extracomment>settings tab, general section, amounts unit label</extracomment>
-        <translation type="unfinished">Show amounts in</translation>
+        <translation>Visa belopp i</translation>
     </message>
     <message id="notifications-title">
         <source>Notifications</source>
@@ -1938,11 +1934,11 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notifications-empty">
         <source>There are no notifications yet.</source>
-        <translation type="unfinished">There are no notifications yet.</translation>
+        <translation>Det finns inga notifikationer ännu.</translation>
     </message>
     <message id="notifications-read">
         <source>read</source>
-        <translation type="unfinished">read</translation>
+        <translation>läs</translation>
     </message>
     <message id="notifications-update-now">
         <source>update now</source>
@@ -1958,15 +1954,15 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
-        <translation type="unfinished">New version v %1 is available</translation>
+        <translation>Ny version v %1 är tillgänglig</translation>
     </message>
     <message id="notification-address-expired">
         <source>Address expired</source>
-        <translation type="unfinished">Address expired</translation>
+        <translation>Adress har utgått</translation>
     </message>
     <message id="notification-transaction-received">
         <source>Transaction was received</source>
-        <translation type="unfinished">Transaction was received</translation>
+        <translation>Transaktionen togs emot</translation>
     </message>
     <message id="notification-transaction-sent-message">
         <source>You sent &lt;b&gt;%1&lt;/b&gt; BEAM to &lt;b&gt;%2&lt;/b&gt;.</source>
@@ -1978,7 +1974,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-news">
         <source>BEAM in the press</source>
-        <translation type="unfinished">BEAM in the press</translation>
+        <translation>BEAM i pressen</translation>
     </message>
     <message id="notification-address-expired-message">
         <source>&lt;b&gt;%1&lt;/b&gt; address expired.</source>
@@ -1998,20 +1994,20 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-transaction-sent">
         <source>Transaction was sent</source>
-        <translation type="unfinished">Transaction was sent</translation>
+        <translation>Transaktionen har skickats</translation>
     </message>
     <message id="settings-update-wallet">
         <source>update wallet</source>
         <extracomment>settings update wallet button</extracomment>
-        <translation type="unfinished">update wallet</translation>
+        <translation>uppdatera plånbok</translation>
     </message>
     <message id="general-exchange-rate-not-available">
         <source>Exchange rate to %1 is not available</source>
-        <translation type="unfinished">Exchange rate to %1 is not available</translation>
+        <translation>Växelkursen till %1 är inte tillgänglig</translation>
     </message>
     <message id="notification-swap-completed">
         <source>Atomic Swap offer completed</source>
-        <translation type="unfinished">Atomic Swap offer completed</translation>
+        <translation>Atomic Swap erbjudande avslutat</translation>
     </message>
     <message id="notification-swap-beam-completed-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</source>
@@ -2031,11 +2027,11 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-swap-failed">
         <source>Atomic Swap offer failed</source>
-        <translation type="unfinished">Atomic Swap offer failed</translation>
+        <translation>Atomic Swap erbjudande misslyckades</translation>
     </message>
     <message id="notification-swap-expired">
         <source>Atomic Swap offer expired</source>
-        <translation type="unfinished">Atomic Swap offer expired</translation>
+        <translation>Atomic Swap erbjudande löpte ut</translation>
     </message>
     <message id="notification-swap-beam-expired-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
@@ -2051,15 +2047,15 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notifications-activated">
         <source>activated</source>
-        <translation type="unfinished">activated</translation>
+        <translation>aktiverat</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
         <source>Exchange rate to %1 was not available at the time of transaction</source>
-        <translation type="unfinished">Exchange rate to %1 was not available at the time of transaction</translation>
+        <translation>Växelkursen till %1 var inte tillgänglig vid tidpunkten för transaktionen</translation>
     </message>
     <message id="tx-details-second-currency-notification">
         <source>(for the day of transaction)</source>
-        <translation type="unfinished">(for the day of transaction)</translation>
+        <translation>(för dagens transaktioner)</translation>
     </message>
     <message id="tx-details-title">
         <source>General transaction info</source>
@@ -2071,7 +2067,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="tx-details-sender-identity">
         <source>Sender identity</source>
-        <translation type="unfinished">Sender identity</translation>
+        <translation>Avsändarens identitet</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
@@ -2079,7 +2075,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="tx-details-receiver-identity">
         <source>Receiver identity</source>
-        <translation type="unfinished">Receiver identity</translation>
+        <translation>Mottagarens identitet</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
@@ -2103,43 +2099,43 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
-        <translation type="unfinished">Asset has been already registered</translation>
+        <translation>Tillgången har redan registrerats</translation>
     </message>
     <message id="tx-failure-asset-invalid-owner-id">
         <source>Invalid asset owner id</source>
-        <translation type="unfinished">Invalid asset owner id</translation>
+        <translation>Ogiltigt tillgångsägar-id</translation>
     </message>
     <message id="tx-failure-assets-disabled">
         <source>Asset transactions are disabled in the wallet</source>
-        <translation type="unfinished">Asset transactions are disabled in the wallet</translation>
+        <translation>Tillgångstransaktioner är inaktiverade i plånboken</translation>
     </message>
     <message id="tx-failure-no-vouchers">
         <source>No voucher, no address to receive it</source>
-        <translation type="unfinished">No voucher, no address to receive it</translation>
+        <translation>Ingen kupong, ingen adress för att ta emot den</translation>
     </message>
     <message id="tx-failure-assets-fork2">
         <source>Asset transactions are not available until fork2</source>
-        <translation type="unfinished">Asset transactions are not available until fork2</translation>
+        <translation>Tillgångstransaktioner är inte tillgängliga förrän fork2</translation>
     </message>
     <message id="address-newer-lib">
         <source>This address generated by newer Beam library version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <translation type="unfinished">This address generated by newer Beam library version(%1)
-Your version is: %2. Please, check for updates.</translation>
+        <translation>Denna adress genereras av nyare Beam-biblioteksversion (%1)
+Din version är: %2. Sök efter uppdateringar.</translation>
     </message>
     <message id="address-newer-client">
         <source>This address generated by newer Beam client version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <translation type="unfinished">This address generated by newer Beam client version(%1)
-Your version is: %2. Please, check for updates.</translation>
+        <translation>Denna adress genereras av nyare Beam-klientversion (%1)
+Din version är: %2. Sök efter uppdateringar.</translation>
     </message>
     <message id="wallet-txs-status-failing">
         <source>failing</source>
-        <translation type="unfinished">failing</translation>
+        <translation>misslyckades</translation>
     </message>
     <message id="wallet-receive-expires-12">
         <source>12 hours</source>
-        <translation type="unfinished">12 hours</translation>
+        <translation>12 timmar</translation>
     </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
@@ -2147,11 +2143,11 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-connectivity-title">
         <source>Connectivity</source>
-        <translation type="unfinished">Connectivity</translation>
+        <translation>Anslutning</translation>
     </message>
     <message id="settings-troubleshooting-title">
         <source>Troubleshooting</source>
-        <translation type="unfinished">Troubleshooting</translation>
+        <translation>Felsökning</translation>
     </message>
     <message id="settings-get-beam">
         <source>Get Beams from Beam Community Faucet</source>
@@ -2163,7 +2159,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-resources-title">
         <source>Resources</source>
-        <translation type="unfinished">Resources</translation>
+        <translation>Resurser</translation>
     </message>
     <message id="settings-utilities-title">
         <source>Utilities</source>
@@ -2172,7 +2168,7 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="settings-local-node-run-checkbox">
         <source>Integrated node</source>
         <extracomment>settings tab, node section, run node label</extracomment>
-        <translation type="unfinished">Integrated node</translation>
+        <translation>Integrerad nod</translation>
     </message>
     <message id="general-invalid-port">
         <source>Port is mandatory</source>
@@ -2190,31 +2186,31 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-integrated-node-title">
         <source>Beam Integrated Node</source>
-        <translation type="unfinished">Beam Integrated Node</translation>
+        <translation>Beam integrerad nod</translation>
     </message>
     <message id="settings-remote-node-title">
         <source>Beam Remote Node</source>
-        <translation type="unfinished">Beam Remote Node</translation>
+        <translation>Fjärrnod för Beam</translation>
     </message>
     <message id="settings-run-remote-node">
         <source>Remote node</source>
-        <translation type="unfinished">Remote node</translation>
+        <translation>Fjärr-nod</translation>
     </message>
     <message id="open-show-wallet-button-hw">
         <source>Show my wallet with Trezor</source>
-        <translation type="unfinished">Show my wallet with Trezor</translation>
+        <translation>Visa min plånbok med Trezor</translation>
     </message>
     <message id="overtop-beam-supply">
         <source>Amount overtop total Beam supply.</source>
-        <translation type="unfinished">Amount overtop total Beam supply.</translation>
+        <translation>Belopp överstiger totalt Beam-innehav.</translation>
     </message>
     <message id="specific_node">
         <source>Specific node</source>
-        <translation type="unfinished">Specific node</translation>
+        <translation>Specifik nod</translation>
     </message>
     <message id="random_node">
         <source>Random node</source>
-        <translation type="unfinished">Random node</translation>
+        <translation>Slumpmässig nod</translation>
     </message>
     <message id="can-not-generate-new-address-message">
         <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
@@ -2226,11 +2222,11 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-receive-address-for-wallet">
         <source>(for wallet)</source>
-        <translation type="unfinished">(for wallet)</translation>
+        <translation>(för plånbok)</translation>
     </message>
     <message id="wallet-receive-addr-message">
         <source>Min transaction fee to send Max privacy coins is %1.</source>
-        <translation type="unfinished">Min transaction fee to send Max privacy coins is %1.</translation>
+        <translation>Minsta transaktionsavgift för att skicka Max sekretessmynt är %1.</translation>
     </message>
     <message id="wallet-receive-text-online-time">
         <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
@@ -2238,23 +2234,23 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="show-token">
         <source>Show token</source>
-        <translation type="unfinished">Show token</translation>
+        <translation>Visa Tokens</translation>
     </message>
     <message id="wallet-receive-copy-and-close">
         <source>Copy and close</source>
-        <translation type="unfinished">Copy and close</translation>
+        <translation>Kopiera och stäng</translation>
     </message>
     <message id="wallet-receive-address-for-exchange">
         <source>(for exchange or mining pool)</source>
-        <translation type="unfinished">(for exchange or mining pool)</translation>
+        <translation>(för exchange eller miningpool)</translation>
     </message>
     <message id="token-info-title">
         <source>Transaction token</source>
-        <translation type="unfinished">Transaction token</translation>
+        <translation>Transaktionstoken</translation>
     </message>
     <message id="token-info-token">
         <source>Token</source>
-        <translation type="unfinished">Token</translation>
+        <translation>Token</translation>
     </message>
     <message id="token-info-copy-token">
         <source>Copy token</source>
@@ -2262,7 +2258,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="general-transaction-info">
         <source>Transaction info</source>
-        <translation type="unfinished">Transaction info</translation>
+        <translation>Information om transaktion</translation>
     </message>
     <message id="receive-request">
         <source>Requested amount</source>
@@ -2270,11 +2266,11 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="address-one-time">
         <source>One-time use</source>
-        <translation type="unfinished">One-time use</translation>
+        <translation>Engångsanvändning</translation>
     </message>
     <message id="address-permanent">
         <source>Permanent</source>
-        <translation type="unfinished">Permanent</translation>
+        <translation>Permanent</translation>
     </message>
     <message id="tx-regular">
         <source>Regular</source>
@@ -2282,23 +2278,23 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="tx-max-privacy">
         <source>Max privacy</source>
-        <translation type="unfinished">Max privacy</translation>
+        <translation>Max sekretess</translation>
     </message>
     <message id="address-save">
         <source>save</source>
-        <translation type="unfinished">save</translation>
+        <translation>spara</translation>
     </message>
     <message id="save-contact-title">
         <source>Do you want to name the contact?</source>
-        <translation type="unfinished">Do you want to name the contact?</translation>
+        <translation>Vill du namnge kontakten?</translation>
     </message>
     <message id="contact-name-prompt">
         <source>Enter the name to this contact</source>
-        <translation type="unfinished">Enter the name to this contact</translation>
+        <translation>Ange namnet till denna kontakt</translation>
     </message>
     <message id="receive-request-optional">
         <source>(optional)</source>
-        <translation type="unfinished">(optional)</translation>
+        <translation>(frivilligt)</translation>
     </message>
     <message id="save-address-no-name">
         <source>No name</source>
@@ -2306,86 +2302,86 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-receive-online-address">
         <source>Online address</source>
-        <translation type="unfinished">Online address</translation>
+        <translation>Online-adress</translation>
     </message>
     <message id="wallet-receive-offline-address">
         <source>Offline address</source>
-        <translation type="unfinished">Offline address</translation>
+        <translation>Offline adress</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
-        <translation type="unfinished">Peer already exists</translation>
+        <translation>Den andra parten finns redan</translation>
     </message>
     <message id="address-table-cm-receive">
         <source>receive</source>
         <extracomment>Entry in address table context menu to get receive token</extracomment>
-        <translation type="unfinished">receive</translation>
+        <translation>ta emot</translation>
     </message>
     <message id="format-small-amount">
         <source>&lt; 1 %1</source>
-        <translation type="unfinished">&lt; 1 %1</translation>
+        <translation>&lt; 1 %1</translation>
     </message>
     <message id="format-amount">
         <source>%1 %2</source>
-        <translation type="unfinished">%1 %2</translation>
+        <translation>%1 %2</translation>
     </message>
     <message id="send-regular-fee">
         <source>Fee</source>
-        <translation type="unfinished">Fee</translation>
+        <translation>Avgift</translation>
     </message>
     <message id="settings-swap-clear">
         <source>clear</source>
-        <translation type="unfinished">clear</translation>
+        <translation>rensa</translation>
     </message>
     <message id="settings-swap-confirm-clear-seed-title">
         <source>Clear seed phrase</source>
         <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
-        <translation type="unfinished">Clear seed phrase</translation>
+        <translation>Rensa seed phrase</translation>
     </message>
     <message id="settings-swap-confirm-clear-seed-message">
         <source>Enter your wallet password to clear seed phrase</source>
         <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
-        <translation type="unfinished">Enter your wallet password to clear seed phrase</translation>
+        <translation>Mata in ditt plånbokslösenord för att rensa seed phrase</translation>
     </message>
     <message id="settings-swap-connect-to-electrum">
         <source>connect to electrum node</source>
-        <translation type="unfinished">connect to electrum node</translation>
+        <translation>anslut till electrum nod</translation>
     </message>
     <message id="settings-swap-connect-to-node">
         <source>connect to node</source>
-        <translation type="unfinished">connect to node</translation>
+        <translation>anslut till nod</translation>
     </message>
     <message id="settings-swap-disconnect">
         <source>disconnect</source>
-        <translation type="unfinished">disconnect</translation>
+        <translation>koppla från</translation>
     </message>
     <message id="swap-expiration-time">
         <source>Expiration time</source>
-        <translation type="unfinished">Expiration time</translation>
+        <translation>Utgångstid</translation>
     </message>
     <message id="send-confirmation-type-label">
         <source>Address type</source>
-        <translation type="unfinished">Address type</translation>
+        <translation>Adresstyp</translation>
     </message>
     <message id="token-info-dialog-one-time">
         <source>One time</source>
-        <translation type="unfinished">One time</translation>
+        <translation>En gång</translation>
     </message>
     <message id="swap-expired">
         <source>Expired.</source>
-        <translation type="unfinished">Expired.</translation>
+        <translation>Utgånget.</translation>
     </message>
     <message id="from-shielded-pool">
         <source>shielded pool</source>
-        <translation type="unfinished">shielded pool</translation>
+        <translation>skyddad pool</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
         <source>Connect to integrated or own node to enable sending max privacy transactions</source>
-        <translation type="unfinished">Connect to integrated or own node to enable sending max privacy transactions</translation>
+        <translation>Anslut till integrerad eller egen nod för att aktivera sändning av max sekretess-transaktioner</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>
-        <translation type="unfinished">The minimum recommended fee is %1 %2</translation>
+        <translation>Den lägsta rekommenderade avgiften är %1 %2</translation>
     </message>
     <message id="tx-address-offline">
         <source>Offline</source>
@@ -2394,115 +2390,109 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="wallet-txs-status-in-progress-max">
         <source>in progress
 max privacy</source>
-        <translation type="unfinished">in progress
-max privacy</translation>
+        <translation>pågår
+max sekretess</translation>
     </message>
     <message id="wallet-txs-status-sent-max">
         <source>sent
 max privacy</source>
-        <translation type="unfinished">sent
-max privacy</translation>
+        <translation>skickade
+max sekretess</translation>
     </message>
     <message id="wallet-txs-status-received-max">
         <source>received
 max privacy</source>
-        <translation type="unfinished">received
-max privacy</translation>
+        <translation>mottagen
+max sekretess</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
         <source>in progress
 offline</source>
-        <oldsource>in progress
-max privacy (offline)</oldsource>
-        <translation type="unfinished">in progress
-max privacy (offline)</translation>
+        <translation>pågår
+offline</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
         <source>sent
 offline</source>
-        <oldsource>sent
-max privacy (offline)</oldsource>
-        <translation type="unfinished">sent
-max privacy (offline)</translation>
+        <translation>skickades
+offline</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
         <source>received
 offline</source>
-        <oldsource>received
-max privacy (offline)</oldsource>
-        <translation type="unfinished">received
-max privacy (offline)</translation>
+        <translation>mottagen
+offline</translation>
     </message>
     <message id="general-shielded">
         <source>Shielded</source>
         <extracomment>UTXO type Shielded</extracomment>
-        <translation type="unfinished">Shielded</translation>
+        <translation>Skärmade</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
         <source>Connection error: can�t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete. </source>
-        <translation type="unfinished">Connection error: can�t calculate the recommended fee rate. 
-Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete. </translation>
+        <translation>Anslutningsfel: kan inte beräkna den rekommenderade avgiften. 
+Kontrollera på %1 blockkedjan själv. Låga avgifter kan ta 
+mycket längre tid för en transaktion att slutföra. </translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
-        <translation type="unfinished">Key keeper out of slots</translation>
+        <translation>Nyckelhållaren har slut på öppna slots</translation>
     </message>
     <message id="tx-failure-shielded-coin-fee">
         <source>Cannot extract shielded coin, fee is to big.</source>
-        <translation type="unfinished">Cannot extract shielded coin, fee is to big.</translation>
+        <translation>Kan inte extrahera skärmat mynt, avgiften är för stor.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
         <source>Asset transactions are disabled in the receiver wallet</source>
-        <translation type="unfinished">Asset transactions are disabled in the receiver wallet</translation>
+        <translation>Tillgångstransaktioner är inaktiverade i mottagarplånboken</translation>
     </message>
     <message id="tx-failure-assets-disabled-blockchain">
         <source>Asset transactions are disabled in blockchain configuration</source>
-        <translation type="unfinished">Asset transactions are disabled in blockchain configuration</translation>
+        <translation>Tillgångstransaktioner är inaktiverade i blockkedje-konfigurationen</translation>
     </message>
     <message id="tx-failure-identity-required">
         <source>Peer Identity required</source>
-        <translation type="unfinished">Peer Identity required</translation>
+        <translation>Den andra partens identitet krävs</translation>
     </message>
     <message id="tx-failure-cannot-get-vouchers">
         <source>The sender cannot get vouchers for max privacy transaction</source>
-        <translation type="unfinished">The sender cannot get vouchers for max privacy transaction</translation>
+        <translation>Avsändaren kan inte få kuponger för maximal sekretesstransaktion</translation>
     </message>
     <message id="settings-random-node-text">
         <source>Random node address and port will be displayed 
 when connection is established</source>
-        <translation type="unfinished">Random node address and port will be displayed 
-when connection is established</translation>
+        <translation>Slumpmässig nodadress och port kommer att visas 
+när anslutningen är etablerad</translation>
     </message>
     <message id="settings-node-progress-na">
         <source>Swap in progress, cannot disconnect, switch connection type to 
 %1 electrum, generate new or edit existing seed phrase.</source>
-        <translation type="unfinished">Swap in progress, cannot disconnect, switch connection type to 
-%1 electrum, generate new or edit existing seed phrase.</translation>
+        <translation>Swap pågår, kan inte avbryta anslutning, byta anslutningstyp till 
+%1 elektrum, generera ny eller redigera befintlig seed phrase.</translation>
     </message>
     <message id="settings-electrum-progress-na">
         <source>Swap in progress, cannot switch connection type to %1 node, 
 generate new or edit existing seed phrase.</source>
-        <translation type="unfinished">Swap in progress, cannot switch connection type to %1 node, 
-generate new or edit existing seed phrase.</translation>
+        <translation>Swap pågår, kan inte byta anslutningstyp till %1 nod, 
+generera nya eller redigera befintlig seed phrase.</translation>
     </message>
     <message id="swap-token-newer-lib">
         <source>This address generated by newer Beam library version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <translation type="unfinished">This address generated by newer Beam library version(%1)
-Your version is: %2. Please, check for updates.</translation>
+        <translation>Denna adress genereras av nyare Beam-biblioteksversion (%1)
+Din version är: %2. Sök efter uppdateringar.</translation>
     </message>
     <message id="swap-swap-token-newer-client">
         <source>This address generated by newer Beam client version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <translation type="unfinished">This address generated by newer Beam client version(%1)
-Your version is: %2. Please, check for updates.</translation>
+        <translation>Denna adress genereras av nyare Beam-klientversion (%1)
+Din version är: %2. Sök efter uppdateringar.</translation>
     </message>
     <message id="save-address-title">
         <source>Do you want to name the contact?</source>
-        <translation type="unfinished">Do you want to name the contact?</translation>
+        <translation>Vill du namnge kontakten?</translation>
     </message>
     <message id="send-title">
         <source>Send</source>
@@ -2510,11 +2500,11 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="send-contact-token-placeholder">
         <source>Paste recipient token here</source>
-        <translation type="unfinished">Paste recipient token here</translation>
+        <translation>Klistra in mottagarens token här</translation>
     </message>
     <message id="send-contact-address-placeholder">
         <source>Paste recipient address here</source>
-        <translation type="unfinished">Paste recipient address here</translation>
+        <translation>Klistra in mottagaradressen här</translation>
     </message>
     <message id="wallet-send-invalid-address-or-token">
         <source>Invalid wallet address</source>
@@ -2522,23 +2512,23 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-send-permanent-note">
         <source>Permanent address</source>
-        <translation type="unfinished">Permanent address</translation>
+        <translation>Permanent adress</translation>
     </message>
     <message id="wallet-send-one-time-note">
         <source>One-time use address (expire in 12 hours after succesfull transaction).</source>
-        <translation type="unfinished">One-time use address (expire in 12 hours after succesfull transaction).</translation>
+        <translation>Adress för engångsanvändning (löper ut om 12 timmar efter lyckad transaktion).</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address-offline">
         <source>Offline address. Payments left: %1</source>
-        <translation type="unfinished">Offline address. Payments left: %1</translation>
+        <translation>Offline-adress. Möjliga betalningar kvar: %1</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address">
         <source>Max privacy address</source>
-        <translation type="unfinished">Max privacy address</translation>
+        <translation>Max sekretess-adress</translation>
     </message>
     <message id="wallet-send-need-extract-shielded-note">
         <source>Transaction is slower, fees are higher.</source>
-        <translation type="unfinished">Transaction is slower, fees are higher.</translation>
+        <translation>Transaktionen är långsammare, avgifterna är högre.</translation>
     </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
@@ -2546,7 +2536,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="max-pivacy-fee-fail">
         <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <translation type="unfinished">For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</translation>
+        <translation>För bästa integritet har Max sekretessmynt valts. Min transaktionsavgift är %1 %2</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
@@ -2558,7 +2548,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-receive-swap-copy-token-and-close">
         <source>copy token and close</source>
-        <translation type="unfinished">copy token and close</translation>
+        <translation>kopiera token och stäng</translation>
     </message>
     <message id="address-info-title">
         <source>Address details</source>
@@ -2566,19 +2556,19 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="address-expiration">
         <source>Address expiration</source>
-        <translation type="unfinished">Address expiration</translation>
+        <translation>Adressens utgångsdatum</translation>
     </message>
     <message id="address-info-dialog-permanent">
         <source>Permanent</source>
-        <translation type="unfinished">Permanent</translation>
+        <translation>Permanent</translation>
     </message>
     <message id="address-info-type">
         <source>Address type</source>
-        <translation type="unfinished">Address type</translation>
+        <translation>Adresstyp</translation>
     </message>
     <message id="address-info-sbbs-address">
         <source>SBBS Address</source>
-        <translation type="unfinished">SBBS Address</translation>
+        <translation>SBBS adress</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
@@ -2586,147 +2576,147 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="dogecoin-show-seed-phrase">
         <source>Dogecoin seed phrase</source>
-        <translation type="unfinished">Dogecoin seed phrase</translation>
+        <translation>Dogecoin seed phrase</translation>
     </message>
     <message id="bitcoin-cash-show-seed-phrase">
         <source>Bitcoin Cash seed phrase</source>
-        <translation type="unfinished">Bitcoin Cash seed phrase</translation>
+        <translation>Bitcoin Cash seed phrase</translation>
     </message>
     <message id="bitcoin-sv-show-seed-phrase">
         <source>Bitcoin SV seed phrase</source>
-        <translation type="unfinished">Bitcoin SV seed phrase</translation>
+        <translation>Bitcoin SV seed phrase</translation>
     </message>
     <message id="dash-show-seed-phrase">
         <source>Dash seed phrase</source>
-        <translation type="unfinished">Dash seed phrase</translation>
+        <translation>Dash seed phrase</translation>
     </message>
     <message id="dogecoin-show-addresses-title">
         <source>Dogecoin wallet addresses</source>
-        <translation type="unfinished">Dogecoin wallet addresses</translation>
+        <translation>Dogecoin plånboksadresser</translation>
     </message>
     <message id="bitcoin-cash-show-addresses-title">
         <source>Bitcoin Cash wallet addresses</source>
-        <translation type="unfinished">Bitcoin Cash wallet addresses</translation>
+        <translation>Bitcoin Cash plånboksadresser</translation>
     </message>
     <message id="bitcoin-sv-show-addresses-title">
         <source>Bitcoin SV wallet addresses</source>
-        <translation type="unfinished">Bitcoin SV wallet addresses</translation>
+        <translation>Bitcoin SV plånboksadresser</translation>
     </message>
     <message id="dash-show-addresses-title">
         <source>Dash wallet addresses</source>
-        <translation type="unfinished">Dash wallet addresses</translation>
+        <translation>Dash plånboksadresser</translation>
     </message>
     <message id="general-dogecoin">
         <source>Dogecoin</source>
-        <translation type="unfinished">Dogecoin</translation>
+        <translation>Dogecoin</translation>
     </message>
     <message id="general-bitcoin-cash">
         <source>Bitcoin Cash</source>
-        <translation type="unfinished">Bitcoin Cash</translation>
+        <translation>Bitcoin Cash</translation>
     </message>
     <message id="general-bitcoin-sv">
         <source>Bitcoin SV</source>
-        <translation type="unfinished">Bitcoin SV</translation>
+        <translation>Bitcoin SV</translation>
     </message>
     <message id="general-dash">
         <source>DASH</source>
-        <translation type="unfinished">DASH</translation>
+        <translation>DASH</translation>
     </message>
     <message id="settings-swap-dogecoin-node">
         <source>Dogecoin node</source>
-        <translation type="unfinished">Dogecoin node</translation>
+        <translation>Dogecoin nod</translation>
     </message>
     <message id="settings-swap-bitcoin-cash-node">
         <source>Bitcoin Cash node</source>
-        <translation type="unfinished">Bitcoin Cash node</translation>
+        <translation>Bitcoin Cash nod</translation>
     </message>
     <message id="settings-swap-bitcoin-sv-node">
         <source>Bitcoin SV node</source>
-        <translation type="unfinished">Bitcoin SV node</translation>
+        <translation>Bitcoin SV-nod</translation>
     </message>
     <message id="settings-swap-dash-node">
         <source>Dash node</source>
-        <translation type="unfinished">Dash node</translation>
+        <translation>Dash nod</translation>
     </message>
     <message id="settings-swap-dogecoin-electrum">
         <source>Dogecoin electrum</source>
-        <translation type="unfinished">Dogecoin electrum</translation>
+        <translation>Dogecoin electrum</translation>
     </message>
     <message id="settings-swap-bitcoin-cash-electrum">
         <source>Bitcoin Cash electrum</source>
-        <translation type="unfinished">Bitcoin Cash electrum</translation>
+        <translation>Bitcoin Cash electrum</translation>
     </message>
     <message id="settings-swap-bitcoin-sv-electrum">
         <source>Bitcoin SV electrum</source>
-        <translation type="unfinished">Bitcoin SV electrum</translation>
+        <translation>Bitcoin SV electrum</translation>
     </message>
     <message id="settings-swap-dash-electrum">
         <source>Dash electrum</source>
-        <translation type="unfinished">Dash electrum</translation>
+        <translation>Dash electrum</translation>
     </message>
     <message id="settings-show-public-offline-address">
         <source>Show public offline address</source>
-        <translation type="unfinished">Show public offline address</translation>
+        <translation>Visa publik offline-adress</translation>
     </message>
     <message id="public-address-title">
         <source>Public offline address</source>
-        <translation type="unfinished">Public offline address</translation>
+        <translation>Publik offline-adress</translation>
     </message>
     <message id="public-offline-address-note">
         <source>Publishing this address will allow you to be identified</source>
-        <translation type="unfinished">Publishing this address will allow you to be identified</translation>
+        <translation>Genom att publicera denna adress kan du identifieras</translation>
     </message>
     <message id="more-details">
         <source>More details</source>
-        <translation type="unfinished">More details</translation>
+        <translation>Mer detaljer</translation>
     </message>
     <message id="general-address-type">
         <source>Address Type</source>
-        <translation type="unfinished">Address Type</translation>
+        <translation>Adresstyp</translation>
     </message>
     <message id="qr-code">
         <source>QR Code</source>
-        <translation type="unfinished">QR Code</translation>
+        <translation>QR-kod</translation>
     </message>
     <message id="wallet-receive-address-for-wallet-label">
         <source>Online address (for wallet)</source>
-        <translation type="unfinished">Online address (for wallet)</translation>
+        <translation>Online-adress (för plånbok)</translation>
     </message>
     <message id="wallet-receive-address-for-exchange-label">
         <source>Online address (for exchange or mining pool)</source>
-        <translation type="unfinished">Online address (for exchange or mining pool)</translation>
+        <translation>Online-adress (för exchange eller miningpool)</translation>
     </message>
     <message id="wallet-receive-max-privacy-address">
         <source>Max Privacy Address</source>
-        <translation type="unfinished">Max Privacy Address</translation>
+        <translation>Max sekretess-adress</translation>
     </message>
     <message id="wallet-receive-offline-payments">
         <source>Supports %1 payments.</source>
-        <translation type="unfinished">Supports %1 payments.</translation>
+        <translation>Stöder %1 betalningar.</translation>
     </message>
     <message id="address-info-payments">
         <source>Payments</source>
-        <translation type="unfinished">Payments</translation>
+        <translation>Betalningar</translation>
     </message>
     <message id="available-panel-maturing-mp">
         <source>Max privacy</source>
-        <translation type="unfinished">Max privacy</translation>
+        <translation>Max sekretess</translation>
     </message>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(max privacy)</source>
-        <translation type="unfinished">Maturing%1(max privacy)</translation>
+        <translation>Mognar%1(max sekretess)</translation>
     </message>
     <message id="atomic-swap-more-currency">
         <source>Connect more currencies</source>
-        <translation type="unfinished">Connect more currencies</translation>
+        <translation>Anslut fler valutor</translation>
     </message>
     <message id="address-info-copy-close">
         <source>copy and close</source>
-        <translation type="unfinished">copy and close</translation>
+        <translation>kopiera och stäng</translation>
     </message>
     <message id="tx-address-public-offline">
         <source>Public offline</source>
-        <translation type="unfinished">Public offline</translation>
+        <translation>Publik offline</translation>
     </message>
     <message id="tx-address-unknown">
         <source>Unknown</source>
@@ -2734,70 +2724,77 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="tx-address-regular-exchange">
         <source>Regular (for exchange or mining pool)</source>
-        <translation type="unfinished">Regular (for exchange or mining pool)</translation>
+        <translation>Regelbunden (för exchange eller miningpool)</translation>
     </message>
     <message id="tx-address-regular-wallet">
         <source>Regular (for wallet)</source>
-        <translation type="unfinished">Regular (for wallet)</translation>
+        <translation>Regelbunden(för plånbok)</translation>
     </message>
     <message id="wallet-send-public-offline-address">
         <source>Public offline address</source>
-        <translation type="unfinished">Public offline address</translation>
+        <translation>Publik offline-adress</translation>
     </message>
     <message id="tx-address-regular">
         <source>Regular</source>
-        <translation type="unfinished">Reguljär</translation>
+        <translation>Reguljär</translation>
     </message>
     <message id="tx-address-max-privacy">
         <source>Max privacy</source>
-        <translation type="unfinished">Max privacy</translation>
+        <translation>Max sekretess</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress
 public offline</source>
-        <translation type="unfinished"></translation>
+        <translation>pågår
+publik offline</translation>
     </message>
     <message id="wallet-txs-status-sent-public-offline">
         <source>sent
 public offline</source>
-        <translation type="unfinished"></translation>
+        <translation>skickade
+publik offline</translation>
     </message>
     <message id="wallet-txs-status-received-public-offline">
         <source>received
 public offline</source>
-        <translation type="unfinished"></translation>
+        <translation>mottagen
+publik offline</translation>
     </message>
     <message id="wallet-txs-canceled-max">
         <source>canceled
 max privacy</source>
-        <translation type="unfinished">canceled
-max privacy</translation>
+        <translation>avbruten
+max sekretess</translation>
     </message>
     <message id="wallet-txs-canceled-max-offline">
         <source>canceled
 offline</source>
-        <translation type="unfinished"></translation>
+        <translation>avbruten
+offline</translation>
     </message>
     <message id="wallet-txs-status-canceled-public-offline">
         <source>canceled
 public offline</source>
-        <translation type="unfinished"></translation>
+        <translation>avbruten
+publik offline</translation>
     </message>
     <message id="wallet-txs-failed-max">
         <source>failed
 max privacy</source>
-        <translation type="unfinished">failed
-max privacy</translation>
+        <translation>misslyckades
+max sekretess</translation>
     </message>
     <message id="wallet-txs-failed-max-offline">
         <source>failed
 offline</source>
-        <translation type="unfinished"></translation>
+        <translation>misslyckades
+offline</translation>
     </message>
     <message id="wallet-txs-status-failed-public-offline">
         <source>failed
 public offline</source>
-        <translation type="unfinished"></translation>
+        <translation>misslyckades
+publik offline</translation>
     </message>
 </context>
 </TS>
