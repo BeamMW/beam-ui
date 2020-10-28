@@ -132,7 +132,7 @@ RowLayout {
             elide: Text.ElideMiddle
             text: getHighlitedText(root.sendAddress)
             onCopyText: textCopied(root.sendAddress)
-            visible: isTextFieldVisible(root.sendAddress) && root.sendAddress.length
+            visible: isTextFieldVisible(root.sendAddress) && root.sendAddress.length && !(isIncome && isShieldedTx)
         }
 
         SFText {
