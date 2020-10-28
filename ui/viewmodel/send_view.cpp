@@ -478,9 +478,6 @@ void SendViewModel::sendMoney()
 
 void SendViewModel::saveReceiverAddress(const QString& name)
 {
-    if (_receiverWalletAddress.is_initialized())
-        return;
-
     using namespace beam::wallet;
     QString trimmed = name.trimmed();
     WalletAddress address;
