@@ -285,7 +285,7 @@ ColumnLayout {
                                                             //% "Public offline address"
                                                             qsTrId("wallet-send-public-offline-address")
                                                             :""
-                                visible:            viewModel.isShieldedTx && viewModel.isToken && !viewModel.isOwnAddress
+                                visible:            viewModel.isShieldedTx && viewModel.isToken// && !viewModel.isOwnAddress
                             }
 
                             SFText {
