@@ -216,39 +216,19 @@ void ReceiveViewModel::saveOfflineAddress()
 void ReceiveViewModel::updateTransactionToken()
 {
     using namespace beam::wallet;
-    TxParameters params;
-    if (_amountToReceiveGrothes > 0)
-    {
-        params.SetParameter(TxParameterID::Amount, _amountToReceiveGrothes);
-    }
-
-#ifdef BEAM_CLIENT_VERSION
-    params.SetParameter(
-        TxParameterID::ClientVersion,
-        AppModel::getMyName() + " " + std::string(BEAM_CLIENT_VERSION));
-#endif // BEAM_CLIENT_VERSION
-    AppendLibraryVersion(params);
-
     if (!isShieldedTx())
     {
-        params.SetParameter(TxParameterID::PeerID, _receiverAddress.m_walletID);
-        params.SetParameter(TxParameterID::PeerWalletIdentity, _receiverAddress.m_Identity);
-        params.SetParameter(TxParameterID::IsPermanentPeerID, isPermanentAddress());
-        params.SetParameter(TxParameterID::TransactionType, TxType::Simple);
-        params.DeleteParameter(TxParameterID::Voucher);
-        setTranasctionToken(QString::fromStdString(std::to_string(params)));
+        auto address = GenerateRegularAddress(_receiverAddress, _amountToReceiveGrothes, isPermanentAddress(), AppModel::getMyVersion());
+        setTranasctionToken(QString::fromStdString(address));
     }
     else
     {
-        // change tx type
-        params.SetParameter(TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
-        params.SetParameter(TxParameterID::PeerWalletIdentity, _receiverAddress.m_Identity);
-        _walletModel.getAsync()->generateVouchers(_receiverAddress.m_OwnID, 1, [this, params=std::move(params)](ShieldedVoucherList v) mutable
+        _walletModel.getAsync()->generateVouchers(_receiverAddress.m_OwnID, 1, [this](ShieldedVoucherList v) mutable
         {
             if (!v.empty() && isShieldedTx())
             {
-                params.SetParameter(TxParameterID::Voucher, v[0]);
-                setTranasctionToken(QString::fromStdString(std::to_string(params)));
+                auto address = GenerateMaxPrivacyAddress(_receiverAddress, _amountToReceiveGrothes, v[0], AppModel::getMyVersion());
+                setTranasctionToken(QString::fromStdString(address));
             }
         });
     }
@@ -290,6 +270,7 @@ void ReceiveViewModel::setIsPermanentAddress(bool value)
     if (_isPermanentAddress != value)
     {
         _isPermanentAddress = value;
+        
         emit isPermanentAddressChanged();
         updateTransactionToken();
     }
@@ -308,18 +289,8 @@ void ReceiveViewModel::generateOfflineAddress()
         {
             if (!vouchers.empty())
             {
-                TxParameters offlineParameters;
-                offlineParameters.SetParameter(TxParameterID::TransactionType, beam::wallet::TxType::PushTransaction);
-                // add voucher parameter
-                offlineParameters.SetParameter(TxParameterID::ShieldedVoucherList, vouchers);
-                offlineParameters.SetParameter(TxParameterID::PeerID, _receiverOfflineAddress.m_walletID);
-                offlineParameters.SetParameter(TxParameterID::PeerWalletIdentity, _receiverOfflineAddress.m_Identity);
-                offlineParameters.SetParameter(TxParameterID::IsPermanentPeerID, _receiverOfflineAddress.isPermanent());
-                if (_amountToReceiveGrothes > 0)
-                {
-                    offlineParameters.SetParameter(TxParameterID::Amount, _amountToReceiveGrothes);
-                }
-                setOfflineToken(QString::fromStdString(std::to_string(offlineParameters)));
+                auto address = GenerateOfflineAddress(_receiverOfflineAddress, _amountToReceiveGrothes, vouchers);
+                setOfflineToken(QString::fromStdString(address));
             }
             else
             {

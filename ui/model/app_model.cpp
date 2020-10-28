@@ -75,6 +75,16 @@ std::string AppModel::getMyName()
     return "Beam Wallet UI";
 }
 
+const std::string& AppModel::getMyVersion()
+{
+    static std::string appVersion
+#ifdef BEAM_CLIENT_VERSION
+        = AppModel::getMyName() + " " + std::string(BEAM_CLIENT_VERSION)
+#endif
+    ;
+    return appVersion;
+}
+
 AppModel::AppModel(WalletSettings& settings)
     : m_settings{settings}
     , m_walletReactor(beam::io::Reactor::create())
