@@ -545,7 +545,7 @@ Control {
                 }
                 Connections {
                     target: deleteTransactionDialog
-                    function onAccepted() {
+                    onAccepted:  {
                         tableViewModel.deleteTx(txContextMenu.txID);
                     }
                 }
