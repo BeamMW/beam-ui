@@ -95,7 +95,7 @@ Control {
                     if (onTip) {
                         onTip(containsMouse, formTipText(),
                               txIcon.parent.x + txIcon.x + txIcon.width,
-                              txIcon.parent.y + txIcon.y + txIcon.height,
+                              txIcon.parent.y + txIcon.y + txIcon.height
                         )
                     }
                 }

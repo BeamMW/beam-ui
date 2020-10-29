@@ -72,7 +72,7 @@ QString AssetsManager::getIcon(beam::Asset::ID id)
      const auto it = _info.find(id);
      if (it != _info.end())
      {
-         auto idx = static_cast<int>(id) % _icons.size();
+         auto idx = static_cast<int>(id % _icons.size());
          return _icons[idx];
      }
 
@@ -135,7 +135,7 @@ QColor AssetsManager::getColor(beam::Asset::ID id)
     const auto it = _info.find(id);
      if (it != _info.end())
      {
-         auto idx = static_cast<int>(id) % _colors.size();
+         auto idx = static_cast<int>(id % _colors.size());
          return _colors[idx];
      }
 

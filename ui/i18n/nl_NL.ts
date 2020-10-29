@@ -2641,10 +2641,9 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="asset-inout-tip">
-        <source>%1 active transactions
-(%2 incoming, %3 outgoing)</source>
-        <oldsource>%1% active transactions
-(%2% incoming, %3% outgoing)</oldsource>
+        <source>%1 active transactions\n(%2 incoming, %3 outgoing)</source>
+        <oldsource>%1 active transactions
+(%2 incoming, %3 outgoing)</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-search-asset">
@@ -2815,6 +2814,18 @@ Uw versie is: %2. Controleer op updates.</translation>
     <message id="available-panel-maturing-mp">
         <source>Max Privacy</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-public-offline-address">
+        <source>Public offline address</source>
+        <translation type="unfinished">Openbaar offline adres</translation>
+    </message>
+    <message id="tx-address-max-privacy">
+        <source>Max privacy</source>
+        <translation type="unfinished">Maximale privacy</translation>
+    </message>
+    <message id="tx-address-regular">
+        <source>Regular</source>
+        <translation type="unfinished">Normaal</translation>
     </message>
 </context>
 </TS>

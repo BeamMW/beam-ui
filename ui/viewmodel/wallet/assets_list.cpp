@@ -155,9 +155,9 @@ void AssetsList::onTransactionsChanged(beam::wallet::ChangeAction action, const 
     case ChangeAction::Removed:
         for(auto del: modified)
         {
-            std::remove_if(_txlist.begin(), _txlist.end(), [&del](const TxDescription& t) {
+            _txlist.erase(std::remove_if(_txlist.begin(), _txlist.end(), [&del](const TxDescription& t) {
                 return t.m_txId == del.m_txId;
-            });
+            }), _txlist.end());
         }
         break;
 
