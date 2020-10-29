@@ -224,6 +224,9 @@ void SendViewModel::setIsShieldedTx(bool value)
 
         if (_walletModel.hasShielded(_selectedAssetId) && _sendAmount)
         {
+            // TODO: ??
+            ///if (_walletModel.getAvailable(_selectedAssetId) - _sendAmount == 0 &&
+            //    _walletModel.getAvailable(beam::Asset::s_BeamID) - _fee == 0)
             if (avail < _sendAmount + (isBeam ? _fee : 0))
             {
                 setMaxAvailableAmount();
