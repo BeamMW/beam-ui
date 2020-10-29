@@ -32,8 +32,9 @@ namespace
             return offline;
         case TxAddressType::PublicOffline:
             return publicOffline;
+        default:
+            return fallback;
         }
-        return fallback;
     }
 
 QString getStatusTextTranslated(const QString& status, TxAddressType addressType)
