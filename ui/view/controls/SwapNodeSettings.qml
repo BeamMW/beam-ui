@@ -584,11 +584,13 @@ when connection is established"
             font.pixelSize:        14
             wrapMode:              Text.WordWrap
             color:                 control.color
-            lineHeight:            1.1 
-/*% "Swap in progress, cannot disconnect, switch connection type to 
-%1 electrum, generate new or edit existing seed phrase."
-*/
-            text:                  qsTrId("settings-node-progress-na").arg(control.generalTitle)
+            lineHeight:            1.1
+            text:                  isSupportedElectrum ?
+                                       //% "Swap in progress, cannot disconnect or switch connection type."
+                                       qsTrId("settings-node-progress")
+                                       :
+                                       //% "Swap in progress, cannot disconnect."
+                                       qsTrId("settings-doge-node-progress")
         }
 
         SFText {
@@ -603,10 +605,7 @@ when connection is established"
             wrapMode:              Text.WordWrap
             color:                 control.color
             lineHeight:            1.1 
-/*% "Swap in progress, cannot switch connection type to %1 node, 
-generate new or edit existing seed phrase."
-*/
-            text:                  qsTrId("settings-electrum-progress-na").arg(control.generalTitle)
+            text:                  qsTrId("settings-node-progress")
         }
 
         // buttons
