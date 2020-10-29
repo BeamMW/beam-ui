@@ -1,4 +1,4 @@
-// Copyright 2018 The Beam Team
+// Copyright 2020 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,25 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 #pragma once
-#include <QObject>
-#include "ui_helpers.h"
 
-class WalletCurrency: public QObject
-{
-    Q_OBJECT
-public:
-    enum class Currency {
-        CurrStart = -1,
-#define MACRO(name, label, slabel, subunut, feeLabel, dec) Curr##name,
-        CURRENCY_MAP(MACRO)
-#undef MACRO
-        CurrEnd
-    };
-    Q_ENUMS(Currency)
-};
+#include "currencies.h"
 
-typedef WalletCurrency::Currency Currency;
-
-beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(Currency currency);
-Currency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin);
+beam::Amount minFeeBeam(bool isShielded = false);
+bool isFeeOK(beam::Amount fee, Currency currency, bool isShielded);
+bool isSwapFeeOK(beam::Amount amount, beam::Amount fee, Currency currency);
+beam::Amount minimalFee(Currency, bool isShielded);
+QString calcTotalFee(Currency currency, beam::Amount feeRate);

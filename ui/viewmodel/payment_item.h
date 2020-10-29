@@ -41,10 +41,10 @@ public:
 
 signals:
     void paymentProofChanged();
-
 private:
     QString m_paymentProof;
-    beam::wallet::storage::PaymentInfo m_paymentInfo;
+    boost::optional<beam::wallet::storage::PaymentInfo> m_paymentInfo;
+    boost::optional<beam::wallet::storage::ShieldedPaymentInfo> m_shieldedPaymentInfo;
 };
 
 class MyPaymentInfoItem : public PaymentInfoItem

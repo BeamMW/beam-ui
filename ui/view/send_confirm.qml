@@ -25,6 +25,7 @@ ConfirmationDialog {
 
     property alias  addressText:  addressLabel.text
     property alias  typeText:     typeLabel.text
+    property alias  isOnline:     onlineMessageText.visible
     property bool   swapMode:     false
 
     property string amount:    "0"
@@ -282,6 +283,7 @@ ConfirmationDialog {
             }
 
             SFText {
+                id:                     onlineMessageText
                 Layout.columnSpan:      2
                 Layout.topMargin:       0//15
                 Layout.bottomMargin:    15

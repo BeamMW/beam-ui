@@ -18,6 +18,7 @@
 
 #include "ui_helpers.h"
 #include "qml_globals.h"
+#include "fee_helpers.h"
 
 #include <algorithm>
 #include <regex>
@@ -36,9 +37,9 @@ namespace
 }
 
 SendViewModel::SendViewModel()
-    : _fee(QMLGlobals::getMinimalFee(Currency::CurrBeam, false))
+    : _fee(minimalFee(Currency::CurrBeam, false))
     , _walletModel(*AppModel::getInstance().getWallet())
-    , _minFee(QMLGlobals::minFeeBeam(false))
+    , _minFee(minFeeBeam(false))
 {
     connect(&_walletModel,           &WalletModel::changeCalculated,                 this,  &SendViewModel::onChangeCalculated);
     connect(&_walletModel,           SIGNAL(sendMoneyVerified()),                 this,  SIGNAL(sendMoneyVerified()));
@@ -483,9 +484,8 @@ bool SendViewModel::canSend() const
 {
     return !QMLGlobals::isSwapToken(_receiverTA) && getRreceiverTAValid()
            && _sendAmount > 0 && isEnough()
-           && QMLGlobals::isFeeOK(_fee, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins)
-           && (!isShieldedTx() || !isOffline() || getOfflinePayments() > 0)
-           && !(isShieldedTx() && isOwnAddress());
+           && isFeeOK(_fee, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins)
+           && (!isShieldedTx() || !isOffline() || getOfflinePayments() > 0);
 }
 
 bool SendViewModel::isToken() const
@@ -542,6 +542,10 @@ void SendViewModel::sendMoney()
             CopyParameter(TxParameterID::Voucher, _txParameters, params);
             params.SetParameter(TxParameterID::MaxPrivacyMinAnonimitySet, uint8_t(64));
         }
+        if (isShieldedTx())
+        {
+            CopyParameter(TxParameterID::PeerOwnID, _txParameters, params);
+        }
 
         if (isToken())
         {
@@ -554,9 +558,6 @@ void SendViewModel::sendMoney()
 
 void SendViewModel::saveReceiverAddress(const QString& name)
 {
-    if (_receiverWalletAddress.is_initialized())
-        return;
-
     using namespace beam::wallet;
     QString trimmed = name.trimmed();
     WalletAddress address;
@@ -581,10 +582,6 @@ void SendViewModel::extractParameters()
     _txParameters = *txParameters;
 
     resetAddress();
-    _walletModel.getAsync()->getAddress(_receiverTA.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
-    {
-        onGetAddressReturned(addr, (int)c);
-    });
 
     if (auto peerID = _txParameters.GetParameter<WalletID>(TxParameterID::PeerID); peerID)
     {
@@ -592,7 +589,6 @@ void SendViewModel::extractParameters()
         _receiverAddress = QString::fromStdString(std::to_string(*peerID));
         setIsToken(_receiverTA != _receiverAddress);
         emit receiverAddressChanged();
-        
     }
     else
     {
@@ -650,6 +646,20 @@ void SendViewModel::extractParameters()
     {
         std::string s(comment->begin(), comment->end());
         setComment(QString::fromStdString(s));
+    }
+    if (_receiverWalletID != Zero)
+    {
+        _walletModel.getAsync()->getAddress(_receiverWalletID, [this](const boost::optional<WalletAddress>& addr, size_t c)
+        {
+            onGetAddressReturned(addr, (int)c);
+        });
+    }
+    else
+    {
+        _walletModel.getAsync()->getAddress(_receiverTA.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
+        {
+            onGetAddressReturned(addr, (int)c);
+        });
     }
 
     _newTokenMsg.clear();
@@ -733,7 +743,7 @@ void SendViewModel::setWalletAddress(const boost::optional<beam::wallet::WalletA
 void SendViewModel::resetMinimalFee()
 {
     _shieldedFee = 0;
-    _minFee = QMLGlobals::minFeeBeam(_isShielded);
+    _minFee = minFeeBeam(_isShielded);
     emit minFeeChanged();
 }
 

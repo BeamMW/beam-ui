@@ -276,8 +276,11 @@ ColumnLayout {
                                                         viewModel.isMaxPrivacy ?
                                                         //% "Max privacy address"
                                                         qsTrId("wallet-send-max-privacy-note-address")
-                                                        : ""
-                                visible:            viewModel.isShieldedTx && viewModel.isToken && !viewModel.isOwnAddress && !viewModel.isPublicOffline
+                                                        : viewModel.isPublicOffline ? 
+                                                            //% "Public offline address"
+                                                            qsTrId("wallet-send-public-offline-address")
+                                                            :""
+                                visible:            viewModel.isShieldedTx && viewModel.isToken// && !viewModel.isOwnAddress
                             }
 
                             SFText {
@@ -613,6 +616,7 @@ ColumnLayout {
                                                             //% "Unknown"
                                                             : qsTrId("tx-address-unknown")
                                                 : qsTrId("tx-regular"),
+                            isOnline:      !viewModel.isShieldedTx,
                             amount:        viewModel.sendAmount,
                             fee:           viewModel.feeGrothes,
                             flatFee:       true,

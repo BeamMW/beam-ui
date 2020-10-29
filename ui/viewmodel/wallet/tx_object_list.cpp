@@ -16,8 +16,28 @@
 
 namespace
 {
+    using namespace beam::wallet;
 
-QString getStatusTextTranslated(const QString& status, bool isOfflineToken)
+    QString selectShilededStatus(TxAddressType addressType
+        , const QString& maxPrivacy
+        , const QString& offline
+        , const QString& publicOffline
+        , const QString& fallback)
+    {
+        switch (addressType)
+        {
+        case TxAddressType::MaxPrivacy:
+            return maxPrivacy;
+        case TxAddressType::Offline:
+            return offline;
+        case TxAddressType::PublicOffline:
+            return publicOffline;
+        default:
+            return fallback;
+        }
+    }
+
+QString getStatusTextTranslated(const QString& status, TxAddressType addressType)
 {
     if (status == "pending")
     {
@@ -76,53 +96,78 @@ QString getStatusTextTranslated(const QString& status, bool isOfflineToken)
     }
     else if (status == "in progress max privacy")
     {
-        return !isOfflineToken ?
+        return selectShilededStatus(addressType,
         /*% "in progress
 max privacy" */
-         qtTrId("wallet-txs-status-in-progress-max") : 
+            qtTrId("wallet-txs-status-in-progress-max"),
         /*% "in progress
-max privacy (offline)" */
-        qtTrId("wallet-txs-status-in-progress-max-offline");
+offline" */
+            qtTrId("wallet-txs-status-in-progress-max-offline"),
+            /*% "in progress
+public offline" */
+            qtTrId("wallet-txs-status-in-progress-public-offline"),
+            qtTrId("wallet-txs-status-in-progress")
+        );
     }
     else if (status == "sent max privacy")
     {
-        return !isOfflineToken ?
+        return selectShilededStatus(addressType,
         /*% "sent
 max privacy"*/
-        qtTrId("wallet-txs-status-sent-max") :
+            qtTrId("wallet-txs-status-sent-max"),
         /*% "sent
-max privacy (offline)"*/
-        qtTrId("wallet-txs-status-sent-max-offline");
+offline"*/
+            qtTrId("wallet-txs-status-sent-max-offline"),
+            /*% "sent
+public offline" */
+            qtTrId("wallet-txs-status-sent-public-offline"),
+            qtTrId("wallet-txs-status-sent")
+        );
     }
     else if (status == "received max privacy")
     {
-        return !isOfflineToken ?
+        return selectShilededStatus(addressType,
         /*% "received
 max privacy" */
-        qtTrId("wallet-txs-status-received-max") :
+            qtTrId("wallet-txs-status-received-max"),
         /*% "received
-max privacy (offline)" */
-        qtTrId("wallet-txs-status-received-max-offline");
+offline" */
+            qtTrId("wallet-txs-status-received-max-offline"),
+            /*% "received
+public offline" */
+            qtTrId("wallet-txs-status-received-public-offline"),
+            qtTrId("wallet-txs-status-received")
+        );
     }
     else if (status == "canceled max privacy")
     {
-        return !isOfflineToken ?
+        return selectShilededStatus(addressType,
         /*% "canceled
-max privacy"*/
-        qtTrId("wallet-txs-status-canceled-max") :
+max privacy" */
+            qtTrId("wallet-txs-canceled-max"),
         /*% "canceled
-max privacy (offline)"*/
-        qtTrId("wallet-txs-status-canceled-max-offline");
+offline" */
+            qtTrId("wallet-txs-canceled-max-offline"),
+        /*% "canceled
+public offline" */
+            qtTrId("wallet-txs-status-canceled-public-offline"),
+            qtTrId("wallet-txs-status-cancelled")
+        );
     }
     else if (status == "failed max privacy")
     {
-        return !isOfflineToken ?
+        return selectShilededStatus(addressType,
+            /*% "failed
+max privacy" */
+            qtTrId("wallet-txs-failed-max"),
         /*% "failed
-max privacy"*/
-        qtTrId("wallet-txs-status-failed-max") : 
+offline" */
+            qtTrId("wallet-txs-failed-max-offline"),
         /*% "failed
-max privacy (offline)"*/
-        qtTrId("wallet-txs-status-failed-max-offline");
+public offline" */
+            qtTrId("wallet-txs-status-failed-public-offline"),
+            qtTrId("wallet-txs-status-failed")
+        );
     }
     else
     {
@@ -177,12 +222,14 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::Token), "token" },
         { static_cast<int>(Roles::SenderIdentity), "senderIdentity"},
         { static_cast<int>(Roles::ReceiverIdentity), "receiverIdentity"},
-        { static_cast<int>(Roles::IsMaxPrivacy), "isMaxPrivacy"},
+        { static_cast<int>(Roles::IsShieldedTx), "isShieldedTx"},
         { static_cast<int>(Roles::IsOfflineToken), "isOfflineToken"},
         { static_cast<int>(Roles::UnitName), "unitName"},
         { static_cast<int>(Roles::Icon), "icon"},
         { static_cast<int>(Roles::IsSent), "isSent"},
-        { static_cast<int>(Roles::IsReceived), "isReceived"}
+        { static_cast<int>(Roles::IsReceived), "isReceived"},
+        { static_cast<int>(Roles::IsPublicOffline), "isPublicOffline"},
+        { static_cast<int>(Roles::IsMaxPrivacy), "isMaxPrivacy"}
     };
     return roles;
 }
@@ -227,7 +274,7 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return value->getAddressTo();
         case Roles::Status:
         case Roles::StatusSort:
-            return getStatusTextTranslated(value->getStatus(), value->isOfflineToken());
+            return getStatusTextTranslated(value->getStatus(), value->getAddressType());
         case Roles::Fee:
             return value->getFee();
         case Roles::Comment:
@@ -244,10 +291,14 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return value->isDeleteAvailable();
         case Roles::IsSelfTransaction:
             return value->isSelfTx();
-        case Roles::IsMaxPrivacy:
-            return value->isMaxPrivacy();
+        case Roles::IsShieldedTx:
+            return value->isShieldedTx();
         case Roles::IsOfflineToken:
-            return value->isOfflineToken();
+            return value->getAddressType() == beam::wallet::TxAddressType::Offline;
+        case Roles::IsPublicOffline:
+            return value->getAddressType() == beam::wallet::TxAddressType::PublicOffline;
+        case Roles::IsMaxPrivacy:
+            return value->getAddressType() == beam::wallet::TxAddressType::MaxPrivacy;
         case Roles::IsIncome:
             return value->isIncome();
         case Roles::IsInProgress:
@@ -256,13 +307,10 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return value->isPending();
         case Roles::IsCompleted:
             return value->isCompleted();
-
         case Roles::IsSent:
             return value->isSent();
-
         case Roles::IsReceived:
             return value->isReceived();
-
         case Roles::IsCanceled:
             return value->isCanceled();
         case Roles::IsFailed:

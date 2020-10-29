@@ -224,9 +224,9 @@ please review your settings and try again"
                         content: FeeInput {
                             id:                         sendFeeInput
                             currency:                   viewModel.sendCurrency
-                            minFee:                     currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(viewModel.sentCurrency, false)
-                            recommendedFee:             BeamGlobals.getRecommendedFee(viewModel.sendCurrency)
-                            feeLabel:                   BeamGlobals.getFeeRateLabel(viewModel.sendCurrency)
+                            minFee:                     currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
+                            recommendedFee:             BeamGlobals.getRecommendedFee(currency)
+                            feeLabel:                   BeamGlobals.getFeeRateLabel(currency)
                             color:                      Style.accent_outgoing
                             readOnly:                   false
                             fillWidth:                  true
@@ -333,9 +333,9 @@ please review your settings and try again"
                         content: FeeInput {
                             id:                         receiveFeeInput
                             currency:                   viewModel.receiveCurrency
-                            minFee:                     BeamGlobals.getMinimalFee(viewModel.receiveCurrency, false)
-                            recommendedFee:             BeamGlobals.getRecommendedFee(viewModel.receiveCurrency)
-                            feeLabel:                   BeamGlobals.getFeeRateLabel(viewModel.receiveCurrency)
+                            minFee:                     BeamGlobals.getMinimalFee(currency, false)
+                            recommendedFee:             BeamGlobals.getRecommendedFee(currency)
+                            feeLabel:                   BeamGlobals.getFeeRateLabel(currency)
                             color:                      Style.accent_outgoing
                             readOnly:                   false
                             fillWidth:                  true

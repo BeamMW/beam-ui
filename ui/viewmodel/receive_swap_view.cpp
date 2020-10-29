@@ -18,6 +18,7 @@
 #include "wallet/transactions/swaps/utils.h"
 #include <QClipboard>
 #include "qml_globals.h"
+#include "fee_helpers.h"
 
 namespace {
     enum
@@ -69,7 +70,7 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     , _walletModel(*AppModel::getInstance().getWallet())
     , _txParameters(beam::wallet::CreateSwapTransactionParameters())
     , _isBeamSide(false)
-    , _minimalBeamFeeGrothes(QMLGlobals::getMinimalFee(Currency::CurrBeam, false))
+    , _minimalBeamFeeGrothes(minimalFee(Currency::CurrBeam, false))
 {
     connect(&_walletModel, &WalletModel::generatedNewAddress, this, &ReceiveSwapViewModel::onGeneratedNewAddress);
     connect(&_walletModel, &WalletModel::swapParamsLoaded, this, &ReceiveSwapViewModel::onSwapParamsLoaded);
@@ -232,7 +233,7 @@ void ReceiveSwapViewModel::setAmountSent(QString value)
         {
             if (isPreviouseGreaterThanNow)
             {
-                _minimalBeamFeeGrothes = QMLGlobals::getMinimalFee(Currency::CurrBeam, false);
+                _minimalBeamFeeGrothes = minimalFee(Currency::CurrBeam, false);
                 _sentFeeGrothes = _minimalBeamFeeGrothes;
                 emit minimalBeamFeeGrothesChanged();
                 emit sentFeeChanged();
@@ -395,18 +396,18 @@ bool ReceiveSwapViewModel::isEnough() const
     }
 
     // TODO sentFee is fee rate. should be corrected
-    auto swapCoin = QMLGlobals::convertCurrencyToSwapCoin(_sentCurrency);
+    auto swapCoin = convertCurrencyToSwapCoin(_sentCurrency);
     return AppModel::getInstance().getSwapCoinClient(swapCoin)->getAvailable() > total;
 }
 
 bool ReceiveSwapViewModel::isSendFeeOK() const
 {
-    return _amountSentGrothes == 0 || QMLGlobals::isSwapFeeOK(_amountSentGrothes, _sentFeeGrothes, _sentCurrency);
+    return _amountSentGrothes == 0 || isSwapFeeOK(_amountSentGrothes, _sentFeeGrothes, _sentCurrency);
 }
 
 bool ReceiveSwapViewModel::isReceiveFeeOK() const
 {
-    return _amountToReceiveGrothes == 0 || QMLGlobals::isSwapFeeOK(_amountToReceiveGrothes, _receiveFeeGrothes, _receiveCurrency);
+    return _amountToReceiveGrothes == 0 || isSwapFeeOK(_amountToReceiveGrothes, _receiveFeeGrothes, _receiveCurrency);
 }
 
 void ReceiveSwapViewModel::saveAddress()
@@ -469,7 +470,7 @@ void ReceiveSwapViewModel::updateTransactionToken()
     emit isReceiveFeeOKChanged();
 
     _isBeamSide = (_sentCurrency == Currency::CurrBeam);
-    auto swapCoin   = QMLGlobals::convertCurrencyToSwapCoin(
+    auto swapCoin   = convertCurrencyToSwapCoin(
         _isBeamSide ? _receiveCurrency : _sentCurrency);
     auto beamAmount =
         _isBeamSide ? _amountSentGrothes : _amountToReceiveGrothes;

@@ -20,19 +20,14 @@
 #include "wallet/core/common.h"
 #include "ui_helpers.h"
 #include "wallet/client/extensions/offers_board/swap_offer_token.h"
-#include "wallet/transactions/swaps/bridges/bitcoin/bitcoin_side.h"
-#include "wallet/transactions/swaps/bridges/litecoin/litecoin_side.h"
-#include "wallet/transactions/swaps/bridges/qtum/qtum_side.h"
-#include "wallet/transactions/swaps/bridges/bitcoin_cash/bitcoin_cash_side.h"
-#include "wallet/transactions/swaps/bridges/bitcoin_sv/bitcoin_sv_side.h"
-#include "wallet/transactions/swaps/bridges/dash/dash_side.h"
-#include "wallet/transactions/swaps/bridges/dogecoin/dogecoin_side.h"
 #include "wallet/transactions/swaps/utils.h"
 #include "utility/string_helpers.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/multiprecision/cpp_dec_float.hpp>
 #include "3rdparty/libbitcoin/include/bitcoin/bitcoin/formats/base_10.hpp"
+
+#include "fee_helpers.h"
 
 using boost::multiprecision::cpp_dec_float_50;
 
@@ -182,28 +177,6 @@ int QMLGlobals::maxCommentLength()
     return 1024;
 }
 
-bool QMLGlobals::isFeeOK(uint32_t fee, Currency currency, bool isShielded)
-{
-    switch (currency)
-    {
-    case Currency::CurrBeam: return fee >= minFeeBeam(isShielded);
-    case Currency::CurrBitcoin:  return true;
-    case Currency::CurrLitecoin:  return true;
-    case Currency::CurrQtum: return true;
-    case Currency::CurrBitcoinCash: return true;
-    case Currency::CurrBitcoinSV: return true;
-    case Currency::CurrDash: return true;
-    case Currency::CurrDogecoin: return true;
-    default:
-        return false;
-    }
-}
-
-uint32_t QMLGlobals::minFeeBeam(bool isShielded)
-{
-    return isShielded ? beam::wallet::kShieldedTxMinFeeInGroth : beam::wallet::kMinFeeInGroth;
-}
-
 bool QMLGlobals::needPasswordToSpend()
 {
     return AppModel::getInstance().getSettings().isPasswordReqiredToSpendMoney();
@@ -213,100 +186,6 @@ bool QMLGlobals::isPasswordValid(const QString& value)
 {
     beam::SecString secretPass = value.toStdString();
     return AppModel::getInstance().checkWalletPassword(secretPass);
-}
-
-int QMLGlobals::getMinFeeOrRate(Currency currency)
-{
-    switch (currency) {
-        case Currency::CurrBeam: return minFeeBeam();
-        default: return 0;
-    }
-}
-
-beam::wallet::AtomicSwapCoin QMLGlobals::convertCurrencyToSwapCoin(Currency currency)
-{
-    switch (currency)
-    {
-        case Currency::CurrBitcoin:
-            return beam::wallet::AtomicSwapCoin::Bitcoin;
-        case Currency::CurrLitecoin:
-            return beam::wallet::AtomicSwapCoin::Litecoin;
-        case Currency::CurrQtum:
-            return beam::wallet::AtomicSwapCoin::Qtum;
-        case Currency::CurrBitcoinCash:
-            return beam::wallet::AtomicSwapCoin::Bitcoin_Cash;
-        case Currency::CurrBitcoinSV:
-            return beam::wallet::AtomicSwapCoin::Bitcoin_SV;
-        case Currency::CurrDash:
-            return beam::wallet::AtomicSwapCoin::Dash;
-        case Currency::CurrDogecoin:
-            return beam::wallet::AtomicSwapCoin::Dogecoin;
-        default:
-            return beam::wallet::AtomicSwapCoin::Unknown;
-    }
-}
-
-Currency QMLGlobals::convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin)
-{
-    switch (swapCoin)
-    {
-        case beam::wallet::AtomicSwapCoin::Bitcoin:
-            return Currency::CurrBitcoin;
-        case beam::wallet::AtomicSwapCoin::Litecoin:
-            return Currency::CurrLitecoin;
-        case beam::wallet::AtomicSwapCoin::Qtum:
-            return Currency::CurrQtum;
-        case beam::wallet::AtomicSwapCoin::Bitcoin_Cash:
-            return Currency::CurrBitcoinCash;
-        case beam::wallet::AtomicSwapCoin::Bitcoin_SV:
-            return Currency::CurrBitcoinSV;
-        case beam::wallet::AtomicSwapCoin::Dash:
-            return Currency::CurrDash;
-        case beam::wallet::AtomicSwapCoin::Dogecoin:
-            return Currency::CurrDogecoin;
-        default:
-            return Currency::CurrEnd;
-    }
-}
-
-QString QMLGlobals::calcTotalFee(Currency currency, unsigned int feeRate)
-{
-    switch (currency) {
-        case Currency::CurrBeam: {
-            return QString::fromStdString(std::to_string(feeRate));
-        }
-        case Currency::CurrBitcoin: {
-            auto total = beam::wallet::BitcoinSide::CalcTotalFee(feeRate);
-            return QString::fromStdString(std::to_string(total)) + " sat";
-        }
-        case Currency::CurrLitecoin: {
-            auto total = beam::wallet::LitecoinSide::CalcTotalFee(feeRate);
-            return QString::fromStdString(std::to_string(total)) + " ph";
-        }
-        case Currency::CurrQtum: {
-            auto total = beam::wallet::QtumSide::CalcTotalFee(feeRate);
-            return QString::fromStdString(std::to_string(total)) + " qsat";
-        }
-        case Currency::CurrBitcoinCash: {
-            auto total = beam::wallet::BitcoinCashSide::CalcTotalFee(feeRate);
-            return QString::fromStdString(std::to_string(total)) + " sat";
-        }
-        case Currency::CurrBitcoinSV: {
-            auto total = beam::wallet::BitcoinSVSide::CalcTotalFee(feeRate);
-            return QString::fromStdString(std::to_string(total)) + " sat";
-        }
-        case Currency::CurrDash: {
-            auto total = beam::wallet::DashSide::CalcTotalFee(feeRate);
-            return QString::fromStdString(std::to_string(total)) + " duff";
-        }
-        case Currency::CurrDogecoin: {
-            auto total = beam::wallet::DogecoinSide::CalcTotalFee(feeRate);
-            return QString::fromStdString(std::to_string(total)) + " sat";
-        }
-        default: {
-            return QString();
-        }
-    }
 }
 
 QString QMLGlobals::calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyUnitName)
@@ -466,49 +345,32 @@ QString QMLGlobals::getCurrencySubunitFromLabel(const QString& currLabel)
     return beamui::getCurrencySubunitFromLabel(currLabel);
 }
 
-unsigned int QMLGlobals::getMinimalFee(Currency currency, bool isShielded)
+QString QMLGlobals::getMinimalFee(Currency currency, bool isShielded)
 {
-    if (Currency::CurrBeam == currency)
-    {
-        return minFeeBeam(isShielded);
-    }
-
-    auto swapCoin = convertCurrencyToSwapCoin(currency);
-    return AppModel::getInstance().getSwapCoinClient(swapCoin)->GetSettings().GetMinFeeRate();
+    return QString::fromStdString(std::to_string(minimalFee(currency, isShielded)));
 }
 
-unsigned int QMLGlobals::getRecommendedFee(Currency currency)
+QString QMLGlobals::getRecommendedFee(Currency currency)
 {
     if (Currency::CurrBeam == currency)
     {
         // TODO roman.strilets need to investigate
-        return 0;
+        return QString::fromStdString(std::to_string(0));
     }
 
     auto swapCoin = convertCurrencyToSwapCoin(currency);
-    return AppModel::getInstance().getSwapCoinClient(swapCoin)->getEstimatedFeeRate();
+    return QString::fromStdString(std::to_string(AppModel::getInstance().getSwapCoinClient(swapCoin)->getEstimatedFeeRate()));
 }
 
-unsigned int QMLGlobals::getDefaultFee(Currency currency)
+QString QMLGlobals::getDefaultFee(Currency currency)
 {
     if (Currency::CurrBeam == currency)
     {
-        return minFeeBeam();
+        return QString::fromStdString(std::to_string(minFeeBeam()));
     }
 
     auto swapCoin = convertCurrencyToSwapCoin(currency);
-    return AppModel::getInstance().getSwapCoinClient(swapCoin)->getEstimatedFeeRate();
-}
-
-bool QMLGlobals::isSwapFeeOK(unsigned int amount, unsigned int fee, Currency currency)
-{
-    if (Currency::CurrBeam == currency)
-    {
-        return amount > fee && fee >= QMLGlobals::minFeeBeam();
-    }
-
-    // TODO roman.strilets maybe need to process exception?
-    return beam::wallet::IsSwapAmountValid(convertCurrencyToSwapCoin(currency), amount, fee);
+    return QString::fromStdString(std::to_string(AppModel::getInstance().getSwapCoinClient(swapCoin)->getEstimatedFeeRate()));
 }
 
 QString QMLGlobals::divideWithPrecision8(const QString& dividend, const QString& divider)

@@ -59,12 +59,14 @@ public:
         Token,
         SenderIdentity,
         ReceiverIdentity, 
-        IsMaxPrivacy,
+        IsShieldedTx,
         IsOfflineToken,
         UnitName,
         Icon,
         IsSent,
-        IsReceived
+        IsReceived,
+        IsPublicOffline,
+        IsMaxPrivacy
     };
 
     Q_ENUM(Roles)

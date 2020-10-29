@@ -236,18 +236,32 @@ Control {
                     rawTxID:            txRolesMap && txRolesMap.rawTxID ? txRolesMap.rawTxID : null
                     stateDetails:       txRolesMap && txRolesMap.stateDetails ? txRolesMap.stateDetails : ""
                     amount:             txRolesMap && txRolesMap.amountGeneral ? txRolesMap.amountGeneral : ""
-                    transactionType:    txRolesMap && txRolesMap.isMaxPrivacy ? qsTrId("tx-max-privacy") : qsTrId("tx-regular")
-                    tokenType:          txRolesMap && txRolesMap.isOfflineToken ?
-                        //% "Offline"
-                        qsTrId("tx-address-offline") :
-                        //% "Online"
-                        qsTrId("tx-address-online")
+                    addressType:        {
+                        if (txRolesMap) {
+                            if (txRolesMap.isMaxPrivacy) {
+                                //% "Max privacy"
+                                return qsTrId("tx-address-max-privacy")
+                            }
+                            if (txRolesMap.isOfflineToken) {
+                                //% "Offline"
+                                return qsTrId("tx-address-offline") 
+                            }
+                            if (txRolesMap.isPublicOffline) {
+                                //% "Public offline"
+                                return qsTrId("tx-address-public-offline") 
+                            }
+                            //% "Regular"
+                            return qsTrId("tx-address-regular");
+                        }
+                        return ""
+                    }
+
                     rate:               txRolesMap && txRolesMap.rate ? txRolesMap.rate : ""
                     rateUnit:           tableViewModel.rateUnit
                     searchFilter:       searchBox.text
                     hideFiltered:       rowItem.hideFiltered
                     token:              txRolesMap ? txRolesMap.token : ""
-                    isMaxPrivacy:       txRolesMap && txRolesMap.isMaxPrivacy ? true : false
+                    isShieldedTx:       txRolesMap && txRolesMap.isShieldedTx ? true : false
                     unitName:           txRolesMap ? txRolesMap.unitName: ""
 
                     onSearchFilterChanged: function(text) {
@@ -416,9 +430,9 @@ Control {
                                             return "qrc:/assets/icon-sending-own.svg";
                                         }
                                         return model.isIncome
-                                            ? !model.isMaxPrivacy ? "qrc:/assets/icon-receiving.svg" :
+                                            ? !model.isShieldedTx ? "qrc:/assets/icon-receiving.svg" :
                                                     model.isOfflineToken ? "qrc:/assets/icon-receiving-max-offline.svg" : "qrc:/assets/icon-receiving-max-online.svg"
-                                            : !model.isMaxPrivacy ? "qrc:/assets/icon-sending.svg" :
+                                            : !model.isShieldedTx ? "qrc:/assets/icon-sending.svg" :
                                                     model.isOfflineToken ? "qrc:/assets/icon-sending-max-offline.svg" : "qrc:/assets/icon-sending-max-online.svg";
                                     }
                                     else if (model.isCompleted) {
@@ -426,9 +440,9 @@ Control {
                                             return "qrc:/assets/icon-sent-own.svg";
                                         }
                                         return model.isIncome
-                                            ? !model.isMaxPrivacy ? "qrc:/assets/icon-received.svg" :
+                                            ? !model.isShieldedTx ? "qrc:/assets/icon-received.svg" :
                                                     model.isOfflineToken ? "qrc:/assets/icon-received-max-offline.svg" : "qrc:/assets/icon-received-max-online.svg"
-                                            : !model.isMaxPrivacy ? "qrc:/assets/icon-sent.svg" :
+                                            : !model.isShieldedTx ? "qrc:/assets/icon-sent.svg" :
                                                     model.isOfflineToken ? "qrc:/assets/icon-sent-max-offline.svg" : "qrc:/assets/icon-sent-max-online.svg";
                                     }
                                     else if (model.isExpired) {
@@ -437,13 +451,13 @@ Control {
                                     else if (model.isFailed) {
                                         return model.isIncome
                                             ? "qrc:/assets/icon-receive-failed.svg"
-                                            : !model.isMaxPrivacy ? "qrc:/assets/icon-send-failed.svg" :
+                                            : !model.isShieldedTx ? "qrc:/assets/icon-send-failed.svg" :
                                                     model.isOfflineToken ? "qrc:/assets/icon-failed-max-offline.svg" : "qrc:/assets/icon-failed-max-online.svg";
                                     }
                                     else {
                                         return model.isIncome
                                             ? "qrc:/assets/icon-receive-canceled.svg"
-                                            : !model.isMaxPrivacy ? "qrc:/assets/icon-send-canceled.svg" :
+                                            : !model.isShieldedTx ? "qrc:/assets/icon-send-canceled.svg" :
                                                     model.isOfflineToken ? "qrc:/assets/icon-canceled-max-offline.svg" : "qrc:/assets/icon-canceled-max-online.svg";
                                     }
                                 }
@@ -545,7 +559,7 @@ Control {
                 }
                 Connections {
                     target: deleteTransactionDialog
-                    function onAccepted() {
+                    onAccepted:  {
                         tableViewModel.deleteTx(txContextMenu.txID);
                     }
                 }

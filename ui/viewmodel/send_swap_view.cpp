@@ -17,6 +17,7 @@
 #include "wallet/transactions/swaps/common.h"
 #include "wallet/transactions/swaps/swap_transaction.h"
 #include "ui_helpers.h"
+#include "fee_helpers.h"
 
 #include <algorithm>
 #include <regex>
@@ -31,7 +32,7 @@ SendSwapViewModel::SendSwapViewModel()
     , _changeGrothes(0)
     , _walletModel(*AppModel::getInstance().getWallet())
     , _isBeamSide(true)
-    , _minimalBeamFeeGrothes(QMLGlobals::getMinimalFee(Currency::CurrBeam, false))
+    , _minimalBeamFeeGrothes(minimalFee(Currency::CurrBeam, false))
 {
     connect(&_walletModel, &WalletModel::changeCalculated,  this,  &SendSwapViewModel::onChangeCalculated);
     connect(&_walletModel, &WalletModel::walletStatusChanged, this, &SendSwapViewModel::recalcAvailable);
@@ -68,13 +69,13 @@ void SendSwapViewModel::fillParameters(const beam::wallet::TxParameters& paramet
             // Do not set fee, it is set automatically based on the currency param
             setSendCurrency(Currency::CurrBeam);
             setSendAmount(beamui::AmountToUIString(*beamAmount));
-            setReceiveCurrency(QMLGlobals::convertSwapCoinToCurrency(*swapCoin));
+            setReceiveCurrency(convertSwapCoinToCurrency(*swapCoin));
             setReceiveAmount(beamui::AmountToUIString(*swapAmount));
         }
         else
         {
             // Do not set fee, it is set automatically based on the currency param
-            setSendCurrency(QMLGlobals::convertSwapCoinToCurrency(*swapCoin));
+            setSendCurrency(convertSwapCoinToCurrency(*swapCoin));
             setSendAmount(beamui::AmountToUIString(*swapAmount));
             setReceiveCurrency(Currency::CurrBeam);
             setReceiveAmount(beamui::AmountToUIString(*beamAmount));
@@ -340,7 +341,7 @@ bool SendSwapViewModel::isEnough() const
     }
 
     // TODO sentFee is fee rate. should be corrected
-    auto swapCoin = QMLGlobals::convertCurrencyToSwapCoin(_sendCurrency);
+    auto swapCoin = convertCurrencyToSwapCoin(_sendCurrency);
 
     return AppModel::getInstance().getSwapCoinClient(swapCoin)->getAvailable() > total;
 }
@@ -375,7 +376,7 @@ QString SendSwapViewModel::getReceiverAddress() const
 bool SendSwapViewModel::canSend() const
 {
     // TODO:SWAP check if correct
-    return QMLGlobals::isFeeOK(_sendFeeGrothes, _sendCurrency, false) &&
+    return isFeeOK(_sendFeeGrothes, _sendCurrency, false) &&
            _sendCurrency != _receiveCurrency &&
            isEnough() &&
            QDateTime::currentDateTime() < _expiresTime;
@@ -423,12 +424,12 @@ void SendSwapViewModel::sendMoney()
 
 bool SendSwapViewModel::isSendFeeOK() const
 {
-    return _sendAmountGrothes == 0 || QMLGlobals::isSwapFeeOK(_sendAmountGrothes, _sendFeeGrothes, _sendCurrency);
+    return _sendAmountGrothes == 0 || isSwapFeeOK(_sendAmountGrothes, _sendFeeGrothes, _sendCurrency);
 }
 
 bool SendSwapViewModel::isReceiveFeeOK() const
 {
-    return _receiveAmountGrothes == 0 || QMLGlobals::isSwapFeeOK(_receiveAmountGrothes, _receiveFeeGrothes, _receiveCurrency);
+    return _receiveAmountGrothes == 0 || isSwapFeeOK(_receiveAmountGrothes, _receiveFeeGrothes, _receiveCurrency);
 }
 
 bool SendSwapViewModel::isSendBeam() const
