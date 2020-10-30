@@ -2434,10 +2434,13 @@ offline</source>
         <translation>Защищенная</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can�t calculate the recommended fee rate. 
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete. </source>
-        <translation>Ошибка соединения: невозможно рассчитать рекомендованную ставку комиссии. 
+much longer for a transaction to complete.</source>
+        <oldsource>Connection error: can�t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete. </oldsource>
+        <translation type="unfinished">Ошибка соединения: невозможно рассчитать рекомендованную ставку комиссии. 
 Проверьте %1 блокчейн самостоятельно. Низкая комиссия может потребовать
 гораздо больше времени, чтобы завершить транзакцию. </translation>
     </message>

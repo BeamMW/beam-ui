@@ -2432,10 +2432,13 @@ offline</translation>
         <translation>Chráněné</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can�t calculate the recommended fee rate. 
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete. </source>
-        <translation>Chyba připojení: nelze vypočítat doporučenou sazbu poplatku. 
+much longer for a transaction to complete.</source>
+        <oldsource>Connection error: can�t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete. </oldsource>
+        <translation type="unfinished">Chyba připojení: nelze vypočítat doporučenou sazbu poplatku. 
 Zkontrolujte blockchain %1 sami. Při nízkých poplatcích může trvat 
 mnohem déle, než je transakce dokončena. </translation>
     </message>

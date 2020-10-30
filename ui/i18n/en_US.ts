@@ -2433,12 +2433,12 @@ offline</source>
         <translation>Shielded</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can�t calculate the recommended fee rate. 
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete. </source>
-        <translation>Connection error: can’t calculate the recommended fee rate. 
+much longer for a transaction to complete.</source>
+        <translation>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete. </translation>
+much longer for a transaction to complete.</translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
@@ -2467,16 +2467,6 @@ much longer for a transaction to complete. </translation>
     <message id="settings-random-node-text">
         <source>Random node address and port will be displayed 
 when connection is established</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-node-progress-na">
-        <source>Swap in progress, cannot disconnect, switch connection type to 
-%1 electrum, generate new or edit existing seed phrase.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-electrum-progress-na">
-        <source>Swap in progress, cannot switch connection type to %1 node, 
-generate new or edit existing seed phrase.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="swap-token-newer-lib">
@@ -2788,6 +2778,14 @@ offline</source>
     <message id="wallet-txs-status-failed-public-offline">
         <source>failed
 public offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-node-progress">
+        <source>Swap in progress, cannot disconnect or switch connection type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-doge-node-progress">
+        <source>Swap in progress, cannot disconnect.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

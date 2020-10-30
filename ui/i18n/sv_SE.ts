@@ -2429,10 +2429,13 @@ offline</translation>
         <translation>Skärmade</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can�t calculate the recommended fee rate. 
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete. </source>
-        <translation>Anslutningsfel: kan inte beräkna den rekommenderade avgiften. 
+much longer for a transaction to complete.</source>
+        <oldsource>Connection error: can�t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete. </oldsource>
+        <translation type="unfinished">Anslutningsfel: kan inte beräkna den rekommenderade avgiften. 
 Kontrollera på %1 blockkedjan själv. Låga avgifter kan ta 
 mycket längre tid för en transaktion att slutföra. </translation>
     </message>
