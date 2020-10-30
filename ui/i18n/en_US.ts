@@ -2439,7 +2439,7 @@ offline</translation>
         <source>Connection error: can�t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete. </source>
-        <translation type="unfinished">Connection error: can�t calculate the recommended fee rate. 
+        <translation type="unfinished">Connection error: can’t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete. </translation>
     </message>
