@@ -113,8 +113,10 @@ set(UI_SRC
     viewmodel/wallet/tx_object_list.cpp
     viewmodel/wallet/wallet_view.cpp
     viewmodel/wallet/tx_table.cpp
+    viewmodel/atomic_swap/seed_phrase_item.cpp
     viewmodel/atomic_swap/swap_offer_item.cpp
     viewmodel/atomic_swap/swap_offers_list.cpp
+    viewmodel/atomic_swap/swap_settings_item.cpp
     viewmodel/atomic_swap/swap_tx_object.cpp
     viewmodel/atomic_swap/swap_tx_object_list.cpp
     viewmodel/atomic_swap/swap_offers_view.cpp
@@ -157,6 +159,7 @@ set(UI_SRC
     viewmodel/receive_view.cpp
     viewmodel/send_view.h
     viewmodel/send_view.cpp
+    viewmodel/settings_helpers.cpp
     viewmodel/payment_item.h
     viewmodel/payment_item.cpp
     viewmodel/qml_globals.h
