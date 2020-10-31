@@ -102,3 +102,18 @@ function openExternalWithConfirmation(externalLink, onFinish) {
 function navigateToDownloads() {
     openExternalWithConfirmation("https://www.beam.mw/downloads")
 }
+
+function getSwapFeeTitle(currency) {
+    if (currency == Currency.CurrBeam) {
+        //% "BEAM Transaction fee"
+        return qsTrId("beam-transaction-fee")
+    }
+    var label = BeamGlobals.getCurrencyName(currency)
+    //% "%1 Transaction fee rate"
+    return qsTrId("general-fee-rate").arg(label)
+}
+
+function getSwapTotalFeeTitle(currencyUnit) {
+    //% "%1 Transaction fee (est)"
+    return qsTrId("general-fee-total").arg(currencyUnit) + ":"
+}

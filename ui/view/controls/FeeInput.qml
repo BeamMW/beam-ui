@@ -66,7 +66,7 @@ ColumnLayout {
 
         SFText {
             font.pixelSize: 14
-            color:          Style.content_main
+            color:          isValid ? Style.content_main : Style.validator_error
             text:           control.feeLabel
             visible:        (control.feeLabel || "").length
         }

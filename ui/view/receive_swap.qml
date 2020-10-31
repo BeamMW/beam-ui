@@ -158,7 +158,6 @@ Update your settings and try again."
                         AmountInput {
                             id:                         sentAmountInput
                             color:                      Style.accent_outgoing
-                            currFeeTitle:               true
                             currencyIdx:                viewModel.sentCurrency
                             amountIn:                   viewModel.amountSent
                             rate:                       viewModel.secondCurrencySendRateValue
@@ -211,22 +210,23 @@ please review your settings and try again"
                     // Send Fee
                     //
                     FoldablePanel {
-                        title:                   sentAmountInput.getFeeTitle()
-                        Layout.fillWidth:        true
-                        folded:                  false
+                        title:             Utils.getSwapFeeTitle(sentAmountInput.currencyIdx)
+                        Layout.fillWidth:  true
+                        folded:            false
+
                         content: FeeInput {
-                            id:                         sendFeeInput
-                            currency:                   viewModel.sentCurrency
-                            minFee:                     currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
-                            recommendedFee:             BeamGlobals.getRecommendedFee(currency)
-                            feeLabel:                   BeamGlobals.getFeeRateLabel(currency)
-                            color:                      Style.accent_outgoing
-                            readOnly:                   false
-                            fillWidth:                  true
-                            showSecondCurrency:         sentAmountInput.showSecondCurrency
-                            isExchangeRateAvailable:    sentAmountInput.isExchangeRateAvailable
-                            rateAmount:                 sentAmountInput.getFeeInSecondCurrency(viewModel.sentFee)
-                            rateUnit:                   viewModel.secondCurrencyUnitName
+                            id:                       sendFeeInput
+                            currency:                 viewModel.sentCurrency
+                            minFee:                   currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
+                            recommendedFee:           BeamGlobals.getRecommendedFee(currency)
+                            feeLabel:                 BeamGlobals.getFeeRateLabel(currency)
+                            color:                    Style.accent_outgoing
+                            readOnly:                 false
+                            fillWidth:                true
+                            showSecondCurrency:       sentAmountInput.showRate
+                            isExchangeRateAvailable:  sentAmountInput.isExchangeRateAvailable
+                            rateAmount:               Utils.formatFeeToSecondCurrency(viewModel.sentFee, viewModel.secondCurrencySendRateValue, viewModel.secondCurrencyUnitName)
+                            rateUnit:                 viewModel.secondCurrencyUnitName
                         }
 
                         Binding {
@@ -381,18 +381,15 @@ please review your settings and try again"
                         Layout.fillWidth: true
 
                         AmountInput {
-                            id:                  receiveAmountInput
-                            currFeeTitle:        true
-                            currencyIdx:         viewModel.receiveCurrency
-                            amountIn:            viewModel.amountToReceive
-                            rate:                viewModel.secondCurrencyReceiveRateValue
-                            rateUnit:            viewModel.secondCurrencyUnitName
-                            multi:               true
-                            resetAmount:         false
-                            currColor:           currencyError() || !BeamGlobals.canReceive(currencyIdx) ? Style.validator_error : Style.content_main
-                            error:               getErrorText()
-                            showTotalFee:        true
-                            showSecondCurrency:  sentAmountInput.showSecondCurrency
+                            id:             receiveAmountInput
+                            currencyIdx:    viewModel.receiveCurrency
+                            amountIn:       viewModel.amountToReceive
+                            rate:           viewModel.secondCurrencyReceiveRateValue
+                            rateUnit:       viewModel.secondCurrencyUnitName
+                            multi:          true
+                            resetAmount:    false
+                            currColor:      currencyError() || !BeamGlobals.canReceive(currencyIdx) ? Style.validator_error : Style.content_main
+                            error:          getErrorText()
 
                             function getErrorText() {
                                 if(!BeamGlobals.canReceive(currencyIdx)) {
@@ -432,9 +429,10 @@ please review your settings and try again"
                     // Fee
                     //
                     FoldablePanel {
-                        title:                   receiveAmountInput.getFeeTitle()
+                        title:                   Utils.getSwapFeeTitle(receiveAmountInput.currencyIdx)
                         Layout.fillWidth:        true
                         folded:                  false
+
                         content: FeeInput {
                             id:                         receiveFeeInput
                             currency:                   viewModel.receiveCurrency
@@ -444,9 +442,9 @@ please review your settings and try again"
                             color:                      Style.accent_outgoing
                             readOnly:                   false
                             fillWidth:                  true
-                            showSecondCurrency:         receiveAmountInput.showSecondCurrency
+                            showSecondCurrency:         receiveAmountInput.showRate
                             isExchangeRateAvailable:    receiveAmountInput.isExchangeRateAvailable
-                            rateAmount:                 receiveAmountInput.getFeeInSecondCurrency(viewModel.receiveFee)
+                            rateAmount:                 Utils.formatFeeToSecondCurrency(viewModel.receiveFee, viewModel.secondCurrencyReceiveRateValue, viewModel.secondCurrencyUnitName)
                             rateUnit:                   viewModel.secondCurrencyUnitName
                         }
 
@@ -476,10 +474,10 @@ please review your settings and try again"
                         ColumnLayout {
                             anchors.fill:        parent
                             spacing:             20
+
                             GridLayout {
                                 Layout.fillWidth:    true
                                 columnSpacing:       20
-                                rowSpacing:          20
                                 columns:             2
 
                                 property bool showEstimatedFee: viewModel.receiveCurrency != Currency.CurrBeam
@@ -488,7 +486,7 @@ please review your settings and try again"
                                     Layout.alignment:       Qt.AlignTop
                                     font.pixelSize:         14
                                     color:                  Style.content_secondary
-                                    text:                   receiveAmountInput.getTotalFeeTitle() + ":"
+                                    text:                   Utils.getSwapTotalFeeTitle(receiveAmountInput.currencyUnit)
                                     visible:                parent.showEstimatedFee
                                 }
     
@@ -501,6 +499,7 @@ please review your settings and try again"
 
                                 SFText {
                                     Layout.alignment:       Qt.AlignTop
+                                    Layout.topMargin:       parent.showEstimatedFee ? 20 : 0
                                     font.pixelSize:         14
                                     color:                  Style.content_secondary
                                     //% "Exchange rate"
@@ -510,6 +509,7 @@ please review your settings and try again"
                                 RowLayout {
                                     id:                     rateRow
                                     Layout.fillWidth:       true
+                                    Layout.topMargin:       parent.showEstimatedFee ? 20 : 0
 
                                     property double maxAmount: parseFloat(Utils.maxAmount)
                                     property double minAmount: parseFloat(Utils.minAmount)
@@ -568,6 +568,7 @@ please review your settings and try again"
                                     SFText {
                                         id:               rateStart
                                         font.pixelSize:   14
+                                        Layout.alignment: Qt.AlignTop
                                         color:            rateRow.rateValid ? Style.content_main : Style.validator_error
                                         text:             viewModel.isSendBeam
                                             ? ["1", sentAmountInput.currencyUnit, "="].join(" ")
@@ -576,10 +577,8 @@ please review your settings and try again"
 
                                     SFTextInput {
                                         property string rate: "0"
-
                                         id:                  rateInput
                                         padding:             0
-                                        Layout.minimumWidth: 35
                                         activeFocusOnTab:    true
                                         font.pixelSize:      14
                                         color:               rateRow.rateValid ? Style.content_main : Style.validator_error
@@ -587,7 +586,8 @@ please review your settings and try again"
                                         text:                ""
                                         selectByMouse:       true
                                         maximumLength:       30
-                                    
+                                        Layout.minimumWidth: 35
+
                                         validator: DoubleValidator {
                                             bottom: rateRow.minAmount
                                             top: rateRow.maxAmount
@@ -625,34 +625,42 @@ please review your settings and try again"
 
                                     SFText {
                                         id:               rateEnd
+                                        Layout.alignment: Qt.AlignTop
                                         font.pixelSize:   14
                                         color:            rateRow.rateValid ? Style.content_main : Style.validator_error
                                         text:             viewModel.isSendBeam ? receiveAmountInput.currencyUnit : sentAmountInput.currencyUnit
                                     }
-                                    Item {
-                                        Layout.leftMargin: rateInput.x
-                                        SFText {
-                                            color:               Style.validator_error
-                                            font.pixelSize:      12
-                                            font.styleName:      "Italic"
-                                            width:               parent.width
-                                            //% "Invalid rate"
-                                            text:                qsTrId("swap-invalid-rate")
-                                            visible:             !rateRow.rateValid
-                                        }
-                                    }
+                                }
+
+                                SFText {
+                                    visible:  !rateRow.rateValid
+                                }
+
+                                SFText {
+                                    id:                  errorRow
+                                    visible:             !rateRow.rateValid
+                                    color:               Style.validator_error
+                                    font.pixelSize:      12
+                                    font.styleName:      "Italic"
+                                    width:               parent.width
+                                    //% "Invalid rate"
+                                    text:                qsTrId("swap-invalid-rate")
                                 }
 
                                 SFText {
                                     Layout.alignment:       Qt.AlignTop
+                                    Layout.topMargin:       rateRow.rateValid ? 22 : 0
                                     font.pixelSize:         14
                                     color:                  Style.content_secondary
                                     //% "Swap token"
                                     text:                   qsTrId("send-swap-token") + ":"
                                 }
+
                                 RowLayout {
                                     Layout.fillWidth:        true
                                     Layout.rightMargin:      showTokenLink.visible ? 0 : 40
+                                    Layout.topMargin:        rateRow.rateValid ? 22 : 0
+
                                     SFLabel {
                                         id:                  tokenLabel
                                         Layout.fillWidth:    true

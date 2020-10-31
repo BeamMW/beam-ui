@@ -6,8 +6,9 @@ import "controls"
 import "./utils.js" as Utils
 
 ColumnLayout {
-    id: sendRegularView
+    id: control
     spacing: 0
+    property var defaultFocusItem: receiverTAInput
 
     SendViewModel {
         id: viewModel
@@ -18,19 +19,22 @@ ColumnLayout {
 
         onCantSendToExpired: {
             Qt.createComponent("send_expired.qml")
-                .createObject(sendRegularView)
+                .createObject(control)
                 .open();
         }
     }
 
-    property var   defaultFocusItem: receiverTAInput
-    property alias selectedAsset: viewModel.selectedAsset
+    property var assetId:   viewModel.selectedAssetId
+    property var assetIdx:  sendAmountInput.currencyIdx
+    property var assetInfo: viewModel.assetsList[control.assetIdx]
+    property var sendUnit:  control.assetInfo.unitName
+    property var rate:      control.assetInfo.rate
+    property var rateUnit:  control.assetInfo.rateUnit
 
     // callbacks set by parent
-    property var onAccepted:        undefined
-    property var onClosed:          undefined
-    property var onSwapToken:       undefined
-    property alias receiverAddress: viewModel.receiverTA
+    property var onAccepted:  undefined
+    property var onClosed:    undefined
+    property var onSwapToken: undefined
 
     readonly property bool showInsufficientBalanceWarning:
         !viewModel.isEnough &&
@@ -312,26 +316,15 @@ ColumnLayout {
                             AmountInput {
                                 id:                sendAmountInput
                                 amountIn:          viewModel.sendAmount
-                                rate:              viewModel.rate
-                                rateUnit:          viewModel.rateUnit
                                 color:             Style.accent_outgoing
                                 Layout.fillWidth:  true
-
-                                // TODO: make real list
-                                currencies: [{
-                                      "isBEAM":         viewModel.selectedAsset == 0,
-                                      "unitName":       viewModel.sendUnit,
-                                      "defaultFee":     BeamGlobals.getDefaultFee(Currency.CurrBeam),
-                                      "recommededFee":  BeamGlobals.getRecommendedFee(Currency.CurrBeam),
-                                      "minimumFee":     BeamGlobals.getMinimalFee(Currency.CurrBeam, false),
-                                      "feeLabel":       BeamGlobals.getFeeRateLabel(Currency.CurrBeam, false),
-                                      "calcTotalFee":   function(fee) {return BeamGlobals.calcTotalFee(Currency.CurrBeam, fee)}
-                                }]
+                                currencies:        viewModel.assetsList
+                                multi:             viewModel.assetsList.length > 1
 
                                 error: {
                                     if (showInsufficientBalanceWarning)
                                     {
-                                        if (viewModel.selectedAsset == 0)
+                                        if (control.assetId == 0)
                                         {
                                             //% "Insufficient funds: you would need %1 to complete the transaction"
                                             return qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.assetMissing))
@@ -343,6 +336,11 @@ ColumnLayout {
                                         }
                                     }
                                     return ""
+                                }
+
+                                onCurrencyIdxChanged: function () {
+                                    var idx = sendAmountInput.currencyIdx
+                                    viewModel.selectedAssetId = viewModel.assetsList[idx].assetId
                                 }
                             }
 
@@ -409,7 +407,7 @@ ColumnLayout {
                             id:                         feeInput
                             fee:                        viewModel.feeGrothes
                             minFee:                     viewModel.minFee
-                            feeLabel:                   sendAmountInput.currencies[0].feeLabel
+                            feeLabel:                   BeamGlobals.getFeeRateLabel(Currency.CurrBeam, false)
                             color:                      Style.accent_outgoing
                             readOnly:                   false
                             fillWidth:                  true
@@ -505,9 +503,9 @@ ColumnLayout {
                                 error:             showInsufficientBalanceWarning
                                 amount:            viewModel.sendAmount
                                 lightFont:         false
-                                unitName:          viewModel.sendUnit
-                                rateUnit:          viewModel.rateUnit
-                                rate:              viewModel.rate
+                                unitName:          control.sendUnit
+                                rateUnit:          control.assetId == 0 ? control.rateUnit : ""
+                                rate:              control.rate
                             }
                     
                             SFText {
@@ -523,9 +521,9 @@ ColumnLayout {
                                 error:             showInsufficientBalanceWarning
                                 amount:            viewModel.changeAsset
                                 lightFont:         false
-                                unitName:          viewModel.sendUnit
-                                rateUnit:          viewModel.rateUnit
-                                rate:              viewModel.rate
+                                unitName:          control.sendUnit
+                                rateUnit:          control.assetId == 0 ? control.rateUnit : ""
+                                rate:              control.rate
                             }
 
                             SFText {
@@ -560,16 +558,16 @@ ColumnLayout {
                                 error:             showInsufficientBalanceWarning
                                 amount:            viewModel.assetAvailable
                                 lightFont:         false
-                                unitName:          viewModel.sendUnit
-                                rateUnit:          viewModel.rateUnit
-                                rate:              viewModel.rate
+                                unitName:          control.sendUnit
+                                rateUnit:          control.assetId == 0 ? control.rateUnit : ""
+                                rate:              control.rate
                             }
 
                             SFText {
                                 Layout.alignment:       Qt.AlignTop
                                 font.pixelSize:         14
                                 color:                  Style.content_secondary
-                                visible:                viewModel.selectedAsset != 0
+                                visible:                control.assetId != 0
                                 //% "BEAM Remaining"
                                 text:                   qsTrId("send-remaining-beam-label") + ":"
                             }
@@ -583,7 +581,7 @@ ColumnLayout {
                                 unitName:          BeamGlobals.beamUnit
                                 rateUnit:          viewModel.feeRateUnit
                                 rate:              viewModel.feeRate
-                                visible:           viewModel.selectedAsset != 0
+                                visible:           control.assetId != 0
                             }
                         }
                     }
@@ -605,7 +603,7 @@ ColumnLayout {
                 enabled:             viewModel.canSend
                 onClicked: {                
                     const dialog = Qt.createComponent("send_confirm.qml")
-                    const instance = dialog.createObject(sendRegularView,
+                    const instance = dialog.createObject(control,
                         {
                             addressText:   viewModel.receiverTA,
                             typeText:      viewModel.isShieldedTx ?
@@ -620,9 +618,9 @@ ColumnLayout {
                             amount:        viewModel.sendAmount,
                             fee:           viewModel.feeGrothes,
                             flatFee:       true,
-                            unitName:      viewModel.sendUnit,
-                            rate:          viewModel.rate,
-                            rateUnit:      viewModel.rateUnit,
+                            unitName:      control.sendUnit,
+                            rate:          control.rate,
+                            rateUnit:      control.rateUnit,
                             acceptHandler: acceptedCallback,
                         })
                     instance.open()

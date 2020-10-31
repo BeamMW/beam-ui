@@ -184,10 +184,9 @@ please review your settings and try again"
                         content:
                         AmountInput {
                             id:           sendAmountInput
-                            currFeeTitle: true
                             amountIn:     viewModel.sendAmount
                             currencyIdx:  viewModel.sendCurrency
-                            rate:         viewModel.secondCurrencySendRate
+                            rate:         viewModel.secondCurrencySendRateValue
                             rateUnit:     viewModel.secondCurrencyUnitName
                             readOnlyA:    true
                             multi:        false
@@ -218,7 +217,7 @@ please review your settings and try again"
                     // Send Fee
                     //
                     FoldablePanel {
-                        title:                   sendAmountInput.getFeeTitle()
+                        title:                   Utils.getSwapFeeTitle(viewModel.sendCurrency)
                         Layout.fillWidth:        true
                         folded:                  false
                         content: FeeInput {
@@ -230,9 +229,9 @@ please review your settings and try again"
                             color:                      Style.accent_outgoing
                             readOnly:                   false
                             fillWidth:                  true
-                            showSecondCurrency:         sendAmountInput.showSecondCurrency
+                            showSecondCurrency:         sendAmountInput.showRate
                             isExchangeRateAvailable:    sendAmountInput.isExchangeRateAvailable
-                            rateAmount:                 sendAmountInput.getFeeInSecondCurrency(viewModel.sendFee)
+                            rateAmount:                 Utils.formatFeeToSecondCurrency(viewModel.sendFee, viewModel.secondCurrencySendRateValue, viewModel.secondCurrencyUnitName)
                             rateUnit:                   viewModel.secondCurrencyUnitName
                         }
 
@@ -297,17 +296,15 @@ please review your settings and try again"
 
                         AmountInput {
                             id:            receiveAmountInput
-                            currFeeTitle:  true
                             amountIn:      viewModel.receiveAmount
                             currencyIdx:   viewModel.receiveCurrency
-                            rate:          viewModel.secondCurrencyReceiveRate
+                            rate:          viewModel.secondCurrencyReceiveRateValue
                             rateUnit:      viewModel.secondCurrencyUnitName
                             readOnlyA:     true
                             multi:         false
                             color:         Style.accent_incoming
                             currColor:     viewModel.receiveCurrency == viewModel.sendCurrency || getErrorText().length ? Style.validator_error : Style.content_main
                             error:         getErrorText()
-                            showTotalFee:  true
 
                             function getErrorText() {
                                 if(!viewModel.isReceiveFeeOK) {
@@ -327,7 +324,7 @@ please review your settings and try again"
                     // Fee
                     //
                     FoldablePanel {
-                        title:                   receiveAmountInput.getFeeTitle()
+                        title:                   Utils.getSwapFeeTitle(viewModel.receiveCurrency)
                         Layout.fillWidth:        true
                         folded:                  false
                         content: FeeInput {
@@ -339,9 +336,9 @@ please review your settings and try again"
                             color:                      Style.accent_outgoing
                             readOnly:                   false
                             fillWidth:                  true
-                            showSecondCurrency:         receiveAmountInput.showSecondCurrency
+                            showSecondCurrency:         receiveAmountInput.showRate
                             isExchangeRateAvailable:    receiveAmountInput.isExchangeRateAvailable
-                            rateAmount:                 receiveAmountInput.getFeeInSecondCurrency(viewModel.receiveFee)
+                            rateAmount:                 Utils.formatFeeToSecondCurrency(viewModel.receiveFee, viewModel.secondCurrencyReceiveRateValue, viewModel.secondCurrencyUnitName)
                             rateUnit:                   viewModel.secondCurrencyUnitName
                         }
 
@@ -379,7 +376,7 @@ please review your settings and try again"
                                     Layout.alignment:       Qt.AlignTop
                                     font.pixelSize:         14
                                     color:                  Style.content_secondary
-                                    text:                   receiveAmountInput.getTotalFeeTitle() + ":"
+                                    text:                   Utils.getSwapTotalFeeTitle(receiveAmountInput.currencyUnit)
                                     visible:                parent.showEstimatedFee
                                 }
     

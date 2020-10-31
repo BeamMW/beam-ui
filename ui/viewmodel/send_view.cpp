@@ -45,8 +45,8 @@ SendViewModel::SendViewModel()
     connect(&_walletModel,           SIGNAL(sendMoneyVerified()),                 this,  SIGNAL(sendMoneyVerified()));
     connect(&_walletModel,           SIGNAL(cantSendToExpired()),                 this,  SIGNAL(cantSendToExpired()));
     connect(&_walletModel,           &WalletModel::walletStatusChanged,              this,  &SendViewModel::availableChanged);
-    connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,         this,  &SendViewModel::rateChanged);
-    connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged,       this,  &SendViewModel::rateChanged);
+    connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,         this,  &SendViewModel::assetsListChanged);
+    connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged,       this,  &SendViewModel::assetsListChanged);
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,         this,  &SendViewModel::feeRateChanged);
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged,       this,  &SendViewModel::feeRateChanged);
     connect(&_walletModel,           &WalletModel::shieldedCoinsSelectionCalculated, this,  &SendViewModel::onShieldedCoinsSelectionCalculated);
@@ -689,17 +689,6 @@ Your version is: %2. Please, check for updates."
 #endif // BEAM_CLIENT_VERSION
 }
 
-QString SendViewModel::getRateUnit() const
-{
-    return _selectedAssetId == beam::Asset::s_BeamID ? beamui::getCurrencyUnitName(_exchangeRatesManager.getRateUnitRaw()) : "";
-}
-
-QString SendViewModel::getRate() const
-{
-    auto rate = _selectedAssetId == beam::Asset::s_BeamID ? _exchangeRatesManager.getRate(beam::wallet::ExchangeRate::Currency::Beam) : 0;
-    return beamui::AmountToUIString(rate);
-}
-
 QString SendViewModel::getFeeRateUnit() const
 {
     return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateUnitRaw());
@@ -747,29 +736,27 @@ void SendViewModel::resetMinimalFee()
     emit minFeeChanged();
 }
 
-QString SendViewModel::getSendUnitName()
-{
-    return _amgr.getUnitName(_selectedAssetId);
-}
-
 void SendViewModel::onAssetInfo(beam::Asset::ID assetId)
 {
-    if (assetId != static_cast<beam::Asset::ID>(_selectedAssetId)) {
-        return;
-    }
-    emit assetChanged();
+    emit assetsListChanged();
 }
 
-int SendViewModel::getSelectedAsset() const
+int SendViewModel::getSelectedAssetId() const
 {
     return static_cast<int>(_selectedAssetId);
 }
 
-void SendViewModel::setSelectedAsset(int value)
+void SendViewModel::setSelectedAssetId(int value)
 {
-    _selectedAssetId = value < 0 ? beam::Asset::s_BeamID : static_cast<beam::Asset::ID>(value);
-    emit assetChanged();
-    emit rateChanged();
+    auto valueId = value < 0 ? beam::Asset::s_BeamID : static_cast<beam::Asset::ID>(value);
+    if (_selectedAssetId != valueId)
+    {
+        LOG_INFO () << "Selected asset id" << value;
+        _selectedAssetId = valueId;
+
+        emit selectedAssetChanged();
+        emit availableChanged();
+    }
 }
 
 void SendViewModel::resetAddress()
@@ -790,4 +777,28 @@ void SendViewModel::resetAddress()
 
     emit receiverAddressChanged();
     emit receiverIdentityChanged();
+}
+
+QList<QMap<QString, QVariant>> SendViewModel::getAssetsList() const
+{
+    const auto assets   = _walletModel.getAssetsNZ();
+    const auto beamRate = beamui::AmountToUIString(_exchangeRatesManager.getRate(beam::wallet::ExchangeRate::Currency::Beam));
+    const auto rateUnit = beamui::getCurrencyUnitName(_exchangeRatesManager.getRateUnitRaw());
+    QList<QMap<QString, QVariant>> result;
+
+    for(auto assetId: assets)
+    {
+        QMap<QString, QVariant> asset;
+
+        const bool isBeam = assetId == beam::Asset::s_BeamID;
+        asset.insert("isBEAM", isBeam);
+        asset.insert("unitName", _amgr.getUnitName(assetId));
+        asset.insert("rate", isBeam ? beamRate : "0");
+        asset.insert("rateUnit", rateUnit);
+        asset.insert("assetId", static_cast<int>(assetId));
+
+        result.push_back(asset);
+    }
+
+    return result;
 }

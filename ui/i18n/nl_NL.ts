@@ -2603,9 +2603,9 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="asset-inout-tip">
-        <source>%1 active transactions\n(%2 incoming, %3 outgoing)</source>
-        <oldsource>%1 active transactions
-(%2 incoming, %3 outgoing)</oldsource>
+        <source>%1 active transactions
+(%2 incoming, %3 outgoing)</source>
+        <oldsource>%1 active transactions\n(%2 incoming, %3 outgoing)</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-search-asset">

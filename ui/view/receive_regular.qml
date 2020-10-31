@@ -230,10 +230,10 @@ ColumnLayout {
                         // Amount
                         //
                         content: AmountInput {
-                            id:       receiveAmountInput
-                            amountIn: viewModel.amountToReceive
-                            rate:     viewModel.rate
-                            rateUnit: viewModel.rateUnit
+                            id:        receiveAmountInput
+                            amountIn:  viewModel.amountToReceive
+                            rate:      viewModel.rate
+                            rateUnit:  viewModel.rateUnit
                         }
                 
                         Binding {
