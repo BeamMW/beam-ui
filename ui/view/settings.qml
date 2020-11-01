@@ -157,7 +157,6 @@ ColumnLayout {
                         generalTitle:             modelData.generalTitle
                         showSeedDialogTitle:      modelData.showSeedDialogTitle
                         showAddressesDialogTitle: modelData.showAddressesDialogTitle
-                        feeRateLabel:             modelData.feeRateLabel
                         canEdit:                  modelData.canEdit
                         isSupportedElectrum:      modelData.isSupportedElectrum
                         isConnected:              modelData.isConnected

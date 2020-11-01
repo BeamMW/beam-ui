@@ -16,7 +16,6 @@ SettingsFoldable {
     property string generalTitle:             ""
     property alias  showSeedDialogTitle:      seedPhraseDialog.showSeedDialogTitle
     property alias  showAddressesDialogTitle: showAddressesDialog.showAddressesDialogTitle
-    property string feeRateLabel:        ""
     property string color:               Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
     property string disabledColor:       Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.2)
     property alias  editElectrum:        useElectrumSwitch.checked

@@ -24,7 +24,6 @@ class SwapCoinClientModel;
 class SwapCoinSettingsItem : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString  feeRateLabel             READ getFeeRateLabel                         CONSTANT)
     Q_PROPERTY(QString  showSeedDialogTitle      READ getShowSeedDialogTitle                  CONSTANT)
     Q_PROPERTY(QString  showAddressesDialogTitle READ getShowAddressesDialogTitle             CONSTANT)
     Q_PROPERTY(QString  generalTitle             READ getGeneralTitle                         CONSTANT)
@@ -60,8 +59,6 @@ public:
     SwapCoinSettingsItem() = default;
     SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin swapCoin);
     virtual ~SwapCoinSettingsItem();
-
-    QString getFeeRateLabel() const;
 
     QString getTitle() const;
     QString getShowSeedDialogTitle() const;

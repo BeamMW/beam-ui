@@ -43,11 +43,6 @@ SwapCoinSettingsItem::~SwapCoinSettingsItem()
     qDeleteAll(m_seedPhraseItems);
 }
 
-QString SwapCoinSettingsItem::getFeeRateLabel() const
-{
-    return beamui::getFeeRateLabel(beamui::convertSwapCoinToCurrency(m_swapCoin));
-}
-
 QString SwapCoinSettingsItem::getTitle() const
 {
     switch (m_settings->GetCurrentConnectionType())
