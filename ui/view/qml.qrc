@@ -268,5 +268,6 @@
         <file>assets/icon-sent-max-offline.svg</file>
         <file>assets/icon-sending-max-offline.svg</file>
         <file>controls/AddressQRDialog.qml</file>
+        <file>controls/SeedPhraseDialog.qml</file>
     </qresource>
 </RCC>
