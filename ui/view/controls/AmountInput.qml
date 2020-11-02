@@ -4,9 +4,6 @@ import Beam.Wallet 1.0
 import "../utils.js" as Utils
 import Beam.Wallet 1.0
 
-// TODO: preselect asset on send/receive
-// TODO: Add assets support to receive dialog
-// TODO: error color for currencies dropdown
 ColumnLayout {
     id: control
 
@@ -126,7 +123,7 @@ ColumnLayout {
             Layout.topMargin:   22
             font.pixelSize:     24
             font.letterSpacing: 0.6
-            color:              control.currColor
+            color:              error.length ? Style.validator_error : control.currColor
             text:               control.currencyUnit
             visible:            !multi
         }
@@ -139,7 +136,7 @@ ColumnLayout {
             fontPixelSize:       24
             fontLetterSpacing:   0.6
             currentIndex:        control.currencyIdx
-            color:               control.currColor
+            color:               error.length ? Style.validator_error : control.currColor
             visible:             multi
             model:               control.currencies
             textRole:            "unitName"
