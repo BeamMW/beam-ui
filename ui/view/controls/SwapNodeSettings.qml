@@ -471,6 +471,7 @@ when connection is established"
             Layout.bottomMargin: 7
 
             LinkButton {
+                Layout.fillWidth:   true
                 text:      isCurrentElectrumSeedValid ?   
                             //% "Edit your seed phrase"
                             qsTrId("settings-swap-edit-seed") :
@@ -509,6 +510,7 @@ when connection is established"
             }
 
             LinkButton {
+                Layout.fillWidth:   true
                 //% "Generate new seed phrase"
                 text:             qsTrId("settings-swap-new-seed")
                 onClicked: {
