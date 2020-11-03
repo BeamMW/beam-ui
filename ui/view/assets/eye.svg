@@ -21,16 +21,16 @@
     </defs>
     <g fill="none" fill-rule="nonzero">
         <g>
-            <use fill="#000" filter="url(#a)" xlink:href="#b"/>
-            <use fill="#00F6D2" fill-rule="evenodd" xlink:href="#b"/>
+            <use fill="#000FF" filter="url(#a)" xlink:href="#b"/>
+            <use fill="#DC97DC" fill-rule="evenodd" xlink:href="#b"/>
         </g>
         <g>
-            <use fill="#000" filter="url(#c)" xlink:href="#d"/>
-            <use fill="#00F6D2" fill-rule="evenodd" xlink:href="#d"/>
+            <use fill="#000FF" filter="url(#c)" xlink:href="#d"/>
+            <use fill="#DC97DC" fill-rule="evenodd" xlink:href="#d"/>
         </g>
         <g>
-            <use fill="#000" filter="url(#e)" xlink:href="#f"/>
-            <use fill="#00F6D2" fill-rule="evenodd" xlink:href="#f"/>
+            <use fill="#000FF" filter="url(#e)" xlink:href="#f"/>
+            <use fill="#DC97DC" fill-rule="evenodd" xlink:href="#f"/>
         </g>
     </g>
 </svg>

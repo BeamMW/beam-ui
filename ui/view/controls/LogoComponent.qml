@@ -38,7 +38,7 @@ ColumnLayout
      //% "Confidential, fast, easy to use"
         text: qsTrId("logo-description")
 
-        color: Style.accent_incoming
+        color: Style.active
         font.pixelSize: 18
         font.styleName: "Bold"; font.weight: Font.Bold
     }

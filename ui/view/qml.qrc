@@ -4,6 +4,7 @@
         <file>color_themes/Mainnet.qml</file>
         <file>color_themes/Masternet.qml</file>
         <file>color_themes/Testnet.qml</file>
+        <file>color_themes/BeamX.qml</file>
         <file>controls/Style.qml</file>
         <file>controls/qmldir</file>
         <file>controls/SvgImage.qml</file>

@@ -17,14 +17,15 @@
 // static
 QString Theme::name()
 {
-    return "mainnet";/*
-#ifdef BEAM_TESTNET
+#ifdef BEAM_BEAMX
+    return "beamx";
+#elif BEAM_TESTNET
     return "testnet";
 #elif defined(BEAM_MAINNET)
     return "mainnet";
 #else
     return "masternet";
-#endif*/
+#endif
 }
 
 // static

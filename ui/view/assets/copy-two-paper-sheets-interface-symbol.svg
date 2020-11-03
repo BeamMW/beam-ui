@@ -8,7 +8,7 @@
         </filter>
     </defs>
     <g fill="none" fill-rule="nonzero">
-        <use fill="#000" filter="url(#a)" xlink:href="#b"/>
-        <use fill="#00F6D2" fill-rule="evenodd" xlink:href="#b"/>
+        <use fill="#000FF" filter="url(#a)" xlink:href="#b"/>
+        <use fill="#DC97DC" fill-rule="evenodd" xlink:href="#b"/>
     </g>
 </svg>
