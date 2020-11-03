@@ -29,8 +29,8 @@ Control {
         id: back
         leftColor:        Style.currencyPaneLeftBEAM
         rightColor:       Style.currencyPaneRight
-        leftBorderColor:  Qt.rgba( 0 / 255, 242 / 255, 209 / 255, 0.99)
-        rightBorderColor: Qt.rgba( 0 / 255, 89 / 134, 209 / 255, 0.4)
+        rightBorderColor: Style.currencyPaneRight
+        leftBorderColor:  Style.currencyPaneLeftBEAM
         borderWidth:      control.selected ? 1 : 0
 
         implicitWidth:    control.width
