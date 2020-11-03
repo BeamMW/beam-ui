@@ -127,6 +127,11 @@ namespace
             getPeerID(p, wid);
             return std::to_string(wid).c_str();
         }
+        if (auto peerID = p.GetParameter<PeerID>(TxParameterID::PeerWalletIdentity); peerID)
+        {
+            return std::to_string(*peerID).c_str();
+        }
+
         //% "shielded pool"
         return qtTrId("from-shielded-pool");
     }

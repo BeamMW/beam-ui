@@ -175,7 +175,7 @@ ColumnLayout {
                     anchors.topMargin: 20
                     anchors.bottomMargin: 20
                     anchors.leftMargin: 100
-                    anchors.rightMargin: 150
+                    anchors.rightMargin: actionButton.width + 20
         
                     spacing: 10
         
@@ -249,6 +249,7 @@ ColumnLayout {
             }
         
             CustomButton {
+                id:             actionButton
                 anchors.bottom: itemRect.bottom
                 anchors.right: itemRect.right
                 anchors.bottomMargin: 20
