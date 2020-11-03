@@ -582,15 +582,7 @@ void SwapCoinSettingsItem::copySeedElectrum()
 
 void SwapCoinSettingsItem::validateCurrentElectrumSeedPhrase()
 {
-    std::vector<std::string> seedElectrum;
-    seedElectrum.reserve(WORD_COUNT);
-
-    // extract seed phrase from user input
-    for (const auto phraseItem : m_seedPhraseItems)
-    {
-        auto word = static_cast<SeedPhraseItem*>(phraseItem)->getValue().toStdString();
-        seedElectrum.push_back(word);
-    }
+    auto seedElectrum = GetSeedPhraseFromSeedItems();
 
     setIsCurrentSeedValid(bitcoin::validateElectrumMnemonic(seedElectrum));
     setIsCurrentSeedSegwit(bitcoin::validateElectrumMnemonic(seedElectrum, true));

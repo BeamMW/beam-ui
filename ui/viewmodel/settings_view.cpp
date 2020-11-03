@@ -447,3 +447,8 @@ QObject* SettingsViewModel::getNotificationsSettings()
 {
     return &m_notificationsSettings;
 }
+
+QObject* SettingsViewModel::getEthSettings()
+{
+    return &m_ethSettings;
+}

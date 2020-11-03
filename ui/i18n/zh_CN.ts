@@ -2816,7 +2816,24 @@ Your version is: %2. Please, check for updates.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="general-ethereum">
-        <source>ETHEREUM</source>
+        <source>Ethereum</source>
+        <oldsource>ETHEREUM</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-ethereum-node">
+        <source>Ethereum node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ethereum-show-seed-title">
+        <source>Ethereum seed phrase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-account-index">
+        <source>Account index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-contract-address">
+        <source>Contract address</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

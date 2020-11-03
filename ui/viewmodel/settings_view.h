@@ -22,6 +22,7 @@
 #include "wallet/transactions/swaps/bridges/bitcoin/client.h"
 #include "wallet/transactions/swaps/bridges/bitcoin/settings.h"
 #include "viewmodel/notifications/notifications_settings.h"
+#include "viewmodel/atomic_swap/swap_eth_settings_item.h"
 
 class SettingsViewModel : public QObject
 {
@@ -48,6 +49,7 @@ class SettingsViewModel : public QObject
 
     Q_PROPERTY(QList<QObject*> swapCoinSettingsList READ getSwapCoinSettings    CONSTANT)
     Q_PROPERTY(QObject* notificationsSettings   READ getNotificationsSettings   CONSTANT)
+    Q_PROPERTY(QObject* ethSettings   READ getEthSettings   CONSTANT)
     
 public:
 
@@ -91,6 +93,7 @@ public:
 
     const QList<QObject*>& getSwapCoinSettings();
     QObject* getNotificationsSettings();
+    QObject* getEthSettings();
 
     Q_INVOKABLE uint coreAmount() const;
     Q_INVOKABLE void addLocalNodePeer(const QString& localNodePeer);
@@ -138,6 +141,7 @@ private:
     WalletSettings& m_settings;
     QList<QObject*> m_swapSettings;
     NotificationsSettings m_notificationsSettings;
+    SwapEthSettingsItem m_ethSettings;
 
     QString m_nodeAddress;
     bool m_localNodeRun;

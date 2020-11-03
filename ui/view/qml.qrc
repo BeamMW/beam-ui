@@ -269,5 +269,6 @@
         <file>assets/icon-sending-max-offline.svg</file>
         <file>controls/AddressQRDialog.qml</file>
         <file>controls/SeedPhraseDialog.qml</file>
+        <file>controls/SwapEthSettings.qml</file>
     </qresource>
 </RCC>

@@ -284,6 +284,57 @@ ColumnLayout {
                         }
                     }
                 }
+
+                SwapEthSettings {
+                    id: swapEthSettings
+                    title:                    viewModel.ethSettings.title
+                    generalTitle:             viewModel.ethSettings.generalTitle
+                    showSeedDialogTitle:      viewModel.ethSettings.showSeedDialogTitle
+                    seedPhrases:              viewModel.ethSettings.seedPhrases
+                    phrasesSeparator:         viewModel.ethSettings.phrasesSeparator
+                    isCurrentSeedValid:       viewModel.ethSettings.isCurrentSeedValid
+                    mainSettingsViewModel:    viewModel
+
+                    canEdit:                  viewModel.ethSettings.canEdit
+                    isConnected:              viewModel.ethSettings.isConnected
+
+                    address:             viewModel.ethSettings.nodeAddress
+                    port:                viewModel.ethSettings.nodePort
+                    accountIndex:        viewModel.ethSettings.accountIndex
+                    contractAddress:     viewModel.ethSettings.contractAddress
+
+                    Connections {
+                        target: viewModel.ethSettings
+                        onCanEditChanged:        swapEthSettings.canEdit = viewModel.ethSettings.canEdit
+                        onConnectionChanged: {
+                            swapEthSettings.isConnected          = viewModel.ethSettings.isConnected;
+                            swapEthSettings.title                = viewModel.ethSettings.title;
+                        }
+                        /*onConnectionStatusChanged: {
+                            swapEthSettings.connectionStatus     = modelData.connectionStatus;
+                        }
+
+                        onConnectionErrorMsgChanged: {
+                            swapEthSettings.connectionErrorMsg   = modelData.connectionErrorMsg;
+                        }*/
+
+                        onNodeAddressChanged: swapEthSettings.address  = viewModel.ethSettings.nodeAddress
+                        onNodePortChanged:    swapEthSettings.port     = viewModel.ethSettings.nodePort
+                        onAccountIndexChanged: swapEthSettings.accountIndex = viewModel.ethSettings.accountIndex
+                        onContractAddressChanged: swapEthSettings.contractAddress = viewModel.ethSettings.contractAddress
+                        onSeedPhrasesChanged: swapEthSettings.seedPhrasesElectrum = viewModel.ethSettings.electrumSeedPhrases
+                        onIsCurrentSeedValidChanged:  swapEthSettings.isCurrentSeedValid = viewModel.ethSettings.isCurrentSeedValid
+                    }
+                    
+                    onDisconnect: viewModel.ethSettings.disconnect()
+                    onApplySettings: viewModel.ethSettings.applySettings()
+                    onClearSettings: viewModel.ethSettings.clearSettings()
+                    onConnectToNode: viewModel.ethSettings.connectToNode()
+                    onNewSeedPhrases: viewModel.ethSettings.newSeedPhrases()
+                    onRestoreSeedPhrases: viewModel.ethSettings.restoreSeedPhrases()
+                    onCopySeedPhrases: viewModel.ethSettings.copySeedPhrases()
+                    onValidateCurrentSeedPhrase: viewModel.ethSettings.validateCurrentSeedPhrase()
+                }
             }
         }
     }

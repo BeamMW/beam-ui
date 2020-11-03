@@ -113,6 +113,7 @@ set(UI_SRC
     viewmodel/wallet/tx_object_list.cpp
     viewmodel/wallet/wallet_view.cpp
     viewmodel/wallet/tx_table.cpp
+    viewmodel/atomic_swap/swap_eth_settings_item.cpp
     viewmodel/atomic_swap/seed_phrase_item.cpp
     viewmodel/atomic_swap/swap_offer_item.cpp
     viewmodel/atomic_swap/swap_offers_list.cpp
