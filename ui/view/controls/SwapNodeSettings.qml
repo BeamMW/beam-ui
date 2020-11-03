@@ -621,6 +621,8 @@ when connection is established"
             spacing:                20
 
             CustomButton {
+                leftPadding:            25
+                rightPadding:           25
                 visible:                applySettingsButtonId.visible
                 text:                   qsTrId("general-cancel")
                 icon.source:            enabled ? "qrc:/assets/icon-cancel-white.svg" : "qrc:/assets/icon-cancel.svg"
@@ -630,6 +632,8 @@ when connection is established"
 
             CustomButton {
                 id:                     disconnectButtonId
+                leftPadding:            25
+                rightPadding:           25
                 visible:                canDisconnect()
                 palette.button:         Style.swapDisconnectNode
                 palette.buttonText:     Style.content_opposite
@@ -640,6 +644,8 @@ when connection is established"
             }
 
             CustomButton {
+                leftPadding:            25
+                rightPadding:           25
                 visible:                connectButtonId.visible
                 //% "clear"
                 text:                   qsTrId("settings-swap-clear")
@@ -664,6 +670,8 @@ when connection is established"
 
             PrimaryButton {
                 id:                     applySettingsButtonId
+                leftPadding:            25
+                rightPadding:           25
                 visible:                !connectButtonId.visible && !disconnectButtonId.visible
                 text:                   qsTrId("settings-apply")
                 icon.source:            "qrc:/assets/icon-done.svg"
@@ -673,6 +681,8 @@ when connection is established"
 
             PrimaryButton {
                 id:                     connectButtonId
+                leftPadding:            25
+                rightPadding:           25
                 visible:                canConnect()
                 text:                   editElectrum
                                             //% "connect to electrum node"
@@ -935,7 +945,6 @@ when connection is established"
                 CustomButton {
                     id: cancelButtonId
                     visible:                false
-                    Layout.preferredHeight: 38
                     Layout.minimumWidth:    133
                     text:                   qsTrId("general-cancel")
                     icon.source:            "qrc:/assets/icon-cancel-white.svg"
@@ -946,7 +955,6 @@ when connection is established"
                 PrimaryButton {
                     id: applyButtonId
                     visible:                false
-                    Layout.preferredHeight: 38
                     Layout.minimumWidth:    126
                     text:                   qsTrId("settings-apply")
                     icon.source:            "qrc:/assets/icon-done.svg"
@@ -960,7 +968,6 @@ when connection is established"
                 CustomButton {
                     id: closeButtonId
                     visible:                false
-                    Layout.preferredHeight: 38
                     Layout.minimumWidth:    125
                     text:                   qsTrId("general-close")
                     icon.source:            "qrc:/assets/icon-cancel-white.svg"
@@ -969,7 +976,6 @@ when connection is established"
                 CustomButton {
                     id: generateButtonId
                     visible:                false
-                    Layout.preferredHeight: 38
                     Layout.minimumWidth:    271
                     rightPadding:           20
                     //% "generate another seed phrase"
@@ -981,7 +987,6 @@ when connection is established"
                 PrimaryButton {
                     id: copyButtonId
                     visible:                false
-                    Layout.preferredHeight: 38
                     Layout.minimumWidth:    124
                     text:                   qsTrId("general-copy")
                     icon.source:            "qrc:/assets/icon-copy-blue.svg"
