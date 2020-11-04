@@ -2861,5 +2861,9 @@ offline</source>
 public offline</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="apps-title">
+        <source>Applications</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

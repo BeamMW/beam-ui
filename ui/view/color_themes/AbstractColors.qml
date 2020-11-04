@@ -48,4 +48,9 @@ QtObject {
 
     property color swapCurrencyStateIndicator;
     property color swapDisconnectNode;
+
+    property string linkStyle;
+    property string explorerUrl;
+    property string faucetUrl;
+    property string appsUrl;
 }
