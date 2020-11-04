@@ -25,15 +25,10 @@ AbstractColors {
     property color row_selected:          "#353636"
     property color separator:             "#353636"
     property color table_header:          "#323232"
-
     property color active :               "#00f6d2" // bright-teal
     property color passive:               "#d6d9e0" // silver
         
     property color caps_warning:          "#ffffff"
-
-    property string linkStyle:   "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
-    property string explorerUrl: "https://master-net.explorer.beam.mw/"
-    property string faucetUrl:   "https://faucet.beamprivacy.community/"
 
     property color currencyPaneRight:     "#3b3b3b"
     property color currencyPaneLeftBEAM:  "#00f6d2"
@@ -49,4 +44,9 @@ AbstractColors {
 
     property color swapCurrencyStateIndicator:  "#ff746b"
     property color swapDisconnectNode:          "#f9605b"
+
+    property string linkStyle:   "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
+    property string explorerUrl: "https://master-net.explorer.beam.mw/"
+    property string faucetUrl:   "https://faucet.beamprivacy.community/"
+    property string appsUrl:     "http://3.136.182.25:80/app/index.html"
 }

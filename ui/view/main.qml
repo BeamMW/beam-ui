@@ -123,7 +123,9 @@ Rectangle {
 		"addresses",
         "notifications",
 		"utxo",
+		"applications",
 		"settings"]
+
     property int selectedItem
 
     Item {
