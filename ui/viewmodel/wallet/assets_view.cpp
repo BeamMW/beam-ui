@@ -14,13 +14,20 @@
 #include "assets_view.h"
 #include "model/app_model.h"
 
+namespace
+{
+    typedef std::vector<std::shared_ptr<AssetObject>> VAssets;
+}
+
 AssetsViewModel::AssetsViewModel()
     : _wallet (*AppModel::getInstance().getWallet())
 {
     connect(&_wallet, &WalletModel::walletStatusChanged, this, &AssetsViewModel::onWalletStatus);
 
     auto assetBEAM  = std::make_shared<AssetObject>(0);
-    _assets.insert(assetBEAM);
+
+    VAssets all = {assetBEAM};
+    _assets.reset(all);
 
     formAssetsList();
     emit assetsChanged();
@@ -33,10 +40,12 @@ QAbstractItemModel* AssetsViewModel::getAssets()
 
 void AssetsViewModel::formAssetsList()
 {
+    VAssets all;
+
     const auto assets = _wallet.getAssetsNZ();
     for (auto assetId: assets)
     {
-        bool found = false;
+        /* bool found = false;
         for (const auto& asset: _assets)
         {
             if((found = asset->id() == assetId)) {
@@ -48,7 +57,12 @@ void AssetsViewModel::formAssetsList()
         {
             _assets.insert(std::make_shared<AssetObject>(assetId));
         }
+        */
+
+        all.insert(all.begin(),std::make_shared<AssetObject>(assetId));
     }
+
+    _assets.reset(all);
 }
 
 void AssetsViewModel::onWalletStatus()
