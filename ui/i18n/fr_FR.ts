@@ -659,7 +659,7 @@ Vous essayez de restaurer un portefeuille Beam existant. Veuillez noter que si v
     </message>
     <message id="wallet-model-connection-addr-in-use-error">
         <source>The port %1 is already in use. Check if a wallet is already running on this machine or change the port settings.</source>
-        <translation>Le port% 1 est déjà utilisé. Vérifiez si un portefeuille est déjà en cours d&apos;exécution sur cette machine ou modifiez les paramètres du port.</translation>
+        <translation>Le port %1 est déjà utilisé. Vérifiez si un portefeuille est déjà en cours d&apos;exécution sur cette machine ou modifiez les paramètres du port.</translation>
     </message>
     <message id="wallet-model-time-sync-error">
         <source>System time not synchronized</source>
@@ -1019,7 +1019,7 @@ Allow to open and proceed to the website? You can always update your choice in S
     <message id="settings-general-require-pwd-to-spend-confirm-pwd-title">
         <source>Don&apos;t ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if checked</extracomment>
-        <translation>Don&apos;t ask password on every Send</translation>
+        <translation type="unfinished">Don&apos;t ask password on every Send</translation>
     </message>
     <message id="settings-general-require-pwd-to-spend-confirm-pwd-message">
         <source>Password verification is required to change that setting</source>
@@ -1092,7 +1092,7 @@ Allow to open and proceed to the website? You can always update your choice in S
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
-        <translation>Transaction fee rate</translation>
+        <translation type="unfinished">%1 Transaction fee rate</translation>
     </message>
     <message id="general-fee-fail">
         <source>The minimum fee is %1 %2</source>
@@ -1120,20 +1120,21 @@ Allow to open and proceed to the website? You can always update your choice in S
     </message>
     <message id="swap-beta-message">
         <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>Atomic Swap functionality is Beta at the moment. We recommend you not to send large amounts.</translation>
+        <translation type="unfinished">Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</translation>
     </message>
     <message id="swap-beta-title">
         <source>Atomic Swaps are in BETA</source>
-        <translation>Atomic Swap is in BETA</translation>
+        <translation type="unfinished">Atomic Swaps are in BETA</translation>
     </message>
     <message id="swap-na-message">
         <source>You do not have any 3rd-party currencies connected.
 Update your settings and try again.</source>
-        <translation>You do not have any 3rd-party currencies connected.\nUpdate your settings and try again.</translation>
+        <translation type="unfinished">You do not have any 3rd-party currencies connected.
+Update your settings and try again.</translation>
     </message>
     <message id="wallet-receive-swap-title">
         <source>Create a Swap Offer</source>
-        <translation>Create swap offer</translation>
+        <translation type="unfinished">Create a Swap Offer</translation>
     </message>
     <message id="receive-amount-swap-label">
         <source>Receive amount</source>
@@ -1157,11 +1158,11 @@ Update your settings and try again.</source>
     </message>
     <message id="wallet-receive-swap-publish">
         <source>publish offer</source>
-        <translation>publish transaction token</translation>
+        <translation type="unfinished">publish offer</translation>
     </message>
     <message id="wallet-send-swap-title">
         <source>Accept Swap Offer</source>
-        <translation>Swap currencies</translation>
+        <translation type="unfinished">Accept Swap Offer</translation>
     </message>
     <message id="wallet-send-swap-invalid-token">
         <source>Invalid swap token</source>
@@ -1169,7 +1170,7 @@ Update your settings and try again.</source>
     </message>
     <message id="general-comment-local">
         <source>Comments are local and won&apos;t be shared</source>
-        <translation>Comments are local and won&apos;t be shared</translation>
+        <translation type="unfinished">Comments are local and won&apos;t be shared</translation>
     </message>
     <message id="general-bitcoin">
         <source>Bitcoin</source>
@@ -1190,7 +1191,8 @@ Update your settings and try again.</source>
     <message id="swap-currency-na-message">
         <source>%1 is not connected, 
 please review your settings and try again</source>
-        <translation>%1 is not connected, \nplease review your settings and try again.</translation>
+        <translation type="unfinished">%1 is not connected, 
+please review your settings and try again</translation>
     </message>
     <message id="send-not-enough">
         <source>There is not enough funds to complete the transaction</source>
@@ -1230,7 +1232,7 @@ please review your settings and try again</source>
     </message>
     <message id="atomic-swap-title">
         <source>Atomic Swaps</source>
-        <translation>Atomic Swap</translation>
+        <translation type="unfinished">Atomic Swaps</translation>
     </message>
     <message id="atomic-swap-create">
         <source>Create offer</source>
@@ -1371,11 +1373,12 @@ please review your settings and try again</source>
     <message id="atomic-no-offers">
         <source>There are no active offers at the moment.
 Please try again later or create an offer yourself.</source>
-        <translation>There are no active offers at the moment.\nPlease try again later or create an offer yourself.</translation>
+        <translation type="unfinished">There are no active offers at the moment.
+Please try again later or create an offer yourself.</translation>
     </message>
     <message id="send-less-than-fee">
         <source>The swap amount must be greater than the transaction fee</source>
-        <translation>The swap amount must be greater than the redemption fee.</translation>
+        <translation type="unfinished">The swap amount must be greater than the transaction fee</translation>
     </message>
     <message id="wallet-txs-status-in-progress">
         <source>in progress</source>
@@ -1431,11 +1434,11 @@ Please try again later or create an offer yourself.</source>
     </message>
     <message id="accept-own-offer-allert-head">
         <source>You cannot accept your own offer</source>
-        <translation>Own offer can’t be accepted</translation>
+        <translation type="unfinished">You cannot accept your own offer</translation>
     </message>
     <message id="accept-own-offer-allert-body">
         <source>The swap token was generated by you, and therefore cannot be accepted.</source>
-        <translation>The transaction token was generated by you, therefore it is not allowed to accept your own offer.\nPlease check the swap token and try again.</translation>
+        <translation type="unfinished">The swap token was generated by you, and therefore cannot be accepted.</translation>
     </message>
     <message id="swap-copy-token">
         <source>Copy token</source>
@@ -1507,7 +1510,7 @@ Please try again later or create an offer yourself.</source>
     </message>
     <message id="swap-details-tx-fee-rate">
         <source>%1 Transaction fee rate</source>
-        <translation>Transaction fee rate</translation>
+        <translation type="unfinished">%1 Transaction fee rate</translation>
     </message>
     <message id="settings-swap-bitcoin-node">
         <source>Bitcoin node</source>
@@ -1536,7 +1539,8 @@ Please try again later or create an offer yourself.</source>
     <message id="swap-offer-duplicate-message">
         <source>The offer with this transaction token is already accepted.
 Please check the swap token and try again.</source>
-        <translation>The offer with this transaction token is already accepted.\nPlease check the swap token and try again.</translation>
+        <translation type="unfinished">The offer with this transaction token is already accepted.
+Please check the swap token and try again.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
         <source>Оffer is already accepted</source>
@@ -1580,7 +1584,7 @@ Please check the swap token and try again.</source>
     </message>
     <message id="swap-seed-info-message">
         <source>Your seed phrase is the access key to all the funds! Print or write down the phrase and keep it in a safe or in a locked vault. Without the phrase you will not be able to recover your money.</source>
-        <translation>Your seed phrase is the access key to all the funds! Print or write down the phrase and keep it in a safe or in a locked vault.\nWithout the phrase you will not be able to recover your money.</translation>
+        <translation type="unfinished">Your seed phrase is the access key to all the funds! Print or write down the phrase and keep it in a safe or in a locked vault. Without the phrase you will not be able to recover your money.</translation>
     </message>
     <message id="settings-swap-seed-generate">
         <source>generate another seed phrase</source>
@@ -1845,7 +1849,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="tx-failure-kernel-min-height">
         <source>Kernel&apos;s min height is unacceptable</source>
-        <translation>Kernel&apos;s min height is unacceptable</translation>
+        <translation type="unfinished">Kernel&apos;s min height is unacceptable</translation>
     </message>
     <message id="tx-failure-loopback">
         <source>Not a loopback transaction</source>
@@ -1917,7 +1921,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="tx-failure-asset-in-use">
         <source>Asset is still in use (issued amount &gt; 0)</source>
-        <translation>Asset is still in use (issued amount &gt; 0)</translation>
+        <translation type="unfinished">Asset is still in use (issued amount &gt; 0)</translation>
     </message>
     <message id="tx-failure-asset-locked">
         <source>Asset is still locked</source>
@@ -1970,7 +1974,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-transaction-sent-message">
         <source>You sent &lt;b&gt;%1&lt;/b&gt; BEAM to &lt;b&gt;%2&lt;/b&gt;.</source>
-        <translation>You sent &lt;b&gt;%1&lt;/b&gt; BEAM to &lt;b&gt;%2&lt;/b&gt;.</translation>
+        <translation type="unfinished">You sent &lt;b&gt;%1&lt;/b&gt; BEAM to &lt;b&gt;%2&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-failed">
         <source>Transaction failed</source>
@@ -1982,19 +1986,19 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-address-expired-message">
         <source>&lt;b&gt;%1&lt;/b&gt; address expired.</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; address expired.</translation>
+        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; address expired.</translation>
     </message>
     <message id="notification-transaction-received-message">
         <source>You received &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt;.</source>
-        <translation>You received &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt;.</translation>
+        <translation type="unfinished">You received &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-send-failed-message">
         <source>Sending &lt;b&gt;%1 BEAM&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt; failed.</source>
-        <translation>Sending &lt;b&gt;%1 BEAM&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt; failed.</translation>
+        <translation type="unfinished">Sending &lt;b&gt;%1 BEAM&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt; failed.</translation>
     </message>
     <message id="notification-transaction-receive-failed-message">
         <source>Receiving &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt; failed.</source>
-        <translation>Receiving &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt; failed.</translation>
+        <translation type="unfinished">Receiving &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt; failed.</translation>
     </message>
     <message id="notification-transaction-sent">
         <source>Transaction was sent</source>
@@ -2015,19 +2019,19 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-swap-beam-completed-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</source>
-        <translation>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</translation>
+        <translation type="unfinished">Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</translation>
     </message>
     <message id="notification-swap-completed-message">
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</source>
-        <translation>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</translation>
+        <translation type="unfinished">Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</translation>
     </message>
     <message id="notification-swap-beam-failed-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</source>
-        <translation>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</translation>
+        <translation type="unfinished">Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</translation>
     </message>
     <message id="notification-swap-failed-message">
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</source>
-        <translation>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</translation>
+        <translation type="unfinished">Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</translation>
     </message>
     <message id="notification-swap-failed">
         <source>Atomic Swap offer failed</source>
@@ -2039,11 +2043,11 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-swap-beam-expired-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
-        <translation>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</translation>
+        <translation type="unfinished">Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</translation>
     </message>
     <message id="notification-swap-expired-message">
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
-        <translation>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</translation>
+        <translation type="unfinished">Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</translation>
     </message>
     <message id="general-identity">
         <source>Identity</source>
@@ -2436,12 +2440,9 @@ offline</translation>
         <source>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</source>
-        <oldsource>Connection error: can�t calculate the recommended fee rate. 
+        <translation type="unfinished">Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete. </oldsource>
-        <translation type="unfinished">Connection error: can�t calculate the recommended fee rate. 
-Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete. </translation>
+much longer for a transaction to complete.</translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
@@ -2503,7 +2504,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-send-invalid-address-or-token">
         <source>Invalid wallet address</source>
-        <translation>Invalid wallet address or swap token</translation>
+        <translation type="unfinished">Invalid wallet address</translation>
     </message>
     <message id="wallet-send-permanent-note">
         <source>Permanent address</source>
@@ -2527,7 +2528,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
-        <translation>Fonds insuffisants: vous auriez besoin de % 1 pour finaliser la transaction</translation>
+        <translation>Fonds insuffisants: vous auriez besoin de %1 pour finaliser la transaction</translation>
     </message>
     <message id="max-pivacy-fee-fail">
         <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
@@ -2793,11 +2794,11 @@ public offline</translation>
     </message>
     <message id="settings-node-progress">
         <source>Swap in progress, cannot disconnect or switch connection type.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Swap in progress, cannot disconnect or switch connection type.</translation>
     </message>
     <message id="settings-doge-node-progress">
         <source>Swap in progress, cannot disconnect.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Swap in progress, cannot disconnect.</translation>
     </message>
 </context>
 </TS>
