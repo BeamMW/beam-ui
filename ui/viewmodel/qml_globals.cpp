@@ -188,6 +188,11 @@ bool QMLGlobals::isPasswordValid(const QString& value)
     return AppModel::getInstance().checkWalletPassword(secretPass);
 }
 
+QString QMLGlobals::calcTotalFee(Currency currency, unsigned int feeRate)
+{
+    return ::calcTotalFee(currency, feeRate);
+}
+
 QString QMLGlobals::calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyLabel)
 {
     QString feeInOriginalCurrency = beamui::AmountToUIString(fee);
