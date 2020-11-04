@@ -105,7 +105,6 @@ int main (int argc, char* argv[])
 {
     wallet::g_AssetsEnabled = true;
 
-#if defined Q_OS_WIN
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 

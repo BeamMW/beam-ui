@@ -30,10 +30,6 @@ AbstractColors {
     property color passive:               "#d6d9e0"  // silver
     property color caps_warning:          "#000000"
 
-    property string linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
-    property string explorerUrl: "https://explorer.beam.mw/"
-    property string faucetUrl: "https://faucet.beamprivacy.community/"
-
     property color currencyPaneRight:     "#00458f"
     property color currencyPaneLeftBEAM:  "#00f6d2"
     property color currencyPaneLeftBTC:   "#fcaf38"

@@ -28,11 +28,7 @@ QtObject {
     property color active;
     property color passive;
     property color caps_warning;
-
 	property color  white: "#ffffff";
-    property string linkStyle;
-    property string explorerUrl;
-    property string faucetUrl;
 
     property color currencyPaneRight;
     property color currencyPaneLeftBEAM;
