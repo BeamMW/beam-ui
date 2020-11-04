@@ -27,6 +27,9 @@ class SwapEthSettingsItem : public QObject
     Q_PROPERTY(QString  showSeedDialogTitle      READ getShowSeedDialogTitle                  CONSTANT)
     Q_PROPERTY(QString  generalTitle             READ getGeneralTitle                         CONSTANT)
     Q_PROPERTY(QString  title                    READ getTitle                                CONSTANT)
+    Q_PROPERTY(QString  coinID                   READ getCoinID                               CONSTANT)
+    Q_PROPERTY(bool     folded                   READ getFolded       WRITE setFolded         NOTIFY foldedChanged)
+
     Q_PROPERTY(QChar           phrasesSeparator READ getPhrasesSeparator                          CONSTANT)
     Q_PROPERTY(QList<QObject*> seedPhrases      READ getSeedPhrases                               NOTIFY seedPhrasesChanged)
     Q_PROPERTY(bool            isCurrentSeedValid       READ isCurrentSeedValid                                NOTIFY isCurrentSeedValidChanged)
@@ -37,6 +40,8 @@ class SwapEthSettingsItem : public QObject
 
     Q_PROPERTY(bool canEdit      READ getCanEdit                            NOTIFY canEditChanged)
     Q_PROPERTY(bool isConnected             READ getIsConnected             NOTIFY connectionChanged)
+    Q_PROPERTY(QString connectionStatus     READ getConnectionStatus        NOTIFY connectionStatusChanged)
+    Q_PROPERTY(QString connectionErrorMsg   READ getConnectionErrorMsg      NOTIFY connectionErrorMsgChanged)
 
 
 public:
@@ -56,6 +61,9 @@ private:
     QString getTitle() const;
     QString getShowSeedDialogTitle() const;
     QString getGeneralTitle() const;
+    QString getCoinID() const;
+    bool getFolded() const;
+    void setFolded(bool value);
     QList<QObject*> getSeedPhrases();
     QChar getPhrasesSeparator() const;
     bool isCurrentSeedValid() const;
@@ -75,6 +83,8 @@ private:
 
     bool getCanEdit() const;
     bool getIsConnected() const;
+    QString getConnectionStatus() const;
+    QString getConnectionErrorMsg() const;
 
     void applyNodeAddress(const QString& address);
     std::vector<std::string> GetSeedPhraseFromSeedItems() const;
@@ -88,6 +98,9 @@ signals:
     void connectionChanged();
     void accountIndexChanged();
     void contractAddressChanged();
+    void connectionStatusChanged();
+    void connectionErrorMsgChanged();
+    void foldedChanged();
 
 private:
     std::weak_ptr<SwapEthClientModel> m_coinClient;
@@ -99,4 +112,5 @@ private:
     QString m_nodePort;
     unsigned int m_accountIndex;
     QString m_contractAddress;
+    bool m_isFolded = true;
 };

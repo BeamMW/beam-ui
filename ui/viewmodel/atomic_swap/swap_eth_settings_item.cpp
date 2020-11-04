@@ -30,6 +30,9 @@ namespace
 SwapEthSettingsItem::SwapEthSettingsItem()
     : m_coinClient(AppModel::getInstance().getSwapEthClient())
 {
+    auto coinClient = m_coinClient.lock();
+    connect(coinClient.get(), SIGNAL(statusChanged()), this, SIGNAL(connectionStatusChanged()));
+    connect(coinClient.get(), SIGNAL(connectionErrorChanged()), this, SIGNAL(connectionErrorMsgChanged()));
     LoadSettings();
 }
 
@@ -52,7 +55,8 @@ void SwapEthSettingsItem::applySettings()
     m_settings->m_accountIndex = m_accountIndex;
     m_settings->m_shouldConnect = m_shouldConnect;
     m_settings->m_address = formatAddress(m_nodeAddress, m_nodePort).toStdString();
-    m_settings->m_contractAddress = m_contractAddress.toStdString();
+    // TODO roman.strilets hash or aggregate
+    m_settings->m_swapContractAddress = m_contractAddress.toStdString();
 
     coinClient->SetSettings(*m_settings);
 }
@@ -119,6 +123,21 @@ QString SwapEthSettingsItem::getGeneralTitle() const
     return qtTrId("general-ethereum");
 }
 
+QString SwapEthSettingsItem::getCoinID() const
+{
+    return beamui::getCurrencyLabel(beamui::Currencies::Ethereum);
+}
+
+bool SwapEthSettingsItem::getFolded() const
+{
+    return m_isFolded;
+}
+
+void SwapEthSettingsItem::setFolded(bool value)
+{
+    m_isFolded = value;
+}
+
 QList<QObject*> SwapEthSettingsItem::getSeedPhrases()
 {
     return m_seedPhraseItems;
@@ -154,7 +173,8 @@ void SwapEthSettingsItem::LoadSettings()
         SetSeedPhrase(m_settings->m_secretWords);
         applyNodeAddress(str2qstr(m_settings->m_address));
         setAccountIndex(m_settings->m_accountIndex);
-        setContractAddress(str2qstr(m_settings->m_contractAddress));
+        // TODO roman.strilets hash or aggregate
+        setContractAddress(str2qstr(m_settings->m_swapContractAddress));
         shouldConnect(m_settings->m_shouldConnect);
     }
 }
@@ -276,6 +296,44 @@ bool SwapEthSettingsItem::getCanEdit() const
 bool SwapEthSettingsItem::getIsConnected() const
 {
     return m_shouldConnect;
+}
+
+QString SwapEthSettingsItem::getConnectionStatus() const
+{
+    using beam::ethereum::Client;
+
+    switch (m_coinClient.lock()->getStatus())
+    {
+    case Client::Status::Uninitialized:
+        return "uninitialized";
+
+    case Client::Status::Initialized:
+    case Client::Status::Connecting:
+        return "disconnected";
+
+    case Client::Status::Connected:
+        return "connected";
+
+    case Client::Status::Failed:
+    case Client::Status::Unknown:
+    default:
+        return "error";
+    }
+}
+
+QString SwapEthSettingsItem::getConnectionErrorMsg() const
+{
+    using beam::ethereum::IBridge;
+
+    switch (m_coinClient.lock()->getConnectionError())
+    {
+    case IBridge::ErrorType::IOError:
+        //% "Cannot connect to node. Please check your network connection."
+        return qtTrId("swap-connection-error");
+
+    default:
+        return QString();
+    }
 }
 
 void SwapEthSettingsItem::applyNodeAddress(const QString& address)

@@ -294,9 +294,13 @@ ColumnLayout {
                     phrasesSeparator:         viewModel.ethSettings.phrasesSeparator
                     isCurrentSeedValid:       viewModel.ethSettings.isCurrentSeedValid
                     mainSettingsViewModel:    viewModel
+                    hasStatusIndicatior:      true
+                    folded:                   creating ? (swapMode == viewModel.ethSettings.coinID ? false : (swapMode == "ALL" ? viewModel.ethSettings.isConnected : true)) : viewModel.ethSettings.folded
 
                     canEdit:                  viewModel.ethSettings.canEdit
                     isConnected:              viewModel.ethSettings.isConnected
+                    connectionStatus:         viewModel.ethSettings.connectionStatus
+                    connectionErrorMsg:       viewModel.ethSettings.connectionErrorMsg
 
                     address:             viewModel.ethSettings.nodeAddress
                     port:                viewModel.ethSettings.nodePort
@@ -310,13 +314,13 @@ ColumnLayout {
                             swapEthSettings.isConnected          = viewModel.ethSettings.isConnected;
                             swapEthSettings.title                = viewModel.ethSettings.title;
                         }
-                        /*onConnectionStatusChanged: {
-                            swapEthSettings.connectionStatus     = modelData.connectionStatus;
+                        onConnectionStatusChanged: {
+                            swapEthSettings.connectionStatus     = viewModel.ethSettings.connectionStatus;
                         }
 
                         onConnectionErrorMsgChanged: {
-                            swapEthSettings.connectionErrorMsg   = modelData.connectionErrorMsg;
-                        }*/
+                            swapEthSettings.connectionErrorMsg   = viewModel.ethSettings.connectionErrorMsg;
+                        }
 
                         onNodeAddressChanged: swapEthSettings.address  = viewModel.ethSettings.nodeAddress
                         onNodePortChanged:    swapEthSettings.port     = viewModel.ethSettings.nodePort
@@ -334,6 +338,36 @@ ColumnLayout {
                     onRestoreSeedPhrases: viewModel.ethSettings.restoreSeedPhrases()
                     onCopySeedPhrases: viewModel.ethSettings.copySeedPhrases()
                     onValidateCurrentSeedPhrase: viewModel.ethSettings.validateCurrentSeedPhrase()
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "folded"
+                        value:    swapEthSettings.folded
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "nodeAddress"
+                        value:    swapEthSettings.address
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "nodePort"
+                        value:    swapEthSettings.port
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "accountIndex"
+                        value:    swapEthSettings.accountIndex
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "contractAddress"
+                        value:    swapEthSettings.contractAddress
+                    }
                 }
             }
         }
