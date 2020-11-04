@@ -19,7 +19,7 @@ QString Theme::name()
 {
 #ifdef BEAM_BEAMX
     return "beamx";
-#elif BEAM_TESTNET
+#elif defined(BEAM_TESTNET)
     return "testnet";
 #elif defined(BEAM_MAINNET)
     return "mainnet";
