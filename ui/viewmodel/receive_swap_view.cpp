@@ -243,7 +243,7 @@ void ReceiveSwapViewModel::setAmountSent(QString value)
             if (_amountSentGrothes)
             {
                 _shieldedInputsFee = 0;
-                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes);
+                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes, beam::Asset::s_BeamID);
             }
         }
     }
@@ -268,7 +268,7 @@ void ReceiveSwapViewModel::setSentFee(unsigned int value)
         {
             _feeChangedByUI = true;
             _shieldedInputsFee = 0;
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes, beam::Asset::s_BeamID);
         }
     }
 }

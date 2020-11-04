@@ -172,7 +172,7 @@ void SendSwapViewModel::setSendAmount(QString value)
         if (_sendCurrency == Currency::CurrBeam && _walletModel.hasShielded())
         {
             _shieldedInputsFee = 0;
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
         }
     }
 }
@@ -195,7 +195,7 @@ void SendSwapViewModel::setSendFee(unsigned int value)
         {
             _feeChangedByUI = true;
             _shieldedInputsFee = 0;
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
         }
     }
 }
@@ -354,7 +354,7 @@ void SendSwapViewModel::recalcAvailable()
     {
     case Currency::CurrBeam:
         _changeGrothes = 0;
-        _walletModel.getAsync()->calcChange(_sendAmountGrothes + _sendFeeGrothes);
+        _walletModel.getAsync()->calcChange(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
         return;
     default:
         // TODO:SWAP implement for all currencies

@@ -133,9 +133,10 @@ void WalletModel::onSyncProgressUpdated(int done, int total)
     emit syncProgressUpdated(done, total);
 }
 
-void WalletModel::onChangeCalculated(beam::Amount change)
+void WalletModel::onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId)
 {
-    emit changeCalculated(change);
+    if (assetId == Asset::s_BeamID)
+        emit changeCalculated(changeBeam);
 }
 
 void WalletModel::onShieldedCoinsSelectionCalculated(const ShieldedCoinsSelectionInfo& selectionRes)
@@ -332,37 +333,38 @@ uint32_t WalletModel::getClientRevision() const
 
 beam::Amount WalletModel::getAvailable() const
 {
-    return m_status.available + m_status.shielded;
+    auto status = m_status.GetBeamStatus();
+    return status.available + status.shielded;
 }
 
 beam::Amount WalletModel::getReceiving() const
 {
-    return m_status.receiving;
+    return m_status.GetBeamStatus().receiving;
 }
 
 beam::Amount WalletModel::getReceivingIncoming() const
 {
-    return m_status.receivingIncoming;
+    return m_status.GetBeamStatus().receivingIncoming;
 }
 
 beam::Amount WalletModel::getReceivingChange() const
 {
-    return m_status.receivingChange;
+    return m_status.GetBeamStatus().receivingChange;
 }
 
 beam::Amount WalletModel::getSending() const
 {
-    return m_status.sending;
+    return m_status.GetBeamStatus().sending;
 }
 
 beam::Amount WalletModel::getMaturing() const
 {
-    return m_status.maturing;
+    return m_status.GetBeamStatus().maturing;
 }
 
 beam::Amount WalletModel::getMaturingMP() const
 {
-    return m_status.maturingMP;
+    return m_status.GetBeamStatus().maturingMP;
 }
 
 beam::Height WalletModel::getCurrentHeight() const
@@ -382,51 +384,52 @@ beam::Block::SystemState::ID WalletModel::getCurrentStateID() const
 
 bool WalletModel::hasShielded() const
 {
-    return !!m_status.shielded;
+    return !!m_status.GetBeamStatus().shielded;
 }
 
 void WalletModel::setStatus(const beam::wallet::WalletStatus& status)
 {
-    if (m_status.available != status.available || m_status.shielded != status.shielded)
+    if (m_status.GetBeamStatus().available != status.GetBeamStatus().available ||
+        m_status.GetBeamStatus().shielded != status.GetBeamStatus().shielded)
     {
-        m_status.available = status.available;
-        m_status.shielded = status.shielded;
+        m_status.all[Asset::s_BeamID].available = status.GetBeamStatus().available;
+        m_status.all[Asset::s_BeamID].shielded = status.GetBeamStatus().shielded;
         emit availableChanged();
     }
 
-    if (m_status.receiving != status.receiving)
+    if (m_status.GetBeamStatus().receiving != status.GetBeamStatus().receiving)
     {
-        m_status.receiving = status.receiving;
+        m_status.all[Asset::s_BeamID].receiving = status.GetBeamStatus().receiving;
         emit receivingChanged();
     }
 
-    if (m_status.receivingIncoming != status.receivingIncoming)
+    if (m_status.GetBeamStatus().receivingIncoming != status.GetBeamStatus().receivingIncoming)
     {
-        m_status.receivingIncoming = status.receivingIncoming;
+        m_status.all[Asset::s_BeamID].receivingIncoming = status.GetBeamStatus().receivingIncoming;
         emit receivingIncomingChanged();
     }
 
-    if (m_status.receivingChange != status.receivingChange)
+    if (m_status.GetBeamStatus().receivingChange != status.GetBeamStatus().receivingChange)
     {
-        m_status.receivingChange = status.receivingChange;
+        m_status.all[Asset::s_BeamID].receivingChange = status.GetBeamStatus().receivingChange;
         emit receivingChangeChanged();
     }
 
-    if (m_status.sending != status.sending)
+    if (m_status.GetBeamStatus().sending != status.GetBeamStatus().sending)
     {
-        m_status.sending = status.sending;
+        m_status.all[Asset::s_BeamID].sending = status.GetBeamStatus().sending;
         emit sendingChanged();
     }
 
-    if (m_status.maturing != status.maturing)
+    if (m_status.GetBeamStatus().maturing != status.GetBeamStatus().maturing)
     {
-        m_status.maturing = status.maturing;
+        m_status.all[Asset::s_BeamID].maturing = status.GetBeamStatus().maturing;
         emit maturingChanged();
     }
 
-    if (m_status.maturingMP != status.maturingMP)
+    if (m_status.GetBeamStatus().maturingMP != status.GetBeamStatus().maturingMP)
     {
-        m_status.maturingMP = status.maturingMP;
+        m_status.all[Asset::s_BeamID].maturingMP = status.GetBeamStatus().maturingMP;
         emit maturingChanged();
     }
 

@@ -78,11 +78,11 @@ void SendViewModel::setFeeGrothes(unsigned int value)
 
         if (_walletModel.hasShielded())
         {
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes, _isShieldedTx);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes, beam::Asset::s_BeamID, _isShieldedTx);
         }
         else
         {
-            _walletModel.getAsync()->calcChange(_sendAmountGrothes + _feeGrothes);
+            _walletModel.getAsync()->calcChange(_sendAmountGrothes, _feeGrothes, beam::Asset::s_BeamID);
             _feeChangedByUi = false;
             emit canSendChanged();
         }
@@ -136,7 +136,7 @@ void SendViewModel::setSendAmount(QString value)
             }
             _sendAmountGrothes = amount;
             emit sendAmountChanged();
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes, _isShieldedTx);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes, beam::Asset::s_BeamID, _isShieldedTx);
         }
         else
         {
@@ -149,7 +149,7 @@ void SendViewModel::setSendAmount(QString value)
             }
             _sendAmountGrothes = amount;
             emit sendAmountChanged();
-            _walletModel.getAsync()->calcChange(_sendAmountGrothes + _feeGrothes);
+            _walletModel.getAsync()->calcChange(_sendAmountGrothes, _feeGrothes, beam::Asset::s_BeamID);
             emit canSendChanged();
             _maxAvailable = false;
         }
@@ -226,7 +226,7 @@ void SendViewModel::setIsShieldedTx(bool value)
             }
             else
             {
-                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _minimalFeeGrothes, _isShieldedTx);
+                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _minimalFeeGrothes, beam::Asset::s_BeamID,  _isShieldedTx);
             }
         }
         else
@@ -348,9 +348,9 @@ void SendViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::Shiel
 {
     _shieldedInputsFee = selectionRes.shieldedInputsFee;
 
-    if (selectionRes.selectedSum < selectionRes.requestedSum + selectionRes.requestedFee && _maxAvailable)
+    if (selectionRes.selectedSumBeam < selectionRes.requestedSum + selectionRes.requestedFee && _maxAvailable)
     {
-        _sendAmountGrothes = selectionRes.selectedSum - selectionRes.selectedFee;
+        _sendAmountGrothes = selectionRes.selectedSumBeam - selectionRes.selectedFee;
         emit sendAmountChanged();
         _maxAvailable = false;
     }
@@ -365,7 +365,7 @@ void SendViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::Shiel
     }
     _feeChangedByUi = false;
 
-    onChangeCalculated(selectionRes.change);
+    onChangeCalculated(selectionRes.changeBeam);
 }
 
 void SendViewModel::onNeedExtractShieldedCoins(bool val)
