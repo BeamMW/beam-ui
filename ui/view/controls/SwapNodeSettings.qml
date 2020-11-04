@@ -623,7 +623,7 @@ when connection is established"
             CustomButton {
                 leftPadding:            25
                 rightPadding:           25
-                visible:                applySettingsButtonId.visible
+                visible:                !canConnect() && !canDisconnect()
                 text:                   qsTrId("general-cancel")
                 icon.source:            enabled ? "qrc:/assets/icon-cancel-white.svg" : "qrc:/assets/icon-cancel.svg"
                 enabled:                isSettingsChanged()
@@ -646,7 +646,7 @@ when connection is established"
             CustomButton {
                 leftPadding:            25
                 rightPadding:           25
-                visible:                connectButtonId.visible
+                visible:                canConnect()
                 //% "clear"
                 text:                   qsTrId("settings-swap-clear")
                 icon.source:            "qrc:/assets/icon-delete.svg"
@@ -672,7 +672,8 @@ when connection is established"
                 id:                     applySettingsButtonId
                 leftPadding:            25
                 rightPadding:           25
-                visible:                !connectButtonId.visible && !disconnectButtonId.visible
+                // TODO roman.strilets need to refactor this
+                visible:                !canConnect() && !canDisconnect()
                 text:                   qsTrId("settings-apply")
                 icon.source:            "qrc:/assets/icon-done.svg"
                 enabled:                isSettingsChanged() && canApplySettings()
