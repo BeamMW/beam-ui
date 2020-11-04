@@ -52,5 +52,5 @@ AbstractColors {
     property string linkStyle:   "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
     property string explorerUrl: "https://master-net.explorer.beam.mw/"
     property string faucetUrl:   "https://faucet.beamprivacy.community/"
-    property string appsUrl:     "http://127.0.0.1:80/"
+    property string appsUrl:     "http://3.136.182.25:80/app/index.html"
 }
