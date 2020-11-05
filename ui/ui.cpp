@@ -61,6 +61,7 @@
 #include "version.h"
 #include "utility/helpers.h"
 #include "model/translator.h"
+#include "viewmodel/applications/public.h"
 #include "model/qr.h"
 
 #if defined(BEAM_USE_STATIC)
@@ -104,34 +105,19 @@ int main (int argc, char* argv[])
 {
     wallet::g_AssetsEnabled = true;
 
-#if defined Q_OS_WIN
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
+    QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+
     block_sigpipe();
-    //QLoggingCategory::setFilterRules(QStringLiteral("qt.qml.binding.removal.info=true"));
     QApplication app(argc, argv);
-
-	app.setWindowIcon(QIcon(Theme::iconPath()));
-
-    QApplication::setApplicationName(AppName);
-
     QDir appDataDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
+
+    QApplication::setWindowIcon(QIcon(Theme::iconPath()));
+    QApplication::setApplicationName(AppName);
 
     try
     {
-
-        // TODO: ugly temporary fix for unused variable, GCC only
-#if defined(__GNUC__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-variable"
-#endif
-
         auto [options, visibleOptions] = createOptionsDescription(GENERAL_OPTIONS | UI_OPTIONS | WALLET_OPTIONS);
-
-#if defined(__GNUC__)
-#pragma GCC diagnostic pop
-#endif
-
         po::variables_map vm;
 
         try
@@ -276,6 +262,7 @@ int main (int argc, char* argv[])
             qmlRegisterType<ExchangeRatesManager>("Beam.Wallet", 1, 0, "ExchangeRatesManager");
             qmlRegisterType<SortFilterProxyModel>("Beam.Wallet", 1, 0, "SortFilterProxyModel");
             qmlRegisterType<QR>("Beam.Wallet", 1, 0, "QR");
+            beamui::applications::RegisterQMLTypes();
 
             engine.load(QUrl("qrc:/root.qml"));
             if (engine.rootObjects().count() < 1)
@@ -284,8 +271,8 @@ int main (int argc, char* argv[])
                 return -1;
             }
 
-            QObject* topLevel = engine.rootObjects().value(0);
-            QQuickWindow* window = qobject_cast<QQuickWindow*>(topLevel);
+            auto topLevel = engine.rootObjects().value(0);
+            auto window = qobject_cast<QQuickWindow*>(topLevel);
 
             if (!window)
             {
@@ -293,11 +280,10 @@ int main (int argc, char* argv[])
                 return -1;
             }
 
-            //window->setMinimumSize(QSize(768, 540));
             window->setFlag(Qt::WindowFullscreenButtonHint);
             window->show();
 
-            return app.exec();
+            return QApplication::exec();
         }
         catch (const po::error& e)
         {

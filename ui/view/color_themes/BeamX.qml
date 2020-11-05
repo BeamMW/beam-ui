@@ -11,27 +11,32 @@ AbstractColors {
     property color content_opposite:      "#171717"
     property color validator_warning:     "#f4ce4a"
     property color validator_error:       "#ff625c"
-    property color section:               "#2c5066"
+    property color section:               Qt.rgba(255, 255, 255, 0.5)
 
     property color navigation_background: "#000000"
-    property color background_main:       "#171717"
-    property color background_main_top:   "#393939"
+    property color background_main:       "#271727"
+    property color background_main_top:   "#744474"
     property color background_second:     Qt.rgba(255, 255, 255, 0.05)
     property color background_row_even:   "#07ffffff"
     property color background_row_odd:    "#0cffffff"
-    property color background_details:    "#3d3d3d"
+    property color background_details:    "#3e384a"
     property color background_button:     Qt.rgba(255, 255, 255, 0.1)
-    property color background_popup:      "#323232"
-    property color row_selected:          "#353636"
-    property color separator:             "#353636"
-    property color table_header:          "#323232"
-    property color active :               "#00f6d2" // bright-teal
-    property color passive:               "#d6d9e0" // silver
-        
-    property color caps_warning:          "#ffffff"
+    property color background_popup:      "#412541"
+    property color row_selected:          "#534e5e"
+    property color separator:             "#342e41"
+    property color table_header:          "#3e384a"
 
-    property color currencyPaneRight:     "#3b3b3b"
-    property color currencyPaneLeftBEAM:  "#00f6d2"
+    property color active :               "#DC97DC" // bright-teal
+    property color passive:               "#d6d9e0"  // silver
+
+    property color caps_warning:          "#000000"
+
+    property string linkStyle: "<style>a:link {color: '#DC97DC'; text-decoration: none;}</style>"
+    property string explorerUrl: "https://testnet.explorer.beam.mw/"
+    property string faucetUrl: "https://faucet.beamprivacy.community/"
+
+    property color currencyPaneRight:     "#5B345B"
+    property color currencyPaneLeftBEAM:  "#DC97DC"
     property color currencyPaneLeftBTC:   "#fcaf38"
     property color currencyPaneLeftLTC:   "#bebebe"
     property color currencyPaneLeftQTUM:  "#2e9ad0"
@@ -44,9 +49,4 @@ AbstractColors {
 
     property color swapCurrencyStateIndicator:  "#ff746b"
     property color swapDisconnectNode:          "#f9605b"
-
-    property string linkStyle:   "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
-    property string explorerUrl: "https://master-net.explorer.beam.mw/"
-    property string faucetUrl:   "https://faucet.beamprivacy.community/"
-    property string appsUrl:     "http://3.136.182.25:80/app/index.html"
 }

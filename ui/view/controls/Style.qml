@@ -8,10 +8,12 @@ AbstractColors {
 		property AbstractColors masternet: Masternet{}
 		property AbstractColors testnet: Testnet{}
 		property AbstractColors mainnet: Mainnet{}
+		property AbstractColors beamx: BeamX{}
 	}
 
 	Component.onCompleted: {
 		var currentTheme = themes[Theme.name()]
+
 		if (!currentTheme) {
 			currentTheme = themes['masternet'];
 		}
@@ -22,7 +24,6 @@ AbstractColors {
 				&& propName != "themes") {
 				this[propName] = currentTheme[propName]
 			}
-				
 		}
 	}
 }
