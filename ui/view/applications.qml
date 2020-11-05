@@ -10,12 +10,26 @@ ColumnLayout {
     id: control
     Layout.fillWidth: true
 
-    property var  appsList: undefined
-    property bool hasApps:  !!appsList && appsList.length > 0
-    property string errorMessage: ""
+    property var     appsList: undefined
+    property bool    hasApps:  !!appsList && appsList.length > 0
+    property string  errorMessage: ""
+    property var     activeApp: undefined
 
     ApplicationsViewModel {
         id: viewModel
+    }
+
+    //
+    // Page Header (Title + Status Bar)
+    //
+    Title {
+        //% "Applications"
+        text: qsTrId("apps-title")
+    }
+
+    StatusBar {
+        id: statusBar
+        model: statusbarModel
     }
 
     //
@@ -32,38 +46,37 @@ ColumnLayout {
         registeredObjects: [webapiBEAM]
     }
 
-    /*WebEngineView {
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        Layout.bottomMargin: 9
-        Layout.topMargin: 34
-
+    WebEngineView {
         id: webView
-        url: Style.appsUrl
+
+        Layout.fillWidth:    true
+        Layout.fillHeight:   true
+        Layout.bottomMargin: 10
+        Layout.topMargin:    34
+
         webChannel: apiChannel
+        visible: false
 
         // TODO:check why cache doesn't respect headers and always load cached page
         profile.httpCacheType: WebEngineProfile.NoCache
-    }
-    */
 
-    //
-    // Page Header (Title + Status Bar)
-    //
-    Title {
-        //% "Applications"
-        text: qsTrId("apps-title")
+        onLoadingChanged: {
+            if (control.activeApp && !this.loading) {
+                this.visible = true
+            }
+        }
     }
 
-    StatusBar {
-        id: statusBar
-        model: statusbarModel
+    function launchApp(app) {
+        control.activeApp = app
+        webView.url = app.url
+       // webView.visible = true
     }
 
     Item {
         Layout.fillHeight: true
         Layout.fillWidth:  true
-        visible: !control.hasApps
+        visible: !webView.visible && !appsView.visible
 
         SFText {
             anchors.horizontalCenter: parent.horizontalCenter
@@ -75,6 +88,11 @@ ColumnLayout {
             }
 
             text: {
+                if (control.activeApp) {
+                    //% "Loading '%1'..."
+                    return qsTrId("apps-loading-app").arg(control.activeApp.name)
+                }
+
                 if (control.errorMessage.length) {
                     return control.errorMessage
                 }
@@ -92,6 +110,7 @@ ColumnLayout {
 
     // Actuall apps list
     ScrollView {
+        id: appsView
         Layout.topMargin:  50
         Layout.fillHeight: true
         Layout.fillWidth:  true
@@ -99,7 +118,7 @@ ColumnLayout {
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         ScrollBar.vertical.policy: ScrollBar.AsNeeded
         clip: true
-        visible: control.hasApps
+        visible: control.hasApps && !control.activeApp
 
         ColumnLayout
         {
@@ -179,10 +198,7 @@ ColumnLayout {
                                 hoverEnabled:     true
                                 propagateComposedEvents: true
                                 preventStealing:  true
-
-                                onClicked: function () {
-                                    BeamGlobals.showMessage("LAUNCH")
-                                }
+                                onClicked:        launchApp(modelData)
                             }
                         }
                     }
@@ -215,6 +231,8 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
+        viewModel.onCompleted(webView)
+
         if (Style.appsUrl.length) {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function()
@@ -240,7 +258,6 @@ ColumnLayout {
             xhr.send('')
         }
 
-        //viewModel.onCompleted(webView)
         control.appsList = appendDevApp(undefined)
     }
 }
