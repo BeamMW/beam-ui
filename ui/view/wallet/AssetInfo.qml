@@ -44,7 +44,8 @@ Control {
         //% "%1 outgoing transactions"
         var outf = qsTrId("asset-outgoing-tip")
 
-        //% "%1 active transactions\n(%2 incoming, %3 outgoing)"
+        /*% "%1 active transactions
+(%2 incoming, %3 outgoing)" */
         var inoutf = qsTrId("asset-inout-tip")
 
         if (control.inTxCnt && control.outTxCnt) {
