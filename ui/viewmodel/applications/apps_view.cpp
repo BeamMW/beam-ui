@@ -20,4 +20,14 @@ namespace beamui::applications {
         assert(webView != nullptr);
         LOG_INFO() << "AppsViewModel::OnCompleted, webView is " << webView;
     }
+
+    QString AppsViewModel::getDevAppURL() const
+    {
+        return "http://www.tut.by/";
+    }
+
+    QString AppsViewModel::getDevAppName() const
+    {
+        return "TUT.BY";
+    }
 }

@@ -54,6 +54,9 @@ namespace
     const char* kBeamNewsActive = "notifications/beam_news";
     const char* kTxStatusActive = "notifications/tx_status";
 
+    const char* kDevAppURL  = "devapp/url";
+    const char* kDevAppName = "devapp/name";
+
     const std::map<QString, QString> kSupportedLangs { 
         { "zh_CN", "Chinese Simplified"},
         { "en_US", "English" },
@@ -572,4 +575,14 @@ void WalletSettings::reportProblem()
 void WalletSettings::applyChanges()
 {
     AppModel::getInstance().applySettingsChanges();
+}
+
+QString WalletSettings::getDevBeamAppUrl()
+{
+    return m_data.value(kDevAppURL).toString();
+}
+
+QString WalletSettings::getDevBeamAppName()
+{
+    return m_data.value(kDevAppName).toString();
 }

@@ -84,6 +84,10 @@ public:
 
     static void openFolder(const QString& path);
 
+    // dev BEAM Apps
+    QString getDevBeamAppUrl();
+    QString getDevBeamAppName();
+
 public:
     static const char* WalletCfg;
     static const char* LogsFolder;
