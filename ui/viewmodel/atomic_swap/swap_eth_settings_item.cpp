@@ -55,6 +55,7 @@ void SwapEthSettingsItem::applySettings()
     m_settings->m_accountIndex = m_accountIndex;
     m_settings->m_shouldConnect = m_shouldConnect;
     m_settings->m_address = formatAddress(m_nodeAddress, m_nodePort).toStdString();
+    m_settings->m_secretWords = GetSeedPhraseFromSeedItems();
     // TODO roman.strilets hash or aggregate
     m_settings->m_swapContractAddress = m_contractAddress.toStdString();
 
@@ -95,7 +96,15 @@ void SwapEthSettingsItem::copySeedPhrases()
 
 void SwapEthSettingsItem::validateCurrentSeedPhrase()
 {
-    std::vector<std::string> seedPhrases = GetSeedPhraseFromSeedItems();
+    std::vector<std::string> seedPhrases;
+    seedPhrases.reserve(WORD_COUNT);
+
+    // extract seed phrase from user input
+    for (const auto phraseItem : m_seedPhraseItems)
+    {
+        auto word = static_cast<SeedPhraseItem*>(phraseItem)->getValue().toStdString();
+        seedPhrases.push_back(word);
+    }
 
     setIsCurrentSeedValid(isValidMnemonic(seedPhrases, language::en));
 }

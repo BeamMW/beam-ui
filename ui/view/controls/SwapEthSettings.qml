@@ -93,7 +93,7 @@ SettingsFoldable {
 
     function applyChanges() {
         internalValues.save();
-        control.applyElectrum();
+        control.applySettings();
     }
 
     function restoreSettings() {
