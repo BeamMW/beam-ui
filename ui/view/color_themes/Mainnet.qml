@@ -14,8 +14,8 @@ AbstractColors {
     property color validator_error:       "#ff625c"
     property color section:               "#2c5066"
 
-    property color navigation_background: "#000000" 
-    property color background_main:       "#042548" 
+    property color navigation_background: "#000000"
+    property color background_main:       "#042548"
     property color background_main_top:   "#035b8f"
     property color background_second:     Qt.rgba(255, 255, 255, 0.05)
     property color background_row_even:   "#07ffffff"
@@ -48,5 +48,5 @@ AbstractColors {
     property string linkStyle:   "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
     property string explorerUrl: "https://explorer.beam.mw/"
     property string faucetUrl:   "https://faucet.beamprivacy.community/"
-    property string appsUrl:     "http://3.136.182.25:80/app/index.html"
+    property string appsUrl:     "http://3.136.182.25:80/app/appslist.json"
 }
