@@ -2850,26 +2850,28 @@ public offline</source>
         <source>Applications</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="apps-run">
-        <source>launch</source>
-        <oldsource>Run</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-loading">
-        <source>Loading...</source>
+    <message id="apps-loading-app">
+        <source>Loading &apos;%1&apos;...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-nothing">
         <source>There are no applications at the moment</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="apps-load-error">
-        <source>Failed to load applications list, %1</source>
-        <oldsource>Failed to load applications list, code %1</oldsource>
+    <message id="apps-loading">
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-run">
+        <source>launch</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-load-error">
+        <source>Failed to load applications list, %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
