@@ -4,7 +4,7 @@ image: Visual Studio 2019
 environment:
   BOOST_ROOT: C:\Libraries\boost_1_71_0
   OPENSSL_ROOT_DIR: c:\beam-libs\openssl
-  QT5_ROOT_DIR: c:/beam-libs/qt5-static-win
+  QT5_ROOT_DIR: C:\Qt\5.15.1\msvc2019_64
   QML_IMPORT_PATH: $(QT5_ROOT_DIR)\qml
   BUILD_SERVER:
     secure: 5oPcbgETrXo4nmgoqILqgzdjyghCp4tEsBR4gzpEall4E9Vy77ArnCHSRjtLIEai  
@@ -18,7 +18,6 @@ before_build:
   - cmd: cd ..
   - cmd: echo %QML_IMPORT_PATH%
   - cmd: git clone --depth=1 https://github.com/BeamMW/libs.git c:/beam-libs
-  - cmd: git clone --depth=1 https://github.com/nesbox/qt5-static-win.git %QT5_ROOT_DIR%
   - cmd: cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_BUILD_TYPE=%BUILD_CONFIG% -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=%APPVEYOR_REPO_BRANCH% -DBEAM_HW_WALLET=Off .
 
 test_script:
