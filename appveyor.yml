@@ -16,8 +16,9 @@ before_build:
   - cmd: cd beam
   - cmd: git apply 3rdparty/protobuf-patch.diff
   - cmd: cd ..
+  - cmd: echo %QML_IMPORT_PATH%
   - cmd: git clone --depth=1 https://github.com/BeamMW/libs.git c:/beam-libs
-  - cmd: git clone --depth=1 https://github.com/nesbox/qt5-static-win.git $(QT5_ROOT_DIR)
+  - cmd: git clone --depth=1 https://github.com/nesbox/qt5-static-win.git %QT5_ROOT_DIR%
   - cmd: cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_BUILD_TYPE=%BUILD_CONFIG% -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=%APPVEYOR_REPO_BRANCH% -DBEAM_HW_WALLET=Off .
 
 test_script:
