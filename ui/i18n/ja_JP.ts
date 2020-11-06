@@ -692,14 +692,6 @@
         <source>Connection error</source>
         <translation>接続エラー</translation>
     </message>
-    <message id="start-view-printer-not-found-error">
-        <source>Printer is not found. Please, check your printer preferences.</source>
-        <translation>プリンタが見つかりません。プリンタの設定を確認してください。</translation>
-    </message>
-    <message id="start-view-printer-error">
-        <source>Failed to print seed phrase. Please, check your printer.</source>
-        <translation>シードフレーズの印刷に失敗しました。プリンタを確認してください。</translation>
-    </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
         <translation>SQLiteデータベースファイル（*.db）</translation>

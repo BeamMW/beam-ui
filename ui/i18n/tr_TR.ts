@@ -692,14 +692,6 @@
         <source>Connection error</source>
         <translation>Bağlantı hatası</translation>
     </message>
-    <message id="start-view-printer-not-found-error">
-        <source>Printer is not found. Please, check your printer preferences.</source>
-        <translation>Yazıcı bulunamadı. Lütfen yazıcınızın tercihlerini kontrol edin.</translation>
-    </message>
-    <message id="start-view-printer-error">
-        <source>Failed to print seed phrase. Please, check your printer.</source>
-        <translation>Anahtar kelimeler yazdırılamadı. Lütfen yazıcınızı kontrol edin.</translation>
-    </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
         <translation>SQLite database dosyası (*.db)</translation>

@@ -692,14 +692,6 @@
         <source>Connection error</source>
         <translation>ผิดพลาดในการเชื่อมต่อ</translation>
     </message>
-    <message id="start-view-printer-not-found-error">
-        <source>Printer is not found. Please, check your printer preferences.</source>
-        <translation>ไม่พบปริ้นเตอร์ กรุณาตรวจสอบการตั้งค่าปริ้นเตอร์</translation>
-    </message>
-    <message id="start-view-printer-error">
-        <source>Failed to print seed phrase. Please, check your printer.</source>
-        <translation>ไม่สามารถพิมพ์กลุ่มคำลับได้ กรุณาตรวจสอบปริ้นเตอร์ของคุณ</translation>
-    </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
         <translation>ไฟล์ SQLite Database (*.db)</translation>

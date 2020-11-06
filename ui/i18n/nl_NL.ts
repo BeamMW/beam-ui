@@ -692,14 +692,6 @@
         <source>Connection error</source>
         <translation>Verbindingsfout</translation>
     </message>
-    <message id="start-view-printer-not-found-error">
-        <source>Printer is not found. Please, check your printer preferences.</source>
-        <translation>Printer is niet gevonden. Controleer uw printer voorkeuren.</translation>
-    </message>
-    <message id="start-view-printer-error">
-        <source>Failed to print seed phrase. Please, check your printer.</source>
-        <translation>Herstelzin printen mislukt. Controleer uw printer.</translation>
-    </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
         <translation>SQLite database bestand (*.db)</translation>

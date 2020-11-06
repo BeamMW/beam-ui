@@ -692,14 +692,6 @@
         <source>Connection error</source>
         <translation>Yhteysvirhe</translation>
     </message>
-    <message id="start-view-printer-not-found-error">
-        <source>Printer is not found. Please, check your printer preferences.</source>
-        <translation>Tulostinta ei löydy. Tarkista laitteesi tulostinasetukset.</translation>
-    </message>
-    <message id="start-view-printer-error">
-        <source>Failed to print seed phrase. Please, check your printer.</source>
-        <translation>Seed phrasen tulostus epäonnistui. Ole hyvä ja tarkista tulostin.</translation>
-    </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
         <translation>SQLiten tietokantatiedosto (*.db)</translation>

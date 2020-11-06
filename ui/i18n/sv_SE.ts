@@ -692,14 +692,6 @@
         <source>Connection error</source>
         <translation>Anslutningsfel</translation>
     </message>
-    <message id="start-view-printer-not-found-error">
-        <source>Printer is not found. Please, check your printer preferences.</source>
-        <translation>Skrivare ej hittad. Vänligen kontrollera skrivarinställningar.</translation>
-    </message>
-    <message id="start-view-printer-error">
-        <source>Failed to print seed phrase. Please, check your printer.</source>
-        <translation>Misslyckades att skriva ut seed phrase. Vänligen kontrollera skrivaren.</translation>
-    </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
         <translation>SQLite databas-fil (*.db)</translation>

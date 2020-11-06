@@ -693,14 +693,6 @@ Vous essayez de restaurer un portefeuille Beam existant. Veuillez noter que si v
         <source>Connection error</source>
         <translation>Erreur de connexion</translation>
     </message>
-    <message id="start-view-printer-not-found-error">
-        <source>Printer is not found. Please, check your printer preferences.</source>
-        <translation>L&apos;imprimante ne peut être localisée. Merci de vérifier les préférences de votre imprimante.</translation>
-    </message>
-    <message id="start-view-printer-error">
-        <source>Failed to print seed phrase. Please, check your printer.</source>
-        <translation>L&apos;impression de votre phrase clé a echoué. Merci de vérifier votre imprimante.</translation>
-    </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
         <translation>SQLite database file (*.db)</translation>

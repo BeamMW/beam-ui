@@ -692,14 +692,6 @@
         <source>Connection error</source>
         <translation>Памылка падлучэння</translation>
     </message>
-    <message id="start-view-printer-not-found-error">
-        <source>Printer is not found. Please, check your printer preferences.</source>
-        <translation>Прынтэр не знойдзены. Калі ласка, праверце ўсталёўкі прынтэра.</translation>
-    </message>
-    <message id="start-view-printer-error">
-        <source>Failed to print seed phrase. Please, check your printer.</source>
-        <translation>Памылка друку. Калі ласка, праверце ўсталёўкі прынтэра.</translation>
-    </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
         <translation>Файл SQLite (*.db)</translation>

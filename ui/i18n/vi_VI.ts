@@ -692,14 +692,6 @@
         <source>Connection error</source>
         <translation>Lỗi kết nối</translation>
     </message>
-    <message id="start-view-printer-not-found-error">
-        <source>Printer is not found. Please, check your printer preferences.</source>
-        <translation>Máy in không được tìm thấy. Xin vui lòng, kiểm tra tùy chọn máy in của bạn.</translation>
-    </message>
-    <message id="start-view-printer-error">
-        <source>Failed to print seed phrase. Please, check your printer.</source>
-        <translation>Không thể in cụm từ hạt giống. Xin vui lòng, kiểm tra máy in của bạn.</translation>
-    </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
         <translation>Tệp cơ sở dữ liệu SQLite (*.db)</translation>

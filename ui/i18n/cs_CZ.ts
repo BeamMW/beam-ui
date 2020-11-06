@@ -692,14 +692,6 @@
         <source>Connection error</source>
         <translation>Chyba připojení</translation>
     </message>
-    <message id="start-view-printer-not-found-error">
-        <source>Printer is not found. Please, check your printer preferences.</source>
-        <translation>Tiskárna nebyla nalezena. Zkontrolujte prosím nastavení tiskárny.</translation>
-    </message>
-    <message id="start-view-printer-error">
-        <source>Failed to print seed phrase. Please, check your printer.</source>
-        <translation>Tisk klíčových slov se nezdařil. Zkontrolujte prosím tiskárnu.</translation>
-    </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
         <translation>Soubor databáze SQLite (*.db)</translation>

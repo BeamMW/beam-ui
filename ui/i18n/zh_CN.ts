@@ -702,16 +702,6 @@
         <source>Connection error</source>
         <translation>连接错误</translation>
     </message>
-    <message id="start-view-printer-not-found-error">
-        <source>Printer is not found. Please, check your printer preferences.</source>
-        <translation>找不到打印机
-请检查您的打印机设置</translation>
-    </message>
-    <message id="start-view-printer-error">
-        <source>Failed to print seed phrase. Please, check your printer.</source>
-        <translation>打印助记词失败
-请检查您的打印机</translation>
-    </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
         <translation>SQLite数据库文件(*.db)</translation>
