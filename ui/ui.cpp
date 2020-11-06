@@ -64,7 +64,7 @@
 #include "viewmodel/applications/public.h"
 #include "model/qr.h"
 
-#if defined(BEAM_USE_STATIC)
+#if defined(BEAM_USE_STATIC_QT)
 
 #if defined Q_OS_WIN
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)

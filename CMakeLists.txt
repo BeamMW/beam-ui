@@ -31,6 +31,15 @@ if (BEAM_SIGN_PACKAGE AND WIN32)
     #endif()
 endif()
 
+if(BEAM_LINK_TYPE MATCHES "Static")
+    set(BEAM_USE_STATIC TRUE)
+endif()
+
+option(BEAM_USE_STATIC_QT "Build with staticaly linked QT library" FALSE)
+if (BEAM_USE_STATIC AND NOT BEAM_USE_STATIC_QT)
+    set(BEAM_USE_STATIC_RUNTIME FALSE)
+endif()
+
 # should be before project and git 
 set(BEAM_WALLET_CLIENT_LIBRARY TRUE)
 set(BEAM_TESTS_ENABLED FALSE)
@@ -81,13 +90,12 @@ endif()
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/beam)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty)
 
-
-if(BEAM_LINK_TYPE MATCHES "Static")
-    set(BEAM_USE_STATIC TRUE)
-endif()
-
 if(BEAM_USE_STATIC)
     add_definitions(-DBEAM_USE_STATIC)
+endif()
+
+if(BEAM_USE_STATIC_QT)
+    add_definitions(-DBEAM_USE_STATIC_QT)
 endif()
 
 message("BRANCH_NAME: ${BRANCH_NAME}")
@@ -131,7 +139,7 @@ if(MSVC)
     #target_compile_definitions(beam INTERFACE -D_WIN32_WINNT=0x0600)
     #add_definitions(-D_WIN32_WINNT=0x0600)
 
-    if(BEAM_USE_STATIC)
+    if(BEAM_USE_STATIC_RUNTIME)
        # target_compile_options(beam INTERFACE $<IF:$<CONFIG:Debug>,/MTd, /MT>)
        # target_link_options(beam INTERFACE $<IF:$<NOT:$<CONFIG:Debug>>, /OPT:REF /INCREMENTAL:NO, >)
         # use static runtime

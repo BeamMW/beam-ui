@@ -318,7 +318,7 @@ if (BEAM_SIGN_PACKAGE AND WIN32)
     )
 endif()
 
-if(BEAM_USE_STATIC)
+if(BEAM_USE_STATIC_QT)
 
     if(WIN32)
 
