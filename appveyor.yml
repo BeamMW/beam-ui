@@ -18,7 +18,7 @@ before_build:
   - cmd: cd ..
   - cmd: git clone --depth=1 https://github.com/BeamMW/libs.git c:/beam-libs
   - cmd: git clone --depth=1 https://github.com/nesbox/qt5-static-win.git $(QT5_ROOT_DIR)
-  - cmd: cmake -G "Ninja" -DCMAKE_BUILD_TYPE=%BUILD_CONFIG% -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=%APPVEYOR_REPO_BRANCH% -DBEAM_HW_WALLET=Off .
+  - cmd: cmake -G "Visual Studio 16 2019 Win64" -DCMAKE_BUILD_TYPE=%BUILD_CONFIG% -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=%APPVEYOR_REPO_BRANCH% -DBEAM_HW_WALLET=Off .
 
 test_script:
   - cmd: ctest -C %BUILD_CONFIG% --verbose
