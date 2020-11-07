@@ -347,10 +347,9 @@ QString QMLGlobals::calcAmountInSecondCurrency(const QString& amount, const QStr
 
 bool QMLGlobals::canSwap()
 {
-    // TODO roman.strilets add ethereum
     return haveSwapClient(Currency::CurrBitcoin) || haveSwapClient(Currency::CurrLitecoin) || haveSwapClient(Currency::CurrQtum)
         || haveSwapClient(Currency::CurrBitcoinCash) || haveSwapClient(Currency::CurrBitcoinSV) || haveSwapClient(Currency::CurrDash)
-        || haveSwapClient(Currency::CurrDogecoin);
+        || haveSwapClient(Currency::CurrDogecoin) || haveSwapClient(Currency::CurrEthereum);
 }
 
 bool QMLGlobals::haveSwapClient(Currency currency)
