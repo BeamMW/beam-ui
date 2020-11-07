@@ -91,7 +91,7 @@ matrix:
         #- export QML_IMPORT_PATH="/usr/local/qt5-static/qml"
         - export QT5_ROOT_DIR=$(brew --prefix qt)
         - export PATH=$QT5_ROOT_DIR/bin:$PATH
-        - export QML_IMPORT_PATH="QT5_ROOT_DIR/qml"
+        - export QML_IMPORT_PATH="$QT5_ROOT_DIR/qml"
         - echo $QT5_ROOT_DIR
         - echo $QML_IMPORT_PATH
         - openssl aes-256-cbc -K $encrypted_82bff69d916a_key -iv $encrypted_82bff69d916a_iv -in macos_cert.tar.enc -out macos_cert.tar -d
