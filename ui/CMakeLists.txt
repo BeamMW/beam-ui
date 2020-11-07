@@ -460,6 +460,7 @@ else()
             add_custom_target(deployqt ALL 
                 COMMAND ${CMAKE_COMMAND} -E remove_directory "${CMAKE_CURRENT_BINARY_DIR}/windeployqt"
                 COMMAND windeployqt --release --no-virtualkeyboard --no-angle --dir "${CMAKE_CURRENT_BINARY_DIR}/windeployqt" --qmldir "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/${TARGET_NAME}"
+                DEPENDS ${TARGET_NAME}
             )
             install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/windeployqt DESTINATION .)
         endif()
