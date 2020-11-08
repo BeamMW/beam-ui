@@ -456,6 +456,7 @@ if(LINUX)
 else()
 
     if(WIN32)
+        message(STATUS "CURRENT_RUNTIME_OUTPUT_DIRECTORY = ${CURRENT_RUNTIME_OUTPUT_DIRECTORY}")
         if (NOT BEAM_USE_STATIC_QT)
             add_custom_target(deployqt ALL 
                 COMMAND ${CMAKE_COMMAND} -E remove_directory "${CMAKE_CURRENT_BINARY_DIR}/windeployqt"
@@ -464,7 +465,7 @@ else()
             )
             install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/windeployqt DESTINATION .)
         endif()
-        install(FILES ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION .)
+        #install(FILES ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION .)
         install(FILES beam-wallet.cfg DESTINATION .)
         install(TARGETS ${TARGET_NAME} DESTINATION .)
     endif()

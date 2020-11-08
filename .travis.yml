@@ -90,7 +90,7 @@ matrix:
         #- export QT5_ROOT_DIR="/usr/local/qt5-static"
         #- export QML_IMPORT_PATH="/usr/local/qt5-static/qml"
         - export QT5_ROOT_DIR=$(brew --prefix qt)
-        - export PATH=$QT5_ROOT_DIR/bin:$PATH
+        - export PATH="$QT5_ROOT_DIR/bin:$PATH"
         - export QML_IMPORT_PATH="$QT5_ROOT_DIR/qml"
         - echo $QT5_ROOT_DIR
         - echo $QML_IMPORT_PATH
@@ -112,7 +112,7 @@ matrix:
         - cd beam
         - git apply 3rdparty/protobuf-patch.diff
         - cd ..
-        - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DCMAKE_PREFIX_PATH=$(brew --prefix qt) -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$TRAVIS_BRANCH -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_HW_WALLET=Off .
+        - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DCMAKE_PREFIX_PATH=$QT5_ROOT_DIR -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$TRAVIS_BRANCH -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_HW_WALLET=Off .
         - make -j$(sysctl -n hw.ncpu)
         - ctest --verbose
       after_success:
