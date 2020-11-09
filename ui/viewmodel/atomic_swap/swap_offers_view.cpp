@@ -499,7 +499,6 @@ void SwapOffersViewModel::InitSwapClientWrappers()
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Litecoin));
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Qtum));
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Bitcoin_Cash));
-        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Bitcoin_SV));
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Dogecoin));
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Dash));
     }

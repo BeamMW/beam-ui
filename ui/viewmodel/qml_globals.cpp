@@ -107,9 +107,6 @@ namespace
             case Currency::CurrBitcoinCash:
                 return beamui::Currencies::BitcoinCash;
 
-            case Currency::CurrBitcoinSV:
-                return beamui::Currencies::BitcoinSV;
-
             case Currency::CurrDash:
                 return beamui::Currencies::Dash;
 
@@ -221,7 +218,7 @@ QString QMLGlobals::calcAmountInSecondCurrency(const QString& amount, const QStr
 bool QMLGlobals::canSwap()
 {
     return haveSwapClient(Currency::CurrBitcoin) || haveSwapClient(Currency::CurrLitecoin) || haveSwapClient(Currency::CurrQtum)
-        || haveSwapClient(Currency::CurrBitcoinCash) || haveSwapClient(Currency::CurrBitcoinSV) || haveSwapClient(Currency::CurrDash)
+        || haveSwapClient(Currency::CurrBitcoinCash) || haveSwapClient(Currency::CurrDash)
         || haveSwapClient(Currency::CurrDogecoin);
 }
 
@@ -292,11 +289,6 @@ QString QMLGlobals::getCurrencyName(Currency currency)
     {
         //% "Bitcoin Cash"
         return qtTrId("general-bitcoin-cash");
-    }
-    case Currency::CurrBitcoinSV:
-    {
-        //% "Bitcoin SV"
-        return qtTrId("general-bitcoin-sv");
     }
     case Currency::CurrDash:
     {

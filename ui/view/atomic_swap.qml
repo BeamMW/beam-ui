@@ -254,8 +254,6 @@ Item {
                             return "qrc:/assets/icon-qtum.svg";
                         case Currency.CurrBitcoinCash:
                             return "qrc:/assets/icon-bch.svg";
-                        case Currency.CurrBitcoinSV:
-                            return "qrc:/assets/icon-bsv.svg";
                         case Currency.CurrDash:
                             return "qrc:/assets/icon-dash.svg";
                         case Currency.CurrDogecoin:
@@ -274,8 +272,6 @@ Item {
                             return Style.swapCurrencyPaneGrLeftQTUM;
                         case Currency.CurrBitcoinCash:
                             return Style.swapCurrencyPaneGrLeftBCH;
-                        case Currency.CurrBitcoinSV:
-                            return Style.swapCurrencyPaneGrLeftBSV;
                         case Currency.CurrDash:
                             return Style.swapCurrencyPaneGrLeftDASH;
                         case Currency.CurrDogecoin:
@@ -521,14 +517,12 @@ Item {
                                     ListElement{text: "BEAM->BCH"; pair: "beambch"}
                                     ListElement{text: "BEAM->DASH"; pair: "beamdash"}
                                     ListElement{text: "BEAM->DOGE"; pair: "beamdoge"}
-                                    ListElement{text: "BEAM->BSV"; pair: "beambsv"}
                                     ListElement{text: "BTC->BEAM"; pair: "btcbeam"}
                                     ListElement{text: "LTC->BEAM"; pair: "ltcbeam"}
                                     ListElement{text: "QTUM->BEAM"; pair: "qtumbeam"}
                                     ListElement{text: "BCH->BEAM"; pair: "bchbeam"}
                                     ListElement{text: "DASH->BEAM"; pair: "dashbeam"}
                                     ListElement{text: "DOGE->BEAM"; pair: "dogebeam"}
-                                    ListElement{text: "BSV->BEAM"; pair: "bsvbeam"}
                                 }
                         }
                     }   // RowLayout
@@ -1209,7 +1203,6 @@ Please try again later or create an offer yourself."
             case "ltc": return "qrc:/assets/icon-ltc.svg";
             case "qtum": return "qrc:/assets/icon-qtum.svg";
             case "bch": return "qrc:/assets/icon-bch.svg";
-            case "bsv": return "qrc:/assets/icon-bsv.svg";
             case "dash": return "qrc:/assets/icon-dash.svg";
             case "doge": return "qrc:/assets/icon-doge.svg";
 

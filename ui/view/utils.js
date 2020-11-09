@@ -111,7 +111,6 @@ function currenciesList() {
         BeamGlobals.getCurrencyLabel(Currency.CurrLitecoin),
         BeamGlobals.getCurrencyLabel(Currency.CurrQtum),
         BeamGlobals.getCurrencyLabel(Currency.CurrBitcoinCash),
-        BeamGlobals.getCurrencyLabel(Currency.CurrBitcoinSV),
         BeamGlobals.getCurrencyLabel(Currency.CurrDogecoin),
         BeamGlobals.getCurrencyLabel(Currency.CurrDash)
     ]

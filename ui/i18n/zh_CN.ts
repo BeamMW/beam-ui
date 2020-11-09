@@ -2589,10 +2589,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Bitcoin Cash seed phrase</source>
         <translation>Bitcoin Cash助记词</translation>
     </message>
-    <message id="bitcoin-sv-show-seed-phrase">
-        <source>Bitcoin SV seed phrase</source>
-        <translation>Bitcoin SV助记词</translation>
-    </message>
     <message id="dash-show-seed-phrase">
         <source>Dash seed phrase</source>
         <translation>Dash助记词</translation>
@@ -2604,10 +2600,6 @@ Your version is: %2. Please, check for updates.</source>
     <message id="bitcoin-cash-show-addresses-title">
         <source>Bitcoin Cash wallet addresses</source>
         <translation>Bitcoin Cash钱包地址</translation>
-    </message>
-    <message id="bitcoin-sv-show-addresses-title">
-        <source>Bitcoin SV wallet addresses</source>
-        <translation>Bitcoin SV钱包地址</translation>
     </message>
     <message id="dash-show-addresses-title">
         <source>Dash wallet addresses</source>
@@ -2621,10 +2613,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Bitcoin Cash</source>
         <translation>Bitcoin Cash</translation>
     </message>
-    <message id="general-bitcoin-sv">
-        <source>Bitcoin SV</source>
-        <translation>Bitcoin SV</translation>
-    </message>
     <message id="general-dash">
         <source>DASH</source>
         <translation>DASH</translation>
@@ -2637,10 +2625,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Bitcoin Cash node</source>
         <translation>Bitcoin Cash 节点</translation>
     </message>
-    <message id="settings-swap-bitcoin-sv-node">
-        <source>Bitcoin SV node</source>
-        <translation>Bitcoin SV节点</translation>
-    </message>
     <message id="settings-swap-dash-node">
         <source>Dash node</source>
         <translation>Dash节点</translation>
@@ -2652,10 +2636,6 @@ Your version is: %2. Please, check for updates.</source>
     <message id="settings-swap-bitcoin-cash-electrum">
         <source>Bitcoin Cash electrum</source>
         <translation>Bitcoin Cash electrum</translation>
-    </message>
-    <message id="settings-swap-bitcoin-sv-electrum">
-        <source>Bitcoin SV electrum</source>
-        <translation>Bitcoin SV electrum</translation>
     </message>
     <message id="settings-swap-dash-electrum">
         <source>Dash electrum</source>
