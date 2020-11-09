@@ -82,7 +82,7 @@ matrix:
         - brew uninstall --ignore-dependencies postgis
         
         #- sudo git clone --depth=1 https://github.com/nesbox/qt5-static-mac.git /usr/local/qt5-static
-        - brew uninstall --ignore-dependencies --force qt boost
+        - brew uninstall --ignore-dependencies --force boost
         - curl -O https://raw.githubusercontent.com/Homebrew/homebrew-core/5da5895add2f6b9320d654dd844d4827f6876c8b/Formula/boost.rb
         - brew install ./boost.rb
         - export OPENSSL_ROOT_DIR="/usr/local/opt/openssl@1.1"
