@@ -195,7 +195,8 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - qt5-default
+            - qtbase5-dev
+            - qtdeclarative5-dev
             - g++-7
             - libssl-dev
             - curl
@@ -215,6 +216,7 @@ matrix:
         - sudo git clone --depth=1 https://github.com/BeamMW/boost-linux.git /usr/local/boost_1_69_0
         - export BOOST_ROOT="/usr/local/boost_1_69_0"
         - eval "CC=gcc-7 && CXX=g++-7"
+        - export QT_SELECT=qt5
         #- git clone --depth=1 https://github.com/nesbox/qt5-static-linux.git /home/travis/qt5-static
         #- export QT5_ROOT_DIR="/home/travis/qt5-static"
         #- export QML_IMPORT_PATH="/home/travis/qt5-static/qml"
