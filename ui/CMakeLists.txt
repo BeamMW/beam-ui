@@ -457,7 +457,7 @@ else()
 
     if(WIN32)
         message(STATUS "CURRENT_RUNTIME_OUTPUT_DIRECTORY = ${CURRENT_RUNTIME_OUTPUT_DIRECTORY}")
-        if (NOT BEAM_USE_STATIC_QT)
+        if (NOT BEAM_USE_STATIC_QT AND BEAM_DEPLOY)
             add_custom_target(deployqt ALL 
                 COMMAND ${CMAKE_COMMAND} -E remove_directory "${CMAKE_CURRENT_BINARY_DIR}/windeployqt"
                 COMMAND windeployqt --release --no-virtualkeyboard --no-angle --dir "${CMAKE_CURRENT_BINARY_DIR}/windeployqt" --qmldir "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/RelWithDebInfo/${OUTPUT_NAME}.exe"

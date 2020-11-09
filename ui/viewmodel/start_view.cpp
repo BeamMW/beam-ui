@@ -194,12 +194,12 @@ QString WalletDBPathItem::getShortPath() const
 
 QString WalletDBPathItem::getLastWriteDateString() const
 {
-    return m_lastWriteTime.date().toString(Qt::SystemLocaleShortDate);
+    return m_lastWriteTime.date().toString(QLocale().dateTimeFormat(QLocale::ShortFormat));
 }
 
 QString WalletDBPathItem::getCreationDateString() const
 {
-    return m_creationTime.date().toString(Qt::SystemLocaleShortDate);
+    return m_creationTime.date().toString(QLocale().dateTimeFormat(QLocale::ShortFormat));
 }
 
 QDateTime WalletDBPathItem::getLastWriteDate() const

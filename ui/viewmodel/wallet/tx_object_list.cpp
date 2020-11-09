@@ -248,7 +248,7 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
         {
             QDateTime datetime;
             datetime.setTime_t(value->timeCreated());
-            return datetime.toString(Qt::SystemLocaleShortDate);
+            return datetime.toString(m_locale.dateTimeFormat(QLocale::ShortFormat));
         }
             
         case Roles::TimeCreatedSort:

@@ -46,9 +46,9 @@ QVariant NotificationsList::data(const QModelIndex &index, int role) const
     switch (static_cast<Roles>(role))
     {
         case Roles::TimeCreated:
-            return value->timeCreated().time().toString(Qt::SystemLocaleShortDate);
+            return value->timeCreated().time().toString(m_locale.dateTimeFormat(QLocale::ShortFormat));
         case Roles::DateCreated:
-            return value->timeCreated().date().toString(Qt::SystemLocaleShortDate);
+            return value->timeCreated().date().toString(m_locale.dateTimeFormat(QLocale::ShortFormat));
         case Roles::TimeCreatedSort:
         {
             auto t = value->getTimestamp();

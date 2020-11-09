@@ -139,7 +139,7 @@ namespace beamui
         QDateTime datetime;
         datetime.setTime_t(ts);
 
-        return datetime.toString(Qt::SystemLocaleShortDate);
+        return datetime.toString(QLocale().dateTimeFormat(QLocale::ShortFormat));
     }
 
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
