@@ -86,14 +86,14 @@ matrix:
         - curl -O https://raw.githubusercontent.com/Homebrew/homebrew-core/5da5895add2f6b9320d654dd844d4827f6876c8b/Formula/boost.rb
         - brew install ./boost.rb
         - export OPENSSL_ROOT_DIR="/usr/local/opt/openssl@1.1"
-        #- export PATH=/usr/local/qt5-static/bin:$PATH
-        #- export QT5_ROOT_DIR="/usr/local/qt5-static"
-        #- export QML_IMPORT_PATH="/usr/local/qt5-static/qml"
-        - export QT5_ROOT_DIR=$(brew --prefix qt)
-        - export PATH="$QT5_ROOT_DIR/bin:$PATH"
-        - export QML_IMPORT_PATH="$QT5_ROOT_DIR/qml"
-        - echo $QT5_ROOT_DIR
-        - echo $QML_IMPORT_PATH
+        - export PATH=/usr/local/Cellar/qt/5.15.1/bin:$PATH
+        - export QT5_ROOT_DIR="/usr/local/Cellar/qt/5.15.1"
+        - export QML_IMPORT_PATH="/usr/local/Cellar/qt/5.15.1/qml"
+        #- export QT5_ROOT_DIR=$(brew --prefix qt)
+        #- export PATH="$QT5_ROOT_DIR/bin:$PATH"
+        #- export QML_IMPORT_PATH="$QT5_ROOT_DIR/qml"
+        #- echo $QT5_ROOT_DIR
+        #- echo $QML_IMPORT_PATH
         - openssl aes-256-cbc -K $encrypted_82bff69d916a_key -iv $encrypted_82bff69d916a_iv -in macos_cert.tar.enc -out macos_cert.tar -d
         - tar xvf macos_cert.tar
         # create custom keychain
@@ -112,7 +112,7 @@ matrix:
         - cd beam
         - git apply 3rdparty/protobuf-patch.diff
         - cd ..
-        - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DCMAKE_PREFIX_PATH=$QT5_ROOT_DIR -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$TRAVIS_BRANCH -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_HW_WALLET=Off .
+        - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$TRAVIS_BRANCH -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_HW_WALLET=Off .
         - make -j$(sysctl -n hw.ncpu)
         - ctest --verbose
       after_success:
