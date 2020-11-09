@@ -452,16 +452,21 @@ if(LINUX)
     install (FILES beam.desktop DESTINATION ${BEAM_DESKTOP_DIR})
     install (FILES beam.xml DESTINATION ${BEAM_DESKTOP_DIR})
     install (FILES beam.png DESTINATION ${BEAM_PIXMAPS_DIR})
+elseif(APPLE)
+    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+        COMMAND macdeployqt 
+            \"$<TARGET_FILE_DIR:${TARGET_NAME}>\"
+            -always-overwrite
+        COMMENT "Deploying Qt..."
+    )
 
 else()
-
     if(WIN32)
-        message(STATUS "CURRENT_RUNTIME_OUTPUT_DIRECTORY = ${CURRENT_RUNTIME_OUTPUT_DIRECTORY}")
-        if (NOT BEAM_USE_STATIC_QT AND BEAM_DEPLOY)
-            add_custom_target(deployqt ALL 
+        if (NOT BEAM_USE_STATIC_QT)
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E remove_directory "${CMAKE_CURRENT_BINARY_DIR}/windeployqt"
-                COMMAND windeployqt --release --no-virtualkeyboard --no-angle --dir "${CMAKE_CURRENT_BINARY_DIR}/windeployqt" --qmldir "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/RelWithDebInfo/${OUTPUT_NAME}.exe"
-                DEPENDS ${TARGET_NAME}
+                COMMAND windeployqt --release --no-virtualkeyboard --no-angle --dir "${CMAKE_CURRENT_BINARY_DIR}/windeployqt" --qmldir "${CMAKE_CURRENT_SOURCE_DIR}" "$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_NAME:${TARGET_NAME}>"
+                COMMENT "Deploying Qt..."
             )
             install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/windeployqt DESTINATION .)
         endif()
