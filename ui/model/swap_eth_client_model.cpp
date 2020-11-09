@@ -63,9 +63,9 @@ beam::Amount SwapEthClientModel::getAvailable()
     return m_balance;
 }
 
-beam::Amount SwapEthClientModel::getEstimatedFeeRate()
+beam::Amount SwapEthClientModel::getGasPrice()
 {
-    return m_estimatedFeeRate;
+    return m_gasPrice;
 }
 
 void SwapEthClientModel::OnStatus(Status status)
@@ -93,9 +93,9 @@ void SwapEthClientModel::OnBalance(Amount balance)
     emit gotBalance(balance);
 }
 
-void SwapEthClientModel::OnEstimatedGasPrice(Amount feeRate)
+void SwapEthClientModel::OnEstimatedGasPrice(Amount gasPrice)
 {
-    emit gotEstimatedGasPrice(feeRate);
+    emit gotEstimatedGasPrice(gasPrice);
 }
 
 void SwapEthClientModel::OnCanModifySettingsChanged(bool canModify)
@@ -141,11 +141,11 @@ void SwapEthClientModel::setBalance(Amount balance)
     }
 }
 
-void SwapEthClientModel::setEstimatedGasPrice(const beam::Amount estimatedFeeRate)
+void SwapEthClientModel::setEstimatedGasPrice(const beam::Amount gasPrice)
 {
-    if (m_estimatedFeeRate != estimatedFeeRate)
+    if (m_gasPrice != gasPrice)
     {
-        m_estimatedFeeRate = estimatedFeeRate;
+        m_gasPrice = gasPrice;
         emit estimatedFeeRateChanged();
     }
 }

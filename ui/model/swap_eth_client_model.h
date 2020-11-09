@@ -31,7 +31,7 @@ public:
         beam::io::Reactor& reactor);
 
     beam::Amount getAvailable();
-    beam::Amount getEstimatedFeeRate();
+    beam::Amount getGasPrice();
     beam::ethereum::Client::Status getStatus() const;
     bool canModifySettings() const;
     beam::ethereum::IBridge::ErrorType getConnectionError() const;
@@ -52,7 +52,7 @@ signals:
 private:
     void OnStatus(Status status) override;
     void OnBalance(beam::Amount balance) override;
-    void OnEstimatedGasPrice(beam::Amount feeRate) override;
+    void OnEstimatedGasPrice(beam::Amount gasPrice) override;
     void OnCanModifySettingsChanged(bool canModify) override;
     void OnChangedSettings() override;
     void OnConnectionError(beam::ethereum::IBridge::ErrorType error) override;
@@ -61,7 +61,7 @@ private slots:
     void requestBalance();
     void requestEstimatedFeeRate();
     void setBalance(beam::Amount balance);
-    void setEstimatedGasPrice(beam::Amount estimatedFeeRate);
+    void setEstimatedGasPrice(beam::Amount gasPrice);
     void setStatus(beam::ethereum::Client::Status status);
     void setCanModifySettings(bool canModify);
     void setConnectionError(beam::ethereum::IBridge::ErrorType error);
@@ -70,7 +70,7 @@ private:
     QTimer m_balanceTimer;
     QTimer m_feeRateTimer;
     beam::Amount m_balance;
-    beam::Amount m_estimatedFeeRate = 0;
+    beam::Amount m_gasPrice = 0;
     Status m_status = Status::Unknown;
     bool m_canModifySettings = true;
     beam::ethereum::IBridge::ErrorType m_connectionError = beam::ethereum::IBridge::ErrorType::None;

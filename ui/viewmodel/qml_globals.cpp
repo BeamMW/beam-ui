@@ -489,8 +489,7 @@ unsigned int QMLGlobals::getRecommendedFee(Currency currency)
 
     if (currency == Currency::CurrEthereum)
     {
-        // TODO roman.strilets
-        return 0;
+        return AppModel::getInstance().getSwapEthClient()->getGasPrice();
     }
 
     auto swapCoin = convertCurrencyToSwapCoin(currency);
@@ -506,8 +505,7 @@ unsigned int QMLGlobals::getDefaultFee(Currency currency)
 
     if (currency == Currency::CurrEthereum)
     {
-        // TODO roman.strilets
-        return 0;
+        return AppModel::getInstance().getSwapEthClient()->getGasPrice();
     }
 
     auto swapCoin = convertCurrencyToSwapCoin(currency);
