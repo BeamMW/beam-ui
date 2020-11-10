@@ -331,7 +331,8 @@ ColumnLayout {
                             error:                      showInsufficientBalanceWarning
                                                         //% "Insufficient funds: you would need %1 to complete the transaction"
                                                         ? qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.missing))
-                                                        : ""
+                                                        //% "Max privacy coins are selected therefore the maximum amount is %1."
+                                                        : (viewModel.canSendByOneTransaction ? "" : qsTrId("send-founds-fail-by-one-tx").arg(Utils.uiStringToLocale(viewModel.maxSendAmount)))
                         }
      
                         Binding {

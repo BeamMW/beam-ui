@@ -56,6 +56,8 @@ class SendViewModel: public QObject
 
     Q_PROPERTY(bool         isNeedExtractShieldedCoins READ isNeedExtractShieldedCoins NOTIFY isNeedExtractShieldedCoinsChanged)
     Q_PROPERTY(unsigned int minimalFeeGrothes          READ getMinimalFeeGrothes       NOTIFY minimalFeeGrothesChanged)
+    Q_PROPERTY(bool     canSendByOneTransaction        READ canSendByOneTransaction    NOTIFY sendAmountChanged)
+    Q_PROPERTY(QString  maxSendAmount                  READ getMaxSendAmount           NOTIFY sendAmountChanged)
 
 public:
     SendViewModel();
@@ -114,6 +116,9 @@ public:
     bool hasAddress() const;
     void setWalletAddress(const boost::optional<beam::wallet::WalletAddress>& value);
 
+    bool canSendByOneTransaction();
+    QString getMaxSendAmount();
+
 public:
     Q_INVOKABLE void setMaxAvailableAmount();
     Q_INVOKABLE void sendMoney();
@@ -144,6 +149,7 @@ signals:
     void hasAddressChanged();
     void isShieldedTxChanged();
     void isNeedExtractShieldedCoinsChanged();
+    void canSendByOneTransactionChanged();
 
 public slots:
     void onChangeCalculated(beam::Amount change);
@@ -186,4 +192,5 @@ private:
     beam::Amount _shieldedInputsFee;
     bool _feeChangedByUi = false;
     bool _maxAvailable = false;
+    beam::Amount _maxWhatCanSelect = 0;
 };

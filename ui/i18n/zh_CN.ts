@@ -2790,5 +2790,9 @@ public offline</source>
         <source>Swap in progress, cannot disconnect.</source>
         <translation>交易正在进行中，不能断开连接。</translation>
     </message>
+    <message id="send-founds-fail-by-one-tx">
+        <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

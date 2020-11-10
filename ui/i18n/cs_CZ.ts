@@ -2778,5 +2778,9 @@ veřejně offline</translation>
         <source>Swap in progress, cannot disconnect.</source>
         <translation>Probíhá výměna, nelze se odpojit.</translation>
     </message>
+    <message id="send-founds-fail-by-one-tx">
+        <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
