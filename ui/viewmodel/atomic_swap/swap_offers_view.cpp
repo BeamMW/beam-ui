@@ -108,7 +108,7 @@ Amount SwapCoinClientWrapper::getAvailable() const
 }
 
 SwapOffersViewModel::SwapOffersViewModel()
-    :   m_walletModel{*AppModel::getInstance().getWallet()}
+    :   m_walletModel{*AppModel::getInstance().getWalletModel()}
 {
     InitSwapClientWrappers();
 

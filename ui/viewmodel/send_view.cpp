@@ -38,7 +38,7 @@ namespace
 
 SendViewModel::SendViewModel()
     : _fee(minimalFee(Currency::CurrBeam, false))
-    , _walletModel(*AppModel::getInstance().getWallet())
+    , _walletModel(*AppModel::getInstance().getWalletModel())
     , _minFee(minFeeBeam(false))
 {
     connect(&_walletModel,           &WalletModel::changeCalculated,                 this,  &SendViewModel::onChangeCalculated);

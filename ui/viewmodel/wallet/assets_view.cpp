@@ -20,7 +20,7 @@ namespace
 }
 
 AssetsViewModel::AssetsViewModel()
-    : _wallet (*AppModel::getInstance().getWallet())
+    : _wallet (*AppModel::getInstance().getWalletModel())
 {
     connect(&_wallet, &WalletModel::walletStatusChanged, this, &AssetsViewModel::onWalletStatus);
 

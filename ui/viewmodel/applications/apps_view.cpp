@@ -1,8 +1,23 @@
+// Copyright 2018 The Beam Team
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 #include <QObject>
 #include <QMessageBox>
 #include <QtWebEngineWidgets/QWebEngineView>
 #include "apps_view.h"
 #include "utility/logger.h"
+#include "model/settings.h"
+#include "model/app_model.h"
 
 namespace beamui::applications {
     AppsViewModel::AppsViewModel()
@@ -18,16 +33,17 @@ namespace beamui::applications {
     void AppsViewModel::onCompleted(QObject *webView)
     {
         assert(webView != nullptr);
-        LOG_INFO() << "AppsViewModel::OnCompleted, webView is " << webView;
     }
 
     QString AppsViewModel::getDevAppURL() const
     {
-        return "http://www.tut.by/";
+        auto& settings = AppModel::getInstance().getSettings();
+        return settings.getDevBeamAppUrl();
     }
 
     QString AppsViewModel::getDevAppName() const
     {
-        return "TUT.BY";
+        auto& settings = AppModel::getInstance().getSettings();
+        return settings.getDevBeamAppName();
     }
 }

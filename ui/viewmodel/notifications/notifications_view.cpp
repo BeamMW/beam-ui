@@ -20,7 +20,7 @@
 using namespace beam::wallet;
 
 NotificationsViewModel::NotificationsViewModel()
-    : m_walletModel{*AppModel::getInstance().getWallet()}
+    : m_walletModel{*AppModel::getInstance().getWalletModel()}
 {
     connect(&m_walletModel,
             SIGNAL(notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)),

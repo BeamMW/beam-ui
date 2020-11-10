@@ -28,7 +28,7 @@ namespace {
 ReceiveViewModel::ReceiveViewModel()
     : _amountToReceiveGrothes(0)
     , _addressExpires(AddressExpires)
-    , _walletModel(*AppModel::getInstance().getWallet())
+    , _walletModel(*AppModel::getInstance().getWalletModel())
 {
     connect(&_walletModel, &WalletModel::newAddressFailed, this, &ReceiveViewModel::newAddressFailed);
     connect(&_exchangeRatesManager, &ExchangeRatesManager::rateUnitChanged, this, &ReceiveViewModel::rateChanged);

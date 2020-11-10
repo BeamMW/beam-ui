@@ -15,7 +15,6 @@
 
 #include <QObject>
 #include "model/wallet_model.h"
-#include "model/settings.h"
 
 class WalletViewModel : public QObject
 {

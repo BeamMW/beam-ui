@@ -13,6 +13,15 @@
 // limitations under the License.
 #pragma once
 
-namespace beamui::applications {
-    void RegisterQMLTypes();
-}
+#include "wallet/api/api_handler.h"
+
+class AppsApi
+        : public beam::wallet::WalletApi
+        , public beam::wallet::WalletApiHandler
+{
+public:
+     AppsApi(IWalletData& walletData);
+     AppsApi(const AppsApi&) = delete;
+     ~AppsApi();
+};
+

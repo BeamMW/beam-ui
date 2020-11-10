@@ -61,11 +61,16 @@ public:
     bool exportData();
     bool importData();
 
-    WalletModel::Ptr getWallet() const;
-    WalletSettings& getSettings() const;
+    [[nodiscard]] WalletModel::Ptr getWalletModel() const;
+    [[nodiscard]] WalletSettings& getSettings() const;
     MessageManager& getMessages();
+
+    // Please, be very careful with this
+    // wallet db can be destroyed internally
+    [[nodiscard]] beam::wallet::IWalletDB::Ptr getWalletDB() const;
+
     NodeModel& getNode();
-    SwapCoinClientModel::Ptr getSwapCoinClient(beam::wallet::AtomicSwapCoin swapCoin) const;
+    [[nodiscard]] SwapCoinClientModel::Ptr getSwapCoinClient(beam::wallet::AtomicSwapCoin swapCoin) const;
 
 public slots:
     void onStartedNode();

@@ -21,7 +21,7 @@ namespace {
 }
 
 InfoViewModel::InfoViewModel()
-    : _wallet(*AppModel::getInstance().getWallet())
+    : _wallet(*AppModel::getInstance().getWalletModel())
     , _selectedAssetID(-1)
 {
     connect(&_wallet,  &WalletModel::walletStatusChanged,        this,  &InfoViewModel::onWalletStatus);

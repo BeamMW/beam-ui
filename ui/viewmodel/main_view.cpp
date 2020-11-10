@@ -37,17 +37,17 @@ MainViewModel::MainViewModel()
 {
     m_timer.setSingleShot(true);
     
-    auto walletPtr = AppModel::getInstance().getWallet().get();
+    auto walletModelPtr = AppModel::getInstance().getWalletModel().get();
 
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(lockWallet()));
     connect(&m_settings, SIGNAL(lockTimeoutChanged()), this, SLOT(onLockTimeoutChanged()));
-    connect(walletPtr, &WalletModel::walletStatusChanged, this, &MainViewModel::unsafeTxCountChanged);
-    connect(walletPtr, SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SIGNAL(unsafeTxCountChanged()));
-    connect(walletPtr, SIGNAL(notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)), SIGNAL(unreadNotificationsChanged()));
+    connect(walletModelPtr, &WalletModel::walletStatusChanged, this, &MainViewModel::unsafeTxCountChanged);
+    connect(walletModelPtr, SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SIGNAL(unsafeTxCountChanged()));
+    connect(walletModelPtr, SIGNAL(notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)), SIGNAL(unreadNotificationsChanged()));
 #if defined(BEAM_HW_WALLET)
-    connect(walletPtr, SIGNAL(showTrezorMessage()), this, SIGNAL(showTrezorMessage()));
-    connect(walletPtr, SIGNAL(hideTrezorMessage()), this, SIGNAL(hideTrezorMessage()));
-    connect(walletPtr, SIGNAL(showTrezorError(const QString&)), this, SIGNAL(showTrezorError(const QString&)));
+    connect(walletModelPtr, SIGNAL(showTrezorMessage()), this, SIGNAL(showTrezorMessage()));
+    connect(walletModelPtr, SIGNAL(hideTrezorMessage()), this, SIGNAL(hideTrezorMessage()));
+    connect(walletModelPtr, SIGNAL(showTrezorError(const QString&)), this, SIGNAL(showTrezorError(const QString&)));
 #endif
 
     onLockTimeoutChanged();
@@ -89,10 +89,10 @@ void MainViewModel::resetLockTimer()
 
 int MainViewModel::getUnsafeTxCount() const
 {
-    return static_cast<int>(AppModel::getInstance().getWallet()->getUnsafeActiveTransactionsCount());
+    return static_cast<int>(AppModel::getInstance().getWalletModel()->getUnsafeActiveTransactionsCount());
 }
 
 int MainViewModel::getUnreadNotifications() const
 {
-    return static_cast<int>(AppModel::getInstance().getWallet()->getUnreadNotificationsCount());
+    return static_cast<int>(AppModel::getInstance().getWalletModel()->getUnreadNotificationsCount());
 }

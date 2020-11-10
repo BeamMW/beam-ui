@@ -181,8 +181,12 @@ beam::io::Reactor::Ptr AppModel::getWalletReactor() const
 {
     return m_walletReactor;
 }
-
 #endif
+
+beam::wallet::IWalletDB::Ptr AppModel::getWalletDB() const
+{
+    return m_db;
+}
 
 bool AppModel::openWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper)
 {
@@ -492,7 +496,7 @@ void AppModel::changeWalletPassword(const std::string& pass)
     m_wallet->getAsync()->changeWalletPassword(pass);
 }
 
-WalletModel::Ptr AppModel::getWallet() const
+WalletModel::Ptr AppModel::getWalletModel() const
 {
     return m_wallet;
 }

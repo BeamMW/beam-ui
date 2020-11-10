@@ -42,7 +42,7 @@ const int kBpsRecessionCountThreshold = 60;
 Q_DECLARE_METATYPE(uint64_t);
 
 LoadingViewModel::LoadingViewModel()
-    : m_walletModel{ *AppModel::getInstance().getWallet() }
+    : m_walletModel{ *AppModel::getInstance().getWalletModel() }
     , m_progress{0.0}
     , m_nodeInitProgress{0.}
     , m_total{0}

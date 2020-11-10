@@ -189,6 +189,10 @@ set(UI_SRC
     viewmodel/wallet/assets_manager.cpp
     viewmodel/wallet/info_view.cpp
     viewmodel/wallet/info_view.h
+    viewmodel/applications/apps_api.cpp
+    viewmodel/applications/apps_api.h
+    viewmodel/applications/apps_api_client.cpp
+    viewmodel/applications/apps_api_client.h
 
     model/wallet_model.h
     model/wallet_model.cpp
@@ -303,6 +307,7 @@ target_link_libraries(${TARGET_NAME} quazip_static)
 target_link_libraries(${TARGET_NAME}
         beam
         wallet_client
+        wallet_api
         mnemonic 
         Qt5::Qml
         Qt5::Quick 

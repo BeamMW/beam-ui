@@ -28,7 +28,7 @@ namespace
 }
 
 TxTableViewModel::TxTableViewModel()
-    : _model(*AppModel::getInstance().getWallet())
+    : _model(*AppModel::getInstance().getWalletModel())
 {
     connect(&_model, SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SLOT(onTransactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
     connect(&_model, SIGNAL(txHistoryExportedToCsv(const QString&)), this, SLOT(onTxHistoryExportedToCsv(const QString&)));

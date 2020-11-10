@@ -15,7 +15,7 @@
 #include "model/app_model.h"
 
 AssetsManager::AssetsManager ()
-    : _wallet (*AppModel::getInstance().getWallet())
+    : _wallet (*AppModel::getInstance().getWalletModel())
 {
     qRegisterMetaType<beam::Asset::ID>("beam::wallet::AssetID");
     connect(&_wallet, &WalletModel::assetInfoChanged, this, &AssetsManager::onAssetInfo);
