@@ -124,6 +124,15 @@ namespace
             case Currency::CurrEthereum:
                 return beamui::Currencies::Ethereum;
 
+            case Currency::CurrDai:
+                return beamui::Currencies::Dai;
+
+            case Currency::CurrTether:
+                return beamui::Currencies::Tether;
+
+            case Currency::CurrWrappedBTC:
+                return beamui::Currencies::WrappedBTC;
+
             default:
                 return beamui::Currencies::Unknown;
         }
@@ -198,6 +207,9 @@ bool QMLGlobals::isFeeOK(uint32_t fee, Currency currency, bool isShielded)
     case Currency::CurrDash: return true;
     case Currency::CurrDogecoin: return true;
     case Currency::CurrEthereum: return true;
+    case Currency::CurrDai: return true;
+    case Currency::CurrTether: return true;
+    case Currency::CurrWrappedBTC: return true;
     default:
         return false;
     }
@@ -247,8 +259,27 @@ beam::wallet::AtomicSwapCoin QMLGlobals::convertCurrencyToSwapCoin(Currency curr
             return beam::wallet::AtomicSwapCoin::Dogecoin;
         case Currency::CurrEthereum:
             return beam::wallet::AtomicSwapCoin::Ethereum;
+        case Currency::CurrDai:
+            return beam::wallet::AtomicSwapCoin::Dai;
+        case Currency::CurrTether:
+            return beam::wallet::AtomicSwapCoin::Tether;
+        case Currency::CurrWrappedBTC:
+            return beam::wallet::AtomicSwapCoin::WBTC;
         default:
             return beam::wallet::AtomicSwapCoin::Unknown;
+    }
+}
+
+bool QMLGlobals::isEthereumBased(Currency currency)
+{
+    switch (currency)
+    {
+    case Currency::CurrEthereum: return true;
+    case Currency::CurrDai: return true;
+    case Currency::CurrTether: return true;
+    case Currency::CurrWrappedBTC: return true;
+    default:
+        return false;
     }
 }
 
@@ -272,6 +303,12 @@ Currency QMLGlobals::convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swap
             return Currency::CurrDogecoin;
         case beam::wallet::AtomicSwapCoin::Ethereum:
             return Currency::CurrEthereum;
+        case beam::wallet::AtomicSwapCoin::Dai:
+            return Currency::CurrDai;
+        case beam::wallet::AtomicSwapCoin::Tether:
+            return Currency::CurrTether;
+        case beam::wallet::AtomicSwapCoin::WBTC:
+            return Currency::CurrWrappedBTC;
         default:
             return Currency::CurrEnd;
     }
@@ -311,7 +348,10 @@ QString QMLGlobals::calcTotalFee(Currency currency, unsigned int feeRate)
             auto total = beam::wallet::DogecoinSide::CalcTotalFee(feeRate);
             return QString::fromStdString(std::to_string(total)) + " sat";
         }
-        case Currency::CurrEthereum: {
+        case Currency::CurrEthereum:
+        case Currency::CurrDai:
+        case Currency::CurrTether:
+        case Currency::CurrWrappedBTC: {
             return QString();
         }
         default: {
@@ -355,7 +395,7 @@ bool QMLGlobals::canSwap()
 bool QMLGlobals::haveSwapClient(Currency currency)
 {
     auto swapCoin = convertCurrencyToSwapCoin(currency);
-    if (currency == Currency::CurrEthereum)
+    if (isEthereumBased(currency))
     {
         return AppModel::getInstance().getSwapEthClient()->GetSettings().IsActivated();
     }
@@ -380,7 +420,7 @@ bool QMLGlobals::canReceive(Currency currency)
     }
 
     auto swapCoin = convertCurrencyToSwapCoin(currency);
-    if (currency == Currency::CurrEthereum)
+    if (isEthereumBased(currency))
     {
         auto client = AppModel::getInstance().getSwapEthClient();
         return client->GetSettings().IsActivated() && client->getStatus() == beam::ethereum::Client::Status::Connected;
@@ -440,6 +480,9 @@ QString QMLGlobals::getCurrencyName(Currency currency)
         return qtTrId("general-dash");
     }
     case Currency::CurrEthereum:
+    case Currency::CurrDai:
+    case Currency::CurrTether:
+    case Currency::CurrWrappedBTC:
     {
         //% "ETHEREUM"
         return qtTrId("general-ethereum");
@@ -470,7 +513,7 @@ unsigned int QMLGlobals::getMinimalFee(Currency currency, bool isShielded)
         return minFeeBeam(isShielded);
     }
 
-    if (currency == Currency::CurrEthereum)
+    if (isEthereumBased(currency))
     {
         // TODO roman.strilets
         return 0;
@@ -487,7 +530,7 @@ unsigned int QMLGlobals::getRecommendedFee(Currency currency)
         return 0;
     }
 
-    if (currency == Currency::CurrEthereum)
+    if (isEthereumBased(currency))
     {
         return AppModel::getInstance().getSwapEthClient()->getGasPrice();
     }
@@ -503,7 +546,7 @@ unsigned int QMLGlobals::getDefaultFee(Currency currency)
         return minFeeBeam();
     }
 
-    if (currency == Currency::CurrEthereum)
+    if (isEthereumBased(currency))
     {
         return AppModel::getInstance().getSwapEthClient()->getGasPrice();
     }

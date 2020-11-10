@@ -306,6 +306,9 @@ ColumnLayout {
                     port:                viewModel.ethSettings.nodePort
                     accountIndex:        viewModel.ethSettings.accountIndex
                     contractAddress:     viewModel.ethSettings.contractAddress
+                    daiContractAddress:  viewModel.ethSettings.daiContractAddress
+                    usdtContractAddress: viewModel.ethSettings.usdtContractAddress
+                    wbtcContractAddress: viewModel.ethSettings.wbtcContractAddress
 
                     Connections {
                         target: viewModel.ethSettings
@@ -326,6 +329,9 @@ ColumnLayout {
                         onNodePortChanged:    swapEthSettings.port     = viewModel.ethSettings.nodePort
                         onAccountIndexChanged: swapEthSettings.accountIndex = viewModel.ethSettings.accountIndex
                         onContractAddressChanged: swapEthSettings.contractAddress = viewModel.ethSettings.contractAddress
+                        onDaiContractAddressChanged: swapEthSettings.daiContractAddress = viewModel.ethSettings.daiContractAddress
+                        onUsdtContractAddressChanged: swapEthSettings.usdtContractAddress = viewModel.ethSettings.usdtContractAddress
+                        onWbtcContractAddressChanged: swapEthSettings.wbtcContractAddress = viewModel.ethSettings.wbtcContractAddress
                         onSeedPhrasesChanged: swapEthSettings.seedPhrasesElectrum = viewModel.ethSettings.electrumSeedPhrases
                         onIsCurrentSeedValidChanged:  swapEthSettings.isCurrentSeedValid = viewModel.ethSettings.isCurrentSeedValid
                     }
@@ -367,6 +373,24 @@ ColumnLayout {
                         target:   viewModel.ethSettings
                         property: "contractAddress"
                         value:    swapEthSettings.contractAddress
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "daiContractAddress"
+                        value:    swapEthSettings.daiContractAddress
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "usdtContractAddress"
+                        value:    swapEthSettings.usdtContractAddress
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "wbtcContractAddress"
+                        value:    swapEthSettings.wbtcContractAddress
                     }
                 }
             }

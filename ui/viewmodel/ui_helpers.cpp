@@ -6,6 +6,8 @@
 #include "3rdparty/libbitcoin/include/bitcoin/bitcoin/formats/base_10.hpp"
 #include "version.h"
 
+#include "wallet/transactions/swaps/bridges/ethereum/common.h"
+
 using namespace std;
 using namespace beam;
 
@@ -117,6 +119,15 @@ namespace beamui
                 // TODO roman.strilets
                 amountString = libbitcoin::encode_base10(value, 9);
                 break;
+            case Currencies::Dai:
+                amountString = libbitcoin::encode_base10(value, 9);
+                break;
+            case Currencies::Tether:
+                amountString = libbitcoin::encode_base10(value, 6);
+                break;
+            case Currencies::WrappedBTC:
+                amountString = libbitcoin::encode_base10(value, 8);
+                break;
             default:
                 amountString = libbitcoin::satoshi_to_btc(value);
         }
@@ -183,9 +194,46 @@ namespace beamui
             return beamui::Currencies::Dogecoin;
         case wallet::AtomicSwapCoin::Ethereum:
             return beamui::Currencies::Ethereum;
+        case wallet::AtomicSwapCoin::Dai:
+            return beamui::Currencies::Dai;
+        case wallet::AtomicSwapCoin::WBTC:
+            return beamui::Currencies::WrappedBTC;
+        case wallet::AtomicSwapCoin::Tether:
+            return beamui::Currencies::Tether;
         case wallet::AtomicSwapCoin::Unknown:
         default:
             return beamui::Currencies::Unknown;
+        }
+    }
+
+    beam::wallet::AtomicSwapCoin convertCurrenciesToSwapCoin(Currencies currency)
+    {
+        switch (currency)
+        {
+        case beamui::Currencies::Bitcoin:
+            return beam::wallet::AtomicSwapCoin::Bitcoin;
+        case beamui::Currencies::Litecoin:
+            return beam::wallet::AtomicSwapCoin::Litecoin;
+        case beamui::Currencies::Qtum:
+            return beam::wallet::AtomicSwapCoin::Qtum;
+        case beamui::Currencies::BitcoinCash:
+            return beam::wallet::AtomicSwapCoin::Bitcoin_Cash;
+        case beamui::Currencies::BitcoinSV:
+            return beam::wallet::AtomicSwapCoin::Bitcoin_SV;
+        case beamui::Currencies::Dogecoin:
+            return beam::wallet::AtomicSwapCoin::Dogecoin;
+        case beamui::Currencies::Dash:
+            return beam::wallet::AtomicSwapCoin::Dash;
+        case beamui::Currencies::Ethereum:
+            return beam::wallet::AtomicSwapCoin::Ethereum;
+        case beamui::Currencies::Dai:
+            return beam::wallet::AtomicSwapCoin::Dai;
+        case beamui::Currencies::Tether:
+            return beam::wallet::AtomicSwapCoin::Tether;
+        case beamui::Currencies::WrappedBTC:
+            return beam::wallet::AtomicSwapCoin::WBTC;
+        default:
+            return beam::wallet::AtomicSwapCoin::Unknown;
         }
     }
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
@@ -342,6 +390,9 @@ namespace beamui
             case Currencies::Dogecoin: return "doge";
             case Currencies::Usd: return "usd";
             case Currencies::Ethereum: return "eth";
+            case Currencies::Dai: return "dai";
+            case Currencies::Tether: return "usdt";
+            case Currencies::WrappedBTC: return "wbtc";
             default: return "unknown";
         }
     }

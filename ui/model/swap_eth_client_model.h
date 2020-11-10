@@ -30,7 +30,7 @@ public:
         std::unique_ptr<beam::ethereum::SettingsProvider> settingsProvider,
         beam::io::Reactor& reactor);
 
-    beam::Amount getAvailable();
+    beam::Amount getAvailable(beam::wallet::AtomicSwapCoin swapCoin);
     beam::Amount getGasPrice();
     beam::ethereum::Client::Status getStatus() const;
     bool canModifySettings() const;
@@ -38,7 +38,7 @@ public:
 
 signals:
     void gotStatus(beam::ethereum::Client::Status status);
-    void gotBalance(beam::Amount balance);
+    void gotBalance(beam::wallet::AtomicSwapCoin swapCoin, beam::Amount balance);
     void gotEstimatedGasPrice(beam::Amount estimatedFeeRate);
     void gotCanModifySettings(bool canModify);
     void gotConnectionError(const beam::ethereum::IBridge::ErrorType& error);
@@ -51,7 +51,7 @@ signals:
 
 private:
     void OnStatus(Status status) override;
-    void OnBalance(beam::Amount balance) override;
+    void OnBalance(beam::wallet::AtomicSwapCoin swapCoin, beam::Amount balance) override;
     void OnEstimatedGasPrice(beam::Amount gasPrice) override;
     void OnCanModifySettingsChanged(bool canModify) override;
     void OnChangedSettings() override;
@@ -60,7 +60,7 @@ private:
 private slots:
     void requestBalance();
     void requestEstimatedFeeRate();
-    void setBalance(beam::Amount balance);
+    void setBalance(beam::wallet::AtomicSwapCoin swapCoin, beam::Amount balance);
     void setEstimatedGasPrice(beam::Amount gasPrice);
     void setStatus(beam::ethereum::Client::Status status);
     void setCanModifySettings(bool canModify);
@@ -69,7 +69,7 @@ private slots:
 private:
     QTimer m_balanceTimer;
     QTimer m_feeRateTimer;
-    beam::Amount m_balance;
+    std::map<beam::wallet::AtomicSwapCoin, beam::Amount> m_balances;
     beam::Amount m_gasPrice = 0;
     Status m_status = Status::Unknown;
     bool m_canModifySettings = true;

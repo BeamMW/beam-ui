@@ -23,7 +23,10 @@ SettingsFoldable {
     property alias  address:         addressInput.address
     property alias  port:            portInput.text
     property alias  accountIndex:    accountIndexInput.text
-    property alias  contractAddress: contractAddressInput.text
+    property alias  contractAddress:     contractAddressInput.text
+    property alias  daiContractAddress:  daiContractAddressInput.text
+    property alias  usdtContractAddress: usdtContractAddressInput.text
+    property alias  wbtcContractAddress: wbtcContractAddressInput.text
 
     property alias seedPhrases:                 seedPhraseDialog.seedPhrasesElectrum
     property alias phrasesSeparator:            seedPhraseDialog.phrasesSeparatorElectrum
@@ -63,6 +66,11 @@ SettingsFoldable {
         property string initialAddress
         property string initialPort
         property string initialSeed
+        property string initialContractAddress
+        property string initialDaiContractAddress
+        property string initialUsdtContractAddress
+        property string initialWbtcContractAddress
+
         property bool   isSeedChanged: false
 
         function restore() {
@@ -70,16 +78,26 @@ SettingsFoldable {
             address = initialAddress
             port = initialPort
             control.restoreSeedElectrum()
+
+            contractAddress = initialContractAddress
+            daiContractAddress = initialDaiContractAddress
+            usdtContractAddress = initialUsdtContractAddress
+            wbtcContractAddress = initialWbtcContractAddress
         }
 
         function save() {
             initialAddress = address
             initialPort    = port
             isSeedChanged = false
+            initialContractAddress = contractAddress
+            initialDaiContractAddress = daiContractAddress
+            initialUsdtContractAddress = usdtContractAddress
+            initialWbtcContractAddress = wbtcContractAddress
         }
 
         function isChanged() {
-            return initialAddress !== address || initialPort !== port || isSeedChanged
+            return initialAddress !== address || initialPort !== port || isSeedChanged || contractAddress != initialContractAddress
+            || daiContractAddress != initialDaiContractAddress || usdtContractAddress != initialUsdtContractAddress || wbtcContractAddress != initialWbtcContractAddress
         }
     }
 
@@ -210,6 +228,57 @@ SettingsFoldable {
             SFTextInput {
                 id:                 contractAddressInput
                 //visible:            !editElectrum
+                Layout.fillWidth:   true
+                font.pixelSize:     14
+                activeFocusOnTab:   true
+                color:              Style.content_main
+                //underlineVisible:   canEditNode
+                //readOnly:           !canEditNode
+            }
+
+            SFText {
+                font.pixelSize: 14
+                color:          control.color
+                //% "DAI contract address"
+                text:           qsTrId("settings-dai-contract-address")
+            }
+
+            SFTextInput {
+                id:                 daiContractAddressInput
+                Layout.fillWidth:   true
+                font.pixelSize:     14
+                activeFocusOnTab:   true
+                color:              Style.content_main
+                //underlineVisible:   canEditNode
+                //readOnly:           !canEditNode
+            }
+
+            SFText {
+                font.pixelSize: 14
+                color:          control.color
+                //% "USDT contract address"
+                text:           qsTrId("settings-usdt-contract-address")
+            }
+
+            SFTextInput {
+                id:                 usdtContractAddressInput
+                Layout.fillWidth:   true
+                font.pixelSize:     14
+                activeFocusOnTab:   true
+                color:              Style.content_main
+                //underlineVisible:   canEditNode
+                //readOnly:           !canEditNode
+            }
+
+            SFText {
+                font.pixelSize: 14
+                color:          control.color
+                //% "WBTC contract address"
+                text:           qsTrId("settings-wbtc-contract-address")
+            }
+
+            SFTextInput {
+                id:                 wbtcContractAddressInput
                 Layout.fillWidth:   true
                 font.pixelSize:     14
                 activeFocusOnTab:   true

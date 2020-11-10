@@ -327,7 +327,7 @@ void AppModel::startWallet()
     registerSwapFactory<BitcoinSVSide, bitcoin_sv::Electrum, bitcoin_sv::ISettingsProvider>(AtomicSwapCoin::Bitcoin_SV, *swapTransactionCreator);
     registerSwapFactory<DogecoinSide, dogecoin::Electrum, dogecoin::ISettingsProvider>(AtomicSwapCoin::Dogecoin, *swapTransactionCreator);
     registerSwapFactory<DashSide, dash::Electrum, dash::ISettingsProvider>(AtomicSwapCoin::Dash, *swapTransactionCreator);
-    //registerSwapFactory<EthereumSide, ethereum::EthereumBridge, ethereum::ISettingsProvider>(AtomicSwapCoin::Ethereum, *swapTransactionCreator);
+
     if (m_swapEthClient)
     {
         auto bridgeCreator = [bridgeHolder = m_swapEthBridgeHolder, reactor = m_walletReactor, settingsProvider = m_swapEthClient]() -> ethereum::IBridge::Ptr
@@ -337,6 +337,10 @@ void AppModel::startWallet()
 
         auto secondSideFactory = wallet::MakeSecondSideFactory<EthereumSide, ethereum::EthereumBridge, ethereum::ISettingsProvider>(bridgeCreator, *m_swapEthClient);
         swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Ethereum, secondSideFactory);
+        // register ERC20 tokens
+        swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Dai, secondSideFactory);
+        swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Tether, secondSideFactory);
+        swapTransactionCreator->RegisterFactory(AtomicSwapCoin::WBTC, secondSideFactory);
     }
 
     additionalTxCreators->emplace(TxType::AtomicSwap, swapTransactionCreator);

@@ -2764,5 +2764,17 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Contract address</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settings-dai-contract-address">
+        <source>DAI contract address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-usdt-contract-address">
+        <source>USDT contract address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-wbtc-contract-address">
+        <source>WBTC contract address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

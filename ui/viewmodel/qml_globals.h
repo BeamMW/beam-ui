@@ -42,6 +42,7 @@ public:
     static int  getMinFeeOrRate(Currency currency);
     static beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(Currency currency);
     static Currency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin);
+    static bool isEthereumBased(Currency currency);
     Q_INVOKABLE static QString calcTotalFee(Currency currency, unsigned int feeRate);
     Q_INVOKABLE static QString calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyLabel);
     Q_INVOKABLE static QString calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel);

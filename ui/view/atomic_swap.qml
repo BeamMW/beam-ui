@@ -262,6 +262,12 @@ Item {
                         // TODO roman.strilets
                         case Currency.CurrEthereum:
                             return "qrc:/assets/icon-doge.svg";
+                        case Currency.CurrDai:
+                            return "qrc:/assets/icon-doge.svg";
+                        case Currency.CurrTether:
+                            return "qrc:/assets/icon-doge.svg";
+                        case Currency.CurrWrappedBTC:
+                            return "qrc:/assets/icon-doge.svg";
                         default: return "";
                     }
                 }
@@ -284,6 +290,12 @@ Item {
                             return Style.swapCurrencyPaneGrLeftDOGE;
                         // TODO roman.strilets
                         case Currency.CurrEthereum:
+                            return Style.swapCurrencyPaneGrLeftDOGE;
+                        case Currency.CurrDai:
+                            return Style.swapCurrencyPaneGrLeftDOGE;
+                        case Currency.CurrTether:
+                            return Style.swapCurrencyPaneGrLeftDOGE;
+                        case Currency.CurrWrappedBTC:
                             return Style.swapCurrencyPaneGrLeftDOGE;
                         default:
                             return Style.swapCurrencyPaneGrLeftBTC;

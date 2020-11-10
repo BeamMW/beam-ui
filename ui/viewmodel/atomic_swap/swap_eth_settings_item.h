@@ -24,21 +24,25 @@ class SwapEthClientModel;
 class SwapEthSettingsItem : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString  showSeedDialogTitle      READ getShowSeedDialogTitle                  CONSTANT)
-    Q_PROPERTY(QString  generalTitle             READ getGeneralTitle                         CONSTANT)
-    Q_PROPERTY(QString  title                    READ getTitle                                CONSTANT)
-    Q_PROPERTY(QString  coinID                   READ getCoinID                               CONSTANT)
-    Q_PROPERTY(bool     folded                   READ getFolded       WRITE setFolded         NOTIFY foldedChanged)
+    Q_PROPERTY(QString         showSeedDialogTitle  READ getShowSeedDialogTitle                         CONSTANT)
+    Q_PROPERTY(QString         generalTitle         READ getGeneralTitle                                CONSTANT)
+    Q_PROPERTY(QString         title                READ getTitle                                       CONSTANT)
+    Q_PROPERTY(QString         coinID               READ getCoinID                                      CONSTANT)
+    Q_PROPERTY(bool            folded               READ getFolded             WRITE setFolded          NOTIFY foldedChanged)
 
-    Q_PROPERTY(QChar           phrasesSeparator READ getPhrasesSeparator                          CONSTANT)
-    Q_PROPERTY(QList<QObject*> seedPhrases      READ getSeedPhrases                               NOTIFY seedPhrasesChanged)
-    Q_PROPERTY(bool            isCurrentSeedValid       READ isCurrentSeedValid                                NOTIFY isCurrentSeedValidChanged)
-    Q_PROPERTY(QString         nodeAddress      READ getNodeAddress  WRITE setNodeAddress NOTIFY nodeAddressChanged)
-    Q_PROPERTY(QString         nodePort         READ getNodePort     WRITE setNodePort    NOTIFY nodePortChanged)
-    Q_PROPERTY(unsigned int    accountIndex     READ getAccountIndex WRITE setAccountIndex NOTIFY accountIndexChanged)
-    Q_PROPERTY(QString         contractAddress  READ getContractAddress WRITE setContractAddress    NOTIFY contractAddressChanged)
+    Q_PROPERTY(QChar           phrasesSeparator     READ getPhrasesSeparator                             CONSTANT)
+    Q_PROPERTY(QList<QObject*> seedPhrases          READ getSeedPhrases                                  NOTIFY seedPhrasesChanged)
+    Q_PROPERTY(bool            isCurrentSeedValid   READ isCurrentSeedValid                              NOTIFY isCurrentSeedValidChanged)
+    Q_PROPERTY(QString         nodeAddress          READ getNodeAddress         WRITE setNodeAddress     NOTIFY nodeAddressChanged)
+    Q_PROPERTY(QString         nodePort             READ getNodePort            WRITE setNodePort        NOTIFY nodePortChanged)
+    Q_PROPERTY(unsigned int    accountIndex         READ getAccountIndex        WRITE setAccountIndex    NOTIFY accountIndexChanged)
+    Q_PROPERTY(QString         contractAddress      READ getContractAddress     WRITE setContractAddress NOTIFY contractAddressChanged)
 
-    Q_PROPERTY(bool canEdit      READ getCanEdit                            NOTIFY canEditChanged)
+    Q_PROPERTY(QString         daiContractAddress   READ getDaiContractAddress  WRITE setDaiContractAddress    NOTIFY daiContractAddressChanged)
+    Q_PROPERTY(QString         usdtContractAddress  READ getUsdtContractAddress WRITE setUsdtContractAddress   NOTIFY usdtContractAddressChanged)
+    Q_PROPERTY(QString         wbtcContractAddress  READ getWbtcContractAddress WRITE setWbtcContractAddress   NOTIFY wbtcContractAddressChanged)
+
+    Q_PROPERTY(bool canEdit                 READ getCanEdit                 NOTIFY canEditChanged)
     Q_PROPERTY(bool isConnected             READ getIsConnected             NOTIFY connectionChanged)
     Q_PROPERTY(QString connectionStatus     READ getConnectionStatus        NOTIFY connectionStatusChanged)
     Q_PROPERTY(QString connectionErrorMsg   READ getConnectionErrorMsg      NOTIFY connectionErrorMsgChanged)
@@ -79,7 +83,13 @@ private:
     unsigned int getAccountIndex() const;
     void setAccountIndex(unsigned int value);
     QString getContractAddress() const;
+    QString getDaiContractAddress() const;
+    QString getUsdtContractAddress() const;
+    QString getWbtcContractAddress() const;
     void setContractAddress(const QString& value);
+    void setDaiContractAddress(const QString& value);
+    void setUsdtContractAddress(const QString& value);
+    void setWbtcContractAddress(const QString& value);
 
     bool getCanEdit() const;
     bool getIsConnected() const;
@@ -98,6 +108,9 @@ signals:
     void connectionChanged();
     void accountIndexChanged();
     void contractAddressChanged();
+    void daiContractAddressChanged();
+    void usdtContractAddressChanged();
+    void wbtcContractAddressChanged();
     void connectionStatusChanged();
     void connectionErrorMsgChanged();
     void foldedChanged();
@@ -112,5 +125,8 @@ private:
     QString m_nodePort;
     unsigned int m_accountIndex;
     QString m_contractAddress;
+    QString m_daiContractAddress;
+    QString m_usdtContractAddress;
+    QString m_wbtcContractAddress;
     bool m_isFolded = true;
 };

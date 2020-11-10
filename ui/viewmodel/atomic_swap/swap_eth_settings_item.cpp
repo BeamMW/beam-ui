@@ -59,6 +59,10 @@ void SwapEthSettingsItem::applySettings()
     // TODO roman.strilets hash or aggregate
     m_settings->m_swapContractAddress = m_contractAddress.toStdString();
 
+    m_settings->m_daiContractAddress = m_daiContractAddress.toStdString();
+    m_settings->m_usdtContractAddress = m_usdtContractAddress.toStdString();
+    m_settings->m_wbtcContractAddress = m_wbtcContractAddress.toStdString();
+
     coinClient->SetSettings(*m_settings);
 }
 
@@ -288,12 +292,54 @@ QString SwapEthSettingsItem::getContractAddress() const
     return m_contractAddress;
 }
 
+QString SwapEthSettingsItem::getDaiContractAddress() const
+{
+    return m_daiContractAddress;
+}
+
+QString SwapEthSettingsItem::getUsdtContractAddress() const
+{
+    return m_usdtContractAddress;
+}
+
+QString SwapEthSettingsItem::getWbtcContractAddress() const
+{
+    return m_wbtcContractAddress;
+}
+
 void SwapEthSettingsItem::setContractAddress(const QString& value)
 {
     if (value != m_contractAddress)
     {
         m_contractAddress = value;
         emit contractAddressChanged();
+    }
+}
+
+void SwapEthSettingsItem::setDaiContractAddress(const QString& value)
+{
+    if (value != m_daiContractAddress)
+    {
+        m_daiContractAddress = value;
+        emit daiContractAddressChanged();
+    }
+}
+
+void SwapEthSettingsItem::setUsdtContractAddress(const QString& value)
+{
+    if (value != m_usdtContractAddress)
+    {
+        m_usdtContractAddress = value;
+        emit usdtContractAddressChanged();
+    }
+}
+
+void SwapEthSettingsItem::setWbtcContractAddress(const QString& value)
+{
+    if (value != m_wbtcContractAddress)
+    {
+        m_wbtcContractAddress = value;
+        emit wbtcContractAddressChanged();
     }
 }
 

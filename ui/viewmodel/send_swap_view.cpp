@@ -335,14 +335,14 @@ bool SendSwapViewModel::isEnough() const
         return _walletModel.getAvailable() >= total;
     }
 
-    if (_sendCurrency == Currency::CurrEthereum)
+    auto swapCoin = QMLGlobals::convertCurrencyToSwapCoin(_sendCurrency);
+    if (QMLGlobals::isEthereumBased(_sendCurrency))
     {
-        return AppModel::getInstance().getSwapEthClient()->getAvailable() > total;
+        // TODO(alex.starun): check separately Ethereum and ERC20
+        return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) > total;
     }
 
     // TODO sentFee is fee rate. should be corrected
-    auto swapCoin = QMLGlobals::convertCurrencyToSwapCoin(_sendCurrency);
-
     return AppModel::getInstance().getSwapCoinClient(swapCoin)->getAvailable() > total;
 }
 

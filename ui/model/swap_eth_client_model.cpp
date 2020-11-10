@@ -38,12 +38,13 @@ SwapEthClientModel::SwapEthClientModel(beam::ethereum::IBridgeHolder::Ptr bridge
     qRegisterMetaType<beam::ethereum::Client::Status>("beam::ethereum::Client::Status");
     qRegisterMetaType<beam::ethereum::IBridge::ErrorType>("beam::ethereum::IBridge::ErrorType");
     qRegisterMetaType<beam::Amount>("beam::Amount");
+    qRegisterMetaType<beam::wallet::AtomicSwapCoin>("beam::wallet::AtomicSwapCoin");
 
     connect(&m_balanceTimer, SIGNAL(timeout()), this, SLOT(requestBalance()));
     connect(&m_feeRateTimer, SIGNAL(timeout()), this, SLOT(requestEstimatedFeeRate()));
 
     // connect to myself for save values in UI(main) thread
-    connect(this, SIGNAL(gotBalance(beam::Amount)), this, SLOT(setBalance(beam::Amount)));
+    connect(this, SIGNAL(gotBalance(beam::wallet::AtomicSwapCoin, beam::Amount)), this, SLOT(setBalance(beam::wallet::AtomicSwapCoin, beam::Amount)));
     connect(this, SIGNAL(gotEstimatedGasPrice(beam::Amount)), this, SLOT(setEstimatedGasPrice(beam::Amount)));
     connect(this, SIGNAL(gotStatus(beam::ethereum::Client::Status)), this, SLOT(setStatus(beam::ethereum::Client::Status)));
     connect(this, SIGNAL(gotCanModifySettings(bool)), this, SLOT(setCanModifySettings(bool)));
@@ -58,9 +59,14 @@ SwapEthClientModel::SwapEthClientModel(beam::ethereum::IBridgeHolder::Ptr bridge
     GetAsync()->GetStatus();
 }
 
-beam::Amount SwapEthClientModel::getAvailable()
+beam::Amount SwapEthClientModel::getAvailable(beam::wallet::AtomicSwapCoin swapCoin)
 {
-    return m_balance;
+    auto iter = m_balances.find(swapCoin);
+    if (iter != m_balances.end())
+    {
+        return iter->second;
+    }
+    return 0;
 }
 
 beam::Amount SwapEthClientModel::getGasPrice()
@@ -88,9 +94,9 @@ beam::ethereum::IBridge::ErrorType SwapEthClientModel::getConnectionError() cons
     return m_connectionError;
 }
 
-void SwapEthClientModel::OnBalance(Amount balance)
+void SwapEthClientModel::OnBalance(wallet::AtomicSwapCoin swapCoin, Amount balance)
 {
-    emit gotBalance(balance);
+    emit gotBalance(swapCoin, balance);
 }
 
 void SwapEthClientModel::OnEstimatedGasPrice(Amount gasPrice)
@@ -118,8 +124,11 @@ void SwapEthClientModel::requestBalance()
 {
     if (GetSettings().IsActivated())
     {
-        // update balance
-        GetAsync()->GetBalance();
+        // update balances
+        GetAsync()->GetBalance(wallet::AtomicSwapCoin::Ethereum);
+        GetAsync()->GetBalance(wallet::AtomicSwapCoin::Dai);
+        GetAsync()->GetBalance(wallet::AtomicSwapCoin::Tether);
+        GetAsync()->GetBalance(wallet::AtomicSwapCoin::WBTC);
     }
 }
 
@@ -132,11 +141,18 @@ void SwapEthClientModel::requestEstimatedFeeRate()
     }
 }
 
-void SwapEthClientModel::setBalance(Amount balance)
+void SwapEthClientModel::setBalance(wallet::AtomicSwapCoin swapCoin, Amount balance)
 {
-    if (m_balance != balance)
+    auto iter = m_balances.find(swapCoin);
+
+    if (m_balances.end() == iter)
     {
-        m_balance = balance;
+        m_balances.emplace(swapCoin, balance);
+        emit balanceChanged();
+    }
+    else if (iter->second != balance)
+    {
+        iter->second = balance;
         emit balanceChanged();
     }
 }

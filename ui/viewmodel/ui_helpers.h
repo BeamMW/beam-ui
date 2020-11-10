@@ -48,6 +48,9 @@ namespace beamui
     macro(Dogecoin,    "Dogecoin",      "DOGE",          "satoshi",  "sat/kB",    8) \
     macro(Dash,        "Dash",          "DASH",          "duff",     "duff/kB",   8) \
     macro(Ethereum,    "Ethereum",      "ETH",           "gwei",     "gwei",      9) \
+    macro(Dai,         "Dai",           "DAI",           "gwei?",    "gwei",      9) \
+    macro(Tether,      "Tether",        "USDT",          "unit?",    "gwei",      6) \
+    macro(WrappedBTC , "WBTC",          "WBTC",          "satoshi",  "gwei",      8) \
     macro(Usd,         "USD",           "USD",           "cent",     "",          2) \
     macro(Unknown,     "",              "",              "",         "",          0)
 
@@ -78,6 +81,7 @@ namespace beamui
     Currencies convertExchangeRateCurrencyToUiCurrency(beam::wallet::ExchangeRate::Currency);
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     Currencies convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin coin);
+    beam::wallet::AtomicSwapCoin convertCurrenciesToSwapCoin(Currencies currency);
 #endif
 
     QString toString(const beam::wallet::WalletID&);
