@@ -62,6 +62,7 @@ ColumnLayout {
 
         onLoadingChanged: {
             if (control.activeApp && !this.loading) {
+                viewModel.onCompleted(webView)
                 this.visible = true
             }
         }
@@ -70,7 +71,6 @@ ColumnLayout {
     function launchApp(app) {
         control.activeApp = app
         webView.url = app.url
-       // webView.visible = true
     }
 
     Item {
@@ -231,8 +231,6 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
-        viewModel.onCompleted(webView)
-
         if (Style.appsUrl.length) {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function()

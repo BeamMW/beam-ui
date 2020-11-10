@@ -30,7 +30,7 @@ SendSwapViewModel::SendSwapViewModel()
     , _receiveFeeGrothes(0)
     , _receiveCurrency(Currency::CurrStart)
     , _changeGrothes(0)
-    , _walletModel(*AppModel::getInstance().getWallet())
+    , _walletModel(*AppModel::getInstance().getWalletModel())
     , _isBeamSide(true)
     , _minimalBeamFeeGrothes(minimalFee(Currency::CurrBeam, false))
 {

@@ -106,7 +106,8 @@ WalletSettings::WalletSettings(const QDir& appDataDir)
     : m_data{ appDataDir.filePath(SettingsFile), QSettings::IniFormat }
     , m_appDataDir{appDataDir}
 {
-
+    LOG_INFO () << "UI Settings file: " << m_data.fileName().toStdString()
+                << "\n\tApp Name: " << m_data.value(kDevAppName).toString().toStdString();
 }
 
 #if defined(BEAM_HW_WALLET)
@@ -150,7 +151,7 @@ void WalletSettings::setNodeAddress(const QString& addr)
 {
     if (addr != getNodeAddress())
     {
-        auto walletModel = AppModel::getInstance().getWallet();
+        auto walletModel = AppModel::getInstance().getWalletModel();
         if (walletModel)
         {
             walletModel->getAsync()->setNodeAddress(addr.toStdString());
@@ -423,7 +424,7 @@ void WalletSettings::setNewVersionActive(bool isActive)
 {
     if (isActive != isNewVersionActive())
     {
-        auto walletModel = AppModel::getInstance().getWallet();
+        auto walletModel = AppModel::getInstance().getWalletModel();
         if (walletModel)
         {
             walletModel->getAsync()->switchOnOffNotifications(
@@ -439,7 +440,7 @@ void WalletSettings::setBeamNewsActive(bool isActive)
 {
     if (isActive != isBeamNewsActive())
     {
-        auto walletModel = AppModel::getInstance().getWallet();
+        auto walletModel = AppModel::getInstance().getWalletModel();
         if (walletModel)
         {
             walletModel->getAsync()->switchOnOffNotifications(
@@ -455,7 +456,7 @@ void WalletSettings::setTxStatusActive(bool isActive)
 {
     if (isActive != isTxStatusActive())
     {
-        auto walletModel = AppModel::getInstance().getWallet();
+        auto walletModel = AppModel::getInstance().getWalletModel();
         if (walletModel)
         {
             auto asyncModel = walletModel->getAsync();

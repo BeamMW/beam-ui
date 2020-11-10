@@ -24,7 +24,7 @@
 using namespace beam::wallet;
 
 ExchangeRatesManager::ExchangeRatesManager()
-    : m_walletModel(*AppModel::getInstance().getWallet())
+    : m_walletModel(*AppModel::getInstance().getWalletModel())
     , m_settings(AppModel::getInstance().getSettings())
 {
 

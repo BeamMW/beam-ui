@@ -146,7 +146,7 @@ QString ContactItem::getToken() const
 }
 
 AddressBookViewModel::AddressBookViewModel()
-    : m_model{*AppModel::getInstance().getWallet()}
+    : m_model{*AppModel::getInstance().getWalletModel()}
 {
     connect(&m_model,
             SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),

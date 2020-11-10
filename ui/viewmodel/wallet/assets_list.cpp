@@ -12,7 +12,7 @@
 #include "model/app_model.h"
 
 AssetsList::AssetsList()
-    : _wallet(*AppModel::getInstance().getWallet())
+    : _wallet(*AppModel::getInstance().getWalletModel())
 {
     connect(&_ermgr, &ExchangeRatesManager::rateUnitChanged, this, &AssetsList::onNewRates);
     connect(&_ermgr, &ExchangeRatesManager::activeRateChanged, this, &AssetsList::onNewRates);

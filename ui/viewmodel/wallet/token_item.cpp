@@ -152,7 +152,7 @@ void TokenInfoItem::setToken(const QString& token)
                         }
                         else if (walletID)
                         {
-                            AppModel::getInstance().getWallet()->getAsync()->saveVouchers(*vouchers, *walletID);
+                            AppModel::getInstance().getWalletModel()->getAsync()->saveVouchers(*vouchers, *walletID);
                         }
                     } 
                     else
@@ -185,7 +185,7 @@ void TokenInfoItem::setToken(const QString& token)
 
             if (!getIgnoreStoredVouchers() && walletID)
             {
-                AppModel::getInstance().getWallet()->getAsync()->getAddress(*walletID, [this](const auto& addr, auto count)
+                AppModel::getInstance().getWalletModel()->getAsync()->getAddress(*walletID, [this](const auto& addr, auto count)
                 {
                     setOfflinePayments((int)count);
                 });

@@ -145,9 +145,6 @@ class StartViewModel : public QObject
     Q_PROPERTY(bool validateDictionary READ getValidateDictionary WRITE setValidateDictionary NOTIFY validateDictionaryChanged)
 
 public:
-
-    using DoneCallback = std::function<bool (beam::wallet::IWalletDB::Ptr db, const std::string& walletPass)>;
-
     StartViewModel();
     ~StartViewModel();
 

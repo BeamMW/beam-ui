@@ -66,6 +66,7 @@ signals:
     // Public Signal
     void walletStatusChanged();
     void assetInfoChanged(beam::Asset::ID assetId, const beam::wallet::WalletAsset& info);
+    void iwtCallResult(const QString& callId, boost::any);
 
 signals:
     void transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items);
