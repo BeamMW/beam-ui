@@ -149,7 +149,7 @@ ColumnLayout {
                             color:  Style.background_main
 
                             SvgImage {
-                                source: "qrc:/assets/icon-applications-active.svg"
+                                source: hoverArea.containsMouse ? "qrc:/assets/icon-defapp-active.svg" : "qrc:/assets/icon-defapp.svg"
                                 sourceSize: Qt.size(28, 28)
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.horizontalCenter: parent.horizontalCenter
