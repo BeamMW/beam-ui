@@ -2839,7 +2839,8 @@ public offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-title">
-        <source>Applications</source>
+        <source>DAPP Store</source>
+        <oldsource>Applications</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-loading-app">
