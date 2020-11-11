@@ -2409,9 +2409,9 @@ max privacy (offline)</translation>
         <translation>Shielded</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can�t calculate the recommended fee rate. 
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete. </source>
+much longer for a transaction to complete.</source>
         <translation>Connection error: can’t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete. </translation>
@@ -2493,10 +2493,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Bitcoin Cash seed phrase</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="bitcoin-sv-show-seed-phrase">
-        <source>Bitcoin SV seed phrase</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="dash-show-seed-phrase">
         <source>Dash seed phrase</source>
         <translation type="unfinished"></translation>
@@ -2507,10 +2503,6 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="bitcoin-cash-show-addresses-title">
         <source>Bitcoin Cash wallet addresses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="bitcoin-sv-show-addresses-title">
-        <source>Bitcoin SV wallet addresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dash-show-addresses-title">
@@ -2525,10 +2517,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Bitcoin Cash</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="general-bitcoin-sv">
-        <source>Bitcoin SV</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="general-dash">
         <source>DASH</source>
         <translation type="unfinished"></translation>
@@ -2541,10 +2529,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Bitcoin Cash node</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="settings-swap-bitcoin-sv-node">
-        <source>Bitcoin SV node</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="settings-swap-dash-node">
         <source>Dash node</source>
         <translation type="unfinished"></translation>
@@ -2555,10 +2539,6 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-swap-bitcoin-cash-electrum">
         <source>Bitcoin Cash electrum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-swap-bitcoin-sv-electrum">
-        <source>Bitcoin SV electrum</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-swap-dash-electrum">
@@ -2694,6 +2674,102 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Regular (for wallet)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="available-panel-maturing-mp">
+        <source>Max Privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-address-max-privacy">
+        <source>Max privacy</source>
+        <translation type="unfinished">Max privacy</translation>
+    </message>
+    <message id="tx-address-regular">
+        <source>Regular</source>
+        <translation type="unfinished">Regular</translation>
+    </message>
+    <message id="settings-node-progress">
+        <source>Swap in progress, cannot disconnect or switch connection type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-doge-node-progress">
+        <source>Swap in progress, cannot disconnect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-in-progress-public-offline">
+        <source>in progress
+public offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-sent-public-offline">
+        <source>sent
+public offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-received-public-offline">
+        <source>received
+public offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-canceled-public-offline">
+        <source>canceled
+public offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-failed-public-offline">
+        <source>failed
+public offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-title">
+        <source>DAPP Store</source>
+        <oldsource>Applications</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-loading-app">
+        <source>Loading &apos;%1&apos;...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-nothing">
+        <source>There are no applications at the moment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-loading">
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-run">
+        <source>launch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-devapp">
+        <source>This is your dev application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-load-error">
+        <source>Failed to load applications list, %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-canceled-max">
+        <source>canceled
+max privacy</source>
+        <translation type="unfinished">canceled
+max privacy</translation>
+    </message>
+    <message id="wallet-txs-status-canceled-max-offline">
+        <source>canceled
+offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-failed-max">
+        <source>failed
+max privacy</source>
+        <translation type="unfinished">failed
+max privacy</translation>
+    </message>
+    <message id="wallet-txs-status-failed-max-offline">
+        <source>failed
+offline</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="save-address-title">
         <source>Do you want to name the contact?</source>
         <translation type="unfinished">Do you want to name the contact?</translation>
@@ -2734,6 +2810,10 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Max privacy address</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-send-public-offline-address">
+        <source>Public offline address</source>
+        <translation type="unfinished">Public offline address</translation>
+    </message>
     <message id="wallet-send-need-extract-shielded-note">
         <source>Transaction is slower, fees are higher.</source>
         <translation type="unfinished"></translation>
@@ -2744,6 +2824,10 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="send-no-funds">
         <source>Insufficient funds to complete the transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-founds-fail-by-one-tx">
+        <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="amount-input-add-all">
@@ -2768,106 +2852,6 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="tx-address-unknown">
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="available-panel-maturing-mp">
-        <source>Max Privacy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-send-public-offline-address">
-        <source>Public offline address</source>
-        <translation type="unfinished">Public offline address</translation>
-    </message>
-    <message id="tx-address-max-privacy">
-        <source>Max privacy</source>
-        <translation type="unfinished">Max privacy</translation>
-    </message>
-    <message id="tx-address-regular">
-        <source>Regular</source>
-        <translation type="unfinished">Regular</translation>
-    </message>
-    <message id="settings-node-progress">
-        <source>Swap in progress, cannot disconnect or switch connection type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-doge-node-progress">
-        <source>Swap in progress, cannot disconnect.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-txs-status-in-progress-public-offline">
-        <source>in progress
-public offline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-txs-status-sent-public-offline">
-        <source>sent
-public offline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-txs-status-received-public-offline">
-        <source>received
-public offline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-txs-canceled-max">
-        <source>canceled
-max privacy</source>
-        <translation type="unfinished">canceled
-max privacy</translation>
-    </message>
-    <message id="wallet-txs-canceled-max-offline">
-        <source>canceled
-offline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-txs-status-canceled-public-offline">
-        <source>canceled
-public offline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-txs-failed-max">
-        <source>failed
-max privacy</source>
-        <translation type="unfinished">failed
-max privacy</translation>
-    </message>
-    <message id="wallet-txs-failed-max-offline">
-        <source>failed
-offline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-txs-status-failed-public-offline">
-        <source>failed
-public offline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-title">
-        <source>DAPP Store</source>
-        <oldsource>Applications</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-loading-app">
-        <source>Loading &apos;%1&apos;...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-nothing">
-        <source>There are no applications at the moment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-loading">
-        <source>Loading...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-run">
-        <source>launch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-devapp">
-        <source>This is your dev application</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-load-error">
-        <source>Failed to load applications list, %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

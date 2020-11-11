@@ -71,7 +71,7 @@ SettingsFoldable {
                 font.pixelSize: 14
                 color: Style.content_main
                 text: viewModel.walletLocation
-                wrapMode: Text.WrapAnywhere
+                wrapMode: Text.Wrap
             }
 
             SFText {

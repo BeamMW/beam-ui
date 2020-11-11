@@ -73,7 +73,7 @@ SettingsFoldable {
             text: qsTrId("general-rescan")
             linkColor: "#ffffff"
             bold: true
-            enabled: viewModel.localNodeRun && confirmRefreshDialog.canRefresh && viewModel.isLocalNodeRunning
+            enabled: statusbarModel.isConnectionTrusted && statusbarModel.isOnline && confirmRefreshDialog.canRefresh 
             onClicked: {
                 confirmRefreshDialog.open()
             }

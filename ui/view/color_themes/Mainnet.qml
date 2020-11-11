@@ -38,15 +38,14 @@ AbstractColors {
     property color currencyPaneLeftDASH:  "#0092ff"
     property color currencyPaneLeftDOGE:  "#e0cd81"
     property color currencyPaneLeftBCH:   "#ff6700"
-    property color currencyPaneLeftBSV:   "#eab300"
     property color currencyPaneConnect:   Qt.rgba(0, 246, 210, 0.1)
     property color currencyPaneBorder:    Qt.rgba(0, 246, 210, 0.15)
 
     property color swapCurrencyStateIndicator:  "#ff746b"
     property color swapDisconnectNode:          "#f9605b"
 
-    property string linkStyle:   "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
+    property string linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
     property string explorerUrl: "https://explorer.beam.mw/"
-    property string faucetUrl:   "https://faucet.beamprivacy.community/"
+    property string faucetUrl: "https://faucet.beamprivacy.community/"
     property string appsUrl:     "http://3.136.182.25:80/app/appslist.json"
 }

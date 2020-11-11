@@ -471,6 +471,7 @@ when connection is established"
             Layout.bottomMargin: 7
 
             LinkButton {
+                Layout.fillWidth:   true
                 text:      isCurrentElectrumSeedValid ?   
                             //% "Edit your seed phrase"
                             qsTrId("settings-swap-edit-seed") :
@@ -509,6 +510,7 @@ when connection is established"
             }
 
             LinkButton {
+                Layout.fillWidth:   true
                 //% "Generate new seed phrase"
                 text:             qsTrId("settings-swap-new-seed")
                 onClicked: {
@@ -619,7 +621,9 @@ when connection is established"
             spacing:                20
 
             CustomButton {
-                visible:                applySettingsButtonId.visible
+                leftPadding:            25
+                rightPadding:           25
+                visible:                !canConnect() && !canDisconnect()
                 text:                   qsTrId("general-cancel")
                 icon.source:            enabled ? "qrc:/assets/icon-cancel-white.svg" : "qrc:/assets/icon-cancel.svg"
                 enabled:                isSettingsChanged()
@@ -628,6 +632,8 @@ when connection is established"
 
             CustomButton {
                 id:                     disconnectButtonId
+                leftPadding:            25
+                rightPadding:           25
                 visible:                canDisconnect()
                 palette.button:         Style.swapDisconnectNode
                 palette.buttonText:     Style.content_opposite
@@ -638,7 +644,9 @@ when connection is established"
             }
 
             CustomButton {
-                visible:                connectButtonId.visible
+                leftPadding:            25
+                rightPadding:           25
+                visible:                canConnect()
                 //% "clear"
                 text:                   qsTrId("settings-swap-clear")
                 icon.source:            "qrc:/assets/icon-delete.svg"
@@ -662,7 +670,10 @@ when connection is established"
 
             PrimaryButton {
                 id:                     applySettingsButtonId
-                visible:                !connectButtonId.visible && !disconnectButtonId.visible
+                leftPadding:            25
+                rightPadding:           25
+                // TODO roman.strilets need to refactor this
+                visible:                !canConnect() && !canDisconnect()
                 text:                   qsTrId("settings-apply")
                 icon.source:            "qrc:/assets/icon-done.svg"
                 enabled:                isSettingsChanged() && canApplySettings()
@@ -671,6 +682,8 @@ when connection is established"
 
             PrimaryButton {
                 id:                     connectButtonId
+                leftPadding:            25
+                rightPadding:           25
                 visible:                canConnect()
                 text:                   editElectrum
                                             //% "connect to electrum node"
@@ -933,7 +946,6 @@ when connection is established"
                 CustomButton {
                     id: cancelButtonId
                     visible:                false
-                    Layout.preferredHeight: 38
                     Layout.minimumWidth:    133
                     text:                   qsTrId("general-cancel")
                     icon.source:            "qrc:/assets/icon-cancel-white.svg"
@@ -944,7 +956,6 @@ when connection is established"
                 PrimaryButton {
                     id: applyButtonId
                     visible:                false
-                    Layout.preferredHeight: 38
                     Layout.minimumWidth:    126
                     text:                   qsTrId("settings-apply")
                     icon.source:            "qrc:/assets/icon-done.svg"
@@ -958,7 +969,6 @@ when connection is established"
                 CustomButton {
                     id: closeButtonId
                     visible:                false
-                    Layout.preferredHeight: 38
                     Layout.minimumWidth:    125
                     text:                   qsTrId("general-close")
                     icon.source:            "qrc:/assets/icon-cancel-white.svg"
@@ -967,7 +977,6 @@ when connection is established"
                 CustomButton {
                     id: generateButtonId
                     visible:                false
-                    Layout.preferredHeight: 38
                     Layout.minimumWidth:    271
                     rightPadding:           20
                     //% "generate another seed phrase"
@@ -979,7 +988,6 @@ when connection is established"
                 PrimaryButton {
                     id: copyButtonId
                     visible:                false
-                    Layout.preferredHeight: 38
                     Layout.minimumWidth:    124
                     text:                   qsTrId("general-copy")
                     icon.source:            "qrc:/assets/icon-copy-blue.svg"

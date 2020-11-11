@@ -96,7 +96,7 @@ TxObject::TxObject( const TxDescription& tx,
         , m_type(*m_tx.GetParameter<TxType>(TxParameterID::TransactionType))
         , m_secondCurrency(secondCurrency)
 {
-    auto kernelID = QString::fromStdString(to_hex(m_tx.m_kernelID.m_pData, m_tx.m_kernelID.nBytes));
+    auto kernelID = QString::fromStdString(std::to_string(m_tx.m_kernelID));
     setKernelID(kernelID);
 }
 

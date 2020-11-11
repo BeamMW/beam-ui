@@ -415,6 +415,12 @@ void SendViewModel::onChangeCalculated(beam::Amount changeAsset, beam::Amount ch
 
 void SendViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes)
 {
+    if (!selectionRes.isEnought)
+    {
+        _maxWhatCanSelect = selectionRes.selectedSumBeam - selectionRes.selectedFee;
+        emit sendAmountChanged();
+    }
+
     _shieldedFee = selectionRes.shieldedInputsFee;
 
     if (selectionRes.assetID == beam::Asset::s_BeamID)
@@ -727,6 +733,16 @@ void SendViewModel::setWalletAddress(const boost::optional<beam::wallet::WalletA
         _receiverWalletAddress = value;
         emit hasAddressChanged();
     }
+}
+
+bool SendViewModel::canSendByOneTransaction()
+{
+    return !_maxWhatCanSelect || _maxWhatCanSelect >= _sendAmount;
+}
+
+QString SendViewModel::getMaxSendAmount()
+{
+    return beamui::AmountToUIString(_maxWhatCanSelect);
 }
 
 void SendViewModel::resetMinimalFee()

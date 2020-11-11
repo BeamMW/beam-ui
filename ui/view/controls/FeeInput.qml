@@ -129,9 +129,9 @@ ColumnLayout {
         wrapMode:              Text.WordWrap
         color:                 Style.validator_error
         lineHeight:            1.1
-/*% "Connection error: can�t calculate the recommended fee rate. 
+/*% "Connection error: can't calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete. "
+much longer for a transaction to complete."
 */
         text:                  qsTrId("settings-recommended-fee-rate-absent").arg(BeamGlobals.getCurrencyName(control.currency))
     }
