@@ -13,6 +13,29 @@ using namespace beam;
 
 namespace beamui
 {
+    namespace
+    {
+        uint8_t getCurrencyDecimals(Currencies currency)
+        {
+            // TODO(alex.starun): find better solution
+            switch (currency)
+            {
+            case Currencies::Beam:
+                static uint8_t beamDecimals = static_cast<uint8_t>(std::log10(Rules::Coin));
+                return beamDecimals;
+            case Currencies::Ethereum:
+            case Currencies::Dai:
+                return 9;
+            case Currencies::Tether:
+                return 6;
+            case Currencies::WrappedBTC:
+                return libbitcoin::btc_decimal_places;
+            default:
+                return libbitcoin::btc_decimal_places;
+            }
+        }
+    }
+
     QString toString(const beam::wallet::WalletID& walletID)
     {
         if (walletID != Zero)
@@ -107,31 +130,7 @@ namespace beamui
      */
     QString AmountToUIString(const Amount& value, Currencies coinType, bool currencyLabel)
     {
-        static uint8_t beamDecimals = static_cast<uint8_t>(std::log10(Rules::Coin));
-        std::string amountString;
-        switch (coinType)
-        {
-            case Currencies::Usd:
-            case Currencies::Beam:
-                amountString = libbitcoin::encode_base10(value, beamDecimals);
-                break;
-            case Currencies::Ethereum:
-                // TODO roman.strilets
-                amountString = libbitcoin::encode_base10(value, 9);
-                break;
-            case Currencies::Dai:
-                amountString = libbitcoin::encode_base10(value, 9);
-                break;
-            case Currencies::Tether:
-                amountString = libbitcoin::encode_base10(value, 6);
-                break;
-            case Currencies::WrappedBTC:
-                amountString = libbitcoin::encode_base10(value, 8);
-                break;
-            default:
-                amountString = libbitcoin::satoshi_to_btc(value);
-        }
-
+        std::string amountString = libbitcoin::encode_base10(value, getCurrencyDecimals(coinType));
         QString amount = QString::fromStdString(amountString);
         QString coinLabel = getCurrencyLabel(coinType);
 
@@ -154,14 +153,7 @@ namespace beamui
     beam::Amount UIStringToAmount(const QString& value, Currencies currency)
     {
         beam::Amount amount = 0;
-        if (currency == Currencies::Ethereum)
-        {
-            libbitcoin::decode_base10(amount, value.toStdString(), 9);
-        }
-        else
-        {
-            libbitcoin::btc_to_satoshi(amount, value.toStdString());
-        }
+        libbitcoin::decode_base10(amount, value.toStdString(), getCurrencyDecimals(currency));
         return amount;
     }
 
