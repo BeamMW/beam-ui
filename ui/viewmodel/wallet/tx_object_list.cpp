@@ -18,25 +18,6 @@ namespace
 {
     using namespace beam::wallet;
 
-    QString selectShilededStatus(TxAddressType addressType
-        , const QString& maxPrivacy
-        , const QString& offline
-        , const QString& publicOffline
-        , const QString& fallback)
-    {
-        switch (addressType)
-        {
-        case TxAddressType::MaxPrivacy:
-            return maxPrivacy;
-        case TxAddressType::Offline:
-            return offline;
-        case TxAddressType::PublicOffline:
-            return publicOffline;
-        default:
-            return fallback;
-        }
-    }
-
 QString getStatusTextTranslated(const QString& status, TxAddressType addressType)
 {
     if (status == "pending")
@@ -94,80 +75,100 @@ QString getStatusTextTranslated(const QString& status, TxAddressType addressType
         //% "failed"
         return qtTrId("wallet-txs-status-failed");
     }
+    // in progress
     else if (status == "in progress max privacy")
     {
-        return selectShilededStatus(addressType,
-            /*% "in progress
+        /*% "in progress
 max privacy" */
-            qtTrId("wallet-txs-status-in-progress-max"),
-            /*% "in progress
-offline" */
-            qtTrId("wallet-txs-status-in-progress-max-offline"),
-            /*% "in progress
-public offline" */
-            qtTrId("wallet-txs-status-in-progress-public-offline"),
-            qtTrId("wallet-txs-status-in-progress")
-        );
+        return qtTrId("wallet-txs-status-in-progress-max");
     }
+    else if (status == "in progress offline")
+    {
+        /*% "in progress
+offline" */
+        return qtTrId("wallet-txs-status-in-progress-max-offline");
+    }
+    else if (status == "in progress public offline")
+    {
+        /*% "in progress
+public offline" */
+        return qtTrId("wallet-txs-status-in-progress-public-offline");
+    }
+    // sent
     else if (status == "sent max privacy")
     {
-        return selectShilededStatus(addressType,
-            /*% "sent
+        /*% "sent
 max privacy"*/
-            qtTrId("wallet-txs-status-sent-max"),
-            /*% "sent
-offline"*/
-            qtTrId("wallet-txs-status-sent-max-offline"),
-            /*% "sent
-public offline" */
-            qtTrId("wallet-txs-status-sent-public-offline"),
-            qtTrId("wallet-txs-status-sent")
-        );
+        return qtTrId("wallet-txs-status-sent-max");
     }
+    else if (status == "sent offline")
+    {
+        /*% "sent
+offline" */
+        return qtTrId("wallet-txs-status-sent-max-offline");
+    }
+    else if (status == "sent public offline")
+    {
+        /*% "sent
+public offline" */
+        return qtTrId("wallet-txs-status-sent-public-offline");
+    }
+    // received
     else if (status == "received max privacy")
     {
-        return selectShilededStatus(addressType,
-            /*% "received
+        /*% "received
 max privacy" */
-            qtTrId("wallet-txs-status-received-max"),
-            /*% "received
-offline" */
-            qtTrId("wallet-txs-status-received-max-offline"),
-            /*% "received
-public offline" */
-            qtTrId("wallet-txs-status-received-public-offline"),
-            qtTrId("wallet-txs-status-received")
-        );
+        return qtTrId("wallet-txs-status-received-max");
     }
+    else if (status == "received offline")
+    {
+        /*% "received
+offline" */
+        return qtTrId("wallet-txs-status-received-max-offline");
+    }
+    else if (status == "received public offline")
+    {
+        /*% "received
+public offline" */
+        return qtTrId("wallet-txs-status-received-public-offline");
+    }
+    // canceled
     else if (status == "canceled max privacy")
     {
-        return selectShilededStatus(addressType,
-            /*% "canceled
+        /*% "canceled
 max privacy" */
-            qtTrId("wallet-txs-canceled-max"),
-            /*% "canceled
-offline" */
-            qtTrId("wallet-txs-canceled-max-offline"),
-            /*% "canceled
-public offline" */
-            qtTrId("wallet-txs-status-canceled-public-offline"),
-            qtTrId("wallet-txs-status-cancelled")
-        );
+        return qtTrId("wallet-txs-status-canceled-max");
     }
+    else if (status == "canceled offline")
+    {
+        /*% "canceled
+offline" */
+        return qtTrId("wallet-txs-status-canceled-max-offline");
+    }
+    else if (status == "canceled public offline")
+    {
+        /*% "canceled
+public offline" */
+        return qtTrId("wallet-txs-status-canceled-public-offline");
+    }
+    // failed
     else if (status == "failed max privacy")
     {
-        return selectShilededStatus(addressType,
-            /*% "failed
+        /*% "failed
 max privacy" */
-            qtTrId("wallet-txs-failed-max"),
-            /*% "failed
+        return qtTrId("wallet-txs-status-failed-max");
+    }
+    else if (status == "failed offline")
+    {
+        /*% "failed
 offline" */
-            qtTrId("wallet-txs-failed-max-offline"),
-            /*% "failed
+        return qtTrId("wallet-txs-status-failed-max-offline");
+    }
+    else if (status == "failed public offline")
+    {
+        /*% "failed
 public offline" */
-            qtTrId("wallet-txs-status-failed-public-offline"),
-            qtTrId("wallet-txs-status-failed")
-        );
+        return qtTrId("wallet-txs-status-failed-public-offline");
     }
     else
     {
