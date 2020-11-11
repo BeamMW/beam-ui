@@ -2747,34 +2747,11 @@ public offline</source>
         <translation>接收
 公共离线</translation>
     </message>
-    <message id="wallet-txs-canceled-max">
-        <source>canceled
-max privacy</source>
-        <translation>取消
-最大隐私</translation>
-    </message>
-    <message id="wallet-txs-canceled-max-offline">
-        <source>canceled
-offline</source>
-        <translation>取消
-离线</translation>
-    </message>
     <message id="wallet-txs-status-canceled-public-offline">
         <source>canceled
 public offline</source>
         <translation>取消
 公共离线</translation>
-    </message>
-    <message id="wallet-txs-failed-max">
-        <source>failed
-max privacy</source>
-        <translation>失败
-最大隐私</translation>
-    </message>
-    <message id="wallet-txs-failed-max-offline">
-        <source>failed
-offline</source>
-        <translation>离线失败</translation>
     </message>
     <message id="wallet-txs-status-failed-public-offline">
         <source>failed
@@ -2793,6 +2770,29 @@ public offline</source>
     <message id="send-founds-fail-by-one-tx">
         <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-canceled-max">
+        <source>canceled
+max privacy</source>
+        <translation type="unfinished">取消
+最大隐私</translation>
+    </message>
+    <message id="wallet-txs-status-canceled-max-offline">
+        <source>canceled
+offline</source>
+        <translation type="unfinished">取消
+离线</translation>
+    </message>
+    <message id="wallet-txs-status-failed-max">
+        <source>failed
+max privacy</source>
+        <translation type="unfinished">失败
+最大隐私</translation>
+    </message>
+    <message id="wallet-txs-status-failed-max-offline">
+        <source>failed
+offline</source>
+        <translation type="unfinished">离线失败</translation>
     </message>
 </context>
 </TS>

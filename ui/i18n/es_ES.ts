@@ -2736,35 +2736,11 @@ public offline</source>
         <translation type="unfinished">received
 public offline</translation>
     </message>
-    <message id="wallet-txs-canceled-max">
-        <source>canceled
-max privacy</source>
-        <translation type="unfinished">canceled
-max privacy</translation>
-    </message>
-    <message id="wallet-txs-canceled-max-offline">
-        <source>canceled
-offline</source>
-        <translation type="unfinished">canceled
-offline</translation>
-    </message>
     <message id="wallet-txs-status-canceled-public-offline">
         <source>canceled
 public offline</source>
         <translation type="unfinished">canceled
 public offline</translation>
-    </message>
-    <message id="wallet-txs-failed-max">
-        <source>failed
-max privacy</source>
-        <translation type="unfinished">failed
-max privacy</translation>
-    </message>
-    <message id="wallet-txs-failed-max-offline">
-        <source>failed
-offline</source>
-        <translation type="unfinished">failed
-offline</translation>
     </message>
     <message id="wallet-txs-status-failed-public-offline">
         <source>failed
@@ -2783,6 +2759,30 @@ public offline</translation>
     <message id="send-founds-fail-by-one-tx">
         <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-canceled-max">
+        <source>canceled
+max privacy</source>
+        <translation type="unfinished">canceled
+max privacy</translation>
+    </message>
+    <message id="wallet-txs-status-canceled-max-offline">
+        <source>canceled
+offline</source>
+        <translation type="unfinished">canceled
+offline</translation>
+    </message>
+    <message id="wallet-txs-status-failed-max">
+        <source>failed
+max privacy</source>
+        <translation type="unfinished">failed
+max privacy</translation>
+    </message>
+    <message id="wallet-txs-status-failed-max-offline">
+        <source>failed
+offline</source>
+        <translation type="unfinished">failed
+offline</translation>
     </message>
 </context>
 </TS>

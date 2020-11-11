@@ -2735,36 +2735,11 @@ public offline</source>
         <translation>получено
 публичный оффлайн</translation>
     </message>
-    <message id="wallet-txs-canceled-max">
-        <source>canceled
-max privacy</source>
-        <translation>отменено
-макс. конфиденциальность
-</translation>
-    </message>
-    <message id="wallet-txs-canceled-max-offline">
-        <source>canceled
-offline</source>
-        <translation>отменено
-оффлайн</translation>
-    </message>
     <message id="wallet-txs-status-canceled-public-offline">
         <source>canceled
 public offline</source>
         <translation>отменено
 публичный оффлайн</translation>
-    </message>
-    <message id="wallet-txs-failed-max">
-        <source>failed
-max privacy</source>
-        <translation>не удалось
-макс. приватность</translation>
-    </message>
-    <message id="wallet-txs-failed-max-offline">
-        <source>failed
-offline</source>
-        <translation>ошибка
-оффлайн</translation>
     </message>
     <message id="wallet-txs-status-failed-public-offline">
         <source>failed
@@ -2783,6 +2758,31 @@ public offline</source>
     <message id="send-founds-fail-by-one-tx">
         <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-canceled-max">
+        <source>canceled
+max privacy</source>
+        <translation type="unfinished">отменено
+макс. конфиденциальность
+</translation>
+    </message>
+    <message id="wallet-txs-status-canceled-max-offline">
+        <source>canceled
+offline</source>
+        <translation type="unfinished">отменено
+оффлайн</translation>
+    </message>
+    <message id="wallet-txs-status-failed-max">
+        <source>failed
+max privacy</source>
+        <translation type="unfinished">не удалось
+макс. приватность</translation>
+    </message>
+    <message id="wallet-txs-status-failed-max-offline">
+        <source>failed
+offline</source>
+        <translation type="unfinished">ошибка
+оффлайн</translation>
     </message>
 </context>
 </TS>
