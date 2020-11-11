@@ -28,7 +28,7 @@ QtObject {
     property color active;
     property color passive;
     property color caps_warning;
-	property color  white: "#ffffff";
+	property color white: "#ffffff";
 
     property color currencyPaneRight;
     property color currencyPaneLeftBEAM;
@@ -48,4 +48,7 @@ QtObject {
     property string explorerUrl;
     property string faucetUrl;
     property string appsUrl;
+
+    property int appsGradientOffset;
+    property int appsGradientTop;
 }

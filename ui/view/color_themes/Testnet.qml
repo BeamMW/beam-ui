@@ -29,7 +29,6 @@ AbstractColors {
     property color passive:               "#d6d9e0"  // silver
     property color caps_warning:          "#000000"
 
-
     property color currencyPaneRight:     "#45316c"
     property color currencyPaneLeftBEAM:  "#00f6d2"
     property color currencyPaneLeftBTC:   "#fcaf38"
@@ -48,4 +47,7 @@ AbstractColors {
     property string explorerUrl: "https://testnet.explorer.beam.mw/"
     property string faucetUrl:   "https://faucet.beamprivacy.community/"
     property string appsUrl:     "http://3.136.182.25:80/app/appslist.json"
+
+    property int appsGradientOffset: -130
+    property int appsGradientTop: 100
 }
