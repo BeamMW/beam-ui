@@ -70,6 +70,7 @@ SettingsFoldable {
         property string initialDaiContractAddress
         property string initialUsdtContractAddress
         property string initialWbtcContractAddress
+        property string initialAccountIndex
 
         property bool   isSeedChanged: false
 
@@ -83,6 +84,7 @@ SettingsFoldable {
             daiContractAddress = initialDaiContractAddress
             usdtContractAddress = initialUsdtContractAddress
             wbtcContractAddress = initialWbtcContractAddress
+            accountIndex = initialAccountIndex
         }
 
         function save() {
@@ -93,11 +95,13 @@ SettingsFoldable {
             initialDaiContractAddress = daiContractAddress
             initialUsdtContractAddress = usdtContractAddress
             initialWbtcContractAddress = wbtcContractAddress
+            initialAccountIndex = accountIndex
         }
 
         function isChanged() {
             return initialAddress !== address || initialPort !== port || isSeedChanged || contractAddress != initialContractAddress
             || daiContractAddress != initialDaiContractAddress || usdtContractAddress != initialUsdtContractAddress || wbtcContractAddress != initialWbtcContractAddress
+            || initialAccountIndex != accountIndex
         }
     }
 
