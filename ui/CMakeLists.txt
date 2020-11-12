@@ -462,7 +462,7 @@ elseif(APPLE)
     install (CODE "execute_process(COMMAND macdeployqt
             \"$<TARGET_FILE_DIR:${TARGET_NAME}>/../../\"
             -always-overwrite
-            -qmldir \"${CMAKE_CURRENT_SOURCE_DIR}\")"
+            -qmldir=\"${CMAKE_CURRENT_SOURCE_DIR}\")"
     )
 else()
     if(WIN32)
