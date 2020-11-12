@@ -292,21 +292,6 @@ ColumnLayout {
                                                             :""
                                 visible:            viewModel.isShieldedTx && viewModel.isToken// && !viewModel.isOwnAddress
                             }
-
-                            SFText {
-                                height: 16
-                                Layout.alignment:   Qt.AlignTop
-                                Layout.topMargin:   10
-                                Layout.fillWidth:   true
-                                id:                 needExtractShieldedNote
-                                color:              Style.content_secondary
-                                font.italic:        true
-                                font.pixelSize:     14
-                                wrapMode:           Text.Wrap
-                                //% "Transaction is slower, fees are higher."
-                                text:               qsTrId("wallet-send-need-extract-shielded-note")
-                                visible:            viewModel.isNeedExtractShieldedCoins && !viewModel.isShieldedTx
-                            }
                         }
                     }
 
