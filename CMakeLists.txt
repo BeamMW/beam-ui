@@ -203,7 +203,7 @@ elseif (APPLE)
     set(CPACK_BUNDLE_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
     set(CPACK_BUNDLE_PLIST ui/Info.plist)
     set(CPACK_BUNDLE_ICON ui/beam.icns)
-    set(CPACK_BUNDLE_STARTUP_COMMAND "ui/Beam Wallet${BEAM_DISPLAY_SUFFIX}")
+    #set(CPACK_BUNDLE_STARTUP_COMMAND "ui/Beam Wallet${BEAM_DISPLAY_SUFFIX}")
 
     if(BEAM_SIGN_MACOS_BINARY)
         set(CPACK_COMMAND_CODESIGN "codesign -o runtime --timestamp")

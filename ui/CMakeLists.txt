@@ -459,10 +459,16 @@ if(LINUX)
     install (FILES beam.xml DESTINATION ${BEAM_DESKTOP_DIR})
     install (FILES beam.png DESTINATION ${BEAM_PIXMAPS_DIR})
 elseif(APPLE)
+    set_target_properties(${TARGET_NAME} PROPERTIES 
+        MACOSX_BUNDLE_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
+    set_target_properties(${TARGET_NAME} PROPERTIES 
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
+    set_target_properties(${TARGET_NAME} PROPERTIES 
+        MACOSX_BUNDLE_ICON_FILE "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns")
     install (CODE "execute_process(COMMAND macdeployqt
-            \"$<TARGET_FILE_DIR:${TARGET_NAME}>/../../\"
+            \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app\"
             -always-overwrite
-            -qmldir=\"${CMAKE_CURRENT_SOURCE_DIR}\")"
+            -qmldir=${CMAKE_CURRENT_SOURCE_DIR})"
     )
 else()
     if(WIN32)
