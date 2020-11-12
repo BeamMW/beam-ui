@@ -110,7 +110,8 @@ function currenciesList() {
         BeamGlobals.getCurrencyLabel(Currency.CurrBitcoin),
         BeamGlobals.getCurrencyLabel(Currency.CurrLitecoin),
         BeamGlobals.getCurrencyLabel(Currency.CurrQtum),
-        BeamGlobals.getCurrencyLabel(Currency.CurrBitcoinCash),
+        // TODO disable BCH
+        //BeamGlobals.getCurrencyLabel(Currency.CurrBitcoinCash),
         BeamGlobals.getCurrencyLabel(Currency.CurrDogecoin),
         BeamGlobals.getCurrencyLabel(Currency.CurrDash)
     ]

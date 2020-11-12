@@ -24,8 +24,10 @@ beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(Currency currency)
         return beam::wallet::AtomicSwapCoin::Litecoin;
     case Currency::CurrQtum:
         return beam::wallet::AtomicSwapCoin::Qtum;
+#if defined(BITCOIN_CASH_SUPPORT)
     case Currency::CurrBitcoinCash:
         return beam::wallet::AtomicSwapCoin::Bitcoin_Cash;
+#endif // BITCOIN_CASH_SUPPORT
     case Currency::CurrDash:
         return beam::wallet::AtomicSwapCoin::Dash;
     case Currency::CurrDogecoin:
@@ -45,8 +47,10 @@ Currency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin)
         return Currency::CurrLitecoin;
     case beam::wallet::AtomicSwapCoin::Qtum:
         return Currency::CurrQtum;
+#if defined(BITCOIN_CASH_SUPPORT)
     case beam::wallet::AtomicSwapCoin::Bitcoin_Cash:
         return Currency::CurrBitcoinCash;
+#endif // BITCOIN_CASH_SUPPORT
     case beam::wallet::AtomicSwapCoin::Dash:
         return Currency::CurrDash;
     case beam::wallet::AtomicSwapCoin::Dogecoin:

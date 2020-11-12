@@ -162,8 +162,10 @@ namespace beamui
             return beamui::Currencies::Litecoin;
         case wallet::AtomicSwapCoin::Qtum:
             return beamui::Currencies::Qtum;
+#if defined(BITCOIN_CASH_SUPPORT)
         case wallet::AtomicSwapCoin::Bitcoin_Cash:
             return beamui::Currencies::BitcoinCash;
+#endif // BITCOIN_CASH_SUPPORT
         case wallet::AtomicSwapCoin::Dash:
             return beamui::Currencies::Dash;
         case wallet::AtomicSwapCoin::Dogecoin:
@@ -321,7 +323,9 @@ namespace beamui
             case Currencies::Bitcoin: return "btc";
             case Currencies::Litecoin: return "ltc";
             case Currencies::Qtum: return "qtum";
+#if defined(BITCOIN_CASH_SUPPORT)
             case Currencies::BitcoinCash: return "bch";
+#endif // BITCOIN_CASH_SUPPORT
             case Currencies::Dash: return "dash";
             case Currencies::Dogecoin: return "doge";
             case Currencies::Usd: return "usd";
