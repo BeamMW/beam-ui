@@ -337,7 +337,7 @@ uint32_t WalletModel::getClientRevision() const
 std::vector<beam::Asset::ID> WalletModel::getAssetsNZ() const
 {
     std::vector<beam::Asset::ID> assets;
-    for(const auto status: m_status.all)
+    for(const auto& status: m_status.all)
     {
         assets.push_back(status.first);
     }
