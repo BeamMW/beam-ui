@@ -333,7 +333,7 @@ bool SendViewModel::isZeroBalance() const
 
 bool SendViewModel::isEnough() const
 {
-    return _walletModel.getAvailable() >= _sendAmountGrothes + _feeGrothes + _changeGrothes;
+    return _walletModel.getAvailable() >= _sendAmountGrothes + _feeGrothes + _changeGrothes && canSendByOneTransaction();
 }
 
 void SendViewModel::onChangeCalculated(beam::Amount change)
@@ -662,12 +662,12 @@ void SendViewModel::setWalletAddress(const boost::optional<beam::wallet::WalletA
     }
 }
 
-bool SendViewModel::canSendByOneTransaction()
+bool SendViewModel::canSendByOneTransaction() const
 {
     return !_maxWhatCanSelect || _maxWhatCanSelect >= _sendAmountGrothes;
 }
 
-QString SendViewModel::getMaxSendAmount()
+QString SendViewModel::getMaxSendAmount() const
 {
     return beamui::AmountToUIString(_maxWhatCanSelect);
 }
