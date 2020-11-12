@@ -80,7 +80,8 @@ if(MSVC)
     endif()
 
     set_source_files_properties(ui.cpp PROPERTIES COMPILE_FLAGS "/wd4127") # QtCore/qvarlengtharray.h(274): warning C4127: conditional expression is constant
-
+elseif(APPLE)
+    set(SYSTEM_TYPE MACOSX_BUNDLE)
 endif()
 
 list(APPEND SUPPORTED_LANGS "en_US")
@@ -458,13 +459,11 @@ if(LINUX)
     install (FILES beam.xml DESTINATION ${BEAM_DESKTOP_DIR})
     install (FILES beam.png DESTINATION ${BEAM_PIXMAPS_DIR})
 elseif(APPLE)
-    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-        COMMAND macdeployqt 
-            \"$<TARGET_FILE_DIR:${TARGET_NAME}>\"
+    install (CODE "execute_process(COMMAND macdeployqt
+            \"$<TARGET_FILE_DIR:${TARGET_NAME}>/../../\"
             -always-overwrite
-        COMMENT "Deploying Qt..."
+            -qmldir \"${CMAKE_CURRENT_SOURCE_DIR}\")"
     )
-
 else()
     if(WIN32)
         if (NOT BEAM_USE_STATIC_QT)
