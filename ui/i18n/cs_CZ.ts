@@ -2520,10 +2520,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>Max privacy address</source>
         <translation>Adresa max soukromí</translation>
     </message>
-    <message id="wallet-send-need-extract-shielded-note">
-        <source>Transaction is slower, fees are higher.</source>
-        <translation>Transakce je pomalejší, poplatky jsou vyšší.</translation>
-    </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
         <translation>Nedostatek prostředků: k dokončení transakce potřebujete %1 </translation>

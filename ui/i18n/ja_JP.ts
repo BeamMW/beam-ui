@@ -2521,10 +2521,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Max privacy address</source>
         <translation type="unfinished">Max privacy address</translation>
     </message>
-    <message id="wallet-send-need-extract-shielded-note">
-        <source>Transaction is slower, fees are higher.</source>
-        <translation type="unfinished">Transaction is slower, fees are higher.</translation>
-    </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
         <translation>残高不足：トランザクションを完了する為にはあと %1が必要です</translation>

@@ -2533,10 +2533,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Max privacy address</source>
         <translation>最大隐私地址</translation>
     </message>
-    <message id="wallet-send-need-extract-shielded-note">
-        <source>Transaction is slower, fees are higher.</source>
-        <translation>交易速度较慢，费用较高。</translation>
-    </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
         <translation>资金不足：您需要%1来完成交易</translation>

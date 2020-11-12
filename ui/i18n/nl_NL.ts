@@ -2519,10 +2519,6 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>Max privacy address</source>
         <translation>Max privacy adres</translation>
     </message>
-    <message id="wallet-send-need-extract-shielded-note">
-        <source>Transaction is slower, fees are higher.</source>
-        <translation>De transactie is trager, de kosten zijn hoger.</translation>
-    </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
         <translation>Onvoldoende saldo: u heeft %1 nodig om de transactie te voltooien</translation>

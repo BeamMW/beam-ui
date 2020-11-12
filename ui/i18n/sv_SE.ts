@@ -2518,10 +2518,6 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <source>Max privacy address</source>
         <translation>Max sekretess-adress</translation>
     </message>
-    <message id="wallet-send-need-extract-shielded-note">
-        <source>Transaction is slower, fees are higher.</source>
-        <translation>Transaktionen är långsammare, avgifterna är högre.</translation>
-    </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
         <translation>Otillräckliga medel; du behöver %1 för att slutföra transaktionen</translation>

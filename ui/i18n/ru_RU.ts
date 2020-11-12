@@ -2521,10 +2521,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Max privacy address</source>
         <translation>Макс. приватный адрес</translation>
     </message>
-    <message id="wallet-send-need-extract-shielded-note">
-        <source>Transaction is slower, fees are higher.</source>
-        <translation>Транзакция медленнее, комиссия выше.</translation>
-    </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
         <translation>Недостаточно средств: необходимо %1 для завершения транзакции</translation>
