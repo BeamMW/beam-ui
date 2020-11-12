@@ -333,7 +333,7 @@ bool SendViewModel::isZeroBalance() const
 
 bool SendViewModel::isEnough() const
 {
-    return _walletModel.getAvailable() >= _sendAmountGrothes + _feeGrothes + _changeGrothes && canSendByOneTransaction();
+    return _walletModel.getAvailable() >= _sendAmountGrothes + _feeGrothes + _changeGrothes;
 }
 
 void SendViewModel::onChangeCalculated(beam::Amount change)
@@ -350,11 +350,15 @@ void SendViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::Shiel
     {
         _maxWhatCanSelect = selectionRes.selectedSumBeam - selectionRes.selectedFee;
         emit sendAmountChanged();
+    } else if (_maxWhatCanSelect)
+    {
+        _maxWhatCanSelect = 0;
+        emit sendAmountChanged();
     }
 
     _shieldedInputsFee = selectionRes.shieldedInputsFee;
 
-    if (selectionRes.selectedSumBeam < selectionRes.requestedSum + selectionRes.requestedFee && _maxAvailable)
+    if (!selectionRes.isEnought && _maxAvailable)
     {
         _sendAmountGrothes = selectionRes.selectedSumBeam - selectionRes.selectedFee;
         emit sendAmountChanged();
