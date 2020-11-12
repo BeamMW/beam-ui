@@ -189,6 +189,10 @@ void SwapEthSettingsItem::LoadSettings()
         // TODO roman.strilets hash or aggregate
         setContractAddress(str2qstr(m_settings->m_swapContractAddress));
         shouldConnect(m_settings->m_shouldConnect);
+
+        setDaiContractAddress(str2qstr(m_settings->m_daiContractAddress));
+        setUsdtContractAddress(str2qstr(m_settings->m_usdtContractAddress));
+        setWbtcContractAddress(str2qstr(m_settings->m_wbtcContractAddress));
     }
 }
 
