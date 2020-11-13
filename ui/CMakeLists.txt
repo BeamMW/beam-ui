@@ -474,12 +474,13 @@ elseif(APPLE)
     endif()
 
     install (CODE "
-            message(STATUS \"Deploying Qt...\")
-            execute_process(COMMAND macdeployqt
-            \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app\"
-            -always-overwrite
-            -qmldir=${CMAKE_CURRENT_SOURCE_DIR})"
+        message(STATUS \"Deploying Qt...\")
+        execute_process(COMMAND macdeployqt
+        \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app\"
+        -always-overwrite
+        -qmldir=${CMAKE_CURRENT_SOURCE_DIR})"
     )
+    install(TARGETS ${TARGET_NAME} DESTINATION .)
 else()
     if(WIN32)
         if (NOT BEAM_USE_STATIC_QT)
