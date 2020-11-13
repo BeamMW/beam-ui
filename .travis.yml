@@ -181,7 +181,7 @@ matrix:
 ###############################################################################
 
     - os: linux
-      dist: trusty
+      dist: bionic
       language: cpp
       cache: ccache
       addons:
@@ -192,6 +192,8 @@ matrix:
           packages:
             - qtbase5-dev
             - qtdeclarative5-dev
+            - libqt5svg5-dev
+            - qtwebengine5-dev
             - g++-7
             - libssl-dev
             - curl
