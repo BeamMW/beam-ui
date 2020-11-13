@@ -195,6 +195,7 @@ matrix:
             - libqt5svg5-dev
             - qtwebengine5-dev
             - qttools5-dev
+            - qtquickcontrols2-5-dev
             - g++-7
             - libssl-dev
             - curl
