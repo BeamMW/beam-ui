@@ -479,8 +479,7 @@ elseif(APPLE)
         \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app\"
         -always-overwrite
         -qmldir=${CMAKE_CURRENT_SOURCE_DIR}
-        -timestamp
-        -codesign=\"Developer ID Application: Beam Development Limited (KNU2R94BJK)\")"
+        )"
     )
     install(TARGETS ${TARGET_NAME} DESTINATION .)
 else()
