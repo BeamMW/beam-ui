@@ -469,8 +469,8 @@ elseif(APPLE)
         install (CODE "
             message(STATUS \"Signing executable...\")
             execute_process(COMMAND 
-            codesign --deep --force -v -s \"Developer ID Application: Beam Development Limited (KNU2R94BJK)\" -o runtime --timestamp \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/MacOS/Beam Wallet${BEAM_DISPLAY_SUFFIX}\"
-        ")
+            codesign --deep --force -v -s \"Developer ID Application: Beam Development Limited (KNU2R94BJK)\" -o runtime --timestamp \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/MacOS/Beam Wallet${BEAM_DISPLAY_SUFFIX}\")"
+        )
     endif()
 
     install (CODE "
