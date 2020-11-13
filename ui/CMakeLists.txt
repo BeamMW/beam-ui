@@ -459,13 +459,23 @@ if(LINUX)
     install (FILES beam.xml DESTINATION ${BEAM_DESKTOP_DIR})
     install (FILES beam.png DESTINATION ${BEAM_PIXMAPS_DIR})
 elseif(APPLE)
-    set_target_properties(${TARGET_NAME} PROPERTIES 
-        MACOSX_BUNDLE_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
+    #set(MACOSX_BUNDLE_ICON_FILE "Beam Wallet${BEAM_DISPLAY_SUFFIX}.icns")
+    set(MACOSX_BUNDLE_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
     set_target_properties(${TARGET_NAME} PROPERTIES 
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
-    set_target_properties(${TARGET_NAME} PROPERTIES 
-        MACOSX_BUNDLE_ICON_FILE "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns")
-    install (CODE "execute_process(COMMAND macdeployqt
+
+    if(BEAM_SIGN_MACOS_BINARY)
+        install (CODE "
+            message(STATUS \"Signing executable...\")
+            execute_process(COMMAND 
+            codesign --deep --force -v -s "Developer ID Application: Beam Development Limited (KNU2R94BJK)" -o runtime --timestamp \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/MacOS/Beam Wallet${BEAM_DISPLAY_SUFFIX}\"
+        ")
+    endif()
+
+    install (CODE "
+            message(STATUS \"Deploying Qt...\")
+            execute_process(COMMAND macdeployqt
             \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app\"
             -always-overwrite
             -qmldir=${CMAKE_CURRENT_SOURCE_DIR})"
