@@ -20,7 +20,8 @@ SettingsFoldable {
     property bool   isConnected:            false
     property var    mainSettingsViewModel:  undefined
 
-    property alias  address:         addressInput.address
+    // TODO roman.strilets it's for test
+    property alias  address:         addressInput.text
     property alias  port:            portInput.text
     property alias  accountIndex:    accountIndexInput.text
     property alias  contractAddress:     contractAddressInput.text
@@ -78,7 +79,7 @@ SettingsFoldable {
             isSeedChanged = false
             address = initialAddress
             port = initialPort
-            control.restoreSeedElectrum()
+            control.restoreSeedPhrases()
 
             contractAddress = initialContractAddress
             daiContractAddress = initialDaiContractAddress
@@ -110,7 +111,8 @@ SettingsFoldable {
     }
 
     function canApplySettings() {
-        return isCurrentSeedValid && addressInput.isValid && portInput.acceptableInput;
+        // TODO roman.strilets
+        return isCurrentSeedValid /*&& addressInput.isValid*/ && portInput.acceptableInput;
     }
 
     function applyChanges() {
@@ -123,7 +125,8 @@ SettingsFoldable {
     }
 
     function haveSettings() {
-        return isCurrentSeedValid && addressInput.isValid && portInput.acceptableInput;
+        // TODO roman.strilets
+        return isCurrentSeedValid /*&& addressInput.isValid*/ && portInput.acceptableInput;
     }
 
     function clear() {
@@ -166,7 +169,8 @@ SettingsFoldable {
                 text:           qsTrId("settings-node-address")
             }
 
-            IPAddrInput {
+            // TODO roman.strilets it's for test
+            /*IPAddrInput {
                 id:               addressInput
                 //visible:          !editElectrum
                 Layout.fillWidth: true
@@ -174,6 +178,17 @@ SettingsFoldable {
                 //underlineVisible: canEditNode
                 //readOnly:         !canEditNode
                 ipOnly:           false
+            }*/
+
+            SFTextInput {
+                id:               addressInput
+                //visible:          !editElectrum
+                Layout.fillWidth: true
+                color:            Style.content_main
+                font.pixelSize:     14
+                activeFocusOnTab:   true
+                //underlineVisible: canEditNode
+                //readOnly:         !canEditNode
             }
 
             SFText {

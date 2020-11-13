@@ -332,7 +332,7 @@ ColumnLayout {
                         onDaiContractAddressChanged: swapEthSettings.daiContractAddress = viewModel.ethSettings.daiContractAddress
                         onUsdtContractAddressChanged: swapEthSettings.usdtContractAddress = viewModel.ethSettings.usdtContractAddress
                         onWbtcContractAddressChanged: swapEthSettings.wbtcContractAddress = viewModel.ethSettings.wbtcContractAddress
-                        onSeedPhrasesChanged: swapEthSettings.seedPhrasesElectrum = viewModel.ethSettings.electrumSeedPhrases
+                        onSeedPhrasesChanged: swapEthSettings.seedPhrases = viewModel.ethSettings.seedPhrases
                         onIsCurrentSeedValidChanged:  swapEthSettings.isCurrentSeedValid = viewModel.ethSettings.isCurrentSeedValid
                     }
                     
