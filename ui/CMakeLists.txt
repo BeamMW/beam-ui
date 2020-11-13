@@ -268,7 +268,7 @@ if (APPLE)
         message(FATAL_ERROR "Carbon framework not found")
     endif()
 endif()
-add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc ${MACOSX_BUNDLE_ICON_FILE})
+add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns")
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${OUTPUT_NAME})
 
 if(BEAM_HW_WALLET)
@@ -469,7 +469,7 @@ elseif(APPLE)
         install (CODE "
             message(STATUS \"Signing executable...\")
             execute_process(COMMAND 
-            codesign --deep --force -v -s "Developer ID Application: Beam Development Limited (KNU2R94BJK)" -o runtime --timestamp \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/MacOS/Beam Wallet${BEAM_DISPLAY_SUFFIX}\"
+            codesign --deep --force -v -s \"Developer ID Application: Beam Development Limited (KNU2R94BJK)\" -o runtime --timestamp \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/MacOS/Beam Wallet${BEAM_DISPLAY_SUFFIX}\"
         ")
     endif()
 
