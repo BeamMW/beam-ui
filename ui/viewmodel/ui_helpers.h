@@ -43,12 +43,13 @@ namespace beamui
     macro(Bitcoin,     "Bitcoin",       "BTC",           "satoshi",  "sat/kB",    8) \
     macro(Litecoin,    "Litecoin",      "LTC",           "photon",   "ph/kB",     8) \
     macro(Qtum,        "QTUM",          "QTUM",          "qsatoshi", "qsat/kB",   8) \
-    macro(BitcoinCash, "Bitcoin Cash",  "BCH",           "satoshi",  "sat/kB",    8) \
     macro(Dogecoin,    "Dogecoin",      "DOGE",          "satoshi",  "sat/kB",    8) \
     macro(Dash,        "Dash",          "DASH",          "duff",     "duff/kB",   8) \
     macro(Usd,         "USD",           "USD",           "cent",     "",          2) \
     macro(Unknown,     "",              "",              "",         "",          0)
 
+    // TODO roman.strilets deleted from CURRENCY_MAP
+    //macro(BitcoinCash, "Bitcoin Cash",  "BCH",           "satoshi",  "sat/kB",    8)
     enum class Currencies
     {
 #define MACRO(name, label, slabel, subUnit, feeLabel, dec) name,
