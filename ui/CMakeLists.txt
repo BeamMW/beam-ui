@@ -469,19 +469,18 @@ elseif(APPLE)
         install (CODE "
             message(STATUS \"Signing executable...\")
             execute_process(COMMAND 
-            codesign --deep --force -v -s \"Developer ID Application: Beam Development Limited (KNU2R94BJK)\" -o runtime --timestamp \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/MacOS/Beam Wallet${BEAM_DISPLAY_SUFFIX}\")"
+            codesign --deep --force -v -s \"${DBEAM_SIGN_IDENTITY}\" -o runtime --timestamp \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app\")"
         )
     endif()
-
-    install (CODE "
-        message(STATUS \"Deploying Qt...\")
-        execute_process(COMMAND macdeployqt
-        \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app\"
-        -always-overwrite
-        -qmldir=${CMAKE_CURRENT_SOURCE_DIR}
-        -timestamp
-        -codesign=\"Developer ID Application: Beam Development Limited (KNU2R94BJK)\")"
-    )
+    if (NOT BEAM_USE_STATIC_QT)
+        add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND macdeployqt
+            "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app"
+            -always-overwrite
+            -qmldir=${CMAKE_CURRENT_SOURCE_DIR}
+            COMMENT "Deploying Qt..."
+        )
+    endif()
     install(TARGETS ${TARGET_NAME} DESTINATION .)
 else()
     if(WIN32)
