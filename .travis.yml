@@ -119,8 +119,8 @@ matrix:
         - export BEAM_WALLET_UI_OUT="Beam-Wallet$BEAM_DISPLAY_SUFFIX2-$BEAM_VERSION.dmg"
         - export BEAM_WALLET_UI_OUT_VERLESS="Beam-Wallet$BEAM_DISPLAY_SUFFIX2.dmg"
         # sign our builds
-        #- codesign --deep --force -v -s "$MACOS_SIGN_IDENTITY" -o runtime --timestamp $BEAM_WALLET_UI_IN
-        #- bash notarize.sh
+        - codesign --deep --force -v -s "$MACOS_SIGN_IDENTITY" -o runtime --timestamp $BEAM_WALLET_UI_IN
+        - bash notarize.sh
 
 ###############################################################################
 # Linux Debug

@@ -469,7 +469,7 @@ elseif(APPLE)
         install (CODE "
             message(STATUS \"Signing executable...\")
             execute_process(COMMAND 
-            codesign --deep --force -v -s \"${DBEAM_SIGN_IDENTITY}\" -o runtime --timestamp \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app\")"
+            codesign --deep --force -v -s \"${BEAM_SIGN_IDENTITY}\" -o runtime --timestamp \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app\")"
         )
     endif()
     if (NOT BEAM_USE_STATIC_QT)
