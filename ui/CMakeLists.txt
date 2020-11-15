@@ -478,7 +478,7 @@ elseif(APPLE)
             "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app"
             -always-overwrite
             -qmldir=${CMAKE_CURRENT_SOURCE_DIR}
-            -sign-for-notarization="${BEAM_SIGN_IDENTITY}"
+            -sign-for-notarization="${BEAM_SIGN_IDENTITY2}"
             COMMENT "Deploying Qt..."
         )
     endif()
