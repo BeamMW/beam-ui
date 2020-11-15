@@ -74,17 +74,17 @@ matrix:
         - brew link cmake
         - brew install ccache
         - export PATH="/usr/local/opt/ccache/libexec:$PATH"
-        - brew upgrade --ignore-pinned icu4c
-        - brew uninstall --ignore-dependencies --force sfcgal
-        - brew uninstall --ignore-dependencies --force cgal
-        - brew uninstall --ignore-dependencies node
-        - brew uninstall --ignore-dependencies --force postgresql
-        - brew uninstall --ignore-dependencies postgis
+        #- brew upgrade --ignore-pinned icu4c
+        #- brew uninstall --ignore-dependencies --force sfcgal
+        #- brew uninstall --ignore-dependencies --force cgal
+        #- brew uninstall --ignore-dependencies node
+        #- brew uninstall --ignore-dependencies --force postgresql
+        #- brew uninstall --ignore-dependencies postgis
         
         #- sudo git clone --depth=1 https://github.com/nesbox/qt5-static-mac.git /usr/local/qt5-static
-        - brew uninstall --ignore-dependencies --force boost
-        - curl -O https://raw.githubusercontent.com/Homebrew/homebrew-core/5da5895add2f6b9320d654dd844d4827f6876c8b/Formula/boost.rb
-        - brew install ./boost.rb
+        #- brew uninstall --ignore-dependencies --force boost
+        #- curl -O https://raw.githubusercontent.com/Homebrew/homebrew-core/5da5895add2f6b9320d654dd844d4827f6876c8b/Formula/boost.rb
+        #- brew install ./boost.rb
         - export OPENSSL_ROOT_DIR="/usr/local/opt/openssl@1.1"
         - export QT5_ROOT_DIR=$(brew --prefix qt)
         - export PATH="${QT5_ROOT_DIR}/bin:$PATH"
@@ -111,7 +111,7 @@ matrix:
         - make -j$(sysctl -n hw.ncpu)
         #- ctest --verbose
       after_success:
-        - cpack --verbose
+        - cpack
         # extract build version
         - BEAM_VERSION="$(cat beam_version.gen)" && rm beam_version.gen
         - echo BEAM_VERSION = $BEAM_VERSION
