@@ -112,7 +112,7 @@ SettingsFoldable {
 
     function canApplySettings() {
         // TODO roman.strilets
-        return isCurrentSeedValid /*&& addressInput.isValid*/ && portInput.acceptableInput;
+        return isCurrentSeedValid /*&& addressInput.isValid && portInput.acceptableInput*/;
     }
 
     function applyChanges() {
@@ -126,7 +126,7 @@ SettingsFoldable {
 
     function haveSettings() {
         // TODO roman.strilets
-        return isCurrentSeedValid /*&& addressInput.isValid*/ && portInput.acceptableInput;
+        return isCurrentSeedValid /*&& addressInput.isValid && portInput.acceptableInput*/;
     }
 
     function clear() {
@@ -193,6 +193,7 @@ SettingsFoldable {
 
             SFText {
                 //visible:        !editElectrum
+                visible: false
                 font.pixelSize: 14
                 color:          control.color
                 text:           qsTrId("settings-local-node-port")
@@ -201,6 +202,7 @@ SettingsFoldable {
             SFTextInput {
                 id:                 portInput
                 //visible:            !editElectrum
+                visible: false
                 Layout.fillWidth:   true
                 font.pixelSize:     14
                 activeFocusOnTab:   true
