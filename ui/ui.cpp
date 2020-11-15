@@ -115,6 +115,7 @@ int main (int argc, char* argv[])
     try
     {
         auto [options, visibleOptions] = createOptionsDescription(GENERAL_OPTIONS | UI_OPTIONS | WALLET_OPTIONS);
+        visibleOptions;// unused
         po::variables_map vm;
 
         try
