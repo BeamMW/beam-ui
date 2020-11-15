@@ -212,14 +212,22 @@ matrix:
         - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
         - cd ${TRAVIS_BUILD_DIR}
         - cmake --version
-        - sudo git clone --depth=1 https://github.com/BeamMW/boost-linux.git /usr/local/boost_1_69_0
-        - export BOOST_ROOT="/usr/local/boost_1_69_0"
+        #- sudo git clone --depth=1 https://github.com/BeamMW/boost-linux.git /usr/local/boost_1_69_0
+        - wget https://dl.bintray.com/boostorg/release/1.71.0/source/boost_1_71_0.tar.gz
+        - tar xzvf boost_1_71_0.tar.gz
+        - cd boost_1_71_0
+        - ./bootstrap.sh --prefix=/usr/local/boost_1_71_0
+        - ./b2
+        - sudo ./b2 install
+        - export BOOST_ROOT="/usr/local/boost_1_71_0"
+
         - eval "CC=gcc-7 && CXX=g++-7"
         - export QT_SELECT=qt5
         #- git clone --depth=1 https://github.com/nesbox/qt5-static-linux.git /home/travis/qt5-static
         - export QT5_ROOT_DIR="/usr/lib/x86_64-linux-gnu/qt5"
         - export PATH="${QT5_ROOT_DIR}/bin:$PATH"
         - export QML_IMPORT_PATH="${QT5_ROOT_DIR}/qml"
+        - qmake --version
       env: 
         - BUILD_TYPE=Release
         - OS_FOLDER=linux
