@@ -214,7 +214,7 @@ matrix:
         - cmake --version
         #- sudo git clone --depth=1 https://github.com/BeamMW/boost-linux.git /usr/local/boost_1_69_0
         - wget https://dl.bintray.com/boostorg/release/1.71.0/source/boost_1_71_0.tar.gz
-        - tar xzvf boost_1_71_0.tar.gz
+        - tar xzf boost_1_71_0.tar.gz  > /dev/null
         - cd boost_1_71_0
         - ./bootstrap.sh --prefix=/usr/local/boost_1_71_0
         - ./b2
