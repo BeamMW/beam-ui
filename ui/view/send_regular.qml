@@ -232,10 +232,12 @@ ColumnLayout {
                             SFText {
                                 property bool isTokenOrAddressValid: !isTAInputValid()
                                 Layout.alignment: Qt.AlignTop
+                                Layout.fillWidth: true
                                 id:               receiverTAError
                                 color:            isTokenOrAddressValid ? Style.validator_error : Style.content_secondary
                                 font.italic:      !isTokenOrAddressValid
                                 font.pixelSize:   12
+                                wrapMode:         Text.Wrap
                                 text:             isTokenOrAddressValid
                                        //% "Invalid wallet address"
                                       ? qsTrId("wallet-send-invalid-address-or-token")
@@ -252,10 +254,12 @@ ColumnLayout {
                             SFText {
                                 Layout.alignment:   Qt.AlignTop
                                 Layout.topMargin:   10
+                                Layout.fillWidth:   true
                                 id:                 addressNote
                                 color:              Style.content_secondary
                                 font.italic:        true
                                 font.pixelSize:     14
+                                wrapMode:           Text.Wrap
                                 text:               viewModel.isPermanentAddress ? 
                                                     //% "Permanent address"
                                                     qsTrId("wallet-send-permanent-note") 
@@ -268,11 +272,12 @@ ColumnLayout {
                             SFText {
                                 Layout.alignment:   Qt.AlignTop
                                 Layout.topMargin:   10
+                                Layout.fillWidth:   true
                                 id:                 maxPrivacyNoteToken
                                 color:              Style.content_secondary
                                 font.italic:        true
                                 font.pixelSize:     14
-                                
+                                wrapMode:           Text.Wrap
                                 text:               viewModel.isOffline ? 
                                                     //% "Offline address. Payments left: %1"
                                                     qsTrId("wallet-send-max-privacy-note-address-offline").arg(viewModel.offlinePayments)
@@ -291,10 +296,12 @@ ColumnLayout {
                                 height: 16
                                 Layout.alignment:   Qt.AlignTop
                                 Layout.topMargin:   10
+                                Layout.fillWidth:   true
                                 id:                 needExtractShieldedNote
                                 color:              Style.content_secondary
                                 font.italic:        true
                                 font.pixelSize:     14
+                                wrapMode:           Text.Wrap
                                 //% "Transaction is slower, fees are higher."
                                 text:               qsTrId("wallet-send-need-extract-shielded-note")
                                 visible:            viewModel.isNeedExtractShieldedCoins && !viewModel.isShieldedTx
@@ -334,6 +341,10 @@ ColumnLayout {
                                             //% "Insufficient funds to complete the transaction"
                                             return qsTrId("send-no-funds")
                                         }
+                                    }
+                                    if (!viewModel.canSendByOneTransaction) {
+                                        //% "Max privacy coins are selected therefore the maximum amount is %1."
+                                        return qsTrId("send-founds-fail-by-one-tx").arg(Utils.uiStringToLocale(viewModel.maxSendAmount))
                                     }
                                     return ""
                                 }

@@ -38,7 +38,6 @@ QtObject {
     property color currencyPaneLeftDASH;
     property color currencyPaneLeftDOGE;
     property color currencyPaneLeftBCH;
-    property color currencyPaneLeftBSV;
     property color currencyPaneConnect;
     property color currencyPaneBorder;
 

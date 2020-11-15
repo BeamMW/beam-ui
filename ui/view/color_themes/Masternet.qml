@@ -38,7 +38,6 @@ AbstractColors {
     property color currencyPaneLeftDASH:  "#0092ff"
     property color currencyPaneLeftDOGE:  "#e0cd81"
     property color currencyPaneLeftBCH:   "#ff6700"
-    property color currencyPaneLeftBSV:   "#eab300"
     property color currencyPaneConnect:   Qt.rgba(0, 246, 210, 0.1)
     property color currencyPaneBorder:    Qt.rgba(0, 246, 210, 0.15)
 

@@ -107,9 +107,6 @@ namespace
             case Currency::CurrBitcoinCash:
                 return beamui::Currencies::BitcoinCash;
 
-            case Currency::CurrBitcoinSV:
-                return beamui::Currencies::BitcoinSV;
-
             case Currency::CurrDash:
                 return beamui::Currencies::Dash;
 
@@ -188,6 +185,11 @@ bool QMLGlobals::isPasswordValid(const QString& value)
     return AppModel::getInstance().checkWalletPassword(secretPass);
 }
 
+QString QMLGlobals::calcTotalFee(Currency currency, unsigned int feeRate)
+{
+    return ::calcTotalFee(currency, feeRate);
+}
+
 QString QMLGlobals::calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyUnitName)
 {
     QString feeInOriginalCurrency = beamui::AmountToUIString(fee);
@@ -234,7 +236,7 @@ QString QMLGlobals::roundUp(const QString& amount)
 bool QMLGlobals::canSwap()
 {
     return haveSwapClient(Currency::CurrBitcoin) || haveSwapClient(Currency::CurrLitecoin) || haveSwapClient(Currency::CurrQtum)
-        || haveSwapClient(Currency::CurrBitcoinCash) || haveSwapClient(Currency::CurrBitcoinSV) || haveSwapClient(Currency::CurrDash)
+        || haveSwapClient(Currency::CurrBitcoinCash) || haveSwapClient(Currency::CurrDash)
         || haveSwapClient(Currency::CurrDogecoin);
 }
 
@@ -315,11 +317,6 @@ QString QMLGlobals::getCurrencyName(Currency currency)
     {
         //% "Bitcoin Cash"
         return qtTrId("general-bitcoin-cash");
-    }
-    case Currency::CurrBitcoinSV:
-    {
-        //% "Bitcoin SV"
-        return qtTrId("general-bitcoin-sv");
     }
     case Currency::CurrDash:
     {

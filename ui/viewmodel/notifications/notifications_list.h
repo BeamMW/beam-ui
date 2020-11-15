@@ -16,6 +16,7 @@
 
 #include "notification_item.h"
 #include "viewmodel/helpers/list_model.h"
+#include <QLocale>
 
 class NotificationsList : public ListModel<std::shared_ptr<NotificationItem>>
 {
@@ -38,4 +39,6 @@ public:
 
     QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
+private:
+    QLocale m_locale; // default locale
 };
