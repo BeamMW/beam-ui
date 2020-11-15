@@ -181,7 +181,7 @@ matrix:
 ###############################################################################
 
     - os: linux
-      dist: bionic
+      dist: focal
       language: cpp
       cache: ccache
       addons:
@@ -201,25 +201,26 @@ matrix:
             - curl
             - libxi-dev
             - libcups2-dev
+            - libboost-all-dev
       install:
         - export TZ=Etc/GMT-3
         # install new version cmake
         - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
         - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
-        - travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.14.0/cmake-3.14.0-Linux-x86_64.tar.gz
-        - tar -xvf cmake-3.14.0-Linux-x86_64.tar.gz > /dev/null
-        - mv cmake-3.14.0-Linux-x86_64 cmake-install
-        - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
+        #- travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.14.0/cmake-3.14.0-Linux-x86_64.tar.gz
+        #- tar -xvf cmake-3.14.0-Linux-x86_64.tar.gz > /dev/null
+        #- mv cmake-3.14.0-Linux-x86_64 cmake-install
+        #- PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
         - cd ${TRAVIS_BUILD_DIR}
         - cmake --version
         #- sudo git clone --depth=1 https://github.com/BeamMW/boost-linux.git /usr/local/boost_1_69_0
-        - wget https://dl.bintray.com/boostorg/release/1.71.0/source/boost_1_71_0.tar.gz
-        - tar xzf boost_1_71_0.tar.gz  > /dev/null
-        - cd boost_1_71_0
-        - ./bootstrap.sh --prefix=/usr/local/boost_1_71_0
-        - ./b2
-        - sudo ./b2 install
-        - export BOOST_ROOT="/usr/local/boost_1_71_0"
+        #- wget https://dl.bintray.com/boostorg/release/1.71.0/source/boost_1_71_0.tar.gz
+        #- tar xzf boost_1_71_0.tar.gz  > /dev/null
+        #- cd boost_1_71_0
+        #- ./bootstrap.sh --prefix=/usr/local/boost_1_71_0
+        #- ./b2
+        #- sudo ./b2 install
+        #- export BOOST_ROOT="/usr/local/boost_1_71_0"
 
         - eval "CC=gcc-7 && CXX=g++-7"
         - export QT_SELECT=qt5
@@ -237,7 +238,7 @@ matrix:
         - cd ..
         - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$TRAVIS_BRANCH -DBEAM_HW_WALLET=Off .
         - make -j$(nproc)
-        - ctest --verbose
+        #- ctest --verbose
       after_success:
         - cpack
         # extract build version
