@@ -469,13 +469,14 @@ elseif(APPLE)
         install (CODE "
             message(STATUS \"Signing executable...\")
             execute_process(COMMAND 
-            codesign --force -v -s \"${BEAM_SIGN_IDENTITY}\" -o runtime --timestamp \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/MacOS/Beam Wallet${BEAM_DISPLAY_SUFFIX}\")"
+            codesign --force -v -s \"${BEAM_SIGN_IDENTITY2}\" -o runtime --timestamp \"${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/MacOS/Beam Wallet${BEAM_DISPLAY_SUFFIX}\")"
         )
     endif()
     if (NOT BEAM_USE_STATIC_QT)
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
             COMMAND macdeployqt
             "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app"
+            -verbose=3
             -always-overwrite
             -qmldir=${CMAKE_CURRENT_SOURCE_DIR}
             -sign-for-notarization="${BEAM_SIGN_IDENTITY2}"
