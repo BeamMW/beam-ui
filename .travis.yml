@@ -217,8 +217,9 @@ matrix:
         - eval "CC=gcc-7 && CXX=g++-7"
         - export QT_SELECT=qt5
         #- git clone --depth=1 https://github.com/nesbox/qt5-static-linux.git /home/travis/qt5-static
-        #- export QT5_ROOT_DIR="/home/travis/qt5-static"
-        #- export QML_IMPORT_PATH="/home/travis/qt5-static/qml"
+        - export QT5_ROOT_DIR="/usr/lib/x86_64-linux-gnu/qt5"
+        - export PATH="${QT5_ROOT_DIR}/bin:$PATH"
+        - export QML_IMPORT_PATH="${QT5_ROOT_DIR}/qml"
       env: 
         - BUILD_TYPE=Release
         - OS_FOLDER=linux
