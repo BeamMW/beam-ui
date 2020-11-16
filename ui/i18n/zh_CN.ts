@@ -2765,30 +2765,30 @@ public offline</source>
     </message>
     <message id="send-founds-fail-by-one-tx">
         <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Max privacy coins are selected therefore the maximum amount is %1.</translation>
     </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
 max privacy</source>
-        <translation type="unfinished">取消
+        <translation>取消
 最大隐私</translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
         <source>canceled
 offline</source>
-        <translation type="unfinished">取消
+        <translation>取消
 离线</translation>
     </message>
     <message id="wallet-txs-status-failed-max">
         <source>failed
 max privacy</source>
-        <translation type="unfinished">失败
+        <translation>失败
 最大隐私</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
         <source>failed
 offline</source>
-        <translation type="unfinished">离线失败</translation>
+        <translation>离线失败</translation>
     </message>
 </context>
 </TS>

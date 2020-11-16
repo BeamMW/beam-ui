@@ -2753,7 +2753,7 @@ public offline</translation>
     </message>
     <message id="send-founds-fail-by-one-tx">
         <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Max privacy coins are selected therefore the maximum amount is %1.</translation>
     </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled

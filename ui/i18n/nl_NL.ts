@@ -1123,7 +1123,7 @@ Toestaan om te openen en door te gaan naar de website? U kunt uw keuze altijd wi
     </message>
     <message id="swap-beta-title">
         <source>Atomic Swaps are in BETA</source>
-        <translation type="unfinished">Atomic Swaps are in BETA</translation>
+        <translation>Atomic Swaps is in BETA</translation>
     </message>
     <message id="swap-na-message">
         <source>You do not have any 3rd-party currencies connected.
@@ -2751,30 +2751,30 @@ openbaar offline</translation>
     </message>
     <message id="send-founds-fail-by-one-tx">
         <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Max privacy coins zijn geselecteerd, daarom is het maximale aantal %1.</translation>
     </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
 max privacy</source>
-        <translation type="unfinished">geannuleerd
+        <translation>geannuleerd
 max privacy</translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
         <source>canceled
 offline</source>
-        <translation type="unfinished">geannuleerd
+        <translation>geannuleerd
 offline</translation>
     </message>
     <message id="wallet-txs-status-failed-max">
         <source>failed
 max privacy</source>
-        <translation type="unfinished">mislukt
+        <translation>mislukt
 max privacy</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
         <source>failed
 offline</source>
-        <translation type="unfinished">mislukt
+        <translation>mislukt
 offline</translation>
     </message>
 </context>
