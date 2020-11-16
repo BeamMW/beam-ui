@@ -12,6 +12,7 @@ Control {
     property string available
     property string locked
     property string lockedMaturing
+    property string lockedMaturingMP
     property string sending
     property string receiving
     property string receivingChange
@@ -70,20 +71,49 @@ Control {
             rows:          2
 
             SFText {
+                id:             maturingLabel
                 font.pixelSize: 12
                 font.styleName: "Light"
                 font.weight:    Font.Light
                 color:          Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
                 //% "Maturing"
                 text:           qsTrId("available-panel-maturing")
+                Layout.alignment: Qt.AlignTop
+                visible:           parseFloat(lockedMaturing) > 0
             }
 
             BeamAmount {
                 amount:            lockedMaturing
                 currencySymbol:    BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+                secondCurrencyLabel:        control.secondCurrencyLabel
+                secondCurrencyRateValue:    control.secondCurrencyRateValue
                 spacing:           15
                 lightFont:         false
                 fontSize:          12
+                visible:           maturingLabel.visible
+            }
+
+            SFText {
+                id:             maxPrivacyLabel
+                font.pixelSize: 12
+                font.styleName: "Light"
+                font.weight:    Font.Light
+                color:          Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+                //% "Max privacy"
+                text:           qsTrId("available-panel-maturing-mp")
+                Layout.alignment: Qt.AlignTop
+                visible:           parseFloat(lockedMaturingMP) > 0
+            }
+
+            BeamAmount {
+                amount:            lockedMaturingMP
+                currencySymbol:    BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+                secondCurrencyLabel:        control.secondCurrencyLabel
+                secondCurrencyRateValue:    control.secondCurrencyRateValue
+                spacing:           15
+                lightFont:         false
+                fontSize:          12
+                visible:           maxPrivacyLabel.visible
             }
         }
     }

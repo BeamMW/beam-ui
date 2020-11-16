@@ -22,7 +22,6 @@
 
 #include "model/app_model.h"
 
-#include "wallet/transactions/swaps/bridges/bitcoin/settings.h"
 #include "wallet/core/default_peers.h"
 
 #include "version.h"
@@ -46,6 +45,7 @@ namespace
     const char* kLocalNodeRun = "localnode/run";
     const char* kLocalNodePort = "localnode/port";
     const char* kLocalNodePeers = "localnode/peers";
+    const char* kLocalNodePeersPersistent = "localnode/peers_persistent";
 
     const char* kDefaultLocale = "en_US";
     const char* kDefaultAmountUnit = beam::wallet::usdCurrencyStr.data();
@@ -67,7 +67,7 @@ namespace
         { "it_IT", "Italiano"},
         { "ja_JP", "日本語"},
         { "ru_RU", "Русский" },
-        { "rs_RS", "Српски" },
+        { "sr_SR", "Српски" },
         { "fi_FI", "Suomi" },
         { "sv_SE", "Svenska"},
         { "th_TH", "ภาษาไทย"},
@@ -311,6 +311,12 @@ void WalletSettings::setLocalNodePeers(const QStringList& qPeers)
         m_data.setValue(kLocalNodePeers, QVariant::fromValue(qPeers));
     }
     emit localNodePeersChanged();
+}
+
+bool WalletSettings::getPeersPersistent() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kLocalNodePeersPersistent, false).toBool();
 }
 
 QString WalletSettings::getLocale() const

@@ -14,6 +14,7 @@
         <file>controls/AvailablePanel.qml</file>
         <file>controls/Led.qml</file>
         <file>controls/TxFilter.qml</file>
+        <file>controls/TxTable.qml</file>
         <file>controls/TableItem.qml</file>
         <file>controls/ContextMenu.qml</file>
         <file>controls/DefaultButton.qml</file>
@@ -70,6 +71,7 @@
         <file>controls/SettingsResources.qml</file>
         <file>controls/SettingsBeamNode.qml</file>
         <file>controls/SettingsTitle.qml</file>
+        <file>controls/PublicOfflineAddressDialog.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
@@ -208,6 +210,9 @@
         <file>assets/icon-btc.svg</file>
         <file>assets/icon-ltc.svg</file>
         <file>assets/icon-qtum.svg</file>
+        <file>assets/icon-bch.svg</file>
+        <file>assets/icon-dash.svg</file>
+        <file>assets/icon-doge.svg</file>
         <file>assets/icon-print.svg</file>
         <file>assets/icon-recovery.svg</file>
         <file>assets/password.svg</file>
@@ -261,5 +266,6 @@
         <file>assets/icon-canceled-max-offline.svg</file>
         <file>assets/icon-sent-max-offline.svg</file>
         <file>assets/icon-sending-max-offline.svg</file>
+        <file>controls/AddressQRDialog.qml</file>
     </qresource>
 </RCC>

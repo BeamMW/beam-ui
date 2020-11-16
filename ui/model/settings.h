@@ -20,7 +20,6 @@
 #include <QStringList>
 #include <mutex>
 #include "model/wallet_model.h"
-#include "wallet/transactions/swaps/bridges/bitcoin/settings.h"
 
 
 class WalletSettings : public QObject
@@ -62,6 +61,8 @@ public:
 
     QStringList getLocalNodePeers();
     void setLocalNodePeers(const QStringList& qPeers);
+
+    bool getPeersPersistent() const;
 
     QString getLocale() const;
     QString getLanguageName() const;

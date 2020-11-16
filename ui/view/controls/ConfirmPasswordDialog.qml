@@ -45,18 +45,16 @@ Dialog {
 	x: (parent.width - width) / 2
 	y: (parent.height - height) / 2
 	visible: false
+	parent:         Overlay.overlay
+	padding:        30
 
 	background: Rectangle {
 		radius: 10
         color: Style.background_popup
-        anchors.fill: parent            
     }
 
     contentItem: ColumnLayout {
-    	anchors.fill: parent
-    	anchors.margins: 30
-
-    	spacing: 30
+		spacing: 30
 
 		SFText {
 			Layout.alignment: Qt.AlignHCenter
@@ -69,21 +67,22 @@ Dialog {
 		}
 
 		ColumnLayout {
-			Layout.topMargin: 0
-			Layout.preferredWidth: parent.width - 60
+			Layout.fillWidth:		true
 			SFText {
-				Layout.alignment: Qt.AlignHCenter
-				text: dialogMessage
-				color: Style.content_main
-				font.pixelSize: 14
+				Layout.fillWidth:		true
+				Layout.alignment:		Qt.AlignHCenter
+				text:					dialogMessage
+				color:					Style.content_main
+				font.pixelSize:			14
+				wrapMode:				Text.Wrap
 			}
 
 			SFTextInput {
 				id: pwd
 				Layout.alignment: Qt.AlignHCenter
 				Layout.fillWidth: true
-				width: parent.width
 				font.pixelSize: 14
+				rightPadding:   0
 				color: showError ? Style.validator_error : Style.content_main
 				backgroundColor: showError ? Style.validator_error : Style.content_main
 				echoMode: TextInput.Password
@@ -96,7 +95,7 @@ Dialog {
 				Keys.onReturnPressed: {
 					onPwdEntered(text);
 				}
-			}  		
+			}
 
 			Item {
 				Layout.preferredHeight: 16
@@ -123,13 +122,12 @@ Dialog {
 		}			 	
 
 		RowLayout {
-			spacing: 30
+			spacing: 20
 			Layout.topMargin: -10
 			Layout.alignment: Qt.AlignHCenter
 
 			CustomButton {
 				id: cancelButton
-				Layout.preferredHeight: 38
 				//% "Cancel"
 				text: qsTrId("general-cancel")
 				icon.source: "qrc:/assets/icon-cancel.svg"
@@ -138,7 +136,6 @@ Dialog {
 
 			PrimaryButton {
 				id: okButton
-				Layout.preferredHeight: 38
 				//: confirm password dialog, ok button
 				//% "Proceed"
 				text: qsTrId("general-proceed")

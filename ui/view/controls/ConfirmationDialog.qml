@@ -34,6 +34,7 @@ Dialog {
 
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
+    parent:         Overlay.overlay
     visible: false
     
     leftPadding: 30

@@ -29,6 +29,7 @@ public:
         Outgoing,
         Incoming,
         Spent,
+        MaturingMP,
     };
     Q_ENUMS(EnStatus)
 };

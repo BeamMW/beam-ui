@@ -59,9 +59,17 @@ ColumnLayout {
     }
 
     function saveAddressWithNameAndClose(name) {
-        viewModel.addressComment = name;
-        viewModel.saveAddress();
+        saveAddressWithName(name);
         receiveView.onClosed();
+    }
+
+    function saveAddressWithName(name) {
+        viewModel.addressComment = name;
+        viewModel.saveReceiverAddress();
+    }
+
+    function saveReceiverAddress() {
+        saveAddressWithName(viewModel.addressComment)
     }
 
     function saveAddressAndClose() {
@@ -76,7 +84,7 @@ ColumnLayout {
 
     function saveAddress() {
         if (receiveView.isValid()) 
-            viewModel.saveAddress();
+            viewModel.saveReceiverAddress();
     }
 
     //
@@ -146,8 +154,8 @@ ColumnLayout {
                     Layout.preferredWidth: 400
                     spacing:            10
                     Panel {
-                        //% "Transaction info"
-                        title:                   qsTrId("general-transaction-info")
+                        //% "Address Type"
+                        title:                   qsTrId("general-address-type")
                         Layout.fillWidth:        true
                         content: 
                         ColumnLayout {
@@ -182,7 +190,7 @@ ColumnLayout {
                                     CustomButton {
                                         Layout.preferredHeight: 18
                                         id:                 maxPrivacyCheck
-                                        //% "Offline"
+                                        //% "Max privacy"
                                         text:               qsTrId("tx-max-privacy")
                                         palette.buttonText: Style.content_main
                                         ButtonGroup.group:  txTypeGroup
@@ -196,63 +204,6 @@ ColumnLayout {
                                 }
                             }
 
-                            RowLayout {
-                                spacing:    10
-                                visible:    !viewModel.isShieldedTx;
-                                SFText {
-                                    //% "One-time use"
-                                    text:  qsTrId("address-one-time")
-                                    color: permanentTokenSwitch.checked ? Style.content_secondary : Style.active
-                                    font.pixelSize: 14
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        acceptedButtons: Qt.LeftButton
-                                        onClicked: {
-                                            permanentTokenSwitch.checked = !permanentTokenSwitch.checked;
-                                        }
-                                    }
-                                }
-
-                                CustomSwitch {
-                                    id:          permanentTokenSwitch
-                                    alwaysGreen: true
-                                    spacing:     0
-                                    padding:     0
-                                    checked:     viewModel.isPermanentAddress
-                                    Binding {
-                                        target:   viewModel
-                                        property: "isPermanentAddress"
-                                        value:    permanentTokenSwitch.checked
-                                    }
-                                }
-
-                                SFText {
-                                    //% "Permanent address"
-                                    text: qsTrId("address-permanent")
-                                    color: permanentTokenSwitch.checked ? Style.active : Style.content_secondary
-                                    font.pixelSize: 14
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        acceptedButtons: Qt.LeftButton
-                                        onClicked: {
-                                            permanentTokenSwitch.checked = !permanentTokenSwitch.checked;
-                                        }
-                                    }
-                                }
-                            }
-
-                            RowLayout {
-                                Layout.preferredHeight: 20
-                                visible:                viewModel.isShieldedTx
-                                SFText {
-                                    id:                 maxPrivacyNote
-                                    color:              Style.content_secondary
-                                    font.italic:        true
-                                    font.pixelSize:     14
-                                    //% "The receiver pays fees."
-                                    text:               qsTrId("wallet-send-max-privacy-note")
-                                }
-                            }
                             SFText {
                                 Layout.fillWidth:   true
                                 visible:            !parent.isShieldedSupported
@@ -260,17 +211,17 @@ ColumnLayout {
                                 font.italic:        true
                                 font.pixelSize:     14
                                 wrapMode:           Text.WordWrap
-                                //% "Connect to integrated or own node to enable sending offline transactions"
+                                //% "Connect to integrated or own node to enable sending max privacy transactions"
                                 text:               qsTrId("wallet-receive-max-privacy-unsupported")
                             }
                             
                         }
                     }
                     //
-                    // Request
+                    // Requested amount
                     //
                     FoldablePanel {
-                        //% "Request"
+                        //% "Requested amount"
                         title:                   qsTrId("receive-request")
                         //% "(optional)"
                         headerText:              qsTrId("receive-request-optional")
@@ -345,17 +296,89 @@ ColumnLayout {
                     spacing:            10
                     TokenInfoPanel {
                         Layout.fillWidth:   true
-                        //% "Online address"
-                        title:              qsTrId("wallet-receive-online-address")
-                        //% "(for wallets)"
-                        headerText:         qsTrId("wallet-receive-address-for-wallet")
+                        title:              !viewModel.isShieldedTx ? 
+                            //% "Online address"
+                            qsTrId("wallet-receive-online-address")
+                            :
+                            //% "Max Privacy Address"
+                            qsTrId("wallet-receive-max-privacy-address")
+                        headerText:         !viewModel.isShieldedTx ? 
+                            //% "(for wallet)"
+                            qsTrId("wallet-receive-address-for-wallet")
+                            :
+                            ""
+                        //% "Online address (for wallet)"
+                        addressLabel:       qsTrId("wallet-receive-address-for-wallet-label")
                         token:              viewModel.transactionToken
-                        qrCode:             viewModel.isShieldedTx ? "" : viewModel.transactionTokenQR
                         isValidToken:       receiveView.isValid()
-                        visible:            !viewModel.isShieldedTx
                         onTokenCopied: {
-                            receiveView.saveAddressAndClose();
+                            receiveView.saveReceiverAddress();
                         }
+                        onClosed: receiveView.onClosed()
+
+                        headerVisible:  !viewModel.isShieldedTx
+                        headerItem: RowLayout {
+                            spacing:    10
+                            SFText {
+                                //% "One-time use"
+                                text:  qsTrId("address-one-time")
+                                color: permanentTokenSwitch.checked ? Style.content_secondary : Style.active
+                                font.pixelSize: 14
+                                MouseArea {
+                                    anchors.fill: parent
+                                    acceptedButtons: Qt.LeftButton
+                                    onClicked: {
+                                        permanentTokenSwitch.checked = !permanentTokenSwitch.checked;
+                                    }
+                                }
+                            }
+                            
+                            CustomSwitch {
+                                id:          permanentTokenSwitch
+                                alwaysGreen: true
+                                spacing:     0
+                                padding:     0
+                                checked:     viewModel.isPermanentAddress
+                                Binding {
+                                    target:   viewModel
+                                    property: "isPermanentAddress"
+                                    value:    permanentTokenSwitch.checked
+                                }
+                            }
+                            
+                            SFText {
+                                //% "Permanent"
+                                text: qsTrId("address-permanent")
+                                color: permanentTokenSwitch.checked ? Style.active : Style.content_secondary
+                                font.pixelSize: 14
+                                MouseArea {
+                                    anchors.fill: parent
+                                    acceptedButtons: Qt.LeftButton
+                                    onClicked: {
+                                        permanentTokenSwitch.checked = !permanentTokenSwitch.checked;
+                                    }
+                                }
+                            }
+                            Item {
+                                Layout.fillWidth:   true
+                            }
+                        }
+                    }
+                    TokenInfoPanel {
+                        Layout.fillWidth:     true
+                        title:                qsTrId("wallet-receive-online-address")
+                        //% "(for exchange or mining pool)"
+                        headerText:           qsTrId("wallet-receive-address-for-exchange")
+                        //% "Online address (for exchange or mining pool)"
+                        addressLabel:         qsTrId("wallet-receive-address-for-exchange-label")
+                        token:                viewModel.receiverAddressForExchange
+                        amount:               viewModel.amountToReceive
+                        isValidToken:         receiveView.isValid()
+                        visible:              !viewModel.isShieldedTx
+                        onTokenCopied: {
+                            viewModel.saveExchangeAddress();
+                        }
+                        onClosed: receiveView.onClosed()
                     }
                     TokenInfoPanel {
                         Layout.fillWidth:     true
@@ -363,72 +386,23 @@ ColumnLayout {
                         title:                qsTrId("wallet-receive-offline-address")
                         //% "(for wallet)"
                         headerText:           qsTrId("wallet-receive-address-for-wallet")
+                        footerVisible:        true
+                        footerItem: SFText {
+                            font.pixelSize:        14
+                            font.italic:           true
+                            color:                 Style.content_disabled
+                            /*% "Supports %1 payments."*/
+                            text: qsTrId("wallet-receive-offline-payments").arg(10)
+                        }
                         token:                viewModel.offlineToken
-                        qrCode:               ""
+                        showQrCode:           false
                         isValidToken:         receiveView.isValid()
-                        visible:              viewModel.isShieldedTx && viewModel.offlineToken.length > 0
+                        visible:              !viewModel.isShieldedTx && viewModel.offlineToken.length > 0
                         ignoreStoredVouchers: true
                         onTokenCopied: {
-                            receiveView.saveAddressAndClose();
+                            viewModel.saveOfflineAddress();
                         }
-                    }
-                    TokenInfoPanel {
-                        Layout.fillWidth:   true
-                        title:              qsTrId("wallet-receive-online-address")
-                        //% "(for exchange or mining pool)"
-                        headerText:         qsTrId("wallet-receive-address-for-exchange")
-                        token:              viewModel.receiverAddress
-                        qrCode:             viewModel.receiverAddressQR
-                        isValidToken:       receiveView.isValid()
-                        visible:            viewModel.isPermanentAddress && !viewModel.isShieldedTx //disabledLabel.text.length == 0
-                        defaultAddressType: true // permanent
-                        onTokenCopied: {
-                            receiveView.saveAddressAndClose();
-                        }
-                    }
-                    Panel {
-                        Layout.fillWidth:   true
-                        title:              qsTrId("wallet-receive-online-address")
-                        //% "(for exchange or mining pool)"
-                        headerText:         qsTrId("wallet-receive-address-for-exchange")
-                        visible:            false //disabledLabel.text.length > 0
-                        content: ColumnLayout {
-                            spacing:        20
-                            SFText {
-                                id:                     disabledLabel
-                                Layout.fillWidth:       true
-                                Layout.preferredWidth:  332
-                                font.pixelSize:         14
-                                font.italic:            true
-                                wrapMode:               Text.WordWrap
-                                color:                  Style.content_secondary
-                                text:                   !viewModel.isPermanentAddress && !viewModel.isShieldedTx ?
-                                                            //% "Exchanges or mining pools support only permanent address now."
-                                                            qsTrId("wallet-receive-exchanges-one-time-not-supported")
-                                                            :
-                                                            viewModel.isShieldedTx ?
-                                                                    //% "Exchanges or mining pools support only regular transaction now."
-                                                                    qsTrId("wallet-receive-exchanges-not-supported2") : ""
-                            }
-                            LinkButton {
-                                //% "Switch to permanent address"
-                                text:       qsTrId("switch-permanent")
-                                visible:    !viewModel.isPermanentAddress && !viewModel.isShieldedTx
-                                linkColor:  Style.active//Style.accent_incoming
-                                onClicked: {
-                                    viewModel.isPermanentAddress = true;
-                                }
-                            }
-                            LinkButton {
-                                //% "Switch to regular transaction"
-                                text:       qsTrId("switch-regular")
-                                visible:    viewModel.isShieldedTx 
-                                linkColor:  Style.active//Style.accent_incoming
-                                onClicked: {
-                                    viewModel.isShieldedTx = false;
-                                }
-                            }
-                        }
+                        onClosed: receiveView.onClosed()
                     }
                 }
             }
@@ -438,23 +412,22 @@ ColumnLayout {
             //
             SFText {
                 Layout.alignment:      Qt.AlignHCenter
-                Layout.preferredWidth: 298
-                Layout.topMargin:      20
+                Layout.preferredWidth: 428
+                Layout.topMargin:      30
                 font.pixelSize:        14
                 font.italic:           true
-                color:                 Style.content_main
+                color:                 Style.content_disabled
                 wrapMode:              Text.WordWrap
                 horizontalAlignment:   Text.AlignHCenter
-                //% "To spend the received coins the min transaction fee will be %1."
+                /*% "Min transaction fee to send Max privacy coins is %1."*/
                 text: qsTrId("wallet-receive-addr-message").arg("~%1 BEAM".arg(Utils.uiStringToLocale("0.01")))
-                //hardcoded ~0.01 beam (bigromanov requested), text: qsTrId("wallet-receive-addr-message").arg(Utils.formatFeeToSecondCurrency(BeamGlobals.minFeeBeam(true), "1", "BEAM"))
                 visible:               viewModel.isShieldedTx
             }
 
             SFText {
                 Layout.alignment:      Qt.AlignHCenter
                 Layout.preferredWidth: 338
-                Layout.topMargin:      20
+                Layout.topMargin:      30
                 Layout.bottomMargin:   50
                 font.pixelSize:        14
                 font.italic:           true

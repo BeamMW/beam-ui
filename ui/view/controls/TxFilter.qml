@@ -8,7 +8,7 @@ Item  {
     id: root
     
     property string label
-    property var capitalization: Font.MixedCase
+    property var capitalization: Font.AllUppercase
     property alias font : text_label.font
     property bool showLed: true
 

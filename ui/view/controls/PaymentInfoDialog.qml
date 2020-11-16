@@ -16,11 +16,8 @@ Dialog {
 
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
-
-    height: contentItem.implicitHeight
-    
     parent: Overlay.overlay
-    padding: 0
+    padding: 30
 
     closePolicy: Popup.NoAutoClose | Popup.CloseOnEscape
 
@@ -39,46 +36,44 @@ Dialog {
     background: Rectangle {
         radius: 10
         color: Style.background_popup
-        anchors.fill: parent
     }
 
     contentItem: ColumnLayout {
+        spacing:    0
+        RowLayout {
+            SFText {
+                Layout.fillWidth:       true
+                horizontalAlignment:    Text.AlignHCenter
+                leftPadding:            30
+                font.pixelSize:         18
+                font.styleName:         "Bold"
+                font.weight:            Font.Bold
+                color:                  Style.content_main
+                text: shouldVerify ? 
+                    //% "Payment proof verification"
+                    qsTrId("payment-info-proof-verification") :
+                    //% "Payment proof"
+                    qsTrId("general-payment-proof")
+            }
+
+            CustomToolButton {
+                icon.source: "qrc:/assets/icon-cancel-16.svg"
+                //% "Close"
+                ToolTip.text: qsTrId("general-close")
+                onClicked: {
+                    dialog.close();
+                }
+            }
+        }
+
         GridLayout {
             Layout.fillWidth: true
             Layout.preferredWidth: 400
-            Layout.margins: 30
+            Layout.topMargin:       20
+            //Layout.margins: 30
             rowSpacing: 20
             columnSpacing: 13
             columns: 2
-
-            RowLayout {
-                Layout.columnSpan: 2
-                SFText {
-                    Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignHCenter
-                    leftPadding: 30
-                    font.pixelSize: 18
-                    font.styleName: "Bold"
-                    font.weight: Font.Bold
-                    color: Style.content_main
-                    text: shouldVerify ? 
-                        //% "Payment proof verification"
-                        qsTrId("payment-info-proof-verification") :
-                        //% "Payment proof"
-                        qsTrId("general-payment-proof")
-                }
-
-                CustomToolButton {
-                    icon.source: "qrc:/assets/icon-cancel.svg"
-                    icon.width: 12
-                    icon.height: 12
-                    //% "Close"
-                    ToolTip.text: qsTrId("general-close")
-                    onClicked: {
-                        dialog.close();
-                    }
-                }
-            }
 
             ColumnLayout {
                 id: verifyLayout
@@ -151,15 +146,21 @@ Dialog {
                 visible: !shouldVerify
             }
             
-            SFText {
-                Layout.fillWidth: true
-                wrapMode: Text.Wrap
-                font.pixelSize: 14
-                text: model ? model.paymentProof : ""
-                color: Style.content_disabled
-                visible: !shouldVerify
+            ScrollView {
+                Layout.fillWidth:             true
+                Layout.maximumHeight:         130
+                clip:                         true
+                ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
+                ScrollBar.vertical.policy:    ScrollBar.AsNeeded
+                visible:                      !shouldVerify
+                SFText {
+                    width:              400
+                    wrapMode:           Text.Wrap
+                    font.pixelSize:     14
+                    text:               model ? model.paymentProof : ""
+                    color:              Style.content_disabled
+                }
             }
-
             SFText {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.topMargin: 10
@@ -186,7 +187,6 @@ Dialog {
             
             SFText {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 28
                 wrapMode: Text.Wrap
                 font.pixelSize: 14
                 color: Style.content_disabled
@@ -208,7 +208,6 @@ Dialog {
             
             SFText {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 28
                 wrapMode: Text.Wrap
                 font.pixelSize: 14
                 color: Style.content_disabled
@@ -249,7 +248,6 @@ Dialog {
             
             SFText {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 28
                 wrapMode: Text.Wrap
                 font.pixelSize: 14
                 color: Style.content_disabled
@@ -260,9 +258,7 @@ Dialog {
         Row {
             id: buttonsLayout
             Layout.alignment: Qt.AlignHCenter
-            Layout.leftMargin: 30
-            Layout.rightMargin: 30
-            Layout.bottomMargin: 30
+            Layout.topMargin:       20
             spacing: 20
             visible: model? model.isValid : false
 

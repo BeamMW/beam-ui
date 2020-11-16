@@ -127,7 +127,7 @@ SettingsFoldable {
                     font.pixelSize: 14
                     color: !remoteNodePort.acceptableInput ? Style.validator_error : Style.content_main
                     text: viewModel.remoteNodePort
-                    validator: RegExpValidator {regExp: /^([1-9]|[1-5]?[0-9]{2,4}|6[1-4][0-9]{3}|65[1-4][0-9]{2}|655[1-2][0-9]|6553[1-5])$/g}
+                    validator: RegExpValidator {regExp: /^([1-9][0-9]{0,3}|[1-5][0-9]{2,4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/g}
                     backgroundColor: !remoteNodePort.acceptableInput ? Style.validator_error : Style.content_main
                     Binding {
                         target: viewModel
@@ -182,7 +182,7 @@ SettingsFoldable {
                     font.pixelSize: 14
                     color: !localNodePort.acceptableInput ? Style.validator_error : Style.content_main
                     text: viewModel.localNodePort
-                    validator: RegExpValidator {regExp: /^([1-9]|[1-5]?[0-9]{2,4}|6[1-4][0-9]{3}|65[1-4][0-9]{2}|655[1-2][0-9]|6553[1-5])$/g}
+                    validator: RegExpValidator {regExp: /^([1-9][0-9]{0,3}|[1-5][0-9]{2,4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/g}
                     backgroundColor: !localNodePort.acceptableInput ? Style.validator_error : Style.content_main
                     Binding {
                         target: viewModel
@@ -320,7 +320,6 @@ SettingsFoldable {
             Layout.topMargin: 25
 
             CustomButton {
-                Layout.preferredHeight: 38
                 leftPadding:  25
                 rightPadding: 25
                 spacing: 12
@@ -336,7 +335,6 @@ SettingsFoldable {
             }
 
             PrimaryButton {
-                Layout.preferredHeight: 38
                 leftPadding:  25
                 rightPadding: 25
                 spacing: 12

@@ -43,7 +43,7 @@ AddressItem::AddressItem(const beam::wallet::WalletAddress& address)
 
 QString AddressItem::getAddress() const
 {
-    return beamui::toString(m_walletAddress.m_walletID);
+    return QString::fromStdString(m_walletAddress.m_Address);
 }
 
 QString AddressItem::getName() const
@@ -105,7 +105,7 @@ ContactItem::ContactItem(const beam::wallet::WalletAddress& address)
 
 QString ContactItem::getAddress() const
 {
-    return beamui::toString(m_walletAddress.m_walletID);
+    return QString::fromStdString(m_walletAddress.m_Address);
 }
 
 QString ContactItem::getName() const
@@ -129,6 +129,10 @@ QString ContactItem::getIdentity() const
 
 QString ContactItem::getToken() const
 {
+    if (m_walletAddress.m_walletID == Zero)
+    {
+        return QString::fromStdString(m_walletAddress.m_Address);
+    }
     using namespace beam::wallet;
     TxParameters params;
     params.SetParameter(TxParameterID::TransactionType, TxType::Simple);
@@ -161,17 +165,17 @@ AddressBookViewModel::AddressBookViewModel()
 
 QQmlListProperty<ContactItem> AddressBookViewModel::getContacts()
 {
-    return QQmlListProperty<ContactItem>(this, m_contacts);
+    return CreateQmlListProperty<ContactItem>(this, m_contacts);
 }
 
 QQmlListProperty<AddressItem> AddressBookViewModel::getActiveAddresses()
 {
-    return QQmlListProperty<AddressItem>(this, m_activeAddresses);
+    return CreateQmlListProperty<AddressItem>(this, m_activeAddresses);
 }
 
 QQmlListProperty<AddressItem> AddressBookViewModel::getExpiredAddresses()
 {
-    return QQmlListProperty<AddressItem>(this, m_expiredAddresses);
+    return CreateQmlListProperty<AddressItem>(this, m_expiredAddresses);
 }
 
 QString AddressBookViewModel::nameRole() const
@@ -297,10 +301,7 @@ bool AddressBookViewModel::isAddressBusy(const QString& addr)
 
 void AddressBookViewModel::deleteAddress(const QString& addr)
 {
-    WalletID walletID;
-    walletID.FromHex(addr.toStdString());
-
-    m_model.getAsync()->deleteAddress(walletID);
+    m_model.getAsync()->deleteAddress(addr.toStdString());
 }
 
 void AddressBookViewModel::saveChanges(const QString& addr, const QString& name, uint expirationStatus)

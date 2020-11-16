@@ -38,16 +38,35 @@ QR::~QR()
 
 }
 
-void QR::setAmount(beam::Amount amount)
+QString QR::getAmount() const
 {
-    m_amountGrothes = amount;
-    update();
+    return beamui::AmountInGrothToUIString(m_amountGrothes);
+}
+
+void QR::setAmount(const QString& value)
+{
+    auto amount = beamui::UIStringToAmount(value);
+    if (m_amountGrothes != amount)
+    {
+        m_amountGrothes = amount;
+        emit amountChanged();
+        update();
+    }
 }
 
 void QR::setAddr(const QString& addr)
 {
-    m_addr = addr;
-    update();
+    if (m_addr != addr)
+    {
+        m_addr = addr;
+        emit addressChanged();
+        update();
+    }
+}
+
+const QString& QR::getAddress() const
+{
+    return m_addr;
 }
 
 void QR::setDimensions(uint width, uint height)
@@ -57,7 +76,7 @@ void QR::setDimensions(uint width, uint height)
     update();
 }
 
-QString QR::getEncoded() const
+const QString& QR::getEncoded() const
 {
     return m_qrData;
 }

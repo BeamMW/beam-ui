@@ -256,8 +256,12 @@ CustomTableView {
             text: qsTrId("address-table-cm-show-qr")
             icon.source: "qrc:/assets/icon-qr.svg"
             onTriggered: {
-                showQRDialog.addressItem = contextMenu.addressItem;
-                showQRDialog.open();
+                var popup = Qt.createComponent("AddressQRDialog.qml").createObject(main)
+                popup.address = contextMenu.addressItem.address;
+                 //: show qr dialog address label
+                //% "Your address"
+                popup.addressLabelText = qsTrId("show-qr-tx-token-label");
+                popup.open();
             }
         }
         Action {

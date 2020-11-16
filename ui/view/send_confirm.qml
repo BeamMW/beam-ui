@@ -18,6 +18,7 @@ ConfirmationDialog {
     property var    onAcceptedCallback: undefined
     property alias  addressText:        addressLabel.text
     property alias  typeText:           typeLabel.text
+    property alias  isOnline:           onlineMessage.visible
     property bool   swapMode:           false
     property int    currency:           Currency.CurrBeam
     property string amount:             "0"
@@ -147,13 +148,13 @@ ConfirmationDialog {
             }
 
             //
-            // Transaction type
+            // Address type
             //
             SFText {
                 Layout.fillWidth:       true
                 font.pixelSize:         14
                 color:                  Style.content_disabled
-                //% "Type"
+                //% "Address type"
                 text:                   qsTrId("send-confirmation-type-label") + ":"
                 verticalAlignment:      Text.AlignTop
                 visible:                typeLabel.text.length > 0
@@ -281,6 +282,7 @@ ConfirmationDialog {
             // Wait online message
             //
             SFText {
+                id:                     onlineMessage
                 Layout.columnSpan:      2
                 Layout.topMargin:       0//15
                 Layout.bottomMargin:    15

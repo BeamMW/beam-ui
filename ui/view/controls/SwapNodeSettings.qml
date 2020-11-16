@@ -21,6 +21,7 @@ SettingsFoldable {
     property string disabledColor:       Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.2)
     property alias  editElectrum:        useElectrumSwitch.checked
     property bool   canEdit:             true
+    property bool   isSupportedElectrum: true
 
     property bool   isConnected:            false
     property bool   isNodeConnection:       false
@@ -53,7 +54,6 @@ SettingsFoldable {
 
     ConfirmPasswordDialog {
         id: confirmPasswordDialog
-        parent: control.parent
         settingsViewModel: mainSettingsViewModel 
     }
 
@@ -236,7 +236,8 @@ SettingsFoldable {
         RowLayout {
             height:   20
             spacing:  10
-
+            visible:  isSupportedElectrum
+            Layout.fillWidth:   true
             SFText {
                 //% "Node"
                 text:  qsTrId("settings-swap-node")
@@ -321,7 +322,7 @@ SettingsFoldable {
 
         GridLayout {
             visible: !(editElectrum && useRandomNode.checked && !isElectrumConnection)
-            Layout.topMargin: 20
+            Layout.topMargin: isSupportedElectrum ? 20 : 0
             columns:          2
             columnSpacing:    50
             rowSpacing:       13
@@ -440,11 +441,11 @@ SettingsFoldable {
                 color:              Style.content_main
                 readOnly:           useRandomNode.checked
                 underlineVisible:   !useRandomNode.checked
-                validator:          RegExpValidator {regExp: /^([1-9]|[1-5]?[0-9]{2,4}|6[1-4][0-9]{3}|65[1-4][0-9]{2}|655[1-2][0-9]|6553[1-5])$/g}
+                validator:          RegExpValidator {regExp: /^([1-9][0-9]{0,3}|[1-5][0-9]{2,4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/g}
             }
         }
 
-         SFText {
+        SFText {
             visible:               editElectrum && useRandomNode.checked && !disconnectButtonId.visible
             Layout.topMargin:      30
             Layout.preferredWidth: 390
@@ -470,6 +471,7 @@ when connection is established"
             Layout.bottomMargin: 7
 
             LinkButton {
+                Layout.fillWidth:   true
                 text:      isCurrentElectrumSeedValid ?   
                             //% "Edit your seed phrase"
                             qsTrId("settings-swap-edit-seed") :
@@ -508,6 +510,7 @@ when connection is established"
             }
 
             LinkButton {
+                Layout.fillWidth:   true
                 //% "Generate new seed phrase"
                 text:             qsTrId("settings-swap-new-seed")
                 onClicked: {
@@ -583,11 +586,13 @@ when connection is established"
             font.pixelSize:        14
             wrapMode:              Text.WordWrap
             color:                 control.color
-            lineHeight:            1.1 
-/*% "Swap in progress, cannot disconnect, switch connection type to 
-%1 electrum, generate new or edit existing seed phrase."
-*/
-            text:                  qsTrId("settings-node-progress-na").arg(control.generalTitle)
+            lineHeight:            1.1
+            text:                  isSupportedElectrum ?
+                                       //% "Swap in progress, cannot disconnect or switch connection type."
+                                       qsTrId("settings-node-progress")
+                                       :
+                                       //% "Swap in progress, cannot disconnect."
+                                       qsTrId("settings-doge-node-progress")
         }
 
         SFText {
@@ -602,10 +607,7 @@ when connection is established"
             wrapMode:              Text.WordWrap
             color:                 control.color
             lineHeight:            1.1 
-/*% "Swap in progress, cannot switch connection type to %1 node, 
-generate new or edit existing seed phrase."
-*/
-            text:                  qsTrId("settings-electrum-progress-na").arg(control.generalTitle)
+            text:                  qsTrId("settings-node-progress")
         }
 
         // buttons
@@ -614,31 +616,25 @@ generate new or edit existing seed phrase."
         RowLayout {
             visible:                control.canEdit || editElectrum
             Layout.preferredHeight: 52
-            Layout.fillWidth:       true
+            Layout.alignment:       Qt.AlignHCenter
             Layout.topMargin:       30
-            spacing:                15
-
-            Item {
-                Layout.fillWidth: true
-            }
+            spacing:                20
 
             CustomButton {
-                visible:                applySettingsButtonId.visible
-                Layout.preferredHeight: 38
-                Layout.preferredWidth:  130
-                leftPadding:  25
-                rightPadding: 25
-                text:         qsTrId("general-cancel")
-                icon.source:  enabled ? "qrc:/assets/icon-cancel-white.svg" : "qrc:/assets/icon-cancel.svg"
-                enabled:      isSettingsChanged()
-                onClicked:    restoreSettings()
+                leftPadding:            25
+                rightPadding:           25
+                visible:                !canConnect() && !canDisconnect()
+                text:                   qsTrId("general-cancel")
+                icon.source:            enabled ? "qrc:/assets/icon-cancel-white.svg" : "qrc:/assets/icon-cancel.svg"
+                enabled:                isSettingsChanged()
+                onClicked:              restoreSettings()
             }
 
             CustomButton {
                 id:                     disconnectButtonId
+                leftPadding:            25
+                rightPadding:           25
                 visible:                canDisconnect()
-                Layout.preferredHeight: 38
-                Layout.preferredWidth:  164
                 palette.button:         Style.swapDisconnectNode
                 palette.buttonText:     Style.content_opposite
                 //% "disconnect"
@@ -648,11 +644,9 @@ generate new or edit existing seed phrase."
             }
 
             CustomButton {
-                visible:                connectButtonId.visible
-                Layout.preferredHeight: 38
-                Layout.preferredWidth:  124
                 leftPadding:            25
                 rightPadding:           25
+                visible:                canConnect()
                 //% "clear"
                 text:                   qsTrId("settings-swap-clear")
                 icon.source:            "qrc:/assets/icon-delete.svg"
@@ -676,21 +670,21 @@ generate new or edit existing seed phrase."
 
             PrimaryButton {
                 id:                     applySettingsButtonId
-                visible:                !connectButtonId.visible && !disconnectButtonId.visible
                 leftPadding:            25
                 rightPadding:           25
+                // TODO roman.strilets need to refactor this
+                visible:                !canConnect() && !canDisconnect()
                 text:                   qsTrId("settings-apply")
                 icon.source:            "qrc:/assets/icon-done.svg"
                 enabled:                isSettingsChanged() && canApplySettings()
                 onClicked:              applyChanges()
-                Layout.preferredHeight: 38
             }
 
             PrimaryButton {
                 id:                     connectButtonId
-                visible:                canConnect()
                 leftPadding:            25
                 rightPadding:           25
+                visible:                canConnect()
                 text:                   editElectrum
                                             //% "connect to electrum node"
                                             ? qsTrId("settings-swap-connect-to-electrum")
@@ -698,12 +692,6 @@ generate new or edit existing seed phrase."
                                             : qsTrId("settings-swap-connect-to-node")
                 icon.source:            "qrc:/assets/icon-done.svg"
                 onClicked:              editElectrum ? connectToElectrum() : connectToNode();
-                Layout.preferredHeight: 38
-                Layout.preferredWidth:  editElectrum ? 253 : 193
-            }
-
-            Item {
-                Layout.fillWidth: true
             }
         }
     }
@@ -958,7 +946,6 @@ generate new or edit existing seed phrase."
                 CustomButton {
                     id: cancelButtonId
                     visible:                false
-                    Layout.preferredHeight: 38
                     Layout.minimumWidth:    133
                     text:                   qsTrId("general-cancel")
                     icon.source:            "qrc:/assets/icon-cancel-white.svg"
@@ -969,7 +956,6 @@ generate new or edit existing seed phrase."
                 PrimaryButton {
                     id: applyButtonId
                     visible:                false
-                    Layout.preferredHeight: 38
                     Layout.minimumWidth:    126
                     text:                   qsTrId("settings-apply")
                     icon.source:            "qrc:/assets/icon-done.svg"
@@ -983,7 +969,6 @@ generate new or edit existing seed phrase."
                 CustomButton {
                     id: closeButtonId
                     visible:                false
-                    Layout.preferredHeight: 38
                     Layout.minimumWidth:    125
                     text:                   qsTrId("general-close")
                     icon.source:            "qrc:/assets/icon-cancel-white.svg"
@@ -992,7 +977,6 @@ generate new or edit existing seed phrase."
                 CustomButton {
                     id: generateButtonId
                     visible:                false
-                    Layout.preferredHeight: 38
                     Layout.minimumWidth:    271
                     rightPadding:           20
                     //% "generate another seed phrase"
@@ -1004,7 +988,6 @@ generate new or edit existing seed phrase."
                 PrimaryButton {
                     id: copyButtonId
                     visible:                false
-                    Layout.preferredHeight: 38
                     Layout.minimumWidth:    124
                     text:                   qsTrId("general-copy")
                     icon.source:            "qrc:/assets/icon-copy-blue.svg"
@@ -1181,8 +1164,6 @@ generate new or edit existing seed phrase."
             CustomButton {
                 Layout.topMargin:       24
                 Layout.alignment:       Qt.AlignHCenter
-                Layout.preferredHeight: 38
-                Layout.preferredWidth:  125
                 text:             qsTrId("general-close")
                 icon.source:      "qrc:/assets/icon-cancel-white.svg"
                 onClicked:        showAddressesDialog.close()

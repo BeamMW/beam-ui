@@ -53,8 +53,10 @@ public:
 
     bool isIncome() const;
     bool isSelfTx() const;
-    bool isMaxPrivacy() const;
-    bool isOfflineToken() const;
+    bool isShieldedTx() const;
+    beam::wallet::TxAddressType getAddressType();
+    bool isSent() const;
+    bool isReceived() const;
     virtual bool isCancelAvailable() const;
     virtual bool isDeleteAvailable() const;
     virtual bool isInProgress() const;
@@ -78,10 +80,12 @@ protected:
     const beam::wallet::TxDescription& getTxDescription() const;
     QString getReasonString(beam::wallet::TxFailureReason reason) const;
     QString getIdentity(bool isSender) const;
+    void restoreAddressType();
  
     beam::wallet::TxDescription m_tx;
     QString m_kernelID;
     beam::wallet::TxType m_type;
     beam::wallet::ExchangeRate::Currency m_secondCurrency;
     mutable  boost::optional<bool> m_hasVouchers;
+    boost::optional<beam::wallet::TxAddressType> m_addressType;
 };

@@ -16,7 +16,6 @@ SettingsFoldable {
     ConfirmPasswordDialog {
         id: confirmPasswordDialog
         settingsViewModel: viewModel
-        parent: main
     }
 
     ChangePasswordDialog {
@@ -36,7 +35,7 @@ SettingsFoldable {
 
         RowLayout {
             Layout.preferredHeight: 32
-
+            Layout.fillWidth:       true
             SFText {
                 property string beamUrl: "<a href='https://www.beam.mw/'>beam.mw</a>"
                 //% "blockchain explorer"
@@ -50,16 +49,13 @@ SettingsFoldable {
                 font.pixelSize: 14
                 color: allowBeamMWLinks.palette.text
                 wrapMode: Text.WordWrap
-                Layout.preferredWidth: privacyBlock.width - 97
+                Layout.fillWidth:       true
+                Layout.rightMargin:     20
                 Layout.preferredHeight: 32
                 linkEnabled: true
                 onLinkActivated:  {
                     Utils.openExternalWithConfirmation(link)
                 }
-            }
-
-            Item {
-                Layout.fillWidth: true
             }
 
             CustomSwitch {

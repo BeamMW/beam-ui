@@ -96,7 +96,7 @@ TxObject::TxObject( const TxDescription& tx,
         , m_type(*m_tx.GetParameter<TxType>(TxParameterID::TransactionType))
         , m_secondCurrency(secondCurrency)
 {
-    auto kernelID = QString::fromStdString(to_hex(m_tx.m_kernelID.m_pData, m_tx.m_kernelID.nBytes));
+    auto kernelID = QString::fromStdString(std::to_string(m_tx.m_kernelID));
     setKernelID(kernelID);
 }
 
@@ -202,31 +202,30 @@ QString TxObject::getAddressFrom() const
 {
     if (m_tx.m_txType == wallet::TxType::PushTransaction && !m_tx.m_sender)
     {
-        //% "shielded pool"
-        return qtTrId("from-shielded-pool");
+        return getSenderIdentity();
     }
     return toString(m_tx.m_sender ? m_tx.m_myId : m_tx.m_peerId);
 }
 
 QString TxObject::getAddressTo() const
 {
-    return toString(!m_tx.m_sender ? m_tx.m_myId : m_tx.m_peerId);
+    if (m_tx.m_sender)
+    {
+        auto token = getToken();
+        if (token.isEmpty())
+            return toString(m_tx.m_peerId);
+
+        return token;
+    }
+    return toString(m_tx.m_myId);
 }
 
 QString TxObject::getFee() const
 {
     if (m_tx.m_fee)
     {
-        std::vector<TxKernel::Ptr> shieldedInputs;
-        m_tx.GetParameter(TxParameterID::InputsShielded, shieldedInputs);
-        if (shieldedInputs.size())
-        {
-            Transaction::FeeSettings fs;
-            Amount shieldedFee = shieldedInputs.size() * (fs.m_Kernel + fs.m_ShieldedInput);
-            return AmountInGrothToUIString(shieldedFee + m_tx.m_fee);
-        }
-
-        return AmountInGrothToUIString(m_tx.m_fee);
+        Amount shieldedFee = GetShieldedFee(m_tx);
+        return AmountInGrothToUIString(shieldedFee + m_tx.m_fee);
     }
     return QString{};
 }
@@ -439,6 +438,13 @@ QString TxObject::getStateDetails() const
             break;
         }
     }
+
+    if (tx.m_txType == beam::wallet::TxType::PushTransaction &&
+        (tx.m_status == beam::wallet::TxStatus::InProgress || tx.m_status == beam::wallet::TxStatus::Registering))
+    {
+        //% "The transaction is usually expected to complete in a few minutes."
+        return qtTrId("tx-state-in-progress-normal");
+    }
     return "";
 }
 
@@ -460,7 +466,8 @@ QString TxObject::getReceiverIdentity() const
 
 bool TxObject::hasPaymentProof() const
 {
-    return !isIncome() && m_tx.m_status == wallet::TxStatus::Completed && m_tx.m_txType == TxType::Simple;
+    return !isIncome() && m_tx.m_status == wallet::TxStatus::Completed 
+        && (m_tx.m_txType == TxType::Simple || m_tx.m_txType == TxType::PushTransaction);
 }
 
 void TxObject::update(const beam::wallet::TxDescription& tx)
@@ -499,24 +506,29 @@ bool TxObject::isSelfTx() const
     return m_tx.m_selfTx;
 }
 
-bool TxObject::isMaxPrivacy() const
+bool TxObject::isShieldedTx() const
 {
     return m_tx.m_txType == TxType::PushTransaction;
 }
 
-bool TxObject::isOfflineToken() const
+beam::wallet::TxAddressType TxObject::getAddressType()
 {
-    if (!isMaxPrivacy() || isIncome())
-    {
-        return false;
-    }
-    if (!m_hasVouchers)
-    {
-        auto vouchers = m_tx.GetParameter<ShieldedVoucherList>(wallet::TxParameterID::ShieldedVoucherList);
-        m_hasVouchers = (vouchers && !vouchers->empty());
-    }
-    
-    return *m_hasVouchers;
+    restoreAddressType();
+
+    if (m_addressType)
+        return *m_addressType;
+
+    return TxAddressType::Unknown;
+}
+
+bool TxObject::isSent() const
+{
+    return isCompleted() && !isIncome();
+}
+
+bool TxObject::isReceived() const
+{
+    return isCompleted() && isIncome();
 }
 
 bool TxObject::isCanceled() const
@@ -532,4 +544,19 @@ bool TxObject::isFailed() const
 bool TxObject::isExpired() const
 {
     return isFailed() && m_tx.m_failureReason == TxFailureReason::TransactionExpired;
+}
+
+void TxObject::restoreAddressType()
+{
+    auto storedType = m_tx.GetParameter<TxAddressType>(TxParameterID::AddressType);
+    if (storedType)
+    {
+        m_addressType = storedType;
+        return;
+    }
+
+    if (!m_tx.m_sender || m_addressType)
+        return;
+
+    m_addressType = GetAddressType(m_tx);
 }

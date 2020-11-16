@@ -121,22 +121,22 @@ void NodeModel::onSyncError(beam::Node::IObserver::Error error)
     }
 }
 
-uint16_t NodeModel::getLocalNodePort()
+uint16_t NodeModel::getLocalNodePort() const
 {
     return AppModel::getInstance().getSettings().getLocalNodePort();
 }
 
-std::string NodeModel::getLocalNodeStorage()
+std::string NodeModel::getLocalNodeStorage() const
 {
     return AppModel::getInstance().getSettings().getLocalNodeStorage();
 }
 
-std::string NodeModel::getTempDir()
+std::string NodeModel::getTempDir() const
 {
     return AppModel::getInstance().getSettings().getTempDir();
 }
 
-std::vector<std::string> NodeModel::getLocalNodePeers()
+std::vector<std::string> NodeModel::getLocalNodePeers() const
 {
     std::vector<std::string> result;
 
@@ -148,6 +148,11 @@ std::vector<std::string> NodeModel::getLocalNodePeers()
     }
 
     return result;
+}
+
+bool NodeModel::getPeersPersistent() const
+{
+    return AppModel::getInstance().getSettings().getPeersPersistent();
 }
 
 void NodeModel::onNodeThreadFinished()
