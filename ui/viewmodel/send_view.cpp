@@ -468,7 +468,7 @@ void SendViewModel::sendMoney()
         LoadReceiverParams(_txParameters, params);
         params.SetParameter(TxParameterID::Amount, _sendAmountGrothes)
               // fee for shielded inputs included automaticaly
-              .SetParameter(TxParameterID::Fee, !!_shieldedInputsFee ? _feeGrothes - _shieldedInputsFee : _feeGrothes)
+              .SetParameter(TxParameterID::Fee, _feeGrothes - _shieldedInputsFee)
               .SetParameter(TxParameterID::Message, beam::ByteBuffer(messageString.begin(), messageString.end()));
 
         params.SetParameter(TxParameterID::TransactionType, isShieldedTx() ? TxType::PushTransaction : TxType::Simple);
