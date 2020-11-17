@@ -61,7 +61,7 @@ else()
 endif()
 set (CMAKE_PREFIX_PATH $ENV{QT5_ROOT_DIR})
 
-find_package(Qt5 COMPONENTS Qml Quick Svg PrintSupport WebEngine WebEngineWidgets REQUIRED)
+find_package(Qt5 COMPONENTS Qml Quick Svg WebEngine WebEngineWidgets REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -80,7 +80,8 @@ if(MSVC)
     endif()
 
     set_source_files_properties(ui.cpp PROPERTIES COMPILE_FLAGS "/wd4127") # QtCore/qvarlengtharray.h(274): warning C4127: conditional expression is constant
-
+elseif(APPLE)
+    set(SYSTEM_TYPE MACOSX_BUNDLE)
 endif()
 
 list(APPEND SUPPORTED_LANGS "en_US")
@@ -269,7 +270,7 @@ if (APPLE)
         message(FATAL_ERROR "Carbon framework not found")
     endif()
 endif()
-add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc ${MACOSX_BUNDLE_ICON_FILE})
+add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns")
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${OUTPUT_NAME})
 
 if(BEAM_HW_WALLET)
@@ -314,7 +315,6 @@ target_link_libraries(${TARGET_NAME}
         Qt5::Qml
         Qt5::Quick 
         Qt5::Svg
-        Qt5::PrintSupport
         Qt5::WebEngine
         Qt5::WebEngineWidgets
 )
@@ -326,11 +326,11 @@ if (BEAM_SIGN_PACKAGE AND WIN32)
     )
 endif()
 
-if(BEAM_USE_STATIC)
+if(BEAM_USE_STATIC_QT)
 
     if(WIN32)
 
-        foreach(lib lib/clip2tri lib/Qt5Concurrent lib/Qt5Help lib/Qt5PrintSupport lib/Qt5RemoteObjects lib/Qt5TextToSpeech
+        foreach(lib lib/clip2tri lib/Qt5Concurrent lib/Qt5Help lib/Qt5RemoteObjects lib/Qt5TextToSpeech
             lib/Qt5XmlPatterns lib/clipper lib/Qt5Core lib/Qt5Location lib/Qt5Purchasing lib/Qt5Script lib/Qt5ThemeSupport lib/qtfreetype
             lib/poly2tri lib/Qt5DBus lib/Qt5Multimedia lib/Qt5Qml lib/Qt5ScriptTools lib/Qt5UiTools lib/qtharfbuzz lib/Qt5AccessibilitySupport
             lib/Qt5DeviceDiscoverySupport lib/Qt5MultimediaWidgets lib/Qt5QmlDebug lib/Qt5Scxml lib/Qt5WebChannel lib/qtlibpng lib/Qt5AxBase
@@ -342,7 +342,7 @@ if(BEAM_USE_STATIC)
             lib/Qt5Charts lib/Qt5Gui lib/Qt5PositioningQuick lib/Qt5QuickWidgets lib/Qt5Test lib/Qt5Xml qml/QtQuick.2/qtquick2plugin
             qml/QtQuick/Window.2/windowplugin qml/QtQuick/Controls/qtquickcontrolsplugin qml/QtGraphicalEffects/qtgraphicaleffectsplugin
             qml/QtGraphicalEffects/private/qtgraphicaleffectsprivate qml/QtQuick/Layouts/qquicklayoutsplugin qml/QtQuick/Controls.2/qtquickcontrols2plugin
-            qml/QtQuick/Templates.2/qtquicktemplates2plugin plugins/platforms/qwindows plugins/imageformats/qsvg plugins/printsupport/windowsprintersupport)
+            qml/QtQuick/Templates.2/qtquicktemplates2plugin plugins/platforms/qwindows plugins/imageformats/qsvg)
 
             target_link_libraries(${TARGET_NAME} ${CMAKE_PREFIX_PATH}/${lib}.lib)
         endforeach()
@@ -363,7 +363,7 @@ if(BEAM_USE_STATIC)
             lib/libQt53DQuickExtras lib/libQt5FbSupport lib/libQt5PlatformCompositorSupport lib/libQt5Scxml lib/libclipper lib/libQt53DQuickInput
             lib/libQt5FontDatabaseSupport lib/libQt5Positioning lib/libQt5Sensors lib/libpoly2tri lib/libQt53DQuickRender lib/libQt5Gamepad
             lib/libQt5PositioningQuick lib/libQt5SerialBus lib/libqmapboxgl lib/libQt53DQuickScene2D lib/libQt5GraphicsSupport
-            lib/libQt5PrintSupport lib/libQt5SerialPort lib/libqtfreetype lib/libQt53DRender lib/libQt5Gui lib/libQt5Purchasing lib/libQt5Sql
+            lib/libQt5SerialPort lib/libqtfreetype lib/libQt53DRender lib/libQt5Gui lib/libQt5Purchasing lib/libQt5Sql
             lib/libqtharfbuzz lib/libQt5AccessibilitySupport lib/libQt5Help lib/libQt5Qml lib/libQt5Svg lib/libqtlibpng lib/libQt5Bluetooth
             lib/libQt5Location lib/libQt5QmlDebug lib/libQt5Test lib/libqtopenwnn lib/libQt5Bootstrap lib/libQt5MacExtras lib/libQt5QmlDevTools
             lib/libQt5TextToSpeech lib/libqtpcre2 lib/libQt5Charts lib/libQt5Multimedia lib/libQt5Quick lib/libQt5ThemeSupport lib/libqtpinyin
@@ -371,7 +371,7 @@ if(BEAM_USE_STATIC)
             qml/QtQuick.2/libqtquick2plugin qml/QtQuick/Window.2/libwindowplugin qml/QtQuick/Controls/libqtquickcontrolsplugin
             qml/QtGraphicalEffects/libqtgraphicaleffectsplugin qml/QtGraphicalEffects/private/libqtgraphicaleffectsprivate
             qml/QtQuick/Layouts/libqquicklayoutsplugin qml/QtQuick/Controls.2/libqtquickcontrols2plugin qml/QtQuick/Templates.2/libqtquicktemplates2plugin
-            plugins/platforms/libqcocoa plugins/platforms/libqminimal plugins/imageformats/libqsvg plugins/printsupport/libcocoaprintersupport)
+            plugins/platforms/libqcocoa plugins/platforms/libqminimal plugins/imageformats/libqsvg)
 
             target_link_libraries(${TARGET_NAME} ${CMAKE_PREFIX_PATH}/${lib}.a)
         endforeach()
@@ -420,7 +420,6 @@ if(BEAM_USE_STATIC)
             ${CMAKE_PREFIX_PATH}/qml/QtQuick/Templates.2/libqtquicktemplates2plugin.a
 
             ${CMAKE_PREFIX_PATH}/plugins/imageformats/libqsvg.a
-            ${CMAKE_PREFIX_PATH}/plugins/printsupport/libcupsprintersupport.a
         )
 
         foreach(lib
@@ -429,7 +428,7 @@ if(BEAM_USE_STATIC)
             poly2tri Qt5InputSupport Qt5Positioning Qt5QuickTemplates2
             Qt5SerialPort Qt5WebSockets qtlibpng Qt5AccessibilitySupport Qt5DeviceDiscoverySupport
             Qt5KmsSupport Qt5PositioningQuick Qt5QuickTest Qt5ServiceSupport
-            Qt5Bluetooth Qt5EdidSupport Qt5PrintSupport Qt5QuickWidgets
+            Qt5Bluetooth Qt5EdidSupport Qt5QuickWidgets
             Qt5Sql Qt5Widgets qtpcre2 Qt5Bootstrap Qt5EventDispatcherSupport
             Qt5Purchasing Qt5RemoteObjects Qt5Svg Qt5X11Extras
             Qt5FbSupport Qt5Qml Qt5Test
@@ -449,7 +448,6 @@ if(BEAM_USE_STATIC)
         set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
     endif()
-
 endif()
 
 if(LINUX)
@@ -462,11 +460,46 @@ if(LINUX)
     install (FILES beam.desktop DESTINATION ${BEAM_DESKTOP_DIR})
     install (FILES beam.xml DESTINATION ${BEAM_DESKTOP_DIR})
     install (FILES beam.png DESTINATION ${BEAM_PIXMAPS_DIR})
+elseif(APPLE)
+    #set(MACOSX_BUNDLE_ICON_FILE "Beam Wallet${BEAM_DISPLAY_SUFFIX}.icns")
+    set(MACOSX_BUNDLE_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+    set_target_properties(${TARGET_NAME} PROPERTIES 
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
 
+    #if(BEAM_SIGN_MACOS_BINARY)
+    #    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+    #        COMMAND codesign 
+    #        --force 
+    #        -s "${BEAM_SIGN_IDENTITY2}"
+    #        -o runtime
+    #        --timestamp 
+    #        "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/MacOS/Beam Wallet${BEAM_DISPLAY_SUFFIX}"
+    #        COMMENT "Signing executable..."
+    #    )
+    #endif()
+
+    if (NOT BEAM_USE_STATIC_QT)
+        add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND macdeployqt
+            "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app"
+            -always-overwrite
+            -qmldir=${CMAKE_CURRENT_SOURCE_DIR}
+            -sign-for-notarization="${BEAM_SIGN_IDENTITY2}"
+            COMMENT "Deploying Qt..."
+        )
+    endif()
+    install(TARGETS ${TARGET_NAME} DESTINATION .)
 else()
-
     if(WIN32)
-        install(FILES ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION .)
+        if (NOT BEAM_USE_STATIC_QT)
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E remove_directory "${CMAKE_CURRENT_BINARY_DIR}/windeployqt"
+                COMMAND windeployqt --release --no-virtualkeyboard --no-angle --dir "${CMAKE_CURRENT_BINARY_DIR}/windeployqt" --qmldir "${CMAKE_CURRENT_SOURCE_DIR}" "$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_NAME:${TARGET_NAME}>"
+                COMMENT "Deploying Qt..."
+            )
+            install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/windeployqt/ DESTINATION .)
+        endif()
         install(FILES beam-wallet.cfg DESTINATION .)
         install(TARGETS ${TARGET_NAME} DESTINATION .)
     endif()

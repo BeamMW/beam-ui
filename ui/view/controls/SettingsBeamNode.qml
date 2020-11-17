@@ -320,7 +320,6 @@ SettingsFoldable {
             Layout.topMargin: 25
 
             CustomButton {
-                Layout.preferredHeight: 38
                 leftPadding:  25
                 rightPadding: 25
                 spacing: 12
@@ -336,7 +335,6 @@ SettingsFoldable {
             }
 
             PrimaryButton {
-                Layout.preferredHeight: 38
                 leftPadding:  25
                 rightPadding: 25
                 spacing: 12

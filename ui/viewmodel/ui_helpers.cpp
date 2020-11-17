@@ -139,7 +139,7 @@ namespace beamui
         QDateTime datetime;
         datetime.setTime_t(ts);
 
-        return datetime.toString(Qt::SystemLocaleShortDate);
+        return datetime.toString(QLocale().dateTimeFormat(QLocale::ShortFormat));
     }
 
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
@@ -155,8 +155,6 @@ namespace beamui
             return beamui::Currencies::Qtum;
         case wallet::AtomicSwapCoin::Bitcoin_Cash:
             return beamui::Currencies::BitcoinCash;
-        case wallet::AtomicSwapCoin::Bitcoin_SV:
-            return beamui::Currencies::BitcoinSV;
         case wallet::AtomicSwapCoin::Dash:
             return beamui::Currencies::Dash;
         case wallet::AtomicSwapCoin::Dogecoin:
@@ -315,7 +313,6 @@ namespace beamui
             case Currencies::Litecoin: return "ltc";
             case Currencies::Qtum: return "qtum";
             case Currencies::BitcoinCash: return "bch";
-            case Currencies::BitcoinSV: return "bsv";
             case Currencies::Dash: return "dash";
             case Currencies::Dogecoin: return "doge";
             case Currencies::Usd: return "usd";

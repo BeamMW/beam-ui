@@ -56,34 +56,39 @@ matrix:
     - os: osx
       language: cpp
       cache: ccache
-      osx_image: xcode10.2
+      osx_image: xcode12.2
+      addons:
+        homebrew:
+          packages:
+          - qt5
+          update: true
       install:
         - export TZ=GMT-3
         - sudo systemsetup -gettimezone
-        - travis_retry wget --no-check-certificate https://builds.beam.mw/QT5/qt5.12.9-static.tar.gz
-        - sudo mkdir /usr/local/qt5-static
-        - sudo tar -xf qt5.12.9-static.tar.gz -C /usr/local/qt5-static
+        #- travis_retry wget --no-check-certificate https://builds.beam.mw/QT5/qt5.12.9-static.tar.gz
+        #- sudo mkdir /usr/local/qt5-static
+        #- sudo tar -xf qt5.12.9-static.tar.gz -C /usr/local/qt5-static
         - brew update
         - brew unlink cmake
         - brew install cmake
         - brew link cmake
         - brew install ccache
         - export PATH="/usr/local/opt/ccache/libexec:$PATH"
-        - brew upgrade --ignore-pinned icu4c
-        - brew uninstall --ignore-dependencies --force sfcgal
-        - brew uninstall --ignore-dependencies --force cgal
-        - brew uninstall --ignore-dependencies node
-        - brew uninstall --ignore-dependencies --force postgresql
-        - brew uninstall --ignore-dependencies postgis
+        #- brew upgrade --ignore-pinned icu4c
+        #- brew uninstall --ignore-dependencies --force sfcgal
+        #- brew uninstall --ignore-dependencies --force cgal
+        #- brew uninstall --ignore-dependencies node
+        #- brew uninstall --ignore-dependencies --force postgresql
+        #- brew uninstall --ignore-dependencies postgis
         
         #- sudo git clone --depth=1 https://github.com/nesbox/qt5-static-mac.git /usr/local/qt5-static
-        - brew uninstall --ignore-dependencies --force qt boost
-        - curl -O https://raw.githubusercontent.com/Homebrew/homebrew-core/5da5895add2f6b9320d654dd844d4827f6876c8b/Formula/boost.rb
-        - brew install ./boost.rb
+        #- brew uninstall --ignore-dependencies --force boost
+        #- curl -O https://raw.githubusercontent.com/Homebrew/homebrew-core/5da5895add2f6b9320d654dd844d4827f6876c8b/Formula/boost.rb
+        #- brew install ./boost.rb
         - export OPENSSL_ROOT_DIR="/usr/local/opt/openssl@1.1"
-        - export PATH=/usr/local/qt5-static/bin:$PATH
-        - export QT5_ROOT_DIR="/usr/local/qt5-static"
-        - export QML_IMPORT_PATH="/usr/local/qt5-static/qml"
+        - export QT5_ROOT_DIR=$(brew --prefix qt)
+        - export PATH="${QT5_ROOT_DIR}/bin:$PATH"
+        - export QML_IMPORT_PATH="${QT5_ROOT_DIR}/qml"
         - openssl aes-256-cbc -K $encrypted_82bff69d916a_key -iv $encrypted_82bff69d916a_iv -in macos_cert.tar.enc -out macos_cert.tar -d
         - tar xvf macos_cert.tar
         # create custom keychain
@@ -102,9 +107,9 @@ matrix:
         - cd beam
         - git apply 3rdparty/protobuf-patch.diff
         - cd ..
-        - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$TRAVIS_BRANCH -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_HW_WALLET=Off .
+        - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$TRAVIS_BRANCH -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_SIGN_IDENTITY2="$MACOS_SIGN_IDENTITY2" -DBEAM_SIGN_IDENTITY="$MACOS_SIGN_IDENTITY" -DBEAM_HW_WALLET=Off .
         - make -j$(sysctl -n hw.ncpu)
-        - ctest --verbose
+        #- ctest --verbose
       after_success:
         - cpack
         # extract build version
@@ -114,7 +119,7 @@ matrix:
         - export BEAM_WALLET_UI_OUT="Beam-Wallet$BEAM_DISPLAY_SUFFIX2-$BEAM_VERSION.dmg"
         - export BEAM_WALLET_UI_OUT_VERLESS="Beam-Wallet$BEAM_DISPLAY_SUFFIX2.dmg"
         # sign our builds
-        - codesign --deep --force -v -s "$MACOS_SIGN_IDENTITY" -o runtime --timestamp $BEAM_WALLET_UI_IN
+        - codesign --deep --force -v -s "$MACOS_SIGN_IDENTITY2" -o runtime --timestamp $BEAM_WALLET_UI_IN
         - bash notarize.sh
 
 ###############################################################################
@@ -176,7 +181,7 @@ matrix:
 ###############################################################################
 
     - os: linux
-      dist: trusty
+      dist: focal
       language: cpp
       cache: ccache
       addons:
@@ -185,28 +190,45 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
+            - qtbase5-dev
+            - qtdeclarative5-dev
+            - libqt5svg5-dev
+            - qtwebengine5-dev
+            - qttools5-dev
+            - qtquickcontrols2-5-dev
             - g++-7
             - libssl-dev
             - curl
             - libxi-dev
             - libcups2-dev
+            - libboost-all-dev
       install:
         - export TZ=Etc/GMT-3
         # install new version cmake
         - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
         - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
-        - travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.14.0/cmake-3.14.0-Linux-x86_64.tar.gz
-        - tar -xvf cmake-3.14.0-Linux-x86_64.tar.gz > /dev/null
-        - mv cmake-3.14.0-Linux-x86_64 cmake-install
-        - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
+        #- travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.14.0/cmake-3.14.0-Linux-x86_64.tar.gz
+        #- tar -xvf cmake-3.14.0-Linux-x86_64.tar.gz > /dev/null
+        #- mv cmake-3.14.0-Linux-x86_64 cmake-install
+        #- PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
         - cd ${TRAVIS_BUILD_DIR}
         - cmake --version
-        - sudo git clone --depth=1 https://github.com/BeamMW/boost-linux.git /usr/local/boost_1_69_0
-        - export BOOST_ROOT="/usr/local/boost_1_69_0"
+        #- sudo git clone --depth=1 https://github.com/BeamMW/boost-linux.git /usr/local/boost_1_69_0
+        #- wget https://dl.bintray.com/boostorg/release/1.71.0/source/boost_1_71_0.tar.gz
+        #- tar xzf boost_1_71_0.tar.gz  > /dev/null
+        #- cd boost_1_71_0
+        #- ./bootstrap.sh --prefix=/usr/local/boost_1_71_0
+        #- ./b2
+        #- sudo ./b2 install
+        #- export BOOST_ROOT="/usr/local/boost_1_71_0"
+
         - eval "CC=gcc-7 && CXX=g++-7"
-        - git clone --depth=1 https://github.com/nesbox/qt5-static-linux.git /home/travis/qt5-static
-        - export QT5_ROOT_DIR="/home/travis/qt5-static"
-        - export QML_IMPORT_PATH="/home/travis/qt5-static/qml"
+        - export QT_SELECT=qt5
+        #- git clone --depth=1 https://github.com/nesbox/qt5-static-linux.git /home/travis/qt5-static
+        - export QT5_ROOT_DIR="/usr/lib/x86_64-linux-gnu/qt5"
+        - export PATH="${QT5_ROOT_DIR}/bin:$PATH"
+        - export QML_IMPORT_PATH="${QT5_ROOT_DIR}/qml"
+        - qmake --version
       env: 
         - BUILD_TYPE=Release
         - OS_FOLDER=linux
@@ -216,7 +238,7 @@ matrix:
         - cd ..
         - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$TRAVIS_BRANCH -DBEAM_HW_WALLET=Off .
         - make -j$(nproc)
-        - ctest --verbose
+        #- ctest --verbose
       after_success:
         - cpack
         # extract build version

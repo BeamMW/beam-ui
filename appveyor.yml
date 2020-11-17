@@ -1,24 +1,24 @@
 version: '{build}'
-image: Visual Studio 2017
+image: Visual Studio 2019
 
 environment:
-  BOOST_ROOT: C:\Libraries\boost_1_67_0
+  BOOST_ROOT: C:\Libraries\boost_1_71_0
   OPENSSL_ROOT_DIR: c:\beam-libs\openssl
-  QT5_ROOT_DIR: c:/beam-libs/qt5-static-win
-  QML_IMPORT_PATH: c:\beam-libs\qt5-static-win\qml
+  QT5_ROOT_DIR: C:\Qt\5.15.1\msvc2019_64
+  QML_IMPORT_PATH: $(QT5_ROOT_DIR)\qml
   BUILD_SERVER:
     secure: 5oPcbgETrXo4nmgoqILqgzdjyghCp4tEsBR4gzpEall4E9Vy77ArnCHSRjtLIEai  
   BUILD_CONFIG: RelWithDebInfo
-  PATH: c:\beam-libs\qt5-static-win\bin;$(PATH)
+  PATH: $(QT5_ROOT_DIR)\bin;$(PATH)
  
 before_build:
   - cmd: git submodule update --init --recursive --remote --jobs 4
   - cmd: cd beam
   - cmd: git apply 3rdparty/protobuf-patch.diff
   - cmd: cd ..
+  - cmd: echo %QML_IMPORT_PATH%
   - cmd: git clone --depth=1 https://github.com/BeamMW/libs.git c:/beam-libs
-  - cmd: git clone --depth=1 https://github.com/nesbox/qt5-static-win.git c:/beam-libs/qt5-static-win
-  - cmd: cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=%BUILD_CONFIG% -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=%APPVEYOR_REPO_BRANCH% -DBEAM_HW_WALLET=Off .
+  - cmd: cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_BUILD_TYPE=%BUILD_CONFIG% -DBEAM_LINK_TYPE=Static -DBEAM_DEPLOY=True -DBRANCH_NAME=%APPVEYOR_REPO_BRANCH% -DBEAM_HW_WALLET=Off .
 
 test_script:
   - cmd: ctest -C %BUILD_CONFIG% --verbose

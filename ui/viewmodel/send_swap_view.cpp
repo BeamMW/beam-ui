@@ -33,6 +33,7 @@ SendSwapViewModel::SendSwapViewModel()
     , _walletModel(*AppModel::getInstance().getWalletModel())
     , _isBeamSide(true)
     , _minimalBeamFeeGrothes(minimalFee(Currency::CurrBeam, false))
+    , _shieldedInputsFee(0)
 {
     connect(&_walletModel, &WalletModel::changeCalculated,  this,  &SendSwapViewModel::onChangeCalculated);
     connect(&_walletModel, &WalletModel::walletStatusChanged, this, &SendSwapViewModel::recalcAvailable);
@@ -169,7 +170,10 @@ void SendSwapViewModel::setSendAmount(QString value)
         recalcAvailable();
 
         if (_sendCurrency == Currency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID))
+        {
+            _shieldedInputsFee = 0;
             _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
+        }
     }
 }
 
@@ -190,6 +194,7 @@ void SendSwapViewModel::setSendFee(unsigned int value)
         if (_sendCurrency == Currency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID) && _sendAmountGrothes)
         {
             _feeChangedByUI = true;
+            _shieldedInputsFee = 0;
             _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
         }
     }
@@ -319,6 +324,7 @@ void SendSwapViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::S
 {
     if (_sendCurrency == Currency::CurrBeam)
     {
+        _shieldedInputsFee = selectionRes.shieldedInputsFee;
         _minimalBeamFeeGrothes = selectionRes.minimalFee;
         emit minimalBeamFeeGrothesChanged();
 
@@ -392,7 +398,7 @@ void SendSwapViewModel::sendMoney()
 
     beam::wallet::FillSwapFee(
         &txParameters,
-        beam::Amount(beamFee),
+        beam::Amount(!!_shieldedInputsFee ? beamFee - _shieldedInputsFee : beamFee),
         beam::Amount(swapFee),
         _isBeamSide);
 
