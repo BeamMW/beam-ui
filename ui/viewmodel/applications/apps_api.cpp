@@ -61,39 +61,15 @@ void AppsApi::onInvokeContractMessage(const beam::wallet::JsonRpcId& id, const n
 
 void AppsApi::getAppsApiResponse(const beam::wallet::JsonRpcId& id, const InvokeContract::Response& res, nlohmann::json& msg)
 {
-    if (!res.output.empty())
+    msg = nlohmann::json
     {
-        msg = nlohmann::json
-        {
-            {JsonRpcHrd, JsonRpcVerHrd},
-            {"id",       id},
-            {"result",
-                {
-                    {"output", res.output}
-                }
+        {JsonRpcHrd, JsonRpcVerHrd},
+        {"id",       id},
+        {"result",
+            {
+                {"output", res.output},
+                {"txid",   res.txid}
             }
-        };
-    }
-    else if (!res.txid.empty())
-    {
-        msg = nlohmann::json
-        {
-            {JsonRpcHrd, JsonRpcVerHrd},
-            {"id",       id},
-            {"result",
-                {
-                    {"txid", res.txid}
-                }
-            }
-        };
-    }
-    else
-    {
-        msg = nlohmann::json
-        {
-            {JsonRpcHrd, JsonRpcVerHrd},
-            {"id",       id},
-            {"result",   true}
-        };
-    }
+        }
+    };
 }

@@ -76,7 +76,7 @@ namespace beamui::applications {
     void WebAPI_Beam::onInvokeContract(const beam::wallet::JsonRpcId& id, const InvokeContract& data)
     {
         WeakApiClientPtr wp = _apiClient;
-        getAsyncWallet().callShader(data.contract, data.args, [msgid = id, wp,  this] (const std::string& shaderError, const std::string& shaderResult)
+        getAsyncWallet().callShader(data.contract, data.args, [msgid = id, wp,  this] (const std::string& shaderError, const std::string& shaderResult, const TxID& txid)
         {
             if (auto sp = wp.lock())
             {
@@ -86,6 +86,7 @@ namespace beamui::applications {
                 {
                     InvokeContract::Response result;
                     result.output = shaderResult;
+                    result.txid = TxIDToString(txid);
                     sp->getAppsApiResponse(msgid, result, jsonRes);
                 }
                 else
