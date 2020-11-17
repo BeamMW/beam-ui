@@ -20,12 +20,25 @@
 #endif
 
 class AppsApiClient
-    : private AppsApi // We provide wallet service API
+    : public AppsApi // We provide wallet service API
     , private beam::wallet::WalletApiHandler::IWalletData  // We provide wallet data
 {
 public:
-    AppsApiClient();
+    struct IHandler
+    {
+        virtual void onInvokeContract(const beam::wallet::JsonRpcId& id, const InvokeContract& data) = 0;
+    };
+
+    AppsApiClient(IHandler& handler);
     ~AppsApiClient();
+
+    //
+    // Apps Api
+    //
+    void onAppsApiMessage(const beam::wallet::JsonRpcId& id, const InvokeContract& data) override
+    {
+        _handler.onInvokeContract(id, data);
+    }
 
     //
     // WalletApiHandler::IWalletData methods
@@ -50,4 +63,5 @@ public:
 private:
     // this should be used ONLY in reactor thread
     std::string _lastResult;
+    IHandler& _handler;
 };

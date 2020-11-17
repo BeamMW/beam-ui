@@ -13,15 +13,47 @@
 // limitations under the License.
 #pragma once
 
+#include "wallet/core/common.h"
 #include "wallet/api/api_handler.h"
+
+struct InvokeContract
+{
+    std::vector<uint8_t> contract;
+    std::string args;
+
+    struct Response
+    {
+        std::string output;
+        std::string txid;
+    };
+};
+
+#define APPS_API_METHODS(macro) \
+    macro(InvokeContract, "invoke_contract", API_WRITE_ACCESS)
 
 class AppsApi
     : public beam::wallet::WalletApi
     , public beam::wallet::WalletApiHandler
 {
 public:
-     AppsApi(IWalletData& walletData);
-     AppsApi(const AppsApi&) = delete;
-     ~AppsApi();
-};
+    AppsApi(IWalletData& walletData);
+    AppsApi(const AppsApi&) = delete;
+    ~AppsApi();
 
+    #define RESPONSE_FUNC(api, name, _) \
+    void getAppsApiResponse(const beam::wallet::JsonRpcId& id, const api::Response& data, nlohmann::json& msg);
+    APPS_API_METHODS(RESPONSE_FUNC)
+    #undef RESPONSE_FUNC
+
+protected:
+    #define MESSAGE_FUNC(api, name, _) \
+    virtual void onAppsApiMessage(const beam::wallet::JsonRpcId& id, const api& data) = 0;
+    APPS_API_METHODS(MESSAGE_FUNC)
+    #undef MESSAGE_FUNC
+
+private:
+    #define MESSAGE_FUNC(api, name, _) \
+    void on##api##Message(const beam::wallet::JsonRpcId& id, const nlohmann::json& msg);
+    APPS_API_METHODS(MESSAGE_FUNC)
+    #undef MESSAGE_FUNC
+};
