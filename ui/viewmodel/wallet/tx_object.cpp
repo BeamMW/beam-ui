@@ -181,6 +181,11 @@ QString TxObject::getStatus() const
         AssetTxStatusInterpreter interpreter(m_tx);
         return interpreter.getStatus().c_str();
     }
+    else if (m_tx.m_txType == wallet::TxType::Contract)
+    {
+        ContractTxStatusInterpreter interpreter(m_tx);
+        return interpreter.getStatus().c_str();
+    }
     else
     {
         BOOST_ASSERT_MSG(false, kErrorUnknownTxType);

@@ -193,6 +193,8 @@ set(UI_SRC
     viewmodel/applications/apps_api.h
     viewmodel/applications/apps_api_client.cpp
     viewmodel/applications/apps_api_client.h
+    viewmodel/applications/shaders_manager.cpp
+    viewmodel/applications/shaders_manager.h
 
     model/wallet_model.h
     model/wallet_model.cpp

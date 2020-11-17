@@ -100,11 +100,11 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
             case TxType::UnlinkFunds:
             case TxType::VoucherRequest:
             case TxType::VoucherResponse:
-            case TxType::Contract:
                 continue;
             case TxType::ALL:
                 assert(!"This should not happen");
                 continue;
+            case TxType::Contract:
             case TxType::PushTransaction:
             case TxType::Simple:
                 break;

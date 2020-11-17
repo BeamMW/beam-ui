@@ -15,8 +15,9 @@
 #include "utility/logger.h"
 #include "model/app_model.h"
 
-AppsApiClient::AppsApiClient()
+AppsApiClient::AppsApiClient(IHandler& handler)
     : AppsApi(static_cast<WalletApiHandler::IWalletData&>(*this))
+    , _handler(handler)
 {
 }
 
@@ -27,12 +28,8 @@ AppsApiClient::~AppsApiClient()
 std::string AppsApiClient::pluginApiRequest(const std::string& data)
 {
     AppsApi::parse(data.c_str(), data.size());
-
-    assert(!_lastResult.empty());
-
+   // assert(!_lastResult.empty());
     auto result = std::move(_lastResult);
-    assert(_lastResult.empty());
-
     return result;
 }
 

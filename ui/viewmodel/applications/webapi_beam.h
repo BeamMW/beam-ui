@@ -15,41 +15,42 @@
 
 #include "model/app_model.h"
 #include "apps_api_client.h"
+#include "shaders_manager.h"
 
 namespace beamui::applications {
-    class WebAPI_Beam : public QObject
+    class WebAPI_Beam
+            : public QObject
+            , public AppsApiClient::IHandler
     {
     Q_OBJECT
     public:
         explicit WebAPI_Beam(QObject *parent = nullptr);
 
-    private slots:
-        // TODO: check that this is not exposed to JS
-        void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
-        void onAddresses(bool own, const std::vector<beam::wallet::WalletAddress>&);
-
     //
-    // Slots below are called by web
+    // Slots below are called by web in context of the UI thread
     //
     public slots:
        int test();
-       void generatePermanentAddress(const QString& comment);
-
-       QString sendBEAM(QString appTitle, QString address, double amount, double fee);
        void callWalletApi(const QString& request);
 
     //
-    // Signals are received by web
+    // Signals are received by web, should be fired in context of the UI thread
     //
     signals:
-        void permanentAddressGenerated(const QString& address);
         void callWalletApiResult(const QString& result);
 
     private:
-        std::string  _addressLabel;
+        //
+        // AppsApiClient::IHandler
+        // This callback would be called in context of reactor thread
+        //
+        void onInvokeContract(const beam::wallet::JsonRpcId& id, const InvokeContract& data) override;
 
+        //
+        // ApiClient should be called only in context of reactor thread
+        //
         typedef std::shared_ptr<AppsApiClient> ApiClientPtr;
         typedef std::weak_ptr<AppsApiClient> WeakApiClientPtr;
-        ApiClientPtr _apiClient;
+        ApiClientPtr   _apiClient;
     };
 }
