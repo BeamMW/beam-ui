@@ -31,6 +31,7 @@ class ReceiveSwapViewModel: public QObject
     Q_PROPERTY(QString       transactionToken         READ getTransactionToken   WRITE  setTransactionToken  NOTIFY  transactionTokenChanged)
     Q_PROPERTY(bool          commentValid             READ getCommentValid                                   NOTIFY  commentValidChanged)
     Q_PROPERTY(bool          isEnough                 READ isEnough                                          NOTIFY  enoughChanged)
+    Q_PROPERTY(bool          isEnoughToReceive        READ isEnoughToReceive                                 NOTIFY  enoughToReceiveChanged)
     Q_PROPERTY(bool          isSendFeeOK              READ isSendFeeOK                                       NOTIFY  isSendFeeOKChanged)
     Q_PROPERTY(bool          isReceiveFeeOK           READ isReceiveFeeOK                                    NOTIFY  isReceiveFeeOKChanged)
     Q_PROPERTY(bool          isSendBeam               READ isSendBeam                                        NOTIFY  transactionTokenChanged)
@@ -60,6 +61,7 @@ signals:
     void newAddressFailed();
     void commentValidChanged();
     void enoughChanged();
+    void enoughToReceiveChanged();
     void isSendFeeOKChanged();
     void isReceiveFeeOKChanged();
     void rateChanged();
@@ -105,6 +107,7 @@ private:
 
     bool getCommentValid() const;
     bool isEnough() const;
+    bool isEnoughToReceive() const;
     bool isSendFeeOK() const;
     bool isReceiveFeeOK() const;
 

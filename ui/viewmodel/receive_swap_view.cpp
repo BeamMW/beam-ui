@@ -315,6 +315,7 @@ void ReceiveSwapViewModel::setReceiveFee(unsigned int value)
     {
         _receiveFeeGrothes = value;
         emit receiveFeeChanged();
+        emit enoughToReceiveChanged();
         updateTransactionToken();
         emit secondCurrencyRateChanged();
         storeSwapParams();
@@ -406,6 +407,16 @@ bool ReceiveSwapViewModel::isEnough() const
 
     // TODO sentFee is fee rate. should be corrected
     return AppModel::getInstance().getSwapCoinClient(swapCoin)->getAvailable() > total;
+}
+
+bool ReceiveSwapViewModel::isEnoughToReceive() const
+{
+    // TODO roman.strilets need check
+    if (QMLGlobals::isEthereumBased(_receiveCurrency))
+    {
+        return AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) > _receiveFeeGrothes;
+    }
+    return true;
 }
 
 bool ReceiveSwapViewModel::isSendFeeOK() const

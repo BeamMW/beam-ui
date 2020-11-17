@@ -321,6 +321,10 @@ please review your settings and try again"
                                     //% "The swap amount must be greater than the transaction fee"
                                     return qsTrId("send-less-than-fee")
                                 }
+                                if(!viewModel.isEnoughToReceive) {
+                                    //% "There is not enough funds to complete the transaction"
+                                    return qsTrId("send-not-enough")
+                                }
                                 return ""
                             }
                         }
