@@ -291,21 +291,6 @@ ColumnLayout {
                                                             :""
                                 visible:            viewModel.isShieldedTx && viewModel.isToken// && !viewModel.isOwnAddress
                             }
-
-                            SFText {
-                                height: 16
-                                Layout.alignment:   Qt.AlignTop
-                                Layout.topMargin:   10
-                                Layout.fillWidth:   true
-                                id:                 needExtractShieldedNote
-                                color:              Style.content_secondary
-                                font.italic:        true
-                                font.pixelSize:     14
-                                wrapMode:           Text.Wrap
-                                //% "Transaction is slower, fees are higher."
-                                text:               qsTrId("wallet-send-need-extract-shielded-note")
-                                visible:            viewModel.isNeedExtractShieldedCoins && !viewModel.isShieldedTx
-                            }
                         }
                     }
 
@@ -611,7 +596,7 @@ ColumnLayout {
                 palette.buttonText:  Style.content_opposite
                 palette.button:      Style.accent_outgoing
                 icon.source:         "qrc:/assets/icon-send-blue.svg"
-                enabled:             viewModel.canSend
+                enabled:             viewModel.canSend && viewModel.canSendByOneTransaction
                 onClicked: {                
                     const dialog = Qt.createComponent("send_confirm.qml")
                     const instance = dialog.createObject(control,

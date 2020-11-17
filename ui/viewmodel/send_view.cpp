@@ -419,13 +419,17 @@ void SendViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::Shiel
     {
         _maxWhatCanSelect = selectionRes.selectedSumBeam - selectionRes.selectedFee;
         emit sendAmountChanged();
+    } else if (_maxWhatCanSelect)
+    {
+        _maxWhatCanSelect = 0;
+        emit sendAmountChanged();
     }
 
     _shieldedFee = selectionRes.shieldedInputsFee;
 
     if (selectionRes.assetID == beam::Asset::s_BeamID)
     {
-        if (selectionRes.selectedSumBeam < selectionRes.requestedSum + selectionRes.requestedFee && _maxAvailable)
+        if (!selectionRes.isEnought && _maxAvailable)
         {
             // TODO: ???
             _sendAmount = selectionRes.selectedSumBeam - selectionRes.selectedFee;
@@ -491,6 +495,7 @@ bool SendViewModel::canSend() const
     return !QMLGlobals::isSwapToken(_receiverTA) && getRreceiverTAValid()
            && _sendAmount > 0 && isEnough()
            && isFeeOK(_fee, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins)
+           && _fee >= _minFee
            && (!isShieldedTx() || !isOffline() || getOfflinePayments() > 0);
 }
 
@@ -535,7 +540,7 @@ void SendViewModel::sendMoney()
 
         params.SetParameter(TxParameterID::Amount, _sendAmount)
               // fee for shielded inputs would be included automatically
-              .SetParameter(TxParameterID::Fee, _shieldedFee != 0 ? _fee - _shieldedFee : _fee)
+              .SetParameter(TxParameterID::Fee, _fee - _shieldedFee)
               .SetParameter(TxParameterID::AssetID, _selectedAssetId)
               .SetParameter(TxParameterID::Message, beam::ByteBuffer(messageString.begin(), messageString.end()));
 
@@ -735,12 +740,12 @@ void SendViewModel::setWalletAddress(const boost::optional<beam::wallet::WalletA
     }
 }
 
-bool SendViewModel::canSendByOneTransaction()
+bool SendViewModel::canSendByOneTransaction() const
 {
     return !_maxWhatCanSelect || _maxWhatCanSelect >= _sendAmount;
 }
 
-QString SendViewModel::getMaxSendAmount()
+QString SendViewModel::getMaxSendAmount() const
 {
     return beamui::AmountToUIString(_maxWhatCanSelect);
 }

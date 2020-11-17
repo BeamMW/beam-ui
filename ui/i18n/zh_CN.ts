@@ -2522,10 +2522,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Max privacy address</source>
         <translation>最大隐私地址</translation>
     </message>
-    <message id="wallet-send-need-extract-shielded-note">
-        <source>Transaction is slower, fees are higher.</source>
-        <translation>交易速度较慢，费用较高。</translation>
-    </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
         <translation>资金不足：您需要%1来完成交易</translation>
@@ -2759,7 +2755,7 @@ public offline</source>
     </message>
     <message id="send-founds-fail-by-one-tx">
         <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Max privacy coins are selected therefore the maximum amount is %1.</translation>
     </message>
     <message id="apps-title">
         <source>DAPP Store</source>
@@ -2841,25 +2837,25 @@ public offline</source>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
 max privacy</source>
-        <translation type="unfinished">取消
+        <translation>取消
 最大隐私</translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
         <source>canceled
 offline</source>
-        <translation type="unfinished">取消
+        <translation>取消
 离线</translation>
     </message>
     <message id="wallet-txs-status-failed-max">
         <source>failed
 max privacy</source>
-        <translation type="unfinished">失败
+        <translation>失败
 最大隐私</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
         <source>failed
 offline</source>
-        <translation type="unfinished">离线失败</translation>
+        <translation>离线失败</translation>
     </message>
 </context>
 </TS>

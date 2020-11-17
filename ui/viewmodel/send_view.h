@@ -126,8 +126,8 @@ public:
     bool hasAddress() const;
     void setWalletAddress(const boost::optional<beam::wallet::WalletAddress>& value);
 
-    bool canSendByOneTransaction();
-    QString getMaxSendAmount();
+    bool canSendByOneTransaction() const;
+    QString getMaxSendAmount() const;
 
 public:
     Q_INVOKABLE void setMaxAvailableAmount();

@@ -2512,10 +2512,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Max privacy address</source>
         <translation>Макс. приватный адрес</translation>
     </message>
-    <message id="wallet-send-need-extract-shielded-note">
-        <source>Transaction is slower, fees are higher.</source>
-        <translation>Транзакция медленнее, комиссия выше.</translation>
-    </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
         <translation>Недостаточно средств: необходимо %1 для завершения транзакции</translation>
@@ -2749,7 +2745,7 @@ public offline</source>
     </message>
     <message id="send-founds-fail-by-one-tx">
         <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Были выбрны монеты из защищенного пула, поэтому максимально возможная сумма — %1.</translation>
     </message>
     <message id="apps-title">
         <source>DAPP Store</source>
@@ -2831,26 +2827,26 @@ public offline</source>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
 max privacy</source>
-        <translation type="unfinished">отменено
+        <translation>отменено
 макс. конфиденциальность
 </translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
         <source>canceled
 offline</source>
-        <translation type="unfinished">отменено
+        <translation>отменено
 оффлайн</translation>
     </message>
     <message id="wallet-txs-status-failed-max">
         <source>failed
 max privacy</source>
-        <translation type="unfinished">не удалось
+        <translation>не удалось
 макс. приватность</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
         <source>failed
 offline</source>
-        <translation type="unfinished">ошибка
+        <translation>ошибка
 оффлайн</translation>
     </message>
 </context>

@@ -32,7 +32,9 @@
 #include "wallet/transactions/swaps/bridges/litecoin/litecoin.h"
 #include "wallet/transactions/swaps/bridges/qtum/qtum.h"
 #include "wallet/transactions/swaps/bridges/dogecoin/dogecoin.h"
+#if defined(BITCOIN_CASH_SUPPORT)
 #include "wallet/transactions/swaps/bridges/bitcoin_cash/bitcoin_cash.h"
+#endif // BITCOIN_CASH_SUPPORT
 #include "wallet/transactions/swaps/bridges/dash/dash.h"
 
 #include "keykeeper/local_private_key_keeper.h"
@@ -335,7 +337,9 @@ void AppModel::startWallet()
     registerSwapFactory<BitcoinSide, bitcoin::Electrum, bitcoin::ISettingsProvider>(AtomicSwapCoin::Bitcoin, *swapTransactionCreator);
     registerSwapFactory<LitecoinSide, litecoin::Electrum, litecoin::ISettingsProvider>(AtomicSwapCoin::Litecoin, *swapTransactionCreator);
     registerSwapFactory<QtumSide, qtum::Electrum, qtum::ISettingsProvider>(AtomicSwapCoin::Qtum, *swapTransactionCreator);
+#if defined(BITCOIN_CASH_SUPPORT)
     registerSwapFactory<BitcoinCashSide, bitcoin_cash::Electrum, bitcoin_cash::ISettingsProvider>(AtomicSwapCoin::Bitcoin_Cash, *swapTransactionCreator);
+#endif // BITCOIN_CASH_SUPPORT
     registerSwapFactory<DogecoinSide, dogecoin::Electrum, dogecoin::ISettingsProvider>(AtomicSwapCoin::Dogecoin, *swapTransactionCreator);
     registerSwapFactory<DashSide, dash::Electrum, dash::ISettingsProvider>(AtomicSwapCoin::Dash, *swapTransactionCreator);
 
@@ -530,7 +534,9 @@ void AppModel::initSwapClients()
     initSwapClient<litecoin::LitecoinCore017, litecoin::Electrum, litecoin::SettingsProvider>(AtomicSwapCoin::Litecoin);
     initSwapClient<qtum::QtumCore017, qtum::Electrum, qtum::SettingsProvider>(AtomicSwapCoin::Qtum);
     initSwapClient<dash::DashCore014, dash::Electrum, dash::SettingsProvider>(AtomicSwapCoin::Dash);
+#if defined(BITCOIN_CASH_SUPPORT)
     initSwapClient<bitcoin_cash::BitcoinCashCore, bitcoin_cash::Electrum, bitcoin_cash::SettingsProvider>(AtomicSwapCoin::Bitcoin_Cash);
+#endif // BITCOIN_CASH_SUPPORT
     initSwapClient<dogecoin::DogecoinCore014, dogecoin::Electrum, dogecoin::SettingsProvider>(AtomicSwapCoin::Dogecoin);
 }
 

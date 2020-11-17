@@ -2512,10 +2512,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Max privacy address</source>
         <translation type="unfinished">Max privacy address</translation>
     </message>
-    <message id="wallet-send-need-extract-shielded-note">
-        <source>Transaction is slower, fees are higher.</source>
-        <translation type="unfinished">Transaction is slower, fees are higher.</translation>
-    </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
         <translation>จำนวนเงินไม่พอ: คุณจะต้องมีอีกเพิ่มอีก %1 เพื่อดำเนินการธุรกรรม</translation>
@@ -2749,7 +2745,7 @@ public offline</translation>
     </message>
     <message id="send-founds-fail-by-one-tx">
         <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Max privacy coins are selected therefore the maximum amount is %1.</translation>
     </message>
     <message id="apps-title">
         <source>DAPP Store</source>

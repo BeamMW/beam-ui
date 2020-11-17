@@ -252,8 +252,9 @@ Item {
                             return "qrc:/assets/icon-ltc.svg";
                         case Currency.CurrQtum:
                             return "qrc:/assets/icon-qtum.svg";
-                        case Currency.CurrBitcoinCash:
-                            return "qrc:/assets/icon-bch.svg";
+                        // TODO disabled BCH
+                        /*case Currency.CurrBitcoinCash:
+                            return "qrc:/assets/icon-bch.svg";*/
                         case Currency.CurrDash:
                             return "qrc:/assets/icon-dash.svg";
                         case Currency.CurrDogecoin:
@@ -270,8 +271,9 @@ Item {
                             return Style.currencyPaneLeftLTC;
                         case Currency.CurrQtum:
                             return Style.currencyPaneLeftQTUM;
-                        case Currency.CurrBitcoinCash:
-                            return Style.currencyPaneLeftBCH;
+                        // TODO disable BCH
+                        /*case Currency.CurrBitcoinCash:
+                            return Style.currencyPaneLeftBCH;*/
                         case Currency.CurrDash:
                             return Style.currencyPaneLeftDASH;
                         case Currency.CurrDogecoin:
