@@ -103,10 +103,10 @@ namespace
 
             case Currency::CurrQtum:
                 return beamui::Currencies::Qtum;
-
+#if defined(BITCOIN_CASH_SUPPORT)
             case Currency::CurrBitcoinCash:
                 return beamui::Currencies::BitcoinCash;
-
+#endif // BITCOIN_CASH_SUPPORT
             case Currency::CurrDash:
                 return beamui::Currencies::Dash;
 
@@ -236,8 +236,10 @@ QString QMLGlobals::roundUp(const QString& amount)
 bool QMLGlobals::canSwap()
 {
     return haveSwapClient(Currency::CurrBitcoin) || haveSwapClient(Currency::CurrLitecoin) || haveSwapClient(Currency::CurrQtum)
-        || haveSwapClient(Currency::CurrBitcoinCash) || haveSwapClient(Currency::CurrDash)
-        || haveSwapClient(Currency::CurrDogecoin);
+#if defined(BITCOIN_CASH_SUPPORT)
+        || haveSwapClient(Currency::CurrBitcoinCash) 
+#endif // BITCOIN_CASH_SUPPORT
+        || haveSwapClient(Currency::CurrDash) || haveSwapClient(Currency::CurrDogecoin);
 }
 
 bool QMLGlobals::haveSwapClient(Currency currency)
@@ -313,11 +315,13 @@ QString QMLGlobals::getCurrencyName(Currency currency)
         //% "Dogecoin"
         return qtTrId("general-dogecoin");
     }
+#if defined(BITCOIN_CASH_SUPPORT)
     case Currency::CurrBitcoinCash:
     {
         //% "Bitcoin Cash"
         return qtTrId("general-bitcoin-cash");
     }
+#endif // BITCOIN_CASH_SUPPORT
     case Currency::CurrDash:
     {
         //% "DASH"

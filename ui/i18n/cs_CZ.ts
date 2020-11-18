@@ -2511,10 +2511,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>Max privacy address</source>
         <translation>Adresa max soukromí</translation>
     </message>
-    <message id="wallet-send-need-extract-shielded-note">
-        <source>Transaction is slower, fees are higher.</source>
-        <translation>Transakce je pomalejší, poplatky jsou vyšší.</translation>
-    </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
         <translation>Nedostatek prostředků: k dokončení transakce potřebujete %1 </translation>
@@ -2748,7 +2744,7 @@ veřejně offline</translation>
     </message>
     <message id="send-founds-fail-by-one-tx">
         <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jsou vybrány mince max soukromí, proto je maximální počet mincí %1.</translation>
     </message>
     <message id="apps-title">
         <source>DAPP Store</source>
@@ -2830,25 +2826,25 @@ veřejně offline</translation>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
 max privacy</source>
-        <translation type="unfinished">zrušeno
+        <translation>zrušeno
 maximální soukromí</translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
         <source>canceled
 offline</source>
-        <translation type="unfinished">zrušeno
+        <translation>zrušeno
 offline</translation>
     </message>
     <message id="wallet-txs-status-failed-max">
         <source>failed
 max privacy</source>
-        <translation type="unfinished">selhalo
+        <translation>selhalo
 maximální soukromí</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
         <source>failed
 offline</source>
-        <translation type="unfinished">selhalo
+        <translation>selhalo
 offline</translation>
     </message>
 </context>

@@ -18,7 +18,9 @@
 #include "wallet/transactions/swaps/bridges/bitcoin/bitcoin_side.h"
 #include "wallet/transactions/swaps/bridges/litecoin/litecoin_side.h"
 #include "wallet/transactions/swaps/bridges/qtum/qtum_side.h"
+#if defined(BITCOIN_CASH_SUPPORT)
 #include "wallet/transactions/swaps/bridges/bitcoin_cash/bitcoin_cash_side.h"
+#endif // BITCOIN_CASH_SUPPORT
 #include "wallet/transactions/swaps/bridges/dash/dash_side.h"
 #include "wallet/transactions/swaps/bridges/dogecoin/dogecoin_side.h"
 #include "wallet/transactions/swaps/utils.h"
@@ -36,7 +38,9 @@ bool isFeeOK(beam::Amount fee, Currency currency, bool isShielded)
     case Currency::CurrBitcoin:  return true;
     case Currency::CurrLitecoin:  return true;
     case Currency::CurrQtum: return true;
+#if defined(BITCOIN_CASH_SUPPORT)
     case Currency::CurrBitcoinCash: return true;
+#endif // BITCOIN_CASH_SUPPORT
     case Currency::CurrDash: return true;
     case Currency::CurrDogecoin: return true;
     default:
@@ -84,10 +88,12 @@ QString calcTotalFee(Currency currency, beam::Amount feeRate)
         auto total = beam::wallet::QtumSide::CalcTotalFee(feeRate);
         return QString::fromStdString(std::to_string(total)) + " qsat";
     }
+#if defined(BITCOIN_CASH_SUPPORT)
     case Currency::CurrBitcoinCash: {
         auto total = beam::wallet::BitcoinCashSide::CalcTotalFee(feeRate);
         return QString::fromStdString(std::to_string(total)) + " sat";
     }
+#endif // BITCOIN_CASH_SUPPORT
     case Currency::CurrDash: {
         auto total = beam::wallet::DashSide::CalcTotalFee(feeRate);
         return QString::fromStdString(std::to_string(total)) + " duff";
