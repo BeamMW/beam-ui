@@ -247,6 +247,8 @@ if(BEAM_TESTNET)
     set(BEAM_ICON_SUFFIX "testnet")
 elseif(BEAM_MAINNET)
     set(BEAM_ICON_SUFFIX "mainnet")
+elseif(BEAM_BEAMX)
+    set(BEAM_ICON_SUFFIX "beamx")
 endif()
 
 add_definitions(-DAPP_NAME=\"${APP_NAME}\")
