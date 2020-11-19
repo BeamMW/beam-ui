@@ -30,8 +30,10 @@ public:
         std::unique_ptr<beam::ethereum::SettingsProvider> settingsProvider,
         beam::io::Reactor& reactor);
 
-    beam::Amount getAvailable(beam::wallet::AtomicSwapCoin swapCoin);
-    beam::Amount getGasPrice();
+    beam::Amount getAvailable(beam::wallet::AtomicSwapCoin swapCoin) const;
+    // TODO roman.strilets need to check this function
+    bool isInitialized(beam::wallet::AtomicSwapCoin swapCoin) const;
+    beam::Amount getGasPrice() const;
     beam::ethereum::Client::Status getStatus() const;
     bool canModifySettings() const;
     beam::ethereum::IBridge::ErrorType getConnectionError() const;

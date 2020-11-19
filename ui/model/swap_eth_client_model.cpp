@@ -59,7 +59,7 @@ SwapEthClientModel::SwapEthClientModel(beam::ethereum::IBridgeHolder::Ptr bridge
     GetAsync()->GetStatus();
 }
 
-beam::Amount SwapEthClientModel::getAvailable(beam::wallet::AtomicSwapCoin swapCoin)
+beam::Amount SwapEthClientModel::getAvailable(beam::wallet::AtomicSwapCoin swapCoin) const
 {
     auto iter = m_balances.find(swapCoin);
     if (iter != m_balances.end())
@@ -69,7 +69,24 @@ beam::Amount SwapEthClientModel::getAvailable(beam::wallet::AtomicSwapCoin swapC
     return 0;
 }
 
-beam::Amount SwapEthClientModel::getGasPrice()
+bool SwapEthClientModel::isInitialized(beam::wallet::AtomicSwapCoin swapCoin) const
+{
+    switch (swapCoin)
+    {
+    case wallet::AtomicSwapCoin::Ethereum:
+        return GetSettings().IsInitialized();
+    case wallet::AtomicSwapCoin::Dai:
+        return GetSettings().IsDaiInitialized();
+    case wallet::AtomicSwapCoin::Tether:
+        return GetSettings().IsTetherInitialized();
+    case wallet::AtomicSwapCoin::WBTC:
+        return GetSettings().IsWBTCInitialized();
+    default:
+        return false;
+    }
+}
+
+beam::Amount SwapEthClientModel::getGasPrice() const
 {
     return m_gasPrice;
 }
