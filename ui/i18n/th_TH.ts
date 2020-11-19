@@ -2834,5 +2834,9 @@ Your version is: %2. Please, check for updates.</oldsource>
         <source>WBTC contract address</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settings-erc20-contract-address">
+        <source>ERC20 contract address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

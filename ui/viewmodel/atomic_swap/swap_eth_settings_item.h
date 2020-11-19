@@ -37,6 +37,7 @@ class SwapEthSettingsItem : public QObject
     Q_PROPERTY(QString         nodePort             READ getNodePort            WRITE setNodePort        NOTIFY nodePortChanged)
     Q_PROPERTY(unsigned int    accountIndex         READ getAccountIndex        WRITE setAccountIndex    NOTIFY accountIndexChanged)
     Q_PROPERTY(QString         contractAddress      READ getContractAddress     WRITE setContractAddress NOTIFY contractAddressChanged)
+    Q_PROPERTY(QString         erc20ContractAddress READ getERC20ContractAddress WRITE setERC20ContractAddress NOTIFY erc20ContractAddressChanged)
 
     Q_PROPERTY(QString         daiContractAddress   READ getDaiContractAddress  WRITE setDaiContractAddress    NOTIFY daiContractAddressChanged)
     Q_PROPERTY(QString         usdtContractAddress  READ getUsdtContractAddress WRITE setUsdtContractAddress   NOTIFY usdtContractAddressChanged)
@@ -83,10 +84,12 @@ private:
     unsigned int getAccountIndex() const;
     void setAccountIndex(unsigned int value);
     QString getContractAddress() const;
+    QString getERC20ContractAddress() const;
     QString getDaiContractAddress() const;
     QString getUsdtContractAddress() const;
     QString getWbtcContractAddress() const;
     void setContractAddress(const QString& value);
+    void setERC20ContractAddress(const QString& value);
     void setDaiContractAddress(const QString& value);
     void setUsdtContractAddress(const QString& value);
     void setWbtcContractAddress(const QString& value);
@@ -108,6 +111,7 @@ signals:
     void connectionChanged();
     void accountIndexChanged();
     void contractAddressChanged();
+    void erc20ContractAddressChanged();
     void daiContractAddressChanged();
     void usdtContractAddressChanged();
     void wbtcContractAddressChanged();
@@ -125,6 +129,7 @@ private:
     QString m_nodePort;
     unsigned int m_accountIndex;
     QString m_contractAddress;
+    QString m_erc20ContractAddress;
     QString m_daiContractAddress;
     QString m_usdtContractAddress;
     QString m_wbtcContractAddress;

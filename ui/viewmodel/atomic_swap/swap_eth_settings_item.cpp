@@ -58,6 +58,7 @@ void SwapEthSettingsItem::applySettings()
     m_settings->m_secretWords = GetSeedPhraseFromSeedItems();
     // TODO roman.strilets hash or aggregate
     m_settings->m_swapContractAddress = m_contractAddress.toStdString();
+    m_settings->m_erc20SwapContractAddress = m_erc20ContractAddress.toStdString();
 
     m_settings->m_daiContractAddress = m_daiContractAddress.toStdString();
     m_settings->m_usdtContractAddress = m_usdtContractAddress.toStdString();
@@ -188,6 +189,7 @@ void SwapEthSettingsItem::LoadSettings()
         setAccountIndex(m_settings->m_accountIndex);
         // TODO roman.strilets hash or aggregate
         setContractAddress(str2qstr(m_settings->m_swapContractAddress));
+        setERC20ContractAddress(str2qstr(m_settings->m_erc20SwapContractAddress));
         shouldConnect(m_settings->m_shouldConnect);
 
         setDaiContractAddress(str2qstr(m_settings->m_daiContractAddress));
@@ -242,6 +244,7 @@ void SwapEthSettingsItem::SetDefaultSettings(bool clearSeed)
     setNodePort("");
     setAccountIndex(0);
     setContractAddress("");
+    setERC20ContractAddress("");
 
     if (clearSeed)
     {
@@ -296,6 +299,11 @@ QString SwapEthSettingsItem::getContractAddress() const
     return m_contractAddress;
 }
 
+QString SwapEthSettingsItem::getERC20ContractAddress() const
+{
+    return m_erc20ContractAddress;
+}
+
 QString SwapEthSettingsItem::getDaiContractAddress() const
 {
     return m_daiContractAddress;
@@ -317,6 +325,15 @@ void SwapEthSettingsItem::setContractAddress(const QString& value)
     {
         m_contractAddress = value;
         emit contractAddressChanged();
+    }
+}
+
+void SwapEthSettingsItem::setERC20ContractAddress(const QString& value)
+{
+    if (value != m_erc20ContractAddress)
+    {
+        m_erc20ContractAddress = value;
+        emit erc20ContractAddressChanged();
     }
 }
 

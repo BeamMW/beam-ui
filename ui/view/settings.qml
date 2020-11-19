@@ -306,6 +306,7 @@ ColumnLayout {
                     port:                viewModel.ethSettings.nodePort
                     accountIndex:        viewModel.ethSettings.accountIndex
                     contractAddress:     viewModel.ethSettings.contractAddress
+                    erc20ContractAddress:     viewModel.ethSettings.erc20ContractAddress
                     daiContractAddress:  viewModel.ethSettings.daiContractAddress
                     usdtContractAddress: viewModel.ethSettings.usdtContractAddress
                     wbtcContractAddress: viewModel.ethSettings.wbtcContractAddress
@@ -329,6 +330,7 @@ ColumnLayout {
                         onNodePortChanged:    swapEthSettings.port     = viewModel.ethSettings.nodePort
                         onAccountIndexChanged: swapEthSettings.accountIndex = viewModel.ethSettings.accountIndex
                         onContractAddressChanged: swapEthSettings.contractAddress = viewModel.ethSettings.contractAddress
+                        onErc20ContractAddressChanged: swapEthSettings.erc20ContractAddress = viewModel.ethSettings.erc20ContractAddress
                         onDaiContractAddressChanged: swapEthSettings.daiContractAddress = viewModel.ethSettings.daiContractAddress
                         onUsdtContractAddressChanged: swapEthSettings.usdtContractAddress = viewModel.ethSettings.usdtContractAddress
                         onWbtcContractAddressChanged: swapEthSettings.wbtcContractAddress = viewModel.ethSettings.wbtcContractAddress
@@ -373,6 +375,12 @@ ColumnLayout {
                         target:   viewModel.ethSettings
                         property: "contractAddress"
                         value:    swapEthSettings.contractAddress
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "erc20ContractAddress"
+                        value:    swapEthSettings.erc20ContractAddress
                     }
 
                     Binding {

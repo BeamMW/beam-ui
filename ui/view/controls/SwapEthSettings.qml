@@ -25,6 +25,7 @@ SettingsFoldable {
     property alias  port:            portInput.text
     property alias  accountIndex:    accountIndexInput.text
     property alias  contractAddress:     contractAddressInput.text
+    property alias  erc20ContractAddress:     erc20ContractAddressInput.text
     property alias  daiContractAddress:  daiContractAddressInput.text
     property alias  usdtContractAddress: usdtContractAddressInput.text
     property alias  wbtcContractAddress: wbtcContractAddressInput.text
@@ -68,6 +69,7 @@ SettingsFoldable {
         property string initialPort
         property string initialSeed
         property string initialContractAddress
+        property string initialERC20ContractAddress
         property string initialDaiContractAddress
         property string initialUsdtContractAddress
         property string initialWbtcContractAddress
@@ -82,6 +84,7 @@ SettingsFoldable {
             control.restoreSeedPhrases()
 
             contractAddress = initialContractAddress
+            erc20ContractAddress = initialERC20ContractAddress
             daiContractAddress = initialDaiContractAddress
             usdtContractAddress = initialUsdtContractAddress
             wbtcContractAddress = initialWbtcContractAddress
@@ -93,6 +96,7 @@ SettingsFoldable {
             initialPort    = port
             isSeedChanged = false
             initialContractAddress = contractAddress
+            initialERC20ContractAddress = erc20ContractAddress
             initialDaiContractAddress = daiContractAddress
             initialUsdtContractAddress = usdtContractAddress
             initialWbtcContractAddress = wbtcContractAddress
@@ -102,7 +106,7 @@ SettingsFoldable {
         function isChanged() {
             return initialAddress !== address || initialPort !== port || isSeedChanged || contractAddress != initialContractAddress
             || daiContractAddress != initialDaiContractAddress || usdtContractAddress != initialUsdtContractAddress || wbtcContractAddress != initialWbtcContractAddress
-            || initialAccountIndex != accountIndex
+            || initialAccountIndex != accountIndex || erc20ContractAddress != initialERC20ContractAddress
         }
     }
 
@@ -255,6 +259,21 @@ SettingsFoldable {
                 color:              Style.content_main
                 //underlineVisible:   canEditNode
                 //readOnly:           !canEditNode
+            }
+
+            SFText {
+                font.pixelSize: 14
+                color:          control.color
+                //% "ERC20 contract address"
+                text:           qsTrId("settings-erc20-contract-address")
+            }
+
+            SFTextInput {
+                id:                 erc20ContractAddressInput
+                Layout.fillWidth:   true
+                font.pixelSize:     14
+                activeFocusOnTab:   true
+                color:              Style.content_main
             }
 
             SFText {
