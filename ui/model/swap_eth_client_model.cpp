@@ -126,9 +126,22 @@ void SwapEthClientModel::requestBalance()
     {
         // update balances
         GetAsync()->GetBalance(wallet::AtomicSwapCoin::Ethereum);
-        GetAsync()->GetBalance(wallet::AtomicSwapCoin::Dai);
-        GetAsync()->GetBalance(wallet::AtomicSwapCoin::Tether);
-        GetAsync()->GetBalance(wallet::AtomicSwapCoin::WBTC);
+
+        // TODO roman.strilets need to check this
+        if (GetSettings().IsDaiInitialized())
+        {
+            GetAsync()->GetBalance(beam::wallet::AtomicSwapCoin::Dai);
+        }
+
+        if (GetSettings().IsTetherInitialized())
+        {
+            GetAsync()->GetBalance(beam::wallet::AtomicSwapCoin::Tether);
+        }
+
+        if (GetSettings().IsWBTCInitialized())
+        {
+            GetAsync()->GetBalance(beam::wallet::AtomicSwapCoin::WBTC);
+        }
     }
 }
 
