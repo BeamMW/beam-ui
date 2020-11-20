@@ -57,6 +57,11 @@ QString UtxoItem::maturity() const
     return QString::number(_coin.m_maturity);
 }
 
+QString UtxoItem::maturityPercentage() const
+{
+    return QString{ "100" };
+}
+
 UtxoViewStatus::EnStatus UtxoItem::status() const
 {
     switch (_coin.m_status)
@@ -110,8 +115,9 @@ beam::Height UtxoItem::rawMaturity() const
 }
 
 // ShieldedCoinItem
-ShieldedCoinItem::ShieldedCoinItem(const beam::wallet::ShieldedCoin& coin)
-    : _coin{ coin }
+ShieldedCoinItem::ShieldedCoinItem(const beam::wallet::ShieldedCoin& coin, const TxoID& shieldedCount)
+    : _coin{ coin },
+      _shieldedCount(shieldedCount)
 {
 
 }
@@ -141,6 +147,12 @@ QString ShieldedCoinItem::getAmount() const
 QString ShieldedCoinItem::maturity() const
 {
     return QString::number(rawMaturity());
+}
+
+QString ShieldedCoinItem::maturityPercentage() const
+{
+    ShieldedCoin::UnlinkStatus us(_coin, _shieldedCount); 
+    return QString::number(us.m_Progress);
 }
 
 UtxoViewStatus::EnStatus ShieldedCoinItem::status() const

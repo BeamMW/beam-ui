@@ -2674,8 +2674,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Макс. приватность</translation>
     </message>
     <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy)</source>
-        <translation>Созревание%1(макс. приватность)</translation>
+        <source>Maturing%1(max privacy %2% unlinked)</source>
+        <oldsource>Maturing%1(max privacy)</oldsource>
+        <translation type="unfinished">Созревание%1(макс. приватность)</translation>
     </message>
     <message id="atomic-swap-more-currency">
         <source>Connect more currencies</source>

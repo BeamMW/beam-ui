@@ -32,7 +32,9 @@ public:
         Status,
         StatusSort,
         Type,
-        TypeSort
+        TypeSort,
+        MaturityPercentage,
+        MaturityPercentageSort,
     };
 
     UtxoItemList();

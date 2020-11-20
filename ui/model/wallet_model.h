@@ -53,6 +53,7 @@ public:
     beam::Height getCurrentHeight() const;
     beam::Timestamp getCurrentHeightTimestamp() const;
     beam::Block::SystemState::ID getCurrentStateID() const;
+    beam::TxoID getTotalShieldedCount() const;
     bool hasShielded() const;
 
 signals:
@@ -87,6 +88,7 @@ signals:
     void sendingChanged();
     void maturingChanged();
     void stateIDChanged();
+    void shieldedTotalCountChanged();
     void functionPosted(const std::function<void()>&);
 #if defined(BEAM_HW_WALLET)
     void showTrezorMessage();

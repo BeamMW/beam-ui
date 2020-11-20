@@ -29,7 +29,9 @@ QHash<int, QByteArray> UtxoItemList::roleNames() const
         { static_cast<int>(Roles::Status), "status" },
         { static_cast<int>(Roles::StatusSort), "statusSort" },
         { static_cast<int>(Roles::Type), "type" },
-        { static_cast<int>(Roles::TypeSort), "typeSort" }
+        { static_cast<int>(Roles::TypeSort), "typeSort" },
+        { static_cast<int>(Roles::MaturityPercentage), "maturityPercentage" },
+        { static_cast<int>(Roles::MaturityPercentageSort), "maturityPercentageSort" }
     };
     return roles;
 }
@@ -62,6 +64,9 @@ auto UtxoItemList::data(const QModelIndex &index, int role) const -> QVariant
         case Roles::Type:
         case Roles::TypeSort:
             return value->type();
+        case Roles::MaturityPercentage:
+        case Roles::MaturityPercentageSort:
+            return value->maturityPercentage();
 
         default:
             return QVariant();

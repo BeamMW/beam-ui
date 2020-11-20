@@ -2686,8 +2686,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>最大化隐私</translation>
     </message>
     <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy)</source>
-        <translation>正在匹配%1(最大隐私)</translation>
+        <source>Maturing%1(max privacy %2% unlinked)</source>
+        <oldsource>Maturing%1(max privacy)</oldsource>
+        <translation type="unfinished">正在匹配%1(最大隐私)</translation>
     </message>
     <message id="atomic-swap-more-currency">
         <source>Connect more currencies</source>

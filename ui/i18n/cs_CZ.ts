@@ -2673,8 +2673,9 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <translation>Max soukromí</translation>
     </message>
     <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy)</source>
-        <translation>Přibylo%1(maximální soukromí)</translation>
+        <source>Maturing%1(max privacy %2% unlinked)</source>
+        <oldsource>Maturing%1(max privacy)</oldsource>
+        <translation type="unfinished">Přibylo%1(maximální soukromí)</translation>
     </message>
     <message id="atomic-swap-more-currency">
         <source>Connect more currencies</source>

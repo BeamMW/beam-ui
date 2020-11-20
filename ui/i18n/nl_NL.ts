@@ -2672,8 +2672,9 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>Maximale privacy</translation>
     </message>
     <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy)</source>
-        <translation>Maturing%1(max privacy)</translation>
+        <source>Maturing%1(max privacy %2% unlinked)</source>
+        <oldsource>Maturing%1(max privacy)</oldsource>
+        <translation type="unfinished">Maturing%1(max privacy)</translation>
     </message>
     <message id="atomic-swap-more-currency">
         <source>Connect more currencies</source>

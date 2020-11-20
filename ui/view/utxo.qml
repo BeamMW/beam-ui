@@ -293,8 +293,8 @@ ColumnLayout {
                             //% "Spent"
                             return qsTrId("utxo-status-spent");
                         case UtxoStatus.MaturingMP:
-                            //% "Maturing%1(max privacy)"
-                            return qsTrId("utxo-status-maturing-mp").arg(lineSeparator);
+                            //% "Maturing%1(max privacy %2% unlinked)"
+                            return qsTrId("utxo-status-maturing-mp").arg(lineSeparator).arg(model ? model.maturityPercentage : "?");
                         default:
                             return "";
                     }

@@ -34,6 +34,7 @@ public:
 public slots:
     void onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
     void onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& items);
+    void onTotalShieldedCountChanged();
 signals:
     void allUtxoChanged();
     void shieldedCoinsChanged();
@@ -41,4 +42,5 @@ signals:
 private:
     UtxoItemList m_allUtxos;
     WalletModel& m_model;
+    beam::TxoID _totalShieldedCount = std::numeric_limits<beam::TxoID>::max();
 };

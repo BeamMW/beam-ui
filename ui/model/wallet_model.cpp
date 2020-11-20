@@ -382,6 +382,11 @@ beam::Block::SystemState::ID WalletModel::getCurrentStateID() const
     return m_status.stateID;
 }
 
+beam::TxoID WalletModel::getTotalShieldedCount() const
+{
+    return m_status.shieldedTotalCount;
+}
+
 bool WalletModel::hasShielded() const
 {
     return !!m_status.GetBeamStatus().shielded;
@@ -438,6 +443,12 @@ void WalletModel::setStatus(const beam::wallet::WalletStatus& status)
         m_status.stateID = status.stateID;
         m_status.update = status.update;
         emit stateIDChanged();
+    }
+
+    if (m_status.shieldedTotalCount != status.shieldedTotalCount)
+    {
+        m_status.shieldedTotalCount = status.shieldedTotalCount;
+        emit shieldedTotalCountChanged();
     }
 }
 

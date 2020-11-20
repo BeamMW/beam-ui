@@ -2671,8 +2671,9 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <translation>Max sekretess</translation>
     </message>
     <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy)</source>
-        <translation>Mognar%1(max sekretess)</translation>
+        <source>Maturing%1(max privacy %2% unlinked)</source>
+        <oldsource>Maturing%1(max privacy)</oldsource>
+        <translation type="unfinished">Mognar%1(max sekretess)</translation>
     </message>
     <message id="atomic-swap-more-currency">
         <source>Connect more currencies</source>
