@@ -35,22 +35,27 @@ void AssetsManager::collectAssetInfo(beam::Asset::ID assetId)
 {
     if (assetId < 1)
     {
+        LOG_INFO() << "amgr - req beam info";
         emit assetInfo(assetId);
     }
     else
     {
+        LOG_INFO() << "amgr - get async info";
         _wallet.getAsync()->getAssetInfo(assetId);
     }
 }
 
 void AssetsManager::onAssetInfo(beam::Asset::ID id, const beam::wallet::WalletAsset& info)
 {
+    LOG_INFO() << "amgr - onAssetInfo";
     emit assetInfo(id);
     _info[id] = info;
+    LOG_INFO() << "amgr - onAssetInfo OK";
 }
 
 AssetsManager::MetaPtr AssetsManager::getAsset(beam::Asset::ID id)
  {
+    LOG_INFO() << "amgr - getAsset";
     const auto it = _info.find(id);
     if (it != _info.end())
     {
@@ -59,13 +64,16 @@ AssetsManager::MetaPtr AssetsManager::getAsset(beam::Asset::ID id)
     }
 
     collectAssetInfo(id);
+    LOG_INFO() << "amgr - getAsset OK";
     return MetaPtr();
  }
 
 QString AssetsManager::getIcon(beam::Asset::ID id)
 {
+     LOG_INFO() << "amgr - getIcon";
      if (id < 1)
      {
+         LOG_INFO() << "amgr - getIcon ok 1";
          return "qrc:/assets/icon-beam.svg";
      }
 
@@ -73,16 +81,20 @@ QString AssetsManager::getIcon(beam::Asset::ID id)
      if (it != _info.end())
      {
          auto idx = static_cast<int>(id % _icons.size());
+         LOG_INFO() << "amgr - getIcon ok 2";
          return _icons[idx];
      }
 
+     LOG_INFO() << "amgr - getIcon ok 3";
      return "qrc:/assets/asset-err.svg";
 }
 
 QString AssetsManager::getUnitName(beam::Asset::ID id)
 {
+    LOG_INFO() << "amgr - getUnitName";
     if (id < 1)
     {
+        LOG_INFO() << "amgr - getUnitName ok 1";
         return "BEAM";
     }
 
@@ -99,13 +111,16 @@ QString AssetsManager::getUnitName(beam::Asset::ID id)
         unitName = ss.str().c_str();
     }
 
+    LOG_INFO() << "amgr - getUnitName ok 2";
     return unitName;
 }
 
 QString AssetsManager::getName(beam::Asset::ID id)
 {
+    LOG_INFO() << "amgr - getName";
     if (id < 1)
     {
+        LOG_INFO() << "amgr - getName ok 1";
         return "Beam";
     }
 
@@ -122,13 +137,16 @@ QString AssetsManager::getName(beam::Asset::ID id)
         name = QString(ss.str().c_str());
     }
 
+    LOG_INFO() << "amgr - getName ok 2";
     return name;
 }
 
 QColor AssetsManager::getColor(beam::Asset::ID id)
 {
+    LOG_INFO() << "amgr - getColor";
     if (id < 1)
     {
+        LOG_INFO() << "amgr - getColor ok 1";
         return QColor( 167, 129, 167, 252);
     }
 
@@ -136,9 +154,11 @@ QColor AssetsManager::getColor(beam::Asset::ID id)
     if (it != _info.end())
     {
         auto idx = static_cast<int>(id % _colors.size());
+        LOG_INFO() << "amgr - getColor ok 2";
         return _colors[idx];
     }
 
+    LOG_INFO() << "amgr - getColor ok 3";
     return QColor( 255, 116, 107, 252);
 }
 
