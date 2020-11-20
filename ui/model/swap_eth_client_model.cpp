@@ -75,14 +75,8 @@ bool SwapEthClientModel::isInitialized(beam::wallet::AtomicSwapCoin swapCoin) co
     {
     case wallet::AtomicSwapCoin::Ethereum:
         return GetSettings().IsInitialized();
-    case wallet::AtomicSwapCoin::Dai:
-        return GetSettings().IsDaiInitialized();
-    case wallet::AtomicSwapCoin::Tether:
-        return GetSettings().IsTetherInitialized();
-    case wallet::AtomicSwapCoin::WBTC:
-        return GetSettings().IsWBTCInitialized();
     default:
-        return false;
+        return GetSettings().IsTokenInitialized(swapCoin);;
     }
 }
 
@@ -145,19 +139,12 @@ void SwapEthClientModel::requestBalance()
         GetAsync()->GetBalance(wallet::AtomicSwapCoin::Ethereum);
 
         // TODO roman.strilets need to check this
-        if (GetSettings().IsDaiInitialized())
+        for (auto token : beam::wallet::kEthTokens)
         {
-            GetAsync()->GetBalance(beam::wallet::AtomicSwapCoin::Dai);
-        }
-
-        if (GetSettings().IsTetherInitialized())
-        {
-            GetAsync()->GetBalance(beam::wallet::AtomicSwapCoin::Tether);
-        }
-
-        if (GetSettings().IsWBTCInitialized())
-        {
-            GetAsync()->GetBalance(beam::wallet::AtomicSwapCoin::WBTC);
+            if (GetSettings().IsTokenInitialized(token))
+            {
+                GetAsync()->GetBalance(token);
+            }
         }
     }
 }
