@@ -2382,8 +2382,9 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>afgeschermd pool</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable sending max privacy transactions</source>
-        <translation>Verbind met geïntegreerde of eigen node om het verzenden van maximale privacy transacties in te schakelen</translation>
+        <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
+        <oldsource>Connect to integrated or own node to enable sending max privacy transactions</oldsource>
+        <translation type="unfinished">Verbind met geïntegreerde of eigen node om het verzenden van maximale privacy transacties in te schakelen</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>

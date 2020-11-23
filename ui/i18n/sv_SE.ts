@@ -2380,8 +2380,9 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <translation>skyddad pool</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable sending max privacy transactions</source>
-        <translation>Anslut till integrerad eller egen nod för att aktivera sändning av max sekretess-transaktioner</translation>
+        <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
+        <oldsource>Connect to integrated or own node to enable sending max privacy transactions</oldsource>
+        <translation type="unfinished">Anslut till integrerad eller egen nod för att aktivera sändning av max sekretess-transaktioner</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>

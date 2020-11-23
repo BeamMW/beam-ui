@@ -211,7 +211,7 @@ ColumnLayout {
                                 font.italic:        true
                                 font.pixelSize:     14
                                 wrapMode:           Text.WordWrap
-                                //% "Connect to integrated or own node to enable sending max privacy transactions"
+                                //% "Connect to integrated or own node to enable receiving max privacy and offline transactions"
                                 text:               qsTrId("wallet-receive-max-privacy-unsupported")
                             }
                             

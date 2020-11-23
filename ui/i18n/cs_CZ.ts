@@ -2383,8 +2383,9 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <translation>chráněný pool</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable sending max privacy transactions</source>
-        <translation>Připojte se k integrovanému nebo vlastnímu uzlu pro povolení odesílání transakcí s maximální ochranou soukromí</translation>
+        <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
+        <oldsource>Connect to integrated or own node to enable sending max privacy transactions</oldsource>
+        <translation type="unfinished">Připojte se k integrovanému nebo vlastnímu uzlu pro povolení odesílání transakcí s maximální ochranou soukromí</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>

@@ -2397,8 +2397,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>屏蔽池</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable sending max privacy transactions</source>
-        <translation>连接到集成或自己的节点以启用最大隐私交易</translation>
+        <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
+        <oldsource>Connect to integrated or own node to enable sending max privacy transactions</oldsource>
+        <translation type="unfinished">连接到集成或自己的节点以启用最大隐私交易</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>

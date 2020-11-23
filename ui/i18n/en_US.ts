@@ -2383,8 +2383,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>shielded pool</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable sending max privacy transactions</source>
-        <translation>Connect to integrated or own node to enable sending max privacy transactions</translation>
+        <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
+        <translation>Connect to integrated or own node to enable receiving max privacy and offline transactions</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>
