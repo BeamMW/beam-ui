@@ -516,13 +516,15 @@ Item {
                                     ListElement{text: "BEAM->BTC"; pair: "beambtc"}
                                     ListElement{text: "BEAM->LTC"; pair: "beamltc"}
                                     ListElement{text: "BEAM->QTUM"; pair: "beamqtum"}
-                                    ListElement{text: "BEAM->BCH"; pair: "beambch"}
+                                    // TODO disable BCH
+                                    //ListElement{text: "BEAM->BCH"; pair: "beambch"}
                                     ListElement{text: "BEAM->DASH"; pair: "beamdash"}
                                     ListElement{text: "BEAM->DOGE"; pair: "beamdoge"}
                                     ListElement{text: "BTC->BEAM"; pair: "btcbeam"}
                                     ListElement{text: "LTC->BEAM"; pair: "ltcbeam"}
                                     ListElement{text: "QTUM->BEAM"; pair: "qtumbeam"}
-                                    ListElement{text: "BCH->BEAM"; pair: "bchbeam"}
+                                    // TODO disable BCH
+                                    //ListElement{text: "BCH->BEAM"; pair: "bchbeam"}
                                     ListElement{text: "DASH->BEAM"; pair: "dashbeam"}
                                     ListElement{text: "DOGE->BEAM"; pair: "dogebeam"}
                                 }
