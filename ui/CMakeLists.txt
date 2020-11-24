@@ -486,6 +486,7 @@ elseif(APPLE)
                 --deep
                 --verify
                 --verbose
+                --display
                 -s "${BEAM_SIGN_IDENTITY2}"
                 -o runtime
                 --timestamp
@@ -498,6 +499,7 @@ elseif(APPLE)
                 --force
                 --verify
                 --verbose
+                --display
                 -s "${BEAM_SIGN_IDENTITY2}"
                 -o runtime
                 --timestamp
@@ -517,6 +519,10 @@ else()
                 COMMENT "Deploying Qt..."
             )
             install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/windeployqt/ DESTINATION .)
+            
+            set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE) # skip default behaviour
+            include(InstallRequiredSystemLibraries) #dymanic CRT
+            install(PROGRAMS ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} DESTINATION .)
         endif()
         install(FILES beam-wallet.cfg DESTINATION .)
         install(TARGETS ${TARGET_NAME} DESTINATION .)
