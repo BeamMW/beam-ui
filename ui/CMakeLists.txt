@@ -475,11 +475,24 @@ elseif(APPLE)
             "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app"
             -always-overwrite
             -qmldir=${CMAKE_CURRENT_SOURCE_DIR}
-            -sign-for-notarization="${BEAM_SIGN_IDENTITY2}"
+            #-sign-for-notarization="${BEAM_SIGN_IDENTITY2}"
             COMMENT "Deploying Qt..."
         )
 
         if(BEAM_SIGN_MACOS_BINARY)
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND codesign 
+                --force
+                --deep
+                --verify
+                --verbose
+                -s "${BEAM_SIGN_IDENTITY2}"
+                -o runtime
+                --timestamp
+                #--entitlements ${CMAKE_CURRENT_SOURCE_DIR}/QtWebEngineProcess.entitlements
+                "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app"
+                COMMENT "Signing Beam Wallet${BEAM_DISPLAY_SUFFIX}.app..."
+            )
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
                 COMMAND codesign 
                 --force
