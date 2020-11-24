@@ -310,6 +310,9 @@ ColumnLayout {
                     daiContractAddress:  viewModel.ethSettings.daiContractAddress
                     usdtContractAddress: viewModel.ethSettings.usdtContractAddress
                     wbtcContractAddress: viewModel.ethSettings.wbtcContractAddress
+                    activateDai:  viewModel.ethSettings.activateDai
+                    activateUsdt:  viewModel.ethSettings.activateUsdt
+                    activateWBTC:  viewModel.ethSettings.activateWBTC
 
                     Connections {
                         target: viewModel.ethSettings
@@ -336,6 +339,9 @@ ColumnLayout {
                         onWbtcContractAddressChanged: swapEthSettings.wbtcContractAddress = viewModel.ethSettings.wbtcContractAddress
                         onSeedPhrasesChanged: swapEthSettings.seedPhrases = viewModel.ethSettings.seedPhrases
                         onIsCurrentSeedValidChanged:  swapEthSettings.isCurrentSeedValid = viewModel.ethSettings.isCurrentSeedValid
+                        onActivateDaiChanged: swapEthSettings.activateDai = viewModel.ethSettings.activateDai
+                        onActivateUsdtChanged: swapEthSettings.activateUsdt = viewModel.ethSettings.activateUsdt
+                        onActivateWBTCChanged: swapEthSettings.activateWBTC = viewModel.ethSettings.activateWBTC
                     }
                     
                     onDisconnect: viewModel.ethSettings.disconnect()
@@ -399,6 +405,24 @@ ColumnLayout {
                         target:   viewModel.ethSettings
                         property: "wbtcContractAddress"
                         value:    swapEthSettings.wbtcContractAddress
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "activateDai"
+                        value:    swapEthSettings.activateDai
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "activateUsdt"
+                        value:    swapEthSettings.activateUsdt
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "activateWBTC"
+                        value:    swapEthSettings.activateWBTC
                     }
                 }
             }

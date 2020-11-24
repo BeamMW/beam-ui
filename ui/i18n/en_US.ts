@@ -2780,5 +2780,17 @@ Your version is: %2. Please, check for updates.</translation>
         <source>ERC20 contract address</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settings-activate-dai">
+        <source>Activate DAI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-activate-usdt">
+        <source>Activate USDT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-activate-wbtc">
+        <source>Activate WBTC</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

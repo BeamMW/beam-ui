@@ -42,6 +42,9 @@ class SwapEthSettingsItem : public QObject
     Q_PROPERTY(QString         daiContractAddress   READ getDaiContractAddress  WRITE setDaiContractAddress    NOTIFY daiContractAddressChanged)
     Q_PROPERTY(QString         usdtContractAddress  READ getUsdtContractAddress WRITE setUsdtContractAddress   NOTIFY usdtContractAddressChanged)
     Q_PROPERTY(QString         wbtcContractAddress  READ getWbtcContractAddress WRITE setWbtcContractAddress   NOTIFY wbtcContractAddressChanged)
+    Q_PROPERTY(bool            activateDai          READ activateDai            WRITE activateDai              NOTIFY activateDaiChanged)
+    Q_PROPERTY(bool            activateUsdt         READ activateUsdt           WRITE activateUsdt             NOTIFY activateUsdtChanged)
+    Q_PROPERTY(bool            activateWBTC         READ activateWBTC           WRITE activateWBTC             NOTIFY activateWBTCChanged)
 
     Q_PROPERTY(bool canEdit                 READ getCanEdit                 NOTIFY canEditChanged)
     Q_PROPERTY(bool isConnected             READ getIsConnected             NOTIFY connectionChanged)
@@ -93,6 +96,12 @@ private:
     void setDaiContractAddress(const QString& value);
     void setUsdtContractAddress(const QString& value);
     void setWbtcContractAddress(const QString& value);
+    bool activateDai() const;
+    void activateDai(bool value);
+    bool activateUsdt() const;
+    void activateUsdt(bool value);
+    bool activateWBTC() const;
+    void activateWBTC(bool value);
 
     bool getCanEdit() const;
     bool getIsConnected() const;
@@ -115,6 +124,9 @@ signals:
     void daiContractAddressChanged();
     void usdtContractAddressChanged();
     void wbtcContractAddressChanged();
+    void activateDaiChanged();
+    void activateUsdtChanged();
+    void activateWBTCChanged();
     void connectionStatusChanged();
     void connectionErrorMsgChanged();
     void foldedChanged();
@@ -133,5 +145,8 @@ private:
     QString m_daiContractAddress;
     QString m_usdtContractAddress;
     QString m_wbtcContractAddress;
+    bool m_activateDai;
+    bool m_activateUsdt;
+    bool m_activateWBTC;
     bool m_isFolded = true;
 };

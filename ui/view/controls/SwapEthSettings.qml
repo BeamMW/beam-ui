@@ -30,6 +30,10 @@ SettingsFoldable {
     property alias  usdtContractAddress: usdtContractAddressInput.text
     property alias  wbtcContractAddress: wbtcContractAddressInput.text
 
+    property alias activateDai: activateDaiSwitch.checked
+    property alias activateUsdt: activateUsdtSwitch.checked
+    property alias activateWBTC: activateWBTCSwitch.checked
+
     property alias seedPhrases:                 seedPhraseDialog.seedPhrasesElectrum
     property alias phrasesSeparator:            seedPhraseDialog.phrasesSeparatorElectrum
     property bool  isCurrentSeedValid:          false
@@ -74,6 +78,9 @@ SettingsFoldable {
         property string initialUsdtContractAddress
         property string initialWbtcContractAddress
         property string initialAccountIndex
+        property bool initialActivateDai
+        property bool initialActivateUsdt
+        property bool initialActivateWBTC
 
         property bool   isSeedChanged: false
 
@@ -89,6 +96,10 @@ SettingsFoldable {
             usdtContractAddress = initialUsdtContractAddress
             wbtcContractAddress = initialWbtcContractAddress
             accountIndex = initialAccountIndex
+
+            activateDai = initialActivateDai
+            activateUsdt = initialActivateUsdt
+            activateWBTC = initialActivateWBTC
         }
 
         function save() {
@@ -101,12 +112,16 @@ SettingsFoldable {
             initialUsdtContractAddress = usdtContractAddress
             initialWbtcContractAddress = wbtcContractAddress
             initialAccountIndex = accountIndex
+            initialActivateDai = activateDai
+            initialActivateUsdt = activateUsdt
+            initialActivateWBTC = activateWBTC
         }
 
         function isChanged() {
             return initialAddress !== address || initialPort !== port || isSeedChanged || contractAddress != initialContractAddress
             || daiContractAddress != initialDaiContractAddress || usdtContractAddress != initialUsdtContractAddress || wbtcContractAddress != initialWbtcContractAddress
             || initialAccountIndex != accountIndex || erc20ContractAddress != initialERC20ContractAddress
+            || initialActivateDai != activateDai || initialActivateUsdt != activateUsdt || initialActivateWBTC != activateWBTC
         }
     }
 
@@ -325,6 +340,45 @@ SettingsFoldable {
                 color:              Style.content_main
                 //underlineVisible:   canEditNode
                 //readOnly:           !canEditNode
+            }
+
+            SFText {
+                font.pixelSize: 14
+                color:          control.color
+                //% "Activate DAI"
+                text:           qsTrId("settings-activate-dai")
+            }
+
+            CustomSwitch {
+                id:          activateDaiSwitch
+                //alwaysGreen: true
+                spacing:     0
+            }
+
+            SFText {
+                font.pixelSize: 14
+                color:          control.color
+                //% "Activate USDT"
+                text:           qsTrId("settings-activate-usdt")
+            }
+
+            CustomSwitch {
+                id:          activateUsdtSwitch
+                //alwaysGreen: true
+                spacing:     0
+            }
+
+            SFText {
+                font.pixelSize: 14
+                color:          control.color
+                //% "Activate WBTC"
+                text:           qsTrId("settings-activate-wbtc")
+            }
+
+            CustomSwitch {
+                id:          activateWBTCSwitch
+                //alwaysGreen: true
+                spacing:     0
             }
         }
 

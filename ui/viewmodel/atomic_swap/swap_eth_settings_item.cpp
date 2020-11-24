@@ -64,6 +64,10 @@ void SwapEthSettingsItem::applySettings()
     m_settings->m_usdtContractAddress = m_usdtContractAddress.toStdString();
     m_settings->m_wbtcContractAddress = m_wbtcContractAddress.toStdString();
 
+    m_settings->m_shouldConnectToDai = m_activateDai;
+    m_settings->m_shouldConnectToUsdt = m_activateUsdt;
+    m_settings->m_shouldConnectToWBTC = m_activateWBTC;
+
     coinClient->SetSettings(*m_settings);
 }
 
@@ -195,6 +199,10 @@ void SwapEthSettingsItem::LoadSettings()
         setDaiContractAddress(str2qstr(m_settings->m_daiContractAddress));
         setUsdtContractAddress(str2qstr(m_settings->m_usdtContractAddress));
         setWbtcContractAddress(str2qstr(m_settings->m_wbtcContractAddress));
+
+        activateDai(m_settings->m_shouldConnectToDai);
+        activateUsdt(m_settings->m_shouldConnectToUsdt);
+        activateWBTC(m_settings->m_shouldConnectToWBTC);
     }
 }
 
@@ -245,6 +253,13 @@ void SwapEthSettingsItem::SetDefaultSettings(bool clearSeed)
     setAccountIndex(0);
     setContractAddress("");
     setERC20ContractAddress("");
+    setDaiContractAddress("");
+    setUsdtContractAddress("");
+    setWbtcContractAddress("");
+
+    activateDai(false);
+    activateUsdt(false);
+    activateWBTC(false);
 
     if (clearSeed)
     {
@@ -361,6 +376,48 @@ void SwapEthSettingsItem::setWbtcContractAddress(const QString& value)
     {
         m_wbtcContractAddress = value;
         emit wbtcContractAddressChanged();
+    }
+}
+
+bool SwapEthSettingsItem::activateDai() const
+{
+    return m_activateDai;
+}
+
+void SwapEthSettingsItem::activateDai(bool value)
+{
+    if (value != m_activateDai)
+    {
+        m_activateDai = value;
+        emit activateDaiChanged();
+    }
+}
+
+bool SwapEthSettingsItem::activateUsdt() const
+{
+    return m_activateUsdt;
+}
+
+void SwapEthSettingsItem::activateUsdt(bool value)
+{
+    if (value != m_activateUsdt)
+    {
+        m_activateUsdt = value;
+        emit activateUsdtChanged();
+    }
+}
+
+bool SwapEthSettingsItem::activateWBTC() const
+{
+    return m_activateWBTC;
+}
+
+void SwapEthSettingsItem::activateWBTC(bool value)
+{
+    if (value != m_activateWBTC)
+    {
+        m_activateWBTC = value;
+        emit activateWBTCChanged();
     }
 }
 
