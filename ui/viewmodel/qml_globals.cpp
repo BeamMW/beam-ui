@@ -221,7 +221,7 @@ QString QMLGlobals::roundUp(const QString& amount)
     if (point == -1) return amount;
 
     const auto targetDecimals = amount.length() - point - 2;
-    const auto scale = pow(cpp_dec_float_50(10), targetDecimals);
+    const cpp_dec_float_50 scale = pow(cpp_dec_float_50(10), targetDecimals);
 
     const cpp_dec_float_50 original(amount.toStdString().c_str());
     const cpp_dec_float_50 rounded = ceil(original * scale)/scale;
