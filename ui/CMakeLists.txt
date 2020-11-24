@@ -469,18 +469,6 @@ elseif(APPLE)
     set_target_properties(${TARGET_NAME} PROPERTIES 
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
 
-    #if(BEAM_SIGN_MACOS_BINARY)
-    #    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-    #        COMMAND codesign 
-    #        --force 
-    #        -s "${BEAM_SIGN_IDENTITY2}"
-    #        -o runtime
-    #        --timestamp 
-    #        "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/MacOS/Beam Wallet${BEAM_DISPLAY_SUFFIX}"
-    #        COMMENT "Signing executable..."
-    #    )
-    #endif()
-
     if (NOT BEAM_USE_STATIC_QT)
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
             COMMAND macdeployqt
@@ -490,6 +478,21 @@ elseif(APPLE)
             -sign-for-notarization="${BEAM_SIGN_IDENTITY2}"
             COMMENT "Deploying Qt..."
         )
+
+        if(BEAM_SIGN_MACOS_BINARY)
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND codesign 
+                --force
+                --verify
+                --verbose
+                -s "${BEAM_SIGN_IDENTITY2}"
+                -o runtime
+                --timestamp
+                --entitlements ${CMAKE_CURRENT_SOURCE_DIR}/QtWebEngineProcess.entitlements
+                "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/Frameworks/QtWebEngineCore.framework/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess"
+                COMMENT "Signing QtWebEngineProcess..."
+            )
+        endif()
     endif()
     install(TARGETS ${TARGET_NAME} DESTINATION .)
 else()
