@@ -2794,5 +2794,25 @@ max privacy</source>
 offline</source>
         <translation>离线失败</translation>
     </message>
+    <message id="available-panel-maturing-details">
+        <source>More details</source>
+        <translation type="unfinished">更多详细信息</translation>
+    </message>
+    <message id="max-privacy-dialog-header">
+        <source>Max privacy</source>
+        <translation type="unfinished">最大化隐私</translation>
+    </message>
+    <message id="max-privacy-dialog-locked">
+        <source>Locked</source>
+        <translation type="unfinished">锁定</translation>
+    </message>
+    <message id="max-privacy-dialog-amount">
+        <source>Amount</source>
+        <translation type="unfinished">数量</translation>
+    </message>
+    <message id="max-privacy-dialog-unlock-time">
+        <source>Latest unlocked time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

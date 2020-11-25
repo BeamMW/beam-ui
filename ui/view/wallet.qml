@@ -129,6 +129,13 @@ Item {
                 }
             }
 
+            MaxPrivacyCoinsDialog {
+                id: mpDialog
+                locked:                     viewModel.beamLockedMaturingMP
+                secondCurrencyLabel:        viewModel.secondCurrencyLabel
+                secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
+            }
+
             AvailablePanel {
                 Layout.topMargin:      29
                 Layout.maximumHeight:  80

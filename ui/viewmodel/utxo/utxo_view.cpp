@@ -50,6 +50,11 @@ QString UtxoViewModel::getCurrentStateHash() const
     return QString(beam::to_hex(m_model.getCurrentStateID().m_Hash.m_pData, 10).c_str());
 }
 
+QAbstractItemModel* UtxoViewModel::getMpMaturingUtxos()
+{
+    return & m_mpMaturingUtxos;
+}
+
 void UtxoViewModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
     vector<shared_ptr<BaseUtxoItem>> modifiedItems;
@@ -105,7 +110,7 @@ void UtxoViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, con
 
     for (const auto& t : items)
     {
-        if (t.IsAsset()) {
+        if (t.m_Status != beam::wallet::ShieldedCoin::Status::Maturing || t.IsAsset()) {
             continue;
         }
         modifiedItems.push_back(make_shared<ShieldedCoinItem>(t, _totalShieldedCount));
@@ -125,25 +130,30 @@ void UtxoViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, con
             }
         }
         m_allUtxos.remove(toRemove);
+        m_mpMaturingUtxos.remove(toRemove);
         m_allUtxos.insert(modifiedItems);
+        m_mpMaturingUtxos.insert(modifiedItems);
         break;
     }
 
     case ChangeAction::Removed:
     {
         m_allUtxos.remove(modifiedItems);
+        m_mpMaturingUtxos.remove(modifiedItems);
         break;
     }
 
     case ChangeAction::Added:
     {
         m_allUtxos.insert(modifiedItems);
+        m_mpMaturingUtxos.insert(modifiedItems);
         break;
     }
 
     case ChangeAction::Updated:
     {
         m_allUtxos.update(modifiedItems);
+        m_mpMaturingUtxos.insert(modifiedItems);
         break;
     }
 

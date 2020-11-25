@@ -49,6 +49,7 @@
         <file>controls/SecurityNote.qml</file>
         <file>controls/CustomProgressBar.qml</file>
         <file>controls/LogoComponent.qml</file>
+        <file>controls/MaxPrivacyCoinsDialog.qml</file>
         <file>controls/AddressTable.qml</file>
         <file>controls/StatusBar.qml</file>
         <file>controls/Title.qml</file>

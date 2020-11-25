@@ -2780,5 +2780,25 @@ offline</source>
         <translation type="unfinished">failed
 offline</translation>
     </message>
+    <message id="available-panel-maturing-details">
+        <source>More details</source>
+        <translation type="unfinished">More details</translation>
+    </message>
+    <message id="max-privacy-dialog-header">
+        <source>Max privacy</source>
+        <translation type="unfinished">Max privacy</translation>
+    </message>
+    <message id="max-privacy-dialog-locked">
+        <source>Locked</source>
+        <translation type="unfinished">Lukittu</translation>
+    </message>
+    <message id="max-privacy-dialog-amount">
+        <source>Amount</source>
+        <translation type="unfinished">Summa</translation>
+    </message>
+    <message id="max-privacy-dialog-unlock-time">
+        <source>Latest unlocked time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
