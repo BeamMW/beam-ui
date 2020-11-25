@@ -106,6 +106,65 @@ SettingsFoldable {
             }
         }
 
+        SFText {
+            //% "Anonymity set for Max privacy transactions"
+            text: qsTrId("settings-privacy-mp-anonymity-set")
+            wrapMode:   Text.WordWrap
+            color: Style.content_main
+            font.pixelSize: 14
+        }
+
+        SFText {
+            Layout.topMargin: -40
+            //% "Received coins can be spent immediately."
+            text: "(" + qsTrId("settings-privacy-mp-notice") + ")"
+            wrapMode:   Text.WordWrap
+            color: Style.content_secondary
+            font.pixelSize: 10
+        }
+
+        CustomComboBox {
+            id: mpAnonymitySet
+            fontPixelSize: 14
+            Layout.preferredWidth: 150
+            currentIndex: 0
+            model: [
+                "64k",
+                "48k",
+                "32k",
+                "16k",
+                "8k",
+                "2k",
+            ]
+        }
+
+        SFText {
+            //% "Max privacy lock time limit"
+            text: qsTrId("settings-privacy-mp-time-limit")
+            wrapMode:   Text.WordWrap
+            color: Style.content_main
+            font.pixelSize: 14
+        }
+
+        CustomComboBox {
+            id: mpLockTimeLimit
+            fontPixelSize: 14
+            Layout.preferredWidth: 150
+            currentIndex: 0
+            model: [
+                //% "72h"
+                qsTrId("settings-privacy-mp-time-limit-72"),
+                //% "60h"
+                qsTrId("settings-privacy-mp-time-limit-60"),
+                //% "48h"
+                qsTrId("settings-privacy-mp-time-limit-48"),
+                //% "36h"
+                qsTrId("settings-privacy-mp-time-limit-36"),
+                //% "24h"
+                qsTrId("settings-privacy-mp-time-limit-24"),
+            ]
+        }
+
         LinkButton {
             //: settings tab, general section, Show owner key button and dialog title
             //% "Show owner key"

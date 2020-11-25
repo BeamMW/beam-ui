@@ -2799,5 +2799,37 @@ offline</translation>
         <source>Latest unlocked time</source>
         <translation>Latest unlocked time</translation>
     </message>
+    <message id="settings-privacy-mp-anonymity-set">
+        <source>Anonymity set for Max privacy transactions</source>
+        <translation>Anonymity set for Max privacy transactions</translation>
+    </message>
+    <message id="settings-privacy-mp-notice">
+        <source>Received coins can be spent immediately.</source>
+        <translation>Received coins can be spent immediately.</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit">
+        <source>Max privacy lock time limit</source>
+        <translation>Max privacy lock time limit</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-72">
+        <source>72h</source>
+        <translation>72h</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-60">
+        <source>60h</source>
+        <translation>60h</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-48">
+        <source>48h</source>
+        <translation>48h</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-36">
+        <source>36h</source>
+        <translation>36h</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-24">
+        <source>24h</source>
+        <translation>24h</translation>
+    </message>
 </context>
 </TS>
