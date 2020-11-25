@@ -107,6 +107,7 @@ ColumnLayout {
                 }
 
                 SettingsTitle {
+                    topPadding: 30
                     //% "Troubleshooting"
                     text:  qsTrId("settings-troubleshooting-title")
                 }
