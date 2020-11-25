@@ -2384,8 +2384,7 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
         <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
-        <oldsource>Connect to integrated or own node to enable sending max privacy transactions</oldsource>
-        <translation type="unfinished">Подключитесь к интегрированному или собственному узлу, чтобы включить отправку транзакций с макс. конфиденциальностью</translation>
+        <translation>Подключитесь к интегрированному или собственному узлу, чтобы включить получение макс. приватных и оффлайн транзакций</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>
@@ -2676,8 +2675,7 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(max privacy %2% unlinked)</source>
-        <oldsource>Maturing%1(max privacy)</oldsource>
-        <translation type="unfinished">Созревание%1(макс. приватность)</translation>
+        <translation>Созревание %1(макс. приватность, готово на %2%)</translation>
     </message>
     <message id="atomic-swap-more-currency">
         <source>Connect more currencies</source>

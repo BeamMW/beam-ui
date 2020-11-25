@@ -2381,8 +2381,7 @@ Din version är: %2. Sök efter uppdateringar.</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
         <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
-        <oldsource>Connect to integrated or own node to enable sending max privacy transactions</oldsource>
-        <translation type="unfinished">Anslut till integrerad eller egen nod för att aktivera sändning av max sekretess-transaktioner</translation>
+        <translation type="unfinished">Connect to integrated or own node to enable receiving max privacy and offline transactions</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>
@@ -2673,8 +2672,7 @@ Din version är: %2. Sök efter uppdateringar.</translation>
     </message>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(max privacy %2% unlinked)</source>
-        <oldsource>Maturing%1(max privacy)</oldsource>
-        <translation type="unfinished">Mognar%1(max sekretess)</translation>
+        <translation type="unfinished">Maturing%1(max privacy %2% unlinked)</translation>
     </message>
     <message id="atomic-swap-more-currency">
         <source>Connect more currencies</source>

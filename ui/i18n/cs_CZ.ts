@@ -2384,8 +2384,7 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
         <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
-        <oldsource>Connect to integrated or own node to enable sending max privacy transactions</oldsource>
-        <translation type="unfinished">Připojte se k integrovanému nebo vlastnímu uzlu pro povolení odesílání transakcí s maximální ochranou soukromí</translation>
+        <translation>Připojte se k integrovanému nebo vlastnímu uzlu a povolte přijímání maximálně soukromých a offline transakcí</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>
@@ -2675,8 +2674,7 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
     </message>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(max privacy %2% unlinked)</source>
-        <oldsource>Maturing%1(max privacy)</oldsource>
-        <translation type="unfinished">Přibylo%1(maximální soukromí)</translation>
+        <translation>Dochází%1(maximální soukromí %2% odpojeno)</translation>
     </message>
     <message id="atomic-swap-more-currency">
         <source>Connect more currencies</source>

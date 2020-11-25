@@ -331,7 +331,7 @@
     </message>
     <message id="logo-description">
         <source>Confidential, fast, easy to use</source>
-        <translation type="unfinished">Confidential, fast, easy to use</translation>
+        <translation>Confidencial, rápido, fácil de usar</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>
@@ -2246,7 +2246,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-receive-copy-and-close">
         <source>Copy and close</source>
-        <translation type="unfinished">Copy and close</translation>
+        <translation>Copiar y cerrar</translation>
     </message>
     <message id="wallet-receive-address-for-exchange">
         <source>(for exchange or mining pool)</source>
@@ -2278,7 +2278,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="address-permanent">
         <source>Permanent</source>
-        <translation type="unfinished">Permanent</translation>
+        <translation>Permanente</translation>
     </message>
     <message id="tx-regular">
         <source>Regular</source>
@@ -2290,7 +2290,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="address-save">
         <source>save</source>
-        <translation type="unfinished">save</translation>
+        <translation>guardar</translation>
     </message>
     <message id="save-contact-title">
         <source>Do you want to name the contact?</source>
@@ -2302,7 +2302,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="receive-request-optional">
         <source>(optional)</source>
-        <translation type="unfinished">(optional)</translation>
+        <translation>(opcional)</translation>
     </message>
     <message id="save-address-no-name">
         <source>No name</source>
@@ -2323,7 +2323,7 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="address-table-cm-receive">
         <source>receive</source>
         <extracomment>Entry in address table context menu to get receive token</extracomment>
-        <translation type="unfinished">receive</translation>
+        <translation>recibir</translation>
     </message>
     <message id="format-small-amount">
         <source>&lt; 1 %1</source>
@@ -2361,7 +2361,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-swap-disconnect">
         <source>disconnect</source>
-        <translation type="unfinished">disconnect</translation>
+        <translation>desconectar</translation>
     </message>
     <message id="swap-expiration-time">
         <source>Expiration time</source>
@@ -2385,8 +2385,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
         <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
-        <oldsource>Connect to integrated or own node to enable sending max privacy transactions</oldsource>
-        <translation type="unfinished">Connect to integrated or own node to enable sending max privacy transactions</translation>
+        <translation>Conéctate a un nodo integrado o propio para permitir la máxima privacidad y transacciones fuera de línea</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>
@@ -2423,14 +2422,14 @@ offline</translation>
     <message id="wallet-txs-status-sent-max-offline">
         <source>sent
 offline</source>
-        <translation type="unfinished">sent
-offline</translation>
+        <translation>enviado
+fuera de línea</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
         <source>received
 offline</source>
-        <translation type="unfinished">received
-offline</translation>
+        <translation>recibido
+fuera de línea</translation>
     </message>
     <message id="general-shielded">
         <source>Shielded</source>
@@ -2509,7 +2508,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-send-permanent-note">
         <source>Permanent address</source>
-        <translation type="unfinished">Permanent address</translation>
+        <translation>Dirección permanente</translation>
     </message>
     <message id="wallet-send-one-time-note">
         <source>One-time use address (expire in 12 hours after succesfull transaction).</source>
@@ -2541,7 +2540,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-receive-swap-copy-token-and-close">
         <source>copy token and close</source>
-        <translation type="unfinished">copy token and close</translation>
+        <translation>copiar token y cerrar</translation>
     </message>
     <message id="address-info-title">
         <source>Address details</source>
@@ -2553,7 +2552,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="address-info-dialog-permanent">
         <source>Permanent</source>
-        <translation type="unfinished">Permanent</translation>
+        <translation>Permanente</translation>
     </message>
     <message id="address-info-type">
         <source>Address type</source>
@@ -2641,7 +2640,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="more-details">
         <source>More details</source>
-        <translation type="unfinished">More details</translation>
+        <translation>Más detalles</translation>
     </message>
     <message id="general-address-type">
         <source>Address Type</source>
@@ -2649,7 +2648,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="qr-code">
         <source>QR Code</source>
-        <translation type="unfinished">QR Code</translation>
+        <translation>Código QR</translation>
     </message>
     <message id="wallet-receive-address-for-wallet-label">
         <source>Online address (for wallet)</source>
@@ -2669,7 +2668,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="address-info-payments">
         <source>Payments</source>
-        <translation type="unfinished">Payments</translation>
+        <translation>Pagos</translation>
     </message>
     <message id="available-panel-maturing-mp">
         <source>Max privacy</source>
@@ -2677,16 +2676,15 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(max privacy %2% unlinked)</source>
-        <oldsource>Maturing%1(max privacy)</oldsource>
-        <translation type="unfinished">Maturing%1(max privacy)</translation>
+        <translation type="unfinished">Maturing%1(max privacy %2% unlinked)</translation>
     </message>
     <message id="atomic-swap-more-currency">
         <source>Connect more currencies</source>
-        <translation type="unfinished">Connect more currencies</translation>
+        <translation>Conectar más monedas</translation>
     </message>
     <message id="address-info-copy-close">
         <source>copy and close</source>
-        <translation type="unfinished">copy and close</translation>
+        <translation>copiar y cerrar</translation>
     </message>
     <message id="tx-address-public-offline">
         <source>Public offline</source>
