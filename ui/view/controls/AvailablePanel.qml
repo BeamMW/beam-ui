@@ -48,10 +48,6 @@ Control {
     topPadding:    8
     bottomPadding: 12
 
-    // MaxPrivacyCoinsDialog {
-    //     id: mpDialog
-    // }
-
     Control {
         id:            lockedTip
         visible:       (lockedArea.containsMouse || lockedTipArea.containsMouse || maturingMoreDetailsArea.containsMouse) && parseFloat(locked) > 0
@@ -135,7 +131,7 @@ Control {
                 //% "More details"
                 text:             qsTrId("available-panel-maturing-details")
                 Layout.alignment: Qt.AlignTop
-                visible:          parseFloat(lockedMaturingMP) > 0
+                visible:           maxPrivacyLabel.visible
                 MouseArea {
                     id: maturingMoreDetailsArea
                     anchors.fill: parent
