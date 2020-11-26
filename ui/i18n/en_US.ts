@@ -2831,5 +2831,9 @@ offline</translation>
         <source>24h</source>
         <translation>24h</translation>
     </message>
+    <message id="remote-node-lelantus-warning">
+        <source>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

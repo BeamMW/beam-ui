@@ -89,7 +89,7 @@ Dialog {
             }
 
             CustomTableView {
-                id: rootControl
+                id: tableView
                 Layout.alignment: Qt.AlignTop
                 Layout.fillWidth: true
                 Layout.fillHeight: true
@@ -157,7 +157,6 @@ Dialog {
 
         CustomButton {
             Layout.alignment:   Qt.AlignHCenter
-            Layout.preferredWidth: 125
             Layout.bottomMargin: 30
             Layout.topMargin: 10
             icon.source:    "qrc:/assets/icon-cancel-16.svg"
