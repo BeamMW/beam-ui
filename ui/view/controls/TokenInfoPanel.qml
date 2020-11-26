@@ -22,6 +22,8 @@ Panel {
     signal tokenCopied;
     signal closed
 
+    backgroundColor:  Style.background_button
+
     TokenInfoDialog {
         id:                     infoDialog
         token:                  control.token

@@ -398,7 +398,8 @@ ColumnLayout {
                         token:                viewModel.offlineToken
                         showQrCode:           false
                         isValidToken:         receiveView.isValid()
-                        visible:              !viewModel.isShieldedTx && viewModel.offlineToken.length > 0 && isShieldedSupported
+                        visible:              !viewModel.isShieldedTx && viewModel.offlineToken.length > 0
+                        enabled:              isShieldedSupported
                         ignoreStoredVouchers: true
                         onTokenCopied: {
                             viewModel.saveOfflineAddress();
