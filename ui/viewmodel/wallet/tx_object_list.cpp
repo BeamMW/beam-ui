@@ -170,6 +170,11 @@ offline" */
 public offline" */
         return qtTrId("wallet-txs-status-failed-public-offline");
     }
+    else if (status == "completed")
+    {
+        //% completed
+        return qtTrId("wallet-txs-status-completed");
+    }
     else
     {
         //% "unknown"
@@ -230,7 +235,8 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::IsSent), "isSent"},
         { static_cast<int>(Roles::IsReceived), "isReceived"},
         { static_cast<int>(Roles::IsPublicOffline), "isPublicOffline"},
-        { static_cast<int>(Roles::IsMaxPrivacy), "isMaxPrivacy"}
+        { static_cast<int>(Roles::IsMaxPrivacy), "isMaxPrivacy"},
+        { static_cast<int>(Roles::IsContractTx), "isContractTx"}
     };
     return roles;
 }
@@ -253,12 +259,23 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
         }
             
         case Roles::TimeCreatedSort:
-        {
             return static_cast<qulonglong>(value->timeCreated());
-        }
 
         case Roles::AmountGeneralWithCurrency:
-            return beamui::AmountToUIString(value->getAmountValue(), _amgr.getUnitName(value->getAssetId()));
+        {
+            const auto& alist = value->getAssetsList();
+            if (alist.size() == 1)
+            {
+                auto assetID = *alist.begin();
+                return beamui::AmountToUIString(value->getAmountValue(), _amgr.getUnitName(assetID));
+            }
+            else
+            {
+                assert(value->isContractTx());
+                return beamui::AmountToUIString(value->getAmountValue());
+            }
+        }
+
         case Roles::AmountGeneralWithCurrencySort:
             return static_cast<qulonglong>(value->getAmountValue());
         case Roles::AmountGeneral:
@@ -300,6 +317,8 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return value->getAddressType() == beam::wallet::TxAddressType::PublicOffline;
         case Roles::IsMaxPrivacy:
             return value->getAddressType() == beam::wallet::TxAddressType::MaxPrivacy;
+        case Roles::IsContractTx:
+            return value->isContractTx();
         case Roles::IsIncome:
             return value->isIncome();
         case Roles::IsInProgress:
@@ -350,9 +369,25 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
         case Roles::ReceiverIdentity:
             return value->getReceiverIdentity();
         case Roles::UnitName:
-            return _amgr.getUnitName(value->getAssetId());
+        {
+            const auto& alist = value->getAssetsList();
+            if (alist.size() == 1)
+            {
+                auto assetID = *alist.begin();
+                return _amgr.getUnitName(assetID);
+            }
+            return "";
+        }
         case Roles::Icon:
-            return _amgr.getIcon(value->getAssetId());
+        {
+            const auto& alist = value->getAssetsList();
+            if (alist.size() == 1)
+            {
+                auto assetID = *alist.begin();
+                return _amgr.getIcon(assetID);
+            }
+            return _amgr.getIcon(beam::Asset::s_BeamID);
+        }
         default:
             return QVariant();
     }
@@ -360,10 +395,13 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
 
 void TxObjectList::onAssetInfo(beam::Asset::ID assetId)
 {
-    for (auto it = m_list.begin(); it != m_list.end(); ++it) {
-        if ((*it)->getAssetId() == assetId) {
-           const auto idx = it - m_list.begin();
-           ListModel::touch(idx);
+    for (auto it = m_list.begin(); it != m_list.end(); ++it)
+    {
+        const auto& alist = (*it)->getAssetsList();
+        if(std::find(alist.begin(), alist.end(), assetId) != alist.end())
+        {
+            const auto idx = it - m_list.begin();
+            ListModel::touch(idx);
         }
     }
 }

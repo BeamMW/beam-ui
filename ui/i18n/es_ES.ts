@@ -2849,5 +2849,9 @@ offline</source>
         <translation type="unfinished">failed
 offline</translation>
     </message>
+    <message id="tx-contract-default-comment">
+        <source>Contract transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

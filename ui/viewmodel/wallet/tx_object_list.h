@@ -67,7 +67,8 @@ public:
         IsSent,
         IsReceived,
         IsPublicOffline,
-        IsMaxPrivacy
+        IsMaxPrivacy,
+        IsContractTx,
     };
 
     Q_ENUM(Roles)
