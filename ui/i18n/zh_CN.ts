@@ -2857,5 +2857,9 @@ max privacy</source>
 offline</source>
         <translation>离线失败</translation>
     </message>
+    <message id="tx-contract-default-comment">
+        <source>Contract transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

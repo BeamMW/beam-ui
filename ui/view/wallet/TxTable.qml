@@ -154,10 +154,6 @@ Control {
                             index = searchProxyModel.mapFromSource(indexList[0]);
                             index = txProxyModel.mapFromSource(index);
                             transactionsTable.positionViewAtRow(index.row, ListView.Beginning)
-                            //var item = transactionsTable.getItemAt(index.row, ListView.Beginning)
-                            //if (item) {
-                            //    item.collapsed = false;
-                            //}
                         }
                     }
                 })
@@ -352,23 +348,44 @@ Control {
             }
 
             TableViewColumn {
-                role: "addressFrom"
                 //% "From"
                 title: qsTrId("general-address-from")
-                elideMode: Text.ElideMiddle
                 width: 200 * transactionsTable.columnResizeRatio
                 movable: false
                 resizable: false
+
+                delegate: Item { Item {
+                    width: model && model.isContractTx ? parent.width * 2 : parent.width
+                    height: transactionsTable.rowHeight
+
+                    TableItem {
+                        text:   model ? (model.isContractTx ? model.comment : model.addressFrom) : ""
+                        elide:  Text.ElideRight
+                        color:  Style.content_main
+                    }
+                }}
             }
 
             TableViewColumn {
-                role: "addressTo"
                 //% "To"
                 title: qsTrId("general-address-to")
                 elideMode: Text.ElideMiddle
                 width: 200 * transactionsTable.columnResizeRatio
                 movable: false
                 resizable: false
+
+                delegate: Item {
+                    visible: model && !model.isContractTx
+                    Item {
+                        width: parent.width
+                        height: transactionsTable.rowHeight
+                        TableItem {
+                            text:   model ? model.addressTo : ""
+                            elide:  Text.ElideMiddle
+                            color:  Style.content_main
+                        }
+                    }
+                }
             }
 
             TableViewColumn {

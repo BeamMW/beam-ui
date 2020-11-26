@@ -18,6 +18,7 @@
 #include "viewmodel/payment_item.h"
 #include "viewmodel/ui_helpers.h"
 #include "wallet/client/extensions/news_channels/interface.h"
+#include "bvm/ManagerStd.h"
 
 class TxObject : public QObject
 {
@@ -33,8 +34,8 @@ public:
 
     beam::Timestamp timeCreated() const;
     beam::wallet::TxID getTxID() const;
-    QString getAmount() const;
     beam::Amount getAmountValue() const;
+    QString getAmount() const;
     QString getRate() const;
     QString getComment() const;
     QString getAddressFrom() const;
@@ -49,11 +50,12 @@ public:
     QString getToken() const;
     QString getSenderIdentity() const;
     QString getReceiverIdentity() const;
-    beam::Asset::ID getAssetId() const;
+    std::set<beam::Asset::ID> getAssetsList() const;
 
     bool isIncome() const;
     bool isSelfTx() const;
     bool isShieldedTx() const;
+    bool isContractTx() const;
     beam::wallet::TxAddressType getAddressType();
     bool isSent() const;
     bool isReceived() const;
@@ -88,4 +90,12 @@ protected:
     beam::wallet::ExchangeRate::Currency m_secondCurrency;
     mutable  boost::optional<bool> m_hasVouchers;
     boost::optional<beam::wallet::TxAddressType> m_addressType;
+
+    //
+    // Contracts handling
+    //
+    typedef std::function<void (const beam::bvm2::ContractInvokeData& data)> CDVisitor;
+    void visitContractData(const CDVisitor&) const;
+    beam::AmountSigned _contractAmount = 0;
+    std::set<beam::Asset::ID> _contractAssets;
 };

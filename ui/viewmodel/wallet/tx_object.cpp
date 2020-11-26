@@ -96,8 +96,7 @@ TxObject::TxObject( const TxDescription& tx,
         , m_type(*m_tx.GetParameter<TxType>(TxParameterID::TransactionType))
         , m_secondCurrency(secondCurrency)
 {
-    auto kernelID = QString::fromStdString(std::to_string(m_tx.m_kernelID));
-    setKernelID(kernelID);
+    update(tx);
 }
 
 bool TxObject::operator==(const TxObject& other) const
@@ -117,23 +116,52 @@ auto TxObject::getTxID() const -> beam::wallet::TxID
 
 bool TxObject::isIncome() const
 {
-    return m_tx.m_sender == false;
+    if (isContractTx())
+    {
+        return _contractAmount > 0;
+    }
+    else
+    {
+        return m_tx.m_sender == false;
+    }
 }
 
 QString TxObject::getComment() const
 {
-    std::string str{ m_tx.m_message.begin(), m_tx.m_message.end() };
-    return QString(str.c_str()).trimmed();
+    if (isContractTx())
+    {
+        //% "Contract transaction"
+        return qtTrId("tx-contract-default-comment");
+    }
+    else
+    {
+        std::string str{m_tx.m_message.begin(), m_tx.m_message.end()};
+        return QString(str.c_str()).trimmed();
+    }
 }
 
 QString TxObject::getAmount() const
 {
-    return AmountToUIString(m_tx.m_amount);
+    if (isContractTx())
+    {
+        return AmountToUIString(std::abs(_contractAmount));
+    }
+    else
+    {
+        return AmountToUIString(m_tx.m_amount);
+    }
 }
 
 beam::Amount TxObject::getAmountValue() const
 {
-    return m_tx.m_amount;
+    if (isContractTx())
+    {
+        return std::abs(_contractAmount);
+    }
+    else
+    {
+        return m_tx.m_amount;
+    }
 }
 
 QString TxObject::getRate() const
@@ -469,23 +497,21 @@ QString TxObject::getReceiverIdentity() const
     return QString::fromStdString(m_tx.getReceiverIdentity());
 }
 
-beam::Asset::ID TxObject::getAssetId() const
+std::set<beam::Asset::ID> TxObject::getAssetsList() const
 {
-    return m_tx.m_assetId;
+    if (isContractTx())
+    {
+        return _contractAssets;
+    }
+
+    std::set<beam::Asset::ID> alist = {m_tx.m_assetId};
+    return alist;
 }
 
 bool TxObject::hasPaymentProof() const
 {
     return !isIncome() && m_tx.m_status == wallet::TxStatus::Completed 
         && (m_tx.m_txType == TxType::Simple || m_tx.m_txType == TxType::PushTransaction);
-}
-
-void TxObject::update(const beam::wallet::TxDescription& tx)
-{
-    setStatus(tx.m_status);
-    auto kernelID = QString::fromStdString(to_hex(tx.m_kernelID.m_pData, tx.m_kernelID.nBytes));
-    setKernelID(kernelID);
-    setFailureReason(tx.m_failureReason);
 }
 
 bool TxObject::isInProgress() const
@@ -519,6 +545,11 @@ bool TxObject::isSelfTx() const
 bool TxObject::isShieldedTx() const
 {
     return m_tx.m_txType == TxType::PushTransaction;
+}
+
+bool TxObject::isContractTx() const
+{
+    return m_tx.m_txType == TxType::Contract;
 }
 
 beam::wallet::TxAddressType TxObject::getAddressType()
@@ -569,4 +600,33 @@ void TxObject::restoreAddressType()
         return;
 
     m_addressType = GetAddressType(m_tx);
+}
+
+void TxObject::visitContractData(const CDVisitor& visitor) const
+{
+    std::vector<beam::bvm2::ContractInvokeData> vData;
+    if(m_tx.GetParameter(TxParameterID::ContractDataPacked, vData))
+    {
+        for (const auto& data: vData)
+        {
+            visitor(data);
+        }
+    }
+}
+
+void TxObject::update(const beam::wallet::TxDescription& tx)
+{
+    setStatus(tx.m_status);
+    setFailureReason(tx.m_failureReason);
+
+    auto kernelID = QString::fromStdString(to_hex(tx.m_kernelID.m_pData, tx.m_kernelID.nBytes));
+    setKernelID(kernelID);
+
+    _contractAmount = 0;
+    visitContractData([this] (const beam::bvm2::ContractInvokeData& data) {
+        for(const auto& spend: data.m_Spend) {
+            _contractAssets.insert(spend.first);
+            _contractAmount -= spend.second;
+        }
+    });
 }
