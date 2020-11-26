@@ -17,6 +17,8 @@ Dialog {
     }
     
     width: 460
+    height: 610
+    padding: 30
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
     visible: false
@@ -27,33 +29,28 @@ Dialog {
         anchors.fill: parent            
     }
 
-    header: SFText {
-        //% "Max privacy"
-        text: qsTrId("max-privacy-dialog-header")
-        topPadding: 30
-        horizontalAlignment : Text.AlignHCenter
-        font.pixelSize: 18
-        font.styleName: "Bold"; font.weight: Font.Bold
-        color: Style.content_main
-    }
-
     contentItem: ColumnLayout {
         Layout.fillWidth: true
+        
+        spacing: 20
+
+        SFText {
+            //% "Max privacy"
+            text: qsTrId("max-privacy-dialog-header")
+            Layout.alignment:   Qt.AlignHCenter
+            font.pixelSize: 18
+            font.styleName: "Bold"; font.weight: Font.Bold
+            color: Style.content_main
+        }
 
         RowLayout {
             Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
-            Layout.topMargin: 24
-            Layout.leftMargin: 30
-            Layout.rightMargin: 30
-            Layout.bottomMargin: 20
-            Layout.maximumHeight: 40
 
             SFText {
                 id:             maxPrivacyLabel
                 font.pixelSize: 12
-                font.styleName: "Light"
-                font.weight:    Font.Light
+                font.styleName: "Regular"
+                font.weight:    Font.Normal
                 color:          Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
                 //% "Locked"
                 text:           qsTrId("max-privacy-dialog-locked") + ":"
@@ -72,93 +69,70 @@ Dialog {
             }
         }
 
-        ColumnLayout {
-            id: tableColumn
-            Layout.fillWidth: true
+        CustomTableView {
+            id: tableView
             Layout.alignment: Qt.AlignTop
-            Layout.leftMargin: 30
-            Layout.rightMargin: 30
-            Layout.preferredHeight: 375
-
-            Rectangle {
-                id: selectBackground
-                color: Style.background_popup
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                // anchors.fill: parent
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            frameVisible: false
+            selectionMode: SelectionMode.NoSelection
+            backgroundVisible: false
+            sortIndicatorVisible: true
+            sortIndicatorColumn: 1
+            sortIndicatorOrder: Qt.DescendingOrder
+            headerColor: Style.background_main_top
+            mainBackgroundRect: dialog.background 
+            model: SortFilterProxyModel {
+                sortOrder: tableView.sortIndicatorOrder
+                sortCaseSensitivity: Qt.CaseInsensitive
+                sortRole: tableView.getColumn(tableView.sortIndicatorColumn).role + "Sort"
+                source: viewModel.mpMaturingUtxos
+                filterSyntax: SortFilterProxyModel.Wildcard
+                filterCaseSensitivity: Qt.CaseInsensitive
             }
 
-            CustomTableView {
-                id: tableView
-                Layout.alignment: Qt.AlignTop
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                frameVisible: false
-                selectionMode: SelectionMode.NoSelection
-                backgroundVisible: false
-                sortIndicatorVisible: true
-                sortIndicatorColumn: 1
-                sortIndicatorOrder: Qt.DescendingOrder
-                headerColor: Style.background_main_top
-                mainBackgroundRect: selectBackground 
-                model: SortFilterProxyModel {
-                    sortOrder: tableView.sortIndicatorOrder
-                    sortCaseSensitivity: Qt.CaseInsensitive
-                    sortRole: tableView.getColumn(tableView.sortIndicatorColumn).role + "Sort"
-                    source: viewModel.mpMaturingUtxos
-                    filterSyntax: SortFilterProxyModel.Wildcard
-                    filterCaseSensitivity: Qt.CaseInsensitive
-                }
+            TableViewColumn {
+                role: "amount"
+                //% "Amount"
+                title: qsTrId("max-privacy-dialog-amount")
+                width: contentItem.width / 2
+                resizable: false
+                movable: false
+            }
 
-                TableViewColumn {
-                    role: "amount"
-                    //% "Amount"
-                    title: qsTrId("max-privacy-dialog-amount")
-                    width: tableColumn.width / 2
-                    resizable: false
-                    movable: false
+            TableViewColumn {
+                role: "maturityPercentage"
+                //% "Latest unlocked time"
+                title: qsTrId("max-privacy-dialog-unlock-time")
+                width: contentItem.width / 2
+                resizable: false
+                movable: false
+                delegate: TableItem {
+                    text:           styleData.value + "%"
+                    elide:          styleData.elideMode
                 }
+            }
 
-                TableViewColumn {
-                    role: "maturityPercentage"
-                    //% "Latest unlocked time"
-                    title: qsTrId("max-privacy-dialog-unlock-time")
-                    width: tableColumn.width / 2
-                    resizable: false
-                    movable: false
-                    delegate: TableItem {
-                       text:           styleData.value + "%"
-                       elide:          styleData.elideMode
-                    }
+            rowDelegate: Item {
+                height: 56
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                Rectangle {
+                    anchors.fill: parent
+                    color: styleData.selected ? Style.row_selected :
+                            (styleData.alternate ? Style.background_row_even : Style.background_row_odd)
                 }
+            }
 
-                rowDelegate: Item {
-                    height: 56
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-
-                    Rectangle {
-                        anchors.fill: parent
-                        color: styleData.selected ? Style.row_selected :
-                                (styleData.alternate ? Style.background_row_even : Style.background_row_odd)
-                    }
-                }
-
-                itemDelegate: TableItem {
-                    text: styleData.value
-                    elide: Text.ElideRight
-                }
+            itemDelegate: TableItem {
+                text: styleData.value
+                elide: Text.ElideRight
             }
         }
-    }
-
-    footer: RowLayout {
-        Layout.fillWidth: true
 
         CustomButton {
             Layout.alignment:   Qt.AlignHCenter
-            Layout.bottomMargin: 30
-            Layout.topMargin: 10
             icon.source:    "qrc:/assets/icon-cancel-16.svg"
             //% "Close"
             text:           qsTrId("general-close")
