@@ -160,15 +160,16 @@ ColumnLayout {
                         content: 
                         ColumnLayout {
                             spacing: 20
+                            id:     addressType
                             property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
                             Pane {
                                 padding:    2
-                                visible:    parent.isShieldedSupported
+                                //visible:    parent.isShieldedSupported
                                 background: Rectangle {
                                     color: Style.table_header
                                     radius: 10
                                     border.width: 1
-                                    border.color: Style.active
+                                    border.color: addressType.isShieldedSupported ? Style.active : Style.content_secondary
                                 }
                                 ButtonGroup { id: txTypeGroup }
                                 RowLayout {
@@ -192,10 +193,11 @@ ColumnLayout {
                                         id:                 maxPrivacyCheck
                                         //% "Max privacy"
                                         text:               qsTrId("tx-max-privacy")
-                                        palette.buttonText: Style.content_main
+                                        palette.buttonText: addressType.isShieldedSupported ? Style.content_main : Style.content_secondary
                                         ButtonGroup.group:  txTypeGroup
                                         checkable:          true
                                         checked:            viewModel.isShieldedTx
+                                        enabled:            addressType.isShieldedSupported
                                         onToggled: {
                                             viewModel.isShieldedTx = true;
                                             viewModel.isPermanentAddress = true;
