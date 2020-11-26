@@ -172,7 +172,7 @@ public offline" */
     }
     else if (status == "completed")
     {
-        //% completed
+        //% "completed"
         return qtTrId("wallet-txs-status-completed");
     }
     else
