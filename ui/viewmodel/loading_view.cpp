@@ -333,19 +333,23 @@ void LoadingViewModel::onNodeConnectionChanged(bool isNodeConnected)
 
 void LoadingViewModel::onGetWalletError(beam::wallet::ErrorType error)
 {
+    using namespace beam::wallet;
     if (m_isCreating)
     {
         switch (error)
         {
-            case beam::wallet::ErrorType::NodeProtocolIncompatible:
+            case ErrorType::NodeProtocolIncompatible:
             {
                 //% "Incompatible peer"
                 emit walletError(qtTrId("loading-view-protocol-error"), m_walletModel.GetErrorString(error));
                 return;
             }
-            case beam::wallet::ErrorType::ConnectionAddrInUse:
-            case beam::wallet::ErrorType::ConnectionRefused:
-            case beam::wallet::ErrorType::HostResolvedError:
+            case ErrorType::ConnectionBase:
+            case ErrorType::ConnectionTimedOut:
+            case ErrorType::ConnectionHostUnreach:
+            case ErrorType::ConnectionAddrInUse:
+            case ErrorType::ConnectionRefused:
+            case ErrorType::HostResolvedError:
             {
                 //% "Connection error"
                 emit walletError(qtTrId("loading-view-connection-error"), m_walletModel.GetErrorString(error));
@@ -360,7 +364,7 @@ void LoadingViewModel::onGetWalletError(beam::wallet::ErrorType error)
     // There rest need to be added later
     switch (error)
     {
-        case beam::wallet::ErrorType::ConnectionAddrInUse:
+        case ErrorType::ConnectionAddrInUse:
             emit walletError(qtTrId("loading-view-connection-error"), m_walletModel.GetErrorString(error));
             return;
         default:
