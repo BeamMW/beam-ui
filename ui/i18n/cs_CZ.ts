@@ -2448,8 +2448,9 @@ Zkontrolujte na %1 blockchainu sami. Nízké poplatky mohou způsobit
         <translation>Držitel klíče mimo sloty</translation>
     </message>
     <message id="tx-failure-shielded-coin-fee">
-        <source>Cannot extract shielded coin, fee is to big.</source>
-        <translation>Nelze extrahovat chráněnou minci, poplatek je příliš velký.</translation>
+        <source>Cannot extract shielded coin, fee is too big.</source>
+        <oldsource>Cannot extract shielded coin, fee is to big.</oldsource>
+        <translation type="unfinished">Nelze extrahovat chráněnou minci, poplatek je příliš velký.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
         <source>Asset transactions are disabled in the receiver wallet</source>
@@ -2509,8 +2510,9 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <translation>Trvalá adresa</translation>
     </message>
     <message id="wallet-send-one-time-note">
-        <source>One-time use address (expire in 12 hours after succesfull transaction).</source>
-        <translation>Jednorázová adresa pro použití (vyprší za 12 hodin po úspěšné transakci).</translation>
+        <source>One-time use address (expire in 12 hours after successfull transaction).</source>
+        <oldsource>One-time use address (expire in 12 hours after succesfull transaction).</oldsource>
+        <translation type="unfinished">Jednorázová adresa pro použití (vyprší za 12 hodin po úspěšné transakci).</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address-offline">
         <source>Offline address. Payments left: %1</source>
@@ -2525,8 +2527,9 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <translation>Nedostatek prostředků: k dokončení transakce potřebujete %1 </translation>
     </message>
     <message id="max-pivacy-fee-fail">
-        <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <translation>Pro nejlepší maximum osobních mincí bylo vybráno maximální množství osobních údajů. Minimální poplatek za transakci je %1 %2</translation>
+        <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
+        <oldsource>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</oldsource>
+        <translation type="unfinished">Pro nejlepší maximum osobních mincí bylo vybráno maximální množství osobních údajů. Minimální poplatek za transakci je %1 %2</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>

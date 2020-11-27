@@ -2448,8 +2448,8 @@ much longer for a transaction to complete.</translation>
         <translation>Key keeper out of slots</translation>
     </message>
     <message id="tx-failure-shielded-coin-fee">
-        <source>Cannot extract shielded coin, fee is to big.</source>
-        <translation>Cannot extract shielded coin, fee is to big.</translation>
+        <source>Cannot extract shielded coin, fee is too big.</source>
+        <translation type="unfinished">Cannot extract shielded coin, fee is to big.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
         <source>Asset transactions are disabled in the receiver wallet</source>
@@ -2510,8 +2510,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Permanent address</translation>
     </message>
     <message id="wallet-send-one-time-note">
-        <source>One-time use address (expire in 12 hours after succesfull transaction).</source>
-        <translation>One-time use address (expire in 12 hours after succesfull transaction).</translation>
+        <source>One-time use address (expire in 12 hours after successfull transaction).</source>
+        <translation type="unfinished">One-time use address (expire in 12 hours after succesfull transaction).</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address-offline">
         <source>Offline address. Payments left: %1</source>
@@ -2526,8 +2526,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Insufficient funds: you would need %1 to complete the transaction</translation>
     </message>
     <message id="max-pivacy-fee-fail">
-        <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <translation>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</translation>
+        <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
+        <translation type="unfinished">For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>

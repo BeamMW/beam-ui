@@ -2446,8 +2446,9 @@ Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernst
         <translation>Geen beschikbare slots op sleutelhouder</translation>
     </message>
     <message id="tx-failure-shielded-coin-fee">
-        <source>Cannot extract shielded coin, fee is to big.</source>
-        <translation>Kan afgeschermde munt niet extraheren, de vergoeding is te groot.</translation>
+        <source>Cannot extract shielded coin, fee is too big.</source>
+        <oldsource>Cannot extract shielded coin, fee is to big.</oldsource>
+        <translation type="unfinished">Kan afgeschermde munt niet extraheren, de vergoeding is te groot.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
         <source>Asset transactions are disabled in the receiver wallet</source>
@@ -2508,8 +2509,9 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>Permanent adres</translation>
     </message>
     <message id="wallet-send-one-time-note">
-        <source>One-time use address (expire in 12 hours after succesfull transaction).</source>
-        <translation>Adres voor eenmalig gebruik (vervalt binnen 12 uur na succesvolle transactie).</translation>
+        <source>One-time use address (expire in 12 hours after successfull transaction).</source>
+        <oldsource>One-time use address (expire in 12 hours after succesfull transaction).</oldsource>
+        <translation type="unfinished">Adres voor eenmalig gebruik (vervalt binnen 12 uur na succesvolle transactie).</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address-offline">
         <source>Offline address. Payments left: %1</source>
@@ -2524,8 +2526,9 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>Onvoldoende saldo: u heeft %1 nodig om de transactie te voltooien</translation>
     </message>
     <message id="max-pivacy-fee-fail">
-        <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <translation>Voor de beste privacy is Max privacy coins geselecteerd. Min. transactiekosten zijn %1 %2</translation>
+        <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
+        <oldsource>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</oldsource>
+        <translation type="unfinished">Voor de beste privacy is Max privacy coins geselecteerd. Min. transactiekosten zijn %1 %2</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>

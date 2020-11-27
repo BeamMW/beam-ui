@@ -2448,8 +2448,9 @@ much longer for a transaction to complete.</source>
         <translation>У хранителя ключей закончились слоты для нонсов</translation>
     </message>
     <message id="tx-failure-shielded-coin-fee">
-        <source>Cannot extract shielded coin, fee is to big.</source>
-        <translation>Невозможно извлечь защищенные монеты, комиссия должна быть большой.</translation>
+        <source>Cannot extract shielded coin, fee is too big.</source>
+        <oldsource>Cannot extract shielded coin, fee is to big.</oldsource>
+        <translation type="unfinished">Невозможно извлечь защищенные монеты, комиссия должна быть большой.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
         <source>Asset transactions are disabled in the receiver wallet</source>
@@ -2510,8 +2511,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Постоянный адрес</translation>
     </message>
     <message id="wallet-send-one-time-note">
-        <source>One-time use address (expire in 12 hours after succesfull transaction).</source>
-        <translation>Одноразовый адрес (истекает через 12 часов после успешной транзакции).</translation>
+        <source>One-time use address (expire in 12 hours after successfull transaction).</source>
+        <oldsource>One-time use address (expire in 12 hours after succesfull transaction).</oldsource>
+        <translation type="unfinished">Одноразовый адрес (истекает через 12 часов после успешной транзакции).</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address-offline">
         <source>Offline address. Payments left: %1</source>
@@ -2526,8 +2528,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Недостаточно средств: необходимо %1 для завершения транзакции</translation>
     </message>
     <message id="max-pivacy-fee-fail">
-        <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <translation>Для лучшей приватности были выбраны защищенные монеты. Минимальная комиссия за транзакцию - %1 %2</translation>
+        <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
+        <oldsource>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</oldsource>
+        <translation type="unfinished">Для лучшей приватности были выбраны защищенные монеты. Минимальная комиссия за транзакцию - %1 %2</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>

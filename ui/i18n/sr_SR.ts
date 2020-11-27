@@ -2449,7 +2449,8 @@ much longer for a transaction to complete.</translation>
         <translation type="unfinished">Key keeper out of slots</translation>
     </message>
     <message id="tx-failure-shielded-coin-fee">
-        <source>Cannot extract shielded coin, fee is to big.</source>
+        <source>Cannot extract shielded coin, fee is too big.</source>
+        <oldsource>Cannot extract shielded coin, fee is to big.</oldsource>
         <translation type="unfinished">Cannot extract shielded coin, fee is to big.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
@@ -2511,7 +2512,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished">Permanent address</translation>
     </message>
     <message id="wallet-send-one-time-note">
-        <source>One-time use address (expire in 12 hours after succesfull transaction).</source>
+        <source>One-time use address (expire in 12 hours after successfull transaction).</source>
+        <oldsource>One-time use address (expire in 12 hours after succesfull transaction).</oldsource>
         <translation type="unfinished">One-time use address (expire in 12 hours after succesfull transaction).</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address-offline">
@@ -2527,7 +2529,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Недовољна средства: потребан вам је %1 да би сте комплетирали транскацију</translation>
     </message>
     <message id="max-pivacy-fee-fail">
-        <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
+        <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
+        <oldsource>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</oldsource>
         <translation type="unfinished">For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</translation>
     </message>
     <message id="send-amount-label">

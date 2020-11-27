@@ -2445,8 +2445,9 @@ mycket längre tid för en transaktion att slutföras.</translation>
         <translation>Nyckelhållaren har slut på öppna slots</translation>
     </message>
     <message id="tx-failure-shielded-coin-fee">
-        <source>Cannot extract shielded coin, fee is to big.</source>
-        <translation>Kan inte extrahera skärmat mynt, avgiften är för stor.</translation>
+        <source>Cannot extract shielded coin, fee is too big.</source>
+        <oldsource>Cannot extract shielded coin, fee is to big.</oldsource>
+        <translation type="unfinished">Kan inte extrahera skärmat mynt, avgiften är för stor.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
         <source>Asset transactions are disabled in the receiver wallet</source>
@@ -2507,8 +2508,9 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <translation>Permanent adress</translation>
     </message>
     <message id="wallet-send-one-time-note">
-        <source>One-time use address (expire in 12 hours after succesfull transaction).</source>
-        <translation>Adress för engångsanvändning (löper ut om 12 timmar efter lyckad transaktion).</translation>
+        <source>One-time use address (expire in 12 hours after successfull transaction).</source>
+        <oldsource>One-time use address (expire in 12 hours after succesfull transaction).</oldsource>
+        <translation type="unfinished">Adress för engångsanvändning (löper ut om 12 timmar efter lyckad transaktion).</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address-offline">
         <source>Offline address. Payments left: %1</source>
@@ -2523,8 +2525,9 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <translation>Otillräckliga medel; du behöver %1 för att slutföra transaktionen</translation>
     </message>
     <message id="max-pivacy-fee-fail">
-        <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <translation>För bästa integritet har Max sekretessmynt valts. Min transaktionsavgift är %1 %2</translation>
+        <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
+        <oldsource>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</oldsource>
+        <translation type="unfinished">För bästa integritet har Max sekretessmynt valts. Min transaktionsavgift är %1 %2</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
