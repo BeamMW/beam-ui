@@ -475,7 +475,8 @@ void SendViewModel::sendMoney()
         if (isMaxPrivacy())
         {
             CopyParameter(TxParameterID::Voucher, _txParameters, params);
-            params.SetParameter(TxParameterID::MaxPrivacyMinAnonimitySet, uint8_t(64));
+            const auto& settings = AppModel::getInstance().getSettings();
+            params.SetParameter(TxParameterID::MaxPrivacyMinAnonimitySet, settings.getMaxPrivacyAnonymitySet());
         }
         if (isShieldedTx())
         {

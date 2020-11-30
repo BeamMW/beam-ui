@@ -130,10 +130,10 @@ SettingsFoldable {
             currentIndex: 0
             model: [
                 "64k",
-                "48k",
                 "32k",
                 "16k",
                 "8k",
+                "4k",
                 "2k",
             ]
         }

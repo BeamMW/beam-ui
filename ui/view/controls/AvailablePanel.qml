@@ -138,7 +138,6 @@ Control {
                     acceptedButtons: Qt.LeftButton
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        console.log("rara");
                         mpDialog.open()
                     }
                 }

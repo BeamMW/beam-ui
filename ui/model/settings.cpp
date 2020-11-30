@@ -54,6 +54,8 @@ namespace
     const char* kBeamNewsActive = "notifications/beam_news";
     const char* kTxStatusActive = "notifications/tx_status";
 
+    const char* kMpAnonymitySet = "max_privacy/anonymity_set";
+
     const std::map<QString, QString> kSupportedLangs { 
         { "zh_CN", "Chinese Simplified"},
         { "en_US", "English" },
@@ -466,6 +468,12 @@ void WalletSettings::setTxStatusActive(bool isActive)
         Lock lock(m_mutex);
         m_data.setValue(kTxStatusActive, isActive);
     }
+}
+
+uint8_t WalletSettings::getMaxPrivacyAnonymitySet() const
+{
+    Lock lock(m_mutex);
+    return static_cast<uint8_t>(m_data.value(kMpAnonymitySet, 64).toUInt());
 }
 
 // static

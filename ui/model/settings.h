@@ -84,6 +84,8 @@ public:
 
     static void openFolder(const QString& path);
 
+    uint8_t getMaxPrivacyAnonymitySet() const;
+
 public:
     static const char* WalletCfg;
     static const char* LogsFolder;
