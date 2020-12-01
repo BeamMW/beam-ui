@@ -33,6 +33,7 @@ RowLayout {
     property var searchRegExp2:  new RegExp("("+root.searchFilter+")", "i")
     property string addressType
     property bool isShieldedTx
+    property bool isCompleted: false
 
     readonly property string amountPrefix: root.isIncome ? "+" : "-"
     readonly property string amountWithLabel: amountPrefix + " " + root.amount + " " + BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
@@ -338,25 +339,14 @@ RowLayout {
             visible: isTextFieldVisible(root.kernelID) && !isZeroed(root.kernelID)
         }
 
-        function canOpenInBlockchainExplorer(status) {
-            switch(status) {
-                case "completed":
-                case "received":
-                case "sent":
-                    return true;
-                default:
-                    return false;
-            }
-        }
-        
         Item {
             Layout.preferredHeight: 16
-            visible: parent.canOpenInBlockchainExplorer(root.status) && root.isFieldVisible() && kernelID.visible
+            visible: root.isCompleted && root.isFieldVisible() && kernelID.visible
         }
         Item {
             Layout.preferredWidth: openInExplorer.width + 10 + openInExplorerIcon.width
             Layout.preferredHeight: 16
-            visible: parent.canOpenInBlockchainExplorer(root.status) && root.isFieldVisible() && kernelID.visible
+            visible: root.isCompleted && root.isFieldVisible() && kernelID.visible
         
             SFText {
                 id: openInExplorer
