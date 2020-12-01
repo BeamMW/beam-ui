@@ -14,6 +14,7 @@ Dialog {
 
     UtxoViewModel {
         id: viewModel
+        maturingMaxPrivacy: true
     }
     
     width: 460
@@ -86,7 +87,7 @@ Dialog {
                 sortOrder: tableView.sortIndicatorOrder
                 sortCaseSensitivity: Qt.CaseInsensitive
                 sortRole: tableView.getColumn(tableView.sortIndicatorColumn).role + "Sort"
-                source: viewModel.mpMaturingUtxos
+                source: viewModel.allUtxos
                 filterSyntax: SortFilterProxyModel.Wildcard
                 filterCaseSensitivity: Qt.CaseInsensitive
             }
