@@ -81,7 +81,7 @@ Dialog {
             backgroundVisible: false
             sortIndicatorVisible: true
             sortIndicatorColumn: 1
-            sortIndicatorOrder: Qt.DescendingOrder
+            sortIndicatorOrder: Qt.AscendingOrder
             headerColor: Style.background_main_top
             mainBackgroundRect: dialog.background 
             model: SortFilterProxyModel {

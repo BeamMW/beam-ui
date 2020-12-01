@@ -60,6 +60,7 @@ public:
     beam::Block::SystemState::ID getCurrentStateID() const;
     beam::TxoID getTotalShieldedCount() const;
     beam::TxoID getShieldedPer24h() const;
+    uint8_t getMPLockTimeLimit() const;
     bool hasShielded() const;
 
 signals:
@@ -161,4 +162,5 @@ private:
     beam::wallet::WalletStatus m_status;
     std::vector<std::pair<beam::wallet::Height, beam::wallet::TxoID>> m_shieldedCountHistoryPart;
     beam::wallet::TxoID m_shieldedPer24h = 0;
+    uint8_t m_mpLockTimeLimit = 0;
 };

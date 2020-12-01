@@ -2856,5 +2856,10 @@ fuera de línea</translation>
         <extracomment>time &quot;days&quot; string</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settings-privacy-mp-time-no-limit">
+        <source>No limit</source>
+        <oldsource>no limit</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

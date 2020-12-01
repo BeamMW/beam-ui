@@ -51,6 +51,7 @@ MainViewModel::MainViewModel()
 #endif
 
     onLockTimeoutChanged();
+    m_settings.maxPrivacyLockTimeLimitInit();
 }
 
 void MainViewModel::update(int page)

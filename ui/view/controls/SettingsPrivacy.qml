@@ -127,7 +127,7 @@ SettingsFoldable {
             id: mpAnonymitySet
             fontPixelSize: 14
             Layout.preferredWidth: 150
-            currentIndex: 0
+            currentIndex: viewModel.maxPrivacyAnonymitySet
             model: [
                 "64k",
                 "32k",
@@ -136,6 +136,9 @@ SettingsFoldable {
                 "4k",
                 "2k",
             ]
+            onActivated: {
+                viewModel.maxPrivacyAnonymitySet = mpAnonymitySet.currentIndex
+            }
         }
 
         SFText {
@@ -150,8 +153,10 @@ SettingsFoldable {
             id: mpLockTimeLimit
             fontPixelSize: 14
             Layout.preferredWidth: 150
-            currentIndex: 0
+            currentIndex: viewModel.maxPrivacyLockTimeLimit
             model: [
+                //% "No limit"
+                qsTrId("settings-privacy-mp-time-no-limit"),
                 //% "72h"
                 qsTrId("settings-privacy-mp-time-limit-72"),
                 //% "60h"
@@ -163,6 +168,9 @@ SettingsFoldable {
                 //% "24h"
                 qsTrId("settings-privacy-mp-time-limit-24"),
             ]
+            onActivated: {
+                viewModel.maxPrivacyLockTimeLimit = mpLockTimeLimit.currentIndex
+            }
         }
 
         LinkButton {

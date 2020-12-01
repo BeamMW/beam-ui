@@ -90,6 +90,8 @@ namespace
         return find(kOutDatedPeers.begin(), kOutDatedPeers.end(), peer) !=
                kOutDatedPeers.end();
     }
+
+    const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
 }  // namespace
 
 const char* WalletSettings::WalletCfg = "beam-wallet.cfg";
@@ -105,7 +107,6 @@ WalletSettings::WalletSettings(const QDir& appDataDir)
     : m_data{ appDataDir.filePath(SettingsFile), QSettings::IniFormat }
     , m_appDataDir{appDataDir}
 {
-
 }
 
 #if defined(BEAM_HW_WALLET)
@@ -473,7 +474,43 @@ void WalletSettings::setTxStatusActive(bool isActive)
 uint8_t WalletSettings::getMaxPrivacyAnonymitySet() const
 {
     Lock lock(m_mutex);
-    return static_cast<uint8_t>(m_data.value(kMpAnonymitySet, 64).toUInt());
+    return static_cast<uint8_t>(m_data.value(kMpAnonymitySet, kDefaultMaxPrivacyAnonymitySet).toUInt());
+}
+
+void WalletSettings::setMaxPrivacyAnonymitySet(uint8_t anonymitySet)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kMpAnonymitySet, anonymitySet);
+}
+
+void WalletSettings::maxPrivacyLockTimeLimitInit()
+{
+    auto walletModel = AppModel::getInstance().getWallet();
+    if (walletModel)
+    {
+        walletModel->getAsync()->getMaxPrivacyLockTimeLimitHours([this] (uint8_t limit)
+        {
+            m_mpLockTimeLimit = limit;
+        });
+    }
+}
+
+uint8_t WalletSettings::getMaxPrivacyLockTimeLimitHours() const
+{
+    return m_mpLockTimeLimit;
+}
+
+void WalletSettings::setMaxPrivacyLockTimeLimitHours(uint8_t lockTimeLimit)
+{
+    if (m_mpLockTimeLimit != lockTimeLimit)
+    {
+        auto walletModel = AppModel::getInstance().getWallet();
+        if (walletModel)
+        {
+            m_mpLockTimeLimit = lockTimeLimit;
+            walletModel->getAsync()->setMaxPrivacyLockTimeLimitHours(lockTimeLimit);
+        }
+    }
 }
 
 // static

@@ -2855,5 +2855,9 @@ offline</translation>
         <extracomment>time &quot;days&quot; string</extracomment>
         <translation>days</translation>
     </message>
+    <message id="settings-privacy-mp-time-no-limit">
+        <source>No limit</source>
+        <translation>No limit</translation>
+    </message>
 </context>
 </TS>
