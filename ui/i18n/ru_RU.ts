@@ -2449,8 +2449,7 @@ much longer for a transaction to complete.</source>
     </message>
     <message id="tx-failure-shielded-coin-fee">
         <source>Cannot extract shielded coin, fee is too big.</source>
-        <oldsource>Cannot extract shielded coin, fee is to big.</oldsource>
-        <translation type="unfinished">Невозможно извлечь защищенные монеты, комиссия должна быть большой.</translation>
+        <translation>Невозможно извлечь защищенные монеты, комиссия должна быть большой.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
         <source>Asset transactions are disabled in the receiver wallet</source>
@@ -2512,8 +2511,7 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="wallet-send-one-time-note">
         <source>One-time use address (expire in 12 hours after successfull transaction).</source>
-        <oldsource>One-time use address (expire in 12 hours after succesfull transaction).</oldsource>
-        <translation type="unfinished">Одноразовый адрес (истекает через 12 часов после успешной транзакции).</translation>
+        <translation>Одноразовый адрес (истекает через 12 часов после успешной транзакции).</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address-offline">
         <source>Offline address. Payments left: %1</source>
@@ -2529,8 +2527,7 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="max-pivacy-fee-fail">
         <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <oldsource>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</oldsource>
-        <translation type="unfinished">Для лучшей приватности были выбраны защищенные монеты. Минимальная комиссия за транзакцию - %1 %2</translation>
+        <translation>Для лучшей приватности были выбраны защищенные монеты. Минимальная комиссия за транзакцию - %1 %2</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
@@ -2785,59 +2782,59 @@ offline</source>
     </message>
     <message id="available-panel-maturing-details">
         <source>More details</source>
-        <translation type="unfinished">Подробнее</translation>
+        <translation>Подробнее</translation>
     </message>
     <message id="max-privacy-dialog-header">
         <source>Max privacy</source>
-        <translation type="unfinished">Макс. приватность</translation>
+        <translation>Макс. приватность</translation>
     </message>
     <message id="max-privacy-dialog-locked">
         <source>Locked</source>
-        <translation type="unfinished">Заблокировано</translation>
+        <translation>Заблокировано</translation>
     </message>
     <message id="max-privacy-dialog-amount">
         <source>Amount</source>
-        <translation type="unfinished">Сумма</translation>
+        <translation>Сумма</translation>
     </message>
     <message id="max-privacy-dialog-unlock-time">
         <source>Latest unlocked time</source>
-        <translation type="unfinished"></translation>
+        <translation>Последнее время разблокировки</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
         <source>Anonymity set for Max privacy transactions</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер анонимного множества для макс. приватных транзакций</translation>
     </message>
     <message id="settings-privacy-mp-notice">
         <source>Received coins can be spent immediately.</source>
-        <translation type="unfinished"></translation>
+        <translation>Полученные монеты могут быть потрачены немедленно.</translation>
     </message>
     <message id="settings-privacy-mp-time-limit">
         <source>Max privacy lock time limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Максимальное время блокировки монет</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-72">
         <source>72h</source>
-        <translation type="unfinished"></translation>
+        <translation>72 часа</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-60">
         <source>60h</source>
-        <translation type="unfinished"></translation>
+        <translation>60 часов</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-48">
         <source>48h</source>
-        <translation type="unfinished"></translation>
+        <translation>48 часов</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-36">
         <source>36h</source>
-        <translation type="unfinished"></translation>
+        <translation>36 часов</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-24">
         <source>24h</source>
-        <translation type="unfinished"></translation>
+        <translation>24 часа</translation>
     </message>
     <message id="remote-node-lelantus-warning">
         <source>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Чтобы получат макс. приватные и оффлайн транзакции, пожалуйста, подключитесь к интегрированному узлу или к удаленному узлу, настроенному с вашим ключом владельца.</translation>
     </message>
 </context>
 </TS>

@@ -1972,7 +1972,7 @@ deploy the key at the node you trust completely.</source>
     </message>
     <message id="notification-transaction-sent-message">
         <source>You sent &lt;b&gt;%1&lt;/b&gt; BEAM to &lt;b&gt;%2&lt;/b&gt;.</source>
-        <translation type="unfinished">You sent &lt;b&gt;%1&lt;/b&gt; BEAM to &lt;b&gt;%2&lt;/b&gt;.</translation>
+        <translation>U heeft &lt;b&gt;%1&lt;/b&gt; BEAM verzonden naar &lt;b&gt;%2&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-failed">
         <source>Transaction failed</source>
@@ -1984,19 +1984,19 @@ deploy the key at the node you trust completely.</source>
     </message>
     <message id="notification-address-expired-message">
         <source>&lt;b&gt;%1&lt;/b&gt; address expired.</source>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; address expired.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; adres verlopen.</translation>
     </message>
     <message id="notification-transaction-received-message">
         <source>You received &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt;.</source>
-        <translation type="unfinished">You received &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt;.</translation>
+        <translation>U heeft &lt;b&gt;%1 BEAM&lt;/b&gt; ontvangen van &lt;b&gt;%2&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-send-failed-message">
         <source>Sending &lt;b&gt;%1 BEAM&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt; failed.</source>
-        <translation type="unfinished">Sending &lt;b&gt;%1 BEAM&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt; failed.</translation>
+        <translation>Verzenden van &lt;b&gt;%1 BEAM&lt;/b&gt; naar &lt;b&gt;%2&lt;/b&gt; is mislukt.</translation>
     </message>
     <message id="notification-transaction-receive-failed-message">
         <source>Receiving &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt; failed.</source>
-        <translation type="unfinished">Receiving &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt; failed.</translation>
+        <translation>Ontvangen van &lt;b&gt;%1 BEAM&lt;/b&gt; van &lt;b&gt;%2&lt;/b&gt; is mislukt.</translation>
     </message>
     <message id="notification-transaction-sent">
         <source>Transaction was sent</source>
@@ -2017,19 +2017,19 @@ deploy the key at the node you trust completely.</source>
     </message>
     <message id="notification-swap-beam-completed-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</source>
-        <translation type="unfinished">Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</translation>
+        <translation>Aanbieding &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; met transactie ID &lt;b&gt;%4&lt;/b&gt; is voltooid.</translation>
     </message>
     <message id="notification-swap-completed-message">
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</source>
-        <translation type="unfinished">Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</translation>
+        <translation>Aanbieding &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; met transactie ID &lt;b&gt;%4&lt;/b&gt; is voltooid.</translation>
     </message>
     <message id="notification-swap-beam-failed-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</source>
-        <translation type="unfinished">Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</translation>
+        <translation>Aanbieding &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; met transactie ID &lt;b&gt;%4&lt;/b&gt; is mislukt.</translation>
     </message>
     <message id="notification-swap-failed-message">
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</source>
-        <translation type="unfinished">Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</translation>
+        <translation>Aanbieding &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; met transactie ID &lt;b&gt;%4&lt;/b&gt; is mislukt.</translation>
     </message>
     <message id="notification-swap-failed">
         <source>Atomic Swap offer failed</source>
@@ -2041,11 +2041,11 @@ deploy the key at the node you trust completely.</source>
     </message>
     <message id="notification-swap-beam-expired-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
-        <translation type="unfinished">Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</translation>
+        <translation>Aanbieding &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; met transactie ID &lt;b&gt;%4&lt;/b&gt; is verlopen.</translation>
     </message>
     <message id="notification-swap-expired-message">
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
-        <translation type="unfinished">Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</translation>
+        <translation>Aanbieding &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; met transactie ID &lt;b&gt;%4&lt;/b&gt; is verlopen.</translation>
     </message>
     <message id="general-identity">
         <source>Identity</source>
@@ -2447,8 +2447,7 @@ Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernst
     </message>
     <message id="tx-failure-shielded-coin-fee">
         <source>Cannot extract shielded coin, fee is too big.</source>
-        <oldsource>Cannot extract shielded coin, fee is to big.</oldsource>
-        <translation type="unfinished">Kan afgeschermde munt niet extraheren, de vergoeding is te groot.</translation>
+        <translation>Kan afgeschermde coin niet extraheren, fee is te hoog.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
         <source>Asset transactions are disabled in the receiver wallet</source>
@@ -2510,8 +2509,7 @@ Uw versie is: %2. Controleer op updates.</translation>
     </message>
     <message id="wallet-send-one-time-note">
         <source>One-time use address (expire in 12 hours after successfull transaction).</source>
-        <oldsource>One-time use address (expire in 12 hours after succesfull transaction).</oldsource>
-        <translation type="unfinished">Adres voor eenmalig gebruik (vervalt binnen 12 uur na succesvolle transactie).</translation>
+        <translation>Adres voor eenmalig gebruik (vervalt 12 uur na succesvolle transactie).</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address-offline">
         <source>Offline address. Payments left: %1</source>
@@ -2527,8 +2525,7 @@ Uw versie is: %2. Controleer op updates.</translation>
     </message>
     <message id="max-pivacy-fee-fail">
         <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <oldsource>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</oldsource>
-        <translation type="unfinished">Voor de beste privacy is Max privacy coins geselecteerd. Min. transactiekosten zijn %1 %2</translation>
+        <translation>Voor de beste privacy zijn Max privacy coins geselecteerd. Min. transactiekosten zijn %1 %2</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
@@ -2782,59 +2779,59 @@ offline</translation>
     </message>
     <message id="available-panel-maturing-details">
         <source>More details</source>
-        <translation type="unfinished">Meer details</translation>
+        <translation>Meer details</translation>
     </message>
     <message id="max-privacy-dialog-header">
         <source>Max privacy</source>
-        <translation type="unfinished">Maximale privacy</translation>
+        <translation>Maximale privacy</translation>
     </message>
     <message id="max-privacy-dialog-locked">
         <source>Locked</source>
-        <translation type="unfinished">Vergrendeld</translation>
+        <translation>Vergrendeld</translation>
     </message>
     <message id="max-privacy-dialog-amount">
         <source>Amount</source>
-        <translation type="unfinished">Aantal</translation>
+        <translation>Aantal</translation>
     </message>
     <message id="max-privacy-dialog-unlock-time">
         <source>Latest unlocked time</source>
-        <translation type="unfinished"></translation>
+        <translation>Laatste ontgrendelde tijd</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
         <source>Anonymity set for Max privacy transactions</source>
-        <translation type="unfinished"></translation>
+        <translation>Anonimiteit ingesteld voor Max privacytransacties</translation>
     </message>
     <message id="settings-privacy-mp-notice">
         <source>Received coins can be spent immediately.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ontvangen coins kunnen direct worden besteed.</translation>
     </message>
     <message id="settings-privacy-mp-time-limit">
         <source>Max privacy lock time limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Tijdslimiet voor Max privacyvergrendeling</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-72">
         <source>72h</source>
-        <translation type="unfinished"></translation>
+        <translation>72 uur</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-60">
         <source>60h</source>
-        <translation type="unfinished"></translation>
+        <translation>60 uur</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-48">
         <source>48h</source>
-        <translation type="unfinished"></translation>
+        <translation>48 uur</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-36">
         <source>36h</source>
-        <translation type="unfinished"></translation>
+        <translation>36 uur</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-24">
         <source>24h</source>
-        <translation type="unfinished"></translation>
+        <translation>24 uur</translation>
     </message>
     <message id="remote-node-lelantus-warning">
         <source>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Om Max privacy en offline transacties te ondersteunen maakt u verbinding met een geïntegreerde of eigen node, geconfigureerd met uw eigenaarssleutel.</translation>
     </message>
 </context>
 </TS>

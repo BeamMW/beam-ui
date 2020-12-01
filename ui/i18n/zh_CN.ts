@@ -2466,8 +2466,7 @@ much longer for a transaction to complete.</source>
     </message>
     <message id="tx-failure-shielded-coin-fee">
         <source>Cannot extract shielded coin, fee is too big.</source>
-        <oldsource>Cannot extract shielded coin, fee is to big.</oldsource>
-        <translation type="unfinished">无法提取屏蔽池的硬币，费用会很多。</translation>
+        <translation type="unfinished">Cannot extract shielded coin, fee is too big.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
         <source>Asset transactions are disabled in the receiver wallet</source>
@@ -2528,8 +2527,7 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="wallet-send-one-time-note">
         <source>One-time use address (expire in 12 hours after successfull transaction).</source>
-        <oldsource>One-time use address (expire in 12 hours after succesfull transaction).</oldsource>
-        <translation type="unfinished">一次性使用地址(交易成功后12个小时过期)。</translation>
+        <translation type="unfinished">One-time use address (expire in 12 hours after successfull transaction).</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address-offline">
         <source>Offline address. Payments left: %1</source>
@@ -2545,8 +2543,7 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="max-pivacy-fee-fail">
         <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <oldsource>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</oldsource>
-        <translation type="unfinished">为了最好的隐私，选择了最大隐私硬币。最小交易费是 %1 %2</translation>
+        <translation type="unfinished">For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
@@ -2799,59 +2796,59 @@ offline</source>
     </message>
     <message id="available-panel-maturing-details">
         <source>More details</source>
-        <translation type="unfinished">更多详细信息</translation>
+        <translation>更多详细信息</translation>
     </message>
     <message id="max-privacy-dialog-header">
         <source>Max privacy</source>
-        <translation type="unfinished">最大化隐私</translation>
+        <translation>最大化隐私</translation>
     </message>
     <message id="max-privacy-dialog-locked">
         <source>Locked</source>
-        <translation type="unfinished">锁定</translation>
+        <translation>锁定</translation>
     </message>
     <message id="max-privacy-dialog-amount">
         <source>Amount</source>
-        <translation type="unfinished">数量</translation>
+        <translation>数量</translation>
     </message>
     <message id="max-privacy-dialog-unlock-time">
         <source>Latest unlocked time</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Latest unlocked time</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
         <source>Anonymity set for Max privacy transactions</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Anonymity set for Max privacy transactions</translation>
     </message>
     <message id="settings-privacy-mp-notice">
         <source>Received coins can be spent immediately.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Received coins can be spent immediately.</translation>
     </message>
     <message id="settings-privacy-mp-time-limit">
         <source>Max privacy lock time limit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Max privacy lock time limit</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-72">
         <source>72h</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">72h</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-60">
         <source>60h</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">60h</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-48">
         <source>48h</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">48h</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-36">
         <source>36h</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">36h</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-24">
         <source>24h</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">24h</translation>
     </message>
     <message id="remote-node-lelantus-warning">
         <source>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</translation>
     </message>
 </context>
 </TS>
