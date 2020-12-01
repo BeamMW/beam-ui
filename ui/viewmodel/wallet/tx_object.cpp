@@ -559,4 +559,5 @@ void TxObject::restoreAddressType()
         return;
 
     m_addressType = GetAddressType(m_tx);
+    m_tx.SetParameter(TxParameterID::AddressType, *m_addressType);
 }
