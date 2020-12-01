@@ -148,6 +148,8 @@ function formatHours(hours) {
         //: time "hour" string
         //% "hour"
         hh = hh + " " + qsTrId("time-hour");
+    } else if (hh == 0){
+        hh = "";
     } else {
         //: time "hours" string
         //% "hours"
