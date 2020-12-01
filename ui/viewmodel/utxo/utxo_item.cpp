@@ -153,6 +153,8 @@ QString ShieldedCoinItem::getAmount() const
 
 QString ShieldedCoinItem::maturity() const
 {
+    if (!_coin.IsMaturityValid())
+        return QString{ "-" };
     return QString::number(rawMaturity());
 }
 
