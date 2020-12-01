@@ -3,6 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.0
 import Beam.Wallet 1.0
+import "../utils.js" as Utils
 import "."
 
 Dialog {
@@ -109,7 +110,7 @@ Dialog {
                 resizable: false
                 movable: false
                 delegate: TableItem {
-                    text:           styleData.value
+                    text:           Utils.formatHours(styleData.value)
                     elide:          styleData.elideMode
                 }
             }

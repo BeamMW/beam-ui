@@ -70,8 +70,9 @@ auto UtxoItemList::data(const QModelIndex &index, int role) const -> QVariant
         case Roles::MaturityPercentageSort:
             return value->maturityPercentage();
         case Roles::MaturityTimeLeft:
-        case Roles::MaturityTimeLeftSort:
             return value->maturityTimeLeft();
+        case Roles::MaturityTimeLeftSort:
+            return value->rawMaturityTimeLeft();
 
         default:
             return QVariant();

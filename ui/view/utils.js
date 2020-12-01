@@ -136,3 +136,38 @@ function createDialog(component, props) {
 function openDialog(component, props) {
     createDialog(component, props).open()
 }
+
+function formatHours(hours) {
+    var dd = Math.floor(hours / 24);
+    var hh = hours;
+    if (dd) {
+        hh = hours - dd * 24;
+    }
+
+    if (hh == 1) {
+        //: time "hour" string
+        //% "hour"
+        hh = hh + " " + qsTrId("time-hour");
+    } else {
+        //: time "hours" string
+        //% "hours"
+        hh = hh + " " + qsTrId("time-hours");
+    }
+
+    if (dd) {
+        if (dd == 1) {
+            //: time "day" string
+            //% "day"
+            dd = dd + " " + qsTrId("time-day");
+        } else {
+            //: time "days" string
+            //% "days"
+            dd = dd + " " + qsTrId("time-days");
+        }
+
+        return dd + " " + hh;
+
+    } else {
+        return hh;
+    }
+}

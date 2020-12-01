@@ -43,6 +43,7 @@ public:
 
     virtual beam::Amount rawAmount() const = 0;
     virtual beam::Height rawMaturity() const = 0;
+    virtual uint16_t rawMaturityTimeLeft() const = 0;
 };
 
 class UtxoItem : public BaseUtxoItem
@@ -63,6 +64,7 @@ public:
 
     beam::Amount rawAmount() const override;
     beam::Height rawMaturity() const override;
+    uint16_t rawMaturityTimeLeft() const override;
     const beam::wallet::Coin::ID& get_ID() const;
 private:
     beam::wallet::Coin _coin;
@@ -86,6 +88,7 @@ public:
 
     beam::Amount rawAmount() const override;
     beam::Height rawMaturity() const override;
+    uint16_t rawMaturityTimeLeft() const override;
 private:
     WalletModel& _walletModel;
     beam::wallet::ShieldedCoin _coin;

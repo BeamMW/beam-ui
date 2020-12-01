@@ -2836,5 +2836,25 @@ offline</source>
         <source>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
         <translation>Чтобы получат макс. приватные и оффлайн транзакции, пожалуйста, подключитесь к интегрированному узлу или к удаленному узлу, настроенному с вашим ключом владельца.</translation>
     </message>
+    <message id="time-hour">
+        <source>hour</source>
+        <extracomment>time &quot;hour&quot; string</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="time-hours">
+        <source>hours</source>
+        <extracomment>time &quot;hours&quot; string</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="time-day">
+        <source>day</source>
+        <extracomment>time &quot;day&quot; string</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="time-days">
+        <source>days</source>
+        <extracomment>time &quot;days&quot; string</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
