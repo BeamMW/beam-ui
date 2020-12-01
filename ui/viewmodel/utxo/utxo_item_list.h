@@ -35,6 +35,8 @@ public:
         TypeSort,
         MaturityPercentage,
         MaturityPercentageSort,
+        MaturityTimeLeft,
+        MaturityTimeLeftSort,
     };
 
     UtxoItemList();

@@ -102,14 +102,14 @@ Dialog {
             }
 
             TableViewColumn {
-                role: "maturityPercentage"
+                role: "maturityTimeLeft"
                 //% "Latest unlocked time"
                 title: qsTrId("max-privacy-dialog-unlock-time")
                 width: contentItem.width / 2
                 resizable: false
                 movable: false
                 delegate: TableItem {
-                    text:           styleData.value + "%"
+                    text:           styleData.value
                     elide:          styleData.elideMode
                 }
             }

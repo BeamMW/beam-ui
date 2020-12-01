@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "utxo_item.h"
+#include "model/app_model.h"
 #include "viewmodel/ui_helpers.h"
 #include "wallet/core/common.h"
 
@@ -60,6 +61,11 @@ QString UtxoItem::maturity() const
 QString UtxoItem::maturityPercentage() const
 {
     return QString{ "100" };
+}
+
+QString UtxoItem::maturityTimeLeft() const
+{
+    return QString{ "-" };
 }
 
 UtxoViewStatus::EnStatus UtxoItem::status() const
@@ -116,7 +122,8 @@ beam::Height UtxoItem::rawMaturity() const
 
 // ShieldedCoinItem
 ShieldedCoinItem::ShieldedCoinItem(const beam::wallet::ShieldedCoin& coin, const TxoID& shieldedCount)
-    : _coin{ coin },
+    : _walletModel{*AppModel::getInstance().getWallet()},
+      _coin{ coin },
       _shieldedCount(shieldedCount)
 {
 
@@ -153,6 +160,11 @@ QString ShieldedCoinItem::maturityPercentage() const
 {
     ShieldedCoin::UnlinkStatus us(_coin, _shieldedCount); 
     return QString::number(us.m_Progress);
+}
+
+QString ShieldedCoinItem::maturityTimeLeft() const
+{
+    return QString{ "2h" };
 }
 
 UtxoViewStatus::EnStatus ShieldedCoinItem::status() const

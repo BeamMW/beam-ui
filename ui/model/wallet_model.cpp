@@ -14,6 +14,7 @@
 
 #include "wallet_model.h"
 #include "app_model.h"
+#include "filter.h"
 #include "utility/logger.h"
 #include "utility/bridge.h"
 #include "utility/io/asyncevent.h"
@@ -25,8 +26,15 @@ using namespace beam::wallet;
 using namespace beam::io;
 using namespace std;
 
+namespace
+{
+    const size_t kShieldedPer24hFilterSize = 20;
+    const size_t kShieldedPer24hFilterBlocksForUpdate = 144;
+}  // namespace
+
 WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor)
-    : WalletClient(walletDB, nodeAddr, reactor)
+    : WalletClient(walletDB, nodeAddr, reactor),
+      m_shieldedPer24hFilter(std::make_unique<beamui::Filter>(kShieldedPer24hFilterSize))
 {
     qRegisterMetaType<beam::ByteBuffer>("beam::ByteBuffer");
     qRegisterMetaType<beam::wallet::WalletStatus>("beam::wallet::WalletStatus");
@@ -387,6 +395,11 @@ beam::TxoID WalletModel::getTotalShieldedCount() const
     return m_status.shieldedTotalCount;
 }
 
+beam::TxoID WalletModel::getShieldedPer24h() const
+{
+    return m_shieldedPer24h;
+}
+
 bool WalletModel::hasShielded() const
 {
     return !!m_status.GetBeamStatus().shielded;
@@ -438,17 +451,40 @@ void WalletModel::setStatus(const beam::wallet::WalletStatus& status)
         emit maturingChanged();
     }
 
-    if (m_status.stateID != status.stateID)
-    {
-        m_status.stateID = status.stateID;
-        m_status.update = status.update;
-        emit stateIDChanged();
-    }
-
     if (m_status.shieldedTotalCount != status.shieldedTotalCount)
     {
         m_status.shieldedTotalCount = status.shieldedTotalCount;
         emit shieldedTotalCountChanged();
+    }
+
+    if (m_status.stateID != status.stateID)
+    {
+        if (!m_status.stateID.m_Height || !(status.stateID.m_Height % kShieldedPer24hFilterBlocksForUpdate))
+        {
+            m_shieldedCountHistoryPart.clear();
+            auto shieldedCountHistoryWindowSize = kShieldedPer24hFilterSize << 1;
+            m_shieldedCountHistoryPart.reserve(shieldedCountHistoryWindowSize);
+            for (uint8_t i = 0; i < shieldedCountHistoryWindowSize; ++i)
+            {
+                auto h = status.stateID.m_Height - (kShieldedPer24hFilterBlocksForUpdate * i);
+                getAsync()->getShieldedCountAt(h, [this, shieldedCountHistoryWindowSize] (Height h, TxoID count)
+                {
+                    m_shieldedCountHistoryPart.emplace_back(h, count);
+                    if (m_shieldedCountHistoryPart.size() == shieldedCountHistoryWindowSize)
+                    {
+                        for (uint8_t i = 0; i < kShieldedPer24hFilterSize; ++i)
+                        {
+                            double b = m_shieldedCountHistoryPart[i].second - m_shieldedCountHistoryPart[i + kShieldedPer24hFilterSize].second;
+                            m_shieldedPer24hFilter->addSample(b);
+                        }
+                        m_shieldedPer24h = static_cast<TxoID>(floor(m_shieldedPer24hFilter->getAverage() * 10));
+                    }
+                });
+            }
+        }
+        m_status.stateID = status.stateID;
+        m_status.update = status.update;
+        emit stateIDChanged();
     }
 }
 
