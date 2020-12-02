@@ -34,10 +34,9 @@ UtxoViewModel::UtxoViewModel()
     m_model.getAsync()->getUtxosStatus();
 }
 
-
 QAbstractItemModel* UtxoViewModel::getAllUtxos()
 {
-    return & m_allUtxos;
+    return &m_allUtxos;
 }
 
 QString UtxoViewModel::getCurrentHeight() const
