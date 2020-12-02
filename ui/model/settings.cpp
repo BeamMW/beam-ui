@@ -490,6 +490,7 @@ void WalletSettings::maxPrivacyLockTimeLimitInit()
     {
         walletModel->getAsync()->getMaxPrivacyLockTimeLimitHours([this] (uint8_t limit)
         {
+            Lock lock(m_mutex);
             m_mpLockTimeLimit = limit;
         });
     }
@@ -497,6 +498,7 @@ void WalletSettings::maxPrivacyLockTimeLimitInit()
 
 uint8_t WalletSettings::getMaxPrivacyLockTimeLimitHours() const
 {
+    Lock lock(m_mutex);
     return m_mpLockTimeLimit;
 }
 
@@ -507,7 +509,10 @@ void WalletSettings::setMaxPrivacyLockTimeLimitHours(uint8_t lockTimeLimit)
         auto walletModel = AppModel::getInstance().getWallet();
         if (walletModel)
         {
-            m_mpLockTimeLimit = lockTimeLimit;
+            {
+                Lock lock(m_mutex);
+                m_mpLockTimeLimit = lockTimeLimit;
+            }
             walletModel->getAsync()->setMaxPrivacyLockTimeLimitHours(lockTimeLimit);
         }
     }
