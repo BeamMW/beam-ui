@@ -41,6 +41,7 @@ ComboBox {
         source: "qrc:/assets/icon-down.svg"
         anchors.right: control.right
         anchors.verticalCenter: control.verticalCenter
+        visible: control.enabled
     }
 
     contentItem: SFText {
