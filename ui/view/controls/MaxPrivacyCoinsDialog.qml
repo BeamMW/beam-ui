@@ -31,6 +31,11 @@ Dialog {
         anchors.fill: parent            
     }
 
+    onClosed : {
+        tableView.sortIndicatorOrder = Qt.AscendingOrder;
+        tableView.sortIndicatorColumn = 1;
+    }
+
     contentItem: ColumnLayout {
         Layout.fillWidth: true
         
@@ -139,8 +144,6 @@ Dialog {
             //% "Close"
             text:           qsTrId("general-close")
             onClicked: {
-                tableView.sortIndicatorOrder = Qt.AscendingOrder;
-                tableView.sortIndicatorColumn = 1;
                 dialog.close()
             }
         }
