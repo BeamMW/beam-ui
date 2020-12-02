@@ -32,7 +32,7 @@ class ReceiveViewModel: public QObject
     Q_PROPERTY(QString  secondCurrencyRateValue      READ getSecondCurrencyRateValue               NOTIFY secondCurrencyRateChanged)
     Q_PROPERTY(bool     isShieldedTx                 READ isShieldedTx          WRITE setIsShieldedTx       NOTIFY isShieldedTxChanged)
     Q_PROPERTY(bool     isPermanentAddress           READ isPermanentAddress    WRITE setIsPermanentAddress NOTIFY isPermanentAddressChanged)
-        
+    Q_PROPERTY(QString  mpTimeLimit                  READ getMPTimeLimit        CONSTANT)
 
 public:
     ReceiveViewModel();
@@ -96,6 +96,8 @@ private:
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments);
     void generateOfflineAddress();
+
+    QString getMPTimeLimit() const;
 private:
     beam::Amount _amountToReceiveGrothes;
     int          _addressExpires;

@@ -153,7 +153,7 @@ SettingsFoldable {
             ColumnLayout {
                 SFText {
                     Layout.fillWidth: true
-                    //% "Max privacy lock time limit"
+                    //% "Max privacy longest transaction time"
                     text: qsTrId("settings-privacy-mp-time-limit")
                     wrapMode:   Text.WordWrap
                     color: Style.content_main

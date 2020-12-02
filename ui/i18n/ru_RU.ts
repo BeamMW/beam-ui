@@ -2809,8 +2809,9 @@ offline</source>
         <translation>Полученные монеты могут быть потрачены немедленно.</translation>
     </message>
     <message id="settings-privacy-mp-time-limit">
-        <source>Max privacy lock time limit</source>
-        <translation>Максимальное время блокировки монет</translation>
+        <source>Max privacy longest transaction time</source>
+        <oldsource>Max privacy lock time limit</oldsource>
+        <translation type="unfinished">Максимальное время блокировки монет</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-72">
         <source>72h</source>
@@ -2862,7 +2863,12 @@ offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-addr-message-mp">
-        <source>Max Privacy transaction can last at least 2 days.</source>
+        <source>Max Privacy transaction can last at most %1 hours</source>
+        <oldsource>Max Privacy transaction can last at least 2 days.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-addr-message-mp-no-limit">
+        <source>Max Privacy transaction can last indefinitely</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

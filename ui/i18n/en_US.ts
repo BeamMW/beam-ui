@@ -2808,8 +2808,8 @@ offline</translation>
         <translation>Received coins can be spent immediately.</translation>
     </message>
     <message id="settings-privacy-mp-time-limit">
-        <source>Max privacy lock time limit</source>
-        <translation>Max privacy lock time limit</translation>
+        <source>Max privacy longest transaction time</source>
+        <translation>Max privacy longest transaction time</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-72">
         <source>72h</source>
@@ -2860,8 +2860,12 @@ offline</translation>
         <translation>No limit</translation>
     </message>
     <message id="wallet-receive-addr-message-mp">
-        <source>Max Privacy transaction can last at least 2 days.</source>
-        <translation>Max Privacy transaction can last at least 2 days.</translation>
+        <source>Max Privacy transaction can last at most %1 hours</source>
+        <translation>Max Privacy transaction can last at most %1 hours</translation>
+    </message>
+    <message id="wallet-receive-addr-message-mp-no-limit">
+        <source>Max Privacy transaction can last indefinitely</source>
+        <translation>Max Privacy transaction can last indefinitely</translation>
     </message>
 </context>
 </TS>
