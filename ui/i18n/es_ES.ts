@@ -2861,5 +2861,9 @@ fuera de línea</translation>
         <oldsource>no limit</oldsource>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-receive-addr-message-mp">
+        <source>Max Privacy transaction can last at least 2 days.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -423,6 +423,19 @@ ColumnLayout {
                 color:                 Style.content_disabled
                 wrapMode:              Text.WordWrap
                 horizontalAlignment:   Text.AlignHCenter
+                /*% "Max Privacy transaction can last at least 2 days."*/
+                text: qsTrId("wallet-receive-addr-message-mp")
+                visible:               viewModel.isShieldedTx
+            }
+
+            SFText {
+                Layout.alignment:      Qt.AlignHCenter
+                Layout.preferredWidth: 428
+                font.pixelSize:        14
+                font.italic:           true
+                color:                 Style.content_disabled
+                wrapMode:              Text.WordWrap
+                horizontalAlignment:   Text.AlignHCenter
                 /*% "Min transaction fee to send Max privacy coins is %1."*/
                 text: qsTrId("wallet-receive-addr-message").arg("~%1 BEAM".arg(Utils.uiStringToLocale("0.01")))
                 visible:               viewModel.isShieldedTx

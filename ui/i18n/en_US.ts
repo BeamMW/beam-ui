@@ -2859,5 +2859,9 @@ offline</translation>
         <source>No limit</source>
         <translation>No limit</translation>
     </message>
+    <message id="wallet-receive-addr-message-mp">
+        <source>Max Privacy transaction can last at least 2 days.</source>
+        <translation>Max Privacy transaction can last at least 2 days.</translation>
+    </message>
 </context>
 </TS>
