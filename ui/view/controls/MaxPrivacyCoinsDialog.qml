@@ -139,6 +139,8 @@ Dialog {
             //% "Close"
             text:           qsTrId("general-close")
             onClicked: {
+                tableView.sortIndicatorOrder = Qt.AscendingOrder;
+                tableView.sortIndicatorColumn = 1;
                 dialog.close()
             }
         }
