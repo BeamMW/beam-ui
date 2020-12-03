@@ -36,32 +36,25 @@ public:
     Q_INVOKABLE static bool isPasswordValid(const QString& value);
 
     // Currency utils
-    static bool isFeeOK(unsigned int fee, Currency currency, bool isShielded);
-    static bool isSwapFeeOK(unsigned int amount, unsigned int fee, Currency currency);
-    static int  getMinFeeOrRate(Currency currency);
+    // TODO maybe to need use beam::Amount instead of int
     Q_INVOKABLE static QString calcTotalFee(Currency currency, unsigned int feeRate);
     Q_INVOKABLE static QString calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyLabel);
     Q_INVOKABLE static QString calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel);
 
-    Q_INVOKABLE static unsigned int minFeeBeam(bool isShielded = false);
-    
     Q_INVOKABLE static QString getCurrencyLabel(Currency);
     Q_INVOKABLE static QString getCurrencyName(Currency);
     Q_INVOKABLE static QString getFeeRateLabel(Currency);
     Q_INVOKABLE static QString getCurrencySubunitFromLabel(const QString& currLabel);
     
-    Q_INVOKABLE static unsigned int getMinimalFee(Currency, bool isShielded);
-    Q_INVOKABLE static unsigned int getRecommendedFee(Currency);
-    Q_INVOKABLE static unsigned int getDefaultFee(Currency);
+    Q_INVOKABLE static QString getMinimalFee(Currency, bool isShielded);
+    Q_INVOKABLE static QString getRecommendedFee(Currency);
+    Q_INVOKABLE static QString getDefaultFee(Currency);
 
     // Swap & other currencies utils
     Q_INVOKABLE static bool canSwap();
-    Q_INVOKABLE static bool haveBtc();
-    Q_INVOKABLE static bool haveLtc();
-    Q_INVOKABLE static bool haveQtum();
+    Q_INVOKABLE static bool haveSwapClient(Currency);
 
-    Q_INVOKABLE static QString rawTxParametrsToTokenStr(
-            const QVariant& variantTxParams);
+    Q_INVOKABLE static QString rawTxParametrsToTokenStr(const QVariant& variantTxParams);
 
     Q_INVOKABLE static bool canReceive(Currency currency);
     Q_INVOKABLE static QString divideWithPrecision8(const QString& dividend, const QString& divider);

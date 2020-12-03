@@ -22,9 +22,8 @@ Control {
     property bool   connectionError: connectionStatus == "error"
 
     contentItem: ColumnLayout {
-        spacing: 0
-        clip:    true
-
+        spacing:    0
+        clip:       folded
         Item {
             Layout.fillWidth:  true
             Layout.alignment:  Qt.AlignTop
@@ -83,7 +82,7 @@ Control {
         Item {
             Layout.fillWidth:  true
             visible: connectionError
-            height:  errorRow.height
+            implicitHeight:  errorRow.height
 
             RowLayout {
                 id: errorRow
@@ -96,6 +95,7 @@ Control {
                     color:             Style.validator_error
                     font.pixelSize:    12
                     font.italic:       true
+                    wrapMode:          Text.Wrap
                 }
             }
 
@@ -109,12 +109,24 @@ Control {
         }
 
         Control {
-            id: contentControl
-            visible:             !control.folded
-            Layout.fillWidth:    true
-            Layout.topMargin:    connectionError ? 25 - errorRow.height : 25
-            Layout.alignment:    Qt.AlignTop
-            contentItem:         content
+            id:                     contentControl
+            //visible:                !control.folded
+            Layout.fillWidth:       true
+            Layout.topMargin:       folded ? 0 : connectionError ? Math.max(5, 25 - errorRow.height) : 25
+            Layout.alignment:       Qt.AlignTop
+            contentItem:            content
+            Layout.preferredHeight: folded ? 0 : contentControl.implicitHeight
+            opacity:                folded ? 0.0 : 1.0
+
+            Behavior on Layout.preferredHeight {
+                NumberAnimation { duration:  200 }
+            }
+            Behavior on Layout.topMargin {
+                NumberAnimation { duration:  200 }
+            }
+            Behavior on opacity {
+                NumberAnimation { duration:  200 }
+            }
         }
     }
 

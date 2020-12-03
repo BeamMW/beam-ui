@@ -18,24 +18,31 @@
 #include <QtCore>
 #include "utility/common.h"
 
-class QR : public QObject {
+class QR : public QObject
+{
     Q_OBJECT
+    Q_PROPERTY(QString address      READ getAddress     WRITE setAddr   NOTIFY addressChanged)
+    Q_PROPERTY(QString amount       READ getAmount      WRITE setAmount NOTIFY amountChanged)
+    Q_PROPERTY(QString data         READ getEncoded                     NOTIFY qrDataChanged)
 public:
     QR();
     QR(const QString& addr,
        uint width = 200,
        uint height = 200,
        beam::Amount amount = 0);
-       ~QR();
-    void setAmount(beam::Amount amount);
+    ~QR();
+    QString getAmount() const;
+    void setAmount(const QString& value);
+    const QString& getAddress() const;
     void setAddr(const QString& addr);
     void setDimensions(uint width, uint height);
 
-    QString getEncoded() const;
+    const QString& getEncoded() const;
 
 signals:
     void qrDataChanged();
-
+    void addressChanged();
+    void amountChanged();
 private:
     void update();
 
@@ -43,5 +50,6 @@ private:
     uint m_width = 200;
     uint m_height = 200;
     beam::Amount m_amountGrothes = 0;
+    QString m_amountGrothesStr;
     QString m_qrData;
 };

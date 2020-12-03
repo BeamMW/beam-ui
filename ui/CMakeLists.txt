@@ -101,7 +101,7 @@ list(APPEND SUPPORTED_LANGS "sv_SE")
 list(APPEND SUPPORTED_LANGS "th_TH")
 list(APPEND SUPPORTED_LANGS "tr_TR")
 list(APPEND SUPPORTED_LANGS "nl_NL")
-list(APPEND SUPPORTED_LANGS "rs_RS")
+list(APPEND SUPPORTED_LANGS "sr_SR")
 
 set(UI_SRC
     ui.cpp
@@ -112,6 +112,7 @@ set(UI_SRC
     viewmodel/wallet/tx_object.cpp
     viewmodel/wallet/tx_object_list.cpp
     viewmodel/wallet/wallet_view.cpp
+    viewmodel/wallet/tx_table.cpp
     viewmodel/atomic_swap/swap_offer_item.cpp
     viewmodel/atomic_swap/swap_offers_list.cpp
     viewmodel/atomic_swap/swap_tx_object.cpp
@@ -144,6 +145,8 @@ set(UI_SRC
     viewmodel/settings_view.cpp
     viewmodel/address_book_view.h
     viewmodel/address_book_view.cpp
+    viewmodel/fee_helpers.h
+    viewmodel/fee_helpers.cpp
     viewmodel/ui_helpers.h
     viewmodel/ui_helpers.cpp
     viewmodel/messages_view.h
@@ -163,6 +166,7 @@ set(UI_SRC
     viewmodel/receive_swap_view.h
     viewmodel/receive_swap_view.cpp
     viewmodel/currencies.h
+    viewmodel/currencies.cpp
     viewmodel/send_swap_view.h
     viewmodel/send_swap_view.cpp
     viewmodel/el_seed_validator.h
@@ -174,6 +178,8 @@ set(UI_SRC
     model/wallet_model.cpp
     model/app_model.h
     model/app_model.cpp
+    model/filter.h
+    model/filter.cpp
     model/keyboard.h
     model/keyboard.cpp
     model/settings.h

@@ -20,7 +20,6 @@
 #include <QStringList>
 #include <mutex>
 #include "model/wallet_model.h"
-#include "wallet/transactions/swaps/bridges/bitcoin/settings.h"
 
 
 class WalletSettings : public QObject
@@ -63,6 +62,8 @@ public:
     QStringList getLocalNodePeers();
     void setLocalNodePeers(const QStringList& qPeers);
 
+    bool getPeersPersistent() const;
+
     QString getLocale() const;
     QString getLanguageName() const;
     void setLocaleByLanguageName(const QString& language);
@@ -82,6 +83,13 @@ public:
     void setTxStatusActive(bool isActive);
 
     static void openFolder(const QString& path);
+
+    uint8_t getMaxPrivacyAnonymitySet() const;
+    void setMaxPrivacyAnonymitySet(uint8_t anonymitySet);
+
+    void maxPrivacyLockTimeLimitInit();
+    uint8_t getMaxPrivacyLockTimeLimitHours() const;
+    void setMaxPrivacyLockTimeLimitHours(uint8_t lockTimeLimit);
 
 public:
     static const char* WalletCfg;
@@ -109,6 +117,7 @@ signals:
 private:
     QSettings m_data;
     QDir m_appDataDir;
+    uint8_t m_mpLockTimeLimit = 0;
     mutable std::recursive_mutex m_mutex;
     using Lock = std::unique_lock<decltype(m_mutex)>;
 };

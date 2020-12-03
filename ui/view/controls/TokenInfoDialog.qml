@@ -10,8 +10,9 @@ Dialog {
     modal: true
         
     property alias token:                   viewModel.token
-    property alias defaultAddressType:      viewModel.defaultPermanent
     property alias ignoreStoredVouchers:    viewModel.ignoreStoredVouchers
+    property bool incoming:                 true
+    signal addressCopied
     
     TokenInfoItem {
         id:     viewModel
@@ -43,7 +44,7 @@ Dialog {
     contentItem: ColumnLayout {
         GridLayout {
             Layout.margins:         30
-            rowSpacing:             20
+            rowSpacing:             14
             columnSpacing:          16
             columns:                2
         
@@ -57,9 +58,74 @@ Dialog {
                     font.styleName:     "Bold"
                     font.weight:        Font.Bold
                     color:              Style.content_main
-                    //% "Transaction address"
+                    //% "Address details"
                     text:               qsTrId("address-info-title")
                 }
+            }
+
+            // Address type:
+            SFText {
+                Layout.alignment:       Qt.AlignTop
+                font.pixelSize:         14
+                color:                  Style.content_disabled
+                //% "Address type"
+                text:                   qsTrId("address-info-type") + ":"
+                visible:                viewModel.transactionType.length
+            }
+            
+            SFText {
+                Layout.fillWidth:       true
+                wrapMode:               Text.Wrap
+                font.pixelSize:         14
+                color:                  Style.content_main
+                text:                   viewModel.transactionType
+                verticalAlignment:      Text.AlignBottom
+                visible:                viewModel.transactionType.length
+            }
+
+            // Address expiration
+            SFText {
+                Layout.alignment:       Qt.AlignTop
+                font.pixelSize:         14
+                color:                  Style.content_disabled
+                //% "Address expiration"
+                text:                   qsTrId("address-expiration") + ":"
+                visible:                expirationField.visible
+            }
+            
+            SFText {
+                id:                     expirationField
+                Layout.fillWidth:       true
+                wrapMode:               Text.Wrap
+                font.pixelSize:         14
+                text:                   viewModel.isPermanent ? 
+                                        //% "Permanent" 
+                                        qsTrId("address-info-dialog-permanent")
+                                        //% "One time"
+                                        : qsTrId("token-info-dialog-one-time")
+                color:                  Style.content_main
+                visible:                !viewModel.isMaxPrivacy && !viewModel.isOffline && !viewModel.isPublicOffline
+            }
+
+            // Payments
+            SFText {
+                Layout.alignment:       Qt.AlignTop
+                font.pixelSize:         14
+                color:                  Style.content_disabled
+                //% "Payments"
+                text:                   qsTrId("address-info-payments") + ":"
+                visible:                paymentsField.visible
+            }
+            
+            SFLabel {
+                id:                     paymentsField
+                Layout.fillWidth:       true
+                copyMenuEnabled:        true
+                wrapMode:               Text.Wrap
+                font.pixelSize:         14
+                color:                  Style.content_main
+                text:                   viewModel.offlinePayments
+                visible:                viewModel.offlinePayments > 0 && !viewModel.isMaxPrivacy
             }
 
             // Amount
@@ -81,69 +147,7 @@ Dialog {
                 text:                   viewModel.amount
                 visible:                viewModel.amount.length
             }
-        
-            // Address expiration
-            SFText {
-                Layout.alignment:       Qt.AlignTop
-                font.pixelSize:         14
-                color:                  Style.content_disabled
-                //% "Address expiration"
-                text:                   qsTrId("address-expiration") + ":"
-                visible:                viewModel.hasAddressType
-            }
-            
-            SFText {
-                Layout.fillWidth:       true
-                wrapMode:               Text.Wrap
-                font.pixelSize:         14
-                text:                   viewModel.isPermanent ? 
-                                        //% "Permanent" 
-                                        qsTrId("address-info-dialog-permanent")
-                                        //% "One time"
-                                        : qsTrId("token-info-dialog-one-time")
-                color:                  Style.content_main
-                visible:                viewModel.hasAddressType
-            }
 
-            // Transaction type:
-            SFText {
-                Layout.alignment:       Qt.AlignTop
-                font.pixelSize:         14
-                color:                  Style.content_disabled
-                //% "Transaction type"
-                text:                   qsTrId("address-info-transaction-type") + ":"
-                visible:                viewModel.transactionType.length
-            }
-            
-            SFText {
-                Layout.fillWidth:       true
-                wrapMode:               Text.Wrap
-                font.pixelSize:         14
-                color:                  Style.content_main
-                text:                   viewModel.transactionType
-                verticalAlignment:      Text.AlignBottom
-                visible:                viewModel.transactionType.length
-            }
-
-            // Address type
-            SFText {
-                Layout.alignment:       Qt.AlignTop
-                font.pixelSize:         14
-                color:                  Style.content_disabled
-                //% "Address type"
-                text:                   qsTrId("address-info-type") + ":"
-                visible:                viewModel.tokenType.length
-            }
-            
-            SFText {
-                Layout.fillWidth:       true
-                wrapMode:               Text.Wrap
-                font.pixelSize:         14
-                text:                   viewModel.tokenType
-                color:                  Style.content_main
-                visible:                viewModel.tokenType.length
-            }
-            
             // Address
             SFText {
                 Layout.alignment:       Qt.AlignTop
@@ -154,14 +158,12 @@ Dialog {
                 visible:                viewModel.address.length && !viewModel.isMaxPrivacy
             }
             
-            SFLabel {
+            SFText {
                 Layout.fillWidth:       true
-                copyMenuEnabled:        true
                 wrapMode:               Text.Wrap
                 font.pixelSize:         14
                 color:                  Style.content_main
                 text:                   viewModel.address
-                onCopyText:             BeamGlobals.copyToClipboard(text)
                 visible:                viewModel.address.length && !viewModel.isMaxPrivacy
             }
 
@@ -175,14 +177,12 @@ Dialog {
                 visible:                viewModel.identity.length
             }
             
-            SFLabel {
+            SFText {
                 Layout.fillWidth:       true
-                copyMenuEnabled:        true
                 wrapMode:               Text.Wrap
                 font.pixelSize:         14
                 color:                  Style.content_main
                 text:                   viewModel.identity
-                onCopyText:             BeamGlobals.copyToClipboard(text)
                 visible:                viewModel.identity.length
             }
             
@@ -197,24 +197,43 @@ Dialog {
                 visible:                viewModel.token != viewModel.address
             }
             
-            ScrollView {
+            RowLayout {
                 Layout.fillWidth:             true
-                Layout.preferredWidth:        578
-                Layout.maximumHeight:         200
-                clip:                         true
-                ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
-                ScrollBar.vertical.policy:    ScrollBar.AsNeeded
                 visible:                      viewModel.token != viewModel.address
-                SFLabel {
-                    //Layout.fillWidth:       true
-                    //Layout.preferredWidth:  578
-                    width:                    578
-                    copyMenuEnabled:          true
-                    wrapMode:                 Text.Wrap
-                    font.pixelSize:           14
-                    color:                    Style.content_main
-                    text:                     viewModel.token
-                    onCopyText:               BeamGlobals.copyToClipboard(text)
+                ScrollView {
+                    Layout.fillWidth:             true
+                    Layout.preferredWidth:        578
+                    Layout.maximumHeight:         200
+                    clip:                         true
+                    ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
+                    ScrollBar.vertical.policy:    ScrollBar.AsNeeded
+                    SFLabel {
+                        //Layout.fillWidth:       true
+                        //Layout.preferredWidth:  578
+                        width:                    578
+                        copyMenuEnabled:          true
+                        wrapMode:                 Text.Wrap
+                        font.pixelSize:           14
+                        color:                    Style.content_main
+                        text:                     viewModel.token
+                        onCopyText:               {
+                            BeamGlobals.copyToClipboard(text)
+                            dialog.addressCopied();
+                        }
+                    }
+                }
+
+                CustomToolButton {
+                    Layout.alignment:       Qt.AlignTop
+                    Layout.leftMargin:      4
+                    Layout.topMargin:       -8
+                    icon.source:            "qrc:/assets/icon-copy-blue.svg"
+                    //% "Copy"
+                    ToolTip.text:           qsTrId("general-copy")
+                    onClicked: {
+                        BeamGlobals.copyToClipboard(viewModel.token)
+                        dialog.addressCopied();
+                    }
                 }
             }
         }
@@ -240,11 +259,13 @@ Dialog {
                 icon.source:        "qrc:/assets/icon-copy-blue.svg"
                 palette.buttonText: Style.content_opposite
                 icon.color:         Style.content_opposite
-                palette.button:     Style.accent_incoming
-                //% "Copy address"
-                text:               qsTrId("address-info-copy-address")
+                palette.button:     dialog.incoming ? Style.accent_incoming : Style.accent_outgoing
+                //% "copy and close"
+                text:               qsTrId("address-info-copy-close")
                 onClicked: {
                     BeamGlobals.copyToClipboard(viewModel.token);
+                    dialog.addressCopied();
+                    dialog.close();
                 }
             }
         }

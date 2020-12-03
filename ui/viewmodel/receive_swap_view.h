@@ -146,5 +146,6 @@ private:
     bool _isBeamSide;
 
     beam::Amount _minimalBeamFeeGrothes;
+    beam::Amount _shieldedInputsFee;
     bool _feeChangedByUI = false;
 };

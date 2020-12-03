@@ -75,6 +75,7 @@ class SwapCoinSettingsItem : public QObject
     Q_PROPERTY(QString  nodeAddress  READ getNodeAddress  WRITE setNodeAddress    NOTIFY nodeAddressChanged)
     Q_PROPERTY(QString  nodePort     READ getNodePort     WRITE setNodePort       NOTIFY nodePortChanged)
     // electrum settings
+    Q_PROPERTY(bool            isSupportedElectrum      READ isSupportedElectrum                                  CONSTANT)
     Q_PROPERTY(QChar           phrasesSeparatorElectrum READ getPhrasesSeparatorElectrum                          CONSTANT)
     Q_PROPERTY(bool            isCurrentSeedValid       READ getIsCurrentSeedValid                                NOTIFY isCurrentSeedValidChanged)
     Q_PROPERTY(bool            isCurrentSeedSegwit      READ getIsCurrentSeedSegwit                               NOTIFY isCurrentSeedSegwitChanged)
@@ -93,7 +94,8 @@ class SwapCoinSettingsItem : public QObject
     Q_PROPERTY(QString connectionErrorMsg   READ getConnectionErrorMsg      NOTIFY connectionErrorMsgChanged)
 
 public:
-    SwapCoinSettingsItem(SwapCoinClientModel& coinClient, beam::wallet::AtomicSwapCoin swapCoin);
+    SwapCoinSettingsItem() = default;
+    SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin swapCoin);
     virtual ~SwapCoinSettingsItem();
 
     QString getFeeRateLabel() const;
@@ -124,6 +126,7 @@ public:
     void setNodePortElectrum(const QString& value);
     bool getSelectServerAutomatically() const;
     void setSelectServerAutomatically(bool value);
+    bool isSupportedElectrum() const;
 
     bool getCanEdit() const;
 
@@ -197,7 +200,7 @@ private:
 
 private:
     beam::wallet::AtomicSwapCoin m_swapCoin;
-    SwapCoinClientModel& m_coinClient;
+    std::weak_ptr<SwapCoinClientModel> m_coinClient;
 
     boost::optional<beam::bitcoin::Settings> m_settings;
 
@@ -240,9 +243,13 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(QString  currentLanguage         READ getCurrentLanguage         WRITE setCurrentLanguage)
     Q_PROPERTY(bool     isValidNodeAddress      READ isValidNodeAddress         NOTIFY validNodeAddressChanged)
     Q_PROPERTY(QString  secondCurrency  READ getSecondCurrency  WRITE setSecondCurrency NOTIFY secondCurrencyChanged)
+    Q_PROPERTY(QString  publicAddress   READ getPublicAddress                           NOTIFY publicAddressChanged)
 
     Q_PROPERTY(QList<QObject*> swapCoinSettingsList READ getSwapCoinSettings    CONSTANT)
     Q_PROPERTY(QObject* notificationsSettings   READ getNotificationsSettings   CONSTANT)
+
+    Q_PROPERTY(int      maxPrivacyAnonymitySet  READ geMaxPrivacyAnonymitySet   WRITE setMaxPrivacyAnonymitySet NOTIFY maxPrivacyAnonymitySetChanged)
+    Q_PROPERTY(int      maxPrivacyLockTimeLimit READ getMaxPrivacyLockTimeLimit WRITE setMaxPrivacyLockTimeLimit NOTIFY maxPrivacyLockTimeLimitChanged)
     
 public:
 
@@ -274,6 +281,8 @@ public:
     QString getSecondCurrency() const;
     void setSecondCurrency(const QString&);
 
+    const QString& getPublicAddress() const;
+
     QStringList getLocalNodePeers() const;
     void setLocalNodePeers(const QStringList& localNodePeers);
     QString getWalletLocation() const;
@@ -284,6 +293,12 @@ public:
 
     const QList<QObject*>& getSwapCoinSettings();
     QObject* getNotificationsSettings();
+
+    int geMaxPrivacyAnonymitySet() const;
+    void setMaxPrivacyAnonymitySet(int mpAnonymitySetIndex);
+
+    int getMaxPrivacyLockTimeLimit() const;
+    void setMaxPrivacyLockTimeLimit(int limit);
 
     Q_INVOKABLE uint coreAmount() const;
     Q_INVOKABLE void addLocalNodePeer(const QString& localNodePeer);
@@ -306,6 +321,8 @@ public slots:
     void onNodeStarted();
     void onNodeStopped();
     void onAddressChecked(const QString& addr, bool isValid);
+private slots:
+    void onPublicAddressChanged(const QString& publicAddr);
 
 signals:
     void nodeAddressChanged();
@@ -321,7 +338,9 @@ signals:
     void currentLanguageIndexChanged();
     void secondCurrencyChanged();
     void beamMWLinksPermissionChanged();
-
+    void publicAddressChanged();
+    void maxPrivacyAnonymitySetChanged();
+    void maxPrivacyLockTimeLimitChanged();
 protected:
     void timerEvent(QTimerEvent *event) override;
 
@@ -346,6 +365,9 @@ private:
     int m_currentLanguageIndex;
     QString m_secondCurrency;
     int m_timerId;
+    QString m_publicAddress;
+    mutable int m_mpAnonymitySetIndex = 0;
+    mutable int m_mpLockTimeLimitIndex = 1;
 
     const int CHECK_INTERVAL = 1000;
 };

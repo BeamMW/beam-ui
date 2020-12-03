@@ -17,24 +17,22 @@
 #include "model/wallet_model.h"
 #include "notifications/exchange_rates_manager.h"
 
-class QR;
 class ReceiveViewModel: public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString  amountToReceive    READ getAmountToReceive    WRITE  setAmountToReceive   NOTIFY  amountReceiveChanged)
-    Q_PROPERTY(int      addressExpires     READ getAddressExpires     WRITE  setAddressExpires    NOTIFY  addressExpiresChanged)
-    Q_PROPERTY(QString  addressComment     READ getAddressComment     WRITE  setAddressComment    NOTIFY  addressCommentChanged)
-    Q_PROPERTY(QString  receiverAddress    READ getReceiverAddress                                NOTIFY  receiverAddressChanged)
-    Q_PROPERTY(QString  receiverAddressQR  READ getReceiverAddressQR                              NOTIFY  receiverAddressChanged)
-    Q_PROPERTY(QString  transactionTokenQR READ getTransactionTokenQR                             NOTIFY  transactionTokenChanged)
-    Q_PROPERTY(QString  transactionToken   READ getTransactionToken   WRITE  setTranasctionToken  NOTIFY  transactionTokenChanged)
-    Q_PROPERTY(QString  offlineToken       READ getOfflineToken       WRITE  setOfflineToken      NOTIFY  offlineTokenChanged)
-    Q_PROPERTY(bool     commentValid       READ getCommentValid                                   NOTIFY  commentValidChanged)
-    Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                   NOTIFY secondCurrencyLabelChanged)
-    Q_PROPERTY(QString  secondCurrencyRateValue     READ getSecondCurrencyRateValue               NOTIFY secondCurrencyRateChanged)
-    Q_PROPERTY(bool     isShieldedTx       READ isShieldedTx          WRITE setIsShieldedTx       NOTIFY isShieldedTxChanged)
-    Q_PROPERTY(bool     isPermanentAddress READ isPermanentAddress    WRITE setIsPermanentAddress NOTIFY isPermanentAddressChanged)
-        
+    Q_PROPERTY(QString  amountToReceive              READ getAmountToReceive    WRITE  setAmountToReceive   NOTIFY  amountReceiveChanged)
+    Q_PROPERTY(int      addressExpires               READ getAddressExpires     WRITE  setAddressExpires    NOTIFY  addressExpiresChanged)
+    Q_PROPERTY(QString  addressComment               READ getAddressComment     WRITE  setAddressComment    NOTIFY  addressCommentChanged)
+    Q_PROPERTY(QString  receiverAddress              READ getReceiverAddress                                NOTIFY  receiverAddressChanged)
+    Q_PROPERTY(QString  receiverAddressForExchange   READ getReceiverAddressForExchange                     NOTIFY  receiverAddressForExchangeChanged)
+    Q_PROPERTY(QString  transactionToken             READ getTransactionToken   WRITE  setTranasctionToken  NOTIFY  transactionTokenChanged)
+    Q_PROPERTY(QString  offlineToken                 READ getOfflineToken       WRITE  setOfflineToken      NOTIFY  offlineTokenChanged)
+    Q_PROPERTY(bool     commentValid                 READ getCommentValid                                   NOTIFY  commentValidChanged)
+    Q_PROPERTY(QString  secondCurrencyLabel          READ getSecondCurrencyLabel                   NOTIFY secondCurrencyLabelChanged)
+    Q_PROPERTY(QString  secondCurrencyRateValue      READ getSecondCurrencyRateValue               NOTIFY secondCurrencyRateChanged)
+    Q_PROPERTY(bool     isShieldedTx                 READ isShieldedTx          WRITE setIsShieldedTx       NOTIFY isShieldedTxChanged)
+    Q_PROPERTY(bool     isPermanentAddress           READ isPermanentAddress    WRITE setIsPermanentAddress NOTIFY isPermanentAddressChanged)
+    Q_PROPERTY(QString  mpTimeLimit                  READ getMPTimeLimit        CONSTANT)
 
 public:
     ReceiveViewModel();
@@ -44,6 +42,7 @@ signals:
     void amountReceiveChanged();
     void addressExpiresChanged();
     void receiverAddressChanged();
+    void receiverAddressForExchangeChanged();
     void addressCommentChanged();
     void transactionTokenChanged();
     void offlineTokenChanged();
@@ -56,8 +55,10 @@ signals:
 
 public:
     Q_INVOKABLE void initialize(const QString& address);
-    Q_INVOKABLE void generateNewAddress();
-    Q_INVOKABLE void saveAddress();
+    Q_INVOKABLE void generateNewReceiverAddress();
+    Q_INVOKABLE void saveReceiverAddress();
+    Q_INVOKABLE void saveExchangeAddress();
+    Q_INVOKABLE void saveOfflineAddress();
 
 private:
     QString getAmountToReceive() const;
@@ -67,14 +68,13 @@ private:
     int  getAddressExpires() const;
 
     QString getReceiverAddress() const;
-    QString getReceiverAddressQR() const;
+    QString getReceiverAddressForExchange() const;
 
     void setAddressComment(const QString& value);
     QString getAddressComment() const;
 
     void setTranasctionToken(const QString& value);
     QString getTransactionToken() const;
-    QString getTransactionTokenQR() const;
     QString getOfflineToken() const;
     void setOfflineToken(const QString& value);
 
@@ -91,11 +91,13 @@ private:
     bool isPermanentAddress() const;
     void setIsPermanentAddress(bool value);
 
-private slots:
+    void onGeneratedReceiverAddress(const beam::wallet::WalletAddress& addr);
+    void onGeneratedExchangeAddress(const beam::wallet::WalletAddress& addr);
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
-    void onReceiverQRChanged();
-    void onTokenQRChanged();
-    void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
+    void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments);
+    void generateOfflineAddress();
+
+    QString getMPTimeLimit() const;
 private:
     beam::Amount _amountToReceiveGrothes;
     int          _addressExpires;
@@ -103,11 +105,10 @@ private:
     QString      _token;
     QString      _offlineToken;
     beam::wallet::WalletAddress _receiverAddress;
+    beam::wallet::WalletAddress _receiverAddressForExchange;
+    beam::wallet::WalletAddress _receiverOfflineAddress;
     bool _isShieldedTx = false;
     bool _isPermanentAddress = false;
-    std::unique_ptr<QR> _qr;
-    std::unique_ptr<QR> _tokenQr;
     WalletModel& _walletModel;
     ExchangeRatesManager _exchangeRatesManager;
-    beam::wallet::TxParameters _txParameters;
 };

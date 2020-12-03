@@ -14,6 +14,7 @@
 
 #include "wallet_model.h"
 #include "app_model.h"
+#include "filter.h"
 #include "utility/logger.h"
 #include "utility/bridge.h"
 #include "utility/io/asyncevent.h"
@@ -25,8 +26,15 @@ using namespace beam::wallet;
 using namespace beam::io;
 using namespace std;
 
+namespace
+{
+    const size_t kShieldedPer24hFilterSize = 20;
+    const size_t kShieldedPer24hFilterBlocksForUpdate = 144;
+}  // namespace
+
 WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor)
-    : WalletClient(walletDB, nodeAddr, reactor)
+    : WalletClient(walletDB, nodeAddr, reactor),
+      m_shieldedPer24hFilter(std::make_unique<beamui::Filter>(kShieldedPer24hFilterSize))
 {
     qRegisterMetaType<beam::ByteBuffer>("beam::ByteBuffer");
     qRegisterMetaType<beam::wallet::WalletStatus>("beam::wallet::WalletStatus");
@@ -133,9 +141,10 @@ void WalletModel::onSyncProgressUpdated(int done, int total)
     emit syncProgressUpdated(done, total);
 }
 
-void WalletModel::onChangeCalculated(beam::Amount change)
+void WalletModel::onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId)
 {
-    emit changeCalculated(change);
+    if (assetId == Asset::s_BeamID)
+        emit changeCalculated(changeBeam);
 }
 
 void WalletModel::onShieldedCoinsSelectionCalculated(const ShieldedCoinsSelectionInfo& selectionRes)
@@ -314,6 +323,11 @@ void WalletModel::onNotificationsChanged(beam::wallet::ChangeAction action, cons
     emit notificationsChanged(action, notifications);
 }
 
+void WalletModel::onPublicAddress(const std::string& publicAddr)
+{
+    emit publicAddressChanged(QString::fromStdString(publicAddr));
+}
+
 beam::Version WalletModel::getLibVersion() const
 {
     beam::Version ver;
@@ -327,32 +341,38 @@ uint32_t WalletModel::getClientRevision() const
 
 beam::Amount WalletModel::getAvailable() const
 {
-    return m_status.available + m_status.shielded;
+    auto status = m_status.GetBeamStatus();
+    return status.available + status.shielded;
 }
 
 beam::Amount WalletModel::getReceiving() const
 {
-    return m_status.receiving;
+    return m_status.GetBeamStatus().receiving;
 }
 
 beam::Amount WalletModel::getReceivingIncoming() const
 {
-    return m_status.receivingIncoming;
+    return m_status.GetBeamStatus().receivingIncoming;
 }
 
 beam::Amount WalletModel::getReceivingChange() const
 {
-    return m_status.receivingChange;
+    return m_status.GetBeamStatus().receivingChange;
 }
 
 beam::Amount WalletModel::getSending() const
 {
-    return m_status.sending;
+    return m_status.GetBeamStatus().sending;
 }
 
 beam::Amount WalletModel::getMaturing() const
 {
-    return m_status.maturing;
+    return m_status.GetBeamStatus().maturing;
+}
+
+beam::Amount WalletModel::getMaturingMP() const
+{
+    return m_status.GetBeamStatus().maturingMP;
 }
 
 beam::Height WalletModel::getCurrentHeight() const
@@ -370,56 +390,125 @@ beam::Block::SystemState::ID WalletModel::getCurrentStateID() const
     return m_status.stateID;
 }
 
+beam::TxoID WalletModel::getTotalShieldedCount() const
+{
+    return m_status.shieldedTotalCount;
+}
+
+beam::TxoID WalletModel::getShieldedPer24h() const
+{
+    return m_shieldedPer24h;
+}
+
+uint8_t WalletModel::getMPLockTimeLimit() const
+{
+    return m_mpLockTimeLimit;
+}
+
 bool WalletModel::hasShielded() const
 {
-    return !!m_status.shielded;
+    return !!m_status.GetBeamStatus().shielded;
 }
 
 void WalletModel::setStatus(const beam::wallet::WalletStatus& status)
 {
-    if (m_status.available != status.available || m_status.shielded != status.shielded)
+    if (m_status.GetBeamStatus().available != status.GetBeamStatus().available ||
+        m_status.GetBeamStatus().shielded != status.GetBeamStatus().shielded)
     {
-        m_status.available = status.available;
-        m_status.shielded = status.shielded;
+        m_status.all[Asset::s_BeamID].available = status.GetBeamStatus().available;
+        m_status.all[Asset::s_BeamID].shielded = status.GetBeamStatus().shielded;
         emit availableChanged();
     }
 
-    if (m_status.receiving != status.receiving)
+    if (m_status.GetBeamStatus().receiving != status.GetBeamStatus().receiving)
     {
-        m_status.receiving = status.receiving;
+        m_status.all[Asset::s_BeamID].receiving = status.GetBeamStatus().receiving;
         emit receivingChanged();
     }
 
-    if (m_status.receivingIncoming != status.receivingIncoming)
+    if (m_status.GetBeamStatus().receivingIncoming != status.GetBeamStatus().receivingIncoming)
     {
-        m_status.receivingIncoming = status.receivingIncoming;
+        m_status.all[Asset::s_BeamID].receivingIncoming = status.GetBeamStatus().receivingIncoming;
         emit receivingIncomingChanged();
     }
 
-    if (m_status.receivingChange != status.receivingChange)
+    if (m_status.GetBeamStatus().receivingChange != status.GetBeamStatus().receivingChange)
     {
-        m_status.receivingChange = status.receivingChange;
+        m_status.all[Asset::s_BeamID].receivingChange = status.GetBeamStatus().receivingChange;
         emit receivingChangeChanged();
     }
 
-    if (m_status.sending != status.sending)
+    if (m_status.GetBeamStatus().sending != status.GetBeamStatus().sending)
     {
-        m_status.sending = status.sending;
+        m_status.all[Asset::s_BeamID].sending = status.GetBeamStatus().sending;
         emit sendingChanged();
     }
 
-    if (m_status.maturing != status.maturing)
+    if (m_status.GetBeamStatus().maturing != status.GetBeamStatus().maturing)
     {
-        m_status.maturing = status.maturing;
+        m_status.all[Asset::s_BeamID].maturing = status.GetBeamStatus().maturing;
         emit maturingChanged();
+    }
+
+    if (m_status.GetBeamStatus().maturingMP != status.GetBeamStatus().maturingMP)
+    {
+        m_status.all[Asset::s_BeamID].maturingMP = status.GetBeamStatus().maturingMP;
+        emit maturingChanged();
+    }
+
+    if (m_status.shieldedTotalCount != status.shieldedTotalCount)
+    {
+        m_status.shieldedTotalCount = status.shieldedTotalCount;
+        emit shieldedTotalCountChanged();
     }
 
     if (m_status.stateID != status.stateID)
     {
+        if (!m_status.stateID.m_Height || !(status.stateID.m_Height % kShieldedPer24hFilterBlocksForUpdate))
+        {
+            m_shieldedCountHistoryPart.clear();
+            auto shieldedCountHistoryWindowSize = kShieldedPer24hFilterSize << 1;
+
+            if (status.stateID.m_Height > kShieldedPer24hFilterBlocksForUpdate * shieldedCountHistoryWindowSize)
+            {
+                m_shieldedCountHistoryPart.reserve(shieldedCountHistoryWindowSize);
+
+                for (uint8_t i = 0; i < shieldedCountHistoryWindowSize; ++i)
+                {
+                    auto h = status.stateID.m_Height - (kShieldedPer24hFilterBlocksForUpdate * i);
+                    getAsync()->getShieldedCountAt(h, [this, shieldedCountHistoryWindowSize] (Height h, TxoID count)
+                    {
+                        m_shieldedCountHistoryPart.emplace_back(h, count);
+                        if (m_shieldedCountHistoryPart.size() == shieldedCountHistoryWindowSize)
+                        {
+                            for (uint8_t i = 0; i < kShieldedPer24hFilterSize; ++i)
+                            {
+                                if (m_shieldedCountHistoryPart[i].second)
+                                {
+                                    double b = m_shieldedCountHistoryPart[i].second - m_shieldedCountHistoryPart[i + kShieldedPer24hFilterSize].second;
+                                    m_shieldedPer24hFilter->addSample(b);
+                                }
+                                else
+                                {
+                                    m_shieldedPer24hFilter->addSample(0);
+                                }
+                                
+                            }
+                            m_shieldedPer24h = static_cast<TxoID>(floor(m_shieldedPer24hFilter->getAverage() * 10));
+                        }
+                    });
+                }
+            }
+        }
         m_status.stateID = status.stateID;
         m_status.update = status.update;
         emit stateIDChanged();
     }
+
+    getAsync()->getMaxPrivacyLockTimeLimitHours([this] (uint8_t limit)
+    {
+        m_mpLockTimeLimit = limit;
+    });
 }
 
 void WalletModel::setAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addrs)

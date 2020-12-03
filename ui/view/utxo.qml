@@ -251,6 +251,7 @@ ColumnLayout {
                         case UtxoStatus.Available:
                             return Style.active;
                         case UtxoStatus.Maturing:
+                        case UtxoStatus.MaturingMP:
                         case UtxoStatus.Spent:
                         case UtxoStatus.Outgoing:
                             return Style.accent_outgoing;
@@ -291,6 +292,9 @@ ColumnLayout {
                         case UtxoStatus.Spent:
                             //% "Spent"
                             return qsTrId("utxo-status-spent");
+                        case UtxoStatus.MaturingMP:
+                            //% "Maturing%1(max privacy %2% unlinked)"
+                            return qsTrId("utxo-status-maturing-mp").arg(lineSeparator).arg(model ? model.maturityPercentage : "?");
                         default:
                             return "";
                     }

@@ -74,9 +74,10 @@ Control {
                     onCopyText:      BeamGlobals.copyToClipboard(amount)
                     copyMenuEnabled: true
                 }
-                Image {
-                    visible: showDrop
-                    source:  "qrc:/assets/icon-down.svg"
+                SvgImage {
+                    visible:    showDrop
+                    source:     "qrc:/assets/icon-down.svg"
+                    sourceSize: Qt.size(5, 3)
                 }
             }
 

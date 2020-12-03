@@ -105,6 +105,22 @@ ColumnLayout {
                     id: privacyBlock
                     viewModel: viewModel
                 }
+
+                SettingsTitle {
+                    topPadding: 30
+                    //% "Troubleshooting"
+                    text:  qsTrId("settings-troubleshooting-title")
+                }
+
+                SettingsResources {
+                    id: resourcesBlock
+                    viewModel: viewModel
+                }
+
+                SettingsReport {
+                    id: reportBlock
+                    viewModel: viewModel
+                }
             }
 
             ColumnLayout {
@@ -144,6 +160,7 @@ ColumnLayout {
                         showAddressesDialogTitle: modelData.showAddressesDialogTitle
                         feeRateLabel:             modelData.feeRateLabel
                         canEdit:                  modelData.canEdit
+                        isSupportedElectrum:      modelData.isSupportedElectrum
                         isConnected:              modelData.isConnected
                         isNodeConnection:         modelData.isNodeConnection
                         isElectrumConnection:     modelData.isElectrumConnection
@@ -268,21 +285,6 @@ ColumnLayout {
                             value:    settingsControl.useRandomElectrumNode
                         }
                     }
-                }
-
-                SettingsTitle {
-                    //% "Troubleshooting"
-                    text:  qsTrId("settings-troubleshooting-title")
-                }
-
-                SettingsResources {
-                    id: resourcesBlock
-                    viewModel: viewModel
-                }
-
-                SettingsReport {
-                    id: reportBlock
-                    viewModel: viewModel
                 }
             }
         }

@@ -1,13 +1,14 @@
 import QtQuick 2.11
+import Beam.Wallet 1.0
+import "."
 
 Item {
     id: root
 
     property var mainRoot
     property color topColor
-
-    property color mainTopColor: null
-    property color mainTopGradientColor: null
+    property color mainTopColor
+    property color mainTopGradientColor
 
     Component.onCompleted: {
         mainTopColor = mainRoot.topColor;

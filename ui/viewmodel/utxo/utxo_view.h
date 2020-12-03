@@ -22,23 +22,30 @@ class UtxoViewModel : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QAbstractItemModel* allUtxos       READ getAllUtxos          NOTIFY allUtxoChanged)
-    Q_PROPERTY(QString currentHeight              READ getCurrentHeight     NOTIFY stateChanged)
-    Q_PROPERTY(QString currentStateHash           READ getCurrentStateHash  NOTIFY stateChanged)
+    Q_PROPERTY(QAbstractItemModel* allUtxos              READ getAllUtxos           NOTIFY allUtxoChanged)
+    Q_PROPERTY(QString currentHeight                     READ getCurrentHeight      NOTIFY stateChanged)
+    Q_PROPERTY(QString currentStateHash                  READ getCurrentStateHash   NOTIFY stateChanged)
+    Q_PROPERTY(bool maturingMaxPrivacy                   READ getMaturingMaxPrivacy WRITE setMaturingMaxPrivacy NOTIFY maturingMaxPrivacyChanged)
 
 public:
     UtxoViewModel();
     QAbstractItemModel* getAllUtxos();
     QString getCurrentHeight() const;
     QString getCurrentStateHash() const;
+    bool getMaturingMaxPrivacy() const;
+    void setMaturingMaxPrivacy(bool value);
 public slots:
     void onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
     void onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& items);
+    void onTotalShieldedCountChanged();
 signals:
     void allUtxoChanged();
     void shieldedCoinsChanged();
     void stateChanged();
+    void maturingMaxPrivacyChanged();
 private:
     UtxoItemList m_allUtxos;
     WalletModel& m_model;
+    beam::TxoID m_totalShieldedCount = std::numeric_limits<beam::TxoID>::max();
+    bool m_maturingMaxPrivacy = false;
 };

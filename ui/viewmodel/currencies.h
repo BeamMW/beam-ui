@@ -30,3 +30,6 @@ public:
 };
 
 typedef WalletCurrency::Currency Currency;
+
+beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(Currency currency);
+Currency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin);

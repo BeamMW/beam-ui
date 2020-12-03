@@ -22,117 +22,88 @@ using namespace beamui;
 TokenInfoItem::TokenInfoItem(QObject* parent /* = nullptr */)
         : QObject(parent)
 {
-    connect(AppModel::getInstance().getWallet().get(), &WalletModel::getAddressReturned, this, &TokenInfoItem::onGetAddressReturned);
 }
 
 bool TokenInfoItem::isPermanent() const
 {
-    auto p = m_parameters.GetParameter<bool>(TxParameterID::IsPermanentPeerID);
-    if (p)
-    {
-        return *p;
-    }
-    if (m_defaultPermanent)
-    {
-        return *m_defaultPermanent;
-    }
-    return false;
+    return m_isPermanent;
 }
 
 bool TokenInfoItem::isMaxPrivacy() const
 {
-    auto p = m_parameters.GetParameter<TxType>(TxParameterID::TransactionType);
-    return p && *p == TxType::PushTransaction;
+    return m_isMaxPrivacy;
 }
 
-bool TokenInfoItem::hasAddressType() const
+bool TokenInfoItem::isOffline() const
 {
-    return m_defaultPermanent.is_initialized() || m_parameters.GetParameter<bool>(TxParameterID::IsPermanentPeerID);
+    return m_isOffline;
+}
+
+bool TokenInfoItem::isPublicOffline() const
+{
+    return m_isPublicOffline;
 }
 
 QString TokenInfoItem::getTransactionType() const
 {
-    auto p = m_parameters.GetParameter<TxType>(TxParameterID::TransactionType);
-    if (p)
+    if (isOffline())
     {
-        switch (*p)
-        {
-        case TxType::PushTransaction:
-            return qtTrId("tx-max-privacy");
-        case TxType::Simple:
-            return qtTrId("tx-regular");
-        default:
-            break;
-        }
+        //% "Offline"
+        return qtTrId("tx-address-offline");
     }
-    return qtTrId("tx-regular");
+    if (isMaxPrivacy())
+    {
+        return qtTrId("tx-address-max-privacy");
+    }
+    if (isPublicOffline())
+    {
+        return qtTrId("tx-address-public-offline");
+    }
+    if (m_token == beamui::toString(m_addressSBBS))
+    {
+        //% "Regular (for exchange or mining pool)"
+        return qtTrId("tx-address-regular-exchange");
+    }
+    //% "Regular (for wallet)"
+    return qtTrId("tx-address-regular-wallet");
 }
 
 QString TokenInfoItem::getAmount() const
 {
-    auto p = m_parameters.GetParameter<Amount>(TxParameterID::Amount);
-    if (p)
+    if (m_amountValue)
     {
-        return AmountToUIString(*p, Currencies::Beam);
+        return AmountToUIString(m_amountValue, Currencies::Beam);
     }
     return "";
 }
 
 QString TokenInfoItem::getAmountValue() const
 {
-    auto p = m_parameters.GetParameter<Amount>(TxParameterID::Amount);
-    if (p)
+    if (m_amountValue)
     {
-        return AmountToUIString(*p, Currencies::Unknown);
+        return AmountToUIString(m_amountValue, Currencies::Unknown);
     }
     return "";
 }
 
 QString TokenInfoItem::getAddress() const
 {
-    auto p = m_parameters.GetParameter<WalletID>(TxParameterID::PeerID);
-    if (p)
+    if (m_addressSBBS != Zero)
     {
-        return toString(*p);
+        return toString(m_addressSBBS);
     }
     return "";
 }
 
 QString TokenInfoItem::getIdentity() const
 {
-    auto p = m_parameters.GetParameter<PeerID>(TxParameterID::PeerWalletIdentity);
-    if (p)
+    if (m_identity != Zero)
     {
-        return toString(*p);
+        return toString(m_identity);
     }
     return "";
 }
 
-QString TokenInfoItem::getTokenType() const
-{
-    auto p = m_parameters.GetParameter<TxType>(TxParameterID::TransactionType);
-    if (p)
-    {
-        switch (*p)
-        {
-        case TxType::PushTransaction:
-        {
-            auto vouchers = m_parameters.GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList);
-            if (vouchers && !vouchers->empty())
-            {
-                int offlinePayments = getIgnoreStoredVouchers() ? static_cast<int>(vouchers->size()) : getOfflinePayments();
-                //% "Offline (%1)"
-                return qtTrId("tx-address-offline-count").arg(offlinePayments);
-            }
-            //% "Online"
-            return qtTrId("tx-address-online");
-        }
-        default:
-            break;
-        }
-    }
-    return "";
-}
 
 QString TokenInfoItem::getToken() const
 {
@@ -144,24 +115,84 @@ void TokenInfoItem::setToken(const QString& token)
     auto trimmed = token.trimmed();
     if (trimmed != m_token)
     {
-        m_token = trimmed;
+        reset();
         auto p = wallet::ParseParameters(trimmed.toStdString());
         if (p)
         {
-            m_parameters = *p;
+            m_token = trimmed;
+
+            const TxParameters& params = *p;
+
+            auto walletID = params.GetParameter<WalletID>(TxParameterID::PeerID);
+            m_addressSBBS = walletID ? *walletID : Zero;
+
+            auto amount = params.GetParameter<Amount>(TxParameterID::Amount);
+            m_amountValue = amount ? *amount : 0;
+
+            auto identity = params.GetParameter<PeerID>(TxParameterID::PeerWalletIdentity);
+            m_identity = identity ? *identity : Zero;
+
+            auto type = params.GetParameter<TxType>(TxParameterID::TransactionType);
+            if (type)
+            {
+                switch (*type)
+                {
+                case TxType::PushTransaction:
+                {
+                    auto voucher = params.GetParameter<ShieldedTxo::Voucher>(TxParameterID::Voucher);
+                    m_isMaxPrivacy = !!voucher;
+
+                    auto vouchers = params.GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList);
+                    if (vouchers && !vouchers->empty())
+                    {
+                        m_isOffline = true;
+                        if (getIgnoreStoredVouchers())
+                        {
+                            setOfflinePayments((int)vouchers->size());
+                        }
+                        else if (walletID)
+                        {
+                            AppModel::getInstance().getWallet()->getAsync()->saveVouchers(*vouchers, *walletID);
+                        }
+                    } 
+                    else
+                    {
+                        auto gen = params.GetParameter<ShieldedTxo::PublicGen>(TxParameterID::PublicAddreessGen);
+                        if (gen)
+                        {
+                            m_isPublicOffline = true;
+                        }
+                    }
+                }
+                break;
+                case TxType::Simple:
+                {
+                    auto isPermanent = params.GetParameter<bool>(TxParameterID::IsPermanentPeerID);
+                    if (isPermanent)
+                    {
+                        m_isPermanent = *isPermanent;
+                    }
+                }
+                break;
+                default:
+                    break;
+                }
+            }
+            else
+            {
+                m_isPermanent = true;
+            }
+
+            if (!getIgnoreStoredVouchers() && walletID)
+            {
+                AppModel::getInstance().getWallet()->getAsync()->getAddress(*walletID, [this](const auto& addr, auto count)
+                {
+                    setOfflinePayments((int)count);
+                });
+            }
         }
-        else
-        {
-            m_parameters = {};
-        }
-        
+
         emit tokenChanged();
-        emit offlinePaymentsChanged();
-        auto peerID = m_parameters.GetParameter<WalletID>(TxParameterID::PeerID);
-        if (peerID)
-        {
-            AppModel::getInstance().getWallet()->getAsync()->getAddress(*peerID);
-        }
     }
 }
 
@@ -179,29 +210,6 @@ void TokenInfoItem::setOfflinePayments(int value)
     }
 }
 
-bool TokenInfoItem::getDefaultPermanent() const
-{
-    return *m_defaultPermanent;
-}
-
-void TokenInfoItem::setDefaultPermanent(bool value)
-{
-    if (m_defaultPermanent != value)
-    {
-        m_defaultPermanent = value;
-        emit defaultPermanentChanged();
-    }
-}
-
-void TokenInfoItem::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
-{
-    auto p = m_parameters.GetParameter<WalletID>(TxParameterID::PeerID);
-    if (p && *p == id)
-    {
-        setOfflinePayments(offlinePayments);
-    }
-}
-
 bool TokenInfoItem::getIgnoreStoredVouchers() const
 {
     return m_ignoreStoredVouchers;
@@ -214,4 +222,17 @@ void TokenInfoItem::setIgnoreStoredVouchers(bool value)
         m_ignoreStoredVouchers = value;
         emit ignoreStoredVouchersChanged();
     }
+}
+
+void TokenInfoItem::reset()
+{
+    m_token.clear();
+    m_isPermanent = false;
+    m_isMaxPrivacy = false;
+    m_isOffline = false;
+    m_isPublicOffline = false;
+    m_amountValue = 0;
+    m_addressSBBS = Zero;
+    m_identity = Zero;
+    m_offlinePayments = 0;
 }

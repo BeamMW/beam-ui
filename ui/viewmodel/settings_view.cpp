@@ -29,12 +29,6 @@
 #include "mnemonic/mnemonic.h"
 #include "viewmodel/ui_helpers.h"
 
-#include "wallet/transactions/swaps/bridges/litecoin/settings.h"
-#include "wallet/transactions/swaps/bridges/qtum/settings.h"
-#include "wallet/transactions/swaps/bridges/bitcoin/common.h"
-#include "wallet/transactions/swaps/bridges/qtum/common.h"
-#include "wallet/transactions/swaps/bridges/litecoin/common.h"
-
 using namespace beam;
 using namespace ECC;
 using namespace std;
@@ -83,8 +77,10 @@ namespace
     }
 
     const char ELECTRUM_PHRASES_SEPARATOR = ' ';
-}
 
+    const std::map<int, uint8_t> kMPAnonymitySetVariants = { {0, 64}, {1, 32}, {2, 16}, {3, 8}, {4, 4}, {5, 2} };
+    const std::map<int, uint8_t> kMPLockTimeLimits = { {0, 0}, {1, 72}, {2, 60}, {3, 48}, {4, 36}, {5, 24} };
+}  // namespace
 
 ElectrumPhraseItem::ElectrumPhraseItem(int index, const QString& phrase)
     : m_index(index)
@@ -140,12 +136,13 @@ void ElectrumPhraseItem::revertChanges()
 }
 
 
-SwapCoinSettingsItem::SwapCoinSettingsItem(SwapCoinClientModel& coinClient, wallet::AtomicSwapCoin swapCoin)
+SwapCoinSettingsItem::SwapCoinSettingsItem(wallet::AtomicSwapCoin swapCoin)
     : m_swapCoin(swapCoin)
-    , m_coinClient(coinClient)
+    , m_coinClient(AppModel::getInstance().getSwapCoinClient(swapCoin))
 {
-    connect(&m_coinClient, SIGNAL(statusChanged()), this, SLOT(onStatusChanged()));
-    connect(&m_coinClient, SIGNAL(connectionErrorChanged()), this, SIGNAL(connectionErrorMsgChanged()));
+    auto coinClient = m_coinClient.lock();
+    connect(coinClient.get(), SIGNAL(statusChanged()), this, SLOT(onStatusChanged()));
+    connect(coinClient.get(), SIGNAL(connectionErrorChanged()), this, SIGNAL(connectionErrorMsgChanged()));
     LoadSettings();
 }
 
@@ -179,20 +176,7 @@ QString SwapCoinSettingsItem::getTitle() const
 
  QString SwapCoinSettingsItem::getCoinID() const
  {
-    switch (m_swapCoin)
-    {
-         case beam::wallet::AtomicSwapCoin::Bitcoin:
-            return "BTC";
-        case beam::wallet::AtomicSwapCoin::Litecoin:
-            return "LTC";
-        case beam::wallet::AtomicSwapCoin::Qtum:
-            return "QTUM";
-        default:
-        {
-            assert(false && "unexpected swap coin!");
-            return QString();
-        }
-    }
+     return beamui::getCurrencyLabel(beamui::convertSwapCoinToCurrency(m_swapCoin));
  }
 
 QString SwapCoinSettingsItem::getShowSeedDialogTitle() const
@@ -208,6 +192,17 @@ QString SwapCoinSettingsItem::getShowSeedDialogTitle() const
         case beam::wallet::AtomicSwapCoin::Qtum:
             //% "Qtum seed phrase"
             return qtTrId("qtum-show-seed-title");
+        case beam::wallet::AtomicSwapCoin::Dogecoin:
+            //% "Dogecoin seed phrase"
+            return qtTrId("dogecoin-show-seed-phrase");
+#if defined(BITCOIN_CASH_SUPPORT)
+        case beam::wallet::AtomicSwapCoin::Bitcoin_Cash:
+            //% "Bitcoin Cash seed phrase"
+            return qtTrId("bitcoin-cash-show-seed-phrase");
+#endif // BITCOIN_CASH_SUPPORT
+        case beam::wallet::AtomicSwapCoin::Dash:
+            //% "Dash seed phrase"
+            return qtTrId("dash-show-seed-phrase");
         default:
         {
             assert(false && "unexpected swap coin!");
@@ -229,6 +224,17 @@ QString SwapCoinSettingsItem::getShowAddressesDialogTitle() const
         case beam::wallet::AtomicSwapCoin::Qtum:
             //% "Qtum wallet addresses"
             return qtTrId("qtum-show-addresses-title");
+        case beam::wallet::AtomicSwapCoin::Dogecoin:
+            //% "Dogecoin wallet addresses"
+            return qtTrId("dogecoin-show-addresses-title");
+#if defined(BITCOIN_CASH_SUPPORT)
+        case beam::wallet::AtomicSwapCoin::Bitcoin_Cash:
+            //% "Bitcoin Cash wallet addresses"
+            return qtTrId("bitcoin-cash-show-addresses-title");
+#endif // BITCOIN_CASH_SUPPORT
+        case beam::wallet::AtomicSwapCoin::Dash:
+            //% "Dash wallet addresses"
+            return qtTrId("dash-show-addresses-title");
         default:
         {
             assert(false && "unexpected swap coin!");
@@ -250,6 +256,17 @@ QString SwapCoinSettingsItem::getGeneralTitle() const
         case wallet::AtomicSwapCoin::Qtum:
             //% "QTUM"
             return qtTrId("general-qtum");
+        case wallet::AtomicSwapCoin::Dogecoin:
+            //% "Dogecoin"
+            return qtTrId("general-dogecoin");
+#if defined(BITCOIN_CASH_SUPPORT)
+        case wallet::AtomicSwapCoin::Bitcoin_Cash:
+            //% "Bitcoin Cash"
+            return qtTrId("general-bitcoin-cash");
+#endif // BITCOIN_CASH_SUPPORT
+        case wallet::AtomicSwapCoin::Dash:
+            //% "DASH"
+            return qtTrId("general-dash");
         default:
         {
             assert(false && "unexpected swap coin!");
@@ -272,6 +289,17 @@ QString SwapCoinSettingsItem::getConnectedNodeTitle() const
         case wallet::AtomicSwapCoin::Qtum:
             //% "Qtum node"
             return qtTrId("settings-swap-qtum-node");
+        case wallet::AtomicSwapCoin::Dogecoin:
+            //% "Dogecoin node"
+            return qtTrId("settings-swap-dogecoin-node");
+#if defined(BITCOIN_CASH_SUPPORT)
+        case wallet::AtomicSwapCoin::Bitcoin_Cash:
+            //% "Bitcoin Cash node"
+            return qtTrId("settings-swap-bitcoin-cash-node");
+#endif // BITCOIN_CASH_SUPPORT
+        case wallet::AtomicSwapCoin::Dash:
+            //% "Dash node"
+            return qtTrId("settings-swap-dash-node");
         default:
         {
             assert(false && "unexpected swap coin!");
@@ -294,6 +322,17 @@ QString SwapCoinSettingsItem::getConnectedElectrumTitle() const
         case wallet::AtomicSwapCoin::Qtum:
             //% "Qtum electrum"
             return qtTrId("settings-swap-qtum-electrum");
+        case wallet::AtomicSwapCoin::Dogecoin:
+            //% "Dogecoin electrum"
+            return qtTrId("settings-swap-dogecoin-electrum");
+#if defined(BITCOIN_CASH_SUPPORT)
+        case wallet::AtomicSwapCoin::Bitcoin_Cash:
+            //% "Bitcoin Cash electrum"
+            return qtTrId("settings-swap-bitcoin-cash-electrum");
+#endif // BITCOIN_CASH_SUPPORT
+        case wallet::AtomicSwapCoin::Dash:
+            //% "Dash electrum"
+            return qtTrId("settings-swap-dash-electrum");
         default:
         {
             assert(false && "unexpected swap coin!");
@@ -431,6 +470,11 @@ void SwapCoinSettingsItem::setSelectServerAutomatically(bool value)
     }
 }
 
+bool SwapCoinSettingsItem::isSupportedElectrum() const
+{
+    return m_settings->IsSupportedElectrum();
+}
+
 QStringList SwapCoinSettingsItem::getAddressesElectrum() const
 {
     auto electrumSettings = m_settings->GetElectrumConnectionOptions();
@@ -460,13 +504,13 @@ void SwapCoinSettingsItem::onStatusChanged()
     {
         using beam::bitcoin::Client;
 
-        switch (m_coinClient.getStatus())
+        switch (m_coinClient.lock()->getStatus())
         {
         case Client::Status::Connected:
         case Client::Status::Failed:
         case Client::Status::Unknown:
         {
-            auto settings = m_coinClient.GetSettings();
+            auto settings = m_coinClient.lock()->GetSettings();
 
             if (auto options = settings.GetElectrumConnectionOptions(); options.IsInitialized())
             {
@@ -485,7 +529,7 @@ void SwapCoinSettingsItem::onStatusChanged()
 
 bool SwapCoinSettingsItem::getCanEdit() const
 {
-    return m_coinClient.canModifySettings();
+    return m_coinClient.lock()->canModifySettings();
 }
 
 bool SwapCoinSettingsItem::getIsConnected() const
@@ -507,7 +551,7 @@ QString SwapCoinSettingsItem::getConnectionStatus() const
 {
     using beam::bitcoin::Client;
 
-    switch (m_coinClient.getStatus())
+    switch (m_coinClient.lock()->getStatus())
     {
         case Client::Status::Uninitialized:
             return "uninitialized";
@@ -530,7 +574,7 @@ QString SwapCoinSettingsItem::getConnectionErrorMsg() const
 {
     using beam::bitcoin::IBridge;
 
-    switch (m_coinClient.getConnectionError())
+    switch (m_coinClient.lock()->getConnectionError())
     {
         case IBridge::ErrorType::InvalidCredentials:
             //% "Cannot connect to node. Invalid credentials"
@@ -551,7 +595,8 @@ QString SwapCoinSettingsItem::getConnectionErrorMsg() const
 
 void SwapCoinSettingsItem::applyNodeSettings()
 {
-    bitcoin::BitcoinCoreSettings connectionSettings = m_coinClient.GetSettings().GetConnectionOptions();
+    auto coinClient = m_coinClient.lock();
+    bitcoin::BitcoinCoreSettings connectionSettings = coinClient->GetSettings().GetConnectionOptions();
     connectionSettings.m_pass = m_nodePass.toStdString();
     connectionSettings.m_userName = m_nodeUser.toStdString();
 
@@ -564,12 +609,13 @@ void SwapCoinSettingsItem::applyNodeSettings()
 
     m_settings->SetConnectionOptions(connectionSettings);
 
-    m_coinClient.SetSettings(*m_settings);
+    coinClient->SetSettings(*m_settings);
 }
 
 void SwapCoinSettingsItem::applyElectrumSettings()
 {
-    bitcoin::ElectrumSettings electrumSettings = m_coinClient.GetSettings().GetElectrumConnectionOptions();
+    auto coinClient = m_coinClient.lock();
+    bitcoin::ElectrumSettings electrumSettings = coinClient->GetSettings().GetElectrumConnectionOptions();
     
     if (!m_selectServerAutomatically && !m_nodeAddressElectrum.isEmpty())
     {
@@ -581,7 +627,7 @@ void SwapCoinSettingsItem::applyElectrumSettings()
     
     m_settings->SetElectrumConnectionOptions(electrumSettings);
 
-    m_coinClient.SetSettings(*m_settings);
+    coinClient->SetSettings(*m_settings);
 }
 
 void SwapCoinSettingsItem::resetNodeSettings()
@@ -613,7 +659,7 @@ void SwapCoinSettingsItem::disconnect()
     auto connectionType = bitcoin::ISettings::ConnectionType::None;
 
     m_settings->ChangeConnectionType(connectionType);
-    m_coinClient.SetSettings(*m_settings);
+    m_coinClient.lock()->SetSettings(*m_settings);
     setConnectionType(connectionType);
 }
 
@@ -622,7 +668,7 @@ void SwapCoinSettingsItem::connectToNode()
     auto connectionType = bitcoin::ISettings::ConnectionType::Core;
 
     m_settings->ChangeConnectionType(connectionType);
-    m_coinClient.SetSettings(*m_settings);
+    m_coinClient.lock()->SetSettings(*m_settings);
     setConnectionType(connectionType);
 }
 
@@ -631,7 +677,7 @@ void SwapCoinSettingsItem::connectToElectrum()
     auto connectionType = bitcoin::ISettings::ConnectionType::Electrum;
 
     m_settings->ChangeConnectionType(connectionType);
-    m_coinClient.SetSettings(*m_settings);
+    m_coinClient.lock()->SetSettings(*m_settings);
     setConnectionType(connectionType);
 }
 
@@ -663,7 +709,7 @@ void SwapCoinSettingsItem::LoadSettings()
     SetDefaultElectrumSettings();
     SetDefaultNodeSettings();
 
-    m_settings = m_coinClient.GetSettings();
+    m_settings = m_coinClient.lock()->GetSettings();
 
     setConnectionType(m_settings->GetCurrentConnectionType());
 
@@ -825,6 +871,7 @@ SettingsViewModel::SettingsViewModel()
     connect(&AppModel::getInstance().getNode(), SIGNAL(startedNode()), SLOT(onNodeStarted()));
     connect(&AppModel::getInstance().getNode(), SIGNAL(stoppedNode()), SLOT(onNodeStopped()));
     connect(AppModel::getInstance().getWallet().get(), SIGNAL(addressChecked(const QString&, bool)), SLOT(onAddressChecked(const QString&, bool)));
+    connect(AppModel::getInstance().getWallet().get(), SIGNAL(publicAddressChanged(const QString&)), SLOT(onPublicAddressChanged(const QString&)));
     connect(&m_settings, SIGNAL(beamMWLinksChanged()), SIGNAL(beamMWLinksPermissionChanged()));
 
     m_timerId = startTimer(CHECK_INTERVAL);
@@ -859,6 +906,15 @@ void SettingsViewModel::onAddressChecked(const QString& addr, bool isValid)
 
             m_isNeedToApplyChanges = false;
         }
+    }
+}
+
+void SettingsViewModel::onPublicAddressChanged(const QString& publicAddr)
+{
+    if (m_publicAddress != publicAddr)
+    {
+        m_publicAddress = publicAddr;
+        emit publicAddressChanged();
     }
 }
 
@@ -1039,6 +1095,15 @@ void SettingsViewModel::setSecondCurrency(const QString& value)
     emit secondCurrencyChanged();
 }
 
+const QString& SettingsViewModel::getPublicAddress() const
+{
+    if (m_publicAddress.isEmpty())
+    {
+        AppModel::getInstance().getWallet()->getAsync()->getPublicAddress();
+    }
+    return m_publicAddress;
+}
+
 uint SettingsViewModel::coreAmount() const
 {
     return std::thread::hardware_concurrency();
@@ -1183,9 +1248,14 @@ const QList<QObject*>& SettingsViewModel::getSwapCoinSettings()
 {
     if (m_swapSettings.empty())
     {
-        m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getBitcoinClient(), beam::wallet::AtomicSwapCoin::Bitcoin));
-        m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getLitecoinClient(), beam::wallet::AtomicSwapCoin::Litecoin));
-        m_swapSettings.push_back(new SwapCoinSettingsItem(*AppModel::getInstance().getQtumClient(), beam::wallet::AtomicSwapCoin::Qtum));
+        m_swapSettings.push_back(new SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin::Bitcoin));
+        m_swapSettings.push_back(new SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin::Litecoin));
+        m_swapSettings.push_back(new SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin::Qtum));
+#if defined(BITCOIN_CASH_SUPPORT)
+        m_swapSettings.push_back(new SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin::Bitcoin_Cash));
+#endif // BITCOIN_CASH_SUPPORT
+        m_swapSettings.push_back(new SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin::Dogecoin));
+        m_swapSettings.push_back(new SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin::Dash));
     }
     return m_swapSettings;
 }
@@ -1193,4 +1263,56 @@ const QList<QObject*>& SettingsViewModel::getSwapCoinSettings()
 QObject* SettingsViewModel::getNotificationsSettings()
 {
     return &m_notificationsSettings;
+}
+
+int SettingsViewModel::geMaxPrivacyAnonymitySet() const
+{
+    auto anonymitySetValue = m_settings.getMaxPrivacyAnonymitySet();
+    const auto it = std::find_if(
+          kMPAnonymitySetVariants.begin(),
+          kMPAnonymitySetVariants.end(),
+          [anonymitySetValue](const auto& mo) {return mo.second == anonymitySetValue; });
+    if (it != kMPAnonymitySetVariants.end())
+        m_mpAnonymitySetIndex = it->first;
+    return m_mpAnonymitySetIndex;
+}
+
+void SettingsViewModel::setMaxPrivacyAnonymitySet(int mpAnonymitySetIndex)
+{
+    if (m_mpAnonymitySetIndex != mpAnonymitySetIndex)
+    {
+        const auto it = kMPAnonymitySetVariants.find(mpAnonymitySetIndex);
+        if (it != kMPAnonymitySetVariants.end())
+        {
+            m_mpAnonymitySetIndex = mpAnonymitySetIndex;
+            m_settings.setMaxPrivacyAnonymitySet(it->second);
+            emit maxPrivacyAnonymitySetChanged();
+        }
+    }
+}
+
+int SettingsViewModel::getMaxPrivacyLockTimeLimit() const
+{
+    auto limit = m_settings.getMaxPrivacyLockTimeLimitHours();
+    const auto it = std::find_if(
+          kMPLockTimeLimits.begin(),
+          kMPLockTimeLimits.end(),
+          [limit](const auto& mo) {return mo.second == limit; });
+    if (it != kMPLockTimeLimits.end())
+        m_mpLockTimeLimitIndex = it->first;
+    return m_mpLockTimeLimitIndex;
+}
+
+void SettingsViewModel::setMaxPrivacyLockTimeLimit(int limit)
+{
+    if (m_mpLockTimeLimitIndex != limit)
+    {
+        const auto it = kMPLockTimeLimits.find(limit);
+        if (it != kMPLockTimeLimits.end())
+        {
+            m_mpLockTimeLimitIndex = limit;
+            m_settings.setMaxPrivacyLockTimeLimitHours(it->second);
+            emit maxPrivacyLockTimeLimitChanged();
+        }
+    }
 }

@@ -24,6 +24,11 @@
 
 #include <set>
 
+namespace beamui
+{
+    class Filter;
+}  // namespace beamui
+
 class WalletModel
     : public QObject
     , public beam::wallet::WalletClient
@@ -49,9 +54,13 @@ public:
     beam::Amount getReceivingChange() const;
     beam::Amount getSending() const;
     beam::Amount getMaturing() const;
+    beam::Amount getMaturingMP() const;
     beam::Height getCurrentHeight() const;
     beam::Timestamp getCurrentHeightTimestamp() const;
     beam::Block::SystemState::ID getCurrentStateID() const;
+    beam::TxoID getTotalShieldedCount() const;
+    beam::TxoID getShieldedPer24h() const;
+    uint8_t getMPLockTimeLimit() const;
     bool hasShielded() const;
 
 signals:
@@ -86,6 +95,7 @@ signals:
     void sendingChanged();
     void maturingChanged();
     void stateIDChanged();
+    void shieldedTotalCountChanged();
     void functionPosted(const std::function<void()>&);
 #if defined(BEAM_HW_WALLET)
     void showTrezorMessage();
@@ -96,12 +106,12 @@ signals:
 
     void exchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>&);
     void notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&);
-
+    void publicAddressChanged(const QString& publicAddr);
 private:
     void onStatus(const beam::wallet::WalletStatus& status) override;
     void onTxStatus(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items) override;
     void onSyncProgressUpdated(int done, int total) override;
-    void onChangeCalculated(beam::Amount change) override;
+    void onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId) override;
     void onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes) override;
     void onNeedExtractShieldedCoins(bool val) override;
     void onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos) override;
@@ -130,6 +140,7 @@ private:
     void onExportTxHistoryToCsv(const std::string& data) override;
     void onExchangeRates(const std::vector<beam::wallet::ExchangeRate>&) override;
     void onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&) override;
+    void onPublicAddress(const std::string& publicAddr) override;
 #ifdef BEAM_HW_WALLET
     void ShowKeyKeeperMessage() override;
     void HideKeyKeeperMessage() override;
@@ -145,7 +156,11 @@ private slots:
     void doFunction(const std::function<void()>& func);
 
 private:
+    std::unique_ptr<beamui::Filter> m_shieldedPer24hFilter;
     std::set<beam::wallet::WalletID> m_myWalletIds;
     std::set<std::string> m_myAddrLabels;
     beam::wallet::WalletStatus m_status;
+    std::vector<std::pair<beam::wallet::Height, beam::wallet::TxoID>> m_shieldedCountHistoryPart;
+    beam::wallet::TxoID m_shieldedPer24h = 0;
+    uint8_t m_mpLockTimeLimit = 0;
 };

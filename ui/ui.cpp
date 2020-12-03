@@ -33,6 +33,7 @@
 #include "viewmodel/address_book_view.h"
 #include "viewmodel/wallet/wallet_view.h"
 #include "viewmodel/wallet/token_item.h"
+#include "viewmodel/wallet/tx_table.h"
 #include "viewmodel/help_view.h"
 #include "viewmodel/settings_view.h"
 #include "viewmodel/messages_view.h"
@@ -61,6 +62,7 @@
 #include "utility/string_helpers.h"
 #include "utility/helpers.h"
 #include "model/translator.h"
+#include "model/qr.h"
 
 #if defined(BEAM_USE_STATIC)
 
@@ -140,7 +142,6 @@ int main (int argc, char* argv[])
                 t.cdUp(); // Go up to the bundle parent directory
                 QDir::setCurrent(t.absolutePath());
             }
-            
 #endif
             vm = getOptions(argc, argv, WalletSettings::WalletCfg, options, true);
         }
@@ -234,6 +235,7 @@ int main (int argc, char* argv[])
             qmlRegisterType<LoadingViewModel>("Beam.Wallet", 1, 0, "LoadingViewModel");
             qmlRegisterType<MainViewModel>("Beam.Wallet", 1, 0, "MainViewModel");
             qmlRegisterType<WalletViewModel>("Beam.Wallet", 1, 0, "WalletViewModel");
+            qmlRegisterType<TxTableViewModel>("Beam.Wallet", 1, 0, "TxTableViewModel");
             qmlRegisterUncreatableType<UtxoViewStatus>("Beam.Wallet", 1, 0, "UtxoStatus", "Not creatable as it is an enum type.");
             qmlRegisterUncreatableType<UtxoViewType>("Beam.Wallet", 1, 0, "UtxoType", "Not creatable as it is an enum type.");
             qmlRegisterType<UtxoViewModel>("Beam.Wallet", 1, 0, "UtxoViewModel");
@@ -261,12 +263,14 @@ int main (int argc, char* argv[])
             qmlRegisterType<SwapTxObjectList>("Beam.Wallet", 1, 0, "SwapTxObjectList");
             qmlRegisterType<TxObjectList>("Beam.Wallet", 1, 0, "TxObjectList");
             qmlRegisterType<TokenInfoItem>("Beam.Wallet", 1, 0, "TokenInfoItem");
+            qmlRegisterType<SwapCoinClientWrapper>("Beam.Wallet", 1, 0, "SwapCoinClientWrapper");
             
             qmlRegisterType<TokenBootstrapManager>("Beam.Wallet", 1, 0, "TokenBootstrapManager");
             qmlRegisterType<PushNotificationManager>("Beam.Wallet", 1, 0, "PushNotificationManager");
             qmlRegisterType<ExchangeRatesManager>("Beam.Wallet", 1, 0, "ExchangeRatesManager");
             
             qmlRegisterType<SortFilterProxyModel>("Beam.Wallet", 1, 0, "SortFilterProxyModel");
+            qmlRegisterType<QR>("Beam.Wallet", 1, 0, "QR");
 
             engine.load(QUrl("qrc:/root.qml"));
 

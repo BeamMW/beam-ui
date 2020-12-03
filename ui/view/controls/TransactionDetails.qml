@@ -29,10 +29,11 @@ RowLayout {
     property string secondCurrencyLabel
     property string searchFilter: ""
     property bool hideFiltered: false
-    property var searchRegExp: function() { return new RegExp(root.searchFilter, "gi");}
-    property string transactionType
-    property string tokenType
-    property bool isMaxPrivacy
+    property var searchRegExp: new RegExp("("+root.searchFilter+")", "gi")
+    property var searchRegExp2:  new RegExp("("+root.searchFilter+")", "i")
+    property string addressType
+    property bool isShieldedTx
+    property bool isCompleted: false
 
     readonly property string amountPrefix: root.isIncome ? "+" : "-"
     readonly property string amountWithLabel: amountPrefix + " " + root.amount + " " + BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
@@ -43,7 +44,7 @@ RowLayout {
     signal copyPaymentProof()
     signal showPaymentProof()
 
-    spacing: 30
+    spacing: 0
 
     function isFieldVisible() {
         return root.searchFilter.length == 0 || hideFiltered == false;
@@ -51,20 +52,19 @@ RowLayout {
 
     function isTextFieldVisible(text) {
         return isFieldVisible()
-        || (root.searchFilter.length > 0 && text.search(root.searchFilter) >= 0);
+        || (root.searchFilter.length > 0 && text.search(root.searchRegExp2) >= 0);
     }
 
     function getHighlitedText(text) {
+        
         if (root.searchFilter.length == 0)
             return text;
 
-        var start = text.search(root.searchFilter);
+        var start = text.search(root.searchRegExp2);
         if (start == -1)
             return text;
 
-        var s = text.substr(start, root.searchFilter.length);
-        
-        return text.replace(root.searchRegExp, "<font color=\"" + Style.active.toString() + "\">" + s + "</font>");
+        return text.replace(root.searchRegExp, '<font color="' + Style.active.toString() + '">$1</font>');
     }
 
     function getAmountInSecondCurrency() {
@@ -93,7 +93,7 @@ RowLayout {
         return true;
     }
 
-    property bool hasToken: token.length > 0 && isTextFieldVisible(token)
+    property bool hasToken: token.length > 0 
 
     GridLayout {
         Layout.fillWidth: true
@@ -102,7 +102,7 @@ RowLayout {
         Layout.rightMargin: 30
         Layout.topMargin: 30
         Layout.bottomMargin: 30
-        columnSpacing: 44
+        columnSpacing: 40
         rowSpacing: 14
         columns: 2
 
@@ -133,7 +133,7 @@ RowLayout {
             elide: Text.ElideMiddle
             text: getHighlitedText(root.sendAddress)
             onCopyText: textCopied(root.sendAddress)
-            visible: isTextFieldVisible(root.sendAddress) && root.sendAddress.length
+            visible: isTextFieldVisible(root.sendAddress) && root.sendAddress.length && !(isIncome && isShieldedTx)
         }
 
         SFText {
@@ -153,7 +153,7 @@ RowLayout {
             elide: Text.ElideMiddle
             text: getHighlitedText(root.senderIdentity)
             onCopyText: textCopied(root.senderIdentity)
-            visible: root.senderIdentity.length > 0 && (root.receiverIdentity.length > 0 || root.isMaxPrivacy ) && isTextFieldVisible(root.senderIdentity)
+            visible: root.senderIdentity.length > 0 && (root.receiverIdentity.length > 0 || root.isShieldedTx ) && isTextFieldVisible(root.senderIdentity)
         }
 
         SFText {
@@ -165,15 +165,16 @@ RowLayout {
             visible: receiveAddressField.visible
         }
         SFLabel {
+            property var receiveAddressOrToken : hasToken ? root.token : root.receiveAddress
             id: receiveAddressField
             Layout.fillWidth: true
             copyMenuEnabled: true
             font.pixelSize: 14
             color: Style.content_main
             elide: Text.ElideMiddle
-            text: getHighlitedText(hasToken ? root.token : root.receiveAddress)
-            onCopyText: textCopied(hasToken ? root.token : root.receiveAddress)
-            visible: hasToken || (isTextFieldVisible(root.receiveAddress) && root.receiveAddress.length)
+            text: getHighlitedText(receiveAddressOrToken)
+            onCopyText: textCopied(receiveAddressOrToken)
+            visible: receiveAddressOrToken.length && isTextFieldVisible(receiveAddressOrToken)
         }
 
         SFText {
@@ -196,26 +197,6 @@ RowLayout {
             visible: root.senderIdentity.length > 0 && root.receiverIdentity.length > 0 && isTextFieldVisible(root.receiverIdentity)
         }
 
-        // Transaction type:
-        SFText {
-            Layout.alignment:       Qt.AlignTop
-            font.pixelSize:         14
-            color:                  Style.content_secondary
-            //% "Transaction type"
-            text:                   qsTrId("token-info-transaction-type") + ":"
-            visible:                isTextFieldVisible(root.transactionType)
-        }
-            
-        SFText {
-            Layout.fillWidth:       true
-            wrapMode:               Text.Wrap
-            font.pixelSize:         14
-            color:                  Style.content_main
-            text:                   root.transactionType
-            verticalAlignment:      Text.AlignBottom
-            visible:                isTextFieldVisible(root.transactionType)
-        }
-
         // Address type
         SFText {
             Layout.alignment:       Qt.AlignTop
@@ -223,16 +204,16 @@ RowLayout {
             color:                  Style.content_secondary
             //% "Address type"
             text:                   qsTrId("address-info-type") + ":"
-            visible:                isTextFieldVisible(root.tokenType)
+            visible:                isTextFieldVisible(root.addressType)
         }
             
         SFText {
             Layout.fillWidth:       true
             wrapMode:               Text.Wrap
             font.pixelSize:         14
-            text:                   root.tokenType
+            text:                   root.addressType
             color:                  Style.content_main
-            visible:                isTextFieldVisible(root.tokenType)
+            visible:                isTextFieldVisible(root.addressType)
         }
 
         SFText {
@@ -270,7 +251,8 @@ RowLayout {
             copyMenuEnabled: true
             font.pixelSize: 14
             color: Style.content_main
-            elide: Text.ElideMiddle
+            wrapMode: Text.Wrap
+            elide: Text.ElideRight
             text: root.secondCurrencyAmount
             onCopyText: textCopied(secondCurrencyAmountField.text)
             visible: isTextFieldVisible(secondCurrencyAmountField.text) && root.secondCurrencyLabel != ""
@@ -357,25 +339,14 @@ RowLayout {
             visible: isTextFieldVisible(root.kernelID) && !isZeroed(root.kernelID)
         }
 
-        function canOpenInBlockchainExplorer(status) {
-            switch(status) {
-                case "completed":
-                case "received":
-                case "sent":
-                    return true;
-                default:
-                    return false;
-            }
-        }
-        
         Item {
             Layout.preferredHeight: 16
-            visible: parent.canOpenInBlockchainExplorer(root.status) && root.isFieldVisible() && kernelID.visible
+            visible: root.isCompleted && root.isFieldVisible() && kernelID.visible
         }
         Item {
             Layout.preferredWidth: openInExplorer.width + 10 + openInExplorerIcon.width
             Layout.preferredHeight: 16
-            visible: parent.canOpenInBlockchainExplorer(root.status) && root.isFieldVisible() && kernelID.visible
+            visible: root.isCompleted && root.isFieldVisible() && kernelID.visible
         
             SFText {
                 id: openInExplorer
@@ -409,7 +380,7 @@ RowLayout {
         RowLayout {
             Layout.columnSpan: 2
             Layout.fillWidth: true
-            visible: root.stateDetails != ""
+            visible: root.stateDetails != "" && root.isFieldVisible()
             SvgImage {
                 Layout.alignment: Qt.AlignTop
                 sourceSize: Qt.size(16, 16)

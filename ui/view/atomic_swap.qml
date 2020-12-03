@@ -3,6 +3,7 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.3
+//import QtQuick.Shapes 1.11
 import "controls"
 import "utils.js" as Utils
 import Beam.Wallet 1.0
@@ -212,11 +213,13 @@ Item {
                 }
             }
 
-            RowLayout {
+            GridLayout {
+                id: amountPanes
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                 Layout.fillWidth: true
                 Layout.topMargin: 29
-                spacing: 10
+                columnSpacing: 10
+                columns: 4
 
                 SwapCurrencyAmountPane {
                     function activeTxCountStr() {
@@ -241,75 +244,132 @@ Item {
                 //% "Transaction is in progress"
                 property string kTxInProgress: qsTrId("swap-beta-tx-in-progress")
 
-                function btcActiveTxStr() {
-                    return viewModel.hasBtcTx ? kTxInProgress : "";
+                function getCurrencyIcon(currency) {
+                    switch(currency) {
+                        case Currency.CurrBitcoin:
+                            return "qrc:/assets/icon-btc.svg";
+                        case Currency.CurrLitecoin:
+                            return "qrc:/assets/icon-ltc.svg";
+                        case Currency.CurrQtum:
+                            return "qrc:/assets/icon-qtum.svg";
+                        // TODO disabled BCH
+                        /*case Currency.CurrBitcoinCash:
+                            return "qrc:/assets/icon-bch.svg";*/
+                        case Currency.CurrDash:
+                            return "qrc:/assets/icon-dash.svg";
+                        case Currency.CurrDogecoin:
+                            return "qrc:/assets/icon-doge.svg";
+                        default: return "";
+                    }
                 }
 
-                function ltcActiveTxStr() {
-                    return viewModel.hasLtcTx ? kTxInProgress : "";
+                function getSwapCurrencyPaneGradient(currency)  {
+                    switch(currency) {
+                        case Currency.CurrBitcoin:
+                            return Style.swapCurrencyPaneGrLeftBTC;
+                        case Currency.CurrLitecoin:
+                            return Style.swapCurrencyPaneGrLeftLTC;
+                        case Currency.CurrQtum:
+                            return Style.swapCurrencyPaneGrLeftQTUM;
+                        // TODO disable BCH
+                        /*case Currency.CurrBitcoinCash:
+                            return Style.swapCurrencyPaneGrLeftBCH;*/
+                        case Currency.CurrDash:
+                            return Style.swapCurrencyPaneGrLeftDASH;
+                        case Currency.CurrDogecoin:
+                            return Style.swapCurrencyPaneGrLeftDOGE;
+                        default:
+                            return Style.swapCurrencyPaneGrLeftBTC;
+                    }
                 }
 
-                function qtumActiveTxStr() {
-                    return viewModel.hasQtumTx ? kTxInProgress : "";
+                Repeater {
+                    model: viewModel.swapClientList
+
+                    SwapCurrencyAmountPane {
+                        gradLeft: amountPanes.getSwapCurrencyPaneGradient(modelData.currency)
+                        currencyIcon: amountPanes.getCurrencyIcon(modelData.currency)
+                        amount: modelData.hasActiveTx ? "" : modelData.available
+                        currencySymbol: BeamGlobals.getCurrencyLabel(modelData.currency)
+                        valueSecondaryStr: activeTxStr()
+                        isOk: modelData.isConnected
+                        isConnecting: modelData.isConnecting
+                        visible: BeamGlobals.haveSwapClient(modelData.currency)
+                        swapSettingsPane: BeamGlobals.getCurrencyLabel(modelData.currency)
+                        //% "Connecting..."
+                        textConnecting: qsTrId("swap-connecting")
+                        //% "Cannot connect to peer. Please check the address in Settings and try again."
+                        textConnectionError: qsTrId("swap-beta-connection-error")
+
+                        function activeTxStr() {
+                            return modelData.hasActiveTx ? amountPanes.kTxInProgress : "";
+                        }
+                    }
                 }
 
-                SwapCurrencyAmountPane {
-                    gradLeft: Style.swapCurrencyPaneGrLeftBTC
-                    currencyIcon: "qrc:/assets/icon-btc.svg"
-                    amount: viewModel.hasBtcTx ? "" : viewModel.btcAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrBitcoin)
-                    valueSecondaryStr: parent.btcActiveTxStr()
-                    isOk: viewModel.btcOK
-                    isConnecting: viewModel.btcConnecting
-                    visible: BeamGlobals.haveBtc()
-                    swapSettingsPane: "BTC"
-                    //% "Connecting..."
-                    textConnecting: qsTrId("swap-connecting")
-                    //% "Cannot connect to peer. Please check the address in Settings and try again."
-                    textConnectionError: qsTrId("swap-beta-connection-error")
-                }
-
-                SwapCurrencyAmountPane {
-                    gradLeft: Style.swapCurrencyPaneGrLeftLTC
-                    currencyIcon: "qrc:/assets/icon-ltc.svg"
-                    amount: viewModel.hasLtcTx ? "" : viewModel.ltcAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrLitecoin)
-                    valueSecondaryStr: parent.ltcActiveTxStr()
-                    isOk: viewModel.ltcOK
-                    isConnecting: viewModel.ltcConnecting
-                    visible: BeamGlobals.haveLtc()
-                    swapSettingsPane: "LTC"
-                    textConnecting: qsTrId("swap-connecting")
-                    textConnectionError: qsTrId("swap-beta-connection-error")
-                }
-
-                SwapCurrencyAmountPane {
-                    gradLeft: Style.swapCurrencyPaneGrLeftQTUM
-                    currencyIcon: "qrc:/assets/icon-qtum.svg"
-                    amount: viewModel.hasQtumTx ? "" : viewModel.qtumAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrQtum)
-                    valueSecondaryStr: parent.qtumActiveTxStr()
-                    isOk: viewModel.qtumOK
-                    isConnecting: viewModel.qtumConnecting
-                    visible: BeamGlobals.haveQtum()
-                    swapSettingsPane: "QTUM"
-                    textConnecting: qsTrId("swap-connecting")
-                    textConnectionError: qsTrId("swap-beta-connection-error")
-                }
-
-                SwapCurrencyAmountPane {
-                    id: swapOptions
-                    gradLeft: Style.swapCurrencyPaneGrLeftOther
-                    gradRight: Style.swapCurrencyPaneGrLeftOther
-                    //% "Connect other currency wallet to start trading"
-                    amount: qsTrId("atomic-swap-connect-other")
-                    amountWrapMode: Text.Wrap
-                    textSize: 14
-                    rectOpacity: 1.0
-                    textColor: Style.active
-                    isOk: true
-                    borderSize: 1
-                    visible: !BeamGlobals.haveBtc() || !BeamGlobals.haveLtc() || !BeamGlobals.haveQtum()
+                Rectangle {
+                    id:                         swapOptions
+                    Layout.fillWidth:           true
+                    Layout.preferredHeight:     67
+                    
+                    Rectangle {
+                        anchors.fill:           parent
+                        opacity:                0.3
+                        radius:                 10
+                        border {
+                            width:      1
+                            color:      "#1af6d6"
+                        }
+                         color: "transparent"
+                    }
+                    color: "transparent"
+                    // TODO: Shape doesn't work on 5.11 correctly. Need to investigate
+                    //Shape {
+                    //    id:             moreShape
+                    //    asynchronous:   true
+                    //    opacity:        0.3
+                    //    anchors.fill:   parent
+                    //    ShapePath {
+                    //        id: shapePath
+                    //        property var radius:    10
+                    //        property var width2:    moreShape.width - 2*radius
+                    //        property var height2:   moreShape.height - 2*radius
+                    //        strokeWidth: 1
+                    //        strokeColor: "#1af6d6"
+                    //        fillColor: "transparent" // ignored with the gradient set
+                    //        strokeStyle:    ShapePath.SolidLine //DashLine
+                    //        dashPattern:    [ 4, 6 ]
+                    //        startX:         shapePath.radius
+                    //        startY:         0
+                    //        PathLine { relativeX: shapePath.width2; relativeY: 0 }
+                    //        PathArc  { relativeX: shapePath.radius; y: shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
+                    //        PathLine { relativeX: 0; relativeY: shapePath.height2 }
+                    //        PathArc  { relativeX: -shapePath.radius; relativeY: shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
+                    //        PathLine { relativeX: -shapePath.width2; relativeY: 0 }
+                    //        PathArc  { relativeX: -shapePath.radius; relativeY: -shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
+                    //        PathLine { relativeX: 0; relativeY: -shapePath.height2 }
+                    //        PathArc  { relativeX: shapePath.radius; relativeY: -shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
+                    //    }
+                    //}
+                    RowLayout {
+                        anchors.fill:   parent
+                        SvgImage {
+                            Layout.alignment:       Qt.AlignVCenter
+                            Layout.leftMargin:      20
+                            source:                 "qrc:/assets/icon-add-green.svg"
+                            sourceSize:             Qt.size(16, 16)
+                        }
+                        SFText {
+                            Layout.alignment:       Qt.AlignVCenter
+                            Layout.fillWidth:       true
+                            Layout.rightMargin:     20
+                            font.pixelSize:         14
+                            color:                  Style.active
+                            wrapMode:               Text.WordWrap
+                            //% "Connect more currencies"
+                            text:                   qsTrId("atomic-swap-more-currency")
+                        }
+                    }
                     MouseArea {
                         id:                clickArea
                         anchors.fill:      parent
@@ -320,15 +380,14 @@ Item {
                     }
                 }
                 Component.onCompleted: {
-                    var currencyIcons = [];
-                    if (!BeamGlobals.haveBtc())
-                        currencyIcons.push("qrc:/assets/icon-btc.svg");
-                    if (!BeamGlobals.haveLtc())
-                        currencyIcons.push("qrc:/assets/icon-ltc.svg");
-                    if (!BeamGlobals.haveQtum())
-                        currencyIcons.push("qrc:/assets/icon-qtum.svg");
+                    var enabledCurrencies = 0;
 
-                    swapOptions.currencyIcons = currencyIcons;
+                    for (var index = 0; index < viewModel.swapClientList.length; index++) {
+                        if (BeamGlobals.haveSwapClient(viewModel.swapClientList[index].currency)) {
+                            ++enabledCurrencies;
+                        }
+                    }
+                    swapOptions.visible = enabledCurrencies < viewModel.swapClientList.length;
                 }
             }
 
@@ -347,7 +406,6 @@ Item {
                     font {
                         pixelSize: 14
                         letterSpacing: 4
-                        capitalization: Font.AllUppercase
                     }
                 }
 
@@ -362,7 +420,6 @@ Item {
                     font {
                         pixelSize: 14
                         letterSpacing: 4
-                        capitalization: Font.AllUppercase
                     }
                 }
 
@@ -380,7 +437,6 @@ Item {
                     font {
                         pixelSize: 14
                         letterSpacing: 4
-                        capitalization: Font.AllUppercase
                     }
                 }
             }
@@ -460,9 +516,17 @@ Item {
                                     ListElement{text: "BEAM->BTC"; pair: "beambtc"}
                                     ListElement{text: "BEAM->LTC"; pair: "beamltc"}
                                     ListElement{text: "BEAM->QTUM"; pair: "beamqtum"}
+                                    // TODO disable BCH
+                                    //ListElement{text: "BEAM->BCH"; pair: "beambch"}
+                                    ListElement{text: "BEAM->DASH"; pair: "beamdash"}
+                                    ListElement{text: "BEAM->DOGE"; pair: "beamdoge"}
                                     ListElement{text: "BTC->BEAM"; pair: "btcbeam"}
                                     ListElement{text: "LTC->BEAM"; pair: "ltcbeam"}
                                     ListElement{text: "QTUM->BEAM"; pair: "qtumbeam"}
+                                    // TODO disable BCH
+                                    //ListElement{text: "BCH->BEAM"; pair: "bchbeam"}
+                                    ListElement{text: "DASH->BEAM"; pair: "dashbeam"}
+                                    ListElement{text: "DOGE->BEAM"; pair: "dogebeam"}
                                 }
                         }
                     }   // RowLayout
@@ -730,7 +794,6 @@ Please try again later or create an offer yourself."
                             //% "All"
                             label: qsTrId("atomic-swap-all-transactions-tab")
                             onClicked: transactionsTab.state = "filterAllTransactions"
-                            capitalization: Font.AllUppercase
                         }
 
                         TxFilter {
@@ -738,7 +801,6 @@ Please try again later or create an offer yourself."
                             //% "In progress"
                             label: qsTrId("atomic-swap-in-progress-transactions-tab")
                             onClicked: transactionsTab.state = "filterInProgressTransactions"
-                            capitalization: Font.AllUppercase
                         }
 
                         Item {
@@ -1139,20 +1201,15 @@ Please try again later or create an offer yourself."
         }
     }
     
-    function getCoinName(idx) {
-        switch(idx) {
-            case 0: return "btc";
-            case 1: return "ltc";
-            case 2: return "qtum";
-            default: return "";
-        }
-    }
-
     function getCoinIcon(coin) {
         switch(coin) {
             case "btc": return "qrc:/assets/icon-btc.svg";
             case "ltc": return "qrc:/assets/icon-ltc.svg";
             case "qtum": return "qrc:/assets/icon-qtum.svg";
+            case "bch": return "qrc:/assets/icon-bch.svg";
+            case "dash": return "qrc:/assets/icon-dash.svg";
+            case "doge": return "qrc:/assets/icon-doge.svg";
+
             default: return "";
         }
     }

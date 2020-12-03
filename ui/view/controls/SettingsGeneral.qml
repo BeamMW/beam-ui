@@ -17,6 +17,39 @@ SettingsFoldable {
         spacing: 30
 
         RowLayout {
+            Layout.preferredHeight: 16
+            ColumnLayout {
+                SFText {
+                    Layout.fillWidth: true
+                    //: settings tab, general section, language label
+                    //% "Language"
+                    text: qsTrId("settings-general-language")
+                    color: Style.content_secondary
+                    font.pixelSize: 14
+                }
+            }
+
+            Item {
+            }
+
+            ColumnLayout {
+                CustomComboBox {
+                    id: language
+                    Layout.preferredWidth: tripleSwitch.width
+                    fontPixelSize: 14
+                    enableScroll: true
+
+                    model: viewModel.supportedLanguages
+                    currentIndex: viewModel.currentLanguageIndex
+                    onActivated: {
+                        viewModel.currentLanguage = currentText;
+                    }
+                }
+            }
+            //visible: false  // Remove to enable language dropdown
+        }
+
+        RowLayout {
             SFText {
                 Layout.fillWidth: true
                 //: settings tab, general section, lock screen label
@@ -49,39 +82,6 @@ SettingsFoldable {
                     viewModel.lockTimeout = lockTimeoutControl.currentIndex
                 }
             }
-        }
-
-        RowLayout {
-            Layout.preferredHeight: 16
-            ColumnLayout {
-                SFText {
-                    Layout.fillWidth: true
-                    //: settings tab, general section, language label
-                    //% "Language"
-                    text: qsTrId("settings-general-language")
-                    color: Style.content_secondary
-                    font.pixelSize: 14
-                }
-            }
-
-            Item {
-            }
-
-            ColumnLayout {
-                CustomComboBox {
-                    id: language
-                    Layout.preferredWidth: generalBlock.width * 0.33
-                    fontPixelSize: 14
-                    enableScroll: true
-
-                    model: viewModel.supportedLanguages
-                    currentIndex: viewModel.currentLanguageIndex
-                    onActivated: {
-                        viewModel.currentLanguage = currentText;
-                    }
-                }
-            }
-            visible: false  // Remove to enable language dropdown
         }
 
         RowLayout {

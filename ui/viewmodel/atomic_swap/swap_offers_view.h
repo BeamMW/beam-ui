@@ -16,57 +16,82 @@
 
 #include <string>
 #include <QObject>
+#include <QQmlListProperty>
 
 #include "model/wallet_model.h"
 #include "model/swap_coin_client_model.h"
 #include "swap_offers_list.h"
 #include "swap_tx_object_list.h"
+#include "viewmodel/currencies.h"
 
 using namespace beam::wallet;
+
+class SwapCoinClientWrapper : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(QString                      available        READ getAvailableStr     NOTIFY availableChanged)
+    Q_PROPERTY(bool                         isConnected      READ getIsConnected      NOTIFY statusChanged)
+    Q_PROPERTY(bool                         isConnecting     READ getIsConnecting     NOTIFY statusChanged)
+    Q_PROPERTY(bool                         hasActiveTx      READ hasActiveTx         NOTIFY activeTxChanged)
+    Q_PROPERTY(QString                      coinLabel        READ getCoinLabel        CONSTANT)
+    Q_PROPERTY(WalletCurrency::Currency     currency         READ getCurrency         CONSTANT)
+
+public:
+    SwapCoinClientWrapper() = default;
+    SwapCoinClientWrapper(beam::wallet::AtomicSwapCoin swapCoin);
+
+    void incrementActiveTxCounter();
+    void decrementActiveTxCounter();
+    int getActiveTxCounter() const;
+    void resetActiveTxCounter();
+
+    QString getAvailableStr() const;
+    bool getIsConnected() const;
+    bool getIsConnecting() const;
+    bool hasActiveTx() const;
+    QString getCoinLabel() const;
+    Currency getCurrency() const;
+
+    beam::wallet::AtomicSwapCoin getSwapCoin() const;
+    uint16_t getTxMinConfirmations() const;
+    double getBlocksPerHour() const;
+    Amount getAvailable() const;
+
+signals:
+    void activeTxChanged();
+    void availableChanged();
+    void statusChanged();
+
+private:
+    beam::wallet::AtomicSwapCoin m_swapCoin;
+    std::weak_ptr<SwapCoinClientModel> m_coinClient;
+    int m_activeTxCounter = 0;
+    uint16_t m_minTxConfirmations = 0;
+    double m_blocksPerHour = 0;
+};
 
 class SwapOffersViewModel : public QObject
 {
 	Q_OBJECT
-    Q_PROPERTY(QAbstractItemModel*  transactions        READ getTransactions        NOTIFY allTransactionsChanged)
-    Q_PROPERTY(QAbstractItemModel*  allOffers           READ getAllOffers           NOTIFY allOffersChanged)
-    Q_PROPERTY(QAbstractItemModel*  allOffersFitBalance READ getAllOffersFitBalance NOTIFY allOffersFitBalanceChanged)
-    Q_PROPERTY(QString              beamAvailable       READ beamAvailable          NOTIFY beamAvailableChanged)
-    Q_PROPERTY(QString              btcAvailable        READ btcAvailable           NOTIFY btcAvailableChanged)
-    Q_PROPERTY(QString              ltcAvailable        READ ltcAvailable           NOTIFY ltcAvailableChanged)
-    Q_PROPERTY(QString              qtumAvailable       READ qtumAvailable          NOTIFY qtumAvailableChanged)
-    Q_PROPERTY(bool                 btcOK               READ btcOK                  NOTIFY btcOKChanged)
-    Q_PROPERTY(bool                 ltcOK               READ ltcOK                  NOTIFY ltcOKChanged)
-    Q_PROPERTY(bool                 qtumOK              READ qtumOK                 NOTIFY qtumOKChanged)
-    Q_PROPERTY(bool                 btcConnecting       READ btcConnecting          NOTIFY btcOKChanged)
-    Q_PROPERTY(bool                 ltcConnecting       READ ltcConnecting          NOTIFY ltcOKChanged)
-    Q_PROPERTY(bool                 qtumConnecting      READ qtumConnecting         NOTIFY qtumOKChanged)
-    Q_PROPERTY(bool                 showBetaWarning     READ showBetaWarning)
-    Q_PROPERTY(int                  activeTxCount       READ getActiveTxCount       NOTIFY allTransactionsChanged)
-    Q_PROPERTY(bool                 hasBtcTx            READ hasBtcTx               NOTIFY allTransactionsChanged)
-    Q_PROPERTY(bool                 hasLtcTx            READ hasLtcTx               NOTIFY allTransactionsChanged)
-    Q_PROPERTY(bool                 hasQtumTx           READ hasQtumTx              NOTIFY allTransactionsChanged)
+    Q_PROPERTY(QAbstractItemModel*                       transactions        READ getTransactions        NOTIFY allTransactionsChanged)
+    Q_PROPERTY(QAbstractItemModel*                       allOffers           READ getAllOffers           NOTIFY allOffersChanged)
+    Q_PROPERTY(QAbstractItemModel*                       allOffersFitBalance READ getAllOffersFitBalance NOTIFY allOffersFitBalanceChanged)
+    Q_PROPERTY(QString                                   beamAvailable       READ beamAvailable          NOTIFY beamAvailableChanged)
+    Q_PROPERTY(bool                                      showBetaWarning     READ showBetaWarning)
+    Q_PROPERTY(int                                       activeTxCount       READ getActiveTxCount       NOTIFY allTransactionsChanged)
+    Q_PROPERTY(QQmlListProperty<SwapCoinClientWrapper>   swapClientList      READ getSwapClients         CONSTANT)
 
 public:
     SwapOffersViewModel();
+    virtual ~SwapOffersViewModel();
 
     QAbstractItemModel* getTransactions();
     QAbstractItemModel* getAllOffers();
     QAbstractItemModel* getAllOffersFitBalance();
     QString beamAvailable() const;
-    QString btcAvailable() const;
-    QString ltcAvailable() const;
-    QString qtumAvailable() const;
-    bool btcOK()  const;
-    bool ltcOK()  const;
-    bool qtumOK() const;
-    bool btcConnecting() const;
-    bool ltcConnecting() const;
-    bool qtumConnecting() const;
     bool showBetaWarning() const;
     int getActiveTxCount() const;
-    bool hasBtcTx() const;
-    bool hasLtcTx() const;
-    bool hasQtumTx() const;
+    QQmlListProperty<SwapCoinClientWrapper> getSwapClients();
 
     Q_INVOKABLE void cancelOffer(const QVariant& variantTxID);
     Q_INVOKABLE void cancelTx(const QVariant& variantTxID);
@@ -86,14 +111,7 @@ signals:
     void allTransactionsChanged();
     void allOffersChanged();
     void allOffersFitBalanceChanged();
-    void selectedCoinChanged();
     void beamAvailableChanged();
-    void btcAvailableChanged();
-    void ltcAvailableChanged();
-    void qtumAvailableChanged();
-    void btcOKChanged();
-    void ltcOKChanged();
-    void qtumOKChanged();
     void offerRemovedFromTable(QVariant variantTxID);
 
 private:
@@ -104,32 +122,22 @@ private:
     void removeAllOffersFitBalance(
         const std::vector<std::shared_ptr<SwapOfferItem>>& offers);
     bool hasActiveTx(const std::string& swapCoin) const;
-    uint32_t getTxMinConfirmations(AtomicSwapCoin swapCoinType);
-    double getBlocksPerHour(AtomicSwapCoin swapCoinType);
+    void InitSwapClientWrappers();
+
+    SwapCoinClientWrapper* getSwapCoinClientWrapper(AtomicSwapCoin swapCoinType) const;
+    uint32_t getTxMinConfirmations(AtomicSwapCoin swapCoinType) const;
+    double getBlocksPerHour(AtomicSwapCoin swapCoinType) const;
+    void incrementActiveTxCounter(AtomicSwapCoin swapCoinType);
+    void decrementActiveTxCounter(AtomicSwapCoin swapCoinType);
+    void resetActiveTxCounters();
 
     WalletModel& m_walletModel;
 
     SwapTxObjectList m_transactionsList;
     SwapOffersList m_offersList;
     SwapOffersList m_offersListFitBalance;
-    SwapCoinClientModel::Ptr m_btcClient;
-    SwapCoinClientModel::Ptr m_ltcClient;
-    SwapCoinClientModel::Ptr m_qtumClient;
+    QList<SwapCoinClientWrapper*> m_swapClientWrappers;
 
-    struct ActiveTxCounters
-    {
-        int btc = 0;
-        int ltc = 0;
-        int qtum = 0;
-
-        void increment(AtomicSwapCoin swapCoinType);
-        void decrement(AtomicSwapCoin swapCoinType);
-        int& getCounter(AtomicSwapCoin swapCoinType);
-        void clear();
-    };
     int m_activeTxCount = 0;
-    ActiveTxCounters m_activeTxCounters;
     std::map<beam::wallet::TxID, beam::wallet::AtomicSwapCoin> m_activeTx;
-    std::map<AtomicSwapCoin, uint32_t> m_minTxConfirmations;
-    std::map<AtomicSwapCoin, double> m_blocksPerHour;
 };
