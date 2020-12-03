@@ -133,6 +133,11 @@ uint16_t UtxoItem::rawMaturityTimeLeft() const
 }
 
 // ShieldedCoinItem
+ShieldedCoinItem::ShieldedCoinItem()
+    : _walletModel{*AppModel::getInstance().getWallet()}
+{
+}
+
 ShieldedCoinItem::ShieldedCoinItem(const beam::wallet::ShieldedCoin& coin, const TxoID& shieldedCount)
     : _walletModel{*AppModel::getInstance().getWallet()},
       _coin{ coin },

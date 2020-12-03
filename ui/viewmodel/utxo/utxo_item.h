@@ -74,7 +74,7 @@ class ShieldedCoinItem : public BaseUtxoItem
 {
 public:
 
-    ShieldedCoinItem() = default;
+    ShieldedCoinItem();
     ShieldedCoinItem(const beam::wallet::ShieldedCoin& coin, const beam::TxoID& shieldedCount);
     uint64_t getHash() const override;
 
