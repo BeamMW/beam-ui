@@ -11,32 +11,32 @@ SettingsFoldable {
     id:            control
     height:        362
 
-    property string generalTitle:             ""
-    property alias  showSeedDialogTitle:      seedPhraseDialog.showSeedDialogTitle
+    property string generalTitle:        ""
+    property alias  showSeedDialogTitle: seedPhraseDialog.showSeedDialogTitle
     property string color:               Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
     property string disabledColor:       Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.2)
     property bool   canEdit:             !isConnected
 
-    property bool   isConnected:            false
-    property var    mainSettingsViewModel:  undefined
+    property bool   isConnected:           false
+    property var    mainSettingsViewModel: undefined
 
     // TODO roman.strilets it's for test
-    property alias  address:         addressInput.text
-    property alias  port:            portInput.text
-    property alias  accountIndex:    accountIndexInput.text
-    property alias  contractAddress:     contractAddressInput.text
-    property alias  erc20ContractAddress:     erc20ContractAddressInput.text
-    property alias  daiContractAddress:  daiContractAddressInput.text
-    property alias  usdtContractAddress: usdtContractAddressInput.text
-    property alias  wbtcContractAddress: wbtcContractAddressInput.text
+    property alias  address:              addressInput.text
+    property alias  port:                 portInput.text
+    property alias  accountIndex:         accountIndexInput.text
+    property alias  contractAddress:      contractAddressInput.text
+    property alias  erc20ContractAddress: erc20ContractAddressInput.text
+    property alias  daiContractAddress:   daiContractAddressInput.text
+    property alias  usdtContractAddress:  usdtContractAddressInput.text
+    property alias  wbtcContractAddress:  wbtcContractAddressInput.text
 
-    property alias activateDai: activateDaiSwitch.checked
+    property alias activateDai:  activateDaiSwitch.checked
     property alias activateUsdt: activateUsdtSwitch.checked
     property alias activateWBTC: activateWBTCSwitch.checked
 
-    property alias seedPhrases:                 seedPhraseDialog.seedPhrasesElectrum
-    property alias phrasesSeparator:            seedPhraseDialog.phrasesSeparatorElectrum
-    property bool  isCurrentSeedValid:          false
+    property alias seedPhrases:        seedPhraseDialog.seedPhrasesElectrum
+    property alias phrasesSeparator:   seedPhraseDialog.phrasesSeparatorElectrum
+    property bool  isCurrentSeedValid: false
 
     ConfirmPasswordDialog {
         id: confirmPasswordDialog
@@ -47,8 +47,8 @@ SettingsFoldable {
     SeedPhraseDialog {
         id: seedPhraseDialog;
 
-        onNewSeedElectrum: control.newSeedElectrum()
-        onCopySeedElectrum: control.copySeedElectrum()
+        onNewSeedElectrum:        control.newSeedPhrases()
+        onCopySeedElectrum:       control.copySeedPhrases()
         onValidateFullSeedPhrase: control.validateCurrentSeedPhrase()
         onClosed: {
             internalValues.isSeedChanged = seedPhraseDialog.isSeedChanged
@@ -149,7 +149,7 @@ SettingsFoldable {
     }
 
     function clear() {
-        control.clearElectrum();
+        control.clearSettings();
         internalValues.save();
     }
 
@@ -432,7 +432,7 @@ SettingsFoldable {
                 text:             qsTrId("settings-swap-new-seed")
                 onClicked: {
                     function generateSeedPhrase() {
-                        newSeedElectrum();
+                        newSeedPhrases();
                         seedPhraseDialog.setModeNew();
                         seedPhraseDialog.open();
                     }

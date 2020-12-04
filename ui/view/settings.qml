@@ -286,71 +286,71 @@ ColumnLayout {
                 }
 
                 SwapEthSettings {
-                    id: swapEthSettings
-                    title:                    viewModel.ethSettings.title
-                    generalTitle:             viewModel.ethSettings.generalTitle
-                    showSeedDialogTitle:      viewModel.ethSettings.showSeedDialogTitle
-                    seedPhrases:              viewModel.ethSettings.seedPhrases
-                    phrasesSeparator:         viewModel.ethSettings.phrasesSeparator
-                    isCurrentSeedValid:       viewModel.ethSettings.isCurrentSeedValid
-                    mainSettingsViewModel:    viewModel
-                    hasStatusIndicatior:      true
-                    folded:                   creating ? (swapMode == viewModel.ethSettings.coinID ? false : (swapMode == "ALL" ? viewModel.ethSettings.isConnected : true)) : viewModel.ethSettings.folded
+                    id:                    swapEthSettings
+                    title:                 viewModel.ethSettings.title
+                    generalTitle:          viewModel.ethSettings.generalTitle
+                    showSeedDialogTitle:   viewModel.ethSettings.showSeedDialogTitle
+                    seedPhrases:           viewModel.ethSettings.seedPhrases
+                    phrasesSeparator:      viewModel.ethSettings.phrasesSeparator
+                    isCurrentSeedValid:    viewModel.ethSettings.isCurrentSeedValid
+                    mainSettingsViewModel: viewModel
+                    hasStatusIndicatior:   true
+                    folded:                creating ? (swapMode == viewModel.ethSettings.coinID ? false : (swapMode == "ALL" ? viewModel.ethSettings.isConnected : true)) : viewModel.ethSettings.folded
 
-                    canEdit:                  viewModel.ethSettings.canEdit
-                    isConnected:              viewModel.ethSettings.isConnected
-                    connectionStatus:         viewModel.ethSettings.connectionStatus
-                    connectionErrorMsg:       viewModel.ethSettings.connectionErrorMsg
+                    canEdit:               viewModel.ethSettings.canEdit
+                    isConnected:           viewModel.ethSettings.isConnected
+                    connectionStatus:      viewModel.ethSettings.connectionStatus
+                    connectionErrorMsg:    viewModel.ethSettings.connectionErrorMsg
 
-                    address:             viewModel.ethSettings.nodeAddress
-                    port:                viewModel.ethSettings.nodePort
-                    accountIndex:        viewModel.ethSettings.accountIndex
-                    contractAddress:     viewModel.ethSettings.contractAddress
-                    erc20ContractAddress:     viewModel.ethSettings.erc20ContractAddress
-                    daiContractAddress:  viewModel.ethSettings.daiContractAddress
-                    usdtContractAddress: viewModel.ethSettings.usdtContractAddress
-                    wbtcContractAddress: viewModel.ethSettings.wbtcContractAddress
-                    activateDai:  viewModel.ethSettings.activateDai
-                    activateUsdt:  viewModel.ethSettings.activateUsdt
-                    activateWBTC:  viewModel.ethSettings.activateWBTC
+                    address:               viewModel.ethSettings.nodeAddress
+                    port:                  viewModel.ethSettings.nodePort
+                    accountIndex:          viewModel.ethSettings.accountIndex
+                    contractAddress:       viewModel.ethSettings.contractAddress
+                    erc20ContractAddress:  viewModel.ethSettings.erc20ContractAddress
+                    daiContractAddress:    viewModel.ethSettings.daiContractAddress
+                    usdtContractAddress:   viewModel.ethSettings.usdtContractAddress
+                    wbtcContractAddress:   viewModel.ethSettings.wbtcContractAddress
+                    activateDai:           viewModel.ethSettings.activateDai
+                    activateUsdt:          viewModel.ethSettings.activateUsdt
+                    activateWBTC:          viewModel.ethSettings.activateWBTC
 
                     Connections {
-                        target: viewModel.ethSettings
-                        onCanEditChanged:        swapEthSettings.canEdit = viewModel.ethSettings.canEdit
+                        target:              viewModel.ethSettings
+                        onCanEditChanged:    swapEthSettings.canEdit = viewModel.ethSettings.canEdit
                         onConnectionChanged: {
-                            swapEthSettings.isConnected          = viewModel.ethSettings.isConnected;
-                            swapEthSettings.title                = viewModel.ethSettings.title;
+                            swapEthSettings.isConnected        = viewModel.ethSettings.isConnected;
+                            swapEthSettings.title              = viewModel.ethSettings.title;
                         }
                         onConnectionStatusChanged: {
-                            swapEthSettings.connectionStatus     = viewModel.ethSettings.connectionStatus;
+                            swapEthSettings.connectionStatus   = viewModel.ethSettings.connectionStatus;
                         }
 
                         onConnectionErrorMsgChanged: {
-                            swapEthSettings.connectionErrorMsg   = viewModel.ethSettings.connectionErrorMsg;
+                            swapEthSettings.connectionErrorMsg = viewModel.ethSettings.connectionErrorMsg;
                         }
 
-                        onNodeAddressChanged: swapEthSettings.address  = viewModel.ethSettings.nodeAddress
-                        onNodePortChanged:    swapEthSettings.port     = viewModel.ethSettings.nodePort
-                        onAccountIndexChanged: swapEthSettings.accountIndex = viewModel.ethSettings.accountIndex
-                        onContractAddressChanged: swapEthSettings.contractAddress = viewModel.ethSettings.contractAddress
+                        onNodeAddressChanged:          swapEthSettings.address              = viewModel.ethSettings.nodeAddress
+                        onNodePortChanged:             swapEthSettings.port                 = viewModel.ethSettings.nodePort
+                        onAccountIndexChanged:         swapEthSettings.accountIndex         = viewModel.ethSettings.accountIndex
+                        onContractAddressChanged:      swapEthSettings.contractAddress      = viewModel.ethSettings.contractAddress
                         onErc20ContractAddressChanged: swapEthSettings.erc20ContractAddress = viewModel.ethSettings.erc20ContractAddress
-                        onDaiContractAddressChanged: swapEthSettings.daiContractAddress = viewModel.ethSettings.daiContractAddress
-                        onUsdtContractAddressChanged: swapEthSettings.usdtContractAddress = viewModel.ethSettings.usdtContractAddress
-                        onWbtcContractAddressChanged: swapEthSettings.wbtcContractAddress = viewModel.ethSettings.wbtcContractAddress
-                        onSeedPhrasesChanged: swapEthSettings.seedPhrases = viewModel.ethSettings.seedPhrases
-                        onIsCurrentSeedValidChanged:  swapEthSettings.isCurrentSeedValid = viewModel.ethSettings.isCurrentSeedValid
-                        onActivateDaiChanged: swapEthSettings.activateDai = viewModel.ethSettings.activateDai
-                        onActivateUsdtChanged: swapEthSettings.activateUsdt = viewModel.ethSettings.activateUsdt
-                        onActivateWBTCChanged: swapEthSettings.activateWBTC = viewModel.ethSettings.activateWBTC
+                        onDaiContractAddressChanged:   swapEthSettings.daiContractAddress   = viewModel.ethSettings.daiContractAddress
+                        onUsdtContractAddressChanged:  swapEthSettings.usdtContractAddress  = viewModel.ethSettings.usdtContractAddress
+                        onWbtcContractAddressChanged:  swapEthSettings.wbtcContractAddress  = viewModel.ethSettings.wbtcContractAddress
+                        onSeedPhrasesChanged:          swapEthSettings.seedPhrases          = viewModel.ethSettings.seedPhrases
+                        onIsCurrentSeedValidChanged:   swapEthSettings.isCurrentSeedValid   = viewModel.ethSettings.isCurrentSeedValid
+                        onActivateDaiChanged:          swapEthSettings.activateDai          = viewModel.ethSettings.activateDai
+                        onActivateUsdtChanged:         swapEthSettings.activateUsdt         = viewModel.ethSettings.activateUsdt
+                        onActivateWBTCChanged:         swapEthSettings.activateWBTC         = viewModel.ethSettings.activateWBTC
                     }
                     
-                    onDisconnect: viewModel.ethSettings.disconnect()
-                    onApplySettings: viewModel.ethSettings.applySettings()
-                    onClearSettings: viewModel.ethSettings.clearSettings()
-                    onConnectToNode: viewModel.ethSettings.connectToNode()
-                    onNewSeedPhrases: viewModel.ethSettings.newSeedPhrases()
-                    onRestoreSeedPhrases: viewModel.ethSettings.restoreSeedPhrases()
-                    onCopySeedPhrases: viewModel.ethSettings.copySeedPhrases()
+                    onDisconnect:                viewModel.ethSettings.disconnect()
+                    onApplySettings:             viewModel.ethSettings.applySettings()
+                    onClearSettings:             viewModel.ethSettings.clearSettings()
+                    onConnectToNode:             viewModel.ethSettings.connectToNode()
+                    onNewSeedPhrases:            viewModel.ethSettings.newSeedPhrases()
+                    onRestoreSeedPhrases:        viewModel.ethSettings.restoreSeedPhrases()
+                    onCopySeedPhrases:           viewModel.ethSettings.copySeedPhrases()
                     onValidateCurrentSeedPhrase: viewModel.ethSettings.validateCurrentSeedPhrase()
 
                     Binding {
