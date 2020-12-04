@@ -259,15 +259,14 @@ Item {
                             return "qrc:/assets/icon-dash.svg";
                         case Currency.CurrDogecoin:
                             return "qrc:/assets/icon-doge.svg";
-                        // TODO roman.strilets
                         case Currency.CurrEthereum:
-                            return "qrc:/assets/icon-doge.svg";
+                            return "qrc:/assets/icon-eth.svg";
                         case Currency.CurrDai:
-                            return "qrc:/assets/icon-doge.svg";
+                            return "qrc:/assets/icon-dai.svg";
                         case Currency.CurrTether:
-                            return "qrc:/assets/icon-doge.svg";
+                            return "qrc:/assets/icon-usdt.svg";
                         case Currency.CurrWrappedBTC:
-                            return "qrc:/assets/icon-doge.svg";
+                            return "qrc:/assets/icon-wbtc.svg";
                         default: return "";
                     }
                 }
@@ -1181,6 +1180,10 @@ Please try again later or create an offer yourself."
             case "bsv": return "qrc:/assets/icon-bsv.svg";
             case "dash": return "qrc:/assets/icon-dash.svg";
             case "doge": return "qrc:/assets/icon-doge.svg";
+            case "eth": return "qrc:/assets/icon-eth.svg";
+            case "dai": return "qrc:/assets/icon-dai.svg";
+            case "usdt": return "qrc:/assets/icon-usdt.svg";
+            case "wbtc": return "qrc:/assets/icon-wbtc.svg";
 
             default: return "";
         }
