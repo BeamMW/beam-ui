@@ -287,15 +287,14 @@ Item {
                             return Style.swapCurrencyPaneGrLeftDASH;
                         case Currency.CurrDogecoin:
                             return Style.swapCurrencyPaneGrLeftDOGE;
-                        // TODO roman.strilets
                         case Currency.CurrEthereum:
-                            return Style.swapCurrencyPaneGrLeftDOGE;
+                            return Style.swapCurrencyPaneGrLeftETH;
                         case Currency.CurrDai:
-                            return Style.swapCurrencyPaneGrLeftDOGE;
+                            return Style.swapCurrencyPaneGrLeftDAI;
                         case Currency.CurrTether:
-                            return Style.swapCurrencyPaneGrLeftDOGE;
+                            return Style.swapCurrencyPaneGrLeftUSDT;
                         case Currency.CurrWrappedBTC:
-                            return Style.swapCurrencyPaneGrLeftDOGE;
+                            return Style.swapCurrencyPaneGrLeftWBTC;
                         default:
                             return Style.swapCurrencyPaneGrLeftBTC;
                     }
