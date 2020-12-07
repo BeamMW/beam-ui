@@ -54,6 +54,8 @@ namespace
     const char* kBeamNewsActive = "notifications/beam_news";
     const char* kTxStatusActive = "notifications/tx_status";
 
+    const char* kMpAnonymitySet = "max_privacy/anonymity_set";
+
     const std::map<QString, QString> kSupportedLangs { 
         { "zh_CN", "Chinese Simplified"},
         { "en_US", "English" },
@@ -67,7 +69,7 @@ namespace
         { "it_IT", "Italiano"},
         { "ja_JP", "日本語"},
         { "ru_RU", "Русский" },
-        { "rs_RS", "Српски" },
+        { "sr_SR", "Српски" },
         { "fi_FI", "Suomi" },
         { "sv_SE", "Svenska"},
         { "th_TH", "ภาษาไทย"},
@@ -88,6 +90,8 @@ namespace
         return find(kOutDatedPeers.begin(), kOutDatedPeers.end(), peer) !=
                kOutDatedPeers.end();
     }
+
+    const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
 }  // namespace
 
 const char* WalletSettings::WalletCfg = "beam-wallet.cfg";
@@ -103,7 +107,6 @@ WalletSettings::WalletSettings(const QDir& appDataDir)
     : m_data{ appDataDir.filePath(SettingsFile), QSettings::IniFormat }
     , m_appDataDir{appDataDir}
 {
-
 }
 
 #if defined(BEAM_HW_WALLET)
@@ -465,6 +468,53 @@ void WalletSettings::setTxStatusActive(bool isActive)
         }
         Lock lock(m_mutex);
         m_data.setValue(kTxStatusActive, isActive);
+    }
+}
+
+uint8_t WalletSettings::getMaxPrivacyAnonymitySet() const
+{
+    Lock lock(m_mutex);
+    return static_cast<uint8_t>(m_data.value(kMpAnonymitySet, kDefaultMaxPrivacyAnonymitySet).toUInt());
+}
+
+void WalletSettings::setMaxPrivacyAnonymitySet(uint8_t anonymitySet)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kMpAnonymitySet, anonymitySet);
+}
+
+void WalletSettings::maxPrivacyLockTimeLimitInit()
+{
+    auto walletModel = AppModel::getInstance().getWallet();
+    if (walletModel)
+    {
+        walletModel->getAsync()->getMaxPrivacyLockTimeLimitHours([this] (uint8_t limit)
+        {
+            Lock lock(m_mutex);
+            m_mpLockTimeLimit = limit;
+        });
+    }
+}
+
+uint8_t WalletSettings::getMaxPrivacyLockTimeLimitHours() const
+{
+    Lock lock(m_mutex);
+    return m_mpLockTimeLimit;
+}
+
+void WalletSettings::setMaxPrivacyLockTimeLimitHours(uint8_t lockTimeLimit)
+{
+    if (m_mpLockTimeLimit != lockTimeLimit)
+    {
+        auto walletModel = AppModel::getInstance().getWallet();
+        if (walletModel)
+        {
+            {
+                Lock lock(m_mutex);
+                m_mpLockTimeLimit = lockTimeLimit;
+            }
+            walletModel->getAsync()->setMaxPrivacyLockTimeLimitHours(lockTimeLimit);
+        }
     }
 }
 

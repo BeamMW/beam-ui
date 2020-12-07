@@ -43,8 +43,6 @@ namespace beamui
     macro(Bitcoin,     "Bitcoin",       "BTC",           "satoshi",  "sat/kB",    8) \
     macro(Litecoin,    "Litecoin",      "LTC",           "photon",   "ph/kB",     8) \
     macro(Qtum,        "QTUM",          "QTUM",          "qsatoshi", "qsat/kB",   8) \
-    macro(BitcoinCash, "Bitcoin Cash",  "BCH",           "satoshi",  "sat/kB",    8) \
-    macro(BitcoinSV,   "Bitcoin SV",    "BSV",           "satoshi",  "sat/kB",    8) \
     macro(Dogecoin,    "Dogecoin",      "DOGE",          "satoshi",  "sat/kB",    8) \
     macro(Dash,        "Dash",          "DASH",          "duff",     "duff/kB",   8) \
     macro(Ethereum,    "Ethereum",      "ETH",           "gwei",     "gwei",      9) \
@@ -54,6 +52,8 @@ namespace beamui
     macro(Usd,         "USD",           "USD",           "cent",     "",          2) \
     macro(Unknown,     "",              "",              "",         "",          0)
 
+    // TODO roman.strilets deleted from CURRENCY_MAP
+    //macro(BitcoinCash, "Bitcoin Cash",  "BCH",           "satoshi",  "sat/kB",    8)
     enum class Currencies
     {
 #define MACRO(name, label, slabel, subUnit, feeLabel, dec) name,
@@ -89,18 +89,6 @@ namespace beamui
     QString toString(const beam::Merkle::Hash&);
     QString toString(const beam::Timestamp& ts);
 
-    class Filter
-    {
-    public:
-        Filter(size_t size = 12);
-        void addSample(double value);
-        double getAverage() const;
-        double getMedian() const;
-    private:
-        std::vector<double> _samples;
-        size_t _index;
-        bool _is_poor;
-    };
     QDateTime CalculateExpiresTime(beam::Timestamp currentHeightTime, beam::Height currentHeight, beam::Height expiresHeight);
     QString getEstimateTimeStr(int estimate);
     QString convertBeamHeightDiffToTime(int32_t dt);

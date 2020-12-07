@@ -16,9 +16,9 @@
 #include "wallet/transactions/swaps/common.h"
 #include "wallet/transactions/swaps/swap_transaction.h"
 #include "core/ecc.h"
-#include "viewmodel/qml_globals.h"
 #include "viewmodel/ui_helpers.h"
 #include "model/app_model.h"
+#include "viewmodel/fee_helpers.h"
 
 #include <qdebug.h>
 
@@ -255,7 +255,8 @@ QString SwapTxObject::getFee() const
     auto fee = m_swapTx.getFee();
     if (fee)
     {
-        return beamui::AmountInGrothToUIString(*fee);
+        Amount shieldedFee = GetShieldedFee(getTxDescription(), SubTxIndex::BEAM_LOCK_TX);
+        return beamui::AmountInGrothToUIString(shieldedFee + *fee);
     }
     return QString();
 }
@@ -280,8 +281,8 @@ QString SwapTxObject::getSwapCoinFee() const
         return QString();
     }
 
-    Currency coinTypeQt = QMLGlobals::convertSwapCoinToCurrency(m_swapTx.getSwapCoin());
-    return QMLGlobals::calcTotalFee(coinTypeQt, *feeRate);
+    Currency coinTypeQt = convertSwapCoinToCurrency(m_swapTx.getSwapCoin());
+    return calcTotalFee(coinTypeQt, *feeRate);
 }
 
 QString SwapTxObject::getFailureReason() const

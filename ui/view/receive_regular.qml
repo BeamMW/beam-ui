@@ -160,15 +160,16 @@ ColumnLayout {
                         content: 
                         ColumnLayout {
                             spacing: 20
+                            id:     addressType
                             property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
                             Pane {
                                 padding:    2
-                                visible:    parent.isShieldedSupported
+                                //visible:    parent.isShieldedSupported
                                 background: Rectangle {
                                     color: Style.table_header
                                     radius: 10
                                     border.width: 1
-                                    border.color: Style.active
+                                    border.color: addressType.isShieldedSupported ? Style.active : Style.content_secondary
                                 }
                                 ButtonGroup { id: txTypeGroup }
                                 RowLayout {
@@ -192,10 +193,11 @@ ColumnLayout {
                                         id:                 maxPrivacyCheck
                                         //% "Max privacy"
                                         text:               qsTrId("tx-max-privacy")
-                                        palette.buttonText: Style.content_main
+                                        palette.buttonText: addressType.isShieldedSupported ? Style.content_main : Style.content_secondary
                                         ButtonGroup.group:  txTypeGroup
                                         checkable:          true
                                         checked:            viewModel.isShieldedTx
+                                        enabled:            addressType.isShieldedSupported
                                         onToggled: {
                                             viewModel.isShieldedTx = true;
                                             viewModel.isPermanentAddress = true;
@@ -211,7 +213,7 @@ ColumnLayout {
                                 font.italic:        true
                                 font.pixelSize:     14
                                 wrapMode:           Text.WordWrap
-                                //% "Connect to integrated or own node to enable sending max privacy transactions"
+                                //% "Connect to integrated or own node to enable receiving max privacy and offline transactions"
                                 text:               qsTrId("wallet-receive-max-privacy-unsupported")
                             }
                             
@@ -296,7 +298,6 @@ ColumnLayout {
                     spacing:            10
                     TokenInfoPanel {
                         Layout.fillWidth:   true
-                        //% "Online address"
                         title:              !viewModel.isShieldedTx ? 
                             //% "Online address"
                             qsTrId("wallet-receive-online-address")
@@ -376,13 +377,13 @@ ColumnLayout {
                         amount:               viewModel.amountToReceive
                         isValidToken:         receiveView.isValid()
                         visible:              !viewModel.isShieldedTx
-                        defaultAddressType:   true // permanent
                         onTokenCopied: {
                             viewModel.saveExchangeAddress();
                         }
                         onClosed: receiveView.onClosed()
                     }
                     TokenInfoPanel {
+                        property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
                         Layout.fillWidth:     true
                         //% "Offline address"
                         title:                qsTrId("wallet-receive-offline-address")
@@ -400,8 +401,10 @@ ColumnLayout {
                         showQrCode:           false
                         isValidToken:         receiveView.isValid()
                         visible:              !viewModel.isShieldedTx && viewModel.offlineToken.length > 0
+                        enabled:              isShieldedSupported
                         ignoreStoredVouchers: true
                         onTokenCopied: {
+                            viewModel.saveOfflineAddress();
                         }
                         onClosed: receiveView.onClosed()
                     }
@@ -412,9 +415,26 @@ ColumnLayout {
             // Footers
             //
             SFText {
+                property string mpLockTimeLimit: viewModel.mpTimeLimit
                 Layout.alignment:      Qt.AlignHCenter
                 Layout.preferredWidth: 428
                 Layout.topMargin:      30
+                font.pixelSize:        14
+                font.italic:           true
+                color:                 Style.content_disabled
+                wrapMode:              Text.WordWrap
+                horizontalAlignment:   Text.AlignHCenter
+                text: mpLockTimeLimit != "0" ?
+                    /*% "Max Privacy transaction can last at most %1 hours"*/
+                    qsTrId("wallet-receive-addr-message-mp").arg(mpLockTimeLimit) :
+                    /*% "Max Privacy transaction can last indefinitely"*/
+                    qsTrId("wallet-receive-addr-message-mp-no-limit")
+                visible:               viewModel.isShieldedTx
+            }
+
+            SFText {
+                Layout.alignment:      Qt.AlignHCenter
+                Layout.preferredWidth: 428
                 font.pixelSize:        14
                 font.italic:           true
                 color:                 Style.content_disabled

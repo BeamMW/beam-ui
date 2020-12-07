@@ -14,7 +14,6 @@ Panel {
     property alias token:               tokenLabel.text
     property string amount:             ""
     property bool isValidToken:         false
-    property alias defaultAddressType:  infoDialog.defaultAddressType
     property alias ignoreStoredVouchers:infoDialog.ignoreStoredVouchers
     property alias headerItem:          headerPlaceholder.contentItem
     property alias headerVisible:       headerPlaceholder.visible
@@ -22,6 +21,8 @@ Panel {
     property alias footerVisible:       footerPlaceholder.visible
     signal tokenCopied;
     signal closed
+
+    backgroundColor:  Style.background_button
 
     TokenInfoDialog {
         id:                     infoDialog

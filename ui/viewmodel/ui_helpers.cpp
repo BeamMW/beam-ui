@@ -2,7 +2,6 @@
 #include <QDateTime>
 #include <QLocale>
 #include <QTextStream>
-#include <numeric>
 #include "3rdparty/libbitcoin/include/bitcoin/bitcoin/formats/base_10.hpp"
 #include "version.h"
 
@@ -176,10 +175,10 @@ namespace beamui
             return beamui::Currencies::Litecoin;
         case wallet::AtomicSwapCoin::Qtum:
             return beamui::Currencies::Qtum;
+#if defined(BITCOIN_CASH_SUPPORT)
         case wallet::AtomicSwapCoin::Bitcoin_Cash:
             return beamui::Currencies::BitcoinCash;
-        case wallet::AtomicSwapCoin::Bitcoin_SV:
-            return beamui::Currencies::BitcoinSV;
+#endif // BITCOIN_CASH_SUPPORT
         case wallet::AtomicSwapCoin::Dash:
             return beamui::Currencies::Dash;
         case wallet::AtomicSwapCoin::Dogecoin:
@@ -208,10 +207,10 @@ namespace beamui
             return beam::wallet::AtomicSwapCoin::Litecoin;
         case beamui::Currencies::Qtum:
             return beam::wallet::AtomicSwapCoin::Qtum;
+#if defined(BITCOIN_CASH_SUPPORT)
         case beamui::Currencies::BitcoinCash:
             return beam::wallet::AtomicSwapCoin::Bitcoin_Cash;
-        case beamui::Currencies::BitcoinSV:
-            return beam::wallet::AtomicSwapCoin::Bitcoin_SV;
+#endif // BITCOIN_CASH_SUPPORT
         case beamui::Currencies::Dogecoin:
             return beam::wallet::AtomicSwapCoin::Dogecoin;
         case beamui::Currencies::Dash:
@@ -248,39 +247,6 @@ namespace beamui
         default:
             return beamui::Currencies::Unknown;
         }
-    }
-
-    Filter::Filter(size_t size)
-        : _samples(size, 0.0)
-        , _index{0}
-        , _is_poor{true}
-    {
-    }
-    
-    void Filter::addSample(double value)
-    {
-        _samples[_index] = value;
-        _index = (_index + 1) % _samples.size();
-        if (_is_poor)
-        {
-            _is_poor = _index + 1 < _samples.size();
-        }
-    }
-
-    double Filter::getAverage() const
-    {
-        double sum = accumulate(_samples.begin(), _samples.end(), 0.0);
-        return sum / (_is_poor ? _index : _samples.size());
-    }
-
-    double Filter::getMedian() const
-    {
-        vector<double> temp(_samples.begin(), _samples.end());
-        size_t medianPos = (_is_poor ? _index : temp.size()) / 2;
-        nth_element(temp.begin(),
-                    temp.begin() + medianPos,
-                    _is_poor ? temp.begin() + _index : temp.end());
-        return temp[medianPos];
     }
 
     QDateTime CalculateExpiresTime(beam::Timestamp currentHeightTime, beam::Height currentHeight, beam::Height expiresHeight)
@@ -376,8 +342,9 @@ namespace beamui
             case Currencies::Bitcoin: return "btc";
             case Currencies::Litecoin: return "ltc";
             case Currencies::Qtum: return "qtum";
+#if defined(BITCOIN_CASH_SUPPORT)
             case Currencies::BitcoinCash: return "bch";
-            case Currencies::BitcoinSV: return "bsv";
+#endif // BITCOIN_CASH_SUPPORT
             case Currencies::Dash: return "dash";
             case Currencies::Dogecoin: return "doge";
             case Currencies::Usd: return "usd";

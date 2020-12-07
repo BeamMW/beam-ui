@@ -18,6 +18,7 @@
 #include "wallet/transactions/swaps/utils.h"
 #include <QClipboard>
 #include "qml_globals.h"
+#include "fee_helpers.h"
 
 namespace {
     enum
@@ -69,7 +70,8 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     , _walletModel(*AppModel::getInstance().getWallet())
     , _txParameters(beam::wallet::CreateSwapTransactionParameters())
     , _isBeamSide(false)
-    , _minimalBeamFeeGrothes(QMLGlobals::getMinimalFee(Currency::CurrBeam, false))
+    , _minimalBeamFeeGrothes(minimalFee(Currency::CurrBeam, false))
+    , _shieldedInputsFee(0)
 {
     connect(&_walletModel, &WalletModel::generatedNewAddress, this, &ReceiveSwapViewModel::onGeneratedNewAddress);
     connect(&_walletModel, &WalletModel::swapParamsLoaded, this, &ReceiveSwapViewModel::onSwapParamsLoaded);
@@ -179,6 +181,7 @@ void ReceiveSwapViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet
 {
     if (_sentCurrency == Currency::CurrBeam)
     {
+        _shieldedInputsFee = selectionRes.shieldedInputsFee;
         _minimalBeamFeeGrothes = selectionRes.minimalFee;
         emit minimalBeamFeeGrothesChanged();
 
@@ -235,13 +238,16 @@ void ReceiveSwapViewModel::setAmountSent(QString value)
         {
             if (isPreviouseGreaterThanNow)
             {
-                _minimalBeamFeeGrothes = QMLGlobals::getMinimalFee(Currency::CurrBeam, false);
+                _minimalBeamFeeGrothes = minimalFee(Currency::CurrBeam, false);
                 _sentFeeGrothes = _minimalBeamFeeGrothes;
                 emit minimalBeamFeeGrothesChanged();
                 emit sentFeeChanged();
             }
             if (_amountSentGrothes)
-                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes);
+            {
+                _shieldedInputsFee = 0;
+                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes, beam::Asset::s_BeamID);
+            }
         }
     }
 }
@@ -264,7 +270,8 @@ void ReceiveSwapViewModel::setSentFee(unsigned int value)
         if (_sentCurrency == Currency::CurrBeam && _walletModel.hasShielded() && _amountSentGrothes)
         {
             _feeChangedByUI = true;
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes);
+            _shieldedInputsFee = 0;
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes, beam::Asset::s_BeamID);
         }
     }
 }
@@ -398,8 +405,8 @@ bool ReceiveSwapViewModel::isEnough() const
         return _walletModel.getAvailable() >= total;
     }
 
-    auto swapCoin = QMLGlobals::convertCurrencyToSwapCoin(_sentCurrency);
-    if (QMLGlobals::isEthereumBased(_sentCurrency))
+    auto swapCoin = convertCurrencyToSwapCoin(_sentCurrency);
+    if (isEthereumBased(_sentCurrency))
     {
         // TODO(alex.starun): check separately Ethereum and ERC20
         return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) > total;
@@ -412,7 +419,7 @@ bool ReceiveSwapViewModel::isEnough() const
 bool ReceiveSwapViewModel::isEnoughToReceive() const
 {
     // TODO roman.strilets need check
-    if (QMLGlobals::isEthereumBased(_receiveCurrency))
+    if (isEthereumBased(_receiveCurrency))
     {
         return AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) > _receiveFeeGrothes;
     }
@@ -421,12 +428,12 @@ bool ReceiveSwapViewModel::isEnoughToReceive() const
 
 bool ReceiveSwapViewModel::isSendFeeOK() const
 {
-    return _amountSentGrothes == 0 || QMLGlobals::isSwapFeeOK(_amountSentGrothes, _sentFeeGrothes, _sentCurrency);
+    return _amountSentGrothes == 0 || isSwapFeeOK(_amountSentGrothes, _sentFeeGrothes, _sentCurrency);
 }
 
 bool ReceiveSwapViewModel::isReceiveFeeOK() const
 {
-    return _amountToReceiveGrothes == 0 || QMLGlobals::isSwapFeeOK(_amountToReceiveGrothes, _receiveFeeGrothes, _receiveCurrency);
+    return _amountToReceiveGrothes == 0 || isSwapFeeOK(_amountToReceiveGrothes, _receiveFeeGrothes, _receiveCurrency);
 }
 
 void ReceiveSwapViewModel::saveAddress()
@@ -489,7 +496,7 @@ void ReceiveSwapViewModel::updateTransactionToken()
     emit isReceiveFeeOKChanged();
 
     _isBeamSide = (_sentCurrency == Currency::CurrBeam);
-    auto swapCoin   = QMLGlobals::convertCurrencyToSwapCoin(
+    auto swapCoin   = convertCurrencyToSwapCoin(
         _isBeamSide ? _receiveCurrency : _sentCurrency);
     auto beamAmount =
         _isBeamSide ? _amountSentGrothes : _amountToReceiveGrothes;
@@ -505,7 +512,7 @@ void ReceiveSwapViewModel::updateTransactionToken()
         _receiverAddress.m_walletID,
         _walletModel.getCurrentHeight(),
         beamAmount,
-        beamFee,
+        !!_shieldedInputsFee ? beamFee - _shieldedInputsFee : beamFee,
         swapCoin,
         swapAmount,
         swapFeeRate,

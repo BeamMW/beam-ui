@@ -17,7 +17,7 @@ Pane {
 
     contentItem: ColumnLayout {
         spacing: 0
-        //clip:    true
+        clip:    folded
         RowLayout {
             Layout.alignment: Qt.AlignTop
             SFText {
@@ -86,10 +86,21 @@ Pane {
         Control {
             id:                     placeholder
             Layout.fillWidth:       true
-            Layout.fillHeight:      true
-            Layout.topMargin:       20
+            Layout.topMargin:       folded ? 0 : 20
             Layout.alignment:       Qt.AlignTop
-            visible:                !control.folded
+
+            Layout.preferredHeight: folded ? 0 : placeholder.implicitHeight
+            opacity:                folded ? 0.0 : 1.0
+
+            Behavior on Layout.preferredHeight {
+                NumberAnimation { duration:  100 }
+            }
+            Behavior on Layout.topMargin {
+                NumberAnimation { duration:  100 }
+            }
+            Behavior on opacity {
+                NumberAnimation { duration:  200 }
+            }
         }
     }
 

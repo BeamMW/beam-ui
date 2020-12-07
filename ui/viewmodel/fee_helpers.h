@@ -1,4 +1,4 @@
-// Copyright 2019 The Beam Team
+// Copyright 2020 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,22 +14,10 @@
 
 #pragma once
 
-#include <QObject>
+#include "currencies.h"
 
-class UtxoViewStatus : public QObject
-{
-    Q_OBJECT
-public:
-    enum EnStatus
-    {
-        Undefined = 0,
-        Available,
-        Maturing,
-        Unavailable,
-        Outgoing,
-        Incoming,
-        Spent,
-        MaturingMP,
-    };
-    Q_ENUMS(EnStatus)
-};
+beam::Amount minFeeBeam(bool isShielded = false);
+bool isFeeOK(beam::Amount fee, Currency currency, bool isShielded);
+bool isSwapFeeOK(beam::Amount amount, beam::Amount fee, Currency currency);
+beam::Amount minimalFee(Currency, bool isShielded);
+QString calcTotalFee(Currency currency, beam::Amount feeRate);

@@ -8,7 +8,6 @@ import "."
 Dialog {
     id: dialog
     modal: true
-
     property alias address:                 addressField.text
 
     QR {
@@ -19,7 +18,6 @@ Dialog {
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
 
-    
     parent: Overlay.overlay
     padding: 30
 
@@ -41,18 +39,14 @@ Dialog {
                 Layout.fillWidth:       true
                 Layout.leftMargin:      30
                 horizontalAlignment:    Text.AlignHCenter
-                font.pixelSize:         18
-                font.styleName:         "Bold"
-                font.weight:            Font.Bold
+                font.pixelSize:         24
                 color:                  Style.content_main
                 //% "Public offline address"
                 text:                   qsTrId("public-address-title")
             }
 
             CustomToolButton {
-                icon.source:            "qrc:/assets/icon-cancel.svg"
-                icon.width:             12
-                icon.height:            12
+                icon.source:            "qrc:/assets/icon-cancel-16.svg"
                 //% "Close"
                 ToolTip.text:           qsTrId("general-close")
                 onClicked: {
@@ -61,28 +55,27 @@ Dialog {
             }
         }
 
+        Image {
+            Layout.alignment:       Qt.AlignHCenter
+            Layout.topMargin:       50
+            Layout.bottomMargin:    50
+            Layout.preferredWidth:  160
+            Layout.preferredHeight: 160
+            fillMode:               Image.PreserveAspectFit
+            source:                 qrCode.data
+            visible:                qrCode.data.length > 0
+        }
+
         // Address
         SFText {
             id:                     addressField
             Layout.fillWidth:       true
-            Layout.leftMargin:      30
-            Layout.rightMargin:     30
-            Layout.bottomMargin:    30
+            Layout.bottomMargin:    20
             Layout.maximumWidth:    400
             wrapMode:               Text.Wrap
+            horizontalAlignment:    Text.AlignHCenter
             font.pixelSize:         14
             color:                  Style.content_main
-        }
-
-        Image {
-            id:                     qrImage
-            Layout.alignment:       Qt.AlignHCenter
-            Layout.preferredWidth:  120
-            Layout.preferredHeight: 120
-            Layout.bottomMargin:    20
-            fillMode:               Image.PreserveAspectFit
-            source:                 qrCode.data
-            visible:                qrCode.data.length > 0
         }
 
         // Note

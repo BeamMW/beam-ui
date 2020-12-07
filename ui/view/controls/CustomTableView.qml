@@ -13,6 +13,7 @@ TableView {
     property int headerTextLeftMargin: 20
     property var mainBackgroundRect: null
     property var backgroundRect: mainBackgroundRect != null ? mainBackgroundRect : main.backgroundRect
+    property color headerColor: Style.table_header
 
     style: TableViewStyle {
         transientScrollBars: true
@@ -70,7 +71,7 @@ TableView {
             x: lastColumn ? -12 : 0
             width: parent.width + (firstOrLastColumn ? 12 : 0)
             height: parent.height + (firstOrLastColumn ? 12 : 0)
-            color: Style.table_header
+            color: headerColor
             radius: firstOrLastColumn ? 10 : 0
         }
 

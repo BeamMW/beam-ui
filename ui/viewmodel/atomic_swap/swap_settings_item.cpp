@@ -82,12 +82,11 @@ QString SwapCoinSettingsItem::getShowSeedDialogTitle() const
     case beam::wallet::AtomicSwapCoin::Dogecoin:
         //% "Dogecoin seed phrase"
         return qtTrId("dogecoin-show-seed-phrase");
+#if defined(BITCOIN_CASH_SUPPORT)
     case beam::wallet::AtomicSwapCoin::Bitcoin_Cash:
         //% "Bitcoin Cash seed phrase"
         return qtTrId("bitcoin-cash-show-seed-phrase");
-    case beam::wallet::AtomicSwapCoin::Bitcoin_SV:
-        //% "Bitcoin SV seed phrase"
-        return qtTrId("bitcoin-sv-show-seed-phrase");
+#endif // BITCOIN_CASH_SUPPORT
     case beam::wallet::AtomicSwapCoin::Dash:
         //% "Dash seed phrase"
         return qtTrId("dash-show-seed-phrase");
@@ -115,12 +114,11 @@ QString SwapCoinSettingsItem::getShowAddressesDialogTitle() const
     case beam::wallet::AtomicSwapCoin::Dogecoin:
         //% "Dogecoin wallet addresses"
         return qtTrId("dogecoin-show-addresses-title");
+#if defined(BITCOIN_CASH_SUPPORT)
     case beam::wallet::AtomicSwapCoin::Bitcoin_Cash:
         //% "Bitcoin Cash wallet addresses"
         return qtTrId("bitcoin-cash-show-addresses-title");
-    case beam::wallet::AtomicSwapCoin::Bitcoin_SV:
-        //% "Bitcoin SV wallet addresses"
-        return qtTrId("bitcoin-sv-show-addresses-title");
+#endif // BITCOIN_CASH_SUPPORT
     case beam::wallet::AtomicSwapCoin::Dash:
         //% "Dash wallet addresses"
         return qtTrId("dash-show-addresses-title");
@@ -148,12 +146,11 @@ QString SwapCoinSettingsItem::getGeneralTitle() const
     case wallet::AtomicSwapCoin::Dogecoin:
         //% "Dogecoin"
         return qtTrId("general-dogecoin");
+#if defined(BITCOIN_CASH_SUPPORT)
     case wallet::AtomicSwapCoin::Bitcoin_Cash:
         //% "Bitcoin Cash"
         return qtTrId("general-bitcoin-cash");
-    case wallet::AtomicSwapCoin::Bitcoin_SV:
-        //% "Bitcoin SV"
-        return qtTrId("general-bitcoin-sv");
+#endif // BITCOIN_CASH_SUPPORT
     case wallet::AtomicSwapCoin::Dash:
         //% "DASH"
         return qtTrId("general-dash");
@@ -182,12 +179,11 @@ QString SwapCoinSettingsItem::getConnectedNodeTitle() const
     case wallet::AtomicSwapCoin::Dogecoin:
         //% "Dogecoin node"
         return qtTrId("settings-swap-dogecoin-node");
+#if defined(BITCOIN_CASH_SUPPORT)
     case wallet::AtomicSwapCoin::Bitcoin_Cash:
         //% "Bitcoin Cash node"
         return qtTrId("settings-swap-bitcoin-cash-node");
-    case wallet::AtomicSwapCoin::Bitcoin_SV:
-        //% "Bitcoin SV node"
-        return qtTrId("settings-swap-bitcoin-sv-node");
+#endif // BITCOIN_CASH_SUPPORT
     case wallet::AtomicSwapCoin::Dash:
         //% "Dash node"
         return qtTrId("settings-swap-dash-node");
@@ -216,12 +212,11 @@ QString SwapCoinSettingsItem::getConnectedElectrumTitle() const
     case wallet::AtomicSwapCoin::Dogecoin:
         //% "Dogecoin electrum"
         return qtTrId("settings-swap-dogecoin-electrum");
+#if defined(BITCOIN_CASH_SUPPORT)
     case wallet::AtomicSwapCoin::Bitcoin_Cash:
         //% "Bitcoin Cash electrum"
         return qtTrId("settings-swap-bitcoin-cash-electrum");
-    case wallet::AtomicSwapCoin::Bitcoin_SV:
-        //% "Bitcoin SV electrum"
-        return qtTrId("settings-swap-bitcoin-sv-electrum");
+#endif // BITCOIN_CASH_SUPPORT
     case wallet::AtomicSwapCoin::Dash:
         //% "Dash electrum"
         return qtTrId("settings-swap-dash-electrum");

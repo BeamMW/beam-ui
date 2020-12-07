@@ -160,5 +160,6 @@ private:
     QString _tokenGeneratebByNewAppVersionMessage = "";
 
     beam::Amount _minimalBeamFeeGrothes;
+    beam::Amount _shieldedInputsFee;
     bool _feeChangedByUI = false;
 };

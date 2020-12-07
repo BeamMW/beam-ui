@@ -233,10 +233,12 @@ ColumnLayout {
                             SFText {
                                 property bool isTokenOrAddressValid: !isTAInputValid()
                                 Layout.alignment: Qt.AlignTop
+                                Layout.fillWidth: true
                                 id:               receiverTAError
                                 color:            isTokenOrAddressValid ? Style.validator_error : Style.content_secondary
                                 font.italic:      !isTokenOrAddressValid
                                 font.pixelSize:   12
+                                wrapMode:         Text.Wrap
                                 text:             isTokenOrAddressValid
                                        //% "Invalid wallet address"
                                       ? qsTrId("wallet-send-invalid-address-or-token")
@@ -253,27 +255,30 @@ ColumnLayout {
                             SFText {
                                 Layout.alignment:   Qt.AlignTop
                                 Layout.topMargin:   10
+                                Layout.fillWidth:   true
                                 id:                 addressNote
                                 color:              Style.content_secondary
                                 font.italic:        true
                                 font.pixelSize:     14
+                                wrapMode:           Text.Wrap
                                 text:               viewModel.isPermanentAddress ? 
                                                     //% "Permanent address"
                                                     qsTrId("wallet-send-permanent-note") 
                                                     :
-                                                    //% "One-time use address (expire in 12 hours after succesfull transaction)."
+                                                    //% "One-time use address (expire in 12 hours after successfull transaction)."
                                                     qsTrId("wallet-send-one-time-note")
-                                visible:            viewModel.isToken && !viewModel.isOffline && !viewModel.isMaxPrivacy
+                                visible:            viewModel.isToken && !viewModel.isShieldedTx
                             }
 
                             SFText {
                                 Layout.alignment:   Qt.AlignTop
                                 Layout.topMargin:   10
+                                Layout.fillWidth:   true
                                 id:                 maxPrivacyNoteToken
                                 color:              Style.content_secondary
                                 font.italic:        true
                                 font.pixelSize:     14
-                                
+                                wrapMode:           Text.Wrap
                                 text:               viewModel.isOffline ? 
                                                     //% "Offline address. Payments left: %1"
                                                     qsTrId("wallet-send-max-privacy-note-address-offline").arg(viewModel.offlinePayments)
@@ -281,21 +286,11 @@ ColumnLayout {
                                                         viewModel.isMaxPrivacy ?
                                                         //% "Max privacy address"
                                                         qsTrId("wallet-send-max-privacy-note-address")
-                                                        : ""
-                                visible:            viewModel.isShieldedTx && viewModel.isToken && !viewModel.isOwnAddress
-                            }
-
-                            SFText {
-                                height: 16
-                                Layout.alignment:   Qt.AlignTop
-                                Layout.topMargin:   10
-                                id:                 needExtractShieldedNote
-                                color:              Style.content_secondary
-                                font.italic:        true
-                                font.pixelSize:     14
-                                //% "Transaction is slower, fees are higher."
-                                text:               qsTrId("wallet-send-need-extract-shielded-note")
-                                visible:            viewModel.isNeedExtractShieldedCoins && !viewModel.isShieldedTx
+                                                        : viewModel.isPublicOffline ? 
+                                                            //% "Public offline address"
+                                                            qsTrId("wallet-send-public-offline-address")
+                                                            :""
+                                visible:            viewModel.isShieldedTx && viewModel.isToken// && !viewModel.isOwnAddress
                             }
                         }
                     }
@@ -321,7 +316,8 @@ ColumnLayout {
                             error:                      showInsufficientBalanceWarning
                                                         //% "Insufficient funds: you would need %1 to complete the transaction"
                                                         ? qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.missing))
-                                                        : ""
+                                                        //% "Max privacy coins are selected therefore the maximum amount is %1."
+                                                        : (viewModel.canSendByOneTransaction ? "" : qsTrId("send-founds-fail-by-one-tx").arg(Utils.uiStringToLocale(viewModel.maxSendAmount)))
                         }
      
                         Binding {
@@ -353,7 +349,7 @@ ColumnLayout {
                             secondCurrencyAmount:       getFeeInSecondCurrency(viewModel.fee)
                             secondCurrencyLabel:        viewModel.secondCurrencyLabel
                             minimumFeeNotificationText: viewModel.isShieldedTx || viewModel.isNeedExtractShieldedCoins ?
-                                //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
+                                //% "For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2"
                                 qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
                                 ""
                         }
@@ -521,13 +517,21 @@ ColumnLayout {
                 palette.buttonText:  Style.content_opposite
                 palette.button:      Style.accent_outgoing
                 icon.source:         "qrc:/assets/icon-send-blue.svg"
-                enabled:             viewModel.canSend
+                enabled:             viewModel.canSend && viewModel.canSendByOneTransaction
                 onClicked: {                
                     const dialogComponent = Qt.createComponent("send_confirm.qml");
                     const dialogObject = dialogComponent.createObject(sendRegularView,
                         {
                             addressText: viewModel.receiverTA,
-                            typeText: viewModel.isShieldedTx ? qsTrId("tx-max-privacy") : qsTrId("tx-regular"),
+                            typeText: viewModel.isShieldedTx ? 
+                                    viewModel.isMaxPrivacy ? qsTrId("tx-max-privacy") 
+                                        : viewModel.isOffline ? qsTrId("tx-address-offline") 
+                                            //% "Public offline"
+                                            : viewModel.isPublicOffline ? qsTrId("tx-address-public-offline") 
+                                                //% "Unknown"
+                                                : qsTrId("tx-address-unknown")
+                                    : qsTrId("tx-regular"),
+                            isOnline:   !viewModel.isShieldedTx,
                             currency: Currency.CurrBeam,
                             amount: viewModel.sendAmount,
                             fee: viewModel.feeGrothes,

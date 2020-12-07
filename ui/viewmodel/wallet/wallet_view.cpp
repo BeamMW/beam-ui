@@ -55,12 +55,17 @@ QString WalletViewModel::beamReceivingIncoming() const
 
 QString WalletViewModel::beamLocked() const
 {
-    return beamLockedMaturing();
+    return beamui::AmountToUIString(_model.getMaturing() + _model.getMaturingMP());
 }
 
 QString WalletViewModel::beamLockedMaturing() const
 {
     return beamui::AmountToUIString(_model.getMaturing());
+}
+
+QString WalletViewModel::beamLockedMaturingMP() const
+{
+    return beamui::AmountToUIString(_model.getMaturingMP());
 }
 
 QString WalletViewModel::getSecondCurrencyLabel() const

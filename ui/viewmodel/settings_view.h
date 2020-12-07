@@ -49,6 +49,9 @@ class SettingsViewModel : public QObject
 
     Q_PROPERTY(QList<QObject*> swapCoinSettingsList READ getSwapCoinSettings    CONSTANT)
     Q_PROPERTY(QObject* notificationsSettings   READ getNotificationsSettings   CONSTANT)
+
+    Q_PROPERTY(int      maxPrivacyAnonymitySet  READ geMaxPrivacyAnonymitySet   WRITE setMaxPrivacyAnonymitySet NOTIFY maxPrivacyAnonymitySetChanged)
+    Q_PROPERTY(int      maxPrivacyLockTimeLimit READ getMaxPrivacyLockTimeLimit WRITE setMaxPrivacyLockTimeLimit NOTIFY maxPrivacyLockTimeLimitChanged)
     Q_PROPERTY(QObject* ethSettings   READ getEthSettings   CONSTANT)
     
 public:
@@ -95,6 +98,12 @@ public:
     QObject* getNotificationsSettings();
     QObject* getEthSettings();
 
+    int geMaxPrivacyAnonymitySet() const;
+    void setMaxPrivacyAnonymitySet(int mpAnonymitySetIndex);
+
+    int getMaxPrivacyLockTimeLimit() const;
+    void setMaxPrivacyLockTimeLimit(int limit);
+
     Q_INVOKABLE uint coreAmount() const;
     Q_INVOKABLE void addLocalNodePeer(const QString& localNodePeer);
     Q_INVOKABLE void deleteLocalNodePeer(int index);
@@ -134,6 +143,8 @@ signals:
     void secondCurrencyChanged();
     void beamMWLinksPermissionChanged();
     void publicAddressChanged();
+    void maxPrivacyAnonymitySetChanged();
+    void maxPrivacyLockTimeLimitChanged();
 protected:
     void timerEvent(QTimerEvent *event) override;
 
@@ -160,6 +171,8 @@ private:
     QString m_secondCurrency;
     int m_timerId;
     QString m_publicAddress;
+    mutable int m_mpAnonymitySetIndex = 0;
+    mutable int m_mpLockTimeLimitIndex = 1;
 
     const int CHECK_INTERVAL = 1000;
 };

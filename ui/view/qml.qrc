@@ -49,6 +49,7 @@
         <file>controls/SecurityNote.qml</file>
         <file>controls/CustomProgressBar.qml</file>
         <file>controls/LogoComponent.qml</file>
+        <file>controls/MaxPrivacyCoinsDialog.qml</file>
         <file>controls/AddressTable.qml</file>
         <file>controls/StatusBar.qml</file>
         <file>controls/Title.qml</file>
@@ -211,7 +212,6 @@
         <file>assets/icon-ltc.svg</file>
         <file>assets/icon-qtum.svg</file>
         <file>assets/icon-bch.svg</file>
-        <file>assets/icon-bsv.svg</file>
         <file>assets/icon-dash.svg</file>
         <file>assets/icon-doge.svg</file>
         <file>assets/icon-eth.svg</file>

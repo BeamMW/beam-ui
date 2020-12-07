@@ -30,6 +30,7 @@ class SendViewModel: public QObject
     Q_PROPERTY(bool     isShieldedTx       READ isShieldedTx          WRITE setIsShieldedTx            NOTIFY isShieldedTxChanged)
     Q_PROPERTY(bool     isOffline          READ isOffline             WRITE setIsOffline               NOTIFY isOfflineChanged)
     Q_PROPERTY(bool     isMaxPrivacy       READ isMaxPrivacy          WRITE setIsMaxPrivacy            NOTIFY isMaxPrivacyChanged)
+    Q_PROPERTY(bool     isPublicOffline    READ isPublicOffline       WRITE setIsPublicOffline         NOTIFY isPublicOfflineChanged)
     Q_PROPERTY(bool     isPermanentAddress READ isPermanentAddress    WRITE setIsPermanentAddress      NOTIFY isPermanentAddressChanged)
     Q_PROPERTY(int      offlinePayments    READ getOfflinePayments    WRITE setOfflinePayments         NOTIFY offlinePaymentsChanged)
 
@@ -55,6 +56,8 @@ class SendViewModel: public QObject
 
     Q_PROPERTY(bool         isNeedExtractShieldedCoins READ isNeedExtractShieldedCoins NOTIFY isNeedExtractShieldedCoinsChanged)
     Q_PROPERTY(unsigned int minimalFeeGrothes          READ getMinimalFeeGrothes       NOTIFY minimalFeeGrothesChanged)
+    Q_PROPERTY(bool     canSendByOneTransaction        READ canSendByOneTransaction    NOTIFY sendAmountChanged)
+    Q_PROPERTY(QString  maxSendAmount                  READ getMaxSendAmount           NOTIFY sendAmountChanged)
 
 public:
     SendViewModel();
@@ -87,6 +90,9 @@ public:
     bool isMaxPrivacy() const;
     void setIsMaxPrivacy(bool value);
 
+    bool isPublicOffline() const;
+    void setIsPublicOffline(bool value);
+
     QString getAvailable() const;
     QString getMissing() const;
     QString getChange() const;
@@ -110,6 +116,9 @@ public:
     bool hasAddress() const;
     void setWalletAddress(const boost::optional<beam::wallet::WalletAddress>& value);
 
+    bool canSendByOneTransaction() const;
+    QString getMaxSendAmount() const;
+
 public:
     Q_INVOKABLE void setMaxAvailableAmount();
     Q_INVOKABLE void sendMoney();
@@ -125,6 +134,7 @@ signals:
     void offlinePaymentsChanged();
     void isOfflineChanged();
     void isMaxPrivacyChanged();
+    void isPublicOfflineChanged();
     void availableChanged();
     void sendMoneyVerified();
     void cantSendToExpired();
@@ -139,14 +149,14 @@ signals:
     void hasAddressChanged();
     void isShieldedTxChanged();
     void isNeedExtractShieldedCoinsChanged();
+    void canSendByOneTransactionChanged();
 
 public slots:
     void onChangeCalculated(beam::Amount change);
     void onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes);
     void onNeedExtractShieldedCoins(bool val);
-    void onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
-
 private:
+    void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
     void extractParameters();
     void resetMinimalFee();
     void resetAddress();
@@ -165,6 +175,7 @@ private:
 
     bool _isOffline = false;
     bool _isMaxPrivacy = false;
+    bool _isPublicOffline = false;
     bool _isToken = false;
     boost::optional<beam::wallet::WalletAddress> _receiverWalletAddress;
     int _offlinePayments = 0;
@@ -181,4 +192,5 @@ private:
     beam::Amount _shieldedInputsFee;
     bool _feeChangedByUi = false;
     bool _maxAvailable = false;
+    beam::Amount _maxWhatCanSelect = 0;
 };

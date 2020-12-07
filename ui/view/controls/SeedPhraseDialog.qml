@@ -246,7 +246,6 @@ Dialog {
             CustomButton {
                 id: cancelButtonId
                 visible:                false
-                Layout.preferredHeight: 38
                 Layout.minimumWidth:    133
                 text:                   qsTrId("general-cancel")
                 icon.source:            "qrc:/assets/icon-cancel-white.svg"
@@ -257,7 +256,6 @@ Dialog {
             PrimaryButton {
                 id: applyButtonId
                 visible:                false
-                Layout.preferredHeight: 38
                 Layout.minimumWidth:    126
                 text:                   qsTrId("settings-apply")
                 icon.source:            "qrc:/assets/icon-done.svg"
@@ -271,7 +269,6 @@ Dialog {
             CustomButton {
                 id: closeButtonId
                 visible:                false
-                Layout.preferredHeight: 38
                 Layout.minimumWidth:    125
                 text:                   qsTrId("general-close")
                 icon.source:            "qrc:/assets/icon-cancel-white.svg"
@@ -280,7 +277,6 @@ Dialog {
             CustomButton {
                 id: generateButtonId
                 visible:                false
-                Layout.preferredHeight: 38
                 Layout.minimumWidth:    271
                 rightPadding:           20
                 //% "generate another seed phrase"
@@ -292,7 +288,6 @@ Dialog {
             PrimaryButton {
                 id: copyButtonId
                 visible:                false
-                Layout.preferredHeight: 38
                 Layout.minimumWidth:    124
                 text:                   qsTrId("general-copy")
                 icon.source:            "qrc:/assets/icon-copy-blue.svg"

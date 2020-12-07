@@ -126,7 +126,7 @@ QString SwapCoinClientWrapper::getCoinLabel() const
 
 Currency SwapCoinClientWrapper::getCurrency() const
 {
-    return QMLGlobals::convertSwapCoinToCurrency(m_swapCoin);
+    return convertSwapCoinToCurrency(m_swapCoin);
 }
 
 beam::wallet::AtomicSwapCoin SwapCoinClientWrapper::getSwapCoin() const
@@ -544,8 +544,9 @@ void SwapOffersViewModel::InitSwapClientWrappers()
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Bitcoin));
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Litecoin));
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Qtum));
+#if defined(BITCOIN_CASH_SUPPORT)
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Bitcoin_Cash));
-        m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Bitcoin_SV));
+#endif // BITCOIN_CASH_SUPPORT
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Dogecoin));
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Dash));
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Ethereum));

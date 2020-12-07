@@ -35,6 +35,12 @@ using namespace beam;
 using namespace ECC;
 using namespace std;
 
+namespace
+{
+    const std::map<int, uint8_t> kMPAnonymitySetVariants = { {0, 64}, {1, 32}, {2, 16}, {3, 8}, {4, 4}, {5, 2} };
+    const std::map<int, uint8_t> kMPLockTimeLimits = { {0, 0}, {1, 72}, {2, 60}, {3, 48}, {4, 36}, {5, 24} };
+} // namespace
+
 SettingsViewModel::SettingsViewModel()
     : m_settings{AppModel::getInstance().getSettings()}
     , m_notificationsSettings(AppModel::getInstance().getSettings())
@@ -435,8 +441,9 @@ const QList<QObject*>& SettingsViewModel::getSwapCoinSettings()
         m_swapSettings.push_back(new SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin::Bitcoin));
         m_swapSettings.push_back(new SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin::Litecoin));
         m_swapSettings.push_back(new SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin::Qtum));
+#if defined(BITCOIN_CASH_SUPPORT)
         m_swapSettings.push_back(new SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin::Bitcoin_Cash));
-        m_swapSettings.push_back(new SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin::Bitcoin_SV));
+#endif // BITCOIN_CASH_SUPPORT
         m_swapSettings.push_back(new SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin::Dogecoin));
         m_swapSettings.push_back(new SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin::Dash));
     }
@@ -446,6 +453,58 @@ const QList<QObject*>& SettingsViewModel::getSwapCoinSettings()
 QObject* SettingsViewModel::getNotificationsSettings()
 {
     return &m_notificationsSettings;
+}
+
+int SettingsViewModel::geMaxPrivacyAnonymitySet() const
+{
+    auto anonymitySetValue = m_settings.getMaxPrivacyAnonymitySet();
+    const auto it = std::find_if(
+          kMPAnonymitySetVariants.begin(),
+          kMPAnonymitySetVariants.end(),
+          [anonymitySetValue](const auto& mo) {return mo.second == anonymitySetValue; });
+    if (it != kMPAnonymitySetVariants.end())
+        m_mpAnonymitySetIndex = it->first;
+    return m_mpAnonymitySetIndex;
+}
+
+void SettingsViewModel::setMaxPrivacyAnonymitySet(int mpAnonymitySetIndex)
+{
+    if (m_mpAnonymitySetIndex != mpAnonymitySetIndex)
+    {
+        const auto it = kMPAnonymitySetVariants.find(mpAnonymitySetIndex);
+        if (it != kMPAnonymitySetVariants.end())
+        {
+            m_mpAnonymitySetIndex = mpAnonymitySetIndex;
+            m_settings.setMaxPrivacyAnonymitySet(it->second);
+            emit maxPrivacyAnonymitySetChanged();
+        }
+    }
+}
+
+int SettingsViewModel::getMaxPrivacyLockTimeLimit() const
+{
+    auto limit = m_settings.getMaxPrivacyLockTimeLimitHours();
+    const auto it = std::find_if(
+          kMPLockTimeLimits.begin(),
+          kMPLockTimeLimits.end(),
+          [limit](const auto& mo) {return mo.second == limit; });
+    if (it != kMPLockTimeLimits.end())
+        m_mpLockTimeLimitIndex = it->first;
+    return m_mpLockTimeLimitIndex;
+}
+
+void SettingsViewModel::setMaxPrivacyLockTimeLimit(int limit)
+{
+    if (m_mpLockTimeLimitIndex != limit)
+    {
+        const auto it = kMPLockTimeLimits.find(limit);
+        if (it != kMPLockTimeLimits.end())
+        {
+            m_mpLockTimeLimitIndex = limit;
+            m_settings.setMaxPrivacyLockTimeLimitHours(it->second);
+            emit maxPrivacyLockTimeLimitChanged();
+        }
+    }
 }
 
 QObject* SettingsViewModel::getEthSettings()

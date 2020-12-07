@@ -43,7 +43,7 @@ AddressItem::AddressItem(const beam::wallet::WalletAddress& address)
 
 QString AddressItem::getAddress() const
 {
-    return beamui::toString(m_walletAddress.m_walletID);
+    return QString::fromStdString(m_walletAddress.m_Address);
 }
 
 QString AddressItem::getName() const
@@ -105,7 +105,7 @@ ContactItem::ContactItem(const beam::wallet::WalletAddress& address)
 
 QString ContactItem::getAddress() const
 {
-    return beamui::toString(m_walletAddress.m_walletID);
+    return QString::fromStdString(m_walletAddress.m_Address);
 }
 
 QString ContactItem::getName() const
@@ -129,6 +129,10 @@ QString ContactItem::getIdentity() const
 
 QString ContactItem::getToken() const
 {
+    if (m_walletAddress.m_walletID == Zero)
+    {
+        return QString::fromStdString(m_walletAddress.m_Address);
+    }
     using namespace beam::wallet;
     TxParameters params;
     params.SetParameter(TxParameterID::TransactionType, TxType::Simple);
@@ -297,10 +301,7 @@ bool AddressBookViewModel::isAddressBusy(const QString& addr)
 
 void AddressBookViewModel::deleteAddress(const QString& addr)
 {
-    WalletID walletID;
-    walletID.FromHex(addr.toStdString());
-
-    m_model.getAsync()->deleteAddress(walletID);
+    m_model.getAsync()->deleteAddress(addr.toStdString());
 }
 
 void AddressBookViewModel::saveChanges(const QString& addr, const QString& name, uint expirationStatus)

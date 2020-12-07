@@ -41,6 +41,7 @@ ComboBox {
         source: "qrc:/assets/icon-down.svg"
         anchors.right: control.right
         anchors.verticalCenter: control.verticalCenter
+        visible: control.enabled
     }
 
     contentItem: SFText {
@@ -48,7 +49,7 @@ ComboBox {
         rightPadding: control.indicator.width + control.spacing
         clip: true
         text: control.editable ? control.editText : control.displayText
-        color: control.color
+        color: control.enabled ? control.color : Style.content_secondary 
 		font.pixelSize: fontPixelSize
         verticalAlignment: Text.AlignVCenter
     }

@@ -18,6 +18,7 @@
 
 #include "ui_helpers.h"
 #include "qml_globals.h"
+#include "fee_helpers.h"
 
 #include <algorithm>
 #include <regex>
@@ -36,18 +37,17 @@ namespace
 }
 
 SendViewModel::SendViewModel()
-    : _feeGrothes(QMLGlobals::getMinimalFee(Currency::CurrBeam, false))
+    : _feeGrothes(minimalFee(Currency::CurrBeam, false))
     , _sendAmountGrothes(0)
     , _changeGrothes(0)
     , _walletModel(*AppModel::getInstance().getWallet())
-    , _minimalFeeGrothes(QMLGlobals::getMinimalFee(Currency::CurrBeam, false))
+    , _minimalFeeGrothes(minimalFee(Currency::CurrBeam, false))
     , _shieldedInputsFee(0)
 {
     connect(&_walletModel, &WalletModel::changeCalculated, this, &SendViewModel::onChangeCalculated);
     connect(&_walletModel, SIGNAL(sendMoneyVerified()), this, SIGNAL(sendMoneyVerified()));
     connect(&_walletModel, SIGNAL(cantSendToExpired()), this, SIGNAL(cantSendToExpired()));
     connect(&_walletModel, SIGNAL(availableChanged()), this, SIGNAL(availableChanged()));
-    connect(&_walletModel, &WalletModel::getAddressReturned, this, &SendViewModel::onGetAddressReturned);
     connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyLabelChanged()));
     connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
     connect(&_walletModel, &WalletModel::shieldedCoinsSelectionCalculated, this, &SendViewModel::onShieldedCoinsSelectionCalculated);
@@ -78,11 +78,11 @@ void SendViewModel::setFeeGrothes(unsigned int value)
 
         if (_walletModel.hasShielded())
         {
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes, _isShieldedTx);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes, beam::Asset::s_BeamID, _isShieldedTx);
         }
         else
         {
-            _walletModel.getAsync()->calcChange(_sendAmountGrothes + _feeGrothes);
+            _walletModel.getAsync()->calcChange(_sendAmountGrothes, _feeGrothes, beam::Asset::s_BeamID);
             _feeChangedByUi = false;
             emit canSendChanged();
         }
@@ -136,7 +136,7 @@ void SendViewModel::setSendAmount(QString value)
             }
             _sendAmountGrothes = amount;
             emit sendAmountChanged();
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes, _isShieldedTx);
+            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes, beam::Asset::s_BeamID, _isShieldedTx);
         }
         else
         {
@@ -149,7 +149,7 @@ void SendViewModel::setSendAmount(QString value)
             }
             _sendAmountGrothes = amount;
             emit sendAmountChanged();
-            _walletModel.getAsync()->calcChange(_sendAmountGrothes + _feeGrothes);
+            _walletModel.getAsync()->calcChange(_sendAmountGrothes, _feeGrothes, beam::Asset::s_BeamID);
             emit canSendChanged();
             _maxAvailable = false;
         }
@@ -226,7 +226,7 @@ void SendViewModel::setIsShieldedTx(bool value)
             }
             else
             {
-                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _minimalFeeGrothes, _isShieldedTx);
+                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _minimalFeeGrothes, beam::Asset::s_BeamID,  _isShieldedTx);
             }
         }
         else
@@ -301,6 +301,20 @@ void SendViewModel::setIsMaxPrivacy(bool value)
     }
 }
 
+bool SendViewModel::isPublicOffline() const
+{
+    return _isPublicOffline;
+}
+
+void SendViewModel::setIsPublicOffline(bool value)
+{
+    if (_isPublicOffline != value)
+    {
+        _isPublicOffline = value;
+        emit isPublicOfflineChanged();
+    }
+}
+
 QString SendViewModel::getAvailable() const
 {
     return  beamui::AmountToUIString(
@@ -332,11 +346,21 @@ void SendViewModel::onChangeCalculated(beam::Amount change)
 
 void SendViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes)
 {
+    if (!selectionRes.isEnought)
+    {
+        _maxWhatCanSelect = selectionRes.selectedSumBeam - selectionRes.selectedFee;
+        emit sendAmountChanged();
+    } else if (_maxWhatCanSelect)
+    {
+        _maxWhatCanSelect = 0;
+        emit sendAmountChanged();
+    }
+
     _shieldedInputsFee = selectionRes.shieldedInputsFee;
 
-    if (selectionRes.selectedSum < selectionRes.requestedSum + selectionRes.requestedFee && _maxAvailable)
+    if (!selectionRes.isEnought && _maxAvailable)
     {
-        _sendAmountGrothes = selectionRes.selectedSum - selectionRes.selectedFee;
+        _sendAmountGrothes = selectionRes.selectedSumBeam - selectionRes.selectedFee;
         emit sendAmountChanged();
         _maxAvailable = false;
     }
@@ -351,7 +375,7 @@ void SendViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::Shiel
     }
     _feeChangedByUi = false;
 
-    onChangeCalculated(selectionRes.change);
+    onChangeCalculated(selectionRes.changeBeam);
 }
 
 void SendViewModel::onNeedExtractShieldedCoins(bool val)
@@ -363,22 +387,21 @@ void SendViewModel::onNeedExtractShieldedCoins(bool val)
     }
 }
 
-void SendViewModel::onGetAddressReturned(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
+void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
 {
-    if (id == _receiverWalletID)
+    if (address)
     {
-        if (address)
-        {
-            setWalletAddress(address);
-            setComment(QString::fromStdString(address->m_label));
-        }
-        setOfflinePayments(offlinePayments);
+        setComment(QString::fromStdString(address->m_label));
     }
     else
     {
-        setWalletAddress({});
-        setOfflinePayments(0);
+        setComment("");
     }
+
+    setWalletAddress(address);
+    setOfflinePayments(offlinePayments);
+
+
 }
 
 QString SendViewModel::getChange() const
@@ -399,10 +422,11 @@ QString SendViewModel::getTotalUTXO() const
 bool SendViewModel::canSend() const
 {
     return !QMLGlobals::isSwapToken(_receiverTA) && getRreceiverTAValid()
-           && _sendAmountGrothes > 0 && isEnough()
-           && QMLGlobals::isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins) 
-           && (!isShieldedTx() || !isOffline() || getOfflinePayments() > 0)
-           && !(isShieldedTx() && isOwnAddress());
+        && _sendAmountGrothes > 0 && isEnough()
+        && isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins)
+        && _feeGrothes >= _minimalFeeGrothes
+        && (!isShieldedTx() || !isOffline() || getOfflinePayments() > 0)
+        ;// && !(isShieldedTx() && isOwnAddress());
 }
 
 bool SendViewModel::isToken() const
@@ -444,10 +468,20 @@ void SendViewModel::sendMoney()
         LoadReceiverParams(_txParameters, params);
         params.SetParameter(TxParameterID::Amount, _sendAmountGrothes)
               // fee for shielded inputs included automaticaly
-              .SetParameter(TxParameterID::Fee, !!_shieldedInputsFee ? _feeGrothes - _shieldedInputsFee : _feeGrothes)
+              .SetParameter(TxParameterID::Fee, _feeGrothes - _shieldedInputsFee)
               .SetParameter(TxParameterID::Message, beam::ByteBuffer(messageString.begin(), messageString.end()));
 
         params.SetParameter(TxParameterID::TransactionType, isShieldedTx() ? TxType::PushTransaction : TxType::Simple);
+        if (isMaxPrivacy())
+        {
+            CopyParameter(TxParameterID::Voucher, _txParameters, params);
+            const auto& settings = AppModel::getInstance().getSettings();
+            params.SetParameter(TxParameterID::MaxPrivacyMinAnonimitySet, settings.getMaxPrivacyAnonymitySet());
+        }
+        if (isShieldedTx())
+        {
+            CopyParameter(TxParameterID::PeerOwnID, _txParameters, params);
+        }
 
         if (isToken())
         {
@@ -460,18 +494,28 @@ void SendViewModel::sendMoney()
 
 void SendViewModel::saveReceiverAddress(const QString& name)
 {
-    if (_receiverWalletAddress.is_initialized())
-        return;
-
     using namespace beam::wallet;
     QString trimmed = name.trimmed();
-    WalletAddress address;
-    address.m_walletID = _receiverWalletID;
-    address.m_createTime = getTimestamp();
-    address.m_Identity = _receiverIdentity;
-    address.m_label = trimmed.toStdString();
-    address.m_duration = WalletAddress::AddressExpirationNever;
-    _walletModel.getAsync()->saveAddress(address, false);
+    if (!_walletModel.isOwnAddress(_receiverWalletID))
+    {
+        WalletAddress address;
+        address.m_walletID = _receiverWalletID;
+        address.m_createTime = getTimestamp();
+        address.m_Identity = _receiverIdentity;
+        address.m_label = trimmed.toStdString();
+        address.m_duration = WalletAddress::AddressExpirationNever;
+        address.m_Address = _receiverTA.toStdString();
+        _walletModel.getAsync()->saveAddress(address, false);
+    }
+    else
+    {
+        _walletModel.getAsync()->getAddress(_receiverWalletID, [this, trimmed](const boost::optional<WalletAddress>& addr, size_t c)
+        {
+            WalletAddress address = *addr;
+            address.m_label = trimmed.toStdString();
+            _walletModel.getAsync()->saveAddress(address, true);
+        });
+    }
 }
 
 void SendViewModel::extractParameters()
@@ -493,7 +537,6 @@ void SendViewModel::extractParameters()
         _receiverAddress = QString::fromStdString(std::to_string(*peerID));
         setIsToken(_receiverTA != _receiverAddress);
         emit receiverAddressChanged();
-        _walletModel.getAsync()->getAddress(_receiverWalletID);
     }
     else
     {
@@ -514,24 +557,27 @@ void SendViewModel::extractParameters()
     {
         setIsPermanentAddress(*isPermanent);
     }
-    else
-    {
-        setIsPermanentAddress(false);
-    }
 
     if (auto txType = _txParameters.GetParameter<TxType>(TxParameterID::TransactionType); txType && *txType == TxType::PushTransaction)
     {
         setIsShieldedTx(true);
-        ShieldedVoucherList vouchers;
-        auto hasVouchers = _txParameters.GetParameter(TxParameterID::ShieldedVoucherList, vouchers);
-        if (hasVouchers)
+        auto vouchers = _txParameters.GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList);
+        if (vouchers && !vouchers->empty())
         {
             if (_receiverWalletID != Zero)
             {
-                _walletModel.getAsync()->saveVouchers(vouchers, _receiverWalletID);
+                _walletModel.getAsync()->saveVouchers(*vouchers, _receiverWalletID);
+            }
+            setIsOffline(true);
+        }
+        else
+        {
+            auto gen = _txParameters.GetParameter<ShieldedTxo::PublicGen>(TxParameterID::PublicAddreessGen);
+            if (gen)
+            {
+                setIsPublicOffline(true);
             }
         }
-        setIsOffline(hasVouchers);
         
         ShieldedTxo::Voucher voucher;
         setIsMaxPrivacy(_txParameters.GetParameter(TxParameterID::Voucher, voucher) && _receiverIdentity != Zero);
@@ -550,6 +596,22 @@ void SendViewModel::extractParameters()
         std::string s(comment->begin(), comment->end());
         setComment(QString::fromStdString(s));
     }
+
+    if (_receiverWalletID != Zero)
+    {
+        _walletModel.getAsync()->getAddress(_receiverWalletID, [this](const boost::optional<WalletAddress>& addr, size_t c)
+        {
+            onGetAddressReturned(addr, (int)c);
+        });
+    }
+    else
+    {
+        _walletModel.getAsync()->getAddress(_receiverTA.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
+        {
+            onGetAddressReturned(addr, (int)c);
+        });
+    }
+    
 
     _tokenGeneratebByNewAppVersionMessage.clear();
 
@@ -618,9 +680,19 @@ void SendViewModel::setWalletAddress(const boost::optional<beam::wallet::WalletA
     }
 }
 
+bool SendViewModel::canSendByOneTransaction() const
+{
+    return !_maxWhatCanSelect || _maxWhatCanSelect >= _sendAmountGrothes;
+}
+
+QString SendViewModel::getMaxSendAmount() const
+{
+    return beamui::AmountToUIString(_maxWhatCanSelect);
+}
+
 void SendViewModel::resetMinimalFee()
 {
-    _minimalFeeGrothes = QMLGlobals::getMinimalFee(Currency::CurrBeam, _isShieldedTx);
+    _minimalFeeGrothes = minimalFee(Currency::CurrBeam, _isShieldedTx);
     emit minimalFeeGrothesChanged();
     _shieldedInputsFee = 0;
 }
@@ -631,6 +703,17 @@ void SendViewModel::resetAddress()
     setIsShieldedTx(false);
     setIsOffline(false);
     setIsMaxPrivacy(false);
+    setIsPublicOffline(false);
     setIsPermanentAddress(false);
     onNeedExtractShieldedCoins(false);
+    setWalletAddress({});
+    setOfflinePayments(0);
+
+    _receiverAddress.clear();
+    _receiverWalletID = beam::Zero;
+    _receiverIdentity = beam::Zero;
+    _receiverIdentityStr.clear();
+
+    emit receiverAddressChanged();
+    emit receiverIdentityChanged();
 }

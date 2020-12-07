@@ -1,4 +1,4 @@
-// Copyright 2019 The Beam Team
+// Copyright 2020 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,25 +11,23 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #pragma once
 
-#include <QObject>
+#include <vector>
 
-class UtxoViewStatus : public QObject
+namespace beamui
 {
-    Q_OBJECT
+
+class Filter
+{
 public:
-    enum EnStatus
-    {
-        Undefined = 0,
-        Available,
-        Maturing,
-        Unavailable,
-        Outgoing,
-        Incoming,
-        Spent,
-        MaturingMP,
-    };
-    Q_ENUMS(EnStatus)
+    Filter(size_t size = 12);
+    void addSample(double value);
+    double getAverage() const;
+    double getMedian() const;
+private:
+    std::vector<double> _samples;
+    size_t _index;
+    bool _is_poor;
 };
+}  // namespace beamui

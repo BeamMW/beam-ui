@@ -22,15 +22,14 @@ class TokenInfoItem : public QObject
     Q_OBJECT
     Q_PROPERTY(bool    isPermanent           READ isPermanent                NOTIFY tokenChanged)
     Q_PROPERTY(bool    isMaxPrivacy          READ isMaxPrivacy               NOTIFY tokenChanged)
-    Q_PROPERTY(bool    hasAddressType        READ hasAddressType             NOTIFY tokenChanged)
-    Q_PROPERTY(bool    defaultPermanent      READ getDefaultPermanent        WRITE  setDefaultPermanent   NOTIFY defaultPermanentChanged)
+    Q_PROPERTY(bool    isOffline             READ isOffline                  NOTIFY tokenChanged)
+    Q_PROPERTY(bool    isPublicOffline       READ isPublicOffline            NOTIFY tokenChanged)
     Q_PROPERTY(bool    ignoreStoredVouchers  READ getIgnoreStoredVouchers    WRITE  setIgnoreStoredVouchers   NOTIFY ignoreStoredVouchersChanged)
     Q_PROPERTY(QString transactionType       READ getTransactionType         NOTIFY tokenChanged)
     Q_PROPERTY(QString amount                READ getAmount                  NOTIFY tokenChanged)
     Q_PROPERTY(QString amountValue           READ getAmountValue             NOTIFY tokenChanged)
     Q_PROPERTY(QString address               READ getAddress                 NOTIFY tokenChanged)
     Q_PROPERTY(QString identity              READ getIdentity                NOTIFY tokenChanged)
-    Q_PROPERTY(QString tokenType             READ getTokenType               NOTIFY offlinePaymentsChanged)
     Q_PROPERTY(QString token                 READ getToken                   WRITE setToken   NOTIFY tokenChanged)
     Q_PROPERTY(int     offlinePayments       READ getOfflinePayments         WRITE setOfflinePayments         NOTIFY offlinePaymentsChanged)
     
@@ -39,36 +38,38 @@ public:
     TokenInfoItem(QObject* parent = nullptr);
     bool isPermanent() const;
     bool isMaxPrivacy() const;
-    bool hasAddressType() const;
+    bool isOffline() const;
+    bool isPublicOffline() const;
     QString getTransactionType() const;
     QString getAmount() const;
     QString getAmountValue() const;
     QString getAddress() const;
     QString getIdentity() const;
-    QString getTokenType() const;
     QString getToken() const;
     void setToken(const QString& token);
 
     int getOfflinePayments() const;
     void setOfflinePayments(int value);
-    bool getDefaultPermanent() const;
-    void setDefaultPermanent(bool value);
     
     bool getIgnoreStoredVouchers() const;
     void setIgnoreStoredVouchers(bool value);
 private:
-    void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments);
+    void reset();
 signals:
     void tokenChanged();
     void offlinePaymentsChanged();
-    void defaultPermanentChanged();
     void ignoreStoredVouchersChanged();
 
 private:
     QString m_token;
-    beam::wallet::TxParameters m_parameters;
+    bool m_isPermanent = false;
+    bool m_isMaxPrivacy = false;
+    bool m_isOffline = false;
+    bool m_isPublicOffline = false;
+    beam::Amount m_amountValue = 0;
+    beam::wallet::WalletID m_addressSBBS = beam::Zero;
+    beam::PeerID m_identity;
     int m_offlinePayments = 0;
-    boost::optional<bool> m_defaultPermanent;
     bool m_ignoreStoredVouchers = false;
 };
 

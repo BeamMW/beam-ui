@@ -915,8 +915,8 @@ Allow to open and proceed to the website? You can always update your choice in S
 (to fetch exchanges and transaction data)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</source>
-        <translation>1. Click “Save wallet logs” and choose a destination folder&lt;br /&gt;for log archive</translation>
+        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
+        <translation>1. Click “Save wallet logs” and choose a destination folder for log archive</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send email to %1 or open a ticket in %2</source>
@@ -1320,10 +1320,6 @@ please review your settings and try again</translation>
     <message id="send-confirmation-pwd-text-online-time">
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
         <translation>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</translation>
-    </message>
-    <message id="atomic-swap-connect-other">
-        <source>Connect other currency wallet to start trading</source>
-        <translation>Connect other currency wallet to start trading</translation>
     </message>
     <message id="trezor-message">
         <source>Please, look at your Trezor device to complete actions...</source>
@@ -2259,10 +2255,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Transaction token</source>
         <translation>Transaction token</translation>
     </message>
-    <message id="token-info-transaction-type">
-        <source>Transaction type</source>
-        <translation>Transaction type</translation>
-    </message>
     <message id="token-info-token">
         <source>Token</source>
         <translation>Token</translation>
@@ -2316,9 +2308,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>No name</translation>
     </message>
     <message id="wallet-receive-online-address">
-        <source>Online addressOnline address</source>
-        <oldsource>Online address</oldsource>
-        <translation type="unfinished">Online address</translation>
+        <source>Online address</source>
+        <translation>Online address</translation>
     </message>
     <message id="wallet-receive-offline-address">
         <source>Offline address</source>
@@ -2376,8 +2367,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Expiration time</translation>
     </message>
     <message id="send-confirmation-type-label">
-        <source>Type</source>
-        <translation>Type</translation>
+        <source>Address type</source>
+        <translation>Address type</translation>
     </message>
     <message id="token-info-dialog-one-time">
         <source>One time</source>
@@ -2392,8 +2383,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>shielded pool</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable sending max privacy transactions</source>
-        <translation>Connect to integrated or own node to enable sending max privacy transactions</translation>
+        <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
+        <translation>Connect to integrated or own node to enable receiving max privacy and offline transactions</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>
@@ -2421,71 +2412,43 @@ max privacy</source>
         <translation>received
 max privacy</translation>
     </message>
-    <message id="wallet-txs-status-canceled-max">
-        <source>canceled
-max privacy</source>
-        <translation>canceled
-max privacy</translation>
-    </message>
-    <message id="wallet-txs-status-failed-max">
-        <source>failed
-max privacy</source>
-        <translation>failed
-max privacy</translation>
-    </message>
     <message id="wallet-txs-status-in-progress-max-offline">
         <source>in progress
-max privacy (offline)</source>
+offline</source>
         <translation>in progress
-max privacy (offline)</translation>
+offline</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
         <source>sent
-max privacy (offline)</source>
+offline</source>
         <translation>sent
-max privacy (offline)</translation>
+offline</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
         <source>received
-max privacy (offline)</source>
+offline</source>
         <translation>received
-max privacy (offline)</translation>
-    </message>
-    <message id="wallet-txs-status-canceled-max-offline">
-        <source>canceled
-max privacy (offline)</source>
-        <translation>canceled
-max privacy (offline)</translation>
-    </message>
-    <message id="wallet-txs-status-failed-max-offline">
-        <source>failed
-max privacy (offline)</source>
-        <translation>failed
-max privacy (offline)</translation>
+offline</translation>
     </message>
     <message id="general-shielded">
         <source>Shielded</source>
         <extracomment>UTXO type Shielded</extracomment>
         <translation>Shielded</translation>
     </message>
-    <message id="tx-address-online">
-        <source>Online</source>
-        <translation>Online</translation>
-    </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can�t calculate the recommended fee rate. 
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete. </source>
-        <translation>Connection error: can’t calculate the recommended fee rate. 
+much longer for a transaction to complete.</source>
+        <translation>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete. </translation>
+much longer for a transaction to complete.</translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
         <translation>Key keeper out of slots</translation>
     </message>
     <message id="tx-failure-shielded-coin-fee">
-        <source>Cannot extract shielded coin, fee is to big.</source>
+        <source>Cannot extract shielded coin, fee is too big.</source>
         <translation>Cannot extract shielded coin, fee is to big.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
@@ -2498,69 +2461,56 @@ much longer for a transaction to complete. </translation>
     </message>
     <message id="tx-failure-identity-required">
         <source>Peer Identity required</source>
-        <translation type="unfinished"></translation>
+        <translation>Peer Identity required</translation>
     </message>
     <message id="tx-failure-cannot-get-vouchers">
         <source>The sender cannot get vouchers for max privacy transaction</source>
-        <translation type="unfinished"></translation>
+        <translation>The sender cannot get vouchers for max privacy transaction</translation>
     </message>
     <message id="settings-random-node-text">
         <source>Random node address and port will be displayed 
 when connection is established</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-node-progress-na">
-        <source>Swap in progress, cannot disconnect, switch connection type to 
-%1 electrum, generate new or edit existing seed phrase.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-electrum-progress-na">
-        <source>Swap in progress, cannot switch connection type to %1 node, 
-generate new or edit existing seed phrase.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="tx-address-offline-count">
-        <source>Offline (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Random node address and port will be displayed 
+        when connection is established</translation>
     </message>
     <message id="swap-token-newer-lib">
-        <source>This token generated by newer Beam library version(%1)
+        <source>This address generated by newer Beam library version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <translation>This token generated by newer Beam library version(%1)
+        <translation>This address generated by newer Beam library version(%1)
 Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="swap-swap-token-newer-client">
-        <source>This token generated by newer Beam client version(%1)
+        <source>This address generated by newer Beam client version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <translation>This token generated by newer Beam client version(%1)
+        <translation>This address generated by newer Beam client version(%1)
 Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="save-address-title">
         <source>Do you want to name the contact?</source>
-        <translation type="unfinished">Do you want to name the contact?</translation>
+        <translation>Do you want to name the contact?</translation>
     </message>
     <message id="send-title">
         <source>Send</source>
-        <translation type="unfinished">Send</translation>
+        <translation>Send</translation>
     </message>
     <message id="send-contact-token-placeholder">
         <source>Paste recipient token here</source>
-        <translation type="unfinished"></translation>
+        <translation>Paste recipient token here</translation>
     </message>
     <message id="send-contact-address-placeholder">
         <source>Paste recipient address here</source>
-        <translation type="unfinished"></translation>
+        <translation>Paste recipient address here</translation>
     </message>
     <message id="wallet-send-invalid-address-or-token">
         <source>Invalid wallet address</source>
-        <translation type="unfinished"></translation>
+        <translation>Invalid wallet address</translation>
     </message>
     <message id="wallet-send-permanent-note">
         <source>Permanent address</source>
         <translation>Permanent address</translation>
     </message>
     <message id="wallet-send-one-time-note">
-        <source>One-time use address (expire in 12 hours after succesfull transaction).</source>
+        <source>One-time use address (expire in 12 hours after successfull transaction).</source>
         <translation>One-time use address (expire in 12 hours after succesfull transaction).</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address-offline">
@@ -2571,29 +2521,25 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Max privacy address</source>
         <translation>Max privacy address</translation>
     </message>
-    <message id="wallet-send-need-extract-shielded-note">
-        <source>Transaction is slower, fees are higher.</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
-        <translation type="unfinished"></translation>
+        <translation>Insufficient funds: you would need %1 to complete the transaction</translation>
     </message>
     <message id="max-pivacy-fee-fail">
-        <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <translation type="unfinished"></translation>
+        <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
+        <translation>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
-        <translation type="unfinished"></translation>
+        <translation>Amount to send</translation>
     </message>
     <message id="send-remaining-label">
         <source>Remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>Remaining</translation>
     </message>
     <message id="wallet-receive-swap-copy-token-and-close">
         <source>copy token and close</source>
-        <translation type="unfinished"></translation>
+        <translation>copy token and close</translation>
     </message>
     <message id="address-info-title">
         <source>Address details</source>
@@ -2601,11 +2547,11 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="address-expiration">
         <source>Address expiration</source>
-        <translation type="unfinished"></translation>
+        <translation>Address expiration</translation>
     </message>
     <message id="address-info-dialog-permanent">
         <source>Permanent</source>
-        <translation type="unfinished">Permanent</translation>
+        <translation>Permanent</translation>
     </message>
     <message id="address-info-type">
         <source>Address type</source>
@@ -2613,99 +2559,75 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="address-info-sbbs-address">
         <source>SBBS Address</source>
-        <translation type="unfinished"></translation>
+        <translation>SBBS Address</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
-        <translation type="unfinished">Address</translation>
-    </message>
-    <message id="address-info-copy-address">
-        <source>Copy address</source>
-        <translation type="unfinished">Copy address</translation>
+        <translation>Address</translation>
     </message>
     <message id="dogecoin-show-seed-phrase">
         <source>Dogecoin seed phrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Dogecoin seed phrase</translation>
     </message>
     <message id="bitcoin-cash-show-seed-phrase">
         <source>Bitcoin Cash seed phrase</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="bitcoin-sv-show-seed-phrase">
-        <source>Bitcoin SV seed phrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitcoin Cash seed phrase</translation>
     </message>
     <message id="dash-show-seed-phrase">
         <source>Dash seed phrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash seed phrase</translation>
     </message>
     <message id="dogecoin-show-addresses-title">
         <source>Dogecoin wallet addresses</source>
-        <translation type="unfinished"></translation>
+        <translation>Dogecoin wallet addresses</translation>
     </message>
     <message id="bitcoin-cash-show-addresses-title">
         <source>Bitcoin Cash wallet addresses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="bitcoin-sv-show-addresses-title">
-        <source>Bitcoin SV wallet addresses</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitcoin Cash wallet addresses</translation>
     </message>
     <message id="dash-show-addresses-title">
         <source>Dash wallet addresses</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash wallet addresses</translation>
     </message>
     <message id="general-dogecoin">
         <source>Dogecoin</source>
-        <translation type="unfinished"></translation>
+        <translation>Dogecoin</translation>
     </message>
     <message id="general-bitcoin-cash">
         <source>Bitcoin Cash</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="general-bitcoin-sv">
-        <source>Bitcoin SV</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitcoin Cash</translation>
     </message>
     <message id="general-dash">
         <source>DASH</source>
-        <translation type="unfinished"></translation>
+        <translation>DASH</translation>
     </message>
     <message id="settings-swap-dogecoin-node">
         <source>Dogecoin node</source>
-        <translation type="unfinished"></translation>
+        <translation>Dogecoin node</translation>
     </message>
     <message id="settings-swap-bitcoin-cash-node">
         <source>Bitcoin Cash node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-swap-bitcoin-sv-node">
-        <source>Bitcoin SV node</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitcoin Cash node</translation>
     </message>
     <message id="settings-swap-dash-node">
         <source>Dash node</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash node</translation>
     </message>
     <message id="settings-swap-dogecoin-electrum">
         <source>Dogecoin electrum</source>
-        <translation type="unfinished"></translation>
+        <translation>Dogecoin electrum</translation>
     </message>
     <message id="settings-swap-bitcoin-cash-electrum">
         <source>Bitcoin Cash electrum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-swap-bitcoin-sv-electrum">
-        <source>Bitcoin SV electrum</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitcoin Cash electrum</translation>
     </message>
     <message id="settings-swap-dash-electrum">
         <source>Dash electrum</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash electrum</translation>
     </message>
     <message id="settings-show-public-offline-address">
         <source>Show public offline address</source>
-        <translation type="unfinished"></translation>
+        <translation>Show public offline address</translation>
     </message>
     <message id="public-address-title">
         <source>Public offline address</source>
@@ -2717,31 +2639,233 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="more-details">
         <source>More details</source>
-        <translation type="unfinished"></translation>
+        <translation>More details</translation>
     </message>
     <message id="general-address-type">
         <source>Address Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Address Type</translation>
     </message>
     <message id="qr-code">
         <source>QR Code</source>
-        <translation type="unfinished"></translation>
+        <translation>QR Code</translation>
     </message>
     <message id="wallet-receive-address-for-wallet-label">
         <source>Online address (for wallet)</source>
-        <translation type="unfinished"></translation>
+        <translation>Online address (for wallet)</translation>
     </message>
     <message id="wallet-receive-address-for-exchange-label">
         <source>Online address (for exchange or mining pool)</source>
-        <translation type="unfinished"></translation>
+        <translation>Online address (for exchange or mining pool)</translation>
     </message>
     <message id="wallet-receive-max-privacy-address">
         <source>Max Privacy Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Max Privacy Address</translation>
     </message>
     <message id="wallet-receive-offline-payments">
         <source>Supports %1 payments.</source>
-        <translation type="unfinished"></translation>
+        <translation>Supports %1 payments.</translation>
+    </message>
+    <message id="address-info-payments">
+        <source>Payments</source>
+        <translation>Payments</translation>
+    </message>
+    <message id="available-panel-maturing-mp">
+        <source>Max privacy</source>
+        <translation>Max privacy</translation>
+    </message>
+    <message id="utxo-status-maturing-mp">
+        <source>Maturing%1(max privacy %2% unlinked)</source>
+        <translation>Maturing%1(max privacy %2% unlinked)</translation>
+    </message>
+    <message id="atomic-swap-more-currency">
+        <source>Connect more currencies</source>
+        <translation>Connect more currencies</translation>
+    </message>
+    <message id="address-info-copy-close">
+        <source>copy and close</source>
+        <translation>copy and close</translation>
+    </message>
+    <message id="tx-address-public-offline">
+        <source>Public offline</source>
+        <translation>Public offline</translation>
+    </message>
+    <message id="tx-address-unknown">
+        <source>Unknown</source>
+        <translation>Unknown</translation>
+    </message>
+    <message id="tx-address-regular-exchange">
+        <source>Regular (for exchange or mining pool)</source>
+        <translation>Regular (for exchange or mining pool)</translation>
+    </message>
+    <message id="tx-address-regular-wallet">
+        <source>Regular (for wallet)</source>
+        <translation>Regular (for wallet)</translation>
+    </message>
+    <message id="wallet-send-public-offline-address">
+        <source>Public offline address</source>
+        <translation>Public offline address</translation>
+    </message>
+    <message id="tx-address-regular">
+        <source>Regular</source>
+        <translation>Regular</translation>
+    </message>
+    <message id="tx-address-max-privacy">
+        <source>Max privacy</source>
+        <translation>Max privacy</translation>
+    </message>
+    <message id="wallet-txs-status-in-progress-public-offline">
+        <source>in progress
+public offline</source>
+        <translation>in progress
+public offline</translation>
+    </message>
+    <message id="wallet-txs-status-sent-public-offline">
+        <source>sent
+public offline</source>
+        <translation>sent
+public offline</translation>
+    </message>
+    <message id="wallet-txs-status-received-public-offline">
+        <source>received
+public offline</source>
+        <translation>received
+public offline</translation>
+    </message>
+    <message id="wallet-txs-status-canceled-public-offline">
+        <source>canceled
+public offline</source>
+        <translation>canceled
+public offline</translation>
+    </message>
+    <message id="wallet-txs-status-failed-public-offline">
+        <source>failed
+public offline</source>
+        <translation>failed
+public offline</translation>
+    </message>
+    <message id="settings-node-progress">
+        <source>Swap in progress, cannot disconnect or switch connection type.</source>
+        <translation>Swap in progress, cannot disconnect or switch connection type.</translation>
+    </message>
+    <message id="settings-doge-node-progress">
+        <source>Swap in progress, cannot disconnect.</source>
+        <translation>Swap in progress, cannot disconnect.</translation>
+    </message>
+    <message id="send-founds-fail-by-one-tx">
+        <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
+        <translation>Max privacy coins are selected therefore the maximum amount is %1.</translation>
+    </message>
+    <message id="wallet-txs-status-canceled-max">
+        <source>canceled
+max privacy</source>
+        <translation>canceled
+max privacy</translation>
+    </message>
+    <message id="wallet-txs-status-canceled-max-offline">
+        <source>canceled
+offline</source>
+        <translation>canceled
+offline</translation>
+    </message>
+    <message id="wallet-txs-status-failed-max">
+        <source>failed
+max privacy</source>
+        <translation>failed
+max privacy</translation>
+    </message>
+    <message id="wallet-txs-status-failed-max-offline">
+        <source>failed
+offline</source>
+        <translation>failed
+offline</translation>
+    </message>
+    <message id="available-panel-maturing-details">
+        <source>More details</source>
+        <translation>More details</translation>
+    </message>
+    <message id="max-privacy-dialog-header">
+        <source>Max privacy</source>
+        <translation>Max privacy</translation>
+    </message>
+    <message id="max-privacy-dialog-locked">
+        <source>Locked</source>
+        <translation>Locked</translation>
+    </message>
+    <message id="max-privacy-dialog-amount">
+        <source>Amount</source>
+        <translation>Amount</translation>
+    </message>
+    <message id="max-privacy-dialog-unlock-time">
+        <source>Latest unlocked time</source>
+        <translation>Latest unlocked time</translation>
+    </message>
+    <message id="settings-privacy-mp-anonymity-set">
+        <source>Anonymity set for Max privacy transactions</source>
+        <translation>Anonymity set for Max privacy transactions</translation>
+    </message>
+    <message id="settings-privacy-mp-notice">
+        <source>Received coins can be spent immediately.</source>
+        <translation>Received coins can be spent immediately.</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit">
+        <source>Max privacy longest transaction time</source>
+        <translation>Max privacy longest transaction time</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-72">
+        <source>72h</source>
+        <translation>72h</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-60">
+        <source>60h</source>
+        <translation>60h</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-48">
+        <source>48h</source>
+        <translation>48h</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-36">
+        <source>36h</source>
+        <translation>36h</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-24">
+        <source>24h</source>
+        <translation>24h</translation>
+    </message>
+    <message id="remote-node-lelantus-warning">
+        <source>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
+        <translation>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</translation>
+    </message>
+    <message id="time-hour">
+        <source>hour</source>
+        <extracomment>time &quot;hour&quot; string</extracomment>
+        <translation>hour</translation>
+    </message>
+    <message id="time-hours">
+        <source>hours</source>
+        <extracomment>time &quot;hours&quot; string</extracomment>
+        <translation>hours</translation>
+    </message>
+    <message id="time-day">
+        <source>day</source>
+        <extracomment>time &quot;day&quot; string</extracomment>
+        <translation>day</translation>
+    </message>
+    <message id="time-days">
+        <source>days</source>
+        <extracomment>time &quot;days&quot; string</extracomment>
+        <translation>days</translation>
+    </message>
+    <message id="settings-privacy-mp-time-no-limit">
+        <source>No limit</source>
+        <translation>No limit</translation>
+    </message>
+    <message id="wallet-receive-addr-message-mp">
+        <source>Max Privacy transaction can last at most %1 hours</source>
+        <translation>Max Privacy transaction can last at most %1 hours</translation>
+    </message>
+    <message id="wallet-receive-addr-message-mp-no-limit">
+        <source>Max Privacy transaction can last indefinitely</source>
+        <translation>Max Privacy transaction can last indefinitely</translation>
     </message>
     <message id="general-ethereum">
         <source>Ethereum</source>

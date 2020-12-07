@@ -14,6 +14,67 @@
 
 #include "currencies.h"
 
+beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(Currency currency)
+{
+    switch (currency)
+    {
+    case Currency::CurrBitcoin:
+        return beam::wallet::AtomicSwapCoin::Bitcoin;
+    case Currency::CurrLitecoin:
+        return beam::wallet::AtomicSwapCoin::Litecoin;
+    case Currency::CurrQtum:
+        return beam::wallet::AtomicSwapCoin::Qtum;
+#if defined(BITCOIN_CASH_SUPPORT)
+    case Currency::CurrBitcoinCash:
+        return beam::wallet::AtomicSwapCoin::Bitcoin_Cash;
+#endif // BITCOIN_CASH_SUPPORT
+    case Currency::CurrDash:
+        return beam::wallet::AtomicSwapCoin::Dash;
+    case Currency::CurrDogecoin:
+        return beam::wallet::AtomicSwapCoin::Dogecoin;
+    case Currency::CurrEthereum:
+        return beam::wallet::AtomicSwapCoin::Ethereum;
+    case Currency::CurrDai:
+        return beam::wallet::AtomicSwapCoin::Dai;
+    case Currency::CurrTether:
+        return beam::wallet::AtomicSwapCoin::Tether;
+    case Currency::CurrWrappedBTC:
+        return beam::wallet::AtomicSwapCoin::WBTC;
+    default:
+        return beam::wallet::AtomicSwapCoin::Unknown;
+    }
+}
+
+Currency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin)
+{
+    switch (swapCoin)
+    {
+    case beam::wallet::AtomicSwapCoin::Bitcoin:
+        return Currency::CurrBitcoin;
+    case beam::wallet::AtomicSwapCoin::Litecoin:
+        return Currency::CurrLitecoin;
+    case beam::wallet::AtomicSwapCoin::Qtum:
+        return Currency::CurrQtum;
+#if defined(BITCOIN_CASH_SUPPORT)
+    case beam::wallet::AtomicSwapCoin::Bitcoin_Cash:
+        return Currency::CurrBitcoinCash;
+#endif // BITCOIN_CASH_SUPPORT
+    case beam::wallet::AtomicSwapCoin::Dash:
+        return Currency::CurrDash;
+    case beam::wallet::AtomicSwapCoin::Dogecoin:
+        return Currency::CurrDogecoin;
+    case beam::wallet::AtomicSwapCoin::Ethereum:
+        return Currency::CurrEthereum;
+    case beam::wallet::AtomicSwapCoin::Dai:
+        return Currency::CurrDai;
+    case beam::wallet::AtomicSwapCoin::Tether:
+        return Currency::CurrTether;
+    case beam::wallet::AtomicSwapCoin::WBTC:
+        return Currency::CurrWrappedBTC;
+    default:
+        return Currency::CurrEnd;
+    }
+}
 
 beamui::Currencies convertCurrency(Currency value)
 {
@@ -26,5 +87,18 @@ beamui::Currencies convertCurrency(Currency value)
 #undef MACRO
     default:
         return beamui::Currencies::Unknown;
+    }
+}
+
+bool isEthereumBased(Currency currency)
+{
+    switch (currency)
+    {
+    case Currency::CurrEthereum: return true;
+    case Currency::CurrDai: return true;
+    case Currency::CurrTether: return true;
+    case Currency::CurrWrappedBTC: return true;
+    default:
+        return false;
     }
 }

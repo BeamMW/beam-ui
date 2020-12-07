@@ -29,9 +29,10 @@ SettingsFoldable {
 
         LinkButton {
             //% "Show public offline address"
-            text: qsTrId("settings-show-public-offline-address")
-            linkColor: "#ffffff"
+            text:       qsTrId("settings-show-public-offline-address")
+            linkColor:  "#ffffff"
             bold: true
+            enabled:    statusbarModel.isConnectionTrusted
             onClicked: {
                 publicOfflineAddressDialog.address = Qt.binding(function() { return viewModel.publicAddress;})
                 publicOfflineAddressDialog.open();
@@ -40,9 +41,9 @@ SettingsFoldable {
 
         LinkButton {
             //% "Get Beams from Beam Community Faucet"
-            text: qsTrId("settings-get-beam")
-            linkColor: "#ffffff"
-            bold: true
+            text:       qsTrId("settings-get-beam")
+            linkColor:  "#ffffff"
+            bold:       true
             onClicked: {
                 Utils.openExternalWithConfirmation(Style.faucetUrl);
             }
@@ -73,7 +74,7 @@ SettingsFoldable {
             text: qsTrId("general-rescan")
             linkColor: "#ffffff"
             bold: true
-            enabled: viewModel.localNodeRun && confirmRefreshDialog.canRefresh && viewModel.isLocalNodeRunning
+            enabled: statusbarModel.isConnectionTrusted && statusbarModel.isOnline && confirmRefreshDialog.canRefresh 
             onClicked: {
                 confirmRefreshDialog.open()
             }

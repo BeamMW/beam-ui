@@ -8,10 +8,12 @@ import "../utils.js" as Utils
 
 Control {
     id: control
+    z:  10
 
     property string available
     property string locked
     property string lockedMaturing
+    property string lockedMaturingMP
     property string sending
     property string receiving
     property string receivingChange
@@ -48,9 +50,9 @@ Control {
 
     Control {
         id:            lockedTip
-        visible:       lockedArea.containsMouse && parseFloat(locked) > 0
+        visible:       (lockedArea.containsMouse || lockedTipArea.containsMouse || maturingMoreDetailsArea.containsMouse) && parseFloat(locked) > 0
         x:             lockedAmount.x + lockedAmount.parent.x + lockedAmount.parent.parent.x + lockedAmount.width / 2 - lockedTip.width / 2
-        y:             lockedAmount.y + lockedAmount.parent.y + lockedAmount.height + 15
+        y:             lockedAmount.y + lockedAmount.parent.y + lockedAmount.height + 7
 
         leftPadding:   14
         rightPadding:  14
@@ -61,6 +63,11 @@ Control {
             anchors.fill: parent
             color:  Qt.rgba(255, 255, 255, 0.15)
             radius: 10
+            MouseArea {
+                id: lockedTipArea
+                anchors.fill: parent
+                hoverEnabled: true
+            }
         }
 
         contentItem:  GridLayout {
@@ -70,20 +77,70 @@ Control {
             rows:          2
 
             SFText {
+                id:             maturingLabel
                 font.pixelSize: 12
                 font.styleName: "Light"
                 font.weight:    Font.Light
                 color:          Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
                 //% "Maturing"
                 text:           qsTrId("available-panel-maturing")
+                Layout.alignment: Qt.AlignTop
+                visible:           parseFloat(lockedMaturing) > 0
             }
 
             BeamAmount {
                 amount:            lockedMaturing
                 currencySymbol:    BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+                secondCurrencyLabel:        control.secondCurrencyLabel
+                secondCurrencyRateValue:    control.secondCurrencyRateValue
                 spacing:           15
                 lightFont:         false
                 fontSize:          12
+                visible:           maturingLabel.visible
+            }
+
+            SFText {
+                id:             maxPrivacyLabel
+                font.pixelSize: 12
+                font.styleName: "Light"
+                font.weight:    Font.Light
+                color:          Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+                //% "Max privacy"
+                text:           qsTrId("available-panel-maturing-mp")
+                Layout.alignment: Qt.AlignTop
+                visible:           parseFloat(lockedMaturingMP) > 0
+            }
+
+            BeamAmount {
+                amount:            lockedMaturingMP
+                currencySymbol:    BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
+                secondCurrencyLabel:        control.secondCurrencyLabel
+                secondCurrencyRateValue:    control.secondCurrencyRateValue
+                spacing:           15
+                lightFont:         false
+                fontSize:          12
+                visible:           maxPrivacyLabel.visible
+            }
+
+            SFText {
+                id:             maturingMoreDetailsLabel
+                font.pixelSize: 14
+                font.styleName: "Light"
+                font.weight:    Font.Light
+                color:          Style.active
+                //% "More details"
+                text:             qsTrId("available-panel-maturing-details")
+                Layout.alignment: Qt.AlignTop
+                visible:           maxPrivacyLabel.visible
+                MouseArea {
+                    id: maturingMoreDetailsArea
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        mpDialog.open()
+                    }
+                }
             }
         }
     }
