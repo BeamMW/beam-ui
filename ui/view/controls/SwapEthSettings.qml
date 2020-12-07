@@ -434,6 +434,7 @@ SettingsFoldable {
                     function generateSeedPhrase() {
                         newSeedPhrases();
                         seedPhraseDialog.setModeNew();
+                        seedPhraseDialog.isCurrentElectrumSeedValid = Qt.binding(function(){return isCurrentSeedValid;});
                         seedPhraseDialog.open();
                     }
 
