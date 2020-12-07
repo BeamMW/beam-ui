@@ -6,6 +6,7 @@ import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
 import Beam.Wallet 1.0
 import "../controls"
+import "../utils.js" as Utils
 
 Control {
     id: control
@@ -235,6 +236,7 @@ Control {
                     rawTxID:            txRolesMap && txRolesMap.rawTxID ? txRolesMap.rawTxID : null
                     stateDetails:       txRolesMap && txRolesMap.stateDetails ? txRolesMap.stateDetails : ""
                     amount:             txRolesMap && txRolesMap.amountGeneral ? txRolesMap.amountGeneral : ""
+                    isCompleted:        txRolesMap && txRolesMap.isCompleted ? txRolesMap.isCompleted : false
                     addressType:        {
                         if (txRolesMap) {
                             if (txRolesMap.isMaxPrivacy) {

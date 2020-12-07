@@ -124,8 +124,10 @@ namespace
         if (isSender)
         {
             WalletID wid;
-            getPeerID(p, wid);
-            return std::to_string(wid).c_str();
+            if (getPeerID(p, wid))
+            {
+                return std::to_string(wid).c_str();
+            }
         }
         if (auto peerID = p.GetParameter<PeerID>(TxParameterID::PeerWalletIdentity); peerID)
         {

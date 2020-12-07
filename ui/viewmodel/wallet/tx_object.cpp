@@ -395,7 +395,7 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
         qtTrId("tx-failure-assets-fork2"),
         //% "Key keeper out of slots"
         qtTrId("tx-failure-out-of-slots"),
-        //% "Cannot extract shielded coin, fee is to big."
+        //% "Cannot extract shielded coin, fee is too big."
         qtTrId("tx-failure-shielded-coin-fee"),
         //% "Asset transactions are disabled in the receiver wallet"
         qtTrId("tx-failure-assets-disabled-receiver"),
@@ -600,6 +600,7 @@ void TxObject::restoreAddressType()
         return;
 
     m_addressType = GetAddressType(m_tx);
+    m_tx.SetParameter(TxParameterID::AddressType, *m_addressType);
 }
 
 void TxObject::visitContractData(const CDVisitor& visitor) const

@@ -2374,8 +2374,8 @@ Your version is: %2. Please, check for updates.</source>
         <translation>защищенный пул</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable sending max privacy transactions</source>
-        <translation>Подключитесь к интегрированному или собственному узлу, чтобы включить отправку транзакций с макс. конфиденциальностью</translation>
+        <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
+        <translation>Подключитесь к интегрированному или собственному узлу, чтобы включить получение макс. приватных и оффлайн транзакций</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>
@@ -2439,7 +2439,7 @@ much longer for a transaction to complete.</source>
         <translation>У хранителя ключей закончились слоты для нонсов</translation>
     </message>
     <message id="tx-failure-shielded-coin-fee">
-        <source>Cannot extract shielded coin, fee is to big.</source>
+        <source>Cannot extract shielded coin, fee is too big.</source>
         <translation>Невозможно извлечь защищенные монеты, комиссия должна быть большой.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
@@ -2501,7 +2501,7 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Постоянный адрес</translation>
     </message>
     <message id="wallet-send-one-time-note">
-        <source>One-time use address (expire in 12 hours after succesfull transaction).</source>
+        <source>One-time use address (expire in 12 hours after successfull transaction).</source>
         <translation>Одноразовый адрес (истекает через 12 часов после успешной транзакции).</translation>
     </message>
     <message id="wallet-send-max-privacy-note-address-offline">
@@ -2517,7 +2517,7 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Недостаточно средств: необходимо %1 для завершения транзакции</translation>
     </message>
     <message id="max-pivacy-fee-fail">
-        <source>For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2</source>
+        <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
         <translation>Для лучшей приватности были выбраны защищенные монеты. Минимальная комиссия за транзакцию - %1 %2</translation>
     </message>
     <message id="send-amount-label">
@@ -2666,8 +2666,8 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished">Макс. приватность</translation>
     </message>
     <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy)</source>
-        <translation>Созревание%1(макс. приватность)</translation>
+        <source>Maturing%1(max privacy %2% unlinked)</source>
+        <translation>Созревание %1(макс. приватность, готово на %2%)</translation>
     </message>
     <message id="atomic-swap-more-currency">
         <source>Connect more currencies</source>
@@ -2747,6 +2747,118 @@ public offline</source>
         <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
         <translation>Были выбрны монеты из защищенного пула, поэтому максимально возможная сумма — %1.</translation>
     </message>
+    <message id="wallet-txs-status-canceled-max">
+        <source>canceled
+max privacy</source>
+        <translation>отменено
+макс. конфиденциальность
+</translation>
+    </message>
+    <message id="wallet-txs-status-canceled-max-offline">
+        <source>canceled
+offline</source>
+        <translation>отменено
+оффлайн</translation>
+    </message>
+    <message id="wallet-txs-status-failed-max">
+        <source>failed
+max privacy</source>
+        <translation>не удалось
+макс. приватность</translation>
+    </message>
+    <message id="wallet-txs-status-failed-max-offline">
+        <source>failed
+offline</source>
+        <translation>ошибка
+оффлайн</translation>
+    </message>
+    <message id="max-privacy-dialog-header">
+        <source>Max privacy</source>
+        <translation>Макс. приватность</translation>
+    </message>
+    <message id="max-privacy-dialog-locked">
+        <source>Locked</source>
+        <translation>Заблокировано</translation>
+    </message>
+    <message id="max-privacy-dialog-amount">
+        <source>Amount</source>
+        <translation>Сумма</translation>
+    </message>
+    <message id="max-privacy-dialog-unlock-time">
+        <source>Latest unlocked time</source>
+        <translation>Последнее время разблокировки</translation>
+    </message>
+    <message id="settings-privacy-mp-anonymity-set">
+        <source>Anonymity set for Max privacy transactions</source>
+        <translation>Размер анонимного множества для макс. приватных транзакций</translation>
+    </message>
+    <message id="settings-privacy-mp-notice">
+        <source>Received coins can be spent immediately.</source>
+        <translation>Полученные монеты могут быть потрачены немедленно.</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit">
+        <source>Max privacy longest transaction time</source>
+        <oldsource>Max privacy lock time limit</oldsource>
+        <translation type="unfinished">Максимальное время блокировки монет</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-72">
+        <source>72h</source>
+        <translation>72 часа</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-60">
+        <source>60h</source>
+        <translation>60 часов</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-48">
+        <source>48h</source>
+        <translation>48 часов</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-36">
+        <source>36h</source>
+        <translation>36 часов</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-24">
+        <source>24h</source>
+        <translation>24 часа</translation>
+    </message>
+    <message id="remote-node-lelantus-warning">
+        <source>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
+        <translation>Чтобы получат макс. приватные и оффлайн транзакции, пожалуйста, подключитесь к интегрированному узлу или к удаленному узлу, настроенному с вашим ключом владельца.</translation>
+    </message>
+    <message id="time-hour">
+        <source>hour</source>
+        <extracomment>time &quot;hour&quot; string</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="time-hours">
+        <source>hours</source>
+        <extracomment>time &quot;hours&quot; string</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="time-day">
+        <source>day</source>
+        <extracomment>time &quot;day&quot; string</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="time-days">
+        <source>days</source>
+        <extracomment>time &quot;days&quot; string</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-privacy-mp-time-no-limit">
+        <source>No limit</source>
+        <oldsource>no limit</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-addr-message-mp">
+        <source>Max Privacy transaction can last at most %1 hours</source>
+        <oldsource>Max Privacy transaction can last at least 2 days.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-addr-message-mp-no-limit">
+        <source>Max Privacy transaction can last indefinitely</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="apps-title">
         <source>DAPP Store</source>
         <translation type="unfinished"></translation>
@@ -2823,31 +2935,6 @@ public offline</source>
     <message id="inprogress-assets">
         <source>Assets</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-txs-status-canceled-max">
-        <source>canceled
-max privacy</source>
-        <translation>отменено
-макс. конфиденциальность
-</translation>
-    </message>
-    <message id="wallet-txs-status-canceled-max-offline">
-        <source>canceled
-offline</source>
-        <translation>отменено
-оффлайн</translation>
-    </message>
-    <message id="wallet-txs-status-failed-max">
-        <source>failed
-max privacy</source>
-        <translation>не удалось
-макс. приватность</translation>
-    </message>
-    <message id="wallet-txs-status-failed-max-offline">
-        <source>failed
-offline</source>
-        <translation>ошибка
-оффлайн</translation>
     </message>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>

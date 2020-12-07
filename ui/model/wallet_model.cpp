@@ -14,6 +14,7 @@
 
 #include "wallet_model.h"
 #include "app_model.h"
+#include "filter.h"
 #include "utility/logger.h"
 #include "utility/bridge.h"
 #include "utility/io/asyncevent.h"
@@ -25,8 +26,15 @@ using namespace beam::wallet;
 using namespace beam::io;
 using namespace std;
 
+namespace
+{
+    const size_t kShieldedPer24hFilterSize = 20;
+    const size_t kShieldedPer24hFilterBlocksForUpdate = 144;
+}  // namespace
+
 WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor)
-    : WalletClient(walletDB, nodeAddr, reactor)
+    : WalletClient(walletDB, nodeAddr, reactor),
+      m_shieldedPer24hFilter(std::make_unique<beamui::Filter>(kShieldedPer24hFilterSize))
 {
     qRegisterMetaType<beam::ByteBuffer>("beam::ByteBuffer");
     qRegisterMetaType<beam::wallet::WalletStatus>("beam::wallet::WalletStatus");
@@ -401,6 +409,21 @@ beam::Block::SystemState::ID WalletModel::getCurrentStateID() const
     return m_status.stateID;
 }
 
+beam::TxoID WalletModel::getTotalShieldedCount() const
+{
+    return m_status.shieldedTotalCount;
+}
+
+beam::TxoID WalletModel::getShieldedPer24h() const
+{
+    return m_shieldedPer24h;
+}
+
+uint8_t WalletModel::getMPLockTimeLimit() const
+{
+    return m_mpLockTimeLimit;
+}
+
 bool WalletModel::hasShielded(beam::Asset::ID id) const
 {
     const auto& status = m_status.GetStatus(id);
@@ -411,6 +434,50 @@ void WalletModel::onWalletStatusInternal(const beam::wallet::WalletStatus& newSt
 {
     m_status = newStatus;
     emit walletStatusChanged();
+
+    if (m_status.stateID != newStatus.stateID)
+    {
+        if (!m_status.stateID.m_Height || !(newStatus.stateID.m_Height % kShieldedPer24hFilterBlocksForUpdate))
+        {
+            m_shieldedCountHistoryPart.clear();
+            auto shieldedCountHistoryWindowSize = kShieldedPer24hFilterSize << 1;
+
+            if (newStatus.stateID.m_Height > kShieldedPer24hFilterBlocksForUpdate * shieldedCountHistoryWindowSize)
+            {
+                m_shieldedCountHistoryPart.reserve(shieldedCountHistoryWindowSize);
+
+                for (uint8_t i = 0; i < shieldedCountHistoryWindowSize; ++i)
+                {
+                    auto h = newStatus.stateID.m_Height - (kShieldedPer24hFilterBlocksForUpdate * i);
+                    getAsync()->getShieldedCountAt(h, [this, shieldedCountHistoryWindowSize] (Height h, TxoID count)
+                    {
+                        m_shieldedCountHistoryPart.emplace_back(h, count);
+                        if (m_shieldedCountHistoryPart.size() == shieldedCountHistoryWindowSize)
+                        {
+                            for (uint8_t i = 0; i < kShieldedPer24hFilterSize; ++i)
+                            {
+                                if (m_shieldedCountHistoryPart[i].second)
+                                {
+                                    double b = m_shieldedCountHistoryPart[i].second - m_shieldedCountHistoryPart[i + kShieldedPer24hFilterSize].second;
+                                    m_shieldedPer24hFilter->addSample(b);
+                                }
+                                else
+                                {
+                                    m_shieldedPer24hFilter->addSample(0);
+                                }
+                                
+                            }
+                            m_shieldedPer24h = static_cast<TxoID>(floor(m_shieldedPer24hFilter->getAverage() * 10));
+                        }
+                    });
+                }
+            }
+        }
+    }
+    getAsync()->getMaxPrivacyLockTimeLimitHours([this] (uint8_t limit)
+    {
+        m_mpLockTimeLimit = limit;
+    });
 }
 
 void WalletModel::setAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addrs)

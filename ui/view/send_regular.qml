@@ -264,7 +264,7 @@ ColumnLayout {
                                                     //% "Permanent address"
                                                     qsTrId("wallet-send-permanent-note") 
                                                     :
-                                                    //% "One-time use address (expire in 12 hours after succesfull transaction)."
+                                                    //% "One-time use address (expire in 12 hours after successfull transaction)."
                                                     qsTrId("wallet-send-one-time-note")
                                 visible:            viewModel.isToken && !viewModel.isShieldedTx
                             }
@@ -412,7 +412,7 @@ ColumnLayout {
                             rateAmount:                 Utils.formatAmountToSecondCurrency(viewModel.fee, viewModel.feeRate, viewModel.feeRateUnit)
                             rateUnit:                   viewModel.feeRateUnit
                             minimumFeeNotificationText: viewModel.isShieldedTx || viewModel.isNeedExtractShieldedCoins ?
-                                //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
+                                //% "For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2"
                                 qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
                                 ""
                         }

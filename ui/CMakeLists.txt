@@ -201,6 +201,8 @@ set(UI_SRC
     model/wallet_model.cpp
     model/app_model.h
     model/app_model.cpp
+    model/filter.h
+    model/filter.cpp
     model/keyboard.h
     model/keyboard.cpp
     model/settings.h

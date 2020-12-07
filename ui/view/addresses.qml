@@ -297,7 +297,7 @@ ColumnLayout {
                     text: qsTrId("general-send")
                     icon.source: "qrc:/assets/icon-send-blue.svg"
                     onTriggered: {
-                        main.openSendDialog(contextMenu.token);
+                        main.openSendDialog(contextMenu.address);
                     }
                 }
                 Action {

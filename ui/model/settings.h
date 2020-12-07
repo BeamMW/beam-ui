@@ -88,6 +88,13 @@ public:
     QString getDevBeamAppUrl();
     QString getDevBeamAppName();
 
+    uint8_t getMaxPrivacyAnonymitySet() const;
+    void setMaxPrivacyAnonymitySet(uint8_t anonymitySet);
+
+    void maxPrivacyLockTimeLimitInit();
+    uint8_t getMaxPrivacyLockTimeLimitHours() const;
+    void setMaxPrivacyLockTimeLimitHours(uint8_t lockTimeLimit);
+
 public:
     static const char* WalletCfg;
     static const char* LogsFolder;
@@ -114,6 +121,7 @@ signals:
 private:
     QSettings m_data;
     QDir m_appDataDir;
+    uint8_t m_mpLockTimeLimit = 0;
     mutable std::recursive_mutex m_mutex;
     using Lock = std::unique_lock<decltype(m_mutex)>;
 };

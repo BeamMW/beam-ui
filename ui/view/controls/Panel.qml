@@ -11,7 +11,7 @@ Pane {
     property alias title:         headerTitle.text
     property alias titleTip:      headerTextLabel.text
     property alias content:       placeholder.contentItem
-
+    property color backgroundColor:  Style.background_second
     spacing: 0
     padding: 20
 
@@ -23,7 +23,7 @@ Pane {
             SFText {
                 id: headerTitle
                 Layout.fillWidth: headerTextLabel.text.length == 0
-                color: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+                color:              Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, control.enabled ? 0.5 : 0.15)
             
                 font {
                     styleName:      "Bold"
@@ -46,7 +46,7 @@ Pane {
                     pixelSize:      14
                     letterSpacing:  0.35
                 }
-                visible:              text.length > 0
+                visible:              text.length > 0 && control.enabled
             }
         }
 
@@ -55,11 +55,12 @@ Pane {
             Layout.fillWidth:  true
             Layout.topMargin:  20
             Layout.alignment:  Qt.AlignTop
+            visible:           control.enabled
         }
     }
 
     background: Rectangle {
         radius:  10
-        color:   Style.background_second
+        color:   control.enabled ? control.backgroundColor : Qt.rgba(control.backgroundColor.r, control.backgroundColor.g, control.backgroundColor.b, control.backgroundColor.a*0.3)
     }
 }

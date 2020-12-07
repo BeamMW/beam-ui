@@ -4,7 +4,6 @@ import QtQuick.Controls 2.3
 import Beam.Wallet 1.0
 import "."
 import "../utils.js" as Utils
-import Beam.Wallet 1.0
 
 CustomTableView {
     id: rootControl

@@ -29,12 +29,15 @@ UtxoViewModel::UtxoViewModel()
         SLOT(onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>&)));
 
     connect(&m_model, &WalletModel::walletStatusChanged, this, &UtxoViewModel::stateChanged);
+    connect(&m_model, SIGNAL(shieldedTotalCountChanged()), SLOT(onTotalShieldedCountChanged()));
+
+    m_totalShieldedCount = m_model.getTotalShieldedCount();
     m_model.getAsync()->getUtxosStatus();
 }
 
 QAbstractItemModel* UtxoViewModel::getAllUtxos()
 {
-    return & m_allUtxos;
+    return &m_allUtxos;
 }
 
 QString UtxoViewModel::getCurrentHeight() const
@@ -47,8 +50,24 @@ QString UtxoViewModel::getCurrentStateHash() const
     return QString(beam::to_hex(m_model.getCurrentStateID().m_Hash.m_pData, 10).c_str());
 }
 
+bool UtxoViewModel::getMaturingMaxPrivacy() const
+{
+    return m_maturingMaxPrivacy;
+}
+
+void UtxoViewModel::setMaturingMaxPrivacy(bool value)
+{
+    if (m_maturingMaxPrivacy != value)
+    {
+        m_maturingMaxPrivacy = value;
+        emit maturingMaxPrivacyChanged();
+    }
+}
+
 void UtxoViewModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
+    if (getMaturingMaxPrivacy())
+        return;
     vector<shared_ptr<BaseUtxoItem>> modifiedItems;
     modifiedItems.reserve(utxos.size());
 
@@ -96,15 +115,22 @@ void UtxoViewModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const st
 
 void UtxoViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::ShieldedCoin>& items)
 {
+    m_totalShieldedCount = m_model.getTotalShieldedCount();
     vector<shared_ptr<BaseUtxoItem>> modifiedItems;
     modifiedItems.reserve(items.size());
 
     for (const auto& t : items)
     {
-        if (t.IsAsset()) {
+        if (t.IsAsset())
+        {
             continue;
         }
-        modifiedItems.push_back(make_shared<ShieldedCoinItem>(t));
+
+        if (getMaturingMaxPrivacy() && t.m_Status != beam::wallet::ShieldedCoin::Status::Maturing)
+        {
+            continue;
+        }
+        modifiedItems.push_back(make_shared<ShieldedCoinItem>(t, m_totalShieldedCount));
     }
 
     switch (action)
@@ -151,4 +177,8 @@ void UtxoViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, con
     emit allUtxoChanged();
 }
 
-
+void UtxoViewModel::onTotalShieldedCountChanged()
+{
+    m_totalShieldedCount = m_model.getTotalShieldedCount();
+    m_model.getAsync()->getUtxosStatus();
+}

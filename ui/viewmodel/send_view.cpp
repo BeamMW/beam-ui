@@ -551,7 +551,8 @@ void SendViewModel::sendMoney()
         if (isMaxPrivacy())
         {
             CopyParameter(TxParameterID::Voucher, _txParameters, params);
-            params.SetParameter(TxParameterID::MaxPrivacyMinAnonimitySet, uint8_t(64));
+            const auto& settings = AppModel::getInstance().getSettings();
+            params.SetParameter(TxParameterID::MaxPrivacyMinAnonimitySet, settings.getMaxPrivacyAnonymitySet());
         }
         if (isShieldedTx())
         {
@@ -571,14 +572,26 @@ void SendViewModel::saveReceiverAddress(const QString& name)
 {
     using namespace beam::wallet;
     QString trimmed = name.trimmed();
-    WalletAddress address;
-    address.m_walletID = _receiverWalletID;
-    address.m_createTime = getTimestamp();
-    address.m_Identity = _receiverIdentity;
-    address.m_label = trimmed.toStdString();
-    address.m_duration = WalletAddress::AddressExpirationNever;
-    address.m_Address = _receiverTA.toStdString();
-    _walletModel.getAsync()->saveAddress(address, false);
+    if (!_walletModel.isOwnAddress(_receiverWalletID))
+    {
+        WalletAddress address;
+        address.m_walletID = _receiverWalletID;
+        address.m_createTime = getTimestamp();
+        address.m_Identity = _receiverIdentity;
+        address.m_label = trimmed.toStdString();
+        address.m_duration = WalletAddress::AddressExpirationNever;
+        address.m_Address = _receiverTA.toStdString();
+        _walletModel.getAsync()->saveAddress(address, false);
+    }
+    else
+    {
+        _walletModel.getAsync()->getAddress(_receiverWalletID, [this, trimmed](const boost::optional<WalletAddress>& addr, size_t c)
+        {
+            WalletAddress address = *addr;
+            address.m_label = trimmed.toStdString();
+            _walletModel.getAsync()->saveAddress(address, true);
+        });
+    }
 }
 
 void SendViewModel::extractParameters()

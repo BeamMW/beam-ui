@@ -40,11 +40,9 @@ Dialog {
 
 	modal: true
 
-	width: 460
-	height: 243
-	x: (parent.width - width) / 2
+    x: (parent.width - width) / 2
 	y: (parent.height - height) / 2
-	visible: false
+	visible:        false
 	parent:         Overlay.overlay
 	padding:        30
 

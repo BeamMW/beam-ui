@@ -84,18 +84,6 @@ namespace beamui
     QString toString(const beam::Merkle::Hash&);
     QString toString(const beam::Timestamp& ts);
 
-    class Filter
-    {
-    public:
-        Filter(size_t size = 12);
-        void addSample(double value);
-        double getAverage() const;
-        double getMedian() const;
-    private:
-        std::vector<double> _samples;
-        size_t _index;
-        bool _is_poor;
-    };
     QDateTime CalculateExpiresTime(beam::Timestamp currentHeightTime, beam::Height currentHeight, beam::Height expiresHeight);
     QString getEstimateTimeStr(int estimate);
     QString convertBeamHeightDiffToTime(int32_t dt);

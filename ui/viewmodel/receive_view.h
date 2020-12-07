@@ -32,6 +32,7 @@ class ReceiveViewModel: public QObject
     Q_PROPERTY(QString  rateUnit                     READ getRateUnit                                         NOTIFY  rateChanged)
     Q_PROPERTY(QString  rate                         READ getRate                                             NOTIFY  rateChanged)
     Q_PROPERTY(bool     isShieldedTx                 READ isShieldedTx          WRITE setIsShieldedTx         NOTIFY  isShieldedTxChanged)
+    Q_PROPERTY(QString  mpTimeLimit                  READ getMPTimeLimit        CONSTANT)
 
 public:
     ReceiveViewModel();
@@ -94,6 +95,8 @@ private:
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments);
     void generateOfflineAddress();
+
+    QString getMPTimeLimit() const;
 private:
     beam::Amount _amountToReceiveGrothes;
     int          _addressExpires;
