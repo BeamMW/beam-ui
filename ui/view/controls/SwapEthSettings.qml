@@ -15,10 +15,12 @@ SettingsFoldable {
     property alias  showSeedDialogTitle: seedPhraseDialog.showSeedDialogTitle
     property string color:               Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
     property string disabledColor:       Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.2)
-    property bool   canEdit:             !isConnected
 
     property bool   isConnected:           false
     property var    mainSettingsViewModel: undefined
+    // TODO roman.strilets may be it's bad name
+    property bool   canEdit:             true
+    property bool   canEditNode:  !control.isConnected
 
     // TODO roman.strilets it's for test
     property alias  address:              addressInput.text
@@ -213,8 +215,8 @@ SettingsFoldable {
                 color:            Style.content_main
                 font.pixelSize:     14
                 activeFocusOnTab:   true
-                //underlineVisible: canEditNode
-                //readOnly:         !canEditNode
+                underlineVisible: canEditNode
+                readOnly:         !canEditNode
             }
 
             SFText {
@@ -233,8 +235,8 @@ SettingsFoldable {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
-                //underlineVisible:   canEditNode
-                //readOnly:           !canEditNode
+                underlineVisible:   canEditNode
+                readOnly:           !canEditNode
                 validator: IntValidator {
                     bottom: 1
                     top: 65535
@@ -256,8 +258,8 @@ SettingsFoldable {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
-                //underlineVisible:   canEditNode
-                //readOnly:           !canEditNode
+                underlineVisible:   canEditNode
+                readOnly:           !canEditNode
                 validator: IntValidator {
                     bottom: 0
                     top: 20
@@ -279,8 +281,8 @@ SettingsFoldable {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
-                //underlineVisible:   canEditNode
-                //readOnly:           !canEditNode
+                underlineVisible:   canEditNode
+                readOnly:           !canEditNode
             }
 
             SFText {
@@ -296,6 +298,8 @@ SettingsFoldable {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
+                underlineVisible:   canEditNode
+                readOnly:           !canEditNode
             }
 
             SFText {
@@ -311,8 +315,8 @@ SettingsFoldable {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
-                //underlineVisible:   canEditNode
-                //readOnly:           !canEditNode
+                underlineVisible:   canEditNode
+                readOnly:           !canEditNode
             }
 
             SFText {
@@ -328,8 +332,8 @@ SettingsFoldable {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
-                //underlineVisible:   canEditNode
-                //readOnly:           !canEditNode
+                underlineVisible:   canEditNode
+                readOnly:           !canEditNode
             }
 
             SFText {
@@ -345,8 +349,8 @@ SettingsFoldable {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
-                //underlineVisible:   canEditNode
-                //readOnly:           !canEditNode
+                underlineVisible:   canEditNode
+                readOnly:           !canEditNode
             }
 
             SFText {
@@ -360,6 +364,7 @@ SettingsFoldable {
                 id:          activateDaiSwitch
                 //alwaysGreen: true
                 spacing:     0
+                enabled:     canEditNode
             }
 
             SFText {
@@ -373,6 +378,7 @@ SettingsFoldable {
                 id:          activateUsdtSwitch
                 //alwaysGreen: true
                 spacing:     0
+                enabled:     canEditNode
             }
 
             SFText {
@@ -386,6 +392,7 @@ SettingsFoldable {
                 id:          activateWBTCSwitch
                 //alwaysGreen: true
                 spacing:     0
+                enabled:     canEditNode
             }
         }
 

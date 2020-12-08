@@ -19,6 +19,7 @@ SettingsFoldable {
     property string color:               Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
     property string disabledColor:       Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.2)
     property alias  editElectrum:        useElectrumSwitch.checked
+    // TODO roman.strilets may be it's bad name
     property bool   canEdit:             true
     property bool   isSupportedElectrum: true
 
