@@ -38,6 +38,9 @@ SettingsFoldable {
     property alias phrasesSeparator:   seedPhraseDialog.phrasesSeparatorElectrum
     property bool  isCurrentSeedValid: false
 
+    // function to get ethereum addresses
+    property var   getEthereumAddresses:       undefined
+
     ConfirmPasswordDialog {
         id: confirmPasswordDialog
         parent: control.parent
@@ -53,6 +56,10 @@ SettingsFoldable {
         onClosed: {
             internalValues.isSeedChanged = seedPhraseDialog.isSeedChanged
         }
+    }
+
+    ShowAddressesDialog {
+        id: showAddressesDialog
     }
 
     //
@@ -487,7 +494,7 @@ SettingsFoldable {
                 //% "Show wallet addresses"
                 text:      qsTrId("settings-swap-show-addresses")
                 onClicked: {                        
-                    showAddressesDialog.addressesElectrum = getAddressesElectrum();
+                    showAddressesDialog.addressesElectrum = getEthereumAddresses();
                     showAddressesDialog.open();
                 }
             }

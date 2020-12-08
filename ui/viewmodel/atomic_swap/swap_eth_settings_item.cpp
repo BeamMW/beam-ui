@@ -20,6 +20,8 @@
 #include "seed_phrase_item.h"
 #include "viewmodel/settings_helpers.h"
 
+#include "wallet/transactions/swaps/bridges/ethereum/common.h"
+
 using namespace beam;
 
 namespace
@@ -116,6 +118,24 @@ void SwapEthSettingsItem::validateCurrentSeedPhrase()
     }
 
     setIsCurrentSeedValid(isValidMnemonic(seedPhrases, language::en));
+}
+
+QStringList SwapEthSettingsItem::getEthereumAddresses() const
+{
+    QStringList result;
+
+    if (m_settings->IsInitialized())
+    {
+        auto rawAddress = ethereum::GenerateEthereumAddress(m_settings->m_secretWords, m_settings->m_accountIndex);
+        auto address = ethereum::ConvertEthAddressToStr(rawAddress);
+        
+        if (!address.empty())
+        {
+            result.push_back(QString::fromStdString(address));
+        }
+    }
+
+    return result;
 }
 
 QString SwapEthSettingsItem::getTitle() const

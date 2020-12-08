@@ -296,6 +296,7 @@ ColumnLayout {
                     isCurrentSeedValid:    viewModel.ethSettings.isCurrentSeedValid
                     mainSettingsViewModel: viewModel
                     hasStatusIndicatior:   true
+                    getEthereumAddresses:  viewModel.ethSettings.getEthereumAddresses
                     folded:                creating ? (swapMode == viewModel.ethSettings.coinID ? false : (swapMode == "ALL" ? viewModel.ethSettings.isConnected : true)) : viewModel.ethSettings.folded
 
                     canEdit:               viewModel.ethSettings.canEdit

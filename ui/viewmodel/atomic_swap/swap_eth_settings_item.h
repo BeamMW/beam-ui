@@ -64,6 +64,7 @@ public:
     Q_INVOKABLE void restoreSeedPhrases();
     Q_INVOKABLE void copySeedPhrases();
     Q_INVOKABLE void validateCurrentSeedPhrase();
+    Q_INVOKABLE QStringList getEthereumAddresses() const;
 
 private:
     QString getTitle() const;

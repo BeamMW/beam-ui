@@ -274,5 +274,6 @@
         <file>controls/AddressQRDialog.qml</file>
         <file>controls/SeedPhraseDialog.qml</file>
         <file>controls/SwapEthSettings.qml</file>
+        <file>controls/ShowAddressesDialog.qml</file>
     </qresource>
 </RCC>
