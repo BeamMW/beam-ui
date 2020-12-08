@@ -337,6 +337,7 @@ void SendSwapViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::S
 
 bool SendSwapViewModel::isEnough() const
 {
+    // TODO roman.strilets ethereum fee = {gas limit} * {gas price}
     const auto total = _sendAmountGrothes + _sendFeeGrothes + _changeGrothes;
     if (Currency::CurrBeam == _sendCurrency)
     {
@@ -357,6 +358,7 @@ bool SendSwapViewModel::isEnough() const
 bool SendSwapViewModel::isEnoughToReceive() const
 {
     // TODO roman.strilets need check
+    // use m_withdrawTxGasLimit
     if (isEthereumBased(_receiveCurrency))
     {
         return AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) > _receiveFeeGrothes;

@@ -70,7 +70,6 @@ namespace beamui
     QString getCurrencySubunitLabel(Currencies);
     QString getCurrencySubunitFromLabel(const QString& currLabel);
 
-    // TODO roman.strilets
     /// Convert amount to ui string with "." as a separator. With the default @coinType, no currency label added.
     QString AmountToUIString(const beam::Amount& value, Currencies coinType = Currencies::Unknown, bool currencyLabel = true);
     QString AmountInGrothToUIString(const beam::Amount& value);

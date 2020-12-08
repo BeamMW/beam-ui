@@ -72,8 +72,7 @@ beam::Amount minimalFee(Currency currency, bool isShielded)
 
     if (isEthereumBased(currency))
     {
-        // TODO roman.strilets
-        return 0;
+        return AppModel::getInstance().getSwapEthClient()->GetSettings().GetMinFeeRate();
     }
 
     auto swapCoin = convertCurrencyToSwapCoin(currency);

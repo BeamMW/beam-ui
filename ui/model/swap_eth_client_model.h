@@ -31,7 +31,6 @@ public:
         beam::io::Reactor& reactor);
 
     beam::Amount getAvailable(beam::wallet::AtomicSwapCoin swapCoin) const;
-    // TODO roman.strilets need to check this function
     bool isInitialized(beam::wallet::AtomicSwapCoin swapCoin) const;
     beam::Amount getGasPrice() const;
     beam::ethereum::Client::Status getStatus() const;

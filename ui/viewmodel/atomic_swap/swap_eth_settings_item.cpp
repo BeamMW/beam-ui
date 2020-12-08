@@ -56,9 +56,8 @@ void SwapEthSettingsItem::applySettings()
 
     m_settings->m_accountIndex = m_accountIndex;
     m_settings->m_shouldConnect = m_shouldConnect;
-    m_settings->m_address = m_nodeAddress.toStdString();//formatAddress(m_nodeAddress, m_nodePort).toStdString();
+    m_settings->m_address = m_nodeAddress.toStdString();
     m_settings->m_secretWords = GetSeedPhraseFromSeedItems();
-    // TODO roman.strilets hash or aggregate
     m_settings->m_swapContractAddress = m_contractAddress.toStdString();
     m_settings->m_erc20SwapContractAddress = m_erc20ContractAddress.toStdString();
 
@@ -211,7 +210,6 @@ void SwapEthSettingsItem::LoadSettings()
         SetSeedPhrase(m_settings->m_secretWords);
         applyNodeAddress(str2qstr(m_settings->m_address));
         setAccountIndex(m_settings->m_accountIndex);
-        // TODO roman.strilets hash or aggregate
         setContractAddress(str2qstr(m_settings->m_swapContractAddress));
         setERC20ContractAddress(str2qstr(m_settings->m_erc20SwapContractAddress));
         shouldConnect(m_settings->m_shouldConnect);
