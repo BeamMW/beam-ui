@@ -555,13 +555,7 @@ void AppModel::initSwapClients()
     initSwapClient<bitcoin_cash::BitcoinCashCore, bitcoin_cash::Electrum, bitcoin_cash::SettingsProvider>(AtomicSwapCoin::Bitcoin_Cash);
 #endif // BITCOIN_CASH_SUPPORT
     initSwapClient<dogecoin::DogecoinCore014, dogecoin::Electrum, dogecoin::SettingsProvider>(AtomicSwapCoin::Dogecoin);
-
-    {
-        m_swapEthBridgeHolder = std::make_shared<ethereum::BridgeHolder>();
-        auto settingsProvider = std::make_unique<ethereum::SettingsProvider>(m_db);
-        settingsProvider->Initialize();
-        m_swapEthClient = std::make_shared<SwapEthClientModel>(m_swapEthBridgeHolder, std::move(settingsProvider), *m_walletReactor);
-    }
+    initEthClient();
 }
 
 template<typename CoreBridge, typename ElectrumBridge, typename SettingsProvider>
@@ -575,7 +569,16 @@ void AppModel::initSwapClient(beam::wallet::AtomicSwapCoin swapCoin)
     m_swapBridgeHolders.emplace(std::make_pair(swapCoin, bridgeHolder));
 }
 
+void AppModel::initEthClient()
+{
+    m_swapEthBridgeHolder = std::make_shared<ethereum::BridgeHolder>();
+    auto settingsProvider = std::make_unique<ethereum::SettingsProvider>(m_db);
+    settingsProvider->Initialize();
+    m_swapEthClient = std::make_shared<SwapEthClientModel>(m_swapEthBridgeHolder, std::move(settingsProvider), *m_walletReactor);
+}
+
 void AppModel::resetSwapClients()
 {
     m_swapClients.clear();
+    m_swapEthClient.reset();
 }

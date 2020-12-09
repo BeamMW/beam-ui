@@ -85,6 +85,7 @@ private:
     void initSwapClients();
     template<typename CoreBridge, typename ElectrumBridge, typename SettingsProvider>
     void initSwapClient(beam::wallet::AtomicSwapCoin swapCoin);
+    void initEthClient();
     void resetSwapClients();
     void onWalledOpened(const beam::SecString& pass);
     void backupDB(const std::string& dbFilePath);

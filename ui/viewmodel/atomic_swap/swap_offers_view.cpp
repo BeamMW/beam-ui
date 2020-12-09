@@ -22,31 +22,13 @@
 using namespace beam;
 using namespace beam::wallet;
 using namespace std;
-namespace btc = beam::bitcoin;
-
-namespace
-{
-    bool IsEthereumBased(wallet::AtomicSwapCoin swapCoin)
-    {
-        switch (swapCoin)
-        {
-            case beam::wallet::AtomicSwapCoin::Ethereum:
-            case beam::wallet::AtomicSwapCoin::Dai:
-            case beam::wallet::AtomicSwapCoin::Tether:
-            case beam::wallet::AtomicSwapCoin::WBTC:
-                return true;
-            default:
-                return false;
-        }
-    }
-} // namespace
 
 SwapCoinClientWrapper::SwapCoinClientWrapper(wallet::AtomicSwapCoin swapCoin)
     : m_swapCoin(swapCoin)
-    , m_coinClient(!IsEthereumBased(swapCoin) ? AppModel::getInstance().getSwapCoinClient(swapCoin) : nullptr)
-    , m_ethClient(IsEthereumBased(swapCoin) ? AppModel::getInstance().getSwapEthClient() : nullptr)
+    , m_coinClient(!ethereum::IsEthereumBased(swapCoin) ? AppModel::getInstance().getSwapCoinClient(swapCoin) : nullptr)
+    , m_ethClient(ethereum::IsEthereumBased(swapCoin) ? AppModel::getInstance().getSwapEthClient() : nullptr)
 {
-    if (IsEthereumBased(swapCoin))
+    if (ethereum::IsEthereumBased(swapCoin))
     {
         auto coinClient = m_ethClient.lock();
         auto settings = coinClient->GetSettings();
@@ -96,7 +78,7 @@ QString SwapCoinClientWrapper::getAvailableStr() const
 
 bool SwapCoinClientWrapper::getIsConnected() const
 {
-    if (IsEthereumBased(m_swapCoin))
+    if (ethereum::IsEthereumBased(m_swapCoin))
     {
         return m_ethClient.lock()->getStatus() == ethereum::Client::Status::Connected;
     }
@@ -106,7 +88,7 @@ bool SwapCoinClientWrapper::getIsConnected() const
 
 bool SwapCoinClientWrapper::getIsConnecting() const
 {
-    if (IsEthereumBased(m_swapCoin))
+    if (ethereum::IsEthereumBased(m_swapCoin))
     {
         return m_ethClient.lock()->getStatus() == ethereum::Client::Status::Connecting;
     }
@@ -146,7 +128,7 @@ double SwapCoinClientWrapper::getBlocksPerHour() const
 
 Amount SwapCoinClientWrapper::getAvailable() const
 {
-    if (IsEthereumBased(m_swapCoin))
+    if (ethereum::IsEthereumBased(m_swapCoin))
     {
         return m_ethClient.lock()->getAvailable(m_swapCoin);
     }
