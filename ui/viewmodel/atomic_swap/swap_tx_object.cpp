@@ -282,7 +282,7 @@ QString SwapTxObject::getSwapCoinFee() const
     }
 
     Currency coinTypeQt = convertSwapCoinToCurrency(m_swapTx.getSwapCoin());
-    return calcTotalFee(coinTypeQt, *feeRate);
+    return calcWithdrawTxFee(coinTypeQt, *feeRate);
 }
 
 QString SwapTxObject::getFailureReason() const

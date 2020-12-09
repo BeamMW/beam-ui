@@ -20,4 +20,4 @@ beam::Amount minFeeBeam(bool isShielded = false);
 bool isFeeOK(beam::Amount fee, Currency currency, bool isShielded);
 bool isSwapFeeOK(beam::Amount amount, beam::Amount fee, Currency currency);
 beam::Amount minimalFee(Currency, bool isShielded);
-QString calcTotalFee(Currency currency, beam::Amount feeRate);
+QString calcWithdrawTxFee(Currency currency, beam::Amount feeRate);

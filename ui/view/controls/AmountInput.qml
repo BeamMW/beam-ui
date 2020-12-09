@@ -25,7 +25,7 @@ ColumnLayout {
     }
 
     function getTotalFeeAmount() {
-        return BeamGlobals.calcTotalFee(control.currency, control.fee);
+        return BeamGlobals.calcWithdrawTxFee(control.currency, control.fee);
     }
 
     function getFeeInSecondCurrency(feeValue) {

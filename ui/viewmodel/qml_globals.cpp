@@ -197,9 +197,9 @@ bool QMLGlobals::isPasswordValid(const QString& value)
     return AppModel::getInstance().checkWalletPassword(secretPass);
 }
 
-QString QMLGlobals::calcTotalFee(Currency currency, unsigned int feeRate)
+QString QMLGlobals::calcWithdrawTxFee(Currency currency, unsigned int feeRate)
 {
-    return ::calcTotalFee(currency, feeRate);
+    return ::calcWithdrawTxFee(currency, feeRate);
 }
 
 QString QMLGlobals::calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyLabel)
@@ -357,7 +357,6 @@ QString QMLGlobals::getRecommendedFee(Currency currency)
 {
     if (Currency::CurrBeam == currency)
     {
-        // TODO roman.strilets need to investigate
         return QString::fromStdString(std::to_string(0));
     }
 

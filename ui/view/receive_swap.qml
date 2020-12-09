@@ -508,7 +508,7 @@ please review your settings and try again"
                                 SFText {
                                     font.pixelSize:   14
                                     color:            Style.content_main
-                                    text:             BeamGlobals.calcTotalFee(viewModel.receiveCurrency, viewModel.receiveFee)
+                                    text:             BeamGlobals.calcWithdrawTxFee(viewModel.receiveCurrency, viewModel.receiveFee)
                                     visible:          parent.showEstimatedFee
                                 }
 
