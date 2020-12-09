@@ -59,8 +59,18 @@ bool isSwapFeeOK(beam::Amount amount, beam::Amount fee, Currency currency)
         return amount > fee && fee >= minFeeBeam();
     }
 
-    // TODO roman.strilets maybe need to process exception?
-    return beam::wallet::IsSwapAmountValid(convertCurrencyToSwapCoin(currency), amount, fee);
+    bool result = false;
+
+    try
+    {
+        result = beam::wallet::IsSwapAmountValid(convertCurrencyToSwapCoin(currency), amount, fee);
+    }
+    catch (const std::runtime_error& err)
+    {
+        LOG_ERROR() << err.what();
+    }
+    
+    return result;
 }
 
 beam::Amount minimalFee(Currency currency, bool isShielded)
