@@ -19,6 +19,7 @@
 #include <QClipboard>
 #include "qml_globals.h"
 #include "fee_helpers.h"
+#include "wallet/transactions/swaps/bridges/ethereum/ethereum_side.h"
 
 namespace {
     enum
@@ -398,7 +399,6 @@ bool ReceiveSwapViewModel::isEnough() const
     if (_amountSentGrothes == 0)
         return true;
 
-    // TODO roman.strilets ethereum fee = {gas limit} * {gas price}
     auto total = _amountSentGrothes + _sentFeeGrothes;
 
     if (_sentCurrency == Currency::CurrBeam)
@@ -409,8 +409,16 @@ bool ReceiveSwapViewModel::isEnough() const
     auto swapCoin = convertCurrencyToSwapCoin(_sentCurrency);
     if (isEthereumBased(_sentCurrency))
     {
-        // TODO(alex.starun): check separately Ethereum and ERC20
-        return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) > total;
+        if (_sentCurrency == Currency::CurrEthereum)
+        {
+            total = _amountSentGrothes + beam::wallet::EthereumSide::CalcLockTxFee(_sentFeeGrothes, swapCoin);
+            
+            return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) > total;
+        }
+        
+        return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) > _amountSentGrothes &&
+            AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) > 
+            beam::wallet::EthereumSide::CalcLockTxFee(_sentFeeGrothes, swapCoin);
     }
 
     // TODO sentFee is fee rate. should be corrected
@@ -419,11 +427,12 @@ bool ReceiveSwapViewModel::isEnough() const
 
 bool ReceiveSwapViewModel::isEnoughToReceive() const
 {
-    // TODO roman.strilets need check
-    // use m_withdrawTxGasLimit
     if (isEthereumBased(_receiveCurrency))
     {
-        return AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) > _receiveFeeGrothes;
+        auto swapCoin = convertCurrencyToSwapCoin(_receiveCurrency);
+        auto fee = beam::wallet::EthereumSide::CalcWithdrawTxFee(_receiveFeeGrothes, swapCoin);
+    
+        return AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) > fee;
     }
     return true;
 }

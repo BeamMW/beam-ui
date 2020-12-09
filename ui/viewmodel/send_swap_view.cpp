@@ -19,6 +19,8 @@
 #include "ui_helpers.h"
 #include "fee_helpers.h"
 
+#include "wallet/transactions/swaps/bridges/ethereum/ethereum_side.h"
+
 #include <algorithm>
 #include <regex>
 
@@ -337,8 +339,7 @@ void SendSwapViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::S
 
 bool SendSwapViewModel::isEnough() const
 {
-    // TODO roman.strilets ethereum fee = {gas limit} * {gas price}
-    const auto total = _sendAmountGrothes + _sendFeeGrothes + _changeGrothes;
+    auto total = _sendAmountGrothes + _sendFeeGrothes + _changeGrothes;
     if (Currency::CurrBeam == _sendCurrency)
     {
         return _walletModel.getAvailable() >= total;
@@ -347,8 +348,16 @@ bool SendSwapViewModel::isEnough() const
     auto swapCoin = convertCurrencyToSwapCoin(_sendCurrency);
     if (isEthereumBased(_sendCurrency))
     {
-        // TODO(alex.starun): check separately Ethereum and ERC20
-        return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) > total;
+        if (_sendCurrency == Currency::CurrEthereum)
+        {
+            total = _sendAmountGrothes + beam::wallet::EthereumSide::CalcLockTxFee(_sendFeeGrothes, swapCoin);
+
+            return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) > total;
+        }
+
+        return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) > _sendAmountGrothes &&
+            AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) >
+            beam::wallet::EthereumSide::CalcLockTxFee(_sendFeeGrothes, swapCoin);
     }
 
     // TODO sentFee is fee rate. should be corrected
@@ -357,11 +366,12 @@ bool SendSwapViewModel::isEnough() const
 
 bool SendSwapViewModel::isEnoughToReceive() const
 {
-    // TODO roman.strilets need check
-    // use m_withdrawTxGasLimit
     if (isEthereumBased(_receiveCurrency))
     {
-        return AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) > _receiveFeeGrothes;
+        auto swapCoin = convertCurrencyToSwapCoin(_receiveCurrency);
+        auto fee = beam::wallet::EthereumSide::CalcWithdrawTxFee(_receiveFeeGrothes, swapCoin);
+
+        return AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) > fee;
     }
     return true;
 }
