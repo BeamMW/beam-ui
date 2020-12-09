@@ -439,7 +439,7 @@ void SwapEthSettingsItem::activateWBTC(bool value)
     }
 }
 
-bool SwapEthSettingsItem::getCanEdit() const
+bool SwapEthSettingsItem::canChangeConnection() const
 {
     return m_coinClient.lock()->canModifySettings();
 }

@@ -19,8 +19,7 @@ SettingsFoldable {
     property string color:               Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
     property string disabledColor:       Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.2)
     property alias  editElectrum:        useElectrumSwitch.checked
-    // TODO roman.strilets may be it's bad name
-    property bool   canEdit:             true
+    property bool   canChangeConnection: true
     property bool   isSupportedElectrum: true
 
     property bool   isConnected:            false
@@ -135,7 +134,7 @@ SettingsFoldable {
     }
 
     function canClear() {
-        return control.canEdit && (editElectrum ? canClearElectrum() : canClearNode());
+        return control.canChangeConnection && (editElectrum ? canClearElectrum() : canClearNode());
     }
 
     function canConnect() {
@@ -143,7 +142,7 @@ SettingsFoldable {
     }
 
     function canDisconnect() {
-        return isConnected && (editElectrum ? canDisconnectElectrum() : canDisconnectNode() && control.canEdit);
+        return isConnected && (editElectrum ? canDisconnectElectrum() : canDisconnectNode() && control.canChangeConnection);
     }
 
     function canApplyNode() {
@@ -224,7 +223,7 @@ SettingsFoldable {
     }
 
     Component.onCompleted: {
-        control.editElectrum = control.isElectrumConnection || (!control.canEdit && !control.isNodeConnection);
+        control.editElectrum = control.isElectrumConnection || (!control.canChangeConnection && !control.isNodeConnection);
         internalNode.save();
         internalElectrum.save();
     }
@@ -257,7 +256,7 @@ SettingsFoldable {
                 id:          useElectrumSwitch
                 alwaysGreen: true
                 spacing:     0
-                enabled:     !(isConnected || !isConnected && !control.canEdit)
+                enabled:     !(isConnected || !isConnected && !control.canChangeConnection)
             }
 
             SFText {
@@ -499,7 +498,6 @@ when connection is established"
                         editSeedPhrase();
                     }
                 }
-                enabled: control.canEdit
             }
 
             SFText {
@@ -535,7 +533,6 @@ when connection is established"
                         generateSeedPhrase();
                     }
                 }
-                enabled: control.canEdit
             }
         }
 
@@ -577,7 +574,7 @@ when connection is established"
 
         // alert text if we have active transactions
         SFText {
-            visible:               !control.canEdit && !editElectrum
+            visible:               !control.canChangeConnection && !editElectrum
             Layout.topMargin:      30
             Layout.preferredWidth: 390
             Layout.alignment:      Qt.AlignVCenter | Qt.AlignHCenter
@@ -596,7 +593,7 @@ when connection is established"
         }
 
         SFText {
-            visible:               !control.canEdit && editElectrum && !disconnectButtonId.visible
+            visible:               !control.canChangeConnection && editElectrum && !disconnectButtonId.visible
             //visible: false
             Layout.topMargin:      30
             Layout.preferredWidth: 390
@@ -614,7 +611,7 @@ when connection is established"
         // "cancel" "apply"
         // "connect to node" or "connect to electrum"
         RowLayout {
-            visible:                control.canEdit || editElectrum
+            visible:                control.canChangeConnection || editElectrum
             Layout.preferredHeight: 52
             Layout.alignment:       Qt.AlignHCenter
             Layout.topMargin:       30

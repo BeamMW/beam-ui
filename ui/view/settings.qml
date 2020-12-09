@@ -158,7 +158,7 @@ ColumnLayout {
                         generalTitle:             modelData.generalTitle
                         showSeedDialogTitle:      modelData.showSeedDialogTitle
                         showAddressesDialogTitle: modelData.showAddressesDialogTitle
-                        canEdit:                  modelData.canEdit
+                        canChangeConnection:      modelData.canChangeConnection
                         isSupportedElectrum:      modelData.isSupportedElectrum
                         isConnected:              modelData.isConnected
                         isNodeConnection:         modelData.isNodeConnection
@@ -191,7 +191,7 @@ ColumnLayout {
 
                         Connections {
                             target: modelData
-                            onCanEditChanged:        settingsControl.canEdit = modelData.canEdit
+                            onCanChangeConnectionChanged:        settingsControl.canChangeConnection = modelData.canChangeConnection
                             onConnectionTypeChanged: {
                                 settingsControl.isConnected          = modelData.isConnected;
                                 settingsControl.isNodeConnection     = modelData.isNodeConnection;
@@ -299,7 +299,7 @@ ColumnLayout {
                     getEthereumAddresses:  viewModel.ethSettings.getEthereumAddresses
                     folded:                creating ? (swapMode == viewModel.ethSettings.coinID ? false : (swapMode == "ALL" ? viewModel.ethSettings.isConnected : true)) : viewModel.ethSettings.folded
 
-                    canEdit:               viewModel.ethSettings.canEdit
+                    canChangeConnection:   viewModel.ethSettings.canChangeConnection
                     isConnected:           viewModel.ethSettings.isConnected
                     connectionStatus:      viewModel.ethSettings.connectionStatus
                     connectionErrorMsg:    viewModel.ethSettings.connectionErrorMsg
@@ -318,7 +318,7 @@ ColumnLayout {
 
                     Connections {
                         target:              viewModel.ethSettings
-                        onCanEditChanged:    swapEthSettings.canEdit = viewModel.ethSettings.canEdit
+                        onCanChangeConnectionChanged:    swapEthSettings.canChangeConnection = viewModel.ethSettings.canChangeConnection
                         onConnectionChanged: {
                             swapEthSettings.isConnected        = viewModel.ethSettings.isConnected;
                             swapEthSettings.title              = viewModel.ethSettings.title;

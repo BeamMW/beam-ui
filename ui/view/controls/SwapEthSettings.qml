@@ -18,9 +18,8 @@ SettingsFoldable {
 
     property bool   isConnected:           false
     property var    mainSettingsViewModel: undefined
-    // TODO roman.strilets may be it's bad name
-    property bool   canEdit:             true
-    property bool   canEditNode:  !control.isConnected
+    property bool   canChangeConnection:             true
+    property bool   canEdit:  !control.isConnected
 
     // TODO roman.strilets it's for test
     property alias  address:              addressInput.text
@@ -139,7 +138,7 @@ SettingsFoldable {
     }
 
     function canApplySettings() {
-        // TODO roman.strilets
+        // TODO roman.strilets for test
         return isCurrentSeedValid /*&& addressInput.isValid && portInput.acceptableInput*/;
     }
 
@@ -153,7 +152,7 @@ SettingsFoldable {
     }
 
     function haveSettings() {
-        // TODO roman.strilets
+        // TODO roman.strilets for test
         return isCurrentSeedValid /*&& addressInput.isValid && portInput.acceptableInput*/;
     }
 
@@ -171,11 +170,11 @@ SettingsFoldable {
     }
 
     function canDisconnect() {
-        return isConnected;
+        return isConnected && control.canChangeConnection;
     }
 
     Component.onCompleted: {
-        //control.editElectrum = control.isElectrumConnection || (!control.canEdit && !control.isNodeConnection);
+        //control.editElectrum = control.isElectrumConnection || (!control.canChangeConnection && !control.isNodeConnection);
         internalValues.save();
     }
 
@@ -203,8 +202,8 @@ SettingsFoldable {
                 //visible:          !editElectrum
                 Layout.fillWidth: true
                 color:            Style.content_main
-                //underlineVisible: canEditNode
-                //readOnly:         !canEditNode
+                //underlineVisible: canEdit
+                //readOnly:         !canEdit
                 ipOnly:           false
             }*/
 
@@ -215,8 +214,8 @@ SettingsFoldable {
                 color:            Style.content_main
                 font.pixelSize:     14
                 activeFocusOnTab:   true
-                underlineVisible: canEditNode
-                readOnly:         !canEditNode
+                underlineVisible: canEdit
+                readOnly:         !canEdit
             }
 
             SFText {
@@ -235,8 +234,8 @@ SettingsFoldable {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
-                underlineVisible:   canEditNode
-                readOnly:           !canEditNode
+                underlineVisible:   canEdit
+                readOnly:           !canEdit
                 validator: IntValidator {
                     bottom: 1
                     top: 65535
@@ -258,8 +257,8 @@ SettingsFoldable {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
-                underlineVisible:   canEditNode
-                readOnly:           !canEditNode
+                underlineVisible:   canEdit
+                readOnly:           !canEdit
                 validator: IntValidator {
                     bottom: 0
                     top: 20
@@ -281,8 +280,8 @@ SettingsFoldable {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
-                underlineVisible:   canEditNode
-                readOnly:           !canEditNode
+                underlineVisible:   canEdit
+                readOnly:           !canEdit
             }
 
             SFText {
@@ -298,8 +297,8 @@ SettingsFoldable {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
-                underlineVisible:   canEditNode
-                readOnly:           !canEditNode
+                underlineVisible:   canEdit
+                readOnly:           !canEdit
             }
 
             SFText {
@@ -315,8 +314,8 @@ SettingsFoldable {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
-                underlineVisible:   canEditNode
-                readOnly:           !canEditNode
+                underlineVisible:   canEdit
+                readOnly:           !canEdit
             }
 
             SFText {
@@ -332,8 +331,8 @@ SettingsFoldable {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
-                underlineVisible:   canEditNode
-                readOnly:           !canEditNode
+                underlineVisible:   canEdit
+                readOnly:           !canEdit
             }
 
             SFText {
@@ -349,8 +348,8 @@ SettingsFoldable {
                 font.pixelSize:     14
                 activeFocusOnTab:   true
                 color:              Style.content_main
-                underlineVisible:   canEditNode
-                readOnly:           !canEditNode
+                underlineVisible:   canEdit
+                readOnly:           !canEdit
             }
 
             SFText {
@@ -364,7 +363,7 @@ SettingsFoldable {
                 id:          activateDaiSwitch
                 //alwaysGreen: true
                 spacing:     0
-                enabled:     canEditNode
+                enabled:     canEdit
             }
 
             SFText {
@@ -378,7 +377,7 @@ SettingsFoldable {
                 id:          activateUsdtSwitch
                 //alwaysGreen: true
                 spacing:     0
-                enabled:     canEditNode
+                enabled:     canEdit
             }
 
             SFText {
@@ -392,7 +391,7 @@ SettingsFoldable {
                 id:          activateWBTCSwitch
                 //alwaysGreen: true
                 spacing:     0
-                enabled:     canEditNode
+                enabled:     canEdit
             }
         }
 
@@ -431,7 +430,6 @@ SettingsFoldable {
                         editSeedPhrase();
                     }
                 }
-                enabled: control.canEdit
             }
 
             SFText {
@@ -467,8 +465,22 @@ SettingsFoldable {
                         generateSeedPhrase();
                     }
                 }
-                enabled: control.canEdit
             }
+        }
+
+        // alert text if we have active transactions
+        SFText {
+            visible:               !control.canChangeConnection
+            Layout.topMargin:      30
+            Layout.preferredWidth: 390
+            Layout.alignment:      Qt.AlignVCenter | Qt.AlignHCenter
+            horizontalAlignment:   Text.AlignHCenter
+            verticalAlignment:     Text.AlignVCenter
+            font.pixelSize:        14
+            wrapMode:              Text.WordWrap
+            color:                 control.color
+            lineHeight:            1.1
+            text:                  qsTrId("settings-doge-node-progress")
         }
 
         // show seed
@@ -511,7 +523,7 @@ SettingsFoldable {
         // "cancel" "apply"
         // "connect to node" or "connect to electrum"
         RowLayout {
-            visible:                control.canEdit
+            visible:                control.canChangeConnection
             Layout.preferredHeight: 52
             Layout.fillWidth:       true
             Layout.topMargin:       30

@@ -46,7 +46,7 @@ class SwapEthSettingsItem : public QObject
     Q_PROPERTY(bool            activateUsdt         READ activateUsdt             WRITE activateUsdt            NOTIFY activateUsdtChanged)
     Q_PROPERTY(bool            activateWBTC         READ activateWBTC             WRITE activateWBTC            NOTIFY activateWBTCChanged)
 
-    Q_PROPERTY(bool            canEdit              READ getCanEdit                                             NOTIFY canEditChanged)
+    Q_PROPERTY(bool            canChangeConnection              READ canChangeConnection                                             NOTIFY canChangeConnectionChanged)
     Q_PROPERTY(bool            isConnected          READ getIsConnected                                         NOTIFY connectionChanged)
     Q_PROPERTY(QString         connectionStatus     READ getConnectionStatus                                    NOTIFY connectionStatusChanged)
     Q_PROPERTY(QString         connectionErrorMsg   READ getConnectionErrorMsg                                  NOTIFY connectionErrorMsgChanged)
@@ -104,7 +104,7 @@ private:
     bool activateWBTC() const;
     void activateWBTC(bool value);
 
-    bool getCanEdit() const;
+    bool canChangeConnection() const;
     bool getIsConnected() const;
     QString getConnectionStatus() const;
     QString getConnectionErrorMsg() const;
@@ -117,7 +117,7 @@ signals:
     void nodePortChanged();
     void seedPhrasesChanged();
     void isCurrentSeedValidChanged();
-    void canEditChanged();
+    void canChangeConnectionChanged();
     void connectionChanged();
     void accountIndexChanged();
     void contractAddressChanged();

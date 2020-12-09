@@ -46,7 +46,7 @@ class SwapCoinSettingsItem : public QObject
     Q_PROPERTY(QString         nodePortElectrum         READ getNodePortElectrum     WRITE setNodePortElectrum    NOTIFY nodePortElectrumChanged)
     Q_PROPERTY(bool            selectServerAutomatically      READ getSelectServerAutomatically  WRITE setSelectServerAutomatically NOTIFY selectServerAutomaticallyChanged)
 
-    Q_PROPERTY(bool canEdit      READ getCanEdit                            NOTIFY canEditChanged)
+    Q_PROPERTY(bool            canChangeConnection      READ canChangeConnection                                  NOTIFY canChangeConnectionChanged)
 
     // connection properties
     Q_PROPERTY(bool isConnected             READ getIsConnected             NOTIFY connectionTypeChanged)
@@ -88,7 +88,7 @@ public:
     void setSelectServerAutomatically(bool value);
     bool isSupportedElectrum() const;
 
-    bool getCanEdit() const;
+    bool canChangeConnection() const;
 
     bool getIsConnected() const;
     bool getIsNodeConnection() const;
@@ -134,7 +134,8 @@ signals:
     void nodePortElectrumChanged();
     void selectServerAutomaticallyChanged();
 
-    void canEditChanged();
+    // TODO roman.strilets it's not used. check it
+    void canChangeConnectionChanged();
     void connectionTypeChanged();
     void connectionStatusChanged();
     void connectionErrorMsgChanged();

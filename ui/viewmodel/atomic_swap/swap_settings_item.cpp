@@ -414,7 +414,7 @@ void SwapCoinSettingsItem::onStatusChanged()
     }
 }
 
-bool SwapCoinSettingsItem::getCanEdit() const
+bool SwapCoinSettingsItem::canChangeConnection() const
 {
     return m_coinClient.lock()->canModifySettings();
 }
@@ -525,7 +525,7 @@ void SwapCoinSettingsItem::resetNodeSettings()
 
 void SwapCoinSettingsItem::resetElectrumSettings()
 {
-    bool clearSeed = getCanEdit();
+    bool clearSeed = canChangeConnection();
     SetDefaultElectrumSettings(clearSeed);
     applyElectrumSettings();
 }
