@@ -1093,10 +1093,6 @@ Toestaan om te openen en door te gaan naar de website? U kunt uw keuze altijd wi
         <source>%1 Transaction fee rate</source>
         <translation>%1 Transactiekosten</translation>
     </message>
-    <message id="general-fee-fail">
-        <source>The minimum fee is %1 %2</source>
-        <translation>De minimale vergoeding is %1 %2</translation>
-    </message>
     <message id="general-change-settings">
         <source>Change settings</source>
         <translation>Instellingen wijzigen</translation>
@@ -2385,10 +2381,6 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
         <translation>Verbind met geïntegreerde of eigen node om maximale privacy en offline transacties te kunnen ontvangen</translation>
     </message>
-    <message id="general-recommended-fee-fail">
-        <source>The minimum recommended fee is %1 %2</source>
-        <translation>De minimale aanbevolen vergoeding is %1 %2</translation>
-    </message>
     <message id="tx-address-offline">
         <source>Offline</source>
         <translation>Offline</translation>
@@ -2433,13 +2425,6 @@ offline</translation>
         <source>Shielded</source>
         <extracomment>UTXO type Shielded</extracomment>
         <translation>Afgeschermd</translation>
-    </message>
-    <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. 
-Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete.</source>
-        <translation>Verbindingsfout: kan de aanbevolen fee niet berekenen.
-Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernstig vertragen.</translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
@@ -2915,6 +2900,24 @@ offline</translation>
     </message>
     <message id="settings-activate-wbtc">
         <source>Activate WBTC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-recommended-fee-fail">
+        <source>The minimum recommended fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-fee-fail">
+        <source>The minimum fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-max-fee-fail">
+        <source>The maximum fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-recommended-fee-rate-absent">
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

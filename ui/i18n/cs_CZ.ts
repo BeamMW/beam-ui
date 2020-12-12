@@ -1093,10 +1093,6 @@ Povolit otevření a pokračovat na web? Vždy můžete aktualizovat svou volbu 
         <source>%1 Transaction fee rate</source>
         <translation>Poplatek za transakci %1</translation>
     </message>
-    <message id="general-fee-fail">
-        <source>The minimum fee is %1 %2</source>
-        <translation>Minimální poplatek je %1 %2</translation>
-    </message>
     <message id="general-change-settings">
         <source>Change settings</source>
         <translation>Změna nastavení</translation>
@@ -2386,10 +2382,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
         <translation>Připojte se k integrovanému nebo vlastnímu uzlu a povolte přijímání maximálně soukromých a offline transakcí</translation>
     </message>
-    <message id="general-recommended-fee-fail">
-        <source>The minimum recommended fee is %1 %2</source>
-        <translation>Minimální doporučený poplatek je %1 %2</translation>
-    </message>
     <message id="tx-address-offline">
         <source>Offline</source>
         <translation>V režimu offline</translation>
@@ -2434,14 +2426,6 @@ offline</translation>
         <source>Shielded</source>
         <extracomment>UTXO type Shielded</extracomment>
         <translation>Chráněné</translation>
-    </message>
-    <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. 
-Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete.</source>
-        <translation>Chyba připojení: nelze vypočítat doporučenou sazbu poplatku. 
-Zkontrolujte na %1 blockchainu sami. Nízké poplatky mohou způsobit 
-že bude trvat mnohem déle, než bude transakce dokončena.</translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
@@ -2916,6 +2900,24 @@ offline</translation>
     </message>
     <message id="settings-activate-wbtc">
         <source>Activate WBTC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-recommended-fee-fail">
+        <source>The minimum recommended fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-fee-fail">
+        <source>The minimum fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-max-fee-fail">
+        <source>The maximum fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-recommended-fee-rate-absent">
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

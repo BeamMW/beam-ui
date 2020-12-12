@@ -353,6 +353,11 @@ QString QMLGlobals::getMinimalFee(Currency currency, bool isShielded)
     return QString::fromStdString(std::to_string(minimalFee(currency, isShielded)));
 }
 
+QString QMLGlobals::getMaximumFee(Currency currency)
+{
+    return QString::fromStdString(std::to_string(maximumFee(currency)));
+}
+
 QString QMLGlobals::getRecommendedFee(Currency currency)
 {
     if (Currency::CurrBeam == currency)

@@ -1093,10 +1093,6 @@ Allow to open and proceed to the website? You can always update your choice in S
         <source>%1 Transaction fee rate</source>
         <translation>Камісія %1</translation>
     </message>
-    <message id="general-fee-fail">
-        <source>The minimum fee is %1 %2</source>
-        <translation>Мінімальная камісія %1 %2</translation>
-    </message>
     <message id="general-change-settings">
         <source>Change settings</source>
         <translation>Змяніць усталёўкі</translation>
@@ -2386,10 +2382,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
         <translation>Падключыцеся да інтэграванага або ўласнага вузла, каб атрымаць магчымасць атрымліваць макс. прыватныя і аўтаномныя транзакцыі</translation>
     </message>
-    <message id="general-recommended-fee-fail">
-        <source>The minimum recommended fee is %1 %2</source>
-        <translation>Мінімальны рэкамендаваны збор складае %1 %2</translation>
-    </message>
     <message id="tx-address-offline">
         <source>Offline</source>
         <translation>Афлайн</translation>
@@ -2434,14 +2426,6 @@ offline</source>
         <source>Shielded</source>
         <extracomment>UTXO type Shielded</extracomment>
         <translation>Экранаваная</translation>
-    </message>
-    <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. 
-Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete.</source>
-        <translation>Памылка падлучэння: не ўдаецца вылічыць рэкамендаваны збор за транзакцыю.
-Праверце блокчейн% 1 самастойна. Нізкія зборы могуць прывесцi да таго,
-што для здзяйснення транзакцыі будзе запатрабавана значна больш часу.</translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
@@ -2917,6 +2901,24 @@ offline</source>
     </message>
     <message id="settings-activate-wbtc">
         <source>Activate WBTC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-recommended-fee-fail">
+        <source>The minimum recommended fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-fee-fail">
+        <source>The minimum fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-max-fee-fail">
+        <source>The maximum fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-recommended-fee-rate-absent">
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
