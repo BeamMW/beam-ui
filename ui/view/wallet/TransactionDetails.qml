@@ -70,21 +70,17 @@ RowLayout {
     }
 
     function getAmountInSecondCurrency() {
-        if (root.amount !== "") {
-            var amountInSecondCurrency = Utils.formatAmountToSecondCurrency(
-                root.amount,
-                root.rate,
-                root.rateUnit);
-            if (amountInSecondCurrency == "") {
+        if (root.amount.length) {
+            if (root.rate != "0") {
+                var amountInSecondCurrency = Utils.formatAmountToSecondCurrency(root.amount, root.rate, root.rateUnit)
+                //% "(for the day of transaction)"
+                return [root.amountPrefix, amountInSecondCurrency, qsTrId("tx-details-second-currency-notification")].join(" ")
+            } else {
                 //% "Exchange rate to %1 was not available at the time of transaction"
                 return  qsTrId("tx-details-exchange-rate-not-available").arg(root.rateUnit);
             }
-            else {
-                //% "(for the day of transaction)"
-                return root.amountPrefix + " " + amountInSecondCurrency + " " + qsTrId("tx-details-second-currency-notification");
-            }
         }
-        else return "";
+        return ""
     }
 
     function isZeroed(s) {

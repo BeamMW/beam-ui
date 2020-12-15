@@ -101,23 +101,26 @@ ComboBox {
         visible: control.enabled
     }
 
-    property var iconW: (control.model ? control.model[currentIndex]["iconWidth"] : 0) || 0
-    property var iconH: (control.model ? control.model[currentIndex]["iconHeight"] : 0) || 0
-    property var iconS: (control.model ? control.model[currentIndex]["icon"] : "") || ""
+    property var iconW: (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconWidth"] : 0) || 0
+    property var iconH: (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconHeight"] : 0) || 0
+    property var iconS: (control.model && control.model[currentIndex] ? control.model[currentIndex]["icon"] : "") || ""
 
     contentItem: Row {
         spacing: 0
+
         SvgImage {
             source: iconS
             sourceSize: Qt.size(iconW, iconH)
             anchors.verticalCenter: parent.verticalCenter
             visible: iconW > 0
         }
+
         Item {
             visible: iconW > 0
             width: iconW / 4
             height: parent.height
         }
+
         SFText  {
             clip: true
             text: control.editable ? control.editText : control.displayText
