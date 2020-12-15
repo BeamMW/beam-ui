@@ -109,13 +109,13 @@ Control {
             clip: true
             hoverEnabled: true
 
-            GridLayout {
+            Grid {
                 id: grid
 
                 Layout.fillWidth: true
-                columnSpacing:    control.hSpacing
-                rowSpacing:       control.vSpacing
-                columns:          control.gridColumns
+                columnSpacing: control.hSpacing
+                rowSpacing:    control.vSpacing
+                columns:       control.gridColumns
 
                 Repeater {
                     model: SortFilterProxyModel {
@@ -180,9 +180,9 @@ Control {
                 }
 
                 AssetsConnect {
-                    Layout.preferredWidth:   control.connectWidth
-                    Layout.preferredHeight:  control.itemHeight
-                    visible:                 control.connectVisible
+                    visible: control.connectVisible
+                    width:   control.connectWidth
+                    height:  control.itemHeight
 
                     onClicked: function () {
                         BeamGlobals.showMessage("'Connect asset' action is not implemented yet")
