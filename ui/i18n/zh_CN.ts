@@ -2537,10 +2537,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Remaining</source>
         <translation>剩余</translation>
     </message>
-    <message id="wallet-receive-swap-copy-token-and-close">
-        <source>copy token and close</source>
-        <translation>复制令牌并关闭</translation>
-    </message>
     <message id="address-info-title">
         <source>Address details</source>
         <translation>地址详情</translation>
@@ -2935,6 +2931,10 @@ offline</source>
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-swap-copy-and-close">
+        <source>copy and close</source>
+        <translation type="unfinished">复制并关闭</translation>
     </message>
 </context>
 </TS>

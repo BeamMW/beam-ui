@@ -2518,10 +2518,6 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <source>Remaining</source>
         <translation>Återstående</translation>
     </message>
-    <message id="wallet-receive-swap-copy-token-and-close">
-        <source>copy token and close</source>
-        <translation>kopiera token och stäng</translation>
-    </message>
     <message id="address-info-title">
         <source>Address details</source>
         <translation>Adressuppgifter</translation>
@@ -2917,6 +2913,10 @@ offline</translation>
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-swap-copy-and-close">
+        <source>copy and close</source>
+        <translation type="unfinished">kopiera och stäng</translation>
     </message>
 </context>
 </TS>

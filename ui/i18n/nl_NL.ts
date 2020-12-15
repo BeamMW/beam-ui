@@ -2520,10 +2520,6 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>Remaining</source>
         <translation>Resterende</translation>
     </message>
-    <message id="wallet-receive-swap-copy-token-and-close">
-        <source>copy token and close</source>
-        <translation>kopieer token en sluit</translation>
-    </message>
     <message id="address-info-title">
         <source>Address details</source>
         <translation>Adresgegevens</translation>
@@ -2919,6 +2915,10 @@ offline</translation>
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-swap-copy-and-close">
+        <source>copy and close</source>
+        <translation type="unfinished">kopieer en sluit</translation>
     </message>
 </context>
 </TS>

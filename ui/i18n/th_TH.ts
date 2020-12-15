@@ -2521,10 +2521,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Remaining</source>
         <translation>ที่เหลืออยู่</translation>
     </message>
-    <message id="wallet-receive-swap-copy-token-and-close">
-        <source>copy token and close</source>
-        <translation type="unfinished">copy token and close</translation>
-    </message>
     <message id="address-info-title">
         <source>Address details</source>
         <translation>รายละเอียดที่อยู่</translation>
@@ -2920,6 +2916,10 @@ offline</translation>
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-swap-copy-and-close">
+        <source>copy and close</source>
+        <translation type="unfinished">copy and close</translation>
     </message>
 </context>
 </TS>

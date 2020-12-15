@@ -664,26 +664,46 @@ please review your settings and try again"
                                     //% "Swap token"
                                     text:                   qsTrId("send-swap-token") + ":"
                                 }
-                                RowLayout {
-                                    Layout.fillWidth:        true
-                                    Layout.rightMargin:      showTokenLink.visible ? 0 : 40
-                                    SFLabel {
-                                        id:                  tokenLabel
-                                        Layout.fillWidth:    true
-                                        font.pixelSize:      14
-                                        color:               Style.content_main
-                                        elide:               Text.ElideMiddle
-                                        text:                viewModel.transactionToken
+
+                                ColumnLayout {
+                                    spacing: 11
+                                    RowLayout {
+                                        Layout.fillWidth:        true
+                                        Layout.rightMargin:      showTokenLink.visible ? 0 : 40
+                                        SFLabel {
+                                            id:                  tokenLabel
+                                            Layout.fillWidth:    true
+                                            font.pixelSize:      14
+                                            color:               Style.content_main
+                                            elide:               Text.ElideMiddle
+                                            text:                viewModel.transactionToken
+                                        }
+
+                                        LinkButton {
+                                            id: showTokenLink
+                                            //% "Show token"
+                                            text: qsTrId("show-token")
+                                            linkColor: Style.accent_incoming
+                                            visible:  thisView.canSend()
+                                            onClicked: {
+                                                tokenInfoDialog.open();
+                                            }
+                                        }
                                     }
-                                
-                                    LinkButton {
-                                        id: showTokenLink
-                                        //% "Show token"
-                                        text: qsTrId("show-token")
-                                        linkColor: Style.accent_incoming
-                                        visible:  thisView.canSend()
+
+                                    CustomButton {
+                                        //% "copy and close"
+                                        text:                qsTrId("wallet-receive-swap-copy-and-close")
+                                        palette.buttonText:  Style.content_main
+                                        iconColor:           Style.content_main
+                                        palette.button:      Style.background_button
+                                        icon.source:         "qrc:/assets/icon-copy.svg"
+                                        enabled:             thisView.canSend()
                                         onClicked: {
-                                            tokenInfoDialog.open();
+                                            BeamGlobals.copyToClipboard(viewModel.transactionToken);
+                                            thisView.saveAddress();
+                                            viewModel.startListen();
+                                            onClosed();
                                         }
                                     }
                                 }
@@ -701,22 +721,6 @@ please review your settings and try again"
                 Layout.topMargin:    30
                 Layout.bottomMargin: 30
                 spacing:             30
-
-                CustomButton {
-                    //% "copy token and close"
-                    text:                qsTrId("wallet-receive-swap-copy-token-and-close")
-                    palette.buttonText:  Style.content_main
-                    iconColor:           Style.content_main
-                    palette.button:      Style.background_button
-                    icon.source:         "qrc:/assets/icon-copy.svg"
-                    enabled:             thisView.canSend()
-                    onClicked: {
-                        BeamGlobals.copyToClipboard(viewModel.transactionToken);
-                        thisView.saveAddress();
-                        viewModel.startListen();
-                        onClosed();
-                    }
-                }
 
                 CustomButton {
                     //% "publish offer"
