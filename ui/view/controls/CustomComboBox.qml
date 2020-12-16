@@ -13,6 +13,7 @@ ComboBox {
     property int fontPixelSize: 12
     property double fontLetterSpacing: 0
     property string color: Style.content_main
+    property string underlineColor: color
     property bool enableScroll: false
 
     property var modelWidth: control.width
@@ -139,7 +140,7 @@ ComboBox {
             width: control.width
             height: control.activeFocus || control.hovered ? 1 : 1
             y: control.height - 1
-            color: control.color
+            color: control.underlineColor
             opacity: (control.activeFocus || control.hovered)? 0.3 : 0.1
         }
     }

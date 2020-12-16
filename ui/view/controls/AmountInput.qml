@@ -137,6 +137,7 @@ ColumnLayout {
             fontLetterSpacing:   0.6
             currentIndex:        control.currencyIdx
             color:               error.length ? Style.validator_error : control.currColor
+            underlineColor:      "transparent"
             visible:             multi
             model:               control.currencies
             textRole:            "unitName"

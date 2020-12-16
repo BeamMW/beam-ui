@@ -132,12 +132,13 @@ Item {
                 }
             }
 
-            MaxPrivacyCoinsDialog {
-                id: mpDialog
-                locked:                     viewModel.beamLockedMaturingMP
-                secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
-            }
+            // not used, secondCurrencyLabel & secondCurrencyRateValue are not available in view
+            //MaxPrivacyCoinsDialog {
+            //    id: mpDialog
+            //    locked:                     viewModel.beamLockedMaturingMP
+            //    secondCurrencyLabel:        viewModel.secondCurrencyLabel
+            //    secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
+            //}
 
             MainInfoPanel {
                 id: infoPanel
