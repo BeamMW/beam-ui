@@ -347,7 +347,13 @@ std::vector<beam::Asset::ID> WalletModel::getAssetsNZ() const
     std::vector<beam::Asset::ID> assets;
     for(const auto& status: m_status.all)
     {
-        assets.push_back(status.first);
+        const auto& totals = status.second;
+        if (totals.available || totals.maturing || totals.maturingMP ||
+            totals.receiving || totals.receivingChange || totals.receivingIncoming ||
+            totals.sending   || totals.shielded)
+        {
+            assets.push_back(status.first);
+        }
     }
     return assets;
 }
