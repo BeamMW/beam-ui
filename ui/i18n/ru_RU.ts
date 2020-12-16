@@ -1963,8 +1963,8 @@ deploy the key at the node you trust completely.</source>
         <translation>Транзакция получена</translation>
     </message>
     <message id="notification-transaction-sent-message">
-        <source>You sent &lt;b&gt;%1&lt;/b&gt; BEAM to &lt;b&gt;%2&lt;/b&gt;.</source>
-        <translation>Вы отправили &lt;b&gt;%1&lt;/b&gt; BEAM &lt;b&gt;%2&lt;/b&gt;.</translation>
+        <source>You sent &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt;.</source>
+        <translation>Вы отправили &lt;b&gt;%1 %2&lt;/b&gt; &lt;b&gt;%3&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-failed">
         <source>Transaction failed</source>
@@ -1979,16 +1979,16 @@ deploy the key at the node you trust completely.</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; адрес истёк.</translation>
     </message>
     <message id="notification-transaction-received-message">
-        <source>You received &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt;.</source>
-        <translation>Вы получили &lt;b&gt;%1 BEAM&lt;/b&gt; от &lt;b&gt;%2&lt;/b&gt;.</translation>
+        <source>You received &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt;.</source>
+        <translation>Вы получили &lt;b&gt;%1 %2&lt;/b&gt; от &lt;b&gt;%3&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-send-failed-message">
-        <source>Sending &lt;b&gt;%1 BEAM&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt; failed.</source>
-        <translation>Не удалось отправить &lt;b&gt;%1 BEAM&lt;/b&gt; &lt;b&gt;%2&lt;/b&gt;.</translation>
+        <source>Sending &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt; failed.</source>
+        <translation>Не удалось отправить &lt;b&gt;%1 %2&lt;/b&gt; &lt;b&gt;%3&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-receive-failed-message">
-        <source>Receiving &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt; failed.</source>
-        <translation>Не удалось получить &lt;b&gt;%1 BEAM&lt;/b&gt; от &lt;b&gt;%2&lt;/b&gt;.</translation>
+        <source>Receiving &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt; failed.</source>
+        <translation>Не удалось получить &lt;b&gt;%1 %2&lt;/b&gt; от &lt;b&gt;%3&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-sent">
         <source>Transaction was sent</source>

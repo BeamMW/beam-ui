@@ -1963,8 +1963,8 @@ znát všechny Vaše prostředky (UTXO). Ujistěte se, že jste vystavili klíč
         <translation>Transakce byla přijata</translation>
     </message>
     <message id="notification-transaction-sent-message">
-        <source>You sent &lt;b&gt;%1&lt;/b&gt; BEAM to &lt;b&gt;%2&lt;/b&gt;.</source>
-        <translation>Poslali jste &lt;b&gt;%1&lt;/b&gt; BEAM &lt;b&gt;%2&lt;/b&gt;.</translation>
+        <source>You sent &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt;.</source>
+        <translation>Poslali jste &lt;b&gt;%1 %2&lt;/b&gt; &lt;b&gt;%3&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-failed">
         <source>Transaction failed</source>
@@ -1979,16 +1979,16 @@ znát všechny Vaše prostředky (UTXO). Ujistěte se, že jste vystavili klíč
         <translation>&lt;b&gt;%1&lt;/b&gt; platnost adresy vypršela.</translation>
     </message>
     <message id="notification-transaction-received-message">
-        <source>You received &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt;.</source>
-        <translation>Přijali jste &lt;b&gt;%1 BEAM&lt;/b&gt; od &lt;b&gt;%2&lt;/b&gt;.</translation>
+        <source>You received &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt;.</source>
+        <translation>Přijali jste &lt;b&gt;%1 %2&lt;/b&gt; od &lt;b&gt;%3&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-send-failed-message">
-        <source>Sending &lt;b&gt;%1 BEAM&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt; failed.</source>
-        <translation>Odeslání &lt;b&gt;%1 BEAM&lt;/b&gt; uživateli &lt;b&gt;%2&lt;/b&gt; se nezdařilo.</translation>
+        <source>Sending &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt; failed.</source>
+        <translation>Odeslání &lt;b&gt;%1 %2&lt;/b&gt; uživateli &lt;b&gt;%3&lt;/b&gt; se nezdařilo.</translation>
     </message>
     <message id="notification-transaction-receive-failed-message">
-        <source>Receiving &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt; failed.</source>
-        <translation>Přijem &lt;b&gt;%1 BEAM&lt;/b&gt; od &lt;b&gt;%2&lt;/b&gt; selhal.</translation>
+        <source>Receiving &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt; failed.</source>
+        <translation>Přijem &lt;b&gt;%1 %2&lt;/b&gt; od &lt;b&gt;%3&lt;/b&gt; selhal.</translation>
     </message>
     <message id="notification-transaction-sent">
         <source>Transaction was sent</source>
