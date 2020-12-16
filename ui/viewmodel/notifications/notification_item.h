@@ -18,6 +18,7 @@
 #include <QDateTime>
 #include "model/wallet_model.h"
 #include "viewmodel/ui_helpers.h"
+#include "viewmodel/wallet/assets_manager.h"
 
 class NotificationItem : public QObject
 {
@@ -32,9 +33,10 @@ public:
     beam::Timestamp getTimestamp() const;
     beam::wallet::Notification::State getState() const;
     QString title() const;
-    QString message() const;
+    QString message(AssetsManager& amgr) const;
     QString type() const;
     QString state() const;
+    beam::Asset::ID assetId() const;
 
     ECC::uintBig getID() const;
 

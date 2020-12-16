@@ -16,6 +16,7 @@
 
 NotificationsList::NotificationsList()
 {
+    connect(&_amgr, &AssetsManager::assetInfo, this, &NotificationsList::onAssetInfo);
 }
 
 QHash<int, QByteArray> NotificationsList::roleNames() const
@@ -62,7 +63,7 @@ QVariant NotificationsList::data(const QModelIndex &index, int role) const
             return value->title();
 
         case Roles::Message:
-            return value->message();
+            return value->message(_amgr);
 
         case Roles::Type:
             return value->type();
@@ -75,5 +76,15 @@ QVariant NotificationsList::data(const QModelIndex &index, int role) const
 
         default:
             return QVariant();
+    }
+}
+
+void NotificationsList::onAssetInfo(beam::Asset::ID assetId)
+{
+    for (auto it = m_list.begin(); it != m_list.end(); ++it) {
+        if ((*it)->assetId() == assetId) {
+           const auto idx = it - m_list.begin();
+           ListModel::touch(idx);
+        }
     }
 }

@@ -20,50 +20,58 @@
 
 using namespace beam::wallet;
 
-namespace
-{
-    TxParameters getTxParameters(const Notification& notification)
+namespace {
+    TxParameters getTxParameters(const Notification &notification)
     {
         TxToken token;
         Deserializer d;
         d.reset(notification.m_content);
-        d& token;
+        d & token;
         return token.UnpackParameters();
     }
 
-    QString getAmount(const TxParameters& p)
+    QString getAmount(const TxParameters &p)
     {
         return beamui::AmountToUIString(*p.GetParameter<Amount>(TxParameterID::Amount));
     }
 
-    QString getSwapAmount(const TxParameters& p)
+    QString getSwapAmount(const TxParameters &p)
     {
         return beamui::AmountToUIString(*p.GetParameter<Amount>(TxParameterID::AtomicSwapAmount));
     }
 
-    bool isBeamSide(const TxParameters& p)
+    bool isBeamSide(const TxParameters &p)
     {
         return *p.GetParameter<bool>(TxParameterID::AtomicSwapCoin);
     }
 
-    QString getSwapCoinName(const TxParameters& p)
+    QString getSwapCoinName(const TxParameters &p)
     {
         auto swapCoin = p.GetParameter<AtomicSwapCoin>(TxParameterID::AtomicSwapCoin);
         return beamui::toString(beamui::convertSwapCoinToCurrency(*swapCoin));
     }
 
 
-    bool getPeerID(const TxParameters& p, WalletID& result)
+    bool getPeerID(const TxParameters &p, WalletID &result)
     {
         if (auto peerId = p.GetParameter<WalletID>(TxParameterID::PeerID))
         {
             result = *peerId;
             return true;
-        }
-        else
+        } else
         {
             return false;
         }
+    }
+
+    Asset::ID getAssetId(const TxParameters &p)
+    {
+        Asset::ID assetId = Asset::s_InvalidID;
+        if (p.GetParameter(TxParameterID::AssetID, assetId))
+        {
+            return assetId;
+        }
+        return Asset::s_BeamID;
     }
 
     bool isSender(const TxParameters& p)
@@ -98,24 +106,30 @@ namespace
         return beamui::toString(getWalletAddressRaw(notification).m_walletID);
     }
 
-    QString getTxCompletedMessage(const QString& amount, const QString& peer, bool isSender)
+    QString getTxCompletedMessage(const QString& amount, const QString& unitName, const QString& peer, bool isSender)
     {
         return (isSender ? 
-                //% "You sent <b>%1</b> BEAM to <b>%2</b>."
+                //% "You sent <b>%1 %2</b> to <b>%3</b>."
                 qtTrId("notification-transaction-sent-message")
                 : 
-                //% "You received <b>%1 BEAM</b> from <b>%2</b>."
-                qtTrId("notification-transaction-received-message")).arg(amount).arg(peer);
+                //% "You received <b>%1 %2</b> from <b>%3</b>."
+                qtTrId("notification-transaction-received-message"))
+                    .arg(amount)
+                    .arg(unitName)
+                    .arg(peer);
     }
 
-    QString getTxFailedMessage(const QString& amount, const QString& peer, bool isSender)
+    QString getTxFailedMessage(const QString& amount, const QString& unitName, const QString& peer, bool isSender)
     {
         return (isSender ?
-            //% "Sending <b>%1 BEAM</b> to <b>%2</b> failed."
+            //% "Sending <b>%1 %2</b> to <b>%3</b> failed."
             qtTrId("notification-transaction-send-failed-message")
             :
-            //% "Receiving <b>%1 BEAM</b> from <b>%2</b> failed."
-            qtTrId("notification-transaction-receive-failed-message")).arg(amount).arg(peer);
+            //% "Receiving <b>%1 %2</b> from <b>%3</b> failed."
+            qtTrId("notification-transaction-receive-failed-message"))
+                .arg(amount)
+                .arg(unitName)
+                .arg(peer);
     }
 
 
@@ -242,7 +256,7 @@ QString NotificationItem::title() const
     }
 }
 
-QString NotificationItem::message() const
+QString NotificationItem::message(AssetsManager& amgr) const
 {
     switch(m_notification.m_type)
     {
@@ -280,12 +294,19 @@ QString NotificationItem::message() const
             {
                 WalletID wid;
                 getPeerID(p, wid);
-                return getTxCompletedMessage(getAmount(p), std::to_string(wid).c_str(), isSender(p));
+
+                auto aid = getAssetId(p);
+                auto unitName = amgr.getUnitName(aid);
+
+                return getTxCompletedMessage(getAmount(p), unitName, std::to_string(wid).c_str(), isSender(p));
             }
             case TxType::PushTransaction:
             {
                 bool sender = isSender(p);
-                return getTxCompletedMessage(getAmount(p), getPushTxPeer(p, sender), sender);
+                auto aid = getAssetId(p);
+                auto unitName = amgr.getUnitName(aid);
+
+                return getTxCompletedMessage(getAmount(p), unitName, getPushTxPeer(p, sender), sender);
             }
             case TxType::AtomicSwap:
             {
@@ -315,12 +336,19 @@ QString NotificationItem::message() const
             {
                 WalletID wid;
                 getPeerID(p, wid);
-                return getTxFailedMessage(getAmount(p), std::to_string(wid).c_str(), isSender(p));
+
+                auto aid = getAssetId(p);
+                auto unitName = amgr.getUnitName(aid);
+
+                return getTxFailedMessage(getAmount(p), unitName, std::to_string(wid).c_str(), isSender(p));
             }
             case TxType::PushTransaction:
             {
                 bool sender = isSender(p);
-                return getTxFailedMessage(getAmount(p), getPushTxPeer(p, sender), sender);
+                auto aid = getAssetId(p);
+                auto unitName = amgr.getUnitName(aid);
+
+                return getTxFailedMessage(getAmount(p), unitName, getPushTxPeer(p, sender), sender);
             }
             case TxType::AtomicSwap:
             {
@@ -438,4 +466,10 @@ QString NotificationItem::getTxID() const
 WalletAddress NotificationItem::getWalletAddress() const
 {
     return getWalletAddressRaw(m_notification);
+}
+
+beam::Asset::ID NotificationItem::assetId() const
+{
+    auto p = getTxParameters(m_notification);
+    return getAssetId(p);
 }
