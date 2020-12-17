@@ -14,7 +14,6 @@
 
 #include "wallet_model.h"
 #include "app_model.h"
-#include "filter.h"
 #include "utility/logger.h"
 #include "utility/bridge.h"
 #include "utility/io/asyncevent.h"
