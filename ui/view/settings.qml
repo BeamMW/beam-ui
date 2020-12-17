@@ -287,34 +287,35 @@ ColumnLayout {
                 }
 
                 SwapEthSettings {
-                    id:                    swapEthSettings
-                    title:                 viewModel.ethSettings.title
-                    generalTitle:          viewModel.ethSettings.generalTitle
-                    showSeedDialogTitle:   viewModel.ethSettings.showSeedDialogTitle
-                    seedPhrases:           viewModel.ethSettings.seedPhrases
-                    phrasesSeparator:      viewModel.ethSettings.phrasesSeparator
-                    isCurrentSeedValid:    viewModel.ethSettings.isCurrentSeedValid
-                    mainSettingsViewModel: viewModel
-                    hasStatusIndicatior:   true
-                    getEthereumAddresses:  viewModel.ethSettings.getEthereumAddresses
-                    folded:                creating ? (swapMode == viewModel.ethSettings.coinID ? false : (swapMode == "ALL" ? viewModel.ethSettings.isConnected : true)) : viewModel.ethSettings.folded
-
-                    canChangeConnection:   viewModel.ethSettings.canChangeConnection
-                    isConnected:           viewModel.ethSettings.isConnected
-                    connectionStatus:      viewModel.ethSettings.connectionStatus
-                    connectionErrorMsg:    viewModel.ethSettings.connectionErrorMsg
-
-                    address:               viewModel.ethSettings.nodeAddress
-                    port:                  viewModel.ethSettings.nodePort
-                    accountIndex:          viewModel.ethSettings.accountIndex
-                    contractAddress:       viewModel.ethSettings.contractAddress
-                    erc20ContractAddress:  viewModel.ethSettings.erc20ContractAddress
-                    daiContractAddress:    viewModel.ethSettings.daiContractAddress
-                    usdtContractAddress:   viewModel.ethSettings.usdtContractAddress
-                    wbtcContractAddress:   viewModel.ethSettings.wbtcContractAddress
-                    activateDai:           viewModel.ethSettings.activateDai
-                    activateUsdt:          viewModel.ethSettings.activateUsdt
-                    activateWBTC:          viewModel.ethSettings.activateWBTC
+                    id:                       swapEthSettings
+                    title:                    viewModel.ethSettings.title
+                    generalTitle:             viewModel.ethSettings.generalTitle
+                    showSeedDialogTitle:      viewModel.ethSettings.showSeedDialogTitle
+                    showAddressesDialogTitle: viewModel.ethSettings.showAddressesDialogTitle
+                    seedPhrases:              viewModel.ethSettings.seedPhrases
+                    phrasesSeparator:         viewModel.ethSettings.phrasesSeparator
+                    isCurrentSeedValid:       viewModel.ethSettings.isCurrentSeedValid
+                    mainSettingsViewModel:    viewModel
+                    hasStatusIndicatior:      true
+                    getEthereumAddresses:     viewModel.ethSettings.getEthereumAddresses
+                    folded:                   creating ? (swapMode == viewModel.ethSettings.coinID ? false : (swapMode == "ALL" ? viewModel.ethSettings.isConnected : true)) : viewModel.ethSettings.folded
+                                             
+                    canChangeConnection:      viewModel.ethSettings.canChangeConnection
+                    isConnected:              viewModel.ethSettings.isConnected
+                    connectionStatus:         viewModel.ethSettings.connectionStatus
+                    connectionErrorMsg:       viewModel.ethSettings.connectionErrorMsg
+                                             
+                    address:                  viewModel.ethSettings.nodeAddress
+                    port:                     viewModel.ethSettings.nodePort
+                    accountIndex:             viewModel.ethSettings.accountIndex
+                    contractAddress:          viewModel.ethSettings.contractAddress
+                    erc20ContractAddress:     viewModel.ethSettings.erc20ContractAddress
+                    daiContractAddress:       viewModel.ethSettings.daiContractAddress
+                    usdtContractAddress:      viewModel.ethSettings.usdtContractAddress
+                    wbtcContractAddress:      viewModel.ethSettings.wbtcContractAddress
+                    activateDai:              viewModel.ethSettings.activateDai
+                    activateUsdt:             viewModel.ethSettings.activateUsdt
+                    activateWBTC:             viewModel.ethSettings.activateWBTC
 
                     Connections {
                         target:              viewModel.ethSettings

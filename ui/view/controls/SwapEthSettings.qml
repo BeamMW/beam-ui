@@ -11,10 +11,11 @@ SettingsFoldable {
     id:            control
     height:        362
 
-    property string generalTitle:        ""
-    property alias  showSeedDialogTitle: seedPhraseDialog.showSeedDialogTitle
-    property string color:               Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
-    property string disabledColor:       Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.2)
+    property string generalTitle:             ""
+    property alias  showSeedDialogTitle:      seedPhraseDialog.showSeedDialogTitle
+    property alias  showAddressesDialogTitle: showAddressesDialog.showAddressesDialogTitle
+    property string color:                    Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+    property string disabledColor:            Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.2)
 
     property bool   isConnected:           false
     property var    mainSettingsViewModel: undefined
@@ -513,7 +514,7 @@ SettingsFoldable {
                 //% "Show wallet addresses"
                 text:      qsTrId("settings-swap-show-addresses")
                 onClicked: {                        
-                    showAddressesDialog.addressesElectrum = getEthereumAddresses();
+                    showAddressesDialog.addresses = getEthereumAddresses();
                     showAddressesDialog.open();
                 }
             }

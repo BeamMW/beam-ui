@@ -2921,5 +2921,9 @@ much longer for a transaction to complete.</source>
         <source>copy and close</source>
         <translation type="unfinished">скапіраваць і зачыніць</translation>
     </message>
+    <message id="ethereum-show-addresses-title">
+        <source>Ethereum wallet addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

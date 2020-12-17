@@ -1,6 +1,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.0
+import Beam.Wallet 1.0
 import "."
 
 Dialog {
@@ -14,7 +15,7 @@ Dialog {
     modal:   true
 
     property alias showAddressesDialogTitle: showAddressesDialogTitleId.text
-    property var   addressesElectrum: undefined
+    property var   addresses: undefined
 
     background: Rectangle {
         radius:       10
@@ -51,7 +52,7 @@ Dialog {
                 spacing:           30
 
                 Repeater {
-                    model: control.addressesElectrum
+                    model: control.addresses
                     RowLayout {
                         Layout.fillWidth: true
                         spacing: 0

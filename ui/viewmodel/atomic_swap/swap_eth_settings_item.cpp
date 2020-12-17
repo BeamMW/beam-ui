@@ -154,6 +154,13 @@ QString SwapEthSettingsItem::getShowSeedDialogTitle() const
     return qtTrId("ethereum-show-seed-title");
 }
 
+
+QString SwapEthSettingsItem::getShowAddressesDialogTitle() const
+{
+    //% "Ethereum wallet addresses"
+    return qtTrId("ethereum-show-addresses-title");
+}
+
 QString SwapEthSettingsItem::getGeneralTitle() const
 {
     //% "Ethereum"
@@ -233,7 +240,7 @@ void SwapEthSettingsItem::shouldConnect(bool value)
     }
 }
 
-void SwapEthSettingsItem::SetSeedPhrase(const std::vector<std::string>& seedElectrum)
+void SwapEthSettingsItem::SetSeedPhrase(const std::vector<std::string>& seedPhrase)
 {
     if (!m_seedPhraseItems.empty())
     {
@@ -243,7 +250,7 @@ void SwapEthSettingsItem::SetSeedPhrase(const std::vector<std::string>& seedElec
 
     m_seedPhraseItems.reserve(static_cast<int>(WORD_COUNT));
 
-    if (seedElectrum.empty())
+    if (seedPhrase.empty())
     {
         for (int index = 0; index < static_cast<int>(WORD_COUNT); ++index)
         {
@@ -252,15 +259,15 @@ void SwapEthSettingsItem::SetSeedPhrase(const std::vector<std::string>& seedElec
     }
     else
     {
-        assert(seedElectrum.size() == WORD_COUNT);
+        assert(seedPhrase.size() == WORD_COUNT);
         int index = 0;
-        for (auto& word : seedElectrum)
+        for (auto& word : seedPhrase)
         {
             m_seedPhraseItems.push_back(new SeedPhraseItem(index++, QString::fromStdString(word)));
         }
     }
 
-    setIsCurrentSeedValid(isValidMnemonic(seedElectrum, language::en));
+    setIsCurrentSeedValid(isValidMnemonic(seedPhrase, language::en));
     emit seedPhrasesChanged();
 }
 

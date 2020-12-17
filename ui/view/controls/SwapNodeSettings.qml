@@ -566,7 +566,7 @@ when connection is established"
                 //% "Show wallet addresses"
                 text:      qsTrId("settings-swap-show-addresses")
                 onClicked: {                        
-                    showAddressesDialog.addressesElectrum = getAddressesElectrum();
+                    showAddressesDialog.addresses = getAddressesElectrum();
                     showAddressesDialog.open();
                 }
             }
