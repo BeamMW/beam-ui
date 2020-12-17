@@ -28,6 +28,7 @@ AbstractColors {
     property color active :               "#00f6d2" // bright-teal
     property color passive:               "#d6d9e0"  // silver
     property color caps_warning:          "#000000"
+    property color online:                "#00f6d2"
 
     property color currencyPaneRight:     "#45316c"
     property color currencyPaneLeftBEAM:  "#00f6d2"

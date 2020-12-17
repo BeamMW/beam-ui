@@ -27,7 +27,7 @@ AbstractColors {
     property color table_header:          "#323232"
     property color active :               "#00f6d2" // bright-teal
     property color passive:               "#d6d9e0" // silver
-        
+    property color online:                "#00f6d2"
     property color caps_warning:          "#ffffff"
 
     property color currencyPaneRight:     "#3b3b3b"

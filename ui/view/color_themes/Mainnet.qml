@@ -26,9 +26,10 @@ AbstractColors {
     property color row_selected:          "#085469"
     property color separator:             "#33566b"
     property color table_header:          Qt.rgba(0, 246, 210, 0.1)
-    property color active :               "#00f6d2" // bright-teal
-    property color passive:               "#d6d9e0"  // silver
+    property color active :               "#00f6d2"
+    property color passive:               "#d6d9e0"
     property color caps_warning:          "#000000"
+    property color online:                "#00f6d2"
 
     property color currencyPaneRight:     "#00458f"
     property color currencyPaneLeftBEAM:  "#00f6d2"

@@ -27,6 +27,7 @@ QtObject {
     property color table_header;
     property color active;
     property color passive;
+    property color online;
     property color caps_warning;
 	property color white: "#ffffff";
 

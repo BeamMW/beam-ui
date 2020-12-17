@@ -53,8 +53,8 @@ Item {
         State {
             name: "connected"
             when: (rootItem.status === "connected")
-            PropertyChanges { target: indicator; border.color: Style.active }
-            PropertyChanges { target: indicator; color: Style.active }
+            PropertyChanges { target: indicator; border.color: Style.online }
+            PropertyChanges { target: indicator; color: Style.online }
             PropertyChanges { target: indicator; opacity: 1 }
             PropertyChanges { target: shadow; visible: true}
         },
