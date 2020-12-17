@@ -187,7 +187,7 @@ Rectangle {
                             source: indicator
                         }
 
-    					visible: control.activeFocus
+    					visible: selectedItem == index
                     }
 
                     Item {
