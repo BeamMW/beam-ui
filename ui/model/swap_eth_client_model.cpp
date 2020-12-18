@@ -69,17 +69,6 @@ beam::Amount SwapEthClientModel::getAvailable(beam::wallet::AtomicSwapCoin swapC
     return 0;
 }
 
-bool SwapEthClientModel::isInitialized(beam::wallet::AtomicSwapCoin swapCoin) const
-{
-    switch (swapCoin)
-    {
-    case wallet::AtomicSwapCoin::Ethereum:
-        return GetSettings().IsInitialized();
-    default:
-        return GetSettings().IsTokenInitialized(swapCoin);;
-    }
-}
-
 beam::Amount SwapEthClientModel::getGasPrice() const
 {
     return m_gasPrice;
@@ -140,10 +129,7 @@ void SwapEthClientModel::requestBalance()
 
         for (auto token : beam::wallet::kEthTokens)
         {
-            if (GetSettings().IsTokenActivated(token))
-            {
-                GetAsync()->GetBalance(token);
-            }
+            GetAsync()->GetBalance(token);
         }
     }
 }

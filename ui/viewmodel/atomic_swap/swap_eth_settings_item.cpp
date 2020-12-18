@@ -56,18 +56,8 @@ void SwapEthSettingsItem::applySettings()
 
     m_settings->m_accountIndex = m_accountIndex;
     m_settings->m_shouldConnect = m_shouldConnect;
-    m_settings->m_address = m_nodeAddress.toStdString();
+    m_settings->m_projectID = m_infuraProjectID.toStdString();
     m_settings->m_secretWords = GetSeedPhraseFromSeedItems();
-    m_settings->m_swapContractAddress = m_contractAddress.toStdString();
-    m_settings->m_erc20SwapContractAddress = m_erc20ContractAddress.toStdString();
-
-    m_settings->m_daiContractAddress = m_daiContractAddress.toStdString();
-    m_settings->m_usdtContractAddress = m_usdtContractAddress.toStdString();
-    m_settings->m_wbtcContractAddress = m_wbtcContractAddress.toStdString();
-
-    m_settings->m_shouldConnectToDai = m_activateDai;
-    m_settings->m_shouldConnectToUsdt = m_activateUsdt;
-    m_settings->m_shouldConnectToWBTC = m_activateWBTC;
 
     coinClient->SetSettings(*m_settings);
 }
@@ -215,19 +205,10 @@ void SwapEthSettingsItem::LoadSettings()
     if (m_settings->IsInitialized())
     {
         SetSeedPhrase(m_settings->m_secretWords);
-        applyNodeAddress(str2qstr(m_settings->m_address));
+        infuraProjectID(str2qstr(m_settings->m_projectID));
+
         setAccountIndex(m_settings->m_accountIndex);
-        setContractAddress(str2qstr(m_settings->m_swapContractAddress));
-        setERC20ContractAddress(str2qstr(m_settings->m_erc20SwapContractAddress));
         shouldConnect(m_settings->m_shouldConnect);
-
-        setDaiContractAddress(str2qstr(m_settings->m_daiContractAddress));
-        setUsdtContractAddress(str2qstr(m_settings->m_usdtContractAddress));
-        setWbtcContractAddress(str2qstr(m_settings->m_wbtcContractAddress));
-
-        activateDai(m_settings->m_shouldConnectToDai);
-        activateUsdt(m_settings->m_shouldConnectToUsdt);
-        activateWBTC(m_settings->m_shouldConnectToWBTC);
     }
 }
 
@@ -273,18 +254,8 @@ void SwapEthSettingsItem::SetSeedPhrase(const std::vector<std::string>& seedPhra
 
 void SwapEthSettingsItem::SetDefaultSettings(bool clearSeed)
 {
-    setNodeAddress("");
-    setNodePort("");
+    infuraProjectID("");
     setAccountIndex(0);
-    setContractAddress("");
-    setERC20ContractAddress("");
-    setDaiContractAddress("");
-    setUsdtContractAddress("");
-    setWbtcContractAddress("");
-
-    activateDai(false);
-    activateUsdt(false);
-    activateWBTC(false);
 
     if (clearSeed)
     {
@@ -292,31 +263,17 @@ void SwapEthSettingsItem::SetDefaultSettings(bool clearSeed)
     }
 }
 
-QString SwapEthSettingsItem::getNodeAddress() const
+QString SwapEthSettingsItem::infuraProjectID() const
 {
-    return m_nodeAddress;
+    return m_infuraProjectID;
 }
 
-void SwapEthSettingsItem::setNodeAddress(const QString& value)
+void SwapEthSettingsItem::infuraProjectID(const QString& value)
 {
-    if (value != m_nodeAddress)
+    if (value != m_infuraProjectID)
     {
-        m_nodeAddress = value;
-        emit nodeAddressChanged();
-    }
-}
-
-QString SwapEthSettingsItem::getNodePort() const
-{
-    return m_nodePort;
-}
-
-void SwapEthSettingsItem::setNodePort(const QString& value)
-{
-    if (value != m_nodePort)
-    {
-        m_nodePort = value;
-        emit nodePortChanged();
+        m_infuraProjectID = value;
+        emit infuraProjectIDChanged();
     }
 }
 
@@ -331,118 +288,6 @@ void SwapEthSettingsItem::setAccountIndex(unsigned int value)
     {
         m_accountIndex = value;
         emit accountIndexChanged();
-    }
-}
-
-QString SwapEthSettingsItem::getContractAddress() const
-{
-    return m_contractAddress;
-}
-
-QString SwapEthSettingsItem::getERC20ContractAddress() const
-{
-    return m_erc20ContractAddress;
-}
-
-QString SwapEthSettingsItem::getDaiContractAddress() const
-{
-    return m_daiContractAddress;
-}
-
-QString SwapEthSettingsItem::getUsdtContractAddress() const
-{
-    return m_usdtContractAddress;
-}
-
-QString SwapEthSettingsItem::getWbtcContractAddress() const
-{
-    return m_wbtcContractAddress;
-}
-
-void SwapEthSettingsItem::setContractAddress(const QString& value)
-{
-    if (value != m_contractAddress)
-    {
-        m_contractAddress = value;
-        emit contractAddressChanged();
-    }
-}
-
-void SwapEthSettingsItem::setERC20ContractAddress(const QString& value)
-{
-    if (value != m_erc20ContractAddress)
-    {
-        m_erc20ContractAddress = value;
-        emit erc20ContractAddressChanged();
-    }
-}
-
-void SwapEthSettingsItem::setDaiContractAddress(const QString& value)
-{
-    if (value != m_daiContractAddress)
-    {
-        m_daiContractAddress = value;
-        emit daiContractAddressChanged();
-    }
-}
-
-void SwapEthSettingsItem::setUsdtContractAddress(const QString& value)
-{
-    if (value != m_usdtContractAddress)
-    {
-        m_usdtContractAddress = value;
-        emit usdtContractAddressChanged();
-    }
-}
-
-void SwapEthSettingsItem::setWbtcContractAddress(const QString& value)
-{
-    if (value != m_wbtcContractAddress)
-    {
-        m_wbtcContractAddress = value;
-        emit wbtcContractAddressChanged();
-    }
-}
-
-bool SwapEthSettingsItem::activateDai() const
-{
-    return m_activateDai;
-}
-
-void SwapEthSettingsItem::activateDai(bool value)
-{
-    if (value != m_activateDai)
-    {
-        m_activateDai = value;
-        emit activateDaiChanged();
-    }
-}
-
-bool SwapEthSettingsItem::activateUsdt() const
-{
-    return m_activateUsdt;
-}
-
-void SwapEthSettingsItem::activateUsdt(bool value)
-{
-    if (value != m_activateUsdt)
-    {
-        m_activateUsdt = value;
-        emit activateUsdtChanged();
-    }
-}
-
-bool SwapEthSettingsItem::activateWBTC() const
-{
-    return m_activateWBTC;
-}
-
-void SwapEthSettingsItem::activateWBTC(bool value)
-{
-    if (value != m_activateWBTC)
-    {
-        m_activateWBTC = value;
-        emit activateWBTCChanged();
     }
 }
 
@@ -492,17 +337,6 @@ QString SwapEthSettingsItem::getConnectionErrorMsg() const
     default:
         return QString();
     }
-}
-
-void SwapEthSettingsItem::applyNodeAddress(const QString& address)
-{
-    setNodeAddress(address);
-    /*auto unpackedAddress = parseAddress(address);
-    setNodeAddress(unpackedAddress.address);
-    if (unpackedAddress.port > 0)
-    {
-        setNodePort(unpackedAddress.port);
-    }*/
 }
 
 std::vector<std::string> SwapEthSettingsItem::GetSeedPhraseFromSeedItems() const

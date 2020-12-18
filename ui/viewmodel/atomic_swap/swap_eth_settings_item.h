@@ -34,18 +34,8 @@ class SwapEthSettingsItem : public QObject
     Q_PROPERTY(QChar           phrasesSeparator         READ getPhrasesSeparator                                    CONSTANT)
     Q_PROPERTY(QList<QObject*> seedPhrases              READ getSeedPhrases                                         NOTIFY seedPhrasesChanged)
     Q_PROPERTY(bool            isCurrentSeedValid       READ isCurrentSeedValid                                     NOTIFY isCurrentSeedValidChanged)
-    Q_PROPERTY(QString         nodeAddress              READ getNodeAddress           WRITE setNodeAddress          NOTIFY nodeAddressChanged)
-    Q_PROPERTY(QString         nodePort                 READ getNodePort              WRITE setNodePort             NOTIFY nodePortChanged)
+    Q_PROPERTY(QString         infuraProjectID          READ infuraProjectID          WRITE infuraProjectID         NOTIFY infuraProjectIDChanged)
     Q_PROPERTY(unsigned int    accountIndex             READ getAccountIndex          WRITE setAccountIndex         NOTIFY accountIndexChanged)
-    Q_PROPERTY(QString         contractAddress          READ getContractAddress       WRITE setContractAddress      NOTIFY contractAddressChanged)
-    Q_PROPERTY(QString         erc20ContractAddress     READ getERC20ContractAddress  WRITE setERC20ContractAddress NOTIFY erc20ContractAddressChanged)
-                                                        
-    Q_PROPERTY(QString         daiContractAddress       READ getDaiContractAddress    WRITE setDaiContractAddress   NOTIFY daiContractAddressChanged)
-    Q_PROPERTY(QString         usdtContractAddress      READ getUsdtContractAddress   WRITE setUsdtContractAddress  NOTIFY usdtContractAddressChanged)
-    Q_PROPERTY(QString         wbtcContractAddress      READ getWbtcContractAddress   WRITE setWbtcContractAddress  NOTIFY wbtcContractAddressChanged)
-    Q_PROPERTY(bool            activateDai              READ activateDai              WRITE activateDai             NOTIFY activateDaiChanged)
-    Q_PROPERTY(bool            activateUsdt             READ activateUsdt             WRITE activateUsdt            NOTIFY activateUsdtChanged)
-    Q_PROPERTY(bool            activateWBTC             READ activateWBTC             WRITE activateWBTC            NOTIFY activateWBTCChanged)
                                                         
     Q_PROPERTY(bool            canChangeConnection      READ canChangeConnection                                    NOTIFY canChangeConnectionChanged)
     Q_PROPERTY(bool            isConnected              READ getIsConnected                                         NOTIFY connectionChanged)
@@ -83,53 +73,25 @@ private:
     void shouldConnect(bool value);
     void SetSeedPhrase(const std::vector<std::string>& secretWords);
     void SetDefaultSettings(bool clearSeed = true);
-    QString getNodeAddress() const;
-    void setNodeAddress(const QString& value);
-    QString getNodePort() const;
-    void setNodePort(const QString& value);
+    QString infuraProjectID() const;
+    void infuraProjectID(const QString& value);
     unsigned int getAccountIndex() const;
     void setAccountIndex(unsigned int value);
-    QString getContractAddress() const;
-    QString getERC20ContractAddress() const;
-    QString getDaiContractAddress() const;
-    QString getUsdtContractAddress() const;
-    QString getWbtcContractAddress() const;
-    void setContractAddress(const QString& value);
-    void setERC20ContractAddress(const QString& value);
-    void setDaiContractAddress(const QString& value);
-    void setUsdtContractAddress(const QString& value);
-    void setWbtcContractAddress(const QString& value);
-    bool activateDai() const;
-    void activateDai(bool value);
-    bool activateUsdt() const;
-    void activateUsdt(bool value);
-    bool activateWBTC() const;
-    void activateWBTC(bool value);
 
     bool canChangeConnection() const;
     bool getIsConnected() const;
     QString getConnectionStatus() const;
     QString getConnectionErrorMsg() const;
 
-    void applyNodeAddress(const QString& address);
     std::vector<std::string> GetSeedPhraseFromSeedItems() const;
 
 signals:
-    void nodeAddressChanged();
-    void nodePortChanged();
+    void infuraProjectIDChanged();
     void seedPhrasesChanged();
     void isCurrentSeedValidChanged();
     void canChangeConnectionChanged();
     void connectionChanged();
     void accountIndexChanged();
-    void contractAddressChanged();
-    void erc20ContractAddressChanged();
-    void daiContractAddressChanged();
-    void usdtContractAddressChanged();
-    void wbtcContractAddressChanged();
-    void activateDaiChanged();
-    void activateUsdtChanged();
-    void activateWBTCChanged();
     void connectionStatusChanged();
     void connectionErrorMsgChanged();
     void foldedChanged();
@@ -140,16 +102,7 @@ private:
     bool m_shouldConnect = false;
     QList<QObject*> m_seedPhraseItems;
     bool m_isCurrentSeedValid = false;
-    QString m_nodeAddress;
-    QString m_nodePort;
+    QString m_infuraProjectID;
     unsigned int m_accountIndex;
-    QString m_contractAddress;
-    QString m_erc20ContractAddress;
-    QString m_daiContractAddress;
-    QString m_usdtContractAddress;
-    QString m_wbtcContractAddress;
-    bool m_activateDai;
-    bool m_activateUsdt;
-    bool m_activateWBTC;
     bool m_isFolded = true;
 };

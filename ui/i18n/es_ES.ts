@@ -2868,38 +2868,6 @@ fuera de línea</translation>
         <source>Account index</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="settings-contract-address">
-        <source>Contract address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-dai-contract-address">
-        <source>DAI contract address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-usdt-contract-address">
-        <source>USDT contract address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-wbtc-contract-address">
-        <source>WBTC contract address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-erc20-contract-address">
-        <source>ERC20 contract address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-activate-dai">
-        <source>Activate DAI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-activate-usdt">
-        <source>Activate USDT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-activate-wbtc">
-        <source>Activate WBTC</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>
         <translation type="unfinished"></translation>
@@ -2924,6 +2892,10 @@ much longer for a transaction to complete.</source>
     </message>
     <message id="ethereum-show-addresses-title">
         <source>Ethereum wallet addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-infura-project-id">
+        <source>Infura project ID</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

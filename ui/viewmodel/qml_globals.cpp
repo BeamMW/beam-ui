@@ -241,8 +241,7 @@ bool QMLGlobals::haveSwapClient(Currency currency)
     auto swapCoin = convertCurrencyToSwapCoin(currency);
     if (isEthereumBased(currency))
     {
-        return AppModel::getInstance().getSwapEthClient()->isInitialized(swapCoin) &&
-            AppModel::getInstance().getSwapEthClient()->GetSettings().IsActivated();
+        return AppModel::getInstance().getSwapEthClient()->GetSettings().IsActivated();
     }
     return AppModel::getInstance().getSwapCoinClient(swapCoin)->GetSettings().IsActivated();
 }

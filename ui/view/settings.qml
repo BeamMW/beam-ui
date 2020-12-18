@@ -305,17 +305,8 @@ ColumnLayout {
                     connectionStatus:         viewModel.ethSettings.connectionStatus
                     connectionErrorMsg:       viewModel.ethSettings.connectionErrorMsg
                                              
-                    address:                  viewModel.ethSettings.nodeAddress
-                    port:                     viewModel.ethSettings.nodePort
+                    infuraProjectID:          viewModel.ethSettings.infuraProjectID
                     accountIndex:             viewModel.ethSettings.accountIndex
-                    contractAddress:          viewModel.ethSettings.contractAddress
-                    erc20ContractAddress:     viewModel.ethSettings.erc20ContractAddress
-                    daiContractAddress:       viewModel.ethSettings.daiContractAddress
-                    usdtContractAddress:      viewModel.ethSettings.usdtContractAddress
-                    wbtcContractAddress:      viewModel.ethSettings.wbtcContractAddress
-                    activateDai:              viewModel.ethSettings.activateDai
-                    activateUsdt:             viewModel.ethSettings.activateUsdt
-                    activateWBTC:             viewModel.ethSettings.activateWBTC
 
                     Connections {
                         target:              viewModel.ethSettings
@@ -332,19 +323,10 @@ ColumnLayout {
                             swapEthSettings.connectionErrorMsg = viewModel.ethSettings.connectionErrorMsg;
                         }
 
-                        onNodeAddressChanged:          swapEthSettings.address              = viewModel.ethSettings.nodeAddress
-                        onNodePortChanged:             swapEthSettings.port                 = viewModel.ethSettings.nodePort
+                        onInfuraProjectIDChanged:      swapEthSettings.infuraProjectID      = viewModel.ethSettings.infuraProjectID
                         onAccountIndexChanged:         swapEthSettings.accountIndex         = viewModel.ethSettings.accountIndex
-                        onContractAddressChanged:      swapEthSettings.contractAddress      = viewModel.ethSettings.contractAddress
-                        onErc20ContractAddressChanged: swapEthSettings.erc20ContractAddress = viewModel.ethSettings.erc20ContractAddress
-                        onDaiContractAddressChanged:   swapEthSettings.daiContractAddress   = viewModel.ethSettings.daiContractAddress
-                        onUsdtContractAddressChanged:  swapEthSettings.usdtContractAddress  = viewModel.ethSettings.usdtContractAddress
-                        onWbtcContractAddressChanged:  swapEthSettings.wbtcContractAddress  = viewModel.ethSettings.wbtcContractAddress
                         onSeedPhrasesChanged:          swapEthSettings.seedPhrases          = viewModel.ethSettings.seedPhrases
                         onIsCurrentSeedValidChanged:   swapEthSettings.isCurrentSeedValid   = viewModel.ethSettings.isCurrentSeedValid
-                        onActivateDaiChanged:          swapEthSettings.activateDai          = viewModel.ethSettings.activateDai
-                        onActivateUsdtChanged:         swapEthSettings.activateUsdt         = viewModel.ethSettings.activateUsdt
-                        onActivateWBTCChanged:         swapEthSettings.activateWBTC         = viewModel.ethSettings.activateWBTC
                     }
                     
                     onDisconnect:                viewModel.ethSettings.disconnect()
@@ -364,68 +346,14 @@ ColumnLayout {
 
                     Binding {
                         target:   viewModel.ethSettings
-                        property: "nodeAddress"
-                        value:    swapEthSettings.address
-                    }
-
-                    Binding {
-                        target:   viewModel.ethSettings
-                        property: "nodePort"
-                        value:    swapEthSettings.port
+                        property: "infuraProjectID"
+                        value:    swapEthSettings.infuraProjectID
                     }
 
                     Binding {
                         target:   viewModel.ethSettings
                         property: "accountIndex"
                         value:    swapEthSettings.accountIndex
-                    }
-
-                    Binding {
-                        target:   viewModel.ethSettings
-                        property: "contractAddress"
-                        value:    swapEthSettings.contractAddress
-                    }
-
-                    Binding {
-                        target:   viewModel.ethSettings
-                        property: "erc20ContractAddress"
-                        value:    swapEthSettings.erc20ContractAddress
-                    }
-
-                    Binding {
-                        target:   viewModel.ethSettings
-                        property: "daiContractAddress"
-                        value:    swapEthSettings.daiContractAddress
-                    }
-
-                    Binding {
-                        target:   viewModel.ethSettings
-                        property: "usdtContractAddress"
-                        value:    swapEthSettings.usdtContractAddress
-                    }
-
-                    Binding {
-                        target:   viewModel.ethSettings
-                        property: "wbtcContractAddress"
-                        value:    swapEthSettings.wbtcContractAddress
-                    }
-
-                    Binding {
-                        target:   viewModel.ethSettings
-                        property: "activateDai"
-                        value:    swapEthSettings.activateDai
-                    }
-
-                    Binding {
-                        target:   viewModel.ethSettings
-                        property: "activateUsdt"
-                        value:    swapEthSettings.activateUsdt
-                    }
-
-                    Binding {
-                        target:   viewModel.ethSettings
-                        property: "activateWBTC"
-                        value:    swapEthSettings.activateWBTC
                     }
                 }
             }

@@ -22,19 +22,8 @@ SettingsFoldable {
     property bool   canChangeConnection:             true
     property bool   canEdit:  !control.isConnected
 
-    // TODO roman.strilets it's for test
-    property alias  address:              addressInput.text
-    property alias  port:                 portInput.text
+    property alias  infuraProjectID:      infuraProjectIDInput.text
     property alias  accountIndex:         accountIndexInput.text
-    property alias  contractAddress:      contractAddressInput.text
-    property alias  erc20ContractAddress: erc20ContractAddressInput.text
-    property alias  daiContractAddress:   daiContractAddressInput.text
-    property alias  usdtContractAddress:  usdtContractAddressInput.text
-    property alias  wbtcContractAddress:  wbtcContractAddressInput.text
-
-    property alias activateDai:  activateDaiSwitch.checked
-    property alias activateUsdt: activateUsdtSwitch.checked
-    property alias activateWBTC: activateWBTCSwitch.checked
 
     property alias seedPhrases:        seedPhraseDialog.seedPhrasesElectrum
     property alias phrasesSeparator:   seedPhraseDialog.phrasesSeparatorElectrum
@@ -78,59 +67,28 @@ SettingsFoldable {
 
     QtObject {
         id: internalValues
-        property string initialAddress
-        property string initialPort
+        property string initialInfuraProjectID
         property string initialSeed
-        property string initialContractAddress
-        property string initialERC20ContractAddress
-        property string initialDaiContractAddress
-        property string initialUsdtContractAddress
-        property string initialWbtcContractAddress
         property string initialAccountIndex
-        property bool initialActivateDai
-        property bool initialActivateUsdt
-        property bool initialActivateWBTC
 
         property bool   isSeedChanged: false
 
         function restore() {
             isSeedChanged = false
-            address = initialAddress
-            port = initialPort
+            infuraProjectID = initialInfuraProjectID
             control.restoreSeedPhrases()
 
-            contractAddress = initialContractAddress
-            erc20ContractAddress = initialERC20ContractAddress
-            daiContractAddress = initialDaiContractAddress
-            usdtContractAddress = initialUsdtContractAddress
-            wbtcContractAddress = initialWbtcContractAddress
             accountIndex = initialAccountIndex
-
-            activateDai = initialActivateDai
-            activateUsdt = initialActivateUsdt
-            activateWBTC = initialActivateWBTC
         }
 
         function save() {
-            initialAddress = address
-            initialPort    = port
+            initialInfuraProjectID = infuraProjectID
             isSeedChanged = false
-            initialContractAddress = contractAddress
-            initialERC20ContractAddress = erc20ContractAddress
-            initialDaiContractAddress = daiContractAddress
-            initialUsdtContractAddress = usdtContractAddress
-            initialWbtcContractAddress = wbtcContractAddress
             initialAccountIndex = accountIndex
-            initialActivateDai = activateDai
-            initialActivateUsdt = activateUsdt
-            initialActivateWBTC = activateWBTC
         }
 
         function isChanged() {
-            return initialAddress !== address || initialPort !== port || isSeedChanged || contractAddress != initialContractAddress
-            || daiContractAddress != initialDaiContractAddress || usdtContractAddress != initialUsdtContractAddress || wbtcContractAddress != initialWbtcContractAddress
-            || initialAccountIndex != accountIndex || erc20ContractAddress != initialERC20ContractAddress
-            || initialActivateDai != activateDai || initialActivateUsdt != activateUsdt || initialActivateWBTC != activateWBTC
+            return initialInfuraProjectID !== infuraProjectID || isSeedChanged ||initialAccountIndex != accountIndex
         }
     }
 
@@ -139,8 +97,7 @@ SettingsFoldable {
     }
 
     function canApplySettings() {
-        // TODO roman.strilets for test
-        return isCurrentSeedValid /*&& addressInput.isValid && portInput.acceptableInput*/;
+        return isCurrentSeedValid;
     }
 
     function applyChanges() {
@@ -153,8 +110,7 @@ SettingsFoldable {
     }
 
     function haveSettings() {
-        // TODO roman.strilets for test
-        return isCurrentSeedValid /*&& addressInput.isValid && portInput.acceptableInput*/;
+        return isCurrentSeedValid;
     }
 
     function clear() {
@@ -163,7 +119,7 @@ SettingsFoldable {
     }
 
     function canClear() {
-        return !isConnected && (internalValues.initialAddress.length || isCurrentSeedValid);
+        return !isConnected && (internalValues.initialInfuraProjectID.length || isCurrentSeedValid);
     }
 
     function canConnect() {
@@ -175,7 +131,6 @@ SettingsFoldable {
     }
 
     Component.onCompleted: {
-        //control.editElectrum = control.isElectrumConnection || (!control.canChangeConnection && !control.isNodeConnection);
         internalValues.save();
     }
 
@@ -183,34 +138,20 @@ SettingsFoldable {
         spacing: 0
 
         GridLayout {
-            //visible: !(editElectrum && useRandomNode.checked && !isElectrumConnection)
             Layout.topMargin: 20
             columns:          2
             columnSpacing:    50
             rowSpacing:       13
 
             SFText {
-                //visible:        !editElectrum
                 font.pixelSize: 14
                 color:          control.color
-                //% "Node address"
-                text:           qsTrId("settings-node-address")
+                //% "Infura project ID"
+                text:           qsTrId("settings-infura-project-id")
             }
 
-            // TODO roman.strilets it's for test
-            /*IPAddrInput {
-                id:               addressInput
-                //visible:          !editElectrum
-                Layout.fillWidth: true
-                color:            Style.content_main
-                //underlineVisible: canEdit
-                //readOnly:         !canEdit
-                ipOnly:           false
-            }*/
-
             SFTextInput {
-                id:               addressInput
-                //visible:          !editElectrum
+                id:               infuraProjectIDInput
                 Layout.fillWidth: true
                 color:            Style.content_main
                 font.pixelSize:     14
@@ -220,31 +161,6 @@ SettingsFoldable {
             }
 
             SFText {
-                //visible:        !editElectrum
-                visible: false
-                font.pixelSize: 14
-                color:          control.color
-                text:           qsTrId("settings-local-node-port")
-            }
-
-            SFTextInput {
-                id:                 portInput
-                //visible:            !editElectrum
-                visible: false
-                Layout.fillWidth:   true
-                font.pixelSize:     14
-                activeFocusOnTab:   true
-                color:              Style.content_main
-                underlineVisible:   canEdit
-                readOnly:           !canEdit
-                validator: IntValidator {
-                    bottom: 1
-                    top: 65535
-                }
-            }
-
-            SFText {
-                //visible:        !editElectrum
                 font.pixelSize: 14
                 color:          control.color
                 //% "Account index"
@@ -253,7 +169,6 @@ SettingsFoldable {
 
             SFTextInput {
                 id:                 accountIndexInput
-                //visible:            !editElectrum
                 Layout.fillWidth:   true
                 font.pixelSize:     14
                 activeFocusOnTab:   true
@@ -264,135 +179,6 @@ SettingsFoldable {
                     bottom: 0
                     top: 20
                 }
-            }
-
-            SFText {
-                //visible:        !editElectrum
-                font.pixelSize: 14
-                color:          control.color
-                //% "Contract address"
-                text:           qsTrId("settings-contract-address")
-            }
-
-            SFTextInput {
-                id:                 contractAddressInput
-                //visible:            !editElectrum
-                Layout.fillWidth:   true
-                font.pixelSize:     14
-                activeFocusOnTab:   true
-                color:              Style.content_main
-                underlineVisible:   canEdit
-                readOnly:           !canEdit
-            }
-
-            SFText {
-                font.pixelSize: 14
-                color:          control.color
-                //% "ERC20 contract address"
-                text:           qsTrId("settings-erc20-contract-address")
-            }
-
-            SFTextInput {
-                id:                 erc20ContractAddressInput
-                Layout.fillWidth:   true
-                font.pixelSize:     14
-                activeFocusOnTab:   true
-                color:              Style.content_main
-                underlineVisible:   canEdit
-                readOnly:           !canEdit
-            }
-
-            SFText {
-                font.pixelSize: 14
-                color:          control.color
-                //% "DAI contract address"
-                text:           qsTrId("settings-dai-contract-address")
-            }
-
-            SFTextInput {
-                id:                 daiContractAddressInput
-                Layout.fillWidth:   true
-                font.pixelSize:     14
-                activeFocusOnTab:   true
-                color:              Style.content_main
-                underlineVisible:   canEdit
-                readOnly:           !canEdit
-            }
-
-            SFText {
-                font.pixelSize: 14
-                color:          control.color
-                //% "USDT contract address"
-                text:           qsTrId("settings-usdt-contract-address")
-            }
-
-            SFTextInput {
-                id:                 usdtContractAddressInput
-                Layout.fillWidth:   true
-                font.pixelSize:     14
-                activeFocusOnTab:   true
-                color:              Style.content_main
-                underlineVisible:   canEdit
-                readOnly:           !canEdit
-            }
-
-            SFText {
-                font.pixelSize: 14
-                color:          control.color
-                //% "WBTC contract address"
-                text:           qsTrId("settings-wbtc-contract-address")
-            }
-
-            SFTextInput {
-                id:                 wbtcContractAddressInput
-                Layout.fillWidth:   true
-                font.pixelSize:     14
-                activeFocusOnTab:   true
-                color:              Style.content_main
-                underlineVisible:   canEdit
-                readOnly:           !canEdit
-            }
-
-            SFText {
-                font.pixelSize: 14
-                color:          control.color
-                //% "Activate DAI"
-                text:           qsTrId("settings-activate-dai")
-            }
-
-            CustomSwitch {
-                id:          activateDaiSwitch
-                //alwaysGreen: true
-                spacing:     0
-                enabled:     canEdit
-            }
-
-            SFText {
-                font.pixelSize: 14
-                color:          control.color
-                //% "Activate USDT"
-                text:           qsTrId("settings-activate-usdt")
-            }
-
-            CustomSwitch {
-                id:          activateUsdtSwitch
-                //alwaysGreen: true
-                spacing:     0
-                enabled:     canEdit
-            }
-
-            SFText {
-                font.pixelSize: 14
-                color:          control.color
-                //% "Activate WBTC"
-                text:           qsTrId("settings-activate-wbtc")
-            }
-
-            CustomSwitch {
-                id:          activateWBTCSwitch
-                //alwaysGreen: true
-                spacing:     0
-                enabled:     canEdit
             }
         }
 

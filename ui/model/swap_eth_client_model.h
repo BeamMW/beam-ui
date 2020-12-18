@@ -31,7 +31,6 @@ public:
         beam::io::Reactor& reactor);
 
     beam::Amount getAvailable(beam::wallet::AtomicSwapCoin swapCoin) const;
-    bool isInitialized(beam::wallet::AtomicSwapCoin swapCoin) const;
     beam::Amount getGasPrice() const;
     beam::ethereum::Client::Status getStatus() const;
     bool canModifySettings() const;
