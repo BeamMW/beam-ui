@@ -85,7 +85,7 @@ Item {
                                               "onClosed":        onClosed,
                                               "onSwapToken":     onSwapToken,
                                               "receiverAddress": token,
-                                              "selectedAsset":   assetId});
+                                              "assetId":         assetId});
                 token = "";
             }
 

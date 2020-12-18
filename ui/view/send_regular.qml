@@ -24,12 +24,12 @@ ColumnLayout {
         }
     }
 
-    property var assetId:   viewModel.selectedAssetId
-    property var assetIdx:  sendAmountInput.currencyIdx
-    property var assetInfo: viewModel.assetsList[control.assetIdx]
-    property var sendUnit:  control.assetInfo.unitName
-    property var rate:      control.assetInfo.rate
-    property var rateUnit:  control.assetInfo.rateUnit
+    property alias assetId:   viewModel.selectedAssetId
+    property alias assetIdx:  sendAmountInput.currencyIdx
+    property var   assetInfo: viewModel.assetsList[control.assetIdx]
+    property var   sendUnit:  control.assetInfo.unitName
+    property var   rate:      control.assetInfo.rate
+    property var   rateUnit:  control.assetInfo.rateUnit
 
     // callbacks set by parent
     property var onAccepted:  undefined
@@ -39,6 +39,15 @@ ColumnLayout {
     readonly property bool showInsufficientBalanceWarning:
         !viewModel.isEnough &&
         !(viewModel.isZeroBalance && (viewModel.sendAmount == "" || viewModel.sendAmount == "0"))  // not shown if available is 0 and no value entered to send
+
+    Component.onCompleted: {
+        // asset id might be passed by other parts of the UI as a parameter to the send view
+        for (var idx = 0; idx < viewModel.assetsList.length; ++idx) {
+            if (viewModel.assetsList[idx].assetId == assetId) {
+                 assetIdx = idx
+            }
+        }
+    }
 
     TopGradient {
         mainRoot: main
@@ -336,7 +345,7 @@ ColumnLayout {
 
                                 onCurrencyIdxChanged: function () {
                                     var idx = sendAmountInput.currencyIdx
-                                    viewModel.selectedAssetId = viewModel.assetsList[idx].assetId
+                                    control.assetId = viewModel.assetsList[idx].assetId
                                 }
                             }
 

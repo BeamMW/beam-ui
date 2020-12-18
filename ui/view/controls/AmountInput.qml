@@ -146,6 +146,11 @@ ColumnLayout {
                 if (multi) control.currencyIdx = index
                 if (resetAmount) control.amount = 0
             }
+
+            onModelChanged: {
+                // changing model resets index selection, restore
+                if (multi) currentIndex = control.currencyIdx
+            }
         }
     }
 
