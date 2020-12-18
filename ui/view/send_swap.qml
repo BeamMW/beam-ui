@@ -227,6 +227,7 @@ please review your settings and try again"
                             //fee:                        viewModel.sendFee
                             currency:                   viewModel.sendCurrency
                             minFee:                     currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
+                            maxFee:                     BeamGlobals.getMaximumFee(currency)
                             recommendedFee:             BeamGlobals.getRecommendedFee(currency)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(currency)
                             color:                      Style.accent_outgoing
