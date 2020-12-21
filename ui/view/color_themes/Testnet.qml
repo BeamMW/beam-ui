@@ -49,6 +49,6 @@ AbstractColors {
     property string faucetUrl:   "https://faucet.beamprivacy.community/"
     property string appsUrl:     "http://3.136.182.25:80/app/appslist.json"
 
-    property int appsGradientOffset: -130
-    property int appsGradientTop: 100
+    property int appsGradientOffset: -174
+    property int appsGradientTop: 56
 }

@@ -84,40 +84,17 @@ Update your settings and try again."
     //
     // Title row
     //
-    Item {
+    SubtitleRow {
         Layout.fillWidth:    true
         Layout.topMargin:    100
         Layout.bottomMargin: 30
-        CustomButton {
-            anchors.left:   parent.left
-            anchors.verticalCenter: parent.verticalCenter
-            palette.button: "transparent"
-            leftPadding:    0
-            showHandCursor: true
-            //% "Back"
-            text:           qsTrId("general-back")
-            icon.source:    "qrc:/assets/icon-back.svg"
-            onClicked:      {
-                onClosed();
-            }
-        }
 
-        
-        SFText {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            color:              Style.content_main
-            font {
-                styleName:      "Bold"
-                weight:         Font.Bold
-                pixelSize:      14
-                letterSpacing:  4
-                capitalization: Font.AllUppercase
-            }
-            //% "Create a Swap Offer"
-            text:               qsTrId("wallet-receive-swap-title")
+        //% "Create a Swap Offer"
+        text: qsTrId("wallet-receive-swap-title")
+        onBack: function () {
+            onClosed()
         }
-    } // Item
+    }
 
     ScrollView {
         id:                  scrollView

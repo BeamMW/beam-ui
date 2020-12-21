@@ -111,39 +111,17 @@ please review your settings and try again"
     //
     // Title row
     //
-    Item {
+    SubtitleRow {
         Layout.fillWidth:    true
         Layout.topMargin:    100
         Layout.bottomMargin: 30
-        CustomButton {
-            anchors.left:   parent.left
-            anchors.verticalCenter: parent.verticalCenter
-            palette.button: "transparent"
-            leftPadding:    0
-            showHandCursor: true
-            //% "Back"
-            text:           qsTrId("general-back")
-            icon.source:    "qrc:/assets/icon-back.svg"
-            onClicked:      {
-                onClosed();
-            }
-        }
 
-        SFText {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            color:              Style.content_main
-            font {
-                styleName:      "Bold"
-                weight:         Font.Bold
-                pixelSize:      14
-                letterSpacing:  4
-                capitalization: Font.AllUppercase
-            }
-            //% "Accept Swap Offer"
-            text:               qsTrId("wallet-send-swap-title")
+        //% "Accept Swap Offer"
+        text: qsTrId("wallet-send-swap-title")
+        onBack: function () {
+            onClosed()
         }
-    } // Item
+    }
 
     ScrollView {
         id:                  scrollView

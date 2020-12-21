@@ -10,7 +10,7 @@ import "./utils.js" as Utils
 
 ColumnLayout {
     id: receiveView
-    property var defaultFocusItem: null//addressComment
+    property var defaultFocusItem: null // addressComment
 
     // callbacks set by parent
     property var onClosed: function() {}
@@ -90,39 +90,16 @@ ColumnLayout {
     //
     // Title row
     //
-    Item {
+    SubtitleRow {
         Layout.fillWidth:    true
-        Layout.topMargin:    100 // 101
-        Layout.bottomMargin: 30  // 31
-        CustomButton {
-            anchors.left:   parent.left
-            anchors.verticalCenter: parent.verticalCenter
-            palette.button: "transparent"
-            leftPadding:    0
-            showHandCursor: true
-            //% "Back"
-            text:           qsTrId("general-back")
-            icon.source:    "qrc:/assets/icon-back.svg"
-            onClicked:      {
-                receiveView.saveAddress();
-                onClosed();
-            }
-        }
+        Layout.topMargin:    100
+        Layout.bottomMargin: 30
 
-        
-        SFText {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            color:              Style.content_main
-            font {
-                styleName:      "Bold"
-                weight:         Font.Bold
-                pixelSize:      14
-                letterSpacing:  4
-                capitalization: Font.AllUppercase
-            }
-            //% "Receive"
-            text:               qsTrId("wallet-receive-title")
+        //% "Receive"
+        text: qsTrId("wallet-receive-title")
+        onBack: function () {
+            receiveView.saveAddress();
+            onClosed();
         }
     }
 

@@ -72,6 +72,7 @@
         <file>controls/PublicOfflineAddressDialog.qml</file>
         <file>controls/PanelGradient.qml</file>
         <file>controls/AlphaTip.qml</file>
+        <file>controls/SubtitleRow.qml</file>
         <file>wallet/TxTable.qml</file>
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>
