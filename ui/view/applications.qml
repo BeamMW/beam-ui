@@ -32,6 +32,21 @@ ColumnLayout {
         model: statusbarModel
     }
 
+    SubtitleRow {
+        Layout.fillWidth:    true
+        Layout.topMargin:    50
+        Layout.bottomMargin: 20
+
+        text: (control.activeApp || {}).name || ""
+        visible: !!control.activeApp
+
+        onBack: function () {
+            control.activeApp = undefined
+            webView.visible = false
+            webView.url = "about:blank"
+        }
+    }
+
     //
     // C++ object published to web control & web control itself
     //
@@ -52,7 +67,6 @@ ColumnLayout {
         Layout.fillWidth:    true
         Layout.fillHeight:   true
         Layout.bottomMargin: 10
-        Layout.topMargin:    34
 
         webChannel: apiChannel
         visible: false
@@ -61,6 +75,7 @@ ColumnLayout {
         profile.httpCacheType: WebEngineProfile.NoCache
 
         onLoadingChanged: {
+            // do not change this to declarative style, it flickers somewhy, probably because of delays
             if (control.activeApp && !this.loading) {
                 viewModel.onCompleted(webView)
                 this.visible = true
@@ -69,8 +84,9 @@ ColumnLayout {
     }
 
     function launchApp(app) {
-        control.activeApp = app
+        webView.visible = false
         webView.url = app.url
+        control.activeApp = app
     }
 
     Item {
@@ -163,8 +179,8 @@ ColumnLayout {
                             SFText {
                                 text: modelData.name
                                 font {
-                                    styleName:  "Bold"
-                                    weight:     Font.Bold
+                                    styleName:  "DemiBold"
+                                    weight:     Font.DemiBold
                                     pixelSize:  18
                                 }
                                 color: Style.content_main
