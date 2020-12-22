@@ -206,7 +206,7 @@ ColumnLayout {
         font.pixelSize: 14
         font.italic:    !isExchangeRateAvailable
         opacity:        isExchangeRateAvailable ? 0.5 : 1
-        color:          isExchangeRateAvailable ? Style.content_secondary : Style.accent_fail
+        color:          Style.content_secondary
         text:           {
             if (showTotalFee)
                 return ""

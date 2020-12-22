@@ -85,7 +85,7 @@ ColumnLayout {
         font.pixelSize:   14
         font.italic:      !control.isExchangeRateAvailable
         opacity:          control.isExchangeRateAvailable ? 0.5 : 1
-        color:            control.isExchangeRateAvailable ? Style.content_secondary : Style.accent_fail
+        color:            Style.content_secondary
         text:             control.isExchangeRateAvailable
                             ? control.secondCurrencyAmount
                             //% "Exchange rate to %1 is not available"
