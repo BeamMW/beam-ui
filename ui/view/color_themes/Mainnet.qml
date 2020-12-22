@@ -45,11 +45,7 @@ AbstractColors {
     property color swapCurrencyStateIndicator:  "#ff746b"
     property color swapDisconnectNode:          "#f9605b"
 
-    property string linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
-    property string explorerUrl: "https://explorer.beam.mw/"
-    property string faucetUrl: "https://faucet.beamprivacy.community/"
-    property string appsUrl:     "http://3.136.182.25:80/app/appslist.json"
-
+    property string linkStyle:   "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
     property int appsGradientOffset: -174
     property int appsGradientTop: 56
 }

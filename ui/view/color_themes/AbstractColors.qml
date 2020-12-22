@@ -46,10 +46,6 @@ QtObject {
     property color swapDisconnectNode;
 
     property string linkStyle;
-    property string explorerUrl;
-    property string faucetUrl;
-    property string appsUrl;
-
     property int appsGradientOffset;
     property int appsGradientTop;
 }

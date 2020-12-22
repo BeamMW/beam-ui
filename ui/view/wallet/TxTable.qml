@@ -271,7 +271,7 @@ Control {
                     }
 
                     onOpenExternal : function() {
-                        var url = Style.explorerUrl + "block?kernel_id=" + detailsPanel.kernelID;
+                        var url = tableViewModel.explorerUrl + "block?kernel_id=" + detailsPanel.kernelID;
                         Utils.openExternalWithConfirmation(url);
                     }
 

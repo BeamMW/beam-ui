@@ -638,3 +638,47 @@ QString WalletSettings::getDevBeamAppName()
 {
     return m_data.value(kDevAppName).toString();
 }
+
+QString WalletSettings::getExplorerUrl() const
+{
+    #ifdef BEAM_BEAMX
+    return "https://beamx.explorer.beam.mw/";
+    #elif defined(BEAM_TESTNET)
+    return "https://testnet.explorer.beam.mw/";
+    #elif defined(BEAM_MAINNET)
+    return "https://explorer.beam.mw/";
+    #else
+    return "https://master-net.explorer.beam.mw/";
+    #endif
+}
+
+QString WalletSettings::getFaucetUrl() const
+{
+    #ifdef BEAM_BEAMX
+    return "https://faucet.beamprivacy.community/";
+    #elif defined(BEAM_TESTNET)
+    return "https://faucet.beamprivacy.community/";
+    #elif defined(BEAM_MAINNET)
+    return "https://faucet.beamprivacy.community/";
+    #else
+    return "https://faucet.beamprivacy.community/";
+    #endif
+}
+
+QString WalletSettings::getAppsUrl() const
+{
+    #ifdef BEAM_BEAMX
+    return "http://3.136.182.25:80/app/appslist.json";
+    #elif defined(BEAM_TESTNET)
+    return "";
+    #elif defined(BEAM_MAINNET)
+    return "";
+    #else
+    return "";
+    #endif
+}
+/*
+
+
+    property string appsUrl:     "http://3.136.182.25:80/app/appslist.json"
+    */

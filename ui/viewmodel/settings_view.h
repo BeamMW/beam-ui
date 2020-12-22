@@ -226,30 +226,32 @@ class SettingsViewModel : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString  nodeAddress     READ getNodeAddress     WRITE setNodeAddress    NOTIFY nodeAddressChanged)
-    Q_PROPERTY(QString  version         READ getVersion         CONSTANT)
-    Q_PROPERTY(bool     localNodeRun    READ getLocalNodeRun    WRITE setLocalNodeRun   NOTIFY localNodeRunChanged)
-    Q_PROPERTY(QString  localNodePort   READ getLocalNodePort   WRITE setLocalNodePort  NOTIFY localNodePortChanged)
-    Q_PROPERTY(QString  remoteNodePort  READ getRemoteNodePort  WRITE setRemoteNodePort NOTIFY remoteNodePortChanged)
-    Q_PROPERTY(bool     isNodeChanged   READ isNodeChanged      NOTIFY nodeSettingsChanged)
-    Q_PROPERTY(QStringList  localNodePeers  READ getLocalNodePeers  NOTIFY localNodePeersChanged)
-    Q_PROPERTY(int      lockTimeout         READ getLockTimeout     WRITE setLockTimeout NOTIFY lockTimeoutChanged)
-    Q_PROPERTY(QString  walletLocation      READ getWalletLocation  CONSTANT)
-    Q_PROPERTY(bool     isLocalNodeRunning  READ isLocalNodeRunning NOTIFY localNodeRunningChanged)
-    Q_PROPERTY(bool     isPasswordReqiredToSpendMoney   READ isPasswordReqiredToSpendMoney WRITE setPasswordReqiredToSpendMoney NOTIFY passwordReqiredToSpendMoneyChanged)
-    Q_PROPERTY(bool     isAllowedBeamMWLinks    READ isAllowedBeamMWLinks       WRITE allowBeamMWLinks NOTIFY beamMWLinksPermissionChanged)
-    Q_PROPERTY(QStringList  supportedLanguages  READ getSupportedLanguages      NOTIFY currentLanguageIndexChanged)
-    Q_PROPERTY(int      currentLanguageIndex    READ getCurrentLanguageIndex    NOTIFY currentLanguageIndexChanged)
-    Q_PROPERTY(QString  currentLanguage         READ getCurrentLanguage         WRITE setCurrentLanguage)
-    Q_PROPERTY(bool     isValidNodeAddress      READ isValidNodeAddress         NOTIFY validNodeAddressChanged)
-    Q_PROPERTY(QString  secondCurrency  READ getSecondCurrency  WRITE setSecondCurrency NOTIFY secondCurrencyChanged)
-    Q_PROPERTY(QString  publicAddress   READ getPublicAddress                           NOTIFY publicAddressChanged)
+    Q_PROPERTY(QString      nodeAddress                     READ getNodeAddress                 WRITE setNodeAddress    NOTIFY nodeAddressChanged)
+    Q_PROPERTY(QString      version                         READ getVersion                     CONSTANT)
+    Q_PROPERTY(bool         localNodeRun                    READ getLocalNodeRun                WRITE setLocalNodeRun   NOTIFY localNodeRunChanged)
+    Q_PROPERTY(QString      localNodePort                   READ getLocalNodePort               WRITE setLocalNodePort  NOTIFY localNodePortChanged)
+    Q_PROPERTY(QString      remoteNodePort                  READ getRemoteNodePort              WRITE setRemoteNodePort NOTIFY remoteNodePortChanged)
+    Q_PROPERTY(bool         isNodeChanged                   READ isNodeChanged                  NOTIFY nodeSettingsChanged)
+    Q_PROPERTY(QStringList  localNodePeers                  READ getLocalNodePeers              NOTIFY localNodePeersChanged)
+    Q_PROPERTY(int          lockTimeout                     READ getLockTimeout                 WRITE  setLockTimeout NOTIFY lockTimeoutChanged)
+    Q_PROPERTY(QString      walletLocation                  READ getWalletLocation              CONSTANT)
+    Q_PROPERTY(bool         isLocalNodeRunning              READ isLocalNodeRunning             NOTIFY localNodeRunningChanged)
+    Q_PROPERTY(bool         isPasswordReqiredToSpendMoney   READ isPasswordReqiredToSpendMoney  WRITE   setPasswordReqiredToSpendMoney NOTIFY passwordReqiredToSpendMoneyChanged)
+    Q_PROPERTY(bool         isAllowedBeamMWLinks            READ isAllowedBeamMWLinks           WRITE   allowBeamMWLinks NOTIFY beamMWLinksPermissionChanged)
+    Q_PROPERTY(QStringList  supportedLanguages              READ getSupportedLanguages          NOTIFY  currentLanguageIndexChanged)
+    Q_PROPERTY(int          currentLanguageIndex            READ getCurrentLanguageIndex        NOTIFY  currentLanguageIndexChanged)
+    Q_PROPERTY(QString      currentLanguage                 READ getCurrentLanguage             WRITE   setCurrentLanguage)
+    Q_PROPERTY(bool         isValidNodeAddress              READ isValidNodeAddress             NOTIFY  validNodeAddressChanged)
+    Q_PROPERTY(QString      secondCurrency                  READ getSecondCurrency              WRITE   setSecondCurrency NOTIFY secondCurrencyChanged)
+    Q_PROPERTY(QString      publicAddress                   READ getPublicAddress               NOTIFY  publicAddressChanged)
+    Q_PROPERTY(QString      explorerUrl                     READ getExplorerUrl                 CONSTANT)
+    Q_PROPERTY(QString      faucetUrl                       READ getFaucetUrl                   CONSTANT)
 
     Q_PROPERTY(QList<QObject*> swapCoinSettingsList READ getSwapCoinSettings    CONSTANT)
     Q_PROPERTY(QObject* notificationsSettings   READ getNotificationsSettings   CONSTANT)
 
-    Q_PROPERTY(int      maxPrivacyAnonymitySet  READ geMaxPrivacyAnonymitySet   WRITE setMaxPrivacyAnonymitySet NOTIFY maxPrivacyAnonymitySetChanged)
-    Q_PROPERTY(int      maxPrivacyLockTimeLimit READ getMaxPrivacyLockTimeLimit WRITE setMaxPrivacyLockTimeLimit NOTIFY maxPrivacyLockTimeLimitChanged)
+    Q_PROPERTY(int  maxPrivacyAnonymitySet  READ geMaxPrivacyAnonymitySet   WRITE setMaxPrivacyAnonymitySet NOTIFY maxPrivacyAnonymitySetChanged)
+    Q_PROPERTY(int  maxPrivacyLockTimeLimit READ getMaxPrivacyLockTimeLimit WRITE setMaxPrivacyLockTimeLimit NOTIFY maxPrivacyLockTimeLimitChanged)
     
 public:
 
@@ -276,7 +278,8 @@ public:
     void setCurrentLanguageIndex(int value);
     QString getCurrentLanguage() const;
     void setCurrentLanguage(QString value);
-
+    QString getExplorerUrl() const;
+    QString getFaucetUrl() const;
     // Amount in second currency
     QString getSecondCurrency() const;
     void setSecondCurrency(const QString&);

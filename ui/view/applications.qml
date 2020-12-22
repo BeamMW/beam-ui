@@ -239,7 +239,7 @@ ColumnLayout {
                 "name": viewModel.devAppName,
                 //% "This is your dev application"
                 "description": qsTrId("apps-devapp"),
-                "url": viewModel.devAppURL
+                "url": viewModel.devAppUrl
             })
             return arr
         }
@@ -247,7 +247,7 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
-        if (Style.appsUrl.length) {
+        if (viewModel.appsUrl.length) {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function()
             {
@@ -268,7 +268,7 @@ ColumnLayout {
                     }
                 }
             }
-            xhr.open('GET', Style.appsUrl, true)
+            xhr.open('GET', viewModel.appsUrl, true)
             xhr.send('')
         }
 

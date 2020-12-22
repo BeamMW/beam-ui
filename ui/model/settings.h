@@ -95,6 +95,10 @@ public:
     uint8_t getMaxPrivacyLockTimeLimitHours() const;
     void setMaxPrivacyLockTimeLimitHours(uint8_t lockTimeLimit);
 
+    QString getExplorerUrl() const;
+    QString getFaucetUrl() const;
+    QString getAppsUrl() const;
+
 public:
     static const char* WalletCfg;
     static const char* LogsFolder;

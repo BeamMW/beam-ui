@@ -17,15 +17,17 @@ namespace beamui::applications {
     class AppsViewModel : public QObject
     {
         Q_OBJECT
-        Q_PROPERTY(QString devAppURL  READ getDevAppURL CONSTANT)
+        Q_PROPERTY(QString devAppUrl  READ getDevAppUrl  CONSTANT)
         Q_PROPERTY(QString devAppName READ getDevAppName CONSTANT)
+        Q_PROPERTY(QString appsUrl    READ getAppsUrl    CONSTANT)
 
     public:
         AppsViewModel();
         ~AppsViewModel();
 
-        QString getDevAppURL() const;
+        QString getDevAppUrl() const;
         QString getDevAppName() const;
+        QString getAppsUrl() const;
 
     public:
         Q_INVOKABLE void onCompleted(QObject *webView);

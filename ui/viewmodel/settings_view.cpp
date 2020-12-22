@@ -1313,3 +1313,13 @@ void SettingsViewModel::setMaxPrivacyLockTimeLimit(int limit)
         }
     }
 }
+
+QString SettingsViewModel::getExplorerUrl() const
+{
+    return m_settings.getExplorerUrl();
+}
+
+QString SettingsViewModel::getFaucetUrl() const
+{
+    return m_settings.getFaucetUrl();
+}

@@ -45,7 +45,7 @@ SettingsFoldable {
             linkColor:  "#ffffff"
             bold:       true
             onClicked: {
-                Utils.openExternalWithConfirmation(Style.faucetUrl);
+                Utils.openExternalWithConfirmation(viewModel.faucetUrl);
             }
         }
 

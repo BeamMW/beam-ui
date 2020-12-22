@@ -35,7 +35,7 @@ namespace beamui::applications {
         assert(webView != nullptr);
     }
 
-    QString AppsViewModel::getDevAppURL() const
+    QString AppsViewModel::getDevAppUrl() const
     {
         auto& settings = AppModel::getInstance().getSettings();
         return settings.getDevBeamAppUrl();
@@ -45,5 +45,11 @@ namespace beamui::applications {
     {
         auto& settings = AppModel::getInstance().getSettings();
         return settings.getDevBeamAppName();
+    }
+
+    QString AppsViewModel::getAppsUrl() const
+    {
+        auto& settings = AppModel::getInstance().getSettings();
+        return settings.getAppsUrl();
     }
 }
