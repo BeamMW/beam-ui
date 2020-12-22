@@ -111,10 +111,12 @@ namespace
     }
 }  // namespace
 
-SwapTxObject::SwapTxObject(const TxDescription& tx, uint32_t minTxConfirmations, double blocksPerHour, QObject* parent/* = nullptr*/)
+SwapTxObject::SwapTxObject(const TxDescription& tx, uint32_t lockTxMinConfirmations,
+    uint32_t withdrawTxMinConfirmations, double blocksPerHour, QObject* parent/* = nullptr*/)
         : TxObject(tx, parent),
           m_swapTx(tx),
-          m_minTxConfirmations(minTxConfirmations),
+          m_lockTxMinConfirmations(lockTxMinConfirmations),
+          m_withdrawTxMinConfirmations(withdrawTxMinConfirmations),
           m_blocksPerHour(blocksPerHour)
 {
 }
@@ -433,17 +435,17 @@ QString SwapTxObject::getSwapCoinRefundTxId() const
 
 QString SwapTxObject::getSwapCoinLockTxConfirmations() const
 {
-    return getSwapCoinTxConfirmations<SubTxIndex::LOCK_TX>(m_swapTx, m_minTxConfirmations);
+    return getSwapCoinTxConfirmations<SubTxIndex::LOCK_TX>(m_swapTx, m_lockTxMinConfirmations);
 }
 
 QString SwapTxObject::getSwapCoinRedeemTxConfirmations() const
 {
-    return getSwapCoinTxConfirmations<SubTxIndex::REDEEM_TX>(m_swapTx, m_minTxConfirmations);
+    return getSwapCoinTxConfirmations<SubTxIndex::REDEEM_TX>(m_swapTx, m_withdrawTxMinConfirmations);
 }
 
 QString SwapTxObject::getSwapCoinRefundTxConfirmations() const
 {
-    return getSwapCoinTxConfirmations<SubTxIndex::REFUND_TX>(m_swapTx, m_minTxConfirmations);
+    return getSwapCoinTxConfirmations<SubTxIndex::REFUND_TX>(m_swapTx, m_withdrawTxMinConfirmations);
 }
 
 QString SwapTxObject::getBeamLockTxKernelId() const

@@ -54,7 +54,8 @@ public:
     Currency getCurrency() const;
 
     beam::wallet::AtomicSwapCoin getSwapCoin() const;
-    uint16_t getTxMinConfirmations() const;
+    uint16_t getLockTxMinConfirmations() const;
+    uint16_t getWithdrawTxMinConfirmations() const;
     double getBlocksPerHour() const;
     Amount getAvailable() const;
 
@@ -68,7 +69,8 @@ private:
     std::weak_ptr<SwapCoinClientModel> m_coinClient;
     std::weak_ptr<SwapEthClientModel> m_ethClient;
     int m_activeTxCounter = 0;
-    uint16_t m_minTxConfirmations = 0;
+    uint16_t m_lockTxMinConfirmations = 0;
+    uint16_t m_withdrawTxMinConfirmations = 0;
     double m_blocksPerHour = 0;
 };
 
@@ -127,7 +129,8 @@ private:
     void InitSwapClientWrappers();
 
     SwapCoinClientWrapper* getSwapCoinClientWrapper(AtomicSwapCoin swapCoinType) const;
-    uint32_t getTxMinConfirmations(AtomicSwapCoin swapCoinType) const;
+    uint32_t getLockTxMinConfirmations(AtomicSwapCoin swapCoinType) const;
+    uint32_t getWithdrawTxMinConfirmations(AtomicSwapCoin swapCoinType) const;
     double getBlocksPerHour(AtomicSwapCoin swapCoinType) const;
     void incrementActiveTxCounter(AtomicSwapCoin swapCoinType);
     void decrementActiveTxCounter(AtomicSwapCoin swapCoinType);
