@@ -342,9 +342,13 @@ uint32_t WalletModel::getClientRevision() const
     return VERSION_REVISION;
 }
 
-std::vector<beam::Asset::ID> WalletModel::getAssetsNZ() const
+std::set<beam::Asset::ID> WalletModel::getAssetsNZ() const
 {
-    std::vector<beam::Asset::ID> assets;
+    std::set<beam::Asset::ID> assets;
+
+    // always have BEAM, even if zero
+    assets.insert(Asset::s_BeamID);
+
     for(const auto& status: m_status.all)
     {
         const auto& totals = status.second;
@@ -352,9 +356,10 @@ std::vector<beam::Asset::ID> WalletModel::getAssetsNZ() const
             totals.receiving || totals.receivingChange || totals.receivingIncoming ||
             totals.sending   || totals.shielded)
         {
-            assets.push_back(status.first);
+            assets.insert(status.first);
         }
     }
+
     return assets;
 }
 

@@ -46,7 +46,7 @@ public:
     bool isOwnAddress(const beam::wallet::WalletID& walletID) const;
     bool isAddressWithCommentExist(const std::string& comment) const;
 
-    std::vector<beam::Asset::ID> getAssetsNZ() const;
+    std::set<beam::Asset::ID> getAssetsNZ() const;
     beam::Amount getAvailable(beam::Asset::ID) const;
     beam::Amount getReceiving(beam::Asset::ID) const;
     beam::Amount getReceivingIncoming(beam::Asset::ID) const;
