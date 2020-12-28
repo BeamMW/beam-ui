@@ -2232,10 +2232,6 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
         <translation>För att transaktionen ska lyckas måste plånboken vara online inom 12 timmar efter Beam har skickats.</translation>
     </message>
-    <message id="show-token">
-        <source>Show token</source>
-        <translation>Visa Tokens</translation>
-    </message>
     <message id="wallet-receive-copy-and-close">
         <source>Copy and close</source>
         <translation>Kopiera och stäng</translation>
@@ -2251,10 +2247,6 @@ Din version är: %2. Sök efter uppdateringar.</translation>
     <message id="token-info-token">
         <source>Token</source>
         <translation>Token</translation>
-    </message>
-    <message id="token-info-copy-token">
-        <source>Copy token</source>
-        <translation>Kopiera token</translation>
     </message>
     <message id="general-transaction-info">
         <source>Transaction info</source>

@@ -484,8 +484,8 @@ please review your settings and try again"
                                     }
                                 
                                     LinkButton {
-                                        //% "Show token"
-                                        text: qsTrId("show-token")
+                                        //% "More details"
+                                        text: qsTrId("more-details")
                                         linkColor: Style.accent_outgoing
                                         onClicked: {
                                             tokenInfoDialog.open();

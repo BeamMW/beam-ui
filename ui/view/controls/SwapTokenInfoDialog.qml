@@ -238,10 +238,11 @@ Dialog {
                 palette.buttonText: Style.content_opposite
                 icon.color:         Style.content_opposite
                 palette.button:     Style.accent_incoming
-                //% "Copy token"
-                text:               qsTrId("token-info-copy-token")
+                //% "copy and close"
+                text:               qsTrId("wallet-receive-swap-copy-and-close")
                 onClicked: {
                     BeamGlobals.copyToClipboard(viewModel.token);
+                    dialog.close();
                 }
             }
         }

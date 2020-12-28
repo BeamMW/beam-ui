@@ -670,7 +670,7 @@ please review your settings and try again"
                                     spacing: 11
                                     RowLayout {
                                         Layout.fillWidth:        true
-                                        Layout.rightMargin:      showTokenLink.visible ? 0 : 40
+
                                         SFLabel {
                                             id:                  tokenLabel
                                             Layout.fillWidth:    true
@@ -681,11 +681,10 @@ please review your settings and try again"
                                         }
 
                                         LinkButton {
-                                            id: showTokenLink
-                                            //% "Show token"
-                                            text: qsTrId("show-token")
+                                            //% "More details"
+                                            text: qsTrId("more-details")
                                             linkColor: Style.accent_incoming
-                                            visible:  thisView.canSend()
+                                            enabled:  thisView.canSend()
                                             onClicked: {
                                                 tokenInfoDialog.open();
                                             }

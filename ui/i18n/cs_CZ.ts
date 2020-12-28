@@ -2235,10 +2235,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
         <translation>Pro dokončení transakce byste měli být online během 12 hodin po odeslání.</translation>
     </message>
-    <message id="show-token">
-        <source>Show token</source>
-        <translation>Zobrazit token</translation>
-    </message>
     <message id="wallet-receive-copy-and-close">
         <source>Copy and close</source>
         <translation>Kopírovat a zavřít</translation>
@@ -2254,10 +2250,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
     <message id="token-info-token">
         <source>Token</source>
         <translation>Token</translation>
-    </message>
-    <message id="token-info-copy-token">
-        <source>Copy token</source>
-        <translation>Kopírovat token</translation>
     </message>
     <message id="general-transaction-info">
         <source>Transaction info</source>

@@ -2236,10 +2236,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
         <translation>Jotta maksutapahtuma onnistuu, tulee sinun avata lompakkosi 12 tunnin sisällä lähetyksestä.</translation>
     </message>
-    <message id="show-token">
-        <source>Show token</source>
-        <translation type="unfinished">Show token</translation>
-    </message>
     <message id="wallet-receive-copy-and-close">
         <source>Copy and close</source>
         <translation type="unfinished">Copy and close</translation>
@@ -2255,10 +2251,6 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="token-info-token">
         <source>Token</source>
         <translation type="unfinished">Token</translation>
-    </message>
-    <message id="token-info-copy-token">
-        <source>Copy token</source>
-        <translation>Kopioi tunniste</translation>
     </message>
     <message id="general-transaction-info">
         <source>Transaction info</source>

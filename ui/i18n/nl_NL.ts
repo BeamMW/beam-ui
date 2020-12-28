@@ -2234,10 +2234,6 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
         <translation>Om de transactie te voltooien moet u binnen 12 uur nadat de Beam&apos;s zijn verzonden online zijn.</translation>
     </message>
-    <message id="show-token">
-        <source>Show token</source>
-        <translation>Toon token</translation>
-    </message>
     <message id="wallet-receive-copy-and-close">
         <source>Copy and close</source>
         <translation>Kopieer en sluit</translation>
@@ -2253,10 +2249,6 @@ Uw versie is: %2. Controleer op updates.</translation>
     <message id="token-info-token">
         <source>Token</source>
         <translation>Token</translation>
-    </message>
-    <message id="token-info-copy-token">
-        <source>Copy token</source>
-        <translation>Kopieer token</translation>
     </message>
     <message id="general-transaction-info">
         <source>Transaction info</source>
