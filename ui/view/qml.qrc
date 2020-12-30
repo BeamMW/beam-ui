@@ -73,6 +73,7 @@
         <file>controls/PanelGradient.qml</file>
         <file>controls/AlphaTip.qml</file>
         <file>controls/SubtitleRow.qml</file>
+        <file>controls/AddressQRDialog.qml</file>
         <file>wallet/TxTable.qml</file>
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>
@@ -82,6 +83,8 @@
         <file>wallet/MainInfoPanel.qml</file>
         <file>wallet/TransactionDetails.qml</file>
         <file>wallet/AmountTip.qml</file>
+        <file>dex/MarketPanel.qml</file>
+        <file>dex/MarketTable.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
@@ -101,6 +104,7 @@
         <file>send_swap.qml</file>
         <file>send_confirm.qml</file>
         <file>send_expired.qml</file>
+        <file>dex.qml</file>
         <file>assets/fonts/SF-Pro-Display-Black.otf</file>
         <file>assets/fonts/SF-Pro-Display-Light.otf</file>
         <file>assets/fonts/SF-Pro-Display-Semibold.otf</file>
@@ -141,6 +145,8 @@
         <file>assets/icon-defapp-active.svg</file>
         <file>assets/icon-applications.svg</file>
         <file>assets/icon-applications-active.svg</file>
+        <file>assets/icon-dex.svg</file>
+        <file>assets/icon-dex-active.svg</file>
         <file>assets/icon-addresses.svg</file>
         <file>assets/icon-addresses-active.svg</file>
         <file>assets/icon-wallet.svg</file>
@@ -295,6 +301,6 @@
         <file>assets/graph-white-small.svg</file>
         <file>assets/graph-teal-big.svg</file>
         <file>assets/graph-white-big.svg</file>
-        <file>controls/AddressQRDialog.qml</file>
+        <file>assets/icon-swap-currencies-raw.svg</file>
     </qresource>
 </RCC>

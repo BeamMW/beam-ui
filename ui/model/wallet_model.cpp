@@ -200,6 +200,11 @@ void WalletModel::onSwapOffersChanged(beam::wallet::ChangeAction action, const s
 }
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
+void WalletModel::onDexOffersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::DexOffer>& offers)
+{
+    emit dexOffersChanged(action, offers);
+}
+
 void WalletModel::onCoinsByTx(const std::vector<beam::wallet::Coin>& coins)
 {
 }

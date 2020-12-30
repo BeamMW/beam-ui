@@ -118,7 +118,8 @@ Rectangle {
     }
 
     property var contentItems : [
-		"wallet", 
+		"wallet",
+		"dex",
         "atomic_swap",
 		"addresses",
         "notifications",

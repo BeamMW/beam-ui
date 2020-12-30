@@ -33,8 +33,6 @@
 #pragma warning (pop)
 #endif
 
-
-
 namespace beamui::applications
 {
     void RegisterQMLTypes()

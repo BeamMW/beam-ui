@@ -63,6 +63,7 @@
 #include "model/translator.h"
 #include "viewmodel/applications/public.h"
 #include "model/qr.h"
+#include "viewmodel/dex/dex_view.h"
 
 #if defined(BEAM_USE_STATIC_QT)
 
@@ -260,6 +261,7 @@ int main (int argc, char* argv[])
             qmlRegisterType<ExchangeRatesManager>("Beam.Wallet", 1, 0, "ExchangeRatesManager");
             qmlRegisterType<SortFilterProxyModel>("Beam.Wallet", 1, 0, "SortFilterProxyModel");
             qmlRegisterType<QR>("Beam.Wallet", 1, 0, "QR");
+            qmlRegisterType<beamui::dex::DexView>("Beam.Wallet", 1, 0, "DexViewModel");
             beamui::applications::RegisterQMLTypes();
 
             engine.load(QUrl("qrc:/root.qml"));
