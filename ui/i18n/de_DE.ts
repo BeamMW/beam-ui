@@ -1144,7 +1144,8 @@ Aktualisieren Sie Ihre Einstellungen und versuchen Sie es erneut.</translation>
     </message>
     <message id="general-rate">
         <source>Exchange rate</source>
-        <translation>Wechselkurs</translation>
+        <oldsource>Exchange Rate</oldsource>
+        <translation type="unfinished">Wechselkurs</translation>
     </message>
     <message id="wallet-receive-swap-publish">
         <source>publish offer</source>
@@ -2938,6 +2939,54 @@ offline</translation>
     </message>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-title">
+        <source>Order Book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-all-tab">
+        <source>All offers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-my-tab">
+        <source>Opened by me</source>
+        <oldsource>Opened by my</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-other-tab">
+        <source>Opened by other users</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-expiration">
+        <source>Expiration</source>
+        <translation type="unfinished">Ablaufdatum</translation>
+    </message>
+    <message id="dex-type">
+        <source>Type</source>
+        <oldsource>type</oldsource>
+        <translation type="unfinished">Typ</translation>
+    </message>
+    <message id="dex-price">
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-size">
+        <source>Size</source>
+        <translation type="unfinished">Größe</translation>
+    </message>
+    <message id="dex-total">
+        <source>Total</source>
+        <oldsource>total</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-accept-order">
+        <source>Accept Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-no-orders">
+        <source>There are no active orders at the moment.
+Please try again later or create an offer yourself.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
