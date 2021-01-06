@@ -255,7 +255,14 @@ QString TxObject::getAddressTo() const
 
 QString TxObject::getFee() const
 {
-    if (m_tx.m_fee)
+    if (isContractTx())
+    {
+        if (_contractFee)
+        {
+            return AmountInGrothToUIString(_contractFee);
+        }
+    }
+    else if (m_tx.m_fee)
     {
         Amount shieldedFee = GetShieldedFee(m_tx);
         return AmountInGrothToUIString(shieldedFee + m_tx.m_fee);
