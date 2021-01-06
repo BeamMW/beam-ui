@@ -196,6 +196,10 @@ set(UI_SRC
     viewmodel/applications/apps_api_client.h
     viewmodel/applications/shaders_manager.cpp
     viewmodel/applications/shaders_manager.h
+    viewmodel/dex/dex_view.h
+    viewmodel/dex/dex_view.cpp
+    viewmodel/dex/dex_order_object.cpp
+    viewmodel/dex/dex_orders_list.cpp
 
     model/wallet_model.h
     model/wallet_model.cpp

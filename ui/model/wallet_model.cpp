@@ -57,6 +57,7 @@ WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, b
     qRegisterMetaType<ECC::uintBig>("ECC::uintBig");
     qRegisterMetaType<boost::optional<beam::wallet::WalletAddress>>("boost::optional<beam::wallet::WalletAddress>");
     qRegisterMetaType<beam::wallet::ShieldedCoinsSelectionInfo>("beam::wallet::ShieldedCoinsSelectionInfo");
+    qRegisterMetaType<vector<beam::wallet::DexOrder>>("std::vector<beam::wallet::DexOrder>");
 
     connect(this, &WalletModel::walletStatusInternal, this, &WalletModel::onWalletStatusInternal);
     connect(this, SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),this, SLOT(setAddresses(bool, const std::vector<beam::wallet::WalletAddress>&)));
@@ -200,9 +201,9 @@ void WalletModel::onSwapOffersChanged(beam::wallet::ChangeAction action, const s
 }
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
-void WalletModel::onDexOffersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::DexOffer>& offers)
+void WalletModel::onDexOrdersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::DexOrder>& offers)
 {
-    emit dexOffersChanged(action, offers);
+    emit dexOrdersChanged(action, offers);
 }
 
 void WalletModel::onCoinsByTx(const std::vector<beam::wallet::Coin>& coins)

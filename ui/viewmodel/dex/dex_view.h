@@ -14,29 +14,38 @@
 #pragma once
 
 #include <QObject>
-#include <QAbstractItemModel>
 #include "model/wallet_model.h"
+#include "dex_orders_list.h"
 
 namespace beamui::dex {
     class DexView : public QObject
     {
         Q_OBJECT
+        Q_PROPERTY(QAbstractItemModel* orders READ getOrders NOTIFY ordersChanged)
 
     public:
         DexView();
         ~DexView();
 
+        QAbstractItemModel* getOrders();
+
         //
         // Methods
         //
-        Q_INVOKABLE void placeOrder();
+        Q_INVOKABLE void buyBEAM();
+        Q_INVOKABLE void sellBEAM();
+        Q_INVOKABLE void acceptOrder(QString orderId);
+
+    signals:
+        void ordersChanged();
 
     public slots:
-        void onDexOffersChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::DexOffer>& offers) {}
+        void onDexOrdersChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::DexOrder>& offers);
         void onNewAddress(const beam::wallet::WalletAddress& addr);
 
     private:
         WalletModel& _walletModel;
+        DexOrdersList _orders;
         beam::wallet::WalletAddress _receiverAddr;
     };
 }

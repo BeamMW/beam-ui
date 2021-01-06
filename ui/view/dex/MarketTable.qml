@@ -10,25 +10,28 @@ import "../utils.js" as Utils
 Control {
     id: control
 
+    property var viewModel
+
+
     state: "allOffers"
     states: [
         State {
             name: "allOffers"
             PropertyChanges { target: allTab; state: "active" }
-           // PropertyChanges { target: txProxyModel; filterRole: "isMy" }
-          //  PropertyChanges { target: txProxyModel; filterString: "*" }
+            PropertyChanges { target: ordersProxyModel; filterRole: "isMine" }
+            PropertyChanges { target: ordersProxyModel; filterString: "*" }
         },
         State {
             name: "myOffers"
             PropertyChanges { target: myTab; state: "active" }
-            //PropertyChanges { target: txProxyModel; filterRole: "isMy" }
-            //PropertyChanges { target: txProxyModel; filterString: "true" }
+            PropertyChanges { target: ordersProxyModel; filterRole: "isMine" }
+            PropertyChanges { target: ordersProxyModel; filterString: "true" }
         },
         State {
             name: "otherOffers"
             PropertyChanges { target: otherTab; state: "active" }
-            //PropertyChanges { target: txProxyModel; filterRole: "isMy" }
-            //PropertyChanges { target: txProxyModel; filterString: "false" }
+            PropertyChanges { target: ordersProxyModel; filterRole: "isMine" }
+            PropertyChanges { target: ordersProxyModel; filterString: "false" }
         }
     ]
 
@@ -71,13 +74,49 @@ Control {
         }
 
         CustomTableView {
-            id: offersTable
+            id: ordersTable
             Layout.fillWidth : true
             Layout.fillHeight : true
+            visible: model.count > 0
 
             property real rowHeight: 56
-            property real resizableWidth: offersTable.width - actionsColumn.width
+            property real resizableWidth: width - actionsColumn.width
             property real resizeRatio: resizableWidth / 780
+
+            selectionMode:        SelectionMode.NoSelection
+            sortIndicatorVisible: true
+            sortIndicatorColumn:  0
+            sortIndicatorOrder:   Qt.DescendingOrder
+
+            model: SortFilterProxyModel {
+                id: ordersProxyModel
+                source: viewModel.orders
+
+                sortOrder: ordersTable.sortIndicatorOrder
+                sortCaseSensitivity: Qt.CaseInsensitive
+                sortRole: ordersTable.getColumn(ordersTable.sortIndicatorColumn).role
+
+                filterSyntax: SortFilterProxyModel.Wildcard
+                filterCaseSensitivity: Qt.CaseInsensitive
+            }
+
+            rowDelegate: Item {
+                height: ordersTable.rowHeight
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                Rectangle {
+                    anchors.fill: parent
+                    color: styleData.selected ? Style.row_selected :
+                            (styleData.alternate ? Style.background_row_even : Style.background_row_odd)
+                }
+            }
+
+            itemDelegate: TableItem {
+                text:  styleData.value
+                elide: styleData.elideMode
+                onCopyText: BeamGlobals.copyToClipboard(styleData.value)
+            }
 
             /*
             TableViewColumn {
@@ -85,7 +124,7 @@ Control {
                 //% "Date | Time"
                 title:     qsTrId("dex-date-time")
                 elideMode: Text.ElideRight
-                width:     130 * offersTable.resizeRatio
+                width:     130 * ordersTable.resizeRatio
                 movable:   false
                 resizable: false
             }
@@ -96,7 +135,7 @@ Control {
                 //% "Type"
                 title:     qsTrId("dex-type")
                 elideMode: Text.ElideRight
-                width:     130 * offersTable.resizeRatio
+                width:     130 * ordersTable.resizeRatio
                 movable:   false
                 resizable: false
             }
@@ -106,7 +145,7 @@ Control {
                 //% "Price"
                 title:     qsTrId("dex-price")
                 elideMode: Text.ElideRight
-                width:     130 * offersTable.resizeRatio
+                width:     130 * ordersTable.resizeRatio
                 movable:   false
                 resizable: false
             }
@@ -116,7 +155,7 @@ Control {
                 //% "Size"
                 title:     qsTrId("dex-size")
                 elideMode: Text.ElideRight
-                width:     130 * offersTable.resizeRatio
+                width:     130 * ordersTable.resizeRatio
                 movable:   false
                 resizable: false
             }
@@ -126,7 +165,7 @@ Control {
                 //% "Total"
                 title:     qsTrId("dex-total")
                 elideMode: Text.ElideRight
-                width:     130 * offersTable.resizeRatio
+                width:     130 * ordersTable.resizeRatio
                 movable:   false
                 resizable: false
             }
@@ -136,7 +175,7 @@ Control {
                 //% "Amount"
                 title:     qsTrId("general-amount")
                 elideMode: Text.ElideRight
-                width:     130 * offersTable.resizeRatio
+                width:     130 * ordersTable.resizeRatio
                 movable:   false
                 resizable: false
             }
@@ -146,7 +185,7 @@ Control {
                 //% "Amount"
                 title:     qsTrId("general-amount")
                 elideMode: Text.ElideRight
-                width:     130 * offersTable.resizeRatio
+                width:     130 * ordersTable.resizeRatio
                 movable:   false
                 resizable: false
             }
@@ -155,7 +194,7 @@ Control {
                 role: "rate"
                 //% "Exchange Rate"
                 title:     qsTrId("general-rate")
-                width:     130 * offersTable.resizeRatio
+                width:     130 * ordersTable.resizeRatio
                 movable:   false
                 resizable: false
             }
@@ -165,7 +204,7 @@ Control {
                 role: "expiration"
                 //% "Expiration"
                 title:     qsTrId("dex-expiration")
-                width:     130 * offersTable.resizeRatio
+                width:     130 * ordersTable.resizeRatio
                 movable:   false
                 resizable: false
             }
@@ -175,23 +214,50 @@ Control {
                role:     "status"
                //% "Status"
                title:     qsTrId("general-status")
-               width:     offersTable.getAdjustedColumnWidth(statusColumn)
+               width:     ordersTable.getAdjustedColumnWidth(statusColumn)
                movable:   false
                resizable: false
             }
 
             TableViewColumn {
                 id:        actionsColumn
-                width:     30
+                width:     40
                 movable:   false
                 resizable: false
+                delegate:  CustomToolButton {
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.verticalCenter
+                    icon.source: "qrc:/assets/icon-actions.svg"
+                    //% "Actions"
+                    ToolTip.text: qsTrId("general-actions")
+                    onClicked: function () {
+                        orderMenu.orderID = ordersTable.model.getRoleValue(styleData.row, "id");
+                        orderMenu.popup()
+                    }
+                }
+            }
+
+            ContextMenu {
+                id:    orderMenu
+                modal: true
+                dim:   false
+                property var orderID
+
+                Action {
+                    //% "Accept Order"
+                    text: qsTrId("dex-accept-order")
+                    icon.source: "qrc:/assets/icon-accept-offer.svg"
+                    onTriggered: {
+                        viewModel.acceptOrder(orderMenu.orderID)
+                    }
+                }
             }
         }
 
         ColumnLayout {
             Layout.topMargin: 100
             Layout.alignment: Qt.AlignHCenter
-            visible: false
+            visible: ordersTable.model.count == 0
 
             SvgImage {
                 Layout.alignment: Qt.AlignHCenter
@@ -207,8 +273,8 @@ Control {
                 color:                Style.content_main
                 opacity:              0.5
                 lineHeight:           1.43
-                //% "There are no active offers at the moment.\nPlease try again later or create an offer yourself."
-                text: qsTrId("dex-no-offers")
+                //% "There are no active orders at the moment.\nPlease try again later or create an offer yourself."
+                text: qsTrId("dex-no-orders")
             }
 
             Item {

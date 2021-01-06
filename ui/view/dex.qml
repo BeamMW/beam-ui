@@ -42,15 +42,16 @@ ColumnLayout {
             spacing: 15
 
             CustomButton {
-                text: "Buy BEAM"
+                text: "Buy 100 BEAM"
                 onClicked: {
-                    viewModel.placeOrder()
+                    viewModel.buyBEAM()
                 }
             }
 
             CustomButton {
-                text: "Sell BEAM"
+                text: "Sell 100 BEAM"
                 onClicked: {
+                    viewModel.sellBEAM()
                 }
             }
         }
@@ -58,6 +59,7 @@ ColumnLayout {
         MarketTable {
             Layout.fillWidth: true
             Layout.fillHeight: true
+            viewModel: viewModel
         }
     }
 }
