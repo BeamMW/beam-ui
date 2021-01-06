@@ -628,6 +628,9 @@ void TxObject::update(const beam::wallet::TxDescription& tx)
         for(const auto& spend: data.m_Spend) {
             _contractAssets.insert(spend.first);
             _contractAmount -= spend.second;
+            _contractFee += data.m_Fee;
         }
     });
+
+    _contractAmount -= _contractFee;
 }
