@@ -85,6 +85,8 @@ Control {
             Layout.fillWidth:  true
             visible: connectionError
             implicitHeight:  errorRow.height
+            Layout.leftMargin: 20
+            Layout.topMargin: 3
 
             RowLayout {
                 id: errorRow
