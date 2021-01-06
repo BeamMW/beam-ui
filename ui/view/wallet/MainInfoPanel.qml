@@ -12,13 +12,13 @@ Control {
     }
 
     property alias selectedAsset: viewModel.selectedAsset
-    property bool  showDetails:   viewModel.progress.length > 0
+    property bool  showProgress:  viewModel.progress.length > 0
 
     spacing: 10
-    height:  showDetails ? 200 : 130
+    implicitHeight: control.showProgress ? 200 : 130
 
     property real itemWidth: {
-        return control.showDetails ? (control.availableWidth - control.spacing) / 2 : control.availableWidth
+        return showProgress ? (control.availableWidth - control.spacing) / 2 : control.availableWidth
     }
 
     contentItem: Row {
