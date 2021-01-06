@@ -28,7 +28,7 @@ Control {
             id:         avctrl
             width:      control.itemWidth
             height:     control.availableHeight
-            compact:    control.showDetails
+            compact:    control.showProgress
             available:  viewModel.assetAvailable
             rateUnit:   viewModel.rateUnit
             rate:       viewModel.rate
@@ -41,7 +41,7 @@ Control {
             id:        ipctrl
             width:     control.itemWidth
             height:    control.availableHeight
-            visible:   showDetails
+            visible:   showProgress
             progress:  viewModel.progress
             totals:    viewModel.progressTotal
         }
