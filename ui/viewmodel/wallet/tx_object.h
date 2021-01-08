@@ -56,6 +56,7 @@ public:
     bool isSelfTx() const;
     bool isShieldedTx() const;
     bool isContractTx() const;
+    bool isDexTx() const;
     beam::wallet::TxAddressType getAddressType();
     bool isSent() const;
     bool isReceived() const;

@@ -32,6 +32,7 @@
 #include "wallet/transactions/swaps/bridges/litecoin/litecoin.h"
 #include "wallet/transactions/swaps/bridges/qtum/qtum.h"
 #include "wallet/transactions/swaps/bridges/dogecoin/dogecoin.h"
+#include "wallet/transactions/dex/dex_tx.h"
 #if defined(BITCOIN_CASH_SUPPORT)
 #include "wallet/transactions/swaps/bridges/bitcoin_cash/bitcoin_cash.h"
 #endif // BITCOIN_CASH_SUPPORT
@@ -358,6 +359,8 @@ void AppModel::startWallet()
 #ifdef BEAM_LELANTUS_SUPPORT
     additionalTxCreators->emplace(TxType::PushTransaction, std::make_shared<lelantus::PushTransaction::Creator>(m_db));
 #endif
+
+    additionalTxCreators->emplace(TxType::DexSimpleSwap, std::make_shared<DexTransaction::Creator>(m_db));
 
     bool displayRate = m_settings.getSecondCurrency().toStdString() != exchangeRateOffStr;
     m_wallet->start(activeNotifications, displayRate, additionalTxCreators);

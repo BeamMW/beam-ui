@@ -47,7 +47,7 @@ namespace beamui::dex
 
         _walletModel.getAsync()->saveAddress(_receiverAddr, true);
 
-        DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 1, 0, 100);
+        DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 1, 0, 50);
         _walletModel.getAsync()->publishDexOrder(order);
     }
 
@@ -100,16 +100,14 @@ namespace beamui::dex
         }
     }
 
-    void DexView::acceptOrder(QString orderId)
+    void DexView::acceptOrder(const QString& orderId)
     {
-        try
+        beam::wallet::DexOrderID dexOrderId;
+        if (!dexOrderId.FromHex(orderId.toStdString()))
         {
-            beam::wallet::DexOrderID dexOrderId(orderId.toStdString());
-            _walletModel.getAsync()->acceptDexOrder(dexOrderId);
+            // TODO:DEX show error? usually this should not happen, so may be just leave LOG_ERROR as is
+            LOG_ERROR() << "DexView::acceptOrder failed, bad order id";
         }
-        catch(std::runtime_error& err)
-        {
-            LOG_ERROR() << "DexView::acceptOrder failed, " << err.what();
-        }
+        _walletModel.getAsync()->acceptDexOrder(dexOrderId);
     }
 }

@@ -133,6 +133,11 @@ QString TxObject::getComment() const
         //% "Contract transaction"
         return qtTrId("tx-contract-default-comment");
     }
+    else if (isDexTx())
+    {
+        // TODO:DEX just temporary
+        return "DEX transaction";
+    }
     else
     {
         std::string str{m_tx.m_message.begin(), m_tx.m_message.end()};
@@ -213,6 +218,11 @@ QString TxObject::getStatus() const
     {
         ContractTxStatusInterpreter interpreter(m_tx);
         return interpreter.getStatus().c_str();
+    }
+    else if (m_tx.m_txType == wallet::TxType::DexSimpleSwap)
+    {
+        // TODO:DEX implement
+        return "NOT IMPLEMENTED";
     }
     else
     {
@@ -506,6 +516,7 @@ QString TxObject::getReceiverIdentity() const
 
 std::set<beam::Asset::ID> TxObject::getAssetsList() const
 {
+    // TODO:DEX implement
     if (isContractTx())
     {
         return _contractAssets;
@@ -557,6 +568,11 @@ bool TxObject::isShieldedTx() const
 bool TxObject::isContractTx() const
 {
     return m_tx.m_txType == TxType::Contract;
+}
+
+bool TxObject::isDexTx() const
+{
+    return m_tx.m_txType == TxType::DexSimpleSwap;
 }
 
 beam::wallet::TxAddressType TxObject::getAddressType()

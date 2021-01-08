@@ -107,6 +107,7 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
             case TxType::Contract:
             case TxType::PushTransaction:
             case TxType::Simple:
+            case TxType::DexSimpleSwap:
                 break;
             }
             modifiedTransactions.push_back(std::make_shared<TxObject>(t, secondCurrency));
