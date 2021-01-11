@@ -69,12 +69,13 @@ Control {
         BeamAmount {
             id:                amountCtrl
             Layout.fillWidth:  true
-            spacing:           15
+            spacing:           12
             lightFont:         false
             fontSize:          16
             iconSize:          Qt.size(22, 22)
             copyMenuEnabled:   true
             maxPaintedWidth:   calcMaxWidth()
+            maxUnitChars:      6
         }
 
         SvgImage

@@ -28,6 +28,7 @@ Control {
     property string  prefix:              ""
     property alias   fontSizeMode:        amountText.fontSizeMode
     property real    maxPaintedWidth:     0
+    property int     maxUnitChars:        0
     property real    vSpacing:            5
 
     function formatRate () {
@@ -42,9 +43,9 @@ Control {
         elide:  Qt.ElideNone
     }
 
-    function formatText (val, rounded) {
-        if(parseFloat(amount) > 0 || showZero) {
-            return prefix + (rounded && val.split(".")[0] == "0" ? "< " : "") + [Utils.uiStringToLocale(val), control.unitName].join(" ")
+    function formatText (val, uname, rounded) {
+        if (parseFloat(amount) > 0 || showZero) {
+            return prefix + (rounded && val.split(".")[0] == "0" ? "< " : "") + [Utils.uiStringToLocale(val), uname].join(" ")
         }
         return "-"
     }
@@ -56,13 +57,15 @@ Control {
 
     function fitText () {
         var maxw = calcMaxTextWidth()
-        if (maxw <= 0) return formatText(control.amount)
+        if (maxw <= 0) return "A:" + formatText(control.amount, control.unitName)
 
         var samount = control.amount.toString()
         var rounded = false
+        var uname   = control.unitName
+        var unamed  = false
 
         while (true) {
-           var result = formatText(samount, rounded)
+           var result = formatText(samount, [uname, unamed ? '\u2026' : ''].join(''),  rounded)
            if (result == "-") return result;
 
            metrics.text = result
@@ -70,12 +73,20 @@ Control {
                return result
            }
 
-           if (samount.length == 0) return "ERROR"
-           if (samount.indexOf(".") == -1) return result
+           if (uname && control.maxUnitChars && uname.length >= maxUnitChars)
+           {
+                uname  = uname.substring(0, uname.length - 1)
+                unamed = true
+           }
+           else
+           {
+                if (samount.length == 0) return "ERROR"
+                if (samount.indexOf(".") == -1) return result
 
-           var rup = BeamGlobals.roundUp(samount)
-           rounded = rup != samount
-           samount = rup
+                var rup = BeamGlobals.roundUp(samount)
+                rounded = rup != samount
+                samount = rup
+           }
        }
     }
 
@@ -90,12 +101,37 @@ Control {
     onMaxPaintedWidthChanged: {
         if (maxPaintedWidth) amountText.text = fitText()
         else amountText.text = Qt.binding(function () {
-                                            return formatText(control.amount)
+                                            return formatText(control.amount, control.unitName)
                                           })
     }
 
     onWidthChanged: {
         if (maxPaintedWidth) amountText.text = fitText()
+    }
+
+    AlphaTip {
+        id: tip
+
+        visible:      amountTextArea.containsMouse && tipText != amountText.text
+        defBkColor:   Qt.rgba(55 / 255, 93  / 255, 123 / 255, 0.75)
+        defTextColor: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.8)
+
+        x: {
+            var xpos = Utils.xUp(amountText) + amountText.width / 2 - tip.width / 2
+            return xpos + tip.width > root.width ? Utils.xUp(amountText) + amountText.width - tip.width : xpos
+        }
+
+        y: Utils.yUp(amountText) + amountText.height + 5
+        parent: Overlay.overlay
+
+        contentItem: SFText {
+            id:             tipText
+            text:           formatText(control.amount, control.unitName)
+            font.pixelSize: 12
+            font.styleName: "Light"
+            font.weight:    Font.Light
+            color:          tip.defTextColor
+        }
     }
 
     contentItem: Row {
@@ -132,8 +168,15 @@ Control {
                     color:            control.error ? Style.validator_error : control.color
                     onCopyText:       BeamGlobals.copyToClipboard(amount)
                     copyMenuEnabled:  true
-                    text:             control.maxPaintedWidth ? fitText() : formatText(control.amount)
+                    text:             control.maxPaintedWidth ? fitText() : formatText(control.amount, control.unitName)
+
+                    MouseArea {
+                        id: amountTextArea
+                        anchors.fill: parent
+                        hoverEnabled: true
+                    }
                 }
+
                 SvgImage {
                     visible:    showDrop
                     source:     "qrc:/assets/icon-down.svg"

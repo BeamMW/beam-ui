@@ -154,3 +154,25 @@ function formatHours(hours) {
         return hh;
     }
 }
+
+function xUp(ctrl) {
+    var x = 0
+    do
+    {
+        x += ctrl.x
+        ctrl = ctrl.parent
+    }
+    while (ctrl != null)
+    return x
+}
+
+function yUp(ctrl) {
+    var y = 0
+    do
+    {
+        y += ctrl.y
+        ctrl = ctrl.parent
+    }
+    while (ctrl != null)
+    return y
+}

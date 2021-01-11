@@ -3,6 +3,7 @@ import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.3
 import Beam.Wallet 1.0
 import "../controls"
+import "../utils.js" as Utils
 import "."
 
 Control {
@@ -14,33 +15,11 @@ Control {
     property real separatorWidth: 1
     property real fillerWidth: 20
 
-    function xUp(ctrl) {
-        var x = 0
-        do
-        {
-            x += ctrl.x
-            ctrl = ctrl.parent
-        }
-        while (ctrl != null)
-        return x
-    }
-
-    function yUp(ctrl) {
-        var y = 0
-        do
-        {
-            y += ctrl.y
-            ctrl = ctrl.parent
-        }
-        while (ctrl != null)
-        return y
-    }
-
     AmountTip {
         id:           lockedTip
         visible:      lockedArea.containsMouse && lockedCtrl.showDrop
-        x:            xUp(lockedCtrl) - control.padding / 2
-        y:            yUp(lockedCtrl) + lockedCtrl.height + 5
+        x:            Utils.xUp(lockedCtrl) - control.padding / 2
+        y:            Utils.yUp(lockedCtrl) + lockedCtrl.height + 5
         parent:       Overlay.overlay
         totals:       control.totals
         progress:     control.progress
@@ -61,8 +40,8 @@ Control {
     AmountTip {
         id:           receivingTip
         visible:      receivingArea.containsMouse && receivingCtrl.showDrop
-        x:            xUp(receivingCtrl) - control.padding / 2
-        y:            yUp(receivingCtrl) + receivingCtrl.height + 5
+        x:            Utils.xUp(receivingCtrl) - control.padding / 2
+        y:            Utils.yUp(receivingCtrl) + receivingCtrl.height + 5
         parent:       Overlay.overlay
         totals:       control.totals
         progress:     control.progress
@@ -83,8 +62,8 @@ Control {
     AmountTip {
         id:           sendingTip
         visible:      sendingArea.containsMouse && sendingCtrl.showDrop
-        x:            xUp(sendingCtrl) - control.padding / 2
-        y:            yUp(sendingCtrl) + sendingCtrl.height + 5
+        x:            Utils.xUp(sendingCtrl) - control.padding / 2
+        y:            Utils.yUp(sendingCtrl) + sendingCtrl.height + 5
         parent:       Overlay.overlay
         totals:       control.totals
         progress:     control.progress
