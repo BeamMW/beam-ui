@@ -83,8 +83,8 @@ jobs:
       if: matrix.os == 'windows-2019'
       run: |
         export PATH=c:\beam-libs\qt5-static-win\bin:$PATH
-        cmake -G "Visual Studio 16 2019" -A x64 -DBOOST_ROOT=$BOOST_ROOT_1_72_0 -DCMAKE_BUILD_TYPE=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_HW_WALLET=Off .
-        ls -la ui
+        cmake -G "Visual Studio 16 2019" -A x64 -B${{runner.workspace}}/build -DBOOST_ROOT=$BOOST_ROOT_1_72_0 -DCMAKE_BUILD_TYPE=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_HW_WALLET=Off .
+        ls -la ${{runner.workspace}}/build/ui
 
     - name: Save version info
       shell: bash
