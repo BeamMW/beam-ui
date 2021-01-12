@@ -25,7 +25,10 @@ jobs:
 
     - name: Submodule update
       shell: bash
-      run: git submodule update --init --recursive --remote --jobs 4
+      run: |
+        git submodule update --init --recursive --remote --jobs 4
+        cd beam
+        git apply 3rdparty/protobuf-patch.diff
 
 ###############################################################################
 # Create Build Environment
@@ -43,14 +46,6 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install libssl-dev curl libxi-dev libcups2-dev -y
-
-    # - name: Create Build Environment [ununtu 16.04]
-    #   shell: bash
-    #   if: matrix.os == 'ubuntu-16.04'
-    #   run: |
-    #     sudo apt-get install g++-7 gcc-7
-    #     echo "CC=gcc-7" >> $GITHUB_ENV
-    #     echo "CXX=g++-7" >> $GITHUB_ENV
 
     - name: Create Build Environment [windows]
       shell: bash
@@ -81,16 +76,12 @@ jobs:
 ###############################################################################
     - name: Configure CMake [macos-10.15 && ununtu all]
       if: matrix.os != 'windows-2019'
-      run: |
-        # git apply 3rdparty/protobuf-patch.diff
-        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_HW_WALLET=Off .
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_HW_WALLET=Off .
 
     - name: Configure CMake [windows]
       shell: bash
       if: matrix.os == 'windows-2019'
-      run: |
-        # git apply 3rdparty/protobuf-patch.diff
-        cmake -G "Visual Studio 16 2019" -A x64 -DBOOST_ROOT=$BOOST_ROOT_1_72_0 -DCMAKE_BUILD_TYPE=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_HW_WALLET=Off .
+      run: cmake -G "Visual Studio 16 2019" -A x64 -DBOOST_ROOT=$BOOST_ROOT_1_72_0 -DCMAKE_BUILD_TYPE=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_HW_WALLET=Off .
 
     - name: Save version info
       shell: bash
