@@ -81,7 +81,9 @@ jobs:
     - name: Configure CMake [windows]
       shell: bash
       if: matrix.os == 'windows-2019'
-      run: cmake -G "Visual Studio 16 2019" -A x64 -DBOOST_ROOT=$BOOST_ROOT_1_72_0 -DCMAKE_BUILD_TYPE=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_HW_WALLET=Off .
+      run: |
+        export PATH=c:\beam-libs\qt5-static-win\bin:$PATH
+        cmake -G "Visual Studio 16 2019" -A x64 -DBOOST_ROOT=$BOOST_ROOT_1_72_0 -DCMAKE_BUILD_TYPE=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_HW_WALLET=Off .
 
     - name: Save version info
       shell: bash
@@ -95,16 +97,16 @@ jobs:
 ###############################################################################
 # Build
 ###############################################################################
-    # - name: Build [macos-10.15]
-    #   if: matrix.os == 'macos-10.15'
-    #   run: cmake --build . --parallel --config $BUILD_TYPE
+    - name: Build [macos-10.15]
+      if: matrix.os == 'macos-10.15'
+      run: cmake --build . --parallel --config $BUILD_TYPE
 
-    # - name: Build [ununtu all]
-    #   shell: bash
-    #   if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
-    #   run: make -j$(nproc)
+    - name: Build [ununtu all]
+      shell: bash
+      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      run: make -j$(nproc)
 
-    # - name: Build [windows]
-    #   shell: bash
-    #   if: matrix.os == 'windows-2019'
-    #   run: cmake --build . --parallel --config $BUILD_CONFIG
+    - name: Build [windows]
+      shell: bash
+      if: matrix.os == 'windows-2019'
+      run: cmake --build . --parallel --config $BUILD_CONFIG
