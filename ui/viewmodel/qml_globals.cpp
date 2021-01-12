@@ -25,11 +25,13 @@
 
 #include <boost/algorithm/string.hpp>
 #include <boost/multiprecision/cpp_dec_float.hpp>
+#include <boost/multiprecision/cpp_int.hpp>
 #include "3rdparty/libbitcoin/include/bitcoin/bitcoin/formats/base_10.hpp"
 
 #include "fee_helpers.h"
 
 using boost::multiprecision::cpp_dec_float_50;
+using boost::multiprecision::cpp_int;
 
 namespace
 {
@@ -218,19 +220,36 @@ QString QMLGlobals::calcAmountInSecondCurrency(const QString& amount, const QStr
 QString QMLGlobals::roundUp(const QString& amount)
 {
     const auto point = amount.indexOf('.');
-    if (point == -1) return amount;
 
-    const auto targetDecimals = amount.length() - point - 2;
-    const cpp_dec_float_50 scale = pow(cpp_dec_float_50(10), targetDecimals);
+    if (point == -1)
+    {
+        // We do not have decimals
+        const auto kilo = amount.indexOf("K");
+        if (kilo != -1)
+        {
+            // but already rounded to 1000
+            return amount;
+        }
 
-    const cpp_dec_float_50 original(amount.toStdString().c_str());
-    const cpp_dec_float_50 rounded = ceil(original * scale)/scale;
+        const cpp_int original(amount.toStdString().c_str());
+        const cpp_int rounded = original / 1000 + (original % 1000 > 0 ? 1 : 0);
 
-    auto roundedStr = rounded.str(targetDecimals, std::ios_base::fixed);
-    boost::algorithm::trim_right_if(roundedStr, char_is<'0'>);
-    boost::algorithm::trim_right_if(roundedStr, char_is<'.'>);
+        return QString(rounded.str().c_str()) + "K";
+    }
+    else
+    {
+        const auto targetDecimals = amount.length() - point - 2;
+        const cpp_dec_float_50 scale = pow(cpp_dec_float_50(10), targetDecimals);
 
-    return QString(roundedStr.c_str());
+        const cpp_dec_float_50 original(amount.toStdString().c_str());
+        const cpp_dec_float_50 rounded = ceil(original * scale) / scale;
+
+        auto roundedStr = rounded.str(targetDecimals, std::ios_base::fixed);
+        boost::algorithm::trim_right_if(roundedStr, char_is<'0'>);
+        boost::algorithm::trim_right_if(roundedStr, char_is<'.'>);
+
+        return QString(roundedStr.c_str());
+    }
 }
 
 bool QMLGlobals::canSwap()

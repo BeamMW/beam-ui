@@ -141,6 +141,7 @@ ColumnLayout {
             visible:             multi
             model:               control.currencies
             textRole:            "unitName"
+            textMaxLen:          10
 
             onActivated: {
                 if (multi) control.currencyIdx = index

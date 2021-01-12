@@ -47,9 +47,16 @@ function uiStringToLocale (amount) {
     // Trim leading zeros
     var intPart = parseInt(parts[0], 10);
     var left = isNaN(intPart) ? parts[0] : intPart.toString();
-
     left = left.replace(/(\d)(?=(?:\d{3})+\b)/g, "$1" + locale.groupSeparator);
-    return parts[1] ? [left, parts[1]].join(locale.decimalPoint) : left;
+
+    var res = parts[1] ? [left, parts[1]].join(locale.decimalPoint) : left;
+
+    // amount can be ...K, ...M  &c. value, do not drop this postfix
+    if (/[a-z$]/i.test(amount)) {
+        res += amount[amount.length - 1];
+    }
+
+    return res
 }
 
 function localeDecimalToCString(amount) {
@@ -175,4 +182,8 @@ function yUp(ctrl) {
     }
     while (ctrl != null)
     return y
+}
+
+function limitText (text, maxLen) {
+    return maxLen > 0 && text.length >= maxLen ? [text.substring(0, maxLen - 1), '\u2026'].join('') : text
 }

@@ -5,6 +5,7 @@ import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
 import "."
+import "../utils.js" as Utils
 
 ComboBox {
     id: control
@@ -15,6 +16,7 @@ ComboBox {
     property string color: Style.content_main
     property string underlineColor: color
     property bool enableScroll: false
+    property int textMaxLen: 0
 
     property var modelWidth: control.width
     property var calculatedWidth: Math.max(control.width, modelWidth)
@@ -53,10 +55,11 @@ ComboBox {
             }
             SFText {
                 text: {
+                    var text = modelData
                     if (control.textRole) {
-                        return Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]
+                        text = Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]
                     }
-                    return modelData
+                    return Utils.limitText(text, control.textMaxLen)
                 }
                 color: Style.content_main
                 elide: Text.ElideMiddle
@@ -84,7 +87,7 @@ ComboBox {
     onModelChanged: {
         if (model) {
             for(var i = 0; i < model.length; i++){
-                textMetrics.text = control.textRole ? model[i][control.textRole] : model[i]
+                textMetrics.text = Utils.limitText(control.textRole ? model[i][control.textRole] : model[i], control.textMaxLen)
                 var iconW = model[i]["iconWidth"] || 0
                 modelWidth = Math.max(textMetrics.width +
                                       forCalc.leftPadding +
@@ -124,7 +127,7 @@ ComboBox {
 
         SFText  {
             clip: true
-            text: control.editable ? control.editText : control.displayText
+            text: control.editable ? control.editText : Utils.limitText(control.displayText, control.textMaxLen)
             color: control.enabled ? control.color : Style.content_secondary 
             font.pixelSize: fontPixelSize
             anchors.verticalCenter: parent.verticalCenter

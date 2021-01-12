@@ -43,9 +43,9 @@ Control {
         elide:  Qt.ElideNone
     }
 
-    function formatText (val, uname, rounded) {
+    function formatText (val, uname) {
         if (parseFloat(amount) > 0 || showZero) {
-            return prefix + (rounded && val.split(".")[0] == "0" ? "< " : "") + [Utils.uiStringToLocale(val), uname].join(" ")
+            return prefix + [Utils.uiStringToLocale(val), uname].join(" ")
         }
         return "-"
     }
@@ -57,15 +57,14 @@ Control {
 
     function fitText () {
         var maxw = calcMaxTextWidth()
-        if (maxw <= 0) return "A:" + formatText(control.amount, control.unitName)
+        if (maxw <= 0) return formatText(control.amount, control.unitName)
 
         var samount = control.amount.toString()
-        var rounded = false
         var uname   = control.unitName
         var unamed  = false
 
         while (true) {
-           var result = formatText(samount, [uname, unamed ? '\u2026' : ''].join(''),  rounded)
+           var result = formatText(samount, [uname, unamed ? '\u2026' : ''].join(''))
            if (result == "-") return result;
 
            metrics.text = result
@@ -81,10 +80,9 @@ Control {
            else
            {
                 if (samount.length == 0) return "ERROR"
-                if (samount.indexOf(".") == -1) return result
 
                 var rup = BeamGlobals.roundUp(samount)
-                rounded = rup != samount
+                if (rup == samount) return result
                 samount = rup
            }
        }
@@ -112,7 +110,7 @@ Control {
     AlphaTip {
         id: tip
 
-        visible:      amountTextArea.containsMouse && tipText != amountText.text
+        visible:      amountTextArea.containsMouse && tipText.text != amountText.text
         defBkColor:   Qt.rgba(55 / 255, 93  / 255, 123 / 255, 0.75)
         defTextColor: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.8)
 
