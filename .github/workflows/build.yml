@@ -89,6 +89,9 @@ jobs:
         echo "BEAM_VERSION=$(cat beam_version.gen)" >> $GITHUB_ENV
         echo "BEAM_TARGET_SUFFIX=-masternet" >> $GITHUB_ENV
         rm beam_version.gen
+        ls -la
+        ls -la beam
+        ls -la ui
 
 ###############################################################################
 # Build
@@ -103,6 +106,7 @@ jobs:
       run: make -j$(nproc)
 
     - name: Build [windows]
+      if: ${{false}}
       shell: bash
       if: matrix.os == 'windows-2019'
       run: cmake --build . --parallel --config $BUILD_CONFIG
