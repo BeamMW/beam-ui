@@ -15,6 +15,7 @@
 
 #include <QObject>
 #include "wallet/core/wallet_db.h"
+#include "wallet/assets_manager.h"
 
 class PaymentInfoItem : public QObject
 {
@@ -41,10 +42,14 @@ public:
 
 signals:
     void paymentProofChanged();
+
 private:
+    void onAssetInfo(beam::Asset::ID assetId);
+
     QString m_paymentProof;
     boost::optional<beam::wallet::storage::PaymentInfo> m_paymentInfo;
     boost::optional<beam::wallet::storage::ShieldedPaymentInfo> m_shieldedPaymentInfo;
+    mutable AssetsManager _amgr;
 };
 
 class MyPaymentInfoItem : public PaymentInfoItem

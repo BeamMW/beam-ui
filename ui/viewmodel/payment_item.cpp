@@ -21,8 +21,9 @@ using namespace beam::wallet;
 using namespace beamui;
 
 PaymentInfoItem::PaymentInfoItem(QObject* parent /* = nullptr */)
-        : QObject(parent)
+    : QObject(parent)
 {
+     connect(&_amgr, &AssetsManager::assetInfo, this, &PaymentInfoItem::onAssetInfo);
 }
 
 QString PaymentInfoItem::getSender() const
@@ -45,12 +46,32 @@ QString PaymentInfoItem::getReceiver() const
     return "";
 }
 
+void PaymentInfoItem::onAssetInfo(beam::Asset::ID changedAssetId)
+{
+    beam::Asset::ID assetId = 0;
+    if (m_paymentInfo) assetId = m_paymentInfo->m_AssetID;
+    if (m_shieldedPaymentInfo) assetId = m_shieldedPaymentInfo->m_AssetID;
+
+    if (assetId == changedAssetId)
+    {
+        emit paymentProofChanged();
+    }
+}
+
 QString PaymentInfoItem::getAmount() const
 {
     if (m_paymentInfo)
-        return AmountToUIString(m_paymentInfo->m_Amount, Currencies::Beam);
+    {
+        const auto amount = m_paymentInfo->m_Amount;
+        const auto unit = _amgr.getUnitName(m_paymentInfo->m_AssetID);
+        return AmountToUIString(amount, unit, 0);
+    }
     else if (m_shieldedPaymentInfo)
-        return AmountToUIString(m_shieldedPaymentInfo->m_Amount, Currencies::Beam);
+    {
+        const auto amount = m_shieldedPaymentInfo->m_Amount;
+        const auto unit = _amgr.getUnitName(m_shieldedPaymentInfo->m_AssetID);
+        return AmountToUIString(amount, unit, 0);
+    }
 
     return "";
 }
