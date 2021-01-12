@@ -15,7 +15,7 @@ jobs:
     # if: ${{false}}
     strategy:
       matrix:
-        os: [windows-2019]
+        os: [macos-10.15]
         # os: [macos-10.15, ubuntu-18.04, ubuntu-20.04, windows-2019]
 
     steps:
@@ -39,6 +39,11 @@ jobs:
       run: |
         echo $GITHUB_WORKSPACE
         echo "OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1" >> $GITHUB_ENV
+        wget --no-check-certificate https://builds.beam.mw/QT5/qt5.12.9-static.tar.gz
+        mkdir ${{runner.workspace}}/qt5-static
+        tar -xf qt5.12.9-static.tar.gz -C ${{runner.workspace}}/qt5-static
+        echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
+        echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
 
     - name: Create Build Environment [ununtu all]
       shell: bash
@@ -46,6 +51,9 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install libssl-dev curl libxi-dev libcups2-dev -y
+        git clone --depth=1 https://github.com/nesbox/qt5-static-linux.git ${{runner.workspace}}/qt5-static
+        echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
+        echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
 
     - name: Create Build Environment [windows]
       shell: bash
@@ -76,7 +84,9 @@ jobs:
 ###############################################################################
     - name: Configure CMake [macos-10.15 && ununtu all]
       if: matrix.os != 'windows-2019'
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_HW_WALLET=Off .
+      run: |
+        export PATH=${{runner.workspace}}/qt5-static/bin:$PATH
+        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_HW_WALLET=Off .
 
     - name: Configure CMake [windows]
       shell: bash
