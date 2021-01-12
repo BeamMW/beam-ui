@@ -116,7 +116,7 @@ function currenciesList() {
         BeamGlobals.getCurrencyLabel(Currency.CurrDash),
         BeamGlobals.getCurrencyLabel(Currency.CurrEthereum),
         BeamGlobals.getCurrencyLabel(Currency.CurrDai),
-        BeamGlobals.getCurrencyLabel(Currency.CurrTether),
+        BeamGlobals.getCurrencyLabel(Currency.CurrUsdt),
         BeamGlobals.getCurrencyLabel(Currency.CurrWrappedBTC)
     ]
 }

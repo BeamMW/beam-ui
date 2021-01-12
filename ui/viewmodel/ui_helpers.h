@@ -47,7 +47,7 @@ namespace beamui
     macro(Dash,        "Dash",          "DASH",          "duff",     "duff/kB",   8) \
     macro(Ethereum,    "Ethereum",      "ETH",           "gwei",     "gwei",      9) \
     macro(Dai,         "Dai",           "DAI",           "gwei?",    "gwei",      9) \
-    macro(Tether,      "Tether",        "USDT",          "unit?",    "gwei",      6) \
+    macro(Usdt,        "Usdt",          "USDT",          "unit?",    "gwei",      6) \
     macro(WrappedBTC , "WBTC",          "WBTC",          "satoshi",  "gwei",      8) \
     macro(Usd,         "USD",           "USD",           "cent",     "",          2) \
     macro(Unknown,     "",              "",              "",         "",          0)

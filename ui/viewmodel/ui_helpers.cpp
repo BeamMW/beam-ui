@@ -25,7 +25,7 @@ namespace beamui
             case Currencies::Ethereum:
             case Currencies::Dai:
                 return 9;
-            case Currencies::Tether:
+            case Currencies::Usdt:
                 return 6;
             case Currencies::WrappedBTC:
                 return libbitcoin::btc_decimal_places;
@@ -189,8 +189,8 @@ namespace beamui
             return beamui::Currencies::Dai;
         case wallet::AtomicSwapCoin::WBTC:
             return beamui::Currencies::WrappedBTC;
-        case wallet::AtomicSwapCoin::Tether:
-            return beamui::Currencies::Tether;
+        case wallet::AtomicSwapCoin::Usdt:
+            return beamui::Currencies::Usdt;
         case wallet::AtomicSwapCoin::Unknown:
         default:
             return beamui::Currencies::Unknown;
@@ -219,8 +219,8 @@ namespace beamui
             return beam::wallet::AtomicSwapCoin::Ethereum;
         case beamui::Currencies::Dai:
             return beam::wallet::AtomicSwapCoin::Dai;
-        case beamui::Currencies::Tether:
-            return beam::wallet::AtomicSwapCoin::Tether;
+        case beamui::Currencies::Usdt:
+            return beam::wallet::AtomicSwapCoin::Usdt;
         case beamui::Currencies::WrappedBTC:
             return beam::wallet::AtomicSwapCoin::WBTC;
         default:
@@ -350,7 +350,7 @@ namespace beamui
             case Currencies::Usd: return "usd";
             case Currencies::Ethereum: return "eth";
             case Currencies::Dai: return "dai";
-            case Currencies::Tether: return "usdt";
+            case Currencies::Usdt: return "usdt";
             case Currencies::WrappedBTC: return "wbtc";
             default: return "unknown";
         }

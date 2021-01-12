@@ -46,7 +46,7 @@ bool isFeeOK(beam::Amount fee, Currency currency, bool isShielded)
     case Currency::CurrDogecoin: return true;
     case Currency::CurrEthereum: return true;
     case Currency::CurrDai: return true;
-    case Currency::CurrTether: return true;
+    case Currency::CurrUsdt: return true;
     case Currency::CurrWrappedBTC: return true;
     default:
         return false;
@@ -141,7 +141,7 @@ QString calcWithdrawTxFee(Currency currency, beam::Amount feeRate)
     }
     case Currency::CurrEthereum:
     case Currency::CurrDai:
-    case Currency::CurrTether:
+    case Currency::CurrUsdt:
     case Currency::CurrWrappedBTC: {
         auto swapCoin = convertCurrencyToSwapCoin(currency);
         auto total = beam::wallet::EthereumSide::CalcWithdrawTxFee(feeRate, swapCoin);

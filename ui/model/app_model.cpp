@@ -351,7 +351,7 @@ void AppModel::startWallet()
         swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Ethereum, secondSideFactory);
         // register ERC20 tokens
         swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Dai, secondSideFactory);
-        swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Tether, secondSideFactory);
+        swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Usdt, secondSideFactory);
         swapTransactionCreator->RegisterFactory(AtomicSwapCoin::WBTC, secondSideFactory);
     }
 

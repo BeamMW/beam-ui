@@ -119,8 +119,8 @@ namespace
             case Currency::CurrDai:
                 return beamui::Currencies::Dai;
 
-            case Currency::CurrTether:
-                return beamui::Currencies::Tether;
+            case Currency::CurrUsdt:
+                return beamui::Currencies::Usdt;
 
             case Currency::CurrWrappedBTC:
                 return beamui::Currencies::WrappedBTC;
@@ -322,7 +322,7 @@ QString QMLGlobals::getCurrencyName(Currency currency)
     }
     case Currency::CurrEthereum:
     case Currency::CurrDai:
-    case Currency::CurrTether:
+    case Currency::CurrUsdt:
     case Currency::CurrWrappedBTC:
     {
         //% "ETHEREUM"

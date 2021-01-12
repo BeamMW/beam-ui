@@ -263,7 +263,7 @@ Item {
                             return "qrc:/assets/icon-eth.svg";
                         case Currency.CurrDai:
                             return "qrc:/assets/icon-dai.svg";
-                        case Currency.CurrTether:
+                        case Currency.CurrUsdt:
                             return "qrc:/assets/icon-usdt.svg";
                         case Currency.CurrWrappedBTC:
                             return "qrc:/assets/icon-wbtc.svg";
@@ -290,7 +290,7 @@ Item {
                             return Style.swapCurrencyPaneGrLeftETH;
                         case Currency.CurrDai:
                             return Style.swapCurrencyPaneGrLeftDAI;
-                        case Currency.CurrTether:
+                        case Currency.CurrUsdt:
                             return Style.swapCurrencyPaneGrLeftUSDT;
                         case Currency.CurrWrappedBTC:
                             return Style.swapCurrencyPaneGrLeftWBTC;
