@@ -12,7 +12,7 @@ jobs:
 ###############################################################################
   build_desktop:
     runs-on: ${{ matrix.os }}
-    # if: ${{false}}
+    if: ${{false}}
     strategy:
       matrix:
         # os: [macos-10.15]
