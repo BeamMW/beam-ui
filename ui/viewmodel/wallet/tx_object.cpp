@@ -96,7 +96,20 @@ TxObject::TxObject( const TxDescription& tx,
         , m_type(*m_tx.GetParameter<TxType>(TxParameterID::TransactionType))
         , m_secondCurrency(secondCurrency)
 {
-    update(tx);
+    m_kernelID = QString::fromStdString(to_hex(tx.m_kernelID.m_pData, tx.m_kernelID.nBytes));
+    if (m_tx.m_txType == TxType::Contract)
+    {
+        _contractAmount = 0;
+        visitContractData([this](const beam::bvm2::ContractInvokeData &data) {
+            for (const auto &spend: data.m_Spend)
+            {
+                _contractAssets.insert(spend.first);
+                _contractAmount -= spend.second;
+                _contractFee += data.m_Fee;
+            }
+        });
+        _contractAmount -= _contractFee;
+    }
 }
 
 bool TxObject::operator==(const TxObject& other) const
@@ -285,27 +298,9 @@ const beam::wallet::TxDescription& TxObject::getTxDescription() const
     return m_tx;
 }
 
-void TxObject::setStatus(beam::wallet::TxStatus status)
-{
-    if (m_tx.m_status != status)
-    {
-        m_tx.m_status = status;
-        emit statusChanged();
-    }
-}
-
 QString TxObject::getKernelID() const
 {
     return m_kernelID;
-}
-
-void TxObject::setKernelID(const QString& value)
-{
-    if (m_kernelID != value)
-    {
-        m_kernelID = value;
-        emit kernelIDChanged();
-    }
 }
 
 QString TxObject::getTransactionID() const
@@ -447,15 +442,6 @@ QString TxObject::getFailureReason() const
     }
 
     return QString();
-}
-
-void TxObject::setFailureReason(beam::wallet::TxFailureReason reason)
-{
-    if (m_tx.m_failureReason != reason)
-    {
-        m_tx.m_failureReason = reason;
-        emit failureReasonChanged();
-    }
 }
 
 QString TxObject::getStateDetails() const
@@ -636,24 +622,4 @@ void TxObject::visitContractData(const CDVisitor& visitor) const
             visitor(data);
         }
     }
-}
-
-void TxObject::update(const beam::wallet::TxDescription& tx)
-{
-    setStatus(tx.m_status);
-    setFailureReason(tx.m_failureReason);
-
-    auto kernelID = QString::fromStdString(to_hex(tx.m_kernelID.m_pData, tx.m_kernelID.nBytes));
-    setKernelID(kernelID);
-
-    _contractAmount = 0;
-    visitContractData([this] (const beam::bvm2::ContractInvokeData& data) {
-        for(const auto& spend: data.m_Spend) {
-            _contractAssets.insert(spend.first);
-            _contractAmount -= spend.second;
-            _contractFee += data.m_Fee;
-        }
-    });
-
-    _contractAmount -= _contractFee;
 }

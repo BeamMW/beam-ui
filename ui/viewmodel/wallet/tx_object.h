@@ -69,16 +69,6 @@ public:
     virtual bool isCanceled() const;
     virtual bool isFailed() const;
 
-    void setKernelID(const QString& value);
-    void setStatus(beam::wallet::TxStatus status);
-    void setFailureReason(beam::wallet::TxFailureReason reason);
-    void update(const beam::wallet::TxDescription& tx);
-
-signals:
-    void statusChanged();
-    void kernelIDChanged();
-    void failureReasonChanged();
-
 protected:
     const beam::wallet::TxDescription& getTxDescription() const;
     QString getReasonString(beam::wallet::TxFailureReason reason) const;

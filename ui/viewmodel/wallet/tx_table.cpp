@@ -101,16 +101,18 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
             case TxType::VoucherRequest:
             case TxType::VoucherResponse:
                 continue;
+
             case TxType::ALL:
                 assert(!"This should not happen");
                 continue;
+
             case TxType::Contract:
             case TxType::PushTransaction:
             case TxType::Simple:
             case TxType::DexSimpleSwap:
+                modifiedTransactions.push_back(std::make_shared<TxObject>(t, secondCurrency));
                 break;
             }
-            modifiedTransactions.push_back(std::make_shared<TxObject>(t, secondCurrency));
         }
     }
 
@@ -158,7 +160,6 @@ QString TxTableViewModel::getRate() const
     auto rate = _exchangeRatesManager.getRate(beam::wallet::ExchangeRate::Currency::Beam);
     return beamui::AmountToUIString(rate);
 }
-
 
 void TxTableViewModel::cancelTx(const QVariant& variantTxID)
 {

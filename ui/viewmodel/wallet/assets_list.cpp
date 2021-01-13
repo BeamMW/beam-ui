@@ -19,7 +19,9 @@ AssetsList::AssetsList()
     connect(&_wallet, &WalletModel::walletStatusChanged, this, &AssetsList::onWalletStatus);
     connect(&_wallet, &WalletModel::transactionsChanged, this, &AssetsList::onTransactionsChanged);
     connect(&_amgr, &AssetsManager::assetInfo, this, &AssetsList::onAssetInfo);
-    _wallet.getAsync()->getTransactions();
+
+    // Transactions table would be created later and get this for us
+    //_wallet.getAsync()->getTransactions();
 }
 
 QHash<int, QByteArray> AssetsList::roleNames() const
