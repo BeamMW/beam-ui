@@ -139,9 +139,9 @@ void InfoViewModel::updateProgress()
         Amount receiving  = _wallet.getReceiving(asset);
         Amount change     = _wallet.getReceivingChange(asset);
         Amount incoming   = _wallet.getReceivingIncoming(asset);
-        Amount locked     = _wallet.getMaturing(asset);
         Amount maturing   = _wallet.getMaturing(asset);
         Amount maturingMP = _wallet.getMatutingMP(asset);
+        Amount locked     = maturing + maturingMP;
 
         if (sending  > 0 || receiving > 0 || change > 0 || incoming > 0 || locked > 0 || maturing > 0 || maturingMP > 0)
         {
