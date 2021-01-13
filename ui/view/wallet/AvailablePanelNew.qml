@@ -79,8 +79,9 @@ Control {
                     iconSize:          Qt.size(22, 22)
                     copyMenuEnabled:   true
                     //% "%1 Available"
-                    caption:           qsTrId("wallet-beam-available").arg(control.assetName)
+                    caption:           qsTrId("wallet-beam-available").arg(Utils.limitText(control.assetName, 15))
                     maxPaintedWidth:   control.compact ? control.availableWidth / 2 : 0
+                    maxUnitChars:      7
                 }
 
                 BeamAmount {
