@@ -40,29 +40,25 @@ Control {
     AmountTip {
         id:           receivingTip
         visible:      receivingArea.containsMouse && receivingCtrl.showDrop
-        x:            Utils.xUp(receivingCtrl) - control.padding / 2
+        x:            Utils.xUp(receivingCtrl) + receivingCtrl.width / 2 - receivingTip.width / 2
         y:            Utils.yUp(receivingCtrl) + receivingCtrl.height + 5
         parent:       Overlay.overlay
         totals:       control.totals
         progress:     control.progress
-        displayProp:  control.totals.receivingIncoming == "0" ? "receivingChange" : "receivingIncoming"
-        displayProp2: control.totals.receivingIncoming == "0" ? "receivingIncoming" : "receivingChange"
 
-        title:  control.totals.receivingIncoming == "0" ?
-                  //% "Change"
-                  qsTrId("available-panel-change") :
-                  //% "Incoming"
-                  qsTrId("available-panel-incoming")
+        //% "Change"
+        title: control.totals.receivingChange == "0" ? "" : qsTrId("available-panel-change")
+        displayProp: control.totals.receivingChange == "0" ? "" : "receivingChange"
 
-        title2: control.totals.receivingIncoming == "0" ?
-            qsTrId("available-panel-incoming") :
-            qsTrId("available-panel-change")
+        //% "Incoming"
+        title2: control.totals.receivingIncoming == "0" ? "" : qsTrId("available-panel-incoming")
+        displayProp2: control.totals.receivingIncoming == "0" ? "" : "receivingIncoming"
     }
 
     AmountTip {
         id:           sendingTip
         visible:      sendingArea.containsMouse && sendingCtrl.showDrop
-        x:            Utils.xUp(sendingCtrl) - control.padding / 2
+        x:            Utils.xUp(sendingCtrl) + sendingCtrl.width / 2 - sendingTip.width / 2
         y:            Utils.yUp(sendingCtrl) + sendingCtrl.height + 5
         parent:       Overlay.overlay
         totals:       control.totals
@@ -205,7 +201,7 @@ Control {
                 BeamAmount {
                     id:               receivingCtrl
                     amount:           control.totals.receiving
-                    unitName:         control.totals.unitName
+                    unitName:         control.totals.receivingUnit
                     rateUnit:         control.totals.rateUnit
                     rate:             control.totals.rate
                     color:            Style.accent_incoming

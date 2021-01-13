@@ -24,6 +24,7 @@ class InProgress
     Q_GADGET
 public:
     Q_PROPERTY(QString receiving          READ getReceiving)
+    Q_PROPERTY(QString receivingUnit      READ getReceivingUnit)
     Q_PROPERTY(QString sending            READ getSending)
     Q_PROPERTY(QString locked             READ getLocked)
     Q_PROPERTY(QString lockedMaturing     READ getLockedMaturing)
@@ -37,6 +38,10 @@ public:
 
     QString getReceiving() const {
        return receiving;
+    }
+
+    QString getReceivingUnit() const {
+       return receivingUnit;
     }
 
     QString getSending() const {
@@ -81,6 +86,7 @@ public:
     }
 
     QString receiving;
+    QString receivingUnit;
     QString sending;
     QString locked;
     QString lockedMaturing;

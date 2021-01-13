@@ -12,90 +12,103 @@ AlphaTip {
 
     property string  title
     property string  displayProp
+
     property string  title2
     property string  displayProp2
 
-    contentItem:  GridLayout {
-        columnSpacing: 15
-        rowSpacing:    10
-        columns:       2
-        rows:          2
+    Component {
+        id: assetsList
 
-        SFText {
-            font.pixelSize:       12
-            font.styleName:       "Light"
-            font.weight:          Font.Light
-            color:                lockedTip.defTextColor
-            Layout.alignment:     Qt.AlignTop
-            text:                 control.title2
-            visible:              control.title2.length
-            Layout.bottomMargin:  5
-        }
+        GridLayout {
+            columnSpacing: 15
+            rowSpacing:    10
+            columns:       2
 
-        BeamAmount {
-            amount:               control.displayProp2.length ? control.totals[control.displayProp2] : ""
-            unitName:             control.totals.unitName
-            rateUnit:             control.totals.rateUnit
-            rate:                 control.totals.rate
-            spacing:              15
-            lightFont:            false
-            fontSize:             12
-            vSpacing:             1
-            visible:              control.title2.length
-            Layout.bottomMargin:  5
-        }
+            SFText {
+                font.pixelSize:       12
+                font.styleName:       "Light"
+                font.weight:          Font.Light
+                Layout.alignment:     Qt.AlignTop
+                color:                Style.content_main
+                text:                 title
+                Layout.bottomMargin:  5
+                visible:              title.length > 0
+            }
 
-        SFText {
-            font.pixelSize:   12
-            font.styleName:   "Light"
-            font.weight:      Font.Light
-            color:            lockedTip.defTextColor
-            Layout.alignment: Qt.AlignTop
-            text:             control.title
-            visible:          control.title.length
-        }
+            function amountUnit () {
+                var totalCnt = 0
+                var unit = ""
 
-        BeamAmount {
-            amount:    control.totals[control.displayProp]
-            unitName:  control.totals.unitName
-            rateUnit:  control.totals.rateUnit
-            rate:      control.totals.rate
-            spacing:   15
-            lightFont: false
-            fontSize:  12
-            vSpacing:  1
-            visible:   control.title.length
-        }
+                for (var index = 0; index < control.progress.length; ++index) {
+                    var info = control.progress[index]
+                    if (parseFloat(info[displayProp])) {
+                        totalCnt++
+                        unit = info.unitName
+                    }
+                }
 
-        Repeater {
-            model: control.progress.length
-            SvgImage {
-                visible:           control.progress.length > 1 && parseFloat(control.progress[index][control.displayProp])
-                Layout.column:     0
-                Layout.row:        index + (control.title2.length ? 2 : 1)
-                Layout.alignment:  Qt.AlignHCenter | Qt.AlignVCenter
-                source:            control.progress[index].icon
-                sourceSize:        Qt.size(20, 20)
+                return totalCnt == 1 ? unit : totals.unitName;
+            }
+
+            BeamAmount {
+                amount:               displayProp && totals[displayProp]
+                unitName:             amountUnit()
+                rateUnit:             totals.rateUnit
+                rate:                 totals.rate
+                spacing:              15
+                lightFont:            false
+                fontSize:             12
+                vSpacing:             1
+                Layout.bottomMargin:  5
+                visible:              title.length > 0
+            }
+
+            Repeater {
+                model: control.progress.length
+                SvgImage {
+                    visible:           displayProp && parseFloat(control.progress[index][displayProp])
+                    Layout.column:     0
+                    Layout.row:        index + (title.length > 0 ? 1 : 0)
+                    Layout.alignment:  Qt.AlignHCenter | Qt.AlignVCenter
+                    source:            control.progress[index].icon
+                    sourceSize:        Qt.size(20, 20)
+                }
+            }
+
+            Repeater {
+               model: control.progress.length
+               BeamAmount {
+                   Layout.column:     1
+                   Layout.row:        index + (title.length > 0 ? 1 : 0)
+                   Layout.alignment:  Qt.AlignLeft | Qt.AlignVCenter
+                   visible:           displayProp && parseFloat(control.progress[index][displayProp])
+                   amount:            displayProp && control.progress[index][displayProp]
+                   unitName:          displayProp && control.progress[index].unitName
+                   rateUnit:          displayProp && control.progress[index].rateUnit
+                   rate:              displayProp && control.progress[index].rate
+                   spacing:           15
+                   lightFont:         false
+                   fontSize:          12
+                   vSpacing:          1
+                   maxUnitChars:      6
+               }
             }
         }
+    }
 
-        Repeater {
-           model: control.progress.length
-           BeamAmount {
-               Layout.column:     1
-               Layout.row:        index + (control.title2.length ? 2 : 1)
-               Layout.alignment:  Qt.AlignLeft | Qt.AlignVCenter
-               visible:           control.progress.length > 1 && parseFloat(control.progress[index][control.displayProp])
-               amount:            control.progress[index][control.displayProp]
-               unitName:          control.progress[index].unitName
-               rateUnit:          control.progress[index].rateUnit
-               rate:              control.progress[index].rate
-               spacing:           15
-               lightFont:         false
-               fontSize:          12
-               vSpacing:          1
-           }
+    contentItem: Column {
+        spacing: 15
+
+        Loader {
+            sourceComponent: assetsList
+            property string  title: control.title
+            property string  displayProp: control.displayProp
+        }
+
+        Loader {
+            sourceComponent: assetsList
+            property string  title: control.title2
+            property string  displayProp: control.displayProp2
         }
     }
 }
-

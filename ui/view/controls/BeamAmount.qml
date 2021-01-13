@@ -99,7 +99,7 @@ Control {
     onMaxPaintedWidthChanged: {
         if (maxPaintedWidth) amountText.text = fitText()
         else amountText.text = Qt.binding(function () {
-                                            return formatText(control.amount, control.unitName)
+                                            return formatText(control.amount, Utils.limitText(control.unitName, control.maxUnitChars))
                                           })
     }
 
@@ -167,7 +167,7 @@ Control {
                     color:            control.error ? Style.validator_error : control.color
                     onCopyText:       BeamGlobals.copyToClipboard(amount)
                     copyMenuEnabled:  true
-                    text:             control.maxPaintedWidth ? fitText() : formatText(control.amount, control.unitName)
+                    text:             control.maxPaintedWidth ? fitText() : formatText(control.amount, Utils.limitText(control.unitName, control.maxUnitChars))
 
                     MouseArea {
                         id: amountTextArea

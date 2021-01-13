@@ -128,6 +128,7 @@ void InfoViewModel::updateProgress()
     Amount lockedTotal     = 0;
     Amount maturingTotal   = 0;
     Amount maturingMPTotal = 0;
+    QString receivingUnit;
 
     auto assets = _wallet.getAssetsNZ();
     for(auto& asset: assets)
@@ -167,6 +168,11 @@ void InfoViewModel::updateProgress()
 
             _progress.push_back(progress);
             sendingTotal    += sending;
+
+            if (receiving) {
+                receivingUnit = receivingTotal == 0 ? progress.unitName : "ASSETS";
+            }
+
             receivingTotal  += receiving;
             changeTotal     += change;
             incomingTotal   += incoming;
@@ -183,6 +189,7 @@ void InfoViewModel::updateProgress()
     _progressTotals.locked            = beamui::AmountToUIString(lockedTotal);
     _progressTotals.lockedMaturing    = beamui::AmountToUIString(maturingTotal);
     _progressTotals.lockedMaturingMP  = beamui::AmountToUIString(maturingMPTotal);
+    _progressTotals.receivingUnit     = receivingUnit;
     _progressTotals.unitName          = _progress.length() == 1 ? _progress[0].unitName : "ASSETS";
     _progressTotals.rate              = _progress.length() == 1 ? _progress[0].rate : "0";
     _progressTotals.icon              = _progress.length() == 1 ? _progress[0].icon : "";
