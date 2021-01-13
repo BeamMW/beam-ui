@@ -46,13 +46,18 @@ Control {
         totals:       control.totals
         progress:     control.progress
 
-        //% "Change"
-        title: control.totals.receivingChange == "0" ? "" : qsTrId("available-panel-change")
-        displayProp: control.totals.receivingChange == "0" ? "" : "receivingChange"
+        title: control.totals.receivingChange == "0" ?
+            //% "Incoming"
+            qsTrId("available-panel-incoming") :
+            //% "Change"
+            qsTrId("available-panel-change")
 
-        //% "Incoming"
-        title2: control.totals.receivingIncoming == "0" ? "" : qsTrId("available-panel-incoming")
-        displayProp2: control.totals.receivingIncoming == "0" ? "" : "receivingIncoming"
+        title2: control.totals.receivingChange == "0" ?
+            qsTrId("available-panel-change") :
+            qsTrId("available-panel-incoming")
+
+        displayProp: control.totals.receivingChange == "0" ? "receivingIncoming" : "receivingChange"
+        displayProp2: control.totals.receivingChange == "0" ? "receivingChange" : "receivingIncoming"
     }
 
     AmountTip {
