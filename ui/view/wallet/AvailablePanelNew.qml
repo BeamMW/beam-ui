@@ -81,7 +81,7 @@ Control {
                     //% "%1 Available"
                     caption:           qsTrId("wallet-beam-available").arg(Utils.limitText(control.assetName, 15))
                     maxPaintedWidth:   control.compact ? control.availableWidth / 2 : 0
-                    maxUnitChars:      7
+                    maxUnitChars:      6
                 }
 
                 BeamAmount {

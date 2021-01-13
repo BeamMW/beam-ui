@@ -72,7 +72,7 @@ Control {
                return result
            }
 
-           if (uname && control.maxUnitChars && uname.length >= maxUnitChars)
+           if (uname && control.maxUnitChars && uname.length > maxUnitChars)
            {
                 uname  = uname.substring(0, uname.length - 1)
                 unamed = true
@@ -116,6 +116,7 @@ Control {
 
         x: {
             var xpos = Utils.xUp(amountText) + amountText.width / 2 - tip.width / 2
+            if (xpos < 0) return 0
             return xpos + tip.width > root.width ? Utils.xUp(amountText) + amountText.width - tip.width : xpos
         }
 
