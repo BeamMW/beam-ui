@@ -34,7 +34,6 @@ SettingsFoldable {
 
     ConfirmPasswordDialog {
         id: confirmPasswordDialog
-        parent: control.parent
         settingsViewModel: mainSettingsViewModel 
     }
 
