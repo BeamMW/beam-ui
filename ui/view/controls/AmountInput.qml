@@ -142,6 +142,7 @@ ColumnLayout {
             model:               control.currencies
             textRole:            "unitName"
             textMaxLen:          10
+            enableScroll:        true
 
             onActivated: {
                 if (multi) control.currencyIdx = index

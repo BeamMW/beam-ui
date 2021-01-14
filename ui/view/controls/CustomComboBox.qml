@@ -148,7 +148,7 @@ ComboBox {
         }
     }
 
-    popup: Popup {
+   popup: Popup {
         y: control.height - 1
         width: calculatedWidth
         padding: 1
@@ -159,10 +159,12 @@ ComboBox {
                 id: listView
                 Layout.fillWidth: true
                 clip: true
-                implicitHeight: enableScroll ? 250 : contentHeight
+                implicitHeight: enableScroll ? Math.min(350, contentHeight) : contentHeight
                 model: control.popup.visible ? control.delegateModel : null
                 currentIndex: control.highlightedIndex
-                ScrollIndicator.vertical: ScrollIndicator { }
+                 ScrollBar.vertical: ScrollBar {
+                    policy: enableScroll && listView.contentHeight > 350 ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+                }
             }
             Item {
                 Layout.fillWidth: true
