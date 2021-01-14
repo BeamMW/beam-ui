@@ -141,10 +141,13 @@ bool TxObject::isIncome() const
 
 QString TxObject::getComment() const
 {
+    std::string str{m_tx.m_message.begin(), m_tx.m_message.end()};
+    auto comment = QString(str.c_str()).trimmed();
+
     if (isContractTx())
     {
         //% "Contract transaction"
-        return qtTrId("tx-contract-default-comment");
+        return comment.isEmpty() ? qtTrId("tx-contract-default-comment") : comment;
     }
     else if (isDexTx())
     {
@@ -153,8 +156,7 @@ QString TxObject::getComment() const
     }
     else
     {
-        std::string str{m_tx.m_message.begin(), m_tx.m_message.end()};
-        return QString(str.c_str()).trimmed();
+        return comment;
     }
 }
 

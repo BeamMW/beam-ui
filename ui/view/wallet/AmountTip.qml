@@ -54,7 +54,7 @@ AlphaTip {
             }
 
             BeamAmount {
-                amount:               totals[displayProp]
+                amount:               totals[displayProp] || ""
                 unitName:             amountInfo().unitName
                 rateUnit:             totals.rateUnit
                 rate:                 totals.rate
@@ -85,7 +85,7 @@ AlphaTip {
                    Layout.row:        index + (title.length > 0 ? 1 : 0)
                    Layout.alignment:  Qt.AlignLeft | Qt.AlignVCenter
                    visible:           amountInfo().cnt > 1 && parseFloat(control.progress[index][displayProp])
-                   amount:            control.progress[index][displayProp]
+                   amount:            control.progress[index][displayProp] || ""
                    unitName:          control.progress[index].unitName
                    rateUnit:          control.progress[index].rateUnit
                    rate:              control.progress[index].rate
