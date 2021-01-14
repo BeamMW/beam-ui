@@ -36,52 +36,51 @@ public:
     Q_PROPERTY(QString rate               READ getRate)
     Q_PROPERTY(QString rateUnit           READ getRateUnit)
 
-    QString getReceiving() const {
+    [[nodiscard]] QString getReceiving() const {
        return receiving;
     }
 
-    QString getReceivingUnit() const {
+    [[nodiscard]] QString getReceivingUnit() const {
        return receivingUnit;
     }
 
-    QString getSending() const {
+    [[nodiscard]] QString getSending() const {
        return sending;
     }
 
-    QString getLocked() const {
+    [[nodiscard]] QString getLocked() const {
        return locked;
     }
 
-    QString getLockedMaturing() const {
+    [[nodiscard]] QString getLockedMaturing() const {
        return lockedMaturing;
     }
 
-    QString getReceivingChange() const {
+    [[nodiscard]] QString getReceivingChange() const {
        return receivingChange;
     }
 
-    QString getReceivingIncoming() const {
+    [[nodiscard]] QString getReceivingIncoming() const {
        return receivingIncoming;
     }
 
-    QString getIcon() const {
+    [[nodiscard]] QString getIcon() const {
         return icon;
     }
 
-    QString getUnitName() const {
+    [[nodiscard]] QString getUnitName() const {
         return unitName;
     }
 
-    QString getRate() const {
+    [[nodiscard]] QString getRate() const {
         return rate;
     }
 
-    QString getRateUnit() const {
+    [[nodiscard]] QString getRateUnit() const {
         return rateUnit;
     }
 
-    QString getLockedMaturingMP() const
-    {
+    [[nodiscard]] QString getLockedMaturingMP() const {
         return lockedMaturingMP;
     }
 

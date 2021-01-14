@@ -35,7 +35,7 @@ AlphaTip {
                 visible:              title.length > 0
             }
 
-            function amountUnit () {
+            function amountInfo () {
                 var totalCnt = 0
                 var unit = ""
 
@@ -47,12 +47,15 @@ AlphaTip {
                     }
                 }
 
-                return totalCnt == 1 ? unit : totals.unitName;
+                return {
+                    unitName: totalCnt == 1 ? unit : totals.unitName,
+                    cnt: totalCnt
+                }
             }
 
             BeamAmount {
-                amount:               displayProp && totals[displayProp]
-                unitName:             amountUnit()
+                amount:               totals[displayProp]
+                unitName:             amountInfo().unitName
                 rateUnit:             totals.rateUnit
                 rate:                 totals.rate
                 spacing:              15
@@ -66,7 +69,7 @@ AlphaTip {
             Repeater {
                 model: control.progress.length
                 SvgImage {
-                    visible:           displayProp && parseFloat(control.progress[index][displayProp])
+                    visible:           amountInfo().cnt > 1 && parseFloat(control.progress[index][displayProp])
                     Layout.column:     0
                     Layout.row:        index + (title.length > 0 ? 1 : 0)
                     Layout.alignment:  Qt.AlignHCenter | Qt.AlignVCenter
@@ -81,11 +84,11 @@ AlphaTip {
                    Layout.column:     1
                    Layout.row:        index + (title.length > 0 ? 1 : 0)
                    Layout.alignment:  Qt.AlignLeft | Qt.AlignVCenter
-                   visible:           displayProp && parseFloat(control.progress[index][displayProp])
-                   amount:            displayProp && control.progress[index][displayProp]
-                   unitName:          displayProp && control.progress[index].unitName
-                   rateUnit:          displayProp && control.progress[index].rateUnit
-                   rate:              displayProp && control.progress[index].rate
+                   visible:           amountInfo().cnt > 1 && parseFloat(control.progress[index][displayProp])
+                   amount:            control.progress[index][displayProp]
+                   unitName:          control.progress[index].unitName
+                   rateUnit:          control.progress[index].rateUnit
+                   rate:              control.progress[index].rate
                    spacing:           15
                    lightFont:         false
                    fontSize:          12
@@ -97,7 +100,7 @@ AlphaTip {
     }
 
     contentItem: Column {
-        spacing: 15
+        spacing: 5
 
         Loader {
             sourceComponent: assetsList
