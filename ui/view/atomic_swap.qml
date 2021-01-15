@@ -529,21 +529,17 @@ Item {
                             textRole: 'text'
                             model: ListModel {
                                     ListElement{text: "ALL"; pair: ""}
-                                    ListElement{text: "BEAM->BTC"; pair: "beambtc"}
-                                    ListElement{text: "BEAM->LTC"; pair: "beamltc"}
-                                    ListElement{text: "BEAM->QTUM"; pair: "beamqtum"}
-                                    // TODO disable BCH
-                                    //ListElement{text: "BEAM->BCH"; pair: "beambch"}
-                                    ListElement{text: "BEAM->DASH"; pair: "beamdash"}
-                                    ListElement{text: "BEAM->DOGE"; pair: "beamdoge"}
-                                    ListElement{text: "BTC->BEAM"; pair: "btcbeam"}
-                                    ListElement{text: "LTC->BEAM"; pair: "ltcbeam"}
-                                    ListElement{text: "QTUM->BEAM"; pair: "qtumbeam"}
-                                    // TODO disable BCH
-                                    //ListElement{text: "BCH->BEAM"; pair: "bchbeam"}
-                                    ListElement{text: "DASH->BEAM"; pair: "dashbeam"}
-                                    ListElement{text: "DOGE->BEAM"; pair: "dogebeam"}
-                                }
+                                    ListElement{text: "BEAM"; pair: "^(beam)|(beam)$"}
+                                    ListElement{text: "BTC"; pair: "^(btc)|(btc)$"}
+                                    ListElement{text: "DAI"; pair: "^(dai)|(dai)$"}
+                                    ListElement{text: "DASH"; pair: "^(dash)|(dash)$"}
+                                    ListElement{text: "DOGE"; pair: "^(doge)|(doge)$"}
+                                    ListElement{text: "ETH"; pair: "^(eth)|(eth)$"}
+                                    ListElement{text: "LTC"; pair: "^(ltc)|(ltc)$"}
+                                    ListElement{text: "QTUM"; pair: "^(qtum)|(qtum)$"}
+                                    ListElement{text: "USDT"; pair: "^(usdt)|(usdt)$"}
+                                    ListElement{text: "WBTC"; pair: "^(wbtc)|(wbtc)$"}
+                            }
                         }
                     }   // RowLayout
 
@@ -614,7 +610,6 @@ Please try again later or create an offer yourself."
                                     : viewModel.allOffers
                                 filterRole: "pair"
                                 filterString: coinSelector.model.get(coinSelector.currentIndex).pair
-                                filterSyntax: SortFilterProxyModel.Wildcard
                                 filterCaseSensitivity: Qt.CaseInsensitive
                             }
 
