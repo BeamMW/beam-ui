@@ -43,6 +43,22 @@ QHash<int, QByteArray> AssetsList::roleNames() const
     return roles;
 }
 
+int AssetsList::getRoleId(QString name) const
+{
+    const auto roles = roleNames();
+    const auto byteName = name.toUtf8();
+
+    QHashIterator<int, QByteArray> iter(roles);
+    while(iter.hasNext()) {
+        iter.next();
+        if (iter.value() == byteName) {
+            return iter.key();
+        }
+    }
+
+    return -1;
+}
+
 QVariant AssetsList::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || index.row() < 0 || index.row() >= m_list.size())

@@ -9,6 +9,24 @@ Control {
 
     AssetsViewModel {
         id: viewModel
+        onAssetsChanged: {
+            if (selectedId > 0) {
+                var roleid = viewModel.assets.getRoleId("id")
+                BeamGlobals.showMessage("role:" + roleid)
+                for (var idx = 0; idx < viewModel.assets.rowCount(); ++idx) {
+                    var modelIdx = viewModel.assets.index(idx, 0);
+                    var data = viewModel.assets.data(modelIdx, 258)
+                    if (selectedId == data) {
+                        // currently selected asset is still present, do nothing
+                        return
+                    }
+                }
+                // there is no previously selected asset,
+                // reset selection to nothing
+                selectedId  = -1
+                selectedIdx = -1
+            }
+        }
     }
 
     property real   hSpacing:       10
@@ -18,10 +36,9 @@ Control {
     property int    selectedIdx:    -1
     property alias  folded:         viewModel.folded
 
-
     readonly property int   assetsCount:     viewModel.assets.rowCount()
-    readonly property bool  connectVisible:  assetsCount < 3
-    readonly property real itemHeight:       67
+    readonly property bool  connectVisible:  false //assetsCount < 3
+    readonly property real  itemHeight:      67
 
     readonly property real itemWidth: {
         if (assetsCount == 1) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)

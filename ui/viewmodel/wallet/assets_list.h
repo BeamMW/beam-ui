@@ -40,6 +40,7 @@ public:
 
     Q_ENUM(Roles)
 
+    Q_INVOKABLE int getRoleId(QString name) const;
     [[nodiscard]] QHash<int, QByteArray> roleNames() const override;
     [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
 
