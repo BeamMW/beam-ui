@@ -108,7 +108,10 @@ TxObject::TxObject( const TxDescription& tx,
                 _contractFee += data.m_Fee;
             }
         });
-        _contractAmount -= _contractFee;
+
+        if (_contractAmount > 0) {
+            _contractAmount -= _contractFee;
+        }
     }
 }
 
