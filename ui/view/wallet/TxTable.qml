@@ -576,13 +576,8 @@ Control {
                     onTriggered: {
                         //% "The transaction will be deleted. This operation can not be undone"
                         deleteTransactionDialog.text = qsTrId("wallet-txs-delete-message");
+                        deleteTransactionDialog.acceptHandler = function () {tableViewModel.deleteTx(txContextMenu.txID)}
                         deleteTransactionDialog.open();
-                    }
-                }
-                Connections {
-                    target: deleteTransactionDialog
-                    onAccepted:  {
-                        tableViewModel.deleteTx(txContextMenu.txID);
                     }
                 }
             }
