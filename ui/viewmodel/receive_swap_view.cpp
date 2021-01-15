@@ -288,7 +288,10 @@ void ReceiveSwapViewModel::setReceiveCurrency(Currency value)
 
     if (value != _receiveCurrency)
     {
+        // different units for different currencies. example BTC and ETH
+        QString amount = getAmountToReceive();
         _receiveCurrency = value;
+        setAmountToReceive(amount);
         emit receiveCurrencyChanged();
         updateTransactionToken();
         emit rateChanged();
@@ -308,7 +311,10 @@ void ReceiveSwapViewModel::setSentCurrency(Currency value)
 
     if (value != _sentCurrency)
     {
+        // different units for different currencies. example BTC and ETH
+        QString amount = getAmountSent();
         _sentCurrency = value;
+        setAmountSent(amount);
         emit sentCurrencyChanged();
         updateTransactionToken();
         emit rateChanged();

@@ -355,9 +355,13 @@ please review your settings and try again"
                                     rateWasInFocus = true;
                                     rateInput.focus = false;
                                 }
+                                var sendFee = sendFeeInput.fee;
+                                var receiveFee = receiveFeeInput.fee;
                                 var sentCurency = sentAmountInput.currency;
                                 sentAmountInput.currency = receiveAmountInput.currency;
                                 receiveAmountInput.currency = sentCurency;
+                                sendFeeInput.fee = receiveFee;
+                                receiveFeeInput.fee = sendFee;
                                 if (rateWasInFocus) {
                                     rateInput.focus = true;
                                     rateInput.text = rate;
