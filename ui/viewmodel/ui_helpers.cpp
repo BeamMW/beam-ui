@@ -243,6 +243,18 @@ namespace beamui
             return beamui::Currencies::Qtum;
         case wallet::ExchangeRate::Currency::Usd:
             return beamui::Currencies::Usd;
+        case wallet::ExchangeRate::Currency::Dogecoin:
+            return beamui::Currencies::Dogecoin;
+        case wallet::ExchangeRate::Currency::Dash:
+            return beamui::Currencies::Dash;
+        case wallet::ExchangeRate::Currency::Ethereum:
+            return beamui::Currencies::Ethereum;
+        case wallet::ExchangeRate::Currency::Dai:
+            return beamui::Currencies::Dai;
+        case wallet::ExchangeRate::Currency::Usdt:
+            return beamui::Currencies::Usdt;
+        case wallet::ExchangeRate::Currency::WBTC:
+            return beamui::Currencies::WrappedBTC;
         case wallet::ExchangeRate::Currency::Unknown:
         default:
             return beamui::Currencies::Unknown;

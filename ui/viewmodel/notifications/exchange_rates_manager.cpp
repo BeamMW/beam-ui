@@ -120,6 +120,18 @@ ExchangeRate::Currency ExchangeRatesManager::convertCurrencyToExchangeCurrency(W
         return ExchangeRate::Currency::Litecoin;
     case Currency::CurrQtum:
         return ExchangeRate::Currency::Qtum;
+    case Currency::CurrDash:
+        return ExchangeRate::Currency::Dash;
+    case Currency::CurrDogecoin:
+        return ExchangeRate::Currency::Dogecoin;
+    case Currency::CurrEthereum:
+        return ExchangeRate::Currency::Ethereum;
+    case Currency::CurrDai:
+        return ExchangeRate::Currency::Dai;
+    case Currency::CurrUsdt:
+        return ExchangeRate::Currency::Usdt;
+    case Currency::CurrWrappedBTC:
+        return ExchangeRate::Currency::WBTC;
     default:
         return ExchangeRate::Currency::Unknown;
     }
