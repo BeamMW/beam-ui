@@ -84,6 +84,25 @@ namespace {
         return *p.GetParameter<TxType>(TxParameterID::TransactionType);
     }
 
+    QString getContractMessage(const TxParameters& p)
+    {
+        const auto rawMsg = p.GetParameter<beam::ByteBuffer>(TxParameterID::Message);
+        if (rawMsg && !rawMsg->empty())
+        {
+            std::string str{rawMsg->cbegin(), rawMsg->cend()};
+            return QString::fromStdString(str);
+        }
+        //% "Contract: no description provided"
+        return qtTrId("notification-contract-no-message");
+    }
+
+    bool isExpired(const TxParameters& p)
+    {
+        auto status = p.GetParameter<TxStatus>(TxParameterID::FailureReason);
+        auto reason =  p.GetParameter<TxFailureReason>(TxParameterID::FailureReason);
+        return status && reason && *status == wallet::TxStatus::Failed && reason == TxFailureReason::TransactionExpired;
+    }
+
     bool isSwapTxExpired(const TxParameters& p)
     {
         auto txStatus = p.GetParameter<wallet::TxStatus>(TxParameterID::Status);
@@ -131,7 +150,6 @@ namespace {
                 .arg(unitName)
                 .arg(peer);
     }
-
 
     QString getPushTxPeer(const TxParameters& p, bool isSender)
     {
@@ -224,6 +242,9 @@ QString NotificationItem::title() const
             case TxType::AtomicSwap:
                 //% "Atomic Swap offer completed"
                 return qtTrId("notification-swap-completed");
+            case TxType::Contract:
+                //% "Transaction completed"
+                return qtTrId("notification-contract-completed");
             default:
                 return "error";
             }
@@ -244,6 +265,11 @@ QString NotificationItem::title() const
                         :
                         //% "Atomic Swap offer failed"
                         qtTrId("notification-swap-failed");
+            case TxType::Contract:
+                return isExpired(p) ?
+                    //% "Transaction expired"
+                    qtTrId("notification-contract-expired") :
+                    qtTrId("notification-transaction-failed");
             default:
                 return "error";
             }
@@ -323,6 +349,8 @@ QString NotificationItem::message(AssetsManager& amgr) const
                               .arg(getSwapCoinName(p))
                               .arg(std::to_string(*p.GetTxID()).c_str());
             }
+            case TxType::Contract:
+                return getContractMessage(p);
             default:
                 return "error";
             }
@@ -375,6 +403,8 @@ QString NotificationItem::message(AssetsManager& amgr) const
                     .arg(getSwapCoinName(p))
                     .arg(std::to_string(*p.GetTxID()).c_str());
             }
+            case TxType::Contract:
+                return getContractMessage(p);
             default:
                 return "error";
             }
@@ -410,6 +440,8 @@ QString NotificationItem::type() const
                 return (isSender(p) ? "sent" : "received");
             case TxType::AtomicSwap:
                 return "swapCompleted";
+            case TxType::Contract:
+                return "contractCompleted";
             default:
                 return "error";
             }
@@ -425,6 +457,8 @@ QString NotificationItem::type() const
                 return "failedToSend";
             case TxType::AtomicSwap:
                 return isSwapTxExpired(p) ? "swapExpired" : "swapFailed";
+            case TxType::Contract:
+                return isExpired(p) ? "contractExpired" : "contractFailed";
             default:
                 return "error";
             }

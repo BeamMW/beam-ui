@@ -8,7 +8,7 @@ import "utils.js" as Utils
 import Beam.Wallet 1.0
 
 ColumnLayout {
-    id: notificationsViewRoot
+    id: control
     anchors.fill: parent
     spacing: 0
 
@@ -263,11 +263,11 @@ ColumnLayout {
                 text: getActionButtonLabel(type)
         
                 visible: getActionButtonLabel(type) != undefined
-                enabled: notificationsViewRoot.notifications[type].action != null
+                enabled: control.notifications[type].action != null
 
                 onClicked: {
                     if (enabled) {
-                        notificationsViewRoot.notifications[type].action(model.rawID);
+                        control.notifications[type].action(model.rawID);
                     }
                 }
                 onPressed : { // avoid Flickable drag effect
@@ -281,7 +281,7 @@ ColumnLayout {
     }
 
     function getIconSource(notificationType) {
-        return notificationsViewRoot.notifications[notificationType].icon || ''
+        return control.notifications[notificationType].icon || ''
     }
 
     property var icons: ({
@@ -361,6 +361,24 @@ ColumnLayout {
             actionIcon: icons.detailsIcon,
             action:     navigateToSwapTransaction,
             icon:       "qrc:/assets/icon-notifications-swap-completed.svg"
+        },
+        contractCompleted: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-expired.svg"
+        },
+        contractExpired: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-expired.svg"
+        },
+        contractFailed: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-expired.svg"
         }
     })
 
@@ -387,10 +405,10 @@ ColumnLayout {
     }
 
     function getActionButtonLabel(notificationType) {
-        return notificationsViewRoot.notifications[notificationType].label
+        return control.notifications[notificationType].label
     }
 
     function getActionButtonIcon(notificationType) {
-        return notificationsViewRoot.notifications[notificationType].actionIcon || ''
+        return control.notifications[notificationType].actionIcon || ''
     }
 } // Item

@@ -2989,5 +2989,13 @@ fuera de línea</translation>
 Please try again later or create an offer yourself.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="notification-contract-completed">
+        <source>Transaction completed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-contract-expired">
+        <source>Transaction expired</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
