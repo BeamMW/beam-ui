@@ -1889,8 +1889,9 @@ znát všechny Vaše prostředky (UTXO). Ujistěte se, že jste vystavili klíč
         <translation>Upozornění</translation>
     </message>
     <message id="settings-notifications-version">
-        <source>Wallet update</source>
-        <translation>Aktualizace peněženky</translation>
+        <source>Wallet updates</source>
+        <oldsource>Wallet update</oldsource>
+        <translation type="unfinished">Aktualizace peněženky</translation>
     </message>
     <message id="settings-notifications-tx-status">
         <source>Transaction status</source>

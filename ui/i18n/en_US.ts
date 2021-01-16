@@ -1889,8 +1889,9 @@ deploy the key at the node you trust completely.</translation>
         <translation>Notifications</translation>
     </message>
     <message id="settings-notifications-version">
-        <source>Wallet update</source>
-        <translation>Wallet update</translation>
+        <source>Wallet updates</source>
+        <oldsource>Wallet update</oldsource>
+        <translation type="unfinished">Wallet updates</translation>
     </message>
     <message id="settings-notifications-tx-status">
         <source>Transaction status</source>

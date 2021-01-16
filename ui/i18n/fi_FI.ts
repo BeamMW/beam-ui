@@ -1890,7 +1890,8 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
         <translation>Ilmoitukset</translation>
     </message>
     <message id="settings-notifications-version">
-        <source>Wallet update</source>
+        <source>Wallet updates</source>
+        <oldsource>Wallet update</oldsource>
         <translation type="unfinished">Wallet update</translation>
     </message>
     <message id="settings-notifications-tx-status">

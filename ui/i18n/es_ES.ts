@@ -1890,8 +1890,9 @@ despliegue la clave en el nodo en el que confía completamente.</translation>
         <translation>Notificaciones</translation>
     </message>
     <message id="settings-notifications-version">
-        <source>Wallet update</source>
-        <translation>Actualizar wallet</translation>
+        <source>Wallet updates</source>
+        <oldsource>Wallet update</oldsource>
+        <translation type="unfinished">Actualizar wallet</translation>
     </message>
     <message id="settings-notifications-tx-status">
         <source>Transaction status</source>
