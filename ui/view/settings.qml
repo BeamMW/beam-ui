@@ -42,8 +42,8 @@ ColumnLayout {
             font.pixelSize: 14
             color: Style.content_secondary
             //: settings tab, version label
-            //% "Version"
-            text: qsTrId("settings-version") + ": " + viewModel.version
+            //% "v"
+            text: qsTrId("settings-version") + " " + viewModel.version
         }
         PrimaryButton {
             Layout.alignment: Qt.AlignCenter

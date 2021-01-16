@@ -286,9 +286,10 @@
         <translation>Уваходны</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>Версія</translation>
+        <translation type="unfinished">Версія</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -499,8 +500,9 @@
         <translation>Вы спрабуеце аднавіць існуючы кашалёк. Калі ласка, звярніце ўвагу, калі ваш кашалёк выкарыстоўваецца на іншай прыладзе, ваш баланс будзе адноўлены да актуальнага стану, але гісторыя транзакцый і адрасы будуць захоўвацца эксклюзіўна для кожнай прылады.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>Ваш кашалёк будзе абноўлены да версіі:</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">Ваш кашалёк будзе абноўлены да версіі:</translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>

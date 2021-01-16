@@ -286,9 +286,10 @@
         <translation>Gelen</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>Sürüm</translation>
+        <translation type="unfinished">Sürüm</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -499,8 +500,9 @@
         <translation>Mevcut bir Beam cüzdanını geri yüklemeye çalışıyorsunuz. Lütfen cüzdanınızı başka bir cihazda kullanırsanız, bakiyenizin güncel olacağını, ancak işlem geçmişinin ve adreslerin iki cihazda ayrı ayrı tutulacağını unutmayın.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>Cüzdanınız taşındı.</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">Cüzdanınız taşındı.</translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>

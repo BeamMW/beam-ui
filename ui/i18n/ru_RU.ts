@@ -286,9 +286,10 @@
         <translation>Входящий</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>Версия</translation>
+        <translation type="unfinished">Версия</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -499,8 +500,9 @@
         <translation>Вы пытаетесь восстановить существующий кошелек. Пожалуйста, обратите внимание, если ваш кошелек используется на другом устройстве, ваш баланс будет восстановлен до актуального состояния, но история транзакций и адреса будут хранится эксклюзивно для каждого устройства.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>Ваш кошелек будет обновлен до версии:</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">Ваш кошелек будет обновлен до версии:</translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>

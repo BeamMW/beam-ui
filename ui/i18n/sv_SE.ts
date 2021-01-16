@@ -286,9 +286,10 @@
         <translation>Inkommande</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>Version</translation>
+        <translation type="unfinished">Version</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -499,8 +500,9 @@
         <translation>Du försöker nu återställa en befintlig Beam-plånbok. Notera att om du använder din plånbok på en annan enhet kommer balansen vara uppdaterad men transaktionshistorik och adresser kommer hållas separat per enhet.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>Din plånbok kommer att bli migrerad till v.</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">Din plånbok kommer att bli migrerad till v </translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>

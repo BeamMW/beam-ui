@@ -286,9 +286,10 @@
         <translation>Đang tới</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>Phiên bản</translation>
+        <translation type="unfinished">Phiên bản</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -499,8 +500,9 @@
         <translation>Bạn đang cố gắng khôi phục một ví Beam hiện có. Xin lưu ý rằng nếu bạn sử dụng ví của mình trên một thiết bị khác, số dư của bạn sẽ được cập nhật, nhưng lịch sử giao dịch và địa chỉ sẽ được giữ riêng trên mỗi thiết bị.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>Ví của bạn sẽ được chuyển sang v.</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">Ví của bạn sẽ được chuyển sang v </translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>

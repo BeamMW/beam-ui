@@ -286,9 +286,10 @@
         <translation>Llegando</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>Versión</translation>
+        <translation type="unfinished">Versión</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -499,8 +500,9 @@
         <translation>Está intentando restaurar un monedero de Beam existente. Tenga en cuenta que si usa su monedero en otro dispositivo, su saldo estará actualizado, pero el historial de transacciones y las direcciones se guardarán por separado en cada dispositivo.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>Su monedero será migrado a v.</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">Su monedero será migrado a v </translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>

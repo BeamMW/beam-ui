@@ -286,9 +286,10 @@
         <translation>受信</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>バージョン</translation>
+        <translation type="unfinished">バージョン</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -499,8 +500,9 @@
         <translation>あなたはすでに存在するBeamウォレットを復元しようとしています。あなたが他のデバイスで使用しているウォレットを復元しようとすると、残高は最新になりますが、トランザクション履歴とアドレス情報はそれぞれのデバイスで保管されている為、再現されません。</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>あなたのウォレットは v. に移行されます</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">あなたのウォレットは v に移行されます</translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>

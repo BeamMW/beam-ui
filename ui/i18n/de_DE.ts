@@ -286,9 +286,10 @@
         <translation>Eingehend</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>Version&#xa0;</translation>
+        <translation type="unfinished">Version&#xa0;</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -499,8 +500,9 @@
         <translation>Sie versuchen eine vorhandene Beam Wallet wiederherzustellen. Bitte beachten Sie, dass wenn Sie Ihre Wallet auf einem anderen Gerät verwenden, Ihr Guthaben auf dem aktuellen Stand ist, der Transaktionsverlauf und Adressen aber separat auf jedem Gerät getrennt gehalten werden.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>Ihre Wallet wird nach v. migriert.</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">Ihre Wallet wird nach v migriert.</translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>

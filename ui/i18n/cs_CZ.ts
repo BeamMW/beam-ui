@@ -286,9 +286,10 @@
         <translation>Příchozí</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>Verze</translation>
+        <translation type="unfinished">Verze</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -499,8 +500,9 @@
         <translation>Pokoušíte se obnovit již existující peněženku Beam. Vezměte prosím na vědomí, že pokud používáte peněženku na jiném zařízení, Váš zůstatek bude aktuální, ale historie transakcí a adresy budou uchovávány na každém zařízení zvlášť.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>Vaše peněženka bude migrována na v.</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">Vaše peněženka bude migrována na v </translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>

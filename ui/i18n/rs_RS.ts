@@ -505,7 +505,7 @@
     </message>
     <message id="start-migration-message">
         <source>Your wallet will be migrated to v.</source>
-        <translation>Ваш новчаник ће бити мигриран на v.</translation>
+        <translation>Ваш новчаник ће бити мигриран на v </translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>

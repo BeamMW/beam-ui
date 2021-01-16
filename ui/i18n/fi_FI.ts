@@ -286,9 +286,10 @@
         <translation>Saapuva</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>Versio</translation>
+        <translation type="unfinished">Versio</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -499,8 +500,9 @@
         <translation>Olet palauttamassa vanhaa lompakkoa. Huomioithan, että jos olet jo käyttänyt lompakkoa toisella laitteella, historiatiedot tilitapahtumista sekä tallentamasi osoitteet eivät siirry uudelle laitteelle palautuksen yhteydessä. Tilitapahtumat sekä osoitteet tallennetaan erikseen kullekin laitteelle. Lompakkosi saldo kuitenkin palautetaan ja on käytettävissä ajantasaisena uudessa laitteessa.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>Lompakkosi päivitetään uuteen versioon</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">Lompakkosi päivitetään uuteen versioon</translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>

@@ -286,9 +286,10 @@
         <translation>Inkomend</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>Versie</translation>
+        <translation type="unfinished">Versie</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -499,8 +500,9 @@
         <translation>U probeert een bestaande Beam Portemonnee te herstellen. Let op dat wanneer u uw portemonnee op een ander apparaat gebruikt uw saldo up-to-date zal zijn, maar de transactiegeschiedenis en adressen op elk apparaat apart worden gehouden.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>Uw wallet zal worden gemigreerd naar v.</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">Uw wallet zal worden gemigreerd naar v </translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>

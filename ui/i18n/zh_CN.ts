@@ -287,9 +287,10 @@
         <translation>入账</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>版本</translation>
+        <translation type="unfinished">版本</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -503,8 +504,9 @@
 请注意：如果您在其他设备上使用该钱包，您的余额将是最新的，但交易历史和地址将分别保存在每个设备上</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>您的钱包将被迁移到v</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">您的钱包将被迁移到v</translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>

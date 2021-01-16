@@ -286,9 +286,10 @@
         <translation>Entrant</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>Version</translation>
+        <translation type="unfinished">Version</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -500,8 +501,9 @@
 Vous essayez de restaurer un portefeuille Beam existant. Veuillez noter que si vous utilisez votre portefeuille sur un autre appareil, votre solde sera à jour, mais l&apos;historique et les adresses des transactions seront conservés séparément sur chaque appareil.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>Votre portefeuille sera migré vers v.</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">Votre portefeuille sera migré vers v </translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>

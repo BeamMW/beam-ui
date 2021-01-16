@@ -286,9 +286,10 @@
         <translation>ขาเข้า</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>เวอร์ชัน</translation>
+        <translation type="unfinished">เวอร์ชัน</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -499,8 +500,9 @@
         <translation>คุณกำลังดำเนินการกู้กระเป๋า กรุณาเข้าใจว่าถ้าคุณกำลังจะใช้งานกระเป๋าที่จะกู้นี้ในอุปกรณ์อื่น ยอดคงเหลือที่จะแสดงผลในอุปกรณ์นี้จะถูกอัพเดทเป็นปัจจุบัน แต่รายการประวัติธุรกรรมและที่อยู่นั้นจะถูกแยกเก็บในแต่ละอุปกรณ์</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>กระเป๋าของคุณจะถูกย้ายมาที่เวอร์ชั่น</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">กระเป๋าของคุณจะถูกย้ายมาที่เวอร์ชั่น</translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>
