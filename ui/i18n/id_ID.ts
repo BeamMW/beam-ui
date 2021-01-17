@@ -631,7 +631,8 @@
         <translation type="unfinished">Please specify address of the remote node</translation>
     </message>
     <message id="appmodel-failed-start-node">
-        <source>Failed to start node. Please check your node configuration</source>
+        <source>Failed to start node. Please save wallet logs and contact support.</source>
+        <oldsource>Failed to start node. Please check your node configuration</oldsource>
         <translation type="unfinished">Failed to start node. Please check your node configuration</translation>
     </message>
     <message id="wallet-model-node-protocol-error">

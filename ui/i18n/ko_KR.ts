@@ -631,8 +631,9 @@
         <translation>원격 노드의 주소를 명확히 하십시오</translation>
     </message>
     <message id="appmodel-failed-start-node">
-        <source>Failed to start node. Please check your node configuration</source>
-        <translation>노드 시작을 실패했습니다. 노드 구성을 확인하십시오</translation>
+        <source>Failed to start node. Please save wallet logs and contact support.</source>
+        <oldsource>Failed to start node. Please check your node configuration</oldsource>
+        <translation type="unfinished">노드 시작을 실패했습니다. 노드 구성을 확인하십시오</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
         <source>Node protocol error!</source>

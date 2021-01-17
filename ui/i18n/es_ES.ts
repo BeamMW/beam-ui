@@ -631,8 +631,9 @@
         <translation>Por favor, especifica la dirección del nodo remoto</translation>
     </message>
     <message id="appmodel-failed-start-node">
-        <source>Failed to start node. Please check your node configuration</source>
-        <translation>Error al iniciar el nodo. Por favor revise la configuración de su nodo</translation>
+        <source>Failed to start node. Please save wallet logs and contact support.</source>
+        <oldsource>Failed to start node. Please check your node configuration</oldsource>
+        <translation type="unfinished">Error al iniciar el nodo. Por favor revise la configuración de su nodo</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
         <source>Node protocol error!</source>

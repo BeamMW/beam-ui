@@ -631,8 +631,9 @@
         <translation>リモートノードのアドレスを指定してください</translation>
     </message>
     <message id="appmodel-failed-start-node">
-        <source>Failed to start node. Please check your node configuration</source>
-        <translation>ノードの開始に失敗しました。ノード設定を確認してください</translation>
+        <source>Failed to start node. Please save wallet logs and contact support.</source>
+        <oldsource>Failed to start node. Please check your node configuration</oldsource>
+        <translation type="unfinished">ノードの開始に失敗しました。ノード設定を確認してください</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
         <source>Node protocol error!</source>

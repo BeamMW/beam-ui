@@ -632,8 +632,9 @@ Vous essayez de restaurer un portefeuille Beam existant. Veuillez noter que si v
         <translation>Merci de spécifier l&apos;adresse du noeud distant</translation>
     </message>
     <message id="appmodel-failed-start-node">
-        <source>Failed to start node. Please check your node configuration</source>
-        <translation>Impossible de lancer un noeud. Merci de vérifier les paramètre de votre noeud</translation>
+        <source>Failed to start node. Please save wallet logs and contact support.</source>
+        <oldsource>Failed to start node. Please check your node configuration</oldsource>
+        <translation type="unfinished">Impossible de lancer un noeud. Merci de vérifier les paramètre de votre noeud</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
         <source>Node protocol error!</source>

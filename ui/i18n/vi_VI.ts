@@ -631,8 +631,9 @@
         <translation>Vui lòng xác định địa chỉ nút từ xa</translation>
     </message>
     <message id="appmodel-failed-start-node">
-        <source>Failed to start node. Please check your node configuration</source>
-        <translation>Không thể bắt đầu nút. Vui lòng kiểm tra cấu hình nút của bạn</translation>
+        <source>Failed to start node. Please save wallet logs and contact support.</source>
+        <oldsource>Failed to start node. Please check your node configuration</oldsource>
+        <translation type="unfinished">Không thể bắt đầu nút. Vui lòng kiểm tra cấu hình nút của bạn</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
         <source>Node protocol error!</source>

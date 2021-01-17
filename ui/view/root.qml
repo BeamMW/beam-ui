@@ -71,11 +71,28 @@ Window  {
                         Layout.minimumHeight: 20
                         Layout.minimumWidth: 20
                         Layout.rightMargin: 30
+                        icon.source: "qrc:/assets/icon-save.svg"
+                        text: qsTrId("settings-report-problem-save-log-button")
+                        onClicked: viewModel.saveLogs()
+                        font { 
+                            family: "SF Pro Display"
+                            pixelSize: 14
+                            weight: Font.Bold
+                            capitalization: Font.AllLowercase
+                        }
+                        visible: viewModel.enableSaveReport(index)
+                    }
+                    CustomToolButton {
+                        Layout.alignment: Qt.AlignVCenter
+                        Layout.minimumHeight: 20
+                        Layout.minimumWidth: 20
+                        Layout.rightMargin: 30
                         icon.source: "qrc:/assets/icon-cancel.svg"
                         onClicked: viewModel.deleteMessage(index)
+                        visible: viewModel.enableCloseMessage(index)
                     }
                 }
-            }            
+            }
         }
     }
 

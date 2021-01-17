@@ -631,8 +631,9 @@
         <translation>Specificeer adres van de externe node</translation>
     </message>
     <message id="appmodel-failed-start-node">
-        <source>Failed to start node. Please check your node configuration</source>
-        <translation>Starten van de node is mislukt. Controleer uw node configuratie</translation>
+        <source>Failed to start node. Please save wallet logs and contact support.</source>
+        <oldsource>Failed to start node. Please check your node configuration</oldsource>
+        <translation type="unfinished">Starten van de node is mislukt. Controleer uw node configuratie</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
         <source>Node protocol error!</source>

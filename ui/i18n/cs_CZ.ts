@@ -631,8 +631,9 @@
         <translation>Zadejte prosím adresu vzdáleného uzlu</translation>
     </message>
     <message id="appmodel-failed-start-node">
-        <source>Failed to start node. Please check your node configuration</source>
-        <translation>Nepodařilo se spustit přístupový bod Node. Zkontrolujte prosím konfiguraci přístupového bodu</translation>
+        <source>Failed to start node. Please save wallet logs and contact support.</source>
+        <oldsource>Failed to start node. Please check your node configuration</oldsource>
+        <translation type="unfinished">Nepodařilo se spustit přístupový bod Node. Zkontrolujte prosím konfiguraci přístupového bodu</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
         <source>Node protocol error!</source>

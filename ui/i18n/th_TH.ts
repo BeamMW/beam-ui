@@ -631,8 +631,9 @@
         <translation>กรุณาระบุที่อยู่ของ Node ปลายทาง</translation>
     </message>
     <message id="appmodel-failed-start-node">
-        <source>Failed to start node. Please check your node configuration</source>
-        <translation>ไม่สามารถเชื่อมต่อ Node ได้ กรุณาตรวจสอบการตั้งค่าของ Node</translation>
+        <source>Failed to start node. Please save wallet logs and contact support.</source>
+        <oldsource>Failed to start node. Please check your node configuration</oldsource>
+        <translation type="unfinished">ไม่สามารถเชื่อมต่อ Node ได้ กรุณาตรวจสอบการตั้งค่าของ Node</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
         <source>Node protocol error!</source>

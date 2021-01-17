@@ -454,8 +454,8 @@ void AppModel::onFailedToStartNode(beam::wallet::ErrorType errorCode)
         return;
     }
 
-    //% "Failed to start node. Please check your node configuration"
-    getMessages().addMessage(qtTrId("appmodel-failed-start-node"));
+    //% "Failed to start node. Please save wallet logs and contact support."
+    getMessages().addMessage(qtTrId("appmodel-failed-start-node"), true, false);
 }
 
 void AppModel::start()

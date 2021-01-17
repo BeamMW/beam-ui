@@ -631,8 +631,9 @@
         <translation>Määritä ulkoisen palvelimen (remote node) osoite</translation>
     </message>
     <message id="appmodel-failed-start-node">
-        <source>Failed to start node. Please check your node configuration</source>
-        <translation>Palvelimen (node) käynnistäminen epäonnistui. Ole hyvä ja tarkista palvelimen asetukset</translation>
+        <source>Failed to start node. Please save wallet logs and contact support.</source>
+        <oldsource>Failed to start node. Please check your node configuration</oldsource>
+        <translation type="unfinished">Palvelimen (node) käynnistäminen epäonnistui. Ole hyvä ja tarkista palvelimen asetukset</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
         <source>Node protocol error!</source>
