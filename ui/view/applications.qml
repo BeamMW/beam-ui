@@ -1,7 +1,7 @@
 import QtQuick          2.11
 import QtQuick.Layouts  1.0
 import QtQuick.Controls 2.4
-import QtWebEngine      1.1
+import QtWebEngine      1.2
 import QtWebChannel     1.0
 import Beam.Wallet      1.0
 import "controls"
@@ -32,6 +32,13 @@ ColumnLayout {
         model: statusbarModel
     }
 
+    function completeOnBack () {
+        control.errorMessage = ""
+        control.activeApp = undefined
+        webView.visible = false
+        webView.url = "about:blank"
+    }
+
     SubtitleRow {
         Layout.fillWidth:    true
         Layout.topMargin:    50
@@ -41,9 +48,11 @@ ColumnLayout {
         visible: !!control.activeApp
 
         onBack: function () {
-            control.activeApp = undefined
-            webView.visible = false
-            webView.url = "about:blank"
+            if (control.errorMessage.length) {
+                return completeOnBack()
+            }
+            var empty = viewModel.getEmptyHTML()
+            return webView.runJavaScript(empty);
         }
     }
 
@@ -53,7 +62,12 @@ ColumnLayout {
     WebAPIBeam {
         id: webapiBEAM
         WebChannel.id: "BEAM"
+
         property var style: Style
+
+        function completeOnBack() {
+            control.completeOnBack()
+        }
     }
 
     WebChannel {
@@ -70,6 +84,7 @@ ColumnLayout {
 
         webChannel: apiChannel
         visible: false
+        backgroundColor: "transparent"
 
         // TODO:check why cache doesn't respect headers and always load cached page
         profile.httpCacheType: WebEngineProfile.NoCache
@@ -80,8 +95,17 @@ ColumnLayout {
                 viewModel.onCompleted(webView)
 
                 if(loadRequest.status === WebEngineLoadRequest.LoadFailedStatus) {
-                    var html = viewModel.makeErrorHTML(loadRequest.errorString)
-                    loadHtml(html, "")
+                    // code in this 'if' will cause next 'if' to be called
+                    webView.loadHtml("<body style='background-color:transparent;color:red;'></body>")
+                    control.errorMessage = loadRequest.errorString
+                    return
+                }
+
+                if (control.errorMessage.length) {
+                    // hack to eliminate flickering
+                    this.visible = true
+                    this.visible = false
+                    return
                 }
 
                 this.visible = true
@@ -90,6 +114,7 @@ ColumnLayout {
     }
 
     function launchApp(app) {
+        control.errorMessage = ""
         webView.visible = false
         webView.url = app.url
         control.activeApp = app
@@ -100,7 +125,7 @@ ColumnLayout {
     Item {
         Layout.fillHeight: true
         Layout.fillWidth:  true
-        visible: !webView.visible && !appsView.visible
+        visible: !appsView.visible && !webView.visible
 
         SFText {
             anchors.horizontalCenter: parent.horizontalCenter

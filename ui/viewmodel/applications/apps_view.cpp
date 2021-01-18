@@ -53,16 +53,13 @@ namespace beamui::applications {
         return settings.getAppsUrl();
     }
 
-    QString AppsViewModel::makeErrorHTML(QString errText) const
+    QString AppsViewModel::getEmptyHTML() const
     {
-         QFile file(":/assets/apperror.html");
-         if (!file.open(QFile::ReadOnly|QFile::Text)) {
-             return errText.toHtmlEscaped();
-         }
-
-         QTextStream in(&file);
-         QString templ = in.readAll();
-         templ.replace("%errmsg%", errText.toHtmlEscaped());
-         return templ;
+        QFile file(":/assets/appempty.script");
+        if (!file.open(QFile::ReadOnly|QFile::Text)) {
+            return "";
+        }
+        QTextStream in(&file);
+        return in.readAll();
     }
 }

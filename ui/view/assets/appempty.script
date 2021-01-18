@@ -1,0 +1,13 @@
+let head = document.head
+let script = document.createElement('script')
+script.type = 'text/javascript'
+script.src = 'qrc:///qtwebchannel/qwebchannel.js'
+
+script.onload = function () {
+    new QWebChannel(qt.webChannelTransport, (channel) => {
+        document.body.style.display = "none"
+        channel.objects.BEAM.completeOnBack()
+    })
+}
+
+head.appendChild(script)
