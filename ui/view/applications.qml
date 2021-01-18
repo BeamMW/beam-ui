@@ -32,13 +32,6 @@ ColumnLayout {
         model: statusbarModel
     }
 
-    function completeOnBack () {
-        control.errorMessage = ""
-        control.activeApp = undefined
-        webView.visible = false
-        webView.url = "about:blank"
-    }
-
     SubtitleRow {
         Layout.fillWidth:    true
         Layout.topMargin:    50
@@ -48,11 +41,7 @@ ColumnLayout {
         visible: !!control.activeApp
 
         onBack: function () {
-            if (control.errorMessage.length) {
-                return completeOnBack()
-            }
-            var empty = viewModel.getEmptyHTML()
-            return webView.runJavaScript(empty);
+            main.openApplications()
         }
     }
 
@@ -62,12 +51,7 @@ ColumnLayout {
     WebAPIBeam {
         id: webapiBEAM
         WebChannel.id: "BEAM"
-
         property var style: Style
-
-        function completeOnBack() {
-            control.completeOnBack()
-        }
     }
 
     WebChannel {
@@ -96,14 +80,11 @@ ColumnLayout {
 
                 if(loadRequest.status === WebEngineLoadRequest.LoadFailedStatus) {
                     // code in this 'if' will cause next 'if' to be called
-                    webView.loadHtml("<body style='background-color:transparent;color:red;'></body>")
                     control.errorMessage = loadRequest.errorString
                     return
                 }
 
                 if (control.errorMessage.length) {
-                    // hack to eliminate flickering
-                    this.visible = true
                     this.visible = false
                     return
                 }

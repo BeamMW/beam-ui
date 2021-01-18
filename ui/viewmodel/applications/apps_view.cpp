@@ -52,14 +52,4 @@ namespace beamui::applications {
         auto& settings = AppModel::getInstance().getSettings();
         return settings.getAppsUrl();
     }
-
-    QString AppsViewModel::getEmptyHTML() const
-    {
-        QFile file(":/assets/appempty.script");
-        if (!file.open(QFile::ReadOnly|QFile::Text)) {
-            return "";
-        }
-        QTextStream in(&file);
-        return in.readAll();
-    }
 }

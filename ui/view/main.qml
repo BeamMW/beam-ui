@@ -367,6 +367,10 @@ Rectangle {
         updateItem("atomic_swap", {"openedTxID": id})
     }
 
+    function openApplications () {
+        updateItem("applications")
+    }
+
     function resetLockTimer() {
         viewModel.resetLockTimer();
     }

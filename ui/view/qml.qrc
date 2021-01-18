@@ -264,7 +264,6 @@
         <file>assets/atomic-empty-state.svg</file>
         <file>assets/icon-trusted-node-status.svg</file>
         <file>assets/icon-delete-blue.svg</file>
-        <file>assets/appempty.script</file>
         <file>utils.js</file>
         <file>qmldir</file>
         <file>assets/icon-notifications-swap-completed.svg</file>
