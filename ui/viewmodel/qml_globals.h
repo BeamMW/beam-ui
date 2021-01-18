@@ -45,6 +45,7 @@ public:
     Q_INVOKABLE static QString getCurrencyName(Currency);
     Q_INVOKABLE static QString getFeeRateLabel(Currency);
     Q_INVOKABLE static QString getCurrencySubunitFromLabel(const QString& currLabel);
+    Q_INVOKABLE static uint    getCurrencyDecimals(Currency);
     
     Q_INVOKABLE static QString getMinimalFee(Currency, bool isShielded);
     Q_INVOKABLE static QString getMaximumFee(Currency);

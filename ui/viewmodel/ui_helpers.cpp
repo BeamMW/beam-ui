@@ -12,29 +12,6 @@ using namespace beam;
 
 namespace beamui
 {
-    namespace
-    {
-        uint8_t getCurrencyDecimals(Currencies currency)
-        {
-            // TODO(alex.starun): find better solution
-            switch (currency)
-            {
-            case Currencies::Beam:
-                static uint8_t beamDecimals = static_cast<uint8_t>(std::log10(Rules::Coin));
-                return beamDecimals;
-            case Currencies::Ethereum:
-            case Currencies::Dai:
-                return 9;
-            case Currencies::Usdt:
-                return 6;
-            case Currencies::WrappedBTC:
-                return libbitcoin::btc_decimal_places;
-            default:
-                return libbitcoin::btc_decimal_places;
-            }
-        }
-    }
-
     QString toString(const beam::wallet::WalletID& walletID)
     {
         if (walletID != Zero)
@@ -118,6 +95,26 @@ namespace beamui
         CURRENCY_MAP(MACRO)
 #undef MACRO
         return "";
+    }
+
+    // TODO(alex.starun): find better solution / mb use CURRENCY_MAP
+    uint8_t getCurrencyDecimals(Currencies currency)
+    {
+        switch (currency)
+        {
+        case Currencies::Beam:
+            static uint8_t beamDecimals = static_cast<uint8_t>(std::log10(Rules::Coin));
+            return beamDecimals;
+        case Currencies::Ethereum:
+        case Currencies::Dai:
+            return 9;
+        case Currencies::Usdt:
+            return 6;
+        case Currencies::WrappedBTC:
+            return libbitcoin::btc_decimal_places;
+        default:
+            return libbitcoin::btc_decimal_places;
+        }
     }
 
     /**

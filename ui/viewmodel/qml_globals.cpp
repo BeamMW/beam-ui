@@ -347,6 +347,12 @@ QString QMLGlobals::getCurrencySubunitFromLabel(const QString& currLabel)
     return beamui::getCurrencySubunitFromLabel(currLabel);
 }
 
+uint QMLGlobals::getCurrencyDecimals(Currency currency)
+{
+    beamui::Currencies currencyCommon = convertUiCurrencyToCurrencies(currency);
+    return beamui::getCurrencyDecimals(currencyCommon);
+}
+
 QString QMLGlobals::getMinimalFee(Currency currency, bool isShielded)
 {
     return QString::fromStdString(std::to_string(minimalFee(currency, isShielded)));

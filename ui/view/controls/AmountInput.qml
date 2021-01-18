@@ -89,7 +89,7 @@ ColumnLayout {
             font.weight:      Font.Light
             color:            error.length ? Style.validator_error : control.color
             backgroundColor:  error.length ? Style.validator_error : Style.content_main
-            validator:        RegExpValidator {regExp: /^(([1-9][0-9]{0,7})|(1[0-9]{8})|(2[0-4][0-9]{7})|(25[0-3][0-9]{6})|(0))(\.[0-9]{0,7}[1-9])?$/}
+            validator:        RegExpValidator {regExp: new RegExp(ainput.getRegExpPattern())}
             selectByMouse:    true
             text:             formatDisplayedAmount()
             readOnly:         control.readOnlyA
@@ -110,6 +110,11 @@ ColumnLayout {
             function formatDisplayedAmount() {
                 return control.amountIn == "0" ? (ainput.activeFocus ? "": "0") 
                                     : (ainput.activeFocus ? control.amountIn : Utils.uiStringToLocale(control.amountIn))
+            }
+
+            function getRegExpPattern() {
+                var pattern = "^(([1-9][0-9]{0,7})|(1[0-9]{8})|(2[0-4][0-9]{7})|(25[0-3][0-9]{6})|(0))(\.[0-9]{0,%1}[1-9])?$";
+                return pattern.arg(BeamGlobals.getCurrencyDecimals(control.currency) - 1);
             }
 
             Connections {
