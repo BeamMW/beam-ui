@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "swap_tx_object_list.h"
+#include <QLocale>
 
 SwapTxObjectList::SwapTxObjectList()
 {
@@ -96,7 +97,7 @@ auto SwapTxObjectList::data(const QModelIndex &index, int role) const -> QVarian
         {
             QDateTime datetime;
             datetime.setTime_t(value->timeCreated());
-            return datetime.toString(Qt::SystemLocaleShortDate);
+            return datetime.toString(QLocale::system().dateTimeFormat(QLocale::ShortFormat));
         }
         case Roles::TimeCreatedSort:
         {
