@@ -82,6 +82,7 @@ class SwapOffersViewModel : public QObject
     Q_PROPERTY(QAbstractItemModel*                       allOffersFitBalance READ getAllOffersFitBalance NOTIFY allOffersFitBalanceChanged)
     Q_PROPERTY(QString                                   beamAvailable       READ beamAvailable          NOTIFY beamAvailableChanged)
     Q_PROPERTY(bool                                      showBetaWarning     READ showBetaWarning)
+    Q_PROPERTY(bool                                      isOffersLoaded      READ isOffersLoaded         NOTIFY offersLoaded)
     Q_PROPERTY(int                                       activeTxCount       READ getActiveTxCount       NOTIFY allTransactionsChanged)
     Q_PROPERTY(QQmlListProperty<SwapCoinClientWrapper>   swapClientList      READ getSwapClients         CONSTANT)
 
@@ -94,6 +95,7 @@ public:
     QAbstractItemModel* getAllOffersFitBalance();
     QString beamAvailable() const;
     bool showBetaWarning() const;
+    bool isOffersLoaded() const;
     int getActiveTxCount() const;
     QQmlListProperty<SwapCoinClientWrapper> getSwapClients();
 
@@ -117,6 +119,7 @@ signals:
     void allOffersFitBalanceChanged();
     void beamAvailableChanged();
     void offerRemovedFromTable(QVariant variantTxID);
+    void offersLoaded();
 
 private:
     void monitorAllOffersFitBalance();
@@ -135,6 +138,7 @@ private:
     void incrementActiveTxCounter(AtomicSwapCoin swapCoinType);
     void decrementActiveTxCounter(AtomicSwapCoin swapCoinType);
     void resetActiveTxCounters();
+    void setIsOffersLoaded(bool isOffersLoaded);
 
     WalletModel& m_walletModel;
 
@@ -145,4 +149,5 @@ private:
 
     int m_activeTxCount = 0;
     std::map<beam::wallet::TxID, beam::wallet::AtomicSwapCoin> m_activeTx;
+    bool m_isOffersLoaded = false;
 };

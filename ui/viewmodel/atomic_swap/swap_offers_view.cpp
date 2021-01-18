@@ -394,6 +394,7 @@ void SwapOffersViewModel::onSwapOffersDataModelChanged(beam::wallet::ChangeActio
     }
     
     emit allOffersChanged();
+    setIsOffersLoaded(true);
 }
 
 void SwapOffersViewModel::resetAllOffersFitBalance()
@@ -421,6 +422,20 @@ bool SwapOffersViewModel::showBetaWarning() const
         settings.setShowSwapBetaWarning(false);
     }
     return showWarning;
+}
+
+bool SwapOffersViewModel::isOffersLoaded() const
+{
+    return m_isOffersLoaded;
+}
+
+void SwapOffersViewModel::setIsOffersLoaded(bool isOffersLoaded)
+{
+    if (m_isOffersLoaded != isOffersLoaded)
+    {
+        m_isOffersLoaded = isOffersLoaded;
+        emit offersLoaded();
+    }
 }
 
 int SwapOffersViewModel::getActiveTxCount() const

@@ -275,5 +275,6 @@
         <file>controls/SeedPhraseDialog.qml</file>
         <file>controls/SwapEthSettings.qml</file>
         <file>controls/ShowAddressesDialog.qml</file>
+        <file>controls/LoadingSpinner.qml</file>
     </qresource>
 </RCC>

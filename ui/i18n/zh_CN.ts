@@ -2908,5 +2908,9 @@ much longer for a transaction to complete.</source>
         <source>Infura project ID</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="atomic-offers-loading">
+        <source>Please wait, offers are loading.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

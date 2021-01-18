@@ -476,8 +476,8 @@ Item {
                     PropertyChanges { target: transactionsTabSelector; state: "active" }
                     PropertyChanges { target: activeOffersTab; visible: false }
                     PropertyChanges { target: transactionsTab; visible: true }
-                    PropertyChanges { target: offersTable; showOnlyMyOffers: false }
-                    
+                    PropertyChanges { target: offersTable; showOnlyMyOffers: false }                    
+
                 }
             ]
             
@@ -493,6 +493,7 @@ Item {
                     anchors.topMargin: 20
 
                     RowLayout {
+                        visible: !loadingPlaceholder.visible
                         spacing: 0
                         Layout.minimumHeight: 20
                         Layout.maximumHeight: 20
@@ -543,9 +544,37 @@ Item {
                     }   // RowLayout
 
                     ColumnLayout {
+                        id: loadingPlaceholder
+                        visible: !viewModel.isOffersLoaded
                         Layout.minimumWidth: parent.width
                         Layout.minimumHeight: parent.height
-                        visible: offersTable.model.count == 0
+
+                        LoadingSpinner {
+                            Layout.topMargin: 100
+                            Layout.alignment: Qt.AlignHCenter
+                        }
+
+                        SFText {
+                            Layout.topMargin:     30
+                            Layout.alignment:     Qt.AlignHCenter
+                            horizontalAlignment:  Text.AlignHCenter
+                            font.pixelSize:       14
+                            color:                Style.content_main
+                            opacity:              0.5
+                            lineHeight:           1.43
+                            //% "Please wait, offers are loading."
+                            text:                 qsTrId("atomic-offers-loading")
+                        }
+
+                        Item {
+                            Layout.fillHeight: true
+                        }
+                    }
+
+                    ColumnLayout {
+                        Layout.minimumWidth: parent.width
+                        Layout.minimumHeight: parent.height
+                        visible: offersTable.model.count == 0 && !loadingPlaceholder.visible
 
                         SvgImage {
                             Layout.topMargin: 100
@@ -580,7 +609,7 @@ Please try again later or create an offer yourself."
                         Layout.fillWidth : true
                         Layout.fillHeight : true
                         Layout.topMargin: 14
-                        visible: offersTable.model.count > 0
+                        visible: offersTable.model.count > 0 && !loadingPlaceholder.visible
 
                         property int rowHeight: 56
                         property int columnWidth: (width - swapCoinsColumn.width) / 6
