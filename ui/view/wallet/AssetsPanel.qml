@@ -12,7 +12,6 @@ Control {
         onAssetsChanged: {
             if (selectedId > 0) {
                 var roleid = viewModel.assets.getRoleId("id")
-                BeamGlobals.showMessage("role:" + roleid)
                 for (var idx = 0; idx < viewModel.assets.rowCount(); ++idx) {
                     var modelIdx = viewModel.assets.index(idx, 0);
                     var data = viewModel.assets.data(modelIdx, 258)
