@@ -2994,5 +2994,9 @@ Please try again later or create an offer yourself.</source>
         <source>Transaction expired</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="notification-contract-no-message">
+        <source>Contract: no description provided</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

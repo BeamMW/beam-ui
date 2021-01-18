@@ -78,6 +78,12 @@ ColumnLayout {
             // do not change this to declarative style, it flickers somewhy, probably because of delays
             if (control.activeApp && !this.loading) {
                 viewModel.onCompleted(webView)
+
+                if(loadRequest.status === WebEngineLoadRequest.LoadFailedStatus) {
+                    var html = viewModel.makeErrorHTML(loadRequest.errorString)
+                    loadHtml(html, "")
+                }
+
                 this.visible = true
             }
         }
@@ -89,6 +95,8 @@ ColumnLayout {
         control.activeApp = app
     }
 
+    readonly property bool noApps: control.appsList && control.appsList.length == 0
+
     Item {
         Layout.fillHeight: true
         Layout.fillWidth:  true
@@ -96,26 +104,29 @@ ColumnLayout {
 
         SFText {
             anchors.horizontalCenter: parent.horizontalCenter
-            y: parent.height / 2 - this.height / 2 - 40
-            color: control.errorMessage.length ? Style.validator_error : Style.content_main
+            y:       parent.height / 2 - this.height / 2 - 40
+            color:   control.errorMessage.length ? Style.validator_error : Style.content_main
+            opacity: control.noApps ? 1 : 0.5
 
             font {
-                pixelSize: 20
+                styleName: "DemiBold"
+                weight:    Font.DemiBold
+                pixelSize: 18
             }
 
             text: {
-                if (control.activeApp) {
-                    //% "Loading '%1'..."
-                    return qsTrId("apps-loading-app").arg(control.activeApp.name)
-                }
-
                 if (control.errorMessage.length) {
                     return control.errorMessage
                 }
 
-                if (control.appsList && control.appsList.length == 0) {
+                if (control.noApps) {
                     //% "There are no applications at the moment"
                     return qsTrId("apps-nothing")
+                }
+
+                if (control.activeApp) {
+                    //% "Loading '%1'..."
+                    return qsTrId("apps-loading-app").arg(control.activeApp.name)
                 }
 
                 //% "Loading..."
@@ -253,7 +264,6 @@ ColumnLayout {
             {
                 //% "Failed to load applications list, %1"
                 var errTemplate = qsTrId("apps-load-error")
-
                 if(xhr.readyState === XMLHttpRequest.DONE)
                 {
                     if (xhr.status === 200)

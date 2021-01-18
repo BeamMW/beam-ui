@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+            html, body {
+                height: 100%;
+            }
+
+            html {
+                display: table;
+                margin: auto;
+            }
+
+            body {
+                display: table-cell;
+                vertical-align: middle;
+            }
+        </style>
+        <script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js" async></script>
+        <script>
+            window.addEventListener('load', () => new QWebChannel(qt.webChannelTransport, (channel) => {
+                let BEAM = channel.objects.BEAM
+                // Make everything beautiful
+                let topColor =  [BEAM.style.appsGradientOffset, "px,"].join('')
+                let mainColor = [BEAM.style.appsGradientTop, "px,"].join('')
+                document.body.style.backgroundImage = [
+                    "linear-gradient(to bottom,",
+                    BEAM.style.background_main_top, topColor,
+                    BEAM.style.background_main, mainColor,
+                    BEAM.style.background_main
+                ].join(' ')
+
+                let errel = document.getElementById("errmsg");
+                errel.style.color = BEAM.style.validator_error
+                errel.style.marginBottom = [Math.abs(BEAM.style.appsGradientOffset), "px"].join('')
+            }))
+        </script>
+    </head>
+    <body>
+        <div id="errmsg">
+        %errmsg%
+        </div>
+    </body>
+</html>

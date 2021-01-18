@@ -25,9 +25,10 @@ namespace beamui::applications {
         AppsViewModel();
         ~AppsViewModel();
 
-        QString getDevAppUrl() const;
-        QString getDevAppName() const;
-        QString getAppsUrl() const;
+        Q_INVOKABLE QString getDevAppUrl() const;
+        Q_INVOKABLE QString getDevAppName() const;
+        Q_INVOKABLE QString getAppsUrl() const;
+        Q_INVOKABLE QString makeErrorHTML(QString errText) const;
 
     public:
         Q_INVOKABLE void onCompleted(QObject *webView);

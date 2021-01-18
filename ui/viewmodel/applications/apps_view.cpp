@@ -52,4 +52,17 @@ namespace beamui::applications {
         auto& settings = AppModel::getInstance().getSettings();
         return settings.getAppsUrl();
     }
+
+    QString AppsViewModel::makeErrorHTML(QString errText) const
+    {
+         QFile file(":/assets/apperror.html");
+         if (!file.open(QFile::ReadOnly|QFile::Text)) {
+             return errText.toHtmlEscaped();
+         }
+
+         QTextStream in(&file);
+         QString templ = in.readAll();
+         templ.replace("%errmsg%", errText.toHtmlEscaped());
+         return templ;
+    }
 }
