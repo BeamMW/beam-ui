@@ -529,7 +529,6 @@ Item {
                             textRole: 'text'
                             model: ListModel {
                                     ListElement{text: "ALL"; pair: ""}
-                                    ListElement{text: "BEAM"; pair: "^(beam)|(beam)$"}
                                     ListElement{text: "BTC"; pair: "^(btc)|(btc)$"}
                                     ListElement{text: "DAI"; pair: "^(dai)|(dai)$"}
                                     ListElement{text: "DASH"; pair: "^(dash)|(dash)$"}
