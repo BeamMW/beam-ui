@@ -30,6 +30,7 @@ Control {
     property alias   fontSizeMode:        amountText.fontSizeMode
     property real    maxPaintedWidth:     0
     property int     maxUnitChars:        0
+    property int     minUnitChars:        6
     property real    vSpacing:            5
     property var     tipParent:           Overlay.overlay
 
@@ -46,7 +47,7 @@ Control {
 
     function formatText (val, uname) {
         if (parseFloat(amount) > 0 || showZero) {
-            return prefix + [Utils.uiStringToLocale(val), uname].join(" ")
+            return prefix + [Utils.uiStringToLocale(val), uname].join("\u2000") // 1/2 em space, EN QUAD Unicode char
         }
         return "-"
     }
@@ -73,7 +74,7 @@ Control {
                return result
            }
 
-           if (uname && control.maxUnitChars && uname.length > maxUnitChars)
+           if (uname && control.minUnitChars && uname.length > minUnitChars)
            {
                 uname  = uname.substring(0, uname.length - 1)
                 unamed = true
