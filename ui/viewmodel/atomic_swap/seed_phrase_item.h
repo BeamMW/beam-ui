@@ -22,7 +22,7 @@ class SeedPhraseItem : public QObject
     Q_PROPERTY(bool    isModified READ isModified               NOTIFY isModifiedChanged)
     Q_PROPERTY(bool    isAllowed  READ isAllowed                NOTIFY isAllowedChanged)
     Q_PROPERTY(QString value      READ getValue  WRITE setValue NOTIFY valueChanged)
-    Q_PROPERTY(QString phrase     READ getPhrase                CONSTANT)
+    Q_PROPERTY(QString phrase     READ getPhrase                NOTIFY phraseChanged)
     Q_PROPERTY(int     index      READ getIndex                 CONSTANT)
 public:
     SeedPhraseItem(int index, const QString& phrase);
@@ -41,6 +41,7 @@ signals:
     void isModifiedChanged();
     void isAllowedChanged();
     void valueChanged();
+    void phraseChanged();
 
 protected:
     int m_index;

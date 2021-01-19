@@ -62,6 +62,7 @@ bool SeedPhraseItem::isAllowed() const
 void SeedPhraseItem::applyChanges()
 {
     m_phrase = m_userInput;
+    emit phraseChanged();
 }
 
 void SeedPhraseItem::revertChanges()
