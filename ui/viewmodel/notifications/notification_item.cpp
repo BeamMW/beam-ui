@@ -98,7 +98,7 @@ namespace {
 
     bool isExpired(const TxParameters& p)
     {
-        auto status = p.GetParameter<TxStatus>(TxParameterID::FailureReason);
+        auto status = p.GetParameter<TxStatus>(TxParameterID::Status);
         auto reason =  p.GetParameter<TxFailureReason>(TxParameterID::FailureReason);
         return status && reason && *status == wallet::TxStatus::Failed && reason == TxFailureReason::TransactionExpired;
     }
