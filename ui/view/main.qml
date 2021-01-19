@@ -119,7 +119,7 @@ Rectangle {
 
     property var contentItems : [
 		"wallet",
-		"dex",
+		//"dex",
         "atomic_swap",
 		"addresses",
         "notifications",
