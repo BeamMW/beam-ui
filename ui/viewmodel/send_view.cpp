@@ -826,7 +826,7 @@ QList<QMap<QString, QVariant>> SendViewModel::getAssetsList() const
 
         const bool isBeam = assetId == beam::Asset::s_BeamID;
         asset.insert("isBEAM", isBeam);
-        asset.insert("unitName", _amgr.getUnitName(assetId));
+        asset.insert("unitName", _amgr.getUnitName(assetId, false));
         asset.insert("rate", isBeam ? beamRate : "0");
         asset.insert("rateUnit", rateUnit);
         asset.insert("assetId", static_cast<int>(assetId));

@@ -322,7 +322,7 @@ QString NotificationItem::message(AssetsManager& amgr) const
                 getPeerID(p, wid);
 
                 auto aid = getAssetId(p);
-                auto unitName = amgr.getUnitName(aid);
+                auto unitName = amgr.getUnitName(aid, true);
 
                 return getTxCompletedMessage(getAmount(p), unitName, std::to_string(wid).c_str(), isSender(p));
             }
@@ -330,7 +330,7 @@ QString NotificationItem::message(AssetsManager& amgr) const
             {
                 bool sender = isSender(p);
                 auto aid = getAssetId(p);
-                auto unitName = amgr.getUnitName(aid);
+                auto unitName = amgr.getUnitName(aid, true);
 
                 return getTxCompletedMessage(getAmount(p), unitName, getPushTxPeer(p, sender), sender);
             }
@@ -366,7 +366,7 @@ QString NotificationItem::message(AssetsManager& amgr) const
                 getPeerID(p, wid);
 
                 auto aid = getAssetId(p);
-                auto unitName = amgr.getUnitName(aid);
+                auto unitName = amgr.getUnitName(aid, true);
 
                 return getTxFailedMessage(getAmount(p), unitName, std::to_string(wid).c_str(), isSender(p));
             }
@@ -374,7 +374,7 @@ QString NotificationItem::message(AssetsManager& amgr) const
             {
                 bool sender = isSender(p);
                 auto aid = getAssetId(p);
-                auto unitName = amgr.getUnitName(aid);
+                auto unitName = amgr.getUnitName(aid, true);
 
                 return getTxFailedMessage(getAmount(p), unitName, getPushTxPeer(p, sender), sender);
             }

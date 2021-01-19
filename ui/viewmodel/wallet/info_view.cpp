@@ -49,7 +49,7 @@ QString InfoViewModel::assetIcon() const
 
 QString InfoViewModel::assetUnitName() const
 {
-    return _amgr.getUnitName(assetIdxToId(_selectedAssetID));
+    return _amgr.getUnitName(assetIdxToId(_selectedAssetID), false);
 }
 
 QString InfoViewModel::assetName() const
@@ -154,7 +154,7 @@ void InfoViewModel::updateProgress()
             progress.lockedMaturing    = beamui::AmountToUIString(maturing);
             progress.lockedMaturingMP  = beamui::AmountToUIString(maturingMP);
             progress.icon              = _amgr.getIcon(asset);
-            progress.unitName          = _amgr.getUnitName(asset);
+            progress.unitName          = _amgr.getUnitName(asset, false);
 
             if (asset == 0)
             {

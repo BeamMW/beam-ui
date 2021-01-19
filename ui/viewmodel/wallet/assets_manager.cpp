@@ -79,7 +79,7 @@ QString AssetsManager::getIcon(beam::Asset::ID id)
      return "qrc:/assets/asset-err.svg";
 }
 
-QString AssetsManager::getUnitName(beam::Asset::ID id)
+QString AssetsManager::getUnitName(beam::Asset::ID id, bool shorten)
 {
     if (id < 1)
     {
@@ -97,6 +97,13 @@ QString AssetsManager::getUnitName(beam::Asset::ID id)
         std::ostringstream ss;
         ss << "ASSET" << static_cast<int>(id);
         unitName = ss.str().c_str();
+        return unitName;
+    }
+
+    const int kMaxUnitLen = 6;
+    if (shorten && unitName.length() > kMaxUnitLen)
+    {
+        unitName = unitName.left(kMaxUnitLen) + u8"\u2026";
     }
 
     return unitName;

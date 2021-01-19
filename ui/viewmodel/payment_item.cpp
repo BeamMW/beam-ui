@@ -63,13 +63,13 @@ QString PaymentInfoItem::getAmount() const
     if (m_paymentInfo)
     {
         const auto amount = m_paymentInfo->m_Amount;
-        const auto unit = _amgr.getUnitName(m_paymentInfo->m_AssetID);
+        const auto unit = _amgr.getUnitName(m_paymentInfo->m_AssetID, false);
         return AmountToUIString(amount, unit, 0);
     }
     else if (m_shieldedPaymentInfo)
     {
         const auto amount = m_shieldedPaymentInfo->m_Amount;
-        const auto unit = _amgr.getUnitName(m_shieldedPaymentInfo->m_AssetID);
+        const auto unit = _amgr.getUnitName(m_shieldedPaymentInfo->m_AssetID, false);
         return AmountToUIString(amount, unit, 0);
     }
 
