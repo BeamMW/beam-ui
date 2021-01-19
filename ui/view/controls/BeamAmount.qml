@@ -18,6 +18,7 @@ Control {
     property bool    showZero:            true
     property bool    showDrop:            false
     property int     fontSize:            14
+    property int     rateFontSize:        10
     property bool    lightFont:           true
     property bool    boldFont:            false
     property string  iconSource:          ""
@@ -30,11 +31,11 @@ Control {
     property real    maxPaintedWidth:     0
     property int     maxUnitChars:        0
     property real    vSpacing:            5
+    property var     tipParent:           Overlay.overlay
 
     function formatRate () {
-        if (control.amount == "") return "-"
         var formatted = Utils.formatAmountToSecondCurrency(control.amount, control.rate, control.rateUnit);
-        return control.prefix + (formatted == "" ? "-" : formatted);
+        return formatted == "" ?  ["-", control.rateUnit].join(" ") : control.prefix + formatted;
     }
 
     TextMetrics {
@@ -113,6 +114,7 @@ Control {
         visible:      amountTextArea.containsMouse && tipText.text != amountText.text
         defBkColor:   Qt.rgba(55 / 255, 93  / 255, 123 / 255, 0.75)
         defTextColor: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.8)
+        parent:       control.tipParent
 
         x: {
             var xpos = Utils.xUp(amountText) + amountText.width / 2 - tip.width / 2
@@ -121,7 +123,6 @@ Control {
         }
 
         y: Utils.yUp(amountText) + amountText.height + 5
-        parent: Overlay.overlay
 
         contentItem: SFText {
             id:             tipText
@@ -188,7 +189,7 @@ Control {
             SFLabel {
                 id:              secondCurrencyAmountText
                 visible:         rateUnit.length > 0
-                font.pixelSize:  10
+                font.pixelSize:  control.rateFontSize
                 font.styleName:  "Regular"
                 font.weight:     Font.Normal
                 color:           control.error ? Style.validator_error : Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)

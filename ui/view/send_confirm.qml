@@ -40,10 +40,10 @@ ConfirmationDialog {
         if (!control.swapMode) return [qsTrId("send-regular-fee"), ":"].join("")
 
         //% "%1 Transaction fee"
-        if (control.flatFee) return [qsTrId("send-flat-fee").arg(control.unitName), ":"].join("")
+        if (control.flatFee) return [qsTrId("send-flat-fee").arg(control.feeUnit), ":"].join("")
 
         //% "%1 Transaction fee rate"
-        return qsTrId("general-fee-rate").arg(control.unitName)
+        return qsTrId("general-fee-rate").arg(control.feeUnit)
     }
 
     okButtonText: control.swapMode ?
@@ -89,13 +89,6 @@ ConfirmationDialog {
             feeValue,
             control.rate,
             control.rateUnit)
-    }
-
-    function getAmountInSecondCurrency() {
-        return Utils.formatAmountToSecondCurrency(
-            control.amount,
-            control.rate,
-            control.rateUnit);
     }
 
     topPadding: 30
@@ -193,24 +186,20 @@ ConfirmationDialog {
                 verticalAlignment: Text.AlignTop
             }
 
-            ColumnLayout {
-                Layout.fillWidth:       true
-                SFText {
-                    id:                     amountLabel
-                    font.pixelSize:         24
-                    color:                  Style.accent_outgoing
-                    text: [
-                            Utils.uiStringToLocale(control.amount),
-                            control.unitName
-                        ].join(" ")
-                }
-                SFText {
-                    id:             secondCurrencyAmountLabel
-                    visible:        control.showRate
-                    font.pixelSize: 14
-                    color:          Style.content_disabled
-                    text:           getAmountInSecondCurrency()
-                }
+            BeamAmount {
+                visible: true
+                id: amountLabel
+                spacing:           15
+                lightFont:         false
+                fontSize:          24
+                rateFontSize:      14
+                copyMenuEnabled:   true
+                unitName:          control.unitName
+                amount:            control.amount
+                rate:              control.showRate ? control.rate : "0"
+                rateUnit:          control.showRate ? control.rateUnit: ""
+                color:             Style.accent_outgoing
+                maxUnitChars:      10
             }
 
             //
