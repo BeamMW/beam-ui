@@ -42,7 +42,7 @@ Dialog {
         ScrollView {
             Layout.fillWidth:          true
             Layout.fillHeight:         true
-            Layout.topMargin:          50
+            Layout.topMargin:          35
             ScrollBar.vertical.policy: ScrollBar.AsNeeded
             clip:                      true
 
@@ -70,7 +70,7 @@ Dialog {
 
                         Item {
                             Layout.fillWidth: true
-                            Layout.preferredWidth: 55
+                            Layout.preferredWidth: 50
                         }
 
                         CustomToolButton {
