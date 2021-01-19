@@ -515,6 +515,8 @@ when connection is established"
                     function generateSeedPhrase() {
                         newSeedElectrum();
                         seedPhraseDialog.setModeNew();
+                        seedPhraseDialog.isCurrentElectrumSeedValid = Qt.binding(function(){return isCurrentElectrumSeedValid;});
+                        seedPhraseDialog.isCurrentElectrumSeedSegwitAndValid = Qt.binding(function(){return isCurrentElectrumSeedSegwitAndValid;});
                         seedPhraseDialog.open();
                     }
 
