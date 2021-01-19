@@ -269,7 +269,7 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             if (alist.size() == 1)
             {
                 auto assetID = *alist.begin();
-                return beamui::AmountToUIString(value->getAmountValue(), _amgr.getUnitName(assetID, false));
+                return beamui::AmountToUIString(value->getAmountValue(), _amgr.getUnitName(assetID, true));
             }
             else
             {
