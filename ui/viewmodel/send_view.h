@@ -30,9 +30,9 @@ class SendViewModel: public QObject
     Q_PROPERTY(QString  changeBeam       READ getChangeBeam                                 NOTIFY availableChanged)
     Q_PROPERTY(QString  changeAsset      READ getChangeAsset                                NOTIFY availableChanged)
 
-    Q_PROPERTY(unsigned int  feeGrothes   READ getFeeGrothes   WRITE setFeeGrothes  NOTIFY feeGrothesChanged)
-    Q_PROPERTY(QString       sendAmount   READ getSendAmount   WRITE setSendAmount  NOTIFY sendAmountChanged)
-    Q_PROPERTY(QString       comment      READ getComment      WRITE setComment     NOTIFY commentChanged)
+    Q_PROPERTY(unsigned int  feeGrothes   READ getFeeGrothes   WRITE setFeeGrothesUI NOTIFY feeGrothesChanged)
+    Q_PROPERTY(QString       sendAmount   READ getSendAmount   WRITE setSendAmount   NOTIFY sendAmountChanged)
+    Q_PROPERTY(QString       comment      READ getComment      WRITE setComment      NOTIFY commentChanged)
 
     // TA = Transaction or Address
     Q_PROPERTY(QString  receiverTA          READ getReceiverTA         WRITE setReceiverTA          NOTIFY receiverTAChanged)
@@ -73,6 +73,8 @@ public:
 
     unsigned int getFeeGrothes() const;
     unsigned int getMinFee() const;
+
+    void setFeeGrothesUI(unsigned int amount);
     void setFeeGrothes(unsigned int amount);
 
     void setComment(const QString& value);
@@ -119,6 +121,7 @@ public:
     QString getFeeRate() const;
 
     bool isNeedExtractShieldedCoins() const;
+    void setNeedExtractShieldedCoins(bool val);
 
     bool getIsNewToken() const;
     QString getNewTokenMsg() const;
@@ -159,18 +162,14 @@ signals:
     void hasAddressChanged();
     void isShieldedTxChanged();
     void isNeedExtractShieldedCoinsChanged();
-    void canSendByOneTransactionChanged();
 
 public slots:
-    void onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId);
-    void onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes);
-    void onNeedExtractShieldedCoins(bool val);
+    void onSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes);
     void onAssetInfo(beam::Asset::ID assetId);
 
 private:
     void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
     void extractParameters();
-    void resetMinimalFee();
     void resetAddress();
 
     beam::Amount _fee;

@@ -587,7 +587,7 @@ ColumnLayout {
                 palette.buttonText:  Style.content_opposite
                 palette.button:      Style.accent_outgoing
                 icon.source:         "qrc:/assets/icon-send-blue.svg"
-                enabled:             viewModel.canSend && viewModel.canSendByOneTransaction
+                enabled:             viewModel.canSend
                 onClicked: {                
                     const dialog = Qt.createComponent("send_confirm.qml")
                     const instance = dialog.createObject(control,

@@ -151,11 +151,6 @@ void WalletModel::onShieldedCoinsSelectionCalculated(const ShieldedCoinsSelectio
     emit shieldedCoinsSelectionCalculated(selectionRes);
 }
 
-void WalletModel::onNeedExtractShieldedCoins(bool val)
-{
-    emit needExtractShieldedCoins(val);
-}
-
 void WalletModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
     emit allUtxoChanged(action, utxos);
