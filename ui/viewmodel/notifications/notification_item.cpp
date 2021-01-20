@@ -253,7 +253,7 @@ QString NotificationItem::message() const
             {
                 QString currentVer = QString::fromStdString(
                     beamui::getCurrentLibVersion().to_string() + "." + std::to_string(beamui::getCurrentUIRevision()));
-                QString message("Your current version is v");
+                QString message("Your current version is v ");
                 message.append(currentVer);
                 message.append(". Please update to get the most of your Beam wallet.");
                 return message;
