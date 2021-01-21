@@ -368,7 +368,7 @@ QStringList SwapCoinSettingsItem::getAddressesElectrum() const
 
     if (electrumSettings.IsInitialized())
     {
-        auto addresses = bitcoin::generateReceivingAddresses(electrumSettings.m_secretWords,
+        auto addresses = electrum::generateReceivingAddresses(m_swapCoin, electrumSettings.m_secretWords,
             electrumSettings.m_receivingAddressAmount, m_settings->GetAddressVersion());
 
         QStringList result;
@@ -532,7 +532,7 @@ void SwapCoinSettingsItem::resetElectrumSettings()
 
 void SwapCoinSettingsItem::newElectrumSeed()
 {
-    auto secretWords = bitcoin::createElectrumMnemonic(getEntropy());
+    auto secretWords = electrum::createMnemonic(getEntropy());
     SetSeedElectrum(secretWords);
 }
 
@@ -587,8 +587,8 @@ void SwapCoinSettingsItem::validateCurrentElectrumSeedPhrase()
         seedElectrum.push_back(word);
     }
 
-    setIsCurrentSeedValid(bitcoin::validateElectrumMnemonic(seedElectrum));
-    setIsCurrentSeedSegwit(bitcoin::validateElectrumMnemonic(seedElectrum, true));
+    setIsCurrentSeedValid(electrum::validateMnemonic(seedElectrum));
+    setIsCurrentSeedSegwit(electrum::validateMnemonic(seedElectrum, true));
 }
 
 void SwapCoinSettingsItem::LoadSettings()
@@ -646,8 +646,8 @@ void SwapCoinSettingsItem::SetSeedElectrum(const std::vector<std::string>& seedE
         }
     }
 
-    setIsCurrentSeedValid(bitcoin::validateElectrumMnemonic(seedElectrum));
-    setIsCurrentSeedSegwit(bitcoin::validateElectrumMnemonic(seedElectrum, true));
+    setIsCurrentSeedValid(electrum::validateMnemonic(seedElectrum));
+    setIsCurrentSeedSegwit(electrum::validateMnemonic(seedElectrum, true));
     emit electrumSeedPhrasesChanged();
 }
 

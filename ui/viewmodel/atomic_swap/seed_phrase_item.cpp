@@ -14,7 +14,7 @@
 
 #include "seed_phrase_item.h"
 
-#include "wallet/transactions/swaps/bridges/bitcoin/common.h"
+#include "wallet/transactions/swaps/common.h"
 
 SeedPhraseItem::SeedPhraseItem(int index, const QString& phrase)
     : m_index(index)
@@ -56,7 +56,7 @@ int SeedPhraseItem::getIndex() const
 
 bool SeedPhraseItem::isAllowed() const
 {
-    return beam::bitcoin::isAllowedWord(m_userInput.toStdString());
+    return beam::electrum::isAllowedWord(m_userInput.toStdString());
 }
 
 void SeedPhraseItem::applyChanges()
