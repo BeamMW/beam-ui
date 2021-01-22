@@ -34,6 +34,14 @@ namespace
             dest.SetParameter(paramID, buf);
         }
     }
+
+    beam::AmountBig::Type getMaxInputAmount()
+    {
+        // not just const because can throw and this would cause compiler warning
+        beam::AmountBig::Type kMaxInputAmount = 10000000000000000U;
+        return kMaxInputAmount;
+    }
+
 }
 
 SendViewModel::SendViewModel()
@@ -450,9 +458,9 @@ void SendViewModel::setMaxPossibleAmount()
     _maxPossible = true;
     _feeChangedByUi = false;
 
-    // TODO:: set limit
     const auto amount = _walletModel.getAvailable(_selectedAssetId);
-    setSendAmount(beamui::AmountBigToUIString(amount));
+    const auto maxAmount = std::min(amount, getMaxInputAmount());
+    setSendAmount(beamui::AmountBigToUIString(maxAmount));
 }
 
 void SendViewModel::sendMoney()
