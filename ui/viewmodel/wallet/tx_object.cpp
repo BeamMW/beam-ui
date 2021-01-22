@@ -104,6 +104,7 @@ TxObject::TxObject( const TxDescription& tx,
             for (const auto &spend: data.m_Spend)
             {
                 _contractAssets.insert(spend.first);
+                // TODO: this potentially can overflow
                 _contractAmount -= spend.second;
                 _contractFee += data.m_Fee;
             }

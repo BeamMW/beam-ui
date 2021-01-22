@@ -77,7 +77,7 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
         case Roles::RUnitName:
             return _amgr.getUnitName(assetId, false);
         case Roles::RAmount:
-            return beamui::AmountToUIString(_wallet.getAvailable(assetId));
+            return beamui::AmountBigToUIString(_wallet.getAvailable(assetId));
         case Roles::RInTxCnt:
             return static_cast<qint32>(asset->inTxCnt());
         case Roles::ROutTxCnt:

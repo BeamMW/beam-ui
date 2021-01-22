@@ -45,10 +45,10 @@ public:
     // Currency utils
     // TODO maybe to need use beam::Amount instead of int
     Q_INVOKABLE static QString calcTotalFee(Currency currency, unsigned int feeRate);
-    Q_INVOKABLE static QString calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyUnitName);
+    Q_INVOKABLE static QString calcFeeInSecondCurrency(unsigned int fee, const QString& exchangeRate, const QString& secondCurrencyUnitName);
     Q_INVOKABLE static QString calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrUnitName);
 
-    Q_INVOKABLE static QString roundUp(const QString& amount);
+    Q_INVOKABLE static QString roundUp(QString amount);
     Q_INVOKABLE static QString getCurrencyUnitName(Currency);
     Q_INVOKABLE static QString getCurrencyName(Currency);
     Q_INVOKABLE static QString getFeeRateLabel(Currency);

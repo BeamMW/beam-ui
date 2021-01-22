@@ -104,7 +104,7 @@ QString SendViewModel::getSendAmount() const
 void SendViewModel::setSendAmount(QString value)
 {
     beam::Amount amount = beamui::UIStringToAmount(value);
-    if (amount != _sendAmount || _maxAvailable)
+    if (amount != _sendAmount || _maxPossible)
     {
         _sendAmount = amount;
         emit sendAmountChanged();
@@ -249,12 +249,17 @@ void SendViewModel::setIsPublicOffline(bool value)
 
 QString SendViewModel::getAssetAvailable() const
 {
-    auto amount = _sendAmount + (_selectedAssetId == beam::Asset::s_BeamID ? _fee : 0);
-    auto available = _walletModel.getAvailable(_selectedAssetId);
+    beam::AmountBig::Type amount = _sendAmount + (_selectedAssetId == beam::Asset::s_BeamID ? _fee : 0U);
+    beam::AmountBig::Type walletAvailable = _walletModel.getAvailable(_selectedAssetId);
 
-    if (amount < available)
+    if (amount < walletAvailable)
     {
-        return beamui::AmountToUIString(available - amount);
+        auto available = walletAvailable;
+
+        amount.Negate();
+        available += amount;
+
+        return beamui::AmountBigToUIString(available);
     }
 
     return "0";
@@ -268,7 +273,7 @@ QString SendViewModel::getBeamAvailable() const
     }
 
     auto amount = _fee;
-    auto available = _walletModel.getAvailable(beam::Asset::s_BeamID);
+    auto available = beam::AmountBig::get_Lo(_walletModel.getAvailable(beam::Asset::s_BeamID));
 
     if (amount < available)
     {
@@ -281,13 +286,17 @@ QString SendViewModel::getBeamAvailable() const
 
 QString SendViewModel::getAssetMissing() const
 {
-    auto amount = _sendAmount + (_selectedAssetId == beam::Asset::s_BeamID ? _fee : 0);
+    beam::AmountBig::Type amount = _sendAmount + (_selectedAssetId == beam::Asset::s_BeamID ? _fee : 0);
     auto available = _walletModel.getAvailable(_selectedAssetId);
 
     if (amount > available)
     {
-        auto missing = amount - available;
-        return beamui::AmountToUIString(missing);
+        auto missing = amount;
+
+        available.Negate();
+        missing += available;
+
+        return beamui::AmountBigToUIString(missing);
     }
 
     return "0";
@@ -296,7 +305,7 @@ QString SendViewModel::getAssetMissing() const
 QString SendViewModel::getBeamMissing() const
 {
     auto amount = _fee + (_selectedAssetId == beam::Asset::s_BeamID ? _sendAmount : 0);
-    auto available = _walletModel.getAvailable(beam::Asset::s_BeamID);
+    auto available = beam::AmountBig::get_Lo(_walletModel.getAvailable(beam::Asset::s_BeamID));
 
     if (amount > available)
     {
@@ -309,7 +318,8 @@ QString SendViewModel::getBeamMissing() const
 
 bool SendViewModel::isZeroBalance() const
 {
-    return _walletModel.getAvailable(beam::Asset::s_BeamID) == 0;
+    using namespace beam;
+    return _walletModel.getAvailable(beam::Asset::s_BeamID) == Zero;
 }
 
 bool SendViewModel::isEnough() const
@@ -342,11 +352,11 @@ void SendViewModel::onSelectionCalculated(const beam::wallet::ShieldedCoinsSelec
 
     if (selectionRes.assetID == beam::Asset::s_BeamID)
     {
-        if (!selectionRes.isEnought && _maxAvailable)
+        if (!selectionRes.isEnought && _maxPossible)
         {
             _sendAmount = selectionRes.selectedSumBeam - selectionRes.selectedFee;
             emit sendAmountChanged();
-            _maxAvailable = false;
+            _maxPossible = false;
         }
     }
 
@@ -393,12 +403,12 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
 
 QString SendViewModel::getChangeBeam() const
 {
-    return beamui::AmountToUIString(_changeBeam);
+    return beamui::AmountBigToUIString(_changeBeam);
 }
 
 QString SendViewModel::getChangeAsset() const
 {
-    return beamui::AmountToUIString(_changeAsset);
+    return beamui::AmountBigToUIString(_changeAsset);
 }
 
 QString SendViewModel::getFee() const
@@ -435,13 +445,14 @@ bool SendViewModel::isOwnAddress() const
     return _walletModel.isOwnAddress(_receiverWalletID);
 }
 
-void SendViewModel::setMaxAvailableAmount()
+void SendViewModel::setMaxPossibleAmount()
 {
-    _maxAvailable = true;
+    _maxPossible = true;
     _feeChangedByUi = false;
 
+    // TODO:: set limit
     const auto amount = _walletModel.getAvailable(_selectedAssetId);
-    setSendAmount(beamui::AmountToUIString(amount));
+    setSendAmount(beamui::AmountBigToUIString(amount));
 }
 
 void SendViewModel::sendMoney()

@@ -133,7 +133,7 @@ public:
     QString getMaxSendAmount() const;
 
 public:
-    Q_INVOKABLE void setMaxAvailableAmount();
+    Q_INVOKABLE void setMaxPossibleAmount();
     Q_INVOKABLE void sendMoney();
     Q_INVOKABLE void saveReceiverAddress(const QString& name);
 
@@ -173,10 +173,10 @@ private:
     void resetAddress();
 
     beam::Amount _fee;
-    beam::Amount _shieldedFee = 0;
-    beam::Amount _sendAmount  = 0;
-    beam::Amount _changeBeam  = 0;
-    beam::Amount _changeAsset = 0; // for non-beam transactions only
+    beam::Amount _shieldedFee = 0U;
+    beam::Amount _sendAmount = 0U;
+    beam::AmountBig::Type _changeBeam = 0U;
+    beam::AmountBig::Type _changeAsset = 0U; // for non-beam transactions only
     beam::Asset::ID _selectedAssetId = beam::Asset::s_BeamID;
 
     QString _comment;
@@ -205,6 +205,6 @@ private:
     bool _isNeedExtractShieldedCoins = false;
     beam::Amount _minFee;
     bool _feeChangedByUi = false;
-    bool _maxAvailable   = false;
+    bool _maxPossible   = false;
     beam::Amount _maxWhatCanSelect = 0;
 };

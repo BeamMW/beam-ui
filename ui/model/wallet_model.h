@@ -47,13 +47,13 @@ public:
     bool isAddressWithCommentExist(const std::string& comment) const;
 
     std::set<beam::Asset::ID> getAssetsNZ() const;
-    beam::Amount getAvailable(beam::Asset::ID) const;
-    beam::Amount getReceiving(beam::Asset::ID) const;
-    beam::Amount getReceivingIncoming(beam::Asset::ID) const;
-    beam::Amount getReceivingChange(beam::Asset::ID) const;
-    beam::Amount getSending(beam::Asset::ID) const;
-    beam::Amount getMaturing(beam::Asset::ID) const;
-    beam::Amount getMatutingMP(beam::Asset::ID) const;
+    beam::AmountBig::Type getAvailable(beam::Asset::ID) const;
+    beam::AmountBig::Type getReceiving(beam::Asset::ID) const;
+    beam::AmountBig::Type getReceivingIncoming(beam::Asset::ID) const;
+    beam::AmountBig::Type getReceivingChange(beam::Asset::ID) const;
+    beam::AmountBig::Type getSending(beam::Asset::ID) const;
+    beam::AmountBig::Type getMaturing(beam::Asset::ID) const;
+    beam::AmountBig::Type getMatutingMP(beam::Asset::ID) const;
     bool hasShielded(beam::Asset::ID) const;
 
     beam::Height getCurrentHeight() const;
@@ -79,7 +79,7 @@ signals:
 signals:
     void transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items);
     void syncProgressUpdated(int done, int total);
-    void changeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID);
+    void changeCalculated(beam::AmountBig::Type changeAsset, beam::Amount changeBeam, beam::Asset::ID);
     void shieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes);
     void allUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
 #ifdef BEAM_LELANTUS_SUPPORT
@@ -115,7 +115,7 @@ private:
     void onStatus(const beam::wallet::WalletStatus& status) override;
     void onTxStatus(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items) override;
     void onSyncProgressUpdated(int done, int total) override;
-    void onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId) override;
+    void onChangeCalculated(beam::AmountBig::Type changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId) override;
     void onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes) override;
     void onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos) override;
     void onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& items) override;

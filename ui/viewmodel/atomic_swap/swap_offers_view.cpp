@@ -144,7 +144,8 @@ QAbstractItemModel* SwapOffersViewModel::getAllOffersFitBalance()
 
 QString SwapOffersViewModel::beamAvailable() const
 {
-    return beamui::AmountToUIString(m_walletModel.getAvailable(beam::Asset::s_BeamID));
+    auto available = beam::AmountBig::get_Lo(m_walletModel.getAvailable(beam::Asset::s_BeamID));
+    return beamui::AmountToUIString(available);
 }
 
 QAbstractItemModel* SwapOffersViewModel::getTransactions()
@@ -411,7 +412,7 @@ bool SwapOffersViewModel::isOfferFitBalance(const SwapOfferItem& offer)
         return true;
 
     bool isSendBeam = offer.isSendBeam();
-    auto beamOfferAmount = isSendBeam ? offer.rawAmountSend() : offer.rawAmountReceive();
+    beam::AmountBig::Type beamOfferAmount = isSendBeam ? offer.rawAmountSend() : offer.rawAmountReceive();
 
     if (beamOfferAmount > m_walletModel.getAvailable(beam::Asset::s_BeamID))
         return false;

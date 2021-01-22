@@ -394,7 +394,8 @@ bool ReceiveSwapViewModel::isEnough() const
     if (_amountSentGrothes == 0)
         return true;
 
-    auto total = _amountSentGrothes + _sentFeeGrothes;
+    beam::AmountBig::Type total = _amountSentGrothes;
+    total += beam::AmountBig::Type(_sentFeeGrothes);
 
     if (_sentCurrency == Currency::CurrBeam)
     {
@@ -402,8 +403,9 @@ bool ReceiveSwapViewModel::isEnough() const
     }
 
     // TODO sentFee is fee rate. should be corrected
-    auto swapCoin = convertCurrencyToSwapCoin(_sentCurrency);
-    return AppModel::getInstance().getSwapCoinClient(swapCoin)->getAvailable() > total;
+    auto swapCoin  = convertCurrencyToSwapCoin(_sentCurrency);
+    auto swapTotal = beam::AmountBig::Type(AppModel::getInstance().getSwapCoinClient(swapCoin)->getAvailable());
+    return swapTotal > total;
 }
 
 bool ReceiveSwapViewModel::isSendFeeOK() const

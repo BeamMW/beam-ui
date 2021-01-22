@@ -1829,10 +1829,6 @@ znát všechny Vaše prostředky (UTXO). Ujistěte se, že jste vystavili klíč
         <source>It is taking longer than usual. In case the transaction could not be completed it will be canceled automatically in %1.</source>
         <translation>Trvá to déle než obvykle. V případě, že transakce nebude možné dokončit, bude automaticky zrušena za %1.</translation>
     </message>
-    <message id="amount-input-add-all">
-        <source>add all</source>
-        <translation>přidat vše</translation>
-    </message>
     <message id="settings-general-no-require-pwd-to-spend-confirm-pwd-title">
         <source>Ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if unchecked</extracomment>
@@ -2997,6 +2993,10 @@ Please try again later or create an offer yourself.</source>
     </message>
     <message id="notification-contract-no-message">
         <source>Contract: no description provided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="amount-input-add-max">
+        <source>add max</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

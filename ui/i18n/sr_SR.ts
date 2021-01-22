@@ -1830,10 +1830,6 @@ deploy the key at the node you trust completely.</source>
         <source>It is taking longer than usual. In case the transaction could not be completed it will be canceled automatically in %1.</source>
         <translation>Траје дуже него уобичајено. У случају да трансакција не буде комплетирана аутоматски ће бити отказана за %1.</translation>
     </message>
-    <message id="amount-input-add-all">
-        <source>add all</source>
-        <translation>додај све</translation>
-    </message>
     <message id="settings-general-no-require-pwd-to-spend-confirm-pwd-title">
         <source>Ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if unchecked</extracomment>
@@ -2999,6 +2995,10 @@ Please try again later or create an offer yourself.</source>
     </message>
     <message id="notification-contract-no-message">
         <source>Contract: no description provided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="amount-input-add-max">
+        <source>add max</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

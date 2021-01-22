@@ -4,6 +4,7 @@
 #include <QTextStream>
 #include "3rdparty/libbitcoin/include/bitcoin/bitcoin/formats/base_10.hpp"
 #include "version.h"
+#include "core/common.h"
 
 using namespace std;
 using namespace beam;
@@ -106,6 +107,17 @@ namespace beamui
         const auto samount = libbitcoin::encode_base10(value, decimalPlaces ? decimalPlaces : beamDecimals());
         return QString::fromStdString(samount) + (unitName.isEmpty() ? "" : " " + unitName);
     }
+
+     QString AmountBigToUIString(const beam::AmountBig::Type& value)
+     {
+        beam::wallet::PrintableAmount print(value, true);
+
+        std::ostringstream ss;
+        ss << print;
+
+        const auto str = ss.str();
+        return QString::fromStdString(str);
+     }
 
     /**
      *  Convert amount value to printable format.

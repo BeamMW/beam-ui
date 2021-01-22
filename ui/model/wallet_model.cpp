@@ -141,7 +141,7 @@ void WalletModel::onSyncProgressUpdated(int done, int total)
     emit syncProgressUpdated(done, total);
 }
 
-void WalletModel::onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId)
+void WalletModel::onChangeCalculated(beam::AmountBig::Type changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId)
 {
     emit changeCalculated(changeAsset, changeBeam, assetId);
 }
@@ -353,9 +353,9 @@ std::set<beam::Asset::ID> WalletModel::getAssetsNZ() const
     for(const auto& status: m_status.all)
     {
         const auto& totals = status.second;
-        if (totals.available || totals.maturing || totals.maturingMP ||
-            totals.receiving || totals.receivingChange || totals.receivingIncoming ||
-            totals.sending   || totals.shielded)
+        if (totals.available != Zero || totals.maturing != Zero || totals.maturingMP != Zero ||
+            totals.receiving != Zero || totals.receivingChange != Zero || totals.receivingIncoming != Zero ||
+            totals.sending   != Zero || totals.shielded != Zero)
         {
             assets.insert(status.first);
         }
@@ -364,43 +364,47 @@ std::set<beam::Asset::ID> WalletModel::getAssetsNZ() const
     return assets;
 }
 
-beam::Amount WalletModel::getAvailable(beam::Asset::ID id) const
+beam::AmountBig::Type WalletModel::getAvailable(beam::Asset::ID id) const
 {
     const auto& status = m_status.GetStatus(id);
-    return status.available + status.shielded;
+
+    auto result = status.available;
+    result += status.shielded;
+
+    return result;
 }
 
-beam::Amount WalletModel::getReceiving(beam::Asset::ID id) const
+beam::AmountBig::Type WalletModel::getReceiving(beam::Asset::ID id) const
 {
     const auto& status = m_status.GetStatus(id);
     return status.receiving;
 }
 
-beam::Amount WalletModel::getReceivingIncoming(beam::Asset::ID id) const
+beam::AmountBig::Type WalletModel::getReceivingIncoming(beam::Asset::ID id) const
 {
     const auto& status = m_status.GetStatus(id);
     return status.receivingIncoming;
 }
 
-beam::Amount WalletModel::getMatutingMP(beam::Asset::ID id) const
+beam::AmountBig::Type WalletModel::getMatutingMP(beam::Asset::ID id) const
 {
     const auto& status = m_status.GetStatus(id);
     return status.maturingMP;
 }
 
-beam::Amount WalletModel::getReceivingChange(beam::Asset::ID id) const
+beam::AmountBig::Type WalletModel::getReceivingChange(beam::Asset::ID id) const
 {
     const auto& status = m_status.GetStatus(id);
     return status.receivingChange;
 }
 
-beam::Amount WalletModel::getSending(beam::Asset::ID id) const
+beam::AmountBig::Type WalletModel::getSending(beam::Asset::ID id) const
 {
     const auto& status = m_status.GetStatus(id);
     return status.sending;
 }
 
-beam::Amount WalletModel::getMaturing(beam::Asset::ID id) const
+beam::AmountBig::Type WalletModel::getMaturing(beam::Asset::ID id) const
 {
     const auto& status = m_status.GetStatus(id);
     return status.maturing;
@@ -439,7 +443,7 @@ uint8_t WalletModel::getMPLockTimeLimit() const
 bool WalletModel::hasShielded(beam::Asset::ID id) const
 {
     const auto& status = m_status.GetStatus(id);
-    return status.shielded;
+    return status.shielded != Zero;
 }
 
 void WalletModel::onWalletStatusInternal(const beam::wallet::WalletStatus& newStatus)

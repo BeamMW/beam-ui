@@ -309,11 +309,14 @@ void SendSwapViewModel::setExpiresTime(const QDateTime& value)
     }
 }
 
-void SendSwapViewModel::onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetID)
+void SendSwapViewModel::onChangeCalculated(beam::AmountBig::Type changeAsset, beam::Amount changeBeam, beam::Asset::ID assetID)
 {
+    using namespace beam;
+
     // only BEAM used in swap for the moment
-    assert(assetID == beam::Asset::s_BeamID);
-    assert(changeBeam == changeAsset);
+    assert(assetID == Asset::s_BeamID);
+    assert(AmountBig::get_Hi(changeAsset) == 0);
+    assert(changeBeam == AmountBig::get_Lo(changeAsset));
 
     _changeGrothes = changeBeam;
     emit enoughChanged();
@@ -343,7 +346,8 @@ bool SendSwapViewModel::isEnough() const
     const auto total = _sendAmountGrothes + _sendFeeGrothes + _changeGrothes;
     if (Currency::CurrBeam == _sendCurrency)
     {
-        return _walletModel.getAvailable(beam::Asset::s_BeamID) >= total;
+        auto available = beam::AmountBig::get_Lo(beam::Asset::s_BeamID);
+        return available >= total;
     }
 
     // TODO sentFee is fee rate. should be corrected

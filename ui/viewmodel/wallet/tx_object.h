@@ -88,6 +88,6 @@ protected:
     typedef std::function<void (const beam::bvm2::ContractInvokeData& data)> CDVisitor;
     void visitContractData(const CDVisitor&) const;
     beam::AmountSigned _contractAmount = 0;
-    beam::Amount _contractFee = 0;
+    beam::Amount _contractFee = 0U;
     std::set<beam::Asset::ID> _contractAssets;
 };

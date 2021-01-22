@@ -359,8 +359,8 @@ ColumnLayout {
                                     font.weight:      Font.Bold
                                     color:            Style.accent_outgoing
                                     y:                30
-                                    //% "add all"
-                                    text:             " " + qsTrId("amount-input-add-all")
+                                    //% "add max"
+                                    text:             " " + qsTrId("amount-input-add-max")
 
                                     MouseArea {
                                         anchors.fill:    parent
@@ -368,7 +368,7 @@ ColumnLayout {
                                         cursorShape:     Qt.PointingHandCursor
                                         onClicked:       function () {
                                             sendAmountInput.clearFocus()
-                                            viewModel.setMaxAvailableAmount()
+                                            viewModel.setMaxPossibleAmount()
                                         }
                                     }
                                 }

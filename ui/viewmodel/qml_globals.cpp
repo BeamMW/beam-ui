@@ -192,7 +192,7 @@ QString QMLGlobals::calcTotalFee(Currency currency, unsigned int feeRate)
     return ::calcTotalFee(currency, feeRate);
 }
 
-QString QMLGlobals::calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyUnitName)
+QString QMLGlobals::calcFeeInSecondCurrency(unsigned int fee, const QString& exchangeRate, const QString& secondCurrencyUnitName)
 {
     QString feeInOriginalCurrency = beamui::AmountToUIString(fee);
     return calcAmountInSecondCurrency(feeInOriginalCurrency, exchangeRate, secondCurrencyUnitName);
@@ -217,24 +217,42 @@ QString QMLGlobals::calcAmountInSecondCurrency(const QString& amount, const QStr
     return "";
 }
 
-QString QMLGlobals::roundUp(const QString& amount)
+QString QMLGlobals::roundUp(QString amount)
 {
-    const auto point = amount.indexOf('.');
+    if (amount.isEmpty() || amount == "0") {
+        return amount;
+    }
 
+    const auto point = amount.indexOf('.');
     if (point == -1)
     {
-        // We do not have decimals
-        const auto kilo = amount.indexOf("K");
-        if (kilo != -1)
+        if (amount.length() < 4)
         {
-            // but already rounded to 1000
+            // cannot be divide by 1000
             return amount;
+        }
+
+        static const std::array<char, 3> postfixes = {'K', 'M', 'B'};
+        char postfix = postfixes[0];
+
+        for (size_t idx = 0; idx < postfixes.size(); ++idx)
+        {
+            if (amount[amount.length() - 1] == postfixes[idx])
+            {
+                if (idx == postfixes.size() - 1)
+                {
+                    // already rounded to max possible postfix
+                    return amount;
+                }
+                amount = amount.left(amount.length() - 1);
+                postfix = postfixes[idx + 1];
+                break;
+            }
         }
 
         const cpp_int original(amount.toStdString().c_str());
         const cpp_int rounded = original / 1000 + (original % 1000 > 0 ? 1 : 0);
-
-        return QString(rounded.str().c_str()) + "K";
+        return QString(rounded.str().c_str()) + postfix;
     }
     else
     {
