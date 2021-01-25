@@ -12,13 +12,14 @@
 #include "model/app_model.h"
 
 AssetsList::AssetsList()
-    : _wallet(*AppModel::getInstance().getWalletModel())
+    : _amgr(AppModel::getInstance().getAssets())
+    , _wallet(*AppModel::getInstance().getWalletModel())
 {
-    connect(&_ermgr, &ExchangeRatesManager::rateUnitChanged, this, &AssetsList::onNewRates);
-    connect(&_ermgr, &ExchangeRatesManager::activeRateChanged, this, &AssetsList::onNewRates);
-    connect(&_wallet, &WalletModel::walletStatusChanged, this, &AssetsList::onWalletStatus);
-    connect(&_wallet, &WalletModel::transactionsChanged, this, &AssetsList::onTransactionsChanged);
-    connect(&_amgr, &AssetsManager::assetInfo, this, &AssetsList::onAssetInfo);
+    connect(&_ermgr,     &ExchangeRatesManager::rateUnitChanged,   this,  &AssetsList::onNewRates);
+    connect(&_ermgr,     &ExchangeRatesManager::activeRateChanged, this,  &AssetsList::onNewRates);
+    connect(&_wallet,    &WalletModel::walletStatusChanged,        this,  &AssetsList::onWalletStatus);
+    connect(&_wallet,    &WalletModel::transactionsChanged,        this,  &AssetsList::onTransactionsChanged);
+    connect(_amgr.get(), &AssetsManager::assetInfo,                this,  &AssetsList::onAssetInfo);
 
     // Transactions table would be created later and get this for us
     //_wallet.getAsync()->getTransactions();
@@ -75,7 +76,7 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
         case Roles::RId:
             return static_cast<qint64>(assetId);
         case Roles::RUnitName:
-            return _amgr.getUnitName(assetId, false);
+            return _amgr->getUnitName(assetId, false);
         case Roles::RAmount:
             return beamui::AmountBigToUIString(_wallet.getAvailable(assetId));
         case Roles::RInTxCnt:
@@ -83,13 +84,13 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
         case Roles::ROutTxCnt:
             return static_cast<qint32>(asset->outTxCnt());
         case Roles::Search:
-            return _amgr.getName(assetId) + _amgr.getUnitName(assetId, false);
+            return _amgr->getName(assetId) + _amgr->getUnitName(assetId, false);
         case Roles::RIcon:
-            return _amgr.getIcon(assetId);
+            return _amgr->getIcon(assetId);
         case Roles::RColor:
-            return _amgr.getColor(assetId);
+            return _amgr->getColor(assetId);
         case Roles::RSelectionColor:
-            return _amgr.getSelectionColor(assetId);
+            return _amgr->getSelectionColor(assetId);
         case Roles::RRateUnit:
             return assetId < 1 ? beamui::getCurrencyUnitName(_ermgr.getRateUnitRaw()) : "";
         case Roles::RRate:

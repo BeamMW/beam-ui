@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "assets_manager.h"
-#include "model/app_model.h"
 
-AssetsManager::AssetsManager ()
-    : _wallet (*AppModel::getInstance().getWalletModel())
+AssetsManager::AssetsManager (WalletModel::Ptr wallet)
+    : _wallet(wallet)
 {
     qRegisterMetaType<beam::Asset::ID>("beam::wallet::AssetID");
-    connect(&_wallet, &WalletModel::assetInfoChanged, this, &AssetsManager::onAssetInfo);
+    connect(_wallet.get(), &WalletModel::assetInfoChanged, this, &AssetsManager::onAssetInfo);
 
     _icons[0]  = "qrc:/assets/asset-0.svg";
     _icons[1]  = "qrc:/assets/asset-1.svg";
@@ -39,7 +38,7 @@ void AssetsManager::collectAssetInfo(beam::Asset::ID assetId)
     }
     else
     {
-        _wallet.getAsync()->getAssetInfo(assetId);
+        _wallet->getAsync()->getAssetInfo(assetId);
     }
 }
 

@@ -84,6 +84,6 @@ private slots:
     void onAssetInfo(beam::Asset::ID assetId);
 
 private:
-    mutable AssetsManager _amgr;
+    AssetsManager::Ptr _amgr;
     QLocale m_locale;
 };

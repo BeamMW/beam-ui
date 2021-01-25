@@ -142,7 +142,7 @@ private:
     void updateProgress();
 
     WalletModel&           _wallet;
-    mutable AssetsManager  _amgr;
+    AssetsManager::Ptr     _amgr;
     ExchangeRatesManager   _ermgr;
     int                    _selectedAssetID; // can be -1
     QList<InProgress>      _progress;

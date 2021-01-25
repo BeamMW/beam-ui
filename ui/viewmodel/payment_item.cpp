@@ -23,7 +23,8 @@ using namespace beamui;
 PaymentInfoItem::PaymentInfoItem(QObject* parent /* = nullptr */)
     : QObject(parent)
 {
-     connect(&_amgr, &AssetsManager::assetInfo, this, &PaymentInfoItem::onAssetInfo);
+    _amgr = AppModel::getInstance().getAssets();
+    connect(_amgr.get(), &AssetsManager::assetInfo, this, &PaymentInfoItem::onAssetInfo);
 }
 
 QString PaymentInfoItem::getSender() const
@@ -63,13 +64,13 @@ QString PaymentInfoItem::getAmount() const
     if (m_paymentInfo)
     {
         const auto amount = m_paymentInfo->m_Amount;
-        const auto unit = _amgr.getUnitName(m_paymentInfo->m_AssetID, false);
+        const auto unit = _amgr->getUnitName(m_paymentInfo->m_AssetID, false);
         return AmountToUIString(amount, unit, 0);
     }
     else if (m_shieldedPaymentInfo)
     {
         const auto amount = m_shieldedPaymentInfo->m_Amount;
-        const auto unit = _amgr.getUnitName(m_shieldedPaymentInfo->m_AssetID, false);
+        const auto unit = _amgr->getUnitName(m_shieldedPaymentInfo->m_AssetID, false);
         return AmountToUIString(amount, unit, 0);
     }
 

@@ -17,16 +17,14 @@
 #include <QColor>
 #include "model/wallet_model.h"
 
-// TODO: consider singleton for AssetsManager
 class AssetsManager: public QObject
 {
     Q_OBJECT
 public:
-    AssetsManager();
-    ~AssetsManager() override = default;
+    typedef std::shared_ptr<AssetsManager> Ptr;
 
-    // ASYNC
-    void collectAssetInfo(beam::Asset::ID);
+    AssetsManager(WalletModel::Ptr wallet);
+    ~AssetsManager() override = default;
 
     // SYNC
     QString getIcon(beam::Asset::ID);
@@ -42,10 +40,13 @@ private slots:
     void onAssetInfo(beam::Asset::ID, const beam::wallet::WalletAsset&);
 
 private:
+    // ASYNC
+    void collectAssetInfo(beam::Asset::ID);
+
     typedef std::unique_ptr<beam::wallet::WalletAssetMeta> MetaPtr;
     MetaPtr getAsset(beam::Asset::ID);
 
-    WalletModel& _wallet;
+    WalletModel::Ptr _wallet;
     std::map<beam::Asset::ID, beam::wallet::WalletAsset> _info;
 
     std::map<int, QColor> _colors;

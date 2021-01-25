@@ -13,10 +13,12 @@
 // limitations under the License.
 
 #include "notifications_list.h"
+#include "model/app_model.h"
 
 NotificationsList::NotificationsList()
 {
-    connect(&_amgr, &AssetsManager::assetInfo, this, &NotificationsList::onAssetInfo);
+    _amgr = AppModel::getInstance().getAssets();
+    connect(_amgr.get(), &AssetsManager::assetInfo, this, &NotificationsList::onAssetInfo);
 }
 
 QHash<int, QByteArray> NotificationsList::roleNames() const

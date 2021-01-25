@@ -49,7 +49,7 @@ private:
     QString m_paymentProof;
     boost::optional<beam::wallet::storage::PaymentInfo> m_paymentInfo;
     boost::optional<beam::wallet::storage::ShieldedPaymentInfo> m_shieldedPaymentInfo;
-    mutable AssetsManager _amgr;
+    AssetsManager::Ptr _amgr;
 };
 
 class MyPaymentInfoItem : public PaymentInfoItem

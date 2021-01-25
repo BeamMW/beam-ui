@@ -45,5 +45,5 @@ private:
     void onAssetInfo(beam::Asset::ID assetId);
 
     QLocale m_locale; // default locale
-    mutable AssetsManager _amgr;
+    AssetsManager::Ptr _amgr;
 };

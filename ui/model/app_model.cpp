@@ -306,13 +306,16 @@ void AppModel::onResetWallet()
 {
     m_walletConnections.disconnect();
 
+    assert(m_assets);
+    assert(m_assets.use_count() == 1);
+    m_assets.reset();
+
     assert(m_wallet);
     assert(m_wallet.use_count() == 1);
-    assert(m_db);
-
     m_wallet.reset();
-    resetSwapClients();
 
+    resetSwapClients();
+    assert(m_db);
     m_db.reset();
 
     fsutils::remove(getSettings().getWalletStorage());
@@ -467,6 +470,7 @@ void AppModel::start()
     initSwapClients();
 
     m_wallet = std::make_shared<WalletModel>(m_db, nodeAddrStr, m_walletReactor);
+    m_assets = std::make_shared<AssetsManager>(m_wallet);
 
     if (m_settings.getRunLocalNode())
     {
@@ -509,6 +513,11 @@ WalletModel::Ptr AppModel::getWalletModel() const
 WalletSettings& AppModel::getSettings() const
 {
     return m_settings;
+}
+
+AssetsManager::Ptr AppModel::getAssets() const
+{
+    return m_assets;
 }
 
 MessageManager& AppModel::getMessages()

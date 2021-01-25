@@ -23,6 +23,7 @@
 #include "wallet/core/private_key_keeper.h"
 #include "wallet/transactions/swaps/bridges/bitcoin/bridge_holder.h"
 #include "wallet/transactions/swaps/swap_transaction.h"
+#include "viewmodel/wallet/assets_manager.h"
 #include <memory>
 
 #if defined(BEAM_HW_WALLET)
@@ -62,7 +63,9 @@ public:
     bool importData();
 
     [[nodiscard]] WalletModel::Ptr getWalletModel() const;
+    [[nodiscard]] AssetsManager::Ptr getAssets() const;
     [[nodiscard]] WalletSettings& getSettings() const;
+
     MessageManager& getMessages();
 
     // Please, be very careful with this
@@ -104,6 +107,7 @@ private:
     WalletModel::Ptr m_wallet;
     NodeModel m_nodeModel;
     WalletSettings& m_settings;
+    AssetsManager::Ptr m_assets;
     MessageManager m_messages;
     ECC::NoLeak<ECC::uintBig> m_passwordHash;
     beam::io::Reactor::Ptr m_walletReactor;

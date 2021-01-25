@@ -47,6 +47,7 @@ namespace
 SendViewModel::SendViewModel()
     : _fee(minimalFee(Currency::CurrBeam, false))
     , _walletModel(*AppModel::getInstance().getWalletModel())
+    , _amgr(AppModel::getInstance().getAssets())
     , _minFee(minFeeBeam(false))
 {
     connect(&_walletModel,           SIGNAL(sendMoneyVerified()),               this,  SIGNAL(sendMoneyVerified()));
@@ -57,7 +58,7 @@ SendViewModel::SendViewModel()
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,         this,  &SendViewModel::feeRateChanged);
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged,       this,  &SendViewModel::feeRateChanged);
     connect(&_walletModel,           &WalletModel::shieldedCoinsSelectionCalculated, this,  &SendViewModel::onSelectionCalculated);
-    connect(&_amgr,                  &AssetsManager::assetInfo,                      this,  &SendViewModel::onAssetInfo);
+    connect(_amgr.get(),             &AssetsManager::assetInfo,                      this,  &SendViewModel::onAssetInfo);
 }
 
 unsigned int SendViewModel::getFeeGrothes() const
@@ -757,11 +758,11 @@ QList<QMap<QString, QVariant>> SendViewModel::getAssetsList() const
 
         const bool isBeam = assetId == beam::Asset::s_BeamID;
         asset.insert("isBEAM", isBeam);
-        asset.insert("unitName", _amgr.getUnitName(assetId, false));
+        asset.insert("unitName", _amgr->getUnitName(assetId, false));
         asset.insert("rate", isBeam ? beamRate : "0");
         asset.insert("rateUnit", rateUnit);
         asset.insert("assetId", static_cast<int>(assetId));
-        asset.insert("icon", _amgr.getIcon(assetId));
+        asset.insert("icon", _amgr->getIcon(assetId));
         asset.insert("iconWidth", 25);
         asset.insert("iconHeight", 25);
 

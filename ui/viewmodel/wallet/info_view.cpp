@@ -22,12 +22,13 @@ namespace {
 
 InfoViewModel::InfoViewModel()
     : _wallet(*AppModel::getInstance().getWalletModel())
+    , _amgr(AppModel::getInstance().getAssets())
     , _selectedAssetID(-1)
 {
-    connect(&_wallet,  &WalletModel::walletStatusChanged,        this,  &InfoViewModel::onWalletStatus);
-    connect(&_amgr,    &AssetsManager::assetInfo,                this,  &InfoViewModel::onAssetInfo);
-    connect(&_ermgr,   &ExchangeRatesManager::rateUnitChanged,   this,  &InfoViewModel::assetChanged);
-    connect(&_ermgr,   &ExchangeRatesManager::activeRateChanged, this,  &InfoViewModel::assetChanged);
+    connect(&_wallet,    &WalletModel::walletStatusChanged,        this,  &InfoViewModel::onWalletStatus);
+    connect(_amgr.get(), &AssetsManager::assetInfo,                this,  &InfoViewModel::onAssetInfo);
+    connect(&_ermgr,     &ExchangeRatesManager::rateUnitChanged,   this,  &InfoViewModel::assetChanged);
+    connect(&_ermgr,     &ExchangeRatesManager::activeRateChanged, this,  &InfoViewModel::assetChanged);
 
     updateProgress();
     _wallet.getAsync()->getWalletStatus();
@@ -45,17 +46,17 @@ QString InfoViewModel::assetAvailable() const
 
 QString InfoViewModel::assetIcon() const
 {
-    return _amgr.getIcon(assetIdxToId(_selectedAssetID));
+    return _amgr->getIcon(assetIdxToId(_selectedAssetID));
 }
 
 QString InfoViewModel::assetUnitName() const
 {
-    return _amgr.getUnitName(assetIdxToId(_selectedAssetID), false);
+    return _amgr->getUnitName(assetIdxToId(_selectedAssetID), false);
 }
 
 QString InfoViewModel::assetName() const
 {
-    return _amgr.getName(assetIdxToId(_selectedAssetID));
+    return _amgr->getName(assetIdxToId(_selectedAssetID));
 }
 
 void InfoViewModel::onAssetInfo(beam::Asset::ID assetId)
@@ -92,7 +93,6 @@ void InfoViewModel::setSelectedAsset(int newAsset)
     if (_selectedAssetID != newAsset)
     {
         _selectedAssetID = newAsset;
-        _amgr.collectAssetInfo(assetIdxToId(_selectedAssetID));
         updateProgress();
         emit assetChanged();
     }
@@ -153,8 +153,8 @@ void InfoViewModel::updateProgress()
             progress.locked            = beamui::AmountBigToUIString(locked);
             progress.lockedMaturing    = beamui::AmountBigToUIString(maturing);
             progress.lockedMaturingMP  = beamui::AmountBigToUIString(maturingMP);
-            progress.icon              = _amgr.getIcon(asset);
-            progress.unitName          = _amgr.getUnitName(asset, false);
+            progress.icon              = _amgr->getIcon(asset);
+            progress.unitName          = _amgr->getUnitName(asset, false);
 
             if (asset == 0)
             {

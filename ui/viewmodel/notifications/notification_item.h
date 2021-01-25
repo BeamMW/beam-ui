@@ -33,7 +33,7 @@ public:
     beam::Timestamp getTimestamp() const;
     beam::wallet::Notification::State getState() const;
     QString title() const;
-    QString message(AssetsManager& amgr) const;
+    QString message(AssetsManager::Ptr amgr) const;
     QString type() const;
     QString state() const;
     beam::Asset::ID assetId() const;

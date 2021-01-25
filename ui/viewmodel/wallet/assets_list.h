@@ -54,7 +54,7 @@ private:
     void touch(beam::Asset::ID id);
     std::shared_ptr<AssetObject> get(beam::Asset::ID id);
 
-    mutable AssetsManager _amgr;
+    AssetsManager::Ptr _amgr;
     mutable ExchangeRatesManager _ermgr;
     WalletModel& _wallet;
 

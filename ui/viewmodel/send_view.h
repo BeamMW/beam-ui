@@ -199,7 +199,7 @@ private:
     ExchangeRatesManager       _exchangeRatesManager;
     beam::wallet::TxParameters _txParameters;
     QString                    _newTokenMsg;
-    mutable AssetsManager      _amgr;
+    AssetsManager::Ptr         _amgr;
 
     bool _isShielded = false;
     bool _isNeedExtractShieldedCoins = false;

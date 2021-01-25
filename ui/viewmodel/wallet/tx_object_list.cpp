@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "tx_object_list.h"
+#include "model/app_model.h"
 
 namespace
 {
@@ -185,8 +186,9 @@ public offline" */
 }  // namespace
 
 TxObjectList::TxObjectList()
+    : _amgr(AppModel::getInstance().getAssets())
 {
-    connect(&_amgr, &AssetsManager::assetInfo, this, &TxObjectList::onAssetInfo);
+    connect(_amgr.get(), &AssetsManager::assetInfo, this, &TxObjectList::onAssetInfo);
 }
 
 QHash<int, QByteArray> TxObjectList::roleNames() const
@@ -269,7 +271,7 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             if (alist.size() == 1)
             {
                 auto assetID = *alist.begin();
-                return beamui::AmountToUIString(value->getAmountValue(), _amgr.getUnitName(assetID, true));
+                return beamui::AmountToUIString(value->getAmountValue(), _amgr->getUnitName(assetID, true));
             }
             else
             {
@@ -378,7 +380,7 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             if (alist.size() == 1)
             {
                 auto assetID = *alist.begin();
-                return _amgr.getUnitName(assetID, false);
+                return _amgr->getUnitName(assetID, false);
             }
             return "";
         }
@@ -388,9 +390,9 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             if (alist.size() == 1)
             {
                 auto assetID = *alist.begin();
-                return _amgr.getIcon(assetID);
+                return _amgr->getIcon(assetID);
             }
-            return _amgr.getIcon(beam::Asset::s_BeamID);
+            return _amgr->getIcon(beam::Asset::s_BeamID);
         }
         default:
             return QVariant();
