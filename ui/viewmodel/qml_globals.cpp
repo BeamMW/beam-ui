@@ -73,21 +73,6 @@ namespace
         return QString::fromStdString(result);
     }
 
-    QString multiplyWithPrecision(const QString& first, const QString& second, uint8_t precision)
-    {
-        cpp_dec_float_50 dec_first(first.toStdString().c_str());
-        cpp_dec_float_50 dec_second(second.toStdString().c_str());
-
-        cpp_dec_float_50 product = dec_first * dec_second;
-
-        std::ostringstream oss;
-        oss.precision(std::numeric_limits<cpp_dec_float_50>::digits10);
-        oss << std::fixed << product;
-
-        QString result = QString::fromStdString(oss.str());
-        return roundWithPrecision(result, precision);
-    }
-
     beamui::Currencies convertUiCurrencyToCurrencies(WalletCurrency::Currency currency)
     {
         switch (currency)
@@ -395,7 +380,7 @@ QString QMLGlobals::getDefaultFee(Currency currency)
     return QString::fromStdString(std::to_string(AppModel::getInstance().getSwapCoinClient(swapCoin)->getEstimatedFeeRate()));
 }
 
-QString QMLGlobals::divideWithPrecision8(const QString& dividend, const QString& divider)
+QString QMLGlobals::divideWithPrecision(const QString& dividend, const QString& divider, uint precision)
 {
     cpp_dec_float_50 dec_dividend(dividend.toStdString().c_str());
     cpp_dec_float_50 dec_divider(divider.toStdString().c_str());
@@ -407,15 +392,20 @@ QString QMLGlobals::divideWithPrecision8(const QString& dividend, const QString&
     oss << std::fixed << quotient;
 
     QString result = QString::fromStdString(oss.str());
-    return QMLGlobals::roundWithPrecision8(result);
+    return roundWithPrecision(result, static_cast<uint8_t>(precision));
 }
 
-QString QMLGlobals::multiplyWithPrecision8(const QString& first, const QString& second)
+QString QMLGlobals::multiplyWithPrecision(const QString& first, const QString& second, uint precision)
 {
-    return multiplyWithPrecision(first, second, kBTCDecimalPlaces);
-}
+    cpp_dec_float_50 dec_first(first.toStdString().c_str());
+    cpp_dec_float_50 dec_second(second.toStdString().c_str());
 
-QString QMLGlobals::roundWithPrecision8(const QString& number)
-{
-    return roundWithPrecision(number, kBTCDecimalPlaces);
+    cpp_dec_float_50 product = dec_first * dec_second;
+
+    std::ostringstream oss;
+    oss.precision(std::numeric_limits<cpp_dec_float_50>::digits10);
+    oss << std::fixed << product;
+
+    QString result = QString::fromStdString(oss.str());
+    return roundWithPrecision(result, static_cast<uint8_t>(precision));
 }

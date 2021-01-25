@@ -476,10 +476,13 @@ QString SendSwapViewModel::getRate() const
 
     if (!beamAmount) return QString();
 
-    Currency otherCurrency =
-        isSendBeam() ? _receiveCurrency : _sendCurrency;
+    beamui::Currencies otherCurrency =
+        convertCurrency(isSendBeam() ? _receiveCurrency : _sendCurrency);
 
-    return QMLGlobals::divideWithPrecision8(beamui::AmountToUIString(otherCoinAmount, convertCurrency(otherCurrency), false), beamui::AmountToUIString(beamAmount));
+    return QMLGlobals::divideWithPrecision(
+        beamui::AmountToUIString(otherCoinAmount, otherCurrency, false),
+        beamui::AmountToUIString(beamAmount),
+        beamui::getCurrencyDecimals(otherCurrency));
 }
 
 QString SendSwapViewModel::getSecondCurrencySendRateValue() const

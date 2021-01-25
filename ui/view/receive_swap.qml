@@ -557,8 +557,8 @@ please review your settings and try again"
                                             parseFloat(Utils.localeDecimalToCString(rateInput.rate)) || 0;
                                         if (sentAmountInput.amount != "0" && rateValue) {
                                             receiveAmountInput.amount = viewModel.isSendBeam
-                                                ? BeamGlobals.multiplyWithPrecision8(sentAmountInput.amount, rateValue)
-                                                : BeamGlobals.divideWithPrecision8(sentAmountInput.amount, rateValue);
+                                                ? BeamGlobals.multiplyWithPrecision(sentAmountInput.amount, rateValue, BeamGlobals.getCurrencyDecimals(viewModel.sendCurrency))
+                                                : BeamGlobals.divideWithPrecision(sentAmountInput.amount, rateValue, BeamGlobals.getCurrencyDecimals(viewModel.sendCurrency));
                                             checkReceive();
                                         } else if (!rateValue) {
                                             receiveAmountInput.amount = "0";
