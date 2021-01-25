@@ -120,6 +120,8 @@ Dialog {
     }
 
     onAccepted: {
-        acceptHandler();
+        if (acceptHandler) {
+            acceptHandler();
+        }
     }
 }

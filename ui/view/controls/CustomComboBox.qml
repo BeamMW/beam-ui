@@ -84,7 +84,7 @@ ComboBox {
         visible: false
     }
 
-    onModelChanged: {
+    function recalcSize() {
         if (model) {
             for(var i = 0; i < model.length; i++){
                 textMetrics.text = Utils.limitText(control.textRole ? model[i][control.textRole] : model[i], control.textMaxLen)
@@ -97,6 +97,8 @@ ComboBox {
             }
         }
     }
+
+    onModelChanged: recalcSize
 
     indicator: SvgImage {
         source: "qrc:/assets/icon-down.svg"
@@ -149,6 +151,8 @@ ComboBox {
     }
 
    popup: Popup {
+        onAboutToShow: recalcSize()
+
         y: control.height - 1
         width: calculatedWidth
         padding: 1
