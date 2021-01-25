@@ -309,7 +309,7 @@ void SendSwapViewModel::setExpiresTime(const QDateTime& value)
     }
 }
 
-void SendSwapViewModel::onChangeCalculated(beam::AmountBig::Type changeAsset, beam::Amount changeBeam, beam::Asset::ID assetID)
+void SendSwapViewModel::onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetID)
 {
     using namespace beam;
 
