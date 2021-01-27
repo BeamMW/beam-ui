@@ -38,14 +38,35 @@ void AssetsManager::collectAssetInfo(beam::Asset::ID assetId)
     }
     else
     {
-        _wallet->getAsync()->getAssetInfo(assetId);
+        // don't request info multiple times
+        if (_requested.find(assetId) == _requested.end())
+        {
+            _requested.insert(assetId);
+            _wallet->getAsync()->getAssetInfo(assetId);
+        }
     }
 }
 
 void AssetsManager::onAssetInfo(beam::Asset::ID id, const beam::wallet::WalletAsset& info)
 {
-    emit assetInfo(id);
-    _info[id] = info;
+    _requested.erase(id);
+
+    if (info.m_ID == beam::Asset::s_InvalidID)
+    {
+        // Bad info, erase any previously stored and if we had something stored notify about change
+        const auto it = _info.find(id);
+        if (it != _info.end())
+        {
+            _info.erase(it);
+            emit assetInfo(id);
+        }
+    }
+    else
+    {
+        // Good info came, save and notify about change
+        _info[id] = info;
+        emit assetInfo(id);
+    }
 }
 
 AssetsManager::MetaPtr AssetsManager::getAsset(beam::Asset::ID id)

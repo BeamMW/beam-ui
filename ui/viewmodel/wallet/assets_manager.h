@@ -48,6 +48,7 @@ private:
 
     WalletModel::Ptr _wallet;
     std::map<beam::Asset::ID, beam::wallet::WalletAsset> _info;
+    std::set<beam::Asset::ID> _requested;
 
     std::map<int, QColor> _colors;
     std::map<int, QString> _icons;
