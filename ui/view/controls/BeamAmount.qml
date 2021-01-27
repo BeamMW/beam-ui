@@ -30,7 +30,6 @@ Control {
     property alias   fontSizeMode:        amountText.fontSizeMode
     property real    maxPaintedWidth:     0
     property int     maxUnitChars:        0
-    property int     minUnitChars:        6
     property real    vSpacing:            5
     property var     tipParent:           Overlay.overlay
 
@@ -45,11 +44,8 @@ Control {
         elide:  Qt.ElideNone
     }
 
-    function formatText (val, uname) {
-        if (parseFloat(amount) > 0 || showZero) {
-            return prefix + [Utils.uiStringToLocale(val), uname].join("\u2000") // 1/2 em space, EN QUAD Unicode char
-        }
-        return "-"
+    function formatAmount (amount, uname) {
+        return Utils.formatAmount(amount, uname, prefix, showZero)
     }
 
     function calcMaxTextWidth () {
@@ -58,36 +54,13 @@ Control {
     }
 
     function fitText () {
-        var maxw = calcMaxTextWidth()
-        if (maxw <= 0) return formatText(control.amount, control.unitName)
-
-        var samount = control.amount.toString()
-        var uname   = control.unitName
-        var unamed  = false
-
-        while (true) {
-           var result = formatText(samount, [uname, unamed ? '\u2026' : ''].join(''))
-           if (result == "-") return result;
-
-           metrics.text = result
-           if (metrics.tightBoundingRect.width <= maxw) {
-               return result
-           }
-
-           if (uname && control.minUnitChars && uname.length > minUnitChars)
-           {
-                uname  = uname.substring(0, uname.length - 1)
-                unamed = true
-           }
-           else
-           {
-                if (samount.length == 0) return "ERROR"
-
-                var rup = BeamGlobals.roundUp(samount)
-                if (rup == samount) return result
-                samount = rup
-           }
-       }
+        return Utils.fitAmount(control.amount,
+                               control.unitName,
+                               control.prefix,
+                               control.showZero,
+                               metrics,
+                               calcMaxTextWidth()
+        )
     }
 
     onAmountChanged: {
@@ -101,7 +74,7 @@ Control {
     onMaxPaintedWidthChanged: {
         if (maxPaintedWidth) amountText.text = fitText()
         else amountText.text = Qt.binding(function () {
-                                            return formatText(control.amount, Utils.limitText(control.unitName, control.maxUnitChars))
+                                            return formatAmount(control.amount, Utils.limitText(control.unitName, control.maxUnitChars))
                                           })
     }
 
@@ -127,7 +100,7 @@ Control {
 
         contentItem: SFText {
             id:             tipText
-            text:           formatText(control.amount, control.unitName)
+            text:           formatAmount(control.amount, control.unitName)
             font.pixelSize: 12
             font.styleName: "Light"
             font.weight:    Font.Light
@@ -169,7 +142,7 @@ Control {
                     color:            control.error ? Style.validator_error : control.color
                     onCopyText:       BeamGlobals.copyToClipboard(amount)
                     copyMenuEnabled:  true
-                    text:             control.maxPaintedWidth ? fitText() : formatText(control.amount, Utils.limitText(control.unitName, control.maxUnitChars))
+                    text:             control.maxPaintedWidth ? fitText() : formatAmount(control.amount, Utils.limitText(control.unitName, control.maxUnitChars))
 
                     MouseArea {
                         id: amountTextArea
