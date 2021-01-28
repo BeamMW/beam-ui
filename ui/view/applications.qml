@@ -70,11 +70,13 @@ ColumnLayout {
         visible: false
         backgroundColor: "transparent"
 
-        //
-        // Behavior settings
-        //
         profile {
             httpCacheType: WebEngineProfile.DiskHttpCache
+        }
+
+        settings {
+            javascriptCanOpenWindows: false
+            pdfViewerEnabled: false
         }
 
         onLoadingChanged: {
