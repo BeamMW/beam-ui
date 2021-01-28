@@ -151,12 +151,15 @@ jobs:
       if: matrix.os == 'macos-10.15'
       run: codesign --deep --force -v -s "${{secrets.MACOS_SIGN_IDENTITY}}" -o runtime --timestamp Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
     - name: Notarize [macos-10.15]
+      shell: bash
       if: matrix.os == 'macos-10.15'
-      uses: devbotsxyz/xcode-notarize@v1
-      with:
-        product-path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
-        appstore-connect-username: ${{ secrets.MACOS_NOTARIZE_USER }}
-        appstore-connect-password: ${{ secrets.MACOS_NOTARIZE_PASS }}
+      # if: ${{ false }}
+      env:
+        MACOS_NOTARIZE_USER: ${{ secrets.MACOS_NOTARIZE_USER }}
+        MACOS_NOTARIZE_PASS: ${{ secrets.MACOS_NOTARIZE_PASS }}
+      run: |
+        chmod +x ./notarize.sh
+        ./notarize.sh
 
     - name: Collect [ubuntu]
       shell: bash
