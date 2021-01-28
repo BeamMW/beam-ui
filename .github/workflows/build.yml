@@ -157,6 +157,7 @@ jobs:
       env:
         MACOS_NOTARIZE_USER: ${{ secrets.MACOS_NOTARIZE_USER }}
         MACOS_NOTARIZE_PASS: ${{ secrets.MACOS_NOTARIZE_PASS }}
+        BEAM_WALLET_UI_IN: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
       run: |
         chmod +x ./notarize.sh
         ./notarize.sh
