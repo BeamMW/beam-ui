@@ -402,27 +402,35 @@ Control {
             TableViewColumn {
                 //role: "amountGeneral"
                 role: "amountGeneralWithCurrency"
+
                 //% "Amount"
-                title: qsTrId("general-amount")
+                title:     qsTrId("general-amount")
                 elideMode: Text.ElideRight
-                width: 130 * transactionsTable.columnResizeRatio
-                movable: false
+                width:     130 * transactionsTable.columnResizeRatio
+                movable:   false
                 resizable: false
-                delegate: Item {
-                    Item {
-                        width: parent.width
-                        height: transactionsTable.rowHeight
-                        property var isIncome: !!styleData.value && !!model && model.isIncome
-                        TableItem {
-                            text: (parent.isIncome ? "+ " : "- ") + styleData.value
-                            fontWeight: Font.Bold
-                            fontStyleName: "Bold"
-                            fontSizeMode: Text.Fit
-                            color: parent.isIncome ? Style.accent_incoming : Style.accent_outgoing
-                            onCopyText: BeamGlobals.copyToClipboard(!!model ? model.amountGeneral : "")
-                        }
+
+                delegate: Item { Item {
+                    width: parent.width
+                    height: transactionsTable.rowHeight
+
+                    property var isIncome: model && model.isIncome
+                    property var amount:   model ? model.amountGeneral : "0"
+                    property var unitName: model ? model.unitName : ""
+
+                    BeamAmount {
+                        amount:                 parent.amount
+                        unitName:               parent.unitName
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left:           parent.left
+                        anchors.leftMargin:     20
+                        color:                  parent.isIncome ? Style.accent_incoming : Style.accent_outgoing
+                        maxPaintedWidth:        parent.width - 20
+                        boldFont:               true
+                        lightFont:              false
+                        prefix:                 parent.isIncome ? "+ " : "- "
                     }
-                }
+                }}
             }
 
             TableViewColumn {

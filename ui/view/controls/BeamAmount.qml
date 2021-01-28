@@ -45,7 +45,10 @@ Control {
     }
 
     function formatAmount (amount, uname) {
-        return Utils.formatAmount(amount, uname, prefix, showZero)
+        if (parseFloat(amount) > 0 || showZero) {
+            return (prefix || '') + [Utils.uiStringToLocale(amount), uname].join("\u2000") // 1/2 em space, EN QUAD Unicode char
+        }
+        return "-"
     }
 
     function calcMaxTextWidth () {
@@ -53,13 +56,45 @@ Control {
         return control.maxPaintedWidth - pos.x - (showDrop ? drop.width + amountText.parent.spacing : 0)
     }
 
+    function fitAmount (amount, uname, prefix, showZero, metrics, maxw) {
+        if (maxw <= 0) return formatAmount(amount, uname, prefix, showZero)
+
+        var samount = amount.toString()
+        var unamed  = false
+        var minUnitChars = 6
+
+        while (true) {
+           var result = formatAmount(samount, [uname, unamed ? '\u2026' : ''].join(''))
+           if (result == "-") return result;
+
+           metrics.text = result
+           if (metrics.tightBoundingRect.width <= maxw) {
+               return result
+           }
+
+           if (uname && minUnitChars && uname.length > minUnitChars)
+           {
+                uname  = uname.substring(0, uname.length - 1)
+                unamed = true
+           }
+           else
+           {
+                if (samount.length == 0) return "ERROR"
+
+                var rup = BeamGlobals.roundUp(samount)
+                if (rup == samount) return result
+                samount = rup
+           }
+        }
+    }
+
     function fitText () {
-        return Utils.fitAmount(control.amount,
-                               control.unitName,
-                               control.prefix,
-                               control.showZero,
-                               metrics,
-                               calcMaxTextWidth()
+        return fitAmount(control.amount,
+                       control.unitName,
+                       control.prefix,
+                       control.showZero,
+                       metrics,
+                       calcMaxTextWidth()
         )
     }
 
@@ -148,6 +183,9 @@ Control {
                         id: amountTextArea
                         anchors.fill: parent
                         hoverEnabled: true
+                        acceptedButtons:  Qt.LeftButton
+                        propagateComposedEvents: true
+                        preventStealing:  true
                     }
                 }
 

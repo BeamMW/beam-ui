@@ -188,41 +188,5 @@ function limitText (text, maxLen) {
     return maxLen > 0 && text.length >= maxLen ? [text.substring(0, maxLen - 1), '\u2026'].join('') : text
 }
 
-function formatAmount (amount, uname, prefix, showZero) {
-    if (parseFloat(amount) > 0 || showZero) {
-        return (prefix || '') + [uiStringToLocale(amount), uname].join("\u2000") // 1/2 em space, EN QUAD Unicode char
-    }
-    return "-"
-}
 
-function fitAmount (amount, uname, prefix, showZero, metrics, maxw) {
-    if (maxw <= 0) return formatAmount(amount, uname, prefix, showZero)
 
-    var samount = amount.toString()
-    var unamed  = false
-    var minUnitChars = 6
-
-    while (true) {
-       var result = formatAmount(samount, [uname, unamed ? '\u2026' : ''].join(''))
-       if (result == "-") return result;
-
-       metrics.text = result
-       if (metrics.tightBoundingRect.width <= maxw) {
-           return result
-       }
-
-       if (uname && minUnitChars && uname.length > minUnitChars)
-       {
-            uname  = uname.substring(0, uname.length - 1)
-            unamed = true
-       }
-       else
-       {
-            if (samount.length == 0) return "ERROR"
-
-            var rup = BeamGlobals.roundUp(samount)
-            if (rup == samount) return result
-            samount = rup
-       }
-    }
-}
