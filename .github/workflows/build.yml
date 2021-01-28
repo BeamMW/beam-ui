@@ -152,8 +152,8 @@ jobs:
       run: codesign --deep --force -v -s "${{secrets.MACOS_SIGN_IDENTITY}}" -o runtime --timestamp Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
     - name: Notarize [macos-10.15]
       shell: bash
-      if: matrix.os == 'macos-10.15'
-      # if: ${{ false }}
+      # if: matrix.os == 'macos-10.15'
+      if: ${{ false }}
       env:
         MACOS_NOTARIZE_USER: ${{ secrets.MACOS_NOTARIZE_USER }}
         MACOS_NOTARIZE_PASS: ${{ secrets.MACOS_NOTARIZE_PASS }}
