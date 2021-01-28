@@ -5,7 +5,7 @@ on:
       - qt_static*
 
 env:
-  QT_VER: 5.14.1
+  QT_VER: 5.15.2
 
 jobs:
   build_ubuntu:
@@ -20,7 +20,7 @@ jobs:
       run: |
         mkdir ${{runner.workspace}}/qt5-static
         sudo apt update
-        sudo apt install -y build-essential ^libxcb.* libcups2-dev libglu1-mesa-dev libfontconfig1-dev libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb-render-util0-dev libxkbcommon-dev libxkbcommon-x11-dev libpci-dev libicu-dev
+        sudo apt install -y build-essential ^libxcb.* libcups2-dev libgl1-mesa-dev libglu1-mesa-dev libfontconfig1-dev libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb-render-util0-dev libxkbcommon-dev libxkbcommon-x11-dev libpci-dev libicu-dev
 
     - name: Download
       shell: bash
@@ -28,13 +28,13 @@ jobs:
         git clone https://code.qt.io/qt/qt5.git
         cd qt5
         git checkout v${{env.QT_VER}}
-        git submodule update --init --recursive
+        ./init-repository -f
 
     - name: Configure
       shell: bash
       run: |
         cd qt5
-        ./configure -static -release -optimize-size -strip -qt-xcb -xcb-xlib -cups -kms -qt-zlib -qt-libpng -qt-libjpeg -qt-freetype -opengl desktop -platform linux-g++ -opensource -confirm-license -no-compile-examples -nomake examples -nomake tests -skip qtwebengine -prefix${{runner.workspace}}/qt5-static
+        ./configure -platform linux-g++ -release -static -opensource -confirm-license -nomake examples -nomake tests -accessibility -no-sql-sqlite -no-sql-psql -qt-pcre -qt-zlib -qt-libpng -qt-libjpeg -no-feature-vulkan -skip qtwebengine -prefix ${{runner.workspace}}/qt5-static
 
     - name: Build
       shell: bash

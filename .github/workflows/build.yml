@@ -12,12 +12,9 @@ jobs:
 ###############################################################################
   build_desktop:
     runs-on: ${{ matrix.os }}
-    # if: ${{false}}
     strategy:
       matrix:
-        os: [macos-10.15, windows-2019]
-        # os: [ubuntu-20.04]
-        # os: [macos-10.15, ubuntu-18.04, ubuntu-20.04, windows-2019]
+        os: [macos-10.15, ubuntu-18.04, ubuntu-20.04, windows-2019]
 
     steps:
     - uses: actions/checkout@v2
@@ -34,7 +31,6 @@ jobs:
 ###############################################################################
 # Create Build Environment
 ###############################################################################
-
     - name: Create Build Environment [macos-10.15]
       if: matrix.os == 'macos-10.15'
       run: |
@@ -53,8 +49,8 @@ jobs:
         sudo apt update
         sudo apt install build-essential llvm libclang-dev
         sudo apt install libssl-dev curl libcups2-dev mesa-common-dev ^libxcb.* libglu1-mesa-dev libglfw3-dev libgles2-mesa-dev libfontconfig1-dev libudev-dev -y
-        sudo apt install libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-dev -y
-        git clone --depth=1 https://github.com/echoby/qt5.12.9-static-linux.git ${{runner.workspace}}/qt5-static
+        sudo apt install libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-dev libpci-dev libicu-dev -y
+        git clone --depth=1 https://github.com/BeamMW/qt5.15.2-static-${{matrix.os}}.git ${{runner.workspace}}/qt5-static
         chmod +x ${{runner.workspace}}/qt5-static/bin/*
         echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
         echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
@@ -129,8 +125,8 @@ jobs:
 ###############################################################################
 # Pack
 ###############################################################################
-    - name: CPack [macos-10.15]
-      if: matrix.os == 'macos-10.15'
+    - name: CPack [macos-10.15 && ununtu all]
+      if: matrix.os != 'windows-2019'
       run: cpack
 
     - name: CPack [windows]
@@ -144,10 +140,7 @@ jobs:
     - name: Collect [macos-10.15]
       shell: bash
       if: matrix.os == 'macos-10.15'
-      run: |
-        mkdir artifacts
-        cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Darwin.dmg Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
-        echo "BEAM_WALLET_UI_IN=Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg" >> $GITHUB_ENV
+      run: cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Darwin.dmg Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
     - name: Import Code-Signing Certificates [macos-10.15]
       if: matrix.os == 'macos-10.15'
       uses: Apple-Actions/import-codesign-certs@v1
@@ -156,18 +149,19 @@ jobs:
         p12-password: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }}
     - name: Sign the mac binaries [macos-10.15]
       if: matrix.os == 'macos-10.15'
-      run: |
-        codesign --deep --force -v -s "${{secrets.MACOS_SIGN_IDENTITY}}" -o runtime --timestamp ${{env.BEAM_WALLET_UI_IN}}
+      run: codesign --deep --force -v -s "${{secrets.MACOS_SIGN_IDENTITY}}" -o runtime --timestamp Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
     - name: Notarize [macos-10.15]
+      if: matrix.os == 'macos-10.15'
+      uses: devbotsxyz/xcode-notarize@v1
+      with:
+        product-path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
+        appstore-connect-username: ${{ secrets.MACOS_NOTARIZE_USER }}
+        appstore-connect-password: ${{ secrets.MACOS_NOTARIZE_PASS }}
+
+    - name: Collect [ubuntu]
       shell: bash
-      if: ${{ false }} #matrix.os == 'macos-10.15'
-      env:
-        MACOS_NOTARIZE_USER: ${{ secrets.MACOS_NOTARIZE_USER }}
-        MACOS_NOTARIZE_PASS: ${{ secrets.MACOS_NOTARIZE_USER }}
-        MACOS_NOTARIZE_PROVIDER: ${{ secrets.MACOS_NOTARIZE_PROVIDER }}
-      run: |
-        chmod +x ./notarize.sh
-        ./notarize.sh
+      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      run: cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Linux.deb Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb
 
     - name: Collect [windows]
       shell: bash
@@ -177,9 +171,18 @@ jobs:
 ###############################################################################
 # Upload
 ###############################################################################
+    - name: OS name [macos-10.15 && windows]
+      if: matrix.os == 'macos-10.15' || matrix.os == 'windows-2019'
+      run: echo "OS_NAME=${{runner.os}}" >> $GITHUB_ENV
+
+    - name: OS name [ununtu all]
+      shell: bash
+      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      run: echo "OS_NAME=${{matrix.os}}" >> $GITHUB_ENV
+
     - uses: actions/upload-artifact@v2
       with:
-        name: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-${{runner.os}}
+        name: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-${{env.OS_NAME}}
         path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}*
         if-no-files-found: error
 
