@@ -70,8 +70,12 @@ ColumnLayout {
         visible: false
         backgroundColor: "transparent"
 
-        // TODO:check why cache doesn't respect headers and always load cached page
-        profile.httpCacheType: WebEngineProfile.NoCache
+        //
+        // Behavior settings
+        //
+        profile {
+            httpCacheType: WebEngineProfile.DiskHttpCache
+        }
 
         onLoadingChanged: {
             // do not change this to declarative style, it flickers somewhy, probably because of delays
