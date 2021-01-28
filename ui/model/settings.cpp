@@ -677,8 +677,23 @@ QString WalletSettings::getAppsUrl() const
     return "";
     #endif
 }
-/*
 
+QString WalletSettings::getAppsCachePath() const
+{
+    const char* kCacheFolder = "appcache";
+    if (!m_appDataDir.exists(kCacheFolder))
+    {
+        m_appDataDir.mkdir(kCacheFolder);
+    }
+    return m_appDataDir.filePath(kCacheFolder);
+}
 
-    property string appsUrl:     "http://3.136.182.25:80/app/appslist.json"
-    */
+QString WalletSettings::getAppsStoragePath() const
+{
+    const char* kStorageFolder = "appstorage";
+    if (!m_appDataDir.exists(kStorageFolder))
+    {
+        m_appDataDir.mkdir(kStorageFolder);
+    }
+    return m_appDataDir.filePath(kStorageFolder);
+}

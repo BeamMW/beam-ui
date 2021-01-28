@@ -98,6 +98,8 @@ public:
     QString getExplorerUrl() const;
     QString getFaucetUrl() const;
     QString getAppsUrl() const;
+    QString getAppsCachePath() const;
+    QString getAppsStoragePath() const;
 
 public:
     static const char* WalletCfg;

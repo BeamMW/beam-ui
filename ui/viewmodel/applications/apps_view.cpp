@@ -14,6 +14,7 @@
 #include <QObject>
 #include <QMessageBox>
 #include <QtWebEngineWidgets/QWebEngineView>
+#include <QWebEngineProfile>
 #include "apps_view.h"
 #include "utility/logger.h"
 #include "model/settings.h"
@@ -23,6 +24,11 @@ namespace beamui::applications {
     AppsViewModel::AppsViewModel()
     {
         LOG_INFO() << "AppsViewModel created";
+
+        auto& settings = AppModel::getInstance().getSettings();
+        auto defaultProfile = QWebEngineProfile::defaultProfile();
+        defaultProfile->setCachePath(settings.getAppsCachePath());
+        defaultProfile->setPersistentStoragePath(settings.getAppsStoragePath());
     }
 
     AppsViewModel::~AppsViewModel()
