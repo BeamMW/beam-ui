@@ -41,6 +41,15 @@ jobs:
         tar -xf qt5.12.9-static.tar.gz -C ${{runner.workspace}}/qt5-static
         echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
         echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
+        export TZ=GMT-3
+        sudo systemsetup -gettimezone
+        security create-keychain -p github macos-build.keychain
+        security default-keychain -s macos-build.keychain
+        security unlock-keychain -p github macos-build.keychain
+        security set-keychain-settings -t 3600 -l ~/Library/Keychains/macos-build.keychain
+        echo "${{ secrets.APPLE_DEVELOPER_CERTIFICATE_P12_BASE64 }}" | base64 --decode > certificate.p12
+        security import certificate.p12 -k macos-build.keychain -P ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }} -T /usr/bin/codesign
+        security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k github macos-build.keychain
 
     - name: Create Build Environment [ununtu all]
       shell: bash
@@ -69,7 +78,7 @@ jobs:
       if: matrix.os == 'macos-10.15'
       run: |
         curl -O https://raw.githubusercontent.com/Homebrew/homebrew-core/5da5895add2f6b9320d654dd844d4827f6876c8b/Formula/boost.rb
-        brew install ./boost.rb 
+        brew install ./boost.rb
 
     - name: Download boost [ununtu all]
       shell: bash
@@ -82,8 +91,14 @@ jobs:
 ###############################################################################
 # Configure CMake
 ###############################################################################
-    - name: Configure CMake [macos-10.15 && ununtu all]
-      if: matrix.os != 'windows-2019'
+    - name: Configure CMake [macos-10.15]
+      if: matrix.os == 'macos-10.15'
+      run: |
+        export PATH=${{runner.workspace}}/qt5-static/bin:$PATH
+        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_HW_WALLET=Off .
+
+    - name: Configure CMake [ununtu all]
+      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
         export PATH=${{runner.workspace}}/qt5-static/bin:$PATH
         cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_HW_WALLET=Off .
@@ -140,23 +155,16 @@ jobs:
     - name: Collect [macos-10.15]
       shell: bash
       if: matrix.os == 'macos-10.15'
-      run: cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Darwin.dmg Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
-    - name: Import Code-Signing Certificates [macos-10.15]
-      if: matrix.os == 'macos-10.15'
-      uses: Apple-Actions/import-codesign-certs@v1
-      with:
-        p12-file-base64: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_P12_BASE64 }}
-        p12-password: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }}
-    - name: Sign the mac binaries [macos-10.15]
-      if: matrix.os == 'macos-10.15'
-      run: codesign --deep --force -v -s "${{secrets.MACOS_SIGN_IDENTITY}}" -o runtime --timestamp Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
+      run: |
+        cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Darwin.dmg Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
+        codesign --deep --force -v -s "${{secrets.MACOS_SIGN_IDENTITY}}" -o runtime --timestamp Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
     - name: Notarize [macos-10.15]
       shell: bash
-      # if: matrix.os == 'macos-10.15'
-      if: ${{ false }}
+      if: matrix.os == 'macos-10.15'
       env:
         MACOS_NOTARIZE_USER: ${{ secrets.MACOS_NOTARIZE_USER }}
         MACOS_NOTARIZE_PASS: ${{ secrets.MACOS_NOTARIZE_PASS }}
+        MACOS_NOTARIZE_PROVIDER: ${{ secrets.MACOS_NOTARIZE_PROVIDER }}
         BEAM_WALLET_UI_IN: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
       run: |
         chmod +x ./notarize.sh
