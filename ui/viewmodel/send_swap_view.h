@@ -32,6 +32,7 @@ class SendSwapViewModel: public QObject
     Q_PROPERTY(QDateTime     offeredTime      READ getOfferedTime                           NOTIFY offeredTimeChanged)
     Q_PROPERTY(QDateTime     expiresTime      READ getExpiresTime                           NOTIFY expiresTimeChanged)
     Q_PROPERTY(bool          isEnough         READ isEnough                                 NOTIFY enoughChanged)
+    Q_PROPERTY(bool          isEnoughToReceive READ isEnoughToReceive                       NOTIFY enoughToReceiveChanged)
     Q_PROPERTY(bool          canSend          READ canSend                                  NOTIFY canSendChanged)
     Q_PROPERTY(QString       comment          READ getComment          WRITE setComment     NOTIFY commentChanged)
     Q_PROPERTY(QString       receiverAddress  READ getReceiverAddress                       NOTIFY tokenChanged)
@@ -88,6 +89,7 @@ public:
     void setExpiresTime(const QDateTime& time);
 
     bool isEnough() const;
+    bool isEnoughToReceive() const;
     bool canSend() const;
     bool isSendFeeOK() const;
     bool isReceiveFeeOK() const;
@@ -122,6 +124,7 @@ signals:
     void offeredTimeChanged();
     void expiresTimeChanged();
     void enoughChanged();
+    void enoughToReceiveChanged();
     void isSendFeeOKChanged();
     void isReceiveFeeOKChanged();
     void secondCurrencyLabelChanged();

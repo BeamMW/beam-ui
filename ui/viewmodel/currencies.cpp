@@ -32,6 +32,14 @@ beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(Currency currency)
         return beam::wallet::AtomicSwapCoin::Dash;
     case Currency::CurrDogecoin:
         return beam::wallet::AtomicSwapCoin::Dogecoin;
+    case Currency::CurrEthereum:
+        return beam::wallet::AtomicSwapCoin::Ethereum;
+    case Currency::CurrDai:
+        return beam::wallet::AtomicSwapCoin::Dai;
+    case Currency::CurrUsdt:
+        return beam::wallet::AtomicSwapCoin::Usdt;
+    case Currency::CurrWrappedBTC:
+        return beam::wallet::AtomicSwapCoin::WBTC;
     default:
         return beam::wallet::AtomicSwapCoin::Unknown;
     }
@@ -55,7 +63,42 @@ Currency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin)
         return Currency::CurrDash;
     case beam::wallet::AtomicSwapCoin::Dogecoin:
         return Currency::CurrDogecoin;
+    case beam::wallet::AtomicSwapCoin::Ethereum:
+        return Currency::CurrEthereum;
+    case beam::wallet::AtomicSwapCoin::Dai:
+        return Currency::CurrDai;
+    case beam::wallet::AtomicSwapCoin::Usdt:
+        return Currency::CurrUsdt;
+    case beam::wallet::AtomicSwapCoin::WBTC:
+        return Currency::CurrWrappedBTC;
     default:
         return Currency::CurrEnd;
+    }
+}
+
+beamui::Currencies convertCurrency(Currency value)
+{
+    switch (value)
+    {
+#define MACRO(name, label, slabel, subunite, feeLabel, dec) \
+    case Currency::Curr##name:\
+        return beamui::Currencies::name;
+        CURRENCY_MAP(MACRO)
+#undef MACRO
+    default:
+        return beamui::Currencies::Unknown;
+    }
+}
+
+bool isEthereumBased(Currency currency)
+{
+    switch (currency)
+    {
+    case Currency::CurrEthereum: return true;
+    case Currency::CurrDai: return true;
+    case Currency::CurrUsdt: return true;
+    case Currency::CurrWrappedBTC: return true;
+    default:
+        return false;
     }
 }

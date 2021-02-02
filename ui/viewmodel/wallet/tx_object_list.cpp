@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "tx_object_list.h"
+#include <qlocale.h>
+#include <qdebug.h>
 
 namespace
 {
@@ -246,7 +248,7 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
         {
             QDateTime datetime;
             datetime.setTime_t(value->timeCreated());
-            return datetime.toString(Qt::SystemLocaleShortDate);
+            return datetime.toString(QLocale::system().dateTimeFormat(QLocale::ShortFormat));
         }
             
         case Roles::TimeCreatedSort:

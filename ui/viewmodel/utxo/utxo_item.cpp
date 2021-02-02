@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "utxo_item.h"
+#include "model/app_model.h"
 #include "viewmodel/ui_helpers.h"
 #include "wallet/core/common.h"
 
@@ -55,6 +56,16 @@ QString UtxoItem::maturity() const
     if (!_coin.IsMaturityValid())
         return QString{ "-" };
     return QString::number(_coin.m_maturity);
+}
+
+QString UtxoItem::maturityPercentage() const
+{
+    return QString{ "100" };
+}
+
+QString UtxoItem::maturityTimeLeft() const
+{
+    return QString::number(rawMaturityTimeLeft());
 }
 
 UtxoViewStatus::EnStatus UtxoItem::status() const
@@ -109,9 +120,27 @@ beam::Height UtxoItem::rawMaturity() const
     return _coin.get_Maturity();
 }
 
+uint16_t UtxoItem::rawMaturityTimeLeft() const
+{
+    auto walletModel = AppModel::getInstance().getWallet();
+    if (walletModel->getCurrentHeight() < _coin.get_Maturity())
+    {
+        auto blocksLeft = _coin.get_Maturity() - walletModel->getCurrentHeight();
+        return blocksLeft / 60;
+    }
+
+    return 0;
+}
+
 // ShieldedCoinItem
+ShieldedCoinItem::ShieldedCoinItem()
+    : _walletModel{*AppModel::getInstance().getWallet()}
+{
+}
+
 ShieldedCoinItem::ShieldedCoinItem(const beam::wallet::ShieldedCoin& coin)
-    : _coin{ coin }
+    : _walletModel{*AppModel::getInstance().getWallet()}
+    , _coin{ coin }
 {
 
 }
@@ -140,7 +169,19 @@ QString ShieldedCoinItem::getAmount() const
 
 QString ShieldedCoinItem::maturity() const
 {
+    if (!_coin.IsMaturityValid())
+        return QString{ "-" };
     return QString::number(rawMaturity());
+}
+
+QString ShieldedCoinItem::maturityPercentage() const
+{
+    return QString::number(_walletModel.getMarurityProgress(_coin));
+}
+
+QString ShieldedCoinItem::maturityTimeLeft() const
+{
+    return QString::number(rawMaturityTimeLeft());
 }
 
 UtxoViewStatus::EnStatus ShieldedCoinItem::status() const
@@ -179,4 +220,9 @@ beam::Amount ShieldedCoinItem::rawAmount() const
 beam::Height ShieldedCoinItem::rawMaturity() const
 {
     return _coin.m_confirmHeight;
+}
+
+uint16_t ShieldedCoinItem::rawMaturityTimeLeft() const
+{
+    return _walletModel.getMaturityHoursLeft(_coin);
 }

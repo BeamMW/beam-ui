@@ -1,0 +1,206 @@
+name: Build
+
+on: [push]
+
+env:
+  BUILD_TYPE: Release
+  BUILD_CONFIG: RelWithDebInfo
+
+jobs:
+###############################################################################
+# Build Desktop
+###############################################################################
+  build_desktop:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-10.15, ubuntu-18.04, ubuntu-20.04, windows-2019]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Submodule update
+      shell: bash
+      run: |
+        git submodule update --init --recursive --remote --jobs 4
+        cd beam
+        git apply 3rdparty/protobuf-patch.diff
+
+###############################################################################
+# Create Build Environment
+###############################################################################
+    - name: Create Build Environment [macos-10.15]
+      if: matrix.os == 'macos-10.15'
+      run: |
+        echo $GITHUB_WORKSPACE
+        echo "OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1" >> $GITHUB_ENV
+        wget --no-check-certificate https://builds.beam.mw/QT5/qt5.12.9-static.tar.gz
+        mkdir ${{runner.workspace}}/qt5-static
+        tar -xf qt5.12.9-static.tar.gz -C ${{runner.workspace}}/qt5-static
+        echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
+        echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
+        export TZ=GMT-3
+        sudo systemsetup -gettimezone
+        security create-keychain -p github macos-build.keychain
+        security default-keychain -s macos-build.keychain
+        security unlock-keychain -p github macos-build.keychain
+        security set-keychain-settings -t 3600 -l ~/Library/Keychains/macos-build.keychain
+        echo "${{ secrets.APPLE_DEVELOPER_CERTIFICATE_P12_BASE64 }}" | base64 --decode > certificate.p12
+        security import certificate.p12 -k macos-build.keychain -P ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }} -T /usr/bin/codesign
+        security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k github macos-build.keychain
+
+    - name: Create Build Environment [ununtu all]
+      shell: bash
+      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      run: |
+        sudo apt update
+        sudo apt install build-essential llvm libclang-dev
+        sudo apt install libssl-dev curl libcups2-dev mesa-common-dev ^libxcb.* libglu1-mesa-dev libglfw3-dev libgles2-mesa-dev libfontconfig1-dev libudev-dev -y
+        sudo apt install libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-dev libpci-dev libicu-dev -y
+        git clone --depth=1 https://github.com/BeamMW/qt5.15.2-static-${{matrix.os}}.git ${{runner.workspace}}/qt5-static
+        chmod +x ${{runner.workspace}}/qt5-static/bin/*
+        echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
+        echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
+
+    - name: Create Build Environment [windows]
+      shell: bash
+      if: matrix.os == 'windows-2019'
+      run: |
+        git clone --depth=1 https://github.com/BeamMW/libs.git c:/beam-libs
+        echo "OPENSSL_ROOT_DIR=c:\beam-libs\openssl" >> $GITHUB_ENV
+        git clone --depth=1 https://github.com/nesbox/qt5-static-win.git c:/beam-libs/qt5-static-win
+        echo "QT5_ROOT_DIR=c:\beam-libs\qt5-static-win" >> $GITHUB_ENV
+        echo "QML_IMPORT_PATH=c:\beam-libs\qt5-static-win\qml" >> $GITHUB_ENV
+
+    - name: Download boost [macos-10.15]
+      if: matrix.os == 'macos-10.15'
+      run: |
+        curl -O https://raw.githubusercontent.com/Homebrew/homebrew-core/5da5895add2f6b9320d654dd844d4827f6876c8b/Formula/boost.rb
+        brew install ./boost.rb
+
+    - name: Download boost [ununtu all]
+      shell: bash
+      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      run: |
+        git clone https://github.com/BeamMW/boost_prebuild_${{matrix.os}}.git ${{runner.workspace}}/boost_prebuild
+        echo "BOOST_INCLUDEDIR=${{runner.workspace}}/boost_prebuild/include" >> $GITHUB_ENV
+        echo "BOOST_LIBRARYDIR=${{runner.workspace}}/boost_prebuild/lib/" >> $GITHUB_ENV
+
+###############################################################################
+# Configure CMake
+###############################################################################
+    - name: Configure CMake [macos-10.15]
+      if: matrix.os == 'macos-10.15'
+      run: |
+        export PATH=${{runner.workspace}}/qt5-static/bin:$PATH
+        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_HW_WALLET=Off .
+
+    - name: Configure CMake [ununtu all]
+      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      run: |
+        export PATH=${{runner.workspace}}/qt5-static/bin:$PATH
+        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_HW_WALLET=Off .
+
+    - name: Configure CMake [windows]
+      shell: bash
+      if: matrix.os == 'windows-2019'
+      run: |
+        export PATH=/c/beam-libs/qt5-static-win/bin:$PATH
+        cmake -G "Visual Studio 16 2019" -A x64 -DBOOST_ROOT=$BOOST_ROOT_1_72_0 -DCMAKE_BUILD_TYPE=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_HW_WALLET=Off .
+
+    - name: Save version info
+      shell: bash
+      run: |
+        echo "BEAM_VERSION=$(cat beam_version.gen)" >> $GITHUB_ENV
+        echo "BEAM_TARGET_SUFFIX=-testnet" >> $GITHUB_ENV
+        echo "BEAM_DISPLAY_SUFFIX=Testnet" >> $GITHUB_ENV
+        echo "BEAM_DISPLAY_SUFFIX2=-Testnet" >> $GITHUB_ENV
+        echo "BEAM_DISPLAY_SUFFIX3= Testrnet" >> $GITHUB_ENV
+        rm beam_version.gen
+
+###############################################################################
+# Build
+###############################################################################
+    - name: Build [macos-10.15]
+      if: matrix.os == 'macos-10.15'
+      run: cmake --build . --parallel --config $BUILD_TYPE
+
+    - name: Build [ununtu all]
+      shell: bash
+      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      run: make -j$(nproc)
+
+    - name: Build [windows]
+      shell: bash
+      if: matrix.os == 'windows-2019'
+      run: cmake --build . --parallel --config $BUILD_CONFIG
+
+###############################################################################
+# Pack
+###############################################################################
+    - name: CPack [macos-10.15 && ununtu all]
+      if: matrix.os != 'windows-2019'
+      run: cpack
+
+    - name: CPack [windows]
+      shell: bash
+      if: matrix.os == 'windows-2019'
+      run: cpack --verbose -G NSIS -C $BUILD_CONFIG
+
+###############################################################################
+# Collect artifacts
+###############################################################################
+    - name: Collect [macos-10.15]
+      shell: bash
+      if: matrix.os == 'macos-10.15'
+      run: |
+        cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Darwin.dmg Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
+        codesign --deep --force -v -s "${{secrets.MACOS_SIGN_IDENTITY}}" -o runtime --timestamp Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
+    - name: Notarize [macos-10.15]
+      shell: bash
+      if: matrix.os == 'macos-10.15'
+      env:
+        MACOS_NOTARIZE_USER: ${{ secrets.MACOS_NOTARIZE_USER }}
+        MACOS_NOTARIZE_PASS: ${{ secrets.MACOS_NOTARIZE_PASS }}
+        MACOS_NOTARIZE_PROVIDER: ${{ secrets.MACOS_NOTARIZE_PROVIDER }}
+        BEAM_WALLET_UI_IN: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
+      run: |
+        chmod +x ./notarize.sh
+        ./notarize.sh
+
+    - name: Collect [ubuntu]
+      shell: bash
+      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      run: cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Linux.deb Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb
+
+    - name: Collect [windows]
+      shell: bash
+      if: matrix.os == 'windows-2019'
+      run: cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-win64.exe Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.exe
+
+###############################################################################
+# Upload
+###############################################################################
+    - name: OS name [macos-10.15 && windows]
+      if: matrix.os == 'macos-10.15' || matrix.os == 'windows-2019'
+      run: echo "OS_NAME=${{runner.os}}" >> $GITHUB_ENV
+
+    - name: OS name [ununtu all]
+      shell: bash
+      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      run: echo "OS_NAME=${{matrix.os}}" >> $GITHUB_ENV
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-${{env.OS_NAME}}
+        path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}*
+        if-no-files-found: error
+
+    - uses: actions/upload-artifact@v2
+      if: matrix.os == 'windows-2019'
+      with:
+        name: beam-pdb${{env.BEAM_TARGET_SUFFIX}}-${{env.BEAM_VERSION}}
+        path: ui/${{env.BUILD_CONFIG}}/Beam Wallet${{env.BEAM_DISPLAY_SUFFIX3}}.pdb
+        if-no-files-found: error

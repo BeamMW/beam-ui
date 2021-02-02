@@ -14,7 +14,7 @@
 #include "el_seed_validator.h"
 
 #include "utility/string_helpers.h"
-#include "wallet/transactions/swaps/bridges/bitcoin/common.h"
+#include "wallet/transactions/swaps/common.h"
 
 ELSeedValidator::ELSeedValidator(QObject* parent):
     QValidator(parent)
@@ -29,7 +29,7 @@ QValidator::State ELSeedValidator::validate(QString& s, int& pos) const
     if (match.hasMatch()) {
         auto secretWords = string_helpers::split(s.toStdString(), ' ');
 
-        if (beam::bitcoin::validateElectrumMnemonic(secretWords))
+        if (beam::electrum::validateMnemonic(secretWords))
         {
             return Acceptable;
         }

@@ -227,6 +227,7 @@ please review your settings and try again"
                             //fee:                        viewModel.sendFee
                             currency:                   viewModel.sendCurrency
                             minFee:                     currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
+                            maxFee:                     BeamGlobals.getMaximumFee(currency)
                             recommendedFee:             BeamGlobals.getRecommendedFee(currency)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(currency)
                             color:                      Style.accent_outgoing
@@ -321,6 +322,10 @@ please review your settings and try again"
                                     //% "The swap amount must be greater than the transaction fee"
                                     return qsTrId("send-less-than-fee")
                                 }
+                                if(!viewModel.isEnoughToReceive) {
+                                    //% "There is not enough funds to complete the transaction"
+                                    return qsTrId("send-not-enough")
+                                }
                                 return ""
                             }
                         }
@@ -341,6 +346,7 @@ please review your settings and try again"
                             id:                         receiveFeeInput
                             currency:                   viewModel.receiveCurrency
                             minFee:                     BeamGlobals.getMinimalFee(currency, false)
+                            maxFee:                     BeamGlobals.getMaximumFee(currency)
                             recommendedFee:             BeamGlobals.getRecommendedFee(currency)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(currency)
                             color:                      Style.accent_outgoing
@@ -397,7 +403,7 @@ please review your settings and try again"
                                 SFText {
                                     font.pixelSize:   14
                                     color:            Style.content_main
-                                    text:             BeamGlobals.calcTotalFee(viewModel.receiveCurrency, viewModel.receiveFee)
+                                    text:             BeamGlobals.calcWithdrawTxFee(viewModel.receiveCurrency, viewModel.receiveFee)
                                     visible:          parent.showEstimatedFee
                                 }
 
@@ -478,8 +484,8 @@ please review your settings and try again"
                                     }
                                 
                                     LinkButton {
-                                        //% "Show token"
-                                        text: qsTrId("show-token")
+                                        //% "More details"
+                                        text: qsTrId("more-details")
                                         linkColor: Style.accent_outgoing
                                         onClicked: {
                                             tokenInfoDialog.open();

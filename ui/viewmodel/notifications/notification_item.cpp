@@ -124,8 +124,10 @@ namespace
         if (isSender)
         {
             WalletID wid;
-            getPeerID(p, wid);
-            return std::to_string(wid).c_str();
+            if (getPeerID(p, wid))
+            {
+                return std::to_string(wid).c_str();
+            }
         }
         if (auto peerID = p.GetParameter<PeerID>(TxParameterID::PeerWalletIdentity); peerID)
         {
@@ -251,7 +253,7 @@ QString NotificationItem::message() const
             {
                 QString currentVer = QString::fromStdString(
                     beamui::getCurrentLibVersion().to_string() + "." + std::to_string(beamui::getCurrentUIRevision()));
-                QString message("Your current version is v");
+                QString message("Your current version is v ");
                 message.append(currentVer);
                 message.append(". Please update to get the most of your Beam wallet.");
                 return message;

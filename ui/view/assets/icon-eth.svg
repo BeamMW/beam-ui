@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
+    <defs>
+        <radialGradient id="rktavbs5sa" cx="50%" cy="50%" r="41.403%" fx="50%" fy="50%">
+            <stop offset="0%" stop-color="#8A93B2"/>
+            <stop offset="100%" stop-color="#0B2B4D"/>
+        </radialGradient>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g transform="translate(-341 -247) translate(321 224) translate(20 23)">
+                    <circle cx="11" cy="11" r="10" fill="url(#rktavbs5sa)" stroke="#8A93B2" stroke-width="2"/>
+                    <g fill="#FFF" fill-rule="nonzero">
+                        <path d="M.5 6.684l3.507 2.072 3.509-2.072-3.509 4.94L.5 6.684zM4.007.2l3.506 5.82L4.007 8.09.5 6.02 4.007.2z" transform="translate(7 5)"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

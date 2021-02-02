@@ -16,6 +16,7 @@
 
 #include <cmath>
 #include "model/app_model.h"
+#include "wallet/client/filter.h"
 #include "viewmodel/ui_helpers.h"
 
 #include <qdebug.h>
@@ -52,9 +53,9 @@ LoadingViewModel::LoadingViewModel()
     , m_isCreating{false}
     , m_isDownloadStarted{false}
     , m_lastProgress{0.}
-    , m_bpsWholeTimeFilter(std::make_unique<beamui::Filter>(kFilterRange))
-    , m_bpsWindowedFilter(std::make_unique<beamui::Filter>(kFilterRange * 3))
-    , m_estimateFilter(std::make_unique<beamui::Filter>(kFilterRange))
+    , m_bpsWholeTimeFilter(std::make_unique<wallet::Filter>(kFilterRange))
+    , m_bpsWindowedFilter(std::make_unique<wallet::Filter>(kFilterRange * 3))
+    , m_estimateFilter(std::make_unique<wallet::Filter>(kFilterRange))
     , m_startTimestamp{0}
     , m_lastUpdateTimestamp{0}
     , m_estimate{0}
@@ -333,19 +334,23 @@ void LoadingViewModel::onNodeConnectionChanged(bool isNodeConnected)
 
 void LoadingViewModel::onGetWalletError(beam::wallet::ErrorType error)
 {
+    using namespace beam::wallet;
     if (m_isCreating)
     {
         switch (error)
         {
-            case beam::wallet::ErrorType::NodeProtocolIncompatible:
+            case ErrorType::NodeProtocolIncompatible:
             {
                 //% "Incompatible peer"
                 emit walletError(qtTrId("loading-view-protocol-error"), m_walletModel.GetErrorString(error));
                 return;
             }
-            case beam::wallet::ErrorType::ConnectionAddrInUse:
-            case beam::wallet::ErrorType::ConnectionRefused:
-            case beam::wallet::ErrorType::HostResolvedError:
+            case ErrorType::ConnectionBase:
+            case ErrorType::ConnectionTimedOut:
+            case ErrorType::ConnectionHostUnreach:
+            case ErrorType::ConnectionAddrInUse:
+            case ErrorType::ConnectionRefused:
+            case ErrorType::HostResolvedError:
             {
                 //% "Connection error"
                 emit walletError(qtTrId("loading-view-connection-error"), m_walletModel.GetErrorString(error));
@@ -360,7 +365,7 @@ void LoadingViewModel::onGetWalletError(beam::wallet::ErrorType error)
     // There rest need to be added later
     switch (error)
     {
-        case beam::wallet::ErrorType::ConnectionAddrInUse:
+        case ErrorType::ConnectionAddrInUse:
             emit walletError(qtTrId("loading-view-connection-error"), m_walletModel.GetErrorString(error));
             return;
         default:

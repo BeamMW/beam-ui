@@ -42,8 +42,8 @@ ColumnLayout {
             font.pixelSize: 14
             color: Style.content_secondary
             //: settings tab, version label
-            //% "Version"
-            text: qsTrId("settings-version") + ": " + viewModel.version
+            //% "v"
+            text: qsTrId("settings-version") + " " + viewModel.version
         }
         PrimaryButton {
             Layout.alignment: Qt.AlignCenter
@@ -107,6 +107,7 @@ ColumnLayout {
                 }
 
                 SettingsTitle {
+                    topPadding: 30
                     //% "Troubleshooting"
                     text:  qsTrId("settings-troubleshooting-title")
                 }
@@ -157,8 +158,7 @@ ColumnLayout {
                         generalTitle:             modelData.generalTitle
                         showSeedDialogTitle:      modelData.showSeedDialogTitle
                         showAddressesDialogTitle: modelData.showAddressesDialogTitle
-                        feeRateLabel:             modelData.feeRateLabel
-                        canEdit:                  modelData.canEdit
+                        canChangeConnection:      modelData.canChangeConnection
                         isSupportedElectrum:      modelData.isSupportedElectrum
                         isConnected:              modelData.isConnected
                         isNodeConnection:         modelData.isNodeConnection
@@ -191,7 +191,7 @@ ColumnLayout {
 
                         Connections {
                             target: modelData
-                            onCanEditChanged:        settingsControl.canEdit = modelData.canEdit
+                            onCanChangeConnectionChanged:        settingsControl.canChangeConnection = modelData.canChangeConnection
                             onConnectionTypeChanged: {
                                 settingsControl.isConnected          = modelData.isConnected;
                                 settingsControl.isNodeConnection     = modelData.isNodeConnection;
@@ -283,6 +283,77 @@ ColumnLayout {
                             property: "selectServerAutomatically"
                             value:    settingsControl.useRandomElectrumNode
                         }
+                    }
+                }
+
+                SwapEthSettings {
+                    id:                       swapEthSettings
+                    title:                    viewModel.ethSettings.title
+                    generalTitle:             viewModel.ethSettings.generalTitle
+                    showSeedDialogTitle:      viewModel.ethSettings.showSeedDialogTitle
+                    showAddressesDialogTitle: viewModel.ethSettings.showAddressesDialogTitle
+                    seedPhrases:              viewModel.ethSettings.seedPhrases
+                    phrasesSeparator:         viewModel.ethSettings.phrasesSeparator
+                    isCurrentSeedValid:       viewModel.ethSettings.isCurrentSeedValid
+                    mainSettingsViewModel:    viewModel
+                    hasStatusIndicatior:      true
+                    getEthereumAddresses:     viewModel.ethSettings.getEthereumAddresses
+                    folded:                   creating ? (swapMode == viewModel.ethSettings.coinID ? false : (swapMode == "ALL" ? viewModel.ethSettings.isConnected : true)) : viewModel.ethSettings.folded
+                                             
+                    canChangeConnection:      viewModel.ethSettings.canChangeConnection
+                    isConnected:              viewModel.ethSettings.isConnected
+                    connectionStatus:         viewModel.ethSettings.connectionStatus
+                    connectionErrorMsg:       viewModel.ethSettings.connectionErrorMsg
+                                             
+                    infuraProjectID:          viewModel.ethSettings.infuraProjectID
+                    accountIndex:             viewModel.ethSettings.accountIndex
+
+                    Connections {
+                        target:              viewModel.ethSettings
+                        onCanChangeConnectionChanged:    swapEthSettings.canChangeConnection = viewModel.ethSettings.canChangeConnection
+                        onConnectionChanged: {
+                            swapEthSettings.isConnected        = viewModel.ethSettings.isConnected;
+                            swapEthSettings.title              = viewModel.ethSettings.title;
+                        }
+                        onConnectionStatusChanged: {
+                            swapEthSettings.connectionStatus   = viewModel.ethSettings.connectionStatus;
+                        }
+
+                        onConnectionErrorMsgChanged: {
+                            swapEthSettings.connectionErrorMsg = viewModel.ethSettings.connectionErrorMsg;
+                        }
+
+                        onInfuraProjectIDChanged:      swapEthSettings.infuraProjectID      = viewModel.ethSettings.infuraProjectID
+                        onAccountIndexChanged:         swapEthSettings.accountIndex         = viewModel.ethSettings.accountIndex
+                        onSeedPhrasesChanged:          swapEthSettings.seedPhrases          = viewModel.ethSettings.seedPhrases
+                        onIsCurrentSeedValidChanged:   swapEthSettings.isCurrentSeedValid   = viewModel.ethSettings.isCurrentSeedValid
+                    }
+                    
+                    onDisconnect:                viewModel.ethSettings.disconnect()
+                    onApplySettings:             viewModel.ethSettings.applySettings()
+                    onClearSettings:             viewModel.ethSettings.clearSettings()
+                    onConnectToNode:             viewModel.ethSettings.connectToNode()
+                    onNewSeedPhrases:            viewModel.ethSettings.newSeedPhrases()
+                    onRestoreSeedPhrases:        viewModel.ethSettings.restoreSeedPhrases()
+                    onCopySeedPhrases:           viewModel.ethSettings.copySeedPhrases()
+                    onValidateCurrentSeedPhrase: viewModel.ethSettings.validateCurrentSeedPhrase()
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "folded"
+                        value:    swapEthSettings.folded
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "infuraProjectID"
+                        value:    swapEthSettings.infuraProjectID
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "accountIndex"
+                        value:    swapEthSettings.accountIndex
                     }
                 }
             }

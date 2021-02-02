@@ -49,6 +49,7 @@
         <file>controls/SecurityNote.qml</file>
         <file>controls/CustomProgressBar.qml</file>
         <file>controls/LogoComponent.qml</file>
+        <file>controls/MaxPrivacyCoinsDialog.qml</file>
         <file>controls/AddressTable.qml</file>
         <file>controls/StatusBar.qml</file>
         <file>controls/Title.qml</file>
@@ -213,6 +214,10 @@
         <file>assets/icon-bch.svg</file>
         <file>assets/icon-dash.svg</file>
         <file>assets/icon-doge.svg</file>
+        <file>assets/icon-eth.svg</file>
+        <file>assets/icon-dai.svg</file>
+        <file>assets/icon-usdt.svg</file>
+        <file>assets/icon-wbtc.svg</file>
         <file>assets/icon-print.svg</file>
         <file>assets/icon-recovery.svg</file>
         <file>assets/password.svg</file>
@@ -267,5 +272,9 @@
         <file>assets/icon-sent-max-offline.svg</file>
         <file>assets/icon-sending-max-offline.svg</file>
         <file>controls/AddressQRDialog.qml</file>
+        <file>controls/SeedPhraseDialog.qml</file>
+        <file>controls/SwapEthSettings.qml</file>
+        <file>controls/ShowAddressesDialog.qml</file>
+        <file>controls/LoadingSpinner.qml</file>
     </qresource>
 </RCC>

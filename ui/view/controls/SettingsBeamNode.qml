@@ -17,7 +17,9 @@ SettingsFoldable {
        qsTrId("settings-remote-node-title")
 
     content: ColumnLayout {
+        spacing:    0
         RowLayout {
+            Layout.fillWidth: true
             SFText {
                 //: settings tab, node section, run node label
                 //% "Integrated node"
@@ -54,10 +56,10 @@ SettingsFoldable {
         //
         GridLayout {
             Layout.fillWidth: true
-            Layout.topMargin: 20
+            Layout.topMargin: 30
             visible: !viewModel.localNodeRun
             columnSpacing: 20
-            rowSpacing: 15
+            rowSpacing: 30
             columns: 2
 
             SFText {
@@ -150,6 +152,18 @@ SettingsFoldable {
                     }
                 }
             }
+        }
+        SFText {
+            Layout.fillWidth:   true
+            Layout.topMargin:   20
+            color:              Style.content_main
+            opacity:            0.5
+            font.pixelSize:     14
+            horizontalAlignment:Text.AlignHCenter
+            wrapMode:           Text.Wrap
+            //% "To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key."
+            text:               qsTrId("remote-node-lelantus-warning")
+            visible:            !viewModel.localNodeRun && !statusbarModel.isConnectionTrusted
         }
 
         //
@@ -317,7 +331,7 @@ SettingsFoldable {
         RowLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
-            Layout.topMargin: 25
+            Layout.topMargin: 20
 
             CustomButton {
                 leftPadding:  25

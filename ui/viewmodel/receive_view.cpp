@@ -299,3 +299,10 @@ void ReceiveViewModel::generateOfflineAddress()
         });
     });
 }
+
+QString ReceiveViewModel::getMPTimeLimit() const
+{
+    const auto& settings = AppModel::getInstance().getSettings();
+    auto mpLockTimeLimit = settings.getMaxPrivacyLockTimeLimitHours();
+    return QString::number(mpLockTimeLimit);
+}

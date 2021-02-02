@@ -14,6 +14,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include <QObject>
 
 class Connections {

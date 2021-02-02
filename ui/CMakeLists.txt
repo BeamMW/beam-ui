@@ -113,8 +113,11 @@ set(UI_SRC
     viewmodel/wallet/tx_object_list.cpp
     viewmodel/wallet/wallet_view.cpp
     viewmodel/wallet/tx_table.cpp
+    viewmodel/atomic_swap/swap_eth_settings_item.cpp
+    viewmodel/atomic_swap/seed_phrase_item.cpp
     viewmodel/atomic_swap/swap_offer_item.cpp
     viewmodel/atomic_swap/swap_offers_list.cpp
+    viewmodel/atomic_swap/swap_settings_item.cpp
     viewmodel/atomic_swap/swap_tx_object.cpp
     viewmodel/atomic_swap/swap_tx_object_list.cpp
     viewmodel/atomic_swap/swap_offers_view.cpp
@@ -159,6 +162,7 @@ set(UI_SRC
     viewmodel/receive_view.cpp
     viewmodel/send_view.h
     viewmodel/send_view.cpp
+    viewmodel/settings_helpers.cpp
     viewmodel/payment_item.h
     viewmodel/payment_item.cpp
     viewmodel/qml_globals.h
@@ -193,6 +197,8 @@ set(UI_SRC
     model/translator.h
     model/swap_coin_client_model.cpp
     model/swap_coin_client_model.h
+    model/swap_eth_client_model.cpp
+    model/swap_eth_client_model.h
 )
 
 beam_translations_update_ts("${SUPPORTED_LANGS}" TS_FILES)
@@ -385,6 +391,7 @@ if(BEAM_USE_STATIC)
         )
 
         target_link_libraries(${TARGET_NAME}
+            ${CMAKE_PREFIX_PATH}/qml/QtQml/libqmlplugin.a
             ${CMAKE_PREFIX_PATH}/qml/QtQuick.2/libqtquick2plugin.a
             ${CMAKE_PREFIX_PATH}/qml/QtQuick/Window.2/libwindowplugin.a
             ${CMAKE_PREFIX_PATH}/qml/QtQuick/Controls/libqtquickcontrolsplugin.a
@@ -399,17 +406,17 @@ if(BEAM_USE_STATIC)
         )
 
         foreach(lib
-            Qt5Core Qt5XcbQpa clip2tri Qt5Gui Qt5Nfc Qt5Quick Qt5Sensors clipper
-            Qt5PacketProtocol Qt5QuickControls2 Qt5SerialBus Qt5WebChannel qtharfbuzz
-            poly2tri Qt5InputSupport Qt5Positioning Qt5QuickTemplates2
+            Qt5Core Qt5XcbQpa qt_clip2tri Qt5Gui Qt5Nfc Qt5Quick Qt5Sensors qt_clipper
+            Qt5PacketProtocol Qt5QuickControls2 Qt5SerialBus Qt5WebChannel
+            qt_poly2tri Qt5InputSupport Qt5Positioning Qt5QuickTemplates2
             Qt5SerialPort Qt5WebSockets qtlibpng Qt5AccessibilitySupport Qt5DeviceDiscoverySupport
-            Qt5KmsSupport Qt5PositioningQuick Qt5QuickTest Qt5ServiceSupport
+            Qt5PositioningQuick Qt5QuickTest Qt5ServiceSupport
             Qt5Bluetooth Qt5EdidSupport Qt5PrintSupport Qt5QuickWidgets
             Qt5Sql Qt5Widgets qtpcre2 Qt5Bootstrap Qt5EventDispatcherSupport
             Qt5Purchasing Qt5RemoteObjects Qt5Svg Qt5X11Extras
             Qt5FbSupport Qt5Qml Qt5Test
             Qt5Concurrent Qt5FontDatabaseSupport Qt5Network Qt5QmlDebug
-            Qt5Xml xcb-static Qt5Gamepad Qt5NetworkAuth Qt5QmlDevTools
+            Qt5Xml Qt5Gamepad Qt5NetworkAuth Qt5QmlDevTools Qt5QmlWorkerScript
             Qt5Scxml Qt5ThemeSupport Qt5XmlPatterns Qt5DBus Qt5GlxSupport
         )
             target_link_libraries(${TARGET_NAME} ${CMAKE_PREFIX_PATH}/lib/lib${lib}.a)

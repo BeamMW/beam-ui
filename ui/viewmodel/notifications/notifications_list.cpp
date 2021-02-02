@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "notifications_list.h"
+#include <QLocale>
 
 NotificationsList::NotificationsList()
 {
@@ -46,9 +47,9 @@ QVariant NotificationsList::data(const QModelIndex &index, int role) const
     switch (static_cast<Roles>(role))
     {
         case Roles::TimeCreated:
-            return value->timeCreated().time().toString(Qt::SystemLocaleShortDate);
+            return value->timeCreated().time().toString(QLocale::system().timeFormat(QLocale::ShortFormat));
         case Roles::DateCreated:
-            return value->timeCreated().date().toString(Qt::SystemLocaleShortDate);
+            return value->timeCreated().date().toString(QLocale::system().dateFormat(QLocale::ShortFormat));
         case Roles::TimeCreatedSort:
         {
             auto t = value->getTimestamp();

@@ -28,14 +28,14 @@ UtxoViewModel::UtxoViewModel()
     connect(&m_model, SIGNAL(shieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>&)),
         SLOT(onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>&)));
     connect(&m_model, SIGNAL(stateIDChanged()), SIGNAL(stateChanged()));
+    connect(&m_model, SIGNAL(shieldedTotalCountChanged()), SLOT(onTotalShieldedCountChanged()));
 
     m_model.getAsync()->getUtxosStatus();
 }
 
-
 QAbstractItemModel* UtxoViewModel::getAllUtxos()
 {
-    return & m_allUtxos;
+    return &m_allUtxos;
 }
 
 QString UtxoViewModel::getCurrentHeight() const
@@ -48,8 +48,24 @@ QString UtxoViewModel::getCurrentStateHash() const
     return QString(beam::to_hex(m_model.getCurrentStateID().m_Hash.m_pData, 10).c_str());
 }
 
+bool UtxoViewModel::getMaturingMaxPrivacy() const
+{
+    return m_maturingMaxPrivacy;
+}
+
+void UtxoViewModel::setMaturingMaxPrivacy(bool value)
+{
+    if (m_maturingMaxPrivacy != value)
+    {
+        m_maturingMaxPrivacy = value;
+        emit maturingMaxPrivacyChanged();
+    }
+}
+
 void UtxoViewModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
+    if (getMaturingMaxPrivacy())
+        return;
     vector<shared_ptr<BaseUtxoItem>> modifiedItems;
     modifiedItems.reserve(utxos.size());
 
@@ -102,7 +118,13 @@ void UtxoViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, con
 
     for (const auto& t : items)
     {
-        if (t.IsAsset()) {
+        if (t.IsAsset())
+        {
+            continue;
+        }
+
+        if (getMaturingMaxPrivacy() && t.m_Status != beam::wallet::ShieldedCoin::Status::Maturing)
+        {
             continue;
         }
         modifiedItems.push_back(make_shared<ShieldedCoinItem>(t));
@@ -152,4 +174,7 @@ void UtxoViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, con
     emit allUtxoChanged();
 }
 
-
+void UtxoViewModel::onTotalShieldedCountChanged()
+{
+    m_model.getAsync()->getUtxosStatus();
+}

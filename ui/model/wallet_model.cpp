@@ -25,6 +25,7 @@ using namespace beam::wallet;
 using namespace beam::io;
 using namespace std;
 
+
 WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor)
     : WalletClient(walletDB, nodeAddr, reactor)
 {
@@ -431,6 +432,12 @@ void WalletModel::setStatus(const beam::wallet::WalletStatus& status)
     {
         m_status.all[Asset::s_BeamID].maturingMP = status.GetBeamStatus().maturingMP;
         emit maturingChanged();
+    }
+
+    if (m_status.shieldedTotalCount != status.shieldedTotalCount)
+    {
+        m_status.shieldedTotalCount = status.shieldedTotalCount;
+        emit shieldedTotalCountChanged();
     }
 
     if (m_status.stateID != status.stateID)

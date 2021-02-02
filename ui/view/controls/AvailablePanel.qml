@@ -8,6 +8,7 @@ import "../utils.js" as Utils
 
 Control {
     id: control
+    z:  10
 
     property string available
     property string locked
@@ -49,9 +50,9 @@ Control {
 
     Control {
         id:            lockedTip
-        visible:       lockedArea.containsMouse && parseFloat(locked) > 0
+        visible:       (lockedArea.containsMouse || lockedTipArea.containsMouse || maturingMoreDetailsArea.containsMouse) && parseFloat(locked) > 0
         x:             lockedAmount.x + lockedAmount.parent.x + lockedAmount.parent.parent.x + lockedAmount.width / 2 - lockedTip.width / 2
-        y:             lockedAmount.y + lockedAmount.parent.y + lockedAmount.height + 15
+        y:             lockedAmount.y + lockedAmount.parent.y + lockedAmount.height + 7
 
         leftPadding:   14
         rightPadding:  14
@@ -62,6 +63,11 @@ Control {
             anchors.fill: parent
             color:  Qt.rgba(255, 255, 255, 0.15)
             radius: 10
+            MouseArea {
+                id: lockedTipArea
+                anchors.fill: parent
+                hoverEnabled: true
+            }
         }
 
         contentItem:  GridLayout {
@@ -114,6 +120,27 @@ Control {
                 lightFont:         false
                 fontSize:          12
                 visible:           maxPrivacyLabel.visible
+            }
+
+            SFText {
+                id:             maturingMoreDetailsLabel
+                font.pixelSize: 14
+                font.styleName: "Light"
+                font.weight:    Font.Light
+                color:          Style.active
+                //% "More details"
+                text:             qsTrId("available-panel-maturing-details")
+                Layout.alignment: Qt.AlignTop
+                visible:           maxPrivacyLabel.visible
+                MouseArea {
+                    id: maturingMoreDetailsArea
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        mpDialog.open()
+                    }
+                }
             }
         }
     }

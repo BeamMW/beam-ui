@@ -26,21 +26,25 @@ class MessagesViewModel : public QObject
 public:
 
     Q_INVOKABLE void deleteMessage(int index);
+    Q_INVOKABLE bool enableCloseMessage(int index);
+    Q_INVOKABLE bool enableSaveReport(int index);
+    Q_INVOKABLE void saveLogs();
 
 public:
 
     MessagesViewModel();
 
-    void AddMessage(const QString& value);
+    void AddMessage(const QString& value, bool saveReport, bool closeMessage);
 
     QStringList getMessages() const;
 public slots:
 
-    void onNewMessage(const QString& message);
+    void onNewMessage(const QString& message, bool saveReport, bool closeMessage);
 signals:
 
     void messagesChanged();
 
 private:
     QStringList m_messages;
+    QList<std::pair<bool, bool>> m_messageSettings;
 };
