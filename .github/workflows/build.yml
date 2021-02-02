@@ -117,7 +117,7 @@ jobs:
         echo "BEAM_TARGET_SUFFIX=-testnet" >> $GITHUB_ENV
         echo "BEAM_DISPLAY_SUFFIX=Testnet" >> $GITHUB_ENV
         echo "BEAM_DISPLAY_SUFFIX2=-Testnet" >> $GITHUB_ENV
-        echo "BEAM_DISPLAY_SUFFIX3= Testrnet" >> $GITHUB_ENV
+        echo "BEAM_DISPLAY_SUFFIX3= Testnet" >> $GITHUB_ENV
         rm beam_version.gen
 
 ###############################################################################
