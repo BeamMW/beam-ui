@@ -95,20 +95,20 @@ jobs:
       if: matrix.os == 'macos-10.15'
       run: |
         export PATH=${{runner.workspace}}/qt5-static/bin:$PATH
-        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_HW_WALLET=Off .
+        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_HW_WALLET=Off .
 
     - name: Configure CMake [ununtu all]
       if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
         export PATH=${{runner.workspace}}/qt5-static/bin:$PATH
-        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_HW_WALLET=Off .
+        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
 
     - name: Configure CMake [windows]
       shell: bash
       if: matrix.os == 'windows-2019'
       run: |
         export PATH=/c/beam-libs/qt5-static-win/bin:$PATH
-        cmake -G "Visual Studio 16 2019" -A x64 -DBOOST_ROOT=$BOOST_ROOT_1_72_0 -DCMAKE_BUILD_TYPE=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=$GITHUB_REF -DBEAM_HW_WALLET=Off .
+        cmake -G "Visual Studio 16 2019" -A x64 -DBOOST_ROOT=$BOOST_ROOT_1_72_0 -DCMAKE_BUILD_TYPE=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
 
     - name: Save version info
       shell: bash
@@ -190,7 +190,7 @@ jobs:
 
     - name: OS name [ununtu all]
       shell: bash
-      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: echo "OS_NAME=${{matrix.os}}" >> $GITHUB_ENV
 
     - uses: actions/upload-artifact@v2
