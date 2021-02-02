@@ -38,7 +38,9 @@ namespace
 
     QString getSwapAmount(const TxParameters& p)
     {
-        return beamui::AmountToUIString(*p.GetParameter<Amount>(TxParameterID::AtomicSwapAmount));
+        auto amount = *p.GetParameter<Amount>(TxParameterID::AtomicSwapAmount);
+        auto swapCoin = *p.GetParameter<AtomicSwapCoin>(TxParameterID::AtomicSwapCoin);
+        return beamui::AmountToUIString(amount, beamui::convertSwapCoinToCurrency(swapCoin));
     }
 
     bool isBeamSide(const TxParameters& p)
