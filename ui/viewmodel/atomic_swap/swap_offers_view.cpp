@@ -464,7 +464,7 @@ bool SwapOffersViewModel::isOfferFitBalance(const SwapOfferItem& offer)
     bool isSendBeam = offer.isSendBeam();
     auto beamOfferAmount = isSendBeam ? offer.rawAmountSend() : offer.rawAmountReceive();
 
-    if (beamOfferAmount > m_walletModel.getAvailable())
+    if (isSendBeam && beamOfferAmount > m_walletModel.getAvailable())
         return false;
     
     auto swapCoinOfferAmount = isSendBeam ? offer.rawAmountReceive() : offer.rawAmountSend();

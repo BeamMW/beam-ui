@@ -253,6 +253,10 @@ if (APPLE)
         message(FATAL_ERROR "Carbon framework not found")
     endif()
 endif()
+if(BEAM_USE_STATIC AND LINUX)
+    set(CMAKE_C_FLAGS "-no-pie ${CMAKE_C_FLAGS}")
+    set(CMAKE_CXX_FLAGS "-no-pie ${CMAKE_CXX_FLAGS}")
+endif()
 add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc ${MACOSX_BUNDLE_ICON_FILE})
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${OUTPUT_NAME})
 
@@ -261,7 +265,7 @@ if(BEAM_HW_WALLET)
 endif()
 
 configure_file("${PROJECT_SOURCE_DIR}/version.h.in" "${CMAKE_CURRENT_BINARY_DIR}/version.h")
-message("client cmake")
+
 add_definitions(-DBEAM_LIB_VERSION="${BEAM_VERSION}")
 add_definitions(-DBEAM_CLIENT_VERSION="${PROJECT_VERSION}")
 
@@ -297,7 +301,7 @@ target_link_libraries(${TARGET_NAME}
         Qt5::Qml
         Qt5::Quick 
         Qt5::Svg
-        Qt5::PrintSupport
+        # Qt5::PrintSupport
 )
 
 if (BEAM_SIGN_PACKAGE AND WIN32)
@@ -382,7 +386,6 @@ if(BEAM_USE_STATIC)
     endif()
 
     if(LINUX)
-
         target_link_libraries(${TARGET_NAME} -static-libstdc++ -static-libgcc)
 
         target_link_libraries(${TARGET_NAME}
@@ -402,29 +405,23 @@ if(BEAM_USE_STATIC)
             ${CMAKE_PREFIX_PATH}/qml/QtQuick/Templates.2/libqtquicktemplates2plugin.a
 
             ${CMAKE_PREFIX_PATH}/plugins/imageformats/libqsvg.a
-            ${CMAKE_PREFIX_PATH}/plugins/printsupport/libcupsprintersupport.a
+            # ${CMAKE_PREFIX_PATH}/plugins/printsupport/libcupsprintersupport.a
         )
 
         foreach(lib
-            Qt5Core Qt5XcbQpa qt_clip2tri Qt5Gui Qt5Nfc Qt5Quick Qt5Sensors qt_clipper
-            Qt5PacketProtocol Qt5QuickControls2 Qt5SerialBus Qt5WebChannel
-            qt_poly2tri Qt5InputSupport Qt5Positioning Qt5QuickTemplates2
-            Qt5SerialPort Qt5WebSockets qtlibpng Qt5AccessibilitySupport Qt5DeviceDiscoverySupport
-            Qt5PositioningQuick Qt5QuickTest Qt5ServiceSupport
-            Qt5Bluetooth Qt5EdidSupport Qt5PrintSupport Qt5QuickWidgets
-            Qt5Sql Qt5Widgets qtpcre2 Qt5Bootstrap Qt5EventDispatcherSupport
-            Qt5Purchasing Qt5RemoteObjects Qt5Svg Qt5X11Extras
-            Qt5FbSupport Qt5Qml Qt5Test
-            Qt5Concurrent Qt5FontDatabaseSupport Qt5Network Qt5QmlDebug
-            Qt5Xml Qt5Gamepad Qt5NetworkAuth Qt5QmlDevTools Qt5QmlWorkerScript
-            Qt5Scxml Qt5ThemeSupport Qt5XmlPatterns Qt5DBus Qt5GlxSupport
+            Qt5Core Qt5XcbQpa Qt5Gui Qt5Quick Qt5QuickControls2 Qt5InputSupport
+            Qt5QuickTemplates2 qtlibpng Qt5QuickWidgets Qt5Widgets qtpcre2
+            Qt5Bootstrap Qt5EventDispatcherSupport Qt5RemoteObjects Qt5Svg
+            Qt5X11Extras Qt5FbSupport Qt5Qml Qt5Test Qt5Concurrent
+            Qt5FontDatabaseSupport Qt5Network Qt5Xml Qt5QmlWorkerScript Qt5Scxml
+            Qt5ThemeSupport Qt5XmlPatterns Qt5GlxSupport
         )
             target_link_libraries(${TARGET_NAME} ${CMAKE_PREFIX_PATH}/lib/lib${lib}.a)
         endforeach()
 
-        target_link_libraries(${TARGET_NAME} -lX11-xcb -lX11 -lxcb -lGL -lfreetype -lfontconfig -lXi -lXext -lXfixes -lXrender -lglib-2.0 -lSM -lICE -lcups -lxcb-glx -lxcb-xinerama)
+        target_link_libraries(${TARGET_NAME} -lX11-xcb -lX11 -lxcb -lGL -lfreetype -lfontconfig -lXi -lXext -lXfixes -lXrender -lglib-2.0 -lSM -lICE)
 
-        foreach(lib icui18n icuuc icudata)
+        foreach(lib icui18n icuuc icudata xcb-xinerama xcb-xinput xcb-xkb xcb-xfixes xcb-glx xcb-sync xcb-shape xcb-render xcb-render-util xcb-randr xcb-keysyms xcb-shm xcb-icccm xcb-shm xcb-xkb jbig jpeg)
             target_link_libraries(${TARGET_NAME} /usr/lib/x86_64-linux-gnu/lib${lib}.a)
         endforeach()
 
@@ -435,7 +432,7 @@ if(BEAM_USE_STATIC)
 endif()
 
 if(LINUX)
-    install(TARGETS ${TARGET_NAME}	DESTINATION bin)
+    install(TARGETS ${TARGET_NAME} DESTINATION bin)
     install(FILES beam-wallet.cfg DESTINATION bin)
 
     SET(BEAM_DESKTOP_DIR     "/usr/share/applications/")
