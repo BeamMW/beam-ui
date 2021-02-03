@@ -76,7 +76,6 @@ ColumnLayout {
 
         settings {
             javascriptCanOpenWindows: false
-            pdfViewerEnabled: false
         }
 
         onLoadingChanged: {
