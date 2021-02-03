@@ -195,7 +195,6 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-${{env.OS_NAME}}
         path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}*
         if-no-files-found: error
 
