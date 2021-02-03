@@ -76,7 +76,9 @@ Q_IMPORT_PLUGIN(QCocoaPrinterSupportPlugin)
 Q_IMPORT_PLUGIN(QtQmlPlugin)
 Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
 Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)
+#if defined(QT_PRINTSUPPORT_LIB)
 Q_IMPORT_PLUGIN(QCupsPrinterSupportPlugin)
+#endif
 #endif
 
 Q_IMPORT_PLUGIN(QtQuick2Plugin)

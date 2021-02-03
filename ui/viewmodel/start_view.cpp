@@ -643,6 +643,7 @@ void StartViewModel::copyPhrasesToClipboard()
     QApplication::clipboard()->setText(phrases);
 }
 
+#if defined(QT_PRINTSUPPORT_LIB)
 void StartViewModel::printRecoveryPhrases(QVariant viewData )
 {
     try
@@ -702,6 +703,7 @@ void StartViewModel::printRecoveryPhrases(QVariant viewData )
         AppModel::getInstance().getMessages().addMessage(qtTrId("start-view-printer-error"));
     }
 }
+#endif
 
 void StartViewModel::resetPhrases()
 {

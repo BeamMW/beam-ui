@@ -181,7 +181,9 @@ public:
     Q_INVOKABLE void setupRandomNode();
     Q_INVOKABLE uint coreAmount() const;
     Q_INVOKABLE void copyPhrasesToClipboard();
+    #if defined(QT_PRINTSUPPORT_LIB)
     Q_INVOKABLE void printRecoveryPhrases(QVariant viewData);
+    #endif
     Q_INVOKABLE void resetPhrases();
     Q_INVOKABLE bool getIsRunLocalNode() const;
     Q_INVOKABLE QString chooseRandomNode() const;
