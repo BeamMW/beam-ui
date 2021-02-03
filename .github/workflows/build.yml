@@ -205,13 +205,3 @@ jobs:
         name: beam-pdb${{env.BEAM_TARGET_SUFFIX}}-${{env.BEAM_VERSION}}
         path: ui/${{env.BUILD_CONFIG}}/Beam Wallet${{env.BEAM_DISPLAY_SUFFIX3}}.pdb
         if-no-files-found: error
-
-    - uses: MCJack123/ghaction-generate-release-hashes@v1
-      with:
-        hash-type: sha256
-        file-name: hashes.txt
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: Checksum
-        path: hashes.txt
