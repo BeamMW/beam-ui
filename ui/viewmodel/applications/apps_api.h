@@ -14,7 +14,7 @@
 #pragma once
 
 #include "wallet/core/common.h"
-#include "wallet/api/api_handler.h"
+#include "wallet/api/wallet_api.h"
 
 struct InvokeContract
 {
@@ -33,12 +33,11 @@ struct InvokeContract
 
 class AppsApi
     : public beam::wallet::WalletApi
-    , public beam::wallet::WalletApiHandler
 {
 public:
-    AppsApi(IWalletData& walletData);
+    AppsApi(beam::wallet::IWalletDB::Ptr wdb, beam::wallet::Wallet::Ptr wallet, beam::wallet::ISwapsProvider::Ptr swaps);
     AppsApi(const AppsApi&) = delete;
-    ~AppsApi();
+    ~AppsApi() = default;
 
     #define RESPONSE_FUNC(api, name, _) \
     void getAppsApiResponse(const beam::wallet::JsonRpcId& id, const api::Response& data, nlohmann::json& msg);

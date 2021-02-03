@@ -13,9 +13,8 @@
 // limitations under the License.
 #include "apps_api.h"
 
-AppsApi::AppsApi(IWalletData& walletData)
-    : WalletApi(*this, boost::none)
-    , WalletApiHandler(walletData, boost::none)
+AppsApi::AppsApi(beam::wallet::IWalletDB::Ptr wdb, beam::wallet::Wallet::Ptr wallet, beam::wallet::ISwapsProvider::Ptr swaps)
+    : WalletApi(std::move(wdb), std::move(wallet), std::move(swaps), boost::none)
 {
     using namespace beam;
 
@@ -23,10 +22,6 @@ AppsApi::AppsApi(IWalletData& walletData)
         _methods[name] = {BIND_THIS_MEMFN(on##api##Message), writeAccess};
     APPS_API_METHODS(REG_FUNC)
     #undef REG_FUNC
-}
-
-AppsApi::~AppsApi()
-{
 }
 
 void AppsApi::onInvokeContractMessage(const beam::wallet::JsonRpcId& id, const nlohmann::json& params)
@@ -37,22 +32,13 @@ void AppsApi::onInvokeContractMessage(const beam::wallet::JsonRpcId& id, const n
     const char* ARGS = "args";
     InvokeContract message;
 
-    if(existsJsonParam(params, CONTRACT))
+    if(const auto contract = getOptionalParam<JsonArray>(params, CONTRACT))
     {
-        if (!params[CONTRACT].is_array())
-        {
-            throw jsonrpc_exception{ApiError::InvalidJsonRpc, "contract must be a byte array", id};
-
-        }
         message.contract = params[CONTRACT].get<std::vector<uint8_t>>();
     }
 
-    if(existsJsonParam(params, ARGS))
+    if (const auto args = getOptionalParam<NonEmptyString>(params, ARGS))
     {
-        if (!params[ARGS].is_string())
-        {
-            throw jsonrpc_exception{ApiError::InvalidJsonRpc, "args must be a string", id};
-        }
         message.args = params[ARGS].get<std::string>();
     }
 
@@ -63,8 +49,8 @@ void AppsApi::getAppsApiResponse(const beam::wallet::JsonRpcId& id, const Invoke
 {
     msg = nlohmann::json
     {
-        {JsonRpcHrd, JsonRpcVerHrd},
-        {"id",       id},
+        {JsonRpcHeader, JsonRpcVersion},
+        {"id", id},
         {"result",
             {
                 {"output", res.output},

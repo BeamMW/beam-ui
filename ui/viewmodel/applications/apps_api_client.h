@@ -12,16 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #pragma once
-
 #include "apps_api.h"
-
-#ifdef BEAM_ATOMIC_SWAP_SUPPORT
-#include "wallet/api/i_atomic_swap_provider.h"
-#endif
 
 class AppsApiClient
     : public AppsApi // We provide wallet service API
-    , private beam::wallet::WalletApiHandler::IWalletData  // We provide wallet data
 {
 public:
     struct IHandler
@@ -29,8 +23,8 @@ public:
         virtual void onInvokeContract(const beam::wallet::JsonRpcId& id, const InvokeContract& data) = 0;
     };
 
-    AppsApiClient(IHandler& handler);
-    ~AppsApiClient();
+    explicit AppsApiClient(IHandler& handler);
+    ~AppsApiClient() = default;
 
     //
     // Apps Api
@@ -41,24 +35,14 @@ public:
     }
 
     //
-    // WalletApiHandler::IWalletData methods
+    // Methods below must be called in the main (non-UI) reactor thread
     //
-    beam::wallet::IWalletDB::Ptr getWalletDBPtr() override;
-    beam::wallet::Wallet::Ptr getWalletPtr() override;
-
-    #ifdef BEAM_ATOMIC_SWAP_SUPPORT
-    const beam::wallet::IAtomicSwapProvider& getAtomicSwapProvider() const override
-    {
-        // TODO: return real provider
-        throw std::runtime_error("not supported");
-    }
-    #endif  // BEAM_ATOMIC_SWAP_SUPPORT
+    std::string executeAPIRequest(const std::string&);
 
     //
-    // Methods below are called in reactor thread
+    // WalletApi required overrides. Called in the main (non-UI) reactor thread
     //
-    std::string pluginApiRequest(const std::string&);
-    void serializeMsg(const nlohmann::json& msg) override;
+    void sendMessage(const nlohmann::json& msg) override;
 
 private:
     // this should be used ONLY in reactor thread

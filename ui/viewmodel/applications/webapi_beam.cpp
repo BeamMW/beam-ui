@@ -44,7 +44,7 @@ namespace beamui::applications {
             [wp, request]() -> boost::any {
                 if(auto sp = wp.lock())
                 {
-                    return sp->pluginApiRequest(request.toStdString());
+                    return sp->executeAPIRequest(request.toStdString());
                 }
                 // this means that api is disconnected and destroyed already
                 // well, okay, nothing to do then
@@ -64,11 +64,13 @@ namespace beamui::applications {
                     }
                     catch (const boost::bad_any_cast &)
                     {
+                        // THIS SHOULD NEVER HAPPEN AND MEANS THAT THERE IS A CODING
+                        // MISTAKE IN the executeAPIRequest method
                         assert(false);
                     }
                 }
                 // this means that api is disconnected and destroyed already
-                // this is not safe to use "this" here and actually nothing to do
+                // it is not safe to use "this" here and actually nothing to do
             }
         );
     }
@@ -88,16 +90,12 @@ namespace beamui::applications {
                     result.output = shaderResult;
                     result.txid = TxIDToString(txid);
                     sp->getAppsApiResponse(msgid, result, jsonRes);
+                    sp->sendMessage(jsonRes);
                 }
                 else
                 {
-                    sp->getError(msgid, ApiError::InternalErrorJsonRpc, shaderError, jsonRes);
+                    sp->sendError(msgid, ApiError::InternalErrorJsonRpc, shaderError);
                 }
-
-                auto jstr = jsonRes.dump();
-                emit callWalletApiResult(QString::fromStdString(jstr));
-
-                return;
             }
             // this means that api is disconnected and destroyed already
             // this is not safe to use "this" here and actually nothing to do

@@ -16,35 +16,19 @@
 #include "model/app_model.h"
 
 AppsApiClient::AppsApiClient(IHandler& handler)
-    : AppsApi(static_cast<WalletApiHandler::IWalletData&>(*this))
+    : AppsApi(AppModel::getInstance().getWalletDB(),  AppModel::getInstance().getWalletModel()->getWallet(), nullptr)
     , _handler(handler)
 {
 }
 
-AppsApiClient::~AppsApiClient()
+std::string AppsApiClient::executeAPIRequest(const std::string& data)
 {
+    AppsApi::parseJSON(data.c_str(), data.size());
+    return std::move(_lastResult);
 }
 
-std::string AppsApiClient::pluginApiRequest(const std::string& data)
-{
-    AppsApi::parse(data.c_str(), data.size());
-   // assert(!_lastResult.empty());
-    auto result = std::move(_lastResult);
-    return result;
-}
-
-void AppsApiClient::serializeMsg(const nlohmann::json& msg)
+void AppsApiClient::sendMessage(const nlohmann::json& msg)
 {
     assert(_lastResult.empty());
     _lastResult = msg.dump();
-}
-
-beam::wallet::IWalletDB::Ptr AppsApiClient::getWalletDBPtr()
-{
-    return AppModel::getInstance().getWalletDB();
-}
-
-beam::wallet::Wallet::Ptr AppsApiClient::getWalletPtr()
-{
-    return AppModel::getInstance().getWalletModel()->getWallet();
 }
