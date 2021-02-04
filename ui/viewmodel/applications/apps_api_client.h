@@ -12,40 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #pragma once
-#include "apps_api.h"
 
-class AppsApiClient
-    : public AppsApi // We provide wallet service API
-{
-public:
-    struct IHandler
+#include "wallet/api/wallet_api.h"
+
+namespace beamui {
+    using namespace beam::wallet;
+
+    class AppsApiClient
+            : public beam::wallet::WalletApi
     {
-        virtual void onInvokeContract(const beam::wallet::JsonRpcId& id, const InvokeContract& data) = 0;
+    public:
+        struct IHandler {
+            // Called in the main (reactor, non-UI thread)
+            virtual void onAPIResult(const std::string&) = 0;
+        };
+
+        explicit AppsApiClient(IHandler&);
+        ~AppsApiClient() = default;
+
+        //
+        // Methods below must be called in the main (non-UI) reactor thread
+        //
+        void executeAPIRequest(const std::string &);
+
+        //
+        // Called in the main (non-UI) reactor thread
+        //
+        void sendMessage(const nlohmann::json &msg) override;
+
+   private:
+        IHandler& _handler;
     };
-
-    explicit AppsApiClient(IHandler& handler);
-    ~AppsApiClient() = default;
-
-    //
-    // Apps Api
-    //
-    void onAppsApiMessage(const beam::wallet::JsonRpcId& id, const InvokeContract& data) override
-    {
-        _handler.onInvokeContract(id, data);
-    }
-
-    //
-    // Methods below must be called in the main (non-UI) reactor thread
-    //
-    std::string executeAPIRequest(const std::string&);
-
-    //
-    // WalletApi required overrides. Called in the main (non-UI) reactor thread
-    //
-    void sendMessage(const nlohmann::json& msg) override;
-
-private:
-    // this should be used ONLY in reactor thread
-    std::string _lastResult;
-    IHandler& _handler;
-};
+}

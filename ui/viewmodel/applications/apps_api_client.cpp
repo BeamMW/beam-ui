@@ -15,20 +15,26 @@
 #include "utility/logger.h"
 #include "model/app_model.h"
 
-AppsApiClient::AppsApiClient(IHandler& handler)
-    : AppsApi(AppModel::getInstance().getWalletDB(),  AppModel::getInstance().getWalletModel()->getWallet(), nullptr)
-    , _handler(handler)
-{
-}
+namespace beamui {
+    AppsApiClient::AppsApiClient(IHandler& handler)
+        : WalletApi(
+            AppModel::getInstance().getWalletDB(),
+            AppModel::getInstance().getWalletModel()->getWallet(),
+            nullptr,
+            AppModel::getInstance().getWalletModel()->getAppsShaders()
+        ),
+        _handler(handler)
+    {
+    }
 
-std::string AppsApiClient::executeAPIRequest(const std::string& data)
-{
-    AppsApi::parseJSON(data.c_str(), data.size());
-    return std::move(_lastResult);
-}
+    void AppsApiClient::executeAPIRequest(const std::string &data)
+    {
+        WalletApi::parseJSON(data.c_str(), data.size());
+    }
 
-void AppsApiClient::sendMessage(const nlohmann::json& msg)
-{
-    assert(_lastResult.empty());
-    _lastResult = msg.dump();
+    void AppsApiClient::sendMessage(const nlohmann::json &msg)
+    {
+        auto result = msg.dump();
+        _handler.onAPIResult(result);
+    }
 }

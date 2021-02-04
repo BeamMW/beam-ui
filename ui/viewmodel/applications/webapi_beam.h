@@ -19,8 +19,8 @@
 
 namespace beamui::applications {
     class WebAPI_Beam
-            : public QObject
-            , public AppsApiClient::IHandler
+        : public QObject
+        , public AppsApiClient::IHandler
     {
     Q_OBJECT
     public:
@@ -34,23 +34,20 @@ namespace beamui::applications {
        void callWalletApi(const QString& request);
 
     //
-    // Signals are received by web, should be fired in context of the UI thread
+    // Signals are received by web
     //
     signals:
         void callWalletApiResult(const QString& result);
 
     private:
         //
-        // AppsApiClient::IHandler
-        // This callback would be called in context of reactor thread
-        //
-        void onInvokeContract(const beam::wallet::JsonRpcId& id, const InvokeContract& data) override;
-
-        //
         // ApiClient should be called only in context of reactor thread
         //
         typedef std::shared_ptr<AppsApiClient> ApiClientPtr;
         typedef std::weak_ptr<AppsApiClient> WeakApiClientPtr;
-        ApiClientPtr   _apiClient;
+        ApiClientPtr _apiClient;
+
+        // This callback is called in the reactor thread
+        void onAPIResult(const std::string&) override;
     };
 }

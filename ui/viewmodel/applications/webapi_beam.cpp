@@ -34,7 +34,7 @@ namespace beamui::applications {
     WebAPI_Beam::WebAPI_Beam(QObject *parent)
         : QObject(parent)
     {
-        _apiClient = std::make_shared<AppsApiClient>(*static_cast<AppsApiClient::IHandler*>(this));
+        _apiClient = std::make_shared<AppsApiClient>(*this);
     }
 
     void WebAPI_Beam::callWalletApi(const QString& request)
@@ -44,62 +44,24 @@ namespace beamui::applications {
             [wp, request]() -> boost::any {
                 if(auto sp = wp.lock())
                 {
-                    return sp->executeAPIRequest(request.toStdString());
+                    sp->executeAPIRequest(request.toStdString());
+                    return boost::none;
                 }
                 // this means that api is disconnected and destroyed already
                 // well, okay, nothing to do then
                 return std::string();
             },
-            [this, wp] (boost::any res) {
-                if (auto sp = wp.lock())
-                {
-                    // it is safe to use "this" pointer here
-                    try
-                    {
-                        auto apiResult = boost::any_cast<std::string>(res);
-                        if (!apiResult.empty())
-                        {
-                            emit callWalletApiResult(QString::fromStdString(apiResult));
-                        }
-                    }
-                    catch (const boost::bad_any_cast &)
-                    {
-                        // THIS SHOULD NEVER HAPPEN AND MEANS THAT THERE IS A CODING
-                        // MISTAKE IN the executeAPIRequest method
-                        assert(false);
-                    }
-                }
-                // this means that api is disconnected and destroyed already
-                // it is not safe to use "this" here and actually nothing to do
+            [] (boost::any) {
             }
         );
     }
 
-    void WebAPI_Beam::onInvokeContract(const beam::wallet::JsonRpcId& id, const InvokeContract& data)
+    void WebAPI_Beam::onAPIResult(const std::string& result)
     {
-        WeakApiClientPtr wp = _apiClient;
-        getAsyncWallet().callShader(data.contract, data.args, [msgid = id, wp,  this] (const std::string& shaderError, const std::string& shaderResult, const TxID& txid)
+        if (!result.empty())
         {
-            if (auto sp = wp.lock())
-            {
-                nlohmann::json jsonRes;
-
-                if (shaderError.empty())
-                {
-                    InvokeContract::Response result;
-                    result.output = shaderResult;
-                    result.txid = TxIDToString(txid);
-                    sp->getAppsApiResponse(msgid, result, jsonRes);
-                    sp->sendMessage(jsonRes);
-                }
-                else
-                {
-                    sp->sendError(msgid, ApiError::InternalErrorJsonRpc, shaderError);
-                }
-            }
-            // this means that api is disconnected and destroyed already
-            // this is not safe to use "this" here and actually nothing to do
-        });
+            emit callWalletApiResult(QString::fromStdString(result));
+        }
     }
 
     int WebAPI_Beam::test()
