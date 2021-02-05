@@ -19,10 +19,10 @@
 
 #include "model/wallet_model.h"
 
-namespace beamui
+namespace beam::wallet
 {
     class Filter;
-}  // namespace beamui
+}  // namespace beam::wallet
 
 class LoadingViewModel : public QObject
 {
@@ -82,9 +82,9 @@ private:
     
     bool m_isDownloadStarted;
     double m_lastProgress;
-    std::unique_ptr<beamui::Filter> m_bpsWholeTimeFilter;
-    std::unique_ptr<beamui::Filter> m_bpsWindowedFilter;
-    std::unique_ptr<beamui::Filter> m_estimateFilter;
+    std::unique_ptr<beam::wallet::Filter> m_bpsWholeTimeFilter;
+    std::unique_ptr<beam::wallet::Filter> m_bpsWindowedFilter;
+    std::unique_ptr<beam::wallet::Filter> m_estimateFilter;
     
     beam::Timestamp m_startTimestamp;
     beam::Timestamp m_lastUpdateTimestamp;

@@ -69,7 +69,10 @@ QString SwapOfferItem::rate() const
 
     if (!beamAmount) return QString();
 
-    return QMLGlobals::divideWithPrecision8(beamui::AmountToUIString(otherCoinAmount), beamui::AmountToUIString(beamAmount));
+    return QMLGlobals::divideWithPrecision(
+        beamui::AmountToUIString(otherCoinAmount, getSwapCoinType(), false),
+        beamui::AmountToUIString(beamAmount), 
+        beamui::getCurrencyDecimals(getSwapCoinType()));
 }
 
 QString SwapOfferItem::amountSend() const

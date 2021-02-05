@@ -287,9 +287,10 @@
         <translation>入账</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>版本</translation>
+        <translation type="unfinished">版本</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -503,8 +504,9 @@
 请注意：如果您在其他设备上使用该钱包，您的余额将是最新的，但交易历史和地址将分别保存在每个设备上</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>您的钱包将被迁移到v</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">您的钱包将被迁移到v</translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>
@@ -636,8 +638,9 @@
         <translation>请输入远程节点的地址</translation>
     </message>
     <message id="appmodel-failed-start-node">
-        <source>Failed to start node. Please check your node configuration</source>
-        <translation>启动节点失败
+        <source>Failed to start node. Please save wallet logs and contact support.</source>
+        <oldsource>Failed to start node. Please check your node configuration</oldsource>
+        <translation type="unfinished">启动节点失败
 请检查节点配置</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
@@ -1105,10 +1108,6 @@ Allow to open and proceed to the website? You can always update your choice in S
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
         <translation>%1 交易费率</translation>
-    </message>
-    <message id="general-fee-fail">
-        <source>The minimum fee is %1 %2</source>
-        <translation>最小交易费为%1%2</translation>
     </message>
     <message id="general-change-settings">
         <source>Change settings</source>
@@ -1906,8 +1905,9 @@ deploy the key at the node you trust completely.</source>
         <translation>通知</translation>
     </message>
     <message id="settings-notifications-version">
-        <source>Wallet update</source>
-        <translation>钱包更新</translation>
+        <source>Wallet updates</source>
+        <oldsource>Wallet update</oldsource>
+        <translation type="unfinished">钱包更新</translation>
     </message>
     <message id="settings-notifications-tx-status">
         <source>Transaction status</source>
@@ -2257,10 +2257,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
         <translation>为使交易顺利完成，您需要在支付完Beam后12小时内上线同步钱包</translation>
     </message>
-    <message id="show-token">
-        <source>Show token</source>
-        <translation>显示令牌</translation>
-    </message>
     <message id="wallet-receive-copy-and-close">
         <source>Copy and close</source>
         <translation>复制并关闭</translation>
@@ -2276,10 +2272,6 @@ Your version is: %2. Please, check for updates.</source>
     <message id="token-info-token">
         <source>Token</source>
         <translation>令牌</translation>
-    </message>
-    <message id="token-info-copy-token">
-        <source>Copy token</source>
-        <translation>复制令牌</translation>
     </message>
     <message id="general-transaction-info">
         <source>Transaction info</source>
@@ -2404,10 +2396,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
         <translation type="unfinished">Connect to integrated or own node to enable receiving max privacy and offline transactions</translation>
     </message>
-    <message id="general-recommended-fee-fail">
-        <source>The minimum recommended fee is %1 %2</source>
-        <translation>建议的最低费用是 %1 %2</translation>
-    </message>
     <message id="tx-address-offline">
         <source>Offline</source>
         <translation>离线</translation>
@@ -2451,14 +2439,6 @@ offline</source>
         <source>Shielded</source>
         <extracomment>UTXO type Shielded</extracomment>
         <translation>盾</translation>
-    </message>
-    <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. 
-Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete.</source>
-        <translation>连接错误：无法计算推荐的费用率。 
-自行在 %1 区块链上检查。 低费率可能需要 
-更长时间才能完成交易。 </translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
@@ -2552,10 +2532,6 @@ Your version is: %2. Please, check for updates.</source>
     <message id="send-remaining-label">
         <source>Remaining</source>
         <translation>剩余</translation>
-    </message>
-    <message id="wallet-receive-swap-copy-token-and-close">
-        <source>copy token and close</source>
-        <translation>复制令牌并关闭</translation>
     </message>
     <message id="address-info-title">
         <source>Address details</source>
@@ -2883,6 +2859,57 @@ offline</source>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Max Privacy transaction can last indefinitely</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-ethereum">
+        <source>Ethereum</source>
+        <oldsource>ETHEREUM</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-ethereum-node">
+        <source>Ethereum node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ethereum-show-seed-title">
+        <source>Ethereum seed phrase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-account-index">
+        <source>Account index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-recommended-fee-fail">
+        <source>The minimum recommended fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-fee-fail">
+        <source>The minimum fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-max-fee-fail">
+        <source>The maximum fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-recommended-fee-rate-absent">
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-swap-copy-and-close">
+        <source>copy and close</source>
+        <translation type="unfinished">复制并关闭</translation>
+    </message>
+    <message id="ethereum-show-addresses-title">
+        <source>Ethereum wallet addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-infura-project-id">
+        <source>Infura project ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-offers-loading">
+        <source>Please wait, offers are loading.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

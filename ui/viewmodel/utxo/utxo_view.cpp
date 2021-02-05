@@ -30,7 +30,6 @@ UtxoViewModel::UtxoViewModel()
     connect(&m_model, SIGNAL(stateIDChanged()), SIGNAL(stateChanged()));
     connect(&m_model, SIGNAL(shieldedTotalCountChanged()), SLOT(onTotalShieldedCountChanged()));
 
-    m_totalShieldedCount = m_model.getTotalShieldedCount();
     m_model.getAsync()->getUtxosStatus();
 }
 
@@ -114,7 +113,6 @@ void UtxoViewModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const st
 
 void UtxoViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::ShieldedCoin>& items)
 {
-    m_totalShieldedCount = m_model.getTotalShieldedCount();
     vector<shared_ptr<BaseUtxoItem>> modifiedItems;
     modifiedItems.reserve(items.size());
 
@@ -129,7 +127,7 @@ void UtxoViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, con
         {
             continue;
         }
-        modifiedItems.push_back(make_shared<ShieldedCoinItem>(t, m_totalShieldedCount));
+        modifiedItems.push_back(make_shared<ShieldedCoinItem>(t));
     }
 
     switch (action)
@@ -178,6 +176,5 @@ void UtxoViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, con
 
 void UtxoViewModel::onTotalShieldedCountChanged()
 {
-    m_totalShieldedCount = m_model.getTotalShieldedCount();
     m_model.getAsync()->getUtxosStatus();
 }

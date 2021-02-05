@@ -20,6 +20,7 @@
 
 #include "model/wallet_model.h"
 #include "model/swap_coin_client_model.h"
+#include "model/swap_eth_client_model.h"
 #include "swap_offers_list.h"
 #include "swap_tx_object_list.h"
 #include "viewmodel/currencies.h"
@@ -53,7 +54,8 @@ public:
     Currency getCurrency() const;
 
     beam::wallet::AtomicSwapCoin getSwapCoin() const;
-    uint16_t getTxMinConfirmations() const;
+    uint16_t getLockTxMinConfirmations() const;
+    uint16_t getWithdrawTxMinConfirmations() const;
     double getBlocksPerHour() const;
     Amount getAvailable() const;
 
@@ -65,8 +67,10 @@ signals:
 private:
     beam::wallet::AtomicSwapCoin m_swapCoin;
     std::weak_ptr<SwapCoinClientModel> m_coinClient;
+    std::weak_ptr<SwapEthClientModel> m_ethClient;
     int m_activeTxCounter = 0;
-    uint16_t m_minTxConfirmations = 0;
+    uint16_t m_lockTxMinConfirmations = 0;
+    uint16_t m_withdrawTxMinConfirmations = 0;
     double m_blocksPerHour = 0;
 };
 
@@ -78,6 +82,7 @@ class SwapOffersViewModel : public QObject
     Q_PROPERTY(QAbstractItemModel*                       allOffersFitBalance READ getAllOffersFitBalance NOTIFY allOffersFitBalanceChanged)
     Q_PROPERTY(QString                                   beamAvailable       READ beamAvailable          NOTIFY beamAvailableChanged)
     Q_PROPERTY(bool                                      showBetaWarning     READ showBetaWarning)
+    Q_PROPERTY(bool                                      isOffersLoaded      READ isOffersLoaded         NOTIFY offersLoaded)
     Q_PROPERTY(int                                       activeTxCount       READ getActiveTxCount       NOTIFY allTransactionsChanged)
     Q_PROPERTY(QQmlListProperty<SwapCoinClientWrapper>   swapClientList      READ getSwapClients         CONSTANT)
 
@@ -90,6 +95,7 @@ public:
     QAbstractItemModel* getAllOffersFitBalance();
     QString beamAvailable() const;
     bool showBetaWarning() const;
+    bool isOffersLoaded() const;
     int getActiveTxCount() const;
     QQmlListProperty<SwapCoinClientWrapper> getSwapClients();
 
@@ -113,6 +119,7 @@ signals:
     void allOffersFitBalanceChanged();
     void beamAvailableChanged();
     void offerRemovedFromTable(QVariant variantTxID);
+    void offersLoaded();
 
 private:
     void monitorAllOffersFitBalance();
@@ -125,11 +132,13 @@ private:
     void InitSwapClientWrappers();
 
     SwapCoinClientWrapper* getSwapCoinClientWrapper(AtomicSwapCoin swapCoinType) const;
-    uint32_t getTxMinConfirmations(AtomicSwapCoin swapCoinType) const;
+    uint32_t getLockTxMinConfirmations(AtomicSwapCoin swapCoinType) const;
+    uint32_t getWithdrawTxMinConfirmations(AtomicSwapCoin swapCoinType) const;
     double getBlocksPerHour(AtomicSwapCoin swapCoinType) const;
     void incrementActiveTxCounter(AtomicSwapCoin swapCoinType);
     void decrementActiveTxCounter(AtomicSwapCoin swapCoinType);
     void resetActiveTxCounters();
+    void setIsOffersLoaded(bool isOffersLoaded);
 
     WalletModel& m_walletModel;
 
@@ -140,4 +149,5 @@ private:
 
     int m_activeTxCount = 0;
     std::map<beam::wallet::TxID, beam::wallet::AtomicSwapCoin> m_activeTx;
+    bool m_isOffersLoaded = false;
 };

@@ -15,6 +15,7 @@
 
 #include "wallet_model.h"
 #include "swap_coin_client_model.h"
+#include "swap_eth_client_model.h"
 #include "settings.h"
 #include "messages.h"
 #include "node_model.h"
@@ -66,6 +67,7 @@ public:
     MessageManager& getMessages();
     NodeModel& getNode();
     SwapCoinClientModel::Ptr getSwapCoinClient(beam::wallet::AtomicSwapCoin swapCoin) const;
+    SwapEthClientModel::Ptr getSwapEthClient() const;
 
 public slots:
     void onStartedNode();
@@ -83,6 +85,7 @@ private:
     void initSwapClients();
     template<typename CoreBridge, typename ElectrumBridge, typename SettingsProvider>
     void initSwapClient(beam::wallet::AtomicSwapCoin swapCoin);
+    void initEthClient();
     void resetSwapClients();
     void onWalledOpened(const beam::SecString& pass);
     void backupDB(const std::string& dbFilePath);
@@ -95,6 +98,8 @@ private:
     // SwapCoinClientModels must be destroyed after WalletModel
     std::map<beam::wallet::AtomicSwapCoin, SwapCoinClientModel::Ptr> m_swapClients;
     std::map<beam::wallet::AtomicSwapCoin, beam::bitcoin::IBridgeHolder::Ptr> m_swapBridgeHolders;
+    SwapEthClientModel::Ptr m_swapEthClient;
+    beam::ethereum::IBridgeHolder::Ptr m_swapEthBridgeHolder;
 
     WalletModel::Ptr m_wallet;
     NodeModel m_nodeModel;

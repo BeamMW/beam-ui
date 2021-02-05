@@ -75,7 +75,7 @@ class ShieldedCoinItem : public BaseUtxoItem
 public:
 
     ShieldedCoinItem();
-    ShieldedCoinItem(const beam::wallet::ShieldedCoin& coin, const beam::TxoID& shieldedCount);
+    ShieldedCoinItem(const beam::wallet::ShieldedCoin& coin);
     uint64_t getHash() const override;
 
     QString getAmountWithCurrency() const override;
@@ -92,5 +92,4 @@ public:
 private:
     WalletModel& _walletModel;
     beam::wallet::ShieldedCoin _coin;
-    beam::TxoID _shieldedCount = std::numeric_limits<beam::TxoID>::max();
 };

@@ -18,20 +18,41 @@
 MessagesViewModel::MessagesViewModel()
 {
     auto& model = AppModel::getInstance().getMessages();
-    connect(&model, SIGNAL(newMessage(const QString&)),
-        SLOT(onNewMessage(const QString&)));
+    connect(&model, SIGNAL(newMessage(const QString&, bool, bool)),
+        SLOT(onNewMessage(const QString&, bool, bool)));
 }
 
 void MessagesViewModel::deleteMessage(int index)
 {
     m_messages.removeAt(index);
+    m_messageSettings.removeAt(index);
     emit messagesChanged();
 }
 
-void MessagesViewModel::AddMessage(const QString& value)
+bool MessagesViewModel::enableCloseMessage(int index)
+{
+    if (index < m_messageSettings.size())
+        return m_messageSettings.at(index).second;
+    return true;
+}
+
+bool MessagesViewModel::enableSaveReport(int index)
+{
+    if (index < m_messageSettings.size())
+        return m_messageSettings.at(index).first;
+    return false;
+}
+
+void MessagesViewModel::saveLogs()
+{
+    AppModel::getInstance().getSettings().reportProblem();
+}
+
+void MessagesViewModel::AddMessage(const QString& value, bool saveReport, bool closeMessage)
 {
     if (m_messages.isEmpty() || !m_messages.contains(value)) {
         m_messages.push_back(value);
+        m_messageSettings.push_back(std::make_pair(saveReport, closeMessage));
         emit messagesChanged();
     }
 }
@@ -41,7 +62,7 @@ QStringList MessagesViewModel::getMessages() const
     return m_messages;
 }
 
-void MessagesViewModel::onNewMessage(const QString& message)
+void MessagesViewModel::onNewMessage(const QString& message, bool saveReport, bool closeMessage)
 {
-    AddMessage(message);
+    AddMessage(message, saveReport, closeMessage);
 }

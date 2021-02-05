@@ -286,9 +286,10 @@
         <translation>Příchozí</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>Verze</translation>
+        <translation type="unfinished">Verze</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -499,8 +500,9 @@
         <translation>Pokoušíte se obnovit již existující peněženku Beam. Vezměte prosím na vědomí, že pokud používáte peněženku na jiném zařízení, Váš zůstatek bude aktuální, ale historie transakcí a adresy budou uchovávány na každém zařízení zvlášť.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>Vaše peněženka bude migrována na v.</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">Vaše peněženka bude migrována na v </translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>
@@ -629,8 +631,9 @@
         <translation>Zadejte prosím adresu vzdáleného uzlu</translation>
     </message>
     <message id="appmodel-failed-start-node">
-        <source>Failed to start node. Please check your node configuration</source>
-        <translation>Nepodařilo se spustit přístupový bod Node. Zkontrolujte prosím konfiguraci přístupového bodu</translation>
+        <source>Failed to start node. Please save wallet logs and contact support.</source>
+        <oldsource>Failed to start node. Please check your node configuration</oldsource>
+        <translation type="unfinished">Nepodařilo se spustit přístupový bod Node. Zkontrolujte prosím konfiguraci přístupového bodu</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
         <source>Node protocol error!</source>
@@ -1092,10 +1095,6 @@ Povolit otevření a pokračovat na web? Vždy můžete aktualizovat svou volbu 
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
         <translation>Poplatek za transakci %1</translation>
-    </message>
-    <message id="general-fee-fail">
-        <source>The minimum fee is %1 %2</source>
-        <translation>Minimální poplatek je %1 %2</translation>
     </message>
     <message id="general-change-settings">
         <source>Change settings</source>
@@ -1891,8 +1890,9 @@ znát všechny Vaše prostředky (UTXO). Ujistěte se, že jste vystavili klíč
         <translation>Upozornění</translation>
     </message>
     <message id="settings-notifications-version">
-        <source>Wallet update</source>
-        <translation>Aktualizace peněženky</translation>
+        <source>Wallet updates</source>
+        <oldsource>Wallet update</oldsource>
+        <translation type="unfinished">Aktualizace peněženky</translation>
     </message>
     <message id="settings-notifications-tx-status">
         <source>Transaction status</source>
@@ -2239,10 +2239,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
         <translation>Pro dokončení transakce byste měli být online během 12 hodin po odeslání.</translation>
     </message>
-    <message id="show-token">
-        <source>Show token</source>
-        <translation>Zobrazit token</translation>
-    </message>
     <message id="wallet-receive-copy-and-close">
         <source>Copy and close</source>
         <translation>Kopírovat a zavřít</translation>
@@ -2258,10 +2254,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
     <message id="token-info-token">
         <source>Token</source>
         <translation>Token</translation>
-    </message>
-    <message id="token-info-copy-token">
-        <source>Copy token</source>
-        <translation>Kopírovat token</translation>
     </message>
     <message id="general-transaction-info">
         <source>Transaction info</source>
@@ -2386,10 +2378,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
         <translation>Připojte se k integrovanému nebo vlastnímu uzlu a povolte přijímání maximálně soukromých a offline transakcí</translation>
     </message>
-    <message id="general-recommended-fee-fail">
-        <source>The minimum recommended fee is %1 %2</source>
-        <translation>Minimální doporučený poplatek je %1 %2</translation>
-    </message>
     <message id="tx-address-offline">
         <source>Offline</source>
         <translation>V režimu offline</translation>
@@ -2434,14 +2422,6 @@ offline</translation>
         <source>Shielded</source>
         <extracomment>UTXO type Shielded</extracomment>
         <translation>Chráněné</translation>
-    </message>
-    <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. 
-Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete.</source>
-        <translation>Chyba připojení: nelze vypočítat doporučenou sazbu poplatku. 
-Zkontrolujte na %1 blockchainu sami. Nízké poplatky mohou způsobit 
-že bude trvat mnohem déle, než bude transakce dokončena.</translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
@@ -2535,10 +2515,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
     <message id="send-remaining-label">
         <source>Remaining</source>
         <translation>Zbývající</translation>
-    </message>
-    <message id="wallet-receive-swap-copy-token-and-close">
-        <source>copy token and close</source>
-        <translation>zkopírovat token a zavřít</translation>
     </message>
     <message id="address-info-title">
         <source>Address details</source>
@@ -2867,6 +2843,57 @@ offline</translation>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Max Privacy transaction can last indefinitely</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-ethereum">
+        <source>Ethereum</source>
+        <oldsource>ETHEREUM</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-ethereum-node">
+        <source>Ethereum node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ethereum-show-seed-title">
+        <source>Ethereum seed phrase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-account-index">
+        <source>Account index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-recommended-fee-fail">
+        <source>The minimum recommended fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-fee-fail">
+        <source>The minimum fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-max-fee-fail">
+        <source>The maximum fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-recommended-fee-rate-absent">
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-swap-copy-and-close">
+        <source>copy and close</source>
+        <translation type="unfinished">zkopírovat a zavřít</translation>
+    </message>
+    <message id="ethereum-show-addresses-title">
+        <source>Ethereum wallet addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-infura-project-id">
+        <source>Infura project ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-offers-loading">
+        <source>Please wait, offers are loading.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

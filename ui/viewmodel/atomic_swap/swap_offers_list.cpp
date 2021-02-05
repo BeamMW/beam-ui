@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "swap_offers_list.h"
+#include <QLocale>
 
 SwapOffersList::SwapOffersList()
 {
@@ -54,7 +55,7 @@ QVariant SwapOffersList::data(const QModelIndex &index, int role) const
     switch (static_cast<Roles>(role))
     {
         case Roles::TimeCreated:
-            return value->timeCreated().toString(Qt::SystemLocaleShortDate);
+            return value->timeCreated().toString(QLocale::system().dateTimeFormat(QLocale::ShortFormat));
         case Roles::TimeCreatedSort:
             return value->timeCreated();
 
@@ -75,7 +76,7 @@ QVariant SwapOffersList::data(const QModelIndex &index, int role) const
             return value->rate();
 
         case Roles::Expiration:
-            return value->timeExpiration().toString(Qt::SystemLocaleShortDate);
+            return value->timeExpiration().toString(QLocale::system().dateTimeFormat(QLocale::ShortFormat));
         case Roles::ExpirationSort:
             return value->timeExpiration();
 

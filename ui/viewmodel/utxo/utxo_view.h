@@ -46,6 +46,5 @@ signals:
 private:
     UtxoItemList m_allUtxos;
     WalletModel& m_model;
-    beam::TxoID m_totalShieldedCount = std::numeric_limits<beam::TxoID>::max();
     bool m_maturingMaxPrivacy = false;
 };

@@ -11,23 +11,23 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 #pragma once
 
-#include <vector>
+#include <QObject>
 
-namespace beamui
+namespace beam::io
 {
+    struct Address;
+}
 
-class Filter
+struct UnpackedAddress
 {
-public:
-    Filter(size_t size = 12);
-    void addSample(double value);
-    double getAverage() const;
-    double getMedian() const;
-private:
-    std::vector<double> _samples;
-    size_t _index;
-    bool _is_poor;
+    QString address;
+    QString port = 0;
 };
-}  // namespace beamui
+
+QString AddressToQstring(const beam::io::Address& address);
+QString formatAddress(const QString& address, const QString& port);
+QString formatPort(uint16_t port);
+UnpackedAddress parseAddress(const QString& address);

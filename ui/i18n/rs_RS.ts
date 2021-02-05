@@ -505,7 +505,7 @@
     </message>
     <message id="start-migration-message">
         <source>Your wallet will be migrated to v.</source>
-        <translation>Ваш новчаник ће бити мигриран на v.</translation>
+        <translation>Ваш новчаник ће бити мигриран на v </translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>
@@ -2829,6 +2829,55 @@ Your version is: %2. Please, check for updates.</oldsource>
     </message>
     <message id="tx-address-regular-wallet">
         <source>Regular (for wallet)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-ethereum">
+        <source>Ethereum</source>
+        <oldsource>ETHEREUM</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-ethereum-node">
+        <source>Ethereum node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ethereum-show-seed-title">
+        <source>Ethereum seed phrase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-account-index">
+        <source>Account index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-contract-address">
+        <source>Contract address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-dai-contract-address">
+        <source>DAI contract address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-usdt-contract-address">
+        <source>USDT contract address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-wbtc-contract-address">
+        <source>WBTC contract address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-erc20-contract-address">
+        <source>ERC20 contract address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-activate-dai">
+        <source>Activate DAI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-activate-usdt">
+        <source>Activate USDT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-activate-wbtc">
+        <source>Activate WBTC</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
