@@ -204,11 +204,11 @@ jobs:
         path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}*
         if-no-files-found: error
 
-    - uses: actions/upload-artifact@v2
-      with:
-        name: checksum-${{env.OS_NAME}}
-        path: checksum.txt
-        if-no-files-found: error
+    # - uses: actions/upload-artifact@v2
+    #   with:
+    #     name: checksum-${{env.OS_NAME}}
+    #     path: checksum.txt
+    #     if-no-files-found: error
 
     - uses: actions/upload-artifact@v2
       if: matrix.os == 'ubuntu-18.04'
@@ -219,12 +219,12 @@ jobs:
           checksum.txt
         if-no-files-found: error
 
-    - uses: actions/upload-artifact@v2
-      if: matrix.os == 'ubuntu-18.04'
-      with:
-        name: checksum-linux
-        path: checksum.txt
-        if-no-files-found: error
+    # - uses: actions/upload-artifact@v2
+    #   if: matrix.os == 'ubuntu-18.04'
+    #   with:
+    #     name: checksum-linux
+    #     path: checksum.txt
+    #     if-no-files-found: error
 
     - uses: actions/upload-artifact@v2
       if: matrix.os == 'windows-2019'
