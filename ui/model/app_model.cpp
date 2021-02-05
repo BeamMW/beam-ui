@@ -111,10 +111,15 @@ void AppModel::backupDB(const std::string& dbFilePath)
         // it seems that we are trying to restore or login to another wallet.
         // Rename/backup existing db
         std::string newName = dbFilePath + "_" + to_string(getTimestamp());
-       
-        if (fsutils::rename(dbFilePath, newName))
+
+        try
         {
+            fsutils::rename(dbFilePath, newName);
             m_walletDBBackupPath = std::move(newName);
+        }
+        catch(std::runtime_error& err)
+        {
+            LOG_ERROR() << "failed to backup DB, " << err.what();
         }
     }
 }
@@ -126,14 +131,18 @@ void AppModel::restoreDBFromBackup(const std::string& dbFilePath)
 
     if (!wasInitialized && !m_walletDBBackupPath.empty())
     {
-        // Restore existing db
-        bool isBackupExist = fsutils::isExist(m_walletDBBackupPath);
-        if (!isBackupExist)
+        if (fsutils::exists(m_walletDBBackupPath))
         {
-            return;
+            try
+            {
+                fsutils::rename(m_walletDBBackupPath, dbFilePath);
+                m_walletDBBackupPath = {};
+            }
+            catch(const std::runtime_error& err)
+            {
+                LOG_ERROR() << "failed to restore DB, " << err.what();
+            }
         }
-        fsutils::rename(m_walletDBBackupPath, dbFilePath);
-        m_walletDBBackupPath = {};
     }
 }
 
@@ -318,16 +327,22 @@ void AppModel::onResetWallet()
     assert(m_db);
     m_db.reset();
 
-    fsutils::remove(getSettings().getWalletStorage());
+    try
+    {
+        fsutils::remove(getSettings().getWalletStorage());
 
-#if defined(BEAM_HW_WALLET)
-    fsutils::remove(getSettings().getTrezorWalletStorage());
-#endif
+        #if defined(BEAM_HW_WALLET)
+        fsutils::remove(getSettings().getTrezorWalletStorage());
+        #endif
 
-    fsutils::remove(getSettings().getLocalNodeStorage());
+        fsutils::remove(getSettings().getLocalNodeStorage());
+    }
+    catch(std::runtime_error& err)
+    {
+        LOG_ERROR() << "Error while removing files in onResetWallet: " << err.what();
+    }
 
     restoreDBFromBackup(getSettings().getWalletStorage());
-
     emit walletResetCompleted();
 }
 
