@@ -114,10 +114,10 @@ jobs:
       shell: bash
       run: |
         echo "BEAM_VERSION=$(cat beam_version.gen)" >> $GITHUB_ENV
-        echo "BEAM_TARGET_SUFFIX=-mainnet" >> $GITHUB_ENV
-        echo "BEAM_DISPLAY_SUFFIX=Mainnet" >> $GITHUB_ENV
-        echo "BEAM_DISPLAY_SUFFIX2=-Mainnet" >> $GITHUB_ENV
-        echo "BEAM_DISPLAY_SUFFIX3= Mainnet" >> $GITHUB_ENV
+        echo "BEAM_TARGET_SUFFIX=" >> $GITHUB_ENV
+        echo "BEAM_DISPLAY_SUFFIX=" >> $GITHUB_ENV
+        echo "BEAM_DISPLAY_SUFFIX2=" >> $GITHUB_ENV
+        echo "BEAM_DISPLAY_SUFFIX3=" >> $GITHUB_ENV
         rm beam_version.gen
 
 ###############################################################################
