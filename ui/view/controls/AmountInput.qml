@@ -41,7 +41,7 @@ ColumnLayout {
     property var               currencies:  defCurrList()
     readonly property bool     isValid:     error.length == 0
 
-    property int                currencyIdx:     0
+    property int      currencyIdx:  currCombo.currentIndex
     readonly property string    currencyUnit:    currencies[currencyIdx].unitName
     readonly property bool      isBeam:          !!currencies[currencyIdx].isBEAM
 
@@ -152,6 +152,14 @@ ColumnLayout {
             onModelChanged: {
                 // changing model resets index selection, restore
                 if (multi) currentIndex = control.currencyIdx
+            }
+        }
+    }
+
+    onCurrencyIdxChanged: {
+        if (multi) {
+            if (control.currencyIdx != currCombo.currentIndex) {
+                currCombo.currentIndex = control.currencyIdx
             }
         }
     }
