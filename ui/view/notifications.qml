@@ -366,19 +366,19 @@ ColumnLayout {
             label:      labels.detailsLabel,
             actionIcon: icons.detailsIcon,
             action:     navigateToTransaction,
-            icon:       "qrc:/assets/icon-notifications-expired.svg"
+            icon:       "qrc:/assets/icon-contract-completed.svg"
         },
         contractExpired: {
             label:      labels.detailsLabel,
             actionIcon: icons.detailsIcon,
             action:     navigateToTransaction,
-            icon:       "qrc:/assets/icon-notifications-expired.svg"
+            icon:       "qrc:/assets/icon-contract-expired.svg"
         },
         contractFailed: {
             label:      labels.detailsLabel,
             actionIcon: icons.detailsIcon,
             action:     navigateToTransaction,
-            icon:       "qrc:/assets/icon-notifications-expired.svg"
+            icon:       "qrc:/assets/icon-contract-failed.svg"
         }
     })
 
