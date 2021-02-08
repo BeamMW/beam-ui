@@ -166,7 +166,10 @@
         <file>assets/icon-notifications-received.svg</file>
         <file>assets/icon-notifications-sent.svg</file>
         <file>assets/icon-notifications-update.svg</file>
-        <file>assets/icon-notifications-videos.svg</file>
+        <file>assets/icon-notifications-videos.svg</file>  
+        <file>assets/icon-contract-completed.svg</file>
+        <file>assets/icon-contract-expired.svg</file>
+        <file>assets/icon-contract-failed.svg</file>
         <file>assets/icon-info.svg</file>
         <file>assets/icon-info-active.svg</file>
         <file>assets/icon-settings.svg</file>
