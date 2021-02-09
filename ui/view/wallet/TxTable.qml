@@ -189,7 +189,6 @@ Control {
                     filterRole: "search"
                     filterString: searchBox.text
                     filterSyntax: SortFilterProxyModel.Wildcard
-                    filterCaseSensitivity: Qt.CaseInsensitive
 
                     source: SortFilterProxyModel {
                         id: assetFilterProxy
