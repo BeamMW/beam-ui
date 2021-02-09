@@ -394,6 +394,20 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             }
             return _amgr->getIcon(beam::Asset::s_BeamID);
         }
+        case Roles::AssetFilter:
+        {
+            const auto& alist = value->getAssetsList();
+
+            QString r;
+            for(const auto aid: alist) {
+                if (!r.isEmpty()) {
+                    r += ",";
+                }
+                r += QString::number(aid);
+            }
+
+            return r;
+        }
         default:
             return QVariant();
     }

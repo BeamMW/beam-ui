@@ -15,6 +15,8 @@ Control {
         id: tableViewModel
     }
 
+    property int selectedAsset: -1
+
     state: "all"
     states: [
         State {

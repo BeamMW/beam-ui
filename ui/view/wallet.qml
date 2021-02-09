@@ -156,6 +156,12 @@ Item {
                     property: "selectedAsset"
                     value:    assets.selectedId
                 }
+
+                Binding {
+                    target:    txTable
+                    property:  "selectedAsset"
+                    value:     assets.selectedId
+                }
             }
 
             SFText {
@@ -176,6 +182,8 @@ Item {
             }
 
             TxTable {
+                id: txTable
+
                 Layout.topMargin:  12
                 Layout.fillWidth:  true
                 Layout.fillHeight: true

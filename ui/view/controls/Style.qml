@@ -14,6 +14,7 @@ AbstractTheme {
 
 	Component.onCompleted: {
 		var currentTheme = themes[Theme.name()]
+
 		if (!currentTheme) {
 			currentTheme = themes['masternet'];
 		}
@@ -24,7 +25,6 @@ AbstractTheme {
 				&& propName != "themes") {
 				this[propName] = currentTheme[propName]
 			}
-				
 		}
 	}
 }

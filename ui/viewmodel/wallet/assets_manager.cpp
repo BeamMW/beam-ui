@@ -156,15 +156,15 @@ QColor AssetsManager::getColor(beam::Asset::ID id)
 {
     if (id < 1)
     {
-        return QColor( 0, 246, 210, 252);
+        return QColor( 167, 129, 167, 252);
     }
 
     const auto it = _info.find(id);
-     if (it != _info.end())
-     {
-         auto idx = static_cast<int>(id % _colors.size());
-         return _colors[idx];
-     }
+    if (it != _info.end())
+    {
+        auto idx = static_cast<int>(id % _colors.size());
+        return _colors[idx];
+    }
 
     return QColor( 255, 116, 107, 252);
 }
