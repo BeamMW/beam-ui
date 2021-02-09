@@ -2,3 +2,6 @@
 	path = beam
 	url = https://github.com/BeamMW/beam.git
 	branch = master
+[submodule "3rdparty/zlib"]
+	path = 3rdparty/zlib
+	url = https://github.com/madler/zlib.git
