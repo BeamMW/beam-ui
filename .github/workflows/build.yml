@@ -37,11 +37,13 @@ jobs:
       run: |
         echo $GITHUB_WORKSPACE
         echo "OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1" >> $GITHUB_ENV
-        wget --no-check-certificate https://builds.beam.mw/QT5/qt5.12.9-static.tar.gz
-        mkdir ${{runner.workspace}}/qt5-static
-        tar -xf qt5.12.9-static.tar.gz -C ${{runner.workspace}}/qt5-static
-        echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
-        echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
+        # wget --no-check-certificate https://builds.beam.mw/QT5/qt5.12.9-static.tar.gz
+        # mkdir ${{runner.workspace}}/qt5-static
+        # tar -xf qt5.12.9-static.tar.gz -C ${{runner.workspace}}/qt5-static
+        # echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
+        # echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
+        brew update
+        brew install qt5
         export TZ=GMT-3
         sudo systemsetup -gettimezone
         security create-keychain -p github macos-build.keychain
@@ -62,9 +64,9 @@ jobs:
         sudo apt install libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-dev libpci-dev libicu-dev -y
         # git clone --depth=1 https://github.com/BeamMW/qt5.15.2-static-${{matrix.os}}.git ${{runner.workspace}}/qt5-static
         # chmod +x ${{runner.workspace}}/qt5-static/bin/*
-        sudo apt install qtbase5-dev qtdeclarative5-dev libqt5webengine5-dev qml-module-qtwebengine qttools5-dev-tools qml-module-qtquick-controls qtquickcontrols2-5-dev libqt5svg5-dev -y
-        echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
-        echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
+        # sudo apt install qtbase5-dev qtdeclarative5-dev libqt5webengine5-dev qml-module-qtwebengine qttools5-dev-tools qml-module-qtquick-controls qtquickcontrols2-5-dev libqt5svg5-dev -y
+        # echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
+        # echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
 
     - name: Create Build Environment [windows]
       shell: bash
@@ -72,9 +74,9 @@ jobs:
       run: |
         git clone --depth=1 https://github.com/BeamMW/libs.git c:/beam-libs
         echo "OPENSSL_ROOT_DIR=c:\beam-libs\openssl" >> $GITHUB_ENV
-        git clone --depth=1 https://github.com/nesbox/qt5-static-win.git c:/beam-libs/qt5-static-win
-        echo "QT5_ROOT_DIR=c:\beam-libs\qt5-static-win" >> $GITHUB_ENV
-        echo "QML_IMPORT_PATH=c:\beam-libs\qt5-static-win\qml" >> $GITHUB_ENV
+        # git clone --depth=1 https://github.com/nesbox/qt5-static-win.git c:/beam-libs/qt5-static-win
+        # echo "QT5_ROOT_DIR=c:\beam-libs\qt5-static-win" >> $GITHUB_ENV
+        # echo "QML_IMPORT_PATH=c:\beam-libs\qt5-static-win\qml" >> $GITHUB_ENV
 
     - name: Download boost [macos-10.15]
       if: matrix.os == 'macos-10.15'
@@ -89,7 +91,32 @@ jobs:
         git clone https://github.com/BeamMW/boost_prebuild_${{matrix.os}}.git ${{runner.workspace}}/boost_prebuild
         echo "BOOST_INCLUDEDIR=${{runner.workspace}}/boost_prebuild/include" >> $GITHUB_ENV
         echo "BOOST_LIBRARYDIR=${{runner.workspace}}/boost_prebuild/lib/" >> $GITHUB_ENV
+###############################################################################
+# Install Qt5
+###############################################################################
+    - name: Install Qt [windows]
+      if: matrix.os == 'windows-2019'
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: '5.15.2'
+        host: 'windows'
+        modules: 'qtwebengine'
 
+    - name: Install Qt [ubuntu]
+      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: '5.15.2'
+        host: 'linux'
+        modules: 'qtwebengine'
+
+    - name: Install Qt [mac]
+      if: matrix.os == 'macos-10.15'
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: '5.15.2'
+        host: 'mac'
+        modules: 'qtwebengine'
 ###############################################################################
 # Configure CMake
 ###############################################################################
