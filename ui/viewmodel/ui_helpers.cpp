@@ -150,7 +150,6 @@ namespace beamui
      */
     QString AmountToUIString(const Amount& value, Currencies coinType, bool currencyLabel)
     {
-        const auto decimals = (coinType == Currencies::Usd || coinType == Currencies::Beam) ? beamDecimals() : libbitcoin::btc_decimal_places;
         return AmountToUIString(value, currencyLabel ? getCurrencyUnitName(coinType) : "", getCurrencyDecimals(coinType));
     }
 
