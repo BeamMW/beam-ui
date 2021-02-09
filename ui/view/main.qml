@@ -82,6 +82,7 @@ Rectangle {
     property color topColor: Style.background_main_top
     property color topGradientColor: Qt.rgba(Style.background_main_top.r, Style.background_main_top.g, Style.background_main_top.b, 0)
 
+
     StatusbarViewModel {
         id: statusbarModel
     }
@@ -100,6 +101,10 @@ Rectangle {
                 GradientStop { position: 0.0; color: main.topColor }
                 GradientStop { position: 1.0; color: main.topGradientColor }
             }
+        }
+
+        BgLogo {
+            anchors.leftMargin: sidebar.width
         }
     }
 

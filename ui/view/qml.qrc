@@ -124,6 +124,7 @@
         <file>assets/fonts/SF-Pro-Display-HeavyItalic.otf</file>
         <file>assets/fonts/SF-Pro-Display-RegularItalic.otf</file>
         <file>assets/fonts/SF-Pro-Display-UltralightItalic.otf</file>
+        <file>assets/bottom-logo-beamx.svg</file>
         <file>assets/beam-circle.svg</file>
         <file>assets/ltc-circle.svg</file>
         <file>assets/qtum-circle.svg</file>
@@ -286,6 +287,7 @@
         <file>controls/SaveAddressDialog.qml</file>
         <file>controls/FoldablePanel.qml</file>
         <file>controls/SwapTokenInfoDialog.qml</file>
+        <file>controls/BgLogo.qml</file>
         <file>assets/icon-canceled-max-online.svg</file>
         <file>assets/icon-failed-max-online.svg</file>
         <file>assets/icon-received-max-online.svg</file>

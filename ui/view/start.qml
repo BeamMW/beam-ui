@@ -164,6 +164,9 @@ Item
                     source: "qrc:/assets/bg.svg"
                 }
 
+                BgLogo {
+                }
+
                 property Item defaultFocusItem: createNewWallet
 
                 ColumnLayout {
@@ -296,6 +299,9 @@ Item
                     fillMode: Image.PreserveAspectCrop
                     anchors.fill: parent
                     source: "qrc:/assets/bg.svg"
+                }
+
+                BgLogo {
                 }
 
                 property Item defaultFocusItem: startMigration
@@ -2081,6 +2087,9 @@ Item
                     fillMode: Image.PreserveAspectCrop
                     anchors.fill: parent
                     source: "qrc:/assets/bg.svg"
+                }
+
+                BgLogo {
                 }
 
                 ColumnLayout {

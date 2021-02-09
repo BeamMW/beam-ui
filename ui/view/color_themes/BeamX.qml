@@ -2,6 +2,7 @@ import QtQuick 2.11
 
 AbstractTheme {
     property string navigation_logo: "qrc:/assets/beamx-logo.svg"
+    property string bottom_background: "qrc:/assets/bottom-logo-beamx.svg"
 
     property color content_main:          "#ffffff"  // white
     property color accent_outgoing:       "#da68f5"  // heliotrope
@@ -25,7 +26,7 @@ AbstractTheme {
     property color background_row_details_even: Qt.rgba(132/255, 94/255, 255/255, 0.3)
     property color background_row_details_odd:  Qt.rgba(132/255, 94/255, 255/255, 0.3)
 
-    property color background_details:     "#13183d"
+    property color background_details:     Qt.rgba(19/255, 24/255, 61/255, 0.75)
     property color background_button:      Qt.rgba(1, 1, 1, 0.1)
     property color background_popup:       "#0f1535"
     property color row_selected:           "#085469"
