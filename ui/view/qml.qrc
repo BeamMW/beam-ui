@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>color_themes/AbstractColors.qml</file>
+        <file>color_themes/AbstractTheme.qml</file>
         <file>color_themes/Mainnet.qml</file>
         <file>color_themes/Masternet.qml</file>
         <file>color_themes/Testnet.qml</file>
@@ -128,6 +128,7 @@
         <file>assets/qtum-circle.svg</file>
         <file>assets/btc-circle.svg</file>
         <file>assets/logo.svg</file>
+        <file>assets/beamx-logo.svg</file>
         <file>assets/start-logo.svg</file>
         <file>assets/icon.png</file>
         <file>assets/icon_masternet.png</file>

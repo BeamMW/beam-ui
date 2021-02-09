@@ -241,7 +241,7 @@ Rectangle {
             id: image
             y:  50
             anchors.horizontalCenter: parent.horizontalCenter
-            source: "qrc:/assets/logo.svg"
+            source: Style.navigation_logo
             smooth: true
         }
 
@@ -314,7 +314,7 @@ Rectangle {
 
     Loader {
         id: content
-        anchors.topMargin: 50
+        anchors.topMargin: 45
         anchors.bottomMargin: 0
         anchors.rightMargin: 20
         anchors.leftMargin: 90

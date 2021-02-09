@@ -330,8 +330,9 @@
         <translation>Применить изменения</translation>
     </message>
     <message id="logo-description">
-        <source>Confidential, fast, easy to use</source>
-        <translation>Конфиденциальный, быстрый, простой в использовании</translation>
+        <source>Confidential DeFi Platform</source>
+        <oldsource>Confidential, fast, easy to use</oldsource>
+        <translation type="unfinished">Конфиденциальный, быстрый, простой в использовании</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>

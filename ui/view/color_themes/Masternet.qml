@@ -1,6 +1,8 @@
 import QtQuick 2.11
 
-AbstractColors {
+AbstractTheme {
+    property string navigation_logo: "qrc:/assets/logo.svg"
+
     property color content_main:          "#ffffff"  // white
     property color accent_outgoing:       "#da68f5"  // heliotrope
     property color accent_incoming:       "#0bccf7"  // bright-sky-blue

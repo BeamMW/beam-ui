@@ -35,12 +35,15 @@ ColumnLayout
         Layout.topMargin: isSqueezedHeight ? 20 : 40
         Layout.preferredHeight: 20
 
-     //% "Confidential, fast, easy to use"
+        //% "Confidential DeFi Platform"
         text: qsTrId("logo-description")
+        color: Style.active
 
-        color: Style.accent_incoming
-        font.pixelSize: 18
-        font.styleName: "Bold"; font.weight: Font.Bold
+        font {
+            styleName:  "DemiBold"
+            weight:     Font.DemiBold
+            pixelSize:  18
+        }
     }
 
     SFText

@@ -3,11 +3,13 @@ import QtQuick 2.11
 import Beam.Wallet 1.0
 import "../color_themes"
 
-AbstractColors {
+AbstractTheme {
+
 	property var themes: QtObject {
-		property AbstractColors masternet: Masternet{}
-		property AbstractColors testnet: Testnet{}
-		property AbstractColors mainnet: Mainnet{}
+		property AbstractTheme masternet: Masternet{}
+		property AbstractTheme testnet: Testnet{}
+		property AbstractTheme mainnet: Mainnet{}
+		property AbstractTheme beamx: BeamX{}
 	}
 
 	Component.onCompleted: {

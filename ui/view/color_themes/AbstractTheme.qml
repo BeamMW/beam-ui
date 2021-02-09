@@ -1,6 +1,8 @@
 import QtQuick 2.11
 
 QtObject {
+    property string navigation_logo;
+
     property color content_main;
     property color accent_outgoing;
     property color accent_incoming;
