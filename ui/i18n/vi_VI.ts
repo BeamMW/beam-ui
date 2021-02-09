@@ -286,9 +286,10 @@
         <translation>Đang tới</translation>
     </message>
     <message id="settings-version">
-        <source>Version</source>
+        <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation>Phiên bản</translation>
+        <translation type="unfinished">Phiên bản</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -331,7 +332,8 @@
     </message>
     <message id="logo-description">
         <source>Confidential DeFi Platform</source>
-        <translation>Confidential DeFi Platform</translation>
+        <oldsource>Confidential, fast, easy to use</oldsource>
+        <translation type="unfinished">Confidential, fast, easy to use</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>
@@ -499,8 +501,9 @@
         <translation>Bạn đang cố gắng khôi phục một ví Beam hiện có. Xin lưu ý rằng nếu bạn sử dụng ví của mình trên một thiết bị khác, số dư của bạn sẽ được cập nhật, nhưng lịch sử giao dịch và địa chỉ sẽ được giữ riêng trên mỗi thiết bị.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>Ví của bạn sẽ được chuyển sang v.</translation>
+        <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
+        <translation type="unfinished">Ví của bạn sẽ được chuyển sang v </translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>
@@ -629,8 +632,9 @@
         <translation>Vui lòng xác định địa chỉ nút từ xa</translation>
     </message>
     <message id="appmodel-failed-start-node">
-        <source>Failed to start node. Please check your node configuration</source>
-        <translation>Không thể bắt đầu nút. Vui lòng kiểm tra cấu hình nút của bạn</translation>
+        <source>Failed to start node. Please save wallet logs and contact support.</source>
+        <oldsource>Failed to start node. Please check your node configuration</oldsource>
+        <translation type="unfinished">Không thể bắt đầu nút. Vui lòng kiểm tra cấu hình nút của bạn</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
         <source>Node protocol error!</source>
@@ -1084,10 +1088,6 @@ Allow to open and proceed to the website? You can always update your choice in S
         <source>%1 Transaction fee rate</source>
         <translation>Tỷ lệ phí giao dịch</translation>
     </message>
-    <message id="general-fee-fail">
-        <source>The minimum fee is %1 %2</source>
-        <translation>Phí tối thiểu là %1 %2</translation>
-    </message>
     <message id="general-change-settings">
         <source>Change settings</source>
         <translation>Thay đổi cài đặt</translation>
@@ -1108,24 +1108,6 @@ Allow to open and proceed to the website? You can always update your choice in S
         <source>Password</source>
         <translation>Mật khẩu</translation>
     </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation type="unfinished">Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</translation>
-    </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation type="unfinished">Atomic Swaps are in BETA</translation>
-    </message>
-    <message id="swap-na-message">
-        <source>You do not have any 3rd-party currencies connected.
-Update your settings and try again.</source>
-        <translation>Bạn không có bất kỳ loại tiền tệ của bên thứ 3 nào được kết nối.
-Cập nhật cài đặt và thử lại.</translation>
-    </message>
-    <message id="wallet-receive-swap-title">
-        <source>Create a Swap Offer</source>
-        <translation>Tạo đề nghị trao đổi</translation>
-    </message>
     <message id="receive-amount-swap-label">
         <source>Receive amount</source>
         <translation>Nhận số tiền</translation>
@@ -1134,22 +1116,9 @@ Cập nhật cài đặt và thử lại.</translation>
         <source>Send amount</source>
         <translation type="unfinished">Send amount</translation>
     </message>
-    <message id="wallet-receive-offer-expires-label">
-        <source>Offer expiration time</source>
-        <translation>Thời gian đề nghị hết hạn</translation>
-    </message>
-    <message id="wallet-receive-expires-6">
-        <source>6 hours</source>
-        <translation>6 giờ</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
-        <oldsource>Exchange Rate</oldsource>
         <translation type="unfinished">Exchange rate</translation>
-    </message>
-    <message id="wallet-receive-swap-publish">
-        <source>publish offer</source>
-        <translation>xuất tiền điện tử giao dịch</translation>
     </message>
     <message id="wallet-send-swap-title">
         <source>Accept Swap Offer</source>
@@ -1221,90 +1190,6 @@ please review your settings and try again</translation>
         <source>It may take longer than usual. Please, check your network.</source>
         <translation type="unfinished">It may take longer than usual. Please, check your network.</translation>
     </message>
-    <message id="atomic-swap-title">
-        <source>Atomic Swaps</source>
-        <translation type="unfinished">Atomic Swaps</translation>
-    </message>
-    <message id="atomic-swap-create">
-        <source>Create offer</source>
-        <translation type="unfinished">Create offer</translation>
-    </message>
-    <message id="atomic-swap-active-offers-tab">
-        <source>Active offers</source>
-        <translation>Đề nghị có hiệu lực</translation>
-    </message>
-    <message id="atomic-swap-transactions-tab">
-        <source>Transactions</source>
-        <translation>Giao dịch</translation>
-    </message>
-    <message id="atomic-swap-fit-current-balance">
-        <source>Fit my current balance</source>
-        <translation type="unfinished">Fit my current balance</translation>
-    </message>
-    <message id="atomic-swap-currency">
-        <source>Currency</source>
-        <translation type="unfinished">Currency</translation>
-    </message>
-    <message id="atomic-swap-time-created">
-        <source>Created on</source>
-        <translation type="unfinished">Created on</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Gửi</translation>
-    </message>
-    <message id="atomic-swap-amount-receive">
-        <source>Receive</source>
-        <translation>Nhận</translation>
-    </message>
-    <message id="atomic-swap-rate">
-        <source>Rate</source>
-        <translation>Đánh giá</translation>
-    </message>
-    <message id="atomic-swap-expiration">
-        <source>Expiration</source>
-        <translation>Hết hạn</translation>
-    </message>
-    <message id="atomic-swap-cancel">
-        <source>Cancel offer</source>
-        <translation>Hủy đề nghị</translation>
-    </message>
-    <message id="atomic-swap-accept">
-        <source>Accept offer</source>
-        <translation>Chấp nhận đề nghị</translation>
-    </message>
-    <message id="atomic-swap-all-transactions-tab">
-        <source>All</source>
-        <translation>Tất cả</translation>
-    </message>
-    <message id="atomic-swap-in-progress-transactions-tab">
-        <source>In progress</source>
-        <translation>Trong quá trình</translation>
-    </message>
-    <message id="atomic-swap-tx-table-created">
-        <source>Created on</source>
-        <translation type="unfinished">Created on</translation>
-    </message>
-    <message id="atomic-swap-tx-table-from">
-        <source>From</source>
-        <translation>Từ</translation>
-    </message>
-    <message id="atomic-swap-tx-table-to">
-        <source>To</source>
-        <translation>Đến</translation>
-    </message>
-    <message id="atomic-swap-tx-table-sent">
-        <source>Sent</source>
-        <translation>Đã gửi</translation>
-    </message>
-    <message id="atomic-swap-tx-table-received">
-        <source>Received</source>
-        <translation>Đã nhận</translation>
-    </message>
-    <message id="atomic-swap-tx-table-status">
-        <source>Status</source>
-        <translation>Trạng thái</translation>
-    </message>
     <message id="general-create-trezor-wallet">
         <source>Create new Trezor wallet</source>
         <translation type="unfinished">Create new Trezor wallet</translation>
@@ -1361,12 +1246,6 @@ please review your settings and try again</translation>
         <source>Received</source>
         <translation>Đã nhận</translation>
     </message>
-    <message id="atomic-no-offers">
-        <source>There are no active offers at the moment.
-Please try again later or create an offer yourself.</source>
-        <translation type="unfinished">There are no active offers at the moment.
-Please try again later or create an offer yourself.</translation>
-    </message>
     <message id="send-less-than-fee">
         <source>The swap amount must be greater than the transaction fee</source>
         <translation type="unfinished">The swap amount must be greater than the transaction fee</translation>
@@ -1399,26 +1278,6 @@ Please try again later or create an offer yourself.</translation>
         <source>Search</source>
         <translation>Tìm</translation>
     </message>
-    <message id="atomic-swap-1active-tx-count">
-        <source>1 active transaction</source>
-        <translation type="unfinished">1 active transaction</translation>
-    </message>
-    <message id="atomic-swap-active-tx-count">
-        <source>%1 active transactions</source>
-        <translation type="unfinished">%1 active transactions</translation>
-    </message>
-    <message id="swap-beta-tx-in-progress">
-        <source>Transaction is in progress</source>
-        <translation type="unfinished">Transaction is in progress</translation>
-    </message>
-    <message id="swap-connecting">
-        <source>Connecting...</source>
-        <translation>Đang kết nối...</translation>
-    </message>
-    <message id="swap-beta-connection-error">
-        <source>Cannot connect to peer. Please check the address in Settings and try again.</source>
-        <translation type="unfinished">Cannot connect to peer. Please check the address in Settings and try again.</translation>
-    </message>
     <message id="swap-alert-confirm-button">
         <source>I understand</source>
         <translation>Tôi đã hiểu</translation>
@@ -1430,22 +1289,6 @@ Please try again later or create an offer yourself.</translation>
     <message id="accept-own-offer-allert-body">
         <source>The swap token was generated by you, and therefore cannot be accepted.</source>
         <translation type="unfinished">The swap token was generated by you, and therefore cannot be accepted.</translation>
-    </message>
-    <message id="swap-copy-token">
-        <source>Copy token</source>
-        <translation type="unfinished">Copy token</translation>
-    </message>
-    <message id="atomic-swap-cancel-text">
-        <source>Are you sure you want to cancel your offer?</source>
-        <translation type="unfinished">Are you sure you want to cancel your offer?</translation>
-    </message>
-    <message id="atomic-swap-cancel-button">
-        <source>cancel offer</source>
-        <translation type="unfinished">cancel offer</translation>
-    </message>
-    <message id="atomic-swap-back-button">
-        <source>back</source>
-        <translation type="unfinished">back</translation>
     </message>
     <message id="swap-details-lock-tx-id">
         <source>lock transaction ID</source>
@@ -1482,10 +1325,6 @@ Please try again later or create an offer yourself.</translation>
     <message id="swap-details-refund-tx-conf">
         <source>refund transaction confirmations</source>
         <translation type="unfinished">refund transaction confirmations</translation>
-    </message>
-    <message id="swap-invalid-rate">
-        <source>Invalid rate</source>
-        <translation type="unfinished">Invalid rate</translation>
     </message>
     <message id="swap-details-tx-id">
         <source>Transaction ID</source>
@@ -1680,14 +1519,6 @@ Please check the swap token and try again.</translation>
         <source>Swap failed: the refund of your %2 will start in %1. The refund duration depends on the transaction fee you specified for %2.</source>
         <translation type="unfinished">Swap failed: the refund of your %2 will start in %1. The refund duration depends on the transaction fee you specified for %2.</translation>
     </message>
-    <message id="atomic-swap-tx-cancel">
-        <source>Cancel atomic swap</source>
-        <translation type="unfinished">Cancel atomic swap</translation>
-    </message>
-    <message id="atomic-swap-tx-cancel-text">
-        <source>Are you sure you want to cancel?</source>
-        <translation type="unfinished">Are you sure you want to cancel?</translation>
-    </message>
     <message id="atomic-swap-tx-yes-button">
         <source>yes</source>
         <translation type="unfinished">yes</translation>
@@ -1699,10 +1530,6 @@ Please check the swap token and try again.</translation>
     <message id="swap-tx-state-refunding">
         <source>Swap failed, the money is being released back to your wallet</source>
         <translation type="unfinished">Swap failed, the money is being released back to your wallet</translation>
-    </message>
-    <message id="wallet-txs-status-waiting-peer">
-        <source>waiting for counterparty</source>
-        <translation type="unfinished">waiting for counterparty</translation>
     </message>
     <message id="send-swap-fee-warning">
         <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
@@ -1720,10 +1547,6 @@ Please check the swap token and try again.</translation>
         <source>Export transactions history</source>
         <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
         <translation type="unfinished">Export transactions history</translation>
-    </message>
-    <message id="atomic-swap-my-offers-tab">
-        <source>My offers</source>
-        <translation type="unfinished">My offers</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -1760,18 +1583,6 @@ Please check the swap token and try again.</translation>
     <message id="swap-details-tx-fee-estimated">
         <source>%1 Estimated transaction fee</source>
         <translation type="unfinished">%1 Estimated transaction fee</translation>
-    </message>
-    <message id="wallet-receive-expires-30m">
-        <source>30 minutes</source>
-        <translation>30 phút</translation>
-    </message>
-    <message id="wallet-receive-expires-1">
-        <source>1 hour</source>
-        <translation>1 giờ</translation>
-    </message>
-    <message id="wallet-receive-expires-2">
-        <source>2 hours</source>
-        <translation type="unfinished">2 hours</translation>
     </message>
     <message id="settings-show-owner-key-title">
         <source>Owner key</source>
@@ -1879,7 +1690,8 @@ deploy the key at the node you trust completely.</translation>
         <translation>Thông báo</translation>
     </message>
     <message id="settings-notifications-version">
-        <source>Wallet update</source>
+        <source>Wallet updates</source>
+        <oldsource>Wallet update</oldsource>
         <translation type="unfinished">Wallet update</translation>
     </message>
     <message id="settings-notifications-tx-status">
@@ -1961,7 +1773,8 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-transaction-sent-message">
         <source>You sent &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt;.</source>
-        <translation type="unfinished">You sent &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt;.</translation>
+        <oldsource>You sent &lt;b&gt;%1&lt;/b&gt; BEAM to &lt;b&gt;%2&lt;/b&gt;.</oldsource>
+        <translation type="unfinished">You sent &lt;b&gt;%1&lt;/b&gt; BEAM to &lt;b&gt;%2&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-failed">
         <source>Transaction failed</source>
@@ -1977,15 +1790,18 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-transaction-received-message">
         <source>You received &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt;.</source>
-        <translation type="unfinished">You received &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt;.</translation>
+        <oldsource>You received &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt;.</oldsource>
+        <translation type="unfinished">You received &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-send-failed-message">
         <source>Sending &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt; failed.</source>
-        <translation type="unfinished">Sending &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt; failed.</translation>
+        <oldsource>Sending &lt;b&gt;%1 BEAM&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt; failed.</oldsource>
+        <translation type="unfinished">Sending &lt;b&gt;%1 BEAM&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt; failed.</translation>
     </message>
     <message id="notification-transaction-receive-failed-message">
         <source>Receiving &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt; failed.</source>
-        <translation type="unfinished">Receiving &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt; failed.</translation>
+        <oldsource>Receiving &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt; failed.</oldsource>
+        <translation type="unfinished">Receiving &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt; failed.</translation>
     </message>
     <message id="notification-transaction-sent">
         <source>Transaction was sent</source>
@@ -2124,14 +1940,6 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished">This address generated by newer Beam client version(%1)
 Your version is: %2. Please, check for updates.</translation>
     </message>
-    <message id="wallet-txs-status-failing">
-        <source>failing</source>
-        <translation type="unfinished">failing</translation>
-    </message>
-    <message id="wallet-receive-expires-12">
-        <source>12 hours</source>
-        <translation type="unfinished">12 hours</translation>
-    </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
         <translation>Ví</translation>
@@ -2195,10 +2003,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Show my wallet with Trezor</source>
         <translation type="unfinished">Show my wallet with Trezor</translation>
     </message>
-    <message id="overtop-beam-supply">
-        <source>Amount overtop total Beam supply.</source>
-        <translation type="unfinished">Amount overtop total Beam supply.</translation>
-    </message>
     <message id="specific_node">
         <source>Specific node</source>
         <translation type="unfinished">Specific node</translation>
@@ -2227,10 +2031,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
         <translation>Để giao dịch hoàn tất, bạn cần truy cập trực tuyến trong vòng 12 giờ sau khi Beams được gửi.</translation>
     </message>
-    <message id="show-token">
-        <source>Show token</source>
-        <translation type="unfinished">Show token</translation>
-    </message>
     <message id="wallet-receive-copy-and-close">
         <source>Copy and close</source>
         <translation type="unfinished">Copy and close</translation>
@@ -2246,10 +2046,6 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="token-info-token">
         <source>Token</source>
         <translation type="unfinished">Token</translation>
-    </message>
-    <message id="token-info-copy-token">
-        <source>Copy token</source>
-        <translation type="unfinished">Copy token</translation>
     </message>
     <message id="general-transaction-info">
         <source>Transaction info</source>
@@ -2374,10 +2170,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
         <translation type="unfinished">Connect to integrated or own node to enable receiving max privacy and offline transactions</translation>
     </message>
-    <message id="general-recommended-fee-fail">
-        <source>The minimum recommended fee is %1 %2</source>
-        <translation type="unfinished">The minimum recommended fee is %1 %2</translation>
-    </message>
     <message id="tx-address-offline">
         <source>Offline</source>
         <translation>Ngoại tuyến</translation>
@@ -2422,14 +2214,6 @@ offline</translation>
         <source>Shielded</source>
         <extracomment>UTXO type Shielded</extracomment>
         <translation type="unfinished">Shielded</translation>
-    </message>
-    <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. 
-Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete.</source>
-        <translation type="unfinished">Connection error: can&apos;t calculate the recommended fee rate. 
-Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete.</translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
@@ -2524,10 +2308,6 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="send-remaining-label">
         <source>Remaining</source>
         <translation>Còn lại</translation>
-    </message>
-    <message id="wallet-receive-swap-copy-token-and-close">
-        <source>copy token and close</source>
-        <translation type="unfinished">copy token and close</translation>
     </message>
     <message id="address-info-title">
         <source>Address details</source>
@@ -2665,10 +2445,6 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(max privacy %2% unlinked)</source>
         <translation type="unfinished">Maturing%1(max privacy %2% unlinked)</translation>
-    </message>
-    <message id="atomic-swap-more-currency">
-        <source>Connect more currencies</source>
-        <translation type="unfinished">Connect more currencies</translation>
     </message>
     <message id="address-info-copy-close">
         <source>copy and close</source>
@@ -2855,16 +2631,63 @@ offline</translation>
         <source>Max Privacy transaction can last indefinitely</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="general-ethereum">
+        <source>Ethereum</source>
+        <oldsource>ETHEREUM</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-ethereum-node">
+        <source>Ethereum node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ethereum-show-seed-title">
+        <source>Ethereum seed phrase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-account-index">
+        <source>Account index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-recommended-fee-fail">
+        <source>The minimum recommended fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-fee-fail">
+        <source>The minimum fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-max-fee-fail">
+        <source>The maximum fee is %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-recommended-fee-rate-absent">
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-swap-copy-and-close">
+        <source>copy and close</source>
+        <translation type="unfinished">copy and close</translation>
+    </message>
+    <message id="ethereum-show-addresses-title">
+        <source>Ethereum wallet addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-infura-project-id">
+        <source>Infura project ID</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="apps-title">
         <source>DAPP Store</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="apps-loading-app">
-        <source>Loading &apos;%1&apos;...</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="apps-nothing">
         <source>There are no applications at the moment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-loading-app">
+        <source>Loading &apos;%1&apos;...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-loading">
@@ -2883,12 +2706,61 @@ offline</translation>
         <source>Failed to load applications list, %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="dex-all-tab">
+        <source>All offers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-my-tab">
+        <source>Opened by me</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-other-tab">
+        <source>Opened by other users</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-type">
+        <source>Type</source>
+        <translation type="unfinished">Loại</translation>
+    </message>
+    <message id="dex-price">
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-size">
+        <source>Size</source>
+        <translation type="unfinished">Kích cỡ</translation>
+    </message>
+    <message id="dex-total">
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-expiration">
+        <source>Expiration</source>
+        <translation type="unfinished">Hết hạn</translation>
+    </message>
+    <message id="dex-accept-order">
+        <source>Accept Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-no-orders">
+        <source>There are no active orders at the moment.
+Please try again later or create an offer yourself.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-title">
+        <source>Order Book</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="send-flat-fee">
         <source>%1 Transaction fee</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-no-funds">
         <source>Insufficient funds to complete the transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="amount-input-add-max">
+        <source>add max</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-remaining-beam-label">
@@ -2932,56 +2804,8 @@ offline</translation>
         <source>Assets</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="tx-contract-default-comment">
-        <source>Contract transaction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-title">
-        <source>Order Book</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-all-tab">
-        <source>All offers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-my-tab">
-        <source>Opened by me</source>
-        <oldsource>Opened by my</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-other-tab">
-        <source>Opened by other users</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-expiration">
-        <source>Expiration</source>
-        <translation type="unfinished">Hết hạn</translation>
-    </message>
-    <message id="dex-type">
-        <source>Type</source>
-        <oldsource>type</oldsource>
-        <translation type="unfinished">Loại</translation>
-    </message>
-    <message id="dex-price">
-        <source>Price</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-size">
-        <source>Size</source>
-        <translation type="unfinished">Kích cỡ</translation>
-    </message>
-    <message id="dex-total">
-        <source>Total</source>
-        <oldsource>total</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-accept-order">
-        <source>Accept Order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-no-orders">
-        <source>There are no active orders at the moment.
-Please try again later or create an offer yourself.</source>
+    <message id="notification-contract-no-message">
+        <source>Contract: no description provided</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-completed">
@@ -2992,12 +2816,214 @@ Please try again later or create an offer yourself.</source>
         <source>Transaction expired</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="notification-contract-no-message">
-        <source>Contract: no description provided</source>
+    <message id="tx-contract-default-comment">
+        <source>Contract transaction</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="amount-input-add-max">
-        <source>add max</source>
+    <message id="swap-beta-title">
+        <source>Atomic Swaps are in BETA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-beta-message">
+        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-cancel">
+        <source>Cancel offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-cancel-text">
+        <source>Are you sure you want to cancel your offer?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-cancel-button">
+        <source>cancel offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-back-button">
+        <source>back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-tx-cancel">
+        <source>Cancel atomic swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-tx-cancel-text">
+        <source>Are you sure you want to cancel?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-title">
+        <source>Atomic Swaps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-accept">
+        <source>Accept offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-create">
+        <source>Create offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-1active-tx-count">
+        <source>1 active transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-active-tx-count">
+        <source>%1 active transactions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-beta-tx-in-progress">
+        <source>Transaction is in progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-connecting">
+        <source>Connecting...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-beta-connection-error">
+        <source>Cannot connect to peer. Please check the address in Settings and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-more-currency">
+        <source>Connect more currencies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-active-offers-tab">
+        <source>Active offers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-my-offers-tab">
+        <source>My offers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-transactions-tab">
+        <source>Transactions</source>
+        <translation type="unfinished">Giao dịch</translation>
+    </message>
+    <message id="atomic-swap-fit-current-balance">
+        <source>Fit my current balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-currency">
+        <source>Currency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-offers-loading">
+        <source>Please wait, offers are loading.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-no-offers">
+        <source>There are no active offers at the moment.
+Please try again later or create an offer yourself.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-time-created">
+        <source>Created on</source>
+        <translation type="unfinished">Created on</translation>
+    </message>
+    <message id="atomic-swap-amount-send">
+        <source>Send</source>
+        <translation type="unfinished">Gửi</translation>
+    </message>
+    <message id="atomic-swap-amount-receive">
+        <source>Receive</source>
+        <translation type="unfinished">Nhận</translation>
+    </message>
+    <message id="atomic-swap-rate">
+        <source>Rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-expiration">
+        <source>Expiration</source>
+        <translation type="unfinished">Hết hạn</translation>
+    </message>
+    <message id="atomic-swap-all-transactions-tab">
+        <source>All</source>
+        <translation type="unfinished">Tất cả</translation>
+    </message>
+    <message id="atomic-swap-in-progress-transactions-tab">
+        <source>In progress</source>
+        <translation type="unfinished">Trong quá trình</translation>
+    </message>
+    <message id="atomic-swap-tx-table-created">
+        <source>Created on</source>
+        <translation type="unfinished">Created on</translation>
+    </message>
+    <message id="atomic-swap-tx-table-from">
+        <source>From</source>
+        <translation type="unfinished">Từ</translation>
+    </message>
+    <message id="atomic-swap-tx-table-to">
+        <source>To</source>
+        <translation type="unfinished">Đến</translation>
+    </message>
+    <message id="atomic-swap-tx-table-sent">
+        <source>Sent</source>
+        <translation type="unfinished">Đã gửi</translation>
+    </message>
+    <message id="atomic-swap-tx-table-received">
+        <source>Received</source>
+        <translation type="unfinished">Đã nhận</translation>
+    </message>
+    <message id="atomic-swap-tx-table-status">
+        <source>Status</source>
+        <translation type="unfinished">Trạng thái</translation>
+    </message>
+    <message id="swap-copy-token">
+        <source>Copy token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-waiting-peer">
+        <source>waiting for counterparty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-failing">
+        <source>failing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-na-message">
+        <source>You do not have any 3rd-party currencies connected.
+Update your settings and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-swap-title">
+        <source>Create a Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-offer-expires-label">
+        <source>Offer expiration time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-expires-30m">
+        <source>30 minutes</source>
+        <translation type="unfinished">30 phút</translation>
+    </message>
+    <message id="wallet-receive-expires-1">
+        <source>1 hour</source>
+        <translation type="unfinished">1 giờ</translation>
+    </message>
+    <message id="wallet-receive-expires-2">
+        <source>2 hours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-expires-6">
+        <source>6 hours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-expires-12">
+        <source>12 hours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="overtop-beam-supply">
+        <source>Amount overtop total Beam supply.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-invalid-rate">
+        <source>Invalid rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-swap-publish">
+        <source>publish offer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

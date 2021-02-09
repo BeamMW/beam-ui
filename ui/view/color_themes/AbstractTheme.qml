@@ -43,6 +43,10 @@ QtObject {
     property color currencyPaneLeftDASH;
     property color currencyPaneLeftDOGE;
     property color currencyPaneLeftBCH;
+    property color currencyPaneLeftETH;
+    property color currencyPaneLeftDAI;
+    property color currencyPaneLeftUSDT;
+    property color currencyPaneLeftWBTC;
     property color currencyPaneConnect;
     property color currencyPaneBorder;
 

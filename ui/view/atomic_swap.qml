@@ -259,6 +259,14 @@ Item {
                             return "qrc:/assets/icon-dash.svg";
                         case Currency.CurrDogecoin:
                             return "qrc:/assets/icon-doge.svg";
+                        case Currency.CurrEthereum:
+                            return "qrc:/assets/icon-eth.svg";
+                        case Currency.CurrDai:
+                            return "qrc:/assets/icon-dai.svg";
+                        case Currency.CurrUsdt:
+                            return "qrc:/assets/icon-usdt.svg";
+                        case Currency.CurrWrappedBTC:
+                            return "qrc:/assets/icon-wbtc.svg";
                         default: return "";
                     }
                 }
@@ -278,6 +286,14 @@ Item {
                             return Style.currencyPaneLeftDASH;
                         case Currency.CurrDogecoin:
                             return Style.currencyPaneLeftDOGE;
+                        case Currency.CurrEthereum:
+                            return Style.currencyPaneLeftETH;
+                        case Currency.CurrDai:
+                            return Style.currencyPaneLeftDAI;
+                        case Currency.CurrUsdt:
+                            return Style.currencyPaneLeftUSDT;
+                        case Currency.CurrWrappedBTC:
+                            return Style.currencyPaneLeftWBTC;
                         default:
                             return Style.currencyPaneLeftBTC;
                     }
@@ -460,8 +476,8 @@ Item {
                     PropertyChanges { target: transactionsTabSelector; state: "active" }
                     PropertyChanges { target: activeOffersTab; visible: false }
                     PropertyChanges { target: transactionsTab; visible: true }
-                    PropertyChanges { target: offersTable; showOnlyMyOffers: false }
-                    
+                    PropertyChanges { target: offersTable; showOnlyMyOffers: false }                    
+
                 }
             ]
             
@@ -477,6 +493,7 @@ Item {
                     anchors.topMargin: 20
 
                     RowLayout {
+                        visible: !loadingPlaceholder.visible
                         spacing: 0
                         Layout.minimumHeight: 20
                         Layout.maximumHeight: 20
@@ -513,28 +530,51 @@ Item {
                             textRole: 'text'
                             model: ListModel {
                                     ListElement{text: "ALL"; pair: ""}
-                                    ListElement{text: "BEAM->BTC"; pair: "beambtc"}
-                                    ListElement{text: "BEAM->LTC"; pair: "beamltc"}
-                                    ListElement{text: "BEAM->QTUM"; pair: "beamqtum"}
-                                    // TODO disable BCH
-                                    //ListElement{text: "BEAM->BCH"; pair: "beambch"}
-                                    ListElement{text: "BEAM->DASH"; pair: "beamdash"}
-                                    ListElement{text: "BEAM->DOGE"; pair: "beamdoge"}
-                                    ListElement{text: "BTC->BEAM"; pair: "btcbeam"}
-                                    ListElement{text: "LTC->BEAM"; pair: "ltcbeam"}
-                                    ListElement{text: "QTUM->BEAM"; pair: "qtumbeam"}
-                                    // TODO disable BCH
-                                    //ListElement{text: "BCH->BEAM"; pair: "bchbeam"}
-                                    ListElement{text: "DASH->BEAM"; pair: "dashbeam"}
-                                    ListElement{text: "DOGE->BEAM"; pair: "dogebeam"}
+                                    ListElement{text: "BTC"; pair: "^(btc)|(btc)$"}
+                                    ListElement{text: "DAI"; pair: "^(dai)|(dai)$"}
+                                    ListElement{text: "DASH"; pair: "^(dash)|(dash)$"}
+                                    ListElement{text: "DOGE"; pair: "^(doge)|(doge)$"}
+                                    ListElement{text: "ETH"; pair: "^(eth)|(eth)$"}
+                                    ListElement{text: "LTC"; pair: "^(ltc)|(ltc)$"}
+                                    ListElement{text: "QTUM"; pair: "^(qtum)|(qtum)$"}
+                                    ListElement{text: "USDT"; pair: "^(usdt)|(usdt)$"}
+                                    ListElement{text: "WBTC"; pair: "^(wbtc)|(wbtc)$"}
                                 }
                         }
                     }   // RowLayout
 
                     ColumnLayout {
+                        id: loadingPlaceholder
+                        visible: !viewModel.isOffersLoaded
                         Layout.minimumWidth: parent.width
                         Layout.minimumHeight: parent.height
-                        visible: offersTable.model.count == 0
+
+                        LoadingSpinner {
+                            Layout.topMargin: 100
+                            Layout.alignment: Qt.AlignHCenter
+                        }
+
+                        SFText {
+                            Layout.topMargin:     30
+                            Layout.alignment:     Qt.AlignHCenter
+                            horizontalAlignment:  Text.AlignHCenter
+                            font.pixelSize:       14
+                            color:                Style.content_main
+                            opacity:              0.5
+                            lineHeight:           1.43
+                            //% "Please wait, offers are loading."
+                            text:                 qsTrId("atomic-offers-loading")
+                        }
+
+                        Item {
+                            Layout.fillHeight: true
+                        }
+                    }
+
+                    ColumnLayout {
+                        Layout.minimumWidth: parent.width
+                        Layout.minimumHeight: parent.height
+                        visible: offersTable.model.count == 0 && !loadingPlaceholder.visible
 
                         SvgImage {
                             Layout.topMargin: 100
@@ -569,7 +609,7 @@ Please try again later or create an offer yourself."
                         Layout.fillWidth : true
                         Layout.fillHeight : true
                         Layout.topMargin: 14
-                        visible: offersTable.model.count > 0
+                        visible: offersTable.model.count > 0 && !loadingPlaceholder.visible
 
                         property int rowHeight: 56
                         property int columnWidth: (width - swapCoinsColumn.width) / 6
@@ -598,7 +638,6 @@ Please try again later or create an offer yourself."
                                     : viewModel.allOffers
                                 filterRole: "pair"
                                 filterString: coinSelector.model.get(coinSelector.currentIndex).pair
-                                filterSyntax: SortFilterProxyModel.Wildcard
                                 filterCaseSensitivity: Qt.CaseInsensitive
                             }
 
@@ -1209,6 +1248,10 @@ Please try again later or create an offer yourself."
             case "bch": return "qrc:/assets/icon-bch.svg";
             case "dash": return "qrc:/assets/icon-dash.svg";
             case "doge": return "qrc:/assets/icon-doge.svg";
+            case "eth": return "qrc:/assets/icon-eth.svg";
+            case "dai": return "qrc:/assets/icon-dai.svg";
+            case "usdt": return "qrc:/assets/icon-usdt.svg";
+            case "wbtc": return "qrc:/assets/icon-wbtc.svg";
 
             default: return "";
         }

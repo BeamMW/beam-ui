@@ -16,7 +16,7 @@
 
 #include <cmath>
 #include "model/app_model.h"
-#include "model/filter.h"
+#include "wallet/client/filter.h"
 #include "viewmodel/ui_helpers.h"
 
 #include <qdebug.h>
@@ -53,9 +53,9 @@ LoadingViewModel::LoadingViewModel()
     , m_isCreating{false}
     , m_isDownloadStarted{false}
     , m_lastProgress{0.}
-    , m_bpsWholeTimeFilter(std::make_unique<beamui::Filter>(kFilterRange))
-    , m_bpsWindowedFilter(std::make_unique<beamui::Filter>(kFilterRange * 3))
-    , m_estimateFilter(std::make_unique<beamui::Filter>(kFilterRange))
+    , m_bpsWholeTimeFilter(std::make_unique<wallet::Filter>(kFilterRange))
+    , m_bpsWindowedFilter(std::make_unique<wallet::Filter>(kFilterRange * 3))
+    , m_estimateFilter(std::make_unique<wallet::Filter>(kFilterRange))
     , m_startTimestamp{0}
     , m_lastUpdateTimestamp{0}
     , m_estimate{0}

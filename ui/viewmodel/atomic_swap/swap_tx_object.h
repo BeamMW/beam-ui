@@ -22,7 +22,8 @@ class SwapTxObject : public TxObject
     Q_OBJECT
 
 public:
-    SwapTxObject(const beam::wallet::TxDescription& tx, uint32_t minTxConfirmations, double blocksPerHour, QObject* parent = nullptr);
+    SwapTxObject(const beam::wallet::TxDescription& tx, uint32_t lockTxMinConfirmations,
+        uint32_t withdrawTxMinConfirmations, double blocksPerHour, QObject* parent = nullptr);
     bool operator==(const SwapTxObject& other) const;
 
     auto getSentAmountWithCurrency() const -> QString;
@@ -71,6 +72,7 @@ private:
     auto getSwapAmountWithCurrency(bool sent) const -> QString;
 
     beam::wallet::SwapTxDescription m_swapTx;
-    uint32_t m_minTxConfirmations = 0;
+    uint32_t m_lockTxMinConfirmations = 0;
+    uint32_t m_withdrawTxMinConfirmations = 0;
     double m_blocksPerHour = 0;
 };

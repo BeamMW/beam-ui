@@ -10,12 +10,14 @@ ColumnLayout {
     property bool    fillWidth:                  false
     property bool    readOnly:                   false
     property int     minFee:                     0
+    property int     maxFee:                     0
     property int     recommendedFee:             0
     property int     currency:                   Currency.CurrBeam
     property int     fee:                        BeamGlobals.getDefaultFee(control.currency)
     property string  feeLabel:                   undefined
     property string  color:                      Style.content_main
     readonly property bool isValid:              control.fee >= control.minFee && control.fee >= control.recommendedFee
+                                                 && (control.maxFee > 0 ? control.fee <= control.maxFee : true)
     property alias underlineVisible:             feeInput.underlineVisible
     property int inputPreferredWidth:            150
     property bool    showSecondCurrency:         false
@@ -79,11 +81,11 @@ ColumnLayout {
 
     SFText {
         id:               feeInSecondCurrency
-        visible:          !minimumFeeNotification.visible && control.showSecondCurrency && !recommendedFeeAbsent.visible
+        visible:          !minimumFeeNotification.visible&& !maximumFeeNotification.visible && control.showSecondCurrency && !recommendedFeeAbsent.visible
         font.pixelSize:   14
         font.italic:      !control.isExchangeRateAvailable
         opacity:          control.isExchangeRateAvailable ? 0.5 : 1
-        color:            control.isExchangeRateAvailable ? Style.content_secondary : Style.accent_fail
+        color:            Style.content_secondary
         text:             control.isExchangeRateAvailable
                             ? control.rateAmount
                             //% "Exchange rate to %1 is not available"
@@ -105,7 +107,19 @@ ColumnLayout {
         font.italic:      true
         Layout.fillWidth: true
         wrapMode:         Text.WordWrap
-        visible:          !control.isValid && !recommendedFeeAbsent.visible
+        visible:          !control.isValid && !recommendedFeeAbsent.visible && !maximumFeeNotification.visible
+    }
+
+    SFText {
+        id:               maximumFeeNotification
+        //% "The maximum fee is %1 %2"
+        text:             qsTrId("general-max-fee-fail").arg(Utils.uiStringToLocale(control.maxFee)).arg(control.feeLabel)
+        color:            Style.validator_error
+        font.pixelSize:   14
+        font.italic:      true
+        Layout.fillWidth: true
+        wrapMode:         Text.WordWrap
+        visible:          !control.isValid && control.maxFee > 0 && control.fee > control.maxFee
     }
 
     SFText {

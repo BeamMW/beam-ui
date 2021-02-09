@@ -37,7 +37,9 @@ namespace {
 
     QString getSwapAmount(const TxParameters &p)
     {
-        return beamui::AmountToUIString(*p.GetParameter<Amount>(TxParameterID::AtomicSwapAmount));
+        auto amount = *p.GetParameter<Amount>(TxParameterID::AtomicSwapAmount);
+        auto swapCoin = *p.GetParameter<AtomicSwapCoin>(TxParameterID::AtomicSwapCoin);
+        return beamui::AmountToUIString(amount, beamui::convertSwapCoinToCurrency(swapCoin));
     }
 
     bool isBeamSide(const TxParameters &p)
@@ -293,7 +295,7 @@ QString NotificationItem::message(AssetsManager::Ptr amgr) const
             {
                 QString currentVer = QString::fromStdString(
                     beamui::getCurrentLibVersion().to_string() + "." + std::to_string(beamui::getCurrentUIRevision()));
-                QString message("Your current version is v");
+                QString message("Your current version is v ");
                 message.append(currentVer);
                 message.append(". Please update to get the most of your Beam wallet.");
                 return message;

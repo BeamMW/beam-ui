@@ -19,6 +19,8 @@
 #include "ui_helpers.h"
 #include "fee_helpers.h"
 
+#include "wallet/transactions/swaps/bridges/ethereum/ethereum_side.h"
+
 #include <algorithm>
 #include <regex>
 
@@ -71,13 +73,13 @@ void SendSwapViewModel::fillParameters(const beam::wallet::TxParameters& paramet
             setSendCurrency(Currency::CurrBeam);
             setSendAmount(beamui::AmountToUIString(*beamAmount));
             setReceiveCurrency(convertSwapCoinToCurrency(*swapCoin));
-            setReceiveAmount(beamui::AmountToUIString(*swapAmount));
+            setReceiveAmount(beamui::AmountToUIString(*swapAmount, beamui::convertSwapCoinToCurrency(*swapCoin), false));
         }
         else
         {
             // Do not set fee, it is set automatically based on the currency param
             setSendCurrency(convertSwapCoinToCurrency(*swapCoin));
-            setSendAmount(beamui::AmountToUIString(*swapAmount));
+            setSendAmount(beamui::AmountToUIString(*swapAmount, beamui::convertSwapCoinToCurrency(*swapCoin), false));
             setReceiveCurrency(Currency::CurrBeam);
             setReceiveAmount(beamui::AmountToUIString(*beamAmount));
         }
@@ -156,12 +158,12 @@ bool SendSwapViewModel::getParametersValid() const
 
 QString SendSwapViewModel::getSendAmount() const
 {
-    return beamui::AmountToUIString(_sendAmountGrothes);
+    return beamui::AmountToUIString(_sendAmountGrothes, convertCurrency(_sendCurrency), false);
 }
 
 void SendSwapViewModel::setSendAmount(QString value)
 {
-    const auto amount = beamui::UIStringToAmount(value);
+    const auto amount = beamui::UIStringToAmount(value, convertCurrency(_sendCurrency));
     if (amount != _sendAmountGrothes)
     {
         _sendAmountGrothes = amount;
@@ -220,12 +222,12 @@ void SendSwapViewModel::setSendCurrency(Currency value)
 
 QString SendSwapViewModel::getReceiveAmount() const
 {
-    return beamui::AmountToUIString(_receiveAmountGrothes);
+    return beamui::AmountToUIString(_receiveAmountGrothes, convertCurrency(_receiveCurrency), false);
 }
 
 void SendSwapViewModel::setReceiveAmount(QString value)
 {
-    const auto amount = beamui::UIStringToAmount(value);
+    const auto amount = beamui::UIStringToAmount(value, convertCurrency(_receiveCurrency));
     if (amount != _receiveAmountGrothes)
     {
         _receiveAmountGrothes = amount;
@@ -247,6 +249,7 @@ void SendSwapViewModel::setReceiveFee(unsigned int value)
         emit receiveFeeChanged();
         emit canSendChanged();
         emit isReceiveFeeOKChanged();
+        emit enoughToReceiveChanged();
     }
 }
 
@@ -343,17 +346,42 @@ void SendSwapViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::S
 
 bool SendSwapViewModel::isEnough() const
 {
-    const auto total = _sendAmountGrothes + _sendFeeGrothes + _changeGrothes;
+    auto total = _sendAmountGrothes + _sendFeeGrothes + _changeGrothes;
     if (Currency::CurrBeam == _sendCurrency)
     {
         auto available = beam::AmountBig::get_Lo(beam::Asset::s_BeamID);
         return available >= total;
     }
 
-    // TODO sentFee is fee rate. should be corrected
     auto swapCoin = convertCurrencyToSwapCoin(_sendCurrency);
+    if (isEthereumBased(_sendCurrency))
+    {
+        if (_sendCurrency == Currency::CurrEthereum)
+        {
+            total = _sendAmountGrothes + beam::wallet::EthereumSide::CalcLockTxFee(_sendFeeGrothes, swapCoin);
 
+            return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) > total;
+        }
+
+        return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) > _sendAmountGrothes &&
+            AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) >
+            beam::wallet::EthereumSide::CalcLockTxFee(_sendFeeGrothes, swapCoin);
+    }
+
+    // TODO sentFee is fee rate. should be corrected
     return AppModel::getInstance().getSwapCoinClient(swapCoin)->getAvailable() > total;
+}
+
+bool SendSwapViewModel::isEnoughToReceive() const
+{
+    if (isEthereumBased(_receiveCurrency))
+    {
+        auto swapCoin = convertCurrencyToSwapCoin(_receiveCurrency);
+        auto fee = beam::wallet::EthereumSide::CalcWithdrawTxFee(_receiveFeeGrothes, swapCoin);
+
+        return AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) > fee;
+    }
+    return true;
 }
 
 void SendSwapViewModel::recalcAvailable()
@@ -456,7 +484,13 @@ QString SendSwapViewModel::getRate() const
 
     if (!beamAmount) return QString();
 
-    return QMLGlobals::divideWithPrecision8(beamui::AmountToUIString(otherCoinAmount), beamui::AmountToUIString(beamAmount));
+    beamui::Currencies otherCurrency =
+        convertCurrency(isSendBeam() ? _receiveCurrency : _sendCurrency);
+
+    return QMLGlobals::divideWithPrecision(
+        beamui::AmountToUIString(otherCoinAmount, otherCurrency, false),
+        beamui::AmountToUIString(beamAmount),
+        beamui::getCurrencyDecimals(otherCurrency));
 }
 
 QString SendSwapViewModel::getSecondCurrencySendRateValue() const

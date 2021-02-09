@@ -8,7 +8,7 @@ import "."
 
 Dialog {
     id: dialog
-
+    modal: true
     property string locked
     property string secondCurrencyLabel
     property string secondCurrencyRateValue
@@ -18,9 +18,10 @@ Dialog {
         maturingMaxPrivacy: true
     }
     
-    width: 460
-    height: 610
-    padding: 30
+    width:          460
+    height:         610
+    parent:         Overlay.overlay
+    padding:        30
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
     visible: false

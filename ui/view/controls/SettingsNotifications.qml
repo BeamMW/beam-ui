@@ -17,7 +17,7 @@ SettingsFoldable {
 
         CustomSwitch {
             id: walletVersionNotificationsSwitch
-            //% "Wallet update"
+            //% "Wallet updates"
             text: qsTrId("settings-notifications-version")
             font.pixelSize: 14
             font.styleName:  "Regular"

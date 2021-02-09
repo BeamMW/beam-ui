@@ -195,6 +195,7 @@ please review your settings and try again"
                             id:                       sendFeeInput
                             currency:                 viewModel.sentCurrency
                             minFee:                   currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
+                            maxFee:                     BeamGlobals.getMaximumFee(currency)
                             recommendedFee:           BeamGlobals.getRecommendedFee(currency)
                             feeLabel:                 BeamGlobals.getFeeRateLabel(currency)
                             color:                    Style.accent_outgoing
@@ -326,9 +327,13 @@ please review your settings and try again"
                                     rateWasInFocus = true;
                                     rateInput.focus = false;
                                 }
+                                var sendFee = sendFeeInput.fee;
+                                var receiveFee = receiveFeeInput.fee;
                                 var sentCurency = sentAmountInput.currencyIdx;
                                 sentAmountInput.currencyIdx = receiveAmountInput.currencyIdx;
                                 receiveAmountInput.currencyIdx = sentCurency;
+                                sendFeeInput.fee = receiveFee;
+                                receiveFeeInput.fee = sendFee;
                                 if (rateWasInFocus) {
                                     rateInput.focus = true;
                                     rateInput.text = rate;
@@ -379,6 +384,10 @@ please review your settings and try again"
                                     //% "The swap amount must be greater than the transaction fee"
                                     return qsTrId("send-less-than-fee")
                                 }
+                                if(!viewModel.isEnoughToReceive) {
+                                    //% "There is not enough funds to complete the transaction"
+                                    return qsTrId("send-not-enough")
+                                }
                                 return ""
                             }
 
@@ -414,6 +423,7 @@ please review your settings and try again"
                             id:                         receiveFeeInput
                             currency:                   viewModel.receiveCurrency
                             minFee:                     BeamGlobals.getMinimalFee(currency, false)
+                            maxFee:                     BeamGlobals.getMaximumFee(currency)
                             recommendedFee:             BeamGlobals.getRecommendedFee(currency)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(currency)
                             color:                      Style.accent_outgoing
@@ -470,7 +480,7 @@ please review your settings and try again"
                                 SFText {
                                     font.pixelSize:   14
                                     color:            Style.content_main
-                                    text:             BeamGlobals.calcTotalFee(viewModel.receiveCurrency, viewModel.receiveFee)
+                                    text:             BeamGlobals.calcWithdrawTxFee(viewModel.receiveCurrency, viewModel.receiveFee)
                                     visible:          parent.showEstimatedFee
                                 }
 
@@ -515,8 +525,8 @@ please review your settings and try again"
                                             parseFloat(Utils.localeDecimalToCString(rateInput.rate)) || 0;
                                         if (sentAmountInput.amount != "0" && rateValue) {
                                             receiveAmountInput.amount = viewModel.isSendBeam
-                                                ? BeamGlobals.multiplyWithPrecision8(sentAmountInput.amount, rateValue)
-                                                : BeamGlobals.divideWithPrecision8(sentAmountInput.amount, rateValue);
+                                                ? BeamGlobals.multiplyWithPrecision(sentAmountInput.amount, rateValue, BeamGlobals.getCurrencyDecimals(viewModel.sendCurrency))
+                                                : BeamGlobals.divideWithPrecision(sentAmountInput.amount, rateValue, BeamGlobals.getCurrencyDecimals(viewModel.sendCurrency));
                                             checkReceive();
                                         } else if (!rateValue) {
                                             receiveAmountInput.amount = "0";
@@ -633,9 +643,10 @@ please review your settings and try again"
                                     text:                   qsTrId("send-swap-token") + ":"
                                 }
 
+                                ColumnLayout {
+                                    spacing: 11
                                 RowLayout {
                                     Layout.fillWidth:        true
-                                    Layout.rightMargin:      showTokenLink.visible ? 0 : 40
                                     Layout.topMargin:        rateRow.rateValid ? 22 : 0
 
                                     SFLabel {
@@ -648,13 +659,29 @@ please review your settings and try again"
                                     }
                                 
                                     LinkButton {
-                                        id: showTokenLink
-                                        //% "Show token"
-                                        text: qsTrId("show-token")
+                                            //% "More details"
+                                            text: qsTrId("more-details")
                                         linkColor: Style.accent_incoming
-                                        visible:  thisView.canSend()
+                                            enabled:  thisView.canSend()
                                         onClicked: {
                                             tokenInfoDialog.open();
+                                        }
+                                    }
+                                }
+
+                                    CustomButton {
+                                        //% "copy and close"
+                                        text:                qsTrId("wallet-receive-swap-copy-and-close")
+                                        palette.buttonText:  Style.content_main
+                                        iconColor:           Style.content_main
+                                        palette.button:      Style.background_button
+                                        icon.source:         "qrc:/assets/icon-copy.svg"
+                                        enabled:             thisView.canSend()
+                                        onClicked: {
+                                            BeamGlobals.copyToClipboard(viewModel.transactionToken);
+                                            thisView.saveAddress();
+                                            viewModel.startListen();
+                                            onClosed();
                                         }
                                     }
                                 }
@@ -672,22 +699,6 @@ please review your settings and try again"
                 Layout.topMargin:    30
                 Layout.bottomMargin: 30
                 spacing:             30
-
-                CustomButton {
-                    //% "copy token and close"
-                    text:                qsTrId("wallet-receive-swap-copy-token-and-close")
-                    palette.buttonText:  Style.content_main
-                    iconColor:           Style.content_main
-                    palette.button:      Style.background_button
-                    icon.source:         "qrc:/assets/icon-copy.svg"
-                    enabled:             thisView.canSend()
-                    onClicked: {
-                        BeamGlobals.copyToClipboard(viewModel.transactionToken);
-                        thisView.saveAddress();
-                        viewModel.startListen();
-                        onClosed();
-                    }
-                }
 
                 CustomButton {
                     //% "publish offer"

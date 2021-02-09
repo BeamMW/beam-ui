@@ -44,7 +44,7 @@ public:
 
     // Currency utils
     // TODO maybe to need use beam::Amount instead of int
-    Q_INVOKABLE static QString calcTotalFee(Currency currency, unsigned int feeRate);
+    Q_INVOKABLE static QString calcWithdrawTxFee(Currency currency, unsigned int feeRate);
     Q_INVOKABLE static QString calcFeeInSecondCurrency(unsigned int fee, const QString& exchangeRate, const QString& secondCurrencyUnitName);
     Q_INVOKABLE static QString calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrUnitName);
 
@@ -53,8 +53,10 @@ public:
     Q_INVOKABLE static QString getCurrencyName(Currency);
     Q_INVOKABLE static QString getFeeRateLabel(Currency);
     Q_INVOKABLE static QString getCurrencySubunitFromLabel(const QString& currLabel);
+    Q_INVOKABLE static uint    getCurrencyDecimals(Currency);
     
     Q_INVOKABLE static QString getMinimalFee(Currency, bool isShielded);
+    Q_INVOKABLE static QString getMaximumFee(Currency);
     Q_INVOKABLE static QString getRecommendedFee(Currency);
     Q_INVOKABLE static QString getDefaultFee(Currency);
 
@@ -63,9 +65,8 @@ public:
     Q_INVOKABLE static bool haveSwapClient(Currency);
     Q_INVOKABLE static QString rawTxParametrsToTokenStr(const QVariant& variantTxParams);
     Q_INVOKABLE static bool canReceive(Currency currency);
-    Q_INVOKABLE static QString divideWithPrecision8(const QString& dividend, const QString& divider);
-    Q_INVOKABLE static QString multiplyWithPrecision8(const QString& first, const QString& second);
-    Q_INVOKABLE static QString roundWithPrecision8(const QString& number);
+    Q_INVOKABLE static QString divideWithPrecision(const QString& dividend, const QString& divider, uint precision);
+    Q_INVOKABLE static QString multiplyWithPrecision(const QString& first, const QString& second, uint precision);
 private:
     QQmlEngine& _engine;
 };

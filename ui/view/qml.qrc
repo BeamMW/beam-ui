@@ -241,6 +241,10 @@
         <file>assets/icon-bch.svg</file>
         <file>assets/icon-dash.svg</file>
         <file>assets/icon-doge.svg</file>
+        <file>assets/icon-eth.svg</file>
+        <file>assets/icon-dai.svg</file>
+        <file>assets/icon-usdt.svg</file>
+        <file>assets/icon-wbtc.svg</file>
         <file>assets/icon-print.svg</file>
         <file>assets/icon-recovery.svg</file>
         <file>assets/password.svg</file>
@@ -308,5 +312,9 @@
         <file>assets/graph-teal-big.svg</file>
         <file>assets/graph-white-big.svg</file>
         <file>assets/icon-swap-currencies-raw.svg</file>
+        <file>controls/SeedPhraseDialog.qml</file>
+        <file>controls/SwapEthSettings.qml</file>
+        <file>controls/ShowAddressesDialog.qml</file>
+        <file>controls/LoadingSpinner.qml</file>
     </qresource>
 </RCC>

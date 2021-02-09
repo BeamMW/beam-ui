@@ -24,8 +24,8 @@ Rectangle {
         id: updateInfoProvider
         onShowUpdateNotification: function(newVersion, currentVersion, id) {
             var popup = Qt.createComponent("controls/NotificationPopup.qml").createObject(main);
-            popup.title = "New version v" + newVersion + " is avalable";
-            popup.message = "Your current version is v" + currentVersion + ". Please update to get the most of your Beam wallet.";
+            popup.title = "New version v " + newVersion + " is avalable";
+            popup.message = "Your current version is v " + currentVersion + ". Please update to get the most of your Beam wallet.";
             popup.acceptButtonText = "update now";
             popup.onCancel = function () {
                 updateInfoProvider.onCancelPopup(id);

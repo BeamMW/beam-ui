@@ -24,11 +24,6 @@
 
 #include <set>
 
-namespace beamui
-{
-    class Filter;
-}  // namespace beamui
-
 class WalletModel
     : public QObject
     , public beam::wallet::WalletClient
@@ -59,9 +54,6 @@ public:
     beam::Height getCurrentHeight() const;
     beam::Timestamp getCurrentHeightTimestamp() const;
     beam::Block::SystemState::ID getCurrentStateID() const;
-    beam::TxoID getTotalShieldedCount() const;
-    beam::TxoID getShieldedPer24h() const;
-    uint8_t getMPLockTimeLimit() const;
 
 signals:
     // INTERNAL SIGNALS, DO NOT SUBSCRIBE IN OTHER UI OBJECTS.
@@ -161,11 +153,7 @@ private slots:
     void doFunction(const std::function<void()>& func);
 
 private:
-    std::unique_ptr<beamui::Filter> m_shieldedPer24hFilter;
     std::set<beam::wallet::WalletID> m_myWalletIds;
     std::set<std::string> m_myAddrLabels;
     beam::wallet::WalletStatus m_status;
-    std::vector<std::pair<beam::wallet::Height, beam::wallet::TxoID>> m_shieldedCountHistoryPart;
-    beam::wallet::TxoID m_shieldedPer24h = 0;
-    uint8_t m_mpLockTimeLimit = 0;
 };

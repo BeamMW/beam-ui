@@ -45,6 +45,10 @@ namespace beamui
     macro(Qtum,        "QTUM",          "QTUM",          "qsatoshi", "qsat/kB",   8) \
     macro(Dogecoin,    "Dogecoin",      "DOGE",          "satoshi",  "sat/kB",    8) \
     macro(Dash,        "Dash",          "DASH",          "duff",     "duff/kB",   8) \
+    macro(Ethereum,    "Ethereum",      "ETH",           "gwei",     "gwei",      9) \
+    macro(Dai,         "Dai",           "DAI",           "gwei?",    "gwei",      9) \
+    macro(Usdt,        "Usdt",          "USDT",          "unit?",    "gwei",      6) \
+    macro(WrappedBTC , "WBTC",          "WBTC",          "satoshi",  "gwei",      8) \
     macro(Usd,         "USD",           "USD",           "cent",     "",          2) \
     macro(Unknown,     "",              "",              "",         "",          0)
 
@@ -65,9 +69,10 @@ namespace beamui
     QString getFeeRateLabel(Currencies);
     QString getCurrencySubunitLabel(Currencies);
     QString getCurrencySubunitFromLabel(const QString& currLabel);
+    uint8_t getCurrencyDecimals(Currencies);
 
     /// Convert amount to ui string with "." as a separator. With the default @coinType, no currency label added.
-    QString AmountToUIString(const beam::Amount& value, Currencies coinType = Currencies::Unknown);
+    QString AmountToUIString(const beam::Amount& value, Currencies coinType = Currencies::Unknown, bool currencyLabel = true);
     QString AmountToUIString(const beam::Amount& value, const QString& unitName, uint8_t decimalPlaces = 0);
     QString AmountBigToUIString(const beam::AmountBig::Type& value);
 
@@ -75,11 +80,12 @@ namespace beamui
     QString AmountInGrothToUIString(const beam::Amount& value);
 
     /// expects ui string with a "." as a separator
-    beam::Amount UIStringToAmount(const QString& value);
+    beam::Amount UIStringToAmount(const QString& value, Currencies currency = Currencies::Unknown);
 
     Currencies convertExchangeRateCurrencyToUiCurrency(beam::wallet::ExchangeRate::Currency);
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     Currencies convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin coin);
+    beam::wallet::AtomicSwapCoin convertCurrenciesToSwapCoin(Currencies currency);
 #endif
 
     QString toString(const beam::wallet::WalletID&);
