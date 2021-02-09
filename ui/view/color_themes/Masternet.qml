@@ -17,9 +17,13 @@ AbstractColors {
     property color background_main:       "#171717"
     property color background_main_top:   "#393939"
     property color background_second:     Qt.rgba(255, 255, 255, 0.05)
-    property color background_row_even:   "#07ffffff"
-    property color background_row_odd:    "#0cffffff"
-    property color background_details:    "#3d3d3d"
+
+    property color background_row_even:         "#07ffffff"
+    property color background_row_odd:          "#0cffffff"
+    property color background_details:          "#3d3d3d"
+    property color background_row_details_even: "#07ffffff"
+    property color background_row_details_odd:  "#0cffffff"
+
     property color background_button:     Qt.rgba(255, 255, 255, 0.1)
     property color background_popup:      "#323232"
     property color row_selected:          "#353636"

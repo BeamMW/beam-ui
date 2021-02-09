@@ -213,7 +213,12 @@ Control {
                 collapsed: true
                 rowInModel: styleData.row !== undefined && styleData.row >= 0 &&  styleData.row < txProxyModel.count
                 rowHeight: transactionsTable.rowHeight
-                backgroundColor: styleData.selected ? Style.row_selected : (styleData.alternate ? Style.background_row_even : Style.background_row_odd)
+
+                backgroundColor: styleData.selected ?
+                                 Style.row_selected :
+                                 (styleData.alternate ? (!collapsed || animating ? Style.background_row_details_even : Style.background_row_even)
+                                                      : (!collapsed || animating ? Style.background_row_details_odd : Style.background_row_odd))
+
                 property var myModel: parent.model
                 property bool hideFiltered: true
 

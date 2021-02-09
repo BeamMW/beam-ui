@@ -3,6 +3,7 @@ import QtQuick 2.11
 Rectangle {
     id: rowItem
     property bool collapsed: true
+    property bool animating: false
     property bool rowInModel: true 
     property int rowHeight: 10
     property color backgroundColor: Style.background_row_even
@@ -106,7 +107,14 @@ Rectangle {
             duration: expandAnimation.expandDuration
         }
 
-        onStopped: rowItem.collapsed = false
+        onStarted: {
+            rowItem.animating = true
+        }
+
+        onStopped: {
+            rowItem.collapsed = false
+            rowItem.animating = false
+        }
     }
 
     ParallelAnimation {
@@ -130,6 +138,13 @@ Rectangle {
             duration: collapseAnimation.collapseDuration
         }
 
-        onStopped: rowItem.collapsed = true
+         onStarted: {
+            rowItem.animating = true
+        }
+
+        onStopped: {
+            rowItem.collapsed = true
+            rowItem.animating = false
+        }
     }
 }

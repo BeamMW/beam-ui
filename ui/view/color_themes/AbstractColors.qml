@@ -19,6 +19,8 @@ QtObject {
     property color background_second;
     property color background_row_even;
     property color background_row_odd;
+    property color background_row_details_even;
+    property color background_row_details_odd;
     property color background_details;
     property color background_button;
     property color background_popup;
