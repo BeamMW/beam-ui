@@ -183,12 +183,13 @@ Control {
 
             model: SortFilterProxyModel {
                 id: txProxyModel
+
                 source: SortFilterProxyModel {
                     id: searchProxyModel
-                    source: tableViewModel.transactions
                     filterRole: "search"
                     filterString: searchBox.text
                     filterSyntax: SortFilterProxyModel.Wildcard
+                    filterCaseSensitivity: Qt.CaseInsensitive
 
                     source: SortFilterProxyModel {
                         id: assetFilterProxy
@@ -202,9 +203,7 @@ Control {
                 sortOrder: transactionsTable.sortIndicatorOrder
                 sortCaseSensitivity: Qt.CaseInsensitive
                 sortRole: transactionsTable.getColumn(transactionsTable.sortIndicatorColumn).role + "Sort"
-
                 filterSyntax: SortFilterProxyModel.Wildcard
-                filterCaseSensitivity: Qt.CaseInsensitive
             }
 
             rowDelegate: ExpandableRowDelegate {
