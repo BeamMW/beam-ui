@@ -25,10 +25,10 @@ public:
         Undefined = 0,
         Comission,
         Coinbase,
+        Shielded,
         Regular,
         Change,
-        Treasury,
-        Shielded
+        Treasury
     };
     Q_ENUMS(EnType)
 };
