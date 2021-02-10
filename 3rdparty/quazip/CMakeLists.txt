@@ -56,6 +56,7 @@ target_include_directories(${TARGET_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/3rdparty/
 message(STATUS "zlib ${CMAKE_CURRENT_BINARY_DIR}/../zlib")
 message(STATUS "zlib ${PROJECT_SOURCE_DIR}/3rdparty/zlib")
 
+include_directories(${PROJECT_SOURCE_DIR}/3rdparty/zlib)
 target_include_directories(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/3rdparty/zlib)
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/../zlib)
 
