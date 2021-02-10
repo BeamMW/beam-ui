@@ -28,7 +28,7 @@ namespace beamui {
         };
 
         explicit AppsApiClient(IHandler&);
-        ~AppsApiClient() = default;
+        virtual ~AppsApiClient() = default;
 
         //
         // Methods below must be called in the main (non-UI) reactor thread
