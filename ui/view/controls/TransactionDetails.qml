@@ -292,7 +292,6 @@ RowLayout {
             color: Style.content_main
             wrapMode: Text.WrapAnywhere 
             text: getHighlitedText(root.comment)
-            font.styleName: "Italic"
             elide: Text.ElideRight
             onCopyText: textCopied(root.comment)
             visible: isTextFieldVisible(root.comment)
@@ -312,7 +311,6 @@ RowLayout {
             font.pixelSize: 14
             color: Style.content_main
             text: getHighlitedText(root.txID)
-            font.styleName: "Italic"
             elide: Text.ElideMiddle
             onCopyText: textCopied(root.txID)
             visible: isTextFieldVisible(root.txID) && !isZeroed(root.txID)
@@ -333,7 +331,6 @@ RowLayout {
             color: Style.content_main
             //wrapMode: Text.Wrap
             text: getHighlitedText(root.kernelID)
-            font.styleName: "Italic"
             elide: Text.ElideMiddle
             onCopyText: textCopied(root.kernelID)
             visible: isTextFieldVisible(root.kernelID) && !isZeroed(root.kernelID)
@@ -415,7 +412,6 @@ RowLayout {
             wrapMode: Text.Wrap
             visible: root.failureReason.length > 0 && root.isFieldVisible()
             text: root.failureReason.length > 0 ? root.failureReason : ""
-            font.styleName: "Italic"
             elide: Text.ElideRight
             onCopyText: textCopied(text)
         }

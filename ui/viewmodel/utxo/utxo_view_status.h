@@ -25,11 +25,11 @@ public:
         Undefined = 0,
         Available,
         Maturing,
+        MaturingMP,
         Unavailable,
         Outgoing,
         Incoming,
         Spent,
-        MaturingMP,
     };
     Q_ENUMS(EnStatus)
 };

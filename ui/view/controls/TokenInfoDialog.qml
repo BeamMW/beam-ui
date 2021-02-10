@@ -18,10 +18,10 @@ Dialog {
         id:     viewModel
     }
 
+    height: contentGrid.implicitHeight + buttonsLayout.implicitHeight + 90
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
 
-    
     parent: Overlay.overlay
     padding: 0
 
@@ -42,7 +42,10 @@ Dialog {
     }
 
     contentItem: ColumnLayout {
+        id: contentColumn
+
         GridLayout {
+            id: contentGrid
             Layout.margins:         30
             rowSpacing:             14
             columnSpacing:          16
@@ -201,7 +204,6 @@ Dialog {
                 Layout.fillWidth:             true
                 visible:                      viewModel.token != viewModel.address
                 ScrollView {
-                    Layout.fillWidth:             true
                     Layout.preferredWidth:        578
                     Layout.maximumHeight:         200
                     clip:                         true
