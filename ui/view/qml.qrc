@@ -78,10 +78,6 @@
         <file>wallet/TxTable.qml</file>
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>
-        <file>wallet/AssetsConnect.qml</file>
-        <file>wallet/AvailablePanelNew.qml</file>
-        <file>wallet/InProgressPanelNew.qml</file>
-        <file>wallet/MainInfoPanel.qml</file>
         <file>wallet/TransactionDetails.qml</file>
         <file>wallet/AmountTip.qml</file>
         <file>dex/MarketPanel.qml</file>
@@ -309,10 +305,6 @@
         <file>assets/asset-3.svg</file>
         <file>assets/asset-err.svg</file>
         <file>assets/icon-usd.svg</file>
-        <file>assets/graph-teal-small.svg</file>
-        <file>assets/graph-white-small.svg</file>
-        <file>assets/graph-teal-big.svg</file>
-        <file>assets/graph-white-big.svg</file>
         <file>assets/icon-swap-currencies-raw.svg</file>
         <file>controls/SeedPhraseDialog.qml</file>
         <file>controls/SwapEthSettings.qml</file>

@@ -257,34 +257,6 @@
         <source>Delete contact</source>
         <translation>Elimina contatto</translation>
     </message>
-    <message id="available-panel-available">
-        <source>Available</source>
-        <translation>Disponibile</translation>
-    </message>
-    <message id="available-panel-locked">
-        <source>Locked</source>
-        <translation type="unfinished">Locked</translation>
-    </message>
-    <message id="available-panel-sending">
-        <source>Sending</source>
-        <translation>Invio</translation>
-    </message>
-    <message id="available-panel-receiving">
-        <source>Receiving</source>
-        <translation>Ricezione</translation>
-    </message>
-    <message id="available-panel-maturing">
-        <source>Maturing</source>
-        <translation>Maturazione</translation>
-    </message>
-    <message id="available-panel-change">
-        <source>Change</source>
-        <translation>Modifica</translation>
-    </message>
-    <message id="available-panel-incoming">
-        <source>Incoming</source>
-        <translation type="unfinished">Incoming</translation>
-    </message>
     <message id="settings-version">
         <source>v</source>
         <oldsource>Version</oldsource>
@@ -2437,11 +2409,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Payments</source>
         <translation type="unfinished">Payments</translation>
     </message>
-    <message id="available-panel-maturing-mp">
-        <source>Max Privacy</source>
-        <oldsource>Max privacy</oldsource>
-        <translation type="unfinished">Max privacy</translation>
-    </message>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(max privacy %2% unlinked)</source>
         <translation type="unfinished">Maturing%1(max privacy %2% unlinked)</translation>
@@ -2778,10 +2745,6 @@ Please try again later or create an offer yourself.</source>
     <message id="asset-inout-tip">
         <source>%1 active transactions
 (%2 incoming, %3 outgoing)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="assets-connect-other">
-        <source>Connect other assets</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-assets-title">

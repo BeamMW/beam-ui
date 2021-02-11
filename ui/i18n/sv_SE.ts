@@ -257,34 +257,6 @@
         <source>Delete contact</source>
         <translation>Ta bort kontakt</translation>
     </message>
-    <message id="available-panel-available">
-        <source>Available</source>
-        <translation>Tillgängligt</translation>
-    </message>
-    <message id="available-panel-locked">
-        <source>Locked</source>
-        <translation>Låst</translation>
-    </message>
-    <message id="available-panel-sending">
-        <source>Sending</source>
-        <translation>Skickar</translation>
-    </message>
-    <message id="available-panel-receiving">
-        <source>Receiving</source>
-        <translation>Mottager</translation>
-    </message>
-    <message id="available-panel-maturing">
-        <source>Maturing</source>
-        <translation>Mognar</translation>
-    </message>
-    <message id="available-panel-change">
-        <source>Change</source>
-        <translation>Ändra</translation>
-    </message>
-    <message id="available-panel-incoming">
-        <source>Incoming</source>
-        <translation>Inkommande</translation>
-    </message>
     <message id="settings-version">
         <source>v</source>
         <oldsource>Version</oldsource>
@@ -2434,11 +2406,6 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <source>Payments</source>
         <translation>Betalningar</translation>
     </message>
-    <message id="available-panel-maturing-mp">
-        <source>Max Privacy</source>
-        <oldsource>Max privacy</oldsource>
-        <translation type="unfinished">Max sekretess</translation>
-    </message>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(max privacy %2% unlinked)</source>
         <translation>Mognar%1(max integritet %2% olänkad)</translation>
@@ -2775,10 +2742,6 @@ Please try again later or create an offer yourself.</source>
     <message id="asset-inout-tip">
         <source>%1 active transactions
 (%2 incoming, %3 outgoing)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="assets-connect-other">
-        <source>Connect other assets</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-assets-title">

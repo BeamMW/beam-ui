@@ -33,10 +33,8 @@ Control {
     property int    maxVisibleRows: 3
     property int    selectedId:     -1
     property int    selectedIdx:    -1
-    property alias  folded:         viewModel.folded
 
     readonly property int   assetsCount:     viewModel.assets.rowCount()
-    readonly property bool  connectVisible:  false //assetsCount < 3
     readonly property real  itemHeight:      67
 
     readonly property real itemWidth: {
@@ -49,10 +47,6 @@ Control {
     }
 
     readonly property int gridColumns: {
-        if (control.connectVisible) {
-            return control.assetsCount + 1
-        }
-
         var avail = control.availableWidth
         var cnt = 0
 
@@ -98,110 +92,75 @@ Control {
         }
     }
 
-    contentItem: FoldablePanel {
-        id: foldable
+    contentItem: ScrollView {
+        id: scroll
 
-        //% "Assets"
-        title: qsTrId("wallet-assets-title")
+        implicitHeight: control.scrollViewHeight
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+        ScrollBar.vertical.policy: control.hasScroll && hovered ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
 
-        padding:         0
-        background:      null
-        folded:          false
-        minHeaderHeight: searchBox.implicitHeight
+        clip: true
+        hoverEnabled: true
 
-        headerContent: SearchBox {
-           id: searchBox
-           //% "Asset name"
-           placeholderText: qsTrId("wallet-search-asset")
-        }
+        Grid {
+            id: grid
 
-        content: ScrollView {
-            id: scroll
+            Layout.fillWidth: true
+            columnSpacing: control.hSpacing
+            rowSpacing:    control.vSpacing
+            columns:       control.gridColumns
 
-            implicitHeight: control.scrollViewHeight
-            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-            ScrollBar.vertical.policy: control.hasScroll && hovered ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+            Repeater {
+                model: viewModel.assets
+                delegate: RowLayout {
+                    Layout.fillWidth: (model.index +  1) % grid.columns == 0
+                    spacing: 0
 
-            clip: true
-            hoverEnabled: true
+                    AssetInfo {
+                        implicitHeight: control.itemHeight
+                        implicitWidth:  control.itemWidth
 
-            Grid {
-                id: grid
+                        inTxCnt:      model.inTxCnt
+                        outTxCnt:     model.outTxCnt
+                        amount:       model.amount
+                        unitName:     model.unitName
+                        selected:     model.index == control.selectedIdx
+                        icon:         model.icon
+                        color:        model.color
+                        borderColor:  model.selectionColor
+                        rateUnit:     model.rateUnit
+                        rate:         model.rate
+                        opacity:      control.selectedIdx < 0  ? 1 : (model.index == control.selectedIdx ? 1 : 0.6)
 
-                Layout.fillWidth: true
-                columnSpacing: control.hSpacing
-                rowSpacing:    control.vSpacing
-                columns:       control.gridColumns
+                        onTip: function (show, text, iRight, iBtm) {
+                            tip.visible = show
+                            tip.text    = text
 
-                Repeater {
-                    model: SortFilterProxyModel {
-                        source: viewModel.assets
-                        filterRole: "search"
-                        filterString: searchBox.text
-                        filterSyntax: SortFilterProxyModel.Wildcard
-                        filterCaseSensitivity: Qt.CaseInsensitive
-                    }
+                            tip.x       = iRight - tip.width
+                            tip.y       = iBtm + 6
 
-                    delegate: RowLayout {
-                        Layout.fillWidth: (model.index +  1) % grid.columns == 0
-                        spacing: 0
-
-                        AssetInfo {
-                            implicitHeight: control.itemHeight
-                            implicitWidth:  control.itemWidth
-
-                            inTxCnt:      model.inTxCnt
-                            outTxCnt:     model.outTxCnt
-                            amount:       model.amount
-                            unitName:     model.unitName
-                            selected:     model.index == control.selectedIdx
-                            icon:         model.icon
-                            color:        model.color
-                            borderColor:  model.selectionColor
-                            rateUnit:     model.rateUnit
-                            rate:         model.rate
-                            opacity:      control.selectedIdx < 0  ? 1 : (model.index == control.selectedIdx ? 1 : 0.6)
-
-                            onTip: function (show, text, iRight, iBtm) {
-                                tip.visible = show
-                                tip.text    = text
-
-                                tip.x       = iRight - tip.width
-                                tip.y       = iBtm + 6
-
-                                var pr = this
-                                while (pr != tip.parent) {
-                                    tip.x += pr.x
-                                    tip.y += pr.y
-                                    pr = pr.parent
-                                }
-                            }
-
-                            onClicked: function () {
-                                if (control.selectedIdx == model.index) {
-                                    control.selectedIdx = -1
-                                    control.selectedId = -1
-                                } else {
-                                    control.selectedIdx = model.index
-                                    control.selectedId  = model.id
-                                }
+                            var pr = this
+                            while (pr != tip.parent) {
+                                tip.x += pr.x
+                                tip.y += pr.y
+                                pr = pr.parent
                             }
                         }
 
-                        Item {
-                           Layout.fillWidth: true
-                           visible: viewModel.assets.rowCount() > 1
+                        onClicked: function () {
+                            if (control.selectedIdx == model.index) {
+                                control.selectedIdx = -1
+                                control.selectedId = -1
+                            } else {
+                                control.selectedIdx = model.index
+                                control.selectedId  = model.id
+                            }
                         }
                     }
-                }
 
-                AssetsConnect {
-                    visible: control.connectVisible
-                    width:   control.connectWidth
-                    height:  control.itemHeight
-
-                    onClicked: function () {
-                        BeamGlobals.showMessage("'Connect asset' action is not implemented yet")
+                    Item {
+                       Layout.fillWidth: true
+                       visible: viewModel.assets.rowCount() > 1
                     }
                 }
             }

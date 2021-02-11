@@ -14,22 +14,18 @@ Item  {
 
     width: showLed ? led.width : text_label.width
     height: 20
-
     state: "normal"
-
     signal clicked()
 
     SFText {
         id: text_label
 
         anchors.horizontalCenter: parent.horizontalCenter
-
         font.pixelSize: 12
-        font.styleName: "Bold"; font.weight: Font.Bold
+        font.styleName: "DemiBold"; font.weight: Font.DemiBold
         font.capitalization: capitalization
-        color: Style.section
-        //opacity: 0.4
         text: label
+        color: Style.section
 
         MouseArea {
             anchors.fill: parent
@@ -41,14 +37,10 @@ Item  {
     Rectangle {
         id: led
 
-//        anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-
         width: text_label.width + 16*2
         height: 2
-
         color: Style.active
-
         visible: false
     }
 

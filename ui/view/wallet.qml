@@ -132,30 +132,10 @@ Item {
                 }
             }
 
-            // not used, secondCurrencyLabel & secondCurrencyRateValue are not available in view
-            //MaxPrivacyCoinsDialog {
-            //    id: mpDialog
-            //    locked:                     viewModel.beamLockedMaturingMP
-            //    secondCurrencyLabel:        viewModel.secondCurrencyLabel
-            //    secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
-            //}
-
-            MainInfoPanel {
-                id: infoPanel
-                Layout.topMargin: 30
-                Layout.fillWidth: true
-            }
-
             AssetsPanel {
                 id: assets
-                Layout.topMargin: 20
+                Layout.topMargin: 25
                 Layout.fillWidth: true
-
-                Binding {
-                    target:   infoPanel
-                    property: "selectedAsset"
-                    value:    assets.selectedId
-                }
 
                 Binding {
                     target:    txTable
@@ -171,7 +151,7 @@ Item {
                 font {
                     pixelSize: 14
                     letterSpacing: 4
-                    styleName: "Bold"; weight: Font.Bold
+                    styleName: "DemiBold"; weight: Font.DemiBold
                     capitalization: Font.AllUppercase
                 }
 
