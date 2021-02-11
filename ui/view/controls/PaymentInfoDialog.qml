@@ -18,6 +18,7 @@ Dialog {
     y: (parent.height - height) / 2
     parent: Overlay.overlay
     padding: 30
+    height: headerLayout.height + 20 + contentLayout.height + 20 + buttonsLayout.height + 60
 
     closePolicy: Popup.NoAutoClose | Popup.CloseOnEscape
 
@@ -41,6 +42,7 @@ Dialog {
     contentItem: ColumnLayout {
         spacing:    0
         RowLayout {
+            id: headerLayout
             SFText {
                 Layout.fillWidth:       true
                 horizontalAlignment:    Text.AlignHCenter
@@ -67,6 +69,7 @@ Dialog {
         }
 
         GridLayout {
+            id: contentLayout
             Layout.fillWidth: true
             Layout.preferredWidth: 400
             Layout.topMargin:       20
