@@ -18,6 +18,7 @@ Dialog {
     y: (parent.height - height) / 2
     parent: Overlay.overlay
     padding: 30
+    //TODO ui 499 - https://github.com/BeamMW/beam-ui/issues/499
     height: headerLayout.height + 20 + contentLayout.height + 20 + buttonsLayout.height + 60
 
     closePolicy: Popup.NoAutoClose | Popup.CloseOnEscape

@@ -23,6 +23,7 @@ Panel {
     signal closed
 
     backgroundColor:  Style.background_button
+    //TODO ui 499 - https://github.com/BeamMW/beam-ui/issues/499
     height: (headerPlaceholder.visible ? headerPlaceholder.height : 0) + footerPlaceholder.height + contentRow.height + copyButton.height
 
     TokenInfoDialog {

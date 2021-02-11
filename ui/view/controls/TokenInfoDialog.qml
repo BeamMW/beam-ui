@@ -18,6 +18,7 @@ Dialog {
         id:     viewModel
     }
 
+    //TODO ui 499 - https://github.com/BeamMW/beam-ui/issues/499
     height: contentGrid.implicitHeight + buttonsLayout.implicitHeight + 90
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
