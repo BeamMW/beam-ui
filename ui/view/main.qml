@@ -87,7 +87,9 @@ Rectangle {
         id: statusbarModel
     }
 
-    property alias backgroundRect: mainBackground
+    property var backgroundRect: mainBackground
+    property var backgroundLogo: mainBackgroundLogo
+
     Rectangle {
         id: mainBackground
         anchors.fill: parent
@@ -104,6 +106,7 @@ Rectangle {
         }
 
         BgLogo {
+            id: mainBackgroundLogo
             anchors.leftMargin: sidebar.width
         }
     }
