@@ -2747,26 +2747,6 @@ Please try again later or create an offer yourself.</source>
 (%2 incoming, %3 outgoing)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="wallet-assets-title">
-        <source>Assets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-search-asset">
-        <source>Asset name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-beam-available">
-        <source>%1 Available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-total-available">
-        <source>Total Available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="inprogress-assets">
-        <source>Assets</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="notification-contract-no-message">
         <source>Contract: no description provided</source>
         <translation type="unfinished"></translation>

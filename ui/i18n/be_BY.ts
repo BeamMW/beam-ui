@@ -2540,14 +2540,6 @@ public offline</source>
 (%2 incoming, %3 outgoing)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="wallet-assets-title">
-        <source>Assets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-search-asset">
-        <source>Asset name</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
 max privacy</source>
@@ -2706,34 +2698,6 @@ much longer for a transaction to complete.</source>
         <source>Infura project ID</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="apps-title">
-        <source>DAPP Store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-nothing">
-        <source>There are no applications at the moment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-loading-app">
-        <source>Loading &apos;%1&apos;...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-loading">
-        <source>Loading...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-run">
-        <source>launch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-devapp">
-        <source>This is your dev application</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-load-error">
-        <source>Failed to load applications list, %1</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="dex-all-tab">
         <source>All offers</source>
         <translation type="unfinished"></translation>
@@ -2779,57 +2743,8 @@ Please try again later or create an offer yourself.</source>
         <source>Order Book</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="send-flat-fee">
-        <source>%1 Transaction fee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-no-funds">
-        <source>Insufficient funds to complete the transaction</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="amount-input-add-max">
         <source>add max</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-remaining-beam-label">
-        <source>BEAM Remaining</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="asset-incoming-tip">
-        <source>%1 incoming transactions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="asset-outgoing-tip">
-        <source>%1 outgoing transactions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="asset-inout-tip">
-        <source>%1 active transactions
-(%2 incoming, %3 outgoing)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="assets-connect-other">
-        <source>Connect other assets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-assets-title">
-        <source>Assets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-search-asset">
-        <source>Asset name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-beam-available">
-        <source>%1 Available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-total-available">
-        <source>Total Available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="inprogress-assets">
-        <source>Assets</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-no-message">
