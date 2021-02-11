@@ -20,6 +20,7 @@ Dialog {
         id:     viewModel
     }
 
+    height: contentLayout.height + 60 + buttonsLayout.height + 60
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
 
@@ -45,6 +46,7 @@ Dialog {
 
     contentItem: ColumnLayout {
         GridLayout {
+            id: contentLayout
             Layout.margins:         30
             rowSpacing:             20
             columnSpacing:          16

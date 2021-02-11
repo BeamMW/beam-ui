@@ -23,6 +23,7 @@ Panel {
     signal closed
 
     backgroundColor:  Style.background_button
+    height: (headerPlaceholder.visible ? headerPlaceholder.height : 0) + footerPlaceholder.height + contentRow.height + copyButton.height
 
     TokenInfoDialog {
         id:                     infoDialog
@@ -42,6 +43,7 @@ Panel {
             bottomPadding:               20
         }
         RowLayout {
+            id: contentRow
             Layout.fillWidth:         true
             Layout.topMargin:         -8
             Layout.bottomMargin:      -8
@@ -100,6 +102,7 @@ Panel {
             topPadding:                  6
         }
         CustomButton {
+            id: copyButton
             Layout.topMargin:       20
             //% "Copy and close"
             text:                   qsTrId("wallet-receive-copy-and-close")
