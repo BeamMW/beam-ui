@@ -137,17 +137,18 @@ Pane {
             Layout.alignment:       Qt.AlignTop
             contentItem:            control.content
 
-            Layout.preferredHeight: folded ? 0 : placeholder.implicitHeight
-            opacity:                folded ? 0.0 : 1.0
+                Layout.preferredHeight: folded ? 0 : placeholder.implicitHeight
+                opacity:                folded ? 0.0 : 1.0
 
-            Behavior on Layout.preferredHeight {
-                NumberAnimation { duration:  100 }
-            }
-            Behavior on Layout.topMargin {
-                NumberAnimation { duration:  100 }
-            }
-            Behavior on opacity {
-                NumberAnimation { duration:  200 }
+                Behavior on Layout.preferredHeight {
+                    NumberAnimation { duration:  100 }
+                }
+                Behavior on Layout.topMargin {
+                    NumberAnimation { duration:  100 }
+                }
+                Behavior on opacity {
+                    NumberAnimation { duration:  200 }
+                }
             }
         }
     }
