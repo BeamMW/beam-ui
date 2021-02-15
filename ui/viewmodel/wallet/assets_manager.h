@@ -43,13 +43,15 @@ private:
     // ASYNC
     void collectAssetInfo(beam::Asset::ID);
 
-    typedef std::unique_ptr<beam::wallet::WalletAssetMeta> MetaPtr;
+    typedef std::shared_ptr<beam::wallet::WalletAssetMeta> MetaPtr;
+    typedef std::shared_ptr<beam::wallet::WalletAsset> AssetPtr;
+    typedef std::pair<AssetPtr, MetaPtr> InfoPair;
     MetaPtr getAsset(beam::Asset::ID);
 
     WalletModel::Ptr _wallet;
-    std::map<beam::Asset::ID, beam::wallet::WalletAsset> _info;
+    std::map<beam::Asset::ID, InfoPair> _info;
     std::set<beam::Asset::ID> _requested;
 
-    std::map<int, QColor> _colors;
+    std::map<int, QColor>  _colors;
     std::map<int, QString> _icons;
 };

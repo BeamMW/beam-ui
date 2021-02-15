@@ -22,8 +22,8 @@ Control {
         State {
             name: "all"
             PropertyChanges { target: allTab; state: "active" }
-            PropertyChanges { target: txProxyModel; filterRole: "status" }
-            PropertyChanges { target: txProxyModel; filterString: "*" }
+            PropertyChanges { target: txProxyModel; filterRole: "isContractTx" }
+            PropertyChanges { target: txProxyModel; filterString: "false" }
         },
         State {
             name: "inProgress"
@@ -41,6 +41,12 @@ Control {
             name: "received"
             PropertyChanges { target: receivedTab; state: "active" }
             PropertyChanges { target: txProxyModel; filterRole: "isReceived" }
+            PropertyChanges { target: txProxyModel; filterString: "true" }
+        },
+        State {
+            name: "contracts"
+            PropertyChanges { target: contractsTab; state: "active" }
+            PropertyChanges { target: txProxyModel; filterRole: "isContractTx" }
             PropertyChanges { target: txProxyModel; filterString: "true" }
         }
     ]
@@ -111,6 +117,14 @@ Control {
                 onClicked: control.state = "received"
             }
 
+            TxFilter {
+                id: contractsTab
+                Layout.alignment: Qt.AlignVCenter
+                //% "Contracts"
+                label: qsTrId("wallet-transactions-contracts-tab")
+                onClicked: control.state = "contracts"
+            }
+
             Item {
                 Layout.fillWidth: true
             }
@@ -163,14 +177,14 @@ Control {
                 })
             }
 
-            Layout.alignment: Qt.AlignTop
-            Layout.fillWidth : true
-            Layout.fillHeight : true
-            Layout.bottomMargin: 9
+            Layout.alignment:     Qt.AlignTop
+            Layout.fillWidth:     true
+            Layout.fillHeight:    true
+            Layout.bottomMargin:  9
 
             property real rowHeight: 56
-            property real resizableWidth: transactionsTable.width - actionsColumn.width
-            property real columnResizeRatio: resizableWidth / 810
+            property real resizableWidth: transactionsTable.width - 140 /*actionsColumn.width + coinColumn.width*/
+            property real columnResizeRatio: resizableWidth / 610
 
             selectionMode: SelectionMode.NoSelection
             sortIndicatorVisible: true
@@ -271,13 +285,13 @@ Control {
                         return ""
                     }
 
-                    rate:               txRolesMap && txRolesMap.rate ? txRolesMap.rate : ""
-                    rateUnit:           tableViewModel.rateUnit
-                    searchFilter:       searchBox.text
-                    hideFiltered:       rowItem.hideFiltered
-                    token:              txRolesMap ? txRolesMap.token : ""
-                    isShieldedTx:       txRolesMap && txRolesMap.isShieldedTx ? true : false
-                    unitName:           txRolesMap ? txRolesMap.unitName: ""
+                    rate:          txRolesMap && txRolesMap.rate ? txRolesMap.rate : ""
+                    rateUnit:      tableViewModel.rateUnit
+                    searchFilter:  searchBox.text
+                    hideFiltered:  rowItem.hideFiltered
+                    token:         txRolesMap ? txRolesMap.token : ""
+                    isShieldedTx:  txRolesMap && txRolesMap.isShieldedTx ? true : false
+                    unitName:      txRolesMap ? txRolesMap.unitName: ""
 
                     onSearchFilterChanged: function(text) {
                         rowItem.collapsed = searchBox.text.length == 0;
@@ -333,107 +347,109 @@ Control {
             }
 
             TableViewColumn {
-                role:      "icon"
-                width:     30
+                role: "unitName"
+                id: coinColumn
+
+                //% "Coin"
+                title:     qsTrId("wallet-txs-coin")
+                width:     100
                 movable:   false
                 resizable: false
 
-                delegate: Item {
-                    width:  35
-                    height: transactionsTable.rowHeight
+                delegate: Item { RowLayout {
+                    width:   parent.width
+                    height:  transactionsTable.rowHeight
+                    spacing: 10
 
                     SvgImage {
                         id: assetIcon
                         source: model ? model.icon : ""
-                        x: 15
-                        y: transactionsTable.rowHeight / 2 - this.height / 2
-                        width:  20
-                        height: 20
+                        Layout.preferredWidth:  20
+                        Layout.preferredHeight: 20
+                        Layout.leftMargin:      15
                     }
-                }
-            }
 
-            TableViewColumn {
-                role: "timeCreated"
-                //% "Created on"
-                title: qsTrId("wallet-txs-date-time")
-                elideMode: Text.ElideRight
-                width: 120 * transactionsTable.columnResizeRatio
-                movable: false
-                resizable: false
-            }
-
-            TableViewColumn {
-                //% "From"
-                title: qsTrId("general-address-from")
-                width: 200 * transactionsTable.columnResizeRatio
-                movable: false
-                resizable: false
-
-                delegate: Item { Item {
-                    width: model && (model.isContractTx || model.isDexTx) ? parent.width * 2 : parent.width
-                    height: transactionsTable.rowHeight
-
-                    TableItem {
-                        text:   model ? (model.isContractTx || model.isDexTx ? model.comment : model.addressFrom) : ""
-                        elide:  Text.ElideRight
+                    SFText {
                         color:  Style.content_main
+                        text:   model ? model.unitName : ""
+                        elide:  Text.ElideRight
+                        Layout.fillWidth: true
                     }
                 }}
             }
 
             TableViewColumn {
-                //% "To"
-                title: qsTrId("general-address-to")
-                elideMode: Text.ElideMiddle
-                width: 200 * transactionsTable.columnResizeRatio
-                movable: false
-                resizable: false
+                role: "timeCreated"
+                id: timeColumn
 
-                delegate: Item {
-                    visible: model && !model.isContractTx && !model.isDexTx
-                    Item {
-                        width: parent.width
-                        height: transactionsTable.rowHeight
-                        TableItem {
-                            text:   model ? model.addressTo : ""
-                            elide:  Text.ElideMiddle
-                            color:  Style.content_main
-                        }
-                    }
-                }
+                //% "Created on"
+                title:      qsTrId("wallet-txs-date-time")
+                elideMode:  Text.ElideRight
+                width:      110 * transactionsTable.columnResizeRatio
+                movable:    false
+                resizable:  false
             }
 
             TableViewColumn {
-                //role: "amountGeneral"
-                role: "amountGeneralWithCurrency"
+                role: "amountGeneral"
 
                 //% "Amount"
                 title:     qsTrId("general-amount")
                 elideMode: Text.ElideRight
-                width:     130 * transactionsTable.columnResizeRatio
+                width:     200 * transactionsTable.columnResizeRatio
                 movable:   false
                 resizable: false
 
-                delegate: Item { Item {
-                    width: parent.width
+                delegate: Item { RowLayout {
+                    width:  parent.width
                     height: transactionsTable.rowHeight
 
                     property var isIncome: model && model.isIncome
                     property var amount:   model ? model.amountGeneral : "0"
-                    property var unitName: model ? model.unitName : ""
+                    property var prefix:   isIncome ? "+ " : "- "
 
-                    BeamAmount {
-                        amount:                 parent.amount
-                        unitName:               parent.unitName
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left:           parent.left
-                        anchors.leftMargin:     20
-                        color:                  parent.isIncome ? Style.accent_incoming : Style.accent_outgoing
-                        maxPaintedWidth:        parent.width - 20
-                        boldFont:               true
-                        lightFont:              false
-                        prefix:                 parent.isIncome ? "+ " : "- "
+                    SFText {
+                        text:              [parent.prefix, Utils.uiStringToLocale(parent.amount)].join('')
+                        color:             parent.isIncome ? Style.accent_incoming : Style.accent_outgoing
+                        Layout.fillWidth:  true
+                        Layout.leftMargin: 20
+                        elide:             Text.ElideRight
+                        font {
+                            styleName: "Bold"
+                            weight:    Font.Bold
+                            pixelSize: 14
+                        }
+                    }
+                }}
+            }
+
+            TableViewColumn {
+                role: "amountSecondCurrency"
+
+                title:     [tableViewModel.rateUnit || "USD", qsTrId("general-amount")].join(' ')
+                elideMode: Text.ElideRight
+                width:     200 * transactionsTable.columnResizeRatio
+                movable:   false
+                resizable: false
+
+                delegate: Item { RowLayout {
+                    width:  parent.width
+                    height: transactionsTable.rowHeight
+
+                    property var amount:   model ? model.amountSecondCurrency : ""
+                    property var prefix:   model && model.isIncome ? "+ " : "- "
+
+                    SFText {
+                        text:                   parent.amount == "" ? "" : [parent.prefix, Utils.uiStringToLocale(parent.amount)].join('')
+                        color:                  Style.content_main
+                        Layout.fillWidth:       true
+                        Layout.leftMargin:      20
+                        elide:                  Text.ElideRight
+                        font {
+                            styleName: "Bold"
+                            weight:    Font.Bold
+                            pixelSize: 14
+                        }
                     }
                 }}
             }
@@ -443,7 +459,7 @@ Control {
                 role: "status"
                 //% "Status"
                 title: qsTrId("general-status")
-                width: transactionsTable.getAdjustedColumnWidth(statusColumn)//150 * transactionsTable.columnResizeRatio
+                width: transactionsTable.getAdjustedColumnWidth(statusColumn) // 100 * transactionsTable.columnResizeRatio
                 movable: false
                 resizable: false
                 delegate: Item {

@@ -1138,14 +1138,6 @@ bitte überprüfen Sie Ihre Einstellungen und versuchen Sie es erneut.</translat
         <source>Expires on</source>
         <translation>Läuft ab am</translation>
     </message>
-    <message id="general-address-from">
-        <source>From</source>
-        <translation>Von</translation>
-    </message>
-    <message id="general-address-to">
-        <source>To</source>
-        <translation>Bis</translation>
-    </message>
     <message id="loading-view-estimate-calculating">
         <source>calculating...</source>
         <translation>berechne...</translation>
@@ -2988,6 +2980,14 @@ Update your settings and try again.</source>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardwate wallet is not connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-transactions-contracts-tab">
+        <source>Contracts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-coin">
+        <source>Coin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

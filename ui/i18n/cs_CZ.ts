@@ -1138,14 +1138,6 @@ prosím zkontrolujte nastavení a zkuste to znovu.</translation>
         <source>Expires on</source>
         <translation>Vyprší dne</translation>
     </message>
-    <message id="general-address-from">
-        <source>From</source>
-        <translation>Od</translation>
-    </message>
-    <message id="general-address-to">
-        <source>To</source>
-        <translation>Komu</translation>
-    </message>
     <message id="loading-view-estimate-calculating">
         <source>calculating...</source>
         <translation>výpočet...</translation>
@@ -2986,6 +2978,14 @@ Update your settings and try again.</source>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardwate wallet is not connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-transactions-contracts-tab">
+        <source>Contracts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-coin">
+        <source>Coin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

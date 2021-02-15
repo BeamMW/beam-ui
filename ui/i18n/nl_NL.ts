@@ -1138,14 +1138,6 @@ controleer uw instellingen en probeer opnieuw.</translation>
         <source>Expires on</source>
         <translation>Verloopt op</translation>
     </message>
-    <message id="general-address-from">
-        <source>From</source>
-        <translation>Van</translation>
-    </message>
-    <message id="general-address-to">
-        <source>To</source>
-        <translation>Naar</translation>
-    </message>
     <message id="loading-view-estimate-calculating">
         <source>calculating...</source>
         <translation>berekenen...</translation>
@@ -2986,6 +2978,14 @@ Update your settings and try again.</source>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardwate wallet is not connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-transactions-contracts-tab">
+        <source>Contracts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-coin">
+        <source>Coin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

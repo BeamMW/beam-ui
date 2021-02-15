@@ -1149,14 +1149,6 @@ please review your settings and try again</source>
         <source>Expires on</source>
         <translation>失效于</translation>
     </message>
-    <message id="general-address-from">
-        <source>From</source>
-        <translation>从</translation>
-    </message>
-    <message id="general-address-to">
-        <source>To</source>
-        <translation>至</translation>
-    </message>
     <message id="loading-view-estimate-calculating">
         <source>calculating...</source>
         <translation>正在计算...</translation>
@@ -3000,6 +2992,14 @@ Update your settings and try again.</source>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardwate wallet is not connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-transactions-contracts-tab">
+        <source>Contracts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-coin">
+        <source>Coin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

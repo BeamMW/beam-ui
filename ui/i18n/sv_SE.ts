@@ -1137,14 +1137,6 @@ vänligen se över dina inställningar och testa igen</translation>
         <source>Expires on</source>
         <translation>Förfaller den</translation>
     </message>
-    <message id="general-address-from">
-        <source>From</source>
-        <translation>Från</translation>
-    </message>
-    <message id="general-address-to">
-        <source>To</source>
-        <translation>Till</translation>
-    </message>
     <message id="loading-view-estimate-calculating">
         <source>calculating...</source>
         <translation>beräknar...</translation>
@@ -2984,6 +2976,14 @@ Update your settings and try again.</source>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardwate wallet is not connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-transactions-contracts-tab">
+        <source>Contracts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-coin">
+        <source>Coin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

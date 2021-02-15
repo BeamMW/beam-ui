@@ -1138,14 +1138,6 @@ Tarkista asetuksesi ja yritä uudelleen.</translation>
         <source>Expires on</source>
         <translation>Vanhentuu</translation>
     </message>
-    <message id="general-address-from">
-        <source>From</source>
-        <translation>Lähettäjä</translation>
-    </message>
-    <message id="general-address-to">
-        <source>To</source>
-        <translation>Saaja</translation>
-    </message>
     <message id="loading-view-estimate-calculating">
         <source>calculating...</source>
         <translation>lasketaan...</translation>
@@ -2988,6 +2980,14 @@ Update your settings and try again.</source>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardwate wallet is not connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-transactions-contracts-tab">
+        <source>Contracts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-coin">
+        <source>Coin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -28,7 +28,7 @@ TableView {
         }
     }
 
-    function getAdjustedColumnWidth(column) {
+    function getAdjustedColumnWidth (column) {
         var acc = 0;
         for (var i = 0; i < columnCount; ++i)
         {
