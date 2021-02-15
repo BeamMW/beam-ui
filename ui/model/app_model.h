@@ -53,8 +53,8 @@ public:
     beam::io::Reactor::Ptr getWalletReactor() const;
 #endif
 
-    bool openWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper = {});
-    bool checkWalletPassword(const beam::SecString& pass) const;
+    void openWalletThrow(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper = {});
+    [[nodiscard]] bool checkWalletPassword(const beam::SecString& pass) const;
     void changeWalletPassword(const std::string& pass);
 
     void applySettingsChanges();

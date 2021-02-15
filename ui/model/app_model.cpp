@@ -22,12 +22,11 @@
 #include "utility/common.h"
 #include "utility/logger.h"
 #include "utility/fsutils.h"
-#include <boost/filesystem.hpp>
 #include <QApplication>
 #include <QTranslator>
 #include <QFileDialog>
 #include <QStandardPaths>
-
+#include <QStringBuilder>
 #include "wallet/transactions/swaps/bridges/bitcoin/bitcoin.h"
 #include "wallet/transactions/swaps/bridges/litecoin/litecoin.h"
 #include "wallet/transactions/swaps/bridges/qtum/qtum.h"
@@ -151,6 +150,7 @@ bool AppModel::createWallet(const SecString& seed, const SecString& pass)
 {
     const auto dbFilePath = m_settings.getWalletStorage();
     backupDB(dbFilePath);
+
     {
         io::Reactor::Scope s(*m_walletReactor); // do it in main thread
         auto db = WalletDB::init(dbFilePath, pass, seed.hash());
@@ -160,7 +160,17 @@ bool AppModel::createWallet(const SecString& seed, const SecString& pass)
         generateDefaultAddress(db);
     }
 
-    return openWallet(pass);
+    try
+    {
+        openWalletThrow(pass);
+        return true;
+    }
+    catch (std::runtime_error& err)
+    {
+        // TODO: handle the reasons of failure
+        LOG_ERROR() << "Error while trying to open database: " << err.what();
+        return false;
+    }
 }
 
 #if defined(BEAM_HW_WALLET)
@@ -200,35 +210,32 @@ beam::wallet::IWalletDB::Ptr AppModel::getWalletDB() const
     return m_db;
 }
 
-bool AppModel::openWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper)
+void AppModel::openWalletThrow(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper)
 {
-    assert(m_db == nullptr);
-
-    try
+    if (m_db != nullptr)
     {
-        if (WalletDB::isInitialized(m_settings.getWalletStorage()))
-        {
-            m_db = WalletDB::open(m_settings.getWalletStorage(), pass);
-        }
-#if defined(BEAM_HW_WALLET)
-        else if (WalletDB::isInitialized(m_settings.getTrezorWalletStorage()))
-        {
-            m_db = WalletDB::open(m_settings.getTrezorWalletStorage(), pass, keyKeeper);
-        }
-#endif
-
-        if (!m_db)
-            return false;
-
-        onWalledOpened(pass);
-        return true;
-    }
-    catch (...)
-    {
-        // TODO: handle the reasons of failure
+        assert(false);
+        //% "Wallet database is already opened"
+        throw std::runtime_error(qtTrId("appmodel-already-opened").toStdString());
     }
 
-    return false;
+    if (WalletDB::isInitialized(m_settings.getWalletStorage()))
+    {
+        m_db = WalletDB::open(m_settings.getWalletStorage(), pass);
+    }
+    #if defined(BEAM_HW_WALLET)
+    else if (WalletDB::isInitialized(m_settings.getTrezorWalletStorage()))
+    {
+        m_db = WalletDB::open(m_settings.getTrezorWalletStorage(), pass, keyKeeper);
+    }
+    #endif
+
+    if (!m_db)
+    {
+        throw std::runtime_error("");
+    }
+
+    onWalledOpened(pass);
 }
 
 void AppModel::onWalledOpened(const beam::SecString& pass)

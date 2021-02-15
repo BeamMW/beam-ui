@@ -15,16 +15,13 @@
 #pragma once
 
 #include <functional>
-
 #include <QObject>
 #include <QDateTime>
 #include <QTimer>
 #include <QThread>
 #include <QJSValue>
-
 #include "wallet/core/wallet_db.h"
 #include "mnemonic/mnemonic.h"
-
 #include "messages_view.h"
 
 namespace beam::wallet
@@ -41,8 +38,8 @@ class RecoveryPhraseItem : public QObject
     Q_PROPERTY(QString phrase READ getPhrase CONSTANT)
     Q_PROPERTY(int index READ getIndex CONSTANT)
 public:
-    RecoveryPhraseItem(int index, const QString& phrase);
-    ~RecoveryPhraseItem();
+    RecoveryPhraseItem(int index, QString phrase);
+    ~RecoveryPhraseItem() = default;
 
     bool isCorrect() const;
     bool isAllowed() const;

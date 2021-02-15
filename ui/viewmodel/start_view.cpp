@@ -19,7 +19,6 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QFileDialog>
-#include <QVariant>
 #include <QStandardPaths>
 #include <QJSEngine>
 #include "settings_view.h"
@@ -97,7 +96,9 @@ namespace
         return walletDBs;
     }
 
-    void DoJSCallback(QJSValue& jsCallback, bool res)
+
+    template<typename T>
+    void DoJSCallback(QJSValue& jsCallback, const T& res)
     {
 #if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
         #pragma GCC diagnostic push
@@ -109,18 +110,38 @@ namespace
         #pragma GCC diagnostic pop
 #endif
     }
+
+    void DoOpenWallet(QJSValue& jsCallback, std::function<void ()> openFunc)
+    {
+        try
+        {
+            openFunc();
+            DoJSCallback(jsCallback, QString());
+        }
+        catch(const beam::wallet::FileIsNotDatabaseException&)
+        {
+            //% "Invalid password provided"
+            DoJSCallback(jsCallback, qtTrId("general-pwd-invalid"));
+        }
+        catch(std::runtime_error& err)
+        {
+            QString errmsg = err.what();
+            if (errmsg.isEmpty())
+            {
+                //% "Failed to open wallet, please check logs"
+                errmsg = qtTrId("general-open-failed");
+            }
+
+            LOG_ERROR() << "Error while trying to open wallet: " << errmsg.toStdString();
+            DoJSCallback(jsCallback, errmsg);
+        }
+    }
 }
 
-RecoveryPhraseItem::RecoveryPhraseItem(int index, const QString& phrase)
+RecoveryPhraseItem::RecoveryPhraseItem(int index, QString phrase)
     : m_index(index)
-    , m_phrase(phrase)
+    , m_phrase(std::move(phrase))
 {
-
-}
-
-RecoveryPhraseItem::~RecoveryPhraseItem()
-{
-
 }
 
 bool RecoveryPhraseItem::isCorrect() const
@@ -452,14 +473,29 @@ void StartViewModel::onTrezorOwnerKeyImported()
 {
     LOG_INFO() << "Trezor Key imported";
 
-    SecString secretPass = m_password;
     if (m_creating)
     {
-        DoJSCallback(m_callback, m_HWKeyKeeper && AppModel::getInstance().createTrezorWallet(secretPass, m_HWKeyKeeper));
+        if (!m_HWKeyKeeper)
+        {
+            //% "Hardware keykeeper is not initialized"
+            reutrn DoJSCallback(m_callback, qtTrId("start-no-hwkeeper"));
+        }
+
+        SecString secretPass
+        if(!AppModel::getInstance().createTrezorWallet(secretPass, m_HWKeyKeeper))
+        {
+            //% "Failed to create trezor wallet"
+            reutrn DoJSCallback(m_callback, qtTrId("start-trezor-error");
+        }
+
+        DoJSCallback(m_callback, "");
     }
     else
     {
-        DoJSCallback(m_callback, AppModel::getInstance().openWallet(secretPass, m_HWKeyKeeper));
+        DoOpenWallet(m_callback, [this] () {
+            SecString secretPass = m_password;
+            AppModel::getInstance().openWalletThrow(secretPass, m_HWKeyKeeper));
+        });
     }
 
     emit isOwnerKeyImportedChanged();
@@ -669,8 +705,9 @@ void StartViewModel::createWallet(const QJSValue& callback)
 
     SecString secretSeed;
     secretSeed.assign(buf.data(), buf.size());
-    SecString sectretPass = m_password;
-    DoJSCallback(m_callback, AppModel::getInstance().createWallet(secretSeed, sectretPass));
+    SecString secretPass = m_password;
+
+    DoJSCallback(m_callback, AppModel::getInstance().createWallet(secretSeed, secretPass));
 }
 
 void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
@@ -686,14 +723,17 @@ void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
         }
         else
         {
-            DoJSCallback(m_callback, false);
+            //% "Hardwate wallet is not connected"
+            DoJSCallback(m_callback, qtTrId("start-hw-not-connected"));
         }
         return;
     }
 #endif
     // TODO make this secure
-    SecString secretPass = pass.toStdString();
-    DoJSCallback(m_callback, AppModel::getInstance().openWallet(secretPass));
+    DoOpenWallet(m_callback, [pass] () {
+        SecString secret = pass.toStdString();
+        AppModel::getInstance().openWalletThrow(secret);
+    });
 }
 
 bool StartViewModel::checkWalletPassword(const QString& password) const
