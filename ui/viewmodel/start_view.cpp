@@ -46,6 +46,8 @@
 #include "keykeeper/hw_wallet.h"
 #endif
 
+#include <qdebug.h>
+
 using namespace beam;
 using namespace ECC;
 using namespace std;
@@ -807,11 +809,18 @@ void StartViewModel::findExistingWalletDB()
         QString absoluteFilePath = fileInfo.absoluteFilePath();
         bool isDefaultLocated = absoluteFilePath.contains(
             QString::fromStdString(defaultAppDataPath));
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
+        auto birthTime = fileInfo.birthTime();
+        if(!birthTime.isValid()) birthTime = fileInfo.metadataChangeTime();
+#else
+        auto birthTime = fileInfo.created();
+#endif
         walletDBpaths.push_back(new WalletDBPathItem(
                 absoluteFilePath,
                 fileInfo.size(),
                 fileInfo.lastModified(),
-                fileInfo.birthTime(),
+                birthTime,
                 isDefaultLocated));
     }
 
