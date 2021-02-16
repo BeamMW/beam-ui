@@ -68,7 +68,10 @@
 
 #if defined Q_OS_WIN
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
+Q_IMPORT_PLUGIN(QtQmlPlugin)
+#if defined(QT_PRINTSUPPORT_LIB)
 Q_IMPORT_PLUGIN(QWindowsPrinterSupportPlugin)
+#endif
 #elif defined Q_OS_MAC
 Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)
 Q_IMPORT_PLUGIN(QCocoaPrinterSupportPlugin)
