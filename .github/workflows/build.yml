@@ -81,8 +81,8 @@ jobs:
         git clone --depth=1 https://github.com/BeamMW/openssl-Windows.git c:/openssl
         echo "OPENSSL_ROOT_DIR=c:\openssl" >> $GITHUB_ENV
         git clone --depth=1 https://github.com/BeamMW/qt5.15.2-static-${{env.OS_NAME}}.git c:/qt5-static
-        echo "QT5_ROOT_DIR=c:\beam-libs\qt5-static" >> $GITHUB_ENV
-        echo "QML_IMPORT_PATH=c:\beam-libs\qt5-static\qml" >> $GITHUB_ENV
+        echo "QT5_ROOT_DIR=c:\qt5-static" >> $GITHUB_ENV
+        echo "QML_IMPORT_PATH=c:\qt5-static\qml" >> $GITHUB_ENV
 
     - name: Download boost [macos-10.15]
       if: matrix.os == 'macos-10.15'
@@ -117,7 +117,7 @@ jobs:
       shell: bash
       if: matrix.os == 'windows-2019'
       run: |
-        export PATH=/c/beam-libs/qt5-static/bin:$PATH
+        export PATH=/c/qt5-static/bin:$PATH
         cmake -G "Visual Studio 16 2019" -A x64 -DBOOST_ROOT=$BOOST_ROOT_1_72_0 -DCMAKE_BUILD_TYPE=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
 
     - name: Save version info
