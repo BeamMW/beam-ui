@@ -46,8 +46,6 @@
 #include "keykeeper/hw_wallet.h"
 #endif
 
-#include <qdebug.h>
-
 using namespace beam;
 using namespace ECC;
 using namespace std;
