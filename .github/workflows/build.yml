@@ -113,12 +113,18 @@ jobs:
         export PATH=${{runner.workspace}}/qt5-static/bin:$PATH
         cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
 
+    - name: Setup Ninja [windows]
+      if: matrix.os == 'windows-2019'
+      uses: ashutoshvarma/setup-ninja@master
+      with:
+        version: 1.10.0
     - name: Configure CMake [windows]
       shell: bash
       if: matrix.os == 'windows-2019'
       run: |
         export PATH=/c/qt5-static/bin:$PATH
-        cmake -G "Visual Studio 16 2019" -A x64 -DBOOST_ROOT=$BOOST_ROOT_1_72_0 -DCMAKE_BUILD_TYPE=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off -DOPENSSL_ROOT_DIR=C:\openssl .
+        export PATH=/c/openssl/lib:$PATH
+        cmake -G "Ninja" -DBOOST_ROOT=$BOOST_ROOT_1_72_0 -DCMAKE_BUILD_TYPE=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
 
     - name: Save version info
       shell: bash
