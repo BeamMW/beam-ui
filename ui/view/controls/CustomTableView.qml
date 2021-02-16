@@ -15,16 +15,33 @@ TableView {
     property var backgroundRect: mainBackgroundRect != null ? mainBackgroundRect : main.backgroundRect
     property color headerColor: Style.table_header
 
+    // Scrollbar fine-tuning
+    __scrollBarTopMargin: tableView.headerHeight
+    verticalScrollBarPolicy: hoverArea.containsMouse ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAsNeeded
+
     style: TableViewStyle {
-        transientScrollBars: true
-        minimumHandleLength: 20
+        transientScrollBars: !hoverArea.containsMouse
+        minimumHandleLength: 30
+
         handle: Rectangle {
-            implicitWidth: 14
-            implicitHeight: 16
-            radius: 6
-            anchors.fill: parent
-            color: Style.white  //
-            opacity: 0.1
+            color: "white"
+            radius: 3
+            opacity: __verticalScrollBar.handlePressed ? 0.12 : 0.5
+            implicitWidth: 6
+        }
+
+        scrollBarBackground: Rectangle {
+            color: "transparent"
+            implicitWidth: 6
+            anchors.topMargin: 46
+        }
+
+        decrementControl: Rectangle {
+            color: "transparent"
+        }
+
+        incrementControl: Rectangle {
+            color: "transparent"
         }
     }
 
@@ -93,5 +110,19 @@ TableView {
 
             text: styleData.value
         }
+    }
+
+    MouseArea {
+        id:               hoverArea
+        anchors.fill:     parent
+        acceptedButtons:  Qt.NoButton
+        hoverEnabled:     true
+        propagateComposedEvents: true
+        preventStealing: true
+    }
+
+    Component.onCompleted: {
+        var numchilds = __scroller.children.length
+        __scroller.children[numchilds -1].anchors.rightMargin = 0
     }
 }

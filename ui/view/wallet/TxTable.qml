@@ -51,6 +51,10 @@ Control {
         }
     ]
 
+    onStateChanged: {
+        transactionsTable.positionViewAtRow(0, ListView.Beginning)
+    }
+
     ConfirmationDialog {
         id: deleteTransactionDialog
         //% "Delete"
