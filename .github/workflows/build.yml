@@ -31,6 +31,16 @@ jobs:
 ###############################################################################
 # Create Build Environment
 ###############################################################################
+    - name: OS name [macos-10.15 && windows]
+      shell: bash
+      if: matrix.os == 'macos-10.15' || matrix.os == 'windows-2019'
+      run: echo "OS_NAME=${{runner.os}}" >> $GITHUB_ENV
+
+    - name: OS name [ununtu all]
+      shell: bash
+      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      run: echo "OS_NAME=${{matrix.os}}" >> $GITHUB_ENV
+
     - name: Create Build Environment [macos-10.15]
       if: matrix.os == 'macos-10.15'
       run: |
@@ -59,7 +69,7 @@ jobs:
         sudo apt install build-essential llvm libclang-dev
         sudo apt install libssl-dev curl libcups2-dev mesa-common-dev ^libxcb.* libglu1-mesa-dev libglfw3-dev libgles2-mesa-dev libfontconfig1-dev libudev-dev -y
         sudo apt install libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-dev libpci-dev libicu-dev -y
-        git clone --depth=1 https://github.com/BeamMW/qt5.15.2-static-${{matrix.os}}.git ${{runner.workspace}}/qt5-static
+        git clone --depth=1 https://github.com/BeamMW/qt5.15.2-static-${{env.OS_NAME}}.git ${{runner.workspace}}/qt5-static
         chmod +x ${{runner.workspace}}/qt5-static/bin/*
         echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
         echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
@@ -70,9 +80,9 @@ jobs:
       run: |
         git clone --depth=1 https://github.com/BeamMW/libs.git c:/beam-libs
         echo "OPENSSL_ROOT_DIR=c:\beam-libs\openssl" >> $GITHUB_ENV
-        git clone --depth=1 https://github.com/nesbox/qt5-static-win.git c:/beam-libs/qt5-static-win
-        echo "QT5_ROOT_DIR=c:\beam-libs\qt5-static-win" >> $GITHUB_ENV
-        echo "QML_IMPORT_PATH=c:\beam-libs\qt5-static-win\qml" >> $GITHUB_ENV
+        git clone --depth=1 https://github.com/BeamMW/qt5.15.2-static-${{env.OS_NAME}}.git c:/qt5-static
+        echo "QT5_ROOT_DIR=c:\qt5-static" >> $GITHUB_ENV
+        echo "QML_IMPORT_PATH=c:\qt5-static\qml" >> $GITHUB_ENV
 
     - name: Download boost [macos-10.15]
       if: matrix.os == 'macos-10.15'
@@ -107,7 +117,7 @@ jobs:
       shell: bash
       if: matrix.os == 'windows-2019'
       run: |
-        export PATH=/c/beam-libs/qt5-static-win/bin:$PATH
+        export PATH=/c/qt5-static/bin:$PATH
         cmake -G "Visual Studio 16 2019" -A x64 -DBOOST_ROOT=$BOOST_ROOT_1_72_0 -DCMAKE_BUILD_TYPE=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
 
     - name: Save version info
@@ -188,16 +198,6 @@ jobs:
 ###############################################################################
 # Upload
 ###############################################################################
-    - name: OS name [macos-10.15 && windows]
-      shell: bash
-      if: matrix.os == 'macos-10.15' || matrix.os == 'windows-2019'
-      run: echo "OS_NAME=${{runner.os}}" >> $GITHUB_ENV
-
-    - name: OS name [ununtu all]
-      shell: bash
-      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
-      run: echo "OS_NAME=${{matrix.os}}" >> $GITHUB_ENV
-
     - uses: actions/upload-artifact@v2
       with:
         name: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-${{env.OS_NAME}}

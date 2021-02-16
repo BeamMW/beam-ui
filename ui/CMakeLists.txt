@@ -61,7 +61,7 @@ else()
 endif()
 set (CMAKE_PREFIX_PATH $ENV{QT5_ROOT_DIR})
 
-find_package(Qt5 COMPONENTS Qml Quick Svg PrintSupport REQUIRED)
+find_package(Qt5 COMPONENTS Qml Quick Svg REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -314,20 +314,21 @@ endif()
 if(BEAM_USE_STATIC)
 
     if(WIN32)
+        foreach(lib
+            Qt5Core Qt5Gui Qt5Quick Qt5QuickControls2 Qt5QuickTemplates2
+            qtlibpng Qt5QuickWidgets Qt5Widgets qtpcre2 Qt5Bootstrap
+            Qt5EventDispatcherSupport Qt5RemoteObjects Qt5Svg Qt5FbSupport
+            Qt5Qml Qt5Test Qt5Concurrent Qt5FontDatabaseSupport Qt5Network
+            Qt5Xml Qt5QmlWorkerScript Qt5Scxml Qt5ThemeSupport Qt5XmlPatterns
+        )
+            target_link_libraries(${TARGET_NAME} ${CMAKE_PREFIX_PATH}/lib/${lib}.lib)
+        endforeach()
 
-        foreach(lib lib/clip2tri lib/Qt5Concurrent lib/Qt5Help lib/Qt5PrintSupport lib/Qt5RemoteObjects lib/Qt5TextToSpeech
-            lib/Qt5XmlPatterns lib/clipper lib/Qt5Core lib/Qt5Location lib/Qt5Purchasing lib/Qt5Script lib/Qt5ThemeSupport lib/qtfreetype
-            lib/poly2tri lib/Qt5DBus lib/Qt5Multimedia lib/Qt5Qml lib/Qt5ScriptTools lib/Qt5UiTools lib/qtharfbuzz lib/Qt5AccessibilitySupport
-            lib/Qt5DeviceDiscoverySupport lib/Qt5MultimediaWidgets lib/Qt5QmlDebug lib/Qt5Scxml lib/Qt5WebChannel lib/qtlibpng lib/Qt5AxBase
-            lib/Qt5EdidSupport lib/Qt5Network lib/Qt5QmlDevTools lib/Qt5Sensors lib/Qt5WebSockets lib/qtmain lib/Qt5AxContainer
-            lib/Qt5EventDispatcherSupport lib/Qt5NetworkAuth lib/Qt5Quick lib/Qt5SerialBus lib/Qt5WebView lib/qtopenwnn lib/Qt5AxServer
-            lib/Qt5FbSupport lib/Qt5Nfc lib/Qt5QuickControls2 lib/Qt5SerialPort lib/Qt5Widgets lib/qtpcre2 lib/Qt5Bluetooth
-            lib/Qt5FontDatabaseSupport lib/Qt5PacketProtocol lib/Qt5QuickTemplates2 lib/Qt5Sql lib/Qt5WindowsUIAutomationSupport
-            lib/qtpinyin lib/Qt5Bootstrap lib/Qt5Gamepad lib/Qt5Positioning lib/Qt5QuickTest lib/Qt5Svg lib/Qt5WinExtras lib/qttcime
-            lib/Qt5Charts lib/Qt5Gui lib/Qt5PositioningQuick lib/Qt5QuickWidgets lib/Qt5Test lib/Qt5Xml qml/QtQuick.2/qtquick2plugin
-            qml/QtQuick/Window.2/windowplugin qml/QtQuick/Controls/qtquickcontrolsplugin qml/QtGraphicalEffects/qtgraphicaleffectsplugin
-            qml/QtGraphicalEffects/private/qtgraphicaleffectsprivate qml/QtQuick/Layouts/qquicklayoutsplugin qml/QtQuick/Controls.2/qtquickcontrols2plugin
-            qml/QtQuick/Templates.2/qtquicktemplates2plugin plugins/platforms/qwindows plugins/imageformats/qsvg plugins/printsupport/windowsprintersupport)
+        foreach(lib qml/QtQuick.2/qtquick2plugin qml/QtQuick/Window.2/windowplugin
+            qml/QtQuick/Controls/qtquickcontrolsplugin qml/QtGraphicalEffects/qtgraphicaleffectsplugin
+            qml/QtGraphicalEffects/private/qtgraphicaleffectsprivate qml/QtQuick/Layouts/qquicklayoutsplugin
+            qml/QtQuick/Controls.2/qtquickcontrols2plugin qml/QtQuick/Templates.2/qtquicktemplates2plugin
+            plugins/platforms/qwindows qml/QtQml/qmlplugin plugins/imageformats/qsvg)
 
             target_link_libraries(${TARGET_NAME} ${CMAKE_PREFIX_PATH}/${lib}.lib)
         endforeach()
@@ -445,7 +446,6 @@ if(LINUX)
 else()
 
     if(WIN32)
-        install(FILES ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION .)
         install(FILES beam-wallet.cfg DESTINATION .)
         install(TARGETS ${TARGET_NAME} DESTINATION .)
     endif()

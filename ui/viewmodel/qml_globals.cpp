@@ -310,8 +310,7 @@ QString QMLGlobals::getCurrencyName(Currency currency)
     case Currency::CurrUsdt:
     case Currency::CurrWrappedBTC:
     {
-        //% "ETHEREUM"
-        return qtTrId("general-ethereum");
+        return qtTrId("general-ethereum").toUpper();
     }
     default:
     {
