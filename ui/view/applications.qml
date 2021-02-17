@@ -106,8 +106,6 @@ ColumnLayout {
         control.activeApp = app
     }
 
-    readonly property bool noApps: control.appsList && control.appsList.length == 0
-
     Item {
         Layout.fillHeight: true
         Layout.fillWidth:  true
@@ -117,7 +115,7 @@ ColumnLayout {
             anchors.horizontalCenter: parent.horizontalCenter
             y:       parent.height / 2 - this.height / 2 - 40
             color:   control.errorMessage.length ? Style.validator_error : Style.content_main
-            opacity: control.noApps ? 1 : 0.5
+            opacity: control.hasApps ? 0.5 : 1
 
             font {
                 styleName: "DemiBold"
@@ -130,7 +128,7 @@ ColumnLayout {
                     return control.errorMessage
                 }
 
-                if (control.noApps) {
+                if (!control.hasApps) {
                     //% "There are no applications at the moment"
                     return qsTrId("apps-nothing")
                 }
@@ -187,10 +185,22 @@ ColumnLayout {
                             color:  Style.background_main
 
                             SvgImage {
+                                id: defaultIcon
                                 source: hoverArea.containsMouse ? "qrc:/assets/icon-defapp-active.svg" : "qrc:/assets/icon-defapp.svg"
-                                sourceSize: Qt.size(28, 28)
+                                sourceSize: Qt.size(30, 30)
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.horizontalCenter: parent.horizontalCenter
+                                visible: !customIcon.visible
+                            }
+
+                            SvgImage {
+                                id: customIcon
+                                source: modelData.icon ? modelData.icon : "qrc:/assets/icon-defapp.svg"
+                                sourceSize: Qt.size(30, 30)
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                smooth: true
+                                visible: !!modelData.icon && progress == 1.0
                             }
                         }
 

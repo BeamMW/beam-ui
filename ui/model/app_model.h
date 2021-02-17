@@ -39,9 +39,6 @@ class AppModel final: public QObject
     Q_OBJECT
     friend class AppModel2;
 public:
-//    static AppModel& getInstance();
-//    static std::string getMyName();
-//    static const std::string& getMyVersion();
 
     AppModel(const beam::Rules& rules, WalletSettings& settings, const std::string& storagePath, const std::string& blockchainName);
     ~AppModel() override;
@@ -56,8 +53,8 @@ public:
     beam::io::Reactor::Ptr getWalletReactor() const;
 #endif
 
-    bool openWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper = {});
-    bool checkWalletPassword(const beam::SecString& pass) const;
+    void openWalletThrow(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper = {});
+    [[nodiscard]] bool checkWalletPassword(const beam::SecString& pass) const;
     void changeWalletPassword(const std::string& pass);
 
     void applySettingsChanges();
@@ -130,7 +127,6 @@ private:
     beam::wallet::IWalletDB::Ptr m_db;
     Connections m_nsc; // [n]ode [s]tarting [c]onnections
     Connections m_walletConnections;
-//    static AppModel* s_instance;
     std::string m_walletDBBackupPath;
     std::string m_storagePath;
     std::string m_blockchainName;
@@ -155,7 +151,7 @@ public:
     static const std::string& getMyVersion();
 
     WalletSettings& getSettings() const { return m_settings; }
-    bool openWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper = {});
+    void openWalletThrow(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper = {});
 
 private:
     static AppModel2* s_instance;

@@ -1138,14 +1138,6 @@ please review your settings and try again</translation>
         <source>Expires on</source>
         <translation>Hết hạn vào</translation>
     </message>
-    <message id="general-address-from">
-        <source>From</source>
-        <translation>Từ</translation>
-    </message>
-    <message id="general-address-to">
-        <source>To</source>
-        <translation>Đến</translation>
-    </message>
     <message id="loading-view-estimate-calculating">
         <source>calculating...</source>
         <translation>đang tính toán...</translation>
@@ -2967,6 +2959,34 @@ Update your settings and try again.</source>
     </message>
     <message id="wallet-receive-swap-publish">
         <source>publish offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="appmodel-already-opened">
+        <source>Wallet database is already opened</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-open-failed">
+        <source>Failed to open wallet, please check logs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-no-hwkeeper">
+        <source>Hardware keykeeper is not initialized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-trezor-error">
+        <source>Failed to create trezor wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-hw-not-connected">
+        <source>Hardwate wallet is not connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-transactions-contracts-tab">
+        <source>Contracts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-coin">
+        <source>Coin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

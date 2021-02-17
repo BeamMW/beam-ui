@@ -47,11 +47,11 @@ void AssetsManager::collectAssetInfo(beam::Asset::ID assetId)
     }
 }
 
-void AssetsManager::onAssetInfo(beam::Asset::ID id, const beam::wallet::WalletAsset& info)
+void AssetsManager::onAssetInfo(beam::Asset::ID id, const beam::wallet::WalletAsset& asset)
 {
     _requested.erase(id);
 
-    if (info.m_ID == beam::Asset::s_InvalidID)
+    if (asset.m_ID == beam::Asset::s_InvalidID)
     {
         // Bad info, erase any previously stored and if we had something stored notify about change
         const auto it = _info.find(id);
@@ -64,7 +64,9 @@ void AssetsManager::onAssetInfo(beam::Asset::ID id, const beam::wallet::WalletAs
     else
     {
         // Good info came, save and notify about change
-        _info[id] = info;
+        AssetPtr aptr = std::make_shared<beam::wallet::WalletAsset>(asset);
+        _info[id] = std::make_pair(aptr, MetaPtr());
+
         emit assetInfo(id);
     }
 }
@@ -74,8 +76,12 @@ AssetsManager::MetaPtr AssetsManager::getAsset(beam::Asset::ID id)
     const auto it = _info.find(id);
     if (it != _info.end())
     {
-        auto mptr = std::make_unique<beam::wallet::WalletAssetMeta>(it->second);
-        return mptr;
+        if (it->second.second == nullptr)
+        {
+            MetaPtr mptr = std::make_shared<beam::wallet::WalletAssetMeta>(*it->second.first);
+            it->second.second = mptr;
+        }
+        return it->second.second;
     }
 
     collectAssetInfo(id);

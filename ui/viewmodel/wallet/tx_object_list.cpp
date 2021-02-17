@@ -14,6 +14,7 @@
 
 #include "tx_object_list.h"
 #include "model/app_model.h"
+#include "viewmodel/qml_globals.h"
 
 namespace
 {
@@ -201,6 +202,8 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::AmountGeneralWithCurrencySort), "amountGeneralWithCurrencySort" },
         { static_cast<int>(Roles::AmountGeneral), "amountGeneral" },
         { static_cast<int>(Roles::AmountGeneralSort), "amountGeneralSort" },
+        { static_cast<int>(Roles::AmountSecondCurrency), "amountSecondCurrency"},
+        { static_cast<int>(Roles::AmountSecondCurrencySort), "amountSecondCurrencySort"},
         { static_cast<int>(Roles::Rate), "rate" },
         { static_cast<int>(Roles::AddressFrom), "addressFrom" },
         { static_cast<int>(Roles::AddressFromSort), "addressFromSort" },
@@ -233,6 +236,7 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::IsShieldedTx), "isShieldedTx"},
         { static_cast<int>(Roles::IsOfflineToken), "isOfflineToken"},
         { static_cast<int>(Roles::UnitName), "unitName"},
+        { static_cast<int>(Roles::UnitNameSort), "unitNameSort"},
         { static_cast<int>(Roles::Icon), "icon"},
         { static_cast<int>(Roles::IsSent), "isSent"},
         { static_cast<int>(Roles::IsReceived), "isReceived"},
@@ -374,6 +378,7 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return value->getSenderIdentity();
         case Roles::ReceiverIdentity:
             return value->getReceiverIdentity();
+        case Roles::UnitNameSort:
         case Roles::UnitName:
         {
             const auto& alist = value->getAssetsList();
@@ -408,6 +413,14 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
 
             return r;
         }
+
+        case Roles::AmountSecondCurrency:
+            return QMLGlobals::calcAmountInSecondCurrency(value->getAmount(), value->getRate(), QString());
+
+        case Roles::AmountSecondCurrencySort:
+            // do not need to convert for sorting, original amount is enough
+            return static_cast<qulonglong>(value->getAmountValue());
+
         default:
             return QVariant();
     }

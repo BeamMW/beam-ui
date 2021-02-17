@@ -2175,13 +2175,12 @@ Item
                                     }
                                     else
                                     {
-                                        openWallet(openPassword.text, function (opened) {
-                                            if(!opened)
+                                        openWallet(openPassword.text, function (errmsg) {
+                                            if(errmsg.length)
                                             {
-                                                //% "Invalid password provided"
-                                                openPasswordError.text = qsTrId("general-pwd-invalid");
-                                                openPassword.selectAll();
-                                                openPassword.focus = true;
+                                                openPasswordError.text = errmsg
+                                                openPassword.selectAll()
+                                                openPassword.focus = true
                                             }
                                             else
                                             {
@@ -2320,9 +2319,22 @@ Item
                 startWizzardView.push(nodeSetup)
             }
             else if (isLockedMode) {
-                startWizzardView.push(open, { "openWallet": function (pass, callback) 
-                                            { callback(viewModel.checkWalletPassword(pass)); },
-                                              "loadWallet": function () { root.parent.setSource("qrc:/main.qml"); } });
+                startWizzardView.push(open,
+                    { "openWallet": function (pass, callback) {
+                        if (viewModel.checkWalletPassword(pass))
+                        {
+                            callback("")
+                        }
+                        else
+                        {
+                            //% "Invalid password provided"
+                            callback(qsTrId("general-pwd-invalid"))
+                        }
+                      },
+                      "loadWallet": function () {
+                        root.parent.setSource("qrc:/main.qml");
+                      }
+                    })
             }
             else if (viewModel.walletExists) {
                 startWizzardView.push(open);
