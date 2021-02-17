@@ -95,12 +95,27 @@ namespace
     }
 
     const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
+
+    const char* kBlockchainName = "blockchain";
+    const char* kMainBlockchain = "Main";
+    const char* kEnabledBlockchain = "/enabled";
+    const char* kBlockchainNodeAddress = "/address";
+    const QList<QString> kSupportedBlockchains
+    {
+#define MACRO(name) #name,
+        BEAM_SIDECHAINS_MAP(MACRO)
+#undef MACRO
+    };
 }  // namespace
 
 const char* WalletSettings::WalletCfg = "beam-wallet.cfg";
 const char* WalletSettings::LogsFolder = "logs";
 const char* WalletSettings::SettingsFile = "settings.ini";
-const char* WalletSettings::WalletDBFile = "wallet.db";
+const char* WalletSettings::WalletMainDBFile = "wallet.db";
+const char* WalletSettings::WalletSidechain1DBFile = "walletSidechain1.db";
+const char* WalletSettings::WalletSidechain2DBFile = "walletSidechain2.db";
+
+
 #if defined(BEAM_HW_WALLET)
 const char* WalletSettings::TrezorWalletDBFile = "trezor-wallet.db";
 #endif
@@ -121,10 +136,13 @@ string WalletSettings::getTrezorWalletStorage() const
 }
 #endif
 
-string WalletSettings::getWalletStorage() const
-{
-    return getWalletFolder() + "/" + WalletDBFile;
+#define MACRO(name) \
+string WalletSettings::getWallet##name##Storage() const \
+{ \
+    return getWalletFolder() + "/" + Wallet##name##DBFile; \
 }
+BEAM_SIDECHAINS_MAP(MACRO)
+#undef MACRO
 
 string WalletSettings::getWalletFolder() const
 {
@@ -147,27 +165,37 @@ string WalletSettings::getAppDataPath() const
 
 QString WalletSettings::getNodeAddress() const
 {
+    return getNodeAddress(kMainBlockchain);
+}
+
+QString WalletSettings::getNodeAddress(const QString& blockchainName) const
+{
     Lock lock(m_mutex);
-    return m_data.value(kNodeAddressName).toString();
+    if (blockchainName == kMainBlockchain)
+        return m_data.value(kNodeAddressName).toString();
+
+    return m_data.value(blockchainName + kBlockchainNodeAddress).toString();
 }
 
 void WalletSettings::setNodeAddress(const QString& addr)
 {
-    if (addr != getNodeAddress())
+    setNodeAddress(kMainBlockchain, addr);
+}
+
+void WalletSettings::setNodeAddress(const QString& blockchainName, const QString& addr)
+{
+    if (addr != getNodeAddress(blockchainName))
     {
-        auto walletModel = AppModel::getInstance().getWalletModel();
-        if (walletModel)
-        {
-            walletModel->getAsync()->setNodeAddress(addr.toStdString());
-        }
         {
             Lock lock(m_mutex);
-            m_data.setValue(kNodeAddressName, addr);
+            if (blockchainName == kMainBlockchain)
+                m_data.setValue(kNodeAddressName, addr);
+            else
+                m_data.setValue(blockchainName + kBlockchainNodeAddress, addr);
         }
         
-        emit nodeAddressChanged();
+        emit nodeAddressChanged(blockchainName, addr);
     }
-    
 }
 
 int WalletSettings::getLockTimeout() const
@@ -428,7 +456,7 @@ void WalletSettings::setNewVersionActive(bool isActive)
 {
     if (isActive != isNewVersionActive())
     {
-        auto walletModel = AppModel::getInstance().getWalletModel();
+        auto walletModel = AppModel2::getInstance().getWalletModel();
         if (walletModel)
         {
             walletModel->getAsync()->switchOnOffNotifications(
@@ -444,7 +472,7 @@ void WalletSettings::setBeamNewsActive(bool isActive)
 {
     if (isActive != isBeamNewsActive())
     {
-        auto walletModel = AppModel::getInstance().getWalletModel();
+        auto walletModel = AppModel2::getInstance().getWalletModel();
         if (walletModel)
         {
             walletModel->getAsync()->switchOnOffNotifications(
@@ -460,7 +488,7 @@ void WalletSettings::setTxStatusActive(bool isActive)
 {
     if (isActive != isTxStatusActive())
     {
-        auto walletModel = AppModel::getInstance().getWalletModel();
+        auto walletModel = AppModel2::getInstance().getWalletModel();
         if (walletModel)
         {
             auto asyncModel = walletModel->getAsync();
@@ -490,7 +518,7 @@ void WalletSettings::setMaxPrivacyAnonymitySet(uint8_t anonymitySet)
 
 void WalletSettings::maxPrivacyLockTimeLimitInit()
 {
-    auto walletModel = AppModel::getInstance().getWalletModel();
+    auto walletModel = AppModel2::getInstance().getWalletModel();
     if (walletModel)
     {
         walletModel->getAsync()->getMaxPrivacyLockTimeLimitHours([this] (uint8_t limit)
@@ -511,7 +539,7 @@ void WalletSettings::setMaxPrivacyLockTimeLimitHours(uint8_t lockTimeLimit)
 {
     if (m_mpLockTimeLimit != lockTimeLimit)
     {
-        auto walletModel = AppModel::getInstance().getWalletModel();
+        auto walletModel = AppModel2::getInstance().getWalletModel();
         if (walletModel)
         {
             {
@@ -626,7 +654,7 @@ void WalletSettings::reportProblem()
 
 void WalletSettings::applyChanges()
 {
-    AppModel::getInstance().applySettingsChanges();
+    AppModel2::getInstance().applySettingsChanges();
 }
 
 QString WalletSettings::getDevBeamAppUrl()
@@ -696,4 +724,56 @@ QString WalletSettings::getAppsStoragePath() const
         m_appDataDir.mkdir(kStorageFolder);
     }
     return m_appDataDir.filePath(kStorageFolder);
+}
+
+const QList<QString>& WalletSettings::getSupportedBlockchains()
+{
+    return kSupportedBlockchains;
+}
+
+QString WalletSettings::getBlockchainInFocus() const
+{
+    QString name;
+    {
+        Lock lock(m_mutex);
+        name = m_data.value(kBlockchainName, kMainBlockchain).toString();
+    }
+
+    return name;
+}
+
+void WalletSettings::setBlockchainInFocus(const QString& name)
+{
+    {
+        Lock lock(m_mutex);
+        m_data.setValue(kBlockchainName, name);
+    }
+    emit blockchainChanged();
+}
+
+void WalletSettings::enableBlockchain(const QString& name, bool value)
+{
+    if (name == kMainBlockchain)
+        return;
+
+    if (kSupportedBlockchains.indexOf(name) < 0)
+        return;
+    {
+        Lock lock(m_mutex);
+        m_data.setValue(name + kEnabledBlockchain, value);
+    }
+}
+
+bool WalletSettings::isBlockchainEnabled(const QString& name) const
+{
+    if (name == kMainBlockchain)
+        return true;
+
+    if (kSupportedBlockchains.indexOf(name) < 0)
+        return false;
+
+    {
+        Lock lock(m_mutex);
+        return m_data.value(name + kEnabledBlockchain, false).toBool();
+    }
 }

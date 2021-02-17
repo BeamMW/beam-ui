@@ -123,24 +123,24 @@ void NodeModel::onSyncError(beam::Node::IObserver::Error error)
 
 uint16_t NodeModel::getLocalNodePort() const
 {
-    return AppModel::getInstance().getSettings().getLocalNodePort();
+    return AppModel2::getInstance2().getSettings().getLocalNodePort();
 }
 
 std::string NodeModel::getLocalNodeStorage() const
 {
-    return AppModel::getInstance().getSettings().getLocalNodeStorage();
+    return AppModel2::getInstance2().getSettings().getLocalNodeStorage();
 }
 
 std::string NodeModel::getTempDir() const
 {
-    return AppModel::getInstance().getSettings().getTempDir();
+    return AppModel2::getInstance2().getSettings().getTempDir();
 }
 
 std::vector<std::string> NodeModel::getLocalNodePeers() const
 {
     std::vector<std::string> result;
 
-    auto peers = AppModel::getInstance().getSettings().getLocalNodePeers();
+    auto peers = AppModel2::getInstance2().getSettings().getLocalNodePeers();
 
     for (const auto& peer : peers)
     {
@@ -152,7 +152,7 @@ std::vector<std::string> NodeModel::getLocalNodePeers() const
 
 bool NodeModel::getPeersPersistent() const
 {
-    return AppModel::getInstance().getSettings().getPeersPersistent();
+    return AppModel2::getInstance2().getSettings().getPeersPersistent();
 }
 
 void NodeModel::onNodeThreadFinished()

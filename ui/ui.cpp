@@ -182,11 +182,18 @@ int main (int argc, char* argv[])
             LOG_INFO() << "Beam Core " << BEAM_VERSION << " (" << BEAM_BRANCH_NAME << ")";
             LOG_INFO() << "Rules signature: " << Rules::get().get_SignatureStr();
 
+#define MACRO(name) \
+            AppModel2::getRules##name().UpdateChecksum(); \
+            LOG_INFO() << #name " Rules signature: " << AppModel2::getRules##name().get_SignatureStr();
+            BEAM_SIDECHAINS_MAP(MACRO)
+#undef MACRO
+
             // AppModel Model MUST BE created before the UI engine and destroyed after.
             // AppModel serves the UI and UI should be able to access AppModel at any time
             // even while being destroyed. Do not move engine above AppModel
             WalletSettings settings(appDataDir);
-            AppModel appModel(settings);
+            AppModel2 appModel(settings);
+            
             QQmlApplicationEngine engine;
             Translator translator(settings, engine);
             

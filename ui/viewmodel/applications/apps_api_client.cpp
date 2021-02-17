@@ -18,10 +18,10 @@
 namespace beamui {
     AppsApiClient::AppsApiClient(IHandler& handler)
         : WalletApi(
-            AppModel::getInstance().getWalletDB(),
-            AppModel::getInstance().getWalletModel()->getWallet(),
+            AppModel2::getInstance().getWalletDB(),
+            AppModel2::getInstance().getWalletModel()->getWallet(),
             nullptr,
-            AppModel::getInstance().getWalletModel()->getAppsShaders()
+            AppModel2::getInstance().getWalletModel()->getAppsShaders()
         ),
         _handler(handler)
     {

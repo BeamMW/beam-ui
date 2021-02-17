@@ -34,7 +34,7 @@ class WalletModel
     Q_OBJECT
 public:
     using Ptr = std::shared_ptr<WalletModel>;
-    WalletModel(beam::wallet::IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor);
+    WalletModel(const beam::Rules& rules, beam::wallet::IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor);
     ~WalletModel() override;
 
     QString GetErrorString(beam::wallet::ErrorType type);

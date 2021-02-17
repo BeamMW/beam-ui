@@ -23,7 +23,7 @@ namespace beamui::applications {
 
     namespace {
         WalletModel& getWallet() {
-            return *AppModel::getInstance().getWalletModel();
+            return *AppModel2::getInstance().getWalletModel();
         }
 
         IWalletModelAsync& getAsyncWallet() {

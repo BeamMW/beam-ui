@@ -138,6 +138,24 @@ Item {
         visible: model.nodeSyncProgress > 0 && update_indicator.visible
     }
 
+    CustomComboBox {
+        id: sidechains
+        anchors.top: parent.top
+        anchors.left: progressText.right
+        fontPixelSize: 14
+        enableScroll: true
+
+        model: parent.model.blockchains
+        currentIndex: parent.model.currentBlockchainIndex
+
+        Connections {
+            target: sidechains
+            onCurrentIndexChanged: function() {
+                rootControl.model.currentBlockchainIndex = sidechains.currentIndex
+            }
+        }
+    }
+
     CustomProgressBar {
         id: progress_bar
         anchors.top: update_indicator.bottom

@@ -24,8 +24,8 @@
 using namespace beam::wallet;
 
 ExchangeRatesManager::ExchangeRatesManager()
-    : m_walletModel(*AppModel::getInstance().getWalletModel())
-    , m_settings(AppModel::getInstance().getSettings())
+    : m_walletModel(*AppModel2::getInstance().getWalletModel())
+    , m_settings(AppModel2::getInstance().getSettings())
 {
 
     qRegisterMetaType<std::vector<beam::wallet::ExchangeRate>>("std::vector<beam::wallet::ExchangeRate>");

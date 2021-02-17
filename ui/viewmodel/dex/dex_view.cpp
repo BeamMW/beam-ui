@@ -18,7 +18,7 @@
 namespace beamui::dex
 {
     DexView::DexView()
-        : _walletModel(*AppModel::getInstance().getWalletModel())
+        : _walletModel(*AppModel2::getInstance().getWalletModel())
     {
         beam::wallet::TxID id;
         LOG_INFO() << id;

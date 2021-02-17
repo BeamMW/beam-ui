@@ -43,13 +43,13 @@ const int kBpsRecessionCountThreshold = 60;
 Q_DECLARE_METATYPE(uint64_t);
 
 LoadingViewModel::LoadingViewModel()
-    : m_walletModel{ *AppModel::getInstance().getWalletModel() }
+    : m_walletModel{ *AppModel2::getInstance().getWalletModel() }
     , m_progress{0.0}
     , m_nodeInitProgress{0.}
     , m_total{0}
     , m_done{0}
     , m_lastDone{0}
-    , m_hasLocalNode{ AppModel::getInstance().getSettings().getRunLocalNode() }
+    , m_hasLocalNode{ AppModel2::getInstance().getSettings().getRunLocalNode() }
     , m_isCreating{false}
     , m_isDownloadStarted{false}
     , m_lastProgress{0.}
@@ -65,10 +65,10 @@ LoadingViewModel::LoadingViewModel()
     connect(&m_walletModel, SIGNAL(nodeConnectionChanged(bool)), SLOT(onNodeConnectionChanged(bool)));
     connect(&m_walletModel, SIGNAL(walletError(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
 
-    if (AppModel::getInstance().getSettings().getRunLocalNode())
+    if (AppModel2::getInstance().getSettings().getRunLocalNode())
     {
-        connect(&AppModel::getInstance().getNode(), SIGNAL(syncProgressUpdated(int, int)), SLOT(onNodeSyncProgressUpdated(int, int)));
-        connect(&AppModel::getInstance().getNode(), SIGNAL(initProgressUpdated(quint64, quint64)), SLOT(onNodeInitProgressUpdated(quint64, quint64)));
+        connect(&AppModel2::getInstance().getNode(), SIGNAL(syncProgressUpdated(int, int)), SLOT(onNodeSyncProgressUpdated(int, int)));
+        connect(&AppModel2::getInstance().getNode(), SIGNAL(initProgressUpdated(quint64, quint64)), SLOT(onNodeInitProgressUpdated(quint64, quint64)));
     }
 }
 
@@ -102,8 +102,8 @@ void LoadingViewModel::resetWallet()
     disconnect(&m_walletModel, SIGNAL(syncProgressUpdated(int, int)), this, SLOT(onSyncProgressUpdated(int, int)));
     disconnect(&m_walletModel, SIGNAL(nodeConnectionChanged(bool)), this, SLOT(onNodeConnectionChanged(bool)));
     disconnect(&m_walletModel, SIGNAL(walletError(beam::wallet::ErrorType)), this, SLOT(onGetWalletError(beam::wallet::ErrorType)));
-    connect(&AppModel::getInstance(), SIGNAL(walletResetCompleted()), this, SIGNAL(walletResetCompleted()));
-    AppModel::getInstance().resetWallet();
+    connect(&AppModel2::getInstance(), SIGNAL(walletResetCompleted()), this, SIGNAL(walletResetCompleted()));
+    AppModel2::getInstance().resetWallet();
 }
 
 void LoadingViewModel::recalculateProgress()
@@ -189,7 +189,7 @@ void LoadingViewModel::updateProgress()
     }
     else
     {
-       m_hasLocalNode = AppModel::getInstance().getSettings().getRunLocalNode();
+       m_hasLocalNode = AppModel2::getInstance().getSettings().getRunLocalNode();
         if (m_hasLocalNode)
         {
             //% "Rebuilding wallet data"

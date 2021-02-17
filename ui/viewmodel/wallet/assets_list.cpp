@@ -12,8 +12,8 @@
 #include "model/app_model.h"
 
 AssetsList::AssetsList()
-    : _amgr(AppModel::getInstance().getAssets())
-    , _wallet(*AppModel::getInstance().getWalletModel())
+    : _amgr(AppModel2::getInstance().getAssets())
+    , _wallet(*AppModel2::getInstance().getWalletModel())
 {
     connect(&_ermgr,     &ExchangeRatesManager::rateUnitChanged,   this,  &AssetsList::onNewRates);
     connect(&_ermgr,     &ExchangeRatesManager::activeRateChanged, this,  &AssetsList::onNewRates);

@@ -25,7 +25,7 @@ namespace beamui::applications {
     {
         LOG_INFO() << "AppsViewModel created";
 
-        auto& settings = AppModel::getInstance().getSettings();
+        auto& settings = AppModel2::getInstance().getSettings();
         auto defaultProfile = QWebEngineProfile::defaultProfile();
         defaultProfile->setCachePath(settings.getAppsCachePath());
         defaultProfile->setPersistentStoragePath(settings.getAppsStoragePath());
@@ -43,19 +43,19 @@ namespace beamui::applications {
 
     QString AppsViewModel::getDevAppUrl() const
     {
-        auto& settings = AppModel::getInstance().getSettings();
+        auto& settings = AppModel2::getInstance().getSettings();
         return settings.getDevBeamAppUrl();
     }
 
     QString AppsViewModel::getDevAppName() const
     {
-        auto& settings = AppModel::getInstance().getSettings();
+        auto& settings = AppModel2::getInstance().getSettings();
         return settings.getDevBeamAppName();
     }
 
     QString AppsViewModel::getAppsUrl() const
     {
-        auto& settings = AppModel::getInstance().getSettings();
+        auto& settings = AppModel2::getInstance().getSettings();
         return settings.getAppsUrl();
     }
 }

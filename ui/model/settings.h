@@ -21,6 +21,10 @@
 #include <mutex>
 #include "model/wallet_model.h"
 
+#define BEAM_SIDECHAINS_MAP(macro) \
+     macro(Main) \
+     macro(Sidechain1) \
+     macro(Sidechain2) 
 
 class WalletSettings : public QObject
 {
@@ -29,7 +33,10 @@ public:
     WalletSettings(const QDir& appDataDir);
 
     QString getNodeAddress() const;
+    QString getNodeAddress(const QString& blockchainName) const;
+
     void setNodeAddress(const QString& value);
+    void setNodeAddress(const QString& blockchainName, const QString& value);
 
     int getLockTimeout() const;
     void setLockTimeout(int value);
@@ -46,7 +53,11 @@ public:
 #if defined(BEAM_HW_WALLET)
     std::string getTrezorWalletStorage() const;
 #endif
-    std::string getWalletStorage() const;
+
+#define MACRO(name) std::string getWallet##name##Storage() const;
+    BEAM_SIDECHAINS_MAP(MACRO)
+#undef MACRO
+
     std::string getWalletFolder() const;
     std::string getAppDataPath() const;
     void reportProblem();
@@ -101,11 +112,19 @@ public:
     QString getAppsCachePath() const;
     QString getAppsStoragePath() const;
 
+    const QList<QString>& getSupportedBlockchains();
+    QString getBlockchainInFocus() const;
+    void setBlockchainInFocus(const QString& name);
+    void enableBlockchain(const QString& name, bool value);
+    bool isBlockchainEnabled(const QString& name) const;
+
 public:
     static const char* WalletCfg;
     static const char* LogsFolder;
     static const char* SettingsFile;
-    static const char* WalletDBFile;
+#define MACRO(name) static const char* Wallet##name##DBFile;
+    BEAM_SIDECHAINS_MAP(MACRO)
+#undef MACRO
 #if defined(BEAM_HW_WALLET)
     static const char* TrezorWalletDBFile;
 #endif
@@ -114,7 +133,7 @@ public:
     void applyChanges();
 
 signals:
-    void nodeAddressChanged();
+    void nodeAddressChanged(const QString& blockchainName, const QString& addr);
     void lockTimeoutChanged();
     void localNodeRunChanged();
     void localNodePortChanged();
@@ -123,6 +142,7 @@ signals:
     void localeChanged();
     void beamMWLinksChanged();
     void secondCurrencyChanged();
+    void blockchainChanged();
 
 private:
     QSettings m_data;

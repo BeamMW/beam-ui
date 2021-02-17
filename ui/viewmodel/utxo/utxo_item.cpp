@@ -122,7 +122,7 @@ beam::Height UtxoItem::rawMaturity() const
 
 uint16_t UtxoItem::rawMaturityTimeLeft() const
 {
-    auto walletModel = AppModel::getInstance().getWalletModel();
+    auto walletModel = AppModel2::getInstance().getWalletModel();
     if (walletModel->getCurrentHeight() < _coin.get_Maturity())
     {
         auto blocksLeft = _coin.get_Maturity() - walletModel->getCurrentHeight();
@@ -134,12 +134,12 @@ uint16_t UtxoItem::rawMaturityTimeLeft() const
 
 // ShieldedCoinItem
 ShieldedCoinItem::ShieldedCoinItem()
-    : _walletModel{*AppModel::getInstance().getWalletModel()}
+    : _walletModel{*AppModel2::getInstance().getWalletModel()}
 {
 }
 
 ShieldedCoinItem::ShieldedCoinItem(const beam::wallet::ShieldedCoin& coin)
-    : _walletModel{*AppModel::getInstance().getWalletModel()}
+    : _walletModel{*AppModel2::getInstance().getWalletModel()}
     , _coin{ coin }
 {
 

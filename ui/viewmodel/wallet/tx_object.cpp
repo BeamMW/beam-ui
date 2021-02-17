@@ -31,7 +31,7 @@ namespace
         QString time = "";
         if (minHeight && responseTime)
         {
-            time = convertBeamHeightDiffToTime(*minHeight + *responseTime - AppModel::getInstance().getWalletModel()->getCurrentHeight());
+            time = convertBeamHeightDiffToTime(*minHeight + *responseTime - AppModel2::getInstance().getWalletModel()->getCurrentHeight());
         }
         if (isSender)
         {
@@ -52,7 +52,7 @@ namespace
             return "";
         }
 
-        auto currentHeight = AppModel::getInstance().getWalletModel()->getCurrentHeight();
+        auto currentHeight = AppModel2::getInstance().getWalletModel()->getCurrentHeight();
         if (currentHeight >= *maxHeight)
         {
             return "";

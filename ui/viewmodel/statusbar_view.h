@@ -27,6 +27,8 @@ class StatusbarViewModel : public QObject
     Q_PROPERTY(int nodeSyncProgress         READ getNodeSyncProgress    NOTIFY nodeSyncProgressChanged)
     Q_PROPERTY(QString branchName           READ getBranchName          CONSTANT)
     Q_PROPERTY(QString walletStatusErrorMsg READ getWalletStatusErrorMsg NOTIFY statusErrorChanged)
+    Q_PROPERTY(QStringList blockchains      READ getBlockchains         NOTIFY blockchainsChanged)
+    Q_PROPERTY(int currentBlockchainIndex   READ getCurrentBlockchainIndex WRITE setCurrentBlockchainIndex   NOTIFY currentBlockchainIndexChanged)
 
 public:
 
@@ -39,6 +41,7 @@ public:
     int getNodeSyncProgress() const;
     QString getBranchName() const;
     QString getWalletStatusErrorMsg() const;
+    QStringList getBlockchains() const;
 
     void setIsOnline(bool value);
     void setIsFailedStatus(bool value);
@@ -46,6 +49,9 @@ public:
     void setIsConnectionTrusted(bool value);
     void setNodeSyncProgress(int value);
     void setWalletStatusErrorMsg(const QString& value);
+
+    int getCurrentBlockchainIndex() const;
+    void setCurrentBlockchainIndex(int value);
 
 public slots:
 
@@ -62,7 +68,11 @@ signals:
     void isConnectionTrustedChanged();
     void nodeSyncProgressChanged();
     void statusErrorChanged();
+    void blockchainsChanged();
+    void currentBlockchainIndexChanged();
 
+private:
+    QString getBlockchainName() const;
 private:
     WalletModel& m_model;
 
@@ -71,6 +81,7 @@ private:
     bool m_isFailedStatus;
     bool m_isConnectionTrusted;
     int m_nodeSyncProgress;
+    int m_currentBlockchainIndex;
 
     int m_nodeDone;
     int m_nodeTotal;

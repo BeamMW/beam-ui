@@ -30,7 +30,7 @@ namespace
 }
 
 SwapEthSettingsItem::SwapEthSettingsItem()
-    : m_coinClient(AppModel::getInstance().getSwapEthClient())
+    : m_coinClient(AppModel2::getInstance().getSwapEthClient())
 {
     auto coinClient = m_coinClient.lock();
     connect(coinClient.get(), SIGNAL(statusChanged()), this, SIGNAL(connectionStatusChanged()));

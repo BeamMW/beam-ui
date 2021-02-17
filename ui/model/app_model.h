@@ -37,13 +37,16 @@ namespace beam::wallet
 class AppModel final: public QObject
 {
     Q_OBJECT
+    friend class AppModel2;
 public:
-    static AppModel& getInstance();
-    static std::string getMyName();
-    static const std::string& getMyVersion();
+//    static AppModel& getInstance();
+//    static std::string getMyName();
+//    static const std::string& getMyVersion();
 
-    AppModel(WalletSettings& settings);
+    AppModel(const beam::Rules& rules, WalletSettings& settings, const std::string& storagePath, const std::string& blockchainName);
     ~AppModel() override;
+
+    const std::string& getWalletStorage() const;
 
     bool createWallet(const beam::SecString& seed, const beam::SecString& pass);
 
@@ -85,6 +88,10 @@ signals:
     void walletReset();
     void walletResetCompleted();
 
+private slots:
+
+    void onNodeAddressChanged(const QString&, const QString&);
+
 private:
     void start();
     void startNode();
@@ -101,6 +108,10 @@ private:
     template<typename BridgeSide, typename Bridge, typename SettingsProvider>
     void registerSwapFactory(beam::wallet::AtomicSwapCoin swapCoin, beam::wallet::AtomicSwapTransaction::Creator& swapTxCreator);
 
+    bool createWalletImpl(const ECC::NoLeak<ECC::uintBig>& secretKey, const beam::SecString& pass);
+    std::string getNodeAddress() const;
+    bool isMain() const;
+    bool AppModel::getRunLocalNode() const;
 private:
     // SwapCoinClientModels must be destroyed after WalletModel
     std::map<beam::wallet::AtomicSwapCoin, SwapCoinClientModel::Ptr> m_swapClients;
@@ -108,6 +119,7 @@ private:
     SwapEthClientModel::Ptr m_swapEthClient;
     beam::ethereum::IBridgeHolder::Ptr m_swapEthBridgeHolder;
 
+    const beam::Rules& m_rules;
     WalletModel::Ptr m_wallet;
     NodeModel m_nodeModel;
     WalletSettings& m_settings;
@@ -118,10 +130,36 @@ private:
     beam::wallet::IWalletDB::Ptr m_db;
     Connections m_nsc; // [n]ode [s]tarting [c]onnections
     Connections m_walletConnections;
-    static AppModel* s_instance;
+//    static AppModel* s_instance;
     std::string m_walletDBBackupPath;
+    std::string m_storagePath;
+    std::string m_blockchainName;
 
 #if defined(BEAM_HW_WALLET)
     mutable std::shared_ptr<beam::wallet::HWWallet> m_hwWallet;
 #endif
+};
+
+class AppModel2
+{
+public:
+    static beam::Rules& getRulesMain();
+    static beam::Rules& getRulesSidechain1();
+    static beam::Rules& getRulesSidechain2();
+    static AppModel& getInstance();
+    static AppModel2& getInstance2();
+    AppModel2(WalletSettings& settings);
+    ~AppModel2();
+
+    static std::string getMyName();
+    static const std::string& getMyVersion();
+
+    WalletSettings& getSettings() const { return m_settings; }
+    bool openWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper = {});
+
+private:
+    static AppModel2* s_instance;
+    WalletSettings& m_settings;
+
+    std::map<std::string, std::unique_ptr<AppModel>> m_wallets;
 };

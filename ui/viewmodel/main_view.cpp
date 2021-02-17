@@ -32,18 +32,21 @@ namespace
 }
 
 MainViewModel::MainViewModel()
-    : m_settings{AppModel::getInstance().getSettings()}
+    : m_settings{AppModel2::getInstance().getSettings()}
     , m_timer(this)
 {
     m_timer.setSingleShot(true);
     
-    auto walletModelPtr = AppModel::getInstance().getWalletModel().get();
+    auto walletModelPtr = AppModel2::getInstance().getWalletModel().get();
 
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(lockWallet()));
     connect(&m_settings, SIGNAL(lockTimeoutChanged()), this, SLOT(onLockTimeoutChanged()));
     connect(walletModelPtr, &WalletModel::walletStatusChanged, this, &MainViewModel::unsafeTxCountChanged);
     connect(walletModelPtr, SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SIGNAL(unsafeTxCountChanged()));
     connect(walletModelPtr, SIGNAL(notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)), SIGNAL(unreadNotificationsChanged()));
+
+    connect(&m_settings, SIGNAL(blockchainChanged()), SIGNAL(appModelChanged()));
+
 #if defined(BEAM_HW_WALLET)
     connect(walletModelPtr, SIGNAL(showTrezorMessage()), this, SIGNAL(showTrezorMessage()));
     connect(walletModelPtr, SIGNAL(hideTrezorMessage()), this, SIGNAL(hideTrezorMessage()));
@@ -90,10 +93,10 @@ void MainViewModel::resetLockTimer()
 
 int MainViewModel::getUnsafeTxCount() const
 {
-    return static_cast<int>(AppModel::getInstance().getWalletModel()->getUnsafeActiveTransactionsCount());
+    return static_cast<int>(AppModel2::getInstance().getWalletModel()->getUnsafeActiveTransactionsCount());
 }
 
 int MainViewModel::getUnreadNotifications() const
 {
-    return static_cast<int>(AppModel::getInstance().getWalletModel()->getUnreadNotificationsCount());
+    return static_cast<int>(AppModel2::getInstance().getWalletModel()->getUnreadNotificationsCount());
 }

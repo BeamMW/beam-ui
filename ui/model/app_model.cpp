@@ -62,44 +62,171 @@ namespace
         address.m_label = "default";
         db->saveAddress(address);
     }
+
+    Rules createTestnetRules()
+    {
+        Rules rules;
+
+        rules.TreasuryChecksum = {
+            0x5d, 0x9b, 0x18, 0x78, 0x9c, 0x02, 0x1a, 0x1e,
+            0xfb, 0x83, 0xd9, 0x06, 0xf4, 0xac, 0x7d, 0xce,
+            0x99, 0x7d, 0x4a, 0xc5, 0xd4, 0x71, 0xd7, 0xb4,
+            0x6f, 0x99, 0x77, 0x6e, 0x7a, 0xbd, 0x2e, 0xc9
+        };
+        rules.pForks[1].m_Height = 270910; // testnet fork
+        rules.pForks[2].m_Height = 690000;
+        rules.Magic.IsTestnet = true;
+
+        rules.Emission.Drop0 = 1440 * 365; // 1 year roughly. This is the height of the last block that still has the initial emission, the drop is starting from the next block
+        rules.Emission.Drop1 = 1440 * 365 * 4; // 4 years roughly. Each such a cycle there's a new drop
+
+        return rules;
+    }
+
+    Rules createMainnetRules()
+    {
+        Rules rules;
+
+        rules.TreasuryChecksum = {
+            0x5d, 0x9b, 0x18, 0x78, 0x9c, 0x02, 0x1a, 0x1e,
+            0xfb, 0x83, 0xd9, 0x06, 0xf4, 0xac, 0x7d, 0xce,
+            0x99, 0x7d, 0x4a, 0xc5, 0xd4, 0x71, 0xd7, 0xb4,
+            0x6f, 0x99, 0x77, 0x6e, 0x7a, 0xbd, 0x2e, 0xc9
+        };
+        rules.pForks[1].m_Height = 321321; // mainnet hard fork
+        rules.pForks[2].m_Height = 777777;
+        rules.Magic.v0 = 14;
+        rules.CA.DepositForList = rules.Coin * 3000;
+        rules.DA.Difficulty0 = Difficulty(22 << Difficulty::s_MantissaBits); // 2^22 = 4,194,304. For GPUs producing 7 sol/sec this is roughly equivalent to 10K GPUs.
+
+        rules.Emission.Drop0 = 1440 * 365; // 1 year roughly. This is the height of the last block that still has the initial emission, the drop is starting from the next block
+        rules.Emission.Drop1 = 1440 * 365 * 4; // 4 years roughly. Each such a cycle there's a new drop
+
+        return rules;
+    }
+
+
 }
 
-AppModel* AppModel::s_instance = nullptr;
+Rules m_testnetRules = createTestnetRules();
+Rules m_mainnetRules = createMainnetRules();
 
-AppModel& AppModel::getInstance()
+Rules& AppModel2::getRulesMain()
+{
+    return Rules::get();
+}
+
+Rules& AppModel2::getRulesSidechain1()
+{
+    return m_testnetRules;
+}
+
+Rules& AppModel2::getRulesSidechain2()
+{
+    return m_mainnetRules;
+}
+
+AppModel2* AppModel2::s_instance = nullptr;
+
+AppModel& AppModel2::getInstance()
+{
+    auto bn = getInstance2().m_settings.getBlockchainInFocus().toStdString();
+    return *getInstance2().m_wallets[bn];
+}
+
+AppModel2& AppModel2::getInstance2()
 {
     assert(s_instance != nullptr);
     return *s_instance;
 }
 
+AppModel2::AppModel2(WalletSettings& settings)
+    : m_settings(settings)
+{
+    assert(s_instance == nullptr);
+    s_instance = this;
+
+#define MACRO(name) \
+    if (settings.isBlockchainEnabled(#name)) \
+        m_wallets.emplace(#name, std::make_unique<AppModel>(getRules##name(), settings, settings.getWallet##name##Storage(), #name));
+    BEAM_SIDECHAINS_MAP(MACRO)
+#undef MACRO
+
+}
+
+AppModel2::~AppModel2()
+{
+    s_instance = nullptr;
+}
+
 // static
-std::string AppModel::getMyName()
+std::string AppModel2::getMyName()
 {
     return "Beam Wallet UI";
 }
 
-const std::string& AppModel::getMyVersion()
+const std::string& AppModel2::getMyVersion()
 {
     static std::string appVersion
 #ifdef BEAM_CLIENT_VERSION
-        = AppModel::getMyName() + " " + std::string(BEAM_CLIENT_VERSION)
+        = AppModel2::getMyName() + " " + std::string(BEAM_CLIENT_VERSION)
 #endif
     ;
     return appVersion;
 }
 
-AppModel::AppModel(WalletSettings& settings)
-    : m_settings{settings}
-    , m_walletReactor(beam::io::Reactor::create())
+bool AppModel2::openWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper)
 {
-    assert(s_instance == nullptr);
-    s_instance = this;
-    m_nodeModel.start();
+    auto& mainWallet = m_wallets["Main"];
+    if (!WalletDB::isInitialized(mainWallet->getWalletStorage()))
+        return false;
+
+    if (!mainWallet->openWallet(pass, keyKeeper))
+        return false;
+
+    auto mainDB = mainWallet->getWalletDB();
+    ECC::NoLeak<ECC::Hash::Value> seed;
+
+    if (!mainDB->getPrivateVarRaw("WalletSeed", &seed.V, sizeof(seed.V)))
+        return false;
+
+    bool res = true;
+    for (auto& wallet : m_wallets)
+    {
+        if (!WalletDB::isInitialized(wallet.second->getWalletStorage()))
+        {
+            wallet.second->createWalletImpl(seed, pass);
+        }
+        if (!wallet.second->getWalletDB())
+            res &= wallet.second->openWallet(pass, keyKeeper);
+    }
+    return res;
+}
+
+AppModel::AppModel(const Rules& rules, WalletSettings& settings, const std::string& storagePath, const std::string& blockchainName)
+    : m_rules(rules)
+    , m_settings{settings}
+    , m_walletReactor(beam::io::Reactor::create())
+    , m_storagePath(storagePath)
+    , m_blockchainName(blockchainName)
+{
+//    assert(s_instance == nullptr);
+//    s_instance = this;
+    if (isMain())
+    {
+        m_nodeModel.start();
+    }
+    connect(&m_settings, SIGNAL(nodeAddressChanged(const QString&, const QString&)), this, SLOT(onNodeAddressChanged(const QString&, const QString&)));
 }
 
 AppModel::~AppModel()
 {
-    s_instance = nullptr;
+//    s_instance = nullptr;
+}
+
+const std::string& AppModel::getWalletStorage() const
+{
+    return m_storagePath;
 }
 
 void AppModel::backupDB(const std::string& dbFilePath)
@@ -149,12 +276,17 @@ void AppModel::restoreDBFromBackup(const std::string& dbFilePath)
 
 bool AppModel::createWallet(const SecString& seed, const SecString& pass)
 {
-    const auto dbFilePath = m_settings.getWalletStorage();
+    return createWalletImpl(seed.hash(), pass);
+}
+
+bool AppModel::createWalletImpl(const ECC::NoLeak<ECC::uintBig>& secretKey, const SecString& pass)
+{
+    const auto dbFilePath = getWalletStorage();
     backupDB(dbFilePath);
     {
         io::Reactor::Scope s(*m_walletReactor); // do it in main thread
-        auto db = WalletDB::init(dbFilePath, pass, seed.hash());
-        if (!db) 
+        auto db = WalletDB::init(dbFilePath, pass, secretKey);
+        if (!db)
             return false;
 
         generateDefaultAddress(db);
@@ -206,9 +338,9 @@ bool AppModel::openWallet(const beam::SecString& pass, beam::wallet::IPrivateKey
 
     try
     {
-        if (WalletDB::isInitialized(m_settings.getWalletStorage()))
+        if (WalletDB::isInitialized(getWalletStorage()))
         {
-            m_db = WalletDB::open(m_settings.getWalletStorage(), pass);
+            m_db = WalletDB::open(getWalletStorage(), pass);
         }
 #if defined(BEAM_HW_WALLET)
         else if (WalletDB::isInitialized(m_settings.getTrezorWalletStorage()))
@@ -330,7 +462,7 @@ void AppModel::onResetWallet()
 
     try
     {
-        fsutils::remove(getSettings().getWalletStorage());
+        fsutils::remove(getWalletStorage());
 
         #if defined(BEAM_HW_WALLET)
         fsutils::remove(getSettings().getTrezorWalletStorage());
@@ -343,8 +475,20 @@ void AppModel::onResetWallet()
         LOG_ERROR() << "Error while removing files in onResetWallet: " << err.what();
     }
 
-    restoreDBFromBackup(getSettings().getWalletStorage());
+    restoreDBFromBackup(getWalletStorage());
     emit walletResetCompleted();
+}
+
+void AppModel::onNodeAddressChanged(const QString& blockchainName, const QString& addr)
+{
+    if (blockchainName.toStdString() == m_blockchainName)
+    {
+        auto w = getWalletModel();
+        if (w)
+        {
+            getWalletModel()->getAsync()->setNodeAddress(addr.toStdString());
+        }
+    }
 }
 
 void AppModel::startWallet()
@@ -424,7 +568,7 @@ void AppModel::applySettingsChanges()
         m_nodeModel.stopNode();
     }
 
-    if (m_settings.getRunLocalNode())
+    if (getRunLocalNode())
     {
         startNode();
 
@@ -434,7 +578,7 @@ void AppModel::applySettingsChanges()
     }
     else
     {
-        auto nodeAddr = m_settings.getNodeAddress().toStdString();
+        auto nodeAddr = getNodeAddress();
         m_wallet->getAsync()->setNodeAddress(nodeAddr);
     }
 }
@@ -442,7 +586,7 @@ void AppModel::applySettingsChanges()
 void AppModel::nodeSettingsChanged()
 {
     applySettingsChanges();
-    if (!m_settings.getRunLocalNode())
+    if (!getRunLocalNode())
     {
         if (!m_wallet->isRunning())
         {
@@ -490,8 +634,8 @@ void AppModel::start()
     m_nodeModel.setKdf(m_db->get_MasterKdf());
     m_nodeModel.setOwnerKey(m_db->get_OwnerKdf());
 
-    std::string nodeAddrStr = m_settings.getNodeAddress().toStdString();
-    if (m_settings.getRunLocalNode())
+    std::string nodeAddrStr = getNodeAddress();
+    if (getRunLocalNode())
     {
         io::Address nodeAddr = io::Address::LOCALHOST;
         nodeAddr.port(m_settings.getLocalNodePort());
@@ -500,10 +644,12 @@ void AppModel::start()
 
     initSwapClients();
 
-    m_wallet = std::make_shared<WalletModel>(m_db, nodeAddrStr, m_walletReactor);
+    m_wallet = std::make_shared<WalletModel>(m_rules, m_db, nodeAddrStr, m_walletReactor);
     m_assets = std::make_shared<AssetsManager>(m_wallet);
 
-    if (m_settings.getRunLocalNode())
+    m_wallet->getAsync()->enableBodyRequests(!isMain());
+
+    if (getRunLocalNode())
     {
         startNode();
     }
@@ -612,4 +758,19 @@ void AppModel::resetSwapClients()
 {
     m_swapClients.clear();
     m_swapEthClient.reset();
+}
+
+std::string AppModel::getNodeAddress() const
+{
+    return m_settings.getNodeAddress(QString::fromStdString(m_blockchainName)).toStdString();
+}
+
+bool AppModel::isMain() const
+{
+    return m_blockchainName == "Main";
+}
+
+bool AppModel::getRunLocalNode() const
+{
+    return m_settings.getRunLocalNode() && isMain();
 }

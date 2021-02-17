@@ -186,7 +186,7 @@ public offline" */
 }  // namespace
 
 TxObjectList::TxObjectList()
-    : _amgr(AppModel::getInstance().getAssets())
+    : _amgr(AppModel2::getInstance().getAssets())
 {
     connect(_amgr.get(), &AssetsManager::assetInfo, this, &TxObjectList::onAssetInfo);
 }

@@ -30,7 +30,7 @@ namespace
 
 SwapCoinSettingsItem::SwapCoinSettingsItem(wallet::AtomicSwapCoin swapCoin)
     : m_swapCoin(swapCoin)
-    , m_coinClient(AppModel::getInstance().getSwapCoinClient(swapCoin))
+    , m_coinClient(AppModel2::getInstance().getSwapCoinClient(swapCoin))
 {
     auto coinClient = m_coinClient.lock();
     connect(coinClient.get(), SIGNAL(statusChanged()), this, SLOT(onStatusChanged()));

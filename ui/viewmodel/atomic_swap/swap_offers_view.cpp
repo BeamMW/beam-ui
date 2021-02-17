@@ -25,8 +25,8 @@ using namespace std;
 
 SwapCoinClientWrapper::SwapCoinClientWrapper(wallet::AtomicSwapCoin swapCoin)
     : m_swapCoin(swapCoin)
-    , m_coinClient(!ethereum::IsEthereumBased(swapCoin) ? AppModel::getInstance().getSwapCoinClient(swapCoin) : nullptr)
-    , m_ethClient(ethereum::IsEthereumBased(swapCoin) ? AppModel::getInstance().getSwapEthClient() : nullptr)
+    , m_coinClient(!ethereum::IsEthereumBased(swapCoin) ? AppModel2::getInstance().getSwapCoinClient(swapCoin) : nullptr)
+    , m_ethClient(ethereum::IsEthereumBased(swapCoin) ? AppModel2::getInstance().getSwapEthClient() : nullptr)
 {
     if (ethereum::IsEthereumBased(swapCoin))
     {
@@ -143,7 +143,7 @@ Amount SwapCoinClientWrapper::getAvailable() const
 }
 
 SwapOffersViewModel::SwapOffersViewModel()
-    :   m_walletModel{*AppModel::getInstance().getWalletModel()}
+    :   m_walletModel{*AppModel2::getInstance().getWalletModel()}
 {
     InitSwapClientWrappers();
 
@@ -416,7 +416,7 @@ void SwapOffersViewModel::resetAllOffersFitBalance()
 
 bool SwapOffersViewModel::showBetaWarning() const
 {
-    auto& settings = AppModel::getInstance().getSettings();
+    auto& settings = AppModel2::getInstance().getSettings();
     bool showWarning = settings.showSwapBetaWarning();
     if (showWarning)
     {

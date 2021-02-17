@@ -164,7 +164,7 @@ bool QMLGlobals::isSwapToken(const QString& text)
 
 QString QMLGlobals::getLocaleName()
 {
-    const auto& settings = AppModel::getInstance().getSettings();
+    const auto& settings = AppModel2::getInstance().getSettings();
     return settings.getLocale();
 }
 
@@ -175,13 +175,13 @@ int QMLGlobals::maxCommentLength()
 
 bool QMLGlobals::needPasswordToSpend()
 {
-    return AppModel::getInstance().getSettings().isPasswordReqiredToSpendMoney();
+    return AppModel2::getInstance().getSettings().isPasswordReqiredToSpendMoney();
 }
 
 bool QMLGlobals::isPasswordValid(const QString& value)
 {
     beam::SecString secretPass = value.toStdString();
-    return AppModel::getInstance().checkWalletPassword(secretPass);
+    return AppModel2::getInstance().checkWalletPassword(secretPass);
 }
 
 QString QMLGlobals::calcWithdrawTxFee(Currency currency, unsigned int feeRate)
@@ -281,9 +281,9 @@ bool QMLGlobals::haveSwapClient(Currency currency)
     auto swapCoin = convertCurrencyToSwapCoin(currency);
     if (isEthereumBased(currency))
     {
-        return AppModel::getInstance().getSwapEthClient()->GetSettings().IsActivated();
+        return AppModel2::getInstance().getSwapEthClient()->GetSettings().IsActivated();
     }
-    return AppModel::getInstance().getSwapCoinClient(swapCoin)->GetSettings().IsActivated();
+    return AppModel2::getInstance().getSwapCoinClient(swapCoin)->GetSettings().IsActivated();
 }
 
 QString QMLGlobals::rawTxParametrsToTokenStr(const QVariant& variantTxParams)
@@ -306,10 +306,10 @@ bool QMLGlobals::canReceive(Currency currency)
     auto swapCoin = convertCurrencyToSwapCoin(currency);
     if (isEthereumBased(currency))
     {
-        auto client = AppModel::getInstance().getSwapEthClient();
+        auto client = AppModel2::getInstance().getSwapEthClient();
         return client->GetSettings().IsActivated() && client->getStatus() == beam::ethereum::Client::Status::Connected;
     }
-    auto client = AppModel::getInstance().getSwapCoinClient(swapCoin);
+    auto client = AppModel2::getInstance().getSwapCoinClient(swapCoin);
     return client->GetSettings().IsActivated() && client->getStatus() == beam::bitcoin::Client::Status::Connected;
 }
 
@@ -422,11 +422,11 @@ QString QMLGlobals::getRecommendedFee(Currency currency)
 
     if (isEthereumBased(currency))
     {
-        return QString::fromStdString(std::to_string(AppModel::getInstance().getSwapEthClient()->getGasPrice()));
+        return QString::fromStdString(std::to_string(AppModel2::getInstance().getSwapEthClient()->getGasPrice()));
     }
 
     auto swapCoin = convertCurrencyToSwapCoin(currency);
-    return QString::fromStdString(std::to_string(AppModel::getInstance().getSwapCoinClient(swapCoin)->getEstimatedFeeRate()));
+    return QString::fromStdString(std::to_string(AppModel2::getInstance().getSwapCoinClient(swapCoin)->getEstimatedFeeRate()));
 }
 
 QString QMLGlobals::getDefaultFee(Currency currency)
@@ -438,11 +438,11 @@ QString QMLGlobals::getDefaultFee(Currency currency)
 
     if (isEthereumBased(currency))
     {
-        return QString::fromStdString(std::to_string(AppModel::getInstance().getSwapEthClient()->getGasPrice()));
+        return QString::fromStdString(std::to_string(AppModel2::getInstance().getSwapEthClient()->getGasPrice()));
     }
 
     auto swapCoin = convertCurrencyToSwapCoin(currency);
-    return QString::fromStdString(std::to_string(AppModel::getInstance().getSwapCoinClient(swapCoin)->getEstimatedFeeRate()));
+    return QString::fromStdString(std::to_string(AppModel2::getInstance().getSwapCoinClient(swapCoin)->getEstimatedFeeRate()));
 }
 
 QString QMLGlobals::divideWithPrecision(const QString& dividend, const QString& divider, uint precision)

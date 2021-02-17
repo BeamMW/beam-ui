@@ -28,7 +28,7 @@ namespace
 }
 
 TxTableViewModel::TxTableViewModel()
-    : _model(*AppModel::getInstance().getWalletModel())
+    : _model(*AppModel2::getInstance().getWalletModel())
 {
     connect(&_model, SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SLOT(onTransactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
     connect(&_model, SIGNAL(txHistoryExportedToCsv(const QString&)), this, SLOT(onTxHistoryExportedToCsv(const QString&)));
@@ -191,6 +191,6 @@ PaymentInfoItem* TxTableViewModel::getPaymentInfo(const QVariant& variantTxID)
 
 QString TxTableViewModel::getExplorerUrl() const
 {
-     const auto& settings = AppModel::getInstance().getSettings();
+     const auto& settings = AppModel2::getInstance().getSettings();
      return settings.getExplorerUrl();
 }

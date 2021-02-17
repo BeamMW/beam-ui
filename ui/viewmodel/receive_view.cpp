@@ -28,7 +28,7 @@ namespace {
 ReceiveViewModel::ReceiveViewModel()
     : _amountToReceiveGrothes(0)
     , _addressExpires(AddressExpires)
-    , _walletModel(*AppModel::getInstance().getWalletModel())
+    , _walletModel(*AppModel2::getInstance().getWalletModel())
 {
     connect(&_walletModel, &WalletModel::newAddressFailed, this, &ReceiveViewModel::newAddressFailed);
     connect(&_exchangeRatesManager, &ExchangeRatesManager::rateUnitChanged, this, &ReceiveViewModel::rateChanged);
@@ -218,7 +218,7 @@ void ReceiveViewModel::updateTransactionToken()
     using namespace beam::wallet;
     if (!isShieldedTx())
     {
-        auto address = GenerateRegularAddress(_receiverAddress, _amountToReceiveGrothes, isPermanentAddress(), AppModel::getMyVersion());
+        auto address = GenerateRegularAddress(_receiverAddress, _amountToReceiveGrothes, isPermanentAddress(), AppModel2::getMyVersion());
         setTranasctionToken(QString::fromStdString(address));
     }
     else
@@ -227,7 +227,7 @@ void ReceiveViewModel::updateTransactionToken()
         {
             if (!v.empty() && isShieldedTx())
             {
-                auto address = GenerateMaxPrivacyAddress(_receiverAddress, _amountToReceiveGrothes, v[0], AppModel::getMyVersion());
+                auto address = GenerateMaxPrivacyAddress(_receiverAddress, _amountToReceiveGrothes, v[0], AppModel2::getMyVersion());
                 setTranasctionToken(QString::fromStdString(address));
             }
         });
@@ -302,7 +302,7 @@ void ReceiveViewModel::generateOfflineAddress()
 
 QString ReceiveViewModel::getMPTimeLimit() const
 {
-    const auto& settings = AppModel::getInstance().getSettings();
+    const auto& settings = AppModel2::getInstance().getSettings();
     auto mpLockTimeLimit = settings.getMaxPrivacyLockTimeLimitHours();
     return QString::number(mpLockTimeLimit);
 }

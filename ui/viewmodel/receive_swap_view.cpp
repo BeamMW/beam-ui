@@ -68,7 +68,7 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     , _sentCurrency(Currency::CurrBitcoin)
     , _offerExpires(OfferExpires12h)
     , _saveParamsAllowed(false)
-    , _walletModel(*AppModel::getInstance().getWalletModel())
+    , _walletModel(*AppModel2::getInstance().getWalletModel())
     , _txParameters(beam::wallet::CreateSwapTransactionParameters())
     , _isBeamSide(false)
     , _minimalBeamFeeGrothes(minimalFee(Currency::CurrBeam, false))
@@ -423,16 +423,16 @@ bool ReceiveSwapViewModel::isEnough() const
         {
             total = _amountSentGrothes + beam::wallet::EthereumSide::CalcLockTxFee(_sentFeeGrothes, swapCoin);
             
-            return beam::AmountBig::Type(AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin)) > total;
+            return beam::AmountBig::Type(AppModel2::getInstance().getSwapEthClient()->getAvailable(swapCoin)) > total;
         }
         
-        return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) > _amountSentGrothes &&
-            AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) > 
+        return AppModel2::getInstance().getSwapEthClient()->getAvailable(swapCoin) > _amountSentGrothes &&
+            AppModel2::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) > 
             beam::wallet::EthereumSide::CalcLockTxFee(_sentFeeGrothes, swapCoin);
     }
 
     // TODO sentFee is fee rate. should be corrected
-    auto swapTotal = beam::AmountBig::Type(AppModel::getInstance().getSwapCoinClient(swapCoin)->getAvailable());
+    auto swapTotal = beam::AmountBig::Type(AppModel2::getInstance().getSwapCoinClient(swapCoin)->getAvailable());
     return swapTotal > total;
 }
 
@@ -443,7 +443,7 @@ bool ReceiveSwapViewModel::isEnoughToReceive() const
         auto swapCoin = convertCurrencyToSwapCoin(_receiveCurrency);
         auto fee = beam::wallet::EthereumSide::CalcWithdrawTxFee(_receiveFeeGrothes, swapCoin);
     
-        return AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) > fee;
+        return AppModel2::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) > fee;
     }
     return true;
 }
@@ -545,7 +545,7 @@ void ReceiveSwapViewModel::updateTransactionToken()
 #ifdef BEAM_CLIENT_VERSION
     _txParameters.SetParameter(
         beam::wallet::TxParameterID::ClientVersion,
-        AppModel::getMyName() + " " + std::string(BEAM_CLIENT_VERSION));
+        AppModel2::getMyName() + " " + std::string(BEAM_CLIENT_VERSION));
 #endif // BEAM_CLIENT_VERSION
 
     const auto& mirroredTxParams = MirrorSwapTxParams(_txParameters);

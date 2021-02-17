@@ -79,7 +79,7 @@ namespace
                     }
                 }
 
-                if (it->path().filename() == WalletSettings::WalletDBFile 
+                if (it->path().filename() == WalletSettings::WalletMainDBFile
 #if defined(BEAM_HW_WALLET)
                     || it->path().filename() == WalletSettings::TrezorWalletDBFile
 #endif
@@ -225,8 +225,8 @@ bool WalletDBPathItem::isPreferred() const
 StartViewModel::StartViewModel()
     : m_isRecoveryMode{false}
 #if defined(BEAM_HW_WALLET)
-    , m_useHWWallet(wallet::WalletDB::isInitialized(AppModel::getInstance().getSettings().getTrezorWalletStorage()))
-    , m_hwWallet(AppModel::getInstance().getHardwareWalletClient())
+    , m_useHWWallet(wallet::WalletDB::isInitialized(AppModel2::getInstance().getSettings().getTrezorWalletStorage()))
+    , m_hwWallet(AppModel2::getInstance().getHardwareWalletClient())
     , m_trezorTimer(this)
     , m_trezorThread(*this)
 #else 
@@ -254,9 +254,9 @@ StartViewModel::~StartViewModel()
 
 bool StartViewModel::walletExists() const
 {
-    return wallet::WalletDB::isInitialized(AppModel::getInstance().getSettings().getWalletStorage())
+    return wallet::WalletDB::isInitialized(AppModel2::getInstance().getWalletStorage())
 #if defined(BEAM_HW_WALLET)
-        || wallet::WalletDB::isInitialized(AppModel::getInstance().getSettings().getTrezorWalletStorage())
+        || wallet::WalletDB::isInitialized(AppModel2::getInstance().getSettings().getTrezorWalletStorage())
 #endif
     ;
 }
@@ -322,14 +322,14 @@ TrezorThread::TrezorThread(StartViewModel& vm)
 
 void TrezorThread::run()
 {
-    auto reactor = AppModel::getInstance().getWalletReactor();
+    auto reactor = AppModel2::getInstance().getWalletReactor();
     io::Reactor::Scope s(*reactor); 
-    auto hwWallet = std::make_shared<beam::wallet::HWWallet>();//AppModel::AppModel::getInstance().getHardwareWalletClient();//std::make_shared<beam::wallet::HWWallet>();
+    auto hwWallet = std::make_shared<beam::wallet::HWWallet>();//AppModel::AppModel2::getInstance().getHardwareWalletClient();//std::make_shared<beam::wallet::HWWallet>();
     struct UIHandlerProxy : public beam::wallet::HWWallet::IHandler
     {
         beam::wallet::HWWallet::IHandler::Ptr getHandler()
         {
-            return std::static_pointer_cast<beam::wallet::HWWallet::IHandler>(AppModel::getInstance().getWallet());
+            return std::static_pointer_cast<beam::wallet::HWWallet::IHandler>(AppModel2::getInstance().getWallet());
         }
 
         void ShowKeyKeeperMessage() override
@@ -455,11 +455,11 @@ void StartViewModel::onTrezorOwnerKeyImported()
     SecString secretPass = m_password;
     if (m_creating)
     {
-        DoJSCallback(m_callback, m_HWKeyKeeper && AppModel::getInstance().createTrezorWallet(secretPass, m_HWKeyKeeper));
+        DoJSCallback(m_callback, m_HWKeyKeeper && AppModel2::getInstance().createTrezorWallet(secretPass, m_HWKeyKeeper));
     }
     else
     {
-        DoJSCallback(m_callback, AppModel::getInstance().openWallet(secretPass, m_HWKeyKeeper));
+        DoJSCallback(m_callback, AppModel2::getInstance().openWallet(secretPass, m_HWKeyKeeper));
     }
 
     emit isOwnerKeyImportedChanged();
@@ -546,7 +546,7 @@ QChar StartViewModel::getPhrasesSeparator()
 
 bool StartViewModel::getIsRunLocalNode() const
 {
-    return AppModel::getInstance().getSettings().getRunLocalNode();
+    return AppModel2::getInstance().getSettings().getRunLocalNode();
 }
 
 QString StartViewModel::chooseRandomNode() const
@@ -563,17 +563,17 @@ QString StartViewModel::walletVersion() const
 
 int StartViewModel::getLocalPort() const
 {
-    return AppModel::getInstance().getSettings().getLocalNodePort();
+    return AppModel2::getInstance().getSettings().getLocalNodePort();
 }
 
 QString StartViewModel::getRemoteNodeAddress() const
 {
-    return AppModel::getInstance().getSettings().getNodeAddress();
+    return AppModel2::getInstance().getSettings().getNodeAddress();
 }
 
 QString StartViewModel::getLocalNodePeer() const
 {
-    auto peers = AppModel::getInstance().getSettings().getLocalNodePeers();
+    auto peers = AppModel2::getInstance().getSettings().getLocalNodePeers();
     return !peers.empty() ? peers.first() : "";
 }
 
@@ -589,7 +589,7 @@ bool StartViewModel::isCapsLockOn() const
 
 void StartViewModel::setupLocalNode(int port, const QString& localNodePeer)
 {
-    auto& settings = AppModel::getInstance().getSettings();
+    auto& settings = AppModel2::getInstance().getSettings();
     auto localAddress = QString::asprintf("127.0.0.1:%d", port);
     settings.setNodeAddress(localAddress);
     settings.setLocalNodePort(port);
@@ -610,14 +610,14 @@ void StartViewModel::setupLocalNode(int port, const QString& localNodePeer)
 
 void StartViewModel::setupRemoteNode(const QString& nodeAddress)
 {
-    AppModel::getInstance().getSettings().setRunLocalNode(false);
-    AppModel::getInstance().getSettings().setNodeAddress(nodeAddress);
+    AppModel2::getInstance().getSettings().setRunLocalNode(false);
+    AppModel2::getInstance().getSettings().setNodeAddress(nodeAddress);
 }
 
 void StartViewModel::setupRandomNode()
 {
-    AppModel::getInstance().getSettings().setRunLocalNode(false);
-    AppModel::getInstance().getSettings().setNodeAddress(chooseRandomNode());
+    AppModel2::getInstance().getSettings().setRunLocalNode(false);
+    AppModel2::getInstance().getSettings().setNodeAddress(chooseRandomNode());
 }
 
 uint StartViewModel::coreAmount() const
@@ -670,7 +670,7 @@ void StartViewModel::createWallet(const QJSValue& callback)
     SecString secretSeed;
     secretSeed.assign(buf.data(), buf.size());
     SecString sectretPass = m_password;
-    DoJSCallback(m_callback, AppModel::getInstance().createWallet(secretSeed, sectretPass));
+    DoJSCallback(m_callback, AppModel2::getInstance().createWallet(secretSeed, sectretPass));
 }
 
 void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
@@ -693,13 +693,13 @@ void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
 #endif
     // TODO make this secure
     SecString secretPass = pass.toStdString();
-    DoJSCallback(m_callback, AppModel::getInstance().openWallet(secretPass));
+    DoJSCallback(m_callback, AppModel2::getInstance2().openWallet(secretPass));
 }
 
 bool StartViewModel::checkWalletPassword(const QString& password) const
 {
     SecString secretPassword = password.toStdString();
-    return AppModel::getInstance().checkWalletPassword(secretPassword);
+    return AppModel2::getInstance().checkWalletPassword(secretPassword);
 }
 
 void StartViewModel::setPassword(const QString& pass)
@@ -709,12 +709,12 @@ void StartViewModel::setPassword(const QString& pass)
 
 void StartViewModel::onNodeSettingsChanged()
 {
-    AppModel::getInstance().nodeSettingsChanged();
+    AppModel2::getInstance().nodeSettingsChanged();
 }
 
 void StartViewModel::findExistingWalletDB()
 {
-    auto appDataPath = AppModel::getInstance().getSettings().getAppDataPath();
+    auto appDataPath = AppModel2::getInstance().getSettings().getAppDataPath();
     auto defaultAppDataPath = QDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation)).path().toStdString();
 
     auto walletDBs = findAllWalletDB(appDataPath);
@@ -769,14 +769,14 @@ void StartViewModel::deleteCurrentWalletDB()
     try
     {
         {
-            auto pathToDB = pathFromStdString(AppModel::getInstance().getSettings().getWalletStorage());
+            auto pathToDB = pathFromStdString(AppModel2::getInstance().getWalletStorage());
             if (boost::filesystem::exists(pathToDB))
                 boost::filesystem::remove(pathToDB);
         }
 
 #if defined(BEAM_HW_WALLET)
         {
-            auto pathToDB = pathFromStdString(AppModel::getInstance().getSettings().getTrezorWalletStorage());
+            auto pathToDB = pathFromStdString(AppModel2::getInstance().getSettings().getTrezorWalletStorage());
             if (boost::filesystem::exists(pathToDB))
                 boost::filesystem::remove(pathToDB);
         }
@@ -793,7 +793,7 @@ void StartViewModel::migrateWalletDB(const QString& path)
     try
     {
         auto pathSrc = pathFromStdString(path.toStdString());
-        auto pathDst = pathFromStdString(AppModel::getInstance().getSettings().getWalletFolder() + "/" + pathSrc.filename().string());
+        auto pathDst = pathFromStdString(AppModel2::getInstance().getSettings().getWalletFolder() + "/" + pathSrc.filename().string());
         boost::filesystem::copy_file(pathSrc, pathDst);
     }
     catch (std::exception& e)

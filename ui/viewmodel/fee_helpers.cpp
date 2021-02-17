@@ -83,11 +83,11 @@ beam::Amount minimalFee(Currency currency, bool isShielded)
 
     if (isEthereumBased(currency))
     {
-        return AppModel::getInstance().getSwapEthClient()->GetSettings().GetMinFeeRate();
+        return AppModel2::getInstance().getSwapEthClient()->GetSettings().GetMinFeeRate();
     }
 
     auto swapCoin = convertCurrencyToSwapCoin(currency);
-    return AppModel::getInstance().getSwapCoinClient(swapCoin)->GetSettings().GetMinFeeRate();
+    return AppModel2::getInstance().getSwapCoinClient(swapCoin)->GetSettings().GetMinFeeRate();
 }
 
 beam::Amount maximumFee(Currency currency)
@@ -100,11 +100,11 @@ beam::Amount maximumFee(Currency currency)
 
     if (isEthereumBased(currency))
     {
-        return AppModel::getInstance().getSwapEthClient()->GetSettings().GetMaxFeeRate();
+        return AppModel2::getInstance().getSwapEthClient()->GetSettings().GetMaxFeeRate();
     }
 
     auto swapCoin = convertCurrencyToSwapCoin(currency);
-    return AppModel::getInstance().getSwapCoinClient(swapCoin)->GetSettings().GetMaxFeeRate();
+    return AppModel2::getInstance().getSwapCoinClient(swapCoin)->GetSettings().GetMaxFeeRate();
 }
 
 QString calcWithdrawTxFee(Currency currency, beam::Amount feeRate)

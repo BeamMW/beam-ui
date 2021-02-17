@@ -36,6 +36,7 @@ signals:
     void showTrezorError(const QString&);
     void unsafeTxCountChanged();
     void unreadNotificationsChanged();
+    void appModelChanged();
 
 public slots:
 	void update(int page);

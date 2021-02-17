@@ -312,7 +312,7 @@ QString SwapTxObject::getStateDetails() const
         case beam::wallet::TxStatus::Pending:
         case beam::wallet::TxStatus::InProgress:
         {
-            Height currentHeight = AppModel::getInstance().getWalletModel()->getCurrentHeight();
+            Height currentHeight = AppModel2::getInstance().getWalletModel()->getCurrentHeight();
             auto state = m_swapTx.getState();
             if (state)
             {

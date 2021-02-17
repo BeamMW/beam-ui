@@ -17,7 +17,7 @@
 #include "version.h"
 
 StatusbarViewModel::StatusbarViewModel()
-    : m_model(*AppModel::getInstance().getWalletModel())
+    : m_model(*AppModel2::getInstance().getWalletModel())
     , m_isOnline(false)
     , m_isSyncInProgress(false)
     , m_isFailedStatus(false)
@@ -28,7 +28,7 @@ StatusbarViewModel::StatusbarViewModel()
     , m_done(0)
     , m_total(0)
     , m_errorMsg{}
-
+    , m_currentBlockchainIndex(getBlockchains().indexOf(getBlockchainName()))
 {
     connect(&m_model, SIGNAL(nodeConnectionChanged(bool)),
         SLOT(onNodeConnectionChanged(bool)));
@@ -39,10 +39,10 @@ StatusbarViewModel::StatusbarViewModel()
     connect(&m_model, SIGNAL(syncProgressUpdated(int, int)),
         SLOT(onSyncProgressUpdated(int, int)));
 
-    connect(&AppModel::getInstance().getNode(), SIGNAL(syncProgressUpdated(int, int)),
+    connect(&AppModel2::getInstance().getNode(), SIGNAL(syncProgressUpdated(int, int)),
             SLOT(onNodeSyncProgressUpdated(int, int)));
     
-    connect(&AppModel::getInstance().getNode(), SIGNAL(failedToSyncNode(beam::wallet::ErrorType)),
+    connect(&AppModel2::getInstance().getNode(), SIGNAL(failedToSyncNode(beam::wallet::ErrorType)),
             SLOT(onGetWalletError(beam::wallet::ErrorType)));
 
     m_model.getAsync()->getNetworkStatus();
@@ -75,19 +75,27 @@ int StatusbarViewModel::getNodeSyncProgress() const
 
 QString StatusbarViewModel::getBranchName() const
 {
+    std::string blockchainName;
 #ifdef BEAM_MAINNET
-    return QString();
+    
 #else
-    if (BRANCH_NAME.empty())
+    blockchainName = BRANCH_NAME;
+#endif
+    blockchainName = getBlockchainName().toStdString();
+    if (blockchainName.empty())
         return QString();
 
-    return QString::fromStdString(" (" + BRANCH_NAME + ")");
-#endif
+    return QString::fromStdString(" (" + blockchainName + ")");
 }
 
 QString StatusbarViewModel::getWalletStatusErrorMsg() const
 {
     return m_errorMsg;
+}
+
+QStringList StatusbarViewModel::getBlockchains() const
+{
+    return AppModel2::getInstance().getSettings().getSupportedBlockchains();
 }
 
 void StatusbarViewModel::setIsOnline(bool value)
@@ -144,6 +152,21 @@ void StatusbarViewModel::setWalletStatusErrorMsg(const QString& value)
     }
 }
 
+int StatusbarViewModel::getCurrentBlockchainIndex() const
+{
+    return m_currentBlockchainIndex;
+}
+
+void StatusbarViewModel::setCurrentBlockchainIndex(int value)
+{
+    if (m_currentBlockchainIndex != value)
+    {
+        m_currentBlockchainIndex = value;
+        AppModel2::getInstance().getSettings().setBlockchainInFocus(getBlockchains()[value]);
+        emit currentBlockchainIndexChanged();
+    }
+}
+
 void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
 {
     setIsConnectionTrusted(m_model.isConnectionTrusted());
@@ -197,4 +220,9 @@ void StatusbarViewModel::onNodeSyncProgressUpdated(int done, int total)
     }
 
     setIsSyncInProgress(!((m_done + m_nodeDone) == (m_total + m_nodeTotal)));
+}
+
+QString StatusbarViewModel::getBlockchainName() const
+{
+    return AppModel2::getInstance().getSettings().getBlockchainInFocus();
 }

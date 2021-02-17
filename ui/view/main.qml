@@ -18,6 +18,10 @@ Rectangle {
 
 	MainViewModel {
         id: viewModel
+        onAppModelChanged: {
+            content.active = !content.active
+            content.active = !content.active
+        }
     }
 
     PushNotificationManager {

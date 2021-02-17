@@ -17,7 +17,7 @@
 
 MessagesViewModel::MessagesViewModel()
 {
-    auto& model = AppModel::getInstance().getMessages();
+    auto& model = AppModel2::getInstance().getMessages();
     connect(&model, SIGNAL(newMessage(const QString&, bool, bool)),
         SLOT(onNewMessage(const QString&, bool, bool)));
 }
@@ -45,7 +45,7 @@ bool MessagesViewModel::enableSaveReport(int index)
 
 void MessagesViewModel::saveLogs()
 {
-    AppModel::getInstance().getSettings().reportProblem();
+    AppModel2::getInstance().getSettings().reportProblem();
 }
 
 void MessagesViewModel::AddMessage(const QString& value, bool saveReport, bool closeMessage)

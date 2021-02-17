@@ -21,7 +21,7 @@ using namespace std;
 using namespace beamui;
 
 UtxoViewModel::UtxoViewModel()
-    : m_model{*AppModel::getInstance().getWalletModel()}
+    : m_model{*AppModel2::getInstance().getWalletModel()}
 {
     connect(&m_model, SIGNAL(allUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>&)),
         SLOT(onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>&)));
