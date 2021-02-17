@@ -361,7 +361,7 @@ please review your settings and try again"
                         //% "Receive amount"
                         title: qsTrId("receive-amount-swap-label")
                         Layout.fillWidth: true
-
+                        content:
                         AmountInput {
                             id:             receiveAmountInput
                             currencyIdx:    viewModel.receiveCurrency

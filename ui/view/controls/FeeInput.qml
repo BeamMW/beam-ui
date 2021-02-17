@@ -7,6 +7,7 @@ import Beam.Wallet 1.0
 ColumnLayout {
     id: control
 
+    property int     maxInt:                     2147483647
     property bool    fillWidth:                  false
     property bool    readOnly:                   false
     property int     minFee:                     0
@@ -47,7 +48,12 @@ ColumnLayout {
             }
 
             onTextEdited: {
-                control.fee = text ? parseInt(text) : 0
+                if (text) {
+                    var val = parseInt(text);
+                    control.fee = val > maxInt ? control.fee : val;
+                } else {
+                    control.fee = 0;
+                }
                 feeInput.text = control.fee
             }
 

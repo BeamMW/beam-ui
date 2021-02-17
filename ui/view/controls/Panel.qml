@@ -18,6 +18,7 @@ Pane {
     contentItem: Item {
         ColumnLayout {
             spacing: 0
+            width: parent.width
             RowLayout {
                 Layout.alignment: Qt.AlignTop
                 SFText {

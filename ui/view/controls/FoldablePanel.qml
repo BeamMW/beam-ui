@@ -39,7 +39,7 @@ Pane {
         ColumnLayout {
             spacing: 0
             clip:    folded
-
+            width: parent.width
             RowLayout {
                 Layout.alignment: Qt.AlignTop
                 Layout.minimumHeight: minHeaderHeight
