@@ -34,24 +34,16 @@ Panel {
     }
 
     content: ColumnLayout {
-<<<<<<< HEAD
         anchors.fill: parent
         spacing: 0
 
-=======
-        anchors.fill:   parent
-        spacing:                     0
->>>>>>> remotes/origin/eager_electron_5.3RC
         Control {
             id:                          headerPlaceholder
             Layout.fillWidth:            true
             visible:                     false
             bottomPadding:               20
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> remotes/origin/eager_electron_5.3RC
         RowLayout {
             id: contentRow
             Layout.fillWidth:         true
