@@ -18,6 +18,7 @@ Pane {
     contentItem: Item {
         ColumnLayout {
             spacing: 0
+            width: parent.width
             //clip:    true
             RowLayout {
                 Layout.alignment: Qt.AlignTop
@@ -50,14 +51,14 @@ Pane {
                     visible:              text.length > 0 && control.enabled
                 }
             }
-                Control {
-                    id:                placeholder
-                    Layout.fillWidth:  true
-                    Layout.fillHeight: true
-                    Layout.topMargin:  20
-                    Layout.alignment:  Qt.AlignTop
-                    visible:           control.enabled
-                }
+            Control {
+                id:                placeholder
+                Layout.fillWidth:  true
+                Layout.fillHeight: true
+                Layout.topMargin:  20
+                Layout.alignment:  Qt.AlignTop
+                visible:           control.enabled
+            }
         }
     }
 
