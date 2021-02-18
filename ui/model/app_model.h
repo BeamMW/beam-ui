@@ -108,7 +108,7 @@ private:
     bool createWalletImpl(const ECC::NoLeak<ECC::uintBig>& secretKey, const beam::SecString& pass);
     std::string getNodeAddress() const;
     bool isMain() const;
-    bool AppModel::getRunLocalNode() const;
+    bool getRunLocalNode() const;
 private:
     // SwapCoinClientModels must be destroyed after WalletModel
     std::map<beam::wallet::AtomicSwapCoin, SwapCoinClientModel::Ptr> m_swapClients;
