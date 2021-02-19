@@ -182,10 +182,10 @@ int main (int argc, char* argv[])
             LOG_INFO() << "Beam Core " << BEAM_VERSION << " (" << BEAM_BRANCH_NAME << ")";
             LOG_INFO() << "Rules signature: " << Rules::get().get_SignatureStr();
 
-#define MACRO(name) \
+#define MACRO(name, name2, suffix) \
             AppModel2::getRules##name().UpdateChecksum(); \
-            LOG_INFO() << #name " Rules signature: " << AppModel2::getRules##name().get_SignatureStr();
-            BEAM_SIDECHAINS_MAP(MACRO)
+            LOG_INFO() << "Rules signature(" #name2 "): " << AppModel2::getRules##name().get_SignatureStr();
+            BEAM_BLOCKCHAINS_MAP(MACRO)
 #undef MACRO
 
             // AppModel Model MUST BE created before the UI engine and destroyed after.

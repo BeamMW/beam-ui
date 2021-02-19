@@ -16,6 +16,7 @@
 
 #include <QObject>
 #include "model/wallet_model.h"
+#include "model/helpers.h"
 
 class StatusbarViewModel : public QObject
 {
@@ -73,15 +74,16 @@ signals:
 
 private:
     QString getBlockchainName() const;
+    void updateWalletModel();
 private:
-    WalletModel& m_model;
+    WalletModel::Ptr m_model;
 
+    Connections m_signalConnections;
     bool m_isOnline;
     bool m_isSyncInProgress;
     bool m_isFailedStatus;
     bool m_isConnectionTrusted;
     int m_nodeSyncProgress;
-    int m_currentBlockchainIndex;
 
     int m_nodeDone;
     int m_nodeTotal;
@@ -89,4 +91,5 @@ private:
     int m_total;
 
     QString m_errorMsg;
+    int m_currentBlockchainIndex;
 };

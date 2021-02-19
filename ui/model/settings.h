@@ -21,10 +21,18 @@
 #include <mutex>
 #include "model/wallet_model.h"
 
-#define BEAM_SIDECHAINS_MAP(macro) \
-     macro(Main) \
-     macro(Sidechain1) \
-     macro(Sidechain2) 
+#ifdef BEAM_MAINNET
+#define BEAM_MAIN_BLOCKCHAIN_NAME ""
+#else
+#define BEAM_MAIN_BLOCKCHAIN_NAME BRANCH_NAME
+#endif
+
+#define BEAM_BLOCKCHAINS_MAP(macro) \
+     macro(Main,       "master",       "") \
+     macro(Sidechain1, "sidechain #1", "Sidechain1") \
+     macro(Sidechain2, "sidechain #2", "Sidechain2") 
+
+
 
 class WalletSettings : public QObject
 {
@@ -54,26 +62,27 @@ public:
     std::string getTrezorWalletStorage() const;
 #endif
 
-#define MACRO(name) std::string getWallet##name##Storage() const;
-    BEAM_SIDECHAINS_MAP(MACRO)
+#define MACRO(name, name2, suffix) \
+    std::string getWalletStorage##name() const; 
+    BEAM_BLOCKCHAINS_MAP(MACRO)
 #undef MACRO
 
     std::string getWalletFolder() const;
     std::string getAppDataPath() const;
     void reportProblem();
 
-    bool getRunLocalNode() const;
-    void setRunLocalNode(bool value);
+    bool getRunLocalNode(const QString& blockchain) const;
+    void setRunLocalNode(const QString& blockchain, bool value);
 
-    uint getLocalNodePort() const;
-    void setLocalNodePort(uint port);
-    std::string getLocalNodeStorage() const;
+    uint getLocalNodePort(const QString& blockchain) const;
+    void setLocalNodePort(const QString& blockchain, uint port);
+    std::string getLocalNodeStorage(const QString& blockchain) const;
     std::string getTempDir() const;
 
-    QStringList getLocalNodePeers();
-    void setLocalNodePeers(const QStringList& qPeers);
+    QStringList getLocalNodePeers(const QString& blockchain);
+    void setLocalNodePeers(const QString& blockchain, const QStringList& qPeers);
 
-    bool getPeersPersistent() const;
+    bool getPeersPersistent(const QString& blockchain) const;
 
     QString getLocale() const;
     QString getLanguageName() const;
@@ -122,13 +131,15 @@ public:
     static const char* WalletCfg;
     static const char* LogsFolder;
     static const char* SettingsFile;
-#define MACRO(name) static const char* Wallet##name##DBFile;
-    BEAM_SIDECHAINS_MAP(MACRO)
+#define MACRO(name, name2, suffix) \
+    static const char* WalletDBFile##name; \
+    static const char* NodeDBFile##name;
+    BEAM_BLOCKCHAINS_MAP(MACRO)
 #undef MACRO
 #if defined(BEAM_HW_WALLET)
     static const char* TrezorWalletDBFile;
 #endif
-    static const char* NodeDBFile;
+    
 
     void applyChanges();
 

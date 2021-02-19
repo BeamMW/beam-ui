@@ -38,6 +38,11 @@ const char* kPercentagePlaceholderNatural = " %.0lf%%";
 const int kMaxTimeDiffForUpdate = 20;
 const int kBpsRecessionCountThreshold = 60;
 
+QString getBlockchainInFocus()
+{
+    return AppModel2::getInstance().getSettings().getBlockchainInFocus();
+}
+
 }  // namespace
 
 Q_DECLARE_METATYPE(uint64_t);
@@ -49,7 +54,7 @@ LoadingViewModel::LoadingViewModel()
     , m_total{0}
     , m_done{0}
     , m_lastDone{0}
-    , m_hasLocalNode{ AppModel2::getInstance().getSettings().getRunLocalNode() }
+    , m_hasLocalNode{ AppModel2::getInstance().getSettings().getRunLocalNode(getBlockchainInFocus()) }
     , m_isCreating{false}
     , m_isDownloadStarted{false}
     , m_lastProgress{0.}
@@ -65,7 +70,7 @@ LoadingViewModel::LoadingViewModel()
     connect(&m_walletModel, SIGNAL(nodeConnectionChanged(bool)), SLOT(onNodeConnectionChanged(bool)));
     connect(&m_walletModel, SIGNAL(walletError(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
 
-    if (AppModel2::getInstance().getSettings().getRunLocalNode())
+    if (AppModel2::getInstance().getSettings().getRunLocalNode(getBlockchainInFocus()))
     {
         connect(&AppModel2::getInstance().getNode(), SIGNAL(syncProgressUpdated(int, int)), SLOT(onNodeSyncProgressUpdated(int, int)));
         connect(&AppModel2::getInstance().getNode(), SIGNAL(initProgressUpdated(quint64, quint64)), SLOT(onNodeInitProgressUpdated(quint64, quint64)));
@@ -189,7 +194,7 @@ void LoadingViewModel::updateProgress()
     }
     else
     {
-       m_hasLocalNode = AppModel2::getInstance().getSettings().getRunLocalNode();
+        m_hasLocalNode = AppModel2::getInstance().getSettings().getRunLocalNode(getBlockchainInFocus());
         if (m_hasLocalNode)
         {
             //% "Rebuilding wallet data"

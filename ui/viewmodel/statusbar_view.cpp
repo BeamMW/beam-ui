@@ -17,7 +17,7 @@
 #include "version.h"
 
 StatusbarViewModel::StatusbarViewModel()
-    : m_model(*AppModel2::getInstance().getWalletModel())
+    : m_model(AppModel2::getInstance().getWalletModel())
     , m_isOnline(false)
     , m_isSyncInProgress(false)
     , m_isFailedStatus(false)
@@ -30,22 +30,7 @@ StatusbarViewModel::StatusbarViewModel()
     , m_errorMsg{}
     , m_currentBlockchainIndex(getBlockchains().indexOf(getBlockchainName()))
 {
-    connect(&m_model, SIGNAL(nodeConnectionChanged(bool)),
-        SLOT(onNodeConnectionChanged(bool)));
-
-    connect(&m_model, SIGNAL(walletError(beam::wallet::ErrorType)),
-        SLOT(onGetWalletError(beam::wallet::ErrorType)));
-
-    connect(&m_model, SIGNAL(syncProgressUpdated(int, int)),
-        SLOT(onSyncProgressUpdated(int, int)));
-
-    connect(&AppModel2::getInstance().getNode(), SIGNAL(syncProgressUpdated(int, int)),
-            SLOT(onNodeSyncProgressUpdated(int, int)));
-    
-    connect(&AppModel2::getInstance().getNode(), SIGNAL(failedToSyncNode(beam::wallet::ErrorType)),
-            SLOT(onGetWalletError(beam::wallet::ErrorType)));
-
-    m_model.getAsync()->getNetworkStatus();
+    updateWalletModel();
 }
 
 bool StatusbarViewModel::getIsOnline() const
@@ -163,13 +148,16 @@ void StatusbarViewModel::setCurrentBlockchainIndex(int value)
     {
         m_currentBlockchainIndex = value;
         AppModel2::getInstance().getSettings().setBlockchainInFocus(getBlockchains()[value]);
+        m_model = AppModel2::getInstance().getWalletModel();
+        m_signalConnections.disconnect();
+        updateWalletModel();
         emit currentBlockchainIndexChanged();
     }
 }
 
 void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
 {
-    setIsConnectionTrusted(m_model.isConnectionTrusted());
+    setIsConnectionTrusted(m_model->isConnectionTrusted());
 
     if (isNodeConnected == getIsOnline())
     {
@@ -197,7 +185,7 @@ void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
 void StatusbarViewModel::onGetWalletError(beam::wallet::ErrorType error)
 {
     setIsOnline(false);
-    setWalletStatusErrorMsg(m_model.GetErrorString(error));
+    setWalletStatusErrorMsg(m_model->GetErrorString(error));
     setIsFailedStatus(true);
     setIsConnectionTrusted(false);
 }
@@ -225,4 +213,21 @@ void StatusbarViewModel::onNodeSyncProgressUpdated(int done, int total)
 QString StatusbarViewModel::getBlockchainName() const
 {
     return AppModel2::getInstance().getSettings().getBlockchainInFocus();
+}
+
+void StatusbarViewModel::updateWalletModel()
+{
+    m_signalConnections
+        << connect(m_model.get(), SIGNAL(nodeConnectionChanged(bool)),
+            SLOT(onNodeConnectionChanged(bool)))
+        << connect(m_model.get(), SIGNAL(walletError(beam::wallet::ErrorType)),
+            SLOT(onGetWalletError(beam::wallet::ErrorType)))
+        << connect(m_model.get(), SIGNAL(syncProgressUpdated(int, int)),
+            SLOT(onSyncProgressUpdated(int, int)))
+        << connect(&AppModel2::getInstance().getNode(), SIGNAL(syncProgressUpdated(int, int)),
+            SLOT(onNodeSyncProgressUpdated(int, int)))
+        << connect(&AppModel2::getInstance().getNode(), SIGNAL(failedToSyncNode(beam::wallet::ErrorType)),
+            SLOT(onGetWalletError(beam::wallet::ErrorType)));
+
+    m_model->getAsync()->getNetworkStatus();
 }

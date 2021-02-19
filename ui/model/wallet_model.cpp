@@ -26,8 +26,9 @@ using namespace beam::io;
 using namespace std;
 
 
-WalletModel::WalletModel(const Rules& rules, IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor)
+WalletModel::WalletModel(const Rules& rules, IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor, const std::string& blockchain)
     : WalletClient(rules, walletDB, nodeAddr, reactor)
+    , m_blockchainName(QString::fromStdString(blockchain))
 {
     qRegisterMetaType<beam::ByteBuffer>("beam::ByteBuffer");
     qRegisterMetaType<beam::wallet::WalletStatus>("beam::wallet::WalletStatus");
@@ -89,7 +90,7 @@ QString WalletModel::GetErrorString(beam::wallet::ErrorType type)
         return qtTrId("wallet-model-connection-host-unreach-error") + ": " + getNodeAddress().c_str();
     case wallet::ErrorType::ConnectionAddrInUse:
     {
-        auto localNodePort = AppModel2::getInstance().getSettings().getLocalNodePort();
+        auto localNodePort = AppModel2::getInstance().getSettings().getLocalNodePort(m_blockchainName);
         //% "The port %1 is already in use. Check if a wallet is already running on this machine or change the port settings."
         return qtTrId("wallet-model-connection-addr-in-use-error").arg(QString::number(localNodePort));
     }

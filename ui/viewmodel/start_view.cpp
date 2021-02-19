@@ -78,7 +78,7 @@ namespace
                     }
                 }
 
-                if (it->path().filename() == WalletSettings::WalletMainDBFile
+                if (it->path().filename() == WalletSettings::WalletDBFileMain
 #if defined(BEAM_HW_WALLET)
                     || it->path().filename() == WalletSettings::TrezorWalletDBFile
 #endif
@@ -582,7 +582,7 @@ QChar StartViewModel::getPhrasesSeparator()
 
 bool StartViewModel::getIsRunLocalNode() const
 {
-    return AppModel2::getInstance().getSettings().getRunLocalNode();
+    return AppModel2::getInstance().getSettings().getRunLocalNode("Main");
 }
 
 QString StartViewModel::chooseRandomNode() const
@@ -599,17 +599,17 @@ QString StartViewModel::walletVersion() const
 
 int StartViewModel::getLocalPort() const
 {
-    return AppModel2::getInstance().getSettings().getLocalNodePort();
+    return AppModel2::getInstance().getSettings().getLocalNodePort("Main");
 }
 
 QString StartViewModel::getRemoteNodeAddress() const
 {
-    return AppModel2::getInstance().getSettings().getNodeAddress();
+    return AppModel2::getInstance().getSettings().getNodeAddress("Main");
 }
 
 QString StartViewModel::getLocalNodePeer() const
 {
-    auto peers = AppModel2::getInstance().getSettings().getLocalNodePeers();
+    auto peers = AppModel2::getInstance().getSettings().getLocalNodePeers("Main");
     return !peers.empty() ? peers.first() : "";
 }
 
@@ -628,8 +628,8 @@ void StartViewModel::setupLocalNode(int port, const QString& localNodePeer)
     auto& settings = AppModel2::getInstance().getSettings();
     auto localAddress = QString::asprintf("127.0.0.1:%d", port);
     settings.setNodeAddress(localAddress);
-    settings.setLocalNodePort(port);
-    settings.setRunLocalNode(true);
+    settings.setLocalNodePort("Main", port);
+    settings.setRunLocalNode("Main", true);
     QStringList peers;
     
     for (const auto& peer : getDefaultPeers())
@@ -641,18 +641,18 @@ void StartViewModel::setupLocalNode(int port, const QString& localNodePeer)
     }
 
     peers.push_back(localNodePeer);
-    settings.setLocalNodePeers(peers);
+    settings.setLocalNodePeers("Main", peers);
 }
 
 void StartViewModel::setupRemoteNode(const QString& nodeAddress)
 {
-    AppModel2::getInstance().getSettings().setRunLocalNode(false);
+    AppModel2::getInstance().getSettings().setRunLocalNode("Main", false);
     AppModel2::getInstance().getSettings().setNodeAddress(nodeAddress);
 }
 
 void StartViewModel::setupRandomNode()
 {
-    AppModel2::getInstance().getSettings().setRunLocalNode(false);
+    AppModel2::getInstance().getSettings().setRunLocalNode("Main", false);
     AppModel2::getInstance().getSettings().setNodeAddress(chooseRandomNode());
 }
 

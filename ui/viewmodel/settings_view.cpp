@@ -42,13 +42,14 @@ namespace
 }  // namespace
 
 SettingsViewModel::SettingsViewModel()
-    : m_settings{AppModel2::getInstance().getSettings()}
+    : m_settings{ AppModel2::getInstance().getSettings() }
     , m_notificationsSettings(AppModel2::getInstance().getSettings())
-    , m_isValidNodeAddress{true}
+    , m_isValidNodeAddress{ true }
     , m_isNeedToCheckAddress(false)
     , m_isNeedToApplyChanges(false)
     , m_supportedLanguages(WalletSettings::getSupportedLanguages())
     , m_supportedAmountUnits(WalletSettings::getSupportedRateUnits())
+    , m_blockchain(m_settings.getBlockchainInFocus())
 {
     undoChanges();
 
@@ -348,10 +349,10 @@ QString SettingsViewModel::getOwnerKey(const QString& password) const
 
 bool SettingsViewModel::isNodeChanged() const
 {
-    return formatAddress(m_nodeAddress, m_remoteNodePort) != m_settings.getNodeAddress()
-        || m_localNodeRun != m_settings.getRunLocalNode()
-        || static_cast<uint>(m_localNodePort.toInt()) != m_settings.getLocalNodePort()
-        || m_localNodePeers != m_settings.getLocalNodePeers();
+    return formatAddress(m_nodeAddress, m_remoteNodePort) != m_settings.getNodeAddress(m_blockchain)
+        || m_localNodeRun != m_settings.getRunLocalNode(m_blockchain)
+        || static_cast<uint>(m_localNodePort.toInt()) != m_settings.getLocalNodePort(m_blockchain)
+        || m_localNodePeers != m_settings.getLocalNodePeers(m_blockchain);
 }
 
 void SettingsViewModel::applyChanges()
@@ -362,10 +363,10 @@ void SettingsViewModel::applyChanges()
         return;
     }
 
-    m_settings.setNodeAddress(formatAddress(m_nodeAddress, m_remoteNodePort));
-    m_settings.setRunLocalNode(m_localNodeRun);
-    m_settings.setLocalNodePort(m_localNodePort.toInt());
-    m_settings.setLocalNodePeers(m_localNodePeers);
+    m_settings.setNodeAddress(m_blockchain, formatAddress(m_nodeAddress, m_remoteNodePort));
+    m_settings.setRunLocalNode(m_blockchain, m_localNodeRun);
+    m_settings.setLocalNodePort(m_blockchain, m_localNodePort.toInt());
+    m_settings.setLocalNodePeers(m_blockchain, m_localNodePeers);
     m_settings.applyChanges();
     emit nodeSettingsChanged();
 }
@@ -396,9 +397,9 @@ void SettingsViewModel::undoChanges()
         setRemoteNodePort(unpackedAddress.port);
     }
 
-    setLocalNodeRun(m_settings.getRunLocalNode());
-    setLocalNodePort(formatPort(m_settings.getLocalNodePort()));
-    setLocalNodePeers(m_settings.getLocalNodePeers());
+    setLocalNodeRun(m_settings.getRunLocalNode(m_blockchain));
+    setLocalNodePort(formatPort(m_settings.getLocalNodePort(m_blockchain)));
+    setLocalNodePeers(m_settings.getLocalNodePeers(m_blockchain));
 }
 
 void SettingsViewModel::reportProblem()

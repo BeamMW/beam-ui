@@ -32,7 +32,7 @@ class NodeModel
     Q_OBJECT
 public:
 
-    NodeModel();
+    NodeModel(const beam::Rules& rules, const std::string& blockchain);
 
     void setKdf(beam::Key::IKdf::Ptr);
     void setOwnerKey(beam::Key::IPKdf::Ptr);
@@ -73,4 +73,5 @@ protected:
 
 private:
     beam::NodeClient m_nodeClient;
+    QString m_blockchainName;
 };

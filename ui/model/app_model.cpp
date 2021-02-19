@@ -146,10 +146,10 @@ AppModel2::AppModel2(WalletSettings& settings)
     assert(s_instance == nullptr);
     s_instance = this;
 
-#define MACRO(name) \
+#define MACRO(name, name2, suffix) \
     if (settings.isBlockchainEnabled(#name)) \
-        m_wallets.emplace(#name, std::make_unique<AppModel>(getRules##name(), settings, settings.getWallet##name##Storage(), #name));
-    BEAM_SIDECHAINS_MAP(MACRO)
+        m_wallets.emplace(#name, std::make_unique<AppModel>(getRules##name(), settings, settings.getWalletStorage##name(), #name));
+    BEAM_BLOCKCHAINS_MAP(MACRO)
 #undef MACRO
 
 }
@@ -206,23 +206,14 @@ void AppModel2::openWalletThrow(const beam::SecString& pass, beam::wallet::IPriv
 
 AppModel::AppModel(const Rules& rules, WalletSettings& settings, const std::string& storagePath, const std::string& blockchainName)
     : m_rules(rules)
+    , m_nodeModel(rules, blockchainName)
     , m_settings{settings}
     , m_walletReactor(beam::io::Reactor::create())
     , m_storagePath(storagePath)
     , m_blockchainName(blockchainName)
 {
-//    assert(s_instance == nullptr);
-//    s_instance = this;
-    if (isMain())
-    {
-        m_nodeModel.start();
-    }
+    m_nodeModel.start();
     connect(&m_settings, SIGNAL(nodeAddressChanged(const QString&, const QString&)), this, SLOT(onNodeAddressChanged(const QString&, const QString&)));
-}
-
-AppModel::~AppModel()
-{
-//    s_instance = nullptr;
 }
 
 const std::string& AppModel::getWalletStorage() const
@@ -476,7 +467,7 @@ void AppModel::onResetWallet()
         fsutils::remove(getSettings().getTrezorWalletStorage());
         #endif
 
-        fsutils::remove(getSettings().getLocalNodeStorage());
+        fsutils::remove(getSettings().getLocalNodeStorage(QString::fromStdString(m_blockchainName)));
     }
     catch(std::runtime_error& err)
     {
@@ -581,7 +572,7 @@ void AppModel::applySettingsChanges()
         startNode();
 
         io::Address nodeAddr = io::Address::LOCALHOST;
-        nodeAddr.port(m_settings.getLocalNodePort());
+        nodeAddr.port(getLocalNodePort());
         m_wallet->getAsync()->setNodeAddress(nodeAddr.str());
     }
     else
@@ -646,16 +637,16 @@ void AppModel::start()
     if (getRunLocalNode())
     {
         io::Address nodeAddr = io::Address::LOCALHOST;
-        nodeAddr.port(m_settings.getLocalNodePort());
+        nodeAddr.port(getLocalNodePort());
         nodeAddrStr = nodeAddr.str();
     }
 
     initSwapClients();
 
-    m_wallet = std::make_shared<WalletModel>(m_rules, m_db, nodeAddrStr, m_walletReactor);
+    m_wallet = std::make_shared<WalletModel>(m_rules, m_db, nodeAddrStr, m_walletReactor, m_blockchainName);
     m_assets = std::make_shared<AssetsManager>(m_wallet);
 
-    m_wallet->getAsync()->enableBodyRequests(!isMain());
+    //m_wallet->getAsync()->enableBodyRequests(!isMain());
 
     if (getRunLocalNode())
     {
@@ -773,12 +764,12 @@ std::string AppModel::getNodeAddress() const
     return m_settings.getNodeAddress(QString::fromStdString(m_blockchainName)).toStdString();
 }
 
-bool AppModel::isMain() const
-{
-    return m_blockchainName == "Main";
-}
-
 bool AppModel::getRunLocalNode() const
 {
-    return m_settings.getRunLocalNode() && isMain();
+    return m_settings.getRunLocalNode(QString::fromStdString(m_blockchainName));
+}
+
+int AppModel::getLocalNodePort() const
+{
+    return m_settings.getLocalNodePort(QString::fromStdString(m_blockchainName));
 }

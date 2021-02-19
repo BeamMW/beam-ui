@@ -41,7 +41,7 @@ class AppModel final: public QObject
 public:
 
     AppModel(const beam::Rules& rules, WalletSettings& settings, const std::string& storagePath, const std::string& blockchainName);
-    ~AppModel() override;
+    virtual ~AppModel() = default;
 
     const std::string& getWalletStorage() const;
 
@@ -107,8 +107,8 @@ private:
 
     bool createWalletImpl(const ECC::NoLeak<ECC::uintBig>& secretKey, const beam::SecString& pass);
     std::string getNodeAddress() const;
-    bool isMain() const;
     bool getRunLocalNode() const;
+    int getLocalNodePort() const;
 private:
     // SwapCoinClientModels must be destroyed after WalletModel
     std::map<beam::wallet::AtomicSwapCoin, SwapCoinClientModel::Ptr> m_swapClients;

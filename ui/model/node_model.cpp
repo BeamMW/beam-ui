@@ -26,8 +26,9 @@ using namespace beam;
 using namespace beam::io;
 using namespace std;
 
-NodeModel::NodeModel()
-    : m_nodeClient(this)
+NodeModel::NodeModel(const Rules& rules, const std::string& blockchain)
+    : m_nodeClient(rules, this)
+    , m_blockchainName(QString::fromStdString(blockchain))
 {
 
 }
@@ -123,12 +124,12 @@ void NodeModel::onSyncError(beam::Node::IObserver::Error error)
 
 uint16_t NodeModel::getLocalNodePort() const
 {
-    return AppModel2::getInstance2().getSettings().getLocalNodePort();
+    return AppModel2::getInstance2().getSettings().getLocalNodePort(m_blockchainName);
 }
 
 std::string NodeModel::getLocalNodeStorage() const
 {
-    return AppModel2::getInstance2().getSettings().getLocalNodeStorage();
+    return AppModel2::getInstance2().getSettings().getLocalNodeStorage(m_blockchainName);
 }
 
 std::string NodeModel::getTempDir() const
@@ -140,7 +141,7 @@ std::vector<std::string> NodeModel::getLocalNodePeers() const
 {
     std::vector<std::string> result;
 
-    auto peers = AppModel2::getInstance2().getSettings().getLocalNodePeers();
+    auto peers = AppModel2::getInstance2().getSettings().getLocalNodePeers(m_blockchainName);
 
     for (const auto& peer : peers)
     {
@@ -152,7 +153,7 @@ std::vector<std::string> NodeModel::getLocalNodePeers() const
 
 bool NodeModel::getPeersPersistent() const
 {
-    return AppModel2::getInstance2().getSettings().getPeersPersistent();
+    return AppModel2::getInstance2().getSettings().getPeersPersistent(m_blockchainName);
 }
 
 void NodeModel::onNodeThreadFinished()

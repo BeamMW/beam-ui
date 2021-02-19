@@ -34,7 +34,7 @@ class WalletModel
     Q_OBJECT
 public:
     using Ptr = std::shared_ptr<WalletModel>;
-    WalletModel(const beam::Rules& rules, beam::wallet::IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor);
+    WalletModel(const beam::Rules& rules, beam::wallet::IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor, const std::string& blockchain);
     ~WalletModel() override;
 
     QString GetErrorString(beam::wallet::ErrorType type);
@@ -156,4 +156,5 @@ private:
     std::set<beam::wallet::WalletID> m_myWalletIds;
     std::set<std::string> m_myAddrLabels;
     beam::wallet::WalletStatus m_status;
+    QString m_blockchainName;
 };

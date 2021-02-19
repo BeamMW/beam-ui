@@ -100,26 +100,38 @@ namespace
     const char* kMainBlockchain = "Main";
     const char* kEnabledBlockchain = "/enabled";
     const char* kBlockchainNodeAddress = "/address";
+    const char* kRunIntegratedNode = "/run_integrated_node";
+    const char* kIntegratedNodePort = "/integrated_node_port";
+    const char* kIntegratedNodePeers = "/peers";
+    const char* kIntegratedNodePeersPersistent = "/peers_persistent";
     const QList<QString> kSupportedBlockchains
     {
-#define MACRO(name) #name,
-        BEAM_SIDECHAINS_MAP(MACRO)
+#define MACRO(name, name2, suffix) #name,
+        BEAM_BLOCKCHAINS_MAP(MACRO)
 #undef MACRO
     };
+    QString getBlockchainSettingsPath(const QString& blockchain, const char* path, const char* mainPath)
+    {
+        if (blockchain == kMainBlockchain)
+            return mainPath;
+        return blockchain + path;
+    }
 }  // namespace
 
 const char* WalletSettings::WalletCfg = "beam-wallet.cfg";
 const char* WalletSettings::LogsFolder = "logs";
 const char* WalletSettings::SettingsFile = "settings.ini";
-const char* WalletSettings::WalletMainDBFile = "wallet.db";
-const char* WalletSettings::WalletSidechain1DBFile = "walletSidechain1.db";
-const char* WalletSettings::WalletSidechain2DBFile = "walletSidechain2.db";
+
+#define MACRO(name, name2, suffix) \
+const char* WalletSettings::WalletDBFile##name = "wallet" suffix ".db"; \
+const char* WalletSettings::NodeDBFile##name = "node" suffix ".db";
+BEAM_BLOCKCHAINS_MAP(MACRO)
+#undef MACRO
 
 
 #if defined(BEAM_HW_WALLET)
 const char* WalletSettings::TrezorWalletDBFile = "trezor-wallet.db";
 #endif
-const char* WalletSettings::NodeDBFile = "node.db";
 
 WalletSettings::WalletSettings(const QDir& appDataDir)
     : m_data{ appDataDir.filePath(SettingsFile), QSettings::IniFormat }
@@ -136,12 +148,12 @@ string WalletSettings::getTrezorWalletStorage() const
 }
 #endif
 
-#define MACRO(name) \
-string WalletSettings::getWallet##name##Storage() const \
+#define MACRO(name, name2, suffix) \
+string WalletSettings::getWalletStorage##name() const \
 { \
-    return getWalletFolder() + "/" + Wallet##name##DBFile; \
+    return getWalletFolder() + "/" + WalletDBFile##name##; \
 }
-BEAM_SIDECHAINS_MAP(MACRO)
+BEAM_BLOCKCHAINS_MAP(MACRO)
 #undef MACRO
 
 string WalletSettings::getWalletFolder() const
@@ -165,7 +177,7 @@ string WalletSettings::getAppDataPath() const
 
 QString WalletSettings::getNodeAddress() const
 {
-    return getNodeAddress(kMainBlockchain);
+    return getNodeAddress(getBlockchainInFocus());
 }
 
 QString WalletSettings::getNodeAddress(const QString& blockchainName) const
@@ -179,7 +191,7 @@ QString WalletSettings::getNodeAddress(const QString& blockchainName) const
 
 void WalletSettings::setNodeAddress(const QString& addr)
 {
-    setNodeAddress(kMainBlockchain, addr);
+    setNodeAddress(getBlockchainInFocus(), addr);
 }
 
 void WalletSettings::setNodeAddress(const QString& blockchainName, const QString& addr)
@@ -255,44 +267,50 @@ void WalletSettings::setShowSwapBetaWarning(bool value)
     m_data.setValue(kshowSwapBetaWarning, value);
 }
 
-bool WalletSettings::getRunLocalNode() const
+bool WalletSettings::getRunLocalNode(const QString& blockchain) const
 {
     Lock lock(m_mutex);
-    return m_data.value(kLocalNodeRun, false).toBool();
+    return m_data.value(getBlockchainSettingsPath(blockchain, kRunIntegratedNode, kLocalNodeRun), false).toBool();
 }
 
-void WalletSettings::setRunLocalNode(bool value)
+void WalletSettings::setRunLocalNode(const QString& blockchain, bool value)
 {
     {
         Lock lock(m_mutex);
-        m_data.setValue(kLocalNodeRun, value);
+        m_data.setValue(getBlockchainSettingsPath(blockchain, kRunIntegratedNode, kLocalNodeRun), value);
     }
     emit localNodeRunChanged();
 }
 
-uint WalletSettings::getLocalNodePort() const
+uint WalletSettings::getLocalNodePort(const QString & blockchain) const
 {
     Lock lock(m_mutex);
+    auto path = getBlockchainSettingsPath(blockchain, kIntegratedNodePort, kLocalNodePort);
 #ifdef BEAM_TESTNET
-    return m_data.value(kLocalNodePort, 11005).toUInt();
+    return m_data.value(path, 11005).toUInt();
 #else
-    return m_data.value(kLocalNodePort, 10005).toUInt();
+    return m_data.value(path, 10005).toUInt();
 #endif // BEAM_TESTNET
 }
 
-void WalletSettings::setLocalNodePort(uint port)
+void WalletSettings::setLocalNodePort(const QString& blockchain, uint port)
 {
     {
         Lock lock(m_mutex);
-        m_data.setValue(kLocalNodePort, port);
+        m_data.setValue(getBlockchainSettingsPath(blockchain, kIntegratedNodePort, kLocalNodePort), port);
     }
     emit localNodePortChanged();
 }
 
-string WalletSettings::getLocalNodeStorage() const
+string WalletSettings::getLocalNodeStorage(const QString& blockchain) const \
 {
     Lock lock(m_mutex);
-    return m_appDataDir.filePath(NodeDBFile).toStdString();
+#define MACRO(name, name2, suffix) \
+    if (blockchain == #name) \
+        return m_appDataDir.filePath(NodeDBFile##name).toStdString(); 
+    BEAM_BLOCKCHAINS_MAP(MACRO)
+#undef MACRO
+        throw std::runtime_error("unknown blockchain");
 }
 
 string WalletSettings::getTempDir() const
@@ -315,10 +333,11 @@ static void zipLocalFile(QuaZip& zip, const QString& path, const QString& folder
     }
 }
 
-QStringList WalletSettings::getLocalNodePeers()
+QStringList WalletSettings::getLocalNodePeers(const QString& blockchain)
 {
     Lock lock(m_mutex);
-    QStringList peers = m_data.value(kLocalNodePeers).value<QStringList>();
+    QString path = getBlockchainSettingsPath(blockchain, kIntegratedNodePeers, kLocalNodePeers);
+    QStringList peers = m_data.value(path).value<QStringList>();
     size_t outDatedCount = count_if(
         peers.begin(),
         peers.end(),
@@ -335,24 +354,24 @@ QStringList WalletSettings::getLocalNodePeers()
         {
             peers << QString::fromStdString(it);
         }
-        m_data.setValue(kLocalNodePeers, QVariant::fromValue(peers));
+        m_data.setValue(path, QVariant::fromValue(peers));
     }
     return peers;
 }
 
-void WalletSettings::setLocalNodePeers(const QStringList& qPeers)
+void WalletSettings::setLocalNodePeers(const QString& blockchain, const QStringList& qPeers)
 {
     {
         Lock lock(m_mutex);
-        m_data.setValue(kLocalNodePeers, QVariant::fromValue(qPeers));
+        m_data.setValue(getBlockchainSettingsPath(blockchain, kIntegratedNodePeers, kLocalNodePeers), QVariant::fromValue(qPeers));
     }
     emit localNodePeersChanged();
 }
 
-bool WalletSettings::getPeersPersistent() const
+bool WalletSettings::getPeersPersistent(const QString& blockchain) const
 {
     Lock lock(m_mutex);
-    return m_data.value(kLocalNodePeersPersistent, false).toBool();
+    return m_data.value(getBlockchainSettingsPath(blockchain, kIntegratedNodePeersPersistent, kLocalNodePeersPersistent), false).toBool();
 }
 
 QString WalletSettings::getLocale() const
