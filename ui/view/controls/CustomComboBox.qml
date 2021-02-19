@@ -16,7 +16,8 @@ ComboBox {
     property string color: Style.content_main
     property string underlineColor: color
     property bool enableScroll: false
-    property int textMaxLen: 0
+    property int textMaxLenDrop: 0
+    property int textMaxLenDisplay: 0
 
     property var modelWidth: control.width
     property var calculatedWidth: Math.max(control.width, modelWidth)
@@ -59,7 +60,7 @@ ComboBox {
                     if (control.textRole) {
                         text = Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]
                     }
-                    return Utils.limitText(text, control.textMaxLen)
+                    return Utils.limitText(text, control.textMaxLenDrop)
                 }
                 color: Style.content_main
                 elide: Text.ElideMiddle
@@ -87,7 +88,7 @@ ComboBox {
     function recalcSize() {
         if (model) {
             for(var i = 0; i < model.length; i++){
-                textMetrics.text = Utils.limitText(control.textRole ? model[i][control.textRole] : model[i], control.textMaxLen)
+                textMetrics.text = Utils.limitText(control.textRole ? model[i][control.textRole] : model[i], control.textMaxLenDrop)
                 var iconW = model[i]["iconWidth"] || 0
                 modelWidth = Math.max(textMetrics.width +
                                       forCalc.leftPadding +
@@ -129,7 +130,7 @@ ComboBox {
 
         SFText  {
             clip: true
-            text: control.editable ? control.editText : Utils.limitText(control.displayText, control.textMaxLen)
+            text: control.editable ? control.editText : Utils.limitText(control.displayText, control.textMaxLenDisplay)
             color: control.enabled ? control.color : Style.content_secondary 
             font.pixelSize: fontPixelSize
             anchors.verticalCenter: parent.verticalCenter

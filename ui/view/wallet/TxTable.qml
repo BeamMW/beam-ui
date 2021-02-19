@@ -246,10 +246,11 @@ Control {
             }
 
             rowDelegate: ExpandableRowDelegate {
-                id: rowItem
-                collapsed: true
+                id:         rowItem
+                collapsed:  true
                 rowInModel: styleData.row !== undefined && styleData.row >= 0 &&  styleData.row < txProxyModel.count
-                rowHeight: transactionsTable.rowHeight
+                rowHeight:  transactionsTable.rowHeight
+                tableView:  transactionsTable
 
                 backgroundColor: styleData.selected ?
                                  Style.row_selected :

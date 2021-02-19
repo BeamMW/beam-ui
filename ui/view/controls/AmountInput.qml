@@ -147,7 +147,8 @@ ColumnLayout {
             visible:             multi
             model:               control.currencies
             textRole:            "unitName"
-            textMaxLen:          10
+            textMaxLenDrop:      10
+            textMaxLenDisplay:   5
             enableScroll:        true
 
             onActivated: {

@@ -2,12 +2,14 @@ import QtQuick 2.11
 
 Rectangle {
     id: rowItem
+
     property bool collapsed: true
     property bool animating: false
     property bool rowInModel: true 
     property int  rowHeight: 10
     property color backgroundColor: Style.background_row_even
     property var onLeftClick: function() { return true; }
+    property var tableView
     default property Component delegate  
 
     height:         rowHeight

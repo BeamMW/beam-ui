@@ -918,11 +918,12 @@ Please try again later or create an offer yourself."
                         }
 
                         rowDelegate: ExpandableRowDelegate {
-                            collapsed: true
+                            collapsed:  true
                             rowInModel: styleData.row !== undefined && styleData.row >= 0 &&  styleData.row < txProxyModel.count
-                            rowHeight: transactionsTable.rowHeight
+                            rowHeight:  transactionsTable.rowHeight
+                            tableView:  transactionsTable
                             backgroundColor: styleData.selected ? Style.row_selected : (styleData.alternate ? Style.background_row_even : Style.background_row_odd)
-                            property var  myModel:     parent.model
+                            property var myModel: parent.model
 
                             delegate: SwapTransactionDetails {
                                     width: transactionsTable.width
