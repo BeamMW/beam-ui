@@ -187,7 +187,9 @@ please review your settings and try again"
 
                         Connections {
                             target: viewModel
-                            onIsSendFeeOKChanged: sendAmountInput.error = sendAmountInput.getErrorText()
+                            function onIsSendFeeOKChanged () {
+                                sendAmountInput.error = sendAmountInput.getErrorText()
+                            }
                         }
                     }
 
@@ -222,7 +224,9 @@ please review your settings and try again"
 
                         Connections {
                             target: viewModel
-                            onSendFeeChanged: sendFeeInput.fee = viewModel.sendFee
+                            function onSendFeeChanged () {
+                                sendFeeInput.fee = viewModel.sendFee
+                            }
                         }
                     }
 
@@ -300,7 +304,9 @@ please review your settings and try again"
 
                         Connections {
                             target: viewModel
-                            onIsReceiveFeeOKChanged: receiveAmountInput.error = receiveAmountInput.getErrorText()
+                            function onIsReceiveFeeOKChanged () {
+                                receiveAmountInput.error = receiveAmountInput.getErrorText()
+                            }
                         }
                     }
                     //

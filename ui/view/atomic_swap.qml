@@ -53,7 +53,7 @@ Item {
         }
         Connections {
             target: viewModel
-            onOfferRemovedFromTable: function(txId) {
+            function onOfferRemovedFromTable (txId) {
                 if (cancelOfferDialog.txId == txId) {
                     cancelOfferDialog.cancelButton.onClicked();
                 }
@@ -147,11 +147,11 @@ Item {
                 }
                 Connections {
                     target: tokenDuplicateChecker.model
-                    onTokenPreviousAccepted: function(token) {
-                        tokenDuplicateChecker.isOwn = false;
-                        tokenDuplicateChecker.open();
+                    function onTokenPreviousAccepted (token) {
+                        tokenDuplicateChecker.isOwn = false
+                        tokenDuplicateChecker.open()
                     }
-                    onTokenFirstTimeAccepted: function(token) {
+                    function onTokenFirstTimeAccepted (token) {
                         offersStackView.pop();
                         offersStackView.push(Qt.createComponent("send_swap.qml"),
                                             {
@@ -161,9 +161,9 @@ Item {
                                             });
                         offersStackView.currentItem.validateCoin();
                     }
-                    onTokenOwnGenerated: function(token) {
+                    function onTokenOwnGenerated (token) {
                         tokenDuplicateChecker.isOwn = true;
-                        tokenDuplicateChecker.open();
+                        tokenDuplicateChecker.open()
                     }
                 }
             }
@@ -1198,7 +1198,7 @@ Please try again later or create an offer yourself."
                         }
                         Connections {
                             target: deleteTransactionDialog
-                            onAccepted: {
+                            function onAccepted () {
                                 viewModel.deleteTx(txContextMenu.txID);
                             }
                         }

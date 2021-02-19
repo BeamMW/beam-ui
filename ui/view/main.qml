@@ -387,11 +387,11 @@ Rectangle {
 
     Connections {
         target: viewModel
-        onGotoStartScreen: { 
+        function onGotoStartScreen () {
             main.parent.setSource("qrc:/start.qml", {"isLockedMode": true});
         }
 
-        onShowTrezorMessage:{
+        function onShowTrezorMessage () {
             var popup = Qt.createComponent("popup_message.qml").createObject(main)
             //% "Please, look at your Trezor device to complete actions..."
             popup.message = qsTrId("trezor-message")
@@ -399,7 +399,7 @@ Rectangle {
             trezor_popups.push(popup)
         }
 
-        onHideTrezorMessage:{
+        function onHideTrezorMessage () {
             console.log("onHideTrezorMessage")
             if (trezor_popups.length > 0) {
                 var popup = trezor_popups.pop()
@@ -407,7 +407,7 @@ Rectangle {
             }
         }
 
-        onShowTrezorError: function(error) {
+        function onShowTrezorError (error) {
             console.log(error)
             var popup = Qt.createComponent("popup_message.qml").createObject(main)
             popup.message = error

@@ -215,7 +215,9 @@ please review your settings and try again"
 
                         Connections {
                             target: viewModel
-                            onSentFeeChanged: sendFeeInput.fee = viewModel.sentFee
+                            function onSentFeeChanged () {
+                                sendFeeInput.fee = viewModel.sentFee
+                            }
                         }
                     }
 
@@ -443,7 +445,9 @@ please review your settings and try again"
 
                         Connections {
                             target: viewModel
-                            onReceiveFeeChanged: receiveFeeInput.fee = viewModel.receiveFee
+                            function onReceiveFeeChanged () {
+                                receiveFeeInput.fee = viewModel.receiveFee
+                            }
                         }
                     }
                     //

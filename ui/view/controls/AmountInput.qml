@@ -116,7 +116,7 @@ ColumnLayout {
 
             Connections {
                 target: control
-                onAmountInChanged: {
+                function onAmountInChanged () {
                     if (!ainput.activeFocus) {
                         // we intentionally break binding here
                         ainput.text = ainput.formatDisplayedAmount()

@@ -64,9 +64,13 @@ ColumnLayout {
 
             Connections {
                 target: control
-                onFeeChanged: feeInput.text = feeInput.formatFee()
                 Component.onCompleted: feeInput.text = feeInput.formatFee()
-                onCurrencyChanged: {
+
+                function onFeeChanged () {
+                    feeInput.text = feeInput.formatFee()
+                }
+
+                function onCurrencyChanged () {
                     control.fee = BeamGlobals.getDefaultFee(control.currency)
                 }
             }
