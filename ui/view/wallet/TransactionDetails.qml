@@ -24,12 +24,7 @@ RowLayout {
     property var stateDetails
     property var searchRegExp: new RegExp("("+root.searchFilter+")", "gi")
     property var searchRegExp2:  new RegExp("("+root.searchFilter+")", "i")
-
     property string token
-    property string amount
-    property string amountUnit
-    property string amountRate
-    property string amountRateUnit
 
     property string fee
     property string feeUnit
@@ -47,6 +42,9 @@ RowLayout {
     property var  assetIcons
     property var  assetAmounts
     property var  assetIncome
+    property var  assetRates
+    property var  rateUnit
+    property var  totalValue
     readonly property int assetCount: assetNames ? assetNames.length : 0
 
     property var onOpenExternal: null
@@ -214,47 +212,36 @@ RowLayout {
             color: Style.content_secondary
             //% "Amount"
             text: qsTrId("tx-details-amount-label") + ":"
-            visible: true //amountField.visible
+            visible: amountsList.visible
         }
-
-       /* BeamAmount {
-            id: amountField
-            visible: isTextFieldVisible(root.amount) && !root.isContractTx
-            Layout.fillWidth: true
-
-            amount:    root.amount
-            unitName:  root.amountUnit
-            rate:      root.amountRate
-            rateUnit:  root.amountRateUnit
-            prefix:    root.isIncome ? "+ " : "- "
-            color:     root.isIncome ? Style.accent_incoming : Style.accent_outgoing
-            boldFont:  true
-            lightFont: false
-            showTip:   false
-            maxPaintedWidth: this.width
-        }
-        */
 
         ColumnLayout {
+            id: amountsList
             Layout.fillWidth: true
             spacing: 10
+            visible: true// visibleChildren.length > 0
 
             Repeater {
                 model: root.assetCount
+
                 BeamAmount {
                     Layout.fillWidth: true
 
+                    visible:    true//isTextFieldVisible(root.assetAmounts[index])
                     amount:     root.assetAmounts[index]
                     unitName:   root.assetNames[index]
-                    iconSource: root.isContractTx ? root.assetIcons[index] : ""
+                    iconSource: root.assetCount > 1 ? root.assetIcons[index] : ""
                     iconSize:   Qt.size(20, 20)
                     color:      root.assetIncome[index] ? Style.accent_incoming : Style.accent_outgoing
-                    prefix:     root.assetIncome[index] ? "+ " : "- "
+                    prefix:     this.amount == "0" ? "" : (root.assetIncome[index] ? "+ " : "- ")
+                    rate:       root.assetRates[index]
+                    rateUnit:   this.rate != "0" ? root.rateUnit : ""
 
-                    boldFont:   true
-                    lightFont:  false
-                    showTip:    false
-                    maxPaintedWidth: this.width
+                    boldFont:     true
+                    lightFont:    false
+                    showTip:      false
+                    maxUnitChars: 50
+                    //maxPaintedWidth: this.width don't enable, causes freeze of animations, neet to refactor
                 }
             }
         }
@@ -263,8 +250,26 @@ RowLayout {
             Layout.alignment: Qt.AlignTop
             font.pixelSize: 14
             color: Style.content_secondary
+            //% "Total value"
+            text: qsTrId("general-total value") + ": "
+            visible: totalValueCtrl.visible
+        }
+
+        SFText {
+            id: totalValueCtrl
+            Layout.fillWidth: true
+            font.pixelSize: 14
+            color: Style.content_secondary
+            text: [root.totalValue, root.rateUnit].join(' ')
+            visible: root.assetCount > 1 && root.totalValue != "0" && isTextFieldVisible(root.totalValue)
+        }
+
+        SFText {
+            Layout.alignment: Qt.AlignTop
+            font.pixelSize: 14
+            color: Style.content_secondary
             //% "Transaction fee"
-            text: qsTrId("general-fee") + ":"
+            text: qsTrId("general-fee") + ": "
             visible: root.isFieldVisible() && root.fee.length
         }
 

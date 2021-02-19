@@ -146,9 +146,9 @@ Control {
 
             SearchBox {
                id: searchBox
-               Layout.preferredWidth: 400
+               Layout.preferredWidth: 300
                Layout.alignment: Qt.AlignVCenter
-               //% "Transaction or kernel ID, comment, address or contact"
+               //% "Enter search text..."
                placeholderText: qsTrId("wallet-search-transactions-placeholder")
             }
 
@@ -286,10 +286,6 @@ Control {
                     rawTxID:            model && model.rawTxID ? model.rawTxID : null
                     stateDetails:       model && model.stateDetails ? model.stateDetails : ""
                     isCompleted:        model && model.isCompleted ? model.isCompleted : false
-                    assetNames:         model && model.assetNames ? model.assetNames : []
-                    assetIcons:         model ? model.assetIcons: []
-                    assetAmounts:       model ? model.assetAmounts: []
-                    assetIncome:        model ? model.assetAmountsIncome: []
 
                     addressType:        {
                         if (model) {
@@ -311,15 +307,18 @@ Control {
                         return ""
                     }
 
+                    assetNames:         model && model.assetNames ? model.assetNames : []
+                    assetIcons:         model ? model.assetIcons: []
+                    assetAmounts:       model ? model.assetAmounts: []
+                    assetIncome:        model ? model.assetAmountsIncome: []
+                    assetRates:         model ? model.assetRates: []
+                    totalValue:         model ? model.amountSecondCurrency : "0"
+                    rateUnit:           tableViewModel.rateUnit
+
                     fee:             model && model.fee ? model.fee : "0"
                     feeRate:         model && model.feeRate ? model.feeRate : "0"
                     feeUnit:         qsTrId("general-beam")
                     feeRateUnit:     tableViewModel.rateUnit
-
-                    amount:          model && model.amountGeneral ? model.amountGeneral : "0"
-                    amountRate:      model && model.rate ? model.rate : "0"
-                    amountUnit:      model ? model.assetNames[0]: ""
-                    amountRateUnit:  tableViewModel.rateUnit
 
                     searchFilter:    searchBox.text
                     hideFiltered:    rowItem.hideFiltered
@@ -436,7 +435,7 @@ Control {
                     height: transactionsTable.rowHeight
 
                     property var isIncome:    model && model.isIncome
-                    property var prefix:      isIncome ? "+ " : "- "
+                    property var prefix:      model && model.amountGeneral == "0" ? "" : (isIncome ? "+ " : "- ")
                     property var amountText:  model ? [prefix, Utils.uiStringToLocale(model.amountGeneral)].join('') : "0"
 
                     //% "Multiple assets"
@@ -471,11 +470,11 @@ Control {
                     width:  parent.width
                     height: transactionsTable.rowHeight
 
-                    property var amount:   model ? model.amountSecondCurrency : ""
-                    property var prefix:   model && model.isIncome ? "+ " : "- "
+                    property var amount: model && model.amountSecondCurrency != "0" ? model.amountSecondCurrency : ""
+                    property var prefix: model && model.isIncome ? "+ " : "- "
 
                     SFText {
-                        text:                   parent.amount == "" ? "" : [parent.prefix, Utils.uiStringToLocale(parent.amount)].join('')
+                        text:                   parent.amount ? [parent.prefix, Utils.uiStringToLocale(parent.amount)].join('') : ""
                         color:                  Style.content_main
                         Layout.fillWidth:       true
                         Layout.leftMargin:      20

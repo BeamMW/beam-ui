@@ -1227,8 +1227,9 @@ Tarkista asetuksesi ja yritä uudelleen.</translation>
         <translation>lähettää omaan osoitteeseen</translation>
     </message>
     <message id="wallet-search-transactions-placeholder">
-        <source>Transaction or kernel ID, comment, address or contact</source>
-        <translation>Tapahtuman ID, kernel ID, kommentti, osoite tai yhteystieto</translation>
+        <source>Enter search text...</source>
+        <oldsource>Transaction or kernel ID, comment, address or contact</oldsource>
+        <translation type="unfinished">Tapahtuman ID, kernel ID, kommentti, osoite tai yhteystieto</translation>
     </message>
     <message id="settings-swap-node">
         <source>Node</source>
@@ -1825,14 +1826,6 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
         <source>activated</source>
         <translation type="unfinished">activated</translation>
     </message>
-    <message id="tx-details-exchange-rate-not-available">
-        <source>Exchange rate to %1 was not available at the time of transaction</source>
-        <translation type="unfinished">Exchange rate to %1 was not available at the time of transaction</translation>
-    </message>
-    <message id="tx-details-second-currency-notification">
-        <source>(for the day of transaction)</source>
-        <translation type="unfinished">(for the day of transaction)</translation>
-    </message>
     <message id="tx-details-title">
         <source>General transaction info</source>
         <translation>Tapahtuman yleiset tiedot</translation>
@@ -1855,10 +1848,6 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
-        <translation>Summa</translation>
-    </message>
-    <message id="tx-details-second-currency-amount-label">
-        <source>Currency amount</source>
         <translation>Summa</translation>
     </message>
     <message id="tx-details-tx-id-label">
@@ -3001,6 +2990,10 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-no-comment">
         <source>No comment provided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-total value">
+        <source>Total value</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

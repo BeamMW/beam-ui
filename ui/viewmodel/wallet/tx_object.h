@@ -48,10 +48,12 @@ public:
     QString getSenderIdentity() const;
     QString getReceiverIdentity() const;
     QString getFeeRate() const;
+    QString getAmountSecondCurrency();
 
     const std::vector<beam::Asset::ID>& getAssetsList() const;
     const std::vector<QString>& getAssetAmounts() const;
     const std::vector<bool>& getAssetAmountsIncome() const;
+    const std::vector<QString>& getAssetRates() const;
 
     bool isIncome() const;
     bool isSelfTx() const;
@@ -79,19 +81,12 @@ protected:
 
     beam::wallet::TxDescription _tx;
     beam::wallet::ExchangeRate::Currency _secondCurrency;
+    QString _amountSecondCurrency;
 
     mutable QString _kernelIDStr;
     mutable QString _comment;
     boost::optional<beam::wallet::TxAddressType> _addressType;
 
-    /*
-    beam::wallet::TxType m_type;
-    mutable  boost::optional<bool> m_hasVouchers;
-    */
-
-    //
-    // Contracts handling
-    //
     typedef std::function<void (const beam::bvm2::ContractInvokeData& data)> CDVisitor;
     void visitContractData(const CDVisitor&) const;
 
@@ -99,6 +94,7 @@ protected:
     beam::AmountSigned _contractAmount = 0UL;
 
     std::vector<beam::Asset::ID> _assetsList;
-    std::vector<QString> _assetAmounts;
-    std::vector<bool> _assetAmountsIncome;
+    std::vector<QString>         _assetAmounts;
+    std::vector<bool>            _assetAmountsIncome;
+    std::vector<QString>         _assetRates;
 };

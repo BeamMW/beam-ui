@@ -1227,8 +1227,8 @@ please review your settings and try again</translation>
         <translation>sending to own address</translation>
     </message>
     <message id="wallet-search-transactions-placeholder">
-        <source>Transaction or kernel ID, comment, address or contact</source>
-        <translation>Transaction or kernel ID, comment, address or contact</translation>
+        <source>Enter search text...</source>
+        <translation type="unfinished">Enter search text...</translation>
     </message>
     <message id="settings-swap-node">
         <source>Node</source>
@@ -1824,14 +1824,6 @@ deploy the key at the node you trust completely.</translation>
         <source>activated</source>
         <translation>activated</translation>
     </message>
-    <message id="tx-details-exchange-rate-not-available">
-        <source>Exchange rate to %1 was not available at the time of transaction</source>
-        <translation>Exchange rate to %1 was not available at the time of transaction</translation>
-    </message>
-    <message id="tx-details-second-currency-notification">
-        <source>(for the day of transaction)</source>
-        <translation>(for the day of transaction)</translation>
-    </message>
     <message id="tx-details-title">
         <source>General transaction info</source>
         <translation>General transaction info</translation>
@@ -1855,10 +1847,6 @@ deploy the key at the node you trust completely.</translation>
     <message id="tx-details-amount-label">
         <source>Amount</source>
         <translation>Amount</translation>
-    </message>
-    <message id="tx-details-second-currency-amount-label">
-        <source>Currency amount</source>
-        <translation>Currency amount</translation>
     </message>
     <message id="tx-details-tx-id-label">
         <source>Transaction ID</source>
@@ -2997,6 +2985,10 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-no-comment">
         <source>No comment provided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-total value">
+        <source>Total value</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

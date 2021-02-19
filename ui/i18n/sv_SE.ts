@@ -1226,8 +1226,9 @@ vänligen se över dina inställningar och testa igen</translation>
         <translation>skickar till egen adress</translation>
     </message>
     <message id="wallet-search-transactions-placeholder">
-        <source>Transaction or kernel ID, comment, address or contact</source>
-        <translation>Transaktions eller kernel-ID, kommentar, adress eller kontakt</translation>
+        <source>Enter search text...</source>
+        <oldsource>Transaction or kernel ID, comment, address or contact</oldsource>
+        <translation type="unfinished">Transaktions eller kernel-ID, kommentar, adress eller kontakt</translation>
     </message>
     <message id="settings-swap-node">
         <source>Node</source>
@@ -1821,14 +1822,6 @@ deploy the key at the node you trust completely.</source>
         <source>activated</source>
         <translation>aktiverat</translation>
     </message>
-    <message id="tx-details-exchange-rate-not-available">
-        <source>Exchange rate to %1 was not available at the time of transaction</source>
-        <translation>Växelkursen till %1 var inte tillgänglig vid tidpunkten för transaktionen</translation>
-    </message>
-    <message id="tx-details-second-currency-notification">
-        <source>(for the day of transaction)</source>
-        <translation>(för dagens transaktioner)</translation>
-    </message>
     <message id="tx-details-title">
         <source>General transaction info</source>
         <translation>Generell transaktionsinformation</translation>
@@ -1852,10 +1845,6 @@ deploy the key at the node you trust completely.</source>
     <message id="tx-details-amount-label">
         <source>Amount</source>
         <translation>Belopp</translation>
-    </message>
-    <message id="tx-details-second-currency-amount-label">
-        <source>Currency amount</source>
-        <translation>Valutabelopp</translation>
     </message>
     <message id="tx-details-tx-id-label">
         <source>Transaction ID</source>
@@ -2997,6 +2986,10 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-no-comment">
         <source>No comment provided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-total value">
+        <source>Total value</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

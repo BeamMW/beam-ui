@@ -13,6 +13,7 @@
 // limitations under the License.
 #include "tx_object.h"
 #include "viewmodel/ui_helpers.h"
+#include "viewmodel/qml_globals.h"
 #include "wallet/core/common.h"
 #include "wallet/core/simple_transaction.h"
 #include "wallet/core/strings_resources.h"
@@ -110,23 +111,21 @@ TxObject::TxObject(TxDescription tx, beam::wallet::ExchangeRate::Currency second
             _contractAmount -= _contractFee;
         }
 
-        assets[1] = 10;
-        assets[2] = 20;
-        assets[3] = 30;
-        assets[4] = 40;
-
         for (const auto& info: assets)
         {
             _assetsList.push_back(info.first);
             _assetAmounts.push_back(AmountToUIString(std::abs(info.second)));
-            _assetAmountsIncome.push_back(info.second > 0);
+            _assetAmountsIncome.push_back(info.second >= 0);
+            _assetRates.push_back(getRate(info.first));
         }
     }
-    else
+
+    if (_assetsList.empty())
     {
         _assetsList.push_back(_tx.m_assetId);
         _assetAmounts.push_back(AmountToUIString(_tx.m_amount));
         _assetAmountsIncome.push_back(!_tx.m_sender);
+        _assetRates.push_back(getRate(_tx.m_assetId));
     }
 }
 
@@ -671,4 +670,31 @@ const std::vector<QString>& TxObject::getAssetAmounts() const
 const std::vector<bool>& TxObject::getAssetAmountsIncome() const
 {
     return _assetAmountsIncome;
+}
+
+const std::vector<QString>& TxObject::getAssetRates() const
+{
+    return _assetRates;
+}
+
+QString TxObject::getAmountSecondCurrency()
+{
+    if (_amountSecondCurrency.isEmpty())
+    {
+        // TODO: support multiple assets & rate broadcast for assets
+        if (_assetsList.size() == 1 && _assetsList[0] == beam::Asset::s_BeamID)
+        {
+            LOG_INFO() << "Amount: " << _assetAmounts[0].toStdString();
+            LOG_INFO() << "Rate: " << _assetRates[0].toStdString();
+            _amountSecondCurrency = QMLGlobals::calcAmountInSecondCurrency(_assetAmounts[0], _assetRates[0], QString());
+            LOG_INFO() << "USD: " << _amountSecondCurrency.toStdString();
+            int a =0;
+            a++;
+        }
+        else
+        {
+            _amountSecondCurrency = "0";
+        }
+    }
+    return _amountSecondCurrency;
 }

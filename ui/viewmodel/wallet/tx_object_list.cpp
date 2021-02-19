@@ -204,9 +204,7 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::AmountSecondCurrencySort), "amountSecondCurrencySort"},
         { static_cast<int>(Roles::Rate), "rate" },
         { static_cast<int>(Roles::AddressFrom), "addressFrom" },
-        { static_cast<int>(Roles::AddressFromSort), "addressFromSort" },
         { static_cast<int>(Roles::AddressTo), "addressTo" },
-        { static_cast<int>(Roles::AddressToSort), "addressToSort" },
         { static_cast<int>(Roles::Status), "status" },
         { static_cast<int>(Roles::StatusSort), "statusSort" },
         { static_cast<int>(Roles::Fee), "fee" },
@@ -246,7 +244,8 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::AssetIcons), "assetIcons"},
         { static_cast<int>(Roles::AssetAmounts), "assetAmounts"},
         { static_cast<int>(Roles::FeeRate), "feeRate"},
-        { static_cast<int>(Roles::AssetAmountsIncome), "assetAmountsIncome"}
+        { static_cast<int>(Roles::AssetAmountsIncome), "assetAmountsIncome"},
+        { static_cast<int>(Roles::AssetRates), "assetRates"}
     };
     return roles;
 }
@@ -277,10 +276,8 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
         case Roles::FeeRate:
             return value->getFeeRate();
         case Roles::AddressFrom:
-        case Roles::AddressFromSort:
             return value->getAddressFrom();
         case Roles::AddressTo:
-        case Roles::AddressToSort:
             return value->getAddressTo();
         case Roles::Status:
         case Roles::StatusSort:
@@ -414,6 +411,13 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             result.setValue(amounts);
             return result;
         }
+        case Roles::AssetRates:
+        {
+            const auto& rates = value->getAssetRates();
+            QVariant result;
+            result.setValue(rates);
+            return result;
+        }
         case Roles::AssetFilter:
         {
             const auto& alist = value->getAssetsList();
@@ -428,14 +432,11 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
 
             return r;
         }
-
         case Roles::AmountSecondCurrencySort:
         case Roles::AmountSecondCurrency:
-            return QMLGlobals::calcAmountInSecondCurrency(value->getAmountGeneral(), value->getRate(), QString());
-
+            return value->getAmountSecondCurrency();
         case Roles::IsMultiAsset:
             return value->isMultiAsset();
-
         default:
             return QVariant();
     }

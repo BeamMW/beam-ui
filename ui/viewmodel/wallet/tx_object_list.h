@@ -33,9 +33,7 @@ public:
         AmountSecondCurrencySort,
         Rate,
         AddressFrom,
-        AddressFromSort,
         AddressTo,
-        AddressToSort,
         Status,
         StatusSort,
         Fee,
@@ -75,6 +73,7 @@ public:
         AssetIcons,
         AssetAmounts,
         AssetAmountsIncome,
+        AssetRates,
         IsDexTx,
     };
     Q_ENUM(Roles)

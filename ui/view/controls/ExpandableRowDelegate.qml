@@ -5,7 +5,7 @@ Rectangle {
     property bool collapsed: true
     property bool animating: false
     property bool rowInModel: true 
-    property int rowHeight: 10
+    property int  rowHeight: 10
     property color backgroundColor: Style.background_row_even
     property var onLeftClick: function() { return true; }
     default property Component delegate  
@@ -22,8 +22,22 @@ Rectangle {
         txDetails.height = collapsed ? 0 : txDetails.maximumHeight
     }
 
+    onRowInModelChanged: {
+        if (!rowInModel) {
+            collapsed = true
+        }
+    }
+
     function expand(animate) {
         if (!rowInModel) return
+
+        if (!txDetails.detailsPanel)
+        {
+            txDetails.detailsPanel = rowItem.delegate.createObject(txDetails);
+            txDetails.detailsPanel.implicitHeightChanged.connect(txDetails.onDelegateImplicitHeightChanged);
+            txDetails.onDelegateImplicitHeightChanged();
+        }
+
         if (animate) expandAnimation.start()
         else collapsed = false
     }
@@ -53,11 +67,6 @@ Rectangle {
         Rectangle {
             anchors.fill: parent
             color: Style.background_details
-        }
-
-        Component.onCompleted: {
-            detailsPanel = rowItem.delegate.createObject(txDetails);
-            detailsPanel.implicitHeightChanged.connect(onDelegateImplicitHeightChanged);
         }
     }
 
