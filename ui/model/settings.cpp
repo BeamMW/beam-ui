@@ -151,7 +151,7 @@ string WalletSettings::getTrezorWalletStorage() const
 #define MACRO(name, name2, suffix) \
 string WalletSettings::getWalletStorage##name() const \
 { \
-    return getWalletFolder() + "/" + WalletDBFile##name##; \
+    return getWalletFolder() + "/" + WalletDBFile##name; \
 }
 BEAM_BLOCKCHAINS_MAP(MACRO)
 #undef MACRO
