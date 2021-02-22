@@ -134,7 +134,7 @@ signals:
 
 public slots:
     void onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId);
-    void onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes);
+    void onCoinsSelectionCalculated(const beam::wallet::CoinsSelectionInfo&);
 
 private:
     void fillParameters(const beam::wallet::TxParameters& parameters);
@@ -160,6 +160,5 @@ private:
     QString _tokenGeneratebByNewAppVersionMessage = "";
 
     beam::Amount _minimalBeamFeeGrothes;
-    beam::Amount _shieldedInputsFee;
     bool _feeChangedByUI = false;
 };

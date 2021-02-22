@@ -49,7 +49,7 @@ WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, b
     qRegisterMetaType<beam::wallet::WalletImplVerInfo>("beam::wallet::WalletImplVerInfo");
     qRegisterMetaType<ECC::uintBig>("ECC::uintBig");
     qRegisterMetaType<boost::optional<beam::wallet::WalletAddress>>("boost::optional<beam::wallet::WalletAddress>");
-    qRegisterMetaType<beam::wallet::ShieldedCoinsSelectionInfo>("beam::wallet::ShieldedCoinsSelectionInfo");
+    qRegisterMetaType<beam::wallet::CoinsSelectionInfo>("beam::wallet::CoinsSelectionInfo");
     qRegisterMetaType<vector<beam::wallet::DexOrder>>("std::vector<beam::wallet::DexOrder>");
 
     connect(this, &WalletModel::walletStatusInternal, this, &WalletModel::onWalletStatusInternal);
@@ -139,9 +139,9 @@ void WalletModel::onChangeCalculated(beam::Amount changeAsset, beam::Amount chan
     emit changeCalculated(changeAsset, changeBeam, assetId);
 }
 
-void WalletModel::onShieldedCoinsSelectionCalculated(const ShieldedCoinsSelectionInfo& selectionRes)
+void WalletModel::onCoinsSelectionCalculated(const CoinsSelectionInfo& selectionRes)
 {
-    emit shieldedCoinsSelectionCalculated(selectionRes);
+    emit coinsSelectionCalculated(selectionRes);
 }
 
 void WalletModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)

@@ -164,7 +164,7 @@ signals:
     void isNeedExtractShieldedCoinsChanged();
 
 public slots:
-    void onSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes);
+    void onSelectionCalculated(const beam::wallet::CoinsSelectionInfo&);
     void onAssetInfo(beam::Asset::ID assetId);
 
 private:
@@ -172,12 +172,9 @@ private:
     void extractParameters();
     void resetAddress();
 
-    beam::Amount _fee;
-    beam::Amount _shieldedFee = 0U;
-    beam::Amount _sendAmount = 0U;
-    beam::AmountBig::Type _changeBeam = 0U;
-    beam::AmountBig::Type _changeAsset = 0U; // for non-beam transactions only
-    beam::Asset::ID _selectedAssetId = beam::Asset::s_BeamID;
+    beam::wallet::CoinsSelectionInfo m_Csi;
+    void RefreshCsiAsync();
+    beam::Amount get_TotalSpendSelected() const;
 
     QString _comment;
     QString _receiverTA;
@@ -202,9 +199,6 @@ private:
     AssetsManager::Ptr         _amgr;
 
     bool _isShielded = false;
-    bool _isNeedExtractShieldedCoins = false;
-    beam::Amount _minFee;
     bool _feeChangedByUi = false;
     bool _maxPossible   = false;
-    beam::Amount _maxWhatCanSelect = 0;
 };
