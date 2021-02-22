@@ -34,8 +34,7 @@ beam::Amount minFeeBeam(bool isShielded)
     if (isShielded)
         return fs.m_ShieldedOutputTotal + fs.m_Output + fs.m_Kernel; // wrapped output + change
 
-    beam::Amount val = fs.m_Output * 5 + fs.m_Kernel; // reserve for decoys
-    return std::max(val, beam::wallet::kMinFeeInGroth);
+    return fs.get_DefaultStd();
 }
 
 bool isFeeOK(beam::Amount fee, Currency currency, bool isShielded)
