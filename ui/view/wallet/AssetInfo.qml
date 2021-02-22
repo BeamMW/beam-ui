@@ -22,7 +22,7 @@ Control {
     property var   onClicked:   null
 
     padding: 0
-    leftPadding:  20
+    leftPadding: 20
     rightPadding: 20
 
     background: PanelGradient {
@@ -37,33 +37,11 @@ Control {
         implicitHeight:   control.height
     }
 
-    function formTipText () {
-        //% "%1 incoming transactions"
-        var inf = qsTrId("asset-incoming-tip")
-
-        //% "%1 outgoing transactions"
-        var outf = qsTrId("asset-outgoing-tip")
-
-        /*% "%1 active transactions
-(%2 incoming, %3 outgoing)" */
-        var inoutf = qsTrId("asset-inout-tip")
-
-        if (control.inTxCnt && control.outTxCnt) {
-            return inoutf.arg(control.inTxCnt + control.outTxCnt).arg(control.inTxCnt).arg(control.outTxCnt)
-        }
-
-        if (control.inTxCnt) {
-            return inf.arg(control.inTxCnt)
-        }
-
-        return outf.arg(control.outTxCnt)
-    }
-
     function calcMaxWidth () {
-        return control.availableWidth - (txIcon.visible ? txIcon.width + contentRow.spacing : 0)
+        return control.availableWidth // - (txIcon.visible ? txIcon.width + contentRow.spacing : 0)
     }
 
-    contentItem: RowLayout {
+    contentItem: ColumnLayout {
         id: contentRow
         spacing: 15
 
@@ -73,12 +51,15 @@ Control {
             spacing:           12
             lightFont:         false
             fontSize:          16
-            iconSize:          Qt.size(22, 22)
+            iconSize:          Qt.size(24, 24)
             copyMenuEnabled:   true
             maxPaintedWidth:   calcMaxWidth()
             maxUnitChars:      6
+            showDrop:          true
+            dropSize:          Qt.size(8, 4.8)
         }
 
+        /*
         SvgImage
         {
             id:      txIcon
@@ -102,7 +83,7 @@ Control {
                     }
                 }
             }
-        }
+        }*/
     }
 
     MouseArea {

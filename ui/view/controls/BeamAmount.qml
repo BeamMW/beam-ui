@@ -17,13 +17,14 @@ Control {
     property bool    error:               false
     property bool    showZero:            true
     property bool    showDrop:            false
+    property size    dropSize:            Qt.size(5, 3)
     property bool    showTip:             true
     property int     fontSize:            14
     property int     rateFontSize:        10
     property bool    lightFont:           true
     property bool    boldFont:            false
     property string  iconSource:          ""
-    property size    iconSize:            Qt.size(0, 0)
+    property size    iconSize:            Qt.size(22, 22)
     property alias   copyMenuEnabled:     amountText.copyMenuEnabled
     property alias   caption:             captionText.text
     property int     captionFontSize:     12
@@ -33,6 +34,7 @@ Control {
     property int     maxUnitChars:        0
     property real    vSpacing:            5
     property var     tipParent:           Overlay.overlay
+    property var     tipCtrl:             defaultTipCtrl
 
     function formatRate () {
         var formatted = Utils.formatAmountToSecondCurrency(control.amount, control.rate, control.rateUnit);
@@ -118,29 +120,42 @@ Control {
         if (maxPaintedWidth) amountText.text = fitText()
     }
 
-    AlphaTip {
-        id: tip
+    property bool hasTip: tipText.text != amountText.text
+    readonly property bool tipVisible: showTip && hasTip && (amountTextArea.containsMouse || dropIconArea.containsMouse || iconSpacingArea.containsMouse)
 
-        visible:      showTip && amountTextArea.containsMouse && tipText.text != amountText.text
+    function calcTipX () {
+        var xpos = Utils.xUp(amountText) + amountText.width / 2 - control.tipCtrl.width / 2
+        if (xpos < 0) return 0
+        return xpos + tipCtrl.width > root.width ? Utils.xUp(amountText) + amountText.width - tipCtrl.width : xpos
+    }
+
+    function calcTipY () {
+        return Utils.yUp(amountText) + amountText.height + 5
+    }
+
+    onTipVisibleChanged: {
+        if (tipVisible) {
+            control.tipCtrl.x = calcTipX()
+            control.tipCtrl.y = calcTipY()
+        }
+    }
+
+    AlphaTip {
+        id: defaultTipCtrl
+
+        visible: control.tipCtrl == defaultTipCtrl && control.tipVisible
+
         defBkColor:   Qt.rgba(55 / 255, 93  / 255, 123 / 255, 0.75)
         defTextColor: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.8)
         parent:       control.tipParent
 
-        x: {
-            var xpos = Utils.xUp(amountText) + amountText.width / 2 - tip.width / 2
-            if (xpos < 0) return 0
-            return xpos + tip.width > root.width ? Utils.xUp(amountText) + amountText.width - tip.width : xpos
-        }
-
-        y: Utils.yUp(amountText) + amountText.height + 5
-
         contentItem: SFText {
             id:             tipText
             text:           formatAmount(control.amount, control.unitName)
-            font.pixelSize: 12
+            font.pixelSize: 13
             font.styleName: "Light"
             font.weight:    Font.Light
-            color:          tip.defTextColor
+            color:          defaultTipCtrl.defTextColor
         }
     }
 
@@ -150,7 +165,8 @@ Control {
         SvgImage {
             id:          assetIcon
             source:      control.iconSource
-            sourceSize:  control.iconSize
+            width:       control.iconSize.width
+            height:      control.iconSize.height
             visible:     !!control.iconSource
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -168,7 +184,7 @@ Control {
             }
 
             Row {
-                spacing: 5
+                spacing: 0
 
                 SFLabel {
                     id:               amountText
@@ -191,12 +207,41 @@ Control {
                     }
                 }
 
-                SvgImage {
-                    visible:    showDrop
-                    source:     "qrc:/assets/icon-down.svg"
-                    sourceSize: Qt.size(5, 3)
-                    id: drop
-                    anchors.verticalCenter: parent.verticalCenter
+                Item {
+                    width: 5
+                    height: parent.height
+
+                    MouseArea {
+                        id:               iconSpacingArea
+                        anchors.fill:     parent
+                        hoverEnabled:     true
+                        acceptedButtons:  Qt.NoButton
+                        propagateComposedEvents: true
+                        preventStealing:  true
+                    }
+                }
+
+                Item {
+                    height: parent.height
+                    width:  control.dropSize.width
+
+                    SvgImage {
+                        visible:    showDrop
+                        source:     "qrc:/assets/icon-down.svg"
+                        width:      control.dropSize.width
+                        height:     control.dropSize.height
+                        id: drop
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    MouseArea {
+                        id:               dropIconArea
+                        anchors.fill:     parent
+                        hoverEnabled:     true
+                        acceptedButtons:  Qt.NoButton
+                        propagateComposedEvents: true
+                        preventStealing:  true
+                    }
                 }
             }
 

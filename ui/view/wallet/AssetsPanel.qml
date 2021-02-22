@@ -35,7 +35,7 @@ Control {
     property int    selectedIdx:    -1
 
     readonly property int   assetsCount:     viewModel.assets.rowCount()
-    readonly property real  itemHeight:      67
+    readonly property real  itemHeight:      75
 
     readonly property real itemWidth: {
         if (assetsCount == 1) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
@@ -120,8 +120,8 @@ Control {
                         implicitHeight: control.itemHeight
                         implicitWidth:  control.itemWidth
 
-                        inTxCnt:      model.inTxCnt
-                        outTxCnt:     model.outTxCnt
+                        inTxCnt:      2//model.inTxCnt
+                        outTxCnt:     2//model.outTxCnt
                         amount:       model.amount
                         unitName:     model.unitName
                         selected:     model.index == control.selectedIdx
