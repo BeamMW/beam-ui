@@ -69,6 +69,7 @@ jobs:
         sudo apt install build-essential llvm libclang-dev
         sudo apt install libssl-dev curl libcups2-dev mesa-common-dev ^libxcb.* libglu1-mesa-dev libglfw3-dev libgles2-mesa-dev libfontconfig1-dev libudev-dev -y
         sudo apt install libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-dev libpci-dev libicu-dev -y
+        sudo apt install libwebp-dev libzstd-dev -y
         git clone --depth=1 https://github.com/BeamMW/qt5.15.2-static-${{env.OS_NAME}}.git ${{runner.workspace}}/qt5-static
         chmod +x ${{runner.workspace}}/qt5-static/bin/*
         echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
@@ -78,6 +79,7 @@ jobs:
       shell: bash
       if: matrix.os == 'ubuntu-16.04'
       run: |
+        sudo apt install libjasper-dev -y
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-9
         sudo update-alternatives --set gcc "/usr/bin/gcc-9"
 
