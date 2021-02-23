@@ -79,7 +79,7 @@ jobs:
       shell: bash
       if: matrix.os == 'ubuntu-16.04'
       run: |
-        sudo apt install libjasper-dev libpng16-dev -y
+        sudo apt install libjasper-dev libpng16-dev libfontconfig1 -y
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-9
         sudo update-alternatives --set gcc "/usr/bin/gcc-9"
 
