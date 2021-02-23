@@ -446,6 +446,7 @@ if(LINUX)
 else()
 
     if(WIN32)
+        install(FILES ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION .)
         install(FILES ${CMAKE_PREFIX_PATH}/bin/libEGL.dll DESTINATION .)
         install(FILES ${CMAKE_PREFIX_PATH}/bin/libGLESv2.dll DESTINATION .)
         install(FILES beam-wallet.cfg DESTINATION .)
