@@ -1,4 +1,4 @@
-name: Build
+name: Build Qt
 on:
   push:
     tags:
