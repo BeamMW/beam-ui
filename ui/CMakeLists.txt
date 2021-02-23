@@ -426,7 +426,7 @@ if(BEAM_USE_STATIC)
             icui18n icuuc icudata xcb-xinerama xcb-xkb xcb-xfixes xcb-glx
             xcb-sync xcb-shape xcb-render xcb-render-util xcb-randr xcb-keysyms
             xcb-shm xcb-icccm jbig jpeg ICE SM X11 X11-xcb Xau
-            Xdmcp xcb xcb-util xcb-image dl rt pthread png16 c m z expat
+            Xdmcp xcb xcb-util xcb-image png16 expat
             freetype fontconfig uuid webp zstd lzma tiff)
             target_link_libraries(${TARGET_NAME} /usr/lib/x86_64-linux-gnu/lib${lib}.a)
         endforeach()
