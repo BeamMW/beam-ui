@@ -14,8 +14,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-16.04]
-        # os: [macos-10.15, ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2019]
+        os: [macos-10.15, ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2019]
 
     steps:
     - uses: actions/checkout@v2
@@ -212,27 +211,14 @@ jobs:
         path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}*
         if-no-files-found: error
 
-    # - uses: actions/upload-artifact@v2
-    #   with:
-    #     name: checksum-${{env.OS_NAME}}
-    #     path: checksum.txt
-    #     if-no-files-found: error
-
     - uses: actions/upload-artifact@v2
-      if: matrix.os == 'ubuntu-18.04'
+      if: matrix.os == 'ubuntu-16.04'
       with:
         name: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-linux
         path: |
           Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}*
           checksum.txt
         if-no-files-found: error
-
-    # - uses: actions/upload-artifact@v2
-    #   if: matrix.os == 'ubuntu-18.04'
-    #   with:
-    #     name: checksum-linux
-    #     path: checksum.txt
-    #     if-no-files-found: error
 
     - uses: actions/upload-artifact@v2
       if: matrix.os == 'windows-2019'
