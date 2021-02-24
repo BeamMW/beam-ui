@@ -1,21 +1,29 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
 import QtGraphicalEffects 1.0
+import QtQuick.Layouts 1.4
 
 Control {
     id:            control
     leftPadding:   14
     rightPadding:  14
-    topPadding:    13
-    bottomPadding: 13
+    topPadding:    14
+    bottomPadding: 14
 
+    property int vGap: 0
     property color defTextColor: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.85)
     property color defBkColor: Qt.rgba(1, 1, 1, 0.10)
 
     background: Item {
         Item {
+            height: vGap
+            width: parent.width
+        }
+        Item {
             id: back
-            anchors.fill: parent
+            y: vGap
+            width:  parent.width
+            height: parent.height - vGap
             Rectangle {
                 anchors.fill: parent
                 color:  Qt.rgba(33/255, 71/255, 99/255, 0.7)

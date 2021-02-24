@@ -73,25 +73,6 @@ Control {
         return control.hasScroll ? control.itemHeight * 3 + control.vSpacing * 2 : grid.implicitHeight
     }
 
-    AlphaTip {
-        id: tip
-
-        property alias text: tipText.text
-
-        visible: false
-        defBkColor: Qt.rgba(55 / 255, 93  / 255, 123 / 255, 0.75)
-        defTextColor: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.8)
-        z: 100
-
-        contentItem: SFText {
-            id:             tipText
-            font.pixelSize: 12
-            font.styleName: "Light"
-            font.weight:    Font.Light
-            color:          tip.defTextColor
-        }
-    }
-
     contentItem: ScrollView {
         id: scroll
 
@@ -120,32 +101,24 @@ Control {
                         implicitHeight: control.itemHeight
                         implicitWidth:  control.itemWidth
 
-                        inTxCnt:      2//model.inTxCnt
-                        outTxCnt:     2//model.outTxCnt
-                        amount:       model.amount
-                        unitName:     model.unitName
-                        selected:     model.index == control.selectedIdx
-                        icon:         model.icon
-                        color:        model.color
-                        borderColor:  model.selectionColor
-                        rateUnit:     model.rateUnit
-                        rate:         model.rate
-                        opacity:      control.selectedIdx < 0  ? 1 : (model.index == control.selectedIdx ? 1 : 0.6)
-
-                        onTip: function (show, text, iRight, iBtm) {
-                            tip.visible = show
-                            tip.text    = text
-
-                            tip.x       = iRight - tip.width
-                            tip.y       = iBtm + 6
-
-                            var pr = this
-                            while (pr != tip.parent) {
-                                tip.x += pr.x
-                                tip.y += pr.y
-                                pr = pr.parent
-                            }
-                        }
+                        amount:           model.amount
+                        maturing:         model.maturing
+                        change:           model.change
+                        maxPrivacy:       model.maxPrivacy
+                        unitName:         model.unitName
+                        selected:         model.index == control.selectedIdx
+                        icon:             model.icon
+                        color:            model.color
+                        borderColor:      model.selectionColor
+                        rateUnit:         model.rateUnit
+                        rate:             model.rate
+                        opacity:          control.selectedIdx < 0  ? 1 : (model.index == control.selectedIdx ? 1 : 0.6)
+                        isAsset:          model.id != 0
+                        assetId:          model.id
+                        assetName:        model.assetName
+                        smallestUnitName: model.smallestUnitName
+                        shortDesc:        model.shortDesc
+                        longDesc:         model.longDesc
 
                         onClicked: function () {
                             if (control.selectedIdx == model.index) {

@@ -684,12 +684,7 @@ QString TxObject::getAmountSecondCurrency()
         // TODO: support multiple assets & rate broadcast for assets
         if (_assetsList.size() == 1 && _assetsList[0] == beam::Asset::s_BeamID)
         {
-            LOG_INFO() << "Amount: " << _assetAmounts[0].toStdString();
-            LOG_INFO() << "Rate: " << _assetRates[0].toStdString();
             _amountSecondCurrency = QMLGlobals::calcAmountInSecondCurrency(_assetAmounts[0], _assetRates[0], QString());
-            LOG_INFO() << "USD: " << _amountSecondCurrency.toStdString();
-            int a =0;
-            a++;
         }
         else
         {

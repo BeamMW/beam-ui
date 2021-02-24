@@ -2728,19 +2728,6 @@ Please try again later or create an offer yourself.</source>
         <source>BEAM Remaining</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="asset-incoming-tip">
-        <source>%1 incoming transactions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="asset-outgoing-tip">
-        <source>%1 outgoing transactions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="asset-inout-tip">
-        <source>%1 active transactions
-(%2 incoming, %3 outgoing)</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
         <translation type="unfinished"></translation>
@@ -3006,6 +2993,34 @@ Update your settings and try again.</source>
     </message>
     <message id="general-total value">
         <source>Total value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-maturing">
+        <source>Maturing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-max-privacy">
+        <source>Max privacy</source>
+        <translation type="unfinished">最大化隐私</translation>
+    </message>
+    <message id="general-asset-info">
+        <source>Asset Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-name">
+        <source>Asset name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-smallest">
+        <source>Smallest unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-id">
+        <source>Asset ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-unit">
+        <source>Unit Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

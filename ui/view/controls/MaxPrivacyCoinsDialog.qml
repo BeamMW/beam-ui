@@ -72,8 +72,9 @@ Dialog {
                 //rateUnit:          control.totals.rateUnit
                 //rate:              control.totals.rate
                 spacing:           15
-                lightFont:         false
-                fontSize:          12
+                font.styleName:    "Bold"
+                font.weight:       Font.Bold
+                font.pixelSize:    12
             }
         }
 

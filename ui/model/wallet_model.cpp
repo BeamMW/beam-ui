@@ -385,6 +385,12 @@ beam::AmountBig::Type WalletModel::getMatutingMP(beam::Asset::ID id) const
     return status.maturingMP;
 }
 
+beam::AmountBig::Type WalletModel::getShielded(beam::Asset::ID id) const
+{
+    const auto& status = m_status.GetStatus(id);
+    return status.shielded;
+}
+
 beam::AmountBig::Type WalletModel::getReceivingChange(beam::Asset::ID id) const
 {
     const auto& status = m_status.GetStatus(id);

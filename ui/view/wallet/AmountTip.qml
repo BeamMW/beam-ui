@@ -59,11 +59,12 @@ AlphaTip {
                 rateUnit:             totals.rateUnit
                 rate:                 totals.rate
                 spacing:              15
-                lightFont:            false
-                fontSize:             12
                 vSpacing:             1
                 Layout.bottomMargin:  5
                 visible:              title.length > 0
+                font.styleName:       "Normal"
+                font.weight:          Font.Normal
+                font.pixelSize:       12
             }
 
             Repeater {
@@ -90,10 +91,11 @@ AlphaTip {
                    rateUnit:          control.progress[index].rateUnit
                    rate:              control.progress[index].rate
                    spacing:           15
-                   lightFont:         false
-                   fontSize:          12
                    vSpacing:          1
                    maxUnitChars:      6
+                   font.styleName:    "Normal"
+                   font.weight:       Font.Normal
+                   font.pixelSize:    12
                }
             }
         }

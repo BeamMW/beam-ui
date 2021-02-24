@@ -16,25 +16,40 @@ Control {
     property string  color:               Style.content_main
     property bool    error:               false
     property bool    showZero:            true
-    property bool    showDrop:            false
-    property size    dropSize:            Qt.size(5, 3)
     property bool    showTip:             true
-    property int     fontSize:            14
     property int     rateFontSize:        10
-    property bool    lightFont:           true
-    property bool    boldFont:            false
     property string  iconSource:          ""
     property size    iconSize:            Qt.size(22, 22)
     property alias   copyMenuEnabled:     amountText.copyMenuEnabled
     property alias   caption:             captionText.text
     property int     captionFontSize:     12
     property string  prefix:              ""
-    property alias   fontSizeMode:        amountText.fontSizeMode
     property real    maxPaintedWidth:     0
     property int     maxUnitChars:        0
     property real    vSpacing:            5
-    property var     tipParent:           Overlay.overlay
-    property var     tipCtrl:             defaultTipCtrl
+
+    property var     dropIcon:            dropIconCtrl
+    property bool    showDrop:            false
+    property bool    showDropCircular:    false
+    property size    dropSize:            Qt.size(5, 3)
+
+    property var tipCtrl:   defaultTipCtrl
+    property int tipY:      Utils.yUp(amountRow) + amountRow.height + 5
+
+    font {
+        pixelSize:  14
+        styleName:  "Light"
+        weight:     Font.Light
+        family:     "SF Pro Display"
+    }
+
+    property int tipX: {
+        var amountX = Utils.xUp(control)
+        var xpos = amountX + control.width / 2 - control.tipCtrl.width / 2
+        if (xpos < 0) return 0
+        if (xpos + control.tipCtrl.width <= main.width) return xpos
+        return amountX + control.width - control.tipCtrl.width
+    }
 
     function formatRate () {
         var formatted = Utils.formatAmountToSecondCurrency(control.amount, control.rate, control.rateUnit);
@@ -43,7 +58,7 @@ Control {
 
     TextMetrics {
         id:     metrics
-        font:   amountText.font
+        font:   control.font
         elide:  Qt.ElideNone
     }
 
@@ -56,7 +71,7 @@ Control {
 
     function calcMaxTextWidth () {
         var pos = control.mapFromItem(amountText.parent, amountText.x, amountText.y)
-        return control.maxPaintedWidth - pos.x - (showDrop ? drop.width + amountText.parent.spacing : 0)
+        return control.maxPaintedWidth - pos.x - ((showDropCircular || showDrop) ? dropIconCtrl.width + amountText.parent.spacing : 0)
     }
 
     function fitAmount (amount, uname, prefix, showZero, metrics, maxw) {
@@ -121,24 +136,8 @@ Control {
     }
 
     property bool hasTip: tipText.text != amountText.text
-    readonly property bool tipVisible: showTip && hasTip && (amountTextArea.containsMouse || dropIconArea.containsMouse || iconSpacingArea.containsMouse)
-
-    function calcTipX () {
-        var xpos = Utils.xUp(amountText) + amountText.width / 2 - control.tipCtrl.width / 2
-        if (xpos < 0) return 0
-        return xpos + tipCtrl.width > root.width ? Utils.xUp(amountText) + amountText.width - tipCtrl.width : xpos
-    }
-
-    function calcTipY () {
-        return Utils.yUp(amountText) + amountText.height + 5
-    }
-
-    onTipVisibleChanged: {
-        if (tipVisible) {
-            control.tipCtrl.x = calcTipX()
-            control.tipCtrl.y = calcTipY()
-        }
-    }
+    readonly property bool inTipArea: amountTextArea.containsMouse || dropIconArea.containsMouse
+    readonly property bool tipVisible: showTip && hasTip && inTipArea
 
     AlphaTip {
         id: defaultTipCtrl
@@ -147,7 +146,7 @@ Control {
 
         defBkColor:   Qt.rgba(55 / 255, 93  / 255, 123 / 255, 0.75)
         defTextColor: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.8)
-        parent:       control.tipParent
+        parent:       Overlay.overlay
 
         contentItem: SFText {
             id:             tipText
@@ -185,12 +184,11 @@ Control {
 
             Row {
                 spacing: 0
+                id: amountRow
 
                 SFLabel {
                     id:               amountText
-                    font.pixelSize:   fontSize
-                    font.styleName:   lightFont ? "Light" : (boldFont ? "Bold" : "Regular")
-                    font.weight:      lightFont ? Font.Light : (boldFont ? Font.Bold : Font.Normal)
+                    font.pixelSize:   control.font.pixelSize
                     color:            control.error ? Style.validator_error : control.color
                     onCopyText:       BeamGlobals.copyToClipboard(amount)
                     copyMenuEnabled:  true
@@ -202,36 +200,27 @@ Control {
                         anchors.fill:     parent
                         hoverEnabled:     true
                         acceptedButtons:  Qt.NoButton
-                        propagateComposedEvents: true
                         preventStealing:  true
+                        //propagateComposedEvents: true
+
+                        onWheel: function(data) {
+                            data.accepted = tipCtrl.visible
+                        }
                     }
                 }
 
                 Item {
-                    width: 5
-                    height: parent.height
-
-                    MouseArea {
-                        id:               iconSpacingArea
-                        anchors.fill:     parent
-                        hoverEnabled:     true
-                        acceptedButtons:  Qt.NoButton
-                        propagateComposedEvents: true
-                        preventStealing:  true
-                    }
-                }
-
-                Item {
-                    height: parent.height
-                    width:  control.dropSize.width
+                    height: amountText.height
+                    width:  control.dropSize.width + 5
 
                     SvgImage {
+                        id:         dropIconCtrl
                         visible:    showDrop
                         source:     "qrc:/assets/icon-down.svg"
                         width:      control.dropSize.width
                         height:     control.dropSize.height
-                        id: drop
                         anchors.verticalCenter: parent.verticalCenter
+                        anchors.right: parent.right
                     }
 
                     MouseArea {
@@ -239,8 +228,11 @@ Control {
                         anchors.fill:     parent
                         hoverEnabled:     true
                         acceptedButtons:  Qt.NoButton
-                        propagateComposedEvents: true
                         preventStealing:  true
+
+                        onWheel: function(data) {
+                            data.accepted = tipCtrl.visible
+                        }
                     }
                 }
             }

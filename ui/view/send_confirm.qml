@@ -189,9 +189,10 @@ ConfirmationDialog {
             BeamAmount {
                 visible: true
                 id: amountLabel
-                spacing:           15
-                lightFont:         false
-                fontSize:          24
+                spacing: 15
+                font.pixelSize:    24
+                font.styleName:    "Bold"
+                font.weight:       Font.Bold
                 rateFontSize:      14
                 copyMenuEnabled:   true
                 unitName:          control.unitName

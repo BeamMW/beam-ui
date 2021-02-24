@@ -49,6 +49,7 @@ public:
     beam::AmountBig::Type getSending(beam::Asset::ID) const;
     beam::AmountBig::Type getMaturing(beam::Asset::ID) const;
     beam::AmountBig::Type getMatutingMP(beam::Asset::ID) const;
+    beam::AmountBig::Type getShielded(beam::Asset::ID) const;
     bool hasShielded(beam::Asset::ID) const;
 
     beam::Height getCurrentHeight() const;

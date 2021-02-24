@@ -484,11 +484,12 @@ ColumnLayout {
                                 Layout.fillWidth:  true
                                 error:             showInsufficientBalanceWarning
                                 amount:            viewModel.sendAmount
-                                lightFont:         false
                                 unitName:          control.sendUnit
                                 rateUnit:          control.assetId == 0 ? control.rateUnit : ""
                                 rate:              control.rate
                                 maxPaintedWidth:   this.width - 20
+                                font.styleName:    "Bold"
+                                font.weight:       Font.Bold
                             }
                     
                             SFText {
@@ -503,11 +504,12 @@ ColumnLayout {
                                 Layout.fillWidth:  true
                                 error:             showInsufficientBalanceWarning
                                 amount:            viewModel.changeAsset
-                                lightFont:         false
                                 unitName:          control.sendUnit
                                 rateUnit:          control.assetId == 0 ? control.rateUnit : ""
                                 rate:              control.rate
                                 maxPaintedWidth:   this.width - 20
+                                font.styleName:    "Bold"
+                                font.weight:       Font.Bold
                             }
 
                             SFText {
@@ -522,11 +524,12 @@ ColumnLayout {
                                 Layout.fillWidth:  true
                                 error:             showInsufficientBalanceWarning
                                 amount:            viewModel.fee
-                                lightFont:         false
                                 unitName:          BeamGlobals.beamUnit
                                 rateUnit:          viewModel.feeRateUnit
                                 rate:              viewModel.feeRate
                                 maxPaintedWidth:   this.width - 20
+                                font.styleName:    "Bold"
+                                font.weight:       Font.Bold
                             }
 
                             SFText {
@@ -542,11 +545,12 @@ ColumnLayout {
                                 Layout.fillWidth:  true
                                 error:             showInsufficientBalanceWarning
                                 amount:            viewModel.assetAvailable
-                                lightFont:         false
                                 unitName:          control.sendUnit
                                 rateUnit:          control.assetId == 0 ? control.rateUnit : ""
                                 rate:              control.rate
                                 maxPaintedWidth:   this.width - 20
+                                font.styleName:    "Bold"
+                                font.weight:       Font.Bold
                             }
 
                             SFText {
@@ -563,12 +567,13 @@ ColumnLayout {
                                 Layout.fillWidth:  true
                                 error:             showInsufficientBalanceWarning
                                 amount:            viewModel.beamAvailable
-                                lightFont:         false
                                 unitName:          BeamGlobals.beamUnit
                                 rateUnit:          viewModel.feeRateUnit
                                 rate:              viewModel.feeRate
                                 visible:           control.assetId != 0
                                 maxPaintedWidth:   this.width - 20
+                                font.styleName:    "Bold"
+                                font.weight:       Font.Bold
                             }
                         }
                     }

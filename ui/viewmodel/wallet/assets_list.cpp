@@ -29,17 +29,24 @@ QHash<int, QByteArray> AssetsList::roleNames() const
 {
     static const auto roles = QHash<int, QByteArray>
     {
-        {static_cast<int>(Roles::Search),          "search"},
-        {static_cast<int>(Roles::RId),             "id"},
-        {static_cast<int>(Roles::RUnitName),       "unitName"},
-        {static_cast<int>(Roles::RAmount),         "amount"},
-        {static_cast<int>(Roles::RInTxCnt),        "inTxCnt"},
-        {static_cast<int>(Roles::ROutTxCnt),       "outTxCnt"},
-        {static_cast<int>(Roles::RIcon),           "icon"},
-        {static_cast<int>(Roles::RColor),          "color"},
-        {static_cast<int>(Roles::RSelectionColor), "selectionColor"},
-        {static_cast<int>(Roles::RRateUnit),       "rateUnit"},
-        {static_cast<int>(Roles::RRate),           "rate"},
+        {static_cast<int>(Roles::Search),           "search"},
+        {static_cast<int>(Roles::RId),              "id"},
+        {static_cast<int>(Roles::RUnitName),        "unitName"},
+        {static_cast<int>(Roles::RAmount),          "amount"},
+        {static_cast<int>(Roles::RInTxCnt),         "inTxCnt"},
+        {static_cast<int>(Roles::ROutTxCnt),        "outTxCnt"},
+        {static_cast<int>(Roles::RIcon),            "icon"},
+        {static_cast<int>(Roles::RColor),           "color"},
+        {static_cast<int>(Roles::RSelectionColor),  "selectionColor"},
+        {static_cast<int>(Roles::RRateUnit),        "rateUnit"},
+        {static_cast<int>(Roles::RRate),            "rate"},
+        {static_cast<int>(Roles::RChange),          "change"},
+        {static_cast<int>(Roles::RMaturing),        "maturing"},
+        {static_cast<int>(Roles::RMaxPrivacy),      "maxPrivacy"},
+        {static_cast<int>(Roles::RName),            "assetName"},
+        {static_cast<int>(Roles::RSmallestUnitName),"smallestUnitName"},
+        {static_cast<int>(Roles::RShortDesc),       "shortDesc"},
+        {static_cast<int>(Roles::RLongDesc),        "longDesc"},
     };
     return roles;
 }
@@ -79,6 +86,16 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
             return _amgr->getUnitName(assetId, false);
         case Roles::RAmount:
             return beamui::AmountBigToUIString(_wallet.getAvailable(assetId));
+        case Roles::RMaturing:
+        {
+            auto total = _wallet.getMaturing(assetId);
+            total += _wallet.getMatutingMP(assetId);
+            return beamui::AmountBigToUIString(total);
+        }
+        case Roles::RMaxPrivacy:
+            return beamui::AmountBigToUIString(_wallet.getShielded(assetId));
+        case Roles::RChange:
+            return beamui::AmountBigToUIString(_wallet.getReceivingChange(assetId));
         case Roles::RInTxCnt:
             return static_cast<qint32>(asset->inTxCnt());
         case Roles::ROutTxCnt:
@@ -93,6 +110,14 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
             return _amgr->getSelectionColor(assetId);
         case Roles::RRateUnit:
             return assetId < 1 ? beamui::getCurrencyUnitName(_ermgr.getRateUnitRaw()) : "";
+        case Roles::RName:
+            return _amgr->getName(assetId);
+        case Roles::RSmallestUnitName:
+            return _amgr->getSmallestUnitName(assetId);
+        case Roles::RShortDesc:
+            return _amgr->getShortDesc(assetId);
+        case Roles::RLongDesc:
+            return _amgr->getLongDesc(assetId);
         case Roles::RRate:
             {
                 if (assetId < 1)

@@ -29,6 +29,9 @@ public:
         RId,
         RUnitName,
         RAmount,
+        RChange,
+        RMaturing,
+        RMaxPrivacy,
         RInTxCnt,
         ROutTxCnt,
         RIcon,
@@ -36,6 +39,10 @@ public:
         RSelectionColor,
         RRateUnit,
         RRate,
+        RName,
+        RSmallestUnitName,
+        RShortDesc,
+        RLongDesc,
     };
 
     Q_ENUM(Roles)

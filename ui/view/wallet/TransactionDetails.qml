@@ -227,21 +227,24 @@ RowLayout {
                 BeamAmount {
                     Layout.fillWidth: true
 
-                    visible:    true//isTextFieldVisible(root.assetAmounts[index])
-                    amount:     root.assetAmounts[index]
-                    unitName:   root.assetNames[index]
-                    iconSource: root.assetCount > 1 ? root.assetIcons[index] : ""
-                    iconSize:   Qt.size(20, 20)
-                    color:      root.assetIncome[index] ? Style.accent_incoming : Style.accent_outgoing
-                    prefix:     this.amount == "0" ? "" : (root.assetIncome[index] ? "+ " : "- ")
-                    rate:       root.assetRates[index]
-                    rateUnit:   this.rate != "0" ? root.rateUnit : ""
-
-                    boldFont:     true
-                    lightFont:    false
+                    visible:      true //isTextFieldVisible(root.assetAmounts[index])
+                    amount:       root.assetAmounts[index]
+                    unitName:     root.assetNames[index]
+                    iconSource:   root.assetCount > 1 ? root.assetIcons[index] : ""
+                    iconSize:     Qt.size(20, 20)
+                    color:        root.assetIncome[index] ? Style.accent_incoming : Style.accent_outgoing
+                    prefix:       this.amount == "0" ? "" : (root.assetIncome[index] ? "+ " : "- ")
+                    rate:         root.assetRates[index]
+                    rateUnit:     this.rate != "0" ? root.rateUnit : ""
                     showTip:      false
                     maxUnitChars: 50
                     //maxPaintedWidth: this.width don't enable, causes freeze of animations, neet to refactor
+
+                    font {
+                       styleName:  "Bold"
+                       weight:     Font.Bold
+                       pixelSize:  14
+                    }
                 }
             }
         }

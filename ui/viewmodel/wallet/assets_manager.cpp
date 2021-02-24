@@ -118,14 +118,6 @@ QString AssetsManager::getUnitName(beam::Asset::ID id, bool shorten)
         unitName = meta->GetUnitName().c_str();
     }
 
-    if (unitName.isEmpty())
-    {
-        std::ostringstream ss;
-        ss << "ASSET" << static_cast<int>(id);
-        unitName = ss.str().c_str();
-        return unitName;
-    }
-
     const int kMaxUnitLen = 6;
     if (shorten && unitName.length() > kMaxUnitLen)
     {
@@ -156,6 +148,41 @@ QString AssetsManager::getName(beam::Asset::ID id)
     }
 
     return name;
+}
+
+QString AssetsManager::getSmallestUnitName(beam::Asset::ID id)
+{
+    if (id < 1)
+    {
+        return "GROTH";
+    }
+
+    QString name;
+    if (auto meta = getAsset(id))
+    {
+        name = meta->GetNthUnitName().c_str();
+    }
+    return name;
+}
+
+QString AssetsManager::getShortDesc(beam::Asset::ID id)
+{
+    QString desc;
+    if (auto meta = getAsset(id))
+    {
+        desc = meta->GetShortDesc().c_str();
+    }
+    return desc;
+}
+
+QString AssetsManager::getLongDesc(beam::Asset::ID id)
+{
+    QString desc;
+    if (auto meta = getAsset(id))
+    {
+        desc = meta->GetLongDesc().c_str();
+    }
+    return desc;
 }
 
 QColor AssetsManager::getColor(beam::Asset::ID id)

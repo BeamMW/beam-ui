@@ -30,6 +30,9 @@ public:
     QString getIcon(beam::Asset::ID);
     QString getUnitName(beam::Asset::ID, bool shorten);
     QString getName(beam::Asset::ID);
+    QString getSmallestUnitName(beam::Asset::ID);
+    QString getShortDesc(beam::Asset::ID);
+    QString getLongDesc(beam::Asset::ID);
     QColor  getColor(beam::Asset::ID);
     QColor  getSelectionColor(beam::Asset::ID);
 
