@@ -422,9 +422,21 @@ if(BEAM_USE_STATIC)
 
         target_link_libraries(${TARGET_NAME} -lX11-xcb -lX11 -lxcb -lGL -lfreetype -lfontconfig -lXi -lXext -lXfixes -lXrender -lglib-2.0 -lSM -lICE)
 
-        foreach(lib icui18n icuuc icudata xcb-xinerama xcb-xinput xcb-xkb xcb-xfixes xcb-glx xcb-sync xcb-shape xcb-render xcb-render-util xcb-randr xcb-keysyms xcb-shm xcb-icccm xcb-shm xcb-xkb jbig jpeg)
+        foreach(lib
+            icui18n icuuc icudata xcb-xinerama xcb-xkb xcb-xfixes xcb-glx
+            xcb-sync xcb-shape xcb-render xcb-render-util xcb-randr xcb-keysyms
+            xcb-shm xcb-icccm jbig jpeg xcb-image webp zstd lzma)
             target_link_libraries(${TARGET_NAME} /usr/lib/x86_64-linux-gnu/lib${lib}.a)
         endforeach()
+
+        #Ubuntu 16.04
+        if(EXISTS "/usr/lib/x86_64-linux-gnu/libjasper.a")
+            target_link_libraries(${TARGET_NAME} -ljasper)
+        endif()
+        #Ubuntu 18.04 && Ubuntu 20.04 
+        if(EXISTS "/usr/lib/x86_64-linux-gnu/libxcb-xinput.a")
+            target_link_libraries(${TARGET_NAME} /usr/lib/x86_64-linux-gnu/libxcb-xinput.a)
+        endif()
 
         set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
@@ -446,6 +458,9 @@ if(LINUX)
 else()
 
     if(WIN32)
+        install(FILES ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION .)
+        install(FILES ${CMAKE_PREFIX_PATH}/bin/libEGL.dll DESTINATION .)
+        install(FILES ${CMAKE_PREFIX_PATH}/bin/libGLESv2.dll DESTINATION .)
         install(FILES beam-wallet.cfg DESTINATION .)
         install(TARGETS ${TARGET_NAME} DESTINATION .)
     endif()

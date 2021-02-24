@@ -14,7 +14,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-10.15, ubuntu-18.04, ubuntu-20.04, windows-2019]
+        os: [macos-10.15, ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2019]
 
     steps:
     - uses: actions/checkout@v2
@@ -38,7 +38,7 @@ jobs:
 
     - name: OS name [ununtu all]
       shell: bash
-      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: echo "OS_NAME=${{matrix.os}}" >> $GITHUB_ENV
 
     - name: Create Build Environment [macos-10.15]
@@ -63,16 +63,24 @@ jobs:
 
     - name: Create Build Environment [ununtu all]
       shell: bash
-      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
         sudo apt update
-        sudo apt install build-essential llvm libclang-dev
+        sudo apt install build-essential llvm libclang-dev -y
         sudo apt install libssl-dev curl libcups2-dev mesa-common-dev ^libxcb.* libglu1-mesa-dev libglfw3-dev libgles2-mesa-dev libfontconfig1-dev libudev-dev -y
         sudo apt install libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-dev libpci-dev libicu-dev -y
+        sudo apt install libwebp-dev libzstd-dev libbsd-dev uuid-dev liblzma-dev libtiff-dev -y
         git clone --depth=1 https://github.com/BeamMW/qt5.15.2-static-${{env.OS_NAME}}.git ${{runner.workspace}}/qt5-static
         chmod +x ${{runner.workspace}}/qt5-static/bin/*
         echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
         echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
+
+    - name: Create Build Environment [ubuntu 16.04]
+      shell: bash
+      if: matrix.os == 'ubuntu-16.04'
+      run: |
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-9
+        sudo update-alternatives --set gcc "/usr/bin/gcc-9"
 
     - name: Create Build Environment [windows]
       shell: bash
@@ -92,7 +100,7 @@ jobs:
 
     - name: Download boost [ununtu all]
       shell: bash
-      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
         git clone https://github.com/BeamMW/boost_prebuild_${{matrix.os}}.git ${{runner.workspace}}/boost_prebuild
         echo "BOOST_INCLUDEDIR=${{runner.workspace}}/boost_prebuild/include" >> $GITHUB_ENV
@@ -108,7 +116,7 @@ jobs:
         cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_HW_WALLET=Off .
 
     - name: Configure CMake [ununtu all]
-      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
         export PATH=${{runner.workspace}}/qt5-static/bin:$PATH
         cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
@@ -139,7 +147,7 @@ jobs:
 
     - name: Build [ununtu all]
       shell: bash
-      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: make -j$(nproc)
 
     - name: Build [windows]
@@ -183,7 +191,7 @@ jobs:
 
     - name: Collect [ubuntu]
       shell: bash
-      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
         cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Linux.deb Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb
         sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb > checksum.txt
@@ -204,12 +212,6 @@ jobs:
         path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}*
         if-no-files-found: error
 
-    # - uses: actions/upload-artifact@v2
-    #   with:
-    #     name: checksum-${{env.OS_NAME}}
-    #     path: checksum.txt
-    #     if-no-files-found: error
-
     - uses: actions/upload-artifact@v2
       if: matrix.os == 'ubuntu-18.04'
       with:
@@ -218,13 +220,6 @@ jobs:
           Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}*
           checksum.txt
         if-no-files-found: error
-
-    # - uses: actions/upload-artifact@v2
-    #   if: matrix.os == 'ubuntu-18.04'
-    #   with:
-    #     name: checksum-linux
-    #     path: checksum.txt
-    #     if-no-files-found: error
 
     - uses: actions/upload-artifact@v2
       if: matrix.os == 'windows-2019'
