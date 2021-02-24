@@ -79,7 +79,6 @@ jobs:
       shell: bash
       if: matrix.os == 'ubuntu-16.04'
       run: |
-        sudo apt purge libjasper-dev -y
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-9
         sudo update-alternatives --set gcc "/usr/bin/gcc-9"
 
@@ -214,7 +213,7 @@ jobs:
         if-no-files-found: error
 
     - uses: actions/upload-artifact@v2
-      if: matrix.os == 'ubuntu-16.04'
+      if: matrix.os == 'ubuntu-18.04'
       with:
         name: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-linux
         path: |
