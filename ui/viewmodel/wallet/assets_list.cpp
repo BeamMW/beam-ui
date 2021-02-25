@@ -47,6 +47,7 @@ QHash<int, QByteArray> AssetsList::roleNames() const
         {static_cast<int>(Roles::RSmallestUnitName),"smallestUnitName"},
         {static_cast<int>(Roles::RShortDesc),       "shortDesc"},
         {static_cast<int>(Roles::RLongDesc),        "longDesc"},
+        {static_cast<int>(Roles::RLockedAmount),    "lockedAmount"},
     };
     return roles;
 }
@@ -86,6 +87,7 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
             return _amgr->getUnitName(assetId, false);
         case Roles::RAmount:
             return beamui::AmountBigToUIString(_wallet.getAvailable(assetId));
+        case Roles::RLockedAmount:
         case Roles::RMaturing:
         {
             auto total = _wallet.getMaturing(assetId);

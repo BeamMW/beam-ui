@@ -32,6 +32,7 @@ public:
         RChange,
         RMaturing,
         RMaxPrivacy,
+        RLockedAmount,
         RInTxCnt,
         ROutTxCnt,
         RIcon,

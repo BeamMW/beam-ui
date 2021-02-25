@@ -102,6 +102,7 @@ Control {
                         implicitWidth:  control.itemWidth
 
                         amount:           model.amount
+                        lockedAmount:     model.maturing
                         maturing:         model.maturing
                         change:           model.change
                         maxPrivacy:       model.maxPrivacy

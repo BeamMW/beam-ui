@@ -10,6 +10,7 @@ Control {
     spacing: 8
 
     property string  amount:              "0"
+    property string  lockedAmount:        "0"
     property string  unitName:            BeamGlobals.beamUnit
     property string  rateUnit:            ""
     property string  rate:                "0"
@@ -59,6 +60,12 @@ Control {
     TextMetrics {
         id:     metrics
         font:   control.font
+        elide:  Qt.ElideNone
+    }
+
+    TextMetrics {
+        id:     lockedMetrics
+        font:   lockedAmountCtrl.font
         elide:  Qt.ElideNone
     }
 
@@ -113,6 +120,19 @@ Control {
                        control.showZero,
                        metrics,
                        calcMaxTextWidth()
+        )
+    }
+
+    function calcMaxLockedWidth() {
+        return calcMaxTextWidth() - lockedAmountLabel.width - lockedAmountRow.spacing
+    }
+
+    function fitLocked () {
+        return fitAmount(control.lockedAmount,
+                         control.unitName,
+                         "", false,
+                         lockedMetrics,
+                         calcMaxLockedWidth()
         )
     }
 
@@ -247,6 +267,36 @@ Control {
                 text:            formatRate()
                 onCopyText:      BeamGlobals.copyToClipboard(secondCurrencyAmountText.text)
                 copyMenuEnabled: true
+            }
+
+            Row {
+                id: lockedAmountRow
+                width: parent.width
+                spacing: 5
+
+                SFLabel {
+                    id:              lockedAmountLabel
+                    visible:         lockedAmount != "0"
+                    font.pixelSize:  control.rateFontSize
+                    font.styleName:  "Regular"
+                    font.weight:     Font.Normal
+                    color:           control.error ? Style.validator_error : Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+                    //% "Locked"
+                    text: qsTrId("general-locked")
+                }
+
+                SFLabel {
+                    id:               lockedAmountCtrl
+                    visible:          lockedAmount != "0"
+                    font.pixelSize:   control.rateFontSize
+                    font.styleName:   "Regular"
+                    font.weight:      Font.Normal
+                    color:            control.error ? Style.validator_error : Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+                    onCopyText:       BeamGlobals.copyToClipboard(amount)
+                    copyMenuEnabled:  true
+                    text:             fitLocked()
+                    elide:            Text.ElideRight
+                }
             }
         }
     }

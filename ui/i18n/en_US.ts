@@ -3014,5 +3014,9 @@ Update your settings and try again.</source>
         <source>Long description</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="general-locked">
+        <source>Locked</source>
+        <translation type="unfinished">Locked</translation>
+    </message>
 </context>
 </TS>

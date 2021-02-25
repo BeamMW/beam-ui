@@ -12,20 +12,21 @@ Control {
     property int inTxCnt
     property int outTxCnt
 
-    property alias  amount:      amountCtrl.amount
-    property alias  maturing:    maturingCtrl.amount
-    property alias  change:      changeCtrl.amount
-    property alias  maxPrivacy:  maxPrivacyCtrl.amount
-    property alias  unitName:    amountCtrl.unitName
-    property alias  rateUnit:    amountCtrl.rateUnit
-    property alias  rate:        amountCtrl.rate
-    property alias  icon:        amountCtrl.iconSource
-    property alias  color:       back.leftColor
-    property alias  borderColor: back.leftBorderColor
-    property bool   selected:    false
-    property var    onClicked:   null
-    property int    assetId:     0
-    property bool   isAsset:     false
+    property alias  amount:        amountCtrl.amount
+    property alias  lockedAmount:  amountCtrl.lockedAmount
+    property alias  maturing:      maturingCtrl.amount
+    property alias  change:        changeCtrl.amount
+    property alias  maxPrivacy:    maxPrivacyCtrl.amount
+    property alias  unitName:      amountCtrl.unitName
+    property alias  rateUnit:      amountCtrl.rateUnit
+    property alias  rate:          amountCtrl.rate
+    property alias  icon:          amountCtrl.iconSource
+    property alias  color:         back.leftColor
+    property alias  borderColor:   back.leftBorderColor
+    property bool   selected:      false
+    property var    onClicked:     null
+    property int    assetId:       0
+    property bool   isAsset:       false
 
     property string assetName
     property string smallestUnitName
@@ -53,11 +54,12 @@ Control {
         defBkColor:   Qt.rgba(55 / 255, 93  / 255, 123 / 255, 0.75)
         defTextColor: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.8)
         parent:       Overlay.overlay
-        visible:      false//(amountCtrl.hasTip || control.isAsset) && (amountCtrl.inTipArea || tipArea.containsMouse)
+        visible:      false
         modal:        false
         dim:          true
-        x:            0
-        y:            0
+        x:            amountCtrl.tipX
+        y:            amountCtrl.tipY - 5
+        width:        (state == "ainfo" ? ainfoData.preferredWidth : amountData.preferredWidth ) + leftPadding + rightPadding
 
         Overlay.modeless: MouseArea {
             anchors.fill: parent
@@ -66,7 +68,7 @@ Control {
             propagateComposedEvents: true
         }
 
-        contentItem: ColumnLayout {
+        contentItem: Item { ColumnLayout {
             spacing: 0
             id: stateLayout
 
@@ -107,6 +109,7 @@ Control {
             }
 
             GridLayout {
+                id:            amountData
                 columns:       2
                 columnSpacing: 24
                 rowSpacing:    14
@@ -228,6 +231,7 @@ Control {
             }
 
             GridLayout {
+                id:            ainfoData
                 columns:       2
                 columnSpacing: 24
                 rowSpacing:    14
@@ -411,7 +415,7 @@ Control {
                     }
                 }
             }
-        }
+        }}
     }
 
     contentItem: ColumnLayout {
@@ -446,9 +450,6 @@ Control {
                 mousePoint.y <= iconArea.y + iconArea.height)
             {
                 assetTip.open()
-                assetTip.x = Qt.binding(function() {return amountCtrl.tipX})
-                assetTip.y = Qt.binding(function() {return amountCtrl.tipY - 5})
-
                 mouse.accepted =  true
                 return
             }
