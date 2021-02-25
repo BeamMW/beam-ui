@@ -3010,5 +3010,13 @@ Update your settings and try again.</source>
         <source>Unit Name</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="info-asset-short">
+        <source>Short description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-long">
+        <source>Long description</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

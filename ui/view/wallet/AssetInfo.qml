@@ -48,57 +48,39 @@ Control {
         implicitHeight:   control.height
     }
 
-    AlphaTip {
+    AlphaTipPopup {
         id:           assetTip
         defBkColor:   Qt.rgba(55 / 255, 93  / 255, 123 / 255, 0.75)
         defTextColor: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.8)
         parent:       Overlay.overlay
-        visible:      (amountCtrl.hasTip || control.isAsset) && (amountCtrl.inTipArea || tipArea.containsMouse)
-        vGap:         5
-        x:            amountCtrl.tipX
-        y:            amountCtrl.tipY - vGap
-        z:            100
+        visible:      false//(amountCtrl.hasTip || control.isAsset) && (amountCtrl.inTipArea || tipArea.containsMouse)
+        modal:        false
+        dim:          true
+        x:            0
+        y:            0
 
-        state: amountCtrl.hasTip ? "amount" : "ainfo"
-
-        states: [
-            State {
-                name: "amount"
-                PropertyChanges { target: amountTab; state: "active" }
-            },
-            State {
-                name: "ainfo"
-                PropertyChanges { target: infoTab; state: "active" }
-            }
-        ]
-
-        MouseArea {
-            anchors.fill:     parent
-            hoverEnabled:     true
-            acceptedButtons:  Qt.LeftButton
-            z: -1
-        }
-
-        MouseArea {
-            id:               tipArea
-            anchors.fill:     parent
-            hoverEnabled:     true
+        Overlay.modeless: MouseArea {
+            anchors.fill: parent
+            onWheel: assetTip.close()
             acceptedButtons:  Qt.NoButton
-            z: 1
-
-            onWheel: function(data) {
-                data.accepted = true
-            }
+            propagateComposedEvents: true
         }
 
         contentItem: ColumnLayout {
             spacing: 0
-            z: 0
+            id: stateLayout
 
-            Item {
-                height: assetTip.vGap
-                Layout.fillWidth: true
-            }
+            state: amountCtrl.hasTip ? "amount" : "ainfo"
+            states: [
+                State {
+                    name: "amount"
+                    PropertyChanges { target: amountTab; state: "active" }
+                },
+                State {
+                    name: "ainfo"
+                    PropertyChanges { target: infoTab; state: "active" }
+                }
+            ]
 
             Row {
                 spacing: 0
@@ -107,14 +89,14 @@ Control {
                     id: amountTab
                     //% "Amount"
                     label:  qsTrId("general-amount")
-                    onClicked: assetTip.state = "amount"
+                    onClicked: stateLayout.state = "amount"
                     visible: amountCtrl.hasTip
                 }
                 TxFilter {
                     id: infoTab
                     //% "Asset Info"
                     label:  qsTrId("general-asset-info")
-                    onClicked: assetTip.state = "ainfo"
+                    onClicked: stateLayout.state = "ainfo"
                     visible: control.isAsset
                 }
             }
@@ -128,7 +110,7 @@ Control {
                 columns:       2
                 columnSpacing: 24
                 rowSpacing:    14
-                visible:       assetTip.state == "amount"
+                visible:       stateLayout.state == "amount"
 
                 SFText {
                     Layout.alignment: Qt.AlignTop
@@ -249,7 +231,7 @@ Control {
                 columns:       2
                 columnSpacing: 24
                 rowSpacing:    14
-                visible:       assetTip.state == "ainfo"
+                visible:       stateLayout.state == "ainfo"
 
                 SFText {
                     Layout.alignment: Qt.AlignTop
@@ -441,7 +423,7 @@ Control {
             copyMenuEnabled:   true
             maxPaintedWidth:   control.availableWidth
             maxUnitChars:      6
-            showDrop:          amountCtrl.hasTip
+            showDrop:          amountCtrl.hasTip || control.isAsset
             showDropCircular:  true
             dropSize:          Qt.size(8, 4.8)
             tipCtrl:           assetTip
@@ -454,8 +436,25 @@ Control {
     MouseArea {
         anchors.fill: parent
 
-        onClicked: {
+        onClicked: function (mouse) {
+            var icon = amountCtrl.dropIcon
+            var mousePoint = control.mapToItem(icon, Qt.point(mouse.x, mouse.y))
+            var iconArea = Qt.rect(-8, -8, icon.width + 16, icon.height + 16)
+
+            if (mousePoint.x >= iconArea.x && mousePoint.y > iconArea.y &&
+                mousePoint.x <= iconArea.x + iconArea.width &&
+                mousePoint.y <= iconArea.y + iconArea.height)
+            {
+                assetTip.open()
+                assetTip.x = Qt.binding(function() {return amountCtrl.tipX})
+                assetTip.y = Qt.binding(function() {return amountCtrl.tipY - 5})
+
+                mouse.accepted =  true
+                return
+            }
+
             if (control.onClicked) {
+                mouse.accepted =  true
                 control.onClicked()
                 return
             }

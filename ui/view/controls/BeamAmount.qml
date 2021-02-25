@@ -33,15 +33,15 @@ Control {
     property bool    showDropCircular:    false
     property size    dropSize:            Qt.size(5, 3)
 
-    property var tipCtrl:   defaultTipCtrl
-    property int tipY:      Utils.yUp(amountRow) + amountRow.height + 5
-
     font {
         pixelSize:  14
         styleName:  "Light"
         weight:     Font.Light
         family:     "SF Pro Display"
     }
+
+    property var tipCtrl:   defaultTipCtrl
+    property int tipY:      Utils.yUp(amountRow) + amountRow.height + 5
 
     property int tipX: {
         var amountX = Utils.xUp(control)

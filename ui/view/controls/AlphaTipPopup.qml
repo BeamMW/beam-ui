@@ -3,7 +3,7 @@ import QtQuick.Controls 2.4
 import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.4
 
-Control {
+Popup {
     id:            control
     leftPadding:   14
     rightPadding:  14
