@@ -40,7 +40,6 @@ Controls2.Dialog {
     }
 
     contentItem: ColumnLayout {
-        Layout.fillWidth: true
         spacing: 15
 
         SFText {
@@ -64,16 +63,18 @@ Controls2.Dialog {
                 color:            Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
                 //% "Locked"
                 text:             qsTrId("max-privacy-dialog-locked") + ":"
-                Layout.alignment: Qt.AlignTop
             }
 
             BeamAmount {
+                Layout.fillWidth:  true
                 amount:            dialog.lockedAmount
                 unitName:          dialog.unitName
                 spacing:           15
                 font.styleName:    "Bold"
                 font.weight:       Font.Bold
                 font.pixelSize:    12
+                maxPaintedWidth:   this.width
+                showTip:           true
             }
         }
 
@@ -109,6 +110,15 @@ Controls2.Dialog {
                 width:     tableView.width / 2
                 resizable: false
                 movable:   false
+
+                delegate: RowLayout { BeamAmount {
+                    Layout.leftMargin: 20
+                    Layout.fillWidth: true
+                    amount: model.amount
+                    unitName: model.unitName
+                    maxPaintedWidth: tableView.width / 2 - 20
+                    showTip: false
+                }}
             }
 
             TableViewColumn {
@@ -140,10 +150,10 @@ Controls2.Dialog {
         }
 
         CustomButton {
-            Layout.alignment:   Qt.AlignHCenter
-            icon.source:    "qrc:/assets/icon-cancel-16.svg"
+            Layout.alignment: Qt.AlignHCenter
+            icon.source: "qrc:/assets/icon-cancel-16.svg"
             //% "Close"
-            text:           qsTrId("general-close")
+            text: qsTrId("general-close")
             onClicked: {
                 dialog.close()
             }

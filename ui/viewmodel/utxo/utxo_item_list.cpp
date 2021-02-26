@@ -13,9 +13,13 @@
 // limitations under the License.
 
 #include "utxo_item_list.h"
+#include "viewmodel/ui_helpers.h"
+#include "model/app_model.h"
 
 UtxoItemList::UtxoItemList()
+    : _amgr(AppModel::getInstance().getAssets())
 {
+    connect(_amgr.get(), &AssetsManager::assetInfo, this,  &UtxoItemList::onAssetInfo);
 }
 
 QHash<int, QByteArray> UtxoItemList::roleNames() const
@@ -33,7 +37,8 @@ QHash<int, QByteArray> UtxoItemList::roleNames() const
         { static_cast<int>(Roles::MaturityPercentage), "maturityPercentage" },
         { static_cast<int>(Roles::MaturityPercentageSort), "maturityPercentageSort" },
         { static_cast<int>(Roles::MaturityTimeLeft), "maturityTimeLeft" },
-        { static_cast<int>(Roles::MaturityTimeLeftSort), "maturityTimeLeftSort" }
+        { static_cast<int>(Roles::MaturityTimeLeftSort), "maturityTimeLeftSort" },
+        { static_cast<int>(Roles::UnitName), "unitName" }
     };
     return roles;
 }
@@ -49,20 +54,16 @@ auto UtxoItemList::data(const QModelIndex &index, int role) const -> QVariant
     switch (static_cast<Roles>(role))
     {
         case Roles::Amount:
-            return value->getAmountWithCurrency();
-            
+            return beamui::AmountToUIString(value->rawAmount(), QString());
         case Roles::AmountSort:
             return static_cast<qulonglong>(value->rawAmount());
-
         case Roles::Maturity:
             return value->maturity();
         case Roles::MaturitySort:
             return static_cast<qulonglong>(value->rawMaturity());
-
         case Roles::Status:
         case Roles::StatusSort:
             return value->status();
-
         case Roles::Type:
         case Roles::TypeSort:
             return value->type();
@@ -73,9 +74,24 @@ auto UtxoItemList::data(const QModelIndex &index, int role) const -> QVariant
             return value->maturityTimeLeft();
         case Roles::MaturityTimeLeftSort:
             return value->rawMaturityTimeLeft();
-
+        case Roles::UnitName:
+            return _amgr->getUnitName(value->getAssetId(), false);
         default:
             return QVariant();
     }
 }
 
+void UtxoItemList::onAssetInfo(beam::Asset::ID assetId)
+{
+    touch(assetId);
+}
+
+void UtxoItemList::touch(beam::Asset::ID id)
+{
+    for (auto it = m_list.begin(); it != m_list.end(); ++it) {
+        if ((*it)->getAssetId() == id) {
+           const auto idx = it - m_list.begin();
+           ListModel::touch(idx);
+        }
+    }
+}

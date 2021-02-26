@@ -191,6 +191,15 @@ ColumnLayout {
             title: qsTrId("general-amount")
             width: 300 * tableView.columnResizeRatio
             movable: false
+
+            delegate: RowLayout { BeamAmount {
+                Layout.leftMargin: 20
+                Layout.fillWidth: true
+                amount: model ? model.amount : "0"
+                unitName: model ? model.unitName : ""
+                maxPaintedWidth: 300 * tableView.columnResizeRatio - 20
+                showTip: false
+            }}
         }
 
         TableViewColumn {

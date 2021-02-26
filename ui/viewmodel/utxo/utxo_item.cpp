@@ -27,10 +27,9 @@ bool BaseUtxoItem::operator==(const BaseUtxoItem& other) const
     return getHash() == other.getHash();
 }
 
-UtxoItem::UtxoItem(const beam::wallet::Coin& coin)
-    : _coin{ coin }
+UtxoItem::UtxoItem(beam::wallet::Coin coin)
+    : _coin(std::move(coin))
 {
-
 }
 
 uint64_t UtxoItem::getHash() const
@@ -39,11 +38,6 @@ uint64_t UtxoItem::getHash() const
     _coin.m_ID.get_Hash(hv);
 
     return static_cast<uint64_t>(*reinterpret_cast<uint64_t*>(hv.m_pData));
-}
-
-QString UtxoItem::getAmountWithCurrency() const
-{
-    return AmountToUIString(rawAmount(), Currencies::Beam);
 }
 
 QString UtxoItem::getAmount() const
@@ -132,17 +126,21 @@ uint16_t UtxoItem::rawMaturityTimeLeft() const
     return 0;
 }
 
+beam::Asset::ID UtxoItem::getAssetId() const
+{
+    return _coin.m_ID.m_AssetID;
+}
+
 // ShieldedCoinItem
 ShieldedCoinItem::ShieldedCoinItem()
     : _walletModel{*AppModel::getInstance().getWalletModel()}
 {
 }
 
-ShieldedCoinItem::ShieldedCoinItem(const beam::wallet::ShieldedCoin& coin)
+ShieldedCoinItem::ShieldedCoinItem(beam::wallet::ShieldedCoin coin)
     : _walletModel{*AppModel::getInstance().getWalletModel()}
-    , _coin{ coin }
+    , _coin(std::move(coin))
 {
-
 }
 
 uint64_t ShieldedCoinItem::getHash() const
@@ -155,11 +153,6 @@ uint64_t ShieldedCoinItem::getHash() const
     ECC::Hash::Value hv;
     hp >> hv;
     return static_cast<uint64_t>(*reinterpret_cast<uint64_t*>(hv.m_pData));
-}
-
-QString ShieldedCoinItem::getAmountWithCurrency() const
-{
-    return AmountToUIString(rawAmount(), Currencies::Beam);
 }
 
 QString ShieldedCoinItem::getAmount() const
@@ -225,4 +218,9 @@ beam::Height ShieldedCoinItem::rawMaturity() const
 uint16_t ShieldedCoinItem::rawMaturityTimeLeft() const
 {
     return _walletModel.getMaturityHoursLeft(_coin);
+}
+
+beam::Asset::ID ShieldedCoinItem::getAssetId() const
+{
+    return _coin.m_CoinID.m_AssetID;
 }
