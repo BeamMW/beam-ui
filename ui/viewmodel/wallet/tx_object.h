@@ -19,25 +19,22 @@
 #include "viewmodel/ui_helpers.h"
 #include "wallet/client/extensions/news_channels/interface.h"
 #include "bvm/ManagerStd.h"
+#include "assets_list.h"
 
-class TxObject : public QObject
+class TxObject: public QObject
 {
     Q_OBJECT
-
 public:
-    TxObject(const beam::wallet::TxDescription& tx,
-             QObject* parent = nullptr);
-    TxObject(const beam::wallet::TxDescription& tx,
-             beam::wallet::ExchangeRate::Currency secondCurrency,
-             QObject* parent = nullptr);
+    TxObject(beam::wallet::TxDescription tx, QObject* parent = nullptr);
+    TxObject(beam::wallet::TxDescription tx, beam::wallet::ExchangeRate::Currency secondCurrency, QObject* parent = nullptr);
     bool operator==(const TxObject& other) const;
 
     beam::Timestamp timeCreated() const;
     beam::wallet::TxID getTxID() const;
-    beam::Amount getAmountValue() const;
-    QString getAmount() const;
+    QString getAmountGeneral() const;
     QString getRate() const;
-    QString getComment() const;
+    QString getRate(beam::Asset::ID) const;
+    const QString& getComment() const;
     QString getAddressFrom() const;
     QString getAddressTo() const;
     virtual QString getFee() const;
@@ -50,7 +47,11 @@ public:
     QString getToken() const;
     QString getSenderIdentity() const;
     QString getReceiverIdentity() const;
-    std::set<beam::Asset::ID> getAssetsList() const;
+    QString getFeeRate() const;
+
+    const std::vector<beam::Asset::ID>& getAssetsList() const;
+    const std::vector<QString>& getAssetAmounts() const;
+    const std::vector<bool>& getAssetAmountsIncome() const;
 
     bool isIncome() const;
     bool isSelfTx() const;
@@ -68,26 +69,36 @@ public:
     virtual bool isCompleted() const;
     virtual bool isCanceled() const;
     virtual bool isFailed() const;
+    virtual bool isMultiAsset() const;
 
 protected:
-    const beam::wallet::TxDescription& getTxDescription() const;
-    QString getReasonString(beam::wallet::TxFailureReason reason) const;
-    QString getIdentity(bool isSender) const;
+    [[nodiscard]] const beam::wallet::TxDescription& getTxDescription() const;
+    [[nodiscard]] QString getReasonString(beam::wallet::TxFailureReason reason) const;
+    [[nodiscard]] QString getIdentity(bool isSender) const;
     void restoreAddressType();
- 
-    beam::wallet::TxDescription m_tx;
-    QString m_kernelID;
+
+    beam::wallet::TxDescription _tx;
+    beam::wallet::ExchangeRate::Currency _secondCurrency;
+
+    mutable QString _kernelIDStr;
+    mutable QString _comment;
+    boost::optional<beam::wallet::TxAddressType> _addressType;
+
+    /*
     beam::wallet::TxType m_type;
-    beam::wallet::ExchangeRate::Currency m_secondCurrency;
     mutable  boost::optional<bool> m_hasVouchers;
-    boost::optional<beam::wallet::TxAddressType> m_addressType;
+    */
 
     //
     // Contracts handling
     //
     typedef std::function<void (const beam::bvm2::ContractInvokeData& data)> CDVisitor;
     void visitContractData(const CDVisitor&) const;
-    beam::AmountSigned _contractAmount = 0;
-    beam::Amount _contractFee = 0U;
-    std::set<beam::Asset::ID> _contractAssets;
+
+    beam::Amount _contractFee = 0UL;
+    beam::AmountSigned _contractAmount = 0UL;
+
+    std::vector<beam::Asset::ID> _assetsList;
+    std::vector<QString> _assetAmounts;
+    std::vector<bool> _assetAmountsIncome;
 };

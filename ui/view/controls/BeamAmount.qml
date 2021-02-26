@@ -17,6 +17,7 @@ Control {
     property bool    error:               false
     property bool    showZero:            true
     property bool    showDrop:            false
+    property bool    showTip:             true
     property int     fontSize:            14
     property int     rateFontSize:        10
     property bool    lightFont:           true
@@ -120,7 +121,7 @@ Control {
     AlphaTip {
         id: tip
 
-        visible:      amountTextArea.containsMouse && tipText.text != amountText.text
+        visible:      showTip && amountTextArea.containsMouse && tipText.text != amountText.text
         defBkColor:   Qt.rgba(55 / 255, 93  / 255, 123 / 255, 0.75)
         defTextColor: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.8)
         parent:       control.tipParent
@@ -178,12 +179,13 @@ Control {
                     onCopyText:       BeamGlobals.copyToClipboard(amount)
                     copyMenuEnabled:  true
                     text:             control.maxPaintedWidth ? fitText() : formatAmount(control.amount, Utils.limitText(control.unitName, control.maxUnitChars))
+                    elide:            Text.ElideRight
 
                     MouseArea {
-                        id: amountTextArea
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        acceptedButtons:  Qt.LeftButton
+                        id:               amountTextArea
+                        anchors.fill:     parent
+                        hoverEnabled:     true
+                        acceptedButtons:  Qt.NoButton
                         propagateComposedEvents: true
                         preventStealing:  true
                     }

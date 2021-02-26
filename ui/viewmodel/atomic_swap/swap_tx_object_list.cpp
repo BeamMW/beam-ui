@@ -25,8 +25,6 @@ auto SwapTxObjectList::roleNames() const -> QHash<int, QByteArray>
     {
         { static_cast<int>(Roles::TimeCreated), "timeCreated" },
         { static_cast<int>(Roles::TimeCreatedSort), "timeCreatedSort" },
-        { static_cast<int>(Roles::AmountGeneralWithCurrency), "amountGeneralWithCurrency" },
-        { static_cast<int>(Roles::AmountGeneralWithCurrencySort), "amountGeneralWithCurrencySort" },
         { static_cast<int>(Roles::AmountGeneral), "amountGeneral" },
         { static_cast<int>(Roles::AmountGeneralSort), "amountGeneralSort" },
         { static_cast<int>(Roles::AddressFrom), "addressFrom" },
@@ -103,14 +101,9 @@ auto SwapTxObjectList::data(const QModelIndex &index, int role) const -> QVarian
         {
             return static_cast<qulonglong>(value->timeCreated());
         }
-
-        case Roles::AmountGeneralWithCurrency:
-            return beamui::AmountToUIString(value->getAmountValue(), beamui::Currencies::Beam);
-        case Roles::AmountGeneral:
-            return value->getAmount();
         case Roles::AmountGeneralSort:
-        case Roles::AmountGeneralWithCurrencySort:
-            return static_cast<qulonglong>(value->getAmountValue());
+        case Roles::AmountGeneral:
+            return value->getAmountGeneral();
         case Roles::AddressFrom:
         case Roles::AddressFromSort:
             return value->getAddressFrom();

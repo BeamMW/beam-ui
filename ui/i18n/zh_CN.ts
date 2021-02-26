@@ -2963,7 +2963,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-no-message">
-        <source>Contract: no description provided</source>
+        <source>No description provided by the contract</source>
+        <oldsource>Contract: no description provided</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-completed">
@@ -3000,6 +3001,18 @@ Update your settings and try again.</source>
     </message>
     <message id="wallet-txs-coin">
         <source>Coin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-description">
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-multiple-assets">
+        <source>Multiple assets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-no-comment">
+        <source>No comment provided</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -23,12 +23,10 @@ class TxObjectList : public ListModel<std::shared_ptr<TxObject>>
 {
     Q_OBJECT
 public:
-    enum class Roles
+    enum class Roles: int
     {
         TimeCreated = Qt::UserRole + 1,
         TimeCreatedSort,
-        AmountGeneralWithCurrency,
-        AmountGeneralWithCurrencySort,
         AmountGeneral,
         AmountGeneralSort,
         AmountSecondCurrency,
@@ -41,6 +39,7 @@ public:
         Status,
         StatusSort,
         Fee,
+        FeeRate,
         Comment,
         TxID,
         KernelID,
@@ -64,24 +63,26 @@ public:
         ReceiverIdentity, 
         IsShieldedTx,
         IsOfflineToken,
-        UnitName,
-        UnitNameSort,
-        Icon,
+        AssetNames,
+        AssetNamesSort,
         IsSent,
         IsReceived,
         IsPublicOffline,
         IsMaxPrivacy,
         IsContractTx,
+        IsMultiAsset,
         AssetFilter,
+        AssetIcons,
+        AssetAmounts,
+        AssetAmountsIncome,
         IsDexTx,
     };
-
     Q_ENUM(Roles)
 
     TxObjectList();
 
-    QVariant data(const QModelIndex &index, int role) const override;
-    QHash<int, QByteArray> roleNames() const override;
+    [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
+    [[nodiscard]] QHash<int, QByteArray> roleNames() const override;
 
 private slots:
     void onAssetInfo(beam::Asset::ID assetId);

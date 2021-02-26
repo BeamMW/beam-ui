@@ -80,6 +80,7 @@
         <file>wallet/AssetInfo.qml</file>
         <file>wallet/TransactionDetails.qml</file>
         <file>wallet/AmountTip.qml</file>
+        <file>wallet/CoinsList.qml</file>
         <file>dex/MarketPanel.qml</file>
         <file>dex/MarketTable.qml</file>
         <file>popup_message.qml</file>

@@ -46,14 +46,15 @@ TableView {
     }
 
     function getAdjustedColumnWidth (column) {
-        var acc = 0;
+        var acc = 0
         for (var i = 0; i < columnCount; ++i)
         {
-            var c = getColumn(i);
-            if (c == column) continue;
-            acc += c.width;
+            var c = getColumn(i)
+            if (c != column && c.visible) {
+                acc += c.width
+            }
         }
-        return width - acc;
+        return width - acc
     }
 
     frameVisible: false

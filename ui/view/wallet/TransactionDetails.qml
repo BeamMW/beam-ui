@@ -12,7 +12,6 @@ RowLayout {
     property var receiveAddress
     property var senderIdentity
     property var receiverIdentity
-    property var fee
     property var comment
     property var txID
     property var kernelID
@@ -28,18 +27,27 @@ RowLayout {
 
     property string token
     property string amount
-    property string rate
-    property string rateUnit
+    property string amountUnit
+    property string amountRate
+    property string amountRateUnit
+
+    property string fee
+    property string feeUnit
+    property string feeRate
+    property string feeRateUnit
+
     property string searchFilter: ""
     property bool   hideFiltered: false
     property string addressType
-    property bool isShieldedTx
-    property string unitName
-    property bool isCompleted: false
+    property bool   isShieldedTx: false
+    property bool   isCompleted:  false
+    property bool   isContractTx: false
 
-    readonly property string amountPrefix: root.isIncome ? "+" : "-"
-    readonly property string amountWithLabel: [amountPrefix, root.amount, root.unitName].join(" ")
-    readonly property string secondCurrencyAmount: getAmountInSecondCurrency()
+    property var  assetNames
+    property var  assetIcons
+    property var  assetAmounts
+    property var  assetIncome
+    readonly property int assetCount: assetNames ? assetNames.length : 0
 
     property var onOpenExternal: null
     signal textCopied(string text)
@@ -67,20 +75,6 @@ RowLayout {
             return text;
 
         return text.replace(root.searchRegExp, '<font color="' + Style.active.toString() + '">$1</font>');
-    }
-
-    function getAmountInSecondCurrency() {
-        if (root.amount.length) {
-            if (root.rate != "0") {
-                var amountInSecondCurrency = Utils.formatAmountToSecondCurrency(root.amount, root.rate, root.rateUnit)
-                //% "(for the day of transaction)"
-                return [root.amountPrefix, amountInSecondCurrency, qsTrId("tx-details-second-currency-notification")].join(" ")
-            } else {
-                //% "Exchange rate to %1 was not available at the time of transaction"
-                return  qsTrId("tx-details-exchange-rate-not-available").arg(root.rateUnit);
-            }
-        }
-        return ""
     }
 
     function isZeroed(s) {
@@ -220,42 +214,51 @@ RowLayout {
             color: Style.content_secondary
             //% "Amount"
             text: qsTrId("tx-details-amount-label") + ":"
-            visible: amountField.visible
-        }
-        SFLabel {
-            id: amountField
-            Layout.fillWidth: true
-            copyMenuEnabled: true
-            font.pixelSize: 14
-            font.styleName: "Bold"; font.weight: Font.Bold
-            color: root.isIncome ? Style.accent_incoming : Style.accent_outgoing
-            elide: Text.ElideMiddle
-            text: root.amountWithLabel
-            onCopyText: textCopied(root.amount)
-            visible: isTextFieldVisible(root.amount)
+            visible: true //amountField.visible
         }
 
-        SFText {
-            Layout.alignment: Qt.AlignTop
-            font.pixelSize: 14
-            color: Style.content_secondary
-            //% "Currency amount"
-            text: qsTrId("tx-details-second-currency-amount-label") + ":"
-            visible: secondCurrencyAmountField.visible
-        }
-        SFLabel {
-            id: secondCurrencyAmountField
+       /* BeamAmount {
+            id: amountField
+            visible: isTextFieldVisible(root.amount) && !root.isContractTx
             Layout.fillWidth: true
-            copyMenuEnabled: true
-            font.pixelSize: 14
-            color: Style.content_main
-            wrapMode: Text.Wrap
-            elide: Text.ElideRight
-            text: root.secondCurrencyAmount
-            onCopyText: textCopied(secondCurrencyAmountField.text)
-            visible: isTextFieldVisible(secondCurrencyAmountField.text) && root.rateUnit != ""
+
+            amount:    root.amount
+            unitName:  root.amountUnit
+            rate:      root.amountRate
+            rateUnit:  root.amountRateUnit
+            prefix:    root.isIncome ? "+ " : "- "
+            color:     root.isIncome ? Style.accent_incoming : Style.accent_outgoing
+            boldFont:  true
+            lightFont: false
+            showTip:   false
+            maxPaintedWidth: this.width
         }
-        
+        */
+
+        ColumnLayout {
+            Layout.fillWidth: true
+            spacing: 10
+
+            Repeater {
+                model: root.assetCount
+                BeamAmount {
+                    Layout.fillWidth: true
+
+                    amount:     root.assetAmounts[index]
+                    unitName:   root.assetNames[index]
+                    iconSource: root.isContractTx ? root.assetIcons[index] : ""
+                    iconSize:   Qt.size(20, 20)
+                    color:      root.assetIncome[index] ? Style.accent_incoming : Style.accent_outgoing
+                    prefix:     root.assetIncome[index] ? "+ " : "- "
+
+                    boldFont:   true
+                    lightFont:  false
+                    showTip:    false
+                    maxPaintedWidth: this.width
+                }
+            }
+        }
+
         SFText {
             Layout.alignment: Qt.AlignTop
             font.pixelSize: 14
@@ -264,14 +267,16 @@ RowLayout {
             text: qsTrId("general-fee") + ":"
             visible: root.isFieldVisible() && root.fee.length
         }
-        SFLabel {
+
+        BeamAmount {
             Layout.fillWidth: true
-            copyMenuEnabled: true
-            font.pixelSize: 14
-            color: Style.content_main
-            text: root.fee
-            onCopyText: textCopied(text)
             visible: root.isFieldVisible() && root.fee.length
+
+            amount:    root.fee
+            unitName:  root.feeUnit
+            rateUnit:  root.feeRateUnit
+            rate:      root.feeRate
+            showTip:   false
         }
         
         SFText {
@@ -282,6 +287,7 @@ RowLayout {
             text: qsTrId("general-comment") + ":"
             visible: commentTx.visible
         }
+
         SFLabel {
             Layout.fillWidth: true
             id: commentTx

@@ -94,7 +94,7 @@ namespace {
             std::string str{rawMsg->cbegin(), rawMsg->cend()};
             return QString::fromStdString(str);
         }
-        //% "Contract: no description provided"
+        //% "No description provided by the contract"
         return qtTrId("notification-contract-no-message");
     }
 

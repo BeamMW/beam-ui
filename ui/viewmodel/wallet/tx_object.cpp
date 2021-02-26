@@ -81,38 +81,52 @@ namespace
     }
 }
 
-
-TxObject::TxObject( const TxDescription& tx,
-                    QObject* parent/* = nullptr*/)
-        : TxObject(tx, beam::wallet::ExchangeRate::Currency::Unknown, parent)
+TxObject::TxObject(TxDescription tx, QObject* parent)
+    : TxObject(std::move(tx), beam::wallet::ExchangeRate::Currency::Unknown, parent)
 {
 }
 
-TxObject::TxObject( const TxDescription& tx,
-                    beam::wallet::ExchangeRate::Currency secondCurrency,
-                    QObject* parent/* = nullptr*/)
-        : QObject(parent)
-        , m_tx(tx)
-        , m_type(*m_tx.GetParameter<TxType>(TxParameterID::TransactionType))
-        , m_secondCurrency(secondCurrency)
+TxObject::TxObject(TxDescription tx, beam::wallet::ExchangeRate::Currency secondCurrency, QObject* parent)
+    : QObject(parent)
+    , _tx(std::move(tx))
+    , _secondCurrency(secondCurrency)
 {
-    m_kernelID = QString::fromStdString(to_hex(tx.m_kernelID.m_pData, tx.m_kernelID.nBytes));
-    if (m_tx.m_txType == TxType::Contract)
+    if (_tx.m_txType == TxType::Contract)
     {
-        _contractAmount = 0;
-        visitContractData([this](const beam::bvm2::ContractInvokeData &data) {
+        std::map<beam::Asset::ID, beam::AmountSigned> assets;
+
+        visitContractData([this, &assets](const beam::bvm2::ContractInvokeData &data) {
             for (const auto &spend: data.m_Spend)
             {
-                _contractAssets.insert(spend.first);
                 // TODO: this potentially can overflow
+                assets[spend.first] -= spend.second;
                 _contractAmount -= spend.second;
                 _contractFee += data.m_Fee;
             }
         });
 
-        if (_contractAmount > 0) {
+        if (_contractAmount > 0)
+        {
             _contractAmount -= _contractFee;
         }
+
+        assets[1] = 10;
+        assets[2] = 20;
+        assets[3] = 30;
+        assets[4] = 40;
+
+        for (const auto& info: assets)
+        {
+            _assetsList.push_back(info.first);
+            _assetAmounts.push_back(AmountToUIString(std::abs(info.second)));
+            _assetAmountsIncome.push_back(info.second > 0);
+        }
+    }
+    else
+    {
+        _assetsList.push_back(_tx.m_assetId);
+        _assetAmounts.push_back(AmountToUIString(_tx.m_amount));
+        _assetAmountsIncome.push_back(!_tx.m_sender);
     }
 }
 
@@ -121,14 +135,14 @@ bool TxObject::operator==(const TxObject& other) const
     return getTxID() == other.getTxID();
 }
 
-auto TxObject::timeCreated() const -> beam::Timestamp
+beam::Timestamp TxObject::timeCreated() const
 {
-    return m_tx.m_createTime;
+    return _tx.m_createTime;
 }
 
-auto TxObject::getTxID() const -> beam::wallet::TxID
+beam::wallet::TxID TxObject::getTxID() const
 {
-    return m_tx.m_txId;
+    return _tx.m_txId;
 }
 
 bool TxObject::isIncome() const
@@ -139,32 +153,46 @@ bool TxObject::isIncome() const
     }
     else
     {
-        return m_tx.m_sender == false;
+        return !_tx.m_sender;
     }
 }
 
-QString TxObject::getComment() const
+const QString& TxObject::getComment() const
 {
-    std::string str{m_tx.m_message.begin(), m_tx.m_message.end()};
-    auto comment = QString(str.c_str()).trimmed();
+    if (_comment.isEmpty())
+    {
+        std::string str{_tx.m_message.begin(), _tx.m_message.end()};
+        auto comment = QString(str.c_str()).trimmed();
 
-    if (isContractTx())
-    {
-        //% "Contract transaction"
-        return comment.isEmpty() ? qtTrId("tx-contract-default-comment") : comment;
+        if (isContractTx())
+        {
+            if (comment.isEmpty())
+            {
+                //% "Contract transaction"
+                comment = qtTrId("tx-contract-default-comment");
+            }
+        }
+        else if (isDexTx())
+        {
+            // TODO:DEX just temporary
+            comment = "DEX transaction";
+        }
+        else
+        {
+            if (comment.isEmpty())
+            {
+                //% "No comment provided"
+                comment = qtTrId("tx-no-comment");
+            }
+        }
+
+        _comment = comment;
     }
-    else if (isDexTx())
-    {
-        // TODO:DEX just temporary
-        return "DEX transaction";
-    }
-    else
-    {
-        return comment;
-    }
+
+    return _comment;
 }
 
-QString TxObject::getAmount() const
+QString TxObject::getAmountGeneral() const
 {
     if (isContractTx())
     {
@@ -172,25 +200,13 @@ QString TxObject::getAmount() const
     }
     else
     {
-        return AmountToUIString(m_tx.m_amount);
+        return AmountToUIString(_tx.m_amount);
     }
 }
 
-beam::Amount TxObject::getAmountValue() const
+QString TxObject::getRate(beam::Asset::ID assetId) const
 {
-    if (isContractTx())
-    {
-        return std::abs(_contractAmount);
-    }
-    else
-    {
-        return m_tx.m_amount;
-    }
-}
-
-QString TxObject::getRate() const
-{
-    if (m_tx.m_assetId != Asset::s_BeamID)
+    if (assetId != Asset::s_BeamID)
     {
         return "0";
     }
@@ -199,7 +215,8 @@ QString TxObject::getRate() const
     if (exchangeRatesOptional)
     {
         std::vector<ExchangeRate>& rates = *exchangeRatesOptional;
-        auto secondCurrency = m_secondCurrency;
+
+        auto secondCurrency = _secondCurrency;
         auto search = std::find_if(std::begin(rates),
                                    std::end(rates),
                                    [secondCurrency](const ExchangeRate& r)
@@ -207,38 +224,49 @@ QString TxObject::getRate() const
                                        return r.m_currency == ExchangeRate::Currency::Beam
                                            && r.m_unit == secondCurrency;
                                    });
+
         if (search != std::cend(rates))
         {
             return AmountToUIString(search->m_rate);
         }
     }
 
-    return "0";
+    return "0.22";
+}
+
+QString TxObject::getFeeRate() const
+{
+    return getRate(beam::Asset::s_BeamID);
+}
+
+QString TxObject::getRate() const
+{
+    return getRate(_tx.m_assetId);
 }
 
 QString TxObject::getStatus() const
 {
-    if (m_tx.m_txType == wallet::TxType::Simple)
+    if (_tx.m_txType == wallet::TxType::Simple)
     {
-        SimpleTxStatusInterpreter interpreter(m_tx);
+        SimpleTxStatusInterpreter interpreter(_tx);
         return interpreter.getStatus().c_str();
     }
-    else if (m_tx.m_txType == wallet::TxType::PushTransaction)
+    else if (_tx.m_txType == wallet::TxType::PushTransaction)
     {
-        MaxPrivacyTxStatusInterpreter interpreter(m_tx);
+        MaxPrivacyTxStatusInterpreter interpreter(_tx);
         return interpreter.getStatus().c_str();
     }
-    else if (m_tx.m_txType >= wallet::TxType::AssetIssue && m_tx.m_txType <= wallet::TxType::AssetInfo)
+    else if (_tx.m_txType >= wallet::TxType::AssetIssue && _tx.m_txType <= wallet::TxType::AssetInfo)
     {
-        AssetTxStatusInterpreter interpreter(m_tx);
+        AssetTxStatusInterpreter interpreter(_tx);
         return interpreter.getStatus().c_str();
     }
-    else if (m_tx.m_txType == wallet::TxType::Contract)
+    else if (_tx.m_txType == wallet::TxType::Contract)
     {
-        ContractTxStatusInterpreter interpreter(m_tx);
+        ContractTxStatusInterpreter interpreter(_tx);
         return interpreter.getStatus().c_str();
     }
-    else if (m_tx.m_txType == wallet::TxType::DexSimpleSwap)
+    else if (_tx.m_txType == wallet::TxType::DexSimpleSwap)
     {
         // TODO:DEX implement
         return "NOT IMPLEMENTED";
@@ -252,34 +280,34 @@ QString TxObject::getStatus() const
 
 bool TxObject::isCancelAvailable() const
 {
-    return m_tx.canCancel();
+    return _tx.canCancel();
 }
 
 bool TxObject::isDeleteAvailable() const
 {
-    return m_tx.canDelete();
+    return _tx.canDelete();
 }
 
 QString TxObject::getAddressFrom() const
 {
-    if (m_tx.m_txType == wallet::TxType::PushTransaction && !m_tx.m_sender)
+    if (_tx.m_txType == wallet::TxType::PushTransaction && !_tx.m_sender)
     {
         return getSenderIdentity();
     }
-    return toString(m_tx.m_sender ? m_tx.m_myId : m_tx.m_peerId);
+    return toString(_tx.m_sender ? _tx.m_myId : _tx.m_peerId);
 }
 
 QString TxObject::getAddressTo() const
 {
-    if (m_tx.m_sender)
+    if (_tx.m_sender)
     {
         auto token = getToken();
         if (token.isEmpty())
-            return toString(m_tx.m_peerId);
+            return toString(_tx.m_peerId);
 
         return token;
     }
-    return toString(m_tx.m_myId);
+    return toString(_tx.m_myId);
 }
 
 QString TxObject::getFee() const
@@ -288,29 +316,34 @@ QString TxObject::getFee() const
     {
         if (_contractFee)
         {
-            return AmountInGrothToUIString(_contractFee);
+            return AmountToUIString(_contractFee);
         }
     }
-    else if (m_tx.m_fee)
+    else if (_tx.m_fee)
     {
-        return AmountInGrothToUIString(m_tx.m_fee);
+        Amount shieldedFee = GetShieldedFee(_tx);
+        return AmountToUIString(shieldedFee + _tx.m_fee);
     }
     return QString{};
 }
 
 const beam::wallet::TxDescription& TxObject::getTxDescription() const
 {
-    return m_tx;
+    return _tx;
 }
 
 QString TxObject::getKernelID() const
 {
-    return m_kernelID;
+    if (_kernelIDStr.isEmpty())
+    {
+        _kernelIDStr = QString::fromStdString(to_hex(_tx.m_kernelID.m_pData, _tx.m_kernelID.nBytes));
+    }
+    return _kernelIDStr;
 }
 
 QString TxObject::getTransactionID() const
 {
-    return QString::fromStdString(to_hex(m_tx.m_txId.data(), m_tx.m_txId.size()));
+    return QString::fromStdString(to_hex(_tx.m_txId.data(), _tx.m_txId.size()));
 }
 
 QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
@@ -497,35 +530,29 @@ QString TxObject::getToken() const
 
 QString TxObject::getSenderIdentity() const
 {
-    return QString::fromStdString(m_tx.getSenderIdentity());
+    return QString::fromStdString(_tx.getSenderIdentity());
 }
 
 QString TxObject::getReceiverIdentity() const
 {
-    return QString::fromStdString(m_tx.getReceiverIdentity());
+    return QString::fromStdString(_tx.getReceiverIdentity());
 }
 
-std::set<beam::Asset::ID> TxObject::getAssetsList() const
+bool TxObject::isMultiAsset() const
 {
-    // TODO:DEX implement
-    if (isContractTx())
-    {
-        return _contractAssets;
-    }
-
-    std::set<beam::Asset::ID> alist = {m_tx.m_assetId};
-    return alist;
+    return _assetsList.size() > 1;
 }
 
 bool TxObject::hasPaymentProof() const
 {
-    return !isIncome() && m_tx.m_status == wallet::TxStatus::Completed 
-        && (m_tx.m_txType == TxType::Simple || m_tx.m_txType == TxType::PushTransaction);
+    return !isIncome()
+           && _tx.m_status == wallet::TxStatus::Completed
+           && (_tx.m_txType == TxType::Simple || _tx.m_txType == TxType::PushTransaction);
 }
 
 bool TxObject::isInProgress() const
 {
-    switch (m_tx.m_status)
+    switch (_tx.m_status)
     {
         case wallet::TxStatus::Pending:
         case wallet::TxStatus::InProgress:
@@ -538,40 +565,40 @@ bool TxObject::isInProgress() const
 
 bool TxObject::isPending() const
 {
-    return m_tx.m_status == wallet::TxStatus::Pending;
+    return _tx.m_status == wallet::TxStatus::Pending;
 }
 
 bool TxObject::isCompleted() const
 {
-    return m_tx.m_status == wallet::TxStatus::Completed;
+    return _tx.m_status == wallet::TxStatus::Completed;
 }
 
 bool TxObject::isSelfTx() const
 {
-    return m_tx.m_selfTx;
+    return _tx.m_selfTx;
 }
 
 bool TxObject::isShieldedTx() const
 {
-    return m_tx.m_txType == TxType::PushTransaction;
+    return _tx.m_txType == TxType::PushTransaction;
 }
 
 bool TxObject::isContractTx() const
 {
-    return m_tx.m_txType == TxType::Contract;
+    return _tx.m_txType == TxType::Contract;
 }
 
 bool TxObject::isDexTx() const
 {
-    return m_tx.m_txType == TxType::DexSimpleSwap;
+    return _tx.m_txType == TxType::DexSimpleSwap;
 }
 
 beam::wallet::TxAddressType TxObject::getAddressType()
 {
     restoreAddressType();
 
-    if (m_addressType)
-        return *m_addressType;
+    if (_addressType)
+        return *_addressType;
 
     return TxAddressType::Unknown;
 }
@@ -588,43 +615,60 @@ bool TxObject::isReceived() const
 
 bool TxObject::isCanceled() const
 {
-    return m_tx.m_status == wallet::TxStatus::Canceled;
+    return _tx.m_status == wallet::TxStatus::Canceled;
 }
 
 bool TxObject::isFailed() const
 {
-    return m_tx.m_status == wallet::TxStatus::Failed;
+    return _tx.m_status == wallet::TxStatus::Failed;
 }
 
 bool TxObject::isExpired() const
 {
-    return isFailed() && m_tx.m_failureReason == TxFailureReason::TransactionExpired;
+    return isFailed() && _tx.m_failureReason == TxFailureReason::TransactionExpired;
 }
 
 void TxObject::restoreAddressType()
 {
-    auto storedType = m_tx.GetParameter<TxAddressType>(TxParameterID::AddressType);
+    auto storedType = _tx.GetParameter<TxAddressType>(TxParameterID::AddressType);
     if (storedType)
     {
-        m_addressType = storedType;
+        _addressType = storedType;
         return;
     }
 
-    if (!m_tx.m_sender || m_addressType)
+    if (!_tx.m_sender || _addressType)
+    {
         return;
+    }
 
-    m_addressType = GetAddressType(m_tx);
-    m_tx.SetParameter(TxParameterID::AddressType, *m_addressType);
+    _addressType = GetAddressType(_tx);
+    _tx.SetParameter(TxParameterID::AddressType, *_addressType);
 }
 
 void TxObject::visitContractData(const CDVisitor& visitor) const
 {
     std::vector<beam::bvm2::ContractInvokeData> vData;
-    if(m_tx.GetParameter(TxParameterID::ContractDataPacked, vData))
+    if(_tx.GetParameter(TxParameterID::ContractDataPacked, vData))
     {
         for (const auto& data: vData)
         {
             visitor(data);
         }
     }
+}
+
+const std::vector<beam::Asset::ID>& TxObject::getAssetsList() const
+{
+    return _assetsList;
+}
+
+const std::vector<QString>& TxObject::getAssetAmounts() const
+{
+    return _assetAmounts;
+}
+
+const std::vector<bool>& TxObject::getAssetAmountsIncome() const
+{
+    return _assetAmountsIncome;
 }

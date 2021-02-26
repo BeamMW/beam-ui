@@ -138,24 +138,24 @@ bool SwapTxObject::isExpired() const
 
 bool SwapTxObject::isInProgress() const
 {
-    return  m_tx.m_status == wallet::TxStatus::Pending ||
-            m_tx.m_status == wallet::TxStatus::Registering ||
-            m_tx.m_status == wallet::TxStatus::InProgress;
+    return _tx.m_status == wallet::TxStatus::Pending ||
+           _tx.m_status == wallet::TxStatus::Registering ||
+           _tx.m_status == wallet::TxStatus::InProgress;
 }
 
 bool SwapTxObject::isPending() const
 {
-    return m_tx.m_status == wallet::TxStatus::Pending;
+    return _tx.m_status == wallet::TxStatus::Pending;
 }
 
 bool SwapTxObject::isCompleted() const
 {
-    return m_tx.m_status == wallet::TxStatus::Completed;
+    return _tx.m_status == wallet::TxStatus::Completed;
 }
 
 bool SwapTxObject::isCanceled() const
 {
-    return m_tx.m_status == wallet::TxStatus::Canceled;
+    return _tx.m_status == wallet::TxStatus::Canceled;
 }
 
 bool SwapTxObject::isFailed() const
@@ -170,9 +170,9 @@ bool SwapTxObject::isCancelAvailable() const
 
 bool SwapTxObject::isDeleteAvailable() const
 {
-    return  m_tx.m_status == wallet::TxStatus::Completed ||
-            m_tx.m_status == wallet::TxStatus::Canceled ||
-            m_tx.m_status == wallet::TxStatus::Failed;
+    return _tx.m_status == wallet::TxStatus::Completed ||
+           _tx.m_status == wallet::TxStatus::Canceled ||
+           _tx.m_status == wallet::TxStatus::Failed;
 }
 
 auto SwapTxObject::getSwapCoinName() const -> QString
@@ -182,16 +182,16 @@ auto SwapTxObject::getSwapCoinName() const -> QString
 
 QString SwapTxObject::getSentAmountWithCurrency() const
 {
-    if (m_type == TxType::AtomicSwap)
+    if (_tx.m_txType == TxType::AtomicSwap)
     {
         return getSwapAmountWithCurrency(true);
     }
-    return m_tx.m_sender ? getAmountWithCurrency() : "";
+    return _tx.m_sender ? getAmountWithCurrency() : "";
 }
 
 QString SwapTxObject::getAmountWithCurrency() const
 {
-    return AmountToUIString(m_tx.m_amount, beamui::Currencies::Beam);
+    return AmountToUIString(_tx.m_amount, beamui::Currencies::Beam);
 }
 
 QString SwapTxObject::getSentAmount() const
@@ -202,21 +202,21 @@ QString SwapTxObject::getSentAmount() const
 
 beam::Amount SwapTxObject::getSentAmountValue() const
 {
-    if (m_type == TxType::AtomicSwap)
+    if (_tx.m_txType == TxType::AtomicSwap)
     {
         return getSwapAmountValue(true);
     }
 
-    return m_tx.m_sender ? m_tx.m_amount : 0;
+    return _tx.m_sender ? _tx.m_amount : 0;
 }
 
 QString SwapTxObject::getReceivedAmountWithCurrency() const
 {
-    if (m_type == TxType::AtomicSwap)
+    if (_tx.m_txType == TxType::AtomicSwap)
     {
         return getSwapAmountWithCurrency(false);
     }
-    return !m_tx.m_sender ? getAmountWithCurrency() : "";
+    return !_tx.m_sender ? getAmountWithCurrency() : "";
 }
 
 QString SwapTxObject::getReceivedAmount() const
@@ -227,12 +227,11 @@ QString SwapTxObject::getReceivedAmount() const
 
 beam::Amount SwapTxObject::getReceivedAmountValue() const
 {
-    if (m_type == TxType::AtomicSwap)
+    if (_tx.m_txType == TxType::AtomicSwap)
     {
         return getSwapAmountValue(false);
     }
-
-    return !m_tx.m_sender ? m_tx.m_amount : 0;
+    return !_tx.m_sender ? _tx.m_amount : 0;
 }
 
 QString SwapTxObject::getSwapAmountWithCurrency(bool sent) const
@@ -254,7 +253,7 @@ beam::Amount SwapTxObject::getSwapAmountValue(bool sent) const
     {
         return m_swapTx.getSwapAmount();
     }
-    return m_tx.m_amount;
+    return _tx.m_amount;
 }
 
 QString SwapTxObject::getFee() const

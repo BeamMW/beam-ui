@@ -198,8 +198,6 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
     {
         { static_cast<int>(Roles::TimeCreated), "timeCreated" },
         { static_cast<int>(Roles::TimeCreatedSort), "timeCreatedSort" },
-        { static_cast<int>(Roles::AmountGeneralWithCurrency), "amountGeneralWithCurrency" },
-        { static_cast<int>(Roles::AmountGeneralWithCurrencySort), "amountGeneralWithCurrencySort" },
         { static_cast<int>(Roles::AmountGeneral), "amountGeneral" },
         { static_cast<int>(Roles::AmountGeneralSort), "amountGeneralSort" },
         { static_cast<int>(Roles::AmountSecondCurrency), "amountSecondCurrency"},
@@ -235,16 +233,20 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::ReceiverIdentity), "receiverIdentity"},
         { static_cast<int>(Roles::IsShieldedTx), "isShieldedTx"},
         { static_cast<int>(Roles::IsOfflineToken), "isOfflineToken"},
-        { static_cast<int>(Roles::UnitName), "unitName"},
-        { static_cast<int>(Roles::UnitNameSort), "unitNameSort"},
-        { static_cast<int>(Roles::Icon), "icon"},
+        { static_cast<int>(Roles::AssetNames), "assetNames"},
+        { static_cast<int>(Roles::AssetNamesSort), "assetNamesSort"},
         { static_cast<int>(Roles::IsSent), "isSent"},
         { static_cast<int>(Roles::IsReceived), "isReceived"},
         { static_cast<int>(Roles::IsPublicOffline), "isPublicOffline"},
         { static_cast<int>(Roles::IsMaxPrivacy), "isMaxPrivacy"},
         { static_cast<int>(Roles::IsContractTx), "isContractTx"},
         { static_cast<int>(Roles::AssetFilter), "assetFilter"},
-        { static_cast<int>(Roles::IsDexTx), "isDexTx"}
+        { static_cast<int>(Roles::IsDexTx), "isDexTx"},
+        { static_cast<int>(Roles::IsMultiAsset), "isMultiAsset"},
+        { static_cast<int>(Roles::AssetIcons), "assetIcons"},
+        { static_cast<int>(Roles::AssetAmounts), "assetAmounts"},
+        { static_cast<int>(Roles::FeeRate), "feeRate"},
+        { static_cast<int>(Roles::AssetAmountsIncome), "assetAmountsIncome"}
     };
     return roles;
 }
@@ -265,33 +267,15 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             datetime.setTime_t(value->timeCreated());
             return datetime.toString(m_locale.dateTimeFormat(QLocale::ShortFormat));
         }
-            
         case Roles::TimeCreatedSort:
             return static_cast<qulonglong>(value->timeCreated());
-
-        case Roles::AmountGeneralWithCurrency:
-        {
-            const auto& alist = value->getAssetsList();
-            if (alist.size() == 1)
-            {
-                auto assetID = *alist.begin();
-                return beamui::AmountToUIString(value->getAmountValue(), _amgr->getUnitName(assetID, true));
-            }
-            else
-            {
-                assert(value->isContractTx());
-                return beamui::AmountToUIString(value->getAmountValue());
-            }
-        }
-
-        case Roles::AmountGeneralWithCurrencySort:
-            return static_cast<qulonglong>(value->getAmountValue());
-        case Roles::AmountGeneral:
-            return value->getAmount();
         case Roles::AmountGeneralSort:
-            return static_cast<qulonglong>(value->getAmountValue());
+        case Roles::AmountGeneral:
+            return value->getAmountGeneral();
         case Roles::Rate:
             return value->getRate();
+        case Roles::FeeRate:
+            return value->getFeeRate();
         case Roles::AddressFrom:
         case Roles::AddressFromSort:
             return value->getAddressFrom();
@@ -378,26 +362,57 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return value->getSenderIdentity();
         case Roles::ReceiverIdentity:
             return value->getReceiverIdentity();
-        case Roles::UnitNameSort:
-        case Roles::UnitName:
+        case Roles::AssetNamesSort:
         {
+            QString names;
             const auto& alist = value->getAssetsList();
-            if (alist.size() == 1)
+            for(const auto& assetID: alist)
             {
-                auto assetID = *alist.begin();
-                return _amgr->getUnitName(assetID, false);
+                if (!names.isEmpty())
+                {
+                    names += ",";
+                }
+                names += _amgr->getUnitName(assetID, false);
             }
-            return "";
+            return names;
         }
-        case Roles::Icon:
+        case Roles::AssetNames:
         {
+            QList<QString> namesList;
             const auto& alist = value->getAssetsList();
-            if (alist.size() == 1)
+            for(const auto& assetID: alist)
             {
-                auto assetID = *alist.begin();
-                return _amgr->getIcon(assetID);
+               namesList.append(_amgr->getUnitName(assetID, false));
             }
-            return _amgr->getIcon(beam::Asset::s_BeamID);
+            QVariant result;
+            result.setValue(namesList);
+            return result;
+        }
+        case Roles::AssetIcons:
+        {
+            QList<QString> iconsList;
+            const auto& alist = value->getAssetsList();
+            for(const auto& assetID: alist)
+            {
+                iconsList.append(_amgr->getIcon(assetID));
+            }
+            QVariant result;
+            result.setValue(iconsList);
+            return result;
+        }
+        case Roles::AssetAmounts:
+        {
+            const auto& amounts = value->getAssetAmounts();
+            QVariant result;
+            result.setValue(amounts);
+            return result;
+        }
+        case Roles::AssetAmountsIncome:
+        {
+            const auto& amounts = value->getAssetAmountsIncome();
+            QVariant result;
+            result.setValue(amounts);
+            return result;
         }
         case Roles::AssetFilter:
         {
@@ -414,12 +429,12 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return r;
         }
 
-        case Roles::AmountSecondCurrency:
-            return QMLGlobals::calcAmountInSecondCurrency(value->getAmount(), value->getRate(), QString());
-
         case Roles::AmountSecondCurrencySort:
-            // do not need to convert for sorting, original amount is enough
-            return static_cast<qulonglong>(value->getAmountValue());
+        case Roles::AmountSecondCurrency:
+            return QMLGlobals::calcAmountInSecondCurrency(value->getAmountGeneral(), value->getRate(), QString());
+
+        case Roles::IsMultiAsset:
+            return value->isMultiAsset();
 
         default:
             return QVariant();

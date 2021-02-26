@@ -7,6 +7,7 @@ import QtQuick.Layouts 1.3
 import Beam.Wallet 1.0
 import "../controls"
 import "../utils.js" as Utils
+import "."
 
 Control {
     id: control
@@ -18,36 +19,46 @@ Control {
     property int selectedAsset: -1
 
     state: "all"
+    readonly property bool isContracts: state == "contracts"
+
     states: [
         State {
             name: "all"
             PropertyChanges { target: allTab; state: "active" }
-            PropertyChanges { target: txProxyModel; filterRole: "isContractTx" }
-            PropertyChanges { target: txProxyModel; filterString: "false" }
+            PropertyChanges { target: contractFilterProxy;  filterRole: "isContractTx" }
+            PropertyChanges { target: contractFilterProxy;  filterString: "false" }
         },
         State {
             name: "inProgress"
             PropertyChanges { target: inProgressTab; state: "active" }
             PropertyChanges { target: txProxyModel; filterRole: "isInProgress" }
             PropertyChanges { target: txProxyModel; filterString: "true" }
+            PropertyChanges { target: contractFilterProxy;  filterRole: "isContractTx" }
+            PropertyChanges { target: contractFilterProxy;  filterString: "false" }
         },
         State {
             name: "sent"
             PropertyChanges { target: sentTab; state: "active" }
             PropertyChanges { target: txProxyModel; filterRole: "isSent" }
             PropertyChanges { target: txProxyModel; filterString: "true" }
+            PropertyChanges { target: contractFilterProxy;  filterRole: "isContractTx" }
+            PropertyChanges { target: contractFilterProxy;  filterString: "false" }
         },
         State {
             name: "received"
             PropertyChanges { target: receivedTab; state: "active" }
             PropertyChanges { target: txProxyModel; filterRole: "isReceived" }
             PropertyChanges { target: txProxyModel; filterString: "true" }
+            PropertyChanges { target: contractFilterProxy;  filterRole: "isContractTx" }
+            PropertyChanges { target: contractFilterProxy;  filterString: "false" }
         },
         State {
             name: "contracts"
             PropertyChanges { target: contractsTab; state: "active" }
-            PropertyChanges { target: txProxyModel; filterRole: "isContractTx" }
-            PropertyChanges { target: txProxyModel; filterString: "true" }
+            PropertyChanges { target: txProxyModel; filterRole: "" }
+            PropertyChanges { target: txProxyModel; filterString: "" }
+            PropertyChanges { target: contractFilterProxy;  filterRole: "isContractTx" }
+            PropertyChanges { target: contractFilterProxy;  filterString: "true" }
         }
     ]
 
@@ -172,7 +183,8 @@ Control {
                         var index = tableViewModel.transactions.index(0, 0);
                         var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, root.openedTxID)
                         if (indexList.length > 0) {
-                            index = assetFilterProxy.mapFromSource(indexList[0])
+                            index = contractFilterProxy.mapFromSource(indexList[0])
+                            index = assetFilterProxy.mapFromSource(index)
                             index = searchProxyModel.mapFromSource(index)
                             index = txProxyModel.mapFromSource(index)
                             transactionsTable.positionViewAtRow(index.row, ListView.Beginning)
@@ -216,7 +228,14 @@ Control {
                         filterRole:   "assetFilter"
                         filterString: control.selectedAsset < 0 ? "" : ["\\b", control.selectedAsset, "\\b"].join("")
                         filterSyntax: SortFilterProxyModel.RegExp
-                        source: tableViewModel.transactions
+
+                        source: SortFilterProxyModel {
+                            id: contractFilterProxy
+                            filterRole:   "isContractTx"
+                            filterString: "false"
+                            filterSyntax: SortFilterProxyModel.FixedString
+                            source: tableViewModel.transactions
+                        }
                     }
                 }
 
@@ -237,7 +256,7 @@ Control {
                                  (styleData.alternate ? (!collapsed || animating ? Style.background_row_details_even : Style.background_row_even)
                                                       : (!collapsed || animating ? Style.background_row_details_odd : Style.background_row_odd))
 
-                property var myModel: parent.model
+                property var model: parent.model
                 property bool hideFiltered: true
 
                 onLeftClick: function() {
@@ -251,35 +270,38 @@ Control {
                 delegate: TransactionDetails {
                     id: detailsPanel
                     width: transactionsTable.width
-                    property var        txRolesMap: myModel
-                    sendAddress:        txRolesMap && txRolesMap.addressFrom ? txRolesMap.addressFrom : ""
-                    receiveAddress:     txRolesMap && txRolesMap.addressTo ? txRolesMap.addressTo : ""
-                    senderIdentity:     txRolesMap && txRolesMap.senderIdentity ? txRolesMap.senderIdentity : ""
-                    receiverIdentity:   txRolesMap && txRolesMap.receiverIdentity ? txRolesMap.receiverIdentity : ""
-                    fee:                txRolesMap && txRolesMap.fee ? txRolesMap.fee : ""
-                    comment:            txRolesMap && txRolesMap.comment ? txRolesMap.comment : ""
-                    txID:               txRolesMap && txRolesMap.txID ? txRolesMap.txID : ""
-                    kernelID:           txRolesMap && txRolesMap.kernelID ? txRolesMap.kernelID : ""
-                    status:             txRolesMap && txRolesMap.status ? txRolesMap.status : ""
-                    failureReason:      txRolesMap && txRolesMap.failureReason ? txRolesMap.failureReason : ""
-                    isIncome:           txRolesMap && txRolesMap.isIncome ? txRolesMap.isIncome : false
-                    hasPaymentProof:    txRolesMap && txRolesMap.hasPaymentProof ? txRolesMap.hasPaymentProof : false
-                    isSelfTx:           txRolesMap && txRolesMap.isSelfTransaction ? txRolesMap.isSelfTransaction : false
-                    rawTxID:            txRolesMap && txRolesMap.rawTxID ? txRolesMap.rawTxID : null
-                    stateDetails:       txRolesMap && txRolesMap.stateDetails ? txRolesMap.stateDetails : ""
-                    amount:             txRolesMap && txRolesMap.amountGeneral ? txRolesMap.amountGeneral : ""
-                    isCompleted:        txRolesMap && txRolesMap.isCompleted ? txRolesMap.isCompleted : false
+                    sendAddress:        model && model.addressFrom ? model.addressFrom : ""
+                    receiveAddress:     model && model.addressTo ? model.addressTo : ""
+                    senderIdentity:     model && model.senderIdentity ? model.senderIdentity : ""
+                    receiverIdentity:   model && model.receiverIdentity ? model.receiverIdentity : ""
+                    comment:            model && model.comment ? model.comment : ""
+                    txID:               model && model.txID ? model.txID : ""
+                    kernelID:           model && model.kernelID ? model.kernelID : ""
+                    status:             model && model.status ? model.status : ""
+                    failureReason:      model && model.failureReason ? model.failureReason : ""
+                    isIncome:           model && model.isIncome ? model.isIncome : false
+                    hasPaymentProof:    model && model.hasPaymentProof ? model.hasPaymentProof : false
+                    isSelfTx:           model && model.isSelfTransaction ? model.isSelfTransaction : false
+                    isContractTx:       model ? !!model.isContractTx : false
+                    rawTxID:            model && model.rawTxID ? model.rawTxID : null
+                    stateDetails:       model && model.stateDetails ? model.stateDetails : ""
+                    isCompleted:        model && model.isCompleted ? model.isCompleted : false
+                    assetNames:         model && model.assetNames ? model.assetNames : []
+                    assetIcons:         model ? model.assetIcons: []
+                    assetAmounts:       model ? model.assetAmounts: []
+                    assetIncome:        model ? model.assetAmountsIncome: []
+
                     addressType:        {
-                        if (txRolesMap) {
-                            if (txRolesMap.isMaxPrivacy) {
+                        if (model) {
+                            if (model.isMaxPrivacy) {
                                 //% "Max privacy"
                                 return qsTrId("tx-address-max-privacy")
                             }
-                            if (txRolesMap.isOfflineToken) {
+                            if (model.isOfflineToken) {
                                 //% "Offline"
                                 return qsTrId("tx-address-offline") 
                             }
-                            if (txRolesMap.isPublicOffline) {
+                            if (model.isPublicOffline) {
                                 //% "Public offline"
                                 return qsTrId("tx-address-public-offline") 
                             }
@@ -289,13 +311,20 @@ Control {
                         return ""
                     }
 
-                    rate:          txRolesMap && txRolesMap.rate ? txRolesMap.rate : ""
-                    rateUnit:      tableViewModel.rateUnit
-                    searchFilter:  searchBox.text
-                    hideFiltered:  rowItem.hideFiltered
-                    token:         txRolesMap ? txRolesMap.token : ""
-                    isShieldedTx:  txRolesMap && txRolesMap.isShieldedTx ? true : false
-                    unitName:      txRolesMap ? txRolesMap.unitName: ""
+                    fee:             model && model.fee ? model.fee : "0"
+                    feeRate:         model && model.feeRate ? model.feeRate : "0"
+                    feeUnit:         qsTrId("general-beam")
+                    feeRateUnit:     tableViewModel.rateUnit
+
+                    amount:          model && model.amountGeneral ? model.amountGeneral : "0"
+                    amountRate:      model && model.rate ? model.rate : "0"
+                    amountUnit:      model ? model.assetNames[0]: ""
+                    amountRateUnit:  tableViewModel.rateUnit
+
+                    searchFilter:    searchBox.text
+                    hideFiltered:    rowItem.hideFiltered
+                    token:           model ? model.token : ""
+                    isShieldedTx:    model && model.isShieldedTx ? true : false
 
                     onSearchFilterChanged: function(text) {
                         rowItem.collapsed = searchBox.text.length == 0;
@@ -351,7 +380,7 @@ Control {
             }
 
             TableViewColumn {
-                role: "unitName"
+                role: "assetNames"
                 id: coinColumn
 
                 //% "Coin"
@@ -360,25 +389,11 @@ Control {
                 movable:   false
                 resizable: false
 
-                delegate: Item { RowLayout {
-                    width:   parent.width
-                    height:  transactionsTable.rowHeight
-                    spacing: 10
-
-                    SvgImage {
-                        id: assetIcon
-                        source: model ? model.icon : ""
-                        Layout.preferredWidth:  20
-                        Layout.preferredHeight: 20
-                        Layout.leftMargin:      15
-                    }
-
-                    SFText {
-                        color:  Style.content_main
-                        text:   model ? model.unitName : ""
-                        elide:  Text.ElideRight
-                        Layout.fillWidth: true
-                    }
+                delegate: Item { CoinsList {
+                    width:  parent.width
+                    height: transactionsTable.rowHeight
+                    icons:  model ? model.assetIcons : undefined
+                    names:  model ? model.assetNames : undefined
                 }}
             }
 
@@ -395,6 +410,18 @@ Control {
             }
 
             TableViewColumn {
+                role: "comment"
+
+                //% "Description"
+                title:     qsTrId("general-description")
+                elideMode: Text.ElideRight
+                width:     200 * transactionsTable.columnResizeRatio
+                movable:   false
+                resizable: false
+                visible:   control.isContracts
+            }
+
+            TableViewColumn {
                 role: "amountGeneral"
 
                 //% "Amount"
@@ -408,12 +435,15 @@ Control {
                     width:  parent.width
                     height: transactionsTable.rowHeight
 
-                    property var isIncome: model && model.isIncome
-                    property var amount:   model ? model.amountGeneral : "0"
-                    property var prefix:   isIncome ? "+ " : "- "
+                    property var isIncome:    model && model.isIncome
+                    property var prefix:      isIncome ? "+ " : "- "
+                    property var amountText:  model ? [prefix, Utils.uiStringToLocale(model.amountGeneral)].join('') : "0"
+
+                    //% "Multiple assets"
+                    property var displayText: model && model.isMultiAsset ? qsTrId("general-multiple-assets") : amountText
 
                     SFText {
-                        text:              [parent.prefix, Utils.uiStringToLocale(parent.amount)].join('')
+                        text:              parent.displayText
                         color:             parent.isIncome ? Style.accent_incoming : Style.accent_outgoing
                         Layout.fillWidth:  true
                         Layout.leftMargin: 20
@@ -435,6 +465,7 @@ Control {
                 width:     200 * transactionsTable.columnResizeRatio
                 movable:   false
                 resizable: false
+                visible:   !control.isContracts
 
                 delegate: Item { RowLayout {
                     width:  parent.width
