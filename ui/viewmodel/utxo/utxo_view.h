@@ -22,29 +22,37 @@ class UtxoViewModel : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QAbstractItemModel* allUtxos              READ getAllUtxos           NOTIFY allUtxoChanged)
-    Q_PROPERTY(QString currentHeight                     READ getCurrentHeight      NOTIFY stateChanged)
-    Q_PROPERTY(QString currentStateHash                  READ getCurrentStateHash   NOTIFY stateChanged)
-    Q_PROPERTY(bool maturingMaxPrivacy                   READ getMaturingMaxPrivacy WRITE setMaturingMaxPrivacy NOTIFY maturingMaxPrivacyChanged)
+    Q_PROPERTY(QAbstractItemModel* allUtxos   READ getAllUtxos           NOTIFY allUtxoChanged)
+    Q_PROPERTY(QString currentHeight          READ getCurrentHeight      NOTIFY stateChanged)
+    Q_PROPERTY(QString currentStateHash       READ getCurrentStateHash   NOTIFY stateChanged)
+    Q_PROPERTY(bool maturingMaxPrivacy        READ getMaturingMaxPrivacy WRITE  setMaturingMaxPrivacy NOTIFY  maturingMaxPrivacyChanged)
+    Q_PROPERTY(unsigned int assetId           READ getAssetId            WRITE  setAssetId            NOTIFY  assetIdChanged)
 
 public:
     UtxoViewModel();
+
     QAbstractItemModel* getAllUtxos();
     QString getCurrentHeight() const;
     QString getCurrentStateHash() const;
     bool getMaturingMaxPrivacy() const;
     void setMaturingMaxPrivacy(bool value);
+    unsigned int getAssetId() const;
+    void setAssetId(unsigned int);
+
 public slots:
     void onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
     void onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& items);
     void onTotalShieldedCountChanged();
+
 signals:
     void allUtxoChanged();
-    void shieldedCoinsChanged();
     void stateChanged();
     void maturingMaxPrivacyChanged();
+    void assetIdChanged();
+
 private:
-    UtxoItemList m_allUtxos;
-    WalletModel& m_model;
-    bool m_maturingMaxPrivacy = false;
+    UtxoItemList     m_allUtxos;
+    WalletModel&     m_model;
+    beam::Asset::ID  m_assetId = beam::Asset::s_InvalidID;
+    bool             m_maturingMaxPrivacy = false;
 };

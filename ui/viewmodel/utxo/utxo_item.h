@@ -14,7 +14,6 @@
 #pragma once
 
 #include <QObject>
-// #include "wallet/client/wallet_client.h"
 #include "model/wallet_model.h"
 #include "utxo_view_status.h"
 #include "utxo_view_type.h"
@@ -22,13 +21,7 @@
 class BaseUtxoItem : public QObject
 {
     Q_OBJECT
-        Q_PROPERTY(QString amount                 READ getAmountWithCurrency     CONSTANT)
-        Q_PROPERTY(QString maturity               READ maturity                  CONSTANT)
-        Q_PROPERTY(QString maturityPercentage     READ maturityPercentage        CONSTANT)
-        Q_PROPERTY(int status                     READ status                    CONSTANT)
-        Q_PROPERTY(int type                       READ type                      CONSTANT)
 public:
-
     BaseUtxoItem() = default;
     bool operator==(const BaseUtxoItem& other) const;
 

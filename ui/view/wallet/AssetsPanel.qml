@@ -102,10 +102,10 @@ Control {
                         implicitWidth:  control.itemWidth
 
                         amount:           model.amount
-                        lockedAmount:     model.maturing
-                        maturing:         model.maturing
+                        maturingMP:       model.maturingMP
+                        maturingRegular:  model.maturingRegular
+                        maturingTotal:    model.maturingTotal
                         change:           model.change
-                        maxPrivacy:       model.maxPrivacy
                         unitName:         model.unitName
                         selected:         model.index == control.selectedIdx
                         icon:             model.icon

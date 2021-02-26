@@ -351,6 +351,15 @@ Rectangle {
         update(indexOrID)
     }
 
+    function openMaxPrivacyCoins (assetId, unitName, lockedAmount) {
+        var details = Qt.createComponent("controls/MaxPrivacyCoinsDialog.qml").createObject(main, {
+            "unitName":     unitName,
+            "lockedAmount": lockedAmount,
+            "assetId":      assetId,
+       });
+       details.open()
+    }
+
     function openSendDialog(receiver) {
         updateItem("wallet", {"openSend": true, "token" : receiver})
     }

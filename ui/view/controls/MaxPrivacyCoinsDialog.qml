@@ -1,26 +1,28 @@
 import QtQuick 2.11
-import QtQuick.Controls 1.4
-import QtQuick.Controls 2.3
+import QtQuick.Controls 1.2
+import QtQuick.Controls 2.3 as Controls2
 import QtQuick.Layouts 1.0
+import QtQuick.Controls.Styles 1.2
 import Beam.Wallet 1.0
 import "../utils.js" as Utils
 import "."
 
-Dialog {
+Controls2.Dialog {
     id: dialog
     modal: true
-    property string locked
-    property string secondCurrencyLabel
-    property string secondCurrencyRateValue
+
+    property string unitName
+    property string lockedAmount
+    property int assetId
 
     UtxoViewModel {
         id: viewModel
         maturingMaxPrivacy: true
+        assetId: dialog.assetId
     }
     
     width:          460
     height:         610
-    parent:         Overlay.overlay
     padding:        30
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
@@ -39,11 +41,10 @@ Dialog {
 
     contentItem: ColumnLayout {
         Layout.fillWidth: true
-        
-        spacing: 20
+        spacing: 15
 
         SFText {
-            //% "Max privacy"
+            //% "Locked Max privacy coins"
             text: qsTrId("max-privacy-dialog-header")
             Layout.alignment:   Qt.AlignHCenter
             font.pixelSize: 18
@@ -53,24 +54,22 @@ Dialog {
 
         RowLayout {
             Layout.fillWidth: true
+            spacing: 10
 
             SFText {
-                id:             maxPrivacyLabel
-                font.pixelSize: 12
-                font.styleName: "Regular"
-                font.weight:    Font.Normal
-                color:          Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+                id:               maxPrivacyLabel
+                font.pixelSize:   12
+                font.styleName:   "Regular"
+                font.weight:      Font.Normal
+                color:            Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
                 //% "Locked"
-                text:           qsTrId("max-privacy-dialog-locked") + ":"
+                text:             qsTrId("max-privacy-dialog-locked") + ":"
                 Layout.alignment: Qt.AlignTop
             }
 
             BeamAmount {
-                Layout.leftMargin: 24
-                amount:            locked
-                //unitName:          control.totals.unitName
-                //rateUnit:          control.totals.rateUnit
-                //rate:              control.totals.rate
+                amount:            dialog.lockedAmount
+                unitName:          dialog.unitName
                 spacing:           15
                 font.styleName:    "Bold"
                 font.weight:       Font.Bold
@@ -80,62 +79,62 @@ Dialog {
 
         CustomTableView {
             id: tableView
-            Layout.alignment: Qt.AlignTop
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            frameVisible: false
-            selectionMode: SelectionMode.NoSelection
-            backgroundVisible: false
-            sortIndicatorVisible: true
-            sortIndicatorColumn: 1
-            sortIndicatorOrder: Qt.AscendingOrder
-            headerColor: Style.background_main_top
-            mainBackgroundRect: dialog.background 
+            property int rowHeight: 56
+
+            Layout.fillWidth:    true
+            Layout.fillHeight:   true
+            frameVisible:        false
+            selectionMode:       SelectionMode.NoSelection
+            backgroundVisible:   false
+            headerColor:         Style.background_main_top
+            mainBackgroundRect:  dialog.background
+
             model: SortFilterProxyModel {
-                sortOrder: tableView.sortIndicatorOrder
-                sortCaseSensitivity: Qt.CaseInsensitive
-                sortRole: tableView.getColumn(tableView.sortIndicatorColumn).role + "Sort"
-                source: viewModel.allUtxos
-                filterSyntax: SortFilterProxyModel.Wildcard
+                sortOrder:             tableView.sortIndicatorOrder
+                sortRole:              tableView.getColumn(tableView.sortIndicatorColumn).role + "Sort"
+                source:                viewModel.allUtxos
+                sortCaseSensitivity:   Qt.CaseInsensitive
+                filterSyntax:          SortFilterProxyModel.Wildcard
                 filterCaseSensitivity: Qt.CaseInsensitive
             }
+
+            sortIndicatorVisible: true
+            sortIndicatorColumn:  1
+            sortIndicatorOrder:   Qt.DescendingOrder
 
             TableViewColumn {
                 role: "amount"
                 //% "Amount"
-                title: qsTrId("max-privacy-dialog-amount")
-                width: contentItem.width / 2
+                title:     qsTrId("max-privacy-dialog-amount")
+                width:     tableView.width / 2
                 resizable: false
-                movable: false
+                movable:   false
             }
 
             TableViewColumn {
+                id: unlockColumn
                 role: "maturityTimeLeft"
-                //% "Latest unlocked time"
-                title: qsTrId("max-privacy-dialog-unlock-time")
-                width: contentItem.width / 2
+                //% "Unlock Time"
+                title:     qsTrId("max-privacy-dialog-unlock-time")
+                width:     tableView.getAdjustedColumnWidth(unlockColumn)
                 resizable: false
-                movable: false
+                movable:   false
+
                 delegate: TableItem {
-                    text:           Utils.formatHours(styleData.value)
-                    elide:          styleData.elideMode
+                    text:    Utils.formatHours(styleData.value)
+                    elide:   styleData.elideMode
                 }
             }
 
-            rowDelegate: Item {
-                height: 56
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                Rectangle {
-                    anchors.fill: parent
-                    color: styleData.selected ? Style.row_selected :
-                            (styleData.alternate ? Style.background_row_even : Style.background_row_odd)
-                }
+            rowDelegate: Rectangle {
+                color:          styleData.alternate ? Style.background_row_even : Style.background_row_odd
+                height:         tableView.rowHeight
+                anchors.left:   parent.left
+                anchors.right:  parent.right
             }
 
             itemDelegate: TableItem {
-                text: styleData.value
+                text:  styleData.value
                 elide: Text.ElideRight
             }
         }

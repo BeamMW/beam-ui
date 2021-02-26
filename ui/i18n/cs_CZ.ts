@@ -86,7 +86,6 @@
     </message>
     <message id="general-fee">
         <source>Transaction fee</source>
-        <extracomment>UTXO type fee</extracomment>
         <translation>Transakční poplatek</translation>
     </message>
     <message id="general-ok">
@@ -97,25 +96,9 @@
         <source>Invalid address</source>
         <translation>Neplatná adresa</translation>
     </message>
-    <message id="general-coinbase">
-        <source>Coinbase</source>
-        <extracomment>UTXO type Coinbase</extracomment>
-        <translation>Coinbase</translation>
-    </message>
-    <message id="general-regular">
-        <source>Regular</source>
-        <extracomment>UTXO type Regular</extracomment>
-        <translation>Běžné</translation>
-    </message>
     <message id="general-change">
         <source>Change</source>
-        <extracomment>UTXO type Change</extracomment>
         <translation>Změnit</translation>
-    </message>
-    <message id="general-treasury">
-        <source>Treasury</source>
-        <extracomment>UTXO type Treasury</extracomment>
-        <translation>Pokladnice</translation>
     </message>
     <message id="general-back">
         <source>Back</source>
@@ -743,42 +726,6 @@
     <message id="utxo-last-block-hash">
         <source>Last block hash</source>
         <translation>Poslední hash bloku</translation>
-    </message>
-    <message id="utxo-head-maturity">
-        <source>Maturity</source>
-        <translation>Dokončeno</translation>
-    </message>
-    <message id="utxo-head-type">
-        <source>Type</source>
-        <translation>Typ</translation>
-    </message>
-    <message id="utxo-status-available">
-        <source>Available</source>
-        <translation>K dispozici</translation>
-    </message>
-    <message id="utxo-status-maturing">
-        <source>Maturing%1(till block height %2)</source>
-        <translation>Vyzrávání%1(do výšky bloku %2)</translation>
-    </message>
-    <message id="utxo-status-unavailable">
-        <source>Unavailable%1(mining result rollback)</source>
-        <translation>Nedostupné%1(výsledek těžby obnovení)</translation>
-    </message>
-    <message id="utxo-status-outgoing">
-        <source>In progress%1(outgoing)</source>
-        <translation>Probíhá%1(odchozí)</translation>
-    </message>
-    <message id="utxo-status-change">
-        <source>In progress%1(change)</source>
-        <translation>Probíhá%1(změna)</translation>
-    </message>
-    <message id="utxo-status-incoming">
-        <source>In progress%1(incoming)</source>
-        <translation>Probíhá%1(příchozí)</translation>
-    </message>
-    <message id="utxo-status-spent">
-        <source>Spent</source>
-        <translation>Utraceno</translation>
     </message>
     <message id="settings-general-lock-screen-never">
         <source>Never</source>
@@ -2163,11 +2110,6 @@ offline</source>
         <translation>přijato
 offline</translation>
     </message>
-    <message id="general-shielded">
-        <source>Shielded</source>
-        <extracomment>UTXO type Shielded</extracomment>
-        <translation>Chráněné</translation>
-    </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
         <translation>Držitel klíče mimo sloty</translation>
@@ -2389,10 +2331,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>Payments</source>
         <translation>Platby</translation>
     </message>
-    <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy %2% unlinked)</source>
-        <translation>Dochází%1(maximální soukromí %2% odpojeno)</translation>
-    </message>
     <message id="address-info-copy-close">
         <source>copy and close</source>
         <translation>zkopírovat a zavřít</translation>
@@ -2492,8 +2430,9 @@ offline</source>
 offline</translation>
     </message>
     <message id="max-privacy-dialog-header">
-        <source>Max privacy</source>
-        <translation>Max soukromí</translation>
+        <source>Locked Max privacy coins</source>
+        <oldsource>Max privacy</oldsource>
+        <translation type="unfinished">Max soukromí</translation>
     </message>
     <message id="max-privacy-dialog-locked">
         <source>Locked</source>
@@ -2504,8 +2443,9 @@ offline</translation>
         <translation>Částka</translation>
     </message>
     <message id="max-privacy-dialog-unlock-time">
-        <source>Latest unlocked time</source>
-        <translation>Zbývají čas do uzamčení</translation>
+        <source>Unlock Time</source>
+        <oldsource>Unlock time</oldsource>
+        <translation type="unfinished">Zbývají čas do uzamčení</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
         <source>Anonymity set for Max privacy transactions</source>

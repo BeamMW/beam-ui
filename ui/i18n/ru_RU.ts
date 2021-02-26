@@ -86,7 +86,6 @@
     </message>
     <message id="general-fee">
         <source>Transaction fee</source>
-        <extracomment>UTXO type fee</extracomment>
         <translation>Комиссия</translation>
     </message>
     <message id="general-ok">
@@ -97,25 +96,9 @@
         <source>Invalid address</source>
         <translation>Неправильный адрес</translation>
     </message>
-    <message id="general-coinbase">
-        <source>Coinbase</source>
-        <extracomment>UTXO type Coinbase</extracomment>
-        <translation>Награда</translation>
-    </message>
-    <message id="general-regular">
-        <source>Regular</source>
-        <extracomment>UTXO type Regular</extracomment>
-        <translation>Обычная</translation>
-    </message>
     <message id="general-change">
         <source>Change</source>
-        <extracomment>UTXO type Change</extracomment>
         <translation>Сдача</translation>
-    </message>
-    <message id="general-treasury">
-        <source>Treasury</source>
-        <extracomment>UTXO type Treasury</extracomment>
-        <translation>Казна</translation>
     </message>
     <message id="general-back">
         <source>Back</source>
@@ -743,42 +726,6 @@
     <message id="utxo-last-block-hash">
         <source>Last block hash</source>
         <translation>Хэш последнего блока</translation>
-    </message>
-    <message id="utxo-head-maturity">
-        <source>Maturity</source>
-        <translation>Подтвержден</translation>
-    </message>
-    <message id="utxo-head-type">
-        <source>Type</source>
-        <translation>Тип</translation>
-    </message>
-    <message id="utxo-status-available">
-        <source>Available</source>
-        <translation>Доступно</translation>
-    </message>
-    <message id="utxo-status-maturing">
-        <source>Maturing%1(till block height %2)</source>
-        <translation>Подтверждается%1(до блока %2)</translation>
-    </message>
-    <message id="utxo-status-unavailable">
-        <source>Unavailable%1(mining result rollback)</source>
-        <translation>Недоступно%1(откат результатов майнинга)</translation>
-    </message>
-    <message id="utxo-status-outgoing">
-        <source>In progress%1(outgoing)</source>
-        <translation>В обработке%1(исходящая)</translation>
-    </message>
-    <message id="utxo-status-change">
-        <source>In progress%1(change)</source>
-        <translation>В обработке%1(сдача)</translation>
-    </message>
-    <message id="utxo-status-incoming">
-        <source>In progress%1(incoming)</source>
-        <translation>В обработке%1(входящая)</translation>
-    </message>
-    <message id="utxo-status-spent">
-        <source>Spent</source>
-        <translation>Потрачено</translation>
     </message>
     <message id="settings-general-lock-screen-never">
         <source>Never</source>
@@ -2163,11 +2110,6 @@ offline</source>
         <translation>получено
 оффлайн</translation>
     </message>
-    <message id="general-shielded">
-        <source>Shielded</source>
-        <extracomment>UTXO type Shielded</extracomment>
-        <translation>Защищенная</translation>
-    </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
         <translation>У хранителя ключей закончились слоты для нонсов</translation>
@@ -2390,10 +2332,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Payments</source>
         <translation>Платежи</translation>
     </message>
-    <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy %2% unlinked)</source>
-        <translation>Созревание %1(макс. приватность, готово на %2%)</translation>
-    </message>
     <message id="address-info-copy-close">
         <source>copy and close</source>
         <translation>копировать и закрыть</translation>
@@ -2494,8 +2432,9 @@ offline</source>
 оффлайн</translation>
     </message>
     <message id="max-privacy-dialog-header">
-        <source>Max privacy</source>
-        <translation>Макс. приватность</translation>
+        <source>Locked Max privacy coins</source>
+        <oldsource>Max privacy</oldsource>
+        <translation type="unfinished">Макс. приватность</translation>
     </message>
     <message id="max-privacy-dialog-locked">
         <source>Locked</source>
@@ -2506,8 +2445,9 @@ offline</source>
         <translation>Сумма</translation>
     </message>
     <message id="max-privacy-dialog-unlock-time">
-        <source>Latest unlocked time</source>
-        <translation>Последнее время разблокировки</translation>
+        <source>Unlock Time</source>
+        <oldsource>Unlock time</oldsource>
+        <translation type="unfinished">Последнее время разблокировки</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
         <source>Anonymity set for Max privacy transactions</source>

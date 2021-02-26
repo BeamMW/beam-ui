@@ -86,7 +86,6 @@
     </message>
     <message id="general-fee">
         <source>Transaction fee</source>
-        <extracomment>UTXO type fee</extracomment>
         <translation>Transaktionskostnad</translation>
     </message>
     <message id="general-ok">
@@ -97,25 +96,9 @@
         <source>Invalid address</source>
         <translation>Felaktig adress</translation>
     </message>
-    <message id="general-coinbase">
-        <source>Coinbase</source>
-        <extracomment>UTXO type Coinbase</extracomment>
-        <translation>Coinbase</translation>
-    </message>
-    <message id="general-regular">
-        <source>Regular</source>
-        <extracomment>UTXO type Regular</extracomment>
-        <translation>Reguljär</translation>
-    </message>
     <message id="general-change">
         <source>Change</source>
-        <extracomment>UTXO type Change</extracomment>
         <translation>Ändra</translation>
-    </message>
-    <message id="general-treasury">
-        <source>Treasury</source>
-        <extracomment>UTXO type Treasury</extracomment>
-        <translation>Kassan</translation>
     </message>
     <message id="general-back">
         <source>Back</source>
@@ -743,42 +726,6 @@
     <message id="utxo-last-block-hash">
         <source>Last block hash</source>
         <translation>Senaste blockets hash</translation>
-    </message>
-    <message id="utxo-head-maturity">
-        <source>Maturity</source>
-        <translation>Mognad</translation>
-    </message>
-    <message id="utxo-head-type">
-        <source>Type</source>
-        <translation>Typ</translation>
-    </message>
-    <message id="utxo-status-available">
-        <source>Available</source>
-        <translation>Tillgängligt</translation>
-    </message>
-    <message id="utxo-status-maturing">
-        <source>Maturing%1(till block height %2)</source>
-        <translation>Mognar%1(tills block-höjd %2)</translation>
-    </message>
-    <message id="utxo-status-unavailable">
-        <source>Unavailable%1(mining result rollback)</source>
-        <translation>Otillgänglig%1(mining-resultat rollback)</translation>
-    </message>
-    <message id="utxo-status-outgoing">
-        <source>In progress%1(outgoing)</source>
-        <translation>Pågår%1(utgående)</translation>
-    </message>
-    <message id="utxo-status-change">
-        <source>In progress%1(change)</source>
-        <translation>Pågår%1(växel)</translation>
-    </message>
-    <message id="utxo-status-incoming">
-        <source>In progress%1(incoming)</source>
-        <translation>Pågår%1(inkommande)</translation>
-    </message>
-    <message id="utxo-status-spent">
-        <source>Spent</source>
-        <translation>Spenderat</translation>
     </message>
     <message id="settings-general-lock-screen-never">
         <source>Never</source>
@@ -2160,11 +2107,6 @@ offline</source>
         <translation>mottagen
 offline</translation>
     </message>
-    <message id="general-shielded">
-        <source>Shielded</source>
-        <extracomment>UTXO type Shielded</extracomment>
-        <translation>Skärmade</translation>
-    </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
         <translation>Nyckelhållaren har slut på öppna slots</translation>
@@ -2387,10 +2329,6 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <source>Payments</source>
         <translation>Betalningar</translation>
     </message>
-    <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy %2% unlinked)</source>
-        <translation>Mognar%1(max integritet %2% olänkad)</translation>
-    </message>
     <message id="address-info-copy-close">
         <source>copy and close</source>
         <translation>kopiera och stäng</translation>
@@ -2490,8 +2428,9 @@ offline</source>
 offline</translation>
     </message>
     <message id="max-privacy-dialog-header">
-        <source>Max privacy</source>
-        <translation>Max sekretess</translation>
+        <source>Locked Max privacy coins</source>
+        <oldsource>Max privacy</oldsource>
+        <translation type="unfinished">Max sekretess</translation>
     </message>
     <message id="max-privacy-dialog-locked">
         <source>Locked</source>
@@ -2502,7 +2441,8 @@ offline</translation>
         <translation>Belopp</translation>
     </message>
     <message id="max-privacy-dialog-unlock-time">
-        <source>Latest unlocked time</source>
+        <source>Unlock Time</source>
+        <oldsource>Unlock time</oldsource>
         <translation type="unfinished">Latest unlocked time</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">

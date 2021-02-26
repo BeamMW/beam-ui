@@ -86,7 +86,6 @@
     </message>
     <message id="general-fee">
         <source>Transaction fee</source>
-        <extracomment>UTXO type fee</extracomment>
         <translation>交易费</translation>
     </message>
     <message id="general-ok">
@@ -97,25 +96,9 @@
         <source>Invalid address</source>
         <translation>无效地址</translation>
     </message>
-    <message id="general-coinbase">
-        <source>Coinbase</source>
-        <extracomment>UTXO type Coinbase</extracomment>
-        <translation>Coinbase</translation>
-    </message>
-    <message id="general-regular">
-        <source>Regular</source>
-        <extracomment>UTXO type Regular</extracomment>
-        <translation>常规</translation>
-    </message>
     <message id="general-change">
         <source>Change</source>
-        <extracomment>UTXO type Change</extracomment>
         <translation>找零</translation>
-    </message>
-    <message id="general-treasury">
-        <source>Treasury</source>
-        <extracomment>UTXO type Treasury</extracomment>
-        <translation>基金会</translation>
     </message>
     <message id="general-back">
         <source>Back</source>
@@ -753,42 +736,6 @@
     <message id="utxo-last-block-hash">
         <source>Last block hash</source>
         <translation>最高区块哈希值</translation>
-    </message>
-    <message id="utxo-head-maturity">
-        <source>Maturity</source>
-        <translation>成熟</translation>
-    </message>
-    <message id="utxo-head-type">
-        <source>Type</source>
-        <translation>类型</translation>
-    </message>
-    <message id="utxo-status-available">
-        <source>Available</source>
-        <translation>可用余额</translation>
-    </message>
-    <message id="utxo-status-maturing">
-        <source>Maturing%1(till block height %2)</source>
-        <translation>成熟高度 %1 (至区块高度 %2 )</translation>
-    </message>
-    <message id="utxo-status-unavailable">
-        <source>Unavailable%1(mining result rollback)</source>
-        <translation>不可用%1 (挖矿结果回滚)</translation>
-    </message>
-    <message id="utxo-status-outgoing">
-        <source>In progress%1(outgoing)</source>
-        <translation>进行中%1 (出账)</translation>
-    </message>
-    <message id="utxo-status-change">
-        <source>In progress%1(change)</source>
-        <translation>进行中%1 (找零)</translation>
-    </message>
-    <message id="utxo-status-incoming">
-        <source>In progress%1(incoming)</source>
-        <translation>进行中%1 (入账)</translation>
-    </message>
-    <message id="utxo-status-spent">
-        <source>Spent</source>
-        <translation>已使用</translation>
     </message>
     <message id="settings-general-lock-screen-never">
         <source>Never</source>
@@ -2178,11 +2125,6 @@ offline</source>
         <translation>接收
 离线</translation>
     </message>
-    <message id="general-shielded">
-        <source>Shielded</source>
-        <extracomment>UTXO type Shielded</extracomment>
-        <translation>盾</translation>
-    </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
         <translation>密钥管理员从空位</translation>
@@ -2404,10 +2346,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Payments</source>
         <translation>支付</translation>
     </message>
-    <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy %2% unlinked)</source>
-        <translation type="unfinished">Maturing%1(max privacy %2% unlinked)</translation>
-    </message>
     <message id="address-info-copy-close">
         <source>copy and close</source>
         <translation>复制并关闭</translation>
@@ -2506,8 +2444,9 @@ offline</source>
         <translation>离线失败</translation>
     </message>
     <message id="max-privacy-dialog-header">
-        <source>Max privacy</source>
-        <translation>最大化隐私</translation>
+        <source>Locked Max privacy coins</source>
+        <oldsource>Max privacy</oldsource>
+        <translation type="unfinished">最大化隐私</translation>
     </message>
     <message id="max-privacy-dialog-locked">
         <source>Locked</source>
@@ -2518,7 +2457,8 @@ offline</source>
         <translation>数量</translation>
     </message>
     <message id="max-privacy-dialog-unlock-time">
-        <source>Latest unlocked time</source>
+        <source>Unlock Time</source>
+        <oldsource>Unlock time</oldsource>
         <translation type="unfinished">Latest unlocked time</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">

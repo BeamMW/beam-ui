@@ -286,6 +286,7 @@ Control {
                 }
 
                 SFLabel {
+                    width:            parent.width - lockedAmountLabel.width - parent.spacing
                     id:               lockedAmountCtrl
                     visible:          lockedAmount != "0"
                     font.pixelSize:   control.rateFontSize

@@ -41,13 +41,13 @@ QHash<int, QByteArray> AssetsList::roleNames() const
         {static_cast<int>(Roles::RRateUnit),        "rateUnit"},
         {static_cast<int>(Roles::RRate),            "rate"},
         {static_cast<int>(Roles::RChange),          "change"},
-        {static_cast<int>(Roles::RMaturing),        "maturing"},
-        {static_cast<int>(Roles::RMaxPrivacy),      "maxPrivacy"},
+        {static_cast<int>(Roles::RMaturingRegular), "maturingRegular"},
+        {static_cast<int>(Roles::RMaturingMP),      "maturingMP"},
+        {static_cast<int>(Roles::RMaturingTotal),   "maturingTotal"},
         {static_cast<int>(Roles::RName),            "assetName"},
         {static_cast<int>(Roles::RSmallestUnitName),"smallestUnitName"},
         {static_cast<int>(Roles::RShortDesc),       "shortDesc"},
         {static_cast<int>(Roles::RLongDesc),        "longDesc"},
-        {static_cast<int>(Roles::RLockedAmount),    "lockedAmount"},
     };
     return roles;
 }
@@ -87,15 +87,16 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
             return _amgr->getUnitName(assetId, false);
         case Roles::RAmount:
             return beamui::AmountBigToUIString(_wallet.getAvailable(assetId));
-        case Roles::RLockedAmount:
-        case Roles::RMaturing:
+        case Roles::RMaturingRegular:
+            return beamui::AmountBigToUIString(_wallet.getMaturing(assetId));
+        case Roles::RMaturingMP:
+            return beamui::AmountBigToUIString(_wallet.getMatutingMP(assetId));
+        case Roles::RMaturingTotal:
         {
             auto total = _wallet.getMaturing(assetId);
             total += _wallet.getMatutingMP(assetId);
             return beamui::AmountBigToUIString(total);
         }
-        case Roles::RMaxPrivacy:
-            return beamui::AmountBigToUIString(_wallet.getShielded(assetId));
         case Roles::RChange:
             return beamui::AmountBigToUIString(_wallet.getReceivingChange(assetId));
         case Roles::RInTxCnt:

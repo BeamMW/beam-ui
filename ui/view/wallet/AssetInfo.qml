@@ -9,24 +9,21 @@ import "../utils.js" as Utils
 Control {
     id: control
 
-    property int inTxCnt
-    property int outTxCnt
-
-    property alias  amount:        amountCtrl.amount
-    property alias  lockedAmount:  amountCtrl.lockedAmount
-    property alias  maturing:      maturingCtrl.amount
-    property alias  change:        changeCtrl.amount
-    property alias  maxPrivacy:    maxPrivacyCtrl.amount
-    property alias  unitName:      amountCtrl.unitName
-    property alias  rateUnit:      amountCtrl.rateUnit
-    property alias  rate:          amountCtrl.rate
-    property alias  icon:          amountCtrl.iconSource
-    property alias  color:         back.leftColor
-    property alias  borderColor:   back.leftBorderColor
-    property bool   selected:      false
-    property var    onClicked:     null
-    property int    assetId:       0
-    property bool   isAsset:       false
+    property alias  amount:          amountCtrl.amount
+    property alias  maturingTotal:   amountCtrl.lockedAmount
+    property alias  maturingRegular: maturingCtrl.amount
+    property alias  change:          changeCtrl.amount
+    property alias  maturingMP:      maxPrivacyCtrl.amount
+    property alias  unitName:        amountCtrl.unitName
+    property alias  rateUnit:        amountCtrl.rateUnit
+    property alias  rate:            amountCtrl.rate
+    property alias  icon:            amountCtrl.iconSource
+    property alias  color:           back.leftColor
+    property alias  borderColor:     back.leftBorderColor
+    property bool   selected:        false
+    property var    onClicked:       null
+    property int    assetId:         0
+    property bool   isAsset:         false
 
     property string assetName
     property string smallestUnitName
@@ -58,7 +55,7 @@ Control {
         modal:        false
         dim:          true
         x:            amountCtrl.tipX
-        y:            amountCtrl.tipY - 5
+        y:            amountCtrl.tipY
         width:        (state == "ainfo" ? ainfoData.preferredWidth : amountData.preferredWidth ) + leftPadding + rightPadding
 
         Overlay.modeless: MouseArea {
@@ -215,18 +212,33 @@ Control {
                     }
                 }
 
-                BeamAmount {
-                    id:           maxPrivacyCtrl
-                    unitName:     control.unitName
-                    rateUnit:     control.rateUnit
-                    rate:         control.rate
-                    maxUnitChars: 6
-                    color:        assetTip.defTextColor
-                    visible:      amount != "0"
+                Column {
+                    spacing: 4
 
-                    font.styleName: "DemiBold"
-                    font.weight:    Font.DemiBold
-                    font.pixelSize: 13
+                    BeamAmount {
+                        id:           maxPrivacyCtrl
+                        unitName:     control.unitName
+                        rateUnit:     control.rateUnit
+                        rate:         control.rate
+                        maxUnitChars: 6
+                        color:        assetTip.defTextColor
+                        visible:      amount != "0"
+
+                        font.styleName: "DemiBold"
+                        font.weight:    Font.DemiBold
+                        font.pixelSize: 13
+                    }
+
+                    LinkButton {
+                        visible:  maxPrivacyCtrl.visible
+                        fontSize: 13
+                        //% "More details"
+                        text: qsTrId("more-details")
+
+                        onClicked: {
+                            main.openMaxPrivacyCoins(control.assetId, control.unitName, control.maturingMP)
+                        }
+                    }
                 }
             }
 
