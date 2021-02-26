@@ -86,6 +86,7 @@
     </message>
     <message id="general-fee">
         <source>Transaction fee</source>
+        <extracomment>UTXO type fee</extracomment>
         <translation>交易费</translation>
     </message>
     <message id="general-ok">
@@ -98,6 +99,7 @@
     </message>
     <message id="general-change">
         <source>Change</source>
+        <extracomment>UTXO type Change</extracomment>
         <translation>找零</translation>
     </message>
     <message id="general-back">
@@ -2974,6 +2976,66 @@ Update your settings and try again.</source>
     <message id="general-locked">
         <source>Locked</source>
         <translation type="unfinished">锁定</translation>
+    </message>
+    <message id="utxo-head-maturity">
+        <source>Maturity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-available">
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-maturing">
+        <source>Maturing%1(till block height %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-unavailable">
+        <source>Unavailable%1(mining result rollback)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-outgoing">
+        <source>In progress%1(outgoing)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-change">
+        <source>In progress%1(change)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-incoming">
+        <source>In progress%1(incoming)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-spent">
+        <source>Spent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-maturing-mp">
+        <source>Maturing%1(max privacy %2% unlinked)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-head-type">
+        <source>Type</source>
+        <translation type="unfinished">类型</translation>
+    </message>
+    <message id="general-coinbase">
+        <source>Coinbase</source>
+        <extracomment>UTXO type Coinbase</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-regular">
+        <source>Regular</source>
+        <extracomment>UTXO type Regular</extracomment>
+        <translation type="unfinished">常规</translation>
+    </message>
+    <message id="general-treasury">
+        <source>Treasury</source>
+        <extracomment>UTXO type Treasury</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-shielded">
+        <source>Shielded</source>
+        <extracomment>UTXO type Shielded</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

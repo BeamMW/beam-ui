@@ -320,8 +320,7 @@ QString TxObject::getFee() const
     }
     else if (_tx.m_fee)
     {
-        Amount shieldedFee = GetShieldedFee(_tx);
-        return AmountToUIString(shieldedFee + _tx.m_fee);
+        return AmountToUIString(_tx.m_fee);
     }
     return QString{};
 }
