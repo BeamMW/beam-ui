@@ -417,7 +417,7 @@ Control {
                     wrapMode: Text.Wrap
                     visible: !!this.text
 
-                    text: control.shortDesc
+                    text: control.longDesc
                     color: Style.content_main
 
                     font {
