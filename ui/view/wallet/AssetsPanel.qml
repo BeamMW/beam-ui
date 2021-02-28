@@ -118,8 +118,8 @@ Control {
                         assetId:          model.id
                         assetName:        model.assetName
                         smallestUnitName: model.smallestUnitName
-                        shortDesc:        model.shortDesc
-                        longDesc:         model.longDesc
+                        //shortDesc:        model.shortDesc
+                        //longDesc:         model.longDesc
 
                         onClicked: function () {
                             if (control.selectedIdx == model.index) {

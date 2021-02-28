@@ -25,13 +25,13 @@ Control {
     property alias   caption:             captionText.text
     property int     captionFontSize:     12
     property string  prefix:              ""
-    property real    maxPaintedWidth:     0
-    property int     maxUnitChars:        0
+    property bool    maxPaintedWidth:     true
+    property int     maxUnitChars:        6
+    property int     minUnitChars:        6
     property real    vSpacing:            5
 
     property var     dropIcon:            dropIconCtrl
     property bool    showDrop:            false
-    property bool    showDropCircular:    false
     property size    dropSize:            Qt.size(5, 3)
 
     font {
@@ -65,7 +65,7 @@ Control {
 
     TextMetrics {
         id:     lockedMetrics
-        font:   lockedAmountCtrl.font
+        font:   lockedText.font
         elide:  Qt.ElideNone
     }
 
@@ -77,8 +77,9 @@ Control {
     }
 
     function calcMaxTextWidth () {
-        var pos = control.mapFromItem(amountText.parent, amountText.x, amountText.y)
-        return control.maxPaintedWidth - pos.x - ((showDropCircular || showDrop) ? dropIconCtrl.width + amountText.parent.spacing : 0)
+        //var pos = control.mapFromItem(amountText.parent, amountText.x, amountText.y)
+        //return control.maxPaintedWidth - pos.x - ((showDropCircular || showDrop) ? dropIconCtrl.width + amountText.parent.spacing : 0)
+        return control.width - contentRow.spacing - assetIcon.width - (showDrop ? dropIconCtrl.width + amountText.parent.spacing : 0)
     }
 
     function fitAmount (amount, uname, prefix, showZero, metrics, maxw) {
@@ -86,7 +87,6 @@ Control {
 
         var samount = amount.toString()
         var unamed  = false
-        var minUnitChars = 6
 
         while (true) {
            var result = formatAmount(samount, [uname, unamed ? '\u2026' : ''].join(''))
@@ -97,7 +97,7 @@ Control {
                return result
            }
 
-           if (uname && minUnitChars && uname.length > minUnitChars)
+           if (uname && uname.length > (minUnitChars - 1))
            {
                 uname  = uname.substring(0, uname.length - 1)
                 unamed = true
@@ -114,13 +114,17 @@ Control {
     }
 
     function fitText () {
-        return fitAmount(control.amount,
-                       control.unitName,
-                       control.prefix,
-                       control.showZero,
-                       metrics,
-                       calcMaxTextWidth()
-        )
+        if (maxPaintedWidth)
+        {
+            return fitAmount(control.amount,
+                           control.unitName,
+                           control.prefix,
+                           control.showZero,
+                           metrics,
+                           calcMaxTextWidth()
+            )
+        }
+        return formatAmount(control.amount, Utils.limitText(control.unitName, control.maxUnitChars))
     }
 
     function calcMaxLockedWidth() {
@@ -128,31 +132,35 @@ Control {
     }
 
     function fitLocked () {
-        return fitAmount(control.lockedAmount,
-                         control.unitName,
-                         "", false,
-                         lockedMetrics,
-                         calcMaxLockedWidth()
-        )
+        if (maxPaintedWidth) {
+            return fitAmount(control.lockedAmount,
+                             control.unitName,
+                             "", false,
+                             lockedMetrics,
+                             calcMaxLockedWidth()
+            )
+        }
+        return formatAmount(control.lockedAmount, Utils.limitText(control.unitName, control.maxUnitChars))
     }
 
     onAmountChanged: {
-        if (maxPaintedWidth) amountText.text = fitText()
+        amountText.text = fitText()
+        lockedText.text = fitLocked()
     }
 
     onUnitNameChanged: {
-        if (maxPaintedWidth) amountText.text = fitText()
+        amountText.text = fitText()
+        lockedText.text = fitLocked()
     }
 
     onMaxPaintedWidthChanged: {
-        if (maxPaintedWidth) amountText.text = fitText()
-        else amountText.text = Qt.binding(function () {
-                                            return formatAmount(control.amount, Utils.limitText(control.unitName, control.maxUnitChars))
-                                          })
+        amountText.text = fitText()
+        lockedText.text = fitLocked()
     }
 
     onWidthChanged: {
-        if (maxPaintedWidth) amountText.text = fitText()
+        amountText.text = fitText()
+        lockedText.text = fitLocked()
     }
 
     property bool hasTip: tipText.text != amountText.text
@@ -180,6 +188,7 @@ Control {
 
     contentItem: Row {
         spacing: control.spacing
+        id: contentRow
 
         SvgImage {
             id:          assetIcon
@@ -212,8 +221,7 @@ Control {
                     color:            control.error ? Style.validator_error : control.color
                     onCopyText:       BeamGlobals.copyToClipboard(amount)
                     copyMenuEnabled:  true
-                    text:             control.maxPaintedWidth ? fitText() : formatAmount(control.amount, Utils.limitText(control.unitName, control.maxUnitChars))
-                    elide:            Text.ElideRight
+                    text:             fitText()
 
                     MouseArea {
                         id:               amountTextArea
@@ -221,7 +229,6 @@ Control {
                         hoverEnabled:     true
                         acceptedButtons:  Qt.NoButton
                         preventStealing:  true
-                        //propagateComposedEvents: true
 
                         onWheel: function(data) {
                             data.accepted = tipCtrl.visible
@@ -286,8 +293,7 @@ Control {
                 }
 
                 SFLabel {
-                    width:            parent.width - lockedAmountLabel.width - parent.spacing
-                    id:               lockedAmountCtrl
+                    id:               lockedText
                     visible:          lockedAmount != "0"
                     font.pixelSize:   control.rateFontSize
                     font.styleName:   "Regular"
@@ -296,7 +302,6 @@ Control {
                     onCopyText:       BeamGlobals.copyToClipboard(amount)
                     copyMenuEnabled:  true
                     text:             fitLocked()
-                    elide:            Text.ElideRight
                 }
             }
         }

@@ -200,7 +200,7 @@ ConfirmationDialog {
                 rate:              control.showRate ? control.rate : "0"
                 rateUnit:          control.showRate ? control.rateUnit: ""
                 color:             Style.accent_outgoing
-                maxUnitChars:      10
+                Layout.fillWidth:  true
             }
 
             //

@@ -237,7 +237,6 @@ RowLayout {
                     rate:         root.assetRates[index]
                     rateUnit:     this.rate != "0" ? root.rateUnit : ""
                     showTip:      false
-                    maxUnitChars: 50
                     //maxPaintedWidth: this.width don't enable, causes freeze of animations, neet to refactor
 
                     font {

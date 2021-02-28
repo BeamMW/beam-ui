@@ -487,7 +487,6 @@ ColumnLayout {
                                 unitName:          control.sendUnit
                                 rateUnit:          control.assetId == 0 ? control.rateUnit : ""
                                 rate:              control.rate
-                                maxPaintedWidth:   this.width - 20
                                 font.styleName:    "Bold"
                                 font.weight:       Font.Bold
                             }
@@ -507,7 +506,6 @@ ColumnLayout {
                                 unitName:          control.sendUnit
                                 rateUnit:          control.assetId == 0 ? control.rateUnit : ""
                                 rate:              control.rate
-                                maxPaintedWidth:   this.width - 20
                                 font.styleName:    "Bold"
                                 font.weight:       Font.Bold
                             }
@@ -527,7 +525,6 @@ ColumnLayout {
                                 unitName:          BeamGlobals.beamUnit
                                 rateUnit:          viewModel.feeRateUnit
                                 rate:              viewModel.feeRate
-                                maxPaintedWidth:   this.width - 20
                                 font.styleName:    "Bold"
                                 font.weight:       Font.Bold
                             }
@@ -548,7 +545,6 @@ ColumnLayout {
                                 unitName:          control.sendUnit
                                 rateUnit:          control.assetId == 0 ? control.rateUnit : ""
                                 rate:              control.rate
-                                maxPaintedWidth:   this.width - 20
                                 font.styleName:    "Bold"
                                 font.weight:       Font.Bold
                             }
@@ -571,7 +567,6 @@ ColumnLayout {
                                 rateUnit:          viewModel.feeRateUnit
                                 rate:              viewModel.feeRate
                                 visible:           control.assetId != 0
-                                maxPaintedWidth:   this.width - 20
                                 font.styleName:    "Bold"
                                 font.weight:       Font.Bold
                             }

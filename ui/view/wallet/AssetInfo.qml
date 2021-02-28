@@ -131,12 +131,12 @@ Control {
                     unitName:       control.unitName
                     rateUnit:       control.rateUnit
                     rate:           control.rate
-                    maxUnitChars:   6
                     color:          assetTip.defTextColor
 
-                    font.styleName: "DemiBold"
-                    font.weight:    Font.DemiBold
-                    font.pixelSize: 13
+                    font.styleName:  "DemiBold"
+                    font.weight:     Font.DemiBold
+                    font.pixelSize:  13
+                    maxPaintedWidth: false
                 }
 
                 SFText {
@@ -159,13 +159,13 @@ Control {
                     unitName:     control.unitName
                     rateUnit:     control.rateUnit
                     rate:         control.rate
-                    maxUnitChars: 6
                     color:        assetTip.defTextColor
                     visible:      amount != "0"
 
-                    font.styleName: "DemiBold"
-                    font.weight:    Font.DemiBold
-                    font.pixelSize: 13
+                    font.styleName:  "DemiBold"
+                    font.weight:     Font.DemiBold
+                    font.pixelSize:  13
+                    maxPaintedWidth: false
                 }
 
                 SFText {
@@ -188,13 +188,13 @@ Control {
                     unitName:     control.unitName
                     rateUnit:     control.rateUnit
                     rate:         control.rate
-                    maxUnitChars: 6
                     color:        assetTip.defTextColor
                     visible:      amount != "0"
 
-                    font.styleName: "DemiBold"
-                    font.weight:    Font.DemiBold
-                    font.pixelSize: 13
+                    font.styleName:  "DemiBold"
+                    font.weight:     Font.DemiBold
+                    font.pixelSize:  13
+                    maxPaintedWidth: false
                 }
 
                 SFText {
@@ -220,13 +220,13 @@ Control {
                         unitName:     control.unitName
                         rateUnit:     control.rateUnit
                         rate:         control.rate
-                        maxUnitChars: 6
                         color:        assetTip.defTextColor
                         visible:      amount != "0"
 
-                        font.styleName: "DemiBold"
-                        font.weight:    Font.DemiBold
-                        font.pixelSize: 13
+                        font.styleName:  "DemiBold"
+                        font.weight:     Font.DemiBold
+                        font.pixelSize:  13
+                        maxPaintedWidth: false
                     }
 
                     LinkButton {
@@ -437,10 +437,7 @@ Control {
             spacing:           12
             iconSize:          Qt.size(24, 24)
             copyMenuEnabled:   true
-            maxPaintedWidth:   control.availableWidth
-            maxUnitChars:      6
             showDrop:          amountCtrl.hasTip || control.isAsset
-            showDropCircular:  true
             dropSize:          Qt.size(8, 4.8)
             tipCtrl:           assetTip
             font.styleName:    "Normal"

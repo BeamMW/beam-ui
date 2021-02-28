@@ -73,7 +73,6 @@ Controls2.Dialog {
                 font.styleName:    "Bold"
                 font.weight:       Font.Bold
                 font.pixelSize:    12
-                maxPaintedWidth:   this.width
                 showTip:           true
             }
         }
@@ -114,10 +113,9 @@ Controls2.Dialog {
                 delegate: RowLayout { BeamAmount {
                     Layout.leftMargin: 20
                     Layout.fillWidth: true
-                    amount: model.amount
+                    amount:   model.amount
                     unitName: model.unitName
-                    maxPaintedWidth: tableView.width / 2 - 20
-                    showTip: false
+                    showTip:  false
                 }}
             }
 

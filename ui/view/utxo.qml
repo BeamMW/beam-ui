@@ -197,7 +197,6 @@ ColumnLayout {
                 Layout.fillWidth: true
                 amount: model ? model.amount : "0"
                 unitName: model ? model.unitName : ""
-                maxPaintedWidth: 300 * tableView.columnResizeRatio - 20
                 showTip: false
             }}
         }
