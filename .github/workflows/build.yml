@@ -54,6 +54,7 @@ jobs:
         brew update
         # brew install qt5
         brew uninstall --force p7zip
+        brew upgrade
         brew install boost
         export TZ=GMT-3
         sudo systemsetup -gettimezone
