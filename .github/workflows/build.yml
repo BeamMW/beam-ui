@@ -65,6 +65,8 @@ jobs:
         echo "${{ secrets.APPLE_DEVELOPER_CERTIFICATE_P12_BASE64 }}" | base64 --decode > certificate.p12
         security import certificate.p12 -k macos-build.keychain -P ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }} -T /usr/bin/codesign
         security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k github macos-build.keychain
+        export LDFLAGS="-L/usr/local/opt/icu4c/lib"
+        export CPPFLAGS="-I/usr/local/opt/icu4c/include"
 
     - name: Create Build Environment [ununtu all]
       shell: bash
