@@ -53,6 +53,7 @@ jobs:
         # echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
         brew update
         # brew install qt5
+        brew uninstall --force p7zip
         export TZ=GMT-3
         sudo systemsetup -gettimezone
         security create-keychain -p github macos-build.keychain
