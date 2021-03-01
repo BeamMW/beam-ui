@@ -80,6 +80,7 @@ if(MSVC)
     endif()
 
     set_source_files_properties(ui.cpp PROPERTIES COMPILE_FLAGS "/wd4127") # QtCore/qvarlengtharray.h(274): warning C4127: conditional expression is constant
+    set_source_files_properties(viewmodel/wallet/tx_object_list.cpp PROPERTIES COMPILE_FLAGS "/wd4127")
 elseif(APPLE)
     set(SYSTEM_TYPE MACOSX_BUNDLE)
 endif()
