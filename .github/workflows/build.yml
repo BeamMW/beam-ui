@@ -54,6 +54,7 @@ jobs:
         brew update
         # brew install qt5
         brew uninstall --force p7zip
+        brew install boost
         export TZ=GMT-3
         sudo systemsetup -gettimezone
         security create-keychain -p github macos-build.keychain
@@ -95,12 +96,6 @@ jobs:
         #git clone --depth=1 https://github.com/BeamMW/qt5.15.2-static-${{env.OS_NAME}}.git c:/qt5-static
         #echo "QT5_ROOT_DIR=c:\qt5-static" >> $GITHUB_ENV
         #echo "QML_IMPORT_PATH=c:\qt5-static\qml" >> $GITHUB_ENV
-
-    - name: Download boost [macos-10.15]
-      if: matrix.os == 'macos-10.15'
-      run: |
-        curl -O https://raw.githubusercontent.com/Homebrew/homebrew-core/5da5895add2f6b9320d654dd844d4827f6876c8b/Formula/boost.rb
-        brew install ./boost.rb
 
     - name: Download boost [ununtu all]
       shell: bash
