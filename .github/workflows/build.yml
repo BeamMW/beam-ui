@@ -46,16 +46,12 @@ jobs:
       run: |
         echo $GITHUB_WORKSPACE
         echo "OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1" >> $GITHUB_ENV
-        # wget --no-check-certificate https://builds.beam.mw/QT5/qt5.12.9-static.tar.gz
-        # mkdir ${{runner.workspace}}/qt5-static
-        # tar -xf qt5.12.9-static.tar.gz -C ${{runner.workspace}}/qt5-static
-        # echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
-        # echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
         brew update
-        # brew install qt5
         brew uninstall --force p7zip
         brew upgrade
         brew install boost
+        echo "LDFLAGS=-L/usr/local/opt/icu4c/lib" >> $GITHUB_ENV
+        echo "CPPFLAGS=-I/usr/local/opt/icu4c/include" >> $GITHUB_ENV
         export TZ=GMT-3
         sudo systemsetup -gettimezone
         security create-keychain -p github macos-build.keychain
@@ -65,8 +61,6 @@ jobs:
         echo "${{ secrets.APPLE_DEVELOPER_CERTIFICATE_P12_BASE64 }}" | base64 --decode > certificate.p12
         security import certificate.p12 -k macos-build.keychain -P ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }} -T /usr/bin/codesign
         security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k github macos-build.keychain
-        echo "LDFLAGS=-L/usr/local/opt/icu4c/lib" >> $GITHUB_ENV
-        echo "CPPFLAGS=-I/usr/local/opt/icu4c/include" >> $GITHUB_ENV
 
     - name: Create Build Environment [ununtu all]
       shell: bash
@@ -77,11 +71,6 @@ jobs:
         sudo apt install libssl-dev curl libcups2-dev mesa-common-dev ^libxcb.* libglu1-mesa-dev libglfw3-dev libgles2-mesa-dev libfontconfig1-dev libudev-dev -y
         sudo apt install libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-dev libpci-dev libicu-dev -y
         sudo apt install libwebp-dev libzstd-dev libbsd-dev uuid-dev liblzma-dev libtiff-dev -y
-        # git clone --depth=1 https://github.com/BeamMW/qt5.15.2-static-${{env.OS_NAME}}.git ${{runner.workspace}}/qt5-static
-        # chmod +x ${{runner.workspace}}/qt5-static/bin/*
-        # sudo apt install qtbase5-dev qtdeclarative5-dev libqt5webengine5-dev qml-module-qtwebengine qttools5-dev-tools qml-module-qtquick-controls qtquickcontrols2-5-dev libqt5svg5-dev -y
-        # echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
-        # echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
 
     - name: Create Build Environment [ubuntu 16.04]
       shell: bash
@@ -96,9 +85,6 @@ jobs:
       run: |
         git clone --depth=1 https://github.com/BeamMW/libs.git c:/beam-libs
         echo "OPENSSL_ROOT_DIR=c:\beam-libs\openssl" >> $GITHUB_ENV
-        #git clone --depth=1 https://github.com/BeamMW/qt5.15.2-static-${{env.OS_NAME}}.git c:/qt5-static
-        #echo "QT5_ROOT_DIR=c:\qt5-static" >> $GITHUB_ENV
-        #echo "QML_IMPORT_PATH=c:\qt5-static\qml" >> $GITHUB_ENV
 
     - name: Download boost [ununtu all]
       shell: bash
@@ -128,21 +114,18 @@ jobs:
     - name: Configure CMake [macos-10.15]
       if: matrix.os == 'macos-10.15'
       run: |
-        # export PATH=${{runner.workspace}}/qt5-static/bin:$PATH
         cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
         #cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_SIGN_IDENTITY="${{secrets.MACOS_SIGN_IDENTITY}}" -DBEAM_HW_WALLET=Off .
 
     - name: Configure CMake [ununtu all]
       if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
-        # export PATH=${{runner.workspace}}/qt5-static/bin:$PATH
         cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
 
     - name: Configure CMake [windows]
       shell: bash
       if: matrix.os == 'windows-2019'
       run: |
-        # export PATH=/c/qt5-static/bin:$PATH
         cmake -G "Visual Studio 16 2019" -A x64 -DBOOST_ROOT=$BOOST_ROOT_1_72_0 -DOPENSSL_ROOT_DIR=/c/beam-libs/openssl -DCMAKE_BUILD_TYPE=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
 
     - name: Save version info
@@ -195,7 +178,8 @@ jobs:
         codesign --deep --force -v -s "${{secrets.MACOS_SIGN_IDENTITY}}" -o runtime --timestamp Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
     - name: Notarize [macos-10.15]
       shell: bash
-      if: false #matrix.os == 'macos-10.15'
+      if: false
+      # if: matrix.os == 'macos-10.15'
       env:
         MACOS_NOTARIZE_USER: ${{ secrets.MACOS_NOTARIZE_USER }}
         MACOS_NOTARIZE_PASS: ${{ secrets.MACOS_NOTARIZE_PASS }}
