@@ -55,7 +55,6 @@ jobs:
         # brew install qt5
         brew uninstall --force p7zip
         brew install boost
-        brew install icu4c
         export TZ=GMT-3
         sudo systemsetup -gettimezone
         security create-keychain -p github macos-build.keychain
