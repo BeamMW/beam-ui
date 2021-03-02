@@ -26,6 +26,7 @@ namespace beamui::applications
     Q_OBJECT
     public:
         explicit WebAPI_Beam(QObject *parent = nullptr);
+        Q_INVOKABLE QString chooseApi(const QString& version);
 
     //
     // Slots below are called by web in context of the UI thread
@@ -45,6 +46,7 @@ namespace beamui::applications
         void sendAPIResponse(const beam::wallet::json& result) override;
 
         // API should be called only in context of the reactor thread
+        uint32_t _currApiVersion = 0;
         beam::wallet::IWalletApi::Ptr _walletAPI;
     };
 }

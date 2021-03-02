@@ -106,10 +106,19 @@ ColumnLayout {
     }
 
     function launchApp(app) {
+        control.activeApp = app
+
+        var apiVersion = app.api_version || "current";
+        var apiErr = webapiBEAM.chooseApi(apiVersion)
+
+        if (apiErr) {
+            control.errorMessage = apiErr
+            return
+        }
+
         control.errorMessage = ""
         webView.visible = false
         webView.url = app.url
-        control.activeApp = app
     }
 
     Item {
@@ -274,10 +283,11 @@ ColumnLayout {
         if (viewModel.devAppName) {
             arr = arr || []
             arr.unshift({
-                "name": viewModel.devAppName,
                 //% "This is your dev application"
-                "description": qsTrId("apps-devapp"),
-                "url": viewModel.devAppUrl
+                "description":  qsTrId("apps-devapp"),
+                "name":         viewModel.devAppName,
+                "url":          viewModel.devAppUrl,
+                "api_version":  viewModel.devAppApiVer
             })
             return arr
         }

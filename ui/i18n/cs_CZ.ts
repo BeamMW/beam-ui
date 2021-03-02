@@ -3023,5 +3023,11 @@ Update your settings and try again.</source>
         <extracomment>UTXO type Shielded</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message id="apps-bad-api-version">
+        <source>Unsupported API version requested: %1</source>
+        <oldsource>Unsupported API version requested: %1
+</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

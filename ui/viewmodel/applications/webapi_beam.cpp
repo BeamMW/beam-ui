@@ -34,6 +34,22 @@ namespace beamui::applications {
     WebAPI_Beam::WebAPI_Beam(QObject *parent)
         : QObject(parent)
     {
+    }
+
+    QString WebAPI_Beam::chooseApi(const QString& version)
+    {
+        auto newVer = IWalletApi::SApiVer2NApiVer(version.toStdString());
+        if (_currApiVersion == newVer)
+        {
+            return QString();
+        }
+
+        if (!IWalletApi::ValidateAPIVersion(version.toStdString()))
+        {
+            //% "Unsupported API version requested: %1"
+            return qtTrId("apps-bad-api-version").arg(version);
+        }
+
         IWalletApi::InitData data;
 
         data.contracts = AppModel::getInstance().getWalletModel()->getAppsShaders();
@@ -41,7 +57,10 @@ namespace beamui::applications {
         data.wallet    = AppModel::getInstance().getWalletModel()->getWallet();
         data.walletDB  = AppModel::getInstance().getWalletDB();
 
-        _walletAPI = IWalletApi::CreateInstance(ApiVerCurrent, *this, data);
+        _walletAPI = IWalletApi::CreateInstance(version.toStdString(), *this, data);
+        _currApiVersion = newVer;
+
+        return QString();
     }
 
     void WebAPI_Beam::callWalletApi(const QString& request)

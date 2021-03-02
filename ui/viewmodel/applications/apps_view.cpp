@@ -58,4 +58,10 @@ namespace beamui::applications {
         auto& settings = AppModel::getInstance().getSettings();
         return settings.getAppsUrl();
     }
+
+    QString AppsViewModel::getDevAppApiVer() const
+    {
+        auto& settings = AppModel::getInstance().getSettings();
+        return settings.getDevAppApiVer();
+    }
 }

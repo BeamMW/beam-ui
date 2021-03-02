@@ -54,8 +54,9 @@ namespace
     const char* kBeamNewsActive = "notifications/beam_news";
     const char* kTxStatusActive = "notifications/tx_status";
 
-    const char* kDevAppURL  = "devapp/url";
-    const char* kDevAppName = "devapp/name";
+    const char* kDevAppURL    = "devapp/url";
+    const char* kDevAppName   = "devapp/name";
+    const char* kDevAppApiVer = "devapp/api_version";
 
     const char* kMpAnonymitySet = "max_privacy/anonymity_set";
 
@@ -639,6 +640,11 @@ QString WalletSettings::getDevBeamAppName()
     return m_data.value(kDevAppName).toString();
 }
 
+QString WalletSettings::getDevAppApiVer()
+{
+    return m_data.value(kDevAppApiVer).toString();
+}
+
 QString WalletSettings::getExplorerUrl() const
 {
     #ifdef BEAM_BEAMX
@@ -668,13 +674,13 @@ QString WalletSettings::getFaucetUrl() const
 QString WalletSettings::getAppsUrl() const
 {
     #ifdef BEAM_BEAMX
-    return "http://3.136.182.25:80/app/appslist.json";
+    return "";
     #elif defined(BEAM_TESTNET)
     return "";
     #elif defined(BEAM_MAINNET)
     return "";
     #else
-    return "";
+    return "http://3.136.182.25:80/app/appslist.json";
     #endif
 }
 
