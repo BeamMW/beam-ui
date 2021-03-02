@@ -59,10 +59,10 @@ Item  {
             name: "normal"
             PropertyChanges {target: text_label; font.weight: showLed ? Font.Normal : Font.Bold}
             PropertyChanges {target: text_label; font.styleName: showLed ? "Regular" : "Bold"}
+            PropertyChanges {target: text_label; color: Style.content_secondary}
         },
         State {
             name: "active"
-
             PropertyChanges {target: led; visible: showLed}
             PropertyChanges {target: text_label; opacity: 1.0}
             PropertyChanges {target: text_label; color: Style.content_main}
