@@ -90,6 +90,7 @@ Control {
                     label:  qsTrId("general-amount")
                     onClicked: stateLayout.state = "amount"
                     visible: amountCtrl.hasTip
+                    inactiveColor: Style.content_secondary
                 }
                 TxFilter {
                     id: infoTab
@@ -97,6 +98,7 @@ Control {
                     label:  qsTrId("general-asset-info")
                     onClicked: stateLayout.state = "ainfo"
                     visible: control.isAsset
+                    inactiveColor: Style.content_secondary
                 }
             }
 
