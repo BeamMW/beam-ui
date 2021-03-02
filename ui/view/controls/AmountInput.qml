@@ -31,10 +31,14 @@ ColumnLayout {
         append(Currency.CurrBitcoin)
         append(Currency.CurrLitecoin)
         append(Currency.CurrQtum)
-        append(Currency.CurrBitcoinCash)
-        append(Currency.CurrBitcoinSV)
+        // TODO disable BCH
+        //append(Currency.CurrBitcoinCash)
         append(Currency.CurrDogecoin)
         append(Currency.CurrDash)
+        append(Currency.CurrEthereum)
+        append(Currency.CurrDai)
+        append(Currency.CurrUsdt)
+        append(Currency.CurrWrappedBTC)
         return result
     }
 
