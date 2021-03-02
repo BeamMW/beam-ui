@@ -14,13 +14,14 @@
 #pragma once
 
 #include "model/app_model.h"
-#include "apps_api_client.h"
 #include "shaders_manager.h"
+#include "wallet/api/i_wallet_api.h"
 
-namespace beamui::applications {
+namespace beamui::applications
+{
     class WebAPI_Beam
         : public QObject
-        , public AppsApiClient::IHandler
+        , public beam::wallet::IWalletApiHandler
     {
     Q_OBJECT
     public:
@@ -40,14 +41,10 @@ namespace beamui::applications {
         void callWalletApiResult(const QString& result);
 
     private:
-        //
-        // ApiClient should be called only in context of reactor thread
-        //
-        typedef std::shared_ptr<AppsApiClient> ApiClientPtr;
-        typedef std::weak_ptr<AppsApiClient> WeakApiClientPtr;
-        ApiClientPtr _apiClient;
-
         // This callback is called in the reactor thread
-        void onAPIResult(const std::string&) override;
+        void sendAPIResponse(const beam::wallet::json& result) override;
+
+        // API should be called only in context of the reactor thread
+        beam::wallet::IWalletApi::Ptr _walletAPI;
     };
 }
