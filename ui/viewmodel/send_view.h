@@ -121,8 +121,6 @@ public:
     QString getFeeRate() const;
 
     bool isNeedExtractShieldedCoins() const;
-    void setNeedExtractShieldedCoins(bool val);
-
     bool getIsNewToken() const;
     QString getNewTokenMsg() const;
 

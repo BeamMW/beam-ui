@@ -356,43 +356,30 @@ bool SendViewModel::isEnough() const
 
 void SendViewModel::onSelectionCalculated(const beam::wallet::CoinsSelectionInfo& selectionRes)
 {
-    if ((selectionRes.m_requestedSum != m_Csi.m_requestedSum) ||
-        (selectionRes.m_assetID != m_Csi.m_assetID))
+    if (selectionRes.m_requestedSum != m_Csi.m_requestedSum ||  selectionRes.m_assetID != m_Csi.m_assetID)
+    {
         return;
+    }
 
-    bool bWasEnough = m_Csi.m_isEnought;
     m_Csi = selectionRes;
 
-    if (!m_Csi.m_isEnought || !bWasEnough)
+    if (!m_Csi.m_isEnought && _maxPossible)
     {
-        emit sendAmountChanged();
+        m_Csi.m_requestedSum = m_Csi.get_NettoValue();
+        m_Csi.m_isEnought = true;
+        _maxPossible = false;
     }
 
-    if (m_Csi.m_assetID == beam::Asset::s_BeamID)
-    {
-        if (!m_Csi.m_isEnought && _maxPossible)
-        {
-            m_Csi.m_requestedSum = m_Csi.get_NettoValue();
-            emit sendAmountChanged();
-            _maxPossible = false;
-        }
-    }
-
+    emit sendAmountChanged();
     emit minFeeChanged();
+    emit availableChanged();
+    emit canSendChanged();
+    emit isEnoughChanged();
 
     if (!_feeChangedByUi)
     {
         emit feeGrothesChanged();
     }
-
-    emit availableChanged();
-    emit canSendChanged();
-    emit isEnoughChanged();
-}
-
-void SendViewModel::setNeedExtractShieldedCoins(bool val)
-{
-    // TODO: remove
 }
 
 void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
