@@ -30,6 +30,8 @@ Control {
     property string shortDesc
     property string longDesc
 
+    readonly property bool hasAmountTip: amountCtrl.hasTip || control.maturingTotal != "0" || control.change != "0"
+
     padding: 0
     leftPadding: 20
     rightPadding: 20
@@ -69,7 +71,7 @@ Control {
             spacing: 0
             id: stateLayout
 
-            state: amountCtrl.hasTip ? "amount" : "ainfo"
+            state: control.hasAmountTip ? "amount" : "ainfo"
             states: [
                 State {
                     name: "amount"
@@ -89,7 +91,7 @@ Control {
                     //% "Amount"
                     label:  qsTrId("general-amount")
                     onClicked: stateLayout.state = "amount"
-                    visible: amountCtrl.hasTip
+                    visible: control.hasAmountTip
                     inactiveColor: Style.content_secondary
                 }
                 TxFilter {
@@ -150,8 +152,8 @@ Control {
                     visible: maturingCtrl.visible
 
                     font {
-                       styleName:  "DemiBold"
-                       weight:     Font.DemiBold
+                       styleName:  "Light"
+                       weight:     Font.Light
                        pixelSize:  13
                     }
                 }
@@ -439,7 +441,7 @@ Control {
             spacing:           12
             iconSize:          Qt.size(24, 24)
             copyMenuEnabled:   true
-            showDrop:          amountCtrl.hasTip || control.isAsset
+            showDrop:          control.hasAmountTip || control.isAsset
             dropSize:          Qt.size(8, 4.8)
             tipCtrl:           assetTip
             font.styleName:    "Normal"
