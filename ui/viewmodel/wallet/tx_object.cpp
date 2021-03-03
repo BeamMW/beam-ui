@@ -92,30 +92,22 @@ TxObject::TxObject(TxDescription tx, beam::wallet::ExchangeRate::Currency second
     , _tx(std::move(tx))
     , _secondCurrency(secondCurrency)
 {
+
+    Height h = tx.m_minHeight;
+    _contractFee = std::max(_tx.m_fee, Transaction::FeeSettings::get(h).get_DefaultStd());
+
     if (_tx.m_txType == TxType::Contract)
     {
-        std::map<beam::Asset::ID, beam::AmountSigned> assets;
-
-        visitContractData([this, &assets](const beam::bvm2::ContractInvokeData &data) {
-            for (const auto &spend: data.m_Spend)
-            {
-                // TODO: this potentially can overflow
-                assets[spend.first] -= spend.second;
-                _contractAmount -= spend.second;
-                _contractFee += data.m_Fee;
-            }
+        visitContractData([this, h](const beam::bvm2::ContractInvokeData &data) {
+            _contractSpend += data.m_Spend;
+            _contractFee += data.get_FeeMin(h);
         });
 
-        if (_contractAmount > 0)
-        {
-            _contractAmount -= _contractFee;
-        }
-
-        for (const auto& info: assets)
+        for (const auto& info: _contractSpend)
         {
             _assetsList.push_back(info.first);
             _assetAmounts.push_back(AmountToUIString(std::abs(info.second)));
-            _assetAmountsIncome.push_back(info.second >= 0);
+            _assetAmountsIncome.push_back(info.second <= 0);
             _assetRates.push_back(getRate(info.first));
         }
     }
@@ -148,7 +140,12 @@ bool TxObject::isIncome() const
 {
     if (isContractTx())
     {
-        return _contractAmount > 0;
+        for (const auto& info : _contractSpend) {
+            if (info.second > 0)
+                return false;
+        }
+
+        return true;
     }
     else
     {
@@ -195,7 +192,8 @@ QString TxObject::getAmountGeneral() const
 {
     if (isContractTx())
     {
-        return AmountToUIString(std::abs(_contractAmount));
+        AmountSigned val = _contractSpend.empty() ? 0 : _contractSpend.begin()->second;
+        return AmountToUIString(std::abs(val));
     }
     else
     {

@@ -91,7 +91,7 @@ protected:
     void visitContractData(const CDVisitor&) const;
 
     beam::Amount _contractFee = 0UL;
-    beam::AmountSigned _contractAmount = 0UL;
+    beam::bvm2::FundsMap _contractSpend;
 
     std::vector<beam::Asset::ID> _assetsList;
     std::vector<QString>         _assetAmounts;
