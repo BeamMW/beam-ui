@@ -223,7 +223,7 @@ void ReceiveViewModel::updateTransactionToken()
     }
     else
     {
-        _walletModel.getAsync()->generateVouchers(_receiverAddress.m_OwnID, 1, [this](ShieldedVoucherList v) mutable
+        _walletModel.getAsync()->generateVouchers(_receiverAddress.m_OwnID, 1, [this](const ShieldedVoucherList& v) mutable
         {
             if (!v.empty() && isShieldedTx())
             {
@@ -285,7 +285,7 @@ void ReceiveViewModel::generateOfflineAddress()
         _receiverOfflineAddress.setExpiration(beam::wallet::WalletAddress::ExpirationStatus::Never);
 
         // add a vouchers
-        _walletModel.getAsync()->generateVouchers(_receiverOfflineAddress.m_OwnID, 10, [this](ShieldedVoucherList vouchers)
+        _walletModel.getAsync()->generateVouchers(_receiverOfflineAddress.m_OwnID, 10, [this](const ShieldedVoucherList& vouchers)
         {
             if (!vouchers.empty())
             {
