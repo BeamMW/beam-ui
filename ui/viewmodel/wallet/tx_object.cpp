@@ -173,14 +173,6 @@ const QString& TxObject::getComment() const
             // TODO:DEX just temporary
             comment = "DEX transaction";
         }
-        else
-        {
-            if (comment.isEmpty())
-            {
-                //% "No comment provided"
-                comment = qtTrId("tx-no-comment");
-            }
-        }
 
         _comment = comment;
     }
