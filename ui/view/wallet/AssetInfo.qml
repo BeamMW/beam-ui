@@ -447,6 +447,7 @@ Control {
             font.styleName:    "Normal"
             font.weight:       Font.Normal
             font.pixelSize:    16
+            showTip:           true
         }
     }
 

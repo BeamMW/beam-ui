@@ -17,7 +17,7 @@ Control {
     property string  color:               Style.content_main
     property bool    error:               false
     property bool    showZero:            true
-    property bool    showTip:             true
+    property bool    showTip:             false
     property int     rateFontSize:        10
     property string  iconSource:          ""
     property size    iconSize:            Qt.size(22, 22)
