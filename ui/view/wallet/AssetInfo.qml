@@ -29,6 +29,8 @@ Control {
     property string smallestUnitName
     property string shortDesc
     property string longDesc
+    property string siteUrl
+    property string whitePaper
 
     readonly property bool hasAmountTip: amountCtrl.hasTip || control.maturingTotal != "0" || control.change != "0"
 
@@ -84,6 +86,12 @@ Control {
                         text: longText
                         color: Style.content_main
                         visible: !!this.text
+                        linkEnabled: true
+                        textFormat: Text.RichText
+
+                        onLinkActivated: {
+                            Utils.openExternalWithConfirmation(link)
+                        }
 
                         font {
                             pixelSize: 13
@@ -422,6 +430,48 @@ Control {
                     sourceComponent:           longTipText
                     Layout.maximumWidth:       240
                     Layout.maximumHeight:      70
+                }
+
+                SFText {
+                    visible: !!control.siteUrl
+
+                    //% "Website"
+                    text:  qsTrId("info-asset-site")
+                    color: assetTip.defTextColor
+
+                    font {
+                        pixelSize: 13
+                        styleName: "Light"
+                        weight:    Font.Light
+                    }
+                }
+
+                Loader {
+                    property string longText:  [Style.linkStyle, "<a href='", control.siteUrl, "'>", control.siteUrl, "</a>"].join("")
+                    sourceComponent:           longTipText
+                    Layout.maximumWidth:       240
+                    Layout.maximumHeight:      20
+                }
+
+                SFText {
+                    visible: !!control.siteUrl
+
+                    //% "Whitepaper"
+                    text:  qsTrId("info-asset-paper")
+                    color: assetTip.defTextColor
+
+                    font {
+                        pixelSize: 13
+                        styleName: "Light"
+                        weight:    Font.Light
+                    }
+                }
+
+                Loader {
+                    property string longText:  [Style.linkStyle, "<a href='", control.whitePaper, "'>", control.whitePaper, "</a>"].join("")
+                    sourceComponent:           longTipText
+                    Layout.maximumWidth:       240
+                    Layout.maximumHeight:      20
                 }
             }
         }}

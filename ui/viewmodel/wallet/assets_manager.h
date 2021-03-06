@@ -35,6 +35,8 @@ public:
     QString getLongDesc(beam::Asset::ID);
     QColor  getColor(beam::Asset::ID);
     QColor  getSelectionColor(beam::Asset::ID);
+    QString getSiteUrl(beam::Asset::ID);
+    QString getPaperUrl(beam::Asset::ID);
 
 signals:
     void assetInfo(beam::Asset::ID assetId);

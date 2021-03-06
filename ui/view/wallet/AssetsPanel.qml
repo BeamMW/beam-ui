@@ -120,6 +120,8 @@ Control {
                         smallestUnitName: model.smallestUnitName
                         shortDesc:        model.shortDesc
                         longDesc:         model.longDesc
+                        siteUrl:          model.siteUrl
+                        whitePaper:       model.whitePaper
 
                         onClicked: function () {
                             if (control.selectedIdx == model.index) {

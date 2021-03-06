@@ -196,6 +196,26 @@ QString AssetsManager::getLongDesc(beam::Asset::ID id)
     return desc;
 }
 
+QString AssetsManager::getSiteUrl(beam::Asset::ID id)
+{
+    QString desc;
+    if (auto meta = getAsset(id))
+    {
+        desc = meta->GetSiteUrl().c_str();
+    }
+    return desc;
+}
+
+QString AssetsManager::getPaperUrl(beam::Asset::ID id)
+{
+    QString desc;
+    if (auto meta = getAsset(id))
+    {
+        desc = meta->GetPaperUrl().c_str();
+    }
+    return desc;
+}
+
 QColor AssetsManager::getColor(beam::Asset::ID id)
 {
     if (id < 1)

@@ -48,6 +48,8 @@ QHash<int, QByteArray> AssetsList::roleNames() const
         {static_cast<int>(Roles::RSmallestUnitName),"smallestUnitName"},
         {static_cast<int>(Roles::RShortDesc),       "shortDesc"},
         {static_cast<int>(Roles::RLongDesc),        "longDesc"},
+        {static_cast<int>(Roles::RSiteUrl),            "siteUrl"},
+        {static_cast<int>(Roles::RWhitePaper),         "whitePaper"},
     };
     return roles;
 }
@@ -121,6 +123,10 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
             return _amgr->getShortDesc(assetId);
         case Roles::RLongDesc:
             return _amgr->getLongDesc(assetId);
+        case Roles::RSiteUrl:
+            return _amgr->getSiteUrl(assetId);
+        case Roles::RWhitePaper:
+            return _amgr->getPaperUrl(assetId);
         case Roles::RRate:
             {
                 if (assetId < 1)

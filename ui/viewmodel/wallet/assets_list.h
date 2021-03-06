@@ -44,6 +44,8 @@ public:
         RSmallestUnitName,
         RShortDesc,
         RLongDesc,
+        RSiteUrl,
+        RWhitePaper,
     };
 
     Q_ENUM(Roles)
