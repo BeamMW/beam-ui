@@ -11,13 +11,16 @@ ComboBox {
     id: control
     
     spacing: 8
+    property int dropSpacing: 20
     property int fontPixelSize: 12
+    property int dropFontPixelSize: 13
     property double fontLetterSpacing: 0
     property string color: Style.content_main
     property string underlineColor: color
     property bool enableScroll: false
     property int textMaxLenDrop: 0
     property int textMaxLenDisplay: 0
+    property int dropOffset: 0
 
     property var modelWidth: control.width
     property var calculatedWidth: Math.max(control.width, modelWidth)
@@ -28,7 +31,7 @@ ComboBox {
             family:        "SF Pro Display"
 		    styleName:     "Regular"
 		    weight:        Font.Normal
-            pixelSize:     control.fontPixelSize
+            pixelSize:     control.dropFontPixelSize
             letterSpacing: control.fontLetterSpacing
         }
     }
@@ -36,6 +39,7 @@ ComboBox {
     delegate: ItemDelegate {
         id: itemDelegate
         width: calculatedWidth
+        padding: 0
 
         property var iconW: Array.isArray(control.model) ? modelData["iconWidth"] : model["iconWidth"]
         property var iconH: Array.isArray(control.model) ? modelData["iconHeight"] : model["iconHeight"]
@@ -51,8 +55,8 @@ ComboBox {
             }
             Item {
                 visible: iconW > 0
-                width: iconW / 2.5
-                height: parent.height
+                width:   10
+                height:  parent.height
             }
             SFText {
                 text: {
@@ -62,44 +66,35 @@ ComboBox {
                     }
                     return Utils.limitText(text, control.textMaxLenDrop)
                 }
-                color: Style.content_main
+                color: highlighted ? Style.active : Style.content_main
                 elide: Text.ElideMiddle
-                font.pixelSize: fontPixelSize
+                font.pixelSize: dropFontPixelSize
                 font.letterSpacing: fontLetterSpacing
+                font.styleName: highlighted ? "DemiBold" : "Normal"
+                font.weight: highlighted ? Font.DemiBold : Font.Normal
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
 
         highlighted: control.highlightedIndex === index
-
-        background: Rectangle {
-            implicitWidth: 100
-            implicitHeight: 20
-            opacity: enabled ? 1 : 0.3
-            color:itemDelegate.highlighted ? Style.content_secondary : Style.background_popup
-        }
-    }
-
-    ItemDelegate {
-        id: forCalc
-        visible: false
+        background: Item {}
     }
 
     function recalcSize() {
         if (model) {
-            for(var i = 0; i < model.length; i++){
+            for(var i = 0; i < model.length; i++) {
                 textMetrics.text = Utils.limitText(control.textRole ? model[i][control.textRole] : model[i], control.textMaxLenDrop)
                 var iconW = model[i]["iconWidth"] || 0
                 modelWidth = Math.max(textMetrics.width +
-                                      forCalc.leftPadding +
-                                      forCalc.rightPadding +
-                                      iconW +
-                                      iconW / 2.5, modelWidth)
+                                      //6 + // left padding
+                                      //6 + // right padding
+                                      iconW + 10, // spacing between icon & text
+                                      modelWidth)
             }
         }
     }
 
-    onModelChanged: recalcSize
+    onModelChanged: recalcSize()
 
     indicator: SvgImage {
         source: "qrc:/assets/icon-down.svg"
@@ -124,7 +119,7 @@ ComboBox {
 
         Item {
             visible: iconW > 0
-            width: iconW / 4
+            width:  10
             height: parent.height
         }
 
@@ -135,6 +130,7 @@ ComboBox {
             font.pixelSize: fontPixelSize
             anchors.verticalCenter: parent.verticalCenter
         }
+
         Item {
             width: control.indicator.width + control.spacing
             height: parent.height
@@ -143,8 +139,8 @@ ComboBox {
 
     background: Item {
         Rectangle {
-            width: control.width
-            height: control.activeFocus || control.hovered ? 1 : 1
+            width:  control.width
+            height: 1
             y: control.height - 1
             color: control.underlineColor
             opacity: (control.activeFocus || control.hovered)? 0.3 : 0.1
@@ -152,11 +148,16 @@ ComboBox {
     }
 
    popup: Popup {
-        onAboutToShow: recalcSize()
+        onAboutToShow: recalcSize
 
-        y: control.height - 1
-        width: calculatedWidth
-        padding: 1
+        y: control.height + 7
+        x: control.parent.mapToItem(parent, control.x, 0).x + control.width / 2 - width / 2 + control.dropOffset
+        width: calculatedWidth + leftPadding + rightPadding
+
+        topPadding:    20
+        bottomPadding: 20
+        leftPadding:   20
+        rightPadding:  20
 
         contentItem: ColumnLayout {
             spacing: 0
@@ -164,31 +165,19 @@ ComboBox {
                 id: listView
                 Layout.fillWidth: true
                 clip: true
+                spacing: control.dropSpacing
                 implicitHeight: enableScroll ? Math.min(350, contentHeight) : contentHeight
                 model: control.popup.visible ? control.delegateModel : null
                 currentIndex: control.highlightedIndex
-                 ScrollBar.vertical: ScrollBar {
+                ScrollBar.vertical: ScrollBar {
                     policy: enableScroll && listView.contentHeight > 350 ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
                 }
             }
-            Item {
-                Layout.fillWidth: true
-                Layout.minimumHeight:10
-            }
         }
 
-        background: Item {
-            Rectangle {
-                color: Style.background_popup
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: control.height
-            }
-            Rectangle {
-                anchors.fill: parent
-                color: Style.background_popup
-                radius: 10
-            }
+        background: Rectangle {
+            anchors.fill: parent
+            color: Style.background_popup
         }
     }
 }

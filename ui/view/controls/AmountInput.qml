@@ -142,9 +142,11 @@ ColumnLayout {
             id:                  currCombo
             Layout.topMargin:    22
             Layout.minimumWidth: 95
+            dropSpacing:         18
             spacing:             0
-            fontPixelSize:       24
-            fontLetterSpacing:   0.6
+            fontPixelSize:       20
+            dropFontPixelSize:   14
+            dropOffset:          15
             currentIndex:        control.currencyIdx
             color:               error.length ? Style.validator_error : control.currColor
             underlineColor:      "transparent"

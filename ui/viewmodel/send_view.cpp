@@ -747,8 +747,8 @@ QList<QMap<QString, QVariant>> SendViewModel::getAssetsList() const
         asset.insert("rateUnit", rateUnit);
         asset.insert("assetId", static_cast<int>(assetId));
         asset.insert("icon", _amgr->getIcon(assetId));
-        asset.insert("iconWidth", 25);
-        asset.insert("iconHeight", 25);
+        asset.insert("iconWidth", 22);
+        asset.insert("iconHeight", 22);
 
         result.push_back(asset);
     }

@@ -285,8 +285,8 @@ ColumnLayout {
                     //
                     Panel {
                         //% "Amount"
-                        title:                   qsTrId("general-amount")
-                        Layout.fillWidth:        true
+                        title: qsTrId("general-amount")
+                        Layout.fillWidth: true
 
                         content: RowLayout {
                             spacing: 7
