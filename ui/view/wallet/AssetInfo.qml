@@ -67,6 +67,34 @@ Control {
             propagateComposedEvents: true
         }
 
+        Component {
+            id: longTipText
+
+            ScrollView {
+                clip: true
+                ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+                ScrollBar.vertical.policy: contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+
+                RowLayout {
+                    SFText {
+                        id: textCrtl
+                        Layout.maximumWidth: 240
+                        wrapMode: Text.Wrap
+
+                        text: longText
+                        color: Style.content_main
+                        visible: !!this.text
+
+                        font {
+                            pixelSize: 13
+                            styleName: "Normal"
+                            weight:    Font.Normal
+                        }
+                    }
+                }
+            }
+        }
+
         contentItem: Item { ColumnLayout {
             spacing: 0
             id: stateLayout
@@ -315,7 +343,7 @@ Control {
                 SFText {
                     Layout.alignment: Qt.AlignTop
 
-                    //% "Unit Name"
+                    //% "Unit name"
                     text:  qsTrId("info-asset-unit")
                     color: assetTip.defTextColor
 
@@ -326,25 +354,17 @@ Control {
                     }
                 }
 
-                SFText {
-                    Layout.maximumWidth: 240
-                    wrapMode: Text.Wrap
-
-                    text: control.unitName
-                    color: Style.content_main
-                    visible: !!this.text
-
-                    font {
-                        pixelSize: 13
-                        styleName: "Normal"
-                        weight:    Font.Normal
-                    }
+                Loader {
+                    property string longText:  control.unitName
+                    sourceComponent:           longTipText
+                    Layout.maximumWidth:       240
+                    Layout.maximumHeight:      35
                 }
 
                 SFText {
-                    visible: smallestCtrl.visible
+                    visible: !!control.smallestUnitName
 
-                    //% "Smallest unit"
+                    //% "Smallest unit name"
                     text:  qsTrId("info-asset-smallest")
                     color: assetTip.defTextColor
 
@@ -355,27 +375,18 @@ Control {
                     }
                 }
 
-                SFText {
-                    id: smallestCtrl
-                    Layout.maximumWidth: 240
-                    wrapMode: Text.Wrap
-
-                    text:  "Ca"
-                    color: Style.content_main
-                    visible: !!this.text
-
-                    font {
-                        pixelSize: 13
-                        styleName: "Normal"
-                        weight:    Font.Normal
-                    }
+                Loader {
+                    property string longText:  control.smallestUnitName
+                    sourceComponent:           longTipText
+                    Layout.maximumWidth:       240
+                    Layout.maximumHeight:      35
                 }
 
                 SFText {
-                    visible: shortDescCtrl.visible
+                    visible: !!control.shortDesc
 
                     //% "Short description"
-                    text:  control.shortDesc.length ? qsTrId("info-asset-short") : ""
+                    text:  qsTrId("info-asset-short")
                     color: assetTip.defTextColor
 
                     font {
@@ -385,24 +396,15 @@ Control {
                     }
                 }
 
-                SFText {
-                    id: shortDescCtrl
-                    Layout.maximumWidth: 240
-                    wrapMode: Text.Wrap
-
-                    text: control.shortDesc
-                    color: Style.content_main
-                    visible: !!this.text
-
-                    font {
-                        pixelSize: 13
-                        styleName: "Normal"
-                        weight:    Font.Normal
-                    }
+                Loader {
+                    property string longText:  control.shortDesc
+                    sourceComponent:           longTipText
+                    Layout.maximumWidth:       240
+                    Layout.maximumHeight:      70
                 }
 
                 SFText {
-                    visible: longDescCtrl.visible
+                    visible: !!control.longDesc
 
                     //% "Long description"
                     text:  qsTrId("info-asset-long")
@@ -415,20 +417,11 @@ Control {
                     }
                 }
 
-                SFText {
-                    id: longDescCtrl
-                    Layout.maximumWidth: 240
-                    wrapMode: Text.Wrap
-                    visible: !!this.text
-
-                    text: control.longDesc
-                    color: Style.content_main
-
-                    font {
-                        pixelSize: 13
-                        styleName: "Normal"
-                        weight:    Font.Normal
-                    }
+                Loader {
+                    property string longText:  control.longDesc
+                    sourceComponent:           longTipText
+                    Layout.maximumWidth:       240
+                    Layout.maximumHeight:      70
                 }
             }
         }}

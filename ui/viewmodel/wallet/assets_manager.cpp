@@ -118,6 +118,11 @@ QString AssetsManager::getUnitName(beam::Asset::ID id, bool shorten)
         unitName = meta->GetUnitName().c_str();
     }
 
+    if (unitName.isEmpty())
+    {
+        unitName = "ASSET";
+    }
+
     const int kMaxUnitLen = 6;
     if (shorten && unitName.length() > kMaxUnitLen)
     {
@@ -162,6 +167,12 @@ QString AssetsManager::getSmallestUnitName(beam::Asset::ID id)
     {
         name = meta->GetNthUnitName().c_str();
     }
+
+    if (name.isEmpty())
+    {
+        name = "AGROTH";
+    }
+
     return name;
 }
 
@@ -189,7 +200,7 @@ QColor AssetsManager::getColor(beam::Asset::ID id)
 {
     if (id < 1)
     {
-        return QColor( 167, 129, 167, 252);
+        return QColor( 0, 246, 210, 252);
     }
 
     const auto it = _info.find(id);

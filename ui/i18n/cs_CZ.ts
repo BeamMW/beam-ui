@@ -2915,10 +2915,6 @@ Update your settings and try again.</source>
         <source>Multiple assets</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="tx-no-comment">
-        <source>No comment provided</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="general-total value">
         <source>Total value</source>
         <translation type="unfinished"></translation>
@@ -2940,7 +2936,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="info-asset-smallest">
-        <source>Smallest unit</source>
+        <source>Smallest unit name</source>
+        <oldsource>Smallest unit</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="info-asset-id">
