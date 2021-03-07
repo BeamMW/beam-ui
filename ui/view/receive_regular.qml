@@ -130,51 +130,64 @@ ColumnLayout {
                     Layout.fillWidth:   true
                     Layout.preferredWidth: 400
                     spacing:            10
+
                     Panel {
-                        //% "Address Type"
-                        title:                   qsTrId("general-address-type")
-                        Layout.fillWidth:        true
-                        content: 
-                        ColumnLayout {
+                        //% "Transaction type"
+                        title: qsTrId("general-tx-type")
+                        Layout.fillWidth: true
+
+                        content: ColumnLayout {
                             spacing: 20
-                            id:     addressType
+                            id: addressType
                             property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
+
                             Pane {
-                                padding:    2
-                                //visible:    parent.isShieldedSupported
+                                padding: 2
                                 background: Rectangle {
-                                    color: Style.table_header
-                                    radius: 10
-                                    border.width: 1
-                                    border.color: addressType.isShieldedSupported ? Style.active : Style.content_secondary
+                                    color:  Qt.rgba(1, 1, 1, 0.1)
+                                    radius: 16
                                 }
-                                ButtonGroup { id: txTypeGroup }
+                                ButtonGroup {id: txTypeGroup}
                                 RowLayout {
                                     spacing: 0
                                     CustomButton {
-                                        Layout.preferredHeight: 18
-                                        id:                 regularCheck
+                                        Layout.preferredHeight: 30
+                                        Layout.preferredWidth: maxPrivacyCheck.width
+                                        id: regularCheck
+
                                         //% "Regular"
                                         text:               qsTrId("tx-regular")
-                                        palette.buttonText: Style.content_main
                                         ButtonGroup.group:  txTypeGroup
                                         checkable:          true
-                                        checked: !viewModel.isShieldedTx
+                                        hasShadow:          false
+                                        checked:            !viewModel.isShieldedTx
+                                        radius:             16
+                                        border.width:       1
+                                        border.color:       checked ? Style.active : "transparent"
+                                        palette.button:     checked ? Qt.rgba(0, 252/255, 207/255, 0.1) : "transparent"
+                                        palette.buttonText: checked ? Style.active : Style.content_secondary
+
                                         onToggled: {
                                             viewModel.isShieldedTx = false;
                                             viewModel.isPermanentAddress = false;
                                         }
                                     }
                                     CustomButton {
-                                        Layout.preferredHeight: 18
-                                        id:                 maxPrivacyCheck
+                                        Layout.preferredHeight: 30
+                                        Layout.minimumWidth: 137
+                                        id: maxPrivacyCheck
                                         //% "Max privacy"
                                         text:               qsTrId("tx-max-privacy")
-                                        palette.buttonText: addressType.isShieldedSupported ? Style.content_main : Style.content_secondary
                                         ButtonGroup.group:  txTypeGroup
                                         checkable:          true
                                         checked:            viewModel.isShieldedTx
                                         enabled:            addressType.isShieldedSupported
+                                        hasShadow:          false
+                                        radius:             16
+                                        border.width:       1
+                                        border.color:       checked ? Style.active : "transparent"
+                                        palette.button:     checked ? Qt.rgba(0, 252/255, 207/255, 0.1) : "transparent"
+                                        palette.buttonText: checked ? Style.active : Style.content_secondary
                                         onToggled: {
                                             viewModel.isShieldedTx = true;
                                             viewModel.isPermanentAddress = true;
@@ -196,6 +209,8 @@ ColumnLayout {
                             
                         }
                     }
+
+
                     //
                     // Requested amount
                     //

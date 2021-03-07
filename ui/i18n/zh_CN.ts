@@ -2320,10 +2320,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>More details</source>
         <translation>更多详细信息</translation>
     </message>
-    <message id="general-address-type">
-        <source>Address Type</source>
-        <translation>地址类型</translation>
-    </message>
     <message id="qr-code">
         <source>QR Code</source>
         <translation>二维码</translation>
@@ -2959,7 +2955,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="info-asset-unit">
-        <source>Unit Name</source>
+        <source>Unit name</source>
+        <oldsource>Unit Name</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="info-asset-short">
@@ -3038,6 +3035,18 @@ Update your settings and try again.</source>
         <source>Unsupported API version requested: %1</source>
         <oldsource>Unsupported API version requested: %1
 </oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-site">
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-paper">
+        <source>Whitepaper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-tx-type">
+        <source>Transaction type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

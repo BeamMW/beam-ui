@@ -16,7 +16,6 @@
         <file>controls/TxFilter.qml</file>
         <file>controls/TableItem.qml</file>
         <file>controls/ContextMenu.qml</file>
-        <file>controls/DefaultButton.qml</file>
         <file>controls/EditAddress.qml</file>
         <file>controls/ExpandableRowDelegate.qml</file>
         <file>controls/PrimaryButton.qml</file>

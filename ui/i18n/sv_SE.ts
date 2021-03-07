@@ -2303,10 +2303,6 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <source>More details</source>
         <translation>Mer detaljer</translation>
     </message>
-    <message id="general-address-type">
-        <source>Address Type</source>
-        <translation>Adresstyp</translation>
-    </message>
     <message id="qr-code">
         <source>QR Code</source>
         <translation>QR-kod</translation>
@@ -2943,7 +2939,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="info-asset-unit">
-        <source>Unit Name</source>
+        <source>Unit name</source>
+        <oldsource>Unit Name</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="info-asset-short">
@@ -3022,6 +3019,18 @@ Update your settings and try again.</source>
         <source>Unsupported API version requested: %1</source>
         <oldsource>Unsupported API version requested: %1
 </oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-site">
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-paper">
+        <source>Whitepaper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-tx-type">
+        <source>Transaction type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
