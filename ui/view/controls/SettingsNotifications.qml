@@ -24,6 +24,7 @@ SettingsFoldable {
             font.weight:     Font.Normal
             Layout.fillWidth: true
             checked: viewModel.notificationsSettings.isNewVersionActive
+            palette.text: Style.content_secondary
             Binding {
                 target: viewModel.notificationsSettings
                 property: "isNewVersionActive"
@@ -40,6 +41,7 @@ SettingsFoldable {
             font.weight:     Font.Normal
             Layout.fillWidth: true
             checked: viewModel.notificationsSettings.isTxStatusActive
+            palette.text: Style.content_secondary
             Binding {
                 target: viewModel.notificationsSettings
                 property: "isTxStatusActive"

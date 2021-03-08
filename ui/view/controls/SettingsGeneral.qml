@@ -90,7 +90,7 @@ SettingsFoldable {
                 //: settings tab, general section, amounts unit label
                 //% "Show amounts in"
                 text: qsTrId("settings-general-amounts-unit")
-                color: Style.content_main
+                color: Style.content_secondary
                 font.pixelSize: 14
             }
             Item {}

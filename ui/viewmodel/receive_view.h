@@ -20,7 +20,6 @@
 class ReceiveViewModel: public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(bool     isPermanentAddress           READ isPermanentAddress    WRITE  setIsPermanentAddress  NOTIFY  isPermanentAddressChanged)
     Q_PROPERTY(QString  amountToReceive              READ getAmountToReceive    WRITE  setAmountToReceive     NOTIFY  amountReceiveChanged)
     Q_PROPERTY(int      addressExpires               READ getAddressExpires     WRITE  setAddressExpires      NOTIFY  addressExpiresChanged)
     Q_PROPERTY(QString  addressComment               READ getAddressComment     WRITE  setAddressComment      NOTIFY  addressCommentChanged)
@@ -31,7 +30,7 @@ class ReceiveViewModel: public QObject
     Q_PROPERTY(bool     commentValid                 READ getCommentValid                                     NOTIFY  commentValidChanged)
     Q_PROPERTY(QString  rateUnit                     READ getRateUnit                                         NOTIFY  rateChanged)
     Q_PROPERTY(QString  rate                         READ getRate                                             NOTIFY  rateChanged)
-    Q_PROPERTY(bool     isShieldedTx                 READ isShieldedTx          WRITE setIsShieldedTx         NOTIFY  isShieldedTxChanged)
+    Q_PROPERTY(bool     isMaxPrivacy                 READ getIsMaxPrivacy       WRITE setIsMaxPrivacy         NOTIFY  isMaxPrivacyChanged)
     Q_PROPERTY(QString  mpTimeLimit                  READ getMPTimeLimit        CONSTANT)
 
 public:
@@ -48,8 +47,7 @@ signals:
     void offlineTokenChanged();
     void newAddressFailed();
     void commentValidChanged();
-    void isShieldedTxChanged();
-    void isPermanentAddressChanged();
+    void isMaxPrivacyChanged();
     void rateChanged();
 
 public:
@@ -84,11 +82,8 @@ private:
     QString getRateUnit() const;
     QString getRate() const;
 
-    bool    isShieldedTx() const;
-    void    setIsShieldedTx(bool value);
-
-    bool isPermanentAddress() const;
-    void setIsPermanentAddress(bool value);
+    bool getIsMaxPrivacy() const;
+    void setIsMaxPrivacy(bool value);
 
     void onGeneratedReceiverAddress(const beam::wallet::WalletAddress& addr);
     void onGeneratedExchangeAddress(const beam::wallet::WalletAddress& addr);
@@ -106,7 +101,7 @@ private:
     beam::wallet::WalletAddress _receiverAddress;
     beam::wallet::WalletAddress _receiverAddressForExchange;
     beam::wallet::WalletAddress _receiverOfflineAddress;
-    bool _isShieldedTx = false;
+    bool _isMaxPrivacy = false;
     bool _isPermanentAddress = false;
     WalletModel& _walletModel;
     ExchangeRatesManager _exchangeRatesManager;

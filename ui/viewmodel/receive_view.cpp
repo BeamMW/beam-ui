@@ -49,7 +49,8 @@ void ReceiveViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& 
     }
     _receiverAddress = addr;
     emit receiverAddressChanged();
-    setIsPermanentAddress(addr.isPermanent());
+    //TODO:MAX
+    //setIsPermanentAddress(addr.isPermanent());
     setAddressComment(QString::fromStdString(addr.m_label));
     updateTransactionToken();
 }
@@ -190,7 +191,8 @@ void ReceiveViewModel::saveReceiverAddress()
     if (getCommentValid())
     {
         _receiverAddress.m_label = _addressComment.toStdString();
-        _receiverAddress.setExpiration(isPermanentAddress() ? WalletAddress::ExpirationStatus::Never : WalletAddress::ExpirationStatus::OneDay);
+        // TODO:MAX
+        //_receiverAddress.setExpiration(isPermanentAddress() ? WalletAddress::ExpirationStatus::Never : WalletAddress::ExpirationStatus::OneDay);
         _walletModel.getAsync()->saveAddress(_receiverAddress, true);
     }
 }
@@ -216,16 +218,18 @@ void ReceiveViewModel::saveOfflineAddress()
 void ReceiveViewModel::updateTransactionToken()
 {
     using namespace beam::wallet;
-    if (!isShieldedTx())
+    if (!_isMaxPrivacy)
     {
-        auto address = GenerateRegularAddress(_receiverAddress, _amountToReceiveGrothes, isPermanentAddress(), AppModel::getMyVersion());
+        // TODO:MAX
+        // auto address = GenerateRegularAddress(_receiverAddress, _amountToReceiveGrothes, isPermanentAddress(), AppModel::getMyVersion());
+        auto address = GenerateRegularAddress(_receiverAddress, _amountToReceiveGrothes, true, AppModel::getMyVersion());
         setTranasctionToken(QString::fromStdString(address));
     }
     else
     {
         _walletModel.getAsync()->generateVouchers(_receiverAddress.m_OwnID, 1, [this](const ShieldedVoucherList& v) mutable
         {
-            if (!v.empty() && isShieldedTx())
+            if (!v.empty() && _isMaxPrivacy)
             {
                 auto address = GenerateMaxPrivacyAddress(_receiverAddress, _amountToReceiveGrothes, v[0], AppModel::getMyVersion());
                 setTranasctionToken(QString::fromStdString(address));
@@ -245,21 +249,22 @@ QString ReceiveViewModel::getRate() const
     return beamui::AmountToUIString(rate);
 }
 
-bool ReceiveViewModel::isShieldedTx() const
+bool ReceiveViewModel::getIsMaxPrivacy() const
 {
-    return _isShieldedTx;
+    return _isMaxPrivacy;
 }
 
-void ReceiveViewModel::setIsShieldedTx(bool value)
+void ReceiveViewModel::setIsMaxPrivacy(bool value)
 {
-    if (_isShieldedTx != value)
+    if (_isMaxPrivacy != value)
     {
-        _isShieldedTx = value;
-        emit isShieldedTxChanged();
+        _isMaxPrivacy = value;
+        emit isMaxPrivacyChanged();
         updateTransactionToken();
     }
 }
 
+/* TODO:MAX
 bool ReceiveViewModel::isPermanentAddress() const
 {
     return _isPermanentAddress;
@@ -275,6 +280,7 @@ void ReceiveViewModel::setIsPermanentAddress(bool value)
         updateTransactionToken();
     }
 }
+*/
 
 void ReceiveViewModel::generateOfflineAddress()
 {

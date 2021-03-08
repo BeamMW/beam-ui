@@ -1913,33 +1913,9 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>Random node</source>
         <translation>Náhodný uzel</translation>
     </message>
-    <message id="can-not-generate-new-address-message">
-        <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
-        <translation>Nelze vygenerovat novou adresu. Vaše peněženka nemá hlavní klíč.</translation>
-    </message>
-    <message id="wallet-receive-title">
-        <source>Receive</source>
-        <translation>Přijmout</translation>
-    </message>
-    <message id="wallet-receive-address-for-wallet">
-        <source>(for wallet)</source>
-        <translation>(pro peněženku)</translation>
-    </message>
-    <message id="wallet-receive-addr-message">
-        <source>Min transaction fee to send Max privacy coins is %1.</source>
-        <translation>Minimální transakční poplatek pro odeslání mincí v maximálním soukromí je %1.</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
-        <translation>Pro dokončení transakce byste měli být online během 12 hodin po odeslání.</translation>
-    </message>
     <message id="wallet-receive-copy-and-close">
         <source>Copy and close</source>
         <translation>Kopírovat a zavřít</translation>
-    </message>
-    <message id="wallet-receive-address-for-exchange">
-        <source>(for exchange or mining pool)</source>
-        <translation>(pro směnárnu nebo těžební pool)</translation>
     </message>
     <message id="token-info-title">
         <source>Transaction token</source>
@@ -1953,53 +1929,21 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>Transaction info</source>
         <translation>Informace o transakci</translation>
     </message>
-    <message id="receive-request">
-        <source>Requested amount</source>
-        <translation>Požadovaná částka</translation>
-    </message>
-    <message id="address-one-time">
-        <source>One-time use</source>
-        <translation>Jednorázové použití</translation>
-    </message>
-    <message id="address-permanent">
-        <source>Permanent</source>
-        <translation>Trvalé</translation>
-    </message>
     <message id="tx-regular">
         <source>Regular</source>
-        <translation>Běžné</translation>
+        <translation type="unfinished">Běžné</translation>
     </message>
     <message id="tx-max-privacy">
         <source>Max privacy</source>
-        <translation>Max soukromí</translation>
+        <translation type="unfinished">Max soukromí</translation>
     </message>
     <message id="address-save">
         <source>save</source>
         <translation>uložit</translation>
     </message>
-    <message id="save-contact-title">
-        <source>Do you want to name the contact?</source>
-        <translation>Chcete pojmenovat kontakt?</translation>
-    </message>
-    <message id="contact-name-prompt">
-        <source>Enter the name to this contact</source>
-        <translation>Zadejte název tohoto kontaktu</translation>
-    </message>
-    <message id="receive-request-optional">
-        <source>(optional)</source>
-        <translation>(nepovinné)</translation>
-    </message>
     <message id="save-address-no-name">
         <source>No name</source>
         <translation>Bez názvu</translation>
-    </message>
-    <message id="wallet-receive-online-address">
-        <source>Online address</source>
-        <translation>Online adresa</translation>
-    </message>
-    <message id="wallet-receive-offline-address">
-        <source>Offline address</source>
-        <translation>Offline adresa</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
@@ -2067,10 +2011,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
     <message id="from-shielded-pool">
         <source>shielded pool</source>
         <translation>chráněný pool</translation>
-    </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
-        <translation>Připojte se k integrovanému nebo vlastnímu uzlu a povolte přijímání maximálně soukromých a offline transakcí</translation>
     </message>
     <message id="tx-address-offline">
         <source>Offline</source>
@@ -2309,22 +2249,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>QR Code</source>
         <translation>QR kód</translation>
     </message>
-    <message id="wallet-receive-address-for-wallet-label">
-        <source>Online address (for wallet)</source>
-        <translation>Online adresa (pro peněženku)</translation>
-    </message>
-    <message id="wallet-receive-address-for-exchange-label">
-        <source>Online address (for exchange or mining pool)</source>
-        <translation>Online adresa (pro směnárnu nebo těžební pool)</translation>
-    </message>
-    <message id="wallet-receive-max-privacy-address">
-        <source>Max Privacy Address</source>
-        <translation>Max Soukromá Adresa</translation>
-    </message>
-    <message id="wallet-receive-offline-payments">
-        <source>Supports %1 payments.</source>
-        <translation>Podporuje %1 plateb.</translation>
-    </message>
     <message id="address-info-payments">
         <source>Payments</source>
         <translation>Platby</translation>
@@ -2505,15 +2429,6 @@ offline</translation>
     <message id="settings-privacy-mp-time-no-limit">
         <source>No limit</source>
         <oldsource>no limit</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-addr-message-mp">
-        <source>Max Privacy transaction can last at most %1 hours</source>
-        <oldsource>Max Privacy transaction can last at least 2 days.</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-addr-message-mp-no-limit">
-        <source>Max Privacy transaction can last indefinitely</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="general-ethereum">
@@ -3031,8 +2946,56 @@ Update your settings and try again.</source>
         <source>Whitepaper</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="can-not-generate-new-address-message">
+        <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="save-contact-title">
+        <source>Do you want to name the contact?</source>
+        <translation type="unfinished">Chcete pojmenovat kontakt?</translation>
+    </message>
+    <message id="contact-name-prompt">
+        <source>Enter the name to this contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-title">
+        <source>Receive</source>
+        <translation type="unfinished">Přijmout</translation>
+    </message>
     <message id="general-tx-type">
         <source>Transaction type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-max-privacy-unsupported">
+        <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="receive-request">
+        <source>Requested amount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="receive-request-optional">
+        <source>(optional)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="receive-new-addr">
+        <source>New Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-addr-message-mp">
+        <source>Max Privacy transaction can last at most %1 hours.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-addr-message-mp-no-limit">
+        <source>Max Privacy transaction can last indefinitely.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-addr-message">
+        <source>Min transaction fee to send Max privacy coins is %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-text-online-time">
+        <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
