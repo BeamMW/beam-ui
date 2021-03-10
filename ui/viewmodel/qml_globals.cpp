@@ -473,3 +473,4 @@ QString QMLGlobals::multiplyWithPrecision(const QString& first, const QString& s
     QString result = QString::fromStdString(oss.str());
     return roundWithPrecision(result, static_cast<uint8_t>(precision));
 }
+

@@ -163,7 +163,6 @@ signals:
 
 public slots:
     void onSelectionCalculated(const beam::wallet::CoinsSelectionInfo&);
-    void onAssetInfo(beam::Asset::ID assetId);
 
 private:
     void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);

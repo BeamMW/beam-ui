@@ -410,16 +410,16 @@ Dialog {
 					var expirationStatus;
 					const expirationStatusEnum = {
 						Expired: 0,
-						OneDay: 1,
-						Never: 2,
-						AsIs: 3
+						Auto:    1,
+						Never:   2,
+						AsIs:    3
 					}
 
 					if (rootControl.isExpiredAddress) {
 						if (activate.checked) {
 							switch(expirationOptionsForUnactive.currentIndex) {
 								case 0:
-									expirationStatus = expirationStatusEnum.OneDay;
+									expirationStatus = expirationStatusEnum.Auto;
 									break;
 								case 1:
 									expirationStatus = expirationStatusEnum.Never;
@@ -433,7 +433,7 @@ Dialog {
 						} else if (isNeverExpired()) {
 							switch(expirationOptionsForActive.currentIndex) {
 								case 0:
-									expirationStatus = expirationStatusEnum.OneDay;
+									expirationStatus = expirationStatusEnum.Auto;
 									break;
 								case 1:
 									expirationStatus = expirationStatusEnum.Never;
@@ -442,7 +442,7 @@ Dialog {
 						} else {
 							switch(expirationOptionsForActive.currentIndex) {
 								case 1:
-									expirationStatus = expirationStatusEnum.OneDay;
+									expirationStatus = expirationStatusEnum.Auto;
 									break;
 								case 2:
 									expirationStatus = expirationStatusEnum.Never;

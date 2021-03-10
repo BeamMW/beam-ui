@@ -15,7 +15,11 @@
 
 #include <QObject>
 #include <QColor>
+#include <QMap>
+#include <QList>
+#include <QVariant>
 #include "model/wallet_model.h"
+#include "viewmodel/notifications/exchange_rates_manager.h"
 
 class AssetsManager: public QObject
 {
@@ -23,7 +27,7 @@ class AssetsManager: public QObject
 public:
     typedef std::shared_ptr<AssetsManager> Ptr;
 
-    AssetsManager(WalletModel::Ptr wallet);
+    explicit AssetsManager(WalletModel::Ptr wallet);
     ~AssetsManager() override = default;
 
     // SYNC
@@ -37,9 +41,11 @@ public:
     QColor  getSelectionColor(beam::Asset::ID);
     QString getSiteUrl(beam::Asset::ID);
     QString getPaperUrl(beam::Asset::ID);
+    QList<QMap<QString, QVariant>> getAssetsList();
 
 signals:
     void assetInfo(beam::Asset::ID assetId);
+    void assetsListChanged();
 
 private slots:
     void onAssetInfo(beam::Asset::ID, const beam::wallet::WalletAsset&);
@@ -54,6 +60,7 @@ private:
     MetaPtr getAsset(beam::Asset::ID);
 
     WalletModel::Ptr _wallet;
+    ExchangeRatesManager _exchangeRatesManager;
     std::map<beam::Asset::ID, InfoPair> _info;
     std::set<beam::Asset::ID> _requested;
 

@@ -485,7 +485,7 @@ ColumnLayout {
                                 error:             showInsufficientBalanceWarning
                                 amount:            viewModel.sendAmount
                                 unitName:          control.sendUnit
-                                rateUnit:          control.assetId == 0 ? control.rateUnit : ""
+                                rateUnit:          control.rateUnit
                                 rate:              control.rate
                                 font.styleName:    "Bold"
                                 font.weight:       Font.Bold
@@ -543,7 +543,7 @@ ColumnLayout {
                                 error:             showInsufficientBalanceWarning
                                 amount:            viewModel.assetAvailable
                                 unitName:          control.sendUnit
-                                rateUnit:          control.assetId == 0 ? control.rateUnit : ""
+                                rateUnit:          control.rateUnit
                                 rate:              control.rate
                                 font.styleName:    "Bold"
                                 font.weight:       Font.Bold

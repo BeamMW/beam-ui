@@ -2952,14 +2952,6 @@ Update your settings and try again.</source>
         <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="save-contact-title">
-        <source>Do you want to name the contact?</source>
-        <translation type="unfinished">Вы хотите дать контакту имя?</translation>
-    </message>
-    <message id="contact-name-prompt">
-        <source>Enter the name to this contact</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="wallet-receive-title">
         <source>Receive</source>
         <translation type="unfinished">Получить</translation>

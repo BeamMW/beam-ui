@@ -48,15 +48,14 @@ SendViewModel::SendViewModel()
     : _walletModel(*AppModel::getInstance().getWalletModel())
     , _amgr(AppModel::getInstance().getAssets())
 {
-    connect(&_walletModel,           SIGNAL(sendMoneyVerified()),               this,  SIGNAL(sendMoneyVerified()));
-    connect(&_walletModel,           SIGNAL(cantSendToExpired()),               this,  SIGNAL(cantSendToExpired()));
-    connect(&_walletModel,           &WalletModel::walletStatusChanged,              this,  &SendViewModel::availableChanged);
-    connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,         this,  &SendViewModel::assetsListChanged);
-    connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged,       this,  &SendViewModel::assetsListChanged);
-    connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,         this,  &SendViewModel::feeRateChanged);
-    connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged,       this,  &SendViewModel::feeRateChanged);
-    connect(&_walletModel,           &WalletModel::coinsSelectionCalculated,         this,  &SendViewModel::onSelectionCalculated);
-    connect(_amgr.get(),             &AssetsManager::assetInfo,                      this,  &SendViewModel::onAssetInfo);
+    connect(&_walletModel,           SIGNAL(sendMoneyVerified()),          this,  SIGNAL(sendMoneyVerified()));
+    connect(&_walletModel,           SIGNAL(cantSendToExpired()),          this,  SIGNAL(cantSendToExpired()));
+    connect(&_walletModel,           &WalletModel::walletStatusChanged,        this,  &SendViewModel::availableChanged);
+    connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged, this,  &SendViewModel::assetsListChanged);
+    connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,   this,  &SendViewModel::feeRateChanged);
+    connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged, this,  &SendViewModel::feeRateChanged);
+    connect(&_walletModel,           &WalletModel::coinsSelectionCalculated,   this,  &SendViewModel::onSelectionCalculated);
+    connect(_amgr.get(),                    &AssetsManager::assetsListChanged,        this,  &SendViewModel::assetsListChanged);
 
     m_Csi.m_explicitFee = minFeeBeam(_isShielded);
     m_Csi.m_minimalExplicitFee = m_Csi.m_explicitFee;
@@ -687,11 +686,6 @@ QString SendViewModel::getMaxSendAmount() const
     return beamui::AmountToUIString(m_Csi.get_NettoValue());
 }
 
-void SendViewModel::onAssetInfo(beam::Asset::ID assetId)
-{
-    emit assetsListChanged();
-}
-
 int SendViewModel::getSelectedAssetId() const
 {
     return static_cast<int>(m_Csi.m_assetID);
@@ -702,7 +696,7 @@ void SendViewModel::setSelectedAssetId(int value)
     auto valueId = value < 0 ? beam::Asset::s_BeamID : static_cast<beam::Asset::ID>(value);
     if (m_Csi.m_assetID != valueId)
     {
-        LOG_INFO () << "Selected asset id" << value;
+        LOG_INFO () << "Selected asset id: " << value;
         m_Csi.m_assetID = valueId;
 
         emit selectedAssetChanged();
@@ -731,27 +725,5 @@ void SendViewModel::resetAddress()
 
 QList<QMap<QString, QVariant>> SendViewModel::getAssetsList() const
 {
-    const auto assets   = _walletModel.getAssetsNZ();
-    const auto beamRate = beamui::AmountToUIString(_exchangeRatesManager.getRate(beam::wallet::ExchangeRate::Currency::Beam));
-    const auto rateUnit = beamui::getCurrencyUnitName(_exchangeRatesManager.getRateUnitRaw());
-    QList<QMap<QString, QVariant>> result;
-
-    for(auto assetId: assets)
-    {
-        QMap<QString, QVariant> asset;
-
-        const bool isBeam = assetId == beam::Asset::s_BeamID;
-        asset.insert("isBEAM", isBeam);
-        asset.insert("unitName", _amgr->getUnitName(assetId, false));
-        asset.insert("rate", isBeam ? beamRate : "0");
-        asset.insert("rateUnit", rateUnit);
-        asset.insert("assetId", static_cast<int>(assetId));
-        asset.insert("icon", _amgr->getIcon(assetId));
-        asset.insert("iconWidth", 22);
-        asset.insert("iconHeight", 22);
-
-        result.push_back(asset);
-    }
-
-    return result;
+    return _amgr->getAssetsList();
 }

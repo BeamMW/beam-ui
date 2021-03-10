@@ -460,7 +460,7 @@ void ReceiveSwapViewModel::saveAddress()
 
     if (getCommentValid()) {
         _receiverAddress.m_label = _addressComment.toStdString();
-        _receiverAddress.m_duration = WalletAddress::AddressExpiration24h;
+        _receiverAddress.m_duration = WalletAddress::AddressExpirationAuto;
         _walletModel.getAsync()->saveAddress(_receiverAddress, true);
     }
 }

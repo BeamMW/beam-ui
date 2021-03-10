@@ -16,93 +16,73 @@
 #include <QObject>
 #include "model/wallet_model.h"
 #include "notifications/exchange_rates_manager.h"
+#include "wallet/assets_manager.h"
 
 class ReceiveViewModel: public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString  amountToReceive              READ getAmountToReceive    WRITE  setAmountToReceive     NOTIFY  amountReceiveChanged)
-    Q_PROPERTY(int      addressExpires               READ getAddressExpires     WRITE  setAddressExpires      NOTIFY  addressExpiresChanged)
-    Q_PROPERTY(QString  addressComment               READ getAddressComment     WRITE  setAddressComment      NOTIFY  addressCommentChanged)
-    Q_PROPERTY(QString  receiverAddress              READ getReceiverAddress                                  NOTIFY  receiverAddressChanged)
-    Q_PROPERTY(QString  receiverAddressForExchange   READ getReceiverAddressForExchange                       NOTIFY  receiverAddressForExchangeChanged)
-    Q_PROPERTY(QString  transactionToken             READ getTransactionToken   WRITE  setTranasctionToken    NOTIFY  transactionTokenChanged)
-    Q_PROPERTY(QString  offlineToken                 READ getOfflineToken       WRITE  setOfflineToken        NOTIFY  offlineTokenChanged)
-    Q_PROPERTY(bool     commentValid                 READ getCommentValid                                     NOTIFY  commentValidChanged)
-    Q_PROPERTY(QString  rateUnit                     READ getRateUnit                                         NOTIFY  rateChanged)
-    Q_PROPERTY(QString  rate                         READ getRate                                             NOTIFY  rateChanged)
-    Q_PROPERTY(bool     isMaxPrivacy                 READ getIsMaxPrivacy       WRITE setIsMaxPrivacy         NOTIFY  isMaxPrivacyChanged)
-    Q_PROPERTY(QString  mpTimeLimit                  READ getMPTimeLimit        CONSTANT)
+    Q_PROPERTY(QString    amount             READ getAmount             WRITE  setAmount             NOTIFY  amountChanged)
+    Q_PROPERTY(QString    comment            READ getComment            WRITE  setComment            NOTIFY  commentChanged)
+    Q_PROPERTY(int        assetId            READ getAssetId            WRITE  setAssetId            NOTIFY  assetIdChanged)
+    Q_PROPERTY(QString    token              READ getToken              WRITE  setToken              NOTIFY  tokenChanged)
+    Q_PROPERTY(bool       commentValid       READ getCommentValid                                    NOTIFY  commentValidChanged)
+    Q_PROPERTY(bool       isMaxPrivacy       READ getIsMaxPrivacy       WRITE setIsMaxPrivacy        NOTIFY  isMaxPrivacyChanged)
+    Q_PROPERTY(QString    mpTimeLimit        READ getMPTimeLimit        CONSTANT)
 
+    Q_PROPERTY(QList<QMap<QString, QVariant>> assetsList  READ getAssetsList  NOTIFY  assetsListChanged)
 public:
     ReceiveViewModel();
-    ~ReceiveViewModel() override;
+    ~ReceiveViewModel() override = default;
 
 signals:
-    void amountReceiveChanged();
-    void addressExpiresChanged();
-    void receiverAddressChanged();
-    void receiverAddressForExchangeChanged();
-    void addressCommentChanged();
-    void transactionTokenChanged();
-    void offlineTokenChanged();
+    void amountChanged();
+    void commentChanged();
+    void assetIdChanged();
+    void tokenChanged();
     void newAddressFailed();
     void commentValidChanged();
     void isMaxPrivacyChanged();
-    void rateChanged();
+    void assetsListChanged();
 
 public:
     Q_INVOKABLE void initialize(const QString& address);
-    Q_INVOKABLE void generateNewReceiverAddress();
-    Q_INVOKABLE void saveReceiverAddress();
-    Q_INVOKABLE void saveExchangeAddress();
-    Q_INVOKABLE void saveOfflineAddress();
+    Q_INVOKABLE void saveAddress();
 
 private:
-    QString getAmountToReceive() const;
-    void    setAmountToReceive(QString value);
+    void setAssetId(int id);
+    [[nodiscard]] int getAssetId() const;
 
-    void setAddressExpires(int value);
-    int  getAddressExpires() const;
+    void setAmount(const QString&);
+    [[nodiscard]] QString getAmount() const;
 
-    QString getReceiverAddress() const;
-    QString getReceiverAddressForExchange() const;
+    void setComment(const QString& value);
+    [[nodiscard]] QString getComment() const;
 
-    void setAddressComment(const QString& value);
-    QString getAddressComment() const;
+    void setToken(const QString& value);
+    [[nodiscard]] QString getToken() const;
 
-    void setTranasctionToken(const QString& value);
-    QString getTransactionToken() const;
-    QString getOfflineToken() const;
-    void setOfflineToken(const QString& value);
+    [[nodiscard]] bool getCommentValid() const;
 
-    bool getCommentValid() const;
-
-    void updateTransactionToken();
-
-    QString getRateUnit() const;
-    QString getRate() const;
-
-    bool getIsMaxPrivacy() const;
     void setIsMaxPrivacy(bool value);
-
-    void onGeneratedReceiverAddress(const beam::wallet::WalletAddress& addr);
-    void onGeneratedExchangeAddress(const beam::wallet::WalletAddress& addr);
-    void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
-    void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments);
-    void generateOfflineAddress();
+    [[nodiscard]] bool getIsMaxPrivacy() const;
 
     QString getMPTimeLimit() const;
+    QList<QMap<QString, QVariant>> getAssetsList() const;
+
 private:
-    beam::Amount _amountToReceiveGrothes;
-    int          _addressExpires;
-    QString      _addressComment;
-    QString      _token;
-    QString      _offlineToken;
+    void updateToken();
+
+private:
+    beam::Amount    _amount  = 0UL;
+    beam::Asset::ID _assetId = beam::Asset::s_BeamID;
+    bool            _maxp    = false;
+    QString         _comment;
+    QString         _token;
+
     beam::wallet::WalletAddress _receiverAddress;
-    beam::wallet::WalletAddress _receiverAddressForExchange;
     beam::wallet::WalletAddress _receiverOfflineAddress;
-    bool _isMaxPrivacy = false;
-    bool _isPermanentAddress = false;
-    WalletModel& _walletModel;
+
+    WalletModel&         _walletModel;
     ExchangeRatesManager _exchangeRatesManager;
+    AssetsManager::Ptr   _amgr;
 };

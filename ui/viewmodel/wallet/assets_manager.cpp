@@ -18,6 +18,8 @@ AssetsManager::AssetsManager (WalletModel::Ptr wallet)
 {
     qRegisterMetaType<beam::Asset::ID>("beam::wallet::AssetID");
     connect(_wallet.get(), &WalletModel::assetInfoChanged, this, &AssetsManager::onAssetInfo);
+    connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,   this,  &AssetsManager::assetsListChanged);
+    connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged, this,  &AssetsManager::assetsListChanged);
 
     _icons[0]  = "qrc:/assets/asset-0.svg";
     _icons[1]  = "qrc:/assets/asset-1.svg";
@@ -236,4 +238,31 @@ QColor AssetsManager::getColor(beam::Asset::ID id)
 QColor AssetsManager::getSelectionColor(beam::Asset::ID id)
 {
     return getColor(id);
+}
+
+QList<QMap<QString, QVariant>> AssetsManager::getAssetsList()
+{
+    const auto assets   = _wallet->getAssetsNZ();
+    const auto beamRate = beamui::AmountToUIString(_exchangeRatesManager.getRate(beam::wallet::ExchangeRate::Currency::Beam));
+    const auto rateUnit = beamui::getCurrencyUnitName(_exchangeRatesManager.getRateUnitRaw());
+    QList<QMap<QString, QVariant>> result;
+
+    for(auto assetId: assets)
+    {
+        QMap<QString, QVariant> asset;
+
+        const bool isBeam = assetId == beam::Asset::s_BeamID;
+        asset.insert("isBEAM",     isBeam);
+        asset.insert("unitName",   getUnitName(assetId, false));
+        asset.insert("rate",       isBeam ? beamRate : "0");
+        asset.insert("rateUnit",   rateUnit);
+        asset.insert("assetId",    static_cast<int>(assetId));
+        asset.insert("icon",       getIcon(assetId));
+        asset.insert("iconWidth",  22);
+        asset.insert("iconHeight", 22);
+
+        result.push_back(asset);
+    }
+
+    return result;
 }
