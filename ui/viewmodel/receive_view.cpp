@@ -46,7 +46,7 @@ void ReceiveViewModel::updateToken()
             {
                 if (!v.empty())
                 {
-                    _token = QString::fromStdString(GenerateChoiceToken(_receiverAddress, _amount, _assetId, v[0], AppModel::getMyVersion()));
+                    _token = QString::fromStdString(GenerateOfflineToken(_receiverAddress, _amount, _assetId, v, AppModel::getMyVersion()));
                     emit tokenChanged();
                 }
             });
