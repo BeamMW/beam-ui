@@ -26,10 +26,11 @@ ColumnLayout {
 
     property alias assetId:   viewModel.selectedAssetId
     property alias assetIdx:  sendAmountInput.currencyIdx
-    property var   assetInfo: viewModel.assetsList[control.assetIdx]
-    property var   sendUnit:  control.assetInfo.unitName
-    property var   rate:      control.assetInfo.rate
-    property var   rateUnit:  control.assetInfo.rateUnit
+    property var   assetInfo: viewModel.assetsList[assetIdx]
+
+    property var   sendUnit:  assetInfo.unitName
+    property var   rate:      assetInfo.rate
+    property var   rateUnit:  assetInfo.rateUnit
 
     // callbacks set by parent
     property var onAccepted:  undefined
@@ -40,11 +41,13 @@ ColumnLayout {
         !viewModel.isEnough &&
         !(viewModel.isZeroBalance && (viewModel.sendAmount == "" || viewModel.sendAmount == "0"))  // not shown if available is 0 and no value entered to send
 
-    Component.onCompleted: {
-        // asset id might be passed by other parts of the UI as a parameter to the send view
+    onAssetIdChanged: function () {
+        // C++ provides asset id, combobox exepects index, need to fix this at some point
         for (var idx = 0; idx < viewModel.assetsList.length; ++idx) {
             if (viewModel.assetsList[idx].assetId == assetId) {
-                 assetIdx = idx
+                 if (assetIdx != idx) {
+                    assetIdx = idx
+                 }
             }
         }
     }

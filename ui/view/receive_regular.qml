@@ -10,29 +10,6 @@ import "./utils.js" as Utils
 
 ColumnLayout {
     id: control
-    property var defaultFocusItem: null
-
-    property alias assetId:   viewModel.assetId
-    property alias assetIdx:  amountInput.currencyIdx
-    property var   assetInfo: viewModel.assetsList[control.assetIdx]
-
-    Component.onCompleted: {
-        // asset id might be passed by other parts of the UI as a parameter to the receive view
-        for (var idx = 0; idx < viewModel.assetsList.length; ++idx) {
-            if (viewModel.assetsList[idx].assetId == assetId) {
-                 assetIdx = idx
-            }
-        }
-    }
-
-    // callbacks set by parent
-    property var onClosed: function() {}
-    property string token: ""
-
-    TopGradient {
-        mainRoot: main
-        topColor: Style.accent_incoming
-    }
 
     ReceiveViewModel {
         id: viewModel
@@ -43,10 +20,28 @@ ColumnLayout {
             popup.message = qsTrId("can-not-generate-new-address-message")
             popup.open()
         }
+    }
 
-        Component.onCompleted: function () {
-            viewModel.initialize(token);
+    property var defaultFocusItem: null
+    property var onClosed: function() {} // set by parent
+
+    property alias token:     viewModel.token
+    property alias assetId:   viewModel.assetId
+    property alias assetIdx:  amountInput.currencyIdx
+    property var   assetInfo: viewModel.assetsList[control.assetIdx]
+
+    Component.onCompleted: function () {
+        // asset id might be passed by other parts of the UI as a parameter to the receive view
+        for (var idx = 0; idx < viewModel.assetsList.length; ++idx) {
+            if (viewModel.assetsList[idx].assetId == assetId) {
+                 assetIdx = idx
+            }
         }
+    }
+
+    TopGradient {
+        mainRoot: main
+        topColor: Style.accent_incoming
     }
 
     function isValid () {
@@ -208,7 +203,7 @@ ColumnLayout {
                         //% "(optional)"
                         titleTip:          qsTrId("receive-request-optional")
                         Layout.fillWidth:  true
-                        folded:            true
+                        folded:            false
 
                         //
                         // Amount
@@ -398,7 +393,7 @@ ColumnLayout {
                 color:                 Style.content_disabled
                 wrapMode:              Text.WordWrap
                 horizontalAlignment:   Text.AlignHCenter
-                //% "For the transaction to complete, you should get online during the 12 hours after Beams are sent."
+                //% "Sender will be given a choice between regular and offline payment. For the regular transaction to complete, you should get online during the 12 hours after coins are sent."
                 text: qsTrId("wallet-receive-text-online-time")
                 visible:               !viewModel.isMaxPrivacy
             }

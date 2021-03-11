@@ -218,6 +218,12 @@ QString AssetsManager::getPaperUrl(beam::Asset::ID id)
     return desc;
 }
 
+bool AssetsManager::hasAsset(beam::Asset::ID assetId) const
+{
+    const auto assets = _wallet->getAssetsNZ();
+    return assets.find(assetId) != assets.end();
+}
+
 QColor AssetsManager::getColor(beam::Asset::ID id)
 {
     if (id < 1)

@@ -45,7 +45,6 @@ signals:
     void assetsListChanged();
 
 public:
-    Q_INVOKABLE void initialize(const QString& address);
     Q_INVOKABLE void saveAddress();
 
 private:

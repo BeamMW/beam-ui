@@ -42,6 +42,7 @@ public:
     QString getSiteUrl(beam::Asset::ID);
     QString getPaperUrl(beam::Asset::ID);
     QList<QMap<QString, QVariant>> getAssetsList();
+    bool hasAsset(beam::Asset::ID) const;
 
 signals:
     void assetInfo(beam::Asset::ID assetId);

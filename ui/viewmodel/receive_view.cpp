@@ -22,53 +22,48 @@ ReceiveViewModel::ReceiveViewModel()
 {
     connect(&_walletModel,  &WalletModel::newAddressFailed,    this,  &ReceiveViewModel::newAddressFailed);
     connect(_amgr.get(),    &AssetsManager::assetsListChanged, this,  &ReceiveViewModel::assetsListChanged);
-}
-
-void ReceiveViewModel::initialize(const QString& address)
-{
-    beam::wallet::WalletID walletID;
-    if (address.isEmpty() || !walletID.FromHex(address.toStdString()))
-    {
-        _walletModel.getAsync()->generateNewAddress([this](const auto& addr){
-            _receiverAddress = addr;
-            setComment(QString::fromStdString(addr.m_label));
-            updateToken();
-        });
-    }
-    else
-    {
-        _walletModel.getAsync()->getAddress(walletID, [this](const boost::optional<beam::wallet::WalletAddress>& address, size_t offlineCount) {
-            _receiverAddress = *address;
-            setComment(QString::fromStdString(address->m_label));
-            updateToken();
-        });
-    }
+    updateToken();
 }
 
 void ReceiveViewModel::updateToken()
 {
     using namespace beam::wallet;
-    if (_maxp)
-    {
-        _walletModel.getAsync()->generateVouchers(_receiverAddress.m_OwnID, 1, [this](const ShieldedVoucherList& v)
+    auto generateToken = [this] () {
+        if (_maxp)
         {
-            if (!v.empty())
+            _walletModel.getAsync()->generateVouchers(_receiverAddress.m_OwnID, 1, [this](const ShieldedVoucherList& v)
             {
-                auto address = GenerateMaxPrivacyToken(_receiverAddress, _amount, _assetId, v[0], AppModel::getMyVersion());
-                setToken(QString::fromStdString(address));
-            }
+                if (!v.empty())
+                {
+                    _token = QString::fromStdString(GenerateMaxPrivacyToken(_receiverAddress, _amount, _assetId, v[0], AppModel::getMyVersion()));
+                    emit tokenChanged();
+                }
+            });
+        }
+        else
+        {
+            _walletModel.getAsync()->generateVouchers(_receiverAddress.m_OwnID, 1, [this](const ShieldedVoucherList& v)
+            {
+                if (!v.empty())
+                {
+                    _token = QString::fromStdString(GenerateChoiceToken(_receiverAddress, _amount, _assetId, v[0], AppModel::getMyVersion()));
+                    emit tokenChanged();
+                }
+            });
+        }
+    };
+
+    if (_receiverAddress.m_walletID == Zero)
+    {
+         _walletModel.getAsync()->generateNewAddress([generateToken, this](const auto& addr){
+            _receiverAddress = addr;
+            setComment(QString::fromStdString(addr.m_label));
+            generateToken();
         });
     }
     else
     {
-        _walletModel.getAsync()->generateVouchers(_receiverAddress.m_OwnID, 1, [this](const ShieldedVoucherList& v)
-        {
-            if (!v.empty())
-            {
-                auto address = GenerateChoiceToken(_receiverAddress, _amount, _assetId, v[0], AppModel::getMyVersion());
-                setToken(QString::fromStdString(address));
-            }
-        });
+        generateToken();
     }
 }
 
@@ -95,10 +90,22 @@ QString ReceiveViewModel::getComment() const
 
 void ReceiveViewModel::setToken(const QString& value)
 {
-    if (_token != value)
+    // At the moment only address can come from outer world
+    if (!value.isEmpty())
     {
-        _token = value;
-        emit tokenChanged();
+        beam::wallet::WalletID walletID;
+        if (walletID.FromHex(value.toStdString()))
+        {
+            _walletModel.getAsync()->getAddress(walletID, [this](const boost::optional<beam::wallet::WalletAddress>& address, size_t offlineCount) {
+                _receiverAddress = *address;
+                setComment(QString::fromStdString(address->m_label));
+                updateToken();
+            });
+        }
+        else
+        {
+            throw std::runtime_error("Unknown value passed to ReceiveViewModel::setToken");
+        }
     }
 }
 

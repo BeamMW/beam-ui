@@ -55,7 +55,7 @@ SendViewModel::SendViewModel()
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,   this,  &SendViewModel::feeRateChanged);
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged, this,  &SendViewModel::feeRateChanged);
     connect(&_walletModel,           &WalletModel::coinsSelectionCalculated,   this,  &SendViewModel::onSelectionCalculated);
-    connect(_amgr.get(),                    &AssetsManager::assetsListChanged,        this,  &SendViewModel::assetsListChanged);
+    connect(_amgr.get(),             &AssetsManager::assetsListChanged,        this,  &SendViewModel::assetsListChanged);
 
     m_Csi.m_explicitFee = minFeeBeam(_isShielded);
     m_Csi.m_minimalExplicitFee = m_Csi.m_explicitFee;
@@ -585,6 +585,23 @@ void SendViewModel::extractParameters()
     {
         setSendAmount(beamui::AmountToUIString(*amount));
     }
+
+    if (auto assetId = _txParameters.GetParameter<beam::Asset::ID>(TxParameterID::AssetID); assetId)
+    {
+        if(_amgr->hasAsset(*assetId))
+        {
+            setSelectedAssetId(*assetId);
+        }
+        else
+        {
+            setSelectedAssetId(Asset::s_BeamID);
+        }
+    }
+    else
+    {
+        setSelectedAssetId(Asset::s_BeamID);
+    }
+
     if (auto fee = _txParameters.GetParameter<beam::Amount>(TxParameterID::Fee); fee)
     {
         setFeeGrothes(*fee);

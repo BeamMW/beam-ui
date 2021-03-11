@@ -92,10 +92,11 @@ Item {
                 token = "";
             }
 
-            function navigateReceive() {
+            function navigateReceive(assetId) {
                 walletStackView.push(Qt.createComponent("receive_regular.qml"), 
                                                 {"onClosed": onClosed,
-                                                 "token":    token
+                                                 "token":    token,
+                                                 "assetId":  assetId
                                                 });
                 token = "";
             }
@@ -130,7 +131,7 @@ Item {
                     font.pixelSize: 12
                     //font.capitalization: Font.AllUppercase
                     onClicked: {
-                        navigateReceive();
+                        navigateReceive(assets.selectedId);
                     }
                 }
             }
