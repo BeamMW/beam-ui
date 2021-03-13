@@ -1940,10 +1940,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Token</source>
         <translation>令牌</translation>
     </message>
-    <message id="general-transaction-info">
-        <source>Transaction info</source>
-        <translation>交易信息</translation>
-    </message>
     <message id="tx-regular">
         <source>Regular</source>
         <translation type="unfinished">常规</translation>
@@ -1951,14 +1947,6 @@ Your version is: %2. Please, check for updates.</source>
     <message id="tx-max-privacy">
         <source>Max privacy</source>
         <translation type="unfinished">最大化隐私</translation>
-    </message>
-    <message id="address-save">
-        <source>save</source>
-        <translation>保存</translation>
-    </message>
-    <message id="save-address-no-name">
-        <source>No name</source>
-        <translation>无名称</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
@@ -2107,17 +2095,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>此令牌由新的Beam客户端版本生成(%1)
 你的版本是： %2。请检查更新。</translation>
     </message>
-    <message id="save-address-title">
-        <source>Do you want to name the contact?</source>
-        <translation>您想要给联系人命名吗？</translation>
-    </message>
     <message id="send-title">
         <source>Send</source>
         <translation>付款</translation>
-    </message>
-    <message id="send-contact-token-placeholder">
-        <source>Paste recipient token here</source>
-        <translation>在此粘贴收件人令牌</translation>
     </message>
     <message id="send-contact-address-placeholder">
         <source>Paste recipient address here</source>
@@ -2126,30 +2106,6 @@ Your version is: %2. Please, check for updates.</source>
     <message id="wallet-send-invalid-address-or-token">
         <source>Invalid wallet address</source>
         <translation>无效的钱包地址</translation>
-    </message>
-    <message id="wallet-send-permanent-note">
-        <source>Permanent address</source>
-        <translation>永久地址</translation>
-    </message>
-    <message id="wallet-send-one-time-note">
-        <source>One-time use address (expire in 12 hours after successfull transaction).</source>
-        <translation type="unfinished">One-time use address (expire in 12 hours after successfull transaction).</translation>
-    </message>
-    <message id="wallet-send-max-privacy-note-address-offline">
-        <source>Offline address. Payments left: %1</source>
-        <translation>离线地址。剩余支付： %1</translation>
-    </message>
-    <message id="wallet-send-max-privacy-note-address">
-        <source>Max privacy address</source>
-        <translation>最大隐私地址</translation>
-    </message>
-    <message id="send-founds-fail">
-        <source>Insufficient funds: you would need %1 to complete the transaction</source>
-        <translation>资金不足：您需要%1来完成交易</translation>
-    </message>
-    <message id="max-pivacy-fee-fail">
-        <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <translation type="unfinished">For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
@@ -2275,10 +2231,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Public offline</source>
         <translation>公共离线</translation>
     </message>
-    <message id="tx-address-unknown">
-        <source>Unknown</source>
-        <translation>未知</translation>
-    </message>
     <message id="tx-address-regular-exchange">
         <source>Regular (for exchange or mining pool)</source>
         <translation>一般(用于交易所或采矿池)</translation>
@@ -2286,10 +2238,6 @@ Your version is: %2. Please, check for updates.</source>
     <message id="tx-address-regular-wallet">
         <source>Regular (for wallet)</source>
         <translation>一般(钱包)</translation>
-    </message>
-    <message id="wallet-send-public-offline-address">
-        <source>Public offline address</source>
-        <translation>公共离线地址</translation>
     </message>
     <message id="tx-address-regular">
         <source>Regular</source>
@@ -2338,8 +2286,9 @@ public offline</source>
         <translation>交易正在进行中，不能断开连接。</translation>
     </message>
     <message id="send-founds-fail-by-one-tx">
-        <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
-        <translation>因此选择了最大隐私，最大金额是 %1。</translation>
+        <source>Max privacy coins are selected. The maximum amount is %1 BEAM</source>
+        <oldsource>Max privacy coins are selected. The maximum amount is %1 %2.</oldsource>
+        <translation type="unfinished">因此选择了最大隐私，最大金额是 %1。</translation>
     </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
@@ -2569,7 +2518,8 @@ Please try again later or create an offer yourself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-no-funds">
-        <source>Insufficient funds to complete the transaction</source>
+        <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
+        <oldsource>Insufficient funds. Maximum amount is %1 %2</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="amount-input-add-max">
@@ -3000,8 +2950,33 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-text-online-time">
-        <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
+        <source>Sender will be given a choice between regular and offline payment. For the regular transaction to complete, you should get online during the 12 hours after coins are sent.</source>
+        <oldsource>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</oldsource>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="general-send-to">
+        <source>Send to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-public-token">
+        <source>Public offline address</source>
+        <translation type="unfinished">公共离线地址</translation>
+    </message>
+    <message id="send-maxp-token">
+        <source>Max privacy address</source>
+        <translation type="unfinished">最大隐私地址</translation>
+    </message>
+    <message id="send-unknown-token">
+        <source>Unknown address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-regular-token">
+        <source>Regular address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-offline">
+        <source>Offline</source>
+        <translation type="unfinished">离线</translation>
     </message>
 </context>
 </TS>

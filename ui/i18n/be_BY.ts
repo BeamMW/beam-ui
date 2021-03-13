@@ -1925,10 +1925,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Token</source>
         <translation>Токен</translation>
     </message>
-    <message id="general-transaction-info">
-        <source>Transaction info</source>
-        <translation>Інфармацыя аб транзакцыi</translation>
-    </message>
     <message id="tx-regular">
         <source>Regular</source>
         <translation type="unfinished">Звычайная</translation>
@@ -1936,14 +1932,6 @@ Your version is: %2. Please, check for updates.</source>
     <message id="tx-max-privacy">
         <source>Max privacy</source>
         <translation type="unfinished">Макс. прыватнасць</translation>
-    </message>
-    <message id="address-save">
-        <source>save</source>
-        <translation>захаваць</translation>
-    </message>
-    <message id="save-address-no-name">
-        <source>No name</source>
-        <translation>Няма імя</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
@@ -2094,17 +2082,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Гэты адрас згшенераваны ў больш новай версіі кліента Beam (%1)
 Ваша версія: %2. Калі ласка, праверце наяўнасць абнаўленняў.</translation>
     </message>
-    <message id="save-address-title">
-        <source>Do you want to name the contact?</source>
-        <translation>Хочаце назваць кантакт?</translation>
-    </message>
     <message id="send-title">
         <source>Send</source>
         <translation>Адправіць</translation>
-    </message>
-    <message id="send-contact-token-placeholder">
-        <source>Paste recipient token here</source>
-        <translation type="unfinished">Paste recipient token here</translation>
     </message>
     <message id="send-contact-address-placeholder">
         <source>Paste recipient address here</source>
@@ -2113,30 +2093,6 @@ Your version is: %2. Please, check for updates.</source>
     <message id="wallet-send-invalid-address-or-token">
         <source>Invalid wallet address</source>
         <translation>Няправільны адрас кашалька</translation>
-    </message>
-    <message id="wallet-send-permanent-note">
-        <source>Permanent address</source>
-        <translation>Пастаянны адрас</translation>
-    </message>
-    <message id="wallet-send-one-time-note">
-        <source>One-time use address (expire in 12 hours after successfull transaction).</source>
-        <translation type="unfinished">One-time use address (expire in 12 hours after successfull transaction).</translation>
-    </message>
-    <message id="wallet-send-max-privacy-note-address-offline">
-        <source>Offline address. Payments left: %1</source>
-        <translation>Афлайн адрас. Засталося плацяжоў: %1</translation>
-    </message>
-    <message id="wallet-send-max-privacy-note-address">
-        <source>Max privacy address</source>
-        <translation>Адрас макс. прыватнасці</translation>
-    </message>
-    <message id="send-founds-fail">
-        <source>Insufficient funds: you would need %1 to complete the transaction</source>
-        <translation>Недастаткова сродкаў: неабходна %1 для завяршэння транзакцыі</translation>
-    </message>
-    <message id="max-pivacy-fee-fail">
-        <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <translation>Для лепшай прыватнасці, былі абраны экранаваныя манеты. Мінімальны збор за транзакцыю складае %1 %2</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
@@ -2262,10 +2218,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Public offline</source>
         <translation>Публічны ў аўтаномным рэжыме</translation>
     </message>
-    <message id="tx-address-unknown">
-        <source>Unknown</source>
-        <translation>Невядомы</translation>
-    </message>
     <message id="tx-address-regular-exchange">
         <source>Regular (for exchange or mining pool)</source>
         <translation>Звычайны (для абмену або майнинга)</translation>
@@ -2273,10 +2225,6 @@ Your version is: %2. Please, check for updates.</source>
     <message id="tx-address-regular-wallet">
         <source>Regular (for wallet)</source>
         <translation>Звычайны (для кашалька)</translation>
-    </message>
-    <message id="wallet-send-public-offline-address">
-        <source>Public offline address</source>
-        <translation>Агульнадаступны аўтаномны адрас</translation>
     </message>
     <message id="tx-address-regular">
         <source>Regular</source>
@@ -2325,8 +2273,9 @@ public offline</source>
         <translation>Выконваецца абмен, нельга адключыць.</translation>
     </message>
     <message id="send-founds-fail-by-one-tx">
-        <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
-        <translation>Былi абраныя экранаваныя манеты, таму максімальная сума складае %1.</translation>
+        <source>Max privacy coins are selected. The maximum amount is %1 BEAM</source>
+        <oldsource>Max privacy coins are selected. The maximum amount is %1 %2.</oldsource>
+        <translation type="unfinished">Былi абраныя экранаваныя манеты, таму максімальная сума складае %1.</translation>
     </message>
     <message id="apps-title">
         <source>DAPP Store</source>
@@ -2361,7 +2310,8 @@ public offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-no-funds">
-        <source>Insufficient funds to complete the transaction</source>
+        <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
+        <oldsource>Insufficient funds. Maximum amount is %1 %2</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-remaining-beam-label">
@@ -2988,8 +2938,33 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-text-online-time">
-        <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
+        <source>Sender will be given a choice between regular and offline payment. For the regular transaction to complete, you should get online during the 12 hours after coins are sent.</source>
+        <oldsource>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</oldsource>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="general-send-to">
+        <source>Send to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-public-token">
+        <source>Public offline address</source>
+        <translation type="unfinished">Агульнадаступны аўтаномны адрас</translation>
+    </message>
+    <message id="send-maxp-token">
+        <source>Max privacy address</source>
+        <translation type="unfinished">Адрас макс. прыватнасці</translation>
+    </message>
+    <message id="send-unknown-token">
+        <source>Unknown address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-regular-token">
+        <source>Regular address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-offline">
+        <source>Offline</source>
+        <translation type="unfinished">Афлайн</translation>
     </message>
 </context>
 </TS>

@@ -8,23 +8,23 @@ import "./utils.js" as Utils
 ColumnLayout {
     id: control
     spacing: 0
-    property var defaultFocusItem: receiverTAInput
+    property var defaultFocusItem: tokenInput
 
     SendViewModel {
         id: viewModel
 
-        onSendMoneyVerified: {
-            onAccepted();
+        onSendMoneyVerified: function () {
+            onAccepted()
         }
 
-        onCantSendToExpired: {
+        onCantSendToExpired: function () {
             Qt.createComponent("send_expired.qml")
                 .createObject(control)
                 .open();
         }
     }
 
-    property alias assetId:   viewModel.selectedAssetId
+    property alias assetId:   viewModel.assetId
     property alias assetIdx:  sendAmountInput.currencyIdx
     property var   assetInfo: viewModel.assetsList[assetIdx]
 
@@ -36,10 +36,6 @@ ColumnLayout {
     property var onAccepted:  undefined
     property var onClosed:    undefined
     property var onSwapToken: undefined
-
-    readonly property bool showInsufficientBalanceWarning:
-        !viewModel.isEnough &&
-        !(viewModel.isZeroBalance && (viewModel.sendAmount == "" || viewModel.sendAmount == "0"))  // not shown if available is 0 and no value entered to send
 
     onAssetIdChanged: function () {
         // C++ provides asset id, combobox exepects index, need to fix this at some point
@@ -59,28 +55,8 @@ ColumnLayout {
 
     TokenInfoDialog {
         id:         tokenInfoDialog
-        token:      viewModel.receiverTA
+        token:      viewModel.token
         incoming:   false
-    }
-
-    SaveAddressDialog {
-        id:     saveAddressDialog
-        //% "Do you want to name the contact?"
-        dialogTitle:  qsTrId("save-address-title")
-        //% "No name"
-        text:         qsTrId("save-address-no-name")
-
-        onAccepted: {
-            viewModel.saveReceiverAddress(text);
-            viewModel.sendMoney();
-        }
-        onRejected: {
-            viewModel.sendMoney();
-        }
-    }
-
-    function isTAInputValid() {
-        return viewModel.receiverTA.length == 0 || viewModel.receiverTAValid
     }
 
     //
@@ -128,157 +104,134 @@ ColumnLayout {
                     // Transaction info
                     //
                     Panel {
-                        //% "Transaction info"
-                        title:                   qsTrId("general-transaction-info")
-                        Layout.fillWidth:        true
-                        content: 
-                        ColumnLayout {
+                        //% "Send to"
+                        title:            qsTrId("general-send-to")
+                        Layout.fillWidth: true
+                        content: ColumnLayout {
                             spacing: 0
-
                             SFTextInput {
+                                property bool tokenError:  viewModel.token && !viewModel.tokenValid
+                                property bool isSwap:      BeamGlobals.isSwapToken(text)
+
                                 Layout.fillWidth: true
-                                id:               receiverTAInput
+                                id:               tokenInput
                                 font.pixelSize:   14
-                                color:            isTAInputValid() ? Style.content_main : Style.validator_error
-                                backgroundColor:  isTAInputValid() ? Style.content_main : Style.validator_error
-                                font.italic :     !isTAInputValid()
-                                text:             viewModel.receiverTA
+                                color:            tokenError ? Style.validator_error : Style.content_main
+                                backgroundColor:  tokenError ? Style.validator_error : Style.content_main
+                                font.italic :     tokenError
+                                text:             viewModel.token
                                 validator:        RegExpValidator { regExp: /[0-9a-zA-Z]{1,}/ }
                                 selectByMouse:    true
-                                visible:          !receiverTAText.visible
-                                property bool isSwap: BeamGlobals.isSwapToken(text)
-                                placeholderText:  isSwap ?
-                                    //% "Paste recipient token here"
-                                    qsTrId("send-contact-token-placeholder") :
-                                    //% "Paste recipient address here"
-                                    qsTrId("send-contact-address-placeholder")
-                                onTextChanged: {
+
+                                //% "Paste recipient address here"
+                                placeholderText:  qsTrId("send-contact-address-placeholder")
+                                onTextChanged: function () {
                                     if (isSwap && typeof onSwapToken == "function") {
                                         onSwapToken(text);
                                     }
                                 }
                             }
-                            RowLayout {
-                                id:                 receiverTAText
-                                Layout.fillWidth:     true
-                                Layout.leftMargin:    0
-                                Layout.rightMargin:   6
-                                Layout.topMargin:     6
-                                Layout.bottomMargin:  3
-                                spacing:              0
-                                visible:              !receiverTAInput.activeFocus && viewModel.receiverTAValid
-                                SFText {
-                                    id:                 receiverTAPlaceholder
-                                    Layout.fillWidth:   true
-                                    font.pixelSize:     14
-                                    color:              Style.content_main
-                                    text:               viewModel.receiverTA
-                                    elide:              Text.ElideMiddle
-                                    wrapMode:           Text.NoWrap
-                                    rightPadding:       160
-                                    activeFocusOnTab:   true
-                                    onActiveFocusChanged: {
-                                        if (activeFocus)
-                                            receiverTAInput.forceActiveFocus();
-                                    }
-                                    MouseArea {
-                                        property bool   hovered: false
-                                        id:             receiverTAPlaceholderMA
-                                        anchors.fill:   parent
-                                        hoverEnabled:   true
-                                        acceptedButtons: Qt.LeftButton
-                                        onPressed: {
-                                            receiverTAInput.forceActiveFocus();
-                                        }
-                                        onEntered: {
-                                            hovered = true
-                                        }
-                                        onExited: {
-                                            hovered = false
-                                        }
-                                    }
-                                }
-                                LinkButton {
-                                    //% "More details"
-                                    text:       qsTrId("more-details")
-                                    linkColor:  Style.accent_outgoing
-                                    visible:    viewModel.receiverTAValid
-                                    onClicked: {
-                                        tokenInfoDialog.open();
-                                    }
-                                }
-                            }
-                            Rectangle {
-                                id:                 receiverTAUnderline
-                                Layout.fillWidth:   true
-                                Layout.bottomMargin:2
-                                height:             1
-                                color:              receiverTAInput.backgroundColor
-                                visible:            receiverTAText.visible
-                                opacity:            (receiverTAPlaceholder.activeFocus || receiverTAPlaceholderMA.hovered)? 0.3 : 0.1
-                            }
 
                             SFText {
-                                property bool isTokenOrAddressValid: !isTAInputValid()
                                 Layout.alignment: Qt.AlignTop
                                 Layout.fillWidth: true
                                 id:               receiverTAError
-                                color:            isTokenOrAddressValid ? Style.validator_error : Style.content_secondary
-                                font.italic:      !isTokenOrAddressValid
+                                color:            tokenInput.tokenError ? Style.validator_error : Style.content_secondary
+                                font.italic:      tokenInput.tokenError
                                 font.pixelSize:   12
                                 wrapMode:         Text.Wrap
-                                text:             isTokenOrAddressValid
-                                       //% "Invalid wallet address"
-                                      ? qsTrId("wallet-send-invalid-address-or-token")
-                                      : viewModel.newTokenMsg
-                                visible: isTokenOrAddressValid || viewModel.isNewToken
+                                text:             tokenInput.tokenError ?
+                                                  //% "Invalid wallet address"
+                                                  qsTrId("wallet-send-invalid-address-or-token") :
+                                                  viewModel.newTokenMsg
+                                visible:          tokenInput.tokenError || viewModel.newTokenMsg
                             }
                     
                             Binding {
                                 target:   viewModel
-                                property: "receiverTA"
-                                value:    receiverTAInput.text
+                                property: "token"
+                                value:    tokenInput.text
                             }
 
                             SFText {
                                 Layout.alignment:   Qt.AlignTop
-                                Layout.topMargin:   10
                                 Layout.fillWidth:   true
                                 id:                 addressNote
                                 color:              Style.content_secondary
                                 font.italic:        true
-                                font.pixelSize:     14
+                                font.pixelSize:     12
                                 wrapMode:           Text.Wrap
-                                text:               viewModel.isPermanentAddress ? 
-                                                    //% "Permanent address"
-                                                    qsTrId("wallet-send-permanent-note") 
-                                                    :
-                                                    //% "One-time use address (expire in 12 hours after successfull transaction)."
-                                                    qsTrId("wallet-send-one-time-note")
-                                visible:            viewModel.isToken && !viewModel.isShieldedTx
+                                text:               viewModel.tokenType
+                                visible:            viewModel.tokenValid
                             }
+                        }
+                    }
 
-                            SFText {
-                                Layout.alignment:   Qt.AlignTop
-                                Layout.topMargin:   10
-                                Layout.fillWidth:   true
-                                id:                 maxPrivacyNoteToken
-                                color:              Style.content_secondary
-                                font.italic:        true
-                                font.pixelSize:     14
-                                wrapMode:           Text.Wrap
-                                text:               viewModel.isOffline ? 
-                                                    //% "Offline address. Payments left: %1"
-                                                    qsTrId("wallet-send-max-privacy-note-address-offline").arg(viewModel.offlinePayments)
-                                                    : 
-                                                        viewModel.isMaxPrivacy ?
-                                                        //% "Max privacy address"
-                                                        qsTrId("wallet-send-max-privacy-note-address")
-                                                        : viewModel.isPublicOffline ? 
-                                                            //% "Public offline address"
-                                                            qsTrId("wallet-send-public-offline-address")
-                                                            :""
-                                visible:            viewModel.isShieldedTx && viewModel.isToken// && !viewModel.isOwnAddress
+                    Panel {
+                        //% "Transaction type"
+                        title: qsTrId("general-tx-type")
+                        Layout.fillWidth: true
+                        visible: viewModel.canChoose
+
+                        content: ColumnLayout {
+                            spacing: 20
+                            id: addressType
+
+                            Pane {
+                                padding: 2
+
+                                background: Rectangle {
+                                    color:  Qt.rgba(1, 1, 1, 0.1)
+                                    radius: 16
+                                }
+
+                                ButtonGroup {
+                                    id: txTypeGroup
+                                }
+
+                                RowLayout {
+                                    spacing: 0
+
+                                    CustomButton {
+                                        Layout.preferredHeight: 30
+                                        Layout.preferredWidth: maxPrivacyCheck.width
+                                        id: regularCheck
+                                        //% "Regular"
+                                        text:               qsTrId("tx-regular")
+                                        ButtonGroup.group:  txTypeGroup
+                                        checkable:          true
+                                        hasShadow:          false
+                                        checked:            !viewModel.choiceOffline
+                                        radius:             16
+                                        border.width:       1
+                                        border.color:       checked ? Style.active : "transparent"
+                                        palette.button:     checked ? Qt.rgba(0, 252/255, 207/255, 0.1) : "transparent"
+                                        palette.buttonText: checked ? Style.active : Style.content_secondary
+                                    }
+
+                                    CustomButton {
+                                        Layout.preferredHeight: 30
+                                        Layout.minimumWidth: 137
+                                        id: offlineCheck
+                                        //% "Offline"
+                                        text:               qsTrId("tx-offline")
+                                        ButtonGroup.group:  txTypeGroup
+                                        checkable:          true
+                                        checked:            viewModel.choiceOffline
+                                        hasShadow:          false
+                                        radius:             16
+                                        border.width:       1
+                                        border.color:       checked ? Style.active : "transparent"
+                                        palette.button:     checked ? Qt.rgba(0, 252/255, 207/255, 0.1) : "transparent"
+                                        palette.buttonText: checked ? Style.active : Style.content_secondary
+                                    }
+
+                                    Binding {
+                                        target:   viewModel
+                                        property: "choiceOffline"
+                                        value:    offlineCheck.checked
+                                    }
+                                }
                             }
                         }
                     }
@@ -303,22 +256,16 @@ ColumnLayout {
                                 multi:             viewModel.assetsList.length > 1
 
                                 error: {
-                                    if (showInsufficientBalanceWarning)
+                                    if (!viewModel.isEnough)
                                     {
-                                        if (control.assetId == 0)
-                                        {
-                                            //% "Insufficient funds: you would need %1 to complete the transaction"
-                                            return qsTrId("send-founds-fail").arg(Utils.uiStringToLocale(viewModel.assetMissing))
-                                        }
-                                        else
-                                        {
-                                            //% "Insufficient funds to complete the transaction"
-                                            return qsTrId("send-no-funds")
-                                        }
-                                    }
-                                    if (!viewModel.canSendByOneTransaction) {
-                                        //% "Max privacy coins are selected therefore the maximum amount is %1."
-                                        return qsTrId("send-founds-fail-by-one-tx").arg(Utils.uiStringToLocale(viewModel.maxSendAmount))
+                                       var amount = Utils.uiStringToLocale(viewModel.maxSendAmount)
+                                       if (control.assetId == 0 && viewModel.hasInvFee)
+                                       {
+                                            //% "Max privacy coins are selected. The maximum amount is %1 BEAM"
+                                            return qsTrId("send-founds-fail-by-one-tx").arg(amount).arg(control)
+                                       }
+                                       //% "Insufficient funds to complete the transaction. Maximum amount is %1 %2."
+                                       return qsTrId("send-no-funds").arg(amount).arg(control.sendUnit)
                                     }
                                     return ""
                                 }
@@ -380,60 +327,19 @@ ColumnLayout {
                     }
 
                     //
-                    // Fee
-                    //
-                    FoldablePanel {
-                        id: foldableFee
-                        //% "Fee"
-                        title:                   qsTrId("send-regular-fee")
-                        Layout.fillWidth:        true
-
-                        content: FeeInput {
-                            id:                         feeInput
-                            fee:                        viewModel.feeGrothes
-                            minFee:                     viewModel.minFee
-                            feeLabel:                   BeamGlobals.getFeeRateLabel(Currency.CurrBeam, false)
-                            color:                      Style.accent_outgoing
-                            readOnly:                   false
-                            fillWidth:                  true
-                            showSecondCurrency:         viewModel.feeRateUnit.length > 0
-                            isExchangeRateAvailable:    parseFloat(viewModel.feeRate) > 0
-                            rateAmount:                 Utils.formatAmountToSecondCurrency(viewModel.fee, viewModel.feeRate, viewModel.feeRateUnit)
-                            rateUnit:                   viewModel.feeRateUnit
-                            minimumFeeNotificationText: viewModel.isShieldedTx || viewModel.isNeedExtractShieldedCoins ?
-                                //% "For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2"
-                                qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
-                                ""
-                        }
-
-                        Binding {
-                            target:   viewModel
-                            property: "feeGrothes"
-                            value:    feeInput.fee
-                        }
-
-                        Connections {
-                            target: viewModel
-                            function onFeeGrothesChanged () {
-                                feeInput.fee = viewModel.feeGrothes
-                            }
-                        }
-                    }
-
-                    //
                     // Comment
                     //
                     FoldablePanel {
                         //% "Comment"
                         title: qsTrId("general-comment")
                         Layout.fillWidth: true
+                        folded: false
 
                         content: ColumnLayout {
                             SFTextInput {
                                 id:               addressComment
                                 font.pixelSize:   14
                                 Layout.fillWidth: true
-                                //focus:            true
                                 color:            Style.content_main
                                 text:             viewModel.comment
                                 maximumLength:    BeamGlobals.maxCommentLength()
@@ -454,10 +360,10 @@ ColumnLayout {
                 // Right column
                 //
                 ColumnLayout {
-                    Layout.alignment:   Qt.AlignTop
-                    Layout.fillWidth:   true
+                    Layout.alignment:      Qt.AlignTop
+                    Layout.fillWidth:      true
                     Layout.preferredWidth: 400
-                    spacing:            10
+                    spacing:               10
 
                     Pane {
                         Layout.fillWidth:        true
@@ -477,7 +383,7 @@ ColumnLayout {
                             SFText {
                                 Layout.alignment:  Qt.AlignTop
                                 font.pixelSize:    14
-                                color:             Style.content_secondary
+                                color:             viewModel.isEnough ? Style.content_secondary : Style.validator_error
                                 //% "Amount to send"
                                 text:              qsTrId("send-amount-label") + ":"
                             }
@@ -485,7 +391,7 @@ ColumnLayout {
                             BeamAmount {
                                 Layout.alignment:  Qt.AlignTop
                                 Layout.fillWidth:  true
-                                error:             showInsufficientBalanceWarning
+                                error:             !viewModel.isEnough
                                 amount:            viewModel.sendAmount
                                 unitName:          control.sendUnit
                                 rateUnit:          control.rateUnit
@@ -497,14 +403,14 @@ ColumnLayout {
                             SFText {
                                 Layout.alignment:       Qt.AlignTop
                                 font.pixelSize:         14
-                                color:                  Style.content_secondary
+                                color:                  viewModel.isEnough ? Style.content_secondary : Style.validator_error
                                 text:                   qsTrId("general-change") + ":"
                             }
                     
                             BeamAmount {
                                 Layout.alignment:  Qt.AlignTop
                                 Layout.fillWidth:  true
-                                error:             showInsufficientBalanceWarning
+                                error:             !viewModel.isEnough
                                 amount:            viewModel.changeAsset
                                 unitName:          control.sendUnit
                                 rateUnit:          control.assetId == 0 ? control.rateUnit : ""
@@ -516,14 +422,14 @@ ColumnLayout {
                             SFText {
                                 Layout.alignment:       Qt.AlignTop
                                 font.pixelSize:         14
-                                color:                  Style.content_secondary
+                                color:                  viewModel.isEnough ? Style.content_secondary : Style.validator_error
                                 text:                   qsTrId("send-regular-fee") + ":"
                             }
                     
                             BeamAmount {
                                 Layout.alignment:  Qt.AlignTop
                                 Layout.fillWidth:  true
-                                error:             showInsufficientBalanceWarning
+                                error:             !viewModel.isEnough
                                 amount:            viewModel.fee
                                 unitName:          BeamGlobals.beamUnit
                                 rateUnit:          viewModel.feeRateUnit
@@ -535,7 +441,7 @@ ColumnLayout {
                             SFText {
                                 Layout.alignment:       Qt.AlignTop
                                 font.pixelSize:         14
-                                color:                  Style.content_secondary
+                                color:                  viewModel.isEnough ? Style.content_secondary : Style.validator_error
                                 //% "Remaining"
                                 text:                   qsTrId("send-remaining-label") + ":"
                             }
@@ -543,7 +449,7 @@ ColumnLayout {
                             BeamAmount {
                                 Layout.alignment:  Qt.AlignTop | Qt.AlignLeft
                                 Layout.fillWidth:  true
-                                error:             showInsufficientBalanceWarning
+                                error:             !viewModel.isEnough
                                 amount:            viewModel.assetAvailable
                                 unitName:          control.sendUnit
                                 rateUnit:          control.rateUnit
@@ -555,7 +461,7 @@ ColumnLayout {
                             SFText {
                                 Layout.alignment:       Qt.AlignTop
                                 font.pixelSize:         14
-                                color:                  Style.content_secondary
+                                color:                  viewModel.isEnough ? Style.content_secondary : Style.validator_error
                                 visible:                control.assetId != 0
                                 //% "BEAM Remaining"
                                 text:                   qsTrId("send-remaining-beam-label") + ":"
@@ -564,8 +470,8 @@ ColumnLayout {
                             BeamAmount {
                                 Layout.alignment:  Qt.AlignTop | Qt.AlignLeft
                                 Layout.fillWidth:  true
-                                error:             showInsufficientBalanceWarning
-                                amount:            viewModel.beamAvailable
+                                error:             !viewModel.isEnough
+                                amount:            viewModel.beamRemaining
                                 unitName:          BeamGlobals.beamUnit
                                 rateUnit:          viewModel.feeRateUnit
                                 rate:              viewModel.feeRate
@@ -595,18 +501,21 @@ ColumnLayout {
                     const dialog = Qt.createComponent("send_confirm.qml")
                     const instance = dialog.createObject(control,
                         {
-                            addressText:   viewModel.receiverTA,
-                            typeText:      viewModel.isShieldedTx ?
-                                                viewModel.isMaxPrivacy ? qsTrId("tx-max-privacy")
-                                                    : viewModel.isOffline ? qsTrId("tx-address-offline")
-                                                        //% "Public offline"
-                                                        : viewModel.isPublicOffline ? qsTrId("tx-address-public-offline")
-                                                            //% "Unknown"
-                                                            : qsTrId("tx-address-unknown")
-                                                : qsTrId("tx-regular"),
-                            isOnline:      !viewModel.isShieldedTx,
+                            addressText:   viewModel.token,
+                            typeText:      function () {
+                                               //% "Max Privacy"
+                                               if (viewModel.isMaxPrivacy) return qsTrId("tx-max-privacy")
+                                               //% "Public offline"
+                                               if (viewModel.isPublicOffline) return qsTrId("tx-address-public-offline")
+                                               //% "Offline"
+                                               if (viewModel.isOffline) return qsTrId("tx-address-offline")
+                                               //% "Regular"
+                                               return qsTrId("tx-regular")
+                                           },
+
+                            isOnline:      !viewModel.isMaxPrivacy && !viewModel.isPublicOffline && !viewModel.isOffline,
                             amount:        viewModel.sendAmount,
-                            fee:           viewModel.feeGrothes,
+                            fee:           viewModel.fee,
                             flatFee:       true,
                             unitName:      control.sendUnit,
                             rate:          control.rate,
@@ -616,14 +525,7 @@ ColumnLayout {
                     instance.open()
 
                     function acceptedCallback() {
-                        if (viewModel.isPermanentAddress && !viewModel.hasAddress) {
-                            // TODO: uncomment when UX will be ready
-                            //saveAddressDialog.open();
-                            //viewModel.saveReceiverAddress(viewModel.comment);
-                            viewModel.sendMoney();
-                        } else {
-                            viewModel.sendMoney();
-                        }
+                        viewModel.sendMoney();
                     }
                 }
             }

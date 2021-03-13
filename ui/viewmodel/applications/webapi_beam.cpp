@@ -65,6 +65,8 @@ namespace beamui::applications {
 
     void WebAPI_Beam::callWalletApi(const QString& request)
     {
+        LOG_INFO () << "WebAPP API: " << request.toStdString();
+
         IWalletApi::WeakPtr wp = _walletAPI;
         getAsyncWallet().makeIWTCall(
             [wp, request]() -> boost::any {

@@ -280,7 +280,6 @@
         <file>controls/Panel.qml</file>
         <file>controls/TokenInfoPanel.qml</file>
         <file>controls/TokenInfoDialog.qml</file>
-        <file>controls/SaveAddressDialog.qml</file>
         <file>controls/FoldablePanel.qml</file>
         <file>controls/SwapTokenInfoDialog.qml</file>
         <file>controls/BgLogo.qml</file>

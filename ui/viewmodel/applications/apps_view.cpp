@@ -29,6 +29,7 @@ namespace beamui::applications {
         auto defaultProfile = QWebEngineProfile::defaultProfile();
         defaultProfile->setCachePath(settings.getAppsCachePath());
         defaultProfile->setPersistentStoragePath(settings.getAppsStoragePath());
+        defaultProfile->setHttpCacheType(QWebEngineProfile::HttpCacheType::DiskHttpCache);
     }
 
     AppsViewModel::~AppsViewModel()

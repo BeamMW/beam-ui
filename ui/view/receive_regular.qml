@@ -385,7 +385,7 @@ ColumnLayout {
 
             SFText {
                 Layout.alignment:      Qt.AlignHCenter
-                Layout.preferredWidth: 338
+                Layout.preferredWidth: 400
                 Layout.topMargin:      15
                 Layout.bottomMargin:   50
                 font.pixelSize:        14

@@ -1922,10 +1922,6 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <source>Token</source>
         <translation>Token</translation>
     </message>
-    <message id="general-transaction-info">
-        <source>Transaction info</source>
-        <translation>Information om transaktion</translation>
-    </message>
     <message id="tx-regular">
         <source>Regular</source>
         <translation type="unfinished">Reguljär</translation>
@@ -1933,14 +1929,6 @@ Din version är: %2. Sök efter uppdateringar.</translation>
     <message id="tx-max-privacy">
         <source>Max privacy</source>
         <translation type="unfinished">Max sekretess</translation>
-    </message>
-    <message id="address-save">
-        <source>save</source>
-        <translation>spara</translation>
-    </message>
-    <message id="save-address-no-name">
-        <source>No name</source>
-        <translation>Inget namn</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
@@ -2091,17 +2079,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Denna adress genereras av nyare Beam-klientversion (%1)
 Din version är: %2. Sök efter uppdateringar.</translation>
     </message>
-    <message id="save-address-title">
-        <source>Do you want to name the contact?</source>
-        <translation>Vill du namnge kontakten?</translation>
-    </message>
     <message id="send-title">
         <source>Send</source>
         <translation>Skicka</translation>
-    </message>
-    <message id="send-contact-token-placeholder">
-        <source>Paste recipient token here</source>
-        <translation>Klistra in mottagarens token här</translation>
     </message>
     <message id="send-contact-address-placeholder">
         <source>Paste recipient address here</source>
@@ -2110,30 +2090,6 @@ Din version är: %2. Sök efter uppdateringar.</translation>
     <message id="wallet-send-invalid-address-or-token">
         <source>Invalid wallet address</source>
         <translation>Felaktig plånboksadress</translation>
-    </message>
-    <message id="wallet-send-permanent-note">
-        <source>Permanent address</source>
-        <translation>Permanent adress</translation>
-    </message>
-    <message id="wallet-send-one-time-note">
-        <source>One-time use address (expire in 12 hours after successfull transaction).</source>
-        <translation type="unfinished">One-time use address (expire in 12 hours after successfull transaction).</translation>
-    </message>
-    <message id="wallet-send-max-privacy-note-address-offline">
-        <source>Offline address. Payments left: %1</source>
-        <translation>Offline-adress. Möjliga betalningar kvar: %1</translation>
-    </message>
-    <message id="wallet-send-max-privacy-note-address">
-        <source>Max privacy address</source>
-        <translation>Max sekretess-adress</translation>
-    </message>
-    <message id="send-founds-fail">
-        <source>Insufficient funds: you would need %1 to complete the transaction</source>
-        <translation>Otillräckliga medel; du behöver %1 för att slutföra transaktionen</translation>
-    </message>
-    <message id="max-pivacy-fee-fail">
-        <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <translation type="unfinished">For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
@@ -2259,10 +2215,6 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <source>Public offline</source>
         <translation>Publik offline</translation>
     </message>
-    <message id="tx-address-unknown">
-        <source>Unknown</source>
-        <translation>Okänd</translation>
-    </message>
     <message id="tx-address-regular-exchange">
         <source>Regular (for exchange or mining pool)</source>
         <translation>Regelbunden (för exchange eller miningpool)</translation>
@@ -2270,10 +2222,6 @@ Din version är: %2. Sök efter uppdateringar.</translation>
     <message id="tx-address-regular-wallet">
         <source>Regular (for wallet)</source>
         <translation>Regelbunden(för plånbok)</translation>
-    </message>
-    <message id="wallet-send-public-offline-address">
-        <source>Public offline address</source>
-        <translation>Publik offline-adress</translation>
     </message>
     <message id="tx-address-regular">
         <source>Regular</source>
@@ -2322,8 +2270,9 @@ publik offline</translation>
         <translation>Byte pågår, kan inte koppla ifrån.</translation>
     </message>
     <message id="send-founds-fail-by-one-tx">
-        <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
-        <translation>Max-integritetmynt är valt, därför är det högsta beloppet %1.</translation>
+        <source>Max privacy coins are selected. The maximum amount is %1 BEAM</source>
+        <oldsource>Max privacy coins are selected. The maximum amount is %1 %2.</oldsource>
+        <translation type="unfinished">Max-integritetmynt är valt, därför är det högsta beloppet %1.</translation>
     </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
@@ -2554,7 +2503,8 @@ Please try again later or create an offer yourself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-no-funds">
-        <source>Insufficient funds to complete the transaction</source>
+        <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
+        <oldsource>Insufficient funds. Maximum amount is %1 %2</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="amount-input-add-max">
@@ -2985,8 +2935,33 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-text-online-time">
-        <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
+        <source>Sender will be given a choice between regular and offline payment. For the regular transaction to complete, you should get online during the 12 hours after coins are sent.</source>
+        <oldsource>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</oldsource>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="general-send-to">
+        <source>Send to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-public-token">
+        <source>Public offline address</source>
+        <translation type="unfinished">Publik offline-adress</translation>
+    </message>
+    <message id="send-maxp-token">
+        <source>Max privacy address</source>
+        <translation type="unfinished">Max sekretess-adress</translation>
+    </message>
+    <message id="send-unknown-token">
+        <source>Unknown address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-regular-token">
+        <source>Regular address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-offline">
+        <source>Offline</source>
+        <translation type="unfinished">Nerkopplad</translation>
     </message>
 </context>
 </TS>

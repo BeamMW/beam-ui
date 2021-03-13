@@ -1925,10 +1925,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>Token</source>
         <translation>Token</translation>
     </message>
-    <message id="general-transaction-info">
-        <source>Transaction info</source>
-        <translation>Informace o transakci</translation>
-    </message>
     <message id="tx-regular">
         <source>Regular</source>
         <translation type="unfinished">Běžné</translation>
@@ -1936,14 +1932,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
     <message id="tx-max-privacy">
         <source>Max privacy</source>
         <translation type="unfinished">Max soukromí</translation>
-    </message>
-    <message id="address-save">
-        <source>save</source>
-        <translation>uložit</translation>
-    </message>
-    <message id="save-address-no-name">
-        <source>No name</source>
-        <translation>Bez názvu</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
@@ -2093,17 +2081,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Tato adresa je vygenerovaná novější verzí Beam klienta (%1)
 Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
     </message>
-    <message id="save-address-title">
-        <source>Do you want to name the contact?</source>
-        <translation>Chcete pojmenovat kontakt?</translation>
-    </message>
     <message id="send-title">
         <source>Send</source>
         <translation>Odeslat</translation>
-    </message>
-    <message id="send-contact-token-placeholder">
-        <source>Paste recipient token here</source>
-        <translation>Sem vložte token příjemce</translation>
     </message>
     <message id="send-contact-address-placeholder">
         <source>Paste recipient address here</source>
@@ -2112,30 +2092,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
     <message id="wallet-send-invalid-address-or-token">
         <source>Invalid wallet address</source>
         <translation>Neplatná adresa peněženky nebo token výměny</translation>
-    </message>
-    <message id="wallet-send-permanent-note">
-        <source>Permanent address</source>
-        <translation>Trvalá adresa</translation>
-    </message>
-    <message id="wallet-send-one-time-note">
-        <source>One-time use address (expire in 12 hours after successfull transaction).</source>
-        <translation>Adresa pro jednorázové použití (vyprší za 12 hodin po úspěšné transakci).</translation>
-    </message>
-    <message id="wallet-send-max-privacy-note-address-offline">
-        <source>Offline address. Payments left: %1</source>
-        <translation>Offline adresa. Zbývající platby: %1</translation>
-    </message>
-    <message id="wallet-send-max-privacy-note-address">
-        <source>Max privacy address</source>
-        <translation>Adresa max soukromí</translation>
-    </message>
-    <message id="send-founds-fail">
-        <source>Insufficient funds: you would need %1 to complete the transaction</source>
-        <translation>Nedostatek prostředků: k dokončení transakce potřebujete %1 </translation>
-    </message>
-    <message id="max-pivacy-fee-fail">
-        <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <translation>Pro nejlepší soukromí byly vybrány mince max soukromí. Minimální poplatek za transakci je %1 %2</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
@@ -2261,10 +2217,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>Public offline</source>
         <translation>Veřejná offline</translation>
     </message>
-    <message id="tx-address-unknown">
-        <source>Unknown</source>
-        <translation>Neznámý</translation>
-    </message>
     <message id="tx-address-regular-exchange">
         <source>Regular (for exchange or mining pool)</source>
         <translation>Obvyklé (pro směnárnu nebo těžební pool)</translation>
@@ -2272,10 +2224,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
     <message id="tx-address-regular-wallet">
         <source>Regular (for wallet)</source>
         <translation>Běžné (pro peněženku)</translation>
-    </message>
-    <message id="wallet-send-public-offline-address">
-        <source>Public offline address</source>
-        <translation>Veřejná offline adresa</translation>
     </message>
     <message id="tx-address-regular">
         <source>Regular</source>
@@ -2324,8 +2272,9 @@ veřejně offline</translation>
         <translation>Probíhá výměna, nelze se odpojit.</translation>
     </message>
     <message id="send-founds-fail-by-one-tx">
-        <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
-        <translation>Jsou vybrány mince max soukromí, proto je maximální počet mincí %1.</translation>
+        <source>Max privacy coins are selected. The maximum amount is %1 BEAM</source>
+        <oldsource>Max privacy coins are selected. The maximum amount is %1 %2.</oldsource>
+        <translation type="unfinished">Jsou vybrány mince max soukromí, proto je maximální počet mincí %1.</translation>
     </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
@@ -2556,7 +2505,8 @@ Please try again later or create an offer yourself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-no-funds">
-        <source>Insufficient funds to complete the transaction</source>
+        <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
+        <oldsource>Insufficient funds. Maximum amount is %1 %2</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="amount-input-add-max">
@@ -2987,8 +2937,33 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-text-online-time">
-        <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
+        <source>Sender will be given a choice between regular and offline payment. For the regular transaction to complete, you should get online during the 12 hours after coins are sent.</source>
+        <oldsource>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</oldsource>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="general-send-to">
+        <source>Send to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-public-token">
+        <source>Public offline address</source>
+        <translation type="unfinished">Veřejná offline adresa</translation>
+    </message>
+    <message id="send-maxp-token">
+        <source>Max privacy address</source>
+        <translation type="unfinished">Adresa max soukromí</translation>
+    </message>
+    <message id="send-unknown-token">
+        <source>Unknown address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-regular-token">
+        <source>Regular address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-offline">
+        <source>Offline</source>
+        <translation type="unfinished">V režimu offline</translation>
     </message>
 </context>
 </TS>
