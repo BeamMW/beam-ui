@@ -220,7 +220,7 @@ QString TxObject::getRate(beam::Asset::ID assetId) const
         }
     }
 
-    return "0.22";
+    return "0";
 }
 
 QString TxObject::getFeeRate() const
