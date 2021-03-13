@@ -282,7 +282,8 @@ void SendViewModel::RefreshCsiAsync()
             break;
 
         default:
-            assert(false);
+            isShielded = false;
+            break;
     }
 
     _walletModel.getAsync()->calcShieldedCoinSelectionInfo(

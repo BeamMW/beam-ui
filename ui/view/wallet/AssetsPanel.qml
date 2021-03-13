@@ -100,28 +100,9 @@ Control {
                     AssetInfo {
                         implicitHeight: control.itemHeight
                         implicitWidth:  control.itemWidth
-
-                        amount:           model.amount
-                        maturingMP:       model.maturingMP
-                        maturingRegular:  model.maturingRegular
-                        maturingTotal:    model.maturingTotal
-                        change:           model.change
-                        unitName:         model.unitName
-                        selected:         model.index == control.selectedIdx
-                        icon:             model.icon
-                        color:            model.color
-                        borderColor:      model.selectionColor
-                        rateUnit:         model.rateUnit
-                        rate:             model.rate
-                        opacity:          control.selectedIdx < 0  ? 1 : (model.index == control.selectedIdx ? 1 : 0.6)
-                        isAsset:          model.id != 0
-                        assetId:          model.id
-                        assetName:        model.assetName
-                        smallestUnitName: model.smallestUnitName
-                        shortDesc:        model.shortDesc
-                        longDesc:         model.longDesc
-                        siteUrl:          model.siteUrl
-                        whitePaper:       model.whitePaper
+                        assetInfo:      model
+                        opacity:        control.selectedIdx < 0 ? 1 : (model.index == control.selectedIdx ? 1 : 0.6)
+                        selected:       model.index == control.selectedIdx
 
                         onClicked: function () {
                             if (control.selectedIdx == model.index) {

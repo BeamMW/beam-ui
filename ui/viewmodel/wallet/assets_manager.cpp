@@ -180,6 +180,11 @@ QString AssetsManager::getSmallestUnitName(beam::Asset::ID id)
 
 QString AssetsManager::getShortDesc(beam::Asset::ID id)
 {
+    if (id < 1)
+    {
+        return "";
+    }
+
     QString desc;
     if (auto meta = getAsset(id))
     {
@@ -190,6 +195,11 @@ QString AssetsManager::getShortDesc(beam::Asset::ID id)
 
 QString AssetsManager::getLongDesc(beam::Asset::ID id)
 {
+    if (id < 1)
+    {
+        return "";
+    }
+
     QString desc;
     if (auto meta = getAsset(id))
     {
@@ -200,6 +210,11 @@ QString AssetsManager::getLongDesc(beam::Asset::ID id)
 
 QString AssetsManager::getSiteUrl(beam::Asset::ID id)
 {
+    if (id < 1)
+    {
+        return "";
+    }
+
     QString desc;
     if (auto meta = getAsset(id))
     {
@@ -210,11 +225,17 @@ QString AssetsManager::getSiteUrl(beam::Asset::ID id)
 
 QString AssetsManager::getPaperUrl(beam::Asset::ID id)
 {
+    if (id < 1)
+    {
+        return "";
+    }
+
     QString desc;
     if (auto meta = getAsset(id))
     {
         desc = meta->GetPaperUrl().c_str();
     }
+
     return desc;
 }
 

@@ -78,6 +78,7 @@
         <file>wallet/TxTable.qml</file>
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>
+        <file>wallet/AssetTip.qml</file>
         <file>wallet/TransactionDetails.qml</file>
         <file>wallet/CoinsList.qml</file>
         <file>dex/MarketPanel.qml</file>

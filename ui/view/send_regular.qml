@@ -398,6 +398,8 @@ ColumnLayout {
                                 rate:              control.rate
                                 font.styleName:    "Bold"
                                 font.weight:       Font.Bold
+                                maxPaintedWidth:   false
+                                maxUnitChars:      20
                             }
                     
                             SFText {
@@ -417,6 +419,8 @@ ColumnLayout {
                                 rate:              control.rate
                                 font.styleName:    "Bold"
                                 font.weight:       Font.Bold
+                                maxPaintedWidth:   false
+                                maxUnitChars:      20
                             }
 
                             SFText {
@@ -436,6 +440,8 @@ ColumnLayout {
                                 rate:              viewModel.feeRate
                                 font.styleName:    "Bold"
                                 font.weight:       Font.Bold
+                                maxPaintedWidth:   false
+                                maxUnitChars:      20
                             }
 
                             SFText {
@@ -456,6 +462,8 @@ ColumnLayout {
                                 rate:              control.rate
                                 font.styleName:    "Bold"
                                 font.weight:       Font.Bold
+                                maxPaintedWidth:   false
+                                maxUnitChars:      20
                             }
 
                             SFText {
@@ -478,6 +486,8 @@ ColumnLayout {
                                 visible:           control.assetId != 0
                                 font.styleName:    "Bold"
                                 font.weight:       Font.Bold
+                                maxPaintedWidth:   false
+                                maxUnitChars:      20
                             }
                         }
                     }

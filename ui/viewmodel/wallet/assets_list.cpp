@@ -48,8 +48,8 @@ QHash<int, QByteArray> AssetsList::roleNames() const
         {static_cast<int>(Roles::RSmallestUnitName),"smallestUnitName"},
         {static_cast<int>(Roles::RShortDesc),       "shortDesc"},
         {static_cast<int>(Roles::RLongDesc),        "longDesc"},
-        {static_cast<int>(Roles::RSiteUrl),            "siteUrl"},
-        {static_cast<int>(Roles::RWhitePaper),         "whitePaper"},
+        {static_cast<int>(Roles::RSiteUrl),         "siteUrl"},
+        {static_cast<int>(Roles::RWhitePaper),      "whitePaper"},
     };
     return roles;
 }
