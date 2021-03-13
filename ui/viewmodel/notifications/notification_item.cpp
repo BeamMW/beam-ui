@@ -245,7 +245,7 @@ QString NotificationItem::title() const
                 //% "Atomic Swap offer completed"
                 return qtTrId("notification-swap-completed");
             case TxType::Contract:
-                //% "Transaction completed"
+                //% "Contract transaction completed"
                 return qtTrId("notification-contract-completed");
             default:
                 return "error";

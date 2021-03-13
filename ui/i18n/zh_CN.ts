@@ -2746,7 +2746,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-completed">
-        <source>Transaction completed</source>
+        <source>Contract transaction completed</source>
+        <oldsource>Transaction completed</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-expired">
