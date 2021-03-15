@@ -2959,5 +2959,9 @@ Update your settings and try again.</source>
         <source>Offline</source>
         <translation type="unfinished">Nerkopplad</translation>
     </message>
+    <message id="tx-details-rate-notice">
+        <source>(For the day of the transaction)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -14,6 +14,7 @@ Control {
     property string  unitName:            BeamGlobals.beamUnit
     property string  rateUnit:            ""
     property string  rate:                "0"
+    property string  ratePostfix:         ""
     property string  color:               Style.content_main
     property bool    error:               false
     property bool    showZero:            true
@@ -54,7 +55,7 @@ Control {
 
     function formatRate () {
         var formatted = Utils.formatAmountToSecondCurrency(control.amount, control.rate, control.rateUnit);
-        return formatted == "" ?  ["-", control.rateUnit].join(" ") : control.prefix + formatted;
+        return formatted == "" ?  ["-", control.rateUnit].join(" ") : control.prefix + formatted + (control.ratePostfix ? " " + control.ratePostfix : "");
     }
 
     TextMetrics {

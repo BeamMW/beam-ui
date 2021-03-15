@@ -236,6 +236,8 @@ RowLayout {
                     prefix:       this.amount == "0" ? "" : (root.assetIncome[index] ? "+ " : "- ")
                     rate:         root.assetRates[index]
                     rateUnit:     this.rate != "0" ? root.rateUnit : ""
+                    //% "(For the day of the transaction)"
+                    ratePostfix:  qsTrId("tx-details-rate-notice")
                     showTip:      false
                     //maxPaintedWidth: this.width don't enable, causes freeze of animations, neet to refactor
 
@@ -283,6 +285,8 @@ RowLayout {
             unitName:  root.feeUnit
             rateUnit:  root.feeRateUnit
             rate:      root.feeRate
+            //% "(For the day of the transaction)"
+            ratePostfix:  qsTrId("tx-details-rate-notice")
             showTip:   false
         }
         
