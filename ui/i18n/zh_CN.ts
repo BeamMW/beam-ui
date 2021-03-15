@@ -2285,11 +2285,6 @@ public offline</source>
         <source>Swap in progress, cannot disconnect.</source>
         <translation>交易正在进行中，不能断开连接。</translation>
     </message>
-    <message id="send-founds-fail-by-one-tx">
-        <source>Max privacy coins are selected. The maximum amount is %1 BEAM</source>
-        <oldsource>Max privacy coins are selected. The maximum amount is %1 %2.</oldsource>
-        <translation type="unfinished">因此选择了最大隐私，最大金额是 %1。</translation>
-    </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
 max privacy</source>

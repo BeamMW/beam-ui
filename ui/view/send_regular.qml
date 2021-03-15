@@ -259,11 +259,6 @@ ColumnLayout {
                                     if (!viewModel.isEnough)
                                     {
                                        var amount = Utils.uiStringToLocale(viewModel.maxSendAmount)
-                                       if (control.assetId == 0 && viewModel.hasInvFee)
-                                       {
-                                            //% "Max privacy coins are selected. The maximum amount is %1 BEAM"
-                                            return qsTrId("send-founds-fail-by-one-tx").arg(amount).arg(control)
-                                       }
                                        //% "Insufficient funds to complete the transaction. Maximum amount is %1 %2."
                                        return qsTrId("send-no-funds").arg(amount).arg(control.sendUnit)
                                     }

@@ -35,7 +35,6 @@ class SendViewModel: public QObject
     Q_PROPERTY(QString  sendAmount       READ getSendAmount       WRITE setSendAmount      NOTIFY balanceChanged)
     Q_PROPERTY(bool     isEnough         READ getIsEnough                                  NOTIFY balanceChanged)
     Q_PROPERTY(bool     canSend          READ canSend                                      NOTIFY canSendChanged)
-    Q_PROPERTY(bool     hasInvFee        READ getHasInvFee                                 NOTIFY balanceChanged)
     Q_PROPERTY(QString  maxSendAmount    READ getMaxSendAmount                             NOTIFY balanceChanged)
     Q_PROPERTY(bool     tokenValid       READ getTokenValid                                NOTIFY tokenChanged)
     Q_PROPERTY(QString  token            READ getToken            WRITE setToken           NOTIFY tokenChanged)
@@ -78,7 +77,6 @@ public:
     [[nodiscard]] QString getNewTokenMsg() const;
     [[nodiscard]] QString getTokenType() const;
     [[nodiscard]] bool getIsEnough() const;
-    [[nodiscard]] bool getHasInvFee() const;
     [[nodiscard]] bool getTokenValid() const;
     [[nodiscard]] bool canSend() const;
     [[nodiscard]] bool getIsOffline() const;

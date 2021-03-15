@@ -120,7 +120,7 @@ QString SendViewModel::getBeamRemaining() const
 
 QString SendViewModel::getFee() const
 {
-    return beamui::AmountToUIString(m_Csi.get_TotalFee());
+    return beamui::AmountToUIString(m_Csi.m_explicitFee);
 }
 
 QString SendViewModel::getChangeBeam() const
@@ -161,11 +161,6 @@ QString SendViewModel::getFeeRate() const
 bool SendViewModel::getIsEnough() const
 {
     return m_Csi.m_isEnought;
-}
-
-bool SendViewModel::getHasInvFee() const
-{
-    return m_Csi.m_involuntaryFee != 0;
 }
 
 QString SendViewModel::getSendAmount() const

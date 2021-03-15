@@ -2272,11 +2272,6 @@ public offline</source>
         <source>Swap in progress, cannot disconnect.</source>
         <translation>Выконваецца абмен, нельга адключыць.</translation>
     </message>
-    <message id="send-founds-fail-by-one-tx">
-        <source>Max privacy coins are selected. The maximum amount is %1 BEAM</source>
-        <oldsource>Max privacy coins are selected. The maximum amount is %1 %2.</oldsource>
-        <translation type="unfinished">Былi абраныя экранаваныя манеты, таму максімальная сума складае %1.</translation>
-    </message>
     <message id="apps-title">
         <source>DAPP Store</source>
         <translation type="unfinished"></translation>

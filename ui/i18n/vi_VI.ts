@@ -2272,11 +2272,6 @@ public offline</translation>
         <source>Swap in progress, cannot disconnect.</source>
         <translation type="unfinished">Swap in progress, cannot disconnect.</translation>
     </message>
-    <message id="send-founds-fail-by-one-tx">
-        <source>Max privacy coins are selected. The maximum amount is %1 BEAM</source>
-        <oldsource>Max privacy coins are selected. The maximum amount is %1 %2.</oldsource>
-        <translation type="unfinished">Max privacy coins are selected therefore the maximum amount is %1.</translation>
-    </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
 max privacy</source>
