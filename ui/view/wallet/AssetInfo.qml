@@ -14,6 +14,7 @@ Control {
     property alias  color:         back.leftColor
     property alias  borderColor:   back.leftBorderColor
     property bool   selected:      false
+    property var    panel
 
     readonly property bool hasAmountTip: amountCtrl.hasTip || assetInfo.maturingTotal != "0" || assetInfo.change != "0"
 
@@ -84,8 +85,14 @@ Control {
                 assetTip.onVisibleChanged.connect(function () {
                     if (!assetTip.visible) {
                         assetTip.destroy()
-                        amountCtrl.tipCtrl = fakeTip
+                        if (amountCtrl) {
+                            amountCtrl.tipCtrl = fakeTip
+                        }
                     }
+                })
+
+                panel.Component.onDestruction.connect(function() {
+                    assetTip.visible = false
                 })
 
                 assetTip.onWidthChanged.connect(function () {

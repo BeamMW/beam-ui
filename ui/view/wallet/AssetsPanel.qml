@@ -103,6 +103,7 @@ Control {
                         assetInfo:      model
                         opacity:        control.selectedIdx < 0 ? 1 : (model.index == control.selectedIdx ? 1 : 0.6)
                         selected:       model.index == control.selectedIdx
+                        panel:          control
 
                         onClicked: function () {
                             if (control.selectedIdx == model.index) {
