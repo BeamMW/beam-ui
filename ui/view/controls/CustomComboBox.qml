@@ -148,10 +148,15 @@ ComboBox {
     }
 
    popup: Popup {
+        id: comboPopup
         onAboutToShow: recalcSize
 
         y: control.height + 7
-        x: control.parent.mapToItem(parent, control.x, 0).x + control.width / 2 - width / 2 + control.dropOffset
+        x: {
+            if (iconW) return control.parent.mapToItem(parent, control.x, 0).x - comboPopup.leftPadding
+            return control.parent.mapToItem(parent, control.x, 0).x + control.width / 2 - width / 2 + control.dropOffset
+        }
+
         width: calculatedWidth + leftPadding + rightPadding
 
         topPadding:    20
