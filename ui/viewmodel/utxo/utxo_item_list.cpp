@@ -75,7 +75,7 @@ auto UtxoItemList::data(const QModelIndex &index, int role) const -> QVariant
         case Roles::MaturityTimeLeftSort:
             return value->rawMaturityTimeLeft();
         case Roles::UnitName:
-            return _amgr->getUnitName(value->getAssetId(), false);
+            return _amgr->getUnitName(value->getAssetId(), AssetsManager::NoShorten);
         default:
             return QVariant();
     }

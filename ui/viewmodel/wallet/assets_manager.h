@@ -32,7 +32,14 @@ public:
 
     // SYNC
     QString getIcon(beam::Asset::ID);
-    QString getUnitName(beam::Asset::ID, bool shorten);
+
+    enum Shorten {
+        ShortenTxt,
+        ShortenHtml,
+        NoShorten
+    };
+
+    QString getUnitName(beam::Asset::ID, Shorten shorten);
     QString getName(beam::Asset::ID);
     QString getSmallestUnitName(beam::Asset::ID);
     QString getShortDesc(beam::Asset::ID);

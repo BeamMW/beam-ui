@@ -125,10 +125,10 @@ ColumnLayout {
         }
 
         delegate: Item {
-            anchors.left: parent.left
-            anchors.right: parent.right
+            anchors.left: parent ? parent.left : 0
+            anchors.right: parent ? parent.right : 500
             height: 121+10
-        
+
             property bool isUnread: model.state == "unread" 
 
             Rectangle {

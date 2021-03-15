@@ -2043,7 +2043,6 @@ deploy the key at the node you trust completely.</oldsource>
     </message>
     <message id="notification-transaction-sent">
         <source>Transaction was sent</source>
-        <oldsource>Transaction sent</oldsource>
         <translation type="unfinished">Transaction was sent</translation>
     </message>
     <message id="settings-update-wallet">

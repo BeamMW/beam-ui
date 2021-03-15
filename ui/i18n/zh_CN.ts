@@ -1700,8 +1700,7 @@ deploy the key at the node you trust completely.</source>
     </message>
     <message id="notification-transaction-sent-message">
         <source>You sent &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt;.</source>
-        <oldsource>You sent &lt;b&gt;%1&lt;/b&gt; BEAM to &lt;b&gt;%2&lt;/b&gt;.</oldsource>
-        <translation type="unfinished">您发送 &lt;b&gt;%1&lt;/b&gt; BEAM 至 &lt;b&gt;%2&lt;/b&gt;。</translation>
+        <translation>您发送 &lt;b&gt;%1 %2&lt;/b&gt; 至 &lt;b&gt;%3&lt;/b&gt;。</translation>
     </message>
     <message id="notification-transaction-failed">
         <source>Transaction failed</source>
@@ -1717,18 +1716,15 @@ deploy the key at the node you trust completely.</source>
     </message>
     <message id="notification-transaction-received-message">
         <source>You received &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt;.</source>
-        <oldsource>You received &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt;.</oldsource>
-        <translation type="unfinished">您从 &lt;b&gt;%1 BEAM&lt;/b&gt; 收到了 &lt;b&gt;%2&lt;/b&gt;。</translation>
+        <translation>您从 &lt;b&gt;%1 %2&lt;/b&gt; 收到了 &lt;b&gt;%3&lt;/b&gt;。</translation>
     </message>
     <message id="notification-transaction-send-failed-message">
         <source>Sending &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt; failed.</source>
-        <oldsource>Sending &lt;b&gt;%1 BEAM&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt; failed.</oldsource>
-        <translation type="unfinished">发送 &lt;b&gt;%1 BEAM&lt;/b&gt; 到 &lt;b&gt;%2&lt;/b&gt; 失败。</translation>
+        <translation>发送 &lt;b&gt;%1 %2&lt;/b&gt; 到 &lt;b&gt;%3&lt;/b&gt; 失败。</translation>
     </message>
     <message id="notification-transaction-receive-failed-message">
         <source>Receiving &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt; failed.</source>
-        <oldsource>Receiving &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt; failed.</oldsource>
-        <translation type="unfinished">从 &lt;b&gt;%1 BEAM&lt;/b&gt; 接收失败 &lt;b&gt;%2&lt;/b&gt;</translation>
+        <translation>从 &lt;b&gt;%1 %2&lt;/b&gt; 接收失败 &lt;b&gt;%3&lt;/b&gt;</translation>
     </message>
     <message id="notification-transaction-sent">
         <source>Transaction was sent</source>

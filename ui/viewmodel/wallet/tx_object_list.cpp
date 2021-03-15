@@ -369,7 +369,7 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
                 {
                     names += ",";
                 }
-                names += _amgr->getUnitName(assetID, false);
+                names += _amgr->getUnitName(assetID, AssetsManager::NoShorten);
             }
             return names;
         }
@@ -379,7 +379,7 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             const auto& alist = value->getAssetsList();
             for(const auto& assetID: alist)
             {
-               namesList.append(_amgr->getUnitName(assetID, false));
+               namesList.append(_amgr->getUnitName(assetID, AssetsManager::NoShorten));
             }
             QVariant result;
             result.setValue(namesList);

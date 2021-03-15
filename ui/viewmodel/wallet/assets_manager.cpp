@@ -107,7 +107,7 @@ QString AssetsManager::getIcon(beam::Asset::ID id)
      return "qrc:/assets/asset-err.svg";
 }
 
-QString AssetsManager::getUnitName(beam::Asset::ID id, bool shorten)
+QString AssetsManager::getUnitName(beam::Asset::ID id, Shorten shorten)
 {
     if (id < 1)
     {
@@ -126,9 +126,16 @@ QString AssetsManager::getUnitName(beam::Asset::ID id, bool shorten)
     }
 
     const int kMaxUnitLen = 6;
-    if (shorten && unitName.length() > kMaxUnitLen)
+    if (shorten != NoShorten && unitName.length() > kMaxUnitLen)
     {
-        unitName = unitName.left(kMaxUnitLen) + u8"\u2026";
+        if (shorten == ShortenHtml)
+        {
+            unitName = unitName.left(kMaxUnitLen) + "&#2026;";
+        }
+        else
+        {
+            unitName = unitName.left(kMaxUnitLen) + u8"\u2026";
+        }
     }
 
     return unitName;
@@ -279,11 +286,11 @@ QList<QMap<QString, QVariant>> AssetsManager::getAssetsList()
         QMap<QString, QVariant> asset;
 
         const bool isBeam = assetId == beam::Asset::s_BeamID;
-        asset.insert("isBEAM",     isBeam);
-        asset.insert("unitName",   getUnitName(assetId, false));
+        asset.insert("isBEAM",      isBeam);
+        asset.insert("unitName",   getUnitName(assetId, AssetsManager::NoShorten));
         asset.insert("rate",       isBeam ? beamRate : "0");
-        asset.insert("rateUnit",   rateUnit);
-        asset.insert("assetId",    static_cast<int>(assetId));
+        asset.insert("rateUnit",    rateUnit);
+        asset.insert("assetId",     static_cast<int>(assetId));
         asset.insert("icon",       getIcon(assetId));
         asset.insert("iconWidth",  22);
         asset.insert("iconHeight", 22);
