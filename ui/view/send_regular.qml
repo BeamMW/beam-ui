@@ -111,7 +111,6 @@ ColumnLayout {
                             spacing: 0
                             SFTextInput {
                                 property bool tokenError:  viewModel.token && !viewModel.tokenValid
-                                property bool isSwap:      BeamGlobals.isSwapToken(text)
 
                                 Layout.fillWidth: true
                                 id:               tokenInput
@@ -126,6 +125,7 @@ ColumnLayout {
                                 //% "Paste recipient address here"
                                 placeholderText:  qsTrId("send-contact-address-placeholder")
                                 onTextChanged: function () {
+                                    var isSwap = BeamGlobals.isSwapToken(text)
                                     if (isSwap && typeof onSwapToken == "function") {
                                         onSwapToken(text);
                                     }
