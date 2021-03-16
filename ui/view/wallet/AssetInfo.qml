@@ -49,7 +49,7 @@ Control {
             iconSource:        assetInfo.icon
             Layout.fillWidth:  true
             spacing:           12
-            iconSize:          Qt.size(24, 24)
+            iconSize:          Qt.size(26, 26)
             copyMenuEnabled:   true
             showDrop:          control.hasAmountTip || assetInfo.id != 0
             dropSize:          Qt.size(8, 4.8)
