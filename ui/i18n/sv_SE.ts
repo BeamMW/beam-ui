@@ -2211,14 +2211,6 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <source>Public offline</source>
         <translation>Publik offline</translation>
     </message>
-    <message id="tx-address-regular-exchange">
-        <source>Regular (for exchange or mining pool)</source>
-        <translation>Regelbunden (för exchange eller miningpool)</translation>
-    </message>
-    <message id="tx-address-regular-wallet">
-        <source>Regular (for wallet)</source>
-        <translation>Regelbunden(för plånbok)</translation>
-    </message>
     <message id="tx-address-regular">
         <source>Regular</source>
         <translation>Reguljär</translation>

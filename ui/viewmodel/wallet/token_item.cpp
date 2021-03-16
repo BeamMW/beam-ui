@@ -46,11 +46,6 @@ bool TokenInfoItem::isPublicOffline() const
 
 QString TokenInfoItem::getTransactionType() const
 {
-    if (isOffline())
-    {
-        //% "Offline"
-        return qtTrId("tx-address-offline");
-    }
     if (isMaxPrivacy())
     {
         return qtTrId("tx-address-max-privacy");
@@ -59,13 +54,8 @@ QString TokenInfoItem::getTransactionType() const
     {
         return qtTrId("tx-address-public-offline");
     }
-    if (m_token == beamui::toString(m_addressSBBS))
-    {
-        //% "Regular (for exchange or mining pool)"
-        return qtTrId("tx-address-regular-exchange");
-    }
-    //% "Regular (for wallet)"
-    return qtTrId("tx-address-regular-wallet");
+    //% "Regular"
+    return qtTrId("tx-address-regular");
 }
 
 QString TokenInfoItem::getAmount() const

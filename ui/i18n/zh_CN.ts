@@ -2227,14 +2227,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Public offline</source>
         <translation>公共离线</translation>
     </message>
-    <message id="tx-address-regular-exchange">
-        <source>Regular (for exchange or mining pool)</source>
-        <translation>一般(用于交易所或采矿池)</translation>
-    </message>
-    <message id="tx-address-regular-wallet">
-        <source>Regular (for wallet)</source>
-        <translation>一般(钱包)</translation>
-    </message>
     <message id="tx-address-regular">
         <source>Regular</source>
         <translation>常规</translation>

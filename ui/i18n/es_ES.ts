@@ -2215,14 +2215,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Public offline</source>
         <translation>Público fuera de línea</translation>
     </message>
-    <message id="tx-address-regular-exchange">
-        <source>Regular (for exchange or mining pool)</source>
-        <translation>Regular (de intercambio o pool de minería)</translation>
-    </message>
-    <message id="tx-address-regular-wallet">
-        <source>Regular (for wallet)</source>
-        <translation>Regular (de wallet)</translation>
-    </message>
     <message id="tx-address-regular">
         <source>Regular</source>
         <translation>Regular</translation>

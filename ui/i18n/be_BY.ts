@@ -2214,14 +2214,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Public offline</source>
         <translation>Публічны ў аўтаномным рэжыме</translation>
     </message>
-    <message id="tx-address-regular-exchange">
-        <source>Regular (for exchange or mining pool)</source>
-        <translation>Звычайны (для абмену або майнинга)</translation>
-    </message>
-    <message id="tx-address-regular-wallet">
-        <source>Regular (for wallet)</source>
-        <translation>Звычайны (для кашалька)</translation>
-    </message>
     <message id="tx-address-regular">
         <source>Regular</source>
         <translation>Звычайная</translation>

@@ -2213,14 +2213,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>Public offline</source>
         <translation>Veřejná offline</translation>
     </message>
-    <message id="tx-address-regular-exchange">
-        <source>Regular (for exchange or mining pool)</source>
-        <translation>Obvyklé (pro směnárnu nebo těžební pool)</translation>
-    </message>
-    <message id="tx-address-regular-wallet">
-        <source>Regular (for wallet)</source>
-        <translation>Běžné (pro peněženku)</translation>
-    </message>
     <message id="tx-address-regular">
         <source>Regular</source>
         <translation>Běžné</translation>

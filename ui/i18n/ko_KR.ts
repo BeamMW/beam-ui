@@ -2214,14 +2214,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Public offline</source>
         <translation type="unfinished">Public offline</translation>
     </message>
-    <message id="tx-address-regular-exchange">
-        <source>Regular (for exchange or mining pool)</source>
-        <translation type="unfinished">Regular (for exchange or mining pool)</translation>
-    </message>
-    <message id="tx-address-regular-wallet">
-        <source>Regular (for wallet)</source>
-        <translation type="unfinished">Regular (for wallet)</translation>
-    </message>
     <message id="tx-address-regular">
         <source>Regular</source>
         <translation>일반</translation>

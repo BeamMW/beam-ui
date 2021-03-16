@@ -23,7 +23,7 @@ ColumnLayout {
     }
 
     property var defaultFocusItem: null
-    property var onClosed: function() {} // set by parent
+    property var onClosed: function () {} // set by parent
 
     property alias token:     viewModel.token
     property alias assetId:   viewModel.assetId
@@ -42,6 +42,12 @@ ColumnLayout {
     TopGradient {
         mainRoot: main
         topColor: Style.accent_incoming
+    }
+
+    TokenInfoDialog {
+        id:       tokenInfoDialog
+        token:    viewModel.token
+        incoming: true
     }
 
     function isValid () {
@@ -316,6 +322,7 @@ ColumnLayout {
                                     text:       qsTrId("more-details")
                                     linkColor:  Style.accent_incoming
                                     onClicked:  function () {
+                                        tokenInfoDialog.open()
                                     }
                                 }
                             }

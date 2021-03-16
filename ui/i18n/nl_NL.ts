@@ -2213,14 +2213,6 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>Public offline</source>
         <translation>Openbaar offline</translation>
     </message>
-    <message id="tx-address-regular-exchange">
-        <source>Regular (for exchange or mining pool)</source>
-        <translation>Normaal (voor exchange of mining pool)</translation>
-    </message>
-    <message id="tx-address-regular-wallet">
-        <source>Regular (for wallet)</source>
-        <translation>Normaal (voor wallet)</translation>
-    </message>
     <message id="tx-address-regular">
         <source>Regular</source>
         <translation>Normaal</translation>

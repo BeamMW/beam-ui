@@ -53,12 +53,6 @@ ColumnLayout {
         topColor: Style.accent_outgoing
     }
 
-    TokenInfoDialog {
-        id:         tokenInfoDialog
-        token:      viewModel.token
-        incoming:   false
-    }
-
     //
     // Title row
     //
