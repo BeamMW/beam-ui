@@ -254,7 +254,7 @@ ColumnLayout {
                                     {
                                        var amount = Utils.uiStringToLocale(viewModel.maxSendAmount)
                                        //% "Insufficient funds to complete the transaction. Maximum amount is %1 %2."
-                                       return qsTrId("send-no-funds").arg(amount).arg(control.sendUnit)
+                                       return qsTrId("send-no-funds").arg(amount).arg(Utils.limitText(control.sendUnit, 6))
                                     }
                                     return ""
                                 }
