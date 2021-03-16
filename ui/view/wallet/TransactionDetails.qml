@@ -236,11 +236,10 @@ RowLayout {
                     prefix:       this.amount == "0" ? "" : (root.assetIncome[index] ? "+ " : "- ")
                     rate:         root.assetRates[index]
                     rateUnit:     this.rate != "0" ? root.rateUnit : ""
-                    //% "(For the day of the transaction)"
-                    ratePostfix:  qsTrId("tx-details-rate-notice")
+                    //% "For the day of the transaction"
+                    ratePostfix:  amount != "0" && rate != "0" ? ["(", qsTrId("tx-details-rate-notice"), ")"].join("") : ""
                     showTip:      false
                     //maxPaintedWidth: this.width don't enable, causes freeze of animations, neet to refactor
-
                     font {
                        styleName:  "Bold"
                        weight:     Font.Bold
@@ -252,20 +251,34 @@ RowLayout {
 
         SFText {
             Layout.alignment: Qt.AlignTop
-            font.pixelSize: 14
-            color: Style.content_secondary
+            font.pixelSize:   14
+            color:            Style.content_secondary
+            visible:          totalValueCtrl.visible
             //% "Total value"
             text: qsTrId("general-total value") + ": "
-            visible: totalValueCtrl.visible
         }
 
-        SFText {
-            id: totalValueCtrl
+        ColumnLayout {
             Layout.fillWidth: true
-            font.pixelSize: 14
-            color: Style.content_secondary
-            text: [root.totalValue, root.rateUnit].join(' ')
-            visible: root.assetCount > 1 && root.totalValue != "0" && isTextFieldVisible(root.totalValue)
+            id:               totalValueCtrl
+            visible:          root.totalValue != "0" && isTextFieldVisible(root.totalValue)
+            spacing:          2
+
+            SFText {
+                Layout.fillWidth: true
+                font.pixelSize:   14
+                color:            Style.content_secondary
+                text:             [root.totalValue, root.rateUnit].join(' ')
+            }
+
+            SFText {
+                Layout.fillWidth: true
+                font.pixelSize:   13
+                font.italic:      true
+                color:            Style.content_secondary
+                //% "For the day of the transaction"
+                text: qsTrId("tx-details-rate-notice")
+            }
         }
 
         SFText {
@@ -285,9 +298,10 @@ RowLayout {
             unitName:  root.feeUnit
             rateUnit:  root.feeRateUnit
             rate:      root.feeRate
-            //% "(For the day of the transaction)"
-            ratePostfix:  qsTrId("tx-details-rate-notice")
             showTip:   false
+
+            //% "(For the day of the transaction)"
+            ratePostfix: amount != "0" && rate != "0" ? qsTrId("tx-details-rate-notice") : ""
         }
         
         SFText {
