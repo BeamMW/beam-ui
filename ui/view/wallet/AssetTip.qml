@@ -4,7 +4,6 @@ import QtQuick.Layouts 1.4
 import QtGraphicalEffects 1.0
 import Beam.Wallet 1.0
 import "../controls"
-import "../utils.js" as Utils
 
 AlphaTipPopup {
     id:           assetTip
@@ -17,6 +16,7 @@ AlphaTipPopup {
     width:        (state == "ainfo" ? ainfoData.preferredWidth : amountData.preferredWidth ) + leftPadding + rightPadding
 
     property var  assetInfo
+    property var  onLink
     property bool hasAmountTip: false
 
     Overlay.modeless: MouseArea {
@@ -47,7 +47,7 @@ AlphaTipPopup {
                     textFormat: Text.RichText
 
                     onLinkActivated: {
-                        Utils.openExternalWithConfirmation(link)
+                        assetTip.onLink(link)
                     }
 
                     font {

@@ -100,9 +100,13 @@ Control {
                     assetTip.y = amountCtrl.tipY
                 })
 
-                assetTip.open()
+                assetTip.onLink = function (link) {
+                    assetTip.visible = false
+                    Utils.openExternalWithConfirmation(link)
+                }
 
-                mouse.accepted =  true
+                assetTip.open()
+                mouse.accepted = true
                 return
             }
 
