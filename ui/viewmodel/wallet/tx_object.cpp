@@ -105,9 +105,19 @@ TxObject::TxObject(TxDescription tx, beam::wallet::ExchangeRate::Currency second
 
         for (const auto& info: _contractSpend)
         {
+            auto amount = info.second;
+
+            if (info.first == beam::Asset::s_BeamID)
+            {
+                if (amount < 0 && static_cast<beam::Amount>(std::abs(amount)) >= _contractFee)
+                {
+                    amount += _contractFee;
+                }
+            }
+
+            _assetAmounts.push_back(AmountToUIString(std::abs(amount)));
             _assetsList.push_back(info.first);
-            _assetAmounts.push_back(AmountToUIString(std::abs(info.second)));
-            _assetAmountsIncome.push_back(info.second <= 0);
+            _assetAmountsIncome.push_back(amount <= 0);
             _assetRates.push_back(getRate(info.first));
         }
     }
@@ -178,19 +188,6 @@ const QString& TxObject::getComment() const
     }
 
     return _comment;
-}
-
-QString TxObject::getAmountGeneral() const
-{
-    if (isContractTx())
-    {
-        AmountSigned val = _contractSpend.empty() ? 0 : _contractSpend.begin()->second;
-        return AmountToUIString(std::abs(val));
-    }
-    else
-    {
-        return AmountToUIString(_tx.m_amount);
-    }
 }
 
 QString TxObject::getRate(beam::Asset::ID assetId) const
@@ -298,6 +295,24 @@ QString TxObject::getAddressTo() const
     }
     return toString(_tx.m_myId);
 }
+
+QString TxObject::getAmountGeneral() const
+{
+    if (isContractTx())
+    {
+        if (_assetAmounts.empty())
+        {
+            return QString("0");
+        }
+
+        return *_assetAmounts.begin();
+    }
+    else
+    {
+        return AmountToUIString(_tx.m_amount);
+    }
+}
+
 
 QString TxObject::getFee() const
 {
