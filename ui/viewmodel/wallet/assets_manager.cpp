@@ -25,11 +25,44 @@ AssetsManager::AssetsManager (WalletModel::Ptr wallet)
     _icons[1]  = "qrc:/assets/asset-1.svg";
     _icons[2]  = "qrc:/assets/asset-2.svg";
     _icons[3]  = "qrc:/assets/asset-3.svg";
+    _icons[4]  = "qrc:/assets/asset-4.svg";
+    _icons[5]  = "qrc:/assets/asset-5.svg";
+    _icons[6]  = "qrc:/assets/asset-6.svg";
+    _icons[7]  = "qrc:/assets/asset-7.svg";
+    _icons[8]  = "qrc:/assets/asset-8.svg";
+    _icons[9]  = "qrc:/assets/asset-9.svg";
+    _icons[10]  = "qrc:/assets/asset-10.svg";
+    _icons[11]  = "qrc:/assets/asset-11.svg";
+    _icons[12]  = "qrc:/assets/asset-12.svg";
+    _icons[13]  = "qrc:/assets/asset-13.svg";
+    _icons[14]  = "qrc:/assets/asset-14.svg";
+    _icons[15]  = "qrc:/assets/asset-15.svg";
+    _icons[16]  = "qrc:/assets/asset-16.svg";
+    _icons[17]  = "qrc:/assets/asset-17.svg";
+    _icons[18]  = "qrc:/assets/asset-18.svg";
+    _icons[19]  = "qrc:/assets/asset-19.svg";
 
-    _colors[0] = QColor(115, 255, 124, 252);
-    _colors[1] = QColor(216, 133, 255, 252);
-    _colors[2] = QColor(255, 231, 90, 252);
-    _colors[3] = QColor(79, 165, 255, 252);
+    const unsigned char alpha = 252;
+    _colors[0] = QColor("#72fdff"); _colors[0].setAlpha(alpha);
+    _colors[1] = QColor("#2acf1d"); _colors[1].setAlpha(alpha);
+    _colors[2] = QColor("#ffbb54"); _colors[2].setAlpha(alpha);
+    _colors[3] = QColor("#d885ff"); _colors[3].setAlpha(alpha);
+    _colors[4] = QColor("#008eff"); _colors[4].setAlpha(alpha);
+    _colors[5] = QColor("#ff746b"); _colors[5].setAlpha(alpha);
+    _colors[6] = QColor("#91e300"); _colors[6].setAlpha(alpha);
+    _colors[7] = QColor("#ffe75a"); _colors[7].setAlpha(alpha);
+    _colors[8] = QColor("#9643ff"); _colors[8].setAlpha(alpha);
+    _colors[9] = QColor("#395bff"); _colors[9].setAlpha(alpha);
+    _colors[10] = QColor("#ff3b3b"); _colors[10].setAlpha(alpha);
+    _colors[11] = QColor("#73ff7c"); _colors[11].setAlpha(alpha);
+    _colors[12] = QColor("#ffa86c"); _colors[12].setAlpha(alpha);
+    _colors[13] = QColor("#ff3abe"); _colors[13].setAlpha(alpha);
+    _colors[14] = QColor("#00aee1"); _colors[14].setAlpha(alpha);
+    _colors[15] = QColor("#ff5200"); _colors[15].setAlpha(alpha);
+    _colors[16] = QColor("#6464ff"); _colors[16].setAlpha(alpha);
+    _colors[17] = QColor("#ff7a21"); _colors[17].setAlpha(alpha);
+    _colors[18] = QColor("#63afff"); _colors[18].setAlpha(alpha);
+    _colors[19] = QColor("#c81f68"); _colors[19].setAlpha(alpha);
 }
 
 void AssetsManager::collectAssetInfo(beam::Asset::ID assetId)
@@ -266,7 +299,8 @@ QColor AssetsManager::getColor(beam::Asset::ID id)
         return _colors[idx];
     }
 
-    return QColor( 255, 116, 107, 252);
+    auto errColor = QColor("#8192a3"); errColor.setAlpha(252);
+    return errColor;
 }
 
 QColor AssetsManager::getSelectionColor(beam::Asset::ID id)
