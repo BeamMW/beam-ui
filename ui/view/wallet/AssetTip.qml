@@ -14,6 +14,7 @@ AlphaTipPopup {
     modal:        false
     dim:          true
     width:        (state == "ainfo" ? ainfoData.preferredWidth : amountData.preferredWidth ) + leftPadding + rightPadding
+    rightPadding: 0
 
     property var  assetInfo
     property var  onLink
@@ -29,40 +30,39 @@ AlphaTipPopup {
     Component {
         id: longTipText
 
-        ScrollView {
-            clip: true
-            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-            ScrollBar.vertical.policy: contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+        SFText {
+            id: textCrtl
+            Layout.maximumWidth: 240
+            wrapMode: Text.Wrap
 
-            RowLayout {
-                SFText {
-                    id: textCrtl
-                    Layout.maximumWidth: 240
-                    wrapMode: Text.Wrap
+            text: longText
+            color: Style.content_main
+            linkEnabled: true
+            textFormat: Text.RichText
 
-                    text: longText
-                    color: Style.content_main
-                    visible: !!this.text
-                    linkEnabled: true
-                    textFormat: Text.RichText
+            onLinkActivated: {
+                assetTip.onLink(link)
+            }
 
-                    onLinkActivated: {
-                        assetTip.onLink(link)
-                    }
-
-                    font {
-                        pixelSize: 13
-                        styleName: "Normal"
-                        weight:    Font.Normal
-                    }
+            onLineLaidOut: {
+                if (line.number > 0 && line.height && line.width < Layout.maximumWidth) {
+                    line.width = Layout.maximumWidth
                 }
+            }
+
+            font {
+                pixelSize: 13
+                styleName: "Normal"
+                weight:    Font.Normal
             }
         }
     }
 
+    property var maxScrollHeight: main.height - assetTip.y - tabsRow.height - stateLayout.spacing - assetTip.topPadding - assetTip.bottomPadding
+
     contentItem: Item { ColumnLayout {
-        spacing: 0
         id: stateLayout
+        spacing: 15
 
         state: assetTip.hasAmountTip ? "amount" : "ainfo"
         states: [
@@ -78,7 +78,9 @@ AlphaTipPopup {
 
         Row {
             spacing: 0
+            id: tabsRow
             Layout.alignment: Qt.AlignHCenter
+
             TxFilter {
                 id: amountTab
                 //% "Amount"
@@ -97,130 +99,69 @@ AlphaTipPopup {
             }
         }
 
-        Item {
-            height: 15
-            Layout.fillWidth: true
-        }
+        ScrollView {
+            clip: true
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            ScrollBar.vertical.policy: assetTip.visible && contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+            visible: stateLayout.state == "amount"
+            Layout.maximumHeight: maxScrollHeight
 
-        GridLayout {
-            id:            amountData
-            columns:       2
-            columnSpacing: 24
-            rowSpacing:    14
-            visible:       stateLayout.state == "amount"
+            GridLayout {
+                id:                  amountData
+                columns:             2
+                columnSpacing:       24
+                rowSpacing:          14
+                anchors.rightMargin: 14
 
-            SFText {
-                Layout.alignment: Qt.AlignTop
+                SFText {
+                    Layout.alignment: Qt.AlignTop
 
-                //% "Amount"
-                text:  qsTrId("general-amount")
-                color: assetTip.defTextColor
+                    //% "Amount"
+                    text:  qsTrId("general-amount")
+                    color: assetTip.defTextColor
 
-                font {
-                    pixelSize: 13
-                    styleName: "Light"
-                    weight:    Font.Light
+                    font {
+                        pixelSize: 13
+                        styleName: "Light"
+                        weight:    Font.Light
+                    }
                 }
-            }
-
-            BeamAmount {
-                amount:         assetInfo.amount
-                unitName:       assetInfo.unitName
-                rateUnit:       assetInfo.rateUnit
-                rate:           assetInfo.rate
-                color:          assetTip.defTextColor
-
-                font.styleName:  "DemiBold"
-                font.weight:     Font.DemiBold
-                font.pixelSize:  13
-                maxPaintedWidth: false
-            }
-
-            SFText {
-                Layout.alignment: Qt.AlignTop
-
-                //% "Maturing"
-                text:    qsTrId("general-maturing")
-                color:   assetTip.defTextColor
-                visible: maturingCtrl.visible
-
-                font {
-                   styleName:  "Light"
-                   weight:     Font.Light
-                   pixelSize:  13
-                }
-            }
-
-            BeamAmount {
-                id:           maturingCtrl
-                unitName:     assetInfo.unitName
-                rateUnit:     assetInfo.rateUnit
-                rate:         assetInfo.rate
-                color:        assetTip.defTextColor
-                amount:       assetInfo.maturingTotal
-                visible:      amount != "0"
-
-                font.styleName:  "DemiBold"
-                font.weight:     Font.DemiBold
-                font.pixelSize:  13
-                maxPaintedWidth: false
-            }
-
-            SFText {
-                Layout.alignment: Qt.AlignTop
-
-                //% "Change"
-                text:    qsTrId("general-change")
-                color:   assetTip.defTextColor
-                visible: changeCtrl.visible
-
-                font {
-                    pixelSize: 13
-                    styleName: "Light"
-                    weight:    Font.Light
-                }
-            }
-
-            BeamAmount {
-                id:           changeCtrl
-                unitName:     assetInfo.unitName
-                rateUnit:     assetInfo.rateUnit
-                rate:         assetInfo.rate
-                color:        assetTip.defTextColor
-                amount:       assetInfo.change
-                visible:      amount != "0"
-
-                font.styleName:  "DemiBold"
-                font.weight:     Font.DemiBold
-                font.pixelSize:  13
-                maxPaintedWidth: false
-            }
-
-            SFText {
-                Layout.alignment: Qt.AlignTop
-
-                //% "Max privacy"
-                text:    qsTrId("general-max-privacy")
-                color:   assetTip.defTextColor
-                visible: maxPrivacyCtrl.visible
-
-                font {
-                    pixelSize: 13
-                    styleName: "Light"
-                    weight:    Font.Light
-                }
-            }
-
-            Column {
-                spacing: 4
 
                 BeamAmount {
-                    id:           maxPrivacyCtrl
+                    amount:         assetInfo.amount
+                    unitName:       assetInfo.unitName
+                    rateUnit:       assetInfo.rateUnit
+                    rate:           assetInfo.rate
+                    color:          assetTip.defTextColor
+
+                    font.styleName:  "DemiBold"
+                    font.weight:     Font.DemiBold
+                    font.pixelSize:  13
+                    maxPaintedWidth: false
+                }
+
+                SFText {
+                    Layout.alignment: Qt.AlignTop
+
+                    //% "Maturing"
+                    text:    qsTrId("general-maturing")
+                    color:   assetTip.defTextColor
+                    visible: maturingCtrl.visible
+
+                    font {
+                       styleName:  "Light"
+                       weight:     Font.Light
+                       pixelSize:  13
+                    }
+                }
+
+                BeamAmount {
+                    id:           maturingCtrl
                     unitName:     assetInfo.unitName
                     rateUnit:     assetInfo.rateUnit
                     rate:         assetInfo.rate
                     color:        assetTip.defTextColor
-                    amount:       assetInfo.maturingMP
+                    amount:       assetInfo.maturingTotal
                     visible:      amount != "0"
 
                     font.styleName:  "DemiBold"
@@ -229,209 +170,281 @@ AlphaTipPopup {
                     maxPaintedWidth: false
                 }
 
-                LinkButton {
-                    visible:  maxPrivacyCtrl.visible
-                    fontSize: 13
-                    //% "More details"
-                    text: qsTrId("more-details")
+                SFText {
+                    Layout.alignment: Qt.AlignTop
 
-                    onClicked: {
-                        main.openMaxPrivacyCoins(assetInfo.id, assetInfo.unitName, assetInfo.maturingMP)
+                    //% "Change"
+                    text:    qsTrId("general-change")
+                    color:   assetTip.defTextColor
+                    visible: changeCtrl.visible
+
+                    font {
+                        pixelSize: 13
+                        styleName: "Light"
+                        weight:    Font.Light
+                    }
+                }
+
+                BeamAmount {
+                    id:           changeCtrl
+                    unitName:     assetInfo.unitName
+                    rateUnit:     assetInfo.rateUnit
+                    rate:         assetInfo.rate
+                    color:        assetTip.defTextColor
+                    amount:       assetInfo.change
+                    visible:      amount != "0"
+
+                    font.styleName:  "DemiBold"
+                    font.weight:     Font.DemiBold
+                    font.pixelSize:  13
+                    maxPaintedWidth: false
+                }
+
+                SFText {
+                    Layout.alignment: Qt.AlignTop
+
+                    //% "Max privacy"
+                    text:    qsTrId("general-max-privacy")
+                    color:   assetTip.defTextColor
+                    visible: maxPrivacyCtrl.visible
+
+                    font {
+                        pixelSize: 13
+                        styleName: "Light"
+                        weight:    Font.Light
+                    }
+                }
+
+                Column {
+                    spacing: 4
+
+                    BeamAmount {
+                        id:           maxPrivacyCtrl
+                        unitName:     assetInfo.unitName
+                        rateUnit:     assetInfo.rateUnit
+                        rate:         assetInfo.rate
+                        color:        assetTip.defTextColor
+                        amount:       assetInfo.maturingMP
+                        visible:      amount != "0"
+
+                        font.styleName:  "DemiBold"
+                        font.weight:     Font.DemiBold
+                        font.pixelSize:  13
+                        maxPaintedWidth: false
+                    }
+
+                    LinkButton {
+                        visible:  maxPrivacyCtrl.visible
+                        fontSize: 13
+                        //% "More details"
+                        text: qsTrId("more-details")
+
+                        onClicked: {
+                            main.openMaxPrivacyCoins(assetInfo.id, assetInfo.unitName, assetInfo.maturingMP)
+                        }
                     }
                 }
             }
         }
 
-        GridLayout {
-            id:            ainfoData
-            columns:       2
-            columnSpacing: 24
-            rowSpacing:    14
-            visible:       stateLayout.state == "ainfo"
+        ScrollView {
+            clip: true
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            ScrollBar.vertical.policy: assetTip.visible && contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+            visible: stateLayout.state == "ainfo"
+            Layout.maximumHeight: maxScrollHeight
+            rightPadding: 14
 
-            SFText {
-                Layout.alignment: Qt.AlignTop
+            GridLayout {
+                id:                  ainfoData
+                columns:             2
+                columnSpacing:       24
+                rowSpacing:          14
 
-                //% "Asset ID"
-                text:  qsTrId("info-asset-id")
-                color: assetTip.defTextColor
+                SFText {
+                    Layout.alignment: Qt.AlignTop
 
-                font {
-                    pixelSize: 13
-                    styleName: "Light"
-                    weight:    Font.Light
+                    //% "Asset ID"
+                    text:  qsTrId("info-asset-id")
+                    color: assetTip.defTextColor
+
+                    font {
+                        pixelSize: 13
+                        styleName: "Light"
+                        weight:    Font.Light
+                    }
                 }
-            }
 
-            SFText {
-                Layout.maximumWidth: 240
-                wrapMode: Text.Wrap
+                SFText {
+                    Layout.maximumWidth: 240
+                    wrapMode: Text.Wrap
 
-                text:  assetInfo.id.toString()
-                color: Style.content_main
+                    text:  assetInfo.id.toString()
+                    color: Style.content_main
 
-                font {
-                    pixelSize: 13
-                    styleName: "Normal"
-                    weight:    Font.Normal
+                    font {
+                        pixelSize: 13
+                        styleName: "Normal"
+                        weight:    Font.Normal
+                    }
                 }
-            }
 
-            SFText {
-                Layout.alignment: Qt.AlignTop
-                visible: nameCtrl.visible
+                SFText {
+                    Layout.alignment: Qt.AlignTop
+                    visible: nameCtrl.visible
 
-                //% "Asset name"
-                text:  qsTrId("info-asset-name")
-                color: assetTip.defTextColor
+                    //% "Asset name"
+                    text:  qsTrId("info-asset-name")
+                    color: assetTip.defTextColor
 
-                font {
-                    pixelSize: 13
-                    styleName: "Light"
-                    weight:    Font.Light
+                    font {
+                        pixelSize: 13
+                        styleName: "Light"
+                        weight:    Font.Light
+                    }
                 }
-            }
 
-            SFText {
-                id: nameCtrl
-                Layout.maximumWidth: 240
-                wrapMode: Text.Wrap
+                SFText {
+                    id: nameCtrl
+                    Layout.maximumWidth: 240
+                    wrapMode: Text.Wrap
 
-                text:  assetInfo.assetName
-                color: Style.content_main
-                visible: !!this.text
+                    text:  assetInfo.assetName
+                    color: Style.content_main
+                    visible: !!this.text
 
-                font {
-                    pixelSize: 13
-                    styleName: "Normal"
-                    weight:    Font.Normal
+                    font {
+                        pixelSize: 13
+                        styleName: "Normal"
+                        weight:    Font.Normal
+                    }
                 }
-            }
 
-            SFText {
-                Layout.alignment: Qt.AlignTop
+                SFText {
+                    Layout.alignment: Qt.AlignTop
 
-                //% "Unit name"
-                text:  qsTrId("info-asset-unit")
-                color: assetTip.defTextColor
+                    //% "Unit name"
+                    text:  qsTrId("info-asset-unit")
+                    color: assetTip.defTextColor
 
-                font {
-                    pixelSize: 13
-                    styleName: "Light"
-                    weight:    Font.Light
+                    font {
+                        pixelSize: 13
+                        styleName: "Light"
+                        weight:    Font.Light
+                    }
                 }
-            }
 
-            Loader {
-                property string longText:  assetInfo.unitName
-                sourceComponent:           longTipText
-                Layout.maximumWidth:       240
-                Layout.maximumHeight:      35
-            }
-
-            SFText {
-                visible: !!assetInfo.smallestUnitName
-
-                //% "Smallest unit name"
-                text:  qsTrId("info-asset-smallest")
-                color: assetTip.defTextColor
-
-                font {
-                    pixelSize: 13
-                    styleName: "Light"
-                    weight:    Font.Light
+                Loader {
+                    property string longText:  assetInfo.unitName
+                    sourceComponent:           longTipText
+                    Layout.maximumWidth:       240
+                    visible:                   !!assetInfo.unitName
                 }
-            }
 
-            Loader {
-                property string longText:  assetInfo.smallestUnitName
-                sourceComponent:           longTipText
-                Layout.maximumWidth:       240
-                Layout.maximumHeight:      35
-            }
+                SFText {
+                    visible: !!assetInfo.smallestUnitName
 
-            SFText {
-                visible: !!assetInfo.shortDesc
+                    //% "Smallest unit name"
+                    text:  qsTrId("info-asset-smallest")
+                    color: assetTip.defTextColor
 
-                //% "Short description"
-                text:  qsTrId("info-asset-short")
-                color: assetTip.defTextColor
-
-                font {
-                    pixelSize: 13
-                    styleName: "Light"
-                    weight:    Font.Light
+                    font {
+                        pixelSize: 13
+                        styleName: "Light"
+                        weight:    Font.Light
+                    }
                 }
-            }
 
-            Loader {
-                property string longText:  assetInfo.shortDesc
-                sourceComponent:           longTipText
-                Layout.maximumWidth:       240
-                Layout.maximumHeight:      70
-            }
-
-            SFText {
-                visible: !!assetInfo.longDesc
-
-                //% "Long description"
-                text:  qsTrId("info-asset-long")
-                color: assetTip.defTextColor
-
-                font {
-                    pixelSize: 13
-                    styleName: "Light"
-                    weight:    Font.Light
+                Loader {
+                    property string longText:  assetInfo.smallestUnitName
+                    sourceComponent:           longTipText
+                    Layout.maximumWidth:       240
+                    visible:                   !!assetInfo.smallestUnitName
                 }
-            }
 
-            Loader {
-                property string longText:  assetInfo.longDesc
-                sourceComponent:           longTipText
-                Layout.maximumWidth:       240
-                Layout.maximumHeight:      70
-            }
+                SFText {
+                    visible: !!assetInfo.shortDesc
 
-            SFText {
-                visible: !!assetInfo.siteUrl
+                    //% "Short description"
+                    text:  qsTrId("info-asset-short")
+                    color: assetTip.defTextColor
 
-                //% "Website"
-                text:  qsTrId("info-asset-site")
-                color: assetTip.defTextColor
-
-                font {
-                    pixelSize: 13
-                    styleName: "Light"
-                    weight:    Font.Light
+                    font {
+                        pixelSize: 13
+                        styleName: "Light"
+                        weight:    Font.Light
+                    }
                 }
-            }
 
-            Loader {
-                property string longText:  assetInfo.siteUrl ? [Style.linkStyle, "<a href='", assetInfo.siteUrl, "'>", assetInfo.siteUrl, "</a>"].join("") : ""
-                sourceComponent:           longTipText
-                Layout.maximumWidth:       240
-                Layout.maximumHeight:      20
-            }
-
-            SFText {
-                visible: !!assetInfo.siteUrl
-
-                //% "Whitepaper"
-                text:  qsTrId("info-asset-paper")
-                color: assetTip.defTextColor
-
-                font {
-                    pixelSize: 13
-                    styleName: "Light"
-                    weight:    Font.Light
+                Loader {
+                    property string longText:  assetInfo.shortDesc
+                    sourceComponent:           longTipText
+                    Layout.maximumWidth:       240
+                    visible:                   !!assetInfo.shortDesc
                 }
-            }
 
-            Loader {
-                property string longText:  assetInfo.whitePaper ? [Style.linkStyle, "<a href='", assetInfo.whitePaper, "'>", assetInfo.whitePaper, "</a>"].join("") : ""
-                sourceComponent:           longTipText
-                Layout.maximumWidth:       240
-                Layout.maximumHeight:      20
+                SFText {
+                    visible: !!assetInfo.longDesc
+
+                    //% "Long description"
+                    text:  qsTrId("info-asset-long")
+                    color: assetTip.defTextColor
+
+                    font {
+                        pixelSize: 13
+                        styleName: "Light"
+                        weight:    Font.Light
+                    }
+                }
+
+                Loader {
+                    property string longText:  assetInfo.longDesc
+                    sourceComponent:           longTipText
+                    Layout.maximumWidth:       240
+                    visible:                   !!assetInfo.longDesc
+                }
+
+                SFText {
+                    visible: !!assetInfo.siteUrl
+
+                    //% "Website"
+                    text:  qsTrId("info-asset-site")
+                    color: assetTip.defTextColor
+
+                    font {
+                        pixelSize: 13
+                        styleName: "Light"
+                        weight:    Font.Light
+                    }
+                }
+
+                Loader {
+                    property string longText:  assetInfo.siteUrl ? [Style.linkStyle, "<a href='", assetInfo.siteUrl, "'>", assetInfo.siteUrl, "</a>"].join("") : ""
+                    sourceComponent:           longTipText
+                    Layout.maximumWidth:       240
+                    visible:                   !!longText
+                }
+
+                SFText {
+                    visible: !!assetInfo.siteUrl
+
+                    //% "Whitepaper"
+                    text:  qsTrId("info-asset-paper")
+                    color: assetTip.defTextColor
+
+                    font {
+                        pixelSize: 13
+                        styleName: "Light"
+                        weight:    Font.Light
+                    }
+                }
+
+                Loader {
+                    property string longText:  assetInfo.whitePaper ? [Style.linkStyle, "<a href='", assetInfo.whitePaper, "'>", assetInfo.whitePaper, "</a>"].join("") : ""
+                    sourceComponent:           longTipText
+                    Layout.maximumWidth:       240
+                    visible:                   !!longText
+                }
             }
         }
     }}
