@@ -80,7 +80,7 @@ ComboBox {
             }
 
             Item {
-                width:  17
+                width:  18
                 height: parent.height
             }
         }
@@ -97,7 +97,7 @@ ComboBox {
                 modelWidth = Math.max(textMetrics.width +
                                       iconW +
                                       10 + // spacing between icon & text
-                                      17,  // right padding
+                                      18,  // right padding
                                       modelWidth)
             }
         }
@@ -171,7 +171,7 @@ ComboBox {
         topPadding:    20
         bottomPadding: 20
         leftPadding:   20
-        rightPadding:  3
+        rightPadding:  2
 
         contentItem: ColumnLayout {
             spacing: 0
