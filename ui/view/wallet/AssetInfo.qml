@@ -71,7 +71,8 @@ Control {
 
             if (mousePoint.x >= iconArea.x && mousePoint.y > iconArea.y &&
                 mousePoint.x <= iconArea.x + iconArea.width &&
-                mousePoint.y <= iconArea.y + iconArea.height)
+                mousePoint.y <= iconArea.y + iconArea.height &&
+                amountCtrl.showDrop)
             {
                 var assetTip = Qt.createComponent("AssetTip.qml").createObject(Overlay.overlay, {
                     assetInfo: control.assetInfo,
