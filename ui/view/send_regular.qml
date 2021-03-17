@@ -501,31 +501,19 @@ ColumnLayout {
                     const instance = dialog.createObject(control,
                         {
                             addressText:   viewModel.token,
-                            typeText:      function () {
-                                               //% "Max Privacy"
-                                               if (viewModel.isMaxPrivacy) return qsTrId("tx-max-privacy")
-                                               //% "Public offline"
-                                               if (viewModel.isPublicOffline) return qsTrId("tx-address-public-offline")
-                                               //% "Offline"
-                                               if (viewModel.isOffline) return qsTrId("tx-address-offline")
-                                               //% "Regular"
-                                               return qsTrId("tx-regular")
-                                           },
-
+                            typeText:      viewModel.sendType,
                             isOnline:      !viewModel.isMaxPrivacy && !viewModel.isPublicOffline && !viewModel.isOffline,
                             amount:        viewModel.sendAmount,
-                            fee:           viewModel.fee,
-                            flatFee:       true,
                             unitName:      control.sendUnit,
                             rate:          control.rate,
                             rateUnit:      control.rateUnit,
-                            acceptHandler: acceptedCallback,
+                            fee:           viewModel.fee,
+                            feeRate:       viewModel.feeRate,
+                            acceptHandler: function () {
+                                viewModel.sendMoney()
+                            },
                         })
                     instance.open()
-
-                    function acceptedCallback() {
-                        viewModel.sendMoney();
-                    }
                 }
             }
 

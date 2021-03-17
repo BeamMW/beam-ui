@@ -44,6 +44,7 @@ class SendViewModel: public QObject
     Q_PROPERTY(bool     isPublicOffline  READ getIsPublicOffline                           NOTIFY tokenChanged)
     Q_PROPERTY(QString  tokenType        READ getTokenType                                 NOTIFY tokenChanged)
     Q_PROPERTY(bool     canChoose        READ getCanChoose                                 NOTIFY tokenChanged)
+    Q_PROPERTY(QString  sendType         READ getSendType                                  NOTIFY choiceChanged)
     Q_PROPERTY(bool     choiceOffline    READ getChoiceOffline    WRITE setChoiceOffline   NOTIFY choiceChanged)
 
 public:
@@ -76,6 +77,7 @@ public:
     [[nodiscard]] QString getMaxSendAmount() const;
     [[nodiscard]] QString getNewTokenMsg() const;
     [[nodiscard]] QString getTokenType() const;
+    [[nodiscard]] QString getSendType() const;
     [[nodiscard]] bool getIsEnough() const;
     [[nodiscard]] bool getTokenValid() const;
     [[nodiscard]] bool canSend() const;

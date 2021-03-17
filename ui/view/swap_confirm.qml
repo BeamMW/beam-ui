@@ -15,23 +15,43 @@ ConfirmationDialog {
     id: control
     parent: Overlay.overlay
 
-    property alias  addressText: addressLabel.text
-    property alias  typeText:    typeLabel.text
-    property alias  isOnline:    onlineMessageText.visible
+    // By default we suppose to confirm BEAM transactions
+    property string unitName:  BeamGlobals.beamUnit
+    property string feeUnit:   BeamGlobals.beamFeeUnit
+    property bool   flatFee:   true
+
+    //% "For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards."
+    property string onlineMessage: qsTrId("send-confirmation-pwd-text-online-time")
+
+    property alias  addressText:  addressLabel.text
+    property alias  typeText:     typeLabel.text
+    property alias  isOnline:     onlineMessageText.visible
+    property bool   swapMode:     false
 
     property string amount:    "0"
+    property string fee:       "0"
     property string rate:      "0"
     property string rateUnit:  ""
-    property string unitName:  BeamGlobals.beamUnit
-
-    property string fee:       "0"
-    property string feeRate:   "0"
-    property string feeUnit:   BeamGlobals.beamFeeUnit
-
+    property bool   showRate:  rateUnit.length > 0
     property Item defaultFocusItem: BeamGlobals.needPasswordToSpend() ? requirePasswordInput : cancelButton
 
-    //% "Send"
-    okButtonText:            qsTrId("general-send")
+    readonly property string feeLabel: {
+        //% "Fee"
+        if (!control.swapMode) return [qsTrId("send-regular-fee"), ":"].join("")
+
+        //% "%1 Transaction fee"
+        if (control.flatFee) return [qsTrId("send-flat-fee").arg(control.feeUnit), ":"].join("")
+
+        //% "%1 Transaction fee rate"
+        return qsTrId("general-fee-rate").arg(control.feeUnit)
+    }
+
+    okButtonText: control.swapMode ?
+                    //% "Swap"
+                    qsTrId("general-swap"):
+                    //% "Send"
+                    qsTrId("general-send")
+
     okButtonColor:           Style.accent_outgoing
     okButtonIconSource:      "qrc:/assets/icon-send-blue.svg"
     okButtonEnable:          BeamGlobals.needPasswordToSpend() ? requirePasswordInput.text.length : true
@@ -39,11 +59,10 @@ ConfirmationDialog {
 
     function confirmationHandler() {
         if (BeamGlobals.needPasswordToSpend()) {
-            if (!requirePasswordInput.text) {
+            if (requirePasswordInput.text.length == 0) {
                 requirePasswordInput.forceActiveFocus(Qt.TabFocusReason);
                 return;
             }
-
             if (!BeamGlobals.isPasswordValid(requirePasswordInput.text)) {
                 requirePasswordInput.forceActiveFocus(Qt.TabFocusReason);
                 requirePasswordInput.selectAll();
@@ -63,6 +82,13 @@ ConfirmationDialog {
     function passworInputEnter() {
         okButton.forceActiveFocus(Qt.TabFocusReason);
         okButton.clicked();
+    }
+
+    function getFeeInSecondCurrency(feeValue) {
+        return Utils.formatFeeToSecondCurrency(
+            feeValue,
+            control.rate,
+            control.rateUnit)
     }
 
     topPadding: 30
@@ -128,8 +154,8 @@ ConfirmationDialog {
                 Layout.fillWidth:       true
                 font.pixelSize:         14
                 color:                  Style.content_disabled
-                //% "Transaction type"
-                text:                   qsTrId("send-type-label") + ":"
+                //% "Address type"
+                text:                   qsTrId("send-confirmation-type-label") + ":"
                 verticalAlignment:      Text.AlignTop
                 visible:                typeLabel.text.length > 0
             }
@@ -171,8 +197,8 @@ ConfirmationDialog {
                 copyMenuEnabled:   true
                 unitName:          control.unitName
                 amount:            control.amount
-                rate:              control.rate
-                rateUnit:          control.rateUnit
+                rate:              control.showRate ? control.rate : "0"
+                rateUnit:          control.showRate ? control.rateUnit: ""
                 color:             Style.accent_outgoing
                 maxPaintedWidth:   false
                 Layout.fillWidth:  true
@@ -186,8 +212,7 @@ ConfirmationDialog {
                 Layout.alignment:       Qt.AlignTop
                 font.pixelSize:         14
                 color:                  Style.content_disabled
-                //% "Fee"
-                text:                   [qsTrId("send-regular-fee"), ":"].join("")
+                text:                   control.feeLabel
                 verticalAlignment:      Text.AlignTop
             }
 
@@ -201,10 +226,10 @@ ConfirmationDialog {
                 }
                 SFText {
                     id:                 secondCurrencyFeeLabel
-                    visible:            control.feeRate != "0"
+                    visible:            control.showRate
                     font.pixelSize:     14
                     color:              Style.content_disabled
-                    text:               Utils.formatFeeToSecondCurrency(parseInt(control.fee), control.feeRate, control.rateUnit)
+                    text:               getFeeInSecondCurrency(parseInt(control.fee, 10))
                 }
             }
 
@@ -251,7 +276,7 @@ ConfirmationDialog {
             SFText {
                 id:                     onlineMessageText
                 Layout.columnSpan:      2
-                Layout.topMargin:       0
+                Layout.topMargin:       0//15
                 Layout.bottomMargin:    15
                 horizontalAlignment:    Text.AlignHCenter
                 Layout.fillWidth:       control.swapMode
@@ -261,8 +286,7 @@ ConfirmationDialog {
                 font.pixelSize:         14
                 color:                  Style.content_disabled
                 wrapMode:               Text.WordWrap
-                //% "For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards."
-                text:                   qsTrId("send-confirmation-pwd-text-online-time")
+                text:                   control.onlineMessage
             }
         }
     }

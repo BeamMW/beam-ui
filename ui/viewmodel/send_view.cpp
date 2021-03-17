@@ -211,6 +211,7 @@ void SendViewModel::setToken(const QString& value)
     {
         _newTokenMsg.clear();
         _token = value;
+        _choiceOffline = false;
 
         if (QMLGlobals::isSwapToken(value))
         {
@@ -223,6 +224,7 @@ void SendViewModel::setToken(const QString& value)
         }
 
         emit tokenChanged();
+        emit choiceChanged();
         emit canSendChanged();
     }
 }
@@ -558,4 +560,37 @@ void SendViewModel::sendMoney()
     }
 
     _walletModel.getAsync()->startTransaction(std::move(params));
+}
+
+
+QString SendViewModel::getSendType() const
+{
+    using namespace beam::wallet;
+    const auto type = GetAddressType(_token.toStdString());
+
+    //% "Regular"
+    auto regular = qtTrId("tx-regular");
+    //% "Offline"
+    auto offline = qtTrId("tx-address-offline");
+    //% "Public offline"
+    auto pubOffline = qtTrId("tx-address-public-offline");
+    //% "Max Privacy"
+    auto maxp = qtTrId("tx-max-privacy");
+
+    if (type == TxAddressType::Offline && _choiceOffline)
+    {
+        return offline;
+    }
+
+    if (type == TxAddressType::PublicOffline)
+    {
+        return pubOffline;
+    }
+
+    if (type == TxAddressType::MaxPrivacy)
+    {
+        return maxp;
+    }
+
+    return regular;
 }

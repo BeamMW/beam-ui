@@ -101,6 +101,7 @@
         <file>send_regular.qml</file>
         <file>send_swap.qml</file>
         <file>send_confirm.qml</file>
+        <file>swap_confirm.qml</file>
         <file>send_expired.qml</file>
         <file>dex.qml</file>
         <file>assets/fonts/SF-Pro-Display-Black.otf</file>

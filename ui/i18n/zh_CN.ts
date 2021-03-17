@@ -2091,26 +2091,6 @@ Your version is: %2. Please, check for updates.</source>
         <translation>此令牌由新的Beam客户端版本生成(%1)
 你的版本是： %2。请检查更新。</translation>
     </message>
-    <message id="send-title">
-        <source>Send</source>
-        <translation>付款</translation>
-    </message>
-    <message id="send-contact-address-placeholder">
-        <source>Paste recipient address here</source>
-        <translation>收件人地址粘贴到这里</translation>
-    </message>
-    <message id="wallet-send-invalid-address-or-token">
-        <source>Invalid wallet address</source>
-        <translation>无效的钱包地址</translation>
-    </message>
-    <message id="send-amount-label">
-        <source>Amount to send</source>
-        <translation>付款金额</translation>
-    </message>
-    <message id="send-remaining-label">
-        <source>Remaining</source>
-        <translation>剩余</translation>
-    </message>
     <message id="address-info-title">
         <source>Address details</source>
         <translation>地址详情</translation>
@@ -2498,19 +2478,6 @@ Please try again later or create an offer yourself.</source>
     </message>
     <message id="send-flat-fee">
         <source>%1 Transaction fee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-no-funds">
-        <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
-        <oldsource>Insufficient funds. Maximum amount is %1 %2</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="amount-input-add-max">
-        <source>add max</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-remaining-beam-label">
-        <source>BEAM Remaining</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-contract-default-comment">
@@ -2938,10 +2905,6 @@ Update your settings and try again.</source>
         <oldsource>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</oldsource>
         <translation type="unfinished"></translation>
     </message>
-    <message id="general-send-to">
-        <source>Send to</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="send-public-token">
         <source>Public offline address</source>
         <translation type="unfinished">公共离线地址</translation>
@@ -2958,13 +2921,53 @@ Update your settings and try again.</source>
         <source>Regular address</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="tx-details-rate-notice">
+        <source>For the day of the transaction</source>
+        <oldsource>(For the day of the transaction)</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-title">
+        <source>Send</source>
+        <translation type="unfinished">付款</translation>
+    </message>
+    <message id="general-send-to">
+        <source>Send to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-contact-address-placeholder">
+        <source>Paste recipient address here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-invalid-address-or-token">
+        <source>Invalid wallet address</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="tx-offline">
         <source>Offline</source>
         <translation type="unfinished">离线</translation>
     </message>
-    <message id="tx-details-rate-notice">
-        <source>For the day of the transaction</source>
-        <oldsource>(For the day of the transaction)</oldsource>
+    <message id="send-no-funds">
+        <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="amount-input-add-max">
+        <source>add max</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-amount-label">
+        <source>Amount to send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-remaining-label">
+        <source>Remaining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-remaining-beam-label">
+        <source>BEAM Remaining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-type-label">
+        <source>Transaction type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

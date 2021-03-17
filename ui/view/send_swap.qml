@@ -493,7 +493,7 @@ please review your settings and try again"
                         qsTrId("send-swap-fee-warning").arg(unitName)
                         : "")
 
-                    const dialogComponent = Qt.createComponent("send_confirm.qml");
+                    const dialogComponent = Qt.createComponent("swap_confirm.qml");
                     var dialogObject = dialogComponent.createObject(sendSwapView,
                         {
                             swapMode:       true,
