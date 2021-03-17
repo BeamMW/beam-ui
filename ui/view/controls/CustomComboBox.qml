@@ -41,23 +41,27 @@ ComboBox {
         width: calculatedWidth
         padding: 0
 
-        property var iconW: Array.isArray(control.model) ? modelData["iconWidth"] : model["iconWidth"]
-        property var iconH: Array.isArray(control.model) ? modelData["iconHeight"] : model["iconHeight"]
-        property var iconS: (Array.isArray(control.model) ? modelData["icon"] : model["icon"]) || ""
+        property var iconW: Array.isArray(control.model)  ? modelData["iconWidth"]  : model["iconWidth"]
+        property var iconH: Array.isArray(control.model)  ? modelData["iconHeight"] : model["iconHeight"]
+        property var iconS: (Array.isArray(control.model) ? modelData["icon"]       : model["icon"]) || ""
 
         contentItem: Row {
             spacing: 0
+
             SvgImage {
-                source: iconS
-                sourceSize: Qt.size(iconW, iconH)
-                anchors.verticalCenter: parent.verticalCenter
+                source:  iconS
+                width:   iconW
+                height:  iconH
                 visible: iconW > 0
+                anchors.verticalCenter: parent.verticalCenter
             }
+
             Item {
                 visible: iconW > 0
                 width:   10
                 height:  parent.height
             }
+
             SFText {
                 text: {
                     var text = modelData
@@ -74,6 +78,11 @@ ComboBox {
                 font.weight: highlighted ? Font.DemiBold : Font.Normal
                 anchors.verticalCenter: parent.verticalCenter
             }
+
+            Item {
+                width:  17
+                height: parent.height
+            }
         }
 
         highlighted: control.highlightedIndex === index
@@ -86,9 +95,9 @@ ComboBox {
                 textMetrics.text = Utils.limitText(control.textRole ? model[i][control.textRole] : model[i], control.textMaxLenDrop)
                 var iconW = model[i]["iconWidth"] || 0
                 modelWidth = Math.max(textMetrics.width +
-                                      //6 + // left padding
-                                      //6 + // right padding
-                                      iconW + 10, // spacing between icon & text
+                                      iconW +
+                                      10 + // spacing between icon & text
+                                      17,  // right padding
                                       modelWidth)
             }
         }
@@ -119,8 +128,8 @@ ComboBox {
 
         Item {
             visible: iconW > 0
-            width:  10
-            height: parent.height
+            width:   10
+            height:  parent.height
         }
 
         SFText  {
@@ -132,7 +141,7 @@ ComboBox {
         }
 
         Item {
-            width: control.indicator.width + control.spacing
+            width:  control.indicator.width + control.spacing
             height: parent.height
         }
     }
@@ -162,7 +171,7 @@ ComboBox {
         topPadding:    20
         bottomPadding: 20
         leftPadding:   20
-        rightPadding:  20
+        rightPadding:  3
 
         contentItem: ColumnLayout {
             spacing: 0
@@ -171,11 +180,11 @@ ComboBox {
                 Layout.fillWidth: true
                 clip: true
                 spacing: control.dropSpacing
-                implicitHeight: enableScroll ? Math.min(350, contentHeight) : contentHeight
+                implicitHeight: enableScroll ? Math.min(400, contentHeight) : contentHeight
                 model: control.popup.visible ? control.delegateModel : null
                 currentIndex: control.highlightedIndex
                 ScrollBar.vertical: ScrollBar {
-                    policy: enableScroll && listView.contentHeight > 350 ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+                    policy: enableScroll && listView.contentHeight > listView.height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
                 }
             }
         }

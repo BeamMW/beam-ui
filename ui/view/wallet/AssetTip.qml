@@ -14,7 +14,7 @@ AlphaTipPopup {
     modal:        false
     dim:          true
     width:        (state == "ainfo" ? ainfoData.preferredWidth : amountData.preferredWidth ) + leftPadding + rightPadding
-    rightPadding: 0
+    rightPadding: 3
 
     property var  assetInfo
     property var  onLink
@@ -253,7 +253,7 @@ AlphaTipPopup {
             ScrollBar.vertical.policy: assetTip.visible && contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
             visible: stateLayout.state == "ainfo"
             Layout.maximumHeight: maxScrollHeight
-            rightPadding: 14
+            rightPadding: 11
 
             GridLayout {
                 id:                  ainfoData
