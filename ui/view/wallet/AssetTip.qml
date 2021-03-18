@@ -18,6 +18,7 @@ AlphaTipPopup {
 
     property var  assetInfo
     property var  onLink
+    property var  onMPDetails
     property bool hasAmountTip: false
 
     Overlay.modeless: MouseArea {
@@ -240,7 +241,7 @@ AlphaTipPopup {
                         text: qsTrId("more-details")
 
                         onClicked: {
-                            main.openMaxPrivacyCoins(assetInfo.id, assetInfo.unitName, assetInfo.maturingMP)
+                            assetTip.onMPDetails()
                         }
                     }
                 }

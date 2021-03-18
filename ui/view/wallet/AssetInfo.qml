@@ -106,6 +106,11 @@ Control {
                     Utils.openExternalWithConfirmation(link)
                 }
 
+                assetTip.onMPDetails = function () {
+                    assetTip.visible = false
+                    main.openMaxPrivacyCoins(assetInfo.id, assetInfo.unitName, assetInfo.maturingMP)
+                }
+
                 assetTip.open()
                 mouse.accepted = true
                 return
