@@ -16,7 +16,7 @@ Control {
     property bool   selected:      false
     property var    panel
 
-    readonly property bool hasAmountTip: amountCtrl.hasTip || assetInfo.maturingTotal != "0" || assetInfo.change != "0"
+    readonly property bool hasBalanceTip: amountCtrl.hasTip || assetInfo.locked != "0" || assetInfo.amountShielded != "0"
 
     padding: 0
     leftPadding: 20
@@ -51,7 +51,7 @@ Control {
             spacing:           12
             iconSize:          Qt.size(26, 26)
             copyMenuEnabled:   true
-            showDrop:          control.hasAmountTip || assetInfo.id != 0
+            showDrop:          control.hasBalanceTip || assetInfo.id != 0
             dropSize:          Qt.size(8, 4.8)
             tipCtrl:           fakeTip
             font.styleName:    "Normal"
@@ -76,7 +76,7 @@ Control {
             {
                 var assetTip = Qt.createComponent("AssetTip.qml").createObject(Overlay.overlay, {
                     assetInfo: control.assetInfo,
-                    hasAmountTip: control.hasAmountTip
+                    hasBalanceTip: control.hasBalanceTip
                 });
 
                 amountCtrl.tipCtrl = assetTip

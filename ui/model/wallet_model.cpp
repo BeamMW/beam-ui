@@ -367,6 +367,19 @@ beam::AmountBig::Type WalletModel::getAvailable(beam::Asset::ID id) const
     return result;
 }
 
+
+beam::AmountBig::Type WalletModel::getAvailableRegular(beam::Asset::ID id) const
+{
+    const auto& status = m_status.GetStatus(id);
+    return status.available;
+}
+
+beam::AmountBig::Type WalletModel::getAvailableShielded(beam::Asset::ID id) const
+{
+    const auto& status = m_status.GetStatus(id);
+    return status.shielded;
+}
+
 beam::AmountBig::Type WalletModel::getReceiving(beam::Asset::ID id) const
 {
     const auto& status = m_status.GetStatus(id);

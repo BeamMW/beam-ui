@@ -13,13 +13,13 @@ AlphaTipPopup {
     visible:      false
     modal:        false
     dim:          true
-    width:        (state == "ainfo" ? ainfoData.preferredWidth : amountData.preferredWidth ) + leftPadding + rightPadding
-    rightPadding: 2
+    width:        (state == "ainfo" ? ainfoData.preferredWidth : balanceData.preferredWidth ) + leftPadding + rightPadding
+    rightPadding: 0
 
     property var  assetInfo
     property var  onLink
     property var  onMPDetails
-    property bool hasAmountTip: false
+    property bool hasBalanceTip: false
 
     Overlay.modeless: MouseArea {
         anchors.fill: parent
@@ -65,11 +65,11 @@ AlphaTipPopup {
         id: stateLayout
         spacing: 15
 
-        state: assetTip.hasAmountTip ? "amount" : "ainfo"
+        state: assetTip.hasBalanceTip ? "balance" : "ainfo"
         states: [
             State {
-                name: "amount"
-                PropertyChanges { target: amountTab; state: "active" }
+                name: "balance"
+                PropertyChanges { target: balanceTab; state: "active" }
             },
             State {
                 name: "ainfo"
@@ -81,13 +81,15 @@ AlphaTipPopup {
             spacing: 0
             id: tabsRow
             Layout.alignment: Qt.AlignHCenter
+            Layout.rightMargin: 14
+            Layout.leftMargin: 14
 
             TxFilter {
-                id: amountTab
-                //% "Amount"
-                label:  qsTrId("general-amount")
-                onClicked: stateLayout.state = "amount"
-                visible: assetTip.hasAmountTip
+                id: balanceTab
+                //% "Balance"
+                label:  qsTrId("general-balance")
+                onClicked: stateLayout.state = "balance"
+                visible: assetTip.hasBalanceTip
                 inactiveColor: Style.content_secondary
             }
             TxFilter {
@@ -104,21 +106,21 @@ AlphaTipPopup {
             clip: true
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
             ScrollBar.vertical.policy: assetTip.visible && contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
-            visible: stateLayout.state == "amount"
+            visible: stateLayout.state == "balance"
             Layout.maximumHeight: maxScrollHeight
+            Layout.minimumWidth:  tabsRow.width
 
             GridLayout {
-                id:                  amountData
+                id:                  balanceData
                 columns:             2
                 columnSpacing:       24
                 rowSpacing:          14
-                anchors.rightMargin: 14
 
                 SFText {
                     Layout.alignment: Qt.AlignTop
 
-                    //% "Amount"
-                    text:  qsTrId("general-amount")
+                    //% "Available"
+                    text:  qsTrId("balance-available")
                     color: assetTip.defTextColor
 
                     font {
@@ -139,13 +141,118 @@ AlphaTipPopup {
                     font.weight:     Font.DemiBold
                     font.pixelSize:  13
                     maxPaintedWidth: false
+                    Layout.rightMargin: 14
+                }
+
+                SFText {
+                    Layout.alignment: Qt.AlignTop
+                    visible: amountRegularCtrl.visible
+
+                    //% "Regular"
+                    text:  qsTrId("balance-regular")
+                    color: assetTip.defTextColor
+
+                    font {
+                        pixelSize: 13
+                        styleName: "Light"
+                        weight:    Font.Light
+                    }
+                }
+
+                BeamAmount {
+                    id:             amountRegularCtrl
+                    amount:         assetInfo.amountRegular
+                    unitName:       assetInfo.unitName
+                    rateUnit:       assetInfo.rateUnit
+                    rate:           assetInfo.rate
+                    color:          assetTip.defTextColor
+                    visible:        amount != "0"
+
+                    font.styleName:  "DemiBold"
+                    font.weight:     Font.DemiBold
+                    font.pixelSize:  13
+                    maxPaintedWidth: false
+                    Layout.rightMargin: 14
+                }
+
+                SFText {
+                    Layout.alignment: Qt.AlignTop
+                    visible: amountShieldedCtrl.visible
+
+                    //% "Shielded"
+                    text:  qsTrId("balance-shielded")
+                    color: assetTip.defTextColor
+
+                    font {
+                        pixelSize: 13
+                        styleName: "Light"
+                        weight:    Font.Light
+                    }
+                }
+
+                BeamAmount {
+                    id:             amountShieldedCtrl
+                    amount:         assetInfo.amountShielded
+                    unitName:       assetInfo.unitName
+                    rateUnit:       assetInfo.rateUnit
+                    rate:           assetInfo.rate
+                    color:          assetTip.defTextColor
+                    visible:        amount != "0"
+
+                    font.styleName:  "DemiBold"
+                    font.weight:     Font.DemiBold
+                    font.pixelSize:  13
+                    maxPaintedWidth: false
+                    Layout.rightMargin: 14
+                }
+
+                Rectangle {
+                    Layout.fillWidth:  true
+                    Layout.columnSpan: 2
+
+                    height:   1
+                    color:    "white"
+                    opacity:  0.1
+                    visible:  lockedCtrl.visible
+                    Layout.rightMargin: 14
+                }
+
+                SFText {
+                    Layout.alignment: Qt.AlignTop
+
+                    //% "Locked"
+                    text:    qsTrId("balance-locked")
+                    color:   assetTip.defTextColor
+                    visible: lockedCtrl.visible
+
+                    font {
+                       styleName:  "Light"
+                       weight:     Font.Light
+                       pixelSize:  13
+                    }
+                }
+
+                BeamAmount {
+                    id:           lockedCtrl
+                    unitName:     assetInfo.unitName
+                    rateUnit:     assetInfo.rateUnit
+                    rate:         assetInfo.rate
+                    color:        assetTip.defTextColor
+                    amount:       assetInfo.locked
+                    visible:      amount != "0"
+
+                    font.styleName:  "DemiBold"
+                    font.weight:     Font.DemiBold
+                    font.pixelSize:  13
+                    maxPaintedWidth: false
+                    Layout.rightMargin: 14
                 }
 
                 SFText {
                     Layout.alignment: Qt.AlignTop
 
                     //% "Maturing"
-                    text:    qsTrId("general-maturing")
+                    text:    qsTrId("balance-maturing")
                     color:   assetTip.defTextColor
                     visible: maturingCtrl.visible
 
@@ -162,20 +269,21 @@ AlphaTipPopup {
                     rateUnit:     assetInfo.rateUnit
                     rate:         assetInfo.rate
                     color:        assetTip.defTextColor
-                    amount:       assetInfo.maturingTotal
+                    amount:       assetInfo.maturingRegular
                     visible:      amount != "0"
 
                     font.styleName:  "DemiBold"
                     font.weight:     Font.DemiBold
                     font.pixelSize:  13
                     maxPaintedWidth: false
+                    Layout.rightMargin: 14
                 }
 
                 SFText {
                     Layout.alignment: Qt.AlignTop
 
                     //% "Change"
-                    text:    qsTrId("general-change")
+                    text:    qsTrId("balance-change")
                     color:   assetTip.defTextColor
                     visible: changeCtrl.visible
 
@@ -199,13 +307,14 @@ AlphaTipPopup {
                     font.weight:     Font.DemiBold
                     font.pixelSize:  13
                     maxPaintedWidth: false
+                    Layout.rightMargin: 14
                 }
 
                 SFText {
                     Layout.alignment: Qt.AlignTop
 
                     //% "Max privacy"
-                    text:    qsTrId("general-max-privacy")
+                    text:    qsTrId("balance-mp")
                     color:   assetTip.defTextColor
                     visible: maxPrivacyCtrl.visible
 
@@ -218,6 +327,7 @@ AlphaTipPopup {
 
                 Column {
                     spacing: 4
+                    Layout.rightMargin: 14
 
                     BeamAmount {
                         id:           maxPrivacyCtrl
@@ -254,7 +364,7 @@ AlphaTipPopup {
             ScrollBar.vertical.policy: assetTip.visible && contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
             visible: stateLayout.state == "ainfo"
             Layout.maximumHeight: maxScrollHeight
-            rightPadding: 12
+            Layout.minimumWidth:  tabsRow.width
 
             GridLayout {
                 id:                  ainfoData
@@ -278,6 +388,7 @@ AlphaTipPopup {
 
                 SFText {
                     Layout.maximumWidth: 240
+                    Layout.rightMargin: 14
                     wrapMode: Text.Wrap
 
                     text:  assetInfo.id.toString()
@@ -308,6 +419,7 @@ AlphaTipPopup {
                 SFText {
                     id: nameCtrl
                     Layout.maximumWidth: 240
+                    Layout.rightMargin: 14
                     wrapMode: Text.Wrap
 
                     text:  assetInfo.assetName
@@ -339,6 +451,7 @@ AlphaTipPopup {
                     property string longText:  assetInfo.unitName
                     sourceComponent:           longTipText
                     Layout.maximumWidth:       240
+                    Layout.rightMargin:        14
                     visible:                   !!assetInfo.unitName
                 }
 
@@ -360,6 +473,7 @@ AlphaTipPopup {
                     property string longText:  assetInfo.smallestUnitName
                     sourceComponent:           longTipText
                     Layout.maximumWidth:       240
+                    Layout.rightMargin:        14
                     visible:                   !!assetInfo.smallestUnitName
                 }
 
@@ -381,6 +495,7 @@ AlphaTipPopup {
                     property string longText:  assetInfo.shortDesc
                     sourceComponent:           longTipText
                     Layout.maximumWidth:       240
+                    Layout.rightMargin:        14
                     visible:                   !!assetInfo.shortDesc
                 }
 
@@ -402,6 +517,7 @@ AlphaTipPopup {
                     property string longText:  assetInfo.longDesc
                     sourceComponent:           longTipText
                     Layout.maximumWidth:       240
+                    Layout.rightMargin:        14
                     visible:                   !!assetInfo.longDesc
                 }
 
@@ -423,6 +539,7 @@ AlphaTipPopup {
                     property string longText:  assetInfo.siteUrl ? [Style.linkStyle, "<a href='", assetInfo.siteUrl, "'>", assetInfo.siteUrl, "</a>"].join("") : ""
                     sourceComponent:           longTipText
                     Layout.maximumWidth:       240
+                    Layout.rightMargin:        14
                     visible:                   !!longText
                 }
 
@@ -444,6 +561,7 @@ AlphaTipPopup {
                     property string longText:  assetInfo.whitePaper ? [Style.linkStyle, "<a href='", assetInfo.whitePaper, "'>", assetInfo.whitePaper, "</a>"].join("") : ""
                     sourceComponent:           longTipText
                     Layout.maximumWidth:       240
+                    Layout.rightMargin:        14
                     visible:                   !!longText
                 }
             }

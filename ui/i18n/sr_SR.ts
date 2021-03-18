@@ -2732,44 +2732,6 @@ Update your settings and try again.</source>
         <source>Total value</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="general-maturing">
-        <source>Maturing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="general-max-privacy">
-        <source>Max privacy</source>
-        <translation type="unfinished">Max privacy</translation>
-    </message>
-    <message id="general-asset-info">
-        <source>Asset Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="info-asset-name">
-        <source>Asset name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="info-asset-smallest">
-        <source>Smallest unit name</source>
-        <oldsource>Smallest unit</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="info-asset-id">
-        <source>Asset ID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="info-asset-unit">
-        <source>Unit name</source>
-        <oldsource>Unit Name</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="info-asset-short">
-        <source>Short description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="info-asset-long">
-        <source>Long description</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="general-locked">
         <source>Locked</source>
         <translation type="unfinished">Закључано</translation>
@@ -2838,14 +2800,6 @@ Update your settings and try again.</source>
         <source>Unsupported API version requested: %1</source>
         <oldsource>Unsupported API version requested: %1
 </oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="info-asset-site">
-        <source>Website</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="info-asset-paper">
-        <source>Whitepaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="can-not-generate-new-address-message">
@@ -2956,6 +2910,74 @@ Update your settings and try again.</source>
     </message>
     <message id="send-type-label">
         <source>Transaction type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-balance">
+        <source>Balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-asset-info">
+        <source>Asset Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="balance-available">
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="balance-regular">
+        <source>Regular</source>
+        <translation type="unfinished">Regular</translation>
+    </message>
+    <message id="balance-shielded">
+        <source>Shielded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="balance-locked">
+        <source>Locked</source>
+        <translation type="unfinished">Закључано</translation>
+    </message>
+    <message id="balance-maturing">
+        <source>Maturing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="balance-change">
+        <source>Change</source>
+        <translation type="unfinished">Change</translation>
+    </message>
+    <message id="balance-mp">
+        <source>Max privacy</source>
+        <translation type="unfinished">Max privacy</translation>
+    </message>
+    <message id="info-asset-id">
+        <source>Asset ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-name">
+        <source>Asset name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-unit">
+        <source>Unit name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-smallest">
+        <source>Smallest unit name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-short">
+        <source>Short description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-long">
+        <source>Long description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-site">
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-paper">
+        <source>Whitepaper</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

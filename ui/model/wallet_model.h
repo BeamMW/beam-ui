@@ -43,6 +43,8 @@ public:
 
     std::set<beam::Asset::ID> getAssetsNZ() const;
     beam::AmountBig::Type getAvailable(beam::Asset::ID) const;
+    beam::AmountBig::Type getAvailableRegular(beam::Asset::ID) const;
+    beam::AmountBig::Type getAvailableShielded(beam::Asset::ID) const;
     beam::AmountBig::Type getReceiving(beam::Asset::ID) const;
     beam::AmountBig::Type getReceivingIncoming(beam::Asset::ID) const;
     beam::AmountBig::Type getReceivingChange(beam::Asset::ID) const;

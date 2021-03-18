@@ -238,12 +238,13 @@ Control {
                 }
 
                 Item {
-                    height: amountText.height
-                    width:  control.dropSize.width + 5
+                    height:  amountText.height
+                    width:   control.dropSize.width + 5
+                    visible: showDrop
 
                     SvgImage {
                         id:         dropIconCtrl
-                        visible:    showDrop
+
                         source:     "qrc:/assets/icon-down.svg"
                         width:      control.dropSize.width
                         height:     control.dropSize.height

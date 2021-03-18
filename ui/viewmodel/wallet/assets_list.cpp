@@ -33,6 +33,8 @@ QHash<int, QByteArray> AssetsList::roleNames() const
         {static_cast<int>(Roles::RId),              "id"},
         {static_cast<int>(Roles::RUnitName),        "unitName"},
         {static_cast<int>(Roles::RAmount),          "amount"},
+        {static_cast<int>(Roles::RAmountRegular),   "amountRegular"},
+        {static_cast<int>(Roles::RAmountShielded),  "amountShielded"},
         {static_cast<int>(Roles::RInTxCnt),         "inTxCnt"},
         {static_cast<int>(Roles::ROutTxCnt),        "outTxCnt"},
         {static_cast<int>(Roles::RIcon),            "icon"},
@@ -41,6 +43,7 @@ QHash<int, QByteArray> AssetsList::roleNames() const
         {static_cast<int>(Roles::RRateUnit),        "rateUnit"},
         {static_cast<int>(Roles::RRate),            "rate"},
         {static_cast<int>(Roles::RChange),          "change"},
+        {static_cast<int>(Roles::RLocked),          "locked"},
         {static_cast<int>(Roles::RMaturingRegular), "maturingRegular"},
         {static_cast<int>(Roles::RMaturingMP),      "maturingMP"},
         {static_cast<int>(Roles::RMaturingTotal),   "maturingTotal"},
@@ -89,6 +92,10 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
             return _amgr->getUnitName(assetId, AssetsManager::NoShorten);
         case Roles::RAmount:
             return beamui::AmountBigToUIString(_wallet.getAvailable(assetId));
+        case Roles::RAmountRegular:
+            return beamui::AmountBigToUIString(_wallet.getAvailableRegular(assetId));
+        case Roles::RAmountShielded:
+            return beamui::AmountBigToUIString(_wallet.getAvailableShielded(assetId));
         case Roles::RMaturingRegular:
             return beamui::AmountBigToUIString(_wallet.getMaturing(assetId));
         case Roles::RMaturingMP:
@@ -101,6 +108,13 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
         }
         case Roles::RChange:
             return beamui::AmountBigToUIString(_wallet.getReceivingChange(assetId));
+        case Roles::RLocked:
+        {
+             auto locked = _wallet.getMaturing(assetId);
+             locked += _wallet.getMatutingMP(assetId);
+             locked += _wallet.getReceivingChange(assetId);
+             return beamui::AmountBigToUIString(locked);
+        }
         case Roles::RInTxCnt:
             return static_cast<qint32>(asset->inTxCnt());
         case Roles::ROutTxCnt:
