@@ -33,22 +33,16 @@ AlphaTipPopup {
 
         SFText {
             id: textCrtl
-            Layout.maximumWidth: 240
+            Layout.maximumWidth:   240
             wrapMode: Text.Wrap
 
-            text: longText
-            color: Style.content_main
+            text:        longText
+            color:       Style.content_main
             linkEnabled: true
-            textFormat: Text.RichText
+            textFormat:  Text.RichText
 
             onLinkActivated: {
                 assetTip.onLink(link)
-            }
-
-            onLineLaidOut: {
-                if (line.number > 0 && line.height && line.width < Layout.maximumWidth) {
-                    line.width = Layout.maximumWidth
-                }
             }
 
             font {
@@ -117,8 +111,6 @@ AlphaTipPopup {
                 rowSpacing:          14
 
                 SFText {
-                    Layout.alignment: Qt.AlignTop
-
                     //% "Available"
                     text:  qsTrId("balance-available")
                     color: assetTip.defTextColor
@@ -145,7 +137,6 @@ AlphaTipPopup {
                 }
 
                 SFText {
-                    Layout.alignment: Qt.AlignTop
                     visible: amountRegularCtrl.visible
 
                     //% "Regular"
@@ -176,7 +167,6 @@ AlphaTipPopup {
                 }
 
                 SFText {
-                    Layout.alignment: Qt.AlignTop
                     visible: amountShieldedCtrl.visible
 
                     //% "Shielded"
@@ -218,8 +208,6 @@ AlphaTipPopup {
                 }
 
                 SFText {
-                    Layout.alignment: Qt.AlignTop
-
                     //% "Locked"
                     text:    qsTrId("balance-locked")
                     color:   assetTip.defTextColor
@@ -249,8 +237,6 @@ AlphaTipPopup {
                 }
 
                 SFText {
-                    Layout.alignment: Qt.AlignTop
-
                     //% "Maturing"
                     text:    qsTrId("balance-maturing")
                     color:   assetTip.defTextColor
@@ -280,8 +266,6 @@ AlphaTipPopup {
                 }
 
                 SFText {
-                    Layout.alignment: Qt.AlignTop
-
                     //% "Change"
                     text:    qsTrId("balance-change")
                     color:   assetTip.defTextColor
@@ -311,8 +295,6 @@ AlphaTipPopup {
                 }
 
                 SFText {
-                    Layout.alignment: Qt.AlignTop
-
                     //% "Max privacy"
                     text:    qsTrId("balance-mp")
                     color:   assetTip.defTextColor
@@ -328,15 +310,16 @@ AlphaTipPopup {
                 Column {
                     spacing: 4
                     Layout.rightMargin: 14
+                    id: maxPrivacyCtrl
+                    visible: assetInfo.maturingMP != "0"
 
                     BeamAmount {
-                        id:           maxPrivacyCtrl
+
                         unitName:     assetInfo.unitName
                         rateUnit:     assetInfo.rateUnit
                         rate:         assetInfo.rate
                         color:        assetTip.defTextColor
                         amount:       assetInfo.maturingMP
-                        visible:      amount != "0"
 
                         font.styleName:  "DemiBold"
                         font.weight:     Font.DemiBold
@@ -373,8 +356,6 @@ AlphaTipPopup {
                 rowSpacing:          14
 
                 SFText {
-                    Layout.alignment: Qt.AlignTop
-
                     //% "Asset ID"
                     text:  qsTrId("info-asset-id")
                     color: assetTip.defTextColor
@@ -402,7 +383,6 @@ AlphaTipPopup {
                 }
 
                 SFText {
-                    Layout.alignment: Qt.AlignTop
                     visible: nameCtrl.visible
 
                     //% "Asset name"
@@ -434,8 +414,6 @@ AlphaTipPopup {
                 }
 
                 SFText {
-                    Layout.alignment: Qt.AlignTop
-
                     //% "Unit name"
                     text:  qsTrId("info-asset-unit")
                     color: assetTip.defTextColor
