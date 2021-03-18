@@ -1770,42 +1770,6 @@ znát všechny Vaše prostředky (UTXO). Ujistěte se, že jste vystavili klíč
         <source>activated</source>
         <translation>aktivováno</translation>
     </message>
-    <message id="tx-details-title">
-        <source>General transaction info</source>
-        <translation>Hlavní informace o transakci</translation>
-    </message>
-    <message id="tx-details-sending-addr-label">
-        <source>Sending address</source>
-        <translation>Odesílací adresa</translation>
-    </message>
-    <message id="tx-details-sender-identity">
-        <source>Sender identity</source>
-        <translation>Identita odesílatele</translation>
-    </message>
-    <message id="tx-details-receiving-addr-label">
-        <source>Receiving address</source>
-        <translation>Přijímací adresa</translation>
-    </message>
-    <message id="tx-details-receiver-identity">
-        <source>Receiver identity</source>
-        <translation>Identita příjemce</translation>
-    </message>
-    <message id="tx-details-amount-label">
-        <source>Amount</source>
-        <translation>Částka</translation>
-    </message>
-    <message id="tx-details-tx-id-label">
-        <source>Transaction ID</source>
-        <translation>ID transakce</translation>
-    </message>
-    <message id="open-in-explorer">
-        <source>Open in Blockchain Explorer</source>
-        <translation>Otevřít v prohlížeči Blockchainu</translation>
-    </message>
-    <message id="tx-details-error-label">
-        <source>Error</source>
-        <translation>Chyba</translation>
-    </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
         <translation>Aktivum již bylo registrováno</translation>
@@ -2727,10 +2691,6 @@ Update your settings and try again.</source>
         <source>Multiple assets</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="general-total value">
-        <source>Total value</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="general-locked">
         <source>Locked</source>
         <translation type="unfinished">Uzamčeno</translation>
@@ -2862,11 +2822,6 @@ Update your settings and try again.</source>
         <source>Regular address</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="tx-details-rate-notice">
-        <source>For the day of the transaction</source>
-        <oldsource>(For the day of the transaction)</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="send-title">
         <source>Send</source>
         <translation type="unfinished">Odeslat</translation>
@@ -2978,6 +2933,58 @@ Update your settings and try again.</source>
     <message id="info-asset-paper">
         <source>Whitepaper</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-title">
+        <source>General transaction info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-sending-addr-label">
+        <source>Sending address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-sender-identity">
+        <source>Sender identity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-receiving-addr-label">
+        <source>Receiving address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-receiver-identity">
+        <source>Receiver identity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-amount-label">
+        <source>Amount</source>
+        <translation type="unfinished">Částka</translation>
+    </message>
+    <message id="tx-details-rate-notice">
+        <source>For the day of the transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-total value">
+        <source>Total value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-smth-value">
+        <source>%1 Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-exchange-rate-not-available">
+        <source>Exchange rate to %1 was not available at the time of transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-tx-id-label">
+        <source>Transaction ID</source>
+        <translation type="unfinished">ID transakce</translation>
+    </message>
+    <message id="open-in-explorer">
+        <source>Open in Blockchain Explorer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-error-label">
+        <source>Error</source>
+        <translation type="unfinished">Chyba</translation>
     </message>
 </context>
 </TS>

@@ -1770,42 +1770,6 @@ deploy the key at the node you trust completely.</translation>
         <source>activated</source>
         <translation type="unfinished">activated</translation>
     </message>
-    <message id="tx-details-title">
-        <source>General transaction info</source>
-        <translation>일반 거래 정보</translation>
-    </message>
-    <message id="tx-details-sending-addr-label">
-        <source>Sending address</source>
-        <translation>보내는 주소</translation>
-    </message>
-    <message id="tx-details-sender-identity">
-        <source>Sender identity</source>
-        <translation type="unfinished">Sender identity</translation>
-    </message>
-    <message id="tx-details-receiving-addr-label">
-        <source>Receiving address</source>
-        <translation>받는 주소</translation>
-    </message>
-    <message id="tx-details-receiver-identity">
-        <source>Receiver identity</source>
-        <translation type="unfinished">Receiver identity</translation>
-    </message>
-    <message id="tx-details-amount-label">
-        <source>Amount</source>
-        <translation>양</translation>
-    </message>
-    <message id="tx-details-tx-id-label">
-        <source>Transaction ID</source>
-        <translation>거래 ID</translation>
-    </message>
-    <message id="open-in-explorer">
-        <source>Open in Blockchain Explorer</source>
-        <translation>블록체인 탐색기에서 열기</translation>
-    </message>
-    <message id="tx-details-error-label">
-        <source>Error</source>
-        <translation>오류</translation>
-    </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
         <translation type="unfinished">Asset has been already registered</translation>
@@ -2728,10 +2692,6 @@ Update your settings and try again.</source>
         <source>Multiple assets</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="general-total value">
-        <source>Total value</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="general-locked">
         <source>Locked</source>
         <translation type="unfinished">잠김</translation>
@@ -2863,11 +2823,6 @@ Update your settings and try again.</source>
         <source>Regular address</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="tx-details-rate-notice">
-        <source>For the day of the transaction</source>
-        <oldsource>(For the day of the transaction)</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="send-title">
         <source>Send</source>
         <translation type="unfinished">보내기</translation>
@@ -2979,6 +2934,58 @@ Update your settings and try again.</source>
     <message id="info-asset-paper">
         <source>Whitepaper</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-title">
+        <source>General transaction info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-sending-addr-label">
+        <source>Sending address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-sender-identity">
+        <source>Sender identity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-receiving-addr-label">
+        <source>Receiving address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-receiver-identity">
+        <source>Receiver identity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-amount-label">
+        <source>Amount</source>
+        <translation type="unfinished">양</translation>
+    </message>
+    <message id="tx-details-rate-notice">
+        <source>For the day of the transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-total value">
+        <source>Total value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-smth-value">
+        <source>%1 Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-exchange-rate-not-available">
+        <source>Exchange rate to %1 was not available at the time of transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-tx-id-label">
+        <source>Transaction ID</source>
+        <translation type="unfinished">거래 ID</translation>
+    </message>
+    <message id="open-in-explorer">
+        <source>Open in Blockchain Explorer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-error-label">
+        <source>Error</source>
+        <translation type="unfinished">오류</translation>
     </message>
 </context>
 </TS>

@@ -253,9 +253,14 @@ RowLayout {
             Layout.alignment: Qt.AlignTop
             font.pixelSize:   14
             color:            Style.content_secondary
-            visible:          totalValueCtrl.visible
-            //% "Total value"
-            text: qsTrId("general-total value") + ": "
+            visible:          totalValueCtrl.visible || totalWarningCtrl.visible
+
+            text: (root.isContractTx ?
+                     //% "Total value"
+                     qsTrId("general-total value") :
+                     //% "%1 Value"
+                     qsTrId("general-smth-value").arg(root.rateUnit)
+                  ) + ": "
         }
 
         ColumnLayout {
@@ -279,6 +284,17 @@ RowLayout {
                 //% "For the day of the transaction"
                 text: qsTrId("tx-details-rate-notice")
             }
+        }
+
+        SFText
+        {
+            id:               totalWarningCtrl
+            visible:          root.totalValue == "0" && isTextFieldVisible(text)
+            Layout.fillWidth: true
+            font.pixelSize:   14
+            color:            Style.content_secondary
+            //% "Exchange rate to %1 was not available at the time of transaction"
+            text:             qsTrId("tx-details-exchange-rate-not-available").arg(root.rateUnit)
         }
 
         SFText {
