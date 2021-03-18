@@ -546,13 +546,14 @@ please review your settings and try again"
                                             rateValid = true;
                                             return;
                                         }
+                                        var parsedAmount = parseFloat(receiveAmountInput.amount);
                                         if (receiveAmountInput.currencyIdx == Currency.CurrBeam) {
                                             rateValid =
-                                                parseFloat(receiveAmountInput.amount) <= rateRow.maxAmount &&
-                                                parseFloat(receiveAmountInput.amount) >= rateRow.minAmount;
+                                                parsedAmount <= rateRow.maxAmount &&
+                                                parsedAmount >= rateRow.minAmount;
                                         } else {
                                             rateValid =
-                                                parseFloat(receiveAmountInput.amount) >= rateRow.minAmount
+                                                parsedAmount >= rateRow.minAmount
                                         }
                                     }
 

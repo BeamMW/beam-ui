@@ -1,13 +1,3 @@
-function openUrl(url) {
-    //
-    // if url doesn't have scheme qt would add qrc://
-    //
-    if (url.indexOf("//") == -1) {
-        url = Qt.openUrlExternally(["https://", url].join(""))
-    }
-    Qt.openUrlExternally(url)
-}
-
 function formatDateTime(datetime, localeName) {
     var maxTime = new Date(4294967295000);
     if (datetime >= maxTime) {
@@ -197,4 +187,9 @@ function yUp(ctrl) {
 function limitText (text, maxLen) {
     return maxLen > 0 && text.length >= maxLen ? [text.substring(0, maxLen - 1), '\u2026'].join('') : text
 }
+
+const maxAmount = "262799999";
+const minAmount = "0.00000001";
+
+
 
