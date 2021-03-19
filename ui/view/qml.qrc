@@ -168,7 +168,7 @@
         <file>assets/icon-notifications-received.svg</file>
         <file>assets/icon-notifications-sent.svg</file>
         <file>assets/icon-notifications-update.svg</file>
-        <file>assets/icon-notifications-videos.svg</file>  
+        <file>assets/icon-notifications-videos.svg</file>
         <file>assets/icon-contract-completed.svg</file>
         <file>assets/icon-contract-expired.svg</file>
         <file>assets/icon-contract-failed.svg</file>
@@ -327,5 +327,9 @@
         <file>controls/SwapEthSettings.qml</file>
         <file>controls/ShowAddressesDialog.qml</file>
         <file>controls/LoadingSpinner.qml</file>
+        <file>assets/icon-utxo-empty.svg</file>
+        <file>assets/icon-addressbook-empty.svg</file>
+        <file>assets/icon-notification-empty.svg</file>
+        <file>assets/icon-wallet-empty.svg</file>
     </qresource>
 </RCC>

@@ -46,7 +46,7 @@ ColumnLayout {
         visible: notificationList.model.count == 0
 
         SvgImage {
-            Layout.topMargin: 100
+            Layout.topMargin: 80
             Layout.alignment: Qt.AlignHCenter
             source:     "qrc:/assets/icon-notifications.svg"
             sourceSize: Qt.size(60, 60)

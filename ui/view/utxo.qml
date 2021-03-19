@@ -161,6 +161,7 @@ ColumnLayout {
         Layout.fillHeight: true
         Layout.bottomMargin: 9
         frameVisible: false
+        visible: tableView.model.count > 0
         selectionMode: SelectionMode.NoSelection
         backgroundVisible: false
         model: SortFilterProxyModel {
@@ -382,6 +383,33 @@ ColumnLayout {
         itemDelegate: TableItem {
             text: styleData.value
             elide: Text.ElideRight
+        }
+    }
+    ColumnLayout {
+        Layout.topMargin: 70
+        Layout.alignment: Qt.AlignHCenter
+        visible: tableView.model.count == 0
+
+        SvgImage {
+            Layout.alignment: Qt.AlignHCenter
+            source: "qrc:/assets/icon-utxo-empty.svg"
+            sourceSize: Qt.size(60, 60)
+        }
+
+        SFText {
+            Layout.topMargin:     30
+            Layout.alignment:     Qt.AlignHCenter
+            horizontalAlignment:  Text.AlignHCenter
+            font.pixelSize:       14
+            color:                Style.content_main
+            opacity:              0.5
+            lineHeight:           1.43
+            //% "Your UTXO list is empty"
+            text: qsTrId("utxo-empty")
+        }
+
+        Item {
+            Layout.fillHeight: true
         }
     }
 }

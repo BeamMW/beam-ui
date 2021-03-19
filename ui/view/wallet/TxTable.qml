@@ -27,6 +27,11 @@ Control {
             PropertyChanges { target: allTab; state: "active" }
             PropertyChanges { target: contractFilterProxy;  filterRole: "isContractTx" }
             PropertyChanges { target: contractFilterProxy;  filterString: "false" }
+            PropertyChanges { target: emptyMessage;  
+                //% "Your transaction list is empty"
+                text: qsTrId("tx-empty")
+            }
+            
         },
         State {
             name: "inProgress"
@@ -35,6 +40,10 @@ Control {
             PropertyChanges { target: txProxyModel; filterString: "true" }
             PropertyChanges { target: contractFilterProxy;  filterRole: "isContractTx" }
             PropertyChanges { target: contractFilterProxy;  filterString: "false" }
+            PropertyChanges { target: emptyMessage;  
+                //% "There are no in progress transactions yet."
+                text: qsTrId("tx-in-progress-empty")
+            }
         },
         State {
             name: "sent"
@@ -43,6 +52,10 @@ Control {
             PropertyChanges { target: txProxyModel; filterString: "true" }
             PropertyChanges { target: contractFilterProxy;  filterRole: "isContractTx" }
             PropertyChanges { target: contractFilterProxy;  filterString: "false" }
+            PropertyChanges { target: emptyMessage;  
+                //% "There are no sent transactions yet."
+                text: qsTrId("tx-sent-empty")
+            }
         },
         State {
             name: "received"
@@ -51,6 +64,10 @@ Control {
             PropertyChanges { target: txProxyModel; filterString: "true" }
             PropertyChanges { target: contractFilterProxy;  filterRole: "isContractTx" }
             PropertyChanges { target: contractFilterProxy;  filterString: "false" }
+            PropertyChanges { target: emptyMessage;  
+                //% "There are no received transactions yet."
+                text: qsTrId("tx-received-empty")
+            }
         },
         State {
             name: "contracts"
@@ -59,6 +76,10 @@ Control {
             PropertyChanges { target: txProxyModel; filterString: "" }
             PropertyChanges { target: contractFilterProxy;  filterRole: "isContractTx" }
             PropertyChanges { target: contractFilterProxy;  filterString: "true" }
+            PropertyChanges { target: emptyMessage;  
+                //% "There are no contracts transactions yet."
+                text: qsTrId("tx-contracts-empty")
+            }
         }
     ]
 
@@ -99,7 +120,7 @@ Control {
         RowLayout {
             Layout.fillWidth:    true
             Layout.bottomMargin: 10
-
+            visible:             tableViewModel.transactions.rowCount() > 0
             TxFilter {
                 id: allTab
                 Layout.alignment: Qt.AlignVCenter
@@ -175,6 +196,35 @@ Control {
             }
         }
 
+        ColumnLayout {
+            Layout.topMargin: 90
+            Layout.alignment: Qt.AlignHCenter
+            visible: transactionsTable.model.count == 0
+
+            SvgImage {
+                Layout.alignment: Qt.AlignHCenter
+                source: "qrc:/assets/icon-wallet-empty.svg"
+                sourceSize: Qt.size(60, 60)
+            }
+
+            SFText {
+                id:                   emptyMessage
+                Layout.topMargin:     30
+                Layout.alignment:     Qt.AlignHCenter
+                horizontalAlignment:  Text.AlignHCenter
+                font.pixelSize:       14
+                color:                Style.content_main
+                opacity:              0.5
+                lineHeight:           1.43
+                //% "Your transaction list is empty"
+                text: qsTrId("tx-empty")
+            }
+
+            Item {
+                Layout.fillHeight: true
+            }
+        }
+
         CustomTableView {
             id: transactionsTable
             Component.onCompleted: {
@@ -197,7 +247,7 @@ Control {
             Layout.fillWidth:     true
             Layout.fillHeight:    true
             Layout.bottomMargin:  9
-
+            visible:              transactionsTable.model.count > 0
             property real rowHeight: 56
             property real resizableWidth: transactionsTable.width - 140 /*actionsColumn.width + coinColumn.width*/
             property real columnResizeRatio: resizableWidth / 610
