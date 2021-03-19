@@ -2988,5 +2988,29 @@ Update your settings and try again.</source>
         <source>Error</source>
         <translation type="unfinished">Virhe</translation>
     </message>
+    <message id="utxo-empty">
+        <source>Your UTXO list is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-empty">
+        <source>Your transaction list is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-in-progress-empty">
+        <source>There are no in progress transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-sent-empty">
+        <source>There are no sent transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-received-empty">
+        <source>There are no received transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-contracts-empty">
+        <source>There are no contracts transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
