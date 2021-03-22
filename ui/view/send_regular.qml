@@ -188,7 +188,7 @@ ColumnLayout {
 
                                     CustomButton {
                                         Layout.preferredHeight: 30
-                                        Layout.preferredWidth: maxPrivacyCheck.width
+                                        Layout.preferredWidth: offlineCheck.width
                                         id: regularCheck
                                         //% "Regular"
                                         text:               qsTrId("tx-regular")
@@ -445,7 +445,7 @@ ColumnLayout {
                                 Layout.alignment:  Qt.AlignTop | Qt.AlignLeft
                                 Layout.fillWidth:  true
                                 error:             !viewModel.isEnough
-                                amount:            viewModel.assetAvailable
+                                amount:            viewModel.assetRemaining
                                 unitName:          control.sendUnit
                                 rateUnit:          control.rateUnit
                                 rate:              control.rate
