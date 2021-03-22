@@ -2985,5 +2985,9 @@ Update your settings and try again.</source>
         <source>This address is already expired</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="addressbook-empty">
+        <source>Your address book is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
