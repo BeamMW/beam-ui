@@ -827,7 +827,9 @@ Please try again later or create an offer yourself."
                     state: "filterAllTransactions"
 
                     RowLayout {
-
+                        id:     txFilters
+                        Layout.fillWidth:   true
+                        visible: viewModel.transactions.rowCount() > 0
                         TxFilter {
                             id: allTabSelector
                             //% "All"
@@ -853,16 +855,55 @@ Please try again later or create an offer yourself."
                         //}
                     }
 
+                    ColumnLayout {
+                        Layout.topMargin:   txFilters.visible ? 70 : 95
+                        Layout.fillWidth:   true
+                        Layout.fillHeight:  true
+                        visible: transactionsTable.model.count == 0
+                        SvgImage {
+                            Layout.topMargin:     30
+                            Layout.alignment:     Qt.AlignHCenter
+                            source: "qrc:/assets/atomic-empty-state.svg"
+                            sourceSize: Qt.size(60, 60)
+                        }
+
+                        SFText {
+                            id:                   emptyMessage
+                            Layout.topMargin:     30
+                            Layout.alignment:     Qt.AlignHCenter
+                            horizontalAlignment:  Text.AlignHCenter
+                            font.pixelSize:       14
+                            color:                Style.content_main
+                            opacity:              0.5
+                            lineHeight:           1.43
+                            //% "Your transaction list is empty"
+                            text: qsTrId("tx-empty")
+                        }
+
+                        Item {
+                            Layout.fillHeight:  true
+                            Layout.fillWidth:   true
+                        }
+                    }
+
                     states: [
                         State {
                             name: "filterAllTransactions"
                             PropertyChanges { target: allTabSelector; state: "active" }
                             PropertyChanges { target: txProxyModel; filterString: "*" }
+                            PropertyChanges { target: emptyMessage;  
+                                //% "Your transaction list is empty"
+                                text: qsTrId("tx-empty")
+                            }
                         },
                         State {
                             name: "filterInProgressTransactions"
                             PropertyChanges { target: inProgressTabSelector; state: "active" }
                             PropertyChanges { target: txProxyModel; filterString: "true" }
+                            PropertyChanges { target: emptyMessage;  
+                                //% "There are no in progress transactions yet."
+                                text: qsTrId("tx-in-progress-empty")
+                            }
                         }
                     ]
 
@@ -882,10 +923,11 @@ Please try again later or create an offer yourself."
                             })
                         }
 
-                        Layout.alignment: Qt.AlignTop
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        Layout.topMargin: 14
+                        Layout.alignment:       Qt.AlignTop
+                        Layout.fillWidth:       true
+                        Layout.fillHeight:      true
+                        Layout.topMargin:       14
+                        visible:                transactionsTable.model.count > 0
 
                         property int rowHeight: 56
                         property int columnWidth: (width - txSwapCoinsColumn.width - txSwapActionColumn.width) / 6

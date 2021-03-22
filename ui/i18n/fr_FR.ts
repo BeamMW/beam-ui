@@ -3012,5 +3012,9 @@ Update your settings and try again.</source>
         <source>There are no contracts transactions yet.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="addressbook-empty">
+        <source>Your address book is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
