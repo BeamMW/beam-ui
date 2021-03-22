@@ -7,23 +7,13 @@ import "controls"
 import Beam.Wallet 1.0
 
 ColumnLayout {
-    id: addressRoot
-
-	AddressBookViewModel {id: viewModel}
-
-    EditAddress {
-        id: editActiveAddress
-        parentModel: viewModel
-    }
-
-    EditAddress {
-        id: editExpiredAddress
-        parentModel: viewModel
-        isExpiredAddress: true
-    }
-
+    id: control
     anchors.fill: parent
-    state: "active"
+
+	AddressBookViewModel {
+	    id: viewModel
+	}
+
 	Title {
         //% "Address Book"
         text: qsTrId("addresses-tittle")
@@ -39,8 +29,23 @@ ColumnLayout {
         property bool isOwn
     }
 
+    state: "active"
+    states: [
+        State {
+            name: "active";
+            PropertyChanges {target: activeAddressesFilter; state: "active"}
+        },
+        State {
+            name: "expired";
+            PropertyChanges {target: expiredAddressesFilter; state: "active"}
+        },
+        State {
+            name: "contacts";
+            PropertyChanges {target: contactsFilter; state: "active"}
+        }
+    ]
+
     RowLayout {
-        Layout.fillWidth: true
         Layout.minimumHeight: 40
         Layout.maximumHeight: 40
         Layout.topMargin: 54
@@ -49,26 +54,21 @@ ColumnLayout {
             id: activeAddressesFilter
             //% "My active addresses"
             label: qsTrId("addresses-tab-active")
-            onClicked: addressRoot.state = "active"
+            onClicked: control.state = "active"
         }
 
         TxFilter{
             id: expiredAddressesFilter
             //% "My expired addresses"
             label: qsTrId("addresses-tab-expired")
-            onClicked: addressRoot.state = "expired"
+            onClicked: control.state = "expired"
         }
 
         TxFilter{
             id: contactsFilter
             //% "Contacts"
             label: qsTrId("addresses-tab-contacts")
-            onClicked: addressRoot.state = "contacts"
-        }
-
-        Item {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+            onClicked: control.state = "contacts"
         }
     }
 
@@ -77,50 +77,46 @@ ColumnLayout {
         Layout.fillHeight: true
 
         AddressTable {
-            id: activeAddressesView
-            model: viewModel.activeAddresses
-            parentModel: viewModel
-            visible: false
-
-            editDialog: editActiveAddress
+            id:           activeAddressesView
+            model:        viewModel.activeAddresses
+            parentModel:  viewModel
+            visible:      control.state == "active"
 
             sortIndicatorVisible: true
-            sortIndicatorColumn: 0
-            sortIndicatorOrder: Qt.DescendingOrder
+            sortIndicatorColumn:  0
+            sortIndicatorOrder:   Qt.DescendingOrder
 
             Binding{
-                target: viewModel
+                target:   viewModel
                 property: "activeAddrSortRole"
-                value: activeAddressesView.getColumn(activeAddressesView.sortIndicatorColumn).role
+                value:    activeAddressesView.getColumn(activeAddressesView.sortIndicatorColumn).role
             }
 
             Binding{
-                target: viewModel
+                target:   viewModel
                 property: "activeAddrSortOrder"
-                value: activeAddressesView.sortIndicatorOrder
+                value:    activeAddressesView.sortIndicatorOrder
             }
         }
 
         AddressTable {
-            id: expiredAddressesView
-            model: viewModel.expiredAddresses
-            visible: false
+            id:          expiredAddressesView
+            model:       viewModel.expiredAddresses
+            visible:     control.state == "expired"
             parentModel: viewModel
-
-            editDialog: editExpiredAddress
-            isExpired: true
+            isExpired:   true
 
             sortIndicatorVisible: true
-            sortIndicatorColumn: 0
-            sortIndicatorOrder: Qt.DescendingOrder
+            sortIndicatorColumn:  0
+            sortIndicatorOrder:   Qt.DescendingOrder
 
-            Binding{
+            Binding {
                 target: viewModel
                 property: "expiredAddrSortRole"
                 value: expiredAddressesView.getColumn(expiredAddressesView.sortIndicatorColumn).role
             }
 
-            Binding{
+            Binding {
                 target: viewModel
                 property: "expiredAddrSortOrder"
                 value: expiredAddressesView.sortIndicatorOrder
@@ -129,6 +125,7 @@ ColumnLayout {
         
         CustomTableView {
             id: contactsView
+            visible: control.state == "contacts"
 
             property int rowHeight: 56
             property int resizableWidth: parent.width - actions.width
@@ -311,55 +308,4 @@ ColumnLayout {
             }
         }
     }
-
-    states: [
-        State {
-            name: "active"
-            PropertyChanges {target: activeAddressesFilter; state: "active"}
-            PropertyChanges {
-                target: activeAddressesView
-                visible: true
-            }
-            PropertyChanges {
-                target: expiredAddressesView
-                visible: false
-            }
-            PropertyChanges {
-                target: contactsView
-                visible: false
-            }
-        },
-        State {
-            name: "expired"
-            PropertyChanges {target: expiredAddressesFilter; state: "active"}
-            PropertyChanges {
-                target: activeAddressesView
-                visible: false
-            }
-            PropertyChanges {
-                target: expiredAddressesView
-                visible: true
-            }
-            PropertyChanges {
-                target: contactsView
-                visible: false
-            }
-        },
-        State {
-            name: "contacts"
-            PropertyChanges {target: contactsFilter; state: "active"}
-            PropertyChanges {
-                target: activeAddressesView
-                visible: false
-            }
-            PropertyChanges {
-                target: expiredAddressesView
-                visible: false
-            }
-            PropertyChanges {
-                target: contactsView
-                visible: true
-            }
-        }
-    ]
 }

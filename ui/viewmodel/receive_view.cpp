@@ -15,6 +15,7 @@
 #include "ui_helpers.h"
 #include "model/qr.h"
 #include "model/app_model.h"
+#include "qml_globals.h"
 
 ReceiveViewModel::ReceiveViewModel()
     : _walletModel(*AppModel::getInstance().getWalletModel())
@@ -35,7 +36,7 @@ void ReceiveViewModel::updateToken()
             {
                 if (!v.empty())
                 {
-                    _token = QString::fromStdString(GenerateMaxPrivacyToken(_receiverAddress, _amount, _assetId, v[0], AppModel::getMyVersion()));
+                    _receiverAddress.m_Address = GenerateMaxPrivacyToken(_receiverAddress, _amount, _assetId, v[0], AppModel::getMyVersion());
                     emit tokenChanged();
                 }
             });
@@ -46,7 +47,7 @@ void ReceiveViewModel::updateToken()
             {
                 if (!v.empty())
                 {
-                    _token = QString::fromStdString(GenerateOfflineToken(_receiverAddress, _amount, _assetId, v, AppModel::getMyVersion()));
+                    _receiverAddress.m_Address = GenerateOfflineToken(_receiverAddress, _amount, _assetId, v, AppModel::getMyVersion());
                     emit tokenChanged();
                 }
             });
@@ -85,46 +86,71 @@ void ReceiveViewModel::setAmount(const QString& value)
 
 QString ReceiveViewModel::getComment() const
 {
-    return _comment;
+    return QString::fromStdString(_receiverAddress.m_label);
 }
 
 void ReceiveViewModel::setToken(const QString& value)
 {
-    // At the moment only address can come from outer world
-    if (!value.isEmpty())
+    if (value.isEmpty())
     {
-        beam::wallet::WalletID walletID;
-        if (walletID.FromHex(value.toStdString()))
+        return;
+    }
+
+    const char* error = "Unknown value passed to ReceiveViewModel::setToken";
+    beam::wallet::WalletID walletID;
+
+    if (QMLGlobals::isAddress(value))
+    {
+        if (!walletID.FromHex(value.toStdString()))
         {
-            _walletModel.getAsync()->getAddress(walletID, [this](const boost::optional<beam::wallet::WalletAddress>& address, size_t offlineCount) {
-                _receiverAddress = *address;
-                setComment(QString::fromStdString(address->m_label));
-                updateToken();
-            });
-        }
-        else
-        {
-            throw std::runtime_error("Unknown value passed to ReceiveViewModel::setToken");
+            throw std::runtime_error(error);
         }
     }
+    else if(QMLGlobals::isTransactionToken(value))
+    {
+        auto txParameters = beam::wallet::ParseParameters(value.toStdString());
+        if (!txParameters)
+        {
+            throw std::runtime_error(error);
+        }
+
+        if (!txParameters->GetParameter(beam::wallet::TxParameterID::PeerID, walletID))
+        {
+            throw std::runtime_error(error);
+        }
+    }
+    else
+    {
+        throw std::runtime_error(error);
+    }
+
+    _walletModel.getAsync()->getAddress(walletID, [this, error](const boost::optional<beam::wallet::WalletAddress>& address, size_t offlineCount) {
+        if (!address)
+        {
+            throw std::runtime_error(error);
+        }
+        _receiverAddress = *address;
+        setComment(QString::fromStdString(address->m_label));
+        updateToken();
+    });
 }
 
 QString ReceiveViewModel::getToken() const
 {
-    return _token;
+    return QString::fromStdString(_receiverAddress.m_Address);
 }
 
 bool ReceiveViewModel::getCommentValid() const
 {
-    return _walletModel.isOwnAddress(_receiverAddress.m_walletID) || !_walletModel.isAddressWithCommentExist(_comment.toStdString());
+    return _walletModel.isOwnAddress(_receiverAddress.m_walletID) || !_walletModel.isAddressWithCommentExist(_receiverAddress.m_label);
 }
 
 void ReceiveViewModel::setComment(const QString& value)
 {
-    auto trimmed = value.trimmed();
-    if (_comment != trimmed)
+    auto trimmed = value.trimmed().toStdString();
+    if (_receiverAddress.m_label != trimmed)
     {
-        _comment = trimmed;
+        _receiverAddress.m_label = trimmed;
         emit commentChanged();
         emit commentValidChanged();
     }
@@ -136,7 +162,6 @@ void ReceiveViewModel::saveAddress()
 
     if (getCommentValid())
     {
-        _receiverAddress.m_label = _comment.toStdString();
         _receiverAddress.setExpiration(WalletAddress::ExpirationStatus::Auto);
         _walletModel.getAsync()->saveAddress(_receiverAddress, true);
     }

@@ -316,7 +316,7 @@ RowLayout {
             rate:      root.feeRate
             showTip:   false
 
-            //% "(For the day of the transaction)"
+            //% "For the day of the transaction"
             ratePostfix: amount != "0" && rate != "0" ? ["(", qsTrId("tx-details-rate-notice"), ")"].join("") : ""
         }
         

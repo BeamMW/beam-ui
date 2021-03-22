@@ -1,8 +1,8 @@
-function formatDateTime(datetime, localeName) {
+function formatDateTime(datetime, localeName, neverStr) {
     var maxTime = new Date(4294967295000);
     if (datetime >= maxTime) {
         //% "Never"
-        return qsTrId("time-never");
+        return neverStr ? neverStr: qsTrId("time-never");
     }
     var timeZoneShort = datetime.getTimezoneOffset() / 60 * (-1);
     return datetime.toLocaleDateString(localeName)

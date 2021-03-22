@@ -304,12 +304,9 @@ void AddressBookViewModel::deleteAddress(const QString& addr)
     m_model.getAsync()->deleteAddress(addr.toStdString());
 }
 
-void AddressBookViewModel::saveChanges(const QString& addr, const QString& name, uint expirationStatus)
+void AddressBookViewModel::saveChanges(const QString& token, const QString& name, QDateTime expiration)
 {
-    WalletID walletID;
-    walletID.FromHex(addr.toStdString());
-
-    m_model.getAsync()->updateAddress(walletID, name.toStdString(), static_cast<WalletAddress::ExpirationStatus>(expirationStatus));
+    m_model.getAsync()->updateAddress(token.toStdString(), name.toStdString(), expiration.toMSecsSinceEpoch());
 }
 
 // static
@@ -321,9 +318,9 @@ QString AddressBookViewModel::generateQR(
 }
 
 // static
-bool AddressBookViewModel::isAddressWithCommentExist(const QString& comment) const
+bool AddressBookViewModel::commentValid(const QString& comment) const
 {
-    return m_model.isAddressWithCommentExist(comment.toStdString());
+    return !m_model.isAddressWithCommentExist(comment.toStdString());
 }
 
 void AddressBookViewModel::onAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addresses)

@@ -165,7 +165,7 @@ ColumnLayout {
                                         Layout.preferredHeight: 30
                                         Layout.minimumWidth: 137
                                         id: maxPrivacyCheck
-                                        //% "Max privacy"
+                                        //% "Max Privacy"
                                         text:               qsTrId("tx-max-privacy")
                                         ButtonGroup.group:  txTypeGroup
                                         checkable:          true
@@ -288,8 +288,8 @@ ColumnLayout {
                     spacing:                10
 
                     Panel {
-                        //% "New Address"
-                        title: qsTrId("receive-new-addr")
+                        //% "Address"
+                        title: qsTrId("receive-addr")
                         Layout.fillWidth: true
 
                         content: RowLayout {

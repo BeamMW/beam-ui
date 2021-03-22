@@ -25,14 +25,14 @@
 class AddressItem : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString address          READ getAddress         CONSTANT)
-    Q_PROPERTY(QString name             READ getName            CONSTANT)
-    Q_PROPERTY(QString category         READ getCategory        CONSTANT)
-    Q_PROPERTY(QString identity         READ getIdentity        CONSTANT)
-    Q_PROPERTY(QDateTime expirationDate READ getExpirationDate  CONSTANT)
-    Q_PROPERTY(QDateTime createDate     READ getCreateDate      CONSTANT)
-    Q_PROPERTY(bool neverExpired        READ isNeverExpired     CONSTANT)
-    Q_PROPERTY(bool isExpired           READ isExpired          CONSTANT)
+    Q_PROPERTY(QString   address          READ getAddress        CONSTANT)
+    Q_PROPERTY(QString   name             READ getName           CONSTANT)
+    Q_PROPERTY(QString   category         READ getCategory       CONSTANT)
+    Q_PROPERTY(QString   identity         READ getIdentity       CONSTANT)
+    Q_PROPERTY(QDateTime expirationDate   READ getExpirationDate CONSTANT)
+    Q_PROPERTY(QDateTime createDate       READ getCreateDate     CONSTANT)
+    Q_PROPERTY(bool      neverExpired     READ isNeverExpired    CONSTANT)
+    Q_PROPERTY(bool      isExpired        READ isExpired         CONSTANT)
 
 public:
 
@@ -81,9 +81,9 @@ private:
 class AddressBookViewModel : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QQmlListProperty<ContactItem> contacts   READ getContacts   NOTIFY contactsChanged)
+    Q_PROPERTY(QQmlListProperty<ContactItem> contacts          READ getContacts          NOTIFY contactsChanged)
     Q_PROPERTY(QQmlListProperty<AddressItem> activeAddresses   READ getActiveAddresses   NOTIFY activeAddressesChanged)
-    Q_PROPERTY(QQmlListProperty<AddressItem> expiredAddresses   READ getExpiredAddresses   NOTIFY expiredAddressesChanged)
+    Q_PROPERTY(QQmlListProperty<AddressItem> expiredAddresses  READ getExpiredAddresses  NOTIFY expiredAddressesChanged)
 
     Q_PROPERTY(QString nameRole READ nameRole CONSTANT)
     Q_PROPERTY(QString addressRole READ addressRole CONSTANT)
@@ -92,46 +92,45 @@ class AddressBookViewModel : public QObject
     Q_PROPERTY(QString expirationRole READ expirationRole CONSTANT)
     Q_PROPERTY(QString createdRole READ createdRole CONSTANT)
 
-    Q_PROPERTY(Qt::SortOrder activeAddrSortOrder READ activeAddrSortOrder WRITE setActiveAddrSortOrder)
+    Q_PROPERTY(Qt::SortOrder activeAddrSortOrder  READ activeAddrSortOrder  WRITE setActiveAddrSortOrder)
     Q_PROPERTY(Qt::SortOrder expiredAddrSortOrder READ expiredAddrSortOrder WRITE setExpiredAddrSortOrder)
-    Q_PROPERTY(Qt::SortOrder contactSortOrder READ contactSortOrder WRITE setContactSortOrder)
+    Q_PROPERTY(Qt::SortOrder contactSortOrder     READ contactSortOrder     WRITE setContactSortOrder)
 
-    Q_PROPERTY(QString activeAddrSortRole READ activeAddrSortRole WRITE setActiveAddrSortRole)
+    Q_PROPERTY(QString activeAddrSortRole  READ activeAddrSortRole  WRITE setActiveAddrSortRole)
     Q_PROPERTY(QString expiredAddrSortRole READ expiredAddrSortRole WRITE setExpiredAddrSortRole)
-    Q_PROPERTY(QString contactSortRole READ contactSortRole WRITE setContactSortRole)
+    Q_PROPERTY(QString contactSortRole     READ contactSortRole     WRITE setContactSortRole)
 
 public:
-    Q_INVOKABLE bool isAddressBusy(const QString& addr);
-    Q_INVOKABLE void deleteAddress(const QString& addr);
-    Q_INVOKABLE void saveChanges(const QString& addr, const QString& name, uint expirationStatus);
-    Q_INVOKABLE static QString generateQR(const QString& addr, uint width, uint height);
-    Q_INVOKABLE bool isAddressWithCommentExist(const QString& comment) const;
+    Q_INVOKABLE bool    isAddressBusy(const QString& addr);
+    Q_INVOKABLE bool    commentValid(const QString& comment) const;
+    Q_INVOKABLE void    deleteAddress(const QString& addr);
+    Q_INVOKABLE void    saveChanges(const QString& addr, const QString& name, QDateTime expirationStatus);
+    Q_INVOKABLE QString generateQR(const QString& addr, uint width, uint height);
 
 public:
-
     AddressBookViewModel();
 
     QQmlListProperty<ContactItem> getContacts();
     QQmlListProperty<AddressItem> getActiveAddresses();
     QQmlListProperty<AddressItem> getExpiredAddresses();
 
-    QString nameRole() const;
-    QString addressRole() const;
-    QString categoryRole() const;
-    QString identityRole() const;
-    QString expirationRole() const;
-    QString createdRole() const;
+    [[nodiscard]] QString nameRole() const;
+    [[nodiscard]] QString addressRole() const;
+    [[nodiscard]] QString categoryRole() const;
+    [[nodiscard]] QString identityRole() const;
+    [[nodiscard]] QString expirationRole() const;
+    [[nodiscard]] QString createdRole() const;
 
-    Qt::SortOrder activeAddrSortOrder() const;
-    Qt::SortOrder expiredAddrSortOrder() const;
-    Qt::SortOrder contactSortOrder() const;
+    [[nodiscard]] Qt::SortOrder activeAddrSortOrder() const;
+    [[nodiscard]] Qt::SortOrder expiredAddrSortOrder() const;
+    [[nodiscard]] Qt::SortOrder contactSortOrder() const;
     void setActiveAddrSortOrder(Qt::SortOrder);
     void setExpiredAddrSortOrder(Qt::SortOrder);
     void setContactSortOrder(Qt::SortOrder);
 
-    QString activeAddrSortRole() const;
-    QString expiredAddrSortRole() const;
-    QString contactSortRole() const;
+    [[nodiscard]] QString activeAddrSortRole() const;
+    [[nodiscard]] QString expiredAddrSortRole() const;
+    [[nodiscard]] QString contactSortRole() const;
     void setActiveAddrSortRole(QString);
     void setExpiredAddrSortRole(QString);
     void setContactSortRole(QString);
@@ -147,11 +146,9 @@ signals:
     void expiredAddressesChanged();
 
 protected:
-
     void timerEvent(QTimerEvent *event) override;
 
 private:
-
     void getAddressesFromModel();
     void sortActiveAddresses();
     void sortExpiredAddresses();

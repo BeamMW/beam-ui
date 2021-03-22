@@ -75,13 +75,9 @@ private:
     beam::Amount    _amount  = 0UL;
     beam::Asset::ID _assetId = beam::Asset::s_BeamID;
     bool            _maxp    = false;
-    QString         _comment;
-    QString         _token;
 
     beam::wallet::WalletAddress _receiverAddress;
-    beam::wallet::WalletAddress _receiverOfflineAddress;
-
-    WalletModel&         _walletModel;
-    ExchangeRatesManager _exchangeRatesManager;
-    AssetsManager::Ptr   _amgr;
+    WalletModel&                _walletModel;
+    ExchangeRatesManager        _exchangeRatesManager;
+    AssetsManager::Ptr          _amgr;
 };

@@ -37,7 +37,6 @@
     </message>
     <message id="general-cancel">
         <source>Cancel</source>
-        <extracomment>Edit address dialog, cancel button</extracomment>
         <translation>Abbrechen</translation>
     </message>
     <message id="general-delete">
@@ -351,21 +350,6 @@
     <message id="open-show-wallet-button">
         <source>Show my wallet</source>
         <translation>Dein Wallet öffnen</translation>
-    </message>
-    <message id="edit-addr-title">
-        <source>Edit address</source>
-        <extracomment>Edit address dialog title</extracomment>
-        <translation>Adresse bearbeiten</translation>
-    </message>
-    <message id="edit-addr-addr-id">
-        <source>Address ID</source>
-        <extracomment>Edit address dialog, address label</extracomment>
-        <translation>Adress-ID</translation>
-    </message>
-    <message id="edit-addr-save-button">
-        <source>Save</source>
-        <extracomment>Edit address dialog, save button</extracomment>
-        <translation>Speichern</translation>
     </message>
     <message id="payment-info-proof-verification">
         <source>Payment proof verification</source>
@@ -846,46 +830,6 @@ Allow to open and proceed to the website? You can always update your choice in S
     <message id="explorer">
         <source>blockchain explorer</source>
         <translation>blockchain Explorer</translation>
-    </message>
-    <message id="edit-addr-24-option">
-        <source>In 24 hours from now</source>
-        <extracomment>Edit address dialog, expiration option, in 24 hours from now</extracomment>
-        <translation>In 24 Stunden</translation>
-    </message>
-    <message id="edit-addr-never-option">
-        <source>Never</source>
-        <extracomment>Edit address dialog, expiration option, never</extracomment>
-        <translation>Niemals</translation>
-    </message>
-    <message id="edit-addr-as-is-option">
-        <source>Within 24 hours</source>
-        <extracomment>Edit address dialog, expiration option, do not change</extracomment>
-        <translation>Innerhalb von 24 Stunden</translation>
-    </message>
-    <message id="edit-addr-expires-label">
-        <source>Expires</source>
-        <extracomment>Edit address dialog, expires label</extracomment>
-        <translation>Läuft ab</translation>
-    </message>
-    <message id="edit-addr-expire-now-label">
-        <source>Now</source>
-        <extracomment>Edit address dialog, expire now label</extracomment>
-        <translation>Jetzt</translation>
-    </message>
-    <message id="edit-addr-expire-now-switch">
-        <source>Expire address now</source>
-        <extracomment>Edit address dialog, expire now switch</extracomment>
-        <translation>Ablaufadresse jetzt</translation>
-    </message>
-    <message id="edit-addr-expiration-time-label">
-        <source>Expired on </source>
-        <extracomment>Edit address dialog, expiration time label</extracomment>
-        <translation>Abgelaufen am </translation>
-    </message>
-    <message id="edit-addr-activate-addr-switch">
-        <source>Activate address</source>
-        <extracomment>Edit address dialog, expiration time label</extracomment>
-        <translation>Adresse aktivieren</translation>
     </message>
     <message id="time-never">
         <source>Never</source>
@@ -1479,14 +1423,6 @@ Bitte überprüfen Sie das Swap-Token und versuchen Sie es erneut.</translation>
         <source>Remember to validate the expected fee rate for the blockchain (as it varies with time).</source>
         <translation type="unfinished">Remember to validate the expected fee rate for the blockchain (as it varies with time).</translation>
     </message>
-    <message id="addresses-edit-warning-title">
-        <source>Edit address</source>
-        <translation>Adresse bearbeiten</translation>
-    </message>
-    <message id="addresses-edit-warning-text">
-        <source>There is active transaction that uses this address, therefore the address expiration cannot be changed.</source>
-        <translation type="unfinished">There is active transaction that uses this address, therefore the address expiration cannot be changed.</translation>
-    </message>
     <message id="settings-swap-seed-segwit-warning">
         <source>Segwit seed phrase is not supported yet.</source>
         <translation type="unfinished">Segwit seed phrase is not supported yet.</translation>
@@ -1891,7 +1827,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished">Normal</translation>
     </message>
     <message id="tx-max-privacy">
-        <source>Max privacy</source>
+        <source>Max Privacy</source>
+        <oldsource>Max privacy</oldsource>
         <translation type="unfinished">Max privacy</translation>
     </message>
     <message id="error-peer-exists">
@@ -2787,10 +2724,6 @@ Update your settings and try again.</source>
         <source>(optional)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="receive-new-addr">
-        <source>New Address</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="wallet-receive-addr-message-mp">
         <source>Max Privacy transaction can last at most %1 hours.</source>
         <translation type="unfinished"></translation>
@@ -3010,6 +2943,50 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-contracts-empty">
         <source>There are no contracts transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="receive-addr">
+        <source>Address</source>
+        <translation type="unfinished">Adresse</translation>
+    </message>
+    <message id="edit-addr-title">
+        <source>Edit address</source>
+        <translation type="unfinished">Adresse bearbeiten</translation>
+    </message>
+    <message id="edit-addr-addr">
+        <source>Address</source>
+        <translation type="unfinished">Adresse</translation>
+    </message>
+    <message id="edit-addr-expires-label">
+        <source>Expires on</source>
+        <translation type="unfinished">Läuft ab am</translation>
+    </message>
+    <message id="edit-addr-expire-now">
+        <source>Expire now</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="edit-addr-extend">
+        <source>Extend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="edit-addr-activate">
+        <source>Activate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="edit-addr-save-button">
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="edit-addr-no-expire">
+        <source>There is an active transaction for this address, therefore it cannot be expired.</source>
+        <translation type="unfinished">There is an active transaction for this address, therefore it cannot be expired.</translation>
+    </message>
+    <message id="edit-addr-never-expires">
+        <source>This address never expires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="edit-addr-expired">
+        <source>This address is already expired</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

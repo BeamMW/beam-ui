@@ -14,7 +14,6 @@ CustomTableView {
 
     property var parentModel
     property bool isExpired: false
-    property var editDialog
     property var showQRDialog
     anchors.fill: parent
     frameVisible: false
@@ -269,9 +268,11 @@ CustomTableView {
             text: qsTrId("address-table-cm-edit")
             icon.source: "qrc:/assets/icon-edit.svg"
             onTriggered: {
-                editDialog.addressItem = contextMenu.addressItem;
-                editDialog.reset();
-                editDialog.open();
+                var dialog = Qt.createComponent("EditAddress.qml").createObject(main, {
+                    viewModel:   rootControl.parentModel,
+                    addressItem: contextMenu.addressItem
+                })
+                dialog.open();
             }
         }
         Action {
