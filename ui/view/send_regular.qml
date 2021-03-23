@@ -502,7 +502,7 @@ ColumnLayout {
                         {
                             addressText:   viewModel.token,
                             typeText:      viewModel.sendType,
-                            isOnline:      !viewModel.isMaxPrivacy && !viewModel.isPublicOffline && !viewModel.isOffline,
+                            isOnline:      viewModel.sendTypeOnline,
                             amount:        viewModel.sendAmount,
                             unitName:      control.sendUnit,
                             rate:          control.rate,

@@ -239,21 +239,6 @@ QString SendViewModel::getNewTokenMsg() const
     return _newTokenMsg;
 }
 
-bool SendViewModel::getIsOffline() const
-{
-    return _isOffline;
-}
-
-bool SendViewModel::getIsMaxPrivacy() const
-{
-    return _isMaxPrivacy;
-}
-
-bool SendViewModel::getIsPublicOffline() const
-{
-    return _isPublicOffline;
-}
-
 void SendViewModel::RefreshCsiAsync()
 {
     using namespace beam::wallet;
@@ -593,4 +578,27 @@ QString SendViewModel::getSendType() const
     }
 
     return regular;
+}
+
+bool SendViewModel::getSendTypeOnline() const
+{
+    using namespace beam::wallet;
+    const auto type = GetAddressType(_token.toStdString());
+
+    if (type == TxAddressType::Offline && _choiceOffline)
+    {
+        return false;
+    }
+
+    if (type == TxAddressType::PublicOffline)
+    {
+        return false;
+    }
+
+    if (type == TxAddressType::MaxPrivacy)
+    {
+        return false;
+    }
+
+    return true;
 }

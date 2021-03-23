@@ -39,12 +39,10 @@ class SendViewModel: public QObject
     Q_PROPERTY(bool     tokenValid       READ getTokenValid                                NOTIFY tokenChanged)
     Q_PROPERTY(QString  token            READ getToken            WRITE setToken           NOTIFY tokenChanged)
     Q_PROPERTY(QString  newTokenMsg      READ getNewTokenMsg                               NOTIFY tokenChanged)
-    Q_PROPERTY(bool     isOffline        READ getIsOffline                                 NOTIFY tokenChanged)
-    Q_PROPERTY(bool     isMaxPrivacy     READ getIsMaxPrivacy                              NOTIFY tokenChanged)
-    Q_PROPERTY(bool     isPublicOffline  READ getIsPublicOffline                           NOTIFY tokenChanged)
     Q_PROPERTY(QString  tokenType        READ getTokenType                                 NOTIFY tokenChanged)
     Q_PROPERTY(bool     canChoose        READ getCanChoose                                 NOTIFY tokenChanged)
     Q_PROPERTY(QString  sendType         READ getSendType                                  NOTIFY choiceChanged)
+    Q_PROPERTY(bool     sendTypeOnline   READ getSendTypeOnline                            NOTIFY choiceChanged)
     Q_PROPERTY(bool     choiceOffline    READ getChoiceOffline    WRITE setChoiceOffline   NOTIFY choiceChanged)
 
 public:
@@ -81,9 +79,7 @@ public:
     [[nodiscard]] bool getIsEnough() const;
     [[nodiscard]] bool getTokenValid() const;
     [[nodiscard]] bool canSend() const;
-    [[nodiscard]] bool getIsOffline() const;
-    [[nodiscard]] bool getIsMaxPrivacy() const;
-    [[nodiscard]] bool getIsPublicOffline() const;
+    [[nodiscard]] bool getSendTypeOnline() const;
     [[nodiscard]] bool getCanChoose() const;
 
 public:
@@ -127,10 +123,6 @@ private:
     ExchangeRatesManager       _exchangeRatesManager;
     QString                    _token;
     QString                    _newTokenMsg;
-    bool                       _isShielded = false;
-    bool                       _isOffline = false;
-    bool                       _isMaxPrivacy = false;
-    bool                       _isPublicOffline = false;
     bool                       _choiceOffline = false;
     beam::wallet::TxParameters _txParameters;
 };

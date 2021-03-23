@@ -254,9 +254,9 @@ ConfirmationDialog {
                 Layout.topMargin:       0
                 Layout.bottomMargin:    15
                 horizontalAlignment:    Text.AlignHCenter
-                Layout.fillWidth:       control.swapMode
+                Layout.fillWidth:       true
                 Layout.maximumHeight:   60
-                Layout.maximumWidth:    control.swapMode ? parent.width : 400
+                Layout.maximumWidth:    control.swapMode ? parent.width : 420
                 Layout.minimumHeight:   16
                 font.pixelSize:         14
                 color:                  Style.content_disabled
