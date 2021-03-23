@@ -180,11 +180,11 @@ ComboBox {
                 Layout.fillWidth: true
                 clip: true
                 spacing: control.dropSpacing
-                implicitHeight: enableScroll ? Math.min(400, contentHeight) : contentHeight
+                implicitHeight: contentHeight
                 model: control.popup.visible ? control.delegateModel : null
                 currentIndex: control.highlightedIndex
                 ScrollBar.vertical: ScrollBar {
-                    policy: enableScroll && listView.contentHeight > listView.height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+                    policy: enableScroll && listView.contentHeight > listView.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
                 }
             }
         }

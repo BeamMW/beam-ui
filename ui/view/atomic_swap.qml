@@ -528,18 +528,18 @@ Item {
                             fontLetterSpacing: 0.47
                             color: Style.content_main
                             textRole: 'text'
-                            model: ListModel {
-                                    ListElement{text: "ALL"; pair: ""}
-                                    ListElement{text: "BTC"; pair: "^(btc)|(btc)$"}
-                                    ListElement{text: "DAI"; pair: "^(dai)|(dai)$"}
-                                    ListElement{text: "DASH"; pair: "^(dash)|(dash)$"}
-                                    ListElement{text: "DOGE"; pair: "^(doge)|(doge)$"}
-                                    ListElement{text: "ETH"; pair: "^(eth)|(eth)$"}
-                                    ListElement{text: "LTC"; pair: "^(ltc)|(ltc)$"}
-                                    ListElement{text: "QTUM"; pair: "^(qtum)|(qtum)$"}
-                                    ListElement{text: "USDT"; pair: "^(usdt)|(usdt)$"}
-                                    ListElement{text: "WBTC"; pair: "^(wbtc)|(wbtc)$"}
-                                }
+                            model: [
+                                {text: "ALL",  pair: ""},
+                                {text: "BTC",  pair: "^(btc)|(btc)$"},
+                                {text: "DAI",  pair: "^(dai)|(dai)$"},
+                                {text: "DASH", pair: "^(dash)|(dash)$"},
+                                {text: "DOGE", pair: "^(doge)|(doge)$"},
+                                {text: "ETH",  pair: "^(eth)|(eth)$"},
+                                {text: "LTC",  pair: "^(ltc)|(ltc)$"},
+                                {text: "QTUM", pair: "^(qtum)|(qtum)$"},
+                                {text: "USDT", pair: "^(usdt)|(usdt)$"},
+                                {text: "WBTC", pair: "^(wbtc)|(wbtc)$"}
+                            ]
                         }
                     }   // RowLayout
 
@@ -637,7 +637,7 @@ Please try again later or create an offer yourself."
                                     ? viewModel.allOffersFitBalance
                                     : viewModel.allOffers
                                 filterRole: "pair"
-                                filterString: coinSelector.model.get(coinSelector.currentIndex).pair
+                                filterString: coinSelector.model[coinSelector.currentIndex].pair
                                 filterCaseSensitivity: Qt.CaseInsensitive
                             }
 
