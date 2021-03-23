@@ -158,8 +158,10 @@ ColumnLayout {
             enableScroll:        true
 
             onActivated: {
-                if (multi) control.currencyIdx = index
-                if (resetAmount) control.amount = 0
+                if (multi) {
+                    if (resetAmount) ainput.text = "0"
+                    control.currencyIdx = index
+                }
             }
 
             onModelChanged: {

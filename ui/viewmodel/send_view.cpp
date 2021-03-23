@@ -76,9 +76,8 @@ void SendViewModel::setAssetId(int value)
     {
         LOG_INFO () << "Selected asset id: " << value;
         m_Csi.m_assetID = valueId;
-
         emit assetIdChanged();
-        emit balanceChanged();
+        RefreshCsiAsync();
     }
 }
 
@@ -173,6 +172,7 @@ void SendViewModel::setSendAmount(const QString& value)
     beam::Amount amount = beamui::UIStringToAmount(value);
     if (amount != m_Csi.m_requestedSum)
     {
+        _maxPossible = false;
         m_Csi.m_requestedSum = amount;
         RefreshCsiAsync();
     }
@@ -325,10 +325,13 @@ void SendViewModel::setChoiceOffline(bool value)
 
 void SendViewModel::setMaxPossibleAmount()
 {
-    _maxPossible = true;
     const auto amount = _walletModel.getAvailable(m_Csi.m_assetID);
     const auto maxAmount = std::min(amount, getMaxInputAmount());
-    setSendAmount(beamui::AmountBigToUIString(maxAmount));
+
+    _maxPossible = true;
+    m_Csi.m_requestedSum = beam::AmountBig::get_Lo(maxAmount);
+
+    RefreshCsiAsync();
 }
 
 void SendViewModel::onSelectionCalculated(const beam::wallet::CoinsSelectionInfo& selectionRes)
@@ -345,7 +348,6 @@ void SendViewModel::onSelectionCalculated(const beam::wallet::CoinsSelectionInfo
         m_Csi.m_isEnought = true;
     }
 
-    _maxPossible = false;
     emit balanceChanged();
     emit canSendChanged();
 }

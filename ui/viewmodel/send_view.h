@@ -96,8 +96,6 @@ signals:
     void canSendChanged();
     void tokenChanged();
     void choiceChanged();
-
-    /// TODO:refactor
     void sendMoneyVerified();
     void cantSendToExpired();
 
@@ -108,7 +106,6 @@ private:
     void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
     void extractParameters();
     bool _maxPossible   = false;
-    /// TODO:REFACTOR END
 
 private:
     [[nodiscard]] beam::Amount getTotalSpend() const;
