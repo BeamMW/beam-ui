@@ -2992,5 +2992,9 @@ Update your settings and try again.</source>
         <source>Your address book is empty</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="contacts-empty">
+        <source>Your contact list is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
