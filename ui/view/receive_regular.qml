@@ -216,9 +216,10 @@ ColumnLayout {
                         //
                         content: AmountInput {
                             id:          amountInput
-                            amountIn:    viewModel.amount
+                            amount:      viewModel.amount
                             currencies:  viewModel.assetsList
                             multi:       viewModel.assetsList.length > 1
+                            resetAmount: false
 
                            onCurrencyIdxChanged: function () {
                                var idx = amountInput.currencyIdx

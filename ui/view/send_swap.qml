@@ -162,7 +162,7 @@ please review your settings and try again"
                         content:
                         AmountInput {
                             id:           sendAmountInput
-                            amountIn:     viewModel.sendAmount
+                            amount:       viewModel.sendAmount
                             currencyIdx:  viewModel.sendCurrency
                             rate:         viewModel.secondCurrencySendRateValue
                             rateUnit:     viewModel.secondCurrencyUnitName
@@ -182,6 +182,13 @@ please review your settings and try again"
                                     return qsTrId("send-not-enough")
                                 }
                                 return ""
+                            }
+                        }
+
+                        Connections {
+                            target: viewModel
+                            function onSendAmountChanged () {
+                                sendAmountInput.amount = viewModel.sendAmount
                             }
                         }
 
@@ -279,7 +286,7 @@ please review your settings and try again"
 
                         AmountInput {
                             id:            receiveAmountInput
-                            amountIn:      viewModel.receiveAmount
+                            amount:        viewModel.receiveAmount
                             currencyIdx:   viewModel.receiveCurrency
                             rate:          viewModel.secondCurrencyReceiveRateValue
                             rateUnit:      viewModel.secondCurrencyUnitName
@@ -299,6 +306,13 @@ please review your settings and try again"
                                     return qsTrId("send-not-enough")
                                 }
                                 return ""
+                            }
+                        }
+
+                        Connections {
+                            target: viewModel
+                            function onReceiveAmountChanged () {
+                                receiveAmountInput.amount = viewModel.receiveAmount
                             }
                         }
 

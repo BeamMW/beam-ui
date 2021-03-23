@@ -243,7 +243,7 @@ ColumnLayout {
 
                             AmountInput {
                                 id:                sendAmountInput
-                                amountIn:          viewModel.sendAmount
+                                amount:            viewModel.sendAmount
                                 color:             Style.accent_outgoing
                                 Layout.fillWidth:  true
                                 currencies:        viewModel.assetsList
@@ -252,9 +252,9 @@ ColumnLayout {
                                 error: {
                                     if (!viewModel.isEnough)
                                     {
-                                       var amount = Utils.uiStringToLocale(viewModel.maxSendAmount)
+                                       var maxAmount = Utils.uiStringToLocale(viewModel.maxSendAmount)
                                        //% "Insufficient funds to complete the transaction. Maximum amount is %1 %2."
-                                       return qsTrId("send-no-funds").arg(amount).arg(Utils.limitText(control.sendUnit, 6))
+                                       return qsTrId("send-no-funds").arg(maxAmount).arg(Utils.limitText(control.sendUnit, 6))
                                     }
                                     return ""
                                 }
@@ -262,6 +262,13 @@ ColumnLayout {
                                 onCurrencyIdxChanged: function () {
                                     var idx = sendAmountInput.currencyIdx
                                     control.assetId = viewModel.assetsList[idx].assetId
+                                }
+                            }
+
+                            Connections {
+                                target: viewModel
+                                function onSendAmountChanged () {
+                                    sendAmountInput.amount = viewModel.sendAmount
                                 }
                             }
 

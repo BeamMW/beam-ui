@@ -136,7 +136,7 @@ Update your settings and try again."
                             id:                         sentAmountInput
                             color:                      Style.accent_outgoing
                             currencyIdx:                viewModel.sentCurrency
-                            amountIn:                   viewModel.amountSent
+                            amount:                     viewModel.amountSent
                             rate:                       viewModel.secondCurrencySendRateValue
                             rateUnit:                   viewModel.secondCurrencyUnitName
                             multi:                      true
@@ -367,7 +367,7 @@ please review your settings and try again"
                         AmountInput {
                             id:             receiveAmountInput
                             currencyIdx:    viewModel.receiveCurrency
-                            amountIn:       viewModel.amountToReceive
+                            amount:         viewModel.amountToReceive
                             rate:           viewModel.secondCurrencyReceiveRateValue
                             rateUnit:       viewModel.secondCurrencyUnitName
                             multi:          true

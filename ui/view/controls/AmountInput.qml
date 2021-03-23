@@ -9,7 +9,7 @@ ColumnLayout {
 
     function getAmountInSecondCurrency() {
         return Utils.formatAmountToSecondCurrency(
-            control.amountIn,
+            control.amount,
             control.rate,
             control.rateUnit);
     }
@@ -58,15 +58,11 @@ ColumnLayout {
     property bool     multi:        false // changing this property in runtime would reset bindings, don't do this
     property string   amount:       "0"
 
-    // TODO: this is insanely bad, fix and never do it again
-    property string   amountIn:     "0"  // public property for binding. Use it to avoid binding overriding
-
     property alias    error:        errmsg.text
     property bool     readOnlyA:    false
     property bool     resetAmount:  true
     property var      amountInput:  ainput
-
-    property bool     showRate: control.rateUnit != "" && control.rateUnit != control.currencyUnit
+    property bool     showRate:     control.rateUnit != "" && control.rateUnit != control.currencyUnit
     readonly property bool isExchangeRateAvailable: control.rate != "0"
 
     SFText {
@@ -102,29 +98,26 @@ ColumnLayout {
             }
 
             onActiveFocusChanged: {
-                // we intentionally break binding here
                 text = formatDisplayedAmount()
                 if (activeFocus) cursorPosition = positionAt(ainput.getMousePos().x, ainput.getMousePos().y)
             }
 
             function formatDisplayedAmount() {
-                return control.amountIn == "0" ? (ainput.activeFocus ? "": "0") 
-                                    : (ainput.activeFocus ? control.amountIn : Utils.uiStringToLocale(control.amountIn))
+                if (control.amount == "0") {
+                    return ainput.activeFocus ? "": "0"
+                }
+                return ainput.activeFocus ? control.amount : Utils.uiStringToLocale(control.amount)
             }
 
             function getRegExpPattern() {
-                // TODO: merge conflict /(^(10{8})$)|(^(([1-9][0-9]{0,7})|(0))(\.[0-9]{0,7}[1-9])?$)/
                 var pattern = "^(([1-9][0-9]{0,7})|(1[0-9]{8})|(2[0-4][0-9]{7})|(25[0-3][0-9]{6})|(0))(\\.[0-9]{0,%1}[1-9])?$";
                 return pattern.arg(BeamGlobals.getCurrencyDecimals(control.currency) - 1);
             }
 
             Connections {
                 target: control
-                function onAmountInChanged () {
-                    if (!ainput.activeFocus) {
-                        // we intentionally break binding here
-                        ainput.text = ainput.formatDisplayedAmount()
-                    }
+                function onAmountChanged () {
+                    ainput.text = ainput.formatDisplayedAmount()
                 }
             }
         }
@@ -159,7 +152,8 @@ ColumnLayout {
 
             onActivated: {
                 if (multi) {
-                    if (resetAmount) ainput.text = "0"
+                    ainput.text = "0"
+                    control.amount = "0"
                     control.currencyIdx = index
                 }
             }
