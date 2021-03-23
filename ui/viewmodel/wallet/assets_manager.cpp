@@ -292,9 +292,14 @@ QColor AssetsManager::getColor(beam::Asset::ID id)
         return QColor( 0, 246, 210, 252);
     }
 
-    const auto it = _info.find(id);
-    if (it != _info.end())
+    if (auto meta = getAsset(id))
     {
+        auto color = meta->GetColor();
+        if (!color.empty())
+        {
+            return QString::fromStdString(color);
+        }
+
         auto idx = static_cast<int>(id % _colors.size());
         return _colors[idx];
     }
