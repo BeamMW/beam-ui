@@ -269,9 +269,10 @@ QString NotificationItem::title() const
                         qtTrId("notification-swap-failed");
             case TxType::Contract:
                 return isExpired(p) ?
-                    //% "Transaction expired"
+                    //% "Contract transaction expired"
                     qtTrId("notification-contract-expired") :
-                    qtTrId("notification-transaction-failed");
+                    //% "Contract transaction failed"
+                    qtTrId("notification-contract-failed");
             default:
                 return "error";
             }

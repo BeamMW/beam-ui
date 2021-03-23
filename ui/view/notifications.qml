@@ -188,7 +188,7 @@ ColumnLayout {
         
                     SFText {
                         Layout.fillWidth: true
-                        text: model.message
+                        text: model.message.charAt(0).toUpperCase() + model.message.slice(1)
                         font.pixelSize: 14
                         color: Style.content_main
                         elide: Text.ElideMiddle

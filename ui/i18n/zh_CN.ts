@@ -2602,7 +2602,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-expired">
-        <source>Transaction expired</source>
+        <source>Contract transaction expired</source>
+        <oldsource>Transaction expired</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="appmodel-already-opened">
@@ -3000,8 +3001,8 @@ Update your settings and try again.</source>
         <source>This address is already expired</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="addressbook-empty">
-        <source>Your address book is empty</source>
+    <message id="notification-contract-failed">
+        <source>Contract transaction failed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
