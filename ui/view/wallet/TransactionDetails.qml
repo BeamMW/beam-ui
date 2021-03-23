@@ -236,8 +236,6 @@ RowLayout {
                     prefix:       this.amount == "0" ? "" : (root.assetIncome[index] ? "+ " : "- ")
                     rate:         root.assetRates[index]
                     rateUnit:     this.rate != "0" ? root.rateUnit : ""
-                    //% "For the day of the transaction"
-                    ratePostfix:  amount != "0" && rate != "0" ? ["(", qsTrId("tx-details-rate-notice"), ")"].join("") : ""
                     showTip:      false
                     //maxPaintedWidth: this.width don't enable, causes freeze of animations, neet to refactor
                     font {
@@ -315,9 +313,6 @@ RowLayout {
             rateUnit:  root.feeRateUnit
             rate:      root.feeRate
             showTip:   false
-
-            //% "For the day of the transaction"
-            ratePostfix: amount != "0" && rate != "0" ? ["(", qsTrId("tx-details-rate-notice"), ")"].join("") : ""
         }
         
         SFText {
