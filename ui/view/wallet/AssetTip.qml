@@ -32,14 +32,26 @@ AlphaTipPopup {
         id: longTipText
 
         SFText {
+            TextMetrics {
+                id: textMetrics
+                text: longText
+
+                font {
+                    family:        "SF Pro Display"
+                    styleName:     "Regular"
+                    weight:        Font.Normal
+                    pixelSize:     13
+                }
+            }
+
             id: textCrtl
-            Layout.maximumWidth:   240
-            wrapMode: Text.Wrap
+            wrapMode: textMetrics.width > 240 ? Text.Wrap : Text.NoWrap
 
             text:        longText
             color:       Style.content_main
             linkEnabled: true
             textFormat:  Text.RichText
+            width:       textMetrics.width > 240 ? 240 : textMetrics.width
 
             onLinkActivated: {
                 assetTip.onLink(link)
@@ -101,8 +113,11 @@ AlphaTipPopup {
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
             ScrollBar.vertical.policy: assetTip.visible && contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
             visible: stateLayout.state == "balance"
+
+            property var minWidth: tabsRow.width + tabsRow.Layout.leftMargin + tabsRow.Layout.rightMargin
             Layout.maximumHeight: maxScrollHeight
-            Layout.minimumWidth:  tabsRow.width
+            Layout.minimumWidth: minWidth
+            leftPadding: balanceData.width < minWidth ? (minWidth - balanceData.width) / 2 : 0
 
             GridLayout {
                 id:                  balanceData
@@ -346,8 +361,11 @@ AlphaTipPopup {
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
             ScrollBar.vertical.policy: assetTip.visible && contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
             visible: stateLayout.state == "ainfo"
-            Layout.maximumHeight: maxScrollHeight
-            Layout.minimumWidth:  tabsRow.width
+
+            property var minWidth: tabsRow.width + tabsRow.Layout.leftMargin + tabsRow.Layout.rightMargin
+            Layout.maximumHeight:  maxScrollHeight
+            Layout.minimumWidth:   minWidth
+            leftPadding:           ainfoData.width < minWidth ? (minWidth - ainfoData.width) / 2 : 0
 
             GridLayout {
                 id:                  ainfoData
@@ -368,10 +386,7 @@ AlphaTipPopup {
                 }
 
                 SFText {
-                    Layout.maximumWidth: 240
                     Layout.rightMargin: 14
-                    wrapMode: Text.Wrap
-
                     text:  assetInfo.id.toString()
                     color: Style.content_main
 
@@ -383,7 +398,7 @@ AlphaTipPopup {
                 }
 
                 SFText {
-                    visible: nameCtrl.visible
+                    visible: !!assetInfo.assetName
 
                     //% "Asset name"
                     text:  qsTrId("info-asset-name")
@@ -396,21 +411,11 @@ AlphaTipPopup {
                     }
                 }
 
-                SFText {
-                    id: nameCtrl
-                    Layout.maximumWidth: 240
-                    Layout.rightMargin: 14
-                    wrapMode: Text.Wrap
-
-                    text:  assetInfo.assetName
-                    color: Style.content_main
-                    visible: !!this.text
-
-                    font {
-                        pixelSize: 13
-                        styleName: "Normal"
-                        weight:    Font.Normal
-                    }
+                Loader {
+                    property string longText:  assetInfo.assetName
+                    sourceComponent:           longTipText
+                    Layout.rightMargin:        14
+                    visible:                   !!assetInfo.assetName
                 }
 
                 SFText {
@@ -428,7 +433,6 @@ AlphaTipPopup {
                 Loader {
                     property string longText:  assetInfo.unitName
                     sourceComponent:           longTipText
-                    Layout.maximumWidth:       240
                     Layout.rightMargin:        14
                     visible:                   !!assetInfo.unitName
                 }
@@ -450,7 +454,6 @@ AlphaTipPopup {
                 Loader {
                     property string longText:  assetInfo.smallestUnitName
                     sourceComponent:           longTipText
-                    Layout.maximumWidth:       240
                     Layout.rightMargin:        14
                     visible:                   !!assetInfo.smallestUnitName
                 }
@@ -472,7 +475,6 @@ AlphaTipPopup {
                 Loader {
                     property string longText:  assetInfo.shortDesc
                     sourceComponent:           longTipText
-                    Layout.maximumWidth:       240
                     Layout.rightMargin:        14
                     visible:                   !!assetInfo.shortDesc
                 }
@@ -494,7 +496,6 @@ AlphaTipPopup {
                 Loader {
                     property string longText:  assetInfo.longDesc
                     sourceComponent:           longTipText
-                    Layout.maximumWidth:       240
                     Layout.rightMargin:        14
                     visible:                   !!assetInfo.longDesc
                 }
@@ -516,7 +517,6 @@ AlphaTipPopup {
                 Loader {
                     property string longText:  assetInfo.siteUrl ? [Style.linkStyle, "<a href='", assetInfo.siteUrl, "'>", assetInfo.siteUrl, "</a>"].join("") : ""
                     sourceComponent:           longTipText
-                    Layout.maximumWidth:       240
                     Layout.rightMargin:        14
                     visible:                   !!longText
                 }
@@ -538,7 +538,7 @@ AlphaTipPopup {
                 Loader {
                     property string longText:  assetInfo.whitePaper ? [Style.linkStyle, "<a href='", assetInfo.whitePaper, "'>", assetInfo.whitePaper, "</a>"].join("") : ""
                     sourceComponent:           longTipText
-                    Layout.maximumWidth:       240
+
                     Layout.rightMargin:        14
                     visible:                   !!longText
                 }

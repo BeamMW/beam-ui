@@ -96,6 +96,12 @@ Control {
                     assetTip.visible = false
                 })
 
+                appWindow.onActiveChanged.connect(function() {
+                    if (!appWindow.active) {
+                        assetTip.visible = false
+                    }
+                })
+
                 assetTip.onWidthChanged.connect(function () {
                     assetTip.x = amountCtrl.tipX
                     assetTip.y = amountCtrl.tipY
