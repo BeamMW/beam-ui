@@ -1,3 +1,13 @@
+function openUrl(url) {
+    //
+    // if url doesn't have scheme qt would add qrc://
+    //
+    if (url.indexOf("//") == -1) {
+        url = Qt.openUrlExternally(["https://", url].join(""))
+    }
+    Qt.openUrlExternally(url)
+}
+
 function formatDateTime(datetime, localeName, neverStr) {
     var maxTime = new Date(4294967295000);
     if (datetime >= maxTime) {
