@@ -1,8 +1,12 @@
 function openUrl(url) {
+    if (url.indexOf("mailto:") === 0) {
+        return Qt.openUrlExternally(url)
+    }
+
     //
     // if url doesn't have scheme qt would add qrc://
     //
-    if (url.indexOf("//") == -1) {
+    if (url.indexOf("//") === -1) {
         url = Qt.openUrlExternally(["https://", url].join(""))
     }
     Qt.openUrlExternally(url)
