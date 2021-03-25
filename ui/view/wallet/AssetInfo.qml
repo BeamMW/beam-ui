@@ -42,7 +42,7 @@ Control {
         BeamAmount {
             id:                amountCtrl
             amount:            assetInfo.amount
-            lockedAmount:      assetInfo.maturingTotal
+            lockedAmount:      assetInfo.locked
             unitName:          assetInfo.unitName
             rateUnit:          assetInfo.rateUnit
             rate:              assetInfo.rate
@@ -96,8 +96,8 @@ Control {
                     assetTip.visible = false
                 })
 
-                appWindow.onActiveChanged.connect(function() {
-                    if (!appWindow.active) {
+                appWindow.onActiveChanged.connect(function (active) {
+                    if (!active) {
                         assetTip.visible = false
                     }
                 })

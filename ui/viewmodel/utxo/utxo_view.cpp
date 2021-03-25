@@ -23,15 +23,10 @@ using namespace beamui;
 UtxoViewModel::UtxoViewModel()
     : m_model{*AppModel::getInstance().getWalletModel()}
 {
-    connect(&m_model, SIGNAL(allUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>&)),
-        SLOT(onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>&)));
-    connect(&m_model, SIGNAL(shieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>&)),
-        SLOT(onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>&)));
-
+    connect(&m_model, &WalletModel::normalCoinsChanged,  this, &UtxoViewModel::onNormalCoinsChanged);
+    connect(&m_model, &WalletModel::shieldedCoinChanged, this, &UtxoViewModel::onShieldedCoinChanged);
     connect(&m_model, &WalletModel::walletStatusChanged, this, &UtxoViewModel::stateChanged);
-    connect(&m_model, SIGNAL(shieldedTotalCountChanged()), SLOT(onTotalShieldedCountChanged()));
-
-    m_model.getAsync()->getUtxosStatus(m_assetId);
+    m_model.getAsync()->getAllUtxosStatus();
 }
 
 QAbstractItemModel* UtxoViewModel::getAllUtxos()
@@ -65,21 +60,21 @@ void UtxoViewModel::setMaturingMaxPrivacy(bool value)
 
 unsigned int UtxoViewModel::getAssetId() const
 {
-    return m_assetId;
+    return m_assetId ? *m_assetId : -1;
 }
 
 void UtxoViewModel::setAssetId(unsigned int id)
 {
-    if (m_assetId != id)
+    if (!m_assetId || (*m_assetId != id))
     {
         m_assetId = id;
         emit assetIdChanged();
 
-        m_model.getAsync()->getUtxosStatus(m_assetId);
+        m_model.getAsync()->getAllUtxosStatus();
     }
 }
 
-void UtxoViewModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
+void UtxoViewModel::onNormalCoinsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
     if (getMaturingMaxPrivacy())
         return;
@@ -89,9 +84,9 @@ void UtxoViewModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const st
 
     for (const auto& t : utxos)
     {
-        if (m_assetId != beam::Asset::s_InvalidID)
+        if (m_assetId)
         {
-            if (t.m_ID.m_AssetID != m_assetId)
+            if (t.m_ID.m_AssetID != *m_assetId)
             {
                 continue;
             }
@@ -141,9 +136,9 @@ void UtxoViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, con
 
     for (const auto& t : items)
     {
-        if (m_assetId != beam::Asset::s_InvalidID)
+        if (m_assetId)
         {
-            if (t.m_CoinID.m_AssetID != m_assetId)
+            if (t.m_CoinID.m_AssetID != *m_assetId)
             {
                 continue;
             }
@@ -201,7 +196,3 @@ void UtxoViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, con
     emit allUtxoChanged();
 }
 
-void UtxoViewModel::onTotalShieldedCountChanged()
-{
-    m_model.getAsync()->getUtxosStatus(m_assetId);
-}

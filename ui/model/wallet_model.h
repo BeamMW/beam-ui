@@ -76,7 +76,7 @@ signals:
     void syncProgressUpdated(int done, int total);
     void changeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID);
     void coinsSelectionCalculated(const beam::wallet::CoinsSelectionInfo&);
-    void allUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
+    void normalCoinsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
 #ifdef BEAM_LELANTUS_SUPPORT
     void shieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& coins);
 #endif // BEAM_LELANTUS_SUPPORT
@@ -94,7 +94,6 @@ signals:
     void cantSendToExpired();
     void paymentProofExported(const beam::wallet::TxID& txID, const QString& proof);
     void addressChecked(const QString& addr, bool isValid);
-    void shieldedTotalCountChanged();
     void functionPosted(const std::function<void()>&);
 #if defined(BEAM_HW_WALLET)
     void showTrezorMessage();
@@ -112,7 +111,7 @@ private:
     void onSyncProgressUpdated(int done, int total) override;
     void onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId) override;
     void onCoinsSelectionCalculated(const beam::wallet::CoinsSelectionInfo&) override;
-    void onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos) override;
+    void onNormalCoinsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos) override;
     void onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& items) override;
     void onAddressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>& items) override;
     void onAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addrs) override;

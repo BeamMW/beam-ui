@@ -40,9 +40,8 @@ public:
     void setAssetId(unsigned int);
 
 public slots:
-    void onAllUtxoChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
+    void onNormalCoinsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
     void onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& items);
-    void onTotalShieldedCountChanged();
 
 signals:
     void allUtxoChanged();
@@ -53,6 +52,6 @@ signals:
 private:
     UtxoItemList     m_allUtxos;
     WalletModel&     m_model;
-    beam::Asset::ID  m_assetId = beam::Asset::s_InvalidID;
     bool             m_maturingMaxPrivacy = false;
+    boost::optional<beam::Asset::ID> m_assetId;
 };

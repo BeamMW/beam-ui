@@ -144,9 +144,9 @@ void WalletModel::onCoinsSelectionCalculated(const CoinsSelectionInfo& selection
     emit coinsSelectionCalculated(selectionRes);
 }
 
-void WalletModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
+void WalletModel::onNormalCoinsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
-    emit allUtxoChanged(action, utxos);
+    emit normalCoinsChanged(action, utxos);
 }
 
 void WalletModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::ShieldedCoin>& items)
