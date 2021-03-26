@@ -160,10 +160,8 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.fillHeight: true
         Layout.bottomMargin: 9
-        frameVisible: false
         visible: tableView.model.count > 0
         selectionMode: SelectionMode.NoSelection
-        backgroundVisible: false
         model: SortFilterProxyModel {
             sortOrder: tableView.sortIndicatorOrder
             sortCaseSensitivity: Qt.CaseInsensitive
