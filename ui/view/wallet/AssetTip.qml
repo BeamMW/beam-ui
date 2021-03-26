@@ -23,7 +23,9 @@ AlphaTipPopup {
 
     Overlay.modeless: MouseArea {
         anchors.fill: parent
-        onWheel: assetTip.close()
+        onWheel: function () {
+            assetTip.visible = false
+        }
         acceptedButtons:  Qt.NoButton
         propagateComposedEvents: true
     }

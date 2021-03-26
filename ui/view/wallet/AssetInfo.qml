@@ -75,8 +75,8 @@ Control {
                 amountCtrl.showDrop)
             {
                 var assetTip = Qt.createComponent("AssetTip.qml").createObject(Overlay.overlay, {
-                    assetInfo: control.assetInfo,
-                    hasBalanceTip: control.hasBalanceTip
+                    hasBalanceTip: control.hasBalanceTip,
+                    assetInfo: Object.assign({}, control.assetInfo)
                 });
 
                 amountCtrl.tipCtrl = assetTip
