@@ -82,7 +82,7 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
 
     std::vector<std::shared_ptr<TxObject>> modifiedTransactions;
     modifiedTransactions.reserve(transactions.size());
-    ExchangeRate::Currency secondCurrency = _exchangeRatesManager.getRateUnitRaw();
+    const auto secondCurrency = _exchangeRatesManager.getRateCurrency();
 
     for (const auto& t : transactions)
     {
@@ -152,12 +152,12 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
 
 QString TxTableViewModel::getRateUnit() const
 {
-    return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateUnitRaw());
+    return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateCurrency());
 }
 
 QString TxTableViewModel::getRate() const
 {
-    auto rate = _exchangeRatesManager.getRate(beam::wallet::ExchangeRate::Currency::Beam);
+    auto rate = _exchangeRatesManager.getRate(beam::wallet::Currency::BEAM);
     return beamui::AmountToUIString(rate);
 }
 

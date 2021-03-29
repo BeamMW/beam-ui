@@ -88,11 +88,11 @@ private:
     unsigned int getSentFee() const;
     void setSentFee(unsigned int value);
 
-    Currency  getReceiveCurrency() const;
-    void setReceiveCurrency(Currency value);
+    WalletCurrency::Currency  getReceiveCurrency() const;
+    void setReceiveCurrency(WalletCurrency::Currency value);
 
-    Currency  getSentCurrency() const;
-    void setSentCurrency(Currency value);
+    WalletCurrency::Currency  getSentCurrency() const;
+    void setSentCurrency(WalletCurrency::Currency value);
 
     void setOfferExpires(int value);
     int  getOfferExpires() const;
@@ -135,8 +135,8 @@ private:
     beam::Amount _receiveFeeGrothes;
     beam::Amount _sentFeeGrothes;
 
-    Currency  _receiveCurrency;
-    Currency  _sentCurrency;
+    WalletCurrency::Currency  _receiveCurrency;
+    WalletCurrency::Currency  _sentCurrency;
     int       _offerExpires;
     QString   _addressComment;
     QString   _token;

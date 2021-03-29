@@ -11,21 +11,17 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #pragma once
 
 #include <string>
 #include <QObject>
 #include <QQmlListProperty>
-
 #include "model/wallet_model.h"
 #include "model/swap_coin_client_model.h"
 #include "model/swap_eth_client_model.h"
 #include "swap_offers_list.h"
 #include "swap_tx_object_list.h"
 #include "viewmodel/currencies.h"
-
-using namespace beam::wallet;
 
 class SwapCoinClientWrapper : public QObject
 {
@@ -51,13 +47,13 @@ public:
     bool getIsConnecting() const;
     bool hasActiveTx() const;
     QString getCoinLabel() const;
-    Currency getCurrency() const;
+    WalletCurrency::Currency getCurrency() const;
 
     beam::wallet::AtomicSwapCoin getSwapCoin() const;
     uint16_t getLockTxMinConfirmations() const;
     uint16_t getWithdrawTxMinConfirmations() const;
     double getBlocksPerHour() const;
-    Amount getAvailable() const;
+    beam::Amount getAvailable() const;
 
 signals:
     void activeTxChanged();
@@ -131,12 +127,12 @@ private:
     bool hasActiveTx(const std::string& swapCoin) const;
     void InitSwapClientWrappers();
 
-    SwapCoinClientWrapper* getSwapCoinClientWrapper(AtomicSwapCoin swapCoinType) const;
-    uint32_t getLockTxMinConfirmations(AtomicSwapCoin swapCoinType) const;
-    uint32_t getWithdrawTxMinConfirmations(AtomicSwapCoin swapCoinType) const;
-    double getBlocksPerHour(AtomicSwapCoin swapCoinType) const;
-    void incrementActiveTxCounter(AtomicSwapCoin swapCoinType);
-    void decrementActiveTxCounter(AtomicSwapCoin swapCoinType);
+    SwapCoinClientWrapper* getSwapCoinClientWrapper(beam::wallet::AtomicSwapCoin swapCoinType) const;
+    uint32_t getLockTxMinConfirmations(beam::wallet::AtomicSwapCoin swapCoinType) const;
+    uint32_t getWithdrawTxMinConfirmations(beam::wallet::AtomicSwapCoin swapCoinType) const;
+    double getBlocksPerHour(beam::wallet::AtomicSwapCoin swapCoinType) const;
+    void incrementActiveTxCounter(beam::wallet::AtomicSwapCoin swapCoinType);
+    void decrementActiveTxCounter(beam::wallet::AtomicSwapCoin swapCoinType);
     void resetActiveTxCounters();
     void setIsOffersLoaded(bool isOffersLoaded);
 

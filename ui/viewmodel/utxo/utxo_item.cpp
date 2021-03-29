@@ -18,7 +18,6 @@
 #include "wallet/core/common.h"
 
 using namespace beam;
-using namespace beam::wallet;
 using namespace std;
 using namespace beamui;
 
@@ -64,6 +63,8 @@ QString UtxoItem::maturityTimeLeft() const
 
 UtxoViewStatus::EnStatus UtxoItem::status() const
 {
+    using namespace beam::wallet;
+
     switch (_coin.m_status)
     {
     case Coin::Available:
@@ -179,6 +180,8 @@ QString ShieldedCoinItem::maturityTimeLeft() const
 
 UtxoViewStatus::EnStatus ShieldedCoinItem::status() const
 {
+    using namespace beam::wallet;
+
     switch (_coin.m_Status)
     {
     case ShieldedCoin::Available:

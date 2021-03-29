@@ -16,7 +16,6 @@
 #include "model/app_model.h"
 
 using namespace beam;
-using namespace beam::wallet;
 using namespace beamui;
 
 TokenInfoItem::TokenInfoItem(QObject* parent /* = nullptr */)
@@ -102,6 +101,8 @@ QString TokenInfoItem::getToken() const
 
 void TokenInfoItem::setToken(const QString& token)
 {
+    using namespace beam::wallet;
+
     auto trimmed = token.trimmed();
     if (trimmed != m_token)
     {

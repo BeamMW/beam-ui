@@ -40,5 +40,5 @@ public:
     [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
 
     // TODO:DEX refactor and hide
-    beam::wallet::PeerID selfID;
+    beam::PeerID selfID;
 };

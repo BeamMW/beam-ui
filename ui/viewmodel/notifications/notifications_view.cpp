@@ -17,8 +17,6 @@
 #include "utility/logger.h"
 #include "wallet/client/extensions/news_channels/interface.h"
 
-using namespace beam::wallet;
-
 NotificationsViewModel::NotificationsViewModel()
     : m_walletModel{*AppModel::getInstance().getWalletModel()}
 {
@@ -77,8 +75,10 @@ void NotificationsViewModel::activateAddress(const ECC::uintBig& id)
     }
 }
 
-void NotificationsViewModel::onNotificationsDataModelChanged(ChangeAction action, const std::vector<Notification>& notifications)
+void NotificationsViewModel::onNotificationsDataModelChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Notification>& notifications)
 {
+    using namespace beam::wallet;
+
     std::vector<std::shared_ptr<NotificationItem>> modifiedNotifications;
     modifiedNotifications.reserve(notifications.size());
 

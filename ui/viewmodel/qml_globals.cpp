@@ -79,37 +79,37 @@ namespace
     {
         switch (currency)
         {
-            case Currency::CurrBeam:
+            case WalletCurrency::Currency::CurrBeam:
                 return beamui::Currencies::Beam;
 
-            case Currency::CurrBitcoin:
+            case WalletCurrency::Currency::CurrBitcoin:
                 return beamui::Currencies::Bitcoin;
 
-            case Currency::CurrLitecoin:
+            case WalletCurrency::Currency::CurrLitecoin:
                 return beamui::Currencies::Litecoin;
 
-            case Currency::CurrQtum:
+            case WalletCurrency::Currency::CurrQtum:
                 return beamui::Currencies::Qtum;
 #if defined(BITCOIN_CASH_SUPPORT)
-            case Currency::CurrBitcoinCash:
+            case WalletCurrency::Currency::CurrBitcoinCash:
                 return beamui::Currencies::BitcoinCash;
 #endif // BITCOIN_CASH_SUPPORT
-            case Currency::CurrDash:
+            case WalletCurrency::Currency::CurrDash:
                 return beamui::Currencies::Dash;
 
-            case Currency::CurrDogecoin:
+            case WalletCurrency::Currency::CurrDogecoin:
                 return beamui::Currencies::Dogecoin;
 
-            case Currency::CurrEthereum:
+            case WalletCurrency::Currency::CurrEthereum:
                 return beamui::Currencies::Ethereum;
 
-            case Currency::CurrDai:
+            case WalletCurrency::Currency::CurrDai:
                 return beamui::Currencies::Dai;
 
-            case Currency::CurrUsdt:
+            case WalletCurrency::Currency::CurrUsdt:
                 return beamui::Currencies::Usdt;
 
-            case Currency::CurrWrappedBTC:
+            case WalletCurrency::Currency::CurrWrappedBTC:
                 return beamui::Currencies::WrappedBTC;
 
             default:
@@ -184,7 +184,7 @@ bool QMLGlobals::isPasswordValid(const QString& value)
     return AppModel::getInstance().checkWalletPassword(secretPass);
 }
 
-QString QMLGlobals::calcWithdrawTxFee(Currency currency, unsigned int feeRate)
+QString QMLGlobals::calcWithdrawTxFee(WalletCurrency::Currency currency, unsigned int feeRate)
 {
     return ::calcWithdrawTxFee(currency, feeRate);
 }
@@ -269,14 +269,14 @@ QString QMLGlobals::roundUp(QString amount)
 
 bool QMLGlobals::canSwap()
 {
-    return haveSwapClient(Currency::CurrBitcoin) || haveSwapClient(Currency::CurrLitecoin) || haveSwapClient(Currency::CurrQtum)
+    return haveSwapClient(WalletCurrency::Currency::CurrBitcoin) || haveSwapClient(WalletCurrency::Currency::CurrLitecoin) || haveSwapClient(WalletCurrency::Currency::CurrQtum)
 #if defined(BITCOIN_CASH_SUPPORT)
-        || haveSwapClient(Currency::CurrBitcoinCash) 
+        || haveSwapClient(WalletCurrency::Currency::CurrBitcoinCash)
 #endif // BITCOIN_CASH_SUPPORT
-        || haveSwapClient(Currency::CurrDash) || haveSwapClient(Currency::CurrDogecoin) || haveSwapClient(Currency::CurrEthereum);
+        || haveSwapClient(WalletCurrency::Currency::CurrDash) || haveSwapClient(WalletCurrency::Currency::CurrDogecoin) || haveSwapClient(WalletCurrency::Currency::CurrEthereum);
 }
 
-bool QMLGlobals::haveSwapClient(Currency currency)
+bool QMLGlobals::haveSwapClient(WalletCurrency::Currency currency)
 {
     auto swapCoin = convertCurrencyToSwapCoin(currency);
     if (isEthereumBased(currency))
@@ -296,9 +296,9 @@ QString QMLGlobals::rawTxParametrsToTokenStr(const QVariant& variantTxParams)
     return "";
 }
 
-bool QMLGlobals::canReceive(Currency currency)
+bool QMLGlobals::canReceive(WalletCurrency::Currency currency)
 {
-    if (Currency::CurrBeam == currency)
+    if (WalletCurrency::Currency::CurrBeam == currency)
     {
         return true;
     }
@@ -323,57 +323,57 @@ QString QMLGlobals::getBeamFeeUnit() const
     return beamui::getFeeRateLabel(beamui::Currencies::Beam);
 }
 
-QString QMLGlobals::getCurrencyUnitName(Currency currency)
+QString QMLGlobals::getCurrencyUnitName(WalletCurrency::Currency currency)
 {
     beamui::Currencies currencyCommon = convertUiCurrencyToCurrencies(currency);
     return beamui::getCurrencyUnitName(currencyCommon);
 }
 
-QString QMLGlobals::getCurrencyName(Currency currency)
+QString QMLGlobals::getCurrencyName(WalletCurrency::Currency currency)
 {
     switch(currency)
     {
-    case Currency::CurrBeam:
+    case WalletCurrency::Currency::CurrBeam:
     {
         //% "BEAM"
         return qtTrId("general-beam");
     }
-    case Currency::CurrBitcoin:
+    case WalletCurrency::Currency::CurrBitcoin:
     {
         //% "Bitcoin"
         return qtTrId("general-bitcoin");
     }
-    case Currency::CurrLitecoin:
+    case WalletCurrency::Currency::CurrLitecoin:
     {
         //% "Litecoin"
         return qtTrId("general-litecoin");
     }
-    case Currency::CurrQtum:
+    case WalletCurrency::Currency::CurrQtum:
     {
         //% "QTUM"
         return qtTrId("general-qtum");
     }
-    case Currency::CurrDogecoin:
+    case WalletCurrency::Currency::CurrDogecoin:
     {
         //% "Dogecoin"
         return qtTrId("general-dogecoin");
     }
 #if defined(BITCOIN_CASH_SUPPORT)
-    case Currency::CurrBitcoinCash:
+    case WalletCurrency::Currency::CurrBitcoinCash:
     {
         //% "Bitcoin Cash"
         return qtTrId("general-bitcoin-cash");
     }
 #endif // BITCOIN_CASH_SUPPORT
-    case Currency::CurrDash:
+    case WalletCurrency::Currency::CurrDash:
     {
         //% "DASH"
         return qtTrId("general-dash");
     }
-    case Currency::CurrEthereum:
-    case Currency::CurrDai:
-    case Currency::CurrUsdt:
-    case Currency::CurrWrappedBTC:
+    case WalletCurrency::Currency::CurrEthereum:
+    case WalletCurrency::Currency::CurrDai:
+    case WalletCurrency::Currency::CurrUsdt:
+    case WalletCurrency::Currency::CurrWrappedBTC:
     {
         return qtTrId("general-ethereum").toUpper();
     }
@@ -385,7 +385,7 @@ QString QMLGlobals::getCurrencyName(Currency currency)
     }
 }
 
-QString QMLGlobals::getFeeRateLabel(Currency currency)
+QString QMLGlobals::getFeeRateLabel(WalletCurrency::Currency currency)
 {
     beamui::Currencies currencyCommon = convertUiCurrencyToCurrencies(currency);
     return beamui::getFeeRateLabel(currencyCommon);
@@ -396,25 +396,25 @@ QString QMLGlobals::getCurrencySubunitFromLabel(const QString& currLabel)
     return beamui::getCurrencySubunitFromLabel(currLabel);
 }
 
-uint QMLGlobals::getCurrencyDecimals(Currency currency)
+uint QMLGlobals::getCurrencyDecimals(WalletCurrency::Currency currency)
 {
     beamui::Currencies currencyCommon = convertUiCurrencyToCurrencies(currency);
     return beamui::getCurrencyDecimals(currencyCommon);
 }
 
-QString QMLGlobals::getMinimalFee(Currency currency, bool isShielded)
+QString QMLGlobals::getMinimalFee(WalletCurrency::Currency currency, bool isShielded)
 {
     return QString::fromStdString(std::to_string(minimalFee(currency, isShielded)));
 }
 
-QString QMLGlobals::getMaximumFee(Currency currency)
+QString QMLGlobals::getMaximumFee(WalletCurrency::Currency currency)
 {
     return QString::fromStdString(std::to_string(maximumFee(currency)));
 }
 
-QString QMLGlobals::getRecommendedFee(Currency currency)
+QString QMLGlobals::getRecommendedFee(WalletCurrency::Currency currency)
 {
-    if (Currency::CurrBeam == currency)
+    if (WalletCurrency::Currency::CurrBeam == currency)
     {
         return QString::fromStdString(std::to_string(0));
     }
@@ -428,9 +428,9 @@ QString QMLGlobals::getRecommendedFee(Currency currency)
     return QString::fromStdString(std::to_string(AppModel::getInstance().getSwapCoinClient(swapCoin)->getEstimatedFeeRate()));
 }
 
-QString QMLGlobals::getDefaultFee(Currency currency)
+QString QMLGlobals::getDefaultFee(WalletCurrency::Currency currency)
 {
-    if (Currency::CurrBeam == currency)
+    if (WalletCurrency::Currency::CurrBeam == currency)
     {
         return QString::fromStdString(std::to_string(minFeeBeam()));
     }

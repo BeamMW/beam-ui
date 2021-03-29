@@ -16,7 +16,6 @@
 #include "viewmodel/ui_helpers.h"
 #include "model/app_model.h"
 using namespace beam;
-using namespace beam::wallet;
 using namespace std;
 using namespace beamui;
 
@@ -76,6 +75,8 @@ void UtxoViewModel::setAssetId(unsigned int id)
 
 void UtxoViewModel::onNormalCoinsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
+    using namespace beam::wallet;
+
     if (getMaturingMaxPrivacy())
         return;
 
@@ -131,6 +132,8 @@ void UtxoViewModel::onNormalCoinsChanged(beam::wallet::ChangeAction action, cons
 
 void UtxoViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::ShieldedCoin>& items)
 {
+    using namespace beam::wallet;
+
     vector<shared_ptr<BaseUtxoItem>> modifiedItems;
     modifiedItems.reserve(items.size());
 

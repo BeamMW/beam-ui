@@ -23,7 +23,7 @@ namespace beamui
         return "";
     }
 
-    QString toString(const beam::wallet::PeerID& peerID)
+    QString toString(const beam::PeerID& peerID)
     {
         if (peerID != Zero)
         {
@@ -53,7 +53,7 @@ namespace beamui
         }
     }
 
-    QString getCurrencyUnitName(beam::wallet::ExchangeRate::Currency currency)
+    QString getCurrencyUnitName(beam::wallet::Currency currency)
     {
         return getCurrencyUnitName(convertExchangeRateCurrencyToUiCurrency(currency));
     }
@@ -239,36 +239,73 @@ namespace beamui
     }
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
-    Currencies convertExchangeRateCurrencyToUiCurrency(beam::wallet::ExchangeRate::Currency currency)
+    Currencies convertExchangeRateCurrencyToUiCurrency(const beam::wallet::Currency& currency)
     {
-        switch (currency)
+        if (currency == wallet::Currency::BEAM)
         {
-        case wallet::ExchangeRate::Currency::Beam:
             return beamui::Currencies::Beam;
-        case wallet::ExchangeRate::Currency::Bitcoin:
-            return beamui::Currencies::Bitcoin;
-        case wallet::ExchangeRate::Currency::Litecoin:
-            return beamui::Currencies::Litecoin;
-        case wallet::ExchangeRate::Currency::Qtum:
-            return beamui::Currencies::Qtum;
-        case wallet::ExchangeRate::Currency::Usd:
-            return beamui::Currencies::Usd;
-        case wallet::ExchangeRate::Currency::Dogecoin:
-            return beamui::Currencies::Dogecoin;
-        case wallet::ExchangeRate::Currency::Dash:
-            return beamui::Currencies::Dash;
-        case wallet::ExchangeRate::Currency::Ethereum:
-            return beamui::Currencies::Ethereum;
-        case wallet::ExchangeRate::Currency::Dai:
-            return beamui::Currencies::Dai;
-        case wallet::ExchangeRate::Currency::Usdt:
-            return beamui::Currencies::Usdt;
-        case wallet::ExchangeRate::Currency::WBTC:
-            return beamui::Currencies::WrappedBTC;
-        case wallet::ExchangeRate::Currency::Unknown:
-        default:
-            return beamui::Currencies::Unknown;
         }
+
+        if (currency == wallet::Currency::BTC)
+        {
+            return beamui::Currencies::Bitcoin;
+        }
+
+        if (currency == wallet::Currency::LTC)
+        {
+            return beamui::Currencies::Litecoin;
+        }
+
+        if (currency == wallet::Currency::LTC)
+        {
+            return beamui::Currencies::Litecoin;
+        }
+        if (currency == wallet::Currency::QTUM)
+        {
+            return beamui::Currencies::Qtum;
+        }
+
+        if (currency == wallet::Currency::USD)
+        {
+            return beamui::Currencies::Usd;
+        }
+
+        if (currency == wallet::Currency::DOGE)
+        {
+            return beamui::Currencies::Dogecoin;
+        }
+
+        if (currency == wallet::Currency::DASH)
+        {
+            return beamui::Currencies::Dash;
+        }
+
+        if (currency == wallet::Currency::DASH)
+        {
+            return beamui::Currencies::Dash;
+        }
+
+        if (currency == wallet::Currency::ETH)
+        {
+            return beamui::Currencies::Ethereum;
+        }
+
+        if (currency == wallet::Currency::DAI)
+        {
+            return beamui::Currencies::Dai;
+        }
+
+        if (currency == wallet::Currency::USDT)
+        {
+            return beamui::Currencies::Usdt;
+        }
+
+        if (currency == wallet::Currency::WBTC)
+        {
+            return beamui::Currencies::WrappedBTC;
+        }
+
+        return beamui::Currencies::Unknown;
     }
 
     QDateTime CalculateExpiresTime(beam::Timestamp currentHeightTime, beam::Height currentHeight, beam::Height expiresHeight)

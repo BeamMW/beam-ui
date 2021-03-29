@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #include <qdebug.h>
 #include "model/app_model.h"
 #include "model/settings.h"
@@ -19,16 +18,12 @@
 #include "viewmodel/ui_helpers.h"
 #include "viewmodel/qml_globals.h"
 
-using namespace beam;
-using namespace beam::wallet;
-using namespace std;
-
-SwapCoinClientWrapper::SwapCoinClientWrapper(wallet::AtomicSwapCoin swapCoin)
+SwapCoinClientWrapper::SwapCoinClientWrapper(beam::wallet::AtomicSwapCoin swapCoin)
     : m_swapCoin(swapCoin)
-    , m_coinClient(!ethereum::IsEthereumBased(swapCoin) ? AppModel::getInstance().getSwapCoinClient(swapCoin) : nullptr)
-    , m_ethClient(ethereum::IsEthereumBased(swapCoin) ? AppModel::getInstance().getSwapEthClient() : nullptr)
+    , m_coinClient(!beam::ethereum::IsEthereumBased(swapCoin) ? AppModel::getInstance().getSwapCoinClient(swapCoin) : nullptr)
+    , m_ethClient(beam::ethereum::IsEthereumBased(swapCoin) ? AppModel::getInstance().getSwapEthClient() : nullptr)
 {
-    if (ethereum::IsEthereumBased(swapCoin))
+    if (beam::ethereum::IsEthereumBased(swapCoin))
     {
         auto coinClient = m_ethClient.lock();
         auto settings = coinClient->GetSettings();
@@ -80,22 +75,22 @@ QString SwapCoinClientWrapper::getAvailableStr() const
 
 bool SwapCoinClientWrapper::getIsConnected() const
 {
-    if (ethereum::IsEthereumBased(m_swapCoin))
+    if (beam::ethereum::IsEthereumBased(m_swapCoin))
     {
-        return m_ethClient.lock()->getStatus() == ethereum::Client::Status::Connected;
+        return m_ethClient.lock()->getStatus() == beam::ethereum::Client::Status::Connected;
     }
 
-    return m_coinClient.lock()->getStatus() == bitcoin::Client::Status::Connected;
+    return m_coinClient.lock()->getStatus() == beam::bitcoin::Client::Status::Connected;
 }
 
 bool SwapCoinClientWrapper::getIsConnecting() const
 {
-    if (ethereum::IsEthereumBased(m_swapCoin))
+    if (beam::ethereum::IsEthereumBased(m_swapCoin))
     {
-        return m_ethClient.lock()->getStatus() == ethereum::Client::Status::Connecting;
+        return m_ethClient.lock()->getStatus() == beam::ethereum::Client::Status::Connecting;
     }
 
-    return m_coinClient.lock()->getStatus() == bitcoin::Client::Status::Connecting;
+    return m_coinClient.lock()->getStatus() == beam::bitcoin::Client::Status::Connecting;
 }
 
 bool SwapCoinClientWrapper::hasActiveTx() const
@@ -108,7 +103,7 @@ QString SwapCoinClientWrapper::getCoinLabel() const
     return beamui::getCurrencyUnitName(beamui::convertSwapCoinToCurrency(m_swapCoin)).toUpper();
 }
 
-Currency SwapCoinClientWrapper::getCurrency() const
+WalletCurrency::Currency SwapCoinClientWrapper::getCurrency() const
 {
     return convertSwapCoinToCurrency(m_swapCoin);
 }
@@ -133,9 +128,9 @@ double SwapCoinClientWrapper::getBlocksPerHour() const
     return m_blocksPerHour;
 }
 
-Amount SwapCoinClientWrapper::getAvailable() const
+beam::Amount SwapCoinClientWrapper::getAvailable() const
 {
-    if (ethereum::IsEthereumBased(m_swapCoin))
+    if (beam::ethereum::IsEthereumBased(m_swapCoin))
     {
         return m_ethClient.lock()->getAvailable(m_swapCoin);
     }
@@ -228,9 +223,11 @@ PaymentInfoItem* SwapOffersViewModel::getPaymentInfo(const QVariant& variantTxID
 
 void SwapOffersViewModel::onTransactionsDataModelChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& transactions)
 {
-    vector<shared_ptr<SwapTxObject>> swapTransactions;
-    vector<shared_ptr<SwapTxObject>> activeTransactions;
-    vector<shared_ptr<SwapTxObject>> inactiveTransactions;
+    using namespace beam::wallet;
+
+    std::vector<std::shared_ptr<SwapTxObject>> swapTransactions;
+    std::vector<std::shared_ptr<SwapTxObject>> activeTransactions;
+    std::vector<std::shared_ptr<SwapTxObject>> inactiveTransactions;
     swapTransactions.reserve(transactions.size());
 
     for (const auto& t : transactions)
@@ -241,7 +238,7 @@ void SwapOffersViewModel::onTransactionsDataModelChanged(beam::wallet::ChangeAct
             uint32_t lockTxMinConfirmations = swapCoinType ? getLockTxMinConfirmations(*swapCoinType) : 0;
             uint32_t withdrawTxMinConfirmations = swapCoinType ? getWithdrawTxMinConfirmations(*swapCoinType) : 0;
             double blocksPerHour = swapCoinType ? getBlocksPerHour(*swapCoinType) : 0;
-            auto newItem = make_shared<SwapTxObject>(t, lockTxMinConfirmations, withdrawTxMinConfirmations, blocksPerHour);
+            auto newItem = std::make_shared<SwapTxObject>(t, lockTxMinConfirmations, withdrawTxMinConfirmations, blocksPerHour);
             swapTransactions.push_back(newItem);
             if (!newItem->isPending() && newItem->isInProgress())
             {
@@ -339,7 +336,9 @@ void SwapOffersViewModel::onTransactionsDataModelChanged(beam::wallet::ChangeAct
 
 void SwapOffersViewModel::onSwapOffersDataModelChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::SwapOffer>& offers)
 {
-    vector<shared_ptr<SwapOfferItem>> modifiedOffers;
+    using namespace beam::wallet;
+
+    std::vector<std::shared_ptr<SwapOfferItem>> modifiedOffers;
     modifiedOffers.reserve(offers.size());
 
     for (const auto& offer : offers)
@@ -358,7 +357,7 @@ void SwapOffersViewModel::onSwapOffersDataModelChanged(beam::wallet::ChangeActio
             timeExpiration = beamui::CalculateExpiresTime(currentHeightTimestamp, currentHeight, expiresHeight);
         }
 
-        modifiedOffers.push_back(make_shared<SwapOfferItem>(offer, timeExpiration));
+        modifiedOffers.push_back(std::make_shared<SwapOfferItem>(offer, timeExpiration));
     }
 
     switch (action)
@@ -470,7 +469,7 @@ bool SwapOffersViewModel::isOfferFitBalance(const SwapOfferItem& offer)
     
     auto swapCoinOfferAmount = isSendBeam ? offer.rawAmountReceive() : offer.rawAmountSend();
     // TODO: find better solution to get AtomicSwapCoin
-    auto swapCoin = offer.getTxParameters().GetParameter<AtomicSwapCoin>(TxParameterID::AtomicSwapCoin);
+    auto swapCoin = offer.getTxParameters().GetParameter<beam::wallet::AtomicSwapCoin>(beam::wallet::TxParameterID::AtomicSwapCoin);
     auto swapCoinClientWrapper = getSwapCoinClientWrapper(*swapCoin);
 
     if (swapCoinClientWrapper->getIsConnected())
@@ -545,6 +544,8 @@ bool SwapOffersViewModel::hasActiveTx(const std::string& swapCoin) const
 
 void SwapOffersViewModel::InitSwapClientWrappers()
 {
+    using namespace beam::wallet;
+
     if (m_swapClientWrappers.empty())
     {
         m_swapClientWrappers.push_back(new SwapCoinClientWrapper(AtomicSwapCoin::Bitcoin));
@@ -567,7 +568,7 @@ QQmlListProperty<SwapCoinClientWrapper> SwapOffersViewModel::getSwapClients()
     return beamui::CreateQmlListProperty<SwapCoinClientWrapper>(this, m_swapClientWrappers);
 }
 
-SwapCoinClientWrapper* SwapOffersViewModel::getSwapCoinClientWrapper(AtomicSwapCoin swapCoinType) const
+SwapCoinClientWrapper* SwapOffersViewModel::getSwapCoinClientWrapper(beam::wallet::AtomicSwapCoin swapCoinType) const
 {
     auto it = std::find_if(m_swapClientWrappers.cbegin(), m_swapClientWrappers.cend(),
         [swapCoinType](SwapCoinClientWrapper* wrapper)
@@ -577,7 +578,7 @@ SwapCoinClientWrapper* SwapOffersViewModel::getSwapCoinClientWrapper(AtomicSwapC
     return (it != m_swapClientWrappers.end()) ? (*it) : nullptr;
 }
 
-uint32_t SwapOffersViewModel::getLockTxMinConfirmations(AtomicSwapCoin swapCoinType) const
+uint32_t SwapOffersViewModel::getLockTxMinConfirmations(beam::wallet::AtomicSwapCoin swapCoinType) const
 {
     auto swapClientWrapper = getSwapCoinClientWrapper(swapCoinType);
 
@@ -588,7 +589,7 @@ uint32_t SwapOffersViewModel::getLockTxMinConfirmations(AtomicSwapCoin swapCoinT
     return 0;
 }
 
-uint32_t SwapOffersViewModel::getWithdrawTxMinConfirmations(AtomicSwapCoin swapCoinType) const
+uint32_t SwapOffersViewModel::getWithdrawTxMinConfirmations(beam::wallet::AtomicSwapCoin swapCoinType) const
 {
     auto swapClientWrapper = getSwapCoinClientWrapper(swapCoinType);
 
@@ -599,7 +600,7 @@ uint32_t SwapOffersViewModel::getWithdrawTxMinConfirmations(AtomicSwapCoin swapC
     return 0;
 }
 
-double SwapOffersViewModel::getBlocksPerHour(AtomicSwapCoin swapCoinType) const
+double SwapOffersViewModel::getBlocksPerHour(beam::wallet::AtomicSwapCoin swapCoinType) const
 {
     auto swapClientWrapper = getSwapCoinClientWrapper(swapCoinType);
 
@@ -610,7 +611,7 @@ double SwapOffersViewModel::getBlocksPerHour(AtomicSwapCoin swapCoinType) const
     return 0;
 }
 
-void SwapOffersViewModel::incrementActiveTxCounter(AtomicSwapCoin swapCoinType)
+void SwapOffersViewModel::incrementActiveTxCounter(beam::wallet::AtomicSwapCoin swapCoinType)
 {
     auto swapClientWrapper = getSwapCoinClientWrapper(swapCoinType);
     if (swapClientWrapper)
@@ -619,7 +620,7 @@ void SwapOffersViewModel::incrementActiveTxCounter(AtomicSwapCoin swapCoinType)
     }
 }
 
-void SwapOffersViewModel::decrementActiveTxCounter(AtomicSwapCoin swapCoinType)
+void SwapOffersViewModel::decrementActiveTxCounter(beam::wallet::AtomicSwapCoin swapCoinType)
 {
     auto swapClientWrapper = getSwapCoinClientWrapper(swapCoinType);
     if (swapClientWrapper)

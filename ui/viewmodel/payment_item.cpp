@@ -17,7 +17,6 @@
 #include "model/app_model.h"
 
 using namespace beam;
-using namespace beam::wallet;
 using namespace beamui;
 
 PaymentInfoItem::PaymentInfoItem(QObject* parent /* = nullptr */)
@@ -149,7 +148,7 @@ void PaymentInfoItem::reset()
 }
 
 
-MyPaymentInfoItem::MyPaymentInfoItem(const TxID& txID, QObject* parent/* = nullptr*/)
+MyPaymentInfoItem::MyPaymentInfoItem(const beam::wallet::TxID& txID, QObject* parent/* = nullptr*/)
         : PaymentInfoItem(parent)
 {
     auto model = AppModel::getInstance().getWalletModel();

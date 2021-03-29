@@ -54,7 +54,7 @@ void ReceiveViewModel::updateToken()
         }
     };
 
-    if (_receiverAddress.m_walletID == Zero)
+    if (_receiverAddress.m_walletID == beam::Zero)
     {
          _walletModel.getAsync()->generateNewAddress([generateToken, this](const auto& addr){
             _receiverAddress = addr;
@@ -158,11 +158,9 @@ void ReceiveViewModel::setComment(const QString& value)
 
 void ReceiveViewModel::saveAddress()
 {
-    using namespace beam::wallet;
-
     if (getCommentValid())
     {
-        _receiverAddress.setExpiration(WalletAddress::ExpirationStatus::Auto);
+        _receiverAddress.setExpiration(beam::wallet::WalletAddress::ExpirationStatus::Auto);
         _walletModel.getAsync()->saveAddress(_receiverAddress, true);
     }
 }

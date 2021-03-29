@@ -18,7 +18,6 @@
 #include "viewmodel/ui_helpers.h"
 #include "viewmodel/qml_globals.h"
 
-using namespace beam::wallet;
 
 SwapOfferItem::SwapOfferItem(QObject* parent /* = nullptr*/)
     : QObject(parent)
@@ -26,7 +25,7 @@ SwapOfferItem::SwapOfferItem(QObject* parent /* = nullptr*/)
 
 }
 
-SwapOfferItem::SwapOfferItem(const SwapOffer& offer,
+SwapOfferItem::SwapOfferItem(const beam::wallet::SwapOffer& offer,
                              const QDateTime& timeExpiration)
     : m_offer{offer}
     , m_isBeamSide{offer.isBeamSide()}
@@ -102,7 +101,7 @@ beam::wallet::TxParameters SwapOfferItem::getTxParameters() const
     return m_offer;
 }
 
-TxID SwapOfferItem::getTxID() const
+beam::wallet::TxID SwapOfferItem::getTxID() const
 {
     return m_offer.m_txId;    
 }
@@ -117,7 +116,7 @@ QString SwapOfferItem::getSwapCoinName() const
     return toString(getSwapCoinType());
 }
 
-void SwapOfferItem::reset(const SwapOffer& offer)
+void SwapOfferItem::reset(const beam::wallet::SwapOffer& offer)
 {
     m_offer = offer;
     m_isBeamSide = offer.isBeamSide();

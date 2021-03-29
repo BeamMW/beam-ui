@@ -48,7 +48,7 @@ namespace
     const char* kLocalNodePeersPersistent = "localnode/peers_persistent";
 
     const char* kDefaultLocale = "en_US";
-    const char* kDefaultAmountUnit = beam::wallet::usdCurrencyStr.data();
+    const auto  kDefaultAmountUnit = beam::wallet::Currency::USD;
 
     const char* kNewVersionActive = "notifications/software_release";
     const char* kBeamNewsActive = "notifications/beam_news";
@@ -82,10 +82,10 @@ namespace
         { "ko_KR", "한국어"}
     };
 
-    const std::vector<QString> kSupportedAmountUnits {
-        beam::wallet::exchangeRateOffStr.data(),
-        beam::wallet::usdCurrencyStr.data(),
-        beam::wallet::btcCurrencyStr.data()
+    const std::vector<beam::wallet::Currency> kSupportedAmountUnits {
+        beam::wallet::Currency::UNKNOWN,
+        beam::wallet::Currency::USD,
+        beam::wallet::Currency::BTC
     };
 
     const vector<string> kOutDatedPeers = beam::getOutdatedDefaultPeers();
@@ -372,14 +372,14 @@ void WalletSettings::setLocaleByLanguageName(const QString& language)
     emit localeChanged();
 }
 
-QString WalletSettings::getSecondCurrency() const
+beam::wallet::Currency WalletSettings::getRateCurrency() const
 {
     Lock lock(m_mutex);
-    QString savedAmountUnit = m_data.value(kRateUnit, kDefaultAmountUnit).toString();
 
-    const auto it = find(std::begin(kSupportedAmountUnits),
-                         std::cend(kSupportedAmountUnits),
-                         savedAmountUnit);
+    auto rawUnitValue =  m_data.value(kRateUnit, QString::fromStdString(kDefaultAmountUnit.m_value)).toString();
+    beam::wallet::Currency savedAmountUnit(rawUnitValue.toStdString());
+
+    const auto it = find(std::begin(kSupportedAmountUnits), std::cend(kSupportedAmountUnits), savedAmountUnit);
     if (it == std::cend(kSupportedAmountUnits))
     {
         return kDefaultAmountUnit;
@@ -390,19 +390,14 @@ QString WalletSettings::getSecondCurrency() const
     }
 }
 
-void WalletSettings::setSecondCurrency(const QString& name)
+void WalletSettings::setRateCurrency(const beam::wallet::Currency& curr)
 {
-    const auto& it = std::find(
-            kSupportedAmountUnits.begin(),
-            kSupportedAmountUnits.end(),
-            name);
-    auto unitName = 
-            it != kSupportedAmountUnits.end()
-                ? name
-                : QString::fromUtf8(kDefaultAmountUnit);
+    const auto& it = std::find(kSupportedAmountUnits.begin(), kSupportedAmountUnits.end(), curr);
+    auto unit = it != kSupportedAmountUnits.end() ? curr : kDefaultAmountUnit;
+
     {
         Lock lock(m_mutex);
-        m_data.setValue(kRateUnit, unitName);
+        m_data.setValue(kRateUnit, QString::fromStdString(unit.m_value));
         emit secondCurrencyChanged();
     }
 }
@@ -535,18 +530,6 @@ QStringList WalletSettings::getSupportedLanguages()
                        return lang.second;
                    });
     return languagesNames;
-}
-
-// static
-QStringList WalletSettings::getSupportedRateUnits()
-{
-    QStringList unitNames;
-
-    for (const auto& n : kSupportedAmountUnits)
-    {
-        unitNames.append(n);
-    }
-    return unitNames;
 }
 
 // static

@@ -21,7 +21,6 @@
 
 using namespace std;
 using namespace beam;
-using namespace beam::wallet;
 using namespace beamui;
 
 namespace
@@ -294,7 +293,7 @@ void AddressBookViewModel::setContactSortRole(QString value)
 
 bool AddressBookViewModel::isAddressBusy(const QString& addr)
 {
-    WalletID walletID;
+    beam::wallet::WalletID walletID;
     walletID.FromHex(addr.toStdString());
     return find(m_busyAddresses.cbegin(), m_busyAddresses.cend(), walletID) != m_busyAddresses.cend();
 }
@@ -366,6 +365,8 @@ void AddressBookViewModel::onAddressesChanged(beam::wallet::ChangeAction, const 
 
 void AddressBookViewModel::onTransactions(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& transactions)
 {
+    using namespace beam::wallet;
+
     switch (action)
     {
         case ChangeAction::Reset:

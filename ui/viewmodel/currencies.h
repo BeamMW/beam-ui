@@ -29,10 +29,8 @@ public:
     Q_ENUMS(Currency)
 };
 
-typedef WalletCurrency::Currency Currency;
+beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(WalletCurrency::Currency currency);
+WalletCurrency::Currency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin);
 
-beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(Currency currency);
-Currency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin);
-
-beamui::Currencies convertCurrency(Currency value);
-bool isEthereumBased(Currency currency);
+beamui::Currencies convertCurrency(WalletCurrency::Currency value);
+bool isEthereumBased(WalletCurrency::Currency currency);

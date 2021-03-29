@@ -128,7 +128,7 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
         case Roles::RSelectionColor:
             return _amgr->getSelectionColor(assetId);
         case Roles::RRateUnit:
-            return assetId < 1 ? beamui::getCurrencyUnitName(_ermgr.getRateUnitRaw()) : "";
+            return assetId < 1 ? beamui::getCurrencyUnitName(_ermgr.getRateCurrency()) : "";
         case Roles::RName:
             return _amgr->getName(assetId);
         case Roles::RSmallestUnitName:
@@ -145,7 +145,7 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
             {
                 if (assetId < 1)
                 {
-                    auto rate = _ermgr.getRate(beam::wallet::ExchangeRate::Currency::Beam);
+                    auto rate = _ermgr.getRate(beam::wallet::Currency::BEAM);
                     return beamui::AmountToUIString(rate);
                 }
                 return "";
@@ -253,9 +253,9 @@ void AssetsList::onTransactionsChanged(beam::wallet::ChangeAction action, const 
     for(const auto& tx: _txlist) {
         if (auto obj = get(tx.m_assetId))
         {
-            if(tx.m_status == wallet::TxStatus::Pending ||
-               tx.m_status == wallet::TxStatus::InProgress ||
-               tx.m_status == wallet::TxStatus::Registering)
+            if(tx.m_status == beam::wallet::TxStatus::Pending ||
+               tx.m_status == beam::wallet::TxStatus::InProgress ||
+               tx.m_status == beam::wallet::TxStatus::Registering)
             {
                 if (tx.m_sender)
                 {

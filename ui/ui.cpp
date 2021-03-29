@@ -215,7 +215,7 @@ int main (int argc, char* argv[])
                         return new QMLGlobals(*engine);
                     });
 
-            qRegisterMetaType<Currency>("Currency");
+            qRegisterMetaType<WalletCurrency::Currency>("Currency");
             qRegisterMetaType<beam::Asset::ID>("beam::Asset::ID");
             qRegisterMetaType<beam::wallet::WalletAsset>("beam::wallet::WalletAsset");
             qmlRegisterUncreatableType<WalletCurrency>("Beam.Wallet", 1, 0, "Currency", "Not creatable as it is an enum type.");

@@ -48,7 +48,7 @@ SettingsViewModel::SettingsViewModel()
     , m_isNeedToCheckAddress(false)
     , m_isNeedToApplyChanges(false)
     , m_supportedLanguages(WalletSettings::getSupportedLanguages())
-    , m_supportedAmountUnits(WalletSettings::getSupportedRateUnits())
+    , m_rateCurrency(beam::wallet::Currency::UNKNOWN)
 {
     undoChanges();
 
@@ -56,7 +56,7 @@ SettingsViewModel::SettingsViewModel()
     m_isPasswordReqiredToSpendMoney = m_settings.isPasswordReqiredToSpendMoney();
     m_isAllowedBeamMWLinks = m_settings.isAllowedBeamMWLinks();
     m_currentLanguageIndex = m_supportedLanguages.indexOf(m_settings.getLanguageName());
-    m_secondCurrency = m_settings.getSecondCurrency();
+    m_rateCurrency = m_settings.getRateCurrency();
 
     connect(&AppModel::getInstance().getNode(), SIGNAL(startedNode()), SLOT(onNodeStarted()));
     connect(&AppModel::getInstance().getNode(), SIGNAL(stoppedNode()), SLOT(onNodeStopped()));
@@ -275,13 +275,16 @@ void SettingsViewModel::setCurrentLanguage(QString value)
 
 QString SettingsViewModel::getSecondCurrency() const
 {
-    return m_secondCurrency;
+    return QString::fromStdString(m_rateCurrency.m_value);
 }
 
 void SettingsViewModel::setSecondCurrency(const QString& value)
 {
-    m_secondCurrency = value;
-    m_settings.setSecondCurrency(value);
+    const auto currency = beam::wallet::Currency(value.toStdString());
+
+    m_rateCurrency = currency;
+    m_settings.setRateCurrency(currency);
+
     emit secondCurrencyChanged();
 }
 

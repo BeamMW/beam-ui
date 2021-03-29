@@ -21,12 +21,11 @@
 #include "version.h"
 
 using namespace beam;
-using namespace beam::wallet;
 using namespace beam::io;
 using namespace std;
 
 
-WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor)
+WalletModel::WalletModel(beam::wallet::IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor)
     : WalletClient(Rules::get(), walletDB, nodeAddr, reactor)
 {
     qRegisterMetaType<beam::ByteBuffer>("beam::ByteBuffer");
@@ -105,7 +104,7 @@ QString WalletModel::GetErrorString(beam::wallet::ErrorType type)
     }
 }
 
-bool WalletModel::isOwnAddress(const WalletID& walletID) const
+bool WalletModel::isOwnAddress(const beam::wallet::WalletID& walletID) const
 {
     return m_myWalletIds.count(walletID);
 }
@@ -139,7 +138,7 @@ void WalletModel::onChangeCalculated(beam::Amount changeAsset, beam::Amount chan
     emit changeCalculated(changeAsset, changeBeam, assetId);
 }
 
-void WalletModel::onCoinsSelectionCalculated(const CoinsSelectionInfo& selectionRes)
+void WalletModel::onCoinsSelectionCalculated(const beam::wallet::CoinsSelectionInfo& selectionRes)
 {
     emit coinsSelectionCalculated(selectionRes);
 }
@@ -163,7 +162,7 @@ void WalletModel::onAddressesChanged(beam::wallet::ChangeAction action, const st
     {
         if (item.isOwn())
         {
-            if (action == ChangeAction::Removed)
+            if (action == beam::wallet::ChangeAction::Removed)
             {
                 m_myWalletIds.erase(item.m_walletID);
                 m_myAddrLabels.erase(item.m_label);
@@ -234,7 +233,7 @@ void WalletModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& walle
     emit generatedNewAddress(walletAddr);
 }
 
-void WalletModel::onGetAddress(const WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments)
+void WalletModel::onGetAddress(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments)
 {
     emit getAddressReturned(id, address, (int)offlinePayments);
 }
@@ -310,7 +309,7 @@ void WalletModel::onExchangeRates(const std::vector<beam::wallet::ExchangeRate>&
     emit exchangeRatesUpdate(rates);
 }
 
-void WalletModel::onNotificationsChanged(beam::wallet::ChangeAction action, const std::vector<Notification>& notifications)
+void WalletModel::onNotificationsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Notification>& notifications)
 {
     emit notificationsChanged(action, notifications);
 }
@@ -320,7 +319,7 @@ void WalletModel::onPublicAddress(const std::string& publicAddr)
     emit publicAddressChanged(QString::fromStdString(publicAddr));
 }
 
-void WalletModel::onAssetInfo(beam::Asset::ID assetId, const WalletAsset& info)
+void WalletModel::onAssetInfo(beam::Asset::ID assetId, const beam::wallet::WalletAsset& info)
 {
     emit assetInfoChanged(assetId, info);
 }

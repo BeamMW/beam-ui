@@ -18,44 +18,49 @@
 #include "viewmodel/ui_helpers.h"
 #include "viewmodel/qml_globals.h"
 
-using namespace beam::wallet;
+using namespace beam;
 
 namespace {
-    TxParameters getTxParameters(const Notification &notification)
+    beam::wallet::TxParameters getTxParameters(const beam::wallet::Notification &notification)
     {
-        TxToken token;
+        beam::wallet::TxToken token;
         Deserializer d;
         d.reset(notification.m_content);
         d & token;
         return token.UnpackParameters();
     }
 
-    QString getAmount(const TxParameters &p)
+    QString getAmount(const beam::wallet::TxParameters &p)
     {
-        return beamui::AmountToUIString(*p.GetParameter<Amount>(TxParameterID::Amount));
+        return beamui::AmountToUIString(*p.GetParameter<Amount>(beam::wallet::TxParameterID::Amount));
     }
 
-    QString getSwapAmount(const TxParameters &p)
+    QString getSwapAmount(const beam::wallet::TxParameters &p)
     {
+        using namespace beam::wallet;
+
         auto amount = *p.GetParameter<Amount>(TxParameterID::AtomicSwapAmount);
         auto swapCoin = *p.GetParameter<AtomicSwapCoin>(TxParameterID::AtomicSwapCoin);
         return beamui::AmountToUIString(amount, beamui::convertSwapCoinToCurrency(swapCoin));
     }
 
-    bool isBeamSide(const TxParameters &p)
+    bool isBeamSide(const beam::wallet::TxParameters &p)
     {
-        return *p.GetParameter<bool>(TxParameterID::AtomicSwapCoin);
+        return *p.GetParameter<bool>(beam::wallet::TxParameterID::AtomicSwapCoin);
     }
 
-    QString getSwapCoinName(const TxParameters &p)
+    QString getSwapCoinName(const beam::wallet::TxParameters &p)
     {
+        using namespace beam::wallet;
+
         auto swapCoin = p.GetParameter<AtomicSwapCoin>(TxParameterID::AtomicSwapCoin);
         return beamui::toString(beamui::convertSwapCoinToCurrency(*swapCoin));
     }
 
 
-    bool getPeerID(const TxParameters &p, WalletID &result)
+    bool getPeerID(const beam::wallet::TxParameters &p, beam::wallet::WalletID &result)
     {
+        using namespace beam::wallet;
         if (auto peerId = p.GetParameter<WalletID>(TxParameterID::PeerID))
         {
             result = *peerId;
@@ -66,29 +71,30 @@ namespace {
         }
     }
 
-    Asset::ID getAssetId(const TxParameters &p)
+    Asset::ID getAssetId(const beam::wallet::TxParameters &p)
     {
         Asset::ID assetId = Asset::s_InvalidID;
-        if (p.GetParameter(TxParameterID::AssetID, assetId))
+        if (p.GetParameter(beam::wallet::TxParameterID::AssetID, assetId))
         {
             return assetId;
         }
         return Asset::s_BeamID;
     }
 
-    bool isSender(const TxParameters& p)
+    bool isSender(const beam::wallet::TxParameters& p)
     {
-        return *p.GetParameter<bool>(TxParameterID::IsSender);
+        return *p.GetParameter<bool>(beam::wallet::TxParameterID::IsSender);
     }
 
-    TxType getTxType(const TxParameters& p)
+    beam::wallet::TxType getTxType(const beam::wallet::TxParameters& p)
     {
+        using namespace beam::wallet;
         return *p.GetParameter<TxType>(TxParameterID::TransactionType);
     }
 
-    QString getContractMessage(const TxParameters& p)
+    QString getContractMessage(const beam::wallet::TxParameters& p)
     {
-        const auto rawMsg = p.GetParameter<beam::ByteBuffer>(TxParameterID::Message);
+        const auto rawMsg = p.GetParameter<beam::ByteBuffer>(beam::wallet::TxParameterID::Message);
         if (rawMsg && !rawMsg->empty())
         {
             std::string str{rawMsg->cbegin(), rawMsg->cend()};
@@ -98,15 +104,17 @@ namespace {
         return qtTrId("notification-contract-no-message");
     }
 
-    bool isExpired(const TxParameters& p)
+    bool isExpired(const beam::wallet::TxParameters& p)
     {
+        using namespace beam::wallet;
         auto status = p.GetParameter<TxStatus>(TxParameterID::Status);
         auto reason =  p.GetParameter<TxFailureReason>(TxParameterID::FailureReason);
         return status && reason && *status == wallet::TxStatus::Failed && reason == TxFailureReason::TransactionExpired;
     }
 
-    bool isSwapTxExpired(const TxParameters& p)
+    bool isSwapTxExpired(const beam::wallet::TxParameters& p)
     {
+        using namespace beam::wallet;
         auto txStatus = p.GetParameter<wallet::TxStatus>(TxParameterID::Status);
         auto failureReason = p.GetParameter<TxFailureReason>(TxParameterID::InternalFailureReason);
         return txStatus
@@ -115,14 +123,14 @@ namespace {
             && *failureReason == TxFailureReason::TransactionExpired;
     }
 
-    WalletAddress getWalletAddressRaw(const Notification& notification)
+    beam::wallet::WalletAddress getWalletAddressRaw(const beam::wallet::Notification& notification)
     {
-        WalletAddress walletAddress;
+        beam::wallet::WalletAddress walletAddress;
         fromByteBuffer(notification.m_content, walletAddress);
         return walletAddress;
     }
 
-    QString getAddress(const Notification& notification)
+    QString getAddress(const beam::wallet::Notification& notification)
     {
         return beamui::toString(getWalletAddressRaw(notification).m_walletID);
     }
@@ -153,17 +161,17 @@ namespace {
                 .arg(peer);
     }
 
-    QString getPushTxPeer(const TxParameters& p, bool isSender)
+    QString getPushTxPeer(const beam::wallet::TxParameters& p, bool isSender)
     {
         if (isSender)
         {
-            WalletID wid;
+            beam::wallet::WalletID wid;
             if (getPeerID(p, wid))
             {
                 return std::to_string(wid).c_str();
             }
         }
-        if (auto peerID = p.GetParameter<PeerID>(TxParameterID::PeerWalletIdentity); peerID)
+        if (auto peerID = p.GetParameter<PeerID>(beam::wallet::TxParameterID::PeerWalletIdentity); peerID)
         {
             return std::to_string(*peerID).c_str();
         }
@@ -173,7 +181,7 @@ namespace {
     }
 }
 
-NotificationItem::NotificationItem(const Notification& notification)
+NotificationItem::NotificationItem(const beam::wallet::Notification& notification)
     : m_notification{notification}
 {}
 
@@ -199,13 +207,15 @@ Timestamp NotificationItem::getTimestamp() const
     return m_notification.m_createTime;
 }
 
-Notification::State NotificationItem::getState() const
+beam::wallet::Notification::State NotificationItem::getState() const
 {
     return m_notification.m_state;
 }
 
 QString NotificationItem::title() const
 {
+    using namespace beam::wallet;
+
     switch(m_notification.m_type)
     {
         case Notification::Type::WalletImplUpdateAvailable:
@@ -287,6 +297,8 @@ QString NotificationItem::title() const
 
 QString NotificationItem::message(AssetsManager::Ptr amgr) const
 {
+    using namespace beam::wallet;
+
     switch(m_notification.m_type)
     {
         case Notification::Type::WalletImplUpdateAvailable:
@@ -421,6 +433,7 @@ QString NotificationItem::message(AssetsManager::Ptr amgr) const
 
 QString NotificationItem::type() const
 {
+    using namespace beam::wallet;
     // !TODO: full list of the supported item types is: update expired received sent failed inpress hotnews videos events newsletter community
     
     switch(m_notification.m_type)
@@ -475,6 +488,8 @@ QString NotificationItem::type() const
 
 QString NotificationItem::state() const
 {
+    using namespace beam::wallet;
+
     switch(m_notification.m_state)
     {
         case Notification::State::Unread:
@@ -500,7 +515,7 @@ QString NotificationItem::getTxID() const
     return "";
 }
 
-WalletAddress NotificationItem::getWalletAddress() const
+beam::wallet::WalletAddress NotificationItem::getWalletAddress() const
 {
     return getWalletAddressRaw(m_notification);
 }

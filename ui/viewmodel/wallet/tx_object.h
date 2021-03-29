@@ -25,8 +25,8 @@ class TxObject: public QObject
 {
     Q_OBJECT
 public:
-    TxObject(beam::wallet::TxDescription tx, QObject* parent = nullptr);
-    TxObject(beam::wallet::TxDescription tx, beam::wallet::ExchangeRate::Currency secondCurrency, QObject* parent = nullptr);
+    explicit TxObject(beam::wallet::TxDescription tx, QObject* parent = nullptr);
+    TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency secondCurrency, QObject* parent = nullptr);
     bool operator==(const TxObject& other) const;
 
     beam::Timestamp timeCreated() const;
@@ -80,7 +80,7 @@ protected:
     void restoreAddressType();
 
     beam::wallet::TxDescription _tx;
-    beam::wallet::ExchangeRate::Currency _secondCurrency;
+    beam::wallet::Currency _secondCurrency;
     QString _amountSecondCurrency;
 
     mutable QString _kernelIDStr;

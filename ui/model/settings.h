@@ -68,11 +68,10 @@ public:
     QString getLanguageName() const;
     void setLocaleByLanguageName(const QString& language);
     static QStringList getSupportedLanguages();
-    static QStringList getSupportedRateUnits();
 
     // Second currency settings
-    QString getSecondCurrency() const;
-    void setSecondCurrency(const QString&);
+    beam::wallet::Currency getRateCurrency() const;
+    void setRateCurrency(const beam::wallet::Currency&);
 
     // Notifications settings
     bool isNewVersionActive() const;
@@ -120,7 +119,6 @@ signals:
     void localNodeRunChanged();
     void localNodePortChanged();
     void localNodePeersChanged();
-    void localNodeSynchronizedChanged();
     void localeChanged();
     void beamMWLinksChanged();
     void secondCurrencyChanged();

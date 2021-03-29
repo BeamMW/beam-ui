@@ -171,7 +171,7 @@ private:
     QStringList m_supportedLanguages;
     QStringList m_supportedAmountUnits;
     int m_currentLanguageIndex;
-    QString m_secondCurrency;
+    beam::wallet::Currency m_rateCurrency;
     int m_timerId;
     QString m_publicAddress;
     mutable int m_mpAnonymitySetIndex = 0;

@@ -65,7 +65,7 @@ namespace beamui
     std::string toStdString(Currencies currency);
 
     QString getCurrencyUnitName(Currencies);
-    QString getCurrencyUnitName(beam::wallet::ExchangeRate::Currency);
+    QString getCurrencyUnitName(beam::wallet::Currency);
     QString getFeeRateLabel(Currencies);
     QString getCurrencySubunitLabel(Currencies);
     QString getCurrencySubunitFromLabel(const QString& currLabel);
@@ -82,14 +82,14 @@ namespace beamui
     /// expects ui string with a "." as a separator
     beam::Amount UIStringToAmount(const QString& value, Currencies currency = Currencies::Unknown);
 
-    Currencies convertExchangeRateCurrencyToUiCurrency(beam::wallet::ExchangeRate::Currency);
+    Currencies convertExchangeRateCurrencyToUiCurrency(const beam::wallet::Currency&);
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     Currencies convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin coin);
     beam::wallet::AtomicSwapCoin convertCurrenciesToSwapCoin(Currencies currency);
 #endif
 
     QString toString(const beam::wallet::WalletID&);
-    QString toString(const beam::wallet::PeerID&);
+    QString toString(const beam::PeerID&);
     QString toString(const beam::Merkle::Hash&);
     QString toString(const beam::Timestamp& ts);
 

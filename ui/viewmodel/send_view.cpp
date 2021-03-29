@@ -33,7 +33,7 @@ namespace
 
     void CopyParameter(beam::wallet::TxParameterID paramID, const beam::wallet::TxParameters& input, beam::wallet::TxParameters& dest)
     {
-        beam::wallet::ByteBuffer buf;
+        beam::ByteBuffer buf;
         if (input.GetParameter(paramID, buf))
         {
             dest.SetParameter(paramID, buf);
@@ -148,12 +148,12 @@ void SendViewModel::setComment(const QString& value)
 
 QString SendViewModel::getFeeRateUnit() const
 {
-    return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateUnitRaw());
+    return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateCurrency());
 }
 
 QString SendViewModel::getFeeRate() const
 {
-    auto rate = _exchangeRatesManager.getRate(beam::wallet::ExchangeRate::Currency::Beam);
+    auto rate = _exchangeRatesManager.getRate(beam::wallet::Currency::BEAM);
     return beamui::AmountToUIString(rate);
 }
 
@@ -361,7 +361,7 @@ void SendViewModel::saveReceiverAddress(const QString& name)
     {
         WalletAddress address;
         address.m_walletID   = _receiverWalletID;
-        address.m_createTime = getTimestamp();
+        address.m_createTime = beam::getTimestamp();
         address.m_Identity   = _receiverIdentity;
         address.m_label      = trimmed.toStdString();
         address.m_duration   = WalletAddress::AddressExpirationNever;
@@ -409,7 +409,7 @@ void SendViewModel::extractParameters()
     if (auto peerID = _txParameters.GetParameter<WalletID>(TxParameterID::PeerID); peerID)
     {
         _receiverWalletID = *peerID;
-        if (_receiverWalletID != Zero)
+        if (_receiverWalletID != beam::Zero)
         {
             if(auto vouchers = _txParameters.GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList); vouchers)
             {
@@ -440,13 +440,13 @@ void SendViewModel::extractParameters()
         }
     }
 
-    if (auto comment = _txParameters.GetParameter<ByteBuffer>(TxParameterID::Message); comment)
+    if (auto comment = _txParameters.GetParameter<beam::ByteBuffer>(TxParameterID::Message); comment)
     {
         _comment = QString::fromStdString(std::string(comment->begin(), comment->end()));
         emit commentChanged();
     }
 
-    if (_receiverWalletID != Zero)
+    if (_receiverWalletID != beam::Zero)
     {
         _walletModel.getAsync()->getAddress(_receiverWalletID, [this](const boost::optional<WalletAddress>& addr, size_t c)
         {

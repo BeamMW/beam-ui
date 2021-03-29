@@ -67,8 +67,8 @@ public:
     unsigned int getSendFee() const;
     void setSendFee(unsigned int amount);
 
-    Currency getSendCurrency() const;
-    void setSendCurrency(Currency value);
+    WalletCurrency::Currency getSendCurrency() const;
+    void setSendCurrency(WalletCurrency::Currency value);
 
     QString getReceiveAmount() const;
     void setReceiveAmount(QString value);
@@ -76,8 +76,8 @@ public:
     unsigned int getReceiveFee() const;
     void setReceiveFee(unsigned int amount);
 
-    Currency getReceiveCurrency() const;
-    void setReceiveCurrency(Currency value);
+    WalletCurrency::Currency getReceiveCurrency() const;
+    void setReceiveCurrency(WalletCurrency::Currency value);
 
     void setComment(const QString& value);
     QString getComment() const;
@@ -142,10 +142,10 @@ private:
 
     beam::Amount _sendAmountGrothes;
     beam::Amount _sendFeeGrothes;
-    Currency     _sendCurrency;
+    WalletCurrency::Currency _sendCurrency;
     beam::Amount _receiveAmountGrothes;
     beam::Amount _receiveFeeGrothes;
-    Currency     _receiveCurrency;
+    WalletCurrency::Currency _receiveCurrency;
     beam::Amount _changeGrothes;
     QDateTime    _offeredTime;
     QDateTime    _expiresTime;

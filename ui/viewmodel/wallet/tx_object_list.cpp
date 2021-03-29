@@ -18,9 +18,7 @@
 
 namespace
 {
-    using namespace beam::wallet;
-
-QString getStatusTextTranslated(const QString& status, TxAddressType addressType)
+QString getStatusTextTranslated(const QString& status, beam::wallet::TxAddressType addressType)
 {
     if (status == "pending")
     {

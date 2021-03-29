@@ -14,74 +14,74 @@
 
 #include "currencies.h"
 
-beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(Currency currency)
+beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(WalletCurrency::Currency currency)
 {
     switch (currency)
     {
-    case Currency::CurrBitcoin:
+    case WalletCurrency::Currency::CurrBitcoin:
         return beam::wallet::AtomicSwapCoin::Bitcoin;
-    case Currency::CurrLitecoin:
+    case WalletCurrency::Currency::CurrLitecoin:
         return beam::wallet::AtomicSwapCoin::Litecoin;
-    case Currency::CurrQtum:
+    case WalletCurrency::Currency::CurrQtum:
         return beam::wallet::AtomicSwapCoin::Qtum;
 #if defined(BITCOIN_CASH_SUPPORT)
-    case Currency::CurrBitcoinCash:
+    case WalletCurrency::Currency::CurrBitcoinCash:
         return beam::wallet::AtomicSwapCoin::Bitcoin_Cash;
 #endif // BITCOIN_CASH_SUPPORT
-    case Currency::CurrDash:
+    case WalletCurrency::Currency::CurrDash:
         return beam::wallet::AtomicSwapCoin::Dash;
-    case Currency::CurrDogecoin:
+    case WalletCurrency::Currency::CurrDogecoin:
         return beam::wallet::AtomicSwapCoin::Dogecoin;
-    case Currency::CurrEthereum:
+    case WalletCurrency::Currency::CurrEthereum:
         return beam::wallet::AtomicSwapCoin::Ethereum;
-    case Currency::CurrDai:
+    case WalletCurrency::Currency::CurrDai:
         return beam::wallet::AtomicSwapCoin::Dai;
-    case Currency::CurrUsdt:
+    case WalletCurrency::Currency::CurrUsdt:
         return beam::wallet::AtomicSwapCoin::Usdt;
-    case Currency::CurrWrappedBTC:
+    case WalletCurrency::Currency::CurrWrappedBTC:
         return beam::wallet::AtomicSwapCoin::WBTC;
     default:
         return beam::wallet::AtomicSwapCoin::Unknown;
     }
 }
 
-Currency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin)
+WalletCurrency::Currency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin)
 {
     switch (swapCoin)
     {
     case beam::wallet::AtomicSwapCoin::Bitcoin:
-        return Currency::CurrBitcoin;
+        return WalletCurrency::Currency::CurrBitcoin;
     case beam::wallet::AtomicSwapCoin::Litecoin:
-        return Currency::CurrLitecoin;
+        return WalletCurrency::Currency::CurrLitecoin;
     case beam::wallet::AtomicSwapCoin::Qtum:
-        return Currency::CurrQtum;
+        return WalletCurrency::Currency::CurrQtum;
 #if defined(BITCOIN_CASH_SUPPORT)
     case beam::wallet::AtomicSwapCoin::Bitcoin_Cash:
         return Currency::CurrBitcoinCash;
 #endif // BITCOIN_CASH_SUPPORT
     case beam::wallet::AtomicSwapCoin::Dash:
-        return Currency::CurrDash;
+        return WalletCurrency::Currency::CurrDash;
     case beam::wallet::AtomicSwapCoin::Dogecoin:
-        return Currency::CurrDogecoin;
+        return WalletCurrency::Currency::CurrDogecoin;
     case beam::wallet::AtomicSwapCoin::Ethereum:
-        return Currency::CurrEthereum;
+        return WalletCurrency::Currency::CurrEthereum;
     case beam::wallet::AtomicSwapCoin::Dai:
-        return Currency::CurrDai;
+        return WalletCurrency::Currency::CurrDai;
     case beam::wallet::AtomicSwapCoin::Usdt:
-        return Currency::CurrUsdt;
+        return WalletCurrency::Currency::CurrUsdt;
     case beam::wallet::AtomicSwapCoin::WBTC:
-        return Currency::CurrWrappedBTC;
+        return WalletCurrency::Currency::CurrWrappedBTC;
     default:
-        return Currency::CurrEnd;
+        return WalletCurrency::Currency::CurrEnd;
     }
 }
 
-beamui::Currencies convertCurrency(Currency value)
+beamui::Currencies convertCurrency(WalletCurrency::Currency value)
 {
     switch (value)
     {
 #define MACRO(name, label, slabel, subunite, feeLabel, dec) \
-    case Currency::Curr##name:\
+    case WalletCurrency::Currency::Curr##name:\
         return beamui::Currencies::name;
         CURRENCY_MAP(MACRO)
 #undef MACRO
@@ -90,14 +90,14 @@ beamui::Currencies convertCurrency(Currency value)
     }
 }
 
-bool isEthereumBased(Currency currency)
+bool isEthereumBased(WalletCurrency::Currency currency)
 {
     switch (currency)
     {
-    case Currency::CurrEthereum: return true;
-    case Currency::CurrDai: return true;
-    case Currency::CurrUsdt: return true;
-    case Currency::CurrWrappedBTC: return true;
+    case WalletCurrency::Currency::CurrEthereum: return true;
+    case WalletCurrency::Currency::CurrDai: return true;
+    case WalletCurrency::Currency::CurrUsdt: return true;
+    case WalletCurrency::Currency::CurrWrappedBTC: return true;
     default:
         return false;
     }

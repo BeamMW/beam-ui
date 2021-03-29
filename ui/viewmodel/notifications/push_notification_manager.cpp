@@ -16,8 +16,6 @@
 
 #include "viewmodel/ui_helpers.h"
 
-using namespace beam::wallet;
-
 PushNotificationManager::PushNotificationManager()
     : m_walletModel(*AppModel::getInstance().getWalletModel())
 {
@@ -29,7 +27,7 @@ PushNotificationManager::PushNotificationManager()
 }
 
 void PushNotificationManager::onNewSoftwareUpdateAvailable(
-        const WalletImplVerInfo& info, const ECC::uintBig& notificationID, bool showPopup)
+        const beam::wallet::WalletImplVerInfo& info, const ECC::uintBig& notificationID, bool showPopup)
 {
     auto currentLibVersion = beamui::getCurrentLibVersion();
     auto currentUIRevision = beamui::getCurrentUIRevision();
@@ -50,8 +48,10 @@ void PushNotificationManager::onNewSoftwareUpdateAvailable(
     }
 }
 
-void PushNotificationManager::onNotificationsChanged(ChangeAction action, const std::vector<Notification>& notifications)
+void PushNotificationManager::onNotificationsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Notification>& notifications)
 {
+    using namespace beam::wallet;
+
     if ((m_firstNotification && action == ChangeAction::Reset)
         || action == ChangeAction::Added)
     {

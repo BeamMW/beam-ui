@@ -20,13 +20,14 @@
 #include "model/app_model.h"
 
 using namespace beam;
-using namespace beam::wallet;
 using namespace beamui;
 
 namespace
 {
     QString getWaitingPeerStr(const beam::wallet::TxParameters& txParameters, bool isSender)
     {
+        using namespace beam::wallet;
+
         auto minHeight = txParameters.GetParameter<beam::Height>(TxParameterID::MinHeight);
         auto responseTime = txParameters.GetParameter<beam::Height>(TxParameterID::PeerResponseTime);
         QString time = "";
@@ -45,6 +46,8 @@ namespace
 
     QString getInProgressStr(const beam::wallet::TxParameters& txParameters)
     {
+        using namespace beam::wallet;
+
         const Height kNormalTxConfirmationDelay = 10;
         auto maxHeight = txParameters.GetParameter<beam::Height>(TxParameterID::MaxHeight);
         QString time = "";
@@ -82,21 +85,21 @@ namespace
     }
 }
 
-TxObject::TxObject(TxDescription tx, QObject* parent)
-    : TxObject(std::move(tx), beam::wallet::ExchangeRate::Currency::Unknown, parent)
+TxObject::TxObject(beam::wallet::TxDescription tx, QObject* parent)
+    : TxObject(std::move(tx), beam::wallet::Currency::UNKNOWN, parent)
 {
 }
 
-TxObject::TxObject(TxDescription tx, beam::wallet::ExchangeRate::Currency secondCurrency, QObject* parent)
+TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency secondCurrency, QObject* parent)
     : QObject(parent)
     , _tx(std::move(tx))
-    , _secondCurrency(secondCurrency)
+    , _secondCurrency(std::move(secondCurrency))
 {
 
     Height h = tx.m_minHeight;
     _contractFee = std::max(_tx.m_fee, Transaction::FeeSettings::get(h).get_DefaultStd());
 
-    if (_tx.m_txType == TxType::Contract)
+    if (_tx.m_txType == beam::wallet::TxType::Contract)
     {
         visitContractData([this, h](const beam::bvm2::ContractInvokeData &data) {
             _contractSpend += data.m_Spend;
@@ -192,12 +195,14 @@ const QString& TxObject::getComment() const
 
 QString TxObject::getRate(beam::Asset::ID assetId) const
 {
+    using namespace beam::wallet;
+
     if (assetId != Asset::s_BeamID)
     {
         return "0";
     }
 
-    auto exchangeRatesOptional = getTxDescription().GetParameter<std::vector<ExchangeRate>>(TxParameterID::ExchangeRates);
+    auto exchangeRatesOptional = getTxDescription().GetParameter<std::vector<ExchangeRate>>(TxParameterID::ExchangeRates1);
     if (exchangeRatesOptional)
     {
         std::vector<ExchangeRate>& rates = *exchangeRatesOptional;
@@ -207,8 +212,8 @@ QString TxObject::getRate(beam::Asset::ID assetId) const
                                    std::end(rates),
                                    [secondCurrency](const ExchangeRate& r)
                                    {
-                                       return r.m_currency == ExchangeRate::Currency::Beam
-                                           && r.m_unit == secondCurrency;
+                                       return r.m_from == beam::wallet::Currency::BEAM
+                                           && r.m_to == secondCurrency;
                                    });
 
         if (search != std::cend(rates))
@@ -234,22 +239,22 @@ QString TxObject::getStatus() const
 {
     if (_tx.m_txType == wallet::TxType::Simple)
     {
-        SimpleTxStatusInterpreter interpreter(_tx);
+        beam::wallet::SimpleTxStatusInterpreter interpreter(_tx);
         return interpreter.getStatus().c_str();
     }
     else if (_tx.m_txType == wallet::TxType::PushTransaction)
     {
-        MaxPrivacyTxStatusInterpreter interpreter(_tx);
+        beam::wallet::MaxPrivacyTxStatusInterpreter interpreter(_tx);
         return interpreter.getStatus().c_str();
     }
     else if (_tx.m_txType >= wallet::TxType::AssetIssue && _tx.m_txType <= wallet::TxType::AssetInfo)
     {
-        AssetTxStatusInterpreter interpreter(_tx);
+        beam::wallet::AssetTxStatusInterpreter interpreter(_tx);
         return interpreter.getStatus().c_str();
     }
     else if (_tx.m_txType == wallet::TxType::Contract)
     {
-        ContractTxStatusInterpreter interpreter(_tx);
+        beam::wallet::ContractTxStatusInterpreter interpreter(_tx);
         return interpreter.getStatus().c_str();
     }
     else if (_tx.m_txType == wallet::TxType::DexSimpleSwap)
@@ -353,7 +358,7 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
 {
     // clang doesn't allow to make 'auto reasons' so for the moment assertions below are a bit pointles
     // let's wait until they fix template arg deduction and restore it back
-    static const std::array<QString, TxFailureReason::Count> reasons = {
+    static const std::array<QString, beam::wallet::TxFailureReason::Count> reasons = {
         //% "Unexpected reason, please send wallet logs to Beam support" 
         qtTrId("tx-failure-undefined"),
         //% "Transaction cancelled"
@@ -463,13 +468,13 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
     // ensure QString
     static_assert(std::is_same<decltype(reasons)::value_type, QString>::value);
     // ensure that we have all reasons, otherwise it would be runtime crash
-    static_assert(std::tuple_size<decltype(reasons)>::value == static_cast<size_t>(TxFailureReason::Count));
+    static_assert(std::tuple_size<decltype(reasons)>::value == static_cast<size_t>(beam::wallet::TxFailureReason::Count));
 
     assert(reasons.size() > static_cast<size_t>(reason));
     if (static_cast<size_t>(reason) >= reasons.size())
     {
         LOG_WARNING()  << "Unknown failure reason code " << reason << ". Defaulting to 0";
-        reason = TxFailureReason::Unknown;
+        reason = beam::wallet::TxFailureReason::Unknown;
     }
 
     return reasons[reason];
@@ -495,7 +500,7 @@ QString TxObject::getStateDetails() const
         case beam::wallet::TxStatus::Pending:
         case beam::wallet::TxStatus::InProgress:
         {
-            auto state = tx.GetParameter<wallet::SimpleTransaction::State>(TxParameterID::State);
+            auto state = tx.GetParameter<wallet::SimpleTransaction::State>(beam::wallet::TxParameterID::State);
             if (state)
             {
                 switch (*state)
@@ -549,8 +554,8 @@ bool TxObject::isMultiAsset() const
 bool TxObject::hasPaymentProof() const
 {
     return !isIncome()
-           && _tx.m_status == wallet::TxStatus::Completed
-           && (_tx.m_txType == TxType::Simple || _tx.m_txType == TxType::PushTransaction);
+           && _tx.m_status == beam::wallet::TxStatus::Completed
+           && (_tx.m_txType == beam::wallet::TxType::Simple || _tx.m_txType == beam::wallet::TxType::PushTransaction);
 }
 
 bool TxObject::isInProgress() const
@@ -583,17 +588,17 @@ bool TxObject::isSelfTx() const
 
 bool TxObject::isShieldedTx() const
 {
-    return _tx.m_txType == TxType::PushTransaction;
+    return _tx.m_txType == beam::wallet::TxType::PushTransaction;
 }
 
 bool TxObject::isContractTx() const
 {
-    return _tx.m_txType == TxType::Contract;
+    return _tx.m_txType == beam::wallet::TxType::Contract;
 }
 
 bool TxObject::isDexTx() const
 {
-    return _tx.m_txType == TxType::DexSimpleSwap;
+    return _tx.m_txType == beam::wallet::TxType::DexSimpleSwap;
 }
 
 beam::wallet::TxAddressType TxObject::getAddressType()
@@ -603,7 +608,7 @@ beam::wallet::TxAddressType TxObject::getAddressType()
     if (_addressType)
         return *_addressType;
 
-    return TxAddressType::Unknown;
+    return beam::wallet::TxAddressType::Unknown;
 }
 
 bool TxObject::isSent() const
@@ -628,12 +633,12 @@ bool TxObject::isFailed() const
 
 bool TxObject::isExpired() const
 {
-    return isFailed() && _tx.m_failureReason == TxFailureReason::TransactionExpired;
+    return isFailed() && _tx.m_failureReason == beam::wallet::TxFailureReason::TransactionExpired;
 }
 
 void TxObject::restoreAddressType()
 {
-    auto storedType = _tx.GetParameter<TxAddressType>(TxParameterID::AddressType);
+    auto storedType = _tx.GetParameter<beam::wallet::TxAddressType>(beam::wallet::TxParameterID::AddressType);
     if (storedType)
     {
         _addressType = storedType;
@@ -646,13 +651,13 @@ void TxObject::restoreAddressType()
     }
 
     _addressType = GetAddressType(_tx);
-    _tx.SetParameter(TxParameterID::AddressType, *_addressType);
+    _tx.SetParameter(beam::wallet::TxParameterID::AddressType, *_addressType);
 }
 
 void TxObject::visitContractData(const CDVisitor& visitor) const
 {
     std::vector<beam::bvm2::ContractInvokeData> vData;
-    if(_tx.GetParameter(TxParameterID::ContractDataPacked, vData))
+    if(_tx.GetParameter(beam::wallet::TxParameterID::ContractDataPacked, vData))
     {
         for (const auto& data: vData)
         {

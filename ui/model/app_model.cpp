@@ -47,16 +47,15 @@
 #endif
 
 using namespace beam;
-using namespace beam::wallet;
 using namespace ECC;
 using namespace std;
 
 namespace
 {
-    void generateDefaultAddress(IWalletDB::Ptr db)
+    void generateDefaultAddress(beam::wallet::IWalletDB::Ptr db)
     {
         // generate default address
-        WalletAddress address;
+        beam::wallet::WalletAddress address;
         db->createAddress(address);
         address.m_label = "default";
         db->saveAddress(address);
@@ -103,7 +102,7 @@ AppModel::~AppModel()
 
 void AppModel::backupDB(const std::string& dbFilePath)
 {
-    const auto wasInitialized = WalletDB::isInitialized(dbFilePath);
+    const auto wasInitialized = beam::wallet::WalletDB::isInitialized(dbFilePath);
     m_db.reset();
 
     if (wasInitialized)
@@ -126,7 +125,7 @@ void AppModel::backupDB(const std::string& dbFilePath)
 
 void AppModel::restoreDBFromBackup(const std::string& dbFilePath)
 {
-    const auto wasInitialized = WalletDB::isInitialized(dbFilePath);
+    const auto wasInitialized = beam::wallet::WalletDB::isInitialized(dbFilePath);
     m_db.reset();
 
     if (!wasInitialized && !m_walletDBBackupPath.empty())
@@ -153,7 +152,7 @@ bool AppModel::createWallet(const SecString& seed, const SecString& pass)
 
     {
         io::Reactor::Scope s(*m_walletReactor); // do it in main thread
-        auto db = WalletDB::init(dbFilePath, pass, seed.hash());
+        auto db = beam::wallet::WalletDB::init(dbFilePath, pass, seed.hash());
         if (!db) 
             return false;
 
@@ -219,9 +218,9 @@ void AppModel::openWalletThrow(const beam::SecString& pass, beam::wallet::IPriva
         throw std::runtime_error(qtTrId("appmodel-already-opened").toStdString());
     }
 
-    if (WalletDB::isInitialized(m_settings.getWalletStorage()))
+    if (beam::wallet::WalletDB::isInitialized(m_settings.getWalletStorage()))
     {
-        m_db = WalletDB::open(m_settings.getWalletStorage(), pass);
+        m_db = beam::wallet::WalletDB::open(m_settings.getWalletStorage(), pass);
     }
     #if defined(BEAM_HW_WALLET)
     else if (WalletDB::isInitialized(m_settings.getTrezorWalletStorage()))
@@ -253,7 +252,7 @@ bool AppModel::exportData()
                 QDir(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)).filePath(fileName.c_str()),
                 "Wallet data (*.dat)");
 
-        const auto jsonData = storage::ExportDataToJson(*m_db);
+        const auto jsonData = beam::wallet::storage::ExportDataToJson(*m_db);
 
         FStream fStream;
         return fStream.Open(path.toStdString().c_str(), false) &&
@@ -356,6 +355,8 @@ void AppModel::onResetWallet()
 
 void AppModel::startWallet()
 {
+    using namespace beam::wallet;
+
     assert(!m_wallet->isRunning());
 
     auto additionalTxCreators = std::make_shared<std::unordered_map<TxType, BaseTransaction::Creator::Ptr>>();
@@ -403,12 +404,12 @@ void AppModel::startWallet()
 
     additionalTxCreators->emplace(TxType::DexSimpleSwap, std::make_shared<DexTransaction::Creator>(m_db));
 
-    bool displayRate = m_settings.getSecondCurrency().toStdString() != exchangeRateOffStr;
+    bool displayRate = m_settings.getRateCurrency() != beam::wallet::Currency::UNKNOWN;
     m_wallet->start(activeNotifications, displayRate, additionalTxCreators);
 }
 
 template<typename BridgeSide, typename Bridge, typename SettingsProvider>
-void AppModel::registerSwapFactory(AtomicSwapCoin swapCoin, beam::wallet::AtomicSwapTransaction::Creator& swapTxCreator)
+void AppModel::registerSwapFactory(beam::wallet::AtomicSwapCoin swapCoin, beam::wallet::AtomicSwapTransaction::Creator& swapTxCreator)
 {
     if (auto client = getSwapCoinClient(swapCoin); client)
     {
@@ -585,6 +586,8 @@ SwapEthClientModel::Ptr AppModel::getSwapEthClient() const
 
 void AppModel::initSwapClients()
 {
+    using namespace beam::wallet;
+
     initSwapClient<bitcoin::BitcoinCore017, bitcoin::Electrum, bitcoin::SettingsProvider>(AtomicSwapCoin::Bitcoin);
     initSwapClient<litecoin::LitecoinCore017, litecoin::Electrum, litecoin::SettingsProvider>(AtomicSwapCoin::Litecoin);
     initSwapClient<qtum::QtumCore017, qtum::Electrum, qtum::SettingsProvider>(AtomicSwapCoin::Qtum);

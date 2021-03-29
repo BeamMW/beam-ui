@@ -113,7 +113,7 @@ private:
 
     beam::wallet::CoinsSelectionInfo m_Csi;
     beam::wallet::WalletID     _receiverWalletID;
-    beam::wallet::PeerID       _receiverIdentity;
+    beam::PeerID               _receiverIdentity;
     QString                    _comment;
     WalletModel&               _walletModel;
     AssetsManager::Ptr         _amgr;
