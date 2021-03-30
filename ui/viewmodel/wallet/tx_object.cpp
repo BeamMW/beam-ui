@@ -202,8 +202,6 @@ QString TxObject::getRate(beam::Asset::ID assetId) const
         return "0";
     }
 
-    std::cout << "getRate for: " << getTxID() << std::flush;
-
     auto exchangeRatesOptional = getTxDescription().GetParameter<std::vector<ExchangeRate>>(TxParameterID::ExchangeRates);
     if (exchangeRatesOptional)
     {
@@ -697,10 +695,12 @@ QString TxObject::getAmountSecondCurrency()
         {
             _amountSecondCurrency = QMLGlobals::calcAmountInSecondCurrency(_assetAmounts[0], _assetRates[0], QString());
         }
-        else
-        {
-            _amountSecondCurrency = "0";
-        }
     }
+
+    if (_amountSecondCurrency.isEmpty())
+    {
+        _amountSecondCurrency = "0";
+    }
+
     return _amountSecondCurrency;
 }
