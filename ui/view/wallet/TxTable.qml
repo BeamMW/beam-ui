@@ -422,7 +422,7 @@ Control {
                     height: transactionsTable.rowHeight
 
                     TableItem {
-                        text:  styleData.value
+                        text:  styleData.value || ""
                         elide: styleData.elideMode
                         onCopyText: BeamGlobals.copyToClipboard(styleData.value)
                     }

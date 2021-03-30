@@ -197,23 +197,18 @@ QString TxObject::getRate(beam::Asset::ID assetId) const
 {
     using namespace beam::wallet;
 
-    if (assetId != Asset::s_BeamID)
-    {
-        return "0";
-    }
-
     auto exchangeRatesOptional = getTxDescription().GetParameter<std::vector<ExchangeRate>>(TxParameterID::ExchangeRates);
     if (exchangeRatesOptional)
     {
         std::vector<ExchangeRate>& rates = *exchangeRatesOptional;
 
-        auto secondCurrency = _secondCurrency;
-        auto search = std::find_if(std::begin(rates),
-                                   std::end(rates),
-                                   [secondCurrency](const ExchangeRate& r)
+        auto fromCurrency = beam::wallet::Currency(assetId);
+        auto toCurrency = _secondCurrency;
+
+        auto search = std::find_if(std::begin(rates), std::end(rates),
+                                   [&fromCurrency, &toCurrency](const ExchangeRate& r)
                                    {
-                                       return r.m_from == beam::wallet::Currency::BEAM()
-                                           && r.m_to == secondCurrency;
+                                       return r.m_from == fromCurrency && r.m_to == toCurrency;
                                    });
 
         if (search != std::cend(rates))
@@ -690,8 +685,8 @@ QString TxObject::getAmountSecondCurrency()
 {
     if (_amountSecondCurrency.isEmpty())
     {
-        // TODO: support multiple assets & rate broadcast for assets
-        if (_assetsList.size() == 1 && _assetsList[0] == beam::Asset::s_BeamID)
+        // TODO: support multiple assets
+        if (_assetsList.size() == 1)
         {
             _amountSecondCurrency = QMLGlobals::calcAmountInSecondCurrency(_assetAmounts[0], _assetRates[0], QString());
         }
