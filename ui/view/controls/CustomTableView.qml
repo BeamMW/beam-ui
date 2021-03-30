@@ -64,15 +64,44 @@ TableView {
     headerDelegate: Rectangle {
         id: rect
         height: headerHeight
-       
         color:"transparent"// Style.background_main
+
+        function getX() {
+            return rect.mapToItem(backgroundRect, rect.x, rect.y).y;
+        }
+        function getY() {
+            return rect.mapToItem(backgroundRect, rect.x, rect.y).y;
+        }
+        function updateShader() {
+            shaderSrc.sourceRect.x = getX()
+            shaderSrc.sourceRect.y = getY()
+        }
+
+        Connections {
+            target: tableView
+            function onWidthChanged() {
+                updateShader()
+            }
+            function onHeightChanged() {
+                updateShader()
+            }
+            function onXChanged() {
+                updateShader()
+            }
+            function onYChanged() {
+                updateShader()
+            }
+            function onVisibleChanged() {
+                updateShader()
+            }
+        }
 
         ShaderEffectSource {
             id: shaderSrc
             objectName: "renderRect"
 
-            sourceRect.x: rect.mapToItem(backgroundRect, rect.x, rect.y).x
-            sourceRect.y: rect.mapToItem(backgroundRect, rect.x, rect.y).y
+            sourceRect.x: getX()
+            sourceRect.y: getY()
             sourceRect.width: rect.width
             sourceRect.height: rect.height
             width: rect.width
