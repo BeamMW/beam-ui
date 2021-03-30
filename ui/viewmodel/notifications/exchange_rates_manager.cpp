@@ -37,7 +37,7 @@ ExchangeRatesManager::ExchangeRatesManager()
             SLOT(onRateUnitChanged()));
 
     m_rateUnit = m_settings.getRateCurrency();
-    if (m_rateUnit != beam::wallet::Currency::UNKNOWN)
+    if (m_rateUnit != beam::wallet::Currency::UNKNOWN())
     {
         m_walletModel.getAsync()->getExchangeRates();
     }
@@ -47,13 +47,13 @@ void ExchangeRatesManager::setRateUnit()
 {
     auto newCurrency = m_settings.getRateCurrency();
 
-    if (newCurrency == beam::wallet::Currency::UNKNOWN && m_rateUnit != newCurrency)
+    if (newCurrency == beam::wallet::Currency::UNKNOWN() && m_rateUnit != newCurrency)
     {
         m_walletModel.getAsync()->switchOnOffExchangeRates(false);
     }
     else
     {
-        if (m_rateUnit == beam::wallet::Currency::UNKNOWN)
+        if (m_rateUnit == beam::wallet::Currency::UNKNOWN())
         {
             m_walletModel.getAsync()->switchOnOffExchangeRates(true);
         }
@@ -67,7 +67,7 @@ void ExchangeRatesManager::setRateUnit()
 
 void ExchangeRatesManager::onExchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>& rates)
 {
-    if (m_rateUnit == beam::wallet::Currency::UNKNOWN) return;  /// Second currency is turned OFF
+    if (m_rateUnit == beam::wallet::Currency::UNKNOWN()) return;  /// Second currency is turned OFF
 
     bool isActiveRateChanged = false;
     for (const auto& rate : rates)
@@ -113,26 +113,26 @@ beam::wallet::Currency ExchangeRatesManager::convertCurrencyToExchangeCurrency(W
     switch (uiCurrency)
     {
     case WalletCurrency::Currency::CurrBeam:
-        return beam::wallet::Currency::BEAM;
+        return beam::wallet::Currency::BEAM();
     case WalletCurrency::Currency::CurrBitcoin:
-        return beam::wallet::Currency::BTC;
+        return beam::wallet::Currency::BTC();
     case WalletCurrency::Currency::CurrLitecoin:
-        return beam::wallet::Currency::LTC;
+        return beam::wallet::Currency::LTC();
     case WalletCurrency::Currency::CurrQtum:
-        return beam::wallet::Currency::QTUM;
+        return beam::wallet::Currency::QTUM();
     case WalletCurrency::Currency::CurrDash:
-        return beam::wallet::Currency::DASH;
+        return beam::wallet::Currency::DASH();
     case WalletCurrency::Currency::CurrDogecoin:
-        return beam::wallet::Currency::DOGE;
+        return beam::wallet::Currency::DOGE();
     case WalletCurrency::Currency::CurrEthereum:
-        return beam::wallet::Currency::ETH;
+        return beam::wallet::Currency::ETH();
     case WalletCurrency::Currency::CurrDai:
-        return beam::wallet::Currency::DAI;
+        return beam::wallet::Currency::DAI();
     case WalletCurrency::Currency::CurrUsdt:
-        return beam::wallet::Currency::USDT;
+        return beam::wallet::Currency::USDT();
     case WalletCurrency::Currency::CurrWrappedBTC:
-        return beam::wallet::Currency::WBTC;
+        return beam::wallet::Currency::WBTC();
     default:
-        return beam::wallet::Currency::UNKNOWN;
+        return beam::wallet::Currency::UNKNOWN();
     }
 }

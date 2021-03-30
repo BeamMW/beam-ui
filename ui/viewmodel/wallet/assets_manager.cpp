@@ -316,7 +316,7 @@ QColor AssetsManager::getSelectionColor(beam::Asset::ID id)
 QList<QMap<QString, QVariant>> AssetsManager::getAssetsList()
 {
     const auto assets   = _wallet->getAssetsNZ();
-    const auto beamRate = beamui::AmountToUIString(_exchangeRatesManager.getRate(beam::wallet::Currency::BEAM));
+    const auto beamRate = beamui::AmountToUIString(_exchangeRatesManager.getRate(beam::wallet::Currency::BEAM()));
     const auto rateUnit = beamui::getCurrencyUnitName(_exchangeRatesManager.getRateCurrency());
     QList<QMap<QString, QVariant>> result;
 

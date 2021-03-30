@@ -46,9 +46,7 @@ namespace
     const char* kLocalNodePort = "localnode/port";
     const char* kLocalNodePeers = "localnode/peers";
     const char* kLocalNodePeersPersistent = "localnode/peers_persistent";
-
     const char* kDefaultLocale = "en_US";
-    const auto  kDefaultAmountUnit = beam::wallet::Currency::USD;
 
     const char* kNewVersionActive = "notifications/software_release";
     const char* kBeamNewsActive = "notifications/beam_news";
@@ -82,17 +80,26 @@ namespace
         { "ko_KR", "한국어"}
     };
 
-    const std::vector<beam::wallet::Currency> kSupportedAmountUnits {
-        beam::wallet::Currency::UNKNOWN,
-        beam::wallet::Currency::USD,
-        beam::wallet::Currency::BTC
-    };
-
     const vector<string> kOutDatedPeers = beam::getOutdatedDefaultPeers();
     bool isOutDatedPeer(const string& peer)
     {
         return find(kOutDatedPeers.begin(), kOutDatedPeers.end(), peer) !=
                kOutDatedPeers.end();
+    }
+
+    const beam::wallet::Currency& getDefaultRateUnit()
+    {
+        return beam::wallet::Currency::USD();
+    }
+
+    const std::vector<beam::wallet::Currency>& getSupportedRateUnits()
+    {
+        static const std::vector<beam::wallet::Currency> supportedUnits {
+            beam::wallet::Currency::UNKNOWN(),
+            beam::wallet::Currency::USD(),
+            beam::wallet::Currency::BTC()
+        };
+        return supportedUnits;
     }
 
     const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
@@ -374,15 +381,17 @@ void WalletSettings::setLocaleByLanguageName(const QString& language)
 
 beam::wallet::Currency WalletSettings::getRateCurrency() const
 {
+    const auto& defaultUnit = getDefaultRateUnit();
+    const auto& supportedUnits = getSupportedRateUnits();
     Lock lock(m_mutex);
 
-    auto rawUnitValue =  m_data.value(kRateUnit, QString::fromStdString(kDefaultAmountUnit.m_value)).toString();
+    auto rawUnitValue = m_data.value(kRateUnit, QString::fromStdString(defaultUnit.m_value)).toString();
     beam::wallet::Currency savedAmountUnit(rawUnitValue.toStdString());
 
-    const auto it = find(std::begin(kSupportedAmountUnits), std::cend(kSupportedAmountUnits), savedAmountUnit);
-    if (it == std::cend(kSupportedAmountUnits))
+    const auto it = find(std::begin(supportedUnits), std::cend(supportedUnits), savedAmountUnit);
+    if (it == std::cend(supportedUnits))
     {
-        return kDefaultAmountUnit;
+        return defaultUnit;
     }
     else
     {
@@ -392,8 +401,10 @@ beam::wallet::Currency WalletSettings::getRateCurrency() const
 
 void WalletSettings::setRateCurrency(const beam::wallet::Currency& curr)
 {
-    const auto& it = std::find(kSupportedAmountUnits.begin(), kSupportedAmountUnits.end(), curr);
-    auto unit = it != kSupportedAmountUnits.end() ? curr : kDefaultAmountUnit;
+    const auto& supportedUnits = getSupportedRateUnits();
+
+    const auto& it = std::find(supportedUnits.begin(), supportedUnits.end(), curr);
+    auto unit = it != supportedUnits.end() ? curr : getDefaultRateUnit();
 
     {
         Lock lock(m_mutex);

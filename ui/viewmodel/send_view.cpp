@@ -153,7 +153,7 @@ QString SendViewModel::getFeeRateUnit() const
 
 QString SendViewModel::getFeeRate() const
 {
-    auto rate = _exchangeRatesManager.getRate(beam::wallet::Currency::BEAM);
+    auto rate = _exchangeRatesManager.getRate(beam::wallet::Currency::BEAM());
     return beamui::AmountToUIString(rate);
 }
 

@@ -157,7 +157,7 @@ QString TxTableViewModel::getRateUnit() const
 
 QString TxTableViewModel::getRate() const
 {
-    auto rate = _exchangeRatesManager.getRate(beam::wallet::Currency::BEAM);
+    auto rate = _exchangeRatesManager.getRate(beam::wallet::Currency::BEAM());
     return beamui::AmountToUIString(rate);
 }
 

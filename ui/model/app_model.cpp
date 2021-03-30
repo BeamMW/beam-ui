@@ -404,7 +404,7 @@ void AppModel::startWallet()
 
     additionalTxCreators->emplace(TxType::DexSimpleSwap, std::make_shared<DexTransaction::Creator>(m_db));
 
-    bool displayRate = m_settings.getRateCurrency() != beam::wallet::Currency::UNKNOWN;
+    bool displayRate = m_settings.getRateCurrency() != beam::wallet::Currency::UNKNOWN();
     m_wallet->start(activeNotifications, displayRate, additionalTxCreators);
 }
 

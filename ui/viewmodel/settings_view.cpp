@@ -48,7 +48,7 @@ SettingsViewModel::SettingsViewModel()
     , m_isNeedToCheckAddress(false)
     , m_isNeedToApplyChanges(false)
     , m_supportedLanguages(WalletSettings::getSupportedLanguages())
-    , m_rateCurrency(beam::wallet::Currency::UNKNOWN)
+    , m_rateCurrency(beam::wallet::Currency::UNKNOWN())
 {
     undoChanges();
 

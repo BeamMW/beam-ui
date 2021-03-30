@@ -241,66 +241,66 @@ namespace beamui
 
     Currencies convertExchangeRateCurrencyToUiCurrency(const beam::wallet::Currency& currency)
     {
-        if (currency == wallet::Currency::BEAM)
+        if (currency == wallet::Currency::BEAM())
         {
             return beamui::Currencies::Beam;
         }
 
-        if (currency == wallet::Currency::BTC)
+        if (currency == wallet::Currency::BTC())
         {
             return beamui::Currencies::Bitcoin;
         }
 
-        if (currency == wallet::Currency::LTC)
+        if (currency == wallet::Currency::LTC())
         {
             return beamui::Currencies::Litecoin;
         }
 
-        if (currency == wallet::Currency::LTC)
+        if (currency == wallet::Currency::LTC())
         {
             return beamui::Currencies::Litecoin;
         }
-        if (currency == wallet::Currency::QTUM)
+        if (currency == wallet::Currency::QTUM())
         {
             return beamui::Currencies::Qtum;
         }
 
-        if (currency == wallet::Currency::USD)
+        if (currency == wallet::Currency::USD())
         {
             return beamui::Currencies::Usd;
         }
 
-        if (currency == wallet::Currency::DOGE)
+        if (currency == wallet::Currency::DOGE())
         {
             return beamui::Currencies::Dogecoin;
         }
 
-        if (currency == wallet::Currency::DASH)
+        if (currency == wallet::Currency::DASH())
         {
             return beamui::Currencies::Dash;
         }
 
-        if (currency == wallet::Currency::DASH)
+        if (currency == wallet::Currency::DASH())
         {
             return beamui::Currencies::Dash;
         }
 
-        if (currency == wallet::Currency::ETH)
+        if (currency == wallet::Currency::ETH())
         {
             return beamui::Currencies::Ethereum;
         }
 
-        if (currency == wallet::Currency::DAI)
+        if (currency == wallet::Currency::DAI())
         {
             return beamui::Currencies::Dai;
         }
 
-        if (currency == wallet::Currency::USDT)
+        if (currency == wallet::Currency::USDT())
         {
             return beamui::Currencies::Usdt;
         }
 
-        if (currency == wallet::Currency::WBTC)
+        if (currency == wallet::Currency::WBTC())
         {
             return beamui::Currencies::WrappedBTC;
         }

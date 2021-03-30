@@ -86,7 +86,7 @@ namespace
 }
 
 TxObject::TxObject(beam::wallet::TxDescription tx, QObject* parent)
-    : TxObject(std::move(tx), beam::wallet::Currency::UNKNOWN, parent)
+    : TxObject(std::move(tx), beam::wallet::Currency::UNKNOWN(), parent)
 {
 }
 
@@ -202,7 +202,9 @@ QString TxObject::getRate(beam::Asset::ID assetId) const
         return "0";
     }
 
-    auto exchangeRatesOptional = getTxDescription().GetParameter<std::vector<ExchangeRate>>(TxParameterID::ExchangeRates1);
+    std::cout << "getRate for: " << getTxID() << std::flush;
+
+    auto exchangeRatesOptional = getTxDescription().GetParameter<std::vector<ExchangeRate>>(TxParameterID::ExchangeRates);
     if (exchangeRatesOptional)
     {
         std::vector<ExchangeRate>& rates = *exchangeRatesOptional;
@@ -212,7 +214,7 @@ QString TxObject::getRate(beam::Asset::ID assetId) const
                                    std::end(rates),
                                    [secondCurrency](const ExchangeRate& r)
                                    {
-                                       return r.m_from == beam::wallet::Currency::BEAM
+                                       return r.m_from == beam::wallet::Currency::BEAM()
                                            && r.m_to == secondCurrency;
                                    });
 

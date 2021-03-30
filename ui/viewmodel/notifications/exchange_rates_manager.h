@@ -45,6 +45,6 @@ private:
     WalletModel& m_walletModel;
     WalletSettings& m_settings;
 
-    beam::wallet::Currency m_rateUnit = beam::wallet::Currency::UNKNOWN;
+    beam::wallet::Currency m_rateUnit = beam::wallet::Currency::UNKNOWN();
     std::map<beam::wallet::Currency, beam::Amount> m_rates;
 };

@@ -145,7 +145,7 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
             {
                 if (assetId < 1)
                 {
-                    auto rate = _ermgr.getRate(beam::wallet::Currency::BEAM);
+                    auto rate = _ermgr.getRate(beam::wallet::Currency::BEAM());
                     return beamui::AmountToUIString(rate);
                 }
                 return "";
