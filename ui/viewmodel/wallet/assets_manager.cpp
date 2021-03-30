@@ -316,7 +316,6 @@ QColor AssetsManager::getSelectionColor(beam::Asset::ID id)
 QList<QMap<QString, QVariant>> AssetsManager::getAssetsList()
 {
     const auto assets   = _wallet->getAssetsNZ();
-    const auto beamRate = beamui::AmountToUIString(_exchangeRatesManager.getRate(beam::wallet::Currency::BEAM()));
     const auto rateUnit = beamui::getCurrencyUnitName(_exchangeRatesManager.getRateCurrency());
     QList<QMap<QString, QVariant>> result;
 
@@ -324,15 +323,18 @@ QList<QMap<QString, QVariant>> AssetsManager::getAssetsList()
     {
         QMap<QString, QVariant> asset;
 
-        const bool isBeam = assetId == beam::Asset::s_BeamID;
-        asset.insert("isBEAM",      isBeam);
+        beam::wallet::Currency assetCurr(assetId);
+        const bool isBEAM = assetId == beam::Asset::s_BeamID;
+
+        asset.insert("isBEAM",      isBEAM);
         asset.insert("unitName",   getUnitName(assetId, AssetsManager::NoShorten));
-        asset.insert("rate",       isBeam ? beamRate : "0");
+        asset.insert("rate",       beamui::AmountToUIString(_exchangeRatesManager.getRate(assetCurr)));
         asset.insert("rateUnit",    rateUnit);
         asset.insert("assetId",     static_cast<int>(assetId));
         asset.insert("icon",       getIcon(assetId));
         asset.insert("iconWidth",  22);
         asset.insert("iconHeight", 22);
+        asset.insert("decimals",    static_cast<uint8_t>(std::log10(beam::Rules::Coin)));
 
         result.push_back(asset);
     }

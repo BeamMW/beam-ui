@@ -15,7 +15,7 @@
 #include <QObject>
 #include "ui_helpers.h"
 
-class WalletCurrency: public QObject
+class OldWalletCurrency: public QObject
 {
     Q_OBJECT
 public:
@@ -29,8 +29,10 @@ public:
     Q_ENUMS(Currency)
 };
 
-beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(WalletCurrency::Currency currency);
-WalletCurrency::Currency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin);
+typedef OldWalletCurrency::Currency OldCurrency;
 
-beamui::Currencies convertCurrency(WalletCurrency::Currency value);
-bool isEthereumBased(WalletCurrency::Currency currency);
+beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(OldCurrency currency);
+OldCurrency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin);
+
+beamui::Currencies convertCurrency(OldCurrency value);
+bool isEthereumBased(OldCurrency currency);

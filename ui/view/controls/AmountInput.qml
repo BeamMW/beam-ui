@@ -1,6 +1,5 @@
 import QtQuick.Layouts 1.11
 import QtQuick 2.11
-import Beam.Wallet 1.0
 import "../utils.js" as Utils
 import Beam.Wallet 1.0
 
@@ -18,36 +17,12 @@ ColumnLayout {
         ainput.focus = false
     }
 
-    // TODO: get rid of the "Currency" enum completely
-    function defCurrList () {
-        var result = []
-        var append = function (currid) {
-            result.push({
-                "isBEAM":         currid == Currency.CurrBeam,
-                "unitName":       BeamGlobals.getCurrencyUnitName(currid),
-            })
-        }
-        append(Currency.CurrBeam)
-        append(Currency.CurrBitcoin)
-        append(Currency.CurrLitecoin)
-        append(Currency.CurrQtum)
-        // TODO disable BCH
-        //append(Currency.CurrBitcoinCash)
-        append(Currency.CurrDogecoin)
-        append(Currency.CurrDash)
-        append(Currency.CurrEthereum)
-        append(Currency.CurrDai)
-        append(Currency.CurrUsdt)
-        append(Currency.CurrWrappedBTC)
-        return result
-    }
+    property var               currencies
+    readonly property bool     isValid: error.length == 0
 
-    property var               currencies:  defCurrList()
-    readonly property bool     isValid:     error.length == 0
-
-    property int      currencyIdx:  currCombo.currentIndex
-    readonly property string    currencyUnit:    currencies[currencyIdx].unitName
-    readonly property bool      isBeam:          !!currencies[currencyIdx].isBEAM
+    property int                currencyIdx:   currCombo.currentIndex
+    readonly property string    currencyUnit:  currencies[currencyIdx].unitName
+    readonly property bool      isBeam:        !!currencies[currencyIdx].isBEAM
 
     property string   rate:     currencies[currencyIdx].rate
     property string   rateUnit: currencies[currencyIdx].rateUnit
@@ -111,7 +86,7 @@ ColumnLayout {
 
             function getRegExpPattern() {
                 var pattern = "^(([1-9][0-9]{0,7})|(1[0-9]{8})|(2[0-4][0-9]{7})|(25[0-3][0-9]{6})|(0))(\\.[0-9]{0,%1}[1-9])?$";
-                return pattern.arg(BeamGlobals.getCurrencyDecimals(control.currency) - 1);
+                return pattern.arg(currencies[currencyIdx].decimals);
             }
 
             Connections {

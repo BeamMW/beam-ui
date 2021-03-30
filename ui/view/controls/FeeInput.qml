@@ -13,7 +13,7 @@ ColumnLayout {
     property int     minFee:                     0
     property int     maxFee:                     0
     property int     recommendedFee:             0
-    property int     currency:                   Currency.CurrBeam
+    property int     currency:                   OldCurrency.CurrBeam
     property int     fee:                        BeamGlobals.getDefaultFee(control.currency)
     property string  feeLabel:                   undefined
     property string  color:                      Style.content_main
@@ -134,7 +134,7 @@ ColumnLayout {
 
     SFText {
         Layout.fillWidth:      true
-        visible:               control.currency != Currency.CurrBeam && !recommendedFeeAbsent.visible
+        visible:               control.currency != OldCurrency.CurrBeam && !recommendedFeeAbsent.visible
         font.pixelSize:        14
         font.italic:           true
         wrapMode:              Text.WordWrap
@@ -147,7 +147,7 @@ ColumnLayout {
     SFText {
         id:                    recommendedFeeAbsent
         Layout.fillWidth:      true
-        visible:               control.currency != Currency.CurrBeam && control.recommendedFee == 0 && control.fee == 0
+        visible:               control.currency != OldCurrency.CurrBeam && control.recommendedFee == 0 && control.fee == 0
         font.pixelSize:        14
         font.italic:           true
         wrapMode:              Text.WordWrap

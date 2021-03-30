@@ -521,11 +521,11 @@ Control {
                     width:  parent.width
                     height: transactionsTable.rowHeight
 
-                    property var amount: model && model.amountSecondCurrency != "0" ? model.amountSecondCurrency : ""
+                    property var amount: model ? model.amountSecondCurrency : "0"
                     property var prefix: model && model.isIncome ? "+ " : "- "
 
                     SFText {
-                        text:                   parent.amount ? [parent.prefix, Utils.uiStringToLocale(parent.amount)].join('') : ""
+                        text:                   parent.amount != "0" ? [parent.prefix, Utils.uiStringToLocale(parent.amount)].join('') : ""
                         color:                  Style.content_main
                         Layout.fillWidth:       true
                         Layout.leftMargin:      20

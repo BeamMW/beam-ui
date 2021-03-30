@@ -18,23 +18,22 @@
 #include "wallet/transactions/swaps/swap_transaction.h"
 #include "ui_helpers.h"
 #include "fee_helpers.h"
-
+#include "atomic_swap/swap_utils.h"
 #include "wallet/transactions/swaps/bridges/ethereum/ethereum_side.h"
-
 #include <algorithm>
 #include <regex>
 
 SendSwapViewModel::SendSwapViewModel()
     : _sendAmountGrothes(0)
     , _sendFeeGrothes(0)
-    , _sendCurrency(WalletCurrency::Currency::CurrStart)
+    , _sendCurrency(OldCurrency::CurrStart)
     , _receiveAmountGrothes(0)
     , _receiveFeeGrothes(0)
-    , _receiveCurrency(WalletCurrency::Currency::CurrStart)
+    , _receiveCurrency(OldCurrency::CurrStart)
     , _changeGrothes(0)
     , _walletModel(*AppModel::getInstance().getWalletModel())
     , _isBeamSide(true)
-    , _minimalBeamFeeGrothes(minimalFee(WalletCurrency::Currency::CurrBeam, false))
+    , _minimalBeamFeeGrothes(minimalFee(OldCurrency::CurrBeam, false))
 {
     connect(&_walletModel, &WalletModel::changeCalculated,  this,  &SendSwapViewModel::onChangeCalculated);
     connect(&_walletModel, &WalletModel::walletStatusChanged, this, &SendSwapViewModel::recalcAvailable);
@@ -69,7 +68,7 @@ void SendSwapViewModel::fillParameters(const beam::wallet::TxParameters& paramet
         if (*isBeamSide) // other participant is not a beam side
         {
             // Do not set fee, it is set automatically based on the currency param
-            setSendCurrency(WalletCurrency::Currency::CurrBeam);
+            setSendCurrency(OldCurrency::CurrBeam);
             setSendAmount(beamui::AmountToUIString(*beamAmount));
             setReceiveCurrency(convertSwapCoinToCurrency(*swapCoin));
             setReceiveAmount(beamui::AmountToUIString(*swapAmount, beamui::convertSwapCoinToCurrency(*swapCoin), false));
@@ -79,7 +78,7 @@ void SendSwapViewModel::fillParameters(const beam::wallet::TxParameters& paramet
             // Do not set fee, it is set automatically based on the currency param
             setSendCurrency(convertSwapCoinToCurrency(*swapCoin));
             setSendAmount(beamui::AmountToUIString(*swapAmount, beamui::convertSwapCoinToCurrency(*swapCoin), false));
-            setReceiveCurrency(WalletCurrency::Currency::CurrBeam);
+            setReceiveCurrency(OldCurrency::CurrBeam);
             setReceiveAmount(beamui::AmountToUIString(*beamAmount));
         }
         setOfferedTime(QDateTime::fromSecsSinceEpoch(*offeredTime));
@@ -170,7 +169,7 @@ void SendSwapViewModel::setSendAmount(QString value)
         emit isSendFeeOKChanged();
         recalcAvailable();
 
-        if (_sendCurrency == WalletCurrency::Currency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID))
+        if (_sendCurrency == OldCurrency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID))
         {
             _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
         }
@@ -191,7 +190,7 @@ void SendSwapViewModel::setSendFee(unsigned int value)
         emit isSendFeeOKChanged();
         recalcAvailable();
 
-        if (_sendCurrency == WalletCurrency::Currency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID) && _sendAmountGrothes)
+        if (_sendCurrency == OldCurrency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID) && _sendAmountGrothes)
         {
             _feeChangedByUI = true;
             _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
@@ -199,14 +198,14 @@ void SendSwapViewModel::setSendFee(unsigned int value)
     }
 }
 
-WalletCurrency::Currency SendSwapViewModel::getSendCurrency() const
+OldCurrency SendSwapViewModel::getSendCurrency() const
 {
     return _sendCurrency;
 }
 
-void SendSwapViewModel::setSendCurrency(WalletCurrency::Currency value)
+void SendSwapViewModel::setSendCurrency(OldCurrency value)
 {
-    assert(value > WalletCurrency::Currency::CurrStart && value < WalletCurrency::Currency::CurrEnd);
+    assert(value > OldCurrency::CurrStart && value < OldCurrency::CurrEnd);
 
     if (value != _sendCurrency)
     {
@@ -250,14 +249,14 @@ void SendSwapViewModel::setReceiveFee(unsigned int value)
     }
 }
 
-WalletCurrency::Currency SendSwapViewModel::getReceiveCurrency() const
+OldCurrency SendSwapViewModel::getReceiveCurrency() const
 {
     return _receiveCurrency;
 }
 
-void SendSwapViewModel::setReceiveCurrency(WalletCurrency::Currency value)
+void SendSwapViewModel::setReceiveCurrency(OldCurrency value)
 {
-    assert(value > WalletCurrency::Currency::CurrStart && value < WalletCurrency::Currency::CurrEnd);
+    assert(value > OldCurrency::CurrStart && value < OldCurrency::CurrEnd);
 
     if (value != _receiveCurrency)
     {
@@ -325,7 +324,7 @@ void SendSwapViewModel::onChangeCalculated(beam::Amount changeAsset, beam::Amoun
 
 void SendSwapViewModel::onCoinsSelectionCalculated(const beam::wallet::CoinsSelectionInfo& selectionRes)
 {
-    if (_sendCurrency == WalletCurrency::Currency::CurrBeam)
+    if (_sendCurrency == OldCurrency::CurrBeam)
     {
         _minimalBeamFeeGrothes = selectionRes.m_minimalExplicitFee;
         emit minimalBeamFeeGrothesChanged();
@@ -343,7 +342,7 @@ void SendSwapViewModel::onCoinsSelectionCalculated(const beam::wallet::CoinsSele
 bool SendSwapViewModel::isEnough() const
 {
     auto total = _sendAmountGrothes + _sendFeeGrothes + _changeGrothes;
-    if (WalletCurrency::Currency::CurrBeam == _sendCurrency)
+    if (OldCurrency::CurrBeam == _sendCurrency)
     {
         auto available = beam::AmountBig::get_Lo(beam::Asset::s_BeamID);
         return available >= total;
@@ -352,7 +351,7 @@ bool SendSwapViewModel::isEnough() const
     auto swapCoin = convertCurrencyToSwapCoin(_sendCurrency);
     if (isEthereumBased(_sendCurrency))
     {
-        if (_sendCurrency == WalletCurrency::Currency::CurrEthereum)
+        if (_sendCurrency == OldCurrency::CurrEthereum)
         {
             total = _sendAmountGrothes + beam::wallet::EthereumSide::CalcLockTxFee(_sendFeeGrothes, swapCoin);
 
@@ -384,7 +383,7 @@ void SendSwapViewModel::recalcAvailable()
 {
     switch(_sendCurrency)
     {
-    case WalletCurrency::Currency::CurrBeam:
+    case OldCurrency::CurrBeam:
         _changeGrothes = 0;
         _walletModel.getAsync()->calcChange(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
         return;
@@ -521,4 +520,19 @@ QString SendSwapViewModel::tokenGeneratedByNewVersionMessage() const
 unsigned int SendSwapViewModel::getMinimalBeamFeeGrothes() const
 {
     return _minimalBeamFeeGrothes;
+}
+
+QString SendSwapViewModel::getSentFeeTitle() const
+{
+    return swapui::getSwapFeeTitle(_sendCurrency);
+}
+
+QString SendSwapViewModel::getReceiveFeeTitle() const
+{
+    return swapui::getSwapFeeTitle(_receiveCurrency);
+}
+
+QList<QMap<QString, QVariant>> SendSwapViewModel::getCurrList() const
+{
+    return swapui::getUICurrList();
 }

@@ -103,7 +103,7 @@ QString SwapCoinClientWrapper::getCoinLabel() const
     return beamui::getCurrencyUnitName(beamui::convertSwapCoinToCurrency(m_swapCoin)).toUpper();
 }
 
-WalletCurrency::Currency SwapCoinClientWrapper::getCurrency() const
+OldCurrency SwapCoinClientWrapper::getCurrency() const
 {
     return convertSwapCoinToCurrency(m_swapCoin);
 }

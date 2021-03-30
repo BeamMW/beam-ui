@@ -39,10 +39,13 @@ class ReceiveSwapViewModel: public QObject
     Q_PROPERTY(QString       secondCurrencyUnitName         READ getSecondCurrencyUnitName                   NOTIFY secondCurrencyUnitNameChanged)
     Q_PROPERTY(QString       secondCurrencySendRateValue    READ getSecondCurrencySendRateValue              NOTIFY secondCurrencyRateChanged)
     Q_PROPERTY(QString       secondCurrencyReceiveRateValue READ getSecondCurrencyReceiveRateValue           NOTIFY secondCurrencyRateChanged)
+    Q_PROPERTY(QString       sentFeeTitle                   READ getSentFeeTitle                             NOTIFY sentCurrencyChanged)
+    Q_PROPERTY(QString       receiveFeeTitle                READ getReceiveFeeTitle                          NOTIFY receiveCurrencyChanged)
 
-    Q_PROPERTY(WalletCurrency::Currency  receiveCurrency    READ getReceiveCurrency    WRITE  setReceiveCurrency  NOTIFY  receiveCurrencyChanged)
-    Q_PROPERTY(WalletCurrency::Currency  sentCurrency       READ getSentCurrency       WRITE  setSentCurrency     NOTIFY  sentCurrencyChanged)
-    Q_PROPERTY(unsigned int minimalBeamFeeGrothes          READ getMinimalBeamFeeGrothes       NOTIFY minimalBeamFeeGrothesChanged)
+    Q_PROPERTY(OldCurrency  receiveCurrency    READ getReceiveCurrency    WRITE  setReceiveCurrency  NOTIFY  receiveCurrencyChanged)
+    Q_PROPERTY(OldCurrency  sentCurrency       READ getSentCurrency       WRITE  setSentCurrency     NOTIFY  sentCurrencyChanged)
+    Q_PROPERTY(unsigned int minimalBeamFeeGrothes           READ getMinimalBeamFeeGrothes       NOTIFY  minimalBeamFeeGrothesChanged)
+    Q_PROPERTY(QList<QMap<QString, QVariant>> currList      READ getCurrList                    NOTIFY  currListChanged)
 
 public:
     ReceiveSwapViewModel();
@@ -68,6 +71,7 @@ signals:
     void secondCurrencyRateChanged();
     void secondCurrencyUnitNameChanged();
     void minimalBeamFeeGrothesChanged();
+    void currListChanged();
 
 public:
     Q_INVOKABLE void generateNewAddress();
@@ -88,11 +92,11 @@ private:
     unsigned int getSentFee() const;
     void setSentFee(unsigned int value);
 
-    WalletCurrency::Currency  getReceiveCurrency() const;
-    void setReceiveCurrency(WalletCurrency::Currency value);
+    OldCurrency  getReceiveCurrency() const;
+    void setReceiveCurrency(OldCurrency value);
 
-    WalletCurrency::Currency  getSentCurrency() const;
-    void setSentCurrency(WalletCurrency::Currency value);
+    OldCurrency  getSentCurrency() const;
+    void setSentCurrency(OldCurrency value);
 
     void setOfferExpires(int value);
     int  getOfferExpires() const;
@@ -121,8 +125,11 @@ private:
     QString getSecondCurrencyUnitName() const;
     QString getSecondCurrencySendRateValue() const;
     QString getSecondCurrencyReceiveRateValue() const;
+    QString getSentFeeTitle() const;
+    QString getReceiveFeeTitle() const;
 
     unsigned int getMinimalBeamFeeGrothes() const;
+    QList<QMap<QString, QVariant>> getCurrList() const;
 
 private slots:
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
@@ -135,8 +142,8 @@ private:
     beam::Amount _receiveFeeGrothes;
     beam::Amount _sentFeeGrothes;
 
-    WalletCurrency::Currency  _receiveCurrency;
-    WalletCurrency::Currency  _sentCurrency;
+    OldCurrency  _receiveCurrency;
+    OldCurrency  _sentCurrency;
     int       _offerExpires;
     QString   _addressComment;
     QString   _token;

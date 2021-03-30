@@ -268,7 +268,7 @@ Control {
 
             SFLabel {
                 id:              secondCurrencyAmountText
-                visible:         rateUnit.length > 0
+                visible:         rate  != "0"
                 font.pixelSize:  control.rateFontSize
                 font.styleName:  "Regular"
                 font.weight:     Font.Normal

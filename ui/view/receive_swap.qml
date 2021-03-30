@@ -56,7 +56,7 @@ ColumnLayout {
 
     function currencyError() {
         if (viewModel.receiveCurrency == viewModel.sentCurrency) return true;
-        if (viewModel.receiveCurrency != Currency.CurrBeam && viewModel.sentCurrency != Currency.CurrBeam) return true;
+        if (viewModel.receiveCurrency != OldCurrency.CurrBeam && viewModel.sentCurrency != OldCurrency.CurrBeam) return true;
         return false;
     }
 
@@ -135,6 +135,7 @@ Update your settings and try again."
                         AmountInput {
                             id:                         sentAmountInput
                             color:                      Style.accent_outgoing
+                            currencies:                 viewModel.currList
                             currencyIdx:                viewModel.sentCurrency
                             amount:                     viewModel.amountSent
                             rate:                       viewModel.secondCurrencySendRateValue
@@ -163,9 +164,9 @@ please review your settings and try again"
                             }
 
                             onCurrencyIdxChanged: {
-                                if(sentAmountInput.currencyIdx != Currency.CurrBeam &&
-                                   receiveAmountInput.currencyIdx != Currency.CurrBeam) {
-                                    receiveAmountInput.currencyIdx = Currency.CurrBeam
+                                if(sentAmountInput.currencyIdx != OldCurrency.CurrBeam &&
+                                   receiveAmountInput.currencyIdx != OldCurrency.CurrBeam) {
+                                    receiveAmountInput.currencyIdx = OldCurrency.CurrBeam
                                 }
                             }
                         }
@@ -187,14 +188,14 @@ please review your settings and try again"
                     // Send Fee
                     //
                     FoldablePanel {
-                        title:             Utils.getSwapFeeTitle(sentAmountInput.currencyIdx)
+                        title:             viewModel.sentFeeTitle
                         Layout.fillWidth:  true
                         folded:            false
 
                         content: FeeInput {
                             id:                       sendFeeInput
                             currency:                 viewModel.sentCurrency
-                            minFee:                   currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
+                            minFee:                   currency == OldCurrency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
                             maxFee:                     BeamGlobals.getMaximumFee(currency)
                             recommendedFee:           BeamGlobals.getRecommendedFee(currency)
                             feeLabel:                 BeamGlobals.getFeeRateLabel(currency)
@@ -366,6 +367,7 @@ please review your settings and try again"
                         content:
                         AmountInput {
                             id:             receiveAmountInput
+                            currencies:     viewModel.currList
                             currencyIdx:    viewModel.receiveCurrency
                             amount:         viewModel.amountToReceive
                             rate:           viewModel.secondCurrencyReceiveRateValue
@@ -394,9 +396,9 @@ please review your settings and try again"
                             }
 
                             onCurrencyIdxChanged: {
-                                if(receiveAmountInput.currencyIdx != Currency.CurrBeam &&
-                                   sentAmountInput.currencyIdx != Currency.CurrBeam) {
-                                    sentAmountInput.currencyIdx = Currency.CurrBeam
+                                if(receiveAmountInput.currencyIdx != OldCurrency.CurrBeam &&
+                                   sentAmountInput.currencyIdx != OldCurrency.CurrBeam) {
+                                    sentAmountInput.currencyIdx = OldCurrency.CurrBeam
                                 }
                             }
                         }
@@ -417,7 +419,7 @@ please review your settings and try again"
                     // Fee
                     //
                     FoldablePanel {
-                        title:                   Utils.getSwapFeeTitle(receiveAmountInput.currencyIdx)
+                        title:                   viewModel.receiveFeeTitle
                         Layout.fillWidth:        true
                         folded:                  false
 
@@ -471,7 +473,7 @@ please review your settings and try again"
                                 columnSpacing:       20
                                 columns:             2
 
-                                property bool showEstimatedFee: viewModel.receiveCurrency != Currency.CurrBeam
+                                property bool showEstimatedFee: viewModel.receiveCurrency != OldCurrency.CurrBeam
 
                                 SFText {
                                     Layout.alignment:       Qt.AlignTop
@@ -517,7 +519,7 @@ please review your settings and try again"
                                     function checkReceive() {
                                         receiveAmountInput.amountInput.onTextChanged();
                                         if (parseFloat(receiveAmountInput.amount) >= rateRow.maxAmount) {
-                                            if (receiveAmountInput.currencyIdx == Currency.CurrBeam) {
+                                            if (receiveAmountInput.currencyIdx == OldCurrency.CurrBeam) {
                                                 //% "Amount overtop total Beam supply."
                                                 receiveAmountInput.error = qsTrId("overtop-beam-supply");
                                             }
@@ -547,7 +549,7 @@ please review your settings and try again"
                                             return;
                                         }
                                         var parsedAmount = parseFloat(receiveAmountInput.amount);
-                                        if (receiveAmountInput.currencyIdx == Currency.CurrBeam) {
+                                        if (receiveAmountInput.currencyIdx == OldCurrency.CurrBeam) {
                                             rateValid =
                                                 parsedAmount <= rateRow.maxAmount &&
                                                 parsedAmount >= rateRow.minAmount;

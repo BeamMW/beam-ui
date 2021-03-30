@@ -26,10 +26,10 @@ ColumnLayout {
 
     function validateCoin() {
         var currency = viewModel.sendCurrency
-        if (currency == Currency.CurrBeam) {
+        if (currency == OldCurrency.CurrBeam) {
             currency = viewModel.receiveCurrency;
 
-            if (currency == Currency.CurrBeam) return;
+            if (currency == OldCurrency.CurrBeam) return;
         }
 
         if (!BeamGlobals.canReceive(currency)) {
@@ -163,6 +163,7 @@ please review your settings and try again"
                         AmountInput {
                             id:           sendAmountInput
                             amount:       viewModel.sendAmount
+                            currencies:   viewModel.currList
                             currencyIdx:  viewModel.sendCurrency
                             rate:         viewModel.secondCurrencySendRateValue
                             rateUnit:     viewModel.secondCurrencyUnitName
@@ -204,13 +205,13 @@ please review your settings and try again"
                     // Send Fee
                     //
                     FoldablePanel {
-                        title:                   Utils.getSwapFeeTitle(viewModel.sendCurrency)
+                        title:                   viewModel.sentFeeTitle
                         Layout.fillWidth:        true
                         folded:                  false
                         content: FeeInput {
                             id:                         sendFeeInput
                             currency:                   viewModel.sendCurrency
-                            minFee:                     currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
+                            minFee:                     currency == OldCurrency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
                             maxFee:                     BeamGlobals.getMaximumFee(currency)
                             recommendedFee:             BeamGlobals.getRecommendedFee(currency)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(currency)
@@ -287,6 +288,7 @@ please review your settings and try again"
                         AmountInput {
                             id:            receiveAmountInput
                             amount:        viewModel.receiveAmount
+                            currencies:    viewModel.currList
                             currencyIdx:   viewModel.receiveCurrency
                             rate:          viewModel.secondCurrencyReceiveRateValue
                             rateUnit:      viewModel.secondCurrencyUnitName
@@ -327,7 +329,7 @@ please review your settings and try again"
                     // Fee
                     //
                     FoldablePanel {
-                        title:                   Utils.getSwapFeeTitle(viewModel.receiveCurrency)
+                        title:                   viewModel.receiveFeeTitle
                         Layout.fillWidth:        true
                         folded:                  false
                         content: FeeInput {
@@ -374,7 +376,7 @@ please review your settings and try again"
                                 rowSpacing:          20
                                 columns:             2
 
-                                property bool showEstimatedFee: viewModel.receiveCurrency != Currency.CurrBeam
+                                property bool showEstimatedFee: viewModel.receiveCurrency != OldCurrency.CurrBeam
 
                                 SFText {
                                     Layout.alignment:       Qt.AlignTop
@@ -502,7 +504,7 @@ please review your settings and try again"
                     var unitName = BeamGlobals.getCurrencyUnitName(viewModel.sendCurrency)
                     var onlineMessage =
                         //% "Keep your wallet online. The swap normally takes about 1 hour to complete."
-                        qsTrId("send-swap-sconfirmation-online-time") + (viewModel.sendCurrency !== Currency.CurrBeam ?
+                        qsTrId("send-swap-sconfirmation-online-time") + (viewModel.sendCurrency !== OldCurrency.CurrBeam ?
                         //% " Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled."
                         qsTrId("send-swap-fee-warning").arg(unitName)
                         : "")
@@ -516,7 +518,7 @@ please review your settings and try again"
                             amount:         viewModel.sendAmount,
                             unitName:       unitName,
                             fee:            viewModel.sendFee,
-                            flatFee:        viewModel.sendCurrency == Currency.CurrBeam,
+                            flatFee:        viewModel.sendCurrency == OldCurrency.CurrBeam,
                             acceptHandler:  acceptedCallback,
                             rate:           viewModel.secondCurrencySendRateValue,
                             rateUnit:       viewModel.secondCurrencyUnitName,

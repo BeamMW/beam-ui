@@ -31,7 +31,7 @@ class SwapCoinClientWrapper : public QObject
     Q_PROPERTY(bool                         isConnecting     READ getIsConnecting     NOTIFY statusChanged)
     Q_PROPERTY(bool                         hasActiveTx      READ hasActiveTx         NOTIFY activeTxChanged)
     Q_PROPERTY(QString                      coinLabel        READ getCoinLabel        CONSTANT)
-    Q_PROPERTY(WalletCurrency::Currency     currency         READ getCurrency         CONSTANT)
+    Q_PROPERTY(OldCurrency                  currency         READ getCurrency         CONSTANT)
 
 public:
     SwapCoinClientWrapper() = default;
@@ -47,7 +47,7 @@ public:
     bool getIsConnecting() const;
     bool hasActiveTx() const;
     QString getCoinLabel() const;
-    WalletCurrency::Currency getCurrency() const;
+    OldCurrency getCurrency() const;
 
     beam::wallet::AtomicSwapCoin getSwapCoin() const;
     uint16_t getLockTxMinConfirmations() const;

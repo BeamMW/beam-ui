@@ -246,26 +246,26 @@ Item {
 
                 function getCurrencyIcon(currency) {
                     switch(currency) {
-                        case Currency.CurrBitcoin:
+                        case OldCurrency.CurrBitcoin:
                             return "qrc:/assets/icon-btc.svg";
-                        case Currency.CurrLitecoin:
+                        case OldCurrency.CurrLitecoin:
                             return "qrc:/assets/icon-ltc.svg";
-                        case Currency.CurrQtum:
+                        case OldCurrency.CurrQtum:
                             return "qrc:/assets/icon-qtum.svg";
                         // TODO disabled BCH
-                        /*case Currency.CurrBitcoinCash:
+                        /*case OldCurrency.CurrBitcoinCash:
                             return "qrc:/assets/icon-bch.svg";*/
-                        case Currency.CurrDash:
+                        case OldCurrency.CurrDash:
                             return "qrc:/assets/icon-dash.svg";
-                        case Currency.CurrDogecoin:
+                        case OldCurrency.CurrDogecoin:
                             return "qrc:/assets/icon-doge.svg";
-                        case Currency.CurrEthereum:
+                        case OldCurrency.CurrEthereum:
                             return "qrc:/assets/icon-eth.svg";
-                        case Currency.CurrDai:
+                        case OldCurrency.CurrDai:
                             return "qrc:/assets/icon-dai.svg";
-                        case Currency.CurrUsdt:
+                        case OldCurrency.CurrUsdt:
                             return "qrc:/assets/icon-usdt.svg";
-                        case Currency.CurrWrappedBTC:
+                        case OldCurrency.CurrWrappedBTC:
                             return "qrc:/assets/icon-wbtc.svg";
                         default: return "";
                     }
@@ -273,26 +273,26 @@ Item {
 
                 function getSwapCurrencyPaneGradient(currency)  {
                     switch(currency) {
-                        case Currency.CurrBitcoin:
+                        case OldCurrency.CurrBitcoin:
                             return Style.currencyPaneLeftBTC;
-                        case Currency.CurrLitecoin:
+                        case OldCurrency.CurrLitecoin:
                             return Style.currencyPaneLeftLTC;
-                        case Currency.CurrQtum:
+                        case OldCurrency.CurrQtum:
                             return Style.currencyPaneLeftQTUM;
                         // TODO disable BCH
-                        /*case Currency.CurrBitcoinCash:
+                        /*case OldCurrency.CurrBitcoinCash:
                             return Style.currencyPaneLeftBCH;*/
-                        case Currency.CurrDash:
+                        case OldCurrency.CurrDash:
                             return Style.currencyPaneLeftDASH;
-                        case Currency.CurrDogecoin:
+                        case OldCurrency.CurrDogecoin:
                             return Style.currencyPaneLeftDOGE;
-                        case Currency.CurrEthereum:
+                        case OldCurrency.CurrEthereum:
                             return Style.currencyPaneLeftETH;
-                        case Currency.CurrDai:
+                        case OldCurrency.CurrDai:
                             return Style.currencyPaneLeftDAI;
-                        case Currency.CurrUsdt:
+                        case OldCurrency.CurrUsdt:
                             return Style.currencyPaneLeftUSDT;
-                        case Currency.CurrWrappedBTC:
+                        case OldCurrency.CurrWrappedBTC:
                             return Style.currencyPaneLeftWBTC;
                         default:
                             return Style.currencyPaneLeftBTC;

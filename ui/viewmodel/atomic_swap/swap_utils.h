@@ -1,4 +1,4 @@
-// Copyright 2020 The Beam Team
+// Copyright 2019 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,14 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #pragma once
 
-#include "currencies.h"
+#include <QString>
+#include "viewmodel/currencies.h"
 
-beam::Amount minFeeBeam(bool isShielded = false);
-bool isFeeOK(beam::Amount fee, OldCurrency currency, bool isShielded);
-bool isSwapFeeOK(beam::Amount amount, beam::Amount fee, OldCurrency currency);
-beam::Amount minimalFee(OldCurrency, bool isShielded);
-beam::Amount maximumFee(OldCurrency);
-QString calcWithdrawTxFee(OldCurrency currency, beam::Amount feeRate);
+namespace swapui
+{
+    QString getSwapFeeTitle(OldCurrency currency);
+    QList<QMap<QString, QVariant>> getUICurrList();
+}

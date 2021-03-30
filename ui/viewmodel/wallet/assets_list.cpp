@@ -128,7 +128,7 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
         case Roles::RSelectionColor:
             return _amgr->getSelectionColor(assetId);
         case Roles::RRateUnit:
-            return assetId < 1 ? beamui::getCurrencyUnitName(_ermgr.getRateCurrency()) : "";
+            return beamui::getCurrencyUnitName(_ermgr.getRateCurrency());
         case Roles::RName:
             return _amgr->getName(assetId);
         case Roles::RSmallestUnitName:
@@ -143,12 +143,8 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
             return _amgr->getPaperUrl(assetId);
         case Roles::RRate:
             {
-                if (assetId < 1)
-                {
-                    auto rate = _ermgr.getRate(beam::wallet::Currency::BEAM());
-                    return beamui::AmountToUIString(rate);
-                }
-                return "";
+                auto rate = _ermgr.getRate(beam::wallet::Currency(assetId));
+                return beamui::AmountToUIString(rate);
             }
         default:
             assert(false);

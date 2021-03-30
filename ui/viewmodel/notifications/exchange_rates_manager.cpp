@@ -108,29 +108,29 @@ beam::Amount ExchangeRatesManager::getRate(const beam::wallet::Currency& currenc
     return (it == std::cend(m_rates)) ? 0 : it->second;
 }
 
-beam::wallet::Currency ExchangeRatesManager::convertCurrencyToExchangeCurrency(WalletCurrency::Currency uiCurrency)
+beam::wallet::Currency ExchangeRatesManager::convertCurrencyToExchangeCurrency(OldCurrency uiCurrency)
 {
     switch (uiCurrency)
     {
-    case WalletCurrency::Currency::CurrBeam:
+    case OldCurrency::CurrBeam:
         return beam::wallet::Currency::BEAM();
-    case WalletCurrency::Currency::CurrBitcoin:
+    case OldCurrency::CurrBitcoin:
         return beam::wallet::Currency::BTC();
-    case WalletCurrency::Currency::CurrLitecoin:
+    case OldCurrency::CurrLitecoin:
         return beam::wallet::Currency::LTC();
-    case WalletCurrency::Currency::CurrQtum:
+    case OldCurrency::CurrQtum:
         return beam::wallet::Currency::QTUM();
-    case WalletCurrency::Currency::CurrDash:
+    case OldCurrency::CurrDash:
         return beam::wallet::Currency::DASH();
-    case WalletCurrency::Currency::CurrDogecoin:
+    case OldCurrency::CurrDogecoin:
         return beam::wallet::Currency::DOGE();
-    case WalletCurrency::Currency::CurrEthereum:
+    case OldCurrency::CurrEthereum:
         return beam::wallet::Currency::ETH();
-    case WalletCurrency::Currency::CurrDai:
+    case OldCurrency::CurrDai:
         return beam::wallet::Currency::DAI();
-    case WalletCurrency::Currency::CurrUsdt:
+    case OldCurrency::CurrUsdt:
         return beam::wallet::Currency::USDT();
-    case WalletCurrency::Currency::CurrWrappedBTC:
+    case OldCurrency::CurrWrappedBTC:
         return beam::wallet::Currency::WBTC();
     default:
         return beam::wallet::Currency::UNKNOWN();
