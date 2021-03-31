@@ -3013,5 +3013,13 @@ Update your settings and try again.</source>
         <source>Your address book is empty</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="atomic-no-my-offers">
+        <source>There are no offers yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-tx-empty">
+        <source>There are no transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

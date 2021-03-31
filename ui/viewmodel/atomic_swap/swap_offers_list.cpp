@@ -98,7 +98,7 @@ QVariant SwapOffersList::data(const QModelIndex &index, int role) const
         {
             auto swapCoin = value->getSwapCoinName();
             const QString beam = "beam";
-            return  value->isSendBeam() ? beam + swapCoin : swapCoin + beam;
+            return  value->isSendBeam() ? beam + '-' + swapCoin : swapCoin + '-' + beam;
         }
         default:
             return QVariant();

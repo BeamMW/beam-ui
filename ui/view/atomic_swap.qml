@@ -475,15 +475,15 @@ Item {
                             textRole: 'text'
                             model: [
                                 {text: "ALL",  pair: ""},
-                                {text: "BTC",  pair: "^(btc)|(btc)$"},
-                                {text: "DAI",  pair: "^(dai)|(dai)$"},
-                                {text: "DASH", pair: "^(dash)|(dash)$"},
-                                {text: "DOGE", pair: "^(doge)|(doge)$"},
-                                {text: "ETH",  pair: "^(eth)|(eth)$"},
-                                {text: "LTC",  pair: "^(ltc)|(ltc)$"},
-                                {text: "QTUM", pair: "^(qtum)|(qtum)$"},
-                                {text: "USDT", pair: "^(usdt)|(usdt)$"},
-                                {text: "WBTC", pair: "^(wbtc)|(wbtc)$"}
+                                {text: "BTC",  pair: "^(btc-)|(-btc)$"}, // We need a separator '-' to distinguish 'btc' and 'wbtc' 
+                                {text: "DAI",  pair: "^(dai-)|(-dai)$"},
+                                {text: "DASH", pair: "^(dash-)|(-dash)$"},
+                                {text: "DOGE", pair: "^(doge-)|(-doge)$"},
+                                {text: "ETH",  pair: "^(eth-)|(-eth)$"},
+                                {text: "LTC",  pair: "^(ltc-)|(-ltc)$"},
+                                {text: "QTUM", pair: "^(qtum-)|(-qtum)$"},
+                                {text: "USDT", pair: "^(usdt-)|(-usdt)$"},
+                                {text: "WBTC", pair: "^(wbtc-)|(-wbtc)$"}
                             ]
                         }
                     }   // RowLayout
@@ -536,10 +536,15 @@ Item {
                             color:                Style.content_main
                             opacity:              0.5
                             lineHeight:           1.43
+
+                            text:                 offersTable.showOnlyMyOffers == false ? 
 /*% "There are no active offers at the moment.
 Please try again later or create an offer yourself."
 */
-                            text:                 qsTrId("atomic-no-offers")
+                            qsTrId("atomic-no-offers")
+                            :
+                            //% "There are no offers yet."
+                            qsTrId("atomic-no-my-offers")
                         }
 
                         Item {
@@ -821,8 +826,8 @@ Please try again later or create an offer yourself."
                             color:                Style.content_main
                             opacity:              0.5
                             lineHeight:           1.43
-                            //% "Your transaction list is empty"
-                            text: qsTrId("tx-empty")
+                            //% "There are no transactions yet."
+                            text: qsTrId("swap-tx-empty")
                         }
 
                         Item {
@@ -837,8 +842,8 @@ Please try again later or create an offer yourself."
                             PropertyChanges { target: allTabSelector; state: "active" }
                             PropertyChanges { target: txProxyModel; filterString: "*" }
                             PropertyChanges { target: emptyMessage;  
-                                //% "Your transaction list is empty"
-                                text: qsTrId("tx-empty")
+                                //% "There are no transactions yet."
+                                text: qsTrId("swap-tx-empty")
                             }
                         },
                         State {
