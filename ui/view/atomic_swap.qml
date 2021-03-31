@@ -530,15 +530,15 @@ Item {
                             textRole: 'text'
                             model: [
                                 {text: "ALL",  pair: ""},
-                                {text: "BTC",  pair: "^(btc)|(btc)$"},
-                                {text: "DAI",  pair: "^(dai)|(dai)$"},
-                                {text: "DASH", pair: "^(dash)|(dash)$"},
-                                {text: "DOGE", pair: "^(doge)|(doge)$"},
-                                {text: "ETH",  pair: "^(eth)|(eth)$"},
-                                {text: "LTC",  pair: "^(ltc)|(ltc)$"},
-                                {text: "QTUM", pair: "^(qtum)|(qtum)$"},
-                                {text: "USDT", pair: "^(usdt)|(usdt)$"},
-                                {text: "WBTC", pair: "^(wbtc)|(wbtc)$"}
+                                {text: "BTC",  pair: "^(btc-)|(-btc)$"}, // We need a separator '-' to distinguish 'btc' and 'wbtc' 
+                                {text: "DAI",  pair: "^(dai-)|(-dai)$"},
+                                {text: "DASH", pair: "^(dash-)|(-dash)$"},
+                                {text: "DOGE", pair: "^(doge-)|(-doge)$"},
+                                {text: "ETH",  pair: "^(eth-)|(-eth)$"},
+                                {text: "LTC",  pair: "^(ltc-)|(-ltc)$"},
+                                {text: "QTUM", pair: "^(qtum-)|(-qtum)$"},
+                                {text: "USDT", pair: "^(usdt-)|(-usdt)$"},
+                                {text: "WBTC", pair: "^(wbtc-)|(-wbtc)$"}
                             ]
                         }
                     }   // RowLayout
