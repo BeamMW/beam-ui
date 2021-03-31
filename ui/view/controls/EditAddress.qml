@@ -110,7 +110,8 @@ Dialog {
                 enabled: !viewModel.isAddressBusy(control.token)
 
                 onClicked: {
-                    control.expiration = new Date(new Date(Date.now()) - addressItem.createDate - 1)
+                    var newExpiration = new Date(Date.now() - 1000)
+                    control.expiration = newExpiration
                 }
             }
 
@@ -125,8 +126,9 @@ Dialog {
                     qsTrId("edit-addr-extend")
 
                 onClicked: {
-                    control.expiration = new Date(Date.now())
-                    control.expiration.setDate(control.expiration.getDate() + 61)
+                    var newExpiration = new Date()
+                    newExpiration.setDate(newExpiration.getDate() + 61)
+                    control.expiration = newExpiration
                     control.extended = true
                 }
             }

@@ -104,7 +104,7 @@ public:
     Q_INVOKABLE bool    isAddressBusy(const QString& addr);
     Q_INVOKABLE bool    commentValid(const QString& comment) const;
     Q_INVOKABLE void    deleteAddress(const QString& addr);
-    Q_INVOKABLE void    saveChanges(const QString& addr, const QString& name, QDateTime expirationStatus);
+    Q_INVOKABLE void    saveChanges(const QString& addr, const QString& name, QDateTime expirationDate);
     Q_INVOKABLE QString generateQR(const QString& addr, uint width, uint height);
 
 public:

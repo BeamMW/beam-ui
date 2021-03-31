@@ -305,7 +305,8 @@ void AddressBookViewModel::deleteAddress(const QString& addr)
 
 void AddressBookViewModel::saveChanges(const QString& token, const QString& name, QDateTime expiration)
 {
-    m_model.getAsync()->updateAddress(token.toStdString(), name.toStdString(), expiration.toMSecsSinceEpoch());
+    beam::Timestamp expirationStamp = expiration.toSecsSinceEpoch();
+    m_model.getAsync()->updateAddress(token.toStdString(), name.toStdString(), expirationStamp);
 }
 
 // static
