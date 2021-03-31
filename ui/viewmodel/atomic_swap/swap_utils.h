@@ -18,6 +18,6 @@
 
 namespace swapui
 {
-    QString getSwapFeeTitle(OldCurrency currency);
+    QString getSwapFeeTitle(OldWalletCurrency::OldCurrency currency);
     QList<QMap<QString, QVariant>> getUICurrList();
 }

@@ -34,31 +34,31 @@ beam::Amount minFeeBeam(bool isShielded)
     return isShielded ? fs.get_DefaultShieldedOut() : fs.get_DefaultStd();
 }
 
-bool isFeeOK(beam::Amount fee, OldCurrency currency, bool isShielded)
+bool isFeeOK(beam::Amount fee, OldWalletCurrency::OldCurrency currency, bool isShielded)
 {
     switch (currency)
     {
-    case OldCurrency::CurrBeam: return fee >= minFeeBeam(isShielded);
-    case OldCurrency::CurrBitcoin:  return true;
-    case OldCurrency::CurrLitecoin:  return true;
-    case OldCurrency::CurrQtum: return true;
+    case OldWalletCurrency::OldCurrency::CurrBeam: return fee >= minFeeBeam(isShielded);
+    case OldWalletCurrency::OldCurrency::CurrBitcoin:  return true;
+    case OldWalletCurrency::OldCurrency::CurrLitecoin:  return true;
+    case OldWalletCurrency::OldCurrency::CurrQtum: return true;
 #if defined(BITCOIN_CASH_SUPPORT)
-    case OldCurrency::CurrBitcoinCash: return true;
+    case OldWalletCurrency::OldCurrency::CurrBitcoinCash: return true;
 #endif // BITCOIN_CASH_SUPPORT
-    case OldCurrency::CurrDash: return true;
-    case OldCurrency::CurrDogecoin: return true;
-    case OldCurrency::CurrEthereum: return true;
-    case OldCurrency::CurrDai: return true;
-    case OldCurrency::CurrUsdt: return true;
-    case OldCurrency::CurrWrappedBTC: return true;
+    case OldWalletCurrency::OldCurrency::CurrDash: return true;
+    case OldWalletCurrency::OldCurrency::CurrDogecoin: return true;
+    case OldWalletCurrency::OldCurrency::CurrEthereum: return true;
+    case OldWalletCurrency::OldCurrency::CurrDai: return true;
+    case OldWalletCurrency::OldCurrency::CurrUsdt: return true;
+    case OldWalletCurrency::OldCurrency::CurrWrappedBTC: return true;
     default:
         return false;
     }
 }
 
-bool isSwapFeeOK(beam::Amount amount, beam::Amount fee, OldCurrency currency)
+bool isSwapFeeOK(beam::Amount amount, beam::Amount fee, OldWalletCurrency::OldCurrency currency)
 {
-    if (OldCurrency::CurrBeam == currency)
+    if (OldWalletCurrency::OldCurrency::CurrBeam == currency)
     {
         return amount > fee && fee >= minFeeBeam();
     }
@@ -77,9 +77,9 @@ bool isSwapFeeOK(beam::Amount amount, beam::Amount fee, OldCurrency currency)
     return result;
 }
 
-beam::Amount minimalFee(OldCurrency currency, bool isShielded)
+beam::Amount minimalFee(OldWalletCurrency::OldCurrency currency, bool isShielded)
 {
-    if (OldCurrency::CurrBeam == currency)
+    if (OldWalletCurrency::OldCurrency::CurrBeam == currency)
     {
         return minFeeBeam(isShielded);
     }
@@ -93,9 +93,9 @@ beam::Amount minimalFee(OldCurrency currency, bool isShielded)
     return AppModel::getInstance().getSwapCoinClient(swapCoin)->GetSettings().GetMinFeeRate();
 }
 
-beam::Amount maximumFee(OldCurrency currency)
+beam::Amount maximumFee(OldWalletCurrency::OldCurrency currency)
 {
-    if (OldCurrency::CurrBeam == currency)
+    if (OldWalletCurrency::OldCurrency::CurrBeam == currency)
     {
         // TODO roman.strilets need to investigate
         return 0u;
@@ -110,42 +110,42 @@ beam::Amount maximumFee(OldCurrency currency)
     return AppModel::getInstance().getSwapCoinClient(swapCoin)->GetSettings().GetMaxFeeRate();
 }
 
-QString calcWithdrawTxFee(OldCurrency currency, beam::Amount feeRate)
+QString calcWithdrawTxFee(OldWalletCurrency::OldCurrency currency, beam::Amount feeRate)
 {
     switch (currency) {
-    case OldCurrency::CurrBeam: {
+    case OldWalletCurrency::OldCurrency::CurrBeam: {
         return QString::fromStdString(std::to_string(feeRate));
     }
-    case OldCurrency::CurrBitcoin: {
+    case OldWalletCurrency::OldCurrency::CurrBitcoin: {
         auto total = beam::wallet::BitcoinSide::CalcWithdrawTxFee(feeRate);
         return QString::fromStdString(std::to_string(total)) + " sat";
     }
-    case OldCurrency::CurrLitecoin: {
+    case OldWalletCurrency::OldCurrency::CurrLitecoin: {
         auto total = beam::wallet::LitecoinSide::CalcWithdrawTxFee(feeRate);
         return QString::fromStdString(std::to_string(total)) + " ph";
     }
-    case OldCurrency::CurrQtum: {
+    case OldWalletCurrency::OldCurrency::CurrQtum: {
         auto total = beam::wallet::QtumSide::CalcWithdrawTxFee(feeRate);
         return QString::fromStdString(std::to_string(total)) + " qsat";
     }
 #if defined(BITCOIN_CASH_SUPPORT)
-    case OldCurrency::CurrBitcoinCash: {
+    case OldWalletCurrency::OldCurrency::CurrBitcoinCash: {
         auto total = beam::wallet::BitcoinCashSide::CalcWithdrawTxFee(feeRate);
         return QString::fromStdString(std::to_string(total)) + " sat";
     }
 #endif // BITCOIN_CASH_SUPPORT
-    case OldCurrency::CurrDash: {
+    case OldWalletCurrency::OldCurrency::CurrDash: {
         auto total = beam::wallet::DashSide::CalcWithdrawTxFee(feeRate);
         return QString::fromStdString(std::to_string(total)) + " duff";
     }
-    case OldCurrency::CurrDogecoin: {
+    case OldWalletCurrency::OldCurrency::CurrDogecoin: {
         auto total = beam::wallet::DogecoinSide::CalcWithdrawTxFee(feeRate);
         return QString::fromStdString(std::to_string(total)) + " sat";
     }
-    case OldCurrency::CurrEthereum:
-    case OldCurrency::CurrDai:
-    case OldCurrency::CurrUsdt:
-    case OldCurrency::CurrWrappedBTC: {
+    case OldWalletCurrency::OldCurrency::CurrEthereum:
+    case OldWalletCurrency::OldCurrency::CurrDai:
+    case OldWalletCurrency::OldCurrency::CurrUsdt:
+    case OldWalletCurrency::OldCurrency::CurrWrappedBTC: {
         auto swapCoin = convertCurrencyToSwapCoin(currency);
         auto total = beam::wallet::EthereumSide::CalcWithdrawTxFee(feeRate, swapCoin);
         return QString::fromStdString(std::to_string(total)) + " gwei";

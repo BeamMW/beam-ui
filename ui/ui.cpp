@@ -207,6 +207,9 @@ int main (int argc, char* argv[])
                         return new Theme;
                     });
 
+            qmlRegisterUncreatableType<OldWalletCurrency>("Beam.Wallet", 1, 0, "OldWalletCurrency", "You cannot create an instance of the Enums.");
+            qRegisterMetaType<OldWalletCurrency::OldCurrency>("OldWalletCurrency::OldCurrency");
+
             qmlRegisterSingletonType<QMLGlobals>(
                     "Beam.Wallet", 1, 0, "BeamGlobals",
                     [](QQmlEngine* engine, QJSEngine* scriptEngine) -> QObject* {
@@ -215,10 +218,8 @@ int main (int argc, char* argv[])
                         return new QMLGlobals(*engine);
                     });
 
-            qRegisterMetaType<OldCurrency>("OldCurrency");
             qRegisterMetaType<beam::Asset::ID>("beam::Asset::ID");
             qRegisterMetaType<beam::wallet::WalletAsset>("beam::wallet::WalletAsset");
-            qmlRegisterUncreatableType<OldWalletCurrency>("Beam.Wallet", 1, 0, "OldCurrency", "Not creatable as it is an enum type.");
             qmlRegisterType<StartViewModel>("Beam.Wallet", 1, 0, "StartViewModel");
             qmlRegisterType<LoadingViewModel>("Beam.Wallet", 1, 0, "LoadingViewModel");
             qmlRegisterType<MainViewModel>("Beam.Wallet", 1, 0, "MainViewModel");

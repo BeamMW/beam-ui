@@ -56,7 +56,7 @@ ColumnLayout {
 
     function currencyError() {
         if (viewModel.receiveCurrency == viewModel.sentCurrency) return true;
-        if (viewModel.receiveCurrency != OldCurrency.CurrBeam && viewModel.sentCurrency != OldCurrency.CurrBeam) return true;
+        if (viewModel.receiveCurrency != OldWalletCurrency.CurrBeam && viewModel.sentCurrency != OldWalletCurrency.CurrBeam) return true;
         return false;
     }
 
@@ -164,9 +164,9 @@ please review your settings and try again"
                             }
 
                             onCurrencyIdxChanged: {
-                                if(sentAmountInput.currencyIdx != OldCurrency.CurrBeam &&
-                                   receiveAmountInput.currencyIdx != OldCurrency.CurrBeam) {
-                                    receiveAmountInput.currencyIdx = OldCurrency.CurrBeam
+                                if(sentAmountInput.currencyIdx != OldWalletCurrency.CurrBeam &&
+                                   receiveAmountInput.currencyIdx != OldWalletCurrency.CurrBeam) {
+                                    receiveAmountInput.currencyIdx = OldWalletCurrency.CurrBeam
                                 }
                             }
                         }
@@ -195,7 +195,7 @@ please review your settings and try again"
                         content: FeeInput {
                             id:                       sendFeeInput
                             currency:                 viewModel.sentCurrency
-                            minFee:                   currency == OldCurrency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
+                            minFee:                   currency == OldWalletCurrency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
                             maxFee:                     BeamGlobals.getMaximumFee(currency)
                             recommendedFee:           BeamGlobals.getRecommendedFee(currency)
                             feeLabel:                 BeamGlobals.getFeeRateLabel(currency)
@@ -396,9 +396,9 @@ please review your settings and try again"
                             }
 
                             onCurrencyIdxChanged: {
-                                if(receiveAmountInput.currencyIdx != OldCurrency.CurrBeam &&
-                                   sentAmountInput.currencyIdx != OldCurrency.CurrBeam) {
-                                    sentAmountInput.currencyIdx = OldCurrency.CurrBeam
+                                if(receiveAmountInput.currencyIdx != OldWalletCurrency.CurrBeam &&
+                                   sentAmountInput.currencyIdx != OldWalletCurrency.CurrBeam) {
+                                    sentAmountInput.currencyIdx = OldWalletCurrency.CurrBeam
                                 }
                             }
                         }
@@ -473,7 +473,7 @@ please review your settings and try again"
                                 columnSpacing:       20
                                 columns:             2
 
-                                property bool showEstimatedFee: viewModel.receiveCurrency != OldCurrency.CurrBeam
+                                property bool showEstimatedFee: viewModel.receiveCurrency != OldWalletCurrency.CurrBeam
 
                                 SFText {
                                     Layout.alignment:       Qt.AlignTop
@@ -519,7 +519,7 @@ please review your settings and try again"
                                     function checkReceive() {
                                         receiveAmountInput.amountInput.onTextChanged();
                                         if (parseFloat(receiveAmountInput.amount) >= rateRow.maxAmount) {
-                                            if (receiveAmountInput.currencyIdx == OldCurrency.CurrBeam) {
+                                            if (receiveAmountInput.currencyIdx == OldWalletCurrency.CurrBeam) {
                                                 //% "Amount overtop total Beam supply."
                                                 receiveAmountInput.error = qsTrId("overtop-beam-supply");
                                             }
@@ -549,7 +549,7 @@ please review your settings and try again"
                                             return;
                                         }
                                         var parsedAmount = parseFloat(receiveAmountInput.amount);
-                                        if (receiveAmountInput.currencyIdx == OldCurrency.CurrBeam) {
+                                        if (receiveAmountInput.currencyIdx == OldWalletCurrency.CurrBeam) {
                                             rateValid =
                                                 parsedAmount <= rateRow.maxAmount &&
                                                 parsedAmount >= rateRow.minAmount;

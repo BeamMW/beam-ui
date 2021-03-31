@@ -58,11 +58,6 @@ void SwapCoinClientWrapper::decrementActiveTxCounter()
     --m_activeTxCounter;
 }
 
-int SwapCoinClientWrapper::getActiveTxCounter() const
-{
-    return m_activeTxCounter;
-}
-
 void SwapCoinClientWrapper::resetActiveTxCounter()
 {
     m_activeTxCounter = 0;
@@ -103,9 +98,73 @@ QString SwapCoinClientWrapper::getCoinLabel() const
     return beamui::getCurrencyUnitName(beamui::convertSwapCoinToCurrency(m_swapCoin)).toUpper();
 }
 
-OldCurrency SwapCoinClientWrapper::getCurrency() const
+OldWalletCurrency::OldCurrency SwapCoinClientWrapper::getCurrency() const
 {
     return convertSwapCoinToCurrency(m_swapCoin);
+}
+
+QColor SwapCoinClientWrapper::getGradientColor() const
+{
+    switch(m_swapCoin)
+    {
+    case beam::wallet::AtomicSwapCoin::Bitcoin:
+        return QColor("#fcaf38");
+    case beam::wallet::AtomicSwapCoin::Litecoin:
+        return QColor("#bebebe");
+    case beam::wallet::AtomicSwapCoin::Qtum:
+        return QColor("#2e9ad0");
+#if defined(BITCOIN_CASH_SUPPORT)
+    case beam::wallet::AtomicSwapCoin::Bitcoin_Cash:
+        return QColor("#ff6700");
+#endif // BITCOIN_CASH_SUPPORT
+    case beam::wallet::AtomicSwapCoin::Dash:
+        return QColor("#0092ff");
+    case beam::wallet::AtomicSwapCoin::Dogecoin:
+        return QColor("#e0cd81");
+    case beam::wallet::AtomicSwapCoin::Ethereum:
+        return QColor("#8a93b2");
+    case beam::wallet::AtomicSwapCoin::Dai:
+        return QColor("#f5ac37");
+    case beam::wallet::AtomicSwapCoin::Usdt:
+        return QColor("#468a77");
+    case beam::wallet::AtomicSwapCoin::WBTC:
+        return QColor("#f09241");
+    default:
+        assert(false);
+        return QColor("#ff0000");
+    }
+}
+
+QString SwapCoinClientWrapper::getCoinIcon() const
+{
+    switch(m_swapCoin)
+    {
+    case beam::wallet::AtomicSwapCoin::Bitcoin:
+        return "qrc:/assets/icon-btc.svg";
+    case beam::wallet::AtomicSwapCoin::Litecoin:
+        return "qrc:/assets/icon-ltc.svg";
+    case beam::wallet::AtomicSwapCoin::Qtum:
+        return "qrc:/assets/icon-qtum.svg";
+#if defined(BITCOIN_CASH_SUPPORT)
+    case beam::wallet::AtomicSwapCoin::Bitcoin_Cash:
+        return "qrc:/assets/icon-bch.svg";
+#endif // BITCOIN_CASH_SUPPORT
+    case beam::wallet::AtomicSwapCoin::Dash:
+        return "qrc:/assets/icon-dash.svg";
+    case beam::wallet::AtomicSwapCoin::Dogecoin:
+        return "qrc:/assets/icon-doge.svg";
+    case beam::wallet::AtomicSwapCoin::Ethereum:
+        return "qrc:/assets/icon-eth.svg";
+    case beam::wallet::AtomicSwapCoin::Dai:
+        return "qrc:/assets/icon-dai.svg";
+    case beam::wallet::AtomicSwapCoin::Usdt:
+        return "qrc:/assets/icon-usdt.svg";
+    case beam::wallet::AtomicSwapCoin::WBTC:
+        return "qrc:/assets/icon-wbtc.svg";
+    default:
+        assert(false);
+        return "";
+    }
 }
 
 beam::wallet::AtomicSwapCoin SwapCoinClientWrapper::getSwapCoin() const

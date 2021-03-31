@@ -26,12 +26,14 @@
 class SwapCoinClientWrapper : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString                      available        READ getAvailableStr     NOTIFY availableChanged)
-    Q_PROPERTY(bool                         isConnected      READ getIsConnected      NOTIFY statusChanged)
-    Q_PROPERTY(bool                         isConnecting     READ getIsConnecting     NOTIFY statusChanged)
-    Q_PROPERTY(bool                         hasActiveTx      READ hasActiveTx         NOTIFY activeTxChanged)
-    Q_PROPERTY(QString                      coinLabel        READ getCoinLabel        CONSTANT)
-    Q_PROPERTY(OldCurrency                  currency         READ getCurrency         CONSTANT)
+    Q_PROPERTY(QString                        available        READ getAvailableStr     NOTIFY availableChanged)
+    Q_PROPERTY(bool                           isConnected      READ getIsConnected      NOTIFY statusChanged)
+    Q_PROPERTY(bool                           isConnecting     READ getIsConnecting     NOTIFY statusChanged)
+    Q_PROPERTY(bool                           hasActiveTx      READ hasActiveTx         NOTIFY activeTxChanged)
+    Q_PROPERTY(QString                        coinLabel        READ getCoinLabel        CONSTANT)
+    Q_PROPERTY(OldWalletCurrency::OldCurrency currency         READ getCurrency         CONSTANT)
+    Q_PROPERTY(QColor                         gradientColor    READ getGradientColor    CONSTANT)
+    Q_PROPERTY(QString                        coinIcon         READ getCoinIcon         CONSTANT)
 
 public:
     SwapCoinClientWrapper() = default;
@@ -39,7 +41,6 @@ public:
 
     void incrementActiveTxCounter();
     void decrementActiveTxCounter();
-    int getActiveTxCounter() const;
     void resetActiveTxCounter();
 
     QString getAvailableStr() const;
@@ -47,7 +48,9 @@ public:
     bool getIsConnecting() const;
     bool hasActiveTx() const;
     QString getCoinLabel() const;
-    OldCurrency getCurrency() const;
+    QString getCoinIcon() const;
+    QColor  getGradientColor() const;
+    OldWalletCurrency::OldCurrency getCurrency() const;
 
     beam::wallet::AtomicSwapCoin getSwapCoin() const;
     uint16_t getLockTxMinConfirmations() const;

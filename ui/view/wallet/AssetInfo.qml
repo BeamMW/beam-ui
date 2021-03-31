@@ -29,8 +29,8 @@ Control {
     background: PanelGradient {
         id: back
         leftColor:        assetInfo.color
-        rightColor:       Style.currencyPaneRight
-        rightBorderColor: Style.currencyPaneRight
+        rightColor:       Style.coinPaneRight
+        rightBorderColor: Style.coinPaneRight
         leftBorderColor:  assetInfo.selectionColor
         borderWidth:      control.selected ? 1 : 0
 

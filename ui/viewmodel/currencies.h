@@ -19,20 +19,18 @@ class OldWalletCurrency: public QObject
 {
     Q_OBJECT
 public:
-    enum class Currency {
+    enum class OldCurrency {
         CurrStart = -1,
 #define MACRO(name, label, slabel, subunut, feeLabel, dec) Curr##name,
         CURRENCY_MAP(MACRO)
 #undef MACRO
         CurrEnd
     };
-    Q_ENUMS(Currency)
+    Q_ENUM(OldCurrency)
 };
 
-typedef OldWalletCurrency::Currency OldCurrency;
+beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(OldWalletCurrency::OldCurrency currency);
+OldWalletCurrency::OldCurrency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin);
 
-beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(OldCurrency currency);
-OldCurrency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin);
-
-beamui::Currencies convertCurrency(OldCurrency value);
-bool isEthereumBased(OldCurrency currency);
+beamui::Currencies convertCurrency(OldWalletCurrency::OldCurrency value);
+bool isEthereumBased(OldWalletCurrency::OldCurrency currency);

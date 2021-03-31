@@ -36,22 +36,11 @@ QtObject {
     property color caps_warning;
 	property color white: "#ffffff";
 
-    property color currencyPaneRight;
-    property color currencyPaneLeftBEAM;
-    property color currencyPaneLeftBTC;
-    property color currencyPaneLeftLTC;
-    property color currencyPaneLeftQTUM;
-    property color currencyPaneLeftDASH;
-    property color currencyPaneLeftDOGE;
-    property color currencyPaneLeftBCH;
-    property color currencyPaneLeftETH;
-    property color currencyPaneLeftDAI;
-    property color currencyPaneLeftUSDT;
-    property color currencyPaneLeftWBTC;
-    property color currencyPaneConnect;
-    property color currencyPaneBorder;
+    property color coinPaneRight;
+    property color coinPaneLeft;
+    property color coinPaneBorder;
 
-    property color swapCurrencyStateIndicator;
+    property color swapStateIndicator;
     property color swapDisconnectNode;
 
     property string linkStyle;

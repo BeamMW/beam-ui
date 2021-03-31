@@ -26,10 +26,10 @@ ColumnLayout {
 
     function validateCoin() {
         var currency = viewModel.sendCurrency
-        if (currency == OldCurrency.CurrBeam) {
+        if (currency == OldWalletCurrency.CurrBeam) {
             currency = viewModel.receiveCurrency;
 
-            if (currency == OldCurrency.CurrBeam) return;
+            if (currency == OldWalletCurrency.CurrBeam) return;
         }
 
         if (!BeamGlobals.canReceive(currency)) {
@@ -211,7 +211,7 @@ please review your settings and try again"
                         content: FeeInput {
                             id:                         sendFeeInput
                             currency:                   viewModel.sendCurrency
-                            minFee:                     currency == OldCurrency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
+                            minFee:                     currency == OldWalletCurrency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
                             maxFee:                     BeamGlobals.getMaximumFee(currency)
                             recommendedFee:             BeamGlobals.getRecommendedFee(currency)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(currency)
@@ -376,7 +376,7 @@ please review your settings and try again"
                                 rowSpacing:          20
                                 columns:             2
 
-                                property bool showEstimatedFee: viewModel.receiveCurrency != OldCurrency.CurrBeam
+                                property bool showEstimatedFee: viewModel.receiveCurrency != OldWalletCurrency.CurrBeam
 
                                 SFText {
                                     Layout.alignment:       Qt.AlignTop
@@ -501,10 +501,10 @@ please review your settings and try again"
                 onClicked: {
                     if (!validateCoin()) return;
 
-                    var unitName = BeamGlobals.getCurrencyUnitName(viewModel.sendCurrency)
+                    var unitName = viewModel.currList[viewModel.sendCurrency].unitName
                     var onlineMessage =
                         //% "Keep your wallet online. The swap normally takes about 1 hour to complete."
-                        qsTrId("send-swap-sconfirmation-online-time") + (viewModel.sendCurrency !== OldCurrency.CurrBeam ?
+                        qsTrId("send-swap-sconfirmation-online-time") + (viewModel.sendCurrency !== OldWalletCurrency.CurrBeam ?
                         //% " Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled."
                         qsTrId("send-swap-fee-warning").arg(unitName)
                         : "")
@@ -518,7 +518,7 @@ please review your settings and try again"
                             amount:         viewModel.sendAmount,
                             unitName:       unitName,
                             fee:            viewModel.sendFee,
-                            flatFee:        viewModel.sendCurrency == OldCurrency.CurrBeam,
+                            flatFee:        viewModel.sendCurrency == OldWalletCurrency.CurrBeam,
                             acceptHandler:  acceptedCallback,
                             rate:           viewModel.secondCurrencySendRateValue,
                             rateUnit:       viewModel.secondCurrencyUnitName,

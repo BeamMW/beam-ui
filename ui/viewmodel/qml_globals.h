@@ -44,27 +44,27 @@ public:
 
     // Currency utils
     // TODO maybe to need use beam::Amount instead of int
-    Q_INVOKABLE static QString calcWithdrawTxFee(OldCurrency currency, unsigned int feeRate);
+    Q_INVOKABLE static QString calcWithdrawTxFee(OldWalletCurrency::OldCurrency currency, unsigned int feeRate);
     Q_INVOKABLE static QString calcFeeInSecondCurrency(unsigned int fee, const QString& exchangeRate, const QString& secondCurrencyUnitName);
     Q_INVOKABLE static QString calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrUnitName);
 
     Q_INVOKABLE static QString roundUp(QString amount);
-    Q_INVOKABLE static QString getCurrencyUnitName(OldCurrency);
-    Q_INVOKABLE static QString getCurrencyName(OldCurrency);
-    Q_INVOKABLE static QString getFeeRateLabel(OldCurrency);
+    Q_INVOKABLE static QString getCurrencyUnitName(OldWalletCurrency::OldCurrency);
+    Q_INVOKABLE static QString getCurrencyName(OldWalletCurrency::OldCurrency);
+    Q_INVOKABLE static QString getFeeRateLabel(OldWalletCurrency::OldCurrency);
     Q_INVOKABLE static QString getCurrencySubunitFromLabel(const QString& currLabel);
-    Q_INVOKABLE static uint    getCurrencyDecimals(OldCurrency);
+    Q_INVOKABLE static uint    getCurrencyDecimals(OldWalletCurrency::OldCurrency);
     
-    Q_INVOKABLE static QString getMinimalFee(OldCurrency, bool isShielded);
-    Q_INVOKABLE static QString getMaximumFee(OldCurrency);
-    Q_INVOKABLE static QString getRecommendedFee(OldCurrency);
-    Q_INVOKABLE static QString getDefaultFee(OldCurrency);
+    Q_INVOKABLE static QString getMinimalFee(OldWalletCurrency::OldCurrency, bool isShielded);
+    Q_INVOKABLE static QString getMaximumFee(OldWalletCurrency::OldCurrency);
+    Q_INVOKABLE static QString getRecommendedFee(OldWalletCurrency::OldCurrency);
+    Q_INVOKABLE static QString getDefaultFee(OldWalletCurrency::OldCurrency);
 
     // Swap & other currencies utils
     Q_INVOKABLE static bool canSwap();
-    Q_INVOKABLE static bool haveSwapClient(OldCurrency);
+    Q_INVOKABLE static bool haveSwapClient(OldWalletCurrency::OldCurrency);
     Q_INVOKABLE static QString rawTxParametrsToTokenStr(const QVariant& variantTxParams);
-    Q_INVOKABLE static bool canReceive(OldCurrency currency);
+    Q_INVOKABLE static bool canReceive(OldWalletCurrency::OldCurrency currency);
     Q_INVOKABLE static QString divideWithPrecision(const QString& dividend, const QString& divider, uint precision);
     Q_INVOKABLE static QString multiplyWithPrecision(const QString& first, const QString& second, uint precision);
 private:

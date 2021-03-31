@@ -44,7 +44,7 @@ Item {
         //% "cancel offer"
         okButtonText:           qsTrId("atomic-swap-cancel-button")
         okButtonIconSource:     "qrc:/assets/icon-cancel-black.svg"
-        okButtonColor:          Style.swapCurrencyStateIndicator
+        okButtonColor:          Style.swapStateIndicator
         //% "back"
         cancelButtonText:       qsTrId("atomic-swap-back-button")
         cancelButtonIconSource: "qrc:/assets/icon-back.svg"
@@ -71,7 +71,7 @@ Item {
         //% "yes"
         okButtonText:           qsTrId("atomic-swap-tx-yes-button")
         okButtonIconSource:     "qrc:/assets/icon-done.svg"
-        okButtonColor:          Style.swapCurrencyStateIndicator
+        okButtonColor:          Style.swapStateIndicator
         //% "no"
         cancelButtonText:       qsTrId("atomic-swap-no-button")
         cancelButtonIconSource: "qrc:/assets/icon-cancel-16.svg"
@@ -233,7 +233,7 @@ Item {
                                 .arg(viewModel.activeTxCount)
                             : "";
                     }
-                    gradLeft:           Style.currencyPaneLeftBEAM
+                    gradLeft:           Style.coinPaneLeft
                     currencyIcon:       "qrc:/assets/icon-beam.svg"
                     amount:             viewModel.beamAvailable
                     unitName:           BeamGlobals.beamUnit
@@ -244,74 +244,19 @@ Item {
                 //% "Transaction is in progress"
                 property string kTxInProgress: qsTrId("swap-beta-tx-in-progress")
 
-                function getCurrencyIcon(currency) {
-                    switch(currency) {
-                        case OldCurrency.CurrBitcoin:
-                            return "qrc:/assets/icon-btc.svg";
-                        case OldCurrency.CurrLitecoin:
-                            return "qrc:/assets/icon-ltc.svg";
-                        case OldCurrency.CurrQtum:
-                            return "qrc:/assets/icon-qtum.svg";
-                        // TODO disabled BCH
-                        /*case OldCurrency.CurrBitcoinCash:
-                            return "qrc:/assets/icon-bch.svg";*/
-                        case OldCurrency.CurrDash:
-                            return "qrc:/assets/icon-dash.svg";
-                        case OldCurrency.CurrDogecoin:
-                            return "qrc:/assets/icon-doge.svg";
-                        case OldCurrency.CurrEthereum:
-                            return "qrc:/assets/icon-eth.svg";
-                        case OldCurrency.CurrDai:
-                            return "qrc:/assets/icon-dai.svg";
-                        case OldCurrency.CurrUsdt:
-                            return "qrc:/assets/icon-usdt.svg";
-                        case OldCurrency.CurrWrappedBTC:
-                            return "qrc:/assets/icon-wbtc.svg";
-                        default: return "";
-                    }
-                }
-
-                function getSwapCurrencyPaneGradient(currency)  {
-                    switch(currency) {
-                        case OldCurrency.CurrBitcoin:
-                            return Style.currencyPaneLeftBTC;
-                        case OldCurrency.CurrLitecoin:
-                            return Style.currencyPaneLeftLTC;
-                        case OldCurrency.CurrQtum:
-                            return Style.currencyPaneLeftQTUM;
-                        // TODO disable BCH
-                        /*case OldCurrency.CurrBitcoinCash:
-                            return Style.currencyPaneLeftBCH;*/
-                        case OldCurrency.CurrDash:
-                            return Style.currencyPaneLeftDASH;
-                        case OldCurrency.CurrDogecoin:
-                            return Style.currencyPaneLeftDOGE;
-                        case OldCurrency.CurrEthereum:
-                            return Style.currencyPaneLeftETH;
-                        case OldCurrency.CurrDai:
-                            return Style.currencyPaneLeftDAI;
-                        case OldCurrency.CurrUsdt:
-                            return Style.currencyPaneLeftUSDT;
-                        case OldCurrency.CurrWrappedBTC:
-                            return Style.currencyPaneLeftWBTC;
-                        default:
-                            return Style.currencyPaneLeftBTC;
-                    }
-                }
-
                 Repeater {
                     model: viewModel.swapClientList
 
                     SwapCurrencyAmountPane {
-                        gradLeft: amountPanes.getSwapCurrencyPaneGradient(modelData.currency)
-                        currencyIcon: amountPanes.getCurrencyIcon(modelData.currency)
+                        gradLeft: modelData.gradientColor
+                        currencyIcon: modelData.coinIcon
                         amount: modelData.hasActiveTx ? "" : modelData.available
-                        unitName: BeamGlobals.getCurrencyUnitName(modelData.currency)
+                        unitName: modelData.coinLabel
                         valueSecondaryStr: activeTxStr()
                         isOk: modelData.isConnected
                         isConnecting: modelData.isConnecting
                         visible: BeamGlobals.haveSwapClient(modelData.currency)
-                        swapSettingsPane: BeamGlobals.getCurrencyUnitName(modelData.currency)
+                        swapSettingsPane: modelData.coinLabel
                         //% "Connecting..."
                         textConnecting: qsTrId("swap-connecting")
                         //% "Cannot connect to peer. Please check the address in Settings and try again."
@@ -787,7 +732,7 @@ Please try again later or create an offer yourself."
 
                                         verticalAlignment:   Text.AlignVCenter
                                         font.pixelSize: 14
-                                        color: isOwnOffer ? Style.swapCurrencyStateIndicator : Style.active
+                                        color: isOwnOffer ? Style.swapStateIndicator : Style.active
                                         text: isOwnOffer
                                                         //% "Cancel offer"
                                                         ? qsTrId("atomic-swap-cancel")

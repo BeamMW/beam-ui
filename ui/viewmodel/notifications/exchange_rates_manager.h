@@ -29,7 +29,7 @@ public:
     [[nodiscard]] beam::Amount getRate(const beam::wallet::Currency&) const;
     [[nodiscard]] beam::wallet::Currency getRateCurrency() const;
 
-    static beam::wallet::Currency convertCurrencyToExchangeCurrency(OldCurrency uiCurrency);
+    static beam::wallet::Currency convertCurrencyToExchangeCurrency(OldWalletCurrency::OldCurrency uiCurrency);
 
 public slots:
     void onExchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>& rates);

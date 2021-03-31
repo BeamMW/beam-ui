@@ -5,13 +5,13 @@ import Beam.Wallet 1.0
 import "."
 
 Rectangle {
-    property color borderColor: Style.currencyPaneBorder
+    property color borderColor: Style.coinPaneBorder
     property int borderSize: 0
-    property color gradLeft: Style.currencyPaneLeftBEAM
-    property color gradRight: Style.currencyPaneRight
+    property color gradLeft: Style.coinPaneLeft
+    property color gradRight: Style.coinPaneRight
     property string currencyIcon: ""
     property var currencyIcons: []
-    property color stateIndicatorColor: Style.swapCurrencyStateIndicator
+    property color stateIndicatorColor: Style.swapStateIndicator
     property string amount: ""
     property string unitName: ""
     property string valueSecondaryStr: ""

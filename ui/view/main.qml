@@ -53,7 +53,7 @@ Rectangle {
         //% "yes"
         okButtonText:           qsTrId("atomic-swap-tx-yes-button")
         okButtonIconSource:     "qrc:/assets/icon-done.svg"
-        okButtonColor:          Style.swapCurrencyStateIndicator
+        okButtonColor:          Style.swapStateIndicator
         //% "no"
         cancelButtonText:       qsTrId("atomic-swap-no-button")
         cancelButtonIconSource: "qrc:/assets/icon-cancel-16.svg"

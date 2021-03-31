@@ -42,8 +42,8 @@ class ReceiveSwapViewModel: public QObject
     Q_PROPERTY(QString       sentFeeTitle                   READ getSentFeeTitle                             NOTIFY sentCurrencyChanged)
     Q_PROPERTY(QString       receiveFeeTitle                READ getReceiveFeeTitle                          NOTIFY receiveCurrencyChanged)
 
-    Q_PROPERTY(OldCurrency  receiveCurrency    READ getReceiveCurrency    WRITE  setReceiveCurrency  NOTIFY  receiveCurrencyChanged)
-    Q_PROPERTY(OldCurrency  sentCurrency       READ getSentCurrency       WRITE  setSentCurrency     NOTIFY  sentCurrencyChanged)
+    Q_PROPERTY(OldWalletCurrency::OldCurrency  receiveCurrency    READ getReceiveCurrency    WRITE  setReceiveCurrency  NOTIFY  receiveCurrencyChanged)
+    Q_PROPERTY(OldWalletCurrency::OldCurrency  sentCurrency       READ getSentCurrency       WRITE  setSentCurrency     NOTIFY  sentCurrencyChanged)
     Q_PROPERTY(unsigned int minimalBeamFeeGrothes           READ getMinimalBeamFeeGrothes       NOTIFY  minimalBeamFeeGrothesChanged)
     Q_PROPERTY(QList<QMap<QString, QVariant>> currList      READ getCurrList                    NOTIFY  currListChanged)
 
@@ -92,11 +92,11 @@ private:
     unsigned int getSentFee() const;
     void setSentFee(unsigned int value);
 
-    OldCurrency  getReceiveCurrency() const;
-    void setReceiveCurrency(OldCurrency value);
+    OldWalletCurrency::OldCurrency  getReceiveCurrency() const;
+    void setReceiveCurrency(OldWalletCurrency::OldCurrency value);
 
-    OldCurrency  getSentCurrency() const;
-    void setSentCurrency(OldCurrency value);
+    OldWalletCurrency::OldCurrency  getSentCurrency() const;
+    void setSentCurrency(OldWalletCurrency::OldCurrency value);
 
     void setOfferExpires(int value);
     int  getOfferExpires() const;
@@ -142,8 +142,8 @@ private:
     beam::Amount _receiveFeeGrothes;
     beam::Amount _sentFeeGrothes;
 
-    OldCurrency  _receiveCurrency;
-    OldCurrency  _sentCurrency;
+    OldWalletCurrency::OldCurrency  _receiveCurrency;
+    OldWalletCurrency::OldCurrency  _sentCurrency;
     int       _offerExpires;
     QString   _addressComment;
     QString   _token;

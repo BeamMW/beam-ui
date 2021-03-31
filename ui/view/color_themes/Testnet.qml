@@ -36,22 +36,11 @@ AbstractTheme {
     property color caps_warning:          "#000000"
     property color online:                "#00f6d2"
 
-    property color currencyPaneRight:     "#45316c"
-    property color currencyPaneLeftBEAM:  "#00f6d2"
-    property color currencyPaneLeftBTC:   "#fcaf38"
-    property color currencyPaneLeftLTC:   "#bebebe"
-    property color currencyPaneLeftQTUM:  "#2e9ad0"
-    property color currencyPaneLeftDASH:  "#0092ff"
-    property color currencyPaneLeftDOGE:  "#e0cd81"
-    property color currencyPaneLeftBCH:   "#ff6700"
-    property color currencyPaneLeftETH:   "#8a93b2"
-    property color currencyPaneLeftDAI:   "#f5ac37"
-    property color currencyPaneLeftUSDT:  "#468a77"
-    property color currencyPaneLeftWBTC:  "#f09241"
-    property color currencyPaneConnect:   Qt.rgba(0, 246, 210, 0.1)
-    property color currencyPaneBorder:    Qt.rgba(0, 246, 210, 0.15)
+    property color coinPaneRight:     "#45316c"
+    property color coinPaneLeft:      "#00f6d2"
+    property color coinPaneBorder:    Qt.rgba(0, 246, 210, 0.15)
 
-    property color swapCurrencyStateIndicator:  "#ff746b"
+    property color swapStateIndicator:  "#ff746b"
     property color swapDisconnectNode:          "#f9605b"
 
     property string linkStyle:   "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"

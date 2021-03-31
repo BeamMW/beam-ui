@@ -16,9 +16,9 @@
 
 namespace swapui
 {
-    QString getSwapFeeTitle(OldCurrency currency)
+    QString getSwapFeeTitle(OldWalletCurrency::OldCurrency currency)
     {
-        if (currency == OldCurrency::CurrBeam)
+        if (currency == OldWalletCurrency::OldCurrency::CurrBeam)
         {
             //% "BEAM Transaction fee"
             return qtTrId("beam-transaction-fee");
@@ -33,10 +33,10 @@ namespace swapui
     {
         QList<QMap<QString, QVariant>> result;
 
-        auto append = [&result] (OldCurrency curr, const QString& icon) {
+        auto append = [&result] (OldWalletCurrency::OldCurrency curr, const QString& icon) {
             QMap<QString, QVariant> info;
 
-            info.insert("isBEAM",     curr == OldCurrency::CurrBeam);
+            info.insert("isBEAM",     curr == OldWalletCurrency::OldCurrency::CurrBeam);
             info.insert("unitName",    QMLGlobals::getCurrencyUnitName(curr));
             info.insert("icon",        icon);
             info.insert("iconWidth",  22);
@@ -46,18 +46,18 @@ namespace swapui
             result.push_back(info);
         };
 
-        append(OldCurrency::CurrBeam,       "qrc:/assets/icon-beam.svg");
-        append(OldCurrency::CurrBitcoin,    "qrc:/assets/icon-btc.svg");
-        append(OldCurrency::CurrLitecoin,   "qrc:/assets/icon-ltc.svg");
-        append(OldCurrency::CurrQtum,       "qrc:/assets/icon-qtum.svg");
+        append(OldWalletCurrency::OldCurrency::CurrBeam,       "qrc:/assets/icon-beam.svg");
+        append(OldWalletCurrency::OldCurrency::CurrBitcoin,    "qrc:/assets/icon-btc.svg");
+        append(OldWalletCurrency::OldCurrency::CurrLitecoin,   "qrc:/assets/icon-ltc.svg");
+        append(OldWalletCurrency::OldCurrency::CurrQtum,       "qrc:/assets/icon-qtum.svg");
         // TODO disable BCH
         //append(WalletCurrency::Currency::CurrBitcoinCash,    "qrc:/assets/icon-bch.svg");
-        append(OldCurrency::CurrDogecoin,   "qrc:/assets/icon-doge.svg");
-        append(OldCurrency::CurrDash,       "qrc:/assets/icon-dash.svg");
-        append(OldCurrency::CurrEthereum,   "qrc:/assets/icon-eth.svg");
-        append(OldCurrency::CurrDai,        "qrc:/assets/icon-dai.svg");
-        append(OldCurrency::CurrUsdt,       "qrc:/assets/icon-usdt.svg");
-        append(OldCurrency::CurrWrappedBTC, "qrc:/assets/icon-wbtc.svg");
+        append(OldWalletCurrency::OldCurrency::CurrDogecoin,   "qrc:/assets/icon-doge.svg");
+        append(OldWalletCurrency::OldCurrency::CurrDash,       "qrc:/assets/icon-dash.svg");
+        append(OldWalletCurrency::OldCurrency::CurrEthereum,   "qrc:/assets/icon-eth.svg");
+        append(OldWalletCurrency::OldCurrency::CurrDai,        "qrc:/assets/icon-dai.svg");
+        append(OldWalletCurrency::OldCurrency::CurrUsdt,       "qrc:/assets/icon-usdt.svg");
+        append(OldWalletCurrency::OldCurrency::CurrWrappedBTC, "qrc:/assets/icon-wbtc.svg");
 
         return result;
     }
