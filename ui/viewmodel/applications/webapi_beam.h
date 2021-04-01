@@ -46,7 +46,7 @@ namespace beamui::applications
         void sendAPIResponse(const beam::wallet::json& result) override;
 
         // API should be called only in context of the reactor thread
-        uint32_t _currApiVersion = 0;
+        QString _currApiVersion = 0;
         beam::wallet::IWalletApi::Ptr _walletAPI;
     };
 }
