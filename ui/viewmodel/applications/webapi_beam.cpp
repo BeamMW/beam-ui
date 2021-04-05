@@ -13,6 +13,7 @@
 // limitations under the License.
 #include <QObject>
 #include <QMessageBox>
+#include <QQmlEngine>
 #include <sstream>
 #include "webapi_beam.h"
 #include "utility/logger.h"
@@ -31,48 +32,77 @@ namespace beamui::applications {
         }
     }
 
-    WebAPI_Beam::WebAPI_Beam(QObject *parent)
-        : QObject(parent)
+    WebAPI_Beam::WebAPI_Beam(const std::string& version, const std::string& appid)
+        : QObject(nullptr)
     {
-    }
-
-    QString WebAPI_Beam::chooseApi(const QString& requested)
-    {
-        if (_currApiVersion == requested)
-        {
-            return QString();
-        }
-
-        if (!IWalletApi::ValidateAPIVersion(requested.toStdString()))
-        {
-            //% "Unsupported API version requested: %1"
-            return qtTrId("apps-bad-api-version").arg(requested);
-        }
-
         IWalletApi::InitData data;
 
         data.contracts = AppModel::getInstance().getWalletModel()->getAppsShaders();
         data.swaps     = nullptr;
         data.wallet    = AppModel::getInstance().getWalletModel()->getWallet();
         data.walletDB  = AppModel::getInstance().getWalletDB();
+        data.appid     = appid;
 
-        _walletAPI = IWalletApi::CreateInstance(requested.toStdString(), *this, data);
-        _currApiVersion = requested;
+        _walletAPI = IWalletApi::CreateInstance(version, *this, data);
+    }
 
-        return QString();
+    WebAPI_Beam::~WebAPI_Beam()
+    {
     }
 
     void WebAPI_Beam::callWalletApi(const QString& request)
     {
         LOG_INFO () << "WebAPP API: " << request.toStdString();
 
+        std::string stdreq = request.toStdString();
+        if (auto pres = _walletAPI->parseAPIRequest(stdreq.c_str(), stdreq.size()); pres)
+        {
+            // we allow only known methods
+            static std::vector<std::string> alwaysOK = {
+                    "validate_address",
+                    "tx_asset_info",
+                    "get_asset_info",
+                    "generate_tx_id",
+                    "verify_payment_proof",
+                    "calc_change",
+                    // delete that is below
+                    // "create_address",
+                    // "addr_list",
+                    // "edit_address",
+                    "tx_send",
+                    "tx_cancel",
+                    "tx_delete",
+                    "tx_status",
+                    "tx_list"
+            };
+
+            if (std::find(alwaysOK.begin(), alwaysOK.end(), pres->method) != alwaysOK.end())
+            {
+                return callWalletApiImp(stdreq);
+            }
+
+            // tx_send, tx_cancel, tx_delete, tx_status, tx_list, export_paymnet_proof, invoke_contract, pass address
+
+            const auto error = _walletAPI->fromError(stdreq, ApiError::NotAllowedError, std::string());
+            emit callWalletApiResult(QString::fromStdString(error));
+            return;
+        }
+        else
+        {
+            // parse failed, just log error and return. Error response is already sent back
+            LOG_ERROR() << "WebAPP API failed: " << request.toStdString();
+            return;
+        }
+    }
+
+    void WebAPI_Beam::callWalletApiImp(const std::string& request)
+    {
         IWalletApi::WeakPtr wp = _walletAPI;
         getAsyncWallet().makeIWTCall(
             [wp, request]() -> boost::any {
                 if(auto sp = wp.lock())
                 {
-                    std::string stdreq = request.toStdString();
-                    sp->executeAPIRequest(stdreq.c_str(), stdreq.size());
+                    sp->executeAPIRequest(request.c_str(), request.size());
                     return boost::none;
                 }
                 // this means that api is disconnected and destroyed already
@@ -97,5 +127,55 @@ namespace beamui::applications {
     {
         // only for test, always 42
         return 42;
+    }
+
+    WebAPICreator::WebAPICreator(QObject *parent)
+        : QObject(parent)
+    {
+    }
+
+    WebAPICreator::~WebAPICreator()
+    {
+    }
+
+    void WebAPICreator::createApi(const QString &version, const QString &appName, const QString &appUrl)
+    {
+        const auto stdver = version.toStdString();
+        if (!IWalletApi::ValidateAPIVersion(stdver))
+        {
+            //% "Unsupported API version requested: %1"
+            const auto error = qtTrId("apps-bad-api-version").arg(version);
+            return qmlEngine(this)->throwError(error);
+        }
+
+        ECC::Hash::Value hv;
+        ECC::Hash::Processor() << appName.toStdString() << appUrl.toStdString() >> hv;
+        const auto appid = hv.str();
+
+        std::weak_ptr<bool> wguard = _guard;
+        getAsyncWallet().getAppAddress(appid, [this, wguard, stdver, appid, appUrl](boost::optional<WalletAddress> addr) {
+            auto guard = wguard.lock();
+            if (!guard)
+            {
+                LOG_WARNING() << "API destroyed before getAppAddress response received.";
+                return;
+            }
+
+            if (addr)
+            {
+                LOG_INFO() << "Starting API for app: " << appUrl.toStdString() << " : " << stdver << " : " << appid;
+
+                _api = std::make_unique<WebAPI_Beam>(stdver, appid);
+                QQmlEngine::setObjectOwnership(_api.get(), QQmlEngine::CppOwnership);
+
+                emit apiCreated(_api.get(), "addr");
+            }
+            else
+            {
+                //% "Failed to generate/get application address"
+                const auto error = qtTrId("apps-addr-error");
+                emit apiFailed(error);
+            }
+        });
     }
 }

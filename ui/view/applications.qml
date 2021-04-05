@@ -45,13 +45,17 @@ ColumnLayout {
         }
     }
 
-    //
-    // C++ object published to web control & web control itself
-    //
-    WebAPIBeam {
+    QtObject {
         id: webapiBEAM
         WebChannel.id: "BEAM"
+
         property var style: Style
+        property var api
+        property string appAddress
+    }
+
+    WebAPICreator {
+        id: webapiCreator
     }
 
     WebChannel {
@@ -110,17 +114,30 @@ ColumnLayout {
     function launchApp(app) {
         control.activeApp = app
 
-        var apiVersion = app.api_version || "current";
-        var apiErr = webapiBEAM.chooseApi(apiVersion)
+        try
+        {
+            var apiVersion = app.api_version || "current";
 
-        if (apiErr) {
-            control.errorMessage = apiErr
+            webapiCreator.onApiFailed.connect(function (errmsg) {
+                control.errorMessage = error
+            })
+
+            webapiCreator.onApiCreated.connect(function(api, address) {
+                control.errorMessage = ""
+                webapiBEAM.appAddress = address
+                webapiBEAM.api = api
+                webView.visible = false
+                webView.url = app.url
+            })
+
+            webapiCreator.createApi(apiVersion, app.name, app.url)
             return
         }
-
-        control.errorMessage = ""
-        webView.visible = false
-        webView.url = app.url
+        catch (err)
+        {
+            control.errorMessage = err.toString()
+            return
+        }
     }
 
     Item {

@@ -3010,5 +3010,9 @@ Update your settings and try again.</source>
         <source>There are no transactions yet.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="apps-addr-error">
+        <source>Failed to generate/get application address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -332,6 +332,7 @@ void AddressBookViewModel::onAddresses(bool own, const std::vector<beam::wallet:
 
         for (const auto& addr : addresses)
         {
+            assert(!addr.m_Address.empty());
             if (addr.isExpired())
             {
                 m_expiredAddresses.push_back(new AddressItem(addr));

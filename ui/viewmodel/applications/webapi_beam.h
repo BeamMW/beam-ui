@@ -23,10 +23,10 @@ namespace beamui::applications
         : public QObject
         , public beam::wallet::IWalletApiHandler
     {
-    Q_OBJECT
+        Q_OBJECT
     public:
-        explicit WebAPI_Beam(QObject *parent = nullptr);
-        Q_INVOKABLE QString chooseApi(const QString& version);
+        explicit WebAPI_Beam(const std::string& version, const std::string& appid);
+        ~WebAPI_Beam() override;
 
     //
     // Slots below are called by web in context of the UI thread
@@ -45,8 +45,28 @@ namespace beamui::applications
         // This callback is called in the reactor thread
         void sendAPIResponse(const beam::wallet::json& result) override;
 
-        // API should be called only in context of the reactor thread
-        QString _currApiVersion = 0;
+        // This should be called only in context of the reactor thread
+        void callWalletApiImp(const std::string& request);
+
+        // API should be accessed only in context of the reactor thread
         beam::wallet::IWalletApi::Ptr _walletAPI;
+    };
+
+    class WebAPICreator: public QObject
+    {
+        Q_OBJECT
+    public:
+        explicit WebAPICreator(QObject *parent = nullptr);
+        ~WebAPICreator() override;
+
+        Q_INVOKABLE void createApi(const QString& version, const QString& appName, const QString& appUrl);
+
+    signals:
+        void apiCreated(QObject* api, const QString& appAddress);
+        void apiFailed(const QString& error);
+
+    private:
+        std::unique_ptr<WebAPI_Beam> _api;
+        std::shared_ptr<bool> _guard = std::make_shared<bool>(true);
     };
 }
