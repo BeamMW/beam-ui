@@ -241,6 +241,12 @@ QString SendViewModel::getNewTokenMsg() const
 
 void SendViewModel::RefreshCsiAsync()
 {
+    if(m_Csi.m_requestedSum == 0UL)
+    {
+        // just reset everything to zero
+        return onSelectionCalculated(decltype(m_Csi)());
+    }
+
     using namespace beam::wallet;
     const auto type = getTokenValid() ? GetAddressType(_token.toStdString()) : TxAddressType::Unknown;
     bool isShielded = false;
@@ -267,6 +273,7 @@ void SendViewModel::RefreshCsiAsync()
             isShielded = false;
             break;
     }
+
 
     _walletModel.getAsync()->calcShieldedCoinSelectionInfo(
             m_Csi.m_requestedSum,
@@ -370,7 +377,7 @@ void SendViewModel::saveReceiverAddress(const QString& name)
     }
     else
     {
-        _walletModel.getAsync()->getAddress(_receiverWalletID, [this, trimmed](const boost::optional<WalletAddress>& addr, size_t c)
+        _walletModel.getAsync()->getAddress(_token.toStdString(), [this, trimmed](const boost::optional<WalletAddress>& addr, size_t c)
         {
             WalletAddress address = *addr;
             address.m_label = trimmed.toStdString();
@@ -446,20 +453,10 @@ void SendViewModel::extractParameters()
         emit commentChanged();
     }
 
-    if (_receiverWalletID != beam::Zero)
+    _walletModel.getAsync()->getAddress(_token.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
     {
-        _walletModel.getAsync()->getAddress(_receiverWalletID, [this](const boost::optional<WalletAddress>& addr, size_t c)
-        {
-            onGetAddressReturned(addr, static_cast<int>(c));
-        });
-    }
-    else
-    {
-        _walletModel.getAsync()->getAddress(_token.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
-        {
-            onGetAddressReturned(addr, static_cast<int>(c));
-        });
-    }
+        onGetAddressReturned(addr, static_cast<int>(c));
+    });
 
     ProcessLibraryVersion(_txParameters, [this](const auto& version, const auto& myVersion)
     {

@@ -70,7 +70,7 @@ void NotificationsViewModel::activateAddress(const ECC::uintBig& id)
         if (n->getID() == id)
         {
             const auto walletAddress = n->getWalletAddress();
-            m_walletModel.getAsync()->activateAddress(walletAddress.m_walletID);
+            m_walletModel.getAsync()->activateAddress(walletAddress.m_Address);
         }
     }
 }

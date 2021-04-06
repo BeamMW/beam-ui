@@ -174,9 +174,9 @@ void TokenInfoItem::setToken(const QString& token)
                 m_isPermanent = true;
             }
 
-            if (!getIgnoreStoredVouchers() && walletID)
+            if (!getIgnoreStoredVouchers())
             {
-                AppModel::getInstance().getWalletModel()->getAsync()->getAddress(*walletID, [this](const auto& addr, auto count)
+                AppModel::getInstance().getWalletModel()->getAsync()->getAddress(token.toStdString(), [this](const auto& addr, auto count)
                 {
                     setOfflinePayments((int)count);
                 });

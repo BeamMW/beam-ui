@@ -233,10 +233,6 @@ void WalletModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& walle
     emit generatedNewAddress(walletAddr);
 }
 
-void WalletModel::onGetAddress(const beam::wallet::WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments)
-{
-    emit getAddressReturned(id, address, (int)offlinePayments);
-}
 
 void WalletModel::onNewAddressFailed()
 {

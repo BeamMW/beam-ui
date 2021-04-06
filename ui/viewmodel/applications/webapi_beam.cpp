@@ -58,7 +58,7 @@ namespace beamui::applications {
         if (auto pres = _walletAPI->parseAPIRequest(stdreq.c_str(), stdreq.size()); pres)
         {
             // we allow only known methods
-            static std::vector<std::string> alwaysOK = {
+            /*static std::vector<std::string> alwaysOK = {
                     "validate_address",
                     "tx_asset_info",
                     "get_asset_info",
@@ -74,18 +74,18 @@ namespace beamui::applications {
                     "tx_delete",
                     "tx_status",
                     "tx_list"
-            };
+            }; */
 
-            if (std::find(alwaysOK.begin(), alwaysOK.end(), pres->method) != alwaysOK.end())
+            //if (std::find(alwaysOK.begin(), alwaysOK.end(), pres->method) != alwaysOK.end())
             {
                 return callWalletApiImp(stdreq);
             }
 
             // tx_send, tx_cancel, tx_delete, tx_status, tx_list, export_paymnet_proof, invoke_contract, pass address
 
-            const auto error = _walletAPI->fromError(stdreq, ApiError::NotAllowedError, std::string());
-            emit callWalletApiResult(QString::fromStdString(error));
-            return;
+           // const auto error = _walletAPI->fromError(stdreq, ApiError::NotAllowedError, std::string());
+          //  emit callWalletApiResult(QString::fromStdString(error));
+          //  return;
         }
         else
         {
