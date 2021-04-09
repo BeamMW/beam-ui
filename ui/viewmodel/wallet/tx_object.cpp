@@ -516,11 +516,17 @@ QString TxObject::getStateDetails() const
         }
     }
 
-    if (tx.m_txType == beam::wallet::TxType::PushTransaction &&
-        (tx.m_status == beam::wallet::TxStatus::InProgress || tx.m_status == beam::wallet::TxStatus::Registering))
+    if (tx.m_txType == beam::wallet::TxType::PushTransaction)
     {
-        //% "The transaction is usually expected to complete in a few minutes."
-        return qtTrId("tx-state-in-progress-normal");
+        if (tx.m_status == beam::wallet::TxStatus::InProgress)
+        {
+            return getWaitingPeerStr(tx, tx.m_sender);
+        }
+        else if (tx.m_status == beam::wallet::TxStatus::Registering)
+        {
+            //% "The transaction is usually expected to complete in a few minutes."
+            return qtTrId("tx-state-in-progress-normal");
+        }
     }
     return "";
 }
