@@ -61,7 +61,13 @@ QString TokenInfoItem::getAmount() const
 {
     if (m_amountValue)
     {
-        return AmountToUIString(m_amountValue, Currencies::Beam);
+        if (Asset::s_BeamID == m_assetId)
+            return AmountToUIString(m_amountValue, Currencies::Beam);
+
+        auto amgr = AppModel::getInstance().getAssets();
+        return amgr->hasAsset(m_assetId)
+            ? AmountToUIString(m_amountValue, amgr->getUnitName(m_assetId, AssetsManager::Shorten::ShortenTxt))
+            : AmountToUIString(m_amountValue, Currencies::Unknown);
     }
     return "";
 }
@@ -119,6 +125,9 @@ void TokenInfoItem::setToken(const QString& token)
 
             auto amount = params.GetParameter<Amount>(TxParameterID::Amount);
             m_amountValue = amount ? *amount : 0;
+
+            auto assetId = params.GetParameter<beam::Asset::ID>(TxParameterID::AssetID);
+            m_assetId = assetId ? *assetId : 0;
 
             auto identity = params.GetParameter<PeerID>(TxParameterID::PeerWalletIdentity);
             m_identity = identity ? *identity : Zero;

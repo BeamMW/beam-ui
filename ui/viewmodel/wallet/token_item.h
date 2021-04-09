@@ -67,6 +67,7 @@ private:
     bool m_isOffline = false;
     bool m_isPublicOffline = false;
     beam::Amount m_amountValue = 0;
+    beam::Asset::ID m_assetId = 0;
     beam::wallet::WalletID m_addressSBBS = beam::Zero;
     beam::PeerID m_identity;
     int m_offlinePayments = 0;
