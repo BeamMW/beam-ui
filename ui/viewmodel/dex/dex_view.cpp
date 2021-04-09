@@ -45,7 +45,7 @@ namespace beamui::dex
     {
         using namespace beam::wallet;
 
-        _walletModel.getAsync()->saveAddress(_receiverAddr, true);
+        _walletModel.getAsync()->saveAddress(_receiverAddr);
 
         DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 1, 0, 50);
         _walletModel.getAsync()->publishDexOrder(order);
@@ -55,7 +55,7 @@ namespace beamui::dex
     {
         using namespace beam::wallet;
 
-        _walletModel.getAsync()->saveAddress(_receiverAddr, true);
+        _walletModel.getAsync()->saveAddress(_receiverAddr);
 
         DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 0, 1, 100);
         _walletModel.getAsync()->publishDexOrder(order);

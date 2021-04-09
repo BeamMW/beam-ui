@@ -373,15 +373,15 @@ void SendViewModel::saveReceiverAddress(const QString& name)
         address.m_label      = trimmed.toStdString();
         address.m_duration   = WalletAddress::AddressExpirationNever;
         address.m_Address    = _token.toStdString();
-        _walletModel.getAsync()->saveAddress(address, false);
+        _walletModel.getAsync()->saveAddress(address);
     }
     else
     {
-        _walletModel.getAsync()->getAddress(_token.toStdString(), [this, trimmed](const boost::optional<WalletAddress>& addr, size_t c)
+        _walletModel.getAsync()->getAddress(_receiverWalletID, [this, trimmed](const boost::optional<WalletAddress>& addr, size_t c)
         {
             WalletAddress address = *addr;
             address.m_label = trimmed.toStdString();
-            _walletModel.getAsync()->saveAddress(address, true);
+            _walletModel.getAsync()->saveAddress(address);
         });
     }
 }
@@ -453,7 +453,7 @@ void SendViewModel::extractParameters()
         emit commentChanged();
     }
 
-    _walletModel.getAsync()->getAddress(_token.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
+    _walletModel.getAsync()->getAddress(_receiverWalletID, [this](const boost::optional<WalletAddress>& addr, size_t c)
     {
         onGetAddressReturned(addr, static_cast<int>(c));
     });

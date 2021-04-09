@@ -291,22 +291,26 @@ void AddressBookViewModel::setContactSortRole(QString value)
     }
 }
 
-bool AddressBookViewModel::isAddressBusy(const QString& addr)
+bool AddressBookViewModel::isAddressBusy(const QString& wid)
 {
     beam::wallet::WalletID walletID;
-    walletID.FromHex(addr.toStdString());
+    walletID.FromHex(wid.toStdString());
     return find(m_busyAddresses.cbegin(), m_busyAddresses.cend(), walletID) != m_busyAddresses.cend();
 }
 
-void AddressBookViewModel::deleteAddress(const QString& addr)
+void AddressBookViewModel::deleteAddress(const QString& wid)
 {
-    m_model.getAsync()->deleteAddress(addr.toStdString());
+    beam::wallet::WalletID walletID;
+    walletID.FromHex(wid.toStdString());
+    m_model.getAsync()->deleteAddress(walletID);
 }
 
-void AddressBookViewModel::saveChanges(const QString& token, const QString& name, QDateTime expiration)
+void AddressBookViewModel::saveChanges(const QString& wid, const QString& name, QDateTime expiration)
 {
     beam::Timestamp expirationStamp = expiration.toSecsSinceEpoch();
-    m_model.getAsync()->updateAddress(token.toStdString(), name.toStdString(), expirationStamp);
+    beam::wallet::WalletID walletID;
+    walletID.FromHex(wid.toStdString());
+    m_model.getAsync()->updateAddress(walletID, name.toStdString(), expirationStamp);
 }
 
 // static

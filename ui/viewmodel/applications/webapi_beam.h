@@ -62,11 +62,10 @@ namespace beamui::applications
         Q_INVOKABLE void createApi(const QString& version, const QString& appName, const QString& appUrl);
 
     signals:
-        void apiCreated(QObject* api, const QString& appAddress);
+        void apiCreated(QObject* api);
         void apiFailed(const QString& error);
 
     private:
         std::unique_ptr<WebAPI_Beam> _api;
-        std::shared_ptr<bool> _guard = std::make_shared<bool>(true);
     };
 }

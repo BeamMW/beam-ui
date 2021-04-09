@@ -429,7 +429,7 @@ void SettingsViewModel::timerEvent(QTimerEvent *event)
     if (m_isNeedToCheckAddress && !m_localNodeRun)
     {
         m_isNeedToCheckAddress = false;
-        AppModel::getInstance().getWalletModel()->getAsync()->checkAddress(m_nodeAddress.toStdString());
+        AppModel::getInstance().getWalletModel()->getAsync()->checkNetworkAddress(m_nodeAddress.toStdString());
         killTimer(m_timerId);
     }
 }

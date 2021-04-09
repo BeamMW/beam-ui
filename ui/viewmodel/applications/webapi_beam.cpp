@@ -154,30 +154,8 @@ namespace beamui::applications {
         ECC::Hash::Processor() << appName.toStdString() << appUrl.toStdString() >> hv;
         const auto appid = hv.str();
 
-        std::weak_ptr<bool> wguard = _guard;
-        getAsyncWallet().getAppAddress(appid, [this, wguard, stdver, appid, appUrl](boost::optional<WalletAddress> addr) {
-            auto guard = wguard.lock();
-            if (!guard)
-            {
-                LOG_WARNING() << "API destroyed before getAppAddress response received.";
-                return;
-            }
-
-            if (addr)
-            {
-                LOG_INFO() << "Starting API for app: " << appUrl.toStdString() << " : " << stdver << " : " << appid;
-
-                _api = std::make_unique<WebAPI_Beam>(stdver, appid);
-                QQmlEngine::setObjectOwnership(_api.get(), QQmlEngine::CppOwnership);
-
-                emit apiCreated(_api.get(), "addr");
-            }
-            else
-            {
-                //% "Failed to generate/get application address"
-                const auto error = qtTrId("apps-addr-error");
-                emit apiFailed(error);
-            }
-        });
+        _api = std::make_unique<WebAPI_Beam>(stdver, appid);
+        QQmlEngine::setObjectOwnership(_api.get(), QQmlEngine::CppOwnership);
+        emit apiCreated(_api.get());
     }
 }

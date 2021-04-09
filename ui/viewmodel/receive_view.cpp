@@ -97,10 +97,10 @@ void ReceiveViewModel::setToken(const QString& value)
     }
 
     const char* error = "Unknown value passed to ReceiveViewModel::setToken";
+    beam::wallet::WalletID walletID;
 
     if (QMLGlobals::isAddress(value))
     {
-        beam::wallet::WalletID walletID;
         if (!walletID.FromHex(value.toStdString()))
         {
             throw std::runtime_error(error);
@@ -125,7 +125,7 @@ void ReceiveViewModel::setToken(const QString& value)
         throw std::runtime_error(error);
     }
 
-    _walletModel.getAsync()->getAddress(value.toStdString(), [this, error](const boost::optional<beam::wallet::WalletAddress>& address, size_t offlineCount) {
+    _walletModel.getAsync()->getAddress(walletID, [this, error](const boost::optional<beam::wallet::WalletAddress>& address, size_t offlineCount) {
         if (!address)
         {
             throw std::runtime_error(error);
@@ -162,7 +162,7 @@ void ReceiveViewModel::saveAddress()
     if (getCommentValid())
     {
         _receiverAddress.setExpiration(beam::wallet::WalletAddress::ExpirationStatus::Auto);
-        _walletModel.getAsync()->saveAddress(_receiverAddress, true);
+        _walletModel.getAsync()->saveAddress(_receiverAddress);
     }
 }
 

@@ -51,7 +51,6 @@ ColumnLayout {
 
         property var style: Style
         property var api
-        property string appAddress
     }
 
     WebAPICreator {
@@ -122,9 +121,8 @@ ColumnLayout {
                 control.errorMessage = error
             })
 
-            webapiCreator.onApiCreated.connect(function(api, address) {
+            webapiCreator.onApiCreated.connect(function(api) {
                 control.errorMessage = ""
-                webapiBEAM.appAddress = address
                 webapiBEAM.api = api
                 webView.visible = false
                 webView.url = app.url
