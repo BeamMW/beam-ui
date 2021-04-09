@@ -267,6 +267,7 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
         case Roles::TimeCreatedSort:
             return static_cast<qulonglong>(value->timeCreated());
         case Roles::AmountGeneralSort:
+            return beamui::UIStringToAmount(value->getAmountGeneral());
         case Roles::AmountGeneral:
             return value->getAmountGeneral();
         case Roles::Rate:
@@ -431,6 +432,7 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return r;
         }
         case Roles::AmountSecondCurrencySort:
+            return beamui::UIStringToAmount(value->getAmountSecondCurrency());
         case Roles::AmountSecondCurrency:
             return value->getAmountSecondCurrency();
         case Roles::IsMultiAsset:
