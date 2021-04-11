@@ -34,15 +34,20 @@ namespace
     }
 }
 
-AddressItem::AddressItem(const beam::wallet::WalletAddress& address)
-    : m_walletAddress(address)
+AddressItem::AddressItem(beam::wallet::WalletAddress address)
+    : m_walletAddress(std::move(address))
 {
 
 }
 
-QString AddressItem::getAddress() const
+QString AddressItem::getToken() const
 {
     return QString::fromStdString(m_walletAddress.m_Address);
+}
+
+QString AddressItem::getWalletID() const
+{
+    return QString::fromStdString(std::to_string(m_walletAddress.m_walletID));
 }
 
 QString AddressItem::getName() const
@@ -102,9 +107,9 @@ ContactItem::ContactItem(const beam::wallet::WalletAddress& address)
 
 }
 
-QString ContactItem::getAddress() const
+QString ContactItem::getWalletID() const
 {
-    return QString::fromStdString(m_walletAddress.m_Address);
+    return QString::fromStdString(std::to_string(m_walletAddress.m_walletID));
 }
 
 QString ContactItem::getName() const
@@ -128,20 +133,7 @@ QString ContactItem::getIdentity() const
 
 QString ContactItem::getToken() const
 {
-    if (m_walletAddress.m_walletID == Zero)
-    {
-        return QString::fromStdString(m_walletAddress.m_Address);
-    }
-    using namespace beam::wallet;
-    TxParameters params;
-    params.SetParameter(TxParameterID::TransactionType, TxType::Simple);
-    params.SetParameter(TxParameterID::PeerID, m_walletAddress.m_walletID);
-    if (m_walletAddress.m_Identity != Zero)
-    {
-        params.SetParameter(TxParameterID::PeerWalletIdentity, m_walletAddress.m_Identity);
-    }
-    params.SetParameter(TxParameterID::IsPermanentPeerID, m_walletAddress.isPermanent());
-    return QString::fromStdString(std::to_string(params));
+    return QString::fromStdString(m_walletAddress.m_Address);
 }
 
 AddressBookViewModel::AddressBookViewModel()
@@ -182,9 +174,9 @@ QString AddressBookViewModel::nameRole() const
     return "name";
 }
 
-QString AddressBookViewModel::addressRole() const
+QString AddressBookViewModel::walletIDRole() const
 {
-    return "address";
+    return "walletID";
 }
 
 QString AddressBookViewModel::categoryRole() const
@@ -205,6 +197,11 @@ QString AddressBookViewModel::expirationRole() const
 QString AddressBookViewModel::createdRole() const
 {
     return "createDate";
+}
+
+QString AddressBookViewModel::tokenRole() const
+{
+    return "token";
 }
 
 Qt::SortOrder AddressBookViewModel::activeAddrSortOrder() const
@@ -291,7 +288,7 @@ void AddressBookViewModel::setContactSortRole(QString value)
     }
 }
 
-bool AddressBookViewModel::isAddressBusy(const QString& wid)
+bool AddressBookViewModel::isWIDBusy(const QString& wid)
 {
     beam::wallet::WalletID walletID;
     walletID.FromHex(wid.toStdString());
@@ -483,10 +480,16 @@ std::function<bool(const AddressItem*, const AddressItem*)> AddressBookViewModel
         return compare(lf->getName(), rt->getName(), sortOrder);
     };
 
-    if (role == addressRole())
+    if (role == tokenRole())
         return [sortOrder = order](const AddressItem* lf, const AddressItem* rt)
     {
-        return compare(lf->getAddress(), rt->getAddress(), sortOrder);
+        return compare(lf->getToken(), rt->getToken(), sortOrder);
+    };
+
+    if (role == walletIDRole())
+        return [sortOrder = order](const AddressItem* lf, const AddressItem* rt)
+    {
+        return compare(lf->getWalletID(), rt->getWalletID(), sortOrder);
     };
 
     if (role == categoryRole())
@@ -516,10 +519,16 @@ std::function<bool(const AddressItem*, const AddressItem*)> AddressBookViewModel
 
 std::function<bool(const ContactItem*, const ContactItem*)> AddressBookViewModel::generateContactComparer()
 {
-    if (m_contactSortRole == addressRole())
+    if (m_contactSortRole == walletIDRole())
         return [sortOrder = m_contactSortOrder](const ContactItem* lf, const ContactItem* rt)
     {
-        return compare(lf->getAddress(), rt->getAddress(), sortOrder);
+        return compare(lf->getWalletID(), rt->getWalletID(), sortOrder);
+    };
+
+    if (m_contactSortRole == tokenRole())
+        return [sortOrder = m_contactSortOrder](const ContactItem* lf, const ContactItem* rt)
+    {
+        return compare(lf->getToken(), rt->getToken(), sortOrder);
     };
 
     if (m_contactSortRole == categoryRole())

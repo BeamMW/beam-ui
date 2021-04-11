@@ -231,7 +231,7 @@ void SendViewModel::setToken(const QString& value)
 
 bool SendViewModel::getTokenValid() const
 {
-    return !_token.isEmpty() && QMLGlobals::isTAValid(_token);
+    return !_token.isEmpty() && QMLGlobals::isToken(_token);
 }
 
 QString SendViewModel::getNewTokenMsg() const
@@ -538,11 +538,7 @@ void SendViewModel::sendMoney()
         params.SetParameter(TxParameterID::MaxPrivacyMinAnonimitySet, settings.getMaxPrivacyAnonymitySet());
     }
 
-    if (!QMLGlobals::isAddress(_token))
-    {
-        params.SetParameter(TxParameterID::OriginalToken, _token.toStdString());
-    }
-
+    params.SetParameter(TxParameterID::OriginalToken, _token.toStdString());
     _walletModel.getAsync()->startTransaction(std::move(params));
 }
 

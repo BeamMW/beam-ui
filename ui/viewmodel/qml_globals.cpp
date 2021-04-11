@@ -139,22 +139,9 @@ QString QMLGlobals::version()
     return QString::fromStdString(PROJECT_VERSION);
 }
 
-bool QMLGlobals::isTAValid(const QString& text)
-{
-    return QMLGlobals::isTransactionToken(text) || QMLGlobals::isAddress(text);
-}
-
-bool QMLGlobals::isAddress(const QString& text)
+bool QMLGlobals::isToken(const QString& text)
 {
     return beam::wallet::CheckReceiverAddress(text.toStdString());
-}
-
-bool QMLGlobals::isTransactionToken(const QString& text)
-{
-    if (text.isEmpty()) return false;
-    
-    auto params = beam::wallet::ParseParameters(text.toStdString());
-    return params && params->GetParameter<beam::wallet::TxType>(beam::wallet::TxParameterID::TransactionType);
 }
 
 bool QMLGlobals::isSwapToken(const QString& text)

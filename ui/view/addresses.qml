@@ -209,7 +209,7 @@ ColumnLayout {
                 }
             
                 TableViewColumn {
-                    role: viewModel.addressRole
+                    role: viewModel.tokenRole
                     title: qsTrId("general-address")
                     width: 280 * contactsView.columnResizeRatio
                     movable: false
@@ -292,7 +292,8 @@ ColumnLayout {
                         onClicked: {
                             if (mouse.button == Qt.RightButton && styleData.row != undefined)
                             {
-                                contextMenu.address = contactsView.model[styleData.row].address;
+                                contextMenu.walletID = contactsView.model[styleData.row].walletID;
+                                contextMenu.token = contactsView.model[styleData.row].token;
                                 contextMenu.popup();
                             }
                         }
@@ -321,7 +322,7 @@ ColumnLayout {
                                     //% "Actions"
                                     ToolTip.text: qsTrId("general-actions")
                                     onClicked: {
-                                        contextMenu.address = contactsView.model[styleData.row].address;
+                                        contextMenu.walletID = contactsView.model[styleData.row].walletID;
                                         contextMenu.token = contactsView.model[styleData.row].token;
                                         contextMenu.popup();
                                     }
@@ -335,14 +336,14 @@ ColumnLayout {
                     id: contextMenu
                     modal: true
                     dim: false
-                    property string address
+                    property string walletID
                     property string token
                     Action {
                         //% "Send"
                         text: qsTrId("general-send")
                         icon.source: "qrc:/assets/icon-send-blue.svg"
                         onTriggered: {
-                            main.openSendDialog(contextMenu.address);
+                            main.openSendDialog(contextMenu.token);
                         }
                     }
                     Action {
@@ -350,7 +351,7 @@ ColumnLayout {
                         text: qsTrId("address-table-cm-delete-contact")
                         icon.source: "qrc:/assets/icon-delete.svg"
                         onTriggered: {
-                            viewModel.deleteAddress(contextMenu.address);
+                            viewModel.deleteAddress(contextMenu.walletID);
                         }
                     }
                 }

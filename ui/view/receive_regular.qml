@@ -39,6 +39,10 @@ ColumnLayout {
         }
     }
 
+    Component.onDestruction: function () {
+        viewModel.saveAddress()
+    }
+
     TopGradient {
         mainRoot: main
         topColor: Style.accent_incoming
@@ -80,7 +84,6 @@ ColumnLayout {
         //% "Receive"
         text: qsTrId("wallet-receive-title")
         onBack: function () {
-            if (isValid()) viewModel.saveAddress();
             control.onClosed()
         }
     }

@@ -8,7 +8,7 @@ import "./utils.js" as Utils
 ColumnLayout {
     id: control
     spacing: 0
-    property var defaultFocusItem: tokenInput
+    property var defaultFocusItem: receiverToken ? sendAmountInput.amountInput : tokenInput
 
     SendViewModel {
         id: viewModel
@@ -33,9 +33,16 @@ ColumnLayout {
     property var   rateUnit:  assetInfo.rateUnit
 
     // callbacks set by parent
-    property var onAccepted:  undefined
-    property var onClosed:    undefined
-    property var onSwapToken: undefined
+    property var   onAccepted:    undefined
+    property var   onClosed:      undefined
+    property var   onSwapToken:   undefined
+    property alias receiverToken: viewModel.token
+
+    Component.onCompleted: {
+        if (receiverToken) {
+            tokenInput.cursorPosition = 0
+        }
+    }
 
     onAssetIdChanged: function () {
         // C++ provides asset id, combobox exepects index, need to fix this at some point

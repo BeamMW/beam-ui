@@ -25,7 +25,8 @@
 class AddressItem : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString   address          READ getAddress        CONSTANT)
+    Q_PROPERTY(QString   walletID         READ getWalletID       CONSTANT)
+    Q_PROPERTY(QString   token            READ getToken          CONSTANT)
     Q_PROPERTY(QString   name             READ getName           CONSTANT)
     Q_PROPERTY(QString   category         READ getCategory       CONSTANT)
     Q_PROPERTY(QString   identity         READ getIdentity       CONSTANT)
@@ -37,9 +38,10 @@ class AddressItem : public QObject
 public:
 
     AddressItem() = default;
-    AddressItem(const beam::wallet::WalletAddress&);
+    AddressItem(beam::wallet::WalletAddress);
 
-    QString getAddress() const;
+    QString getWalletID() const;
+    QString getToken() const;
     QString getName() const;
     QString getCategory() const;
     QString getIdentity() const;
@@ -58,7 +60,7 @@ private:
 class ContactItem : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString address       READ getAddress    CONSTANT)
+    Q_PROPERTY(QString walletID      READ getWalletID   CONSTANT)
     Q_PROPERTY(QString name          READ getName       CONSTANT)
     Q_PROPERTY(QString category      READ getCategory   CONSTANT)
     Q_PROPERTY(QString identity      READ getIdentity   CONSTANT)
@@ -68,7 +70,7 @@ public:
     ContactItem() = default;
     ContactItem(const beam::wallet::WalletAddress&);
 
-    QString getAddress() const;
+    QString getWalletID() const;
     QString getName() const;
     QString getCategory() const;
     QString getIdentity() const;
@@ -86,7 +88,8 @@ class AddressBookViewModel : public QObject
     Q_PROPERTY(QQmlListProperty<AddressItem> expiredAddresses  READ getExpiredAddresses  NOTIFY expiredAddressesChanged)
 
     Q_PROPERTY(QString nameRole READ nameRole CONSTANT)
-    Q_PROPERTY(QString addressRole READ addressRole CONSTANT)
+    Q_PROPERTY(QString tokenRole READ tokenRole CONSTANT)
+    Q_PROPERTY(QString walletIDRole READ walletIDRole CONSTANT)
     Q_PROPERTY(QString categoryRole READ categoryRole CONSTANT)
     Q_PROPERTY(QString identityRole READ identityRole CONSTANT)
     Q_PROPERTY(QString expirationRole READ expirationRole CONSTANT)
@@ -101,10 +104,10 @@ class AddressBookViewModel : public QObject
     Q_PROPERTY(QString contactSortRole     READ contactSortRole     WRITE setContactSortRole)
 
 public:
-    Q_INVOKABLE bool    isAddressBusy(const QString& addr);
+    Q_INVOKABLE bool    isWIDBusy(const QString& walletID);
     Q_INVOKABLE bool    commentValid(const QString& comment) const;
-    Q_INVOKABLE void    deleteAddress(const QString& addr);
-    Q_INVOKABLE void    saveChanges(const QString& addr, const QString& name, QDateTime expirationDate);
+    Q_INVOKABLE void    deleteAddress(const QString& walletID);
+    Q_INVOKABLE void    saveChanges(const QString& walletID, const QString& name, QDateTime expirationDate);
     Q_INVOKABLE QString generateQR(const QString& addr, uint width, uint height);
 
 public:
@@ -115,11 +118,12 @@ public:
     QQmlListProperty<AddressItem> getExpiredAddresses();
 
     [[nodiscard]] QString nameRole() const;
-    [[nodiscard]] QString addressRole() const;
+    [[nodiscard]] QString walletIDRole() const;
     [[nodiscard]] QString categoryRole() const;
     [[nodiscard]] QString identityRole() const;
     [[nodiscard]] QString expirationRole() const;
     [[nodiscard]] QString createdRole() const;
+    [[nodiscard]] QString tokenRole() const;
 
     [[nodiscard]] Qt::SortOrder activeAddrSortOrder() const;
     [[nodiscard]] Qt::SortOrder expiredAddrSortOrder() const;

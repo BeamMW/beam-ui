@@ -84,21 +84,20 @@ Item {
             function navigateSend(assetId) {
                 assetId = assetId && assetId >= 0 ? assetId : 0
                 walletStackView.push(Qt.createComponent("send_regular.qml"),
-                                             {"onAccepted":      onAccepted,
-                                              "onClosed":        onClosed,
-                                              "onSwapToken":     onSwapToken,
-                                              "receiverAddress": token,
-                                              "assetId":         assetId});
-                token = "";
+                                         {"onAccepted":     onAccepted,
+                                          "onClosed":       onClosed,
+                                          "onSwapToken":    onSwapToken,
+                                          "receiverToken":  root.token,
+                                          "assetId":        assetId})
+                root.token = ""
             }
 
             function navigateReceive(assetId) {
-                walletStackView.push(Qt.createComponent("receive_regular.qml"), 
-                                                {"onClosed": onClosed,
-                                                 "token":    token,
-                                                 "assetId":  assetId
-                                                });
-                token = "";
+                walletStackView.push(Qt.createComponent("receive_regular.qml"),
+                                        {"onClosed": onClosed,
+                                         "token":    root.token,
+                                         "assetId":  assetId})
+                token = ""
             }
 
             Row {
@@ -205,7 +204,8 @@ Item {
                 item.navigateSend();
                 root.openSend = false;
             }
-        } else if (root.openReceive) {
+        }
+        else if (root.openReceive) {
             var item = walletStackView.currentItem;
             if (item && item.navigateReceive && typeof item.navigateReceive == "function" ) {
                 item.navigateReceive();

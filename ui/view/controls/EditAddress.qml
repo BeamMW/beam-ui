@@ -15,8 +15,9 @@ Dialog {
     property var  viewModel
     property var  addressItem
 
-    property var     token:         addressItem.address
-    property bool    isToken:       !BeamGlobals.isAddress(token)
+    property var     token:         addressItem.token
+    property var     walletID:      addressItem.walletID
+    property var     isOldAddr:     addressItem.token == addressItem.walletID
     property string  comment:       addressItem.name
     property var     expiration:    addressItem.expirationDate
     property bool    expired:       expiration < new Date(Date.now())
@@ -53,14 +54,14 @@ Dialog {
 		ScrollView {
             Layout.maximumHeight:         200
             Layout.topMargin:             10
-            Layout.preferredWidth:        control.isToken ? 578 : 510
+            Layout.preferredWidth:        control.isOldAddr ? 510: 582
             clip:                         true
             ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
             ScrollBar.vertical.policy:    ScrollBar.AsNeeded
 
             SFLabel {
                 id:                       addressID
-                width:                    control.isToken ? 578 : 510
+                width:                    control.isOldAddr ? 510: 582
                 copyMenuEnabled:          true
                 wrapMode:                 Text.Wrap
                 font.pixelSize:           14
@@ -107,7 +108,7 @@ Dialog {
 
                 //% "Expire now"
                 text: qsTrId("edit-addr-expire-now")
-                enabled: !viewModel.isAddressBusy(control.token)
+                enabled: !viewModel.isWIDBusy(control.walletID)
 
                 onClicked: {
                     var newExpiration = new Date(Date.now() - 1000)
@@ -141,7 +142,7 @@ Dialog {
             Layout.topMargin: 7
             font.pixelSize:   13
             font.italic:      true
-            visible:          viewModel.isAddressBusy(control.token)
+            visible:          viewModel.isWIDBusy(control.walletID)
         }
 
         SFText {
@@ -222,7 +223,7 @@ Dialog {
                         )
 
                 onClicked: {
-                    viewModel.saveChanges(control.token, control.comment, control.expiration)
+                    viewModel.saveChanges(control.walletID, control.comment, control.expiration)
                     control.destroy()
                 }
             }

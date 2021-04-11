@@ -99,14 +99,7 @@ void ReceiveViewModel::setToken(const QString& value)
     const char* error = "Unknown value passed to ReceiveViewModel::setToken";
     beam::wallet::WalletID walletID;
 
-    if (QMLGlobals::isAddress(value))
-    {
-        if (!walletID.FromHex(value.toStdString()))
-        {
-            throw std::runtime_error(error);
-        }
-    }
-    else if(QMLGlobals::isTransactionToken(value))
+    if(QMLGlobals::isToken(value))
     {
         auto txParameters = beam::wallet::ParseParameters(value.toStdString());
         if (!txParameters)
@@ -114,7 +107,6 @@ void ReceiveViewModel::setToken(const QString& value)
             throw std::runtime_error(error);
         }
 
-        beam::wallet::WalletID walletID;
         if (!txParameters->GetParameter(beam::wallet::TxParameterID::PeerID, walletID))
         {
             throw std::runtime_error(error);
