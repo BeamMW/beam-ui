@@ -32,6 +32,7 @@ public:
     Q_INVOKABLE static int  maxCommentLength();
     Q_INVOKABLE static bool needPasswordToSpend();
     Q_INVOKABLE static bool isPasswordValid(const QString& value);
+    Q_INVOKABLE static void fatal(const QString& message);
 
     // new currency utils
     Q_PROPERTY(QString beamUnit     READ getBeamUnit    CONSTANT)

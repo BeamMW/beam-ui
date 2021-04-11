@@ -95,6 +95,9 @@ ColumnLayout {
                     if (!ainput.activeFocus) {
                         ainput.text = ainput.formatDisplayedAmount()
                     }
+                    else {
+                        BeamGlobals.fatal("Amount should not be changed while control is in focus")
+                    }
                 }
             }
         }
