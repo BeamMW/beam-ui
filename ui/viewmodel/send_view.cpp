@@ -173,7 +173,7 @@ void SendViewModel::setSendAmount(const QString& value)
     if (amount != m_Csi.m_requestedSum)
     {
         _maxPossible = false;
-        m_Csi.m_requestedSum = (amount == 0UL && !value.isEmpty() && value != "0") ? m_Csi.m_requestedSum : amount;
+        m_Csi.m_requestedSum = amount;
         RefreshCsiAsync();
     }
 }

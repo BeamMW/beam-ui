@@ -86,13 +86,15 @@ ColumnLayout {
 
             function getRegExpPattern() {
                 var pattern = "^(([1-9][0-9]{0,7})|(1[0-9]{8})|(2[0-4][0-9]{7})|(25[0-3][0-9]{6})|(0))(\\.[0-9]{0,%1}[1-9])?$";
-                return pattern.arg(currencies[currencyIdx].decimals);
+                return pattern.arg(currencies[currencyIdx].decimals - 1);
             }
 
             Connections {
                 target: control
                 function onAmountChanged () {
-                    ainput.text = ainput.formatDisplayedAmount()
+                    if (!ainput.activeFocus) {
+                        ainput.text = ainput.formatDisplayedAmount()
+                    }
                 }
             }
         }

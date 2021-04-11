@@ -162,7 +162,7 @@ namespace beamui
     beam::Amount UIStringToAmount(const QString& value, Currencies currency)
     {
         beam::Amount amount = 0;
-        libbitcoin::decode_base10(amount, value.toStdString(), getCurrencyDecimals(currency));
+        libbitcoin::decode_base10(amount, value.toStdString(), getCurrencyDecimals(currency), true);
         return amount;
     }
 
