@@ -16,6 +16,7 @@
 #include <QObject>
 #include "wallet/core/common.h"
 #include "wallet/core/wallet_db.h"
+#include "viewmodel/wallet/assets_manager.h"
 
 class TokenInfoItem : public QObject
 {
@@ -70,7 +71,9 @@ private:
     beam::Asset::ID m_assetId = 0;
     beam::wallet::WalletID m_addressSBBS = beam::Zero;
     beam::PeerID m_identity;
+    QString m_UnitName;
     int m_offlinePayments = 0;
     bool m_ignoreStoredVouchers = false;
+    AssetsManager::Ptr _amgr;
 };
 

@@ -142,6 +142,7 @@ Dialog {
                     wrapMode:               Text.Wrap
                     font.pixelSize:         14
                     color:                  Style.content_main
+                    elide:                  Text.ElideRight
                     text:                   viewModel.amount
                     visible:                viewModel.amount.length
                     onCopyText: function () {

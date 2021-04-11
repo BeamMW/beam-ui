@@ -19,8 +19,9 @@ using namespace beam;
 using namespace beamui;
 
 TokenInfoItem::TokenInfoItem(QObject* parent /* = nullptr */)
-        : QObject(parent)
+    : QObject(parent)
 {
+    _amgr = AppModel::getInstance().getAssets();
 }
 
 bool TokenInfoItem::isPermanent() const
@@ -61,13 +62,7 @@ QString TokenInfoItem::getAmount() const
 {
     if (m_amountValue)
     {
-        if (Asset::s_BeamID == m_assetId)
-            return AmountToUIString(m_amountValue, Currencies::Beam);
-
-        auto amgr = AppModel::getInstance().getAssets();
-        return amgr->hasAsset(m_assetId)
-            ? AmountToUIString(m_amountValue, amgr->getUnitName(m_assetId, AssetsManager::Shorten::ShortenTxt))
-            : AmountToUIString(m_amountValue, Currencies::Unknown);
+        return AmountToUIString(m_amountValue, m_UnitName);
     }
     return "";
 }
@@ -127,7 +122,8 @@ void TokenInfoItem::setToken(const QString& token)
             m_amountValue = amount ? *amount : 0;
 
             auto assetId = params.GetParameter<beam::Asset::ID>(TxParameterID::AssetID);
-            m_assetId = assetId ? *assetId : 0;
+            m_assetId  = assetId ? *assetId : 0;
+            m_UnitName = _amgr->getUnitName(m_assetId, AssetsManager::NoShorten);
 
             auto identity = params.GetParameter<PeerID>(TxParameterID::PeerWalletIdentity);
             m_identity = identity ? *identity : Zero;
