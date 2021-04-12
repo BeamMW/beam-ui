@@ -153,7 +153,7 @@ void ReceiveViewModel::saveAddress()
 {
     if (getCommentValid())
     {
-        _receiverAddress.setExpiration(beam::wallet::WalletAddress::ExpirationStatus::Auto);
+        _receiverAddress.setExpirationStatus(beam::wallet::WalletAddress::ExpirationStatus::Auto);
         _walletModel.getAsync()->saveAddress(_receiverAddress);
     }
 }

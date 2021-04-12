@@ -57,7 +57,7 @@ namespace
         // generate default address
         beam::wallet::WalletAddress address;
         db->createAddress(address);
-        address.setExpiration(wallet::WalletAddress::ExpirationStatus::Never);
+        address.setExpirationStatus(wallet::WalletAddress::ExpirationStatus::Never);
         address.m_label = "default";
         db->saveAddress(address);
     }

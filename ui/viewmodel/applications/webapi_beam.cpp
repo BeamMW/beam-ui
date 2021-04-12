@@ -52,39 +52,41 @@ namespace beamui::applications {
 
     void WebAPI_Beam::callWalletApi(const QString& request)
     {
-        LOG_INFO () << "WebAPP API: " << request.toStdString();
+        //
+        // THIS IS THE UI THREAD
+        //
+        LOG_INFO () << "WebAPP API call: " << request.toStdString();
 
-        std::string stdreq = request.toStdString();
-        return callWalletApiImp(stdreq);
-        /*
+        const auto stdreq = request.toStdString();
         if (auto pres = _walletAPI->parseAPIRequest(stdreq.c_str(), stdreq.size()); pres)
         {
-            // we allow only known methods
-            static std::vector<std::string> alwaysOK = {
-                    "validate_address",
-                    "tx_asset_info",
-                    "get_asset_info",
-                    "generate_tx_id",
-                    "verify_payment_proof",
-                    "calc_change",
-                    // delete that is below
-                    // "create_address",
-                    // "addr_list",
-                    // "edit_address",
-                    "tx_send",
-                    "tx_cancel",
-                    "tx_delete",
-                    "tx_status",
-                    "tx_list"
-            };
-
-            if (std::find(alwaysOK.begin(), alwaysOK.end(), pres->method) != alwaysOK.end())
+            if (pres->minfo.handlesApps)
             {
+                //if (pres->acinfo.method == "tx_create")
+                //{
+                //    return;
+                //}
+
+                //if (pres->acinfo.method == "invoke_contract")
+                //{
+                //    return;
+                //}
+
+                if (pres->minfo.fee > 0 || !pres->minfo.spend.empty())
+                {
+                    LOG_INFO() << "Application called method " << pres->acinfo.method << " that spends funds, but user consent is not handled";
+                    assert(false);
+
+                    const auto error = _walletAPI->fromError(stdreq, ApiError::NotAllowedError, std::string());
+                    emit callWalletApiResult(QString::fromStdString(error));
+
+                    return;
+                }
+
                 return callWalletApiImp(stdreq);
             }
 
-            // tx_send, tx_cancel, tx_delete, tx_status, tx_list, export_paymnet_proof, invoke_contract, pass address
-
+            LOG_INFO() << "Application request call of the not allowed method: " << pres->acinfo.method;
             const auto error = _walletAPI->fromError(stdreq, ApiError::NotAllowedError, std::string());
             emit callWalletApiResult(QString::fromStdString(error));
             return;
@@ -92,13 +94,16 @@ namespace beamui::applications {
         else
         {
             // parse failed, just log error and return. Error response is already sent back
-            LOG_ERROR() << "WebAPP API failed: " << request.toStdString();
+            LOG_ERROR() << "WebAPP API parse failed: " << request.toStdString();
             return;
-        }*/
+        }
     }
 
     void WebAPI_Beam::callWalletApiImp(const std::string& request)
     {
+        //
+        // this can be any thread, for now the UI thread only
+        //
         IWalletApi::WeakPtr wp = _walletAPI;
         getAsyncWallet().makeIWTCall(
             [wp, request]() -> boost::any {

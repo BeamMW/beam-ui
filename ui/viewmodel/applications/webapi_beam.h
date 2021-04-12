@@ -41,13 +41,14 @@ namespace beamui::applications
     signals:
         void callWalletApiResult(const QString& result);
 
-    private:
-        // This callback is called in the reactor thread
+    public:
+        // This can be called from any thread
         void sendAPIResponse(const beam::wallet::json& result) override;
 
-        // This should be called only in context of the reactor thread
+        // This can be called from any thread.
         void callWalletApiImp(const std::string& request);
 
+    private:
         // API should be accessed only in context of the reactor thread
         beam::wallet::IWalletApi::Ptr _walletAPI;
     };
