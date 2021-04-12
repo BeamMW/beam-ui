@@ -65,10 +65,14 @@ ColumnLayout {
             text:             formatDisplayedAmount()
             readOnly:         control.readOnlyA
 
+            function stripAmountText() {
+                return text ? text.replace(/\.0*$|(\.\d*[1-9])0+$/,'$1') : "0"
+            }
+
             onTextChanged: {
                 // if nothing then "0", remove insignificant zeroes and "." in floats
                 if (ainput.activeFocus) {
-                    control.amount = text ? text.replace(/\.0*$|(\.\d*[1-9])0+$/,'$1') : "0"
+                    control.amount = stripAmountText()
                 }
             }
 
@@ -92,11 +96,18 @@ ColumnLayout {
             Connections {
                 target: control
                 function onAmountChanged () {
-                    if (!ainput.activeFocus) {
-                        ainput.text = ainput.formatDisplayedAmount()
+                    var formatted = ainput.formatDisplayedAmount()
+
+                    if (!ainput.activeFocus)
+                    {
+                        ainput.text = formatted
                     }
                     else {
-                        BeamGlobals.fatal("Amount should not be changed while control is in focus")
+                        if (formatted != ainput.stripAmountText()) {
+                            // we tolerate only insignificants 0 at the end of floats
+                            // so if user entered 0.000100 we do not strip last 2 zeroes at the end while in focus
+                            BeamGlobals.fatal("Absolute value of the amount should not be changed while control is in focus")
+                        }
                     }
                 }
             }
