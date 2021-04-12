@@ -86,7 +86,7 @@ namespace beamui::applications {
                 return callWalletApiImp(stdreq);
             }
 
-            LOG_INFO() << "Application request call of the not allowed method: " << pres->acinfo.method;
+            LOG_INFO() << "Application requested call of the not allowed method: " << pres->acinfo.method;
             const auto error = _walletAPI->fromError(stdreq, ApiError::NotAllowedError, std::string());
             emit callWalletApiResult(QString::fromStdString(error));
             return;
@@ -157,7 +157,7 @@ namespace beamui::applications {
 
         ECC::Hash::Value hv;
         ECC::Hash::Processor() << appName.toStdString() << appUrl.toStdString() >> hv;
-        const auto appid = hv.str();
+        const auto appid = std::string("appid:") + hv.str();
 
         _api = std::make_unique<WebAPI_Beam>(stdver, appid);
         QQmlEngine::setObjectOwnership(_api.get(), QQmlEngine::CppOwnership);
