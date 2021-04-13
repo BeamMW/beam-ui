@@ -89,43 +89,48 @@ QString ReceiveViewModel::getComment() const
     return QString::fromStdString(_receiverAddress.m_label);
 }
 
-void ReceiveViewModel::setToken(const QString& value)
+void ReceiveViewModel::setToken(const QString& token)
 {
-    if (value.isEmpty())
+    using namespace beam::wallet;
+
+    if (token.isEmpty())
     {
         return;
     }
 
-    const char* error = "Unknown value passed to ReceiveViewModel::setToken";
-    beam::wallet::WalletID walletID;
+    _walletModel.getAsync()->getAddressByToken(token.toStdString(),
+        [this, token](const boost::optional<beam::wallet::WalletAddress>& address, size_t offlineCount) {
+            if (!address)
+            {
+                throw std::runtime_error("Unknown value passed to ReceiveViewModel::setToken");
+            }
 
-    if(QMLGlobals::isToken(value))
-    {
-        auto txParameters = beam::wallet::ParseParameters(value.toStdString());
-        if (!txParameters)
-        {
-            throw std::runtime_error(error);
-        }
+            _receiverAddress = *address;
+            emit commentChanged();
+            emit commentValidChanged();
 
-        if (!txParameters->GetParameter(beam::wallet::TxParameterID::PeerID, walletID))
-        {
-            throw std::runtime_error(error);
-        }
-    }
-    else
-    {
-        throw std::runtime_error(error);
-    }
+            _maxp = GetAddressType(token.toStdString()) == TxAddressType::MaxPrivacy;
+            emit isMaxPrivacyChanged();
 
-    _walletModel.getAsync()->getAddress(walletID, [this, error](const boost::optional<beam::wallet::WalletAddress>& address, size_t offlineCount) {
-        if (!address)
-        {
-            throw std::runtime_error(error);
+            if (auto params = ParseParameters(token.toStdString()))
+            {
+                if (auto amount = params->GetParameter<beam::Amount>(TxParameterID::Amount))
+                {
+                    _amount = *amount;
+                    emit amountChanged();
+                }
+
+                // this doesn't work at the moment
+                //if (auto assetId = params->GetParameter<beam::Asset::ID>(TxParameterID::AssetID))
+                //{
+                //    _assetId = *assetId;
+                //    emit assetIdChanged();
+                //}
+            }
+
+            updateToken();
         }
-        _receiverAddress = *address;
-        setComment(QString::fromStdString(address->m_label));
-        updateToken();
-    });
+    );
 }
 
 QString ReceiveViewModel::getToken() const
