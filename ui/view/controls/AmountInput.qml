@@ -103,7 +103,7 @@ ColumnLayout {
                         ainput.text = formatted
                     }
                     else {
-                        if (formatted != ainput.stripAmountText()) {
+                        if (formatted && formatted != ainput.stripAmountText()) {
                             // we tolerate only insignificants 0 at the end of floats
                             // so if user entered 0.000100 we do not strip last 2 zeroes at the end while in focus
                             BeamGlobals.fatal("Absolute value of the amount should not be changed while control is in focus")
