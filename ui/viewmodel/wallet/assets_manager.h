@@ -48,6 +48,8 @@ public:
     QColor  getSelectionColor(beam::Asset::ID);
     QString getSiteUrl(beam::Asset::ID);
     QString getPaperUrl(beam::Asset::ID);
+    beam::Amount getRate(beam::Asset::ID);
+    QString getRateUnit();
     QList<QMap<QString, QVariant>> getAssetsList();
     bool hasAsset(beam::Asset::ID) const;
 

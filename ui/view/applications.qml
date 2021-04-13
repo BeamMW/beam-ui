@@ -55,6 +55,29 @@ ColumnLayout {
 
     WebAPICreator {
         id: webapiCreator
+
+        onApproveSend: function(request, info) {
+            const dialog = Qt.createComponent("send_confirm.qml")
+            const instance = dialog.createObject(control,
+                {
+                    addressText:  info["token"],
+                    typeText:     info["tokenType"],
+                    isOnline:     info["isOnline"],
+                    amount:       info["amount"],
+                    unitName:     info["unitName"],
+                    rate:         info["rate"],
+                    rateUnit:     info["rateUnit"],
+                    fee:          info["fee"],
+                    feeRate:      info["feeRate"],
+                    comment:      info["comment"],
+                    appMode:      true,
+
+                    acceptHandler: function () {
+                        webapiCreator.requestApproved(request);
+                    },
+                })
+            instance.open()
+        }
     }
 
     WebChannel {

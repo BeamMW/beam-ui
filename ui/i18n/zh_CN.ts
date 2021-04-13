@@ -3021,5 +3021,9 @@ Update your settings and try again.</source>
         <source>There are no transactions yet.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="send-app-confirmation-title">
+        <source>Confirm Application Transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

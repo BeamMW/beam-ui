@@ -18,6 +18,8 @@ ConfirmationDialog {
     property alias  addressText: addressLabel.text
     property alias  typeText:    typeLabel.text
     property alias  isOnline:    onlineMessageText.visible
+    property bool   appMode:     false
+    property alias  comment:     commentCtrl.text
 
     property string amount:    "0"
     property string rate:      "0"
@@ -26,7 +28,7 @@ ConfirmationDialog {
 
     property string fee:       "0"
     property string feeRate:   "0"
-    property string feeUnit:   BeamGlobals.beamFeeUnit
+    property string feeUnit:   BeamGlobals.beamUnit
 
     property Item defaultFocusItem: BeamGlobals.needPasswordToSpend() ? requirePasswordInput : cancelButton
 
@@ -57,6 +59,7 @@ ConfirmationDialog {
     }
 
     function openHandler() {
+        BeamGlobals.showMessage("fee: " + control.fee)
         defaultFocusItem.forceActiveFocus(Qt.TabFocusReason);
     }
 
@@ -77,9 +80,9 @@ ConfirmationDialog {
             font.styleName:     "Bold";
             font.weight:        Font.Bold
             color:              Style.content_main
-            text:               control.swapMode ?
-                                //% "Confirm atomic swap"
-                                qsTrId("send-swap-confirmation-title") :
+            text:               control.appMode ?
+                                //% "Confirm Application Transaction"
+                                qsTrId("send-app-confirmation-title") :
                                 //% "Confirm transaction details"
                                 qsTrId("send-confirmation-title")
         }
@@ -105,20 +108,43 @@ ConfirmationDialog {
                 verticalAlignment:      Text.AlignTop
             }
 
-            property bool showMultiline: addressLabel.text.length < 68
-
             SFLabel {
                 id:                     addressLabel
                 Layout.fillWidth:       true
                 Layout.maximumWidth:    290
                 Layout.minimumHeight:   16
-                wrapMode:               parent.showMultiline ? Text.Wrap : Text.NoWrap
-                maximumLineCount:       2
-                elide:                  parent.showMultiline ? Text.ElideNone : Text.ElideMiddle
+                wrapMode:               Text.NoWrap
+                elide:                  Text.ElideMiddle
                 font.pixelSize:         14
                 color:                  Style.content_main
                 copyMenuEnabled:        true
                 onCopyText:             BeamGlobals.copyToClipboard(text)
+            }
+
+            //
+            // Comment
+            //
+            SFText {
+                Layout.fillWidth:  false
+                font.pixelSize:    14
+                color:             Style.content_disabled
+                //% "Comment"
+                text:              qsTrId("general-comment") + ":"
+                visible:           commentCtrl.visible
+            }
+
+            SFLabel {
+                id:                   commentCtrl
+                Layout.fillWidth:     true
+                Layout.maximumWidth:  290
+                wrapMode:             Text.Wrap
+                elide:                Text.ElideRight
+                font.pixelSize:       14
+                color:                Style.content_main
+                copyMenuEnabled:      true
+                onCopyText:           BeamGlobals.copyToClipboard(text)
+                maximumLineCount:     4
+                visible:              !!text
             }
 
             //
@@ -204,7 +230,7 @@ ConfirmationDialog {
                     visible:            control.feeRate != "0"
                     font.pixelSize:     14
                     color:              Style.content_disabled
-                    text:               Utils.formatFeeToSecondCurrency(parseInt(control.fee), control.feeRate, control.rateUnit)
+                    text:               Utils.formatAmountToSecondCurrency(control.fee, control.feeRate, control.rateUnit)
                 }
             }
 
@@ -256,7 +282,7 @@ ConfirmationDialog {
                 horizontalAlignment:    Text.AlignHCenter
                 Layout.fillWidth:       true
                 Layout.maximumHeight:   60
-                Layout.maximumWidth:    control.swapMode ? parent.width : 420
+                Layout.maximumWidth:    420
                 Layout.minimumHeight:   16
                 font.pixelSize:         14
                 color:                  Style.content_disabled

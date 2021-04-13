@@ -445,4 +445,36 @@ namespace beamui
         return VERSION_REVISION;
     }
 
+    QString GetTokenTypeUIString(const std::string& token, bool choiceOffline)
+    {
+        using namespace beam::wallet;
+        const auto type = GetAddressType(token);
+
+        //% "Regular"
+        auto regular = qtTrId("tx-regular");
+        //% "Offline"
+        auto offline = qtTrId("tx-address-offline");
+        //% "Public offline"
+        auto pubOffline = qtTrId("tx-address-public-offline");
+        //% "Max Privacy"
+        auto maxp = qtTrId("tx-max-privacy");
+
+        if (type == TxAddressType::Offline && choiceOffline)
+        {
+            return offline;
+        }
+
+        if (type == TxAddressType::PublicOffline)
+        {
+            return pubOffline;
+        }
+
+        if (type == TxAddressType::MaxPrivacy)
+        {
+            return maxp;
+        }
+
+        return regular;
+    }
+
 }  // namespace beamui

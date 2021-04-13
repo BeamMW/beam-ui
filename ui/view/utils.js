@@ -28,6 +28,7 @@ function formatDateTime(datetime, localeName, neverStr) {
 }
 
 function formatSecondCurrency(convertedAmount, amount,  exchangeRate, secondCurrLabel) {
+    //BeamGlobals.showMessage("Format, converted amount: " + convertedAmount + ", amount: " + amount + ", er: " + exchangeRate + ", scl: " + secondCurrLabel)
     if (convertedAmount == "0" && amount != "0") {
         var subLabel = BeamGlobals.getCurrencySubunitFromLabel(secondCurrLabel);
         //% "< 1 %1"

@@ -100,4 +100,5 @@ namespace beamui
     beam::Version getCurrentLibVersion();
     quint32 getCurrentUIRevision();
 
+    QString GetTokenTypeUIString(const std::string& token, bool choiceOffline);
 }  // namespace beamui

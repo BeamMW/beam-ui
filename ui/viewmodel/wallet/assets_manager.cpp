@@ -313,10 +313,21 @@ QColor AssetsManager::getSelectionColor(beam::Asset::ID id)
     return getColor(id);
 }
 
+beam::Amount AssetsManager::getRate(beam::Asset::ID assetId)
+{
+    beam::wallet::Currency assetCurr(assetId);
+    return _exchangeRatesManager.getRate(assetCurr);
+}
+
+QString AssetsManager::getRateUnit()
+{
+    return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateCurrency());
+}
+
 QList<QMap<QString, QVariant>> AssetsManager::getAssetsList()
 {
     const auto assets   = _wallet->getAssetsNZ();
-    const auto rateUnit = beamui::getCurrencyUnitName(_exchangeRatesManager.getRateCurrency());
+    const auto rateUnit = getRateUnit();
     QList<QMap<QString, QVariant>> result;
 
     for(auto assetId: assets)
