@@ -22,21 +22,16 @@ Dialog {
     property alias cancelButtonColor: cancelButton.palette.button
     property alias cancelButtonAllLowercase: cancelButton.allLowercase
     property var   defaultFocusItem: cancelButton
-
-    function confirmationHandler() {
-        accepted();
-        close();
-    }
-
-    modal: true
+    property var   beforeAccept: function(){return true}
 
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
-    parent: Overlay.overlay
-    visible: false
-    
     leftPadding: 30
     rightPadding: 30
+
+    parent:  Overlay.overlay
+    visible: false
+    modal:   true
 
     background: Rectangle {
         radius: 10
@@ -88,20 +83,21 @@ Dialog {
                     focus: true
                     //% "Cancel"
                     text: qsTrId("general-cancel")
-                    onClicked: { 
-                        rejected();
-                        close();
-                    }
+                    onClicked: function(){reject()}
                 }
 
                 CustomButton {
                     id: okButton
                     palette.button: Style.active
+
                     //% "Delete"
                     text: qsTrId("general-delete")
                     palette.buttonText: Style.content_opposite
-                    onClicked: {
-                        confirmationHandler();
+
+                    onClicked: function () {
+                        if (beforeAccept()) {
+                            accept()
+                        }
                     }
                 }
             }
@@ -114,9 +110,6 @@ Dialog {
     onOpened: {
         if (defaultFocusItem) {
             defaultFocusItem.forceActiveFocus(Qt.TabFocusReason)
-    onAccepted: {
-        if (acceptHandler) {
-            acceptHandler();
         }
     }
 }

@@ -91,6 +91,11 @@ Control {
         id: deleteTransactionDialog
         //% "Delete"
         okButtonText: qsTrId("general-delete")
+
+        property var txID
+        onAccepted: function () {
+            tableViewModel.deleteTx(txID)
+       }
     }
 
     PaymentInfoDialog {
@@ -699,7 +704,7 @@ Control {
                     onTriggered: {
                         //% "The transaction will be deleted. This operation can not be undone"
                         deleteTransactionDialog.text = qsTrId("wallet-txs-delete-message");
-                        deleteTransactionDialog.acceptHandler = function () {tableViewModel.deleteTx(txContextMenu.txID)}
+                        deleteTransactionDialog.txID = txContextMenu.txID
                         deleteTransactionDialog.open();
                     }
                 }

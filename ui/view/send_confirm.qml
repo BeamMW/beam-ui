@@ -39,28 +39,21 @@ ConfirmationDialog {
     okButtonEnable:          BeamGlobals.needPasswordToSpend() ? requirePasswordInput.text.length : true
     cancelButtonIconSource:  "qrc:/assets/icon-cancel-white.svg"
 
-    function confirmationHandler() {
+    beforeAccept: function () {
         if (BeamGlobals.needPasswordToSpend()) {
             if (!requirePasswordInput.text) {
                 requirePasswordInput.forceActiveFocus(Qt.TabFocusReason);
-                return;
+                return false
             }
 
             if (!BeamGlobals.isPasswordValid(requirePasswordInput.text)) {
                 requirePasswordInput.forceActiveFocus(Qt.TabFocusReason);
                 requirePasswordInput.selectAll();
                 requirePasswordError.text = qsTrId("general-pwd-invalid");
-                return;
+                return false
             }
         }
-
-        accepted();
-        close();
-    }
-
-    function passworInputEnter() {
-        okButton.forceActiveFocus(Qt.TabFocusReason);
-        okButton.clicked();
+        return true
     }
 
     topPadding: 30
@@ -256,7 +249,7 @@ ConfirmationDialog {
                 font.pixelSize:         14
                 color:                  Style.content_main
                 echoMode:               TextInput.Password
-                onAccepted:             passworInputEnter()
+                onAccepted:             control.okButton.clicked()
                 onTextChanged:          if (requirePasswordError.text.length > 0) requirePasswordError.text = ""
             }
 

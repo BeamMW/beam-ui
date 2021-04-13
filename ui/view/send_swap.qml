@@ -519,15 +519,16 @@ please review your settings and try again"
                             unitName:       unitName,
                             fee:            viewModel.sendFee,
                             flatFee:        viewModel.sendCurrency == OldWalletCurrency.CurrBeam,
-                            acceptHandler:  acceptedCallback,
                             rate:           viewModel.secondCurrencySendRateValue,
                             rateUnit:       viewModel.secondCurrencyUnitName,
-                        }).open();
+                        })
 
-                    function acceptedCallback() {
-                        viewModel.sendMoney();
-                        sendSwapView.onAccepted();
-                    }
+                    dialogObject.onAccepted.connect(function () {
+                        viewModel.sendMoney()
+                        sendSwapView.onAccepted()
+                    })
+
+                    dialogObject.open()
                 }
             }
         }  // ColumnLayout

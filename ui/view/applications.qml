@@ -71,11 +71,17 @@ ColumnLayout {
                     feeRate:      info["feeRate"],
                     comment:      info["comment"],
                     appMode:      true,
-
-                    acceptHandler: function () {
-                        webapiCreator.requestApproved(request);
-                    },
                 })
+
+            instance.onClosed.connect(function () {
+                if (instance.result == Dialog.Accepted) {
+                    webapiCreator.requestApproved(request)
+                    return
+                }
+                webapiCreator.requestRejected(request)
+                return
+            })
+
             instance.open()
         }
     }

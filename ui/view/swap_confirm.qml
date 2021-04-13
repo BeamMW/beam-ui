@@ -14,6 +14,7 @@ ConfirmationDialog {
 
     id: control
     parent: Overlay.overlay
+    defaultFocusItem: BeamGlobals.needPasswordToSpend() ? requirePasswordInput : cancelButton
 
     // By default we suppose to confirm BEAM transactions
     property string unitName:  BeamGlobals.beamUnit
@@ -33,7 +34,6 @@ ConfirmationDialog {
     property string rate:      "0"
     property string rateUnit:  ""
     property bool   showRate:  rateUnit.length > 0
-    property Item defaultFocusItem: BeamGlobals.needPasswordToSpend() ? requirePasswordInput : cancelButton
 
     readonly property string feeLabel: {
         //% "Fee"
@@ -57,26 +57,20 @@ ConfirmationDialog {
     okButtonEnable:          BeamGlobals.needPasswordToSpend() ? requirePasswordInput.text.length : true
     cancelButtonIconSource:  "qrc:/assets/icon-cancel-white.svg"
 
-    function confirmationHandler() {
+    beforeAccept: function () {
         if (BeamGlobals.needPasswordToSpend()) {
             if (requirePasswordInput.text.length == 0) {
                 requirePasswordInput.forceActiveFocus(Qt.TabFocusReason);
-                return;
+                return false
             }
             if (!BeamGlobals.isPasswordValid(requirePasswordInput.text)) {
                 requirePasswordInput.forceActiveFocus(Qt.TabFocusReason);
                 requirePasswordInput.selectAll();
                 requirePasswordError.text = qsTrId("general-pwd-invalid");
-                return;
+                return false
             }
         }
-
-        accepted();
-        close();
-    }
-
-    function openHandler() {
-        defaultFocusItem.forceActiveFocus(Qt.TabFocusReason);
+        return true
     }
 
     function passworInputEnter() {
