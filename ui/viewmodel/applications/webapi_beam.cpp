@@ -190,11 +190,11 @@ namespace beamui::applications {
 
         QMap<QString, QVariant> info;
         info.insert("amount",     AmountBigToUIString(amount));
-        info.insert("fee",       AmountToUIString(fee));
-        info.insert("feeRate",   AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID)));
-        info.insert("unitName",  _amgr->getUnitName(assetId, AssetsManager::NoShorten));
-        info.insert("rate",      AmountToUIString(_amgr->getRate(assetId)));
-        info.insert("rateUnit",  _amgr->getRateUnit());
+        info.insert("fee",        AmountToUIString(fee));
+        info.insert("feeRate",    AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID)));
+        info.insert("unitName",   _amgr->getUnitName(assetId, AssetsManager::NoShorten));
+        info.insert("rate",       AmountToUIString(_amgr->getRate(assetId)));
+        info.insert("rateUnit",   _amgr->getRateUnit());
         info.insert("token",      QString::fromStdString(pinfo.minfo.token));
         info.insert("tokenType",  GetTokenTypeUIString(pinfo.minfo.token, pinfo.minfo.spendOffline));
         info.insert("isOnline",   !pinfo.minfo.spendOffline);

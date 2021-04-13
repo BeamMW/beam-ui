@@ -58,11 +58,6 @@ ConfirmationDialog {
         close();
     }
 
-    function openHandler() {
-        BeamGlobals.showMessage("fee: " + control.fee)
-        defaultFocusItem.forceActiveFocus(Qt.TabFocusReason);
-    }
-
     function passworInputEnter() {
         okButton.forceActiveFocus(Qt.TabFocusReason);
         okButton.clicked();

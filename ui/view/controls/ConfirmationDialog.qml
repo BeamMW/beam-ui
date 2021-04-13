@@ -21,16 +21,12 @@ Dialog {
     property alias cancelButtonVisible: cancelButton.visible
     property alias cancelButtonColor: cancelButton.palette.button
     property alias cancelButtonAllLowercase: cancelButton.allLowercase
-    property var   acceptHandler
+    property var   defaultFocusItem: cancelButton
 
     function confirmationHandler() {
         accepted();
         close();
     }
-
-    function openHandler() {
-        cancelButton.forceActiveFocus(Qt.TabFocusReason);
-    } 
 
     modal: true
 
@@ -116,9 +112,8 @@ Dialog {
     }
 
     onOpened: {
-        openHandler();
-    }
-
+        if (defaultFocusItem) {
+            defaultFocusItem.forceActiveFocus(Qt.TabFocusReason)
     onAccepted: {
         if (acceptHandler) {
             acceptHandler();
