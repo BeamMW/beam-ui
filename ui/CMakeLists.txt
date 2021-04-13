@@ -194,8 +194,8 @@ set(UI_SRC
     viewmodel/wallet/asset_object.cpp
     viewmodel/wallet/assets_manager.h
     viewmodel/wallet/assets_manager.cpp
-    viewmodel/applications/shaders_manager.cpp
-    viewmodel/applications/shaders_manager.h
+    viewmodel/applications/webapi_shaders.cpp
+    viewmodel/applications/webapi_shaders.h
     viewmodel/dex/dex_view.h
     viewmodel/dex/dex_view.cpp
     viewmodel/dex/dex_order_object.cpp

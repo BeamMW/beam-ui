@@ -14,7 +14,7 @@
 #pragma once
 
 #include "model/app_model.h"
-#include "shaders_manager.h"
+#include "webapi_shaders.h"
 #include "wallet/api/i_wallet_api.h"
 
 namespace beamui::applications
@@ -60,6 +60,7 @@ namespace beamui::applications
         // API should be accessed only in context of the reactor thread
         beam::wallet::IWalletApi::Ptr _walletAPI;
         IConsentHandler& _consentHandler;
+        std::string _appid;
     };
 
     class WebAPICreator
