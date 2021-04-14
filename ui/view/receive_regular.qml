@@ -296,56 +296,67 @@ ColumnLayout {
                         title: qsTrId("receive-addr")
                         Layout.fillWidth: true
 
-                        content: RowLayout {
-                            spacing: 0
+                        content: ColumnLayout {
+                            spacing: 12
 
-                            Image {
-                                Layout.preferredWidth:  130
-                                Layout.preferredHeight: 130
-                                fillMode:               Image.PreserveAspectFit
-                                source:                 qrCode.data
+                            RowLayout {
+                                spacing:          0
+                                Layout.alignment: Qt.AlignHCenter
+
+                                Image {
+                                    Layout.preferredWidth:  270
+                                    Layout.preferredHeight: 270
+                                    fillMode:               Image.PreserveAspectFit
+                                    source:                 qrCode.data
+                                }
                             }
 
-                            Column {
-                                id: tokenColumn
+                            RowLayout {
+                                spacing: 0
 
-                                Layout.fillWidth: true
-                                Layout.leftMargin: 20
-                                Layout.rightMargin: 2
-                                Layout.alignment: Qt.AlignVCenter
+                                ColumnLayout {
+                                    spacing: 0
 
-                                SFText {
-                                    text:  viewModel.token
-                                    width: parent.width
-                                    color: Style.content_main
-                                    elide: Text.ElideMiddle
-                                }
+                                    Layout.fillWidth:   true
+                                    Layout.leftMargin:  20
+                                    Layout.rightMargin: 2
+                                    Layout.alignment:   Qt.AlignVCenter
 
-                                LinkButton {
-                                    //% "More details"
-                                    text:       qsTrId("more-details")
-                                    linkColor:  Style.accent_incoming
-                                    onClicked:  function () {
-                                        tokenInfoDialog.open()
+                                    SFText {
+                                        Layout.fillWidth:   true
+                                        text:  viewModel.token
+                                        width: parent.width
+                                        color: Style.content_main
+                                        elide: Text.ElideMiddle
+                                    }
+
+                                    LinkButton {
+                                        Layout.alignment: Qt.AlignHCenter
+                                        //% "More details"
+                                        text:       qsTrId("more-details")
+                                        linkColor:  Style.accent_incoming
+                                        onClicked:  function () {
+                                            tokenInfoDialog.open()
+                                        }
                                     }
                                 }
-                            }
 
-                            SvgImage {
-                                Layout.alignment: Qt.AlignVCenter
-                                Layout.bottomMargin: 15
+                                SvgImage {
+                                    Layout.alignment: Qt.AlignVCenter
+                                    Layout.bottomMargin: 15
 
-                                source: "qrc:/assets/icon-copy.svg"
-                                sourceSize: Qt.size(16, 16)
-                                opacity: control.isValid() ? 1.0 : 0.45
+                                    source: "qrc:/assets/icon-copy.svg"
+                                    sourceSize: Qt.size(16, 16)
+                                    opacity: control.isValid() ? 1.0 : 0.45
 
-                                MouseArea {
-                                   anchors.fill: parent
-                                   acceptedButtons: Qt.LeftButton
-                                   cursorShape: control.isValid() ? Qt.PointingHandCursor : Qt.ArrowCursor
-                                   onClicked: function () {
-                                        control.copyAndSave()
-                                   }
+                                    MouseArea {
+                                    anchors.fill: parent
+                                    acceptedButtons: Qt.LeftButton
+                                    cursorShape: control.isValid() ? Qt.PointingHandCursor : Qt.ArrowCursor
+                                    onClicked: function () {
+                                            control.copyAndSave()
+                                        }
+                                    }
                                 }
                             }
                         }
