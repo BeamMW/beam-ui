@@ -15,22 +15,18 @@
 
 #include "model/app_model.h"
 #include "webapi_shaders.h"
-#include "wallet/api/i_wallet_api.h"
+#include "webapi_shaders.h"
+#include "consent_handler.h"
 
 namespace beamui::applications
 {
-    struct IConsentHandler
-    {
-        virtual void getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&) = 0;
-    };
-
     class WebAPI_Beam
         : public QObject
         , public beam::wallet::IWalletApiHandler
     {
         Q_OBJECT
     public:
-        explicit WebAPI_Beam(IConsentHandler& handler, const std::string& version, const std::string& appid);
+        explicit WebAPI_Beam(IConsentHandler& handler, beam::wallet::IShadersManager::Ptr shaders, const std::string& version, const std::string& appid);
         ~WebAPI_Beam() override;
 
     //
@@ -47,43 +43,25 @@ namespace beamui::applications
         void callWalletApiResult(const QString& result);
 
     public:
-        // This can be called from any thread.
-        void callWalletApiImp(const std::string& request);
-
-        // This can be called from any thread
-        void sendError(const std::string& request, beam::wallet::ApiError err, const std::string& message);
+        void AnyThread_sendApproved(const std::string& request);
+        void AnyThread_sendRejected(const std::string& request, beam::wallet::ApiError err, const std::string& message);
 
     private:
+        // This can be called from any thread.
+        void AnyThread_callWalletApiImp(const std::string& request);
+
         // This can be called from any thread
+        void AnyThread_sendError(const std::string& request, beam::wallet::ApiError err, const std::string& message);
+
+        // This can be called from any thread
+        void AnyThread_sendAPIResponse(const beam::wallet::json& result);
+
+        // This is called from API (REACTOR) thread
         void sendAPIResponse(const beam::wallet::json& result) override;
 
         // API should be accessed only in context of the reactor thread
         beam::wallet::IWalletApi::Ptr _walletAPI;
         IConsentHandler& _consentHandler;
         std::string _appid;
-    };
-
-    class WebAPICreator
-            : public QObject
-            , public IConsentHandler
-    {
-        Q_OBJECT
-    public:
-        explicit WebAPICreator(QObject *parent = nullptr);
-        ~WebAPICreator() override;
-
-        Q_INVOKABLE void createApi(const QString& version, const QString& appName, const QString& appUrl);
-        Q_INVOKABLE void requestApproved(const QString& request);
-        Q_INVOKABLE void requestRejected(const QString& request);
-
-    signals:
-        void apiCreated(QObject* api);
-        void apiFailed(const QString& error);
-        void approveSend(const QString& request, const QMap<QString, QVariant>& info);
-
-    private:
-        void getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&) override;
-        std::unique_ptr<WebAPI_Beam> _api;
-        AssetsManager::Ptr _amgr;
     };
 }

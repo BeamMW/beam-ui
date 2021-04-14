@@ -75,10 +75,10 @@ ColumnLayout {
 
             instance.onClosed.connect(function () {
                 if (instance.result == Dialog.Accepted) {
-                    webapiCreator.requestApproved(request)
+                    webapiCreator.sendApproved(request)
                     return
                 }
-                webapiCreator.requestRejected(request)
+                webapiCreator.sendRejected(request)
                 return
             })
 

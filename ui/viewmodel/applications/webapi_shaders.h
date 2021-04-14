@@ -14,17 +14,52 @@
 #pragma once
 
 #include "wallet/core/contracts/i_shaders_manager.h"
+#include "consent_handler.h"
+#include "model/app_model.h"
 
-class WebAPI_Shaders: public beam::wallet::IShadersManager
+namespace beamui::applications
 {
-public:
-    WebAPI_Shaders(IShadersManager::Ptr real);
-    virtual ~WebAPI_Shaders() = default;
+    class WebAPI_Shaders: public beam::wallet::IShadersManager
+    {
+    public:
+        typedef std::shared_ptr<WebAPI_Shaders> Ptr;
 
-    void CompileAppShader(const std::vector<uint8_t>& shader) override; // throws
-    void Start(const std::string& args, unsigned method, DoneHandler doneHandler) override; // throws
-    bool IsDone() const override;
+        WebAPI_Shaders(IConsentHandler& consentHandler, const std::string& appid);
+        virtual ~WebAPI_Shaders() = default;
 
-private:
-    IShadersManager::Ptr _realShaders;
-};
+        //
+        // AnyThread_ functions should be safe to call from any thread
+        //
+        void AnyThread_contractAllowed();
+        void AnyThread_contractRejected();
+
+    private:
+        void CompileAppShader(const std::vector<uint8_t>& shader) override;
+        void CallShaderAndStartTx(const std::string& args, unsigned method, DoneAllHandler doneHandler) override;
+        void CallShader(const std::string& args, unsigned method, DoneCallHandler) override;
+        void ProcessTxData(const beam::ByteBuffer& data, DoneTxHandler doneHandler) override;
+        bool IsDone() const override;
+
+        virtual void SetCurrentApp(const std::string& appid) override;
+        virtual void ReleaseCurrentApp(const std::string& appid) override;
+
+    private:
+        std::shared_ptr<bool> _guard = std::make_shared<bool>(true);
+        IShadersManager::Ptr _realShaders;
+        IConsentHandler& _consentHandler;
+
+        struct ApproveData
+        {
+            ApproveData(const beam::ByteBuffer& d, boost::optional<std::string> o, DoneAllHandler h)
+                : data(d), output(o), doneHandler(h)
+            {}
+
+            beam::ByteBuffer data;
+            boost::optional<std::string> output;
+            DoneAllHandler doneHandler;
+        };
+
+        std::shared_ptr<ApproveData> _approveData;
+        beam::wallet::IWalletModelAsync::Ptr _asyncWallet;
+    };
+}

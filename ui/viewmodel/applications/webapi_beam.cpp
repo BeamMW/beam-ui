@@ -13,7 +13,6 @@
 // limitations under the License.
 #include <QObject>
 #include <QMessageBox>
-#include <QQmlEngine>
 #include <sstream>
 #include "webapi_beam.h"
 #include "utility/logger.h"
@@ -32,14 +31,14 @@ namespace beamui::applications {
         }
     }
 
-    WebAPI_Beam::WebAPI_Beam(IConsentHandler& handler, const std::string& version, const std::string& appid)
+    WebAPI_Beam::WebAPI_Beam(IConsentHandler& handler, IShadersManager::Ptr shaders, const std::string& version, const std::string& appid)
         : QObject(nullptr)
         , _consentHandler(handler)
         , _appid(appid)
     {
         IWalletApi::InitData data;
 
-        data.contracts = AppModel::getInstance().getWalletModel()->getAppsShaders(_appid);
+        data.contracts = std::move(shaders);
         data.swaps     = nullptr;
         data.wallet    = AppModel::getInstance().getWalletModel()->getWallet();
         data.walletDB  = AppModel::getInstance().getWalletDB();
@@ -67,13 +66,7 @@ namespace beamui::applications {
             {
                 if (pres->acinfo.method == "tx_send")
                 {
-                    return _consentHandler.getSendConsent(stdreq, *pres);
-                }
-
-                if (pres->acinfo.method == "invoke_contract")
-                {
-                    // TODO: handle consent
-                    return callWalletApiImp(stdreq);
+                    return _consentHandler.AnyThread_getSendConsent(stdreq, *pres);
                 }
 
                 if (pres->minfo.fee > 0 || !pres->minfo.spend.empty())
@@ -87,11 +80,11 @@ namespace beamui::applications {
                     return;
                 }
 
-                return callWalletApiImp(stdreq);
+                return AnyThread_callWalletApiImp(stdreq);
             }
 
             LOG_INFO() << "Application requested call of the not allowed method: " << pres->acinfo.method;
-            return sendError(stdreq, ApiError::NotAllowedError, std::string());
+            return AnyThread_sendError(stdreq, ApiError::NotAllowedError, std::string());
         }
         else
         {
@@ -101,10 +94,11 @@ namespace beamui::applications {
         }
     }
 
-    void WebAPI_Beam::callWalletApiImp(const std::string& request)
+    void WebAPI_Beam::AnyThread_callWalletApiImp(const std::string& request)
     {
         //
-        // this can be any thread, for now the UI thread only
+        // Do not assume thread here
+        // Should be safe to call from any thread
         //
         IWalletApi::WeakPtr wp = _walletAPI;
         getAsyncWallet().makeIWTCall(
@@ -118,22 +112,38 @@ namespace beamui::applications {
                 // well, okay, nothing to do then
                 return std::string();
             },
-            [] (boost::any) {
+            [] (const boost::any&) {
             }
         );
     }
 
     void WebAPI_Beam::sendAPIResponse(const json& result)
     {
-        auto str = result.dump();
+        //
+        // This is reactor thread
+        //
+        AnyThread_sendAPIResponse(result);
+    }
+
+    void WebAPI_Beam::AnyThread_sendAPIResponse(const beam::wallet::json& result)
+    {
+        //
+        // Do not assume thread here
+        // Should be safe to call from any thread
+        //
+         auto str = result.dump();
         if (!str.empty())
         {
             emit callWalletApiResult(QString::fromStdString(str));
         }
     }
 
-    void WebAPI_Beam::sendError(const std::string& request, beam::wallet::ApiError err, const std::string& message)
+    void WebAPI_Beam::AnyThread_sendError(const std::string& request, beam::wallet::ApiError err, const std::string& message)
     {
+        //
+        // Do not assume thread here
+        // Should be safe to call from any thread
+        //
         const auto error = _walletAPI->fromError(request, err, message);
         emit callWalletApiResult(QString::fromStdString(error));
     }
@@ -144,91 +154,21 @@ namespace beamui::applications {
         return 42;
     }
 
-    WebAPICreator::WebAPICreator(QObject *parent)
-        : QObject(parent)
-    {
-        _amgr = AppModel::getInstance().getAssets();
-    }
-
-    WebAPICreator::~WebAPICreator()
-    {
-    }
-
-    void WebAPICreator::createApi(const QString &version, const QString &appName, const QString &appUrl)
-    {
-        const auto stdver = version.toStdString();
-        if (!IWalletApi::ValidateAPIVersion(stdver))
-        {
-            //% "Unsupported API version requested: %1"
-            const auto error = qtTrId("apps-bad-api-version").arg(version);
-            return qmlEngine(this)->throwError(error);
-        }
-
-        ECC::Hash::Value hv;
-        ECC::Hash::Processor() << appName.toStdString() << appUrl.toStdString() >> hv;
-        const auto appid = std::string("appid:") + hv.str();
-
-        _api = std::make_unique<WebAPI_Beam>(*this, stdver, appid);
-        QQmlEngine::setObjectOwnership(_api.get(), QQmlEngine::CppOwnership);
-        emit apiCreated(_api.get());
-    }
-
-    void WebAPICreator::getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
+    void WebAPI_Beam::AnyThread_sendApproved(const std::string& request)
     {
         //
-        // THIS IS THE UI THREAD
+        // Do not assume thread here
+        // Should be safe to call from any thread
         //
-        const auto& spend = pinfo.minfo.spend;
-        const auto fee = pinfo.minfo.fee;
-
-        if (spend.size() != 1)
-        {
-            assert(!"tx_send must spend strictly 1 asset");
-            return _api->sendError(request, ApiError::NotAllowedError, "tx_send must spend strictly 1 asset");
-        }
-
-        const auto assetId = spend.begin()->first;
-        const auto amount = spend.begin()->second;
-
-        QMap<QString, QVariant> info;
-        info.insert("amount",     AmountBigToUIString(amount));
-        info.insert("fee",        AmountToUIString(fee));
-        info.insert("feeRate",    AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID)));
-        info.insert("unitName",   _amgr->getUnitName(assetId, AssetsManager::NoShorten));
-        info.insert("rate",       AmountToUIString(_amgr->getRate(assetId)));
-        info.insert("rateUnit",   _amgr->getRateUnit());
-        info.insert("token",      QString::fromStdString(pinfo.minfo.token));
-        info.insert("tokenType",  GetTokenTypeUIString(pinfo.minfo.token, pinfo.minfo.spendOffline));
-        info.insert("isOnline",   !pinfo.minfo.spendOffline);
-        info.insert("comment",    QString::fromStdString(pinfo.minfo.comment));
-
-        if (const auto params = ParseParameters(pinfo.minfo.token))
-        {
-            if (const auto walletID = params->GetParameter<beam::wallet::WalletID>(TxParameterID::PeerID))
-            {
-                const auto widStr = std::to_string(*walletID);
-                info.insert("walletID", QString::fromStdString(widStr));
-            }
-            else
-            {
-                assert(!"Wallet ID is missing");
-            }
-        }
-        else
-        {
-            assert(!"Failed to parse token");
-        }
-
-        emit approveSend(QString::fromStdString(request), info);
+        AnyThread_callWalletApiImp(request);
     }
 
-    void WebAPICreator::requestApproved(const QString& request)
+    void WebAPI_Beam::AnyThread_sendRejected(const std::string& request, ApiError code, const std::string& message)
     {
-        _api->callWalletApiImp(request.toStdString());
-    }
-
-    void WebAPICreator::requestRejected(const QString& request)
-    {
-        _api->sendError(request.toStdString(), ApiError::UserRejected, std::string());
+        //
+        // Do not assume thread here
+        // Should be safe to call from any thread
+        //
+        AnyThread_sendError(request, code, message);
     }
 }

@@ -11,34 +11,20 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#pragma once
 
-#if defined(_MSC_VER)
-#pragma warning (push)
-#pragma warning (disable: 4127)
-#endif
-#include <QQmlEngine>
-#if defined(_MSC_VER)
-#pragma warning (pop)
-#endif
-
-#include "public.h"
-#include "apps_view.h"
-
-#if defined(_MSC_VER)
-#pragma warning (push)
-#pragma warning (disable: 4251)
-#endif
-#include "webapi_beam.h"
-#include "webapi_creator.h"
-#if defined(_MSC_VER)
-#pragma warning (pop)
-#endif
+#include <string>
+#include "wallet/api/i_wallet_api.h"
 
 namespace beamui::applications
 {
-    void RegisterQMLTypes()
+    struct IConsentHandler
     {
-        qmlRegisterType<AppsViewModel>("Beam.Wallet", 1, 0, "ApplicationsViewModel");
-        qmlRegisterType<WebAPICreator>("Beam.Wallet", 1, 0, "WebAPICreator");
-    }
+        //
+        // Do not assume threading here
+        // All consent functions should be safe to call from ANY thread
+        //
+        virtual void AnyThread_getSendConsent(const std::string &request, const beam::wallet::IWalletApi::ParseResult &) = 0;
+        virtual void AnyThread_getContractConsent(const beam::ByteBuffer& buffer) = 0;
+    };
 }
