@@ -116,7 +116,7 @@ namespace beamui::applications
             }
 
             auto data = std::move(_approveData);
-            data->doneHandler(boost::none, data->output, std::string("rejected by user"), true);
+            data->doneHandler(boost::none, data->output, std::string("rejected by user"));
             return boost::none;
 
         }, [](const boost::any&){
