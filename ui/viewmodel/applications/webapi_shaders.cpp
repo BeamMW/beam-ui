@@ -55,6 +55,8 @@ namespace beamui::applications
                     throw std::runtime_error("unexpected approve contract call");
                 }
 
+                 AppModel::getInstance().getWalletModel()->getCurrentHeight();
+
                 _approveData = std::make_unique<ApproveData>(*data, output, doneHandler);
                 _consentHandler.AnyThread_getContractConsent(*data);
             }
@@ -66,7 +68,7 @@ namespace beamui::applications
         });
     }
 
-    void WebAPI_Shaders::AnyThread_contractAllowed()
+    void WebAPI_Shaders::AnyThread_contractApproved()
     {
         std::weak_ptr<bool> wguard = _guard;
         _asyncWallet->makeIWTCall([this, wguard] () -> boost::any {
@@ -94,13 +96,15 @@ namespace beamui::applications
 
             return boost::none;
         }, [](const boost::any&){
+            int a = 0;
+            a++;
         });
     }
 
-    void WebAPI_Shaders::AnyThread_contractRejected()
+    void WebAPI_Shaders::AnyThread_contractRejected(bool byUser, const std::string& error)
     {
         std::weak_ptr<bool> wguard = _guard;
-        _asyncWallet->makeIWTCall([this, wguard] () -> boost::any {
+        _asyncWallet->makeIWTCall([this, wguard, byUser, error] () -> boost::any {
             if (!wguard.lock())
             {
                 LOG_WARNING() << "Wallet shaders destroyed while waiting for consent (n)";
@@ -116,7 +120,7 @@ namespace beamui::applications
             }
 
             auto data = std::move(_approveData);
-            data->doneHandler(boost::none, data->output, std::string("rejected by user"));
+            data->doneHandler(boost::none, data->output, byUser ? std::string("rejected by user") : error);
             return boost::none;
 
         }, [](const boost::any&){

@@ -27,24 +27,32 @@ namespace beamui::applications
         Q_OBJECT
     public:
         explicit WebAPICreator(QObject *parent = nullptr);
-        ~WebAPICreator() override;
+        ~WebAPICreator() override = default;
 
         Q_INVOKABLE void createApi(const QString& version, const QString& appName, const QString& appUrl);
         Q_INVOKABLE void sendApproved(const QString& request);
         Q_INVOKABLE void sendRejected(const QString& request);
+        Q_INVOKABLE void contractApproved();
+        Q_INVOKABLE void contractRejected();
 
     signals:
         void apiCreated(QObject* api);
-        void apiFailed(const QString& error);
         void approveSend(const QString& request, const QMap<QString, QVariant>& info);
-        void approveContract(const QMap<QString, QVariant>& info);
+        void approveContract(const QMap<QString, QVariant>& info, QList<QMap<QString, QVariant>> amounts);
 
     private:
         void AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&) override;
         void AnyThread_getContractConsent(const beam::ByteBuffer& buffer) override;
 
+        void UIThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&);
+        void UIThread_getContractConsent(const beam::ByteBuffer&);
+
         std::unique_ptr<WebAPI_Beam> _api;
         WebAPI_Shaders::Ptr _webShaders;
         AssetsManager::Ptr _amgr;
+        beam::wallet::IWalletModelAsync::Ptr _asyncWallet;
+
+        std::shared_ptr<bool> _sendConsentGuard = std::make_shared<bool>(true);
+        std::shared_ptr<bool> _contractConsentGuard = std::make_shared<bool>(true);
     };
 }

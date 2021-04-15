@@ -3013,5 +3013,13 @@ Update your settings and try again.</source>
         <source>Confirm Application Transaction</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="general-contract-transaction">
+        <source>Contract transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-contract-only-fee">
+        <source>You would pay only transaction fee. It can be considerable for some contracts, so please check it below</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

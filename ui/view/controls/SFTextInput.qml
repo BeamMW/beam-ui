@@ -54,7 +54,7 @@ T.TextField {
         color:               control.color
         verticalAlignment:   control.verticalAlignment
         horizontalAlignment: control.horizontalAlignment
-        visible:             (focusablePlaceholder || !control.activeFocus) && !control.length && !control.preeditText
+        visible:             (focusablePlaceholder || !control.activeFocus) && !control.length && !control.preeditText && text
         elide:               Text.ElideRight
         wrapMode:            control.wrapMode
     }

@@ -56,25 +56,57 @@ ColumnLayout {
     WebAPICreator {
         id: webapiCreator
 
-        onApproveSend: function(request, info) {
+        onApproveContract: function(info, amounts) {
             const dialog = Qt.createComponent("send_confirm.qml")
             const instance = dialog.createObject(control,
                 {
-                    addressText:  info["token"],
-                    typeText:     info["tokenType"],
-                    isOnline:     info["isOnline"],
-                    amount:       info["amount"],
-                    unitName:     info["unitName"],
-                    rate:         info["rate"],
+                    //% "Contract transaction"
+                    typeText:     qsTrId("general-contract-transaction"),
+                    amounts:      amounts,
                     rateUnit:     info["rateUnit"],
                     fee:          info["fee"],
                     feeRate:      info["feeRate"],
                     comment:      info["comment"],
                     appMode:      true,
+                    isOnline:     false,
+                    showPrefix:   true,
                 })
 
-            instance.onClosed.connect(function () {
-                if (instance.result == Dialog.Accepted) {
+            instance.Component.onDestruction.connect(function () {
+                 if (instance.result == Dialog.Accepted) {
+                    webapiCreator.contractApproved()
+                    return
+                }
+                webapiCreator.contractRejected()
+                return
+            })
+
+            instance.open()
+        }
+
+        onApproveSend: function(request, info) {
+            var dialog = Qt.createComponent("send_confirm.qml")
+            var instance = dialog.createObject(control,
+                {
+                    addressText:  info["token"],
+                    typeText:     info["tokenType"],
+                    isOnline:     info["isOnline"],
+                    amounts: [{
+                        amount:   info["amount"],
+                        unitName: info["unitName"],
+                        rate:     info["rate"],
+                        spend:    true
+                    }],
+                    rateUnit:     info["rateUnit"],
+                    fee:          info["fee"],
+                    feeRate:      info["feeRate"],
+                    comment:      info["comment"],
+                    appMode:      true,
+                    showPrefix:   true
+                })
+
+            instance.Component.onDestruction.connect(function () {
+                 if (instance.result == Dialog.Accepted) {
                     webapiCreator.sendApproved(request)
                     return
                 }
@@ -145,10 +177,6 @@ ColumnLayout {
         try
         {
             var apiVersion = app.api_version || "current";
-
-            webapiCreator.onApiFailed.connect(function (errmsg) {
-                control.errorMessage = error
-            })
 
             webapiCreator.onApiCreated.connect(function(api) {
                 control.errorMessage = ""

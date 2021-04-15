@@ -14,6 +14,8 @@
 #include <QQmlEngine>
 #include "webapi_creator.h"
 #include "wallet/api/i_wallet_api.h"
+#include "wallet/core/common.h"
+#include "bvm/invoke_data.h"
 
 namespace beamui::applications
 {
@@ -21,10 +23,7 @@ namespace beamui::applications
         : QObject(parent)
     {
         _amgr = AppModel::getInstance().getAssets();
-    }
-
-    WebAPICreator::~WebAPICreator()
-    {
+        _asyncWallet = AppModel::getInstance().getWalletModel()->getAsync();
     }
 
     void WebAPICreator::createApi(const QString &version, const QString &appName, const QString &appUrl)
@@ -51,6 +50,25 @@ namespace beamui::applications
     }
 
     void WebAPICreator::AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
+    {
+        std::weak_ptr<bool> wp = _sendConsentGuard;
+        _asyncWallet->makeIWTCall([] () -> boost::any {return boost::none;},
+            [this, wp, request, pinfo](const boost::any&)
+            {
+                if (wp.lock())
+                {
+                    UIThread_getSendConsent(request, pinfo);
+                }
+                else
+                {
+                    // Can happen if user leaves the application
+                    LOG_WARNING() << "AT -> UIT send consent arrived but creator is already destroyed";
+                }
+            }
+        );
+    }
+
+    void WebAPICreator::UIThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
     {
         using namespace beam::wallet;
 
@@ -89,10 +107,6 @@ namespace beamui::applications
                 const auto widStr = std::to_string(*walletID);
                 info.insert("walletID", QString::fromStdString(widStr));
             }
-            else
-            {
-                assert(!"Wallet ID is missing");
-            }
         }
         else
         {
@@ -104,11 +118,78 @@ namespace beamui::applications
 
     void WebAPICreator::AnyThread_getContractConsent(const beam::ByteBuffer& buffer)
     {
+        std::weak_ptr<bool> wp = _contractConsentGuard;
+        _asyncWallet->makeIWTCall([] () -> boost::any {return boost::none;},
+            [this, wp, buffer](const boost::any&)
+            {
+                if (wp.lock())
+                {
+                    UIThread_getContractConsent(buffer);
+                }
+                else
+                {
+                    // Can happen if user leaves the application
+                    LOG_WARNING() << "AT -> UIT contract consent arrived but creator is already destroyed";
+                }
+            }
+        );
+    }
+
+    void WebAPICreator::UIThread_getContractConsent(const beam::ByteBuffer& buffer)
+    {
         //
         // Do not assume thread here
         // Should be safe to call from any thread
         //
-        _webShaders->AnyThread_contractAllowed();
+        beam::bvm2::ContractInvokeData invokeData;
+        if(!beam::wallet::fromByteBuffer(buffer, invokeData))
+        {
+            return _webShaders->AnyThread_contractRejected(false, "AnyThread_getContractConsent: failed to parse invoke data");
+        }
+
+        const auto height  = AppModel::getInstance().getWalletModel()->getCurrentHeight();
+        const auto comment = beam::bvm2::getFullComment(invokeData);
+        const auto fee     = beam::bvm2::getFullFee(invokeData, height);
+        const auto spend   = beam::bvm2::getFullSpend(invokeData);
+
+        QMap<QString, QVariant> info;
+        info.insert("comment",    QString::fromStdString(comment));
+        info.insert("fee",       AmountToUIString(fee));
+        info.insert("feeRate",   AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID)));
+        info.insert("rateUnit",  _amgr->getRateUnit());
+
+        QList<QMap<QString, QVariant>> amounts;
+        for(const auto& sinfo: spend)
+        {
+            QMap<QString, QVariant> entry;
+            const auto assetId = sinfo.first;
+            const auto amount  = sinfo.second;
+
+            entry.insert("amount",   AmountToUIString(std::abs(amount)));
+            entry.insert("unitName", _amgr->getUnitName(assetId, AssetsManager::NoShorten));
+            entry.insert("rate",     AmountToUIString(_amgr->getRate(assetId)));
+            entry.insert("spend",    amount > 0);
+
+            amounts.push_back(entry);
+        }
+
+        emit approveContract(info, amounts);
+    }
+
+    void WebAPICreator::contractApproved()
+    {
+        //
+        // This is UI thread
+        //
+        _webShaders->AnyThread_contractApproved();
+    }
+
+    void WebAPICreator::contractRejected()
+    {
+        //
+        // This is UI thread
+        //
+        _webShaders->AnyThread_contractRejected(true, std::string());
     }
 
     void WebAPICreator::sendApproved(const QString& request)

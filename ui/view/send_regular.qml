@@ -517,9 +517,12 @@ ColumnLayout {
                             addressText:   viewModel.token,
                             typeText:      viewModel.sendType,
                             isOnline:      viewModel.sendTypeOnline,
-                            amount:        viewModel.sendAmount,
-                            unitName:      control.sendUnit,
-                            rate:          control.rate,
+                            amounts: [{
+                                amount:   viewModel.sendAmount,
+                                unitName: control.sendUnit,
+                                rate:     control.rate,
+                                spend:    true
+                            }],
                             rateUnit:      control.rateUnit,
                             fee:           viewModel.fee,
                             feeRate:       viewModel.feeRate,

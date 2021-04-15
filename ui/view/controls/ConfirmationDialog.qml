@@ -83,7 +83,7 @@ Dialog {
                     focus: true
                     //% "Cancel"
                     text: qsTrId("general-cancel")
-                    onClicked: function(){reject()}
+                    onClicked: function(){done(Dialog.Rejected)}
                 }
 
                 CustomButton {
@@ -96,7 +96,7 @@ Dialog {
 
                     onClicked: function () {
                         if (beforeAccept()) {
-                            accept()
+                            done(Dialog.Accepted)
                         }
                     }
                 }

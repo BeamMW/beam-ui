@@ -95,29 +95,28 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
     , _tx(std::move(tx))
     , _secondCurrency(std::move(secondCurrency))
 {
-
     Height h = tx.m_minHeight;
     _contractFee = std::max(_tx.m_fee, Transaction::FeeSettings::get(h).get_DefaultStd());
 
     if (_tx.m_txType == beam::wallet::TxType::Contract)
     {
-        visitContractData([this, h](const beam::bvm2::ContractInvokeData &data) {
-            _contractSpend += data.m_Spend;
-            _contractFee += data.get_FeeMin(h);
-        });
+        beam::bvm2::ContractInvokeData vData;
+        if(_tx.GetParameter(beam::wallet::TxParameterID::ContractDataPacked, vData))
+        {
+            _contractFee = beam::bvm2::getFullFee(vData, h);
+            _contractSpend = beam::bvm2::getFullSpend(vData);
+        }
 
         for (const auto& info: _contractSpend)
         {
             auto amount = info.second;
-
             if (info.first == beam::Asset::s_BeamID)
             {
-                if (amount < 0 && static_cast<beam::Amount>(std::abs(amount)) >= _contractFee)
+                if (amount < 0)
                 {
                     amount += _contractFee;
                 }
             }
-
             _assetAmounts.push_back(AmountToUIString(std::abs(amount)));
             _assetsList.push_back(info.first);
             _assetAmountsIncome.push_back(amount <= 0);
@@ -653,18 +652,6 @@ void TxObject::restoreAddressType()
 
     _addressType = GetAddressType(_tx);
     _tx.SetParameter(beam::wallet::TxParameterID::AddressType, *_addressType);
-}
-
-void TxObject::visitContractData(const CDVisitor& visitor) const
-{
-    std::vector<beam::bvm2::ContractInvokeData> vData;
-    if(_tx.GetParameter(beam::wallet::TxParameterID::ContractDataPacked, vData))
-    {
-        for (const auto& data: vData)
-        {
-            visitor(data);
-        }
-    }
 }
 
 const std::vector<beam::Asset::ID>& TxObject::getAssetsList() const

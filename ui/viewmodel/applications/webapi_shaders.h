@@ -25,23 +25,23 @@ namespace beamui::applications
         typedef std::shared_ptr<WebAPI_Shaders> Ptr;
 
         WebAPI_Shaders(IConsentHandler& consentHandler, const std::string& appid);
-        virtual ~WebAPI_Shaders() = default;
+        ~WebAPI_Shaders() override = default;
 
         //
         // AnyThread_ functions should be safe to call from any thread
         //
-        void AnyThread_contractAllowed();
-        void AnyThread_contractRejected();
+        void AnyThread_contractApproved();
+        void AnyThread_contractRejected(bool byUser, const std::string& error);
 
     private:
         void CompileAppShader(const std::vector<uint8_t>& shader) override;
         void CallShaderAndStartTx(const std::string& args, unsigned method, DoneAllHandler doneHandler) override;
         void CallShader(const std::string& args, unsigned method, DoneCallHandler) override;
         void ProcessTxData(const beam::ByteBuffer& data, DoneTxHandler doneHandler) override;
-        bool IsDone() const override;
+        [[nodiscard]] bool IsDone() const override;
 
-        virtual void SetCurrentApp(const std::string& appid) override;
-        virtual void ReleaseCurrentApp(const std::string& appid) override;
+        void SetCurrentApp(const std::string& appid) override;
+        void ReleaseCurrentApp(const std::string& appid) override;
 
     private:
         std::shared_ptr<bool> _guard = std::make_shared<bool>(true);
@@ -50,8 +50,8 @@ namespace beamui::applications
 
         struct ApproveData
         {
-            ApproveData(const beam::ByteBuffer& d, boost::optional<std::string> o, DoneAllHandler h)
-                : data(d), output(o), doneHandler(h)
+            ApproveData(beam::ByteBuffer d, boost::optional<std::string> o, DoneAllHandler h)
+                : data(std::move(d)), output(std::move(o)), doneHandler(std::move(h))
             {}
 
             beam::ByteBuffer data;

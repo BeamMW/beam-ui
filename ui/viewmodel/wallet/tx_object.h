@@ -87,9 +87,6 @@ protected:
     mutable QString _comment;
     boost::optional<beam::wallet::TxAddressType> _addressType;
 
-    typedef std::function<void (const beam::bvm2::ContractInvokeData& data)> CDVisitor;
-    void visitContractData(const CDVisitor&) const;
-
     beam::Amount _contractFee = 0UL;
     beam::bvm2::FundsMap _contractSpend;
 

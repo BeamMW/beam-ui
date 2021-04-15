@@ -6,6 +6,7 @@ import "controls"
 import "./utils.js" as Utils
 
 ConfirmationDialog {
+
     onVisibleChanged: {
         if (!this.visible) {
             this.destroy();
@@ -19,24 +20,23 @@ ConfirmationDialog {
     property alias  typeText:    typeLabel.text
     property alias  isOnline:    onlineMessageText.visible
     property bool   appMode:     false
+    property bool   showPrefix:  false
     property alias  comment:     commentCtrl.text
+    property var    amounts
+    property bool   hasAmounts:  amounts && amounts.length > 0
 
-    property string amount:    "0"
-    property string rate:      "0"
-    property string rateUnit:  ""
-    property string unitName:  BeamGlobals.beamUnit
+    property string rateUnit: ""
+    property string fee:      "0"
+    property string feeRate:  "0"
+    property string feeUnit:  BeamGlobals.beamUnit
 
-    property string fee:       "0"
-    property string feeRate:   "0"
-    property string feeUnit:   BeamGlobals.beamUnit
-
-    property Item defaultFocusItem: BeamGlobals.needPasswordToSpend() ? requirePasswordInput : cancelButton
+    defaultFocusItem: BeamGlobals.needPasswordToSpend() ? requirePasswordInput : cancelButton
 
     //% "Send"
     okButtonText:            qsTrId("general-send")
     okButtonColor:           Style.accent_outgoing
     okButtonIconSource:      "qrc:/assets/icon-send-blue.svg"
-    okButtonEnable:          BeamGlobals.needPasswordToSpend() ? requirePasswordInput.text.length : true
+    okButtonEnable:          BeamGlobals.needPasswordToSpend() ? !!requirePasswordInput.text : true
     cancelButtonIconSource:  "qrc:/assets/icon-cancel-white.svg"
 
     beforeAccept: function () {
@@ -77,7 +77,6 @@ ConfirmationDialog {
 
         GridLayout {
             Layout.fillWidth:       true
-            Layout.fillHeight:      true
             columnSpacing:          14
             rowSpacing:             14
             columns:                2
@@ -86,34 +85,30 @@ ConfirmationDialog {
             // Recipient/Address
             //
             SFText {
-                Layout.fillWidth:       false
-                Layout.fillHeight:      true
-                Layout.minimumHeight:   16
                 font.pixelSize:         14
                 color:                  Style.content_disabled
                 //% "Recipient"
                 text:                   qsTrId("send-confirmation-recipient-label") + ":"
                 verticalAlignment:      Text.AlignTop
+                visible:                addressLabel.visible
             }
 
             SFLabel {
                 id:                     addressLabel
-                Layout.fillWidth:       true
                 Layout.maximumWidth:    290
-                Layout.minimumHeight:   16
                 wrapMode:               Text.NoWrap
                 elide:                  Text.ElideMiddle
                 font.pixelSize:         14
                 color:                  Style.content_main
                 copyMenuEnabled:        true
                 onCopyText:             BeamGlobals.copyToClipboard(text)
+                visible:                !!text
             }
 
             //
             // Comment
             //
             SFText {
-                Layout.fillWidth:  false
                 font.pixelSize:    14
                 color:             Style.content_disabled
                 //% "Comment"
@@ -123,7 +118,6 @@ ConfirmationDialog {
 
             SFLabel {
                 id:                   commentCtrl
-                Layout.fillWidth:     true
                 Layout.maximumWidth:  290
                 wrapMode:             Text.Wrap
                 elide:                Text.ElideRight
@@ -139,7 +133,6 @@ ConfirmationDialog {
             // Address type
             //
             SFText {
-                Layout.fillWidth:       true
                 font.pixelSize:         14
                 color:                  Style.content_disabled
                 //% "Transaction type"
@@ -150,9 +143,7 @@ ConfirmationDialog {
 
             SFText {
                 id:                     typeLabel
-                Layout.fillWidth:       true
                 Layout.maximumWidth:    290
-                Layout.minimumHeight:   16
                 wrapMode:               Text.Wrap
                 maximumLineCount:       2
                 font.pixelSize:         14
@@ -164,49 +155,66 @@ ConfirmationDialog {
             // Amount
             //
             SFText {
-                Layout.fillWidth:       true
-                Layout.alignment:       Qt.AlignTop
-                Layout.topMargin:       8
-                font.pixelSize:         14
-                color: Style.content_disabled
+                Layout.topMargin:  8
+                font.pixelSize:    14
+                color:             Style.content_disabled
                 //% "Amount"
                 text: qsTrId("general-amount") + ":"
-                verticalAlignment: Text.AlignTop
             }
 
-            BeamAmount {
-                visible: true
-                id: amountLabel
-                spacing: 15
-                font.pixelSize:    24
-                font.styleName:    "Bold"
-                font.weight:       Font.Bold
-                rateFontSize:      14
-                copyMenuEnabled:   true
-                unitName:          control.unitName
-                amount:            control.amount
-                rate:              control.rate
-                rateUnit:          control.rateUnit
-                color:             Style.accent_outgoing
-                maxPaintedWidth:   false
-                Layout.fillWidth:  true
+            SFText {
+                Layout.maximumWidth: 290
+                Layout.topMargin:    8
+                font.pixelSize:      14
+                color:               Style.content_main
+                visible:             !control.hasAmounts
+                maximumLineCount:    4
+                wrapMode:            Text.Wrap
+                //% "You would pay only transaction fee. It can be considerable for some contracts, so please check it below."
+                text: qsTrId("send-contract-only-fee")
+            }
+
+            ColumnLayout {
+                Layout.maximumWidth: 290
+                Layout.topMargin:    8
+                visible:             control.hasAmounts
+                spacing:             8
+
+                Repeater {
+                    model: control.amounts
+
+                    BeamAmount  {
+                        Layout.maximumWidth: 290
+
+                        amount:           modelData.amount
+                        unitName:         modelData.unitName
+                        rate:             modelData.rate
+                        prefix:           control.showPrefix ? (modelData.spend ? "- " : "+ ") : ""
+                        rateUnit:         control.rateUnit
+                        maxPaintedWidth:  false
+                        color:            modelData.spend ? Style.accent_outgoing : Style.accent_incoming
+
+                        font.pixelSize:   24
+                        font.styleName:   "Bold"
+                        font.weight:      Font.Bold
+                        rateFontSize:     14
+                        spacing:          15
+                        copyMenuEnabled:  true
+                    }
+                }
             }
 
             //
             // Fee
             //
             SFText {
-                Layout.fillWidth:       true
-                Layout.alignment:       Qt.AlignTop
                 font.pixelSize:         14
                 color:                  Style.content_disabled
                 //% "Fee"
                 text:                   [qsTrId("send-regular-fee"), ":"].join("")
-                verticalAlignment:      Text.AlignTop
             }
 
             ColumnLayout {
-                Layout.fillWidth:   true
                 SFText {
                     id:              feeLabel
                     font.pixelSize:  14
@@ -239,44 +247,58 @@ ConfirmationDialog {
                 text:                   qsTrId("send-confirmation-pwd-require-message")
             }
 
-            SFTextInput {
-                id:                     requirePasswordInput
-                visible:                BeamGlobals.needPasswordToSpend()
-                Layout.columnSpan:      2
-                Layout.fillWidth:       true
-                focus:                  true
-                activeFocusOnTab:       true
-                font.pixelSize:         14
-                color:                  Style.content_main
-                echoMode:               TextInput.Password
-                onAccepted:             control.okButton.clicked()
-                onTextChanged:          if (requirePasswordError.text.length > 0) requirePasswordError.text = ""
-            }
+            Column {
+                Layout.fillWidth:    true
+                Layout.minimumWidth: 340
+                Layout.columnSpan:   2
+                spacing: 0
 
-            SFText {
-                Layout.fillWidth:       true
-                Layout.columnSpan:      2
-                id:                     requirePasswordError
-                visible:                BeamGlobals.needPasswordToSpend()
-                color:                  Style.validator_error
-                font.pixelSize:         14
+                SFTextInput {
+                    id:                requirePasswordInput
+                    visible:           BeamGlobals.needPasswordToSpend()
+                    width:             parent.width
+
+                    font.pixelSize:    14
+                    color:             requirePasswordError.text ? Style.validator_error : Style.content_main
+                    backgroundColor:   requirePasswordError.text ? Style.validator_error : Style.content_main
+                    echoMode:          TextInput.Password
+
+                    onAccepted: function () {
+                        control.okButton.clicked()
+                    }
+
+                    onTextChanged: function () {
+                        requirePasswordError.text = ""
+                    }
+                }
+
+                Item {
+                    SFText {
+                        id:              requirePasswordError
+                        visible:         BeamGlobals.needPasswordToSpend()
+                        color:           Style.validator_error
+                        font.pixelSize:  12
+                        font.italic:     true
+                    }
+                }
             }
 
             SFText {
                 id:                     onlineMessageText
                 Layout.columnSpan:      2
-                Layout.topMargin:       0
-                Layout.bottomMargin:    15
+                Layout.topMargin:       8
                 horizontalAlignment:    Text.AlignHCenter
-                Layout.fillWidth:       true
-                Layout.maximumHeight:   60
                 Layout.maximumWidth:    420
-                Layout.minimumHeight:   16
                 font.pixelSize:         14
                 color:                  Style.content_disabled
                 wrapMode:               Text.WordWrap
                 //% "For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards."
                 text:                   qsTrId("send-confirmation-pwd-text-online-time")
+            }
+
+            Item {
+                // just some additional space
+                height: 15
             }
         }
     }
