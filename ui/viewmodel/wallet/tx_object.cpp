@@ -196,27 +196,8 @@ QString TxObject::getRate(beam::Asset::ID assetId) const
 {
     using namespace beam::wallet;
 
-    auto exchangeRatesOptional = getTxDescription().GetParameter<std::vector<ExchangeRate>>(TxParameterID::ExchangeRates);
-    if (exchangeRatesOptional)
-    {
-        std::vector<ExchangeRate>& rates = *exchangeRatesOptional;
-
-        auto fromCurrency = beam::wallet::Currency(assetId);
-        auto toCurrency = _secondCurrency;
-
-        auto search = std::find_if(std::begin(rates), std::end(rates),
-                                   [&fromCurrency, &toCurrency](const ExchangeRate& r)
-                                   {
-                                       return r.m_from == fromCurrency && r.m_to == toCurrency;
-                                   });
-
-        if (search != std::cend(rates))
-        {
-            return AmountToUIString(search->m_rate);
-        }
-    }
-
-    return "0";
+    auto rate = getTxDescription().getExchangeRate(_secondCurrency);
+    return rate ? AmountToUIString(rate) : "0";
 }
 
 QString TxObject::getFeeRate() const
