@@ -16,6 +16,7 @@ ComboBox {
     property int dropFontPixelSize: 13
     property double fontLetterSpacing: 0
     property string color: Style.content_main
+    property bool colorConst: false
     property string underlineColor: color
     property bool enableScroll: false
     property int textMaxLenDrop: 0
@@ -135,7 +136,7 @@ ComboBox {
         SFText  {
             clip: true
             text: control.editable ? control.editText : Utils.limitText(control.displayText, control.textMaxLenDisplay)
-            color: control.enabled ? control.color : Style.content_secondary 
+            color: control.enabled || control.colorConst ? control.color : Style.content_secondary 
             font.pixelSize: fontPixelSize
             anchors.verticalCenter: parent.verticalCenter
         }
