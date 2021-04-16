@@ -25,6 +25,6 @@ namespace beamui::applications
         // All consent functions should be safe to call from ANY thread
         //
         virtual void AnyThread_getSendConsent(const std::string &request, const beam::wallet::IWalletApi::ParseResult &) = 0;
-        virtual void AnyThread_getContractConsent(const beam::ByteBuffer& buffer) = 0;
+        virtual void AnyThread_getContractInfoConsent(const std::string &request, const beam::wallet::IWalletApi::ParseResult &) = 0;
     };
 }

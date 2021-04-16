@@ -69,6 +69,11 @@ namespace beamui::applications {
                     return _consentHandler.AnyThread_getSendConsent(stdreq, *pres);
                 }
 
+                if (pres->acinfo.method == "process_invoke_data")
+                {
+                    return _consentHandler.AnyThread_getContractInfoConsent(stdreq, *pres);
+                }
+
                 if (pres->minfo.fee > 0 || !pres->minfo.spend.empty())
                 {
                     LOG_INFO() << "Application called method " << pres->acinfo.method << " that spends funds, but user consent is not handled";
@@ -131,7 +136,7 @@ namespace beamui::applications {
         // Do not assume thread here
         // Should be safe to call from any thread
         //
-         auto str = result.dump();
+        auto str = result.dump();
         if (!str.empty())
         {
             emit callWalletApiResult(QString::fromStdString(str));
@@ -164,6 +169,24 @@ namespace beamui::applications {
     }
 
     void WebAPI_Beam::AnyThread_sendRejected(const std::string& request, ApiError code, const std::string& message)
+    {
+        //
+        // Do not assume thread here
+        // Should be safe to call from any thread
+        //
+        AnyThread_sendError(request, code, message);
+    }
+
+    void WebAPI_Beam::AnyThread_contractInfoApproved(const std::string& request)
+    {
+        //
+        // Do not assume thread here
+        // Should be safe to call from any thread
+        //
+        AnyThread_callWalletApiImp(request);
+    }
+
+    void WebAPI_Beam::AnyThread_contractInfoRejected(const std::string& request, ApiError code, const std::string& message)
     {
         //
         // Do not assume thread here

@@ -24,14 +24,8 @@ namespace beamui::applications
     public:
         typedef std::shared_ptr<WebAPI_Shaders> Ptr;
 
-        WebAPI_Shaders(IConsentHandler& consentHandler, const std::string& appid);
+        WebAPI_Shaders(const std::string& appid);
         ~WebAPI_Shaders() override = default;
-
-        //
-        // AnyThread_ functions should be safe to call from any thread
-        //
-        void AnyThread_contractApproved();
-        void AnyThread_contractRejected(bool byUser, const std::string& error);
 
     private:
         void CompileAppShader(const std::vector<uint8_t>& shader) override;
@@ -44,22 +38,6 @@ namespace beamui::applications
         void ReleaseCurrentApp(const std::string& appid) override;
 
     private:
-        std::shared_ptr<bool> _guard = std::make_shared<bool>(true);
         IShadersManager::Ptr _realShaders;
-        IConsentHandler& _consentHandler;
-
-        struct ApproveData
-        {
-            ApproveData(beam::ByteBuffer d, boost::optional<std::string> o, DoneAllHandler h)
-                : data(std::move(d)), output(std::move(o)), doneHandler(std::move(h))
-            {}
-
-            beam::ByteBuffer data;
-            boost::optional<std::string> output;
-            DoneAllHandler doneHandler;
-        };
-
-        std::shared_ptr<ApproveData> _approveData;
-        beam::wallet::IWalletModelAsync::Ptr _asyncWallet;
     };
 }

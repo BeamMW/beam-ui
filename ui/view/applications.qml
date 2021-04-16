@@ -56,7 +56,7 @@ ColumnLayout {
     WebAPICreator {
         id: webapiCreator
 
-        onApproveContract: function(info, amounts) {
+        onApproveContractInfo: function(request, info, amounts) {
             const dialog = Qt.createComponent("send_confirm.qml")
             const instance = dialog.createObject(control,
                 {
@@ -74,10 +74,10 @@ ColumnLayout {
 
             instance.Component.onDestruction.connect(function () {
                  if (instance.result == Dialog.Accepted) {
-                    webapiCreator.contractApproved()
+                    webapiCreator.contractInfoApproved(request)
                     return
                 }
-                webapiCreator.contractRejected()
+                webapiCreator.contractInfoRejected(request)
                 return
             })
 

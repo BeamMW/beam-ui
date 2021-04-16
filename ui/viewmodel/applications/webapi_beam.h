@@ -15,7 +15,6 @@
 
 #include "model/app_model.h"
 #include "webapi_shaders.h"
-#include "webapi_shaders.h"
 #include "consent_handler.h"
 
 namespace beamui::applications
@@ -45,6 +44,8 @@ namespace beamui::applications
     public:
         void AnyThread_sendApproved(const std::string& request);
         void AnyThread_sendRejected(const std::string& request, beam::wallet::ApiError err, const std::string& message);
+        void AnyThread_contractInfoApproved(const std::string& request);
+        void AnyThread_contractInfoRejected(const std::string& request, beam::wallet::ApiError err, const std::string& message);
 
     private:
         // This can be called from any thread.

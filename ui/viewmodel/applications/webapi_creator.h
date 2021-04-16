@@ -32,20 +32,20 @@ namespace beamui::applications
         Q_INVOKABLE void createApi(const QString& version, const QString& appName, const QString& appUrl);
         Q_INVOKABLE void sendApproved(const QString& request);
         Q_INVOKABLE void sendRejected(const QString& request);
-        Q_INVOKABLE void contractApproved();
-        Q_INVOKABLE void contractRejected();
+        Q_INVOKABLE void contractInfoApproved(const QString& request);
+        Q_INVOKABLE void contractInfoRejected(const QString& request);
 
     signals:
         void apiCreated(QObject* api);
         void approveSend(const QString& request, const QMap<QString, QVariant>& info);
-        void approveContract(const QMap<QString, QVariant>& info, QList<QMap<QString, QVariant>> amounts);
+        void approveContractInfo(const QString& request, const QMap<QString, QVariant>& info, QList<QMap<QString, QVariant>> amounts);
 
     private:
         void AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&) override;
-        void AnyThread_getContractConsent(const beam::ByteBuffer& buffer) override;
+        void AnyThread_getContractInfoConsent(const std::string &request, const beam::wallet::IWalletApi::ParseResult &) override;
 
         void UIThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&);
-        void UIThread_getContractConsent(const beam::ByteBuffer&);
+        void UIThread_getContractInfoConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&);
 
         std::unique_ptr<WebAPI_Beam> _api;
         WebAPI_Shaders::Ptr _webShaders;

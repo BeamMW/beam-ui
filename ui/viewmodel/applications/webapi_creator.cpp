@@ -42,7 +42,7 @@ namespace beamui::applications
         ECC::Hash::Processor() << appName.toStdString() << appUrl.toStdString() >> hv;
         const auto appid = std::string("appid:") + hv.str();
 
-        _webShaders = std::make_shared<WebAPI_Shaders>(*this, appid);
+        _webShaders = std::make_shared<WebAPI_Shaders>(appid);
         _api = std::make_unique<WebAPI_Beam>(*this, _webShaders, stdver, appid);
 
         QQmlEngine::setObjectOwnership(_api.get(), QQmlEngine::CppOwnership);
@@ -63,6 +63,25 @@ namespace beamui::applications
                 {
                     // Can happen if user leaves the application
                     LOG_WARNING() << "AT -> UIT send consent arrived but creator is already destroyed";
+                }
+            }
+        );
+    }
+
+    void WebAPICreator::AnyThread_getContractInfoConsent(const std::string &request, const beam::wallet::IWalletApi::ParseResult& pinfo)
+    {
+        std::weak_ptr<bool> wp = _sendConsentGuard;
+        _asyncWallet->makeIWTCall([] () -> boost::any {return boost::none;},
+            [this, wp, request, pinfo](const boost::any&)
+            {
+                if (wp.lock())
+                {
+                    UIThread_getContractInfoConsent(request, pinfo);
+                }
+                else
+                {
+                    // Can happen if user leaves the application
+                    LOG_WARNING() << "AT -> UIT contract consent arrived but creator is already destroyed";
                 }
             }
         );
@@ -116,80 +135,45 @@ namespace beamui::applications
         emit approveSend(QString::fromStdString(request), info);
     }
 
-    void WebAPICreator::AnyThread_getContractConsent(const beam::ByteBuffer& buffer)
+    void WebAPICreator::UIThread_getContractInfoConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
     {
-        std::weak_ptr<bool> wp = _contractConsentGuard;
-        _asyncWallet->makeIWTCall([] () -> boost::any {return boost::none;},
-            [this, wp, buffer](const boost::any&)
-            {
-                if (wp.lock())
-                {
-                    UIThread_getContractConsent(buffer);
-                }
-                else
-                {
-                    // Can happen if user leaves the application
-                    LOG_WARNING() << "AT -> UIT contract consent arrived but creator is already destroyed";
-                }
-            }
-        );
-    }
-
-    void WebAPICreator::UIThread_getContractConsent(const beam::ByteBuffer& buffer)
-    {
-        //
-        // Do not assume thread here
-        // Should be safe to call from any thread
-        //
-        beam::bvm2::ContractInvokeData invokeData;
-        if(!beam::wallet::fromByteBuffer(buffer, invokeData))
-        {
-            return _webShaders->AnyThread_contractRejected(false, "AnyThread_getContractConsent: failed to parse invoke data");
-        }
-
-        const auto height  = AppModel::getInstance().getWalletModel()->getCurrentHeight();
-        const auto comment = beam::bvm2::getFullComment(invokeData);
-        const auto fee     = beam::bvm2::getFullFee(invokeData, height);
-        const auto spend   = beam::bvm2::getFullSpend(invokeData);
-
         QMap<QString, QVariant> info;
-        info.insert("comment",    QString::fromStdString(comment));
-        info.insert("fee",       AmountToUIString(fee));
+        info.insert("comment",   QString::fromStdString(pinfo.minfo.comment));
+        info.insert("fee",       AmountToUIString(pinfo.minfo.fee));
         info.insert("feeRate",   AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID)));
         info.insert("rateUnit",  _amgr->getRateUnit());
 
         QList<QMap<QString, QVariant>> amounts;
-        for(const auto& sinfo: spend)
+
+        for(const auto& sinfo: pinfo.minfo.spend)
         {
             QMap<QString, QVariant> entry;
             const auto assetId = sinfo.first;
             const auto amount  = sinfo.second;
 
-            entry.insert("amount",   AmountToUIString(std::abs(amount)));
+            entry.insert("amount",    AmountBigToUIString(amount));
             entry.insert("unitName", _amgr->getUnitName(assetId, AssetsManager::NoShorten));
             entry.insert("rate",     AmountToUIString(_amgr->getRate(assetId)));
-            entry.insert("spend",    amount > 0);
+            entry.insert("spend",    true);
 
             amounts.push_back(entry);
         }
 
-        emit approveContract(info, amounts);
-    }
+        for(const auto& sinfo: pinfo.minfo.receive)
+        {
+            QMap<QString, QVariant> entry;
+            const auto assetId = sinfo.first;
+            const auto amount  = sinfo.second;
 
-    void WebAPICreator::contractApproved()
-    {
-        //
-        // This is UI thread
-        //
-        _webShaders->AnyThread_contractApproved();
-    }
+            entry.insert("amount",    AmountBigToUIString(amount));
+            entry.insert("unitName", _amgr->getUnitName(assetId, AssetsManager::NoShorten));
+            entry.insert("rate",     AmountToUIString(_amgr->getRate(assetId)));
+            entry.insert("spend",    false);
 
-    void WebAPICreator::contractRejected()
-    {
-        //
-        // This is UI thread
-        //
-        _webShaders->AnyThread_contractRejected(true, std::string());
+            amounts.push_back(entry);
+        }
+
+        emit approveContractInfo(QString::fromStdString(request), info, amounts);
     }
 
     void WebAPICreator::sendApproved(const QString& request)
@@ -206,5 +190,21 @@ namespace beamui::applications
         // This is UI thread
         //
         _api->AnyThread_sendRejected(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
+    }
+
+    void WebAPICreator::contractInfoApproved(const QString& request)
+    {
+        //
+        // This is UI thread
+        //
+        _api->AnyThread_contractInfoApproved(request.toStdString());
+    }
+
+    void WebAPICreator::contractInfoRejected(const QString& request)
+    {
+        //
+        // This is UI thread
+        //
+        _api->AnyThread_contractInfoRejected(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
     }
 }
