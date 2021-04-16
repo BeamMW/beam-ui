@@ -24,7 +24,7 @@ namespace beamui::applications
     public:
         typedef std::shared_ptr<WebAPI_Shaders> Ptr;
 
-        WebAPI_Shaders(const std::string& appid);
+        explicit WebAPI_Shaders(const std::string& appid);
         ~WebAPI_Shaders() override = default;
 
     private:

@@ -492,7 +492,7 @@ Control {
 
                     property var isIncome:    model && model.isIncome
                     property var prefix:      model && model.amountGeneral == "0" ? "" : (isIncome ? "+ " : "- ")
-                    property var amountText:  model ? [prefix, Utils.uiStringToLocale(model.amountGeneral)].join('') : "0"
+                    property var amountText:  model && model.amountGeneral ? [prefix, Utils.uiStringToLocale(model.amountGeneral)].join('') : "0"
 
                     //% "Multiple assets"
                     property var displayText: model && model.isMultiAsset ? qsTrId("general-multiple-assets") : amountText
@@ -526,7 +526,7 @@ Control {
                     width:  parent.width
                     height: transactionsTable.rowHeight
 
-                    property var amount: model ? model.amountSecondCurrency : "0"
+                    property var amount: model && model.amountSecondCurrency ? model.amountSecondCurrency : "0"
                     property var prefix: model && model.isIncome ? "+ " : "- "
 
                     SFText {
@@ -618,7 +618,7 @@ Control {
                                 font.pixelSize: 14
                                 font.italic: true
                                 wrapMode: Text.WordWrap
-                                text: styleData.value
+                                text: styleData && styleData.value ? styleData.value : ""
                                 verticalAlignment: Text.AlignBottom
                                 color: {
                                     if (!model || model.isExpired) {
