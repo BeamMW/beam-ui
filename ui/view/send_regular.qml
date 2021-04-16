@@ -312,7 +312,7 @@ ColumnLayout {
                                     font.weight:      Font.Bold
                                     color:            Style.accent_outgoing
                                     y:                30
-                                    //% "add max"
+                                    //% "max"
                                     text:             " " + qsTrId("amount-input-add-max")
 
                                     MouseArea {

@@ -113,14 +113,6 @@ ColumnLayout {
             }
         }
 
-        SFText {
-            Layout.topMargin:   22
-            font.pixelSize:     24
-            font.letterSpacing: 0.6
-            color:              error.length ? Style.validator_error : control.currColor
-            text:               control.currencyUnit
-            visible:            !multi
-        }
 
         CustomComboBox {
             id:                  currCombo
@@ -134,7 +126,8 @@ ColumnLayout {
             currentIndex:        control.currencyIdx
             color:               error.length ? Style.validator_error : control.currColor
             underlineColor:      "transparent"
-            visible:             multi
+            enabled:             multi
+            colorConst:          true
             model:               control.currencies
             textRole:            "unitName"
             textMaxLenDrop:      10
