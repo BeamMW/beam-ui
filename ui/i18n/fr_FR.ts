@@ -3019,7 +3019,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-contract-only-fee">
-        <source>You would pay only transaction fee. It can be considerable for some contracts, so please check it below</source>
+        <source>You would pay only transaction fee. It can be considerable for some contracts, so please check it below.</source>
+        <oldsource>You would pay only transaction fee. It can be considerable for some contracts, so please check it below</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>
