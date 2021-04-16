@@ -2782,7 +2782,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="amount-input-add-max">
-        <source>add max</source>
+        <source>max</source>
+        <oldsource>add max</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-amount-label">
