@@ -377,12 +377,25 @@ void SendViewModel::saveReceiverAddress(const QString& name)
     }
     else
     {
-        _walletModel.getAsync()->getAddress(_receiverWalletID, [this, trimmed](const boost::optional<WalletAddress>& addr, size_t c)
+        if (_receiverWalletID.IsValid())
         {
-            WalletAddress address = *addr;
-            address.m_label = trimmed.toStdString();
-            _walletModel.getAsync()->saveAddress(address);
-        });
+            _walletModel.getAsync()->getAddress(_receiverWalletID, [this, trimmed](const boost::optional<WalletAddress>& addr, size_t c)
+            {
+                WalletAddress address = *addr;
+                address.m_label = trimmed.toStdString();
+                _walletModel.getAsync()->saveAddress(address);
+            });
+        }
+        else
+        {
+            // Max privacy token doesn't have valid receiver ID, because it is max privacy
+            _walletModel.getAsync()->getAddressByToken(_token.toStdString(), [this, trimmed](const boost::optional<WalletAddress>& addr, size_t c)
+            {
+                WalletAddress address = *addr;
+                address.m_label = trimmed.toStdString();
+                _walletModel.getAsync()->saveAddress(address);
+            });
+        }
     }
 }
 
@@ -453,10 +466,21 @@ void SendViewModel::extractParameters()
         emit commentChanged();
     }
 
-    _walletModel.getAsync()->getAddress(_receiverWalletID, [this](const boost::optional<WalletAddress>& addr, size_t c)
+    if (_receiverWalletID.IsValid())
     {
-        onGetAddressReturned(addr, static_cast<int>(c));
-    });
+        _walletModel.getAsync()->getAddress(_receiverWalletID, [this](const boost::optional<WalletAddress>& addr, size_t c)
+        {
+            onGetAddressReturned(addr, static_cast<int>(c));
+        });
+    }
+    else
+    {
+        // Max privacy token doesn't have valid receiver ID, because it is max privacy
+        _walletModel.getAsync()->getAddressByToken(_token.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
+        {
+            onGetAddressReturned(addr, static_cast<int>(c));
+        });
+    }
 
     ProcessLibraryVersion(_txParameters, [this](const auto& version, const auto& myVersion)
     {
