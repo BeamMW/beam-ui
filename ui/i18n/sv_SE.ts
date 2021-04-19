@@ -3020,5 +3020,9 @@ Update your settings and try again.</source>
         <oldsource>You would pay only transaction fee. It can be considerable for some contracts, so please check it below</oldsource>
         <translation type="unfinished"></translation>
     </message>
+    <message id="apps-fork-warning">
+        <source>DAPPs will be available in your wallet after the Hard Fork</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

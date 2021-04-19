@@ -126,14 +126,16 @@ Rectangle {
     }
 
     property var contentItems : [
-		"wallet",
-		//"dex",
-        "atomic_swap",
-		"addresses",
-        "notifications",
-		"utxo",
-		"applications",
-		"settings"]
+		{name: "wallet"},
+        {name: "atomic_swap"},
+		{name: "addresses"},
+        {name: "notifications"},
+		{name: "utxo"},
+		{name: "applications", qml: function () {
+		    return BeamGlobals.isFork3() ? "applications" : "applications_nofork"
+		}},
+		{name: "settings"}
+	]
 
     property int selectedItem
 
@@ -177,7 +179,7 @@ Rectangle {
                         y: 16
                         width: 28
                         height: 28
-                        source: "qrc:/assets/icon-" + modelData + (selectedItem == index ? "-active" : "") + ".svg"
+                        source: "qrc:/assets/icon-" + modelData.name + (selectedItem == index ? "-active" : "") + ".svg"
 					}
                     Item {
                         Rectangle {
@@ -200,7 +202,7 @@ Rectangle {
                     }
 
                     Item {
-                        visible: contentItems[index] == 'notifications' && viewModel.unreadNotifications > 0
+                        visible: contentItems[index].name == 'notifications' && viewModel.unreadNotifications > 0
                         Rectangle {
                             id: counter
                             x: 42
@@ -335,13 +337,16 @@ Rectangle {
         var update = function(index) {
             selectedItem = index
             controls.itemAt(index).focus = true;
-            content.setSource("qrc:/" + contentItems[index] + ".qml", Object.assign({"openSend": false}, props))
+
+            var source = ["qrc:/", contentItems[index].qml ? contentItems[index].qml() : contentItems[index].name, ".qml"].join('')
+            content.setSource(source, Object.assign({"openSend": false}, props))
+
             viewModel.update(index)
         }
 
         if (typeof(indexOrID) == "string") {
             for (var index = 0; index < contentItems.length; index++) {
-                if (contentItems[index] == indexOrID) {
+                if (contentItems[index].name == indexOrID) {
                     return update(index);
                 }
             }

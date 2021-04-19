@@ -92,6 +92,7 @@
         <file>settings.qml</file>
         <file>addresses.qml</file>
         <file>applications.qml</file>
+        <file>applications_nofork.qml</file>
         <file>utxo.qml</file>
         <file>atomic_swap.qml</file>
         <file>notifications.qml</file>

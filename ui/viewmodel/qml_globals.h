@@ -31,6 +31,7 @@ public:
     Q_INVOKABLE static QString getLocaleName();
     Q_INVOKABLE static int  maxCommentLength();
     Q_INVOKABLE static bool needPasswordToSpend();
+    Q_INVOKABLE static bool isFork3();
     Q_INVOKABLE static bool isPasswordValid(const QString& value);
     Q_INVOKABLE static void fatal(const QString& message);
 
@@ -66,6 +67,7 @@ public:
     Q_INVOKABLE static bool canReceive(OldWalletCurrency::OldCurrency currency);
     Q_INVOKABLE static QString divideWithPrecision(const QString& dividend, const QString& divider, uint precision);
     Q_INVOKABLE static QString multiplyWithPrecision(const QString& first, const QString& second, uint precision);
+
 private:
     QQmlEngine& _engine;
 };

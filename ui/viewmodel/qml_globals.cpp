@@ -165,6 +165,12 @@ bool QMLGlobals::needPasswordToSpend()
     return AppModel::getInstance().getSettings().isPasswordReqiredToSpendMoney();
 }
 
+bool QMLGlobals::isFork3()
+{
+    const auto height = AppModel::getInstance().getWalletModel()->getCurrentHeight();
+    return beam::wallet::isFork3(height);
+}
+
 bool QMLGlobals::isPasswordValid(const QString& value)
 {
     beam::SecString secretPass = value.toStdString();
