@@ -388,7 +388,7 @@ void SendViewModel::saveReceiverAddress(const QString& name)
         }
         else
         {
-            // Max privacy token doesn't have valid receiver ID, because it is max privacy
+            // Max privacy & public offline tokens do not have valid PeerID (_receiverWalletID)
             _walletModel.getAsync()->getAddressByToken(_token.toStdString(), [this, trimmed](const boost::optional<WalletAddress>& addr, size_t c)
             {
                 WalletAddress address = *addr;
@@ -401,13 +401,45 @@ void SendViewModel::saveReceiverAddress(const QString& name)
 
 void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
 {
+    using namespace beam::wallet;
+
     if (address)
     {
         setComment(QString::fromStdString(address->m_label));
+
+        const auto type = GetAddressType(address->m_Address);
+        if (_receiverWalletID != beam::Zero)
+        {
+            if (_receiverWalletID != address->m_walletID)
+            {
+                assert(!"unexpected wallet id in send::onGetAddressReturned");
+                throw std::runtime_error("unexpected walletID in send::onGetAddressReturned");
+            }
+        }
+        else
+        {
+            assert(type == TxAddressType::MaxPrivacy || type == TxAddressType::PublicOffline);
+            _receiverWalletID = address->m_walletID; // our maxprivacy will have id in db
+        }
+
+        if (_receiverIdentity != beam::Zero)
+        {
+            if (_receiverIdentity != address->m_Identity)
+            {
+                assert(!"unexpected identity in send::onGetAddressReturned");
+                throw std::runtime_error("unexpected identity in send::onGetAddressReturned");
+            }
+        }
+        else
+        {
+            assert(type == TxAddressType::PublicOffline);
+        }
     }
     else
     {
         setComment("");
+        _receiverWalletID = beam::Zero;
+        _receiverIdentity = beam::Zero;
     }
 }
 
@@ -475,7 +507,7 @@ void SendViewModel::extractParameters()
     }
     else
     {
-        // Max privacy token doesn't have valid receiver ID, because it is max privacy
+        // Max privacy & public offline tokens do not have valid PeerID (_receiverWalletID)
         _walletModel.getAsync()->getAddressByToken(_token.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
         {
             onGetAddressReturned(addr, static_cast<int>(c));
