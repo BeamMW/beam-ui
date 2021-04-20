@@ -50,7 +50,7 @@ namespace beamui
     macro(Usdt,        "Usdt",          "USDT",          "unit?",    "gwei",      6) \
     macro(WrappedBTC , "WBTC",          "WBTC",          "satoshi",  "gwei",      8) \
     macro(Usd,         "USD",           "USD",           "cent",     "",          2) \
-    macro(Unknown,     "",              "",              "",         "",          0)
+    macro(Unknown,     "",              "",              "",         "",          6)
 
     // TODO roman.strilets deleted from CURRENCY_MAP
     //macro(BitcoinCash, "Bitcoin Cash",  "BCH",           "satoshi",  "sat/kB",    8)

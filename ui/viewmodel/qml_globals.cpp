@@ -44,37 +44,6 @@ namespace
         return c == C;
     }
 
-    QString roundWithPrecision(const QString& number, uint8_t precision)
-    {
-        //TODO rounding precision
-        const char delimeter = '.';
-        auto parts = string_helpers::split(number.toStdString(), delimeter);
-
-        std::string result;
-        std::ostringstream oss;
-        if (parts.size() == 2)
-        {    
-            cpp_dec_float_50 afterPoint("0." + parts[1]);
-
-            std::ostringstream afterPointOss;
-            afterPointOss.precision(precision);
-            afterPointOss << std::fixed << afterPoint;
-
-            auto afterPointParts = string_helpers::split(afterPointOss.str(), delimeter);
-            oss << parts[0] << delimeter << (afterPointParts.size() > 1 ? afterPointParts[1] : "0");
-            result = oss.str();
-            boost::algorithm::trim_right_if(result, char_is<'0'>);
-            boost::algorithm::trim_right_if(result, char_is<'.'>);
-        }
-        else
-        {
-            oss << parts[0];
-            result = oss.str();
-        }
-
-        return QString::fromStdString(result);
-    }
-
     beamui::Currencies convertUiCurrencyToCurrencies(OldWalletCurrency::OldCurrency currency)
     {
         switch (currency)
@@ -449,7 +418,7 @@ QString QMLGlobals::divideWithPrecision(const QString& dividend, const QString& 
     oss << std::fixed << quotient;
 
     QString result = QString::fromStdString(oss.str());
-    return roundWithPrecision(result, static_cast<uint8_t>(precision));
+    return roundWithPrecision(result, precision);
 }
 
 QString QMLGlobals::multiplyWithPrecision(const QString& first, const QString& second, uint precision)
@@ -464,7 +433,38 @@ QString QMLGlobals::multiplyWithPrecision(const QString& first, const QString& s
     oss << std::fixed << product;
 
     QString result = QString::fromStdString(oss.str());
-    return roundWithPrecision(result, static_cast<uint8_t>(precision));
+    return roundWithPrecision(result, precision);
+}
+
+QString QMLGlobals::roundWithPrecision(const QString& number, uint precision)
+{
+    //TODO rounding precision
+    const char delimeter = '.';
+    auto parts = string_helpers::split(number.toStdString(), delimeter);
+
+    std::string result;
+    std::ostringstream oss;
+    if (parts.size() == 2)
+    {    
+        cpp_dec_float_50 afterPoint("0." + parts[1]);
+
+        std::ostringstream afterPointOss;
+        afterPointOss.precision(static_cast<uint8_t>(precision));
+        afterPointOss << std::fixed << afterPoint;
+
+        auto afterPointParts = string_helpers::split(afterPointOss.str(), delimeter);
+        oss << parts[0] << delimeter << (afterPointParts.size() > 1 ? afterPointParts[1] : "0");
+        result = oss.str();
+        boost::algorithm::trim_right_if(result, char_is<'0'>);
+        boost::algorithm::trim_right_if(result, char_is<'.'>);
+    }
+    else
+    {
+        oss << parts[0];
+        result = oss.str();
+    }
+
+    return QString::fromStdString(result);
 }
 
 void QMLGlobals::fatal(const QString& message)
