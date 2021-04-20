@@ -67,6 +67,7 @@ public:
     Q_INVOKABLE static bool canReceive(OldWalletCurrency::OldCurrency currency);
     Q_INVOKABLE static QString divideWithPrecision(const QString& dividend, const QString& divider, uint precision);
     Q_INVOKABLE static QString multiplyWithPrecision(const QString& first, const QString& second, uint precision);
+    Q_INVOKABLE static QString roundWithPrecision(const QString& number, uint precision);
 
 private:
     QQmlEngine& _engine;

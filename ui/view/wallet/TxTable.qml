@@ -492,7 +492,7 @@ Control {
 
                     property var isIncome:    model && model.isIncome
                     property var prefix:      model && model.amountGeneral == "0" ? "" : (isIncome ? "+ " : "- ")
-                    property var amountText:  model && model.amountGeneral ? [prefix, Utils.uiStringToLocale(model.amountGeneral)].join('') : "0"
+                    property var amountText:  model && model.amountGeneral ? [prefix, Utils.uiStringToLocale(BeamGlobals.roundWithPrecision(model.amountGeneral, 6))].join('') : "0"
 
                     //% "Multiple assets"
                     property var displayText: model && model.isMultiAsset ? qsTrId("general-multiple-assets") : amountText
@@ -526,7 +526,7 @@ Control {
                     width:  parent.width
                     height: transactionsTable.rowHeight
 
-                    property var amount: model && model.amountSecondCurrency ? model.amountSecondCurrency : "0"
+                    property var amount: model && BeamGlobals.roundWithPrecision(model.amountSecondCurrency ? model.amountSecondCurrency : "0", tableViewModel.rateUnit ? 6 : 2)
                     property var prefix: model && model.isIncome ? "+ " : "- "
 
                     SFText {
