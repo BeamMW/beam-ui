@@ -21,7 +21,7 @@ Dialog {
     property string  comment:       addressItem.name
     property var     expiration:    addressItem.expirationDate
     property bool    expired:       expiration < new Date(Date.now())
-    property bool    neverExpires:  expiration == new Date(-1)
+    property bool    neverExpires:  expiration.getTime() == (new Date(4294967295000)).getTime()
     property bool    commentValid:  comment == "" || comment == addressItem.name || viewModel.commentValid(comment)
     property bool    extended:      false
 

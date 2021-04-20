@@ -17,7 +17,7 @@ TableView {
 
     // Scrollbar fine-tuning
     __scrollBarTopMargin: tableView.headerHeight
-    verticalScrollBarPolicy: hoverArea.containsMouse && __scroller.contentHeight > __scroller.availableHeight ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAsNeeded
+    verticalScrollBarPolicy: hoverArea.containsMouse && __scroller.contentHeight > __scroller.availableHeight ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAlwaysOff
 
     style: TableViewStyle {
         transientScrollBars: !hoverArea.containsMouse

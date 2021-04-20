@@ -21,14 +21,19 @@ ReceiveViewModel::ReceiveViewModel()
     : _walletModel(*AppModel::getInstance().getWalletModel())
     , _amgr(AppModel::getInstance().getAssets())
 {
+    using namespace beam::wallet;
+
     connect(&_walletModel,  &WalletModel::newAddressFailed,    this,  &ReceiveViewModel::newAddressFailed);
     connect(_amgr.get(),    &AssetsManager::assetsListChanged, this,  &ReceiveViewModel::assetsListChanged);
+
+    _receiverAddress.setExpirationStatus(WalletAddress::ExpirationStatus::Auto);
     updateToken();
 }
 
 void ReceiveViewModel::updateToken()
 {
     using namespace beam::wallet;
+
     auto generateToken = [this] () {
         if (_maxp)
         {
@@ -58,6 +63,7 @@ void ReceiveViewModel::updateToken()
     {
          _walletModel.getAsync()->generateNewAddress([generateToken, this](const auto& addr){
             _receiverAddress = addr;
+            _receiverAddress.setExpirationStatus(WalletAddress::ExpirationStatus::Auto);
             setComment(QString::fromStdString(addr.m_label));
             generateToken();
         });
@@ -158,7 +164,6 @@ void ReceiveViewModel::saveAddress()
 {
     if (getCommentValid())
     {
-        _receiverAddress.setExpirationStatus(beam::wallet::WalletAddress::ExpirationStatus::Auto);
         _walletModel.getAsync()->saveAddress(_receiverAddress);
     }
 }

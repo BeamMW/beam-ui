@@ -112,6 +112,7 @@ public:
 
 public:
     AddressBookViewModel();
+    ~AddressBookViewModel();
 
     QQmlListProperty<ContactItem> getContacts();
     QQmlListProperty<AddressItem> getActiveAddresses();

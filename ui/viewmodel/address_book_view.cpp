@@ -154,6 +154,13 @@ AddressBookViewModel::AddressBookViewModel()
     startTimer(3 * 1000);
 }
 
+AddressBookViewModel::~AddressBookViewModel()
+{
+    qDeleteAll(m_contacts);
+    qDeleteAll(m_activeAddresses);
+    qDeleteAll(m_expiredAddresses);
+}
+
 QQmlListProperty<ContactItem> AddressBookViewModel::getContacts()
 {
     return CreateQmlListProperty<ContactItem>(this, m_contacts);
@@ -328,8 +335,8 @@ void AddressBookViewModel::onAddresses(bool own, const std::vector<beam::wallet:
 {
     if (own)
     {
-        m_activeAddresses.clear();
-        m_expiredAddresses.clear();
+        qDeleteAll(m_activeAddresses); m_activeAddresses.clear();
+        qDeleteAll(m_expiredAddresses); m_expiredAddresses.clear();
 
         for (const auto& addr : addresses)
         {
@@ -349,7 +356,7 @@ void AddressBookViewModel::onAddresses(bool own, const std::vector<beam::wallet:
     }
     else
     {
-        m_contacts.clear();
+        qDeleteAll(m_contacts); m_contacts.clear();
 
         for (const auto& addr : addresses)
         {

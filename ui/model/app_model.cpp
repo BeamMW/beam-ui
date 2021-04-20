@@ -54,12 +54,7 @@ namespace
 {
     void generateDefaultAddress(beam::wallet::IWalletDB::Ptr db)
     {
-        // generate default address
-        beam::wallet::WalletAddress address;
-        db->createAddress(address);
-        address.setExpirationStatus(wallet::WalletAddress::ExpirationStatus::Never);
-        address.m_label = "default";
-        db->saveAddress(address);
+        db->generateAndSaveDefaultAddress();
     }
 }
 
