@@ -662,7 +662,10 @@ QString TxObject::getAmountSecondCurrency()
         // TODO: support multiple assets
         if (_assetsList.size() == 1)
         {
-            _amountSecondCurrency = QMLGlobals::calcAmountInSecondCurrency(_assetAmounts[0], _assetRates[0], QString());
+            _amountSecondCurrency = QMLGlobals::calcAmountInSecondCurrency(
+                _assetAmounts[0],
+                _assetRates[0],
+                QString::fromStdString(_secondCurrency.m_value).toUpper());
         }
     }
 
