@@ -670,9 +670,9 @@ QString WalletSettings::getAppsUrl() const
     #ifdef BEAM_BEAMX
     return "";
     #elif defined(BEAM_TESTNET)
-    return "";
+    return "https://apps-testnet.beam.mw/appslist.json";
     #elif defined(BEAM_MAINNET)
-    return "";
+    return "https://apps.beam.mw/appslist.json";
     #else
     return "http://3.136.182.25:80/app/appslist.json";
     #endif
