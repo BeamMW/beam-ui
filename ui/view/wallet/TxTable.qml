@@ -19,14 +19,11 @@ Control {
     property int selectedAsset: -1
 
     state: "all"
-    readonly property bool isContracts: state == "contracts"
 
     states: [
         State {
             name: "all"
             PropertyChanges { target: allTab; state: "active" }
-            PropertyChanges { target: contractFilterProxy;  filterRole: "isContractTx" }
-            PropertyChanges { target: contractFilterProxy;  filterString: "false" }
             PropertyChanges { target: emptyMessage;  
                 //% "Your transaction list is empty"
                 text: qsTrId("tx-empty")
@@ -38,8 +35,6 @@ Control {
             PropertyChanges { target: inProgressTab; state: "active" }
             PropertyChanges { target: txProxyModel; filterRole: "isInProgress" }
             PropertyChanges { target: txProxyModel; filterString: "true" }
-            PropertyChanges { target: contractFilterProxy;  filterRole: "isContractTx" }
-            PropertyChanges { target: contractFilterProxy;  filterString: "false" }
             PropertyChanges { target: emptyMessage;  
                 //% "There are no in progress transactions yet."
                 text: qsTrId("tx-in-progress-empty")
@@ -50,8 +45,6 @@ Control {
             PropertyChanges { target: sentTab; state: "active" }
             PropertyChanges { target: txProxyModel; filterRole: "isSent" }
             PropertyChanges { target: txProxyModel; filterString: "true" }
-            PropertyChanges { target: contractFilterProxy;  filterRole: "isContractTx" }
-            PropertyChanges { target: contractFilterProxy;  filterString: "false" }
             PropertyChanges { target: emptyMessage;  
                 //% "There are no sent transactions yet."
                 text: qsTrId("tx-sent-empty")
@@ -62,23 +55,9 @@ Control {
             PropertyChanges { target: receivedTab; state: "active" }
             PropertyChanges { target: txProxyModel; filterRole: "isReceived" }
             PropertyChanges { target: txProxyModel; filterString: "true" }
-            PropertyChanges { target: contractFilterProxy;  filterRole: "isContractTx" }
-            PropertyChanges { target: contractFilterProxy;  filterString: "false" }
             PropertyChanges { target: emptyMessage;  
                 //% "There are no received transactions yet."
                 text: qsTrId("tx-received-empty")
-            }
-        },
-        State {
-            name: "contracts"
-            PropertyChanges { target: contractsTab; state: "active" }
-            PropertyChanges { target: txProxyModel; filterRole: "" }
-            PropertyChanges { target: txProxyModel; filterString: "" }
-            PropertyChanges { target: contractFilterProxy;  filterRole: "isContractTx" }
-            PropertyChanges { target: contractFilterProxy;  filterString: "true" }
-            PropertyChanges { target: emptyMessage;  
-                //% "There are no contracts transactions yet."
-                text: qsTrId("tx-contracts-empty")
             }
         }
     ]
@@ -158,14 +137,6 @@ Control {
                 onClicked: control.state = "received"
             }
 
-            TxFilter {
-                id: contractsTab
-                Layout.alignment: Qt.AlignVCenter
-                //% "Contracts"
-                label: qsTrId("wallet-transactions-contracts-tab")
-                onClicked: control.state = "contracts"
-            }
-
             Item {
                 Layout.fillWidth: true
             }
@@ -238,8 +209,7 @@ Control {
                         var index = tableViewModel.transactions.index(0, 0);
                         var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, root.openedTxID)
                         if (indexList.length > 0) {
-                            index = contractFilterProxy.mapFromSource(indexList[0])
-                            index = assetFilterProxy.mapFromSource(index)
+                            index = assetFilterProxy.mapFromSource(indexList[0])
                             index = searchProxyModel.mapFromSource(index)
                             index = txProxyModel.mapFromSource(index)
                             transactionsTable.positionViewAtRow(index.row, ListView.Beginning)
@@ -279,18 +249,11 @@ Control {
                     filterCaseSensitivity: Qt.CaseInsensitive
 
                     source: SortFilterProxyModel {
-                        id: assetFilterProxy
+                        id:           assetFilterProxy
                         filterRole:   "assetFilter"
                         filterString: control.selectedAsset < 0 ? "" : ["\\b", control.selectedAsset, "\\b"].join("")
                         filterSyntax: SortFilterProxyModel.RegExp
-
-                        source: SortFilterProxyModel {
-                            id: contractFilterProxy
-                            filterRole:   "isContractTx"
-                            filterString: "false"
-                            filterSyntax: SortFilterProxyModel.FixedString
-                            source: tableViewModel.transactions
-                        }
+                        source:       tableViewModel.transactions
                     }
                 }
 
@@ -454,36 +417,12 @@ Control {
             }
 
             TableViewColumn {
-                role: "timeCreated"
-                id: timeColumn
-
-                //% "Created on"
-                title:      qsTrId("wallet-txs-date-time")
-                elideMode:  Text.ElideRight
-                width:      110 * transactionsTable.columnResizeRatio
-                movable:    false
-                resizable:  false
-            }
-
-            TableViewColumn {
-                role: "comment"
-
-                //% "Description"
-                title:     qsTrId("general-description")
-                elideMode: Text.ElideRight
-                width:     200 * transactionsTable.columnResizeRatio
-                movable:   false
-                resizable: false
-                visible:   control.isContracts
-            }
-
-            TableViewColumn {
                 role: "amountGeneral"
 
                 //% "Amount"
                 title:     qsTrId("general-amount")
                 elideMode: Text.ElideRight
-                width:     200 * transactionsTable.columnResizeRatio
+                width:     130 * transactionsTable.columnResizeRatio
                 movable:   false
                 resizable: false
 
@@ -516,9 +455,12 @@ Control {
             TableViewColumn {
                 role: "amountSecondCurrency"
 
-                title:     [tableViewModel.rateUnit || "USD", qsTrId("general-amount")].join(' ')
+                title:     [tableViewModel.rateUnit || "USD",
+                            //% "Value"
+                            qsTrId("general-value")].join(' ')
+
                 elideMode: Text.ElideRight
-                width:     200 * transactionsTable.columnResizeRatio
+                width:     130 * transactionsTable.columnResizeRatio
                 movable:   false
                 resizable: false
                 visible:   !control.isContracts
@@ -543,6 +485,30 @@ Control {
                         }
                     }
                 }}
+            }
+
+            TableViewColumn {
+                role: "source"
+                id: sourceColumn
+
+                //% "Source"
+                title:      qsTrId("wallet-txs-source")
+                elideMode:  Text.ElideRight
+                width:      140 * transactionsTable.columnResizeRatio
+                movable:    false
+                resizable:  false
+            }
+
+            TableViewColumn {
+                role: "timeCreated"
+                id: timeColumn
+
+                //% "Created on"
+                title:      qsTrId("wallet-txs-date-time")
+                elideMode:  Text.ElideRight
+                width:      110 * transactionsTable.columnResizeRatio
+                movable:    false
+                resizable:  false
             }
 
             TableViewColumn {

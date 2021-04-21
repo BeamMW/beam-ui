@@ -24,7 +24,7 @@ namespace beamui::applications
     public:
         typedef std::shared_ptr<WebAPI_Shaders> Ptr;
 
-        explicit WebAPI_Shaders(const std::string& appid);
+        explicit WebAPI_Shaders(const std::string& appid, const std::string& appname);
         ~WebAPI_Shaders() override = default;
 
     private:
@@ -34,7 +34,7 @@ namespace beamui::applications
         void ProcessTxData(const beam::ByteBuffer& data, DoneTxHandler doneHandler) override;
         [[nodiscard]] bool IsDone() const override;
 
-        void SetCurrentApp(const std::string& appid) override;
+        void SetCurrentApp(const std::string& appid, const std::string& appname) override;
         void ReleaseCurrentApp(const std::string& appid) override;
 
     private:

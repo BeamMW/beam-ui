@@ -50,6 +50,7 @@ public:
     QString getFeeRate() const;
     QString getAmountSecondCurrency();
     QString getCidsStr() const;
+    QString getSource() const;
 
     const std::vector<beam::Asset::ID>& getAssetsList() const;
     const std::vector<QString>& getAssetAmounts() const;
@@ -91,6 +92,7 @@ protected:
     beam::Amount _contractFee = 0UL;
     beam::bvm2::FundsMap _contractSpend;
     QString _contractCids;
+    QString _source;
 
     std::vector<beam::Asset::ID> _assetsList;
     std::vector<QString>         _assetAmounts;

@@ -76,6 +76,8 @@ public:
         AssetRates,
         IsDexTx,
         CidsStr,
+        Source,
+        SourceSort,
     };
     Q_ENUM(Roles)
 

@@ -244,7 +244,9 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::FeeRate), "feeRate"},
         { static_cast<int>(Roles::AssetAmountsIncome), "assetAmountsIncome"},
         { static_cast<int>(Roles::AssetRates), "assetRates"},
-        { static_cast<int>(Roles::CidsStr), "cidsStr"}
+        { static_cast<int>(Roles::CidsStr), "cidsStr"},
+        { static_cast<int>(Roles::Source), "source"},
+        { static_cast<int>(Roles::SourceSort), "sourceSort"}
     };
     return roles;
 }
@@ -259,6 +261,10 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
     auto& value = m_list[index.row()];
     switch (static_cast<Roles>(role))
     {
+        case Roles::Source:
+        case Roles::SourceSort:
+            return value->getSource();
+
         case Roles::TimeCreated:
         {
             QDateTime datetime;

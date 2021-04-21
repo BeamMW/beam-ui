@@ -2611,16 +2611,8 @@ Update your settings and try again.</source>
         <source>Hardwate wallet is not connected</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="wallet-transactions-contracts-tab">
-        <source>Contracts</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="wallet-txs-coin">
         <source>Coin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="general-description">
-        <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="general-multiple-assets">
@@ -2939,10 +2931,6 @@ Update your settings and try again.</source>
         <source>There are no received transactions yet.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="tx-contracts-empty">
-        <source>There are no contracts transactions yet.</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="receive-addr">
         <source>Address</source>
         <translation type="unfinished">Adress</translation>
@@ -3027,6 +3015,18 @@ Update your settings and try again.</source>
     <message id="address-info-cid">
         <source>Contract ID</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="general-value">
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-source">
+        <source>Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="source-wallet">
+        <source>Wallet</source>
+        <translation type="unfinished">Plånbok</translation>
     </message>
 </context>
 </TS>

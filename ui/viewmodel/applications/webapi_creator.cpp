@@ -42,8 +42,8 @@ namespace beamui::applications
         ECC::Hash::Processor() << appName.toStdString() << appUrl.toStdString() >> hv;
         const auto appid = std::string("appid:") + hv.str();
 
-        _webShaders = std::make_shared<WebAPI_Shaders>(appid);
-        _api = std::make_unique<WebAPI_Beam>(*this, _webShaders, stdver, appid);
+        _webShaders = std::make_shared<WebAPI_Shaders>(appid, appName.toStdString());
+        _api = std::make_unique<WebAPI_Beam>(*this, _webShaders, stdver, appid, appName.toStdString());
 
         QQmlEngine::setObjectOwnership(_api.get(), QQmlEngine::CppOwnership);
         emit apiCreated(_api.get());

@@ -135,6 +135,15 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
             _assetAmountsIncome.push_back(amount <= 0);
             _assetRates.push_back(getRate(info.first));
         }
+
+        std::string stdsrc;
+        _tx.GetParameter(beam::wallet::TxParameterID::AppName, stdsrc);
+        _source = QString::fromStdString(stdsrc);
+    }
+    else
+    {
+        //% "Wallet"
+        _source = qtTrId("source-wallet");
     }
 
     if (_assetsList.empty())
@@ -154,6 +163,11 @@ bool TxObject::operator==(const TxObject& other) const
 beam::Timestamp TxObject::timeCreated() const
 {
     return _tx.m_createTime;
+}
+
+QString TxObject::getSource() const
+{
+    return _source;
 }
 
 beam::wallet::TxID TxObject::getTxID() const

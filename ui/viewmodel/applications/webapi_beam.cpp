@@ -31,10 +31,11 @@ namespace beamui::applications {
         }
     }
 
-    WebAPI_Beam::WebAPI_Beam(IConsentHandler& handler, IShadersManager::Ptr shaders, const std::string& version, const std::string& appid)
+    WebAPI_Beam::WebAPI_Beam(IConsentHandler& handler, IShadersManager::Ptr shaders, const std::string& version, const std::string& appid, const std::string& appname)
         : QObject(nullptr)
         , _consentHandler(handler)
-        , _appid(appid)
+        , _appId(appid)
+        , _appName(appname)
     {
         IWalletApi::InitData data;
 
@@ -42,14 +43,15 @@ namespace beamui::applications {
         data.swaps     = nullptr;
         data.wallet    = AppModel::getInstance().getWalletModel()->getWallet();
         data.walletDB  = AppModel::getInstance().getWalletDB();
-        data.appid     = _appid;
+        data.appId     = _appId;
+        data.appName   = _appName;
 
         _walletAPI = IWalletApi::CreateInstance(version, *this, data);
     }
 
     WebAPI_Beam::~WebAPI_Beam()
     {
-        AppModel::getInstance().getWalletModel()->releaseAppsShaders(_appid);
+        AppModel::getInstance().getWalletModel()->releaseAppsShaders(_appId);
     }
 
     void WebAPI_Beam::callWalletApi(const QString& request)

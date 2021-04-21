@@ -15,9 +15,9 @@
 
 namespace beamui::applications
 {
-    WebAPI_Shaders::WebAPI_Shaders(const std::string &appid)
+    WebAPI_Shaders::WebAPI_Shaders(const std::string &appid, const std::string& appname)
     {
-        _realShaders = AppModel::getInstance().getWalletModel()->getAppsShaders(appid);
+        _realShaders = AppModel::getInstance().getWalletModel()->getAppsShaders(appid, appname);
     }
 
     void WebAPI_Shaders::CompileAppShader(const std::vector<uint8_t> &shader)
@@ -46,9 +46,10 @@ namespace beamui::applications
         return _realShaders->IsDone();
     }
 
-    void WebAPI_Shaders::SetCurrentApp(const std::string &appid)
+    void WebAPI_Shaders::SetCurrentApp(const std::string &appid, const std::string& appname)
     {
-        return _realShaders->SetCurrentApp(appid);
+        assert(!"This should not be called");
+        return _realShaders->SetCurrentApp(appid, appname);
     }
 
     void WebAPI_Shaders::ReleaseCurrentApp(const std::string &appid)

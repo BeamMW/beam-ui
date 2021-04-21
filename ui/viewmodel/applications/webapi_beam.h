@@ -25,7 +25,12 @@ namespace beamui::applications
     {
         Q_OBJECT
     public:
-        explicit WebAPI_Beam(IConsentHandler& handler, beam::wallet::IShadersManager::Ptr shaders, const std::string& version, const std::string& appid);
+        explicit WebAPI_Beam(IConsentHandler& handler,
+                             beam::wallet::IShadersManager::Ptr shaders,
+                             const std::string& version,
+                             const std::string& appid,
+                             const std::string& appname);
+
         ~WebAPI_Beam() override;
 
     //
@@ -63,6 +68,7 @@ namespace beamui::applications
         // API should be accessed only in context of the reactor thread
         beam::wallet::IWalletApi::Ptr _walletAPI;
         IConsentHandler& _consentHandler;
-        std::string _appid;
+        std::string _appId;
+        std::string _appName;
     };
 }
