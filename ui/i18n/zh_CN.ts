@@ -3039,5 +3039,9 @@ Update your settings and try again.</source>
         <source>DAPPs will be available in your wallet after the Hard Fork</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="address-info-cid">
+        <source>Contract ID</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

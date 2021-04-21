@@ -107,6 +107,19 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
             _contractSpend = beam::bvm2::getFullSpend(vData);
         }
 
+        if (!vData.empty())
+        {
+            std::stringstream ss;
+            ss << vData[0].m_Cid.str();
+
+            if (vData.size() > 1)
+            {
+                ss << " +" << vData.size() - 1;
+            }
+
+            _contractCids = QString::fromStdString(ss.str());
+        }
+
         for (const auto& info: _contractSpend)
         {
             auto amount = info.second;
@@ -203,6 +216,11 @@ QString TxObject::getRate(beam::Asset::ID assetId) const
 QString TxObject::getFeeRate() const
 {
     return getRate(beam::Asset::s_BeamID);
+}
+
+QString TxObject::getCidsStr() const
+{
+    return _contractCids;
 }
 
 QString TxObject::getRate() const

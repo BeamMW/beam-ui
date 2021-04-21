@@ -31,6 +31,7 @@ RowLayout {
     property string feeRate
     property string feeRateUnit
 
+    property string cidsStr
     property string searchFilter: ""
     property bool   hideFiltered: false
     property string addressType
@@ -194,16 +195,38 @@ RowLayout {
             color:                  Style.content_secondary
             //% "Address type"
             text:                   qsTrId("address-info-type") + ":"
-            visible:                isTextFieldVisible(root.addressType)
+            visible:                addrTypeText.visible
         }
             
         SFText {
+            id:                     addrTypeText
             Layout.fillWidth:       true
             wrapMode:               Text.Wrap
             font.pixelSize:         14
             text:                   root.addressType
             color:                  Style.content_main
-            visible:                isTextFieldVisible(root.addressType)
+            visible:                !root.isContractTx && isTextFieldVisible(root.addressType)
+        }
+
+        // CID
+        SFText {
+            Layout.alignment:       Qt.AlignTop
+            font.pixelSize:         14
+            color:                  Style.content_secondary
+            //% "Contract ID"
+            text:                   qsTrId("address-info-cid") + ":"
+            visible:                cidText.visible
+        }
+
+        SFLabel {
+            id:               cidText
+            font.pixelSize:   14
+            color:            Style.content_main
+            text:             root.cidsStr
+            elide:            Text.ElideRight
+            copyMenuEnabled:  true
+            onCopyText:       textCopied(text)
+            visible:          root.isContractTx
         }
 
         SFText {

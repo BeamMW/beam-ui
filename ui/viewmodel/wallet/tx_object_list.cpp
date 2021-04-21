@@ -243,7 +243,8 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::AssetAmounts), "assetAmounts"},
         { static_cast<int>(Roles::FeeRate), "feeRate"},
         { static_cast<int>(Roles::AssetAmountsIncome), "assetAmountsIncome"},
-        { static_cast<int>(Roles::AssetRates), "assetRates"}
+        { static_cast<int>(Roles::AssetRates), "assetRates"},
+        { static_cast<int>(Roles::CidsStr), "cidsStr"}
     };
     return roles;
 }
@@ -305,6 +306,8 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return value->getAddressType() == beam::wallet::TxAddressType::PublicOffline;
         case Roles::IsMaxPrivacy:
             return value->getAddressType() == beam::wallet::TxAddressType::MaxPrivacy;
+        case Roles::CidsStr:
+            return value->getCidsStr();
         case Roles::IsContractTx:
             return value->isContractTx();
         case Roles::IsDexTx:

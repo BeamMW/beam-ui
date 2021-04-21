@@ -338,7 +338,8 @@ Control {
                     isIncome:           model && model.isIncome ? model.isIncome : false
                     hasPaymentProof:    model && model.hasPaymentProof ? model.hasPaymentProof : false
                     isSelfTx:           model && model.isSelfTransaction ? model.isSelfTransaction : false
-                    isContractTx:       model ? !!model.isContractTx : false
+                    isContractTx:       model && model.isContractTx
+                    cidsStr:            model && model.cidsStr ? model.cidsStr : ""
                     rawTxID:            model && model.rawTxID ? model.rawTxID : null
                     stateDetails:       model && model.stateDetails ? model.stateDetails : ""
                     isCompleted:        model && model.isCompleted ? model.isCompleted : false
@@ -526,7 +527,7 @@ Control {
                     width:  parent.width
                     height: transactionsTable.rowHeight
 
-                    property var amount: model && BeamGlobals.roundWithPrecision(model.amountSecondCurrency ? model.amountSecondCurrency : "0", tableViewModel.rateUnit ? 6 : 2)
+                    property var amount: BeamGlobals.roundWithPrecision(model && model.amountSecondCurrency ? model.amountSecondCurrency : "0", tableViewModel.rateUnit ? 6 : 2)
                     property var prefix: model && model.isIncome ? "+ " : "- "
 
                     SFText {

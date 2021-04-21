@@ -75,6 +75,7 @@ public:
         AssetAmountsIncome,
         AssetRates,
         IsDexTx,
+        CidsStr,
     };
     Q_ENUM(Roles)
 
