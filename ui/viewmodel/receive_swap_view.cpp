@@ -420,11 +420,11 @@ bool ReceiveSwapViewModel::isEnough() const
         {
             total = _amountSentGrothes + beam::wallet::EthereumSide::CalcLockTxFee(_sentFeeGrothes, swapCoin);
             
-            return beam::AmountBig::Type(AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin)) > total;
+            return beam::AmountBig::Type(AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin)) >= total;
         }
         
-        return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) > _amountSentGrothes &&
-            AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) > 
+        return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) >= _amountSentGrothes &&
+            AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) >= 
             beam::wallet::EthereumSide::CalcLockTxFee(_sentFeeGrothes, swapCoin);
     }
 

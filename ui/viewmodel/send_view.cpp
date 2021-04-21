@@ -407,7 +407,7 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
     {
         setComment(QString::fromStdString(address->m_label));
 
-        const auto type = GetAddressType(address->m_Address);
+        [[maybe_unused]] const auto type = GetAddressType(address->m_Address);
         if (_receiverWalletID != beam::Zero)
         {
             if (_receiverWalletID != address->m_walletID)

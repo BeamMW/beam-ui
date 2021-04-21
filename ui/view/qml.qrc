@@ -58,6 +58,7 @@
         <file>controls/NotificationPopup.qml</file>
         <file>controls/SeedInput.qml</file>
         <file>controls/CustomTripleSwitch.qml</file>
+        <file>controls/CustomSecondCurrencySwitch.qml</file>
         <file>controls/ConfirmRefreshDialog.qml</file>
         <file>controls/OwnerKeyDialog.qml</file>
         <file>controls/SettingsFoldable.qml</file>
