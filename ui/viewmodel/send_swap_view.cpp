@@ -344,7 +344,7 @@ bool SendSwapViewModel::isEnough() const
     auto total = _sendAmountGrothes + _sendFeeGrothes + _changeGrothes;
     if (OldWalletCurrency::OldCurrency::CurrBeam == _sendCurrency)
     {
-        auto available = beam::AmountBig::get_Lo(beam::Asset::s_BeamID);
+        auto available = beam::AmountBig::get_Lo(_walletModel.getAvailable(beam::Asset::s_BeamID));
         return available >= total;
     }
 
@@ -355,11 +355,11 @@ bool SendSwapViewModel::isEnough() const
         {
             total = _sendAmountGrothes + beam::wallet::EthereumSide::CalcLockTxFee(_sendFeeGrothes, swapCoin);
 
-            return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) > total;
+            return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) >= total;
         }
 
-        return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) > _sendAmountGrothes &&
-            AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) >
+        return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) >= _sendAmountGrothes &&
+            AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) >=
             beam::wallet::EthereumSide::CalcLockTxFee(_sendFeeGrothes, swapCoin);
     }
 
