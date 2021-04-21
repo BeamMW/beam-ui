@@ -176,6 +176,7 @@ ConfirmationDialog {
 
             ColumnLayout {
                 Layout.maximumWidth: 290
+                Layout.fillWidth:    true
                 Layout.topMargin:    8
                 visible:             control.hasAmounts
                 spacing:             8
@@ -185,13 +186,14 @@ ConfirmationDialog {
 
                     BeamAmount  {
                         Layout.maximumWidth: 290
+                        Layout.fillWidth:    true
 
                         amount:           modelData.amount
                         unitName:         modelData.unitName
                         rate:             modelData.rate
                         prefix:           control.showPrefix ? (modelData.spend ? "- " : "+ ") : ""
                         rateUnit:         control.rateUnit
-                        maxPaintedWidth:  false
+                        maxPaintedWidth:  true
                         color:            modelData.spend ? Style.accent_outgoing : Style.accent_incoming
 
                         font.pixelSize:   24
