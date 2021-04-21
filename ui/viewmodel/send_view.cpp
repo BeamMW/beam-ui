@@ -438,8 +438,6 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
     else
     {
         setComment("");
-        _receiverWalletID = beam::Zero;
-        _receiverIdentity = beam::Zero;
     }
 }
 
