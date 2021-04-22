@@ -285,7 +285,7 @@ CustomTableView {
                 if (viewModel.isWIDBusy(contextMenu.addressItem.walletID)) {
                     return deleteAddressDialog.open()
                 }
-                viewModel.deleteAddress(contextMenu.addressItem.walletID)
+                viewModel.deleteAddress(contextMenu.addressItem.token)
             }
         }
     

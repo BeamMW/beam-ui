@@ -302,11 +302,9 @@ bool AddressBookViewModel::isWIDBusy(const QString& wid)
     return find(m_busyAddresses.cbegin(), m_busyAddresses.cend(), walletID) != m_busyAddresses.cend();
 }
 
-void AddressBookViewModel::deleteAddress(const QString& wid)
+void AddressBookViewModel::deleteAddress(const QString& token)
 {
-    beam::wallet::WalletID walletID;
-    walletID.FromHex(wid.toStdString());
-    m_model.getAsync()->deleteAddress(walletID);
+    m_model.getAsync()->deleteAddressByToken(token.toStdString());
 }
 
 void AddressBookViewModel::saveChanges(const QString& wid, const QString& name, QDateTime expiration)

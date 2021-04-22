@@ -351,7 +351,7 @@ ColumnLayout {
                         text: qsTrId("address-table-cm-delete-contact")
                         icon.source: "qrc:/assets/icon-delete.svg"
                         onTriggered: {
-                            viewModel.deleteAddress(contextMenu.walletID);
+                            viewModel.deleteAddress(contextMenu.token);
                         }
                     }
                 }
