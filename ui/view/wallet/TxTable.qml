@@ -229,7 +229,7 @@ Control {
 
             selectionMode: SelectionMode.NoSelection
             sortIndicatorVisible: true
-            sortIndicatorColumn: 1
+            sortIndicatorColumn: 4
             sortIndicatorOrder: Qt.DescendingOrder
 
             onSortIndicatorColumnChanged: {
