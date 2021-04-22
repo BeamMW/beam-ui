@@ -135,10 +135,11 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
             _assetAmountsIncome.push_back(amount <= 0);
             _assetRates.push_back(getRate(info.first));
         }
+    }
 
-        std::string stdsrc;
-        _tx.GetParameter(beam::wallet::TxParameterID::AppName, stdsrc);
-        _source = QString::fromStdString(stdsrc);
+    if (auto strdesc = _tx.GetParameter<std::string>(beam::wallet::TxParameterID::AppName); strdesc)
+    {
+        _source = QString::fromStdString(*strdesc);
     }
     else
     {
