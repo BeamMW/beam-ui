@@ -111,6 +111,9 @@ Item
             source: "qrc:/assets/bg.svg"
         }
 
+        BgLogo {
+        }
+
         ColumnLayout {
             anchors.fill: parent
             spacing: 0

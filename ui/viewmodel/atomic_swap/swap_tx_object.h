@@ -50,6 +50,7 @@ public:
     QString getStateDetails() const override;
     beam::wallet::AtomicSwapCoin getSwapCoinType() const;
     auto getStatus() const -> QString override;
+    QString getAmountWithCurrency() const;
 
     bool isLockTxProofReceived() const;
     bool isRefundTxProofReceived() const;

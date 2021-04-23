@@ -17,12 +17,13 @@
 #include "model/app_model.h"
 
 using namespace beam;
-using namespace beam::wallet;
 using namespace beamui;
 
 PaymentInfoItem::PaymentInfoItem(QObject* parent /* = nullptr */)
-        : QObject(parent)
+    : QObject(parent)
 {
+    _amgr = AppModel::getInstance().getAssets();
+    connect(_amgr.get(), &AssetsManager::assetInfo, this, &PaymentInfoItem::onAssetInfo);
 }
 
 QString PaymentInfoItem::getSender() const
@@ -45,12 +46,32 @@ QString PaymentInfoItem::getReceiver() const
     return "";
 }
 
+void PaymentInfoItem::onAssetInfo(beam::Asset::ID changedAssetId)
+{
+    beam::Asset::ID assetId = 0;
+    if (m_paymentInfo) assetId = m_paymentInfo->m_AssetID;
+    if (m_shieldedPaymentInfo) assetId = m_shieldedPaymentInfo->m_AssetID;
+
+    if (assetId == changedAssetId)
+    {
+        emit paymentProofChanged();
+    }
+}
+
 QString PaymentInfoItem::getAmount() const
 {
     if (m_paymentInfo)
-        return AmountToUIString(m_paymentInfo->m_Amount, Currencies::Beam);
+    {
+        const auto amount = m_paymentInfo->m_Amount;
+        const auto unit = _amgr->getUnitName(m_paymentInfo->m_AssetID, AssetsManager::NoShorten);
+        return AmountToUIString(amount, unit, 0);
+    }
     else if (m_shieldedPaymentInfo)
-        return AmountToUIString(m_shieldedPaymentInfo->m_Amount, Currencies::Beam);
+    {
+        const auto amount = m_shieldedPaymentInfo->m_Amount;
+        const auto unit = _amgr->getUnitName(m_shieldedPaymentInfo->m_AssetID, AssetsManager::NoShorten);
+        return AmountToUIString(amount, unit, 0);
+    }
 
     return "";
 }
@@ -127,10 +148,10 @@ void PaymentInfoItem::reset()
 }
 
 
-MyPaymentInfoItem::MyPaymentInfoItem(const TxID& txID, QObject* parent/* = nullptr*/)
+MyPaymentInfoItem::MyPaymentInfoItem(const beam::wallet::TxID& txID, QObject* parent/* = nullptr*/)
         : PaymentInfoItem(parent)
 {
-    auto model = AppModel::getInstance().getWallet();
+    auto model = AppModel::getInstance().getWalletModel();
     connect(model.get(), SIGNAL(paymentProofExported(const beam::wallet::TxID&, const QString&)), SLOT(onPaymentProofExported(const beam::wallet::TxID&, const QString&)));
     model->getAsync()->exportPaymentProof(txID);
 }

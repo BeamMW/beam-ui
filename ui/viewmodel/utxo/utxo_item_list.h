@@ -16,12 +16,11 @@
 
 #include "utxo_item.h"
 #include "viewmodel/helpers/list_model.h"
+#include "viewmodel/wallet/assets_manager.h"
 
 class UtxoItemList : public ListModel<std::shared_ptr<BaseUtxoItem>>
 {
-
     Q_OBJECT
-
 public:
     enum class Roles
     {
@@ -37,10 +36,17 @@ public:
         MaturityPercentageSort,
         MaturityTimeLeft,
         MaturityTimeLeftSort,
+        UnitName,
     };
 
     UtxoItemList();
+    [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
+    [[nodiscard]] QHash<int, QByteArray> roleNames() const override;
 
-    QVariant data(const QModelIndex &index, int role) const override;
-    QHash<int, QByteArray> roleNames() const override;
+public slots:
+    void onAssetInfo(beam::Asset::ID assetId);
+
+private:
+    void touch(beam::Asset::ID id);
+    AssetsManager::Ptr _amgr;
 };

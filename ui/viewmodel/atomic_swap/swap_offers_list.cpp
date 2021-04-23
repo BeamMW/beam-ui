@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "swap_offers_list.h"
-#include <QLocale>
 
 SwapOffersList::SwapOffersList()
 {
@@ -55,7 +54,7 @@ QVariant SwapOffersList::data(const QModelIndex &index, int role) const
     switch (static_cast<Roles>(role))
     {
         case Roles::TimeCreated:
-            return value->timeCreated().toString(QLocale::system().dateTimeFormat(QLocale::ShortFormat));
+            return value->timeCreated().toString(m_locale.dateTimeFormat(QLocale::ShortFormat));
         case Roles::TimeCreatedSort:
             return value->timeCreated();
 
@@ -76,7 +75,7 @@ QVariant SwapOffersList::data(const QModelIndex &index, int role) const
             return value->rate();
 
         case Roles::Expiration:
-            return value->timeExpiration().toString(QLocale::system().dateTimeFormat(QLocale::ShortFormat));
+            return value->timeExpiration().toString(m_locale.dateTimeFormat(QLocale::ShortFormat));
         case Roles::ExpirationSort:
             return value->timeExpiration();
 
@@ -99,7 +98,7 @@ QVariant SwapOffersList::data(const QModelIndex &index, int role) const
         {
             auto swapCoin = value->getSwapCoinName();
             const QString beam = "beam";
-            return  value->isSendBeam() ? beam + swapCoin : swapCoin + beam;
+            return  value->isSendBeam() ? beam + '-' + swapCoin : swapCoin + '-' + beam;
         }
         default:
             return QVariant();

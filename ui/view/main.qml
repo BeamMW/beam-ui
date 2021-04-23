@@ -53,7 +53,7 @@ Rectangle {
         //% "yes"
         okButtonText:           qsTrId("atomic-swap-tx-yes-button")
         okButtonIconSource:     "qrc:/assets/icon-done.svg"
-        okButtonColor:          Style.swapCurrencyStateIndicator
+        okButtonColor:          Style.swapStateIndicator
         //% "no"
         cancelButtonText:       qsTrId("atomic-swap-no-button")
         cancelButtonIconSource: "qrc:/assets/icon-cancel-16.svg"
@@ -82,11 +82,14 @@ Rectangle {
     property color topColor: Style.background_main_top
     property color topGradientColor: Qt.rgba(Style.background_main_top.r, Style.background_main_top.g, Style.background_main_top.b, 0)
 
+
     StatusbarViewModel {
         id: statusbarModel
     }
 
-    property alias backgroundRect: mainBackground
+    property var backgroundRect: mainBackground
+    property var backgroundLogo: mainBackgroundLogo
+
     Rectangle {
         id: mainBackground
         anchors.fill: parent
@@ -100,6 +103,11 @@ Rectangle {
                 GradientStop { position: 0.0; color: main.topColor }
                 GradientStop { position: 1.0; color: main.topGradientColor }
             }
+        }
+
+        BgLogo {
+            id: mainBackgroundLogo
+            anchors.leftMargin: sidebar.width
         }
     }
 
@@ -118,12 +126,17 @@ Rectangle {
     }
 
     property var contentItems : [
-		"wallet", 
-        "atomic_swap",
-		"addresses",
-        "notifications",
-		"utxo",
-		"settings"]
+		{name: "wallet"},
+        {name: "atomic_swap"},
+		{name: "addresses"},
+        {name: "notifications"},
+		{name: "utxo"},
+		{name: "applications", qml: function () {
+		    return BeamGlobals.isFork3() ? "applications" : "applications_nofork"
+		}},
+		{name: "settings"}
+	]
+
     property int selectedItem
 
     Item {
@@ -166,7 +179,7 @@ Rectangle {
                         y: 16
                         width: 28
                         height: 28
-                        source: "qrc:/assets/icon-" + modelData + (selectedItem == index ? "-active" : "") + ".svg"
+                        source: "qrc:/assets/icon-" + modelData.name + (selectedItem == index ? "-active" : "") + ".svg"
 					}
                     Item {
                         Rectangle {
@@ -185,11 +198,11 @@ Rectangle {
                             source: indicator
                         }
 
-    					visible: control.activeFocus
+    					visible: selectedItem == index
                     }
 
                     Item {
-                        visible: contentItems[index] == 'notifications' && viewModel.unreadNotifications > 0
+                        visible: contentItems[index].name == 'notifications' && viewModel.unreadNotifications > 0
                         Rectangle {
                             id: counter
                             x: 42
@@ -238,7 +251,7 @@ Rectangle {
             id: image
             y:  50
             anchors.horizontalCenter: parent.horizontalCenter
-            source: "qrc:/assets/logo.svg"
+            source: Style.navigation_logo
             smooth: true
         }
 
@@ -311,7 +324,7 @@ Rectangle {
 
     Loader {
         id: content
-        anchors.topMargin: 50
+        anchors.topMargin: 45
         anchors.bottomMargin: 0
         anchors.rightMargin: 20
         anchors.leftMargin: 90
@@ -324,13 +337,16 @@ Rectangle {
         var update = function(index) {
             selectedItem = index
             controls.itemAt(index).focus = true;
-            content.setSource("qrc:/" + contentItems[index] + ".qml", Object.assign({"openSend": false}, props))
+
+            var source = ["qrc:/", contentItems[index].qml ? contentItems[index].qml() : contentItems[index].name, ".qml"].join('')
+            content.setSource(source, Object.assign({"openSend": false}, props))
+
             viewModel.update(index)
         }
 
         if (typeof(indexOrID) == "string") {
             for (var index = 0; index < contentItems.length; index++) {
-                if (contentItems[index] == indexOrID) {
+                if (contentItems[index].name == indexOrID) {
                     return update(index);
                 }
             }
@@ -338,6 +354,15 @@ Rectangle {
 
         // plain index passed
         update(indexOrID)
+    }
+
+    function openMaxPrivacyCoins (assetId, unitName, lockedAmount) {
+        var details = Qt.createComponent("controls/MaxPrivacyCoinsDialog.qml").createObject(main, {
+            "unitName":     unitName,
+            "lockedAmount": lockedAmount,
+            "assetId":      assetId,
+       });
+       details.open()
     }
 
     function openSendDialog(receiver) {
@@ -364,6 +389,10 @@ Rectangle {
         updateItem("atomic_swap", {"openedTxID": id})
     }
 
+    function openApplications () {
+        updateItem("applications")
+    }
+
     function resetLockTimer() {
         viewModel.resetLockTimer();
     }
@@ -372,11 +401,11 @@ Rectangle {
 
     Connections {
         target: viewModel
-        onGotoStartScreen: { 
+        function onGotoStartScreen () {
             main.parent.setSource("qrc:/start.qml", {"isLockedMode": true});
         }
 
-        onShowTrezorMessage:{
+        function onShowTrezorMessage () {
             var popup = Qt.createComponent("popup_message.qml").createObject(main)
             //% "Please, look at your Trezor device to complete actions..."
             popup.message = qsTrId("trezor-message")
@@ -384,7 +413,7 @@ Rectangle {
             trezor_popups.push(popup)
         }
 
-        onHideTrezorMessage:{
+        function onHideTrezorMessage () {
             console.log("onHideTrezorMessage")
             if (trezor_popups.length > 0) {
                 var popup = trezor_popups.pop()
@@ -392,7 +421,7 @@ Rectangle {
             }
         }
 
-        onShowTrezorError: function(error) {
+        function onShowTrezorError (error) {
             console.log(error)
             var popup = Qt.createComponent("popup_message.qml").createObject(main)
             popup.message = error

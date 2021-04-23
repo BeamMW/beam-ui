@@ -15,28 +15,46 @@ TableView {
     property var backgroundRect: mainBackgroundRect != null ? mainBackgroundRect : main.backgroundRect
     property color headerColor: Style.table_header
 
+    // Scrollbar fine-tuning
+    __scrollBarTopMargin: tableView.headerHeight
+    verticalScrollBarPolicy: hoverArea.containsMouse && __scroller.contentHeight > __scroller.availableHeight ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAlwaysOff
+
     style: TableViewStyle {
-        transientScrollBars: true
-        minimumHandleLength: 20
+        transientScrollBars: !hoverArea.containsMouse
+        minimumHandleLength: 30
+
         handle: Rectangle {
-            implicitWidth: 14
-            implicitHeight: 16
-            radius: 6
-            anchors.fill: parent
-            color: Style.white  //
-            opacity: 0.1
+            color: "white"
+            radius: 3
+            opacity: __verticalScrollBar.handlePressed ? 0.12 : 0.5
+            implicitWidth: 6
+        }
+
+        scrollBarBackground: Rectangle {
+            color: "transparent"
+            implicitWidth: 6
+            anchors.topMargin: 46
+        }
+
+        decrementControl: Rectangle {
+            color: "transparent"
+        }
+
+        incrementControl: Rectangle {
+            color: "transparent"
         }
     }
 
-    function getAdjustedColumnWidth(column) {
-        var acc = 0;
+    function getAdjustedColumnWidth (column) {
+        var acc = 0
         for (var i = 0; i < columnCount; ++i)
         {
-            var c = getColumn(i);
-            if (c == column) continue;
-            acc += c.width;
+            var c = getColumn(i)
+            if (c != column && c.visible) {
+                acc += c.width
+            }
         }
-        return width - acc;
+        return width - acc
     }
 
     frameVisible: false
@@ -46,15 +64,44 @@ TableView {
     headerDelegate: Rectangle {
         id: rect
         height: headerHeight
-       
         color:"transparent"// Style.background_main
+
+        function getX() {
+            return rect.mapToItem(backgroundRect, rect.x, rect.y).y;
+        }
+        function getY() {
+            return rect.mapToItem(backgroundRect, rect.x, rect.y).y;
+        }
+        function updateShader() {
+            shaderSrc.sourceRect.x = getX()
+            shaderSrc.sourceRect.y = getY()
+        }
+
+        Connections {
+            target: tableView
+            function onWidthChanged() {
+                updateShader()
+            }
+            function onHeightChanged() {
+                updateShader()
+            }
+            function onXChanged() {
+                updateShader()
+            }
+            function onYChanged() {
+                updateShader()
+            }
+            function onVisibleChanged() {
+                updateShader()
+            }
+        }
 
         ShaderEffectSource {
             id: shaderSrc
             objectName: "renderRect"
 
-            sourceRect.x: rect.mapToItem(backgroundRect, rect.x, rect.y).x
-            sourceRect.y: rect.mapToItem(backgroundRect, rect.x, rect.y).y
+            sourceRect.x: getX()
+            sourceRect.y: getY()
             sourceRect.width: rect.width
             sourceRect.height: rect.height
             width: rect.width
@@ -93,5 +140,19 @@ TableView {
 
             text: styleData.value
         }
+    }
+
+    MouseArea {
+        id:               hoverArea
+        anchors.fill:     parent
+        acceptedButtons:  Qt.NoButton
+        hoverEnabled:     true
+        propagateComposedEvents: true
+        preventStealing: true
+    }
+
+    Component.onCompleted: {
+        var numchilds = __scroller.children.length
+        __scroller.children[numchilds -1].anchors.rightMargin = 0
     }
 }

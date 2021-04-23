@@ -27,7 +27,7 @@ using namespace beam::io;
 using namespace std;
 
 NodeModel::NodeModel()
-    : m_nodeClient(this)
+    : m_nodeClient(Rules::get(), this)
 {
 
 }

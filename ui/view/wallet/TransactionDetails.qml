@@ -1,9 +1,9 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-
 import QtQuick.Layouts 1.11
 import Beam.Wallet 1.0
 import "../utils.js" as Utils
+import "../controls"
 import "."
 
 RowLayout {
@@ -12,7 +12,6 @@ RowLayout {
     property var receiveAddress
     property var senderIdentity
     property var receiverIdentity
-    property var fee
     property var comment
     property var txID
     property var kernelID
@@ -23,21 +22,31 @@ RowLayout {
     property var isSelfTx
     property var rawTxID
     property var stateDetails
-    property string token
-    property string amount
-    property string secondCurrencyRate
-    property string secondCurrencyLabel
-    property string searchFilter: ""
-    property bool hideFiltered: false
     property var searchRegExp: new RegExp("("+root.searchFilter+")", "gi")
     property var searchRegExp2:  new RegExp("("+root.searchFilter+")", "i")
-    property string addressType
-    property bool isShieldedTx
-    property bool isCompleted: false
+    property string token
 
-    readonly property string amountPrefix: root.isIncome ? "+" : "-"
-    readonly property string amountWithLabel: amountPrefix + " " + root.amount + " " + BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-    readonly property string secondCurrencyAmount: getAmountInSecondCurrency()
+    property string fee
+    property string feeUnit
+    property string feeRate
+    property string feeRateUnit
+
+    property string cidsStr
+    property string searchFilter: ""
+    property bool   hideFiltered: false
+    property string addressType
+    property bool   isShieldedTx: false
+    property bool   isCompleted:  false
+    property bool   isContractTx: false
+
+    property var  assetNames
+    property var  assetIcons
+    property var  assetAmounts
+    property var  assetIncome
+    property var  assetRates
+    property var  rateUnit
+    property var  totalValue
+    readonly property int assetCount: assetNames ? assetNames.length : 0
 
     property var onOpenExternal: null
     signal textCopied(string text)
@@ -65,24 +74,6 @@ RowLayout {
             return text;
 
         return text.replace(root.searchRegExp, '<font color="' + Style.active.toString() + '">$1</font>');
-    }
-
-    function getAmountInSecondCurrency() {
-        if (root.amount !== "") {
-            var amountInSecondCurrency = Utils.formatAmountToSecondCurrency(
-                root.amount,
-                root.secondCurrencyRate,
-                root.secondCurrencyLabel);
-            if (amountInSecondCurrency == "") {
-                //% "Exchange rate to %1 was not available at the time of transaction"
-                return  qsTrId("tx-details-exchange-rate-not-available").arg(root.secondCurrencyLabel);
-            }
-            else {
-                //% "(for the day of transaction)"
-                return root.amountPrefix + " " + amountInSecondCurrency + " " + qsTrId("tx-details-second-currency-notification");
-            }
-        }
-        else return "";
     }
 
     function isZeroed(s) {
@@ -204,16 +195,38 @@ RowLayout {
             color:                  Style.content_secondary
             //% "Address type"
             text:                   qsTrId("address-info-type") + ":"
-            visible:                isTextFieldVisible(root.addressType)
+            visible:                addrTypeText.visible
         }
             
         SFText {
+            id:                     addrTypeText
             Layout.fillWidth:       true
             wrapMode:               Text.Wrap
             font.pixelSize:         14
             text:                   root.addressType
             color:                  Style.content_main
-            visible:                isTextFieldVisible(root.addressType)
+            visible:                !root.isContractTx && isTextFieldVisible(root.addressType)
+        }
+
+        // CID
+        SFText {
+            Layout.alignment:       Qt.AlignTop
+            font.pixelSize:         14
+            color:                  Style.content_secondary
+            //% "Contract ID"
+            text:                   qsTrId("address-info-cid") + ":"
+            visible:                cidText.visible
+        }
+
+        SFLabel {
+            id:               cidText
+            font.pixelSize:   14
+            color:            Style.content_main
+            text:             root.cidsStr
+            elide:            Text.ElideRight
+            copyMenuEnabled:  true
+            onCopyText:       textCopied(text)
+            visible:          root.isContractTx
         }
 
         SFText {
@@ -222,58 +235,107 @@ RowLayout {
             color: Style.content_secondary
             //% "Amount"
             text: qsTrId("tx-details-amount-label") + ":"
-            visible: amountField.visible
+            visible: amountsList.visible
         }
-        SFLabel {
-            id: amountField
+
+        ColumnLayout {
+            id: amountsList
             Layout.fillWidth: true
-            copyMenuEnabled: true
-            font.pixelSize: 14
-            font.styleName: "Bold"; font.weight: Font.Bold
-            color: root.isIncome ? Style.accent_incoming : Style.accent_outgoing
-            elide: Text.ElideMiddle
-            text: root.amountWithLabel
-            onCopyText: textCopied(root.amount)
-            visible: isTextFieldVisible(root.amount)
+            spacing: 10
+            visible: true// visibleChildren.length > 0
+
+            Repeater {
+                model: root.assetCount
+
+                BeamAmount {
+                    Layout.fillWidth: true
+
+                    visible:      true //isTextFieldVisible(root.assetAmounts[index])
+                    amount:       root.assetAmounts[index]
+                    unitName:     root.assetNames[index]
+                    iconSource:   root.assetCount > 1 ? root.assetIcons[index] : ""
+                    iconSize:     Qt.size(20, 20)
+                    color:        root.assetIncome[index] ? Style.accent_incoming : Style.accent_outgoing
+                    prefix:       this.amount == "0" ? "" : (root.assetIncome[index] ? "+ " : "- ")
+                    rate:         root.assetRates[index]
+                    rateUnit:     this.rate != "0" ? root.rateUnit : ""
+                    showTip:      false
+                    //maxPaintedWidth: this.width don't enable, causes freeze of animations, neet to refactor
+                    font {
+                       styleName:  "Bold"
+                       weight:     Font.Bold
+                       pixelSize:  14
+                    }
+                }
+            }
+        }
+
+        SFText {
+            Layout.alignment: Qt.AlignTop
+            font.pixelSize:   14
+            color:            Style.content_secondary
+            visible:          totalValueCtrl.visible || totalWarningCtrl.visible
+
+            text: (root.isContractTx ?
+                     //% "Total value"
+                     qsTrId("general-total value") :
+                     //% "%1 Value"
+                     qsTrId("general-smth-value").arg(root.rateUnit)
+                  ) + ": "
+        }
+
+        ColumnLayout {
+            Layout.fillWidth: true
+            id:               totalValueCtrl
+            visible:          root.totalValue != "0" && isTextFieldVisible(root.totalValue)
+            spacing:          2
+
+            SFText {
+                Layout.fillWidth: true
+                font.pixelSize:   14
+                color:            Style.content_secondary
+                text:             [root.totalValue, root.rateUnit].join(' ')
+            }
+
+            SFText {
+                Layout.fillWidth: true
+                font.pixelSize:   13
+                font.italic:      true
+                color:            Style.content_secondary
+                //% "For the day of the transaction"
+                text: qsTrId("tx-details-rate-notice")
+            }
+        }
+
+        SFText
+        {
+            id:               totalWarningCtrl
+            visible:          root.totalValue == "0" && isTextFieldVisible(text)
+            Layout.fillWidth: true
+            font.pixelSize:   14
+            color:            Style.content_secondary
+            //% "Exchange rate to %1 was not available at the time of transaction"
+            text:             qsTrId("tx-details-exchange-rate-not-available").arg(root.rateUnit)
         }
 
         SFText {
             Layout.alignment: Qt.AlignTop
             font.pixelSize: 14
             color: Style.content_secondary
-            //% "Currency amount"
-            text: qsTrId("tx-details-second-currency-amount-label") + ":"
-            visible: secondCurrencyAmountField.visible
-        }
-        SFLabel {
-            id: secondCurrencyAmountField
-            Layout.fillWidth: true
-            copyMenuEnabled: true
-            font.pixelSize: 14
-            color: Style.content_main
-            wrapMode: Text.Wrap
-            elide: Text.ElideRight
-            text: root.secondCurrencyAmount
-            onCopyText: textCopied(secondCurrencyAmountField.text)
-            visible: isTextFieldVisible(secondCurrencyAmountField.text) && root.secondCurrencyLabel != ""
-        }
-        
-        SFText {
-            Layout.alignment: Qt.AlignTop
-            font.pixelSize: 14
-            color: Style.content_secondary
             //% "Transaction fee"
-            text: qsTrId("general-fee") + ":"
+            text: qsTrId("general-fee") + ": "
             visible: root.isFieldVisible() && root.fee.length
         }
-        SFLabel {
+
+        BeamAmount {
             Layout.fillWidth: true
-            copyMenuEnabled: true
-            font.pixelSize: 14
-            color: Style.content_main
-            text: root.fee
-            onCopyText: textCopied(text)
             visible: root.isFieldVisible() && root.fee.length
+
+            amount:    root.fee
+            unitName:  root.feeUnit
+            rateUnit:  root.feeRateUnit
+            rate:      root.feeRate
+            showTip:   false
         }
         
         SFText {
@@ -284,6 +346,7 @@ RowLayout {
             text: qsTrId("general-comment") + ":"
             visible: commentTx.visible
         }
+
         SFLabel {
             Layout.fillWidth: true
             id: commentTx
@@ -292,7 +355,6 @@ RowLayout {
             color: Style.content_main
             wrapMode: Text.WrapAnywhere 
             text: getHighlitedText(root.comment)
-            font.styleName: "Italic"
             elide: Text.ElideRight
             onCopyText: textCopied(root.comment)
             visible: isTextFieldVisible(root.comment)
@@ -312,7 +374,6 @@ RowLayout {
             font.pixelSize: 14
             color: Style.content_main
             text: getHighlitedText(root.txID)
-            font.styleName: "Italic"
             elide: Text.ElideMiddle
             onCopyText: textCopied(root.txID)
             visible: isTextFieldVisible(root.txID) && !isZeroed(root.txID)
@@ -333,7 +394,6 @@ RowLayout {
             color: Style.content_main
             //wrapMode: Text.Wrap
             text: getHighlitedText(root.kernelID)
-            font.styleName: "Italic"
             elide: Text.ElideMiddle
             onCopyText: textCopied(root.kernelID)
             visible: isTextFieldVisible(root.kernelID) && !isZeroed(root.kernelID)
@@ -415,7 +475,6 @@ RowLayout {
             wrapMode: Text.Wrap
             visible: root.failureReason.length > 0 && root.isFieldVisible()
             text: root.failureReason.length > 0 ? root.failureReason : ""
-            font.styleName: "Italic"
             elide: Text.ElideRight
             onCopyText: textCopied(text)
         }

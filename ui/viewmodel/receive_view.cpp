@@ -11,293 +11,176 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #include "receive_view.h"
 #include "ui_helpers.h"
 #include "model/qr.h"
 #include "model/app_model.h"
-#include <QClipboard>
-
-namespace {
-    enum {
-        AddressExpires = 0,
-        AddressNotExpires = 1
-    };
-}
+#include "qml_globals.h"
 
 ReceiveViewModel::ReceiveViewModel()
-    : _amountToReceiveGrothes(0)
-    , _addressExpires(AddressExpires)
-    , _walletModel(*AppModel::getInstance().getWallet())
-{
-    connect(&_walletModel, &WalletModel::newAddressFailed, this, &ReceiveViewModel::newAddressFailed);
-    connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyLabelChanged()));
-    connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
-    updateTransactionToken();
-}
-
-ReceiveViewModel::~ReceiveViewModel()
-{
-
-}
-
-void ReceiveViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& addr)
-{
-    if (_receiverAddress == addr)
-    {
-        return;
-    }
-    _receiverAddress = addr;
-    emit receiverAddressChanged();
-    setIsPermanentAddress(addr.isPermanent());
-    setAddressComment(QString::fromStdString(addr.m_label));
-    updateTransactionToken();
-}
-
-QString ReceiveViewModel::getAmountToReceive() const
-{
-    return beamui::AmountToUIString(_amountToReceiveGrothes);
-}
-
-void ReceiveViewModel::setAmountToReceive(QString value)
-{
-    auto amount = beamui::UIStringToAmount(value);
-    if (amount != _amountToReceiveGrothes)
-    {
-        _amountToReceiveGrothes = amount;
-        emit amountReceiveChanged();
-        updateTransactionToken();
-        generateOfflineAddress();
-    }
-}
-
-void ReceiveViewModel::setAddressExpires(int value)
-{
-    if (value != _addressExpires)
-    {
-        _addressExpires = value;
-        emit addressExpiresChanged();
-    }
-}
-
-int ReceiveViewModel::getAddressExpires() const
-{
-    return _addressExpires;
-}
-
-QString ReceiveViewModel::getReceiverAddress() const
-{
-    return beamui::toString(_receiverAddress.m_walletID);
-}
-
-QString ReceiveViewModel::getReceiverAddressForExchange() const
-{
-    return beamui::toString(_receiverAddressForExchange.m_walletID);
-}
-
-void ReceiveViewModel::initialize(const QString& address)
+    : _walletModel(*AppModel::getInstance().getWalletModel())
+    , _amgr(AppModel::getInstance().getAssets())
 {
     using namespace beam::wallet;
-    beam::wallet::WalletID walletID;
-    if (address.isEmpty() || !walletID.FromHex(address.toStdString()))
+
+    connect(&_walletModel,  &WalletModel::newAddressFailed,    this,  &ReceiveViewModel::newAddressFailed);
+    connect(_amgr.get(),    &AssetsManager::assetsListChanged, this,  &ReceiveViewModel::assetsListChanged);
+
+    _receiverAddress.setExpirationStatus(WalletAddress::ExpirationStatus::Auto);
+    updateToken();
+}
+
+void ReceiveViewModel::updateToken()
+{
+    using namespace beam::wallet;
+
+    auto generateToken = [this] () {
+        if (_maxp)
+        {
+            _walletModel.getAsync()->generateVouchers(_receiverAddress.m_OwnID, 1, [this](const ShieldedVoucherList& v)
+            {
+                if (!v.empty())
+                {
+                    _receiverAddress.m_Address = GenerateMaxPrivacyToken(_receiverAddress, _amount, _assetId, v[0], AppModel::getMyVersion());
+                    emit tokenChanged();
+                }
+            });
+        }
+        else
+        {
+            _walletModel.getAsync()->generateVouchers(_receiverAddress.m_OwnID, 1, [this](const ShieldedVoucherList& v)
+            {
+                if (!v.empty())
+                {
+                    _receiverAddress.m_Address = GenerateOfflineToken(_receiverAddress, _amount, _assetId, v, AppModel::getMyVersion());
+                    emit tokenChanged();
+                }
+            });
+        }
+    };
+
+    if (_receiverAddress.m_walletID == beam::Zero)
     {
-        generateNewReceiverAddress();
+         _walletModel.getAsync()->generateNewAddress([generateToken, this](const auto& addr){
+            _receiverAddress = addr;
+            _receiverAddress.setExpirationStatus(WalletAddress::ExpirationStatus::Auto);
+            setComment(QString::fromStdString(addr.m_label));
+            generateToken();
+        });
     }
     else
     {
-        _walletModel.getAsync()->getAddress(walletID, [this](const auto& addr, size_t count) { onGetAddressReturned(addr, count); });
-    }
-    _walletModel.getAsync()->generateNewAddress([this](const auto& addr) 
-    {
-        _receiverAddressForExchange = addr;
-        _receiverAddressForExchange.setExpiration(beam::wallet::WalletAddress::ExpirationStatus::Never);
-        emit receiverAddressForExchangeChanged();
-    });
-
-    generateOfflineAddress();
-}
-
-void ReceiveViewModel::generateNewReceiverAddress()
-{
-    _receiverAddress = {};
-    emit receiverAddressChanged();
-
-    setAddressComment("");
-    _walletModel.getAsync()->generateNewAddress([this](const auto& addr){ onGeneratedNewAddress(addr); });
-}
-
-QString ReceiveViewModel::getAddressComment() const
-{
-    return _addressComment;
-}
-
-void ReceiveViewModel::setTranasctionToken(const QString& value)
-{
-    if (_token != value)
-    {
-        _token = value;
-        emit transactionTokenChanged();
+        generateToken();
     }
 }
 
-QString ReceiveViewModel::getTransactionToken() const
+QString ReceiveViewModel::getAmount() const
 {
-    return _token;
+    return beamui::AmountToUIString(_amount);
 }
 
-QString ReceiveViewModel::getOfflineToken() const
+void ReceiveViewModel::setAmount(const QString& value)
 {
-    return _offlineToken;
-}
-
-void ReceiveViewModel::setOfflineToken(const QString& value)
-{
-    if (_offlineToken != value)
+    auto amount = beamui::UIStringToAmount(value);
+    if (amount != _amount)
     {
-        _offlineToken = value;
-        emit offlineTokenChanged();
+        _amount = amount;
+        emit amountChanged();
+        updateToken();
     }
 }
 
-void ReceiveViewModel::onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments)
+QString ReceiveViewModel::getComment() const
 {
-    if (address)
+    return QString::fromStdString(_receiverAddress.m_label);
+}
+
+void ReceiveViewModel::setToken(const QString& token)
+{
+    using namespace beam::wallet;
+
+    if (token.isEmpty())
     {
-        onGeneratedNewAddress(*address);
+        return;
     }
+
+    _walletModel.getAsync()->getAddressByToken(token.toStdString(),
+        [this, token](const boost::optional<beam::wallet::WalletAddress>& address, size_t offlineCount) {
+            if (!address)
+            {
+                throw std::runtime_error("Unknown value passed to ReceiveViewModel::setToken");
+            }
+
+            _receiverAddress = *address;
+            emit commentChanged();
+            emit commentValidChanged();
+
+            _maxp = GetAddressType(token.toStdString()) == TxAddressType::MaxPrivacy;
+            emit isMaxPrivacyChanged();
+
+            if (auto params = ParseParameters(token.toStdString()))
+            {
+                if (auto amount = params->GetParameter<beam::Amount>(TxParameterID::Amount))
+                {
+                    _amount = *amount;
+                    emit amountChanged();
+                }
+
+                // this doesn't work at the moment
+                //if (auto assetId = params->GetParameter<beam::Asset::ID>(TxParameterID::AssetID))
+                //{
+                //    _assetId = *assetId;
+                //    emit assetIdChanged();
+                //}
+            }
+
+            updateToken();
+        }
+    );
+}
+
+QString ReceiveViewModel::getToken() const
+{
+    return QString::fromStdString(_receiverAddress.m_Address);
 }
 
 bool ReceiveViewModel::getCommentValid() const
 {
-    return _walletModel.isOwnAddress(_receiverAddress.m_walletID) || !_walletModel.isAddressWithCommentExist(_addressComment.toStdString());
+    return _walletModel.isOwnAddress(_receiverAddress.m_walletID) || !_walletModel.isAddressWithCommentExist(_receiverAddress.m_label);
 }
 
-void ReceiveViewModel::setAddressComment(const QString& value)
+void ReceiveViewModel::setComment(const QString& value)
 {
-    auto trimmed = value.trimmed();
-    if (_addressComment != trimmed)
+    auto trimmed = value.trimmed().toStdString();
+    if (_receiverAddress.m_label != trimmed)
     {
-        _addressComment = trimmed;
-        emit addressCommentChanged();
+        _receiverAddress.m_label = trimmed;
+        emit commentChanged();
         emit commentValidChanged();
     }
 }
 
-void ReceiveViewModel::saveReceiverAddress()
-{
-    using namespace beam::wallet;
-
-    if (getCommentValid())
-    {
-        _receiverAddress.m_label = _addressComment.toStdString();
-        _receiverAddress.setExpiration(isPermanentAddress() ? WalletAddress::ExpirationStatus::Never : WalletAddress::ExpirationStatus::OneDay);
-        _walletModel.getAsync()->saveAddress(_receiverAddress, true);
-    }
-}
-
-void ReceiveViewModel::saveExchangeAddress()
+void ReceiveViewModel::saveAddress()
 {
     if (getCommentValid())
     {
-        _receiverAddressForExchange.m_label = _addressComment.toStdString();
-        _walletModel.getAsync()->saveAddress(_receiverAddressForExchange, true);
+        _walletModel.getAsync()->saveAddress(_receiverAddress);
     }
 }
 
-void ReceiveViewModel::saveOfflineAddress()
+bool ReceiveViewModel::getIsMaxPrivacy() const
 {
-    if (getCommentValid())
+    return _maxp;
+}
+
+void ReceiveViewModel::setIsMaxPrivacy(bool value)
+{
+    if (_maxp != value)
     {
-        _receiverOfflineAddress.m_label = _addressComment.toStdString();
-        _walletModel.getAsync()->saveAddress(_receiverOfflineAddress, true);
+        _maxp = value;
+        emit isMaxPrivacyChanged();
+        updateToken();
     }
-}
-
-void ReceiveViewModel::updateTransactionToken()
-{
-    using namespace beam::wallet;
-    if (!isShieldedTx())
-    {
-        auto address = GenerateRegularAddress(_receiverAddress, _amountToReceiveGrothes, isPermanentAddress(), AppModel::getMyVersion());
-        setTranasctionToken(QString::fromStdString(address));
-    }
-    else
-    {
-        _walletModel.getAsync()->generateVouchers(_receiverAddress.m_OwnID, 1, [this](ShieldedVoucherList v) mutable
-        {
-            if (!v.empty() && isShieldedTx())
-            {
-                auto address = GenerateMaxPrivacyAddress(_receiverAddress, _amountToReceiveGrothes, v[0], AppModel::getMyVersion());
-                setTranasctionToken(QString::fromStdString(address));
-            }
-        });
-    }
-}
-
-QString ReceiveViewModel::getSecondCurrencyLabel() const
-{
-    return beamui::getCurrencyLabel(_exchangeRatesManager.getRateUnitRaw());
-}
-
-QString ReceiveViewModel::getSecondCurrencyRateValue() const
-{
-    auto rate = _exchangeRatesManager.getRate(beam::wallet::ExchangeRate::Currency::Beam);
-    return beamui::AmountToUIString(rate);
-}
-
-bool ReceiveViewModel::isShieldedTx() const
-{
-    return _isShieldedTx;
-}
-
-void ReceiveViewModel::setIsShieldedTx(bool value)
-{
-    if (_isShieldedTx != value)
-    {
-        _isShieldedTx = value;
-        emit isShieldedTxChanged();
-        updateTransactionToken();
-    }
-}
-
-bool ReceiveViewModel::isPermanentAddress() const
-{
-    return _isPermanentAddress;
-}
-
-void ReceiveViewModel::setIsPermanentAddress(bool value)
-{
-    if (_isPermanentAddress != value)
-    {
-        _isPermanentAddress = value;
-        
-        emit isPermanentAddressChanged();
-        updateTransactionToken();
-    }
-}
-
-void ReceiveViewModel::generateOfflineAddress()
-{
-    using namespace beam::wallet;
-    _walletModel.getAsync()->generateNewAddress([this](const auto& addr)
-    {
-        _receiverOfflineAddress = addr;
-        _receiverOfflineAddress.setExpiration(beam::wallet::WalletAddress::ExpirationStatus::Never);
-
-        // add a vouchers
-        _walletModel.getAsync()->generateVouchers(_receiverOfflineAddress.m_OwnID, 10, [this](ShieldedVoucherList vouchers)
-        {
-            if (!vouchers.empty())
-            {
-                auto address = GenerateOfflineAddress(_receiverOfflineAddress, _amountToReceiveGrothes, vouchers);
-                setOfflineToken(QString::fromStdString(address));
-            }
-            else
-            {
-                setOfflineToken("");
-            }
-        });
-    });
 }
 
 QString ReceiveViewModel::getMPTimeLimit() const
@@ -305,4 +188,26 @@ QString ReceiveViewModel::getMPTimeLimit() const
     const auto& settings = AppModel::getInstance().getSettings();
     auto mpLockTimeLimit = settings.getMaxPrivacyLockTimeLimitHours();
     return QString::number(mpLockTimeLimit);
+}
+
+QList<QMap<QString, QVariant>> ReceiveViewModel::getAssetsList() const
+{
+    return _amgr->getAssetsList();
+}
+
+void ReceiveViewModel::setAssetId(int value)
+{
+    auto valueId = value < 0 ? beam::Asset::s_BeamID : static_cast<beam::Asset::ID>(value);
+    if (_assetId != valueId)
+    {
+        LOG_INFO () << "Selected asset id" << value;
+        _assetId = valueId;
+        emit assetIdChanged();
+        updateToken();
+    }
+}
+
+int ReceiveViewModel::getAssetId() const
+{
+    return _assetId;
 }

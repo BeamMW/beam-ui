@@ -16,12 +16,12 @@
 #include "model/app_model.h"
 
 using namespace beam;
-using namespace beam::wallet;
 using namespace beamui;
 
 TokenInfoItem::TokenInfoItem(QObject* parent /* = nullptr */)
-        : QObject(parent)
+    : QObject(parent)
 {
+    _amgr = AppModel::getInstance().getAssets();
 }
 
 bool TokenInfoItem::isPermanent() const
@@ -46,11 +46,6 @@ bool TokenInfoItem::isPublicOffline() const
 
 QString TokenInfoItem::getTransactionType() const
 {
-    if (isOffline())
-    {
-        //% "Offline"
-        return qtTrId("tx-address-offline");
-    }
     if (isMaxPrivacy())
     {
         return qtTrId("tx-address-max-privacy");
@@ -59,20 +54,15 @@ QString TokenInfoItem::getTransactionType() const
     {
         return qtTrId("tx-address-public-offline");
     }
-    if (m_token == beamui::toString(m_addressSBBS))
-    {
-        //% "Regular (for exchange or mining pool)"
-        return qtTrId("tx-address-regular-exchange");
-    }
-    //% "Regular (for wallet)"
-    return qtTrId("tx-address-regular-wallet");
+    //% "Regular"
+    return qtTrId("tx-address-regular");
 }
 
 QString TokenInfoItem::getAmount() const
 {
     if (m_amountValue)
     {
-        return AmountToUIString(m_amountValue, Currencies::Beam);
+        return AmountToUIString(m_amountValue, m_UnitName);
     }
     return "";
 }
@@ -112,6 +102,8 @@ QString TokenInfoItem::getToken() const
 
 void TokenInfoItem::setToken(const QString& token)
 {
+    using namespace beam::wallet;
+
     auto trimmed = token.trimmed();
     if (trimmed != m_token)
     {
@@ -128,6 +120,10 @@ void TokenInfoItem::setToken(const QString& token)
 
             auto amount = params.GetParameter<Amount>(TxParameterID::Amount);
             m_amountValue = amount ? *amount : 0;
+
+            auto assetId = params.GetParameter<beam::Asset::ID>(TxParameterID::AssetID);
+            m_assetId  = assetId ? *assetId : 0;
+            m_UnitName = _amgr->getUnitName(m_assetId, AssetsManager::NoShorten);
 
             auto identity = params.GetParameter<PeerID>(TxParameterID::PeerWalletIdentity);
             m_identity = identity ? *identity : Zero;
@@ -152,7 +148,7 @@ void TokenInfoItem::setToken(const QString& token)
                         }
                         else if (walletID)
                         {
-                            AppModel::getInstance().getWallet()->getAsync()->saveVouchers(*vouchers, *walletID);
+                            AppModel::getInstance().getWalletModel()->getAsync()->saveVouchers(*vouchers, *walletID);
                         }
                     } 
                     else
@@ -185,7 +181,7 @@ void TokenInfoItem::setToken(const QString& token)
 
             if (!getIgnoreStoredVouchers() && walletID)
             {
-                AppModel::getInstance().getWallet()->getAsync()->getAddress(*walletID, [this](const auto& addr, auto count)
+                AppModel::getInstance().getWalletModel()->getAsync()->getAddress(*walletID, [this](const auto& addr, auto count)
                 {
                     setOfflinePayments((int)count);
                 });

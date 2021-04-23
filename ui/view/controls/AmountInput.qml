@@ -1,73 +1,44 @@
 import QtQuick.Layouts 1.11
 import QtQuick 2.11
-import Beam.Wallet 1.0
 import "../utils.js" as Utils
 import Beam.Wallet 1.0
 
 ColumnLayout {
     id: control
 
-    function getFeeTitle() {
-        if (control.currency == Currency.CurrBeam) {
-            return control.currFeeTitle ?
-                //% "BEAM Transaction fee"
-                qsTrId("beam-transaction-fee") :
-                //% "Transaction fee"
-                qsTrId("general-fee")
-        }
-        //% "%1 Transaction fee rate"
-        return qsTrId("general-fee-rate").arg(control.currencyLabel)
-    }
-
-    function getTotalFeeTitle() {
-        //% "%1 Transaction fee (est)"
-        return qsTrId("general-fee-total").arg(control.currencyLabel)
-    }
-
-    function getTotalFeeAmount() {
-        return BeamGlobals.calcWithdrawTxFee(control.currency, control.fee);
-    }
-
-    function getFeeInSecondCurrency(feeValue) {
-        return Utils.formatFeeToSecondCurrency(
-            feeValue,
-            control.secondCurrencyRateValue,
-            control.secondCurrencyLabel);
-    }
-
     function getAmountInSecondCurrency() {
         return Utils.formatAmountToSecondCurrency(
-            control.amountIn,
-            control.secondCurrencyRateValue,
-            control.secondCurrencyLabel);
+            control.amount,
+            control.rate,
+            control.rateUnit);
     }
 
-    readonly property bool     isValidFee:     hasFee ? feeInput.isValid : true
-    readonly property bool     isValid:        error.length == 0 && isValidFee
-    readonly property string   currencyLabel:  BeamGlobals.getCurrencyLabel(control.currency)
+    function clearFocus() {
+        ainput.focus = false
+    }
+
+    property var               currencies
+    readonly property bool     isValid: error.length == 0
+
+    property int                currencyIdx:   currCombo.currentIndex
+    readonly property string    currencyUnit:  currencies[currencyIdx].unitName
+    readonly property bool      isBeam:        !!currencies[currencyIdx].isBEAM
+
+    property string   rate:     currencies[currencyIdx].rate
+    property string   rateUnit: currencies[currencyIdx].rateUnit
 
     property string   title
     property string   color:        Style.accent_incoming
     property string   currColor:    Style.content_main
-    property bool     hasFee:       false
-    property bool     currFeeTitle: false
-    property bool     multi:        false // changing this property in runtime would reset bindings
-    property int      currency:     Currency.CurrBeam
+    property bool     multi:        false // changing this property in runtime would reset bindings, don't do this
     property string   amount:       "0"
-    property string   amountIn:     "0"  // public property for binding. Use it to avoid binding overriding
-    property int      fee:          BeamGlobals.getDefaultFee(control.currency)
+
     property alias    error:        errmsg.text
     property bool     readOnlyA:    false
-    property bool     readOnlyF:    false
     property bool     resetAmount:  true
     property var      amountInput:  ainput
-    property bool     showTotalFee: false
-    property bool     showAddAll:   false
-    property string   secondCurrencyRateValue:  "0"
-    property string   secondCurrencyLabel:      ""
-    property var      setMaxAvailableAmount:    {} // callback function to set amount from viewmodel
-    property bool     showSecondCurrency:       control.secondCurrencyLabel != "" && control.secondCurrencyLabel != control.currencyLabel
-    readonly property bool  isExchangeRateAvailable:    control.secondCurrencyRateValue != "0"
+    property bool     showRate:     control.rateUnit != "" && control.rateUnit != control.currencyUnit
+    readonly property bool isExchangeRateAvailable: control.rate != "0"
 
     SFText {
         font.pixelSize:   14
@@ -94,131 +65,112 @@ ColumnLayout {
             text:             formatDisplayedAmount()
             readOnly:         control.readOnlyA
 
+            function stripAmountText() {
+                return text ? text.replace(/\.0*$|(\.\d*[1-9])0+$/,'$1') : "0"
+            }
+
             onTextChanged: {
                 // if nothing then "0", remove insignificant zeroes and "." in floats
                 if (ainput.activeFocus) {
-                    control.amount = text ? text.replace(/\.0*$|(\.\d*[1-9])0+$/,'$1') : "0"
+                    control.amount = stripAmountText()
                 }
             }
 
             onActiveFocusChanged: {
-                // we intentionally break binding here
                 text = formatDisplayedAmount()
                 if (activeFocus) cursorPosition = positionAt(ainput.getMousePos().x, ainput.getMousePos().y)
             }
 
             function formatDisplayedAmount() {
-                return control.amountIn == "0" ? (ainput.activeFocus ? "": "0") 
-                                    : (ainput.activeFocus ? control.amountIn : Utils.uiStringToLocale(control.amountIn))
+                if (control.amount == "0") {
+                    return ainput.activeFocus ? "": "0"
+                }
+                return ainput.activeFocus ? control.amount : Utils.uiStringToLocale(control.amount)
             }
 
             function getRegExpPattern() {
                 var pattern = "^(([1-9][0-9]{0,7})|(1[0-9]{8})|(2[0-4][0-9]{7})|(25[0-3][0-9]{6})|(0))(\\.[0-9]{0,%1}[1-9])?$";
-                return pattern.arg(BeamGlobals.getCurrencyDecimals(control.currency) - 1);
+                return pattern.arg(currencies[currencyIdx].decimals - 1);
             }
 
             Connections {
                 target: control
-                onAmountInChanged: {
-                    if (!ainput.activeFocus) {
-                        // we intentionally break binding here
-                        ainput.text = ainput.formatDisplayedAmount()
+                function onAmountChanged () {
+                    var formatted = ainput.formatDisplayedAmount()
+
+                    if (!ainput.activeFocus)
+                    {
+                        ainput.text = formatted
+                    }
+                    else {
+                        if (formatted && formatted != ainput.stripAmountText()) {
+                            // we tolerate only insignificants 0 at the end of floats
+                            // so if user entered 0.000100 we do not strip last 2 zeroes at the end while in focus
+                            BeamGlobals.fatal("Absolute value of the amount should not be changed while control is in focus")
+                        }
                     }
                 }
             }
         }
 
-        SFText {
-            Layout.topMargin:   22
-            font.pixelSize:     24
-            font.letterSpacing: 0.6
-            color:              control.currColor
-            text:               control.currencyLabel
-            visible:            !multi
-        }
 
         CustomComboBox {
             id:                  currCombo
             Layout.topMargin:    22
             Layout.minimumWidth: 95
+            dropSpacing:         18
             spacing:             0
-            fontPixelSize:       24
-            fontLetterSpacing:   0.6
-            currentIndex:        control.currency
-            color:               control.currColor
-            visible:             multi
-            model:               Utils.currenciesList()
+            fontPixelSize:       20
+            dropFontPixelSize:   14
+            dropOffset:          15
+            currentIndex:        control.currencyIdx
+            color:               error.length ? Style.validator_error : control.currColor
+            underlineColor:      "transparent"
+            enabled:             multi
+            colorConst:          true
+            model:               control.currencies
+            textRole:            "unitName"
+            textMaxLenDrop:      10
+            textMaxLenDisplay:   5
+            enableScroll:        true
 
             onActivated: {
-                if (multi) control.currency = index
-                if (resetAmount) control.amount = 0
+                if (multi) {
+                    ainput.text = "0"
+                    control.amount = "0"
+                    control.currencyIdx = index
+                }
+            }
+
+            onModelChanged: {
+                // changing model resets index selection, restore
+                if (multi) currentIndex = control.currencyIdx
             }
         }
+    }
 
-        RowLayout {
-            id:                  addAllButton
-            Layout.alignment:    Qt.AlignBottom
-            Layout.bottomMargin: 7
-            Layout.leftMargin:   25
-            visible:             control.showAddAll
-
-            function addAll(){
-                ainput.focus = false;                
-                if (typeof control.setMaxAvailableAmount == 'function') {
-                    control.setMaxAvailableAmount();
-                }
-            }
-
-            SvgImage {
-                Layout.maximumHeight: 16
-                Layout.maximumWidth:  16
-                source: "qrc:/assets/icon-send-blue-copy-2.svg"
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        addAllButton.addAll();
-                    }
-                }
-            }
-
-            SFText {
-                font.pixelSize:   14
-                font.styleName:   "Bold";
-                font.weight:      Font.Bold
-                color:            control.color
-                //% "add all"
-                text:             qsTrId("amount-input-add-all")
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        addAllButton.addAll();
-                    }
-                }
+    onCurrencyIdxChanged: {
+        if (multi) {
+            if (control.currencyIdx != currCombo.currentIndex) {
+                currCombo.currentIndex = control.currencyIdx
             }
         }
     }
 
     //
-    // Second currency
+    // Second
     //
     SFText {
-        id:             amountSecondCurrencyText
-        visible:        control.showSecondCurrency && !errmsg.visible /* && !showTotalFee*/  // show only on send side
+        visible:        control.showRate && !errmsg.visible
         font.pixelSize: 14
         font.italic:    !isExchangeRateAvailable
         opacity:        isExchangeRateAvailable ? 0.5 : 1
         color:          Style.content_secondary
         text:           {
-            if (showTotalFee)
-                return ""
             if (isExchangeRateAvailable)
                 return getAmountInSecondCurrency()
             //% "Exchange rate to %1 is not available"
-            return qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
+            return qsTrId("general-exchange-rate-not-available").arg(control.rateUnit)
         }
     }
 
@@ -227,101 +179,11 @@ ColumnLayout {
     //
     SFText {
         Layout.fillWidth:     true
-        Layout.minimumHeight: 35
         id:                   errmsg
         color:                Style.validator_error
         font.pixelSize:       14
         font.italic:          true
         visible:              error.length
         wrapMode:             "WordWrap"
-    }
-
-
-    //
-    // Fee
-    //
-    GridLayout {
-        columns:       2
-        Layout.topMargin: 50
-        visible:       control.hasFee
-        ColumnLayout {
-            Layout.maximumWidth:  198
-            Layout.alignment:     Qt.AlignTop
-            visible:              control.hasFee
-            SFText {
-                font.pixelSize:   14
-                font.styleName:   "Bold"
-                font.weight:      Font.Bold
-                color:            Style.content_main
-                text:             getFeeTitle()
-            }
-            FeeInput {
-                id:               feeInput
-                Layout.fillWidth: true
-                fee:              control.fee
-                recommendedFee:   BeamGlobals.getRecommendedFee(control.currency)
-                minFee:           BeamGlobals.getMinimalFee(control.currency, false)
-                feeLabel:         BeamGlobals.getFeeRateLabel(control.currency)
-                color:            control.color
-                readOnly:         control.readOnlyF
-                showSecondCurrency:         control.showSecondCurrency
-                isExchangeRateAvailable:    control.isExchangeRateAvailable
-                secondCurrencyAmount:       getFeeInSecondCurrency(control.fee)
-                secondCurrencyLabel:        control.secondCurrencyLabel
-                Connections {
-                    target: control
-                    onFeeChanged: feeInput.fee = control.fee
-                    onCurrencyChanged: feeInput.fee = BeamGlobals.getDefaultFee(control.currency)
-                }
-            }
-        }
-       
-        ColumnLayout {
-            Layout.alignment:     Qt.AlignLeft | Qt.AlignTop
-            visible:              showTotalFee && control.hasFee && control.currency != Currency.CurrBeam
-            SFText {
-                font.pixelSize:   14
-                font.styleName:   "Bold"
-                font.weight:      Font.Bold
-                color:            Style.content_main
-                text:             getTotalFeeTitle()
-            }
-            SFText {
-                id:               totalFeeLabel
-                Layout.topMargin: 6
-                font.pixelSize:   14
-                color:            Style.content_main
-                text:             getTotalFeeAmount()
-            }
-            SFText {
-                id:               feeTotalInSecondCurrency
-                visible:          control.showSecondCurrency && control.isExchangeRateAvailable
-                Layout.topMargin: 6
-                font.pixelSize:   14
-                opacity:          0.5
-                color:            Style.content_secondary
-                text:             getFeeInSecondCurrency(parseInt(totalFeeLabel.text, 10))
-            }
-        }
-    }
-
-    SFText {
-        enabled:               control.hasFee && control.currency != Currency.CurrBeam
-        visible:               enabled
-        Layout.topMargin:      20
-        Layout.preferredWidth: 370
-        font.pixelSize:        14
-        font.italic:           true
-        wrapMode:              Text.WordWrap
-        color:                 Style.content_secondary
-        lineHeight:            1.1
-        //% "Remember to validate the expected fee rate for the blockchain (as it varies with time)."
-        text:                  qsTrId("settings-fee-rate-note")
-    }
-
-    Binding {
-        target:   control
-        property: "fee"
-        value:    feeInput.fee
     }
 }

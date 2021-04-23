@@ -5,6 +5,7 @@ import "."
 
 Dialog {
     id: control
+
     property alias text: messageText.text
     property alias okButton: okButton
     property alias okButtonEnable: okButton.enabled
@@ -20,25 +21,17 @@ Dialog {
     property alias cancelButtonVisible: cancelButton.visible
     property alias cancelButtonColor: cancelButton.palette.button
     property alias cancelButtonAllLowercase: cancelButton.allLowercase
-
-    function confirmationHandler() {
-        accepted();
-        close();
-    }
-
-    function openHandler() {
-        cancelButton.forceActiveFocus(Qt.TabFocusReason);
-    } 
-
-    modal: true
+    property var   defaultFocusItem: cancelButton
+    property var   beforeAccept: function(){return true}
 
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
-    parent:         Overlay.overlay
-    visible: false
-    
     leftPadding: 30
     rightPadding: 30
+
+    parent:  Overlay.overlay
+    visible: false
+    modal:   true
 
     background: Rectangle {
         radius: 10
@@ -90,20 +83,21 @@ Dialog {
                     focus: true
                     //% "Cancel"
                     text: qsTrId("general-cancel")
-                    onClicked: { 
-                        rejected();
-                        close();
-                    }
+                    onClicked: function(){done(Dialog.Rejected)}
                 }
 
                 CustomButton {
                     id: okButton
                     palette.button: Style.active
+
                     //% "Delete"
                     text: qsTrId("general-delete")
                     palette.buttonText: Style.content_opposite
-                    onClicked: {
-                        confirmationHandler();
+
+                    onClicked: function () {
+                        if (beforeAccept()) {
+                            done(Dialog.Accepted)
+                        }
                     }
                 }
             }
@@ -114,6 +108,8 @@ Dialog {
     }
 
     onOpened: {
-        openHandler();
+        if (defaultFocusItem) {
+            defaultFocusItem.forceActiveFocus(Qt.TabFocusReason)
+        }
     }
 }

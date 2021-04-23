@@ -10,11 +10,8 @@ ConfirmationDialog {
     okButtonIconSource:       "qrc:/assets/icon-settings-blue.svg"
     cancelButtonIconSource:   "qrc:/assets/icon-cancel-white.svg"
     closePolicy:              Popup.NoAutoClose
+    defaultFocusItem:         okButton
     property alias text:      message.text
-
-    function openHandler() {
-        okButton.forceActiveFocus(Qt.TabFocusReason);
-    }
 
     contentItem: Item {
         id: confirmationContent

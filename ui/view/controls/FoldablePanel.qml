@@ -8,98 +8,148 @@ import "."
 Pane {
     id: control
 
-    property alias title:      headerTitle.text
-    property alias headerText: headerTextLabel.text
-    property alias content:    placeholder.contentItem
-    property bool  folded:     true
+    property string title
+    property string titleTip
+
+    property bool  folded:          true
+    property var   content:         null
+    property var   headerContent:   null
+    property int   minHeaderHeight: 0
+
     spacing: 0
     padding: 20
 
-    contentItem: ColumnLayout {
-        spacing: 0
-        clip:    folded
-        RowLayout {
-            Layout.alignment: Qt.AlignTop
-            SFText {
-                id:                 headerTitle
-                Layout.fillWidth:   headerTextLabel.text.length == 0
-                color:              Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
-        
-                font {
-                    styleName:      "Bold"
-                    weight:         Font.Bold
-                    pixelSize:      14
-                    letterSpacing:  3.11
-                    capitalization: Font.AllUppercase
-                }
-        
-                visible:              text.length > 0
+    Component {
+        id: foldClick
 
-                MouseArea {
-                    anchors.fill:       parent
-                    acceptedButtons:    Qt.LeftButton
-                    cursorShape:        Qt.PointingHandCursor
-                    onClicked: {
-                        control.folded = !control.folded;
-                    }
+        Rectangle {
+            color: "transparent"
+            MouseArea {
+                anchors.fill:    parent
+                acceptedButtons: Qt.LeftButton
+                cursorShape:     Qt.PointingHandCursor
+                onClicked: {
+                    control.folded = !control.folded;
                 }
             }
-            SFText {
-                id:                 headerTextLabel
-                Layout.fillWidth:   true
-                color:              Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
-        
-                font {
-                    styleName:      "Bold"
-                    weight:         Font.Bold
-                    pixelSize:      14
-                    letterSpacing:  0.35
-                }
-        
-                visible:              text.length > 0
-
-                MouseArea {
-                    anchors.fill:       parent
-                    acceptedButtons:    Qt.LeftButton
-                    cursorShape:        Qt.PointingHandCursor
-                    onClicked: {
-                        control.folded = !control.folded;
-                    }
-                }
-            }
-            SvgImage {
-                Layout.alignment:       Qt.AlignCenter
-                Layout.maximumHeight:   8
-                Layout.maximumWidth:    13
-                source:                 control.folded ? "qrc:/assets/icon-grey-arrow-down.svg" : "qrc:/assets/icon-grey-arrow-up.svg"
-                MouseArea {
-                    anchors.fill:       parent
-                    acceptedButtons:    Qt.LeftButton
-                    cursorShape:        Qt.PointingHandCursor
-                    onClicked: {
-                        control.folded = !control.folded;
-                    }
-                }
-            } 
         }
+    }
 
-        Control {
-            id:                     placeholder
-            Layout.fillWidth:       true
-            Layout.topMargin:       folded ? 0 : 20
-            Layout.alignment:       Qt.AlignTop
+    contentItem: Item {
+        ColumnLayout {
+            spacing: 0
+            clip:    folded
+            width: parent.width
+            RowLayout {
+                Layout.alignment: Qt.AlignTop
+                Layout.minimumHeight: minHeaderHeight
+                Layout.fillWidth: true
+                spacing: 0
 
-            Layout.preferredHeight: folded ? 0 : placeholder.implicitHeight
-            opacity:                folded ? 0.0 : 1.0
+                Loader {
+                    width: parent.width
+                    height: parent.height
+                    sourceComponent: foldClick
+                }
 
-            Behavior on Layout.preferredHeight {
-                NumberAnimation { duration:  100 }
+                RowLayout {
+                    Layout.fillHeight: true
+                    spacing: 0
+
+                    SFText {
+                        id:    headerTitle
+                        text:  title
+                        color: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+
+                        font {
+                            styleName:      "Bold"
+                            weight:         Font.Bold
+                            pixelSize:      14
+                            letterSpacing:  3.11
+                            capitalization: Font.AllUppercase
+                        }
+
+                        Loader {
+                            anchors.fill: parent
+                            sourceComponent: foldClick
+                        }
+                    }
+
+                    Item {
+                        width: 5
+                        Layout.fillHeight: true
+                        visible: titleTip.length != 0
+                    }
+
+                    SFText {
+                        color:   Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+                        text:    titleTip
+                        visible: titleTip.length != 0
+
+                        font {
+                            styleName:      "Bold"
+                            weight:         Font.Bold
+                            pixelSize:      14
+                            letterSpacing:  0.35
+                        }
+
+                        Loader {
+                            anchors.fill: parent
+                            sourceComponent: foldClick
+                        }
+                    }
+                }
+
+                Item {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    visible: !headerContent
+                }
+
+                Item {
+                    width: 5
+                    Layout.fillHeight: true
+                }
+
+                SvgImage {
+                    Layout.alignment:       Qt.AlignCenter
+                    Layout.maximumHeight:   8
+                    Layout.maximumWidth:    13
+                    source:                 control.folded ? "qrc:/assets/icon-grey-arrow-down.svg" : "qrc:/assets/icon-grey-arrow-up.svg"
+                }
+
+                Item {
+                    Layout.fillHeight: true
+                    Layout.fillWidth:  true
+                    visible: !!headerContent
+                }
+
+                Control {
+                    id:  headerPlaceholder
+                    visible: headerContent && !folded
+                    contentItem: headerContent
+                }
             }
-            Behavior on Layout.topMargin {
-                NumberAnimation { duration:  100 }
-            }
-            Behavior on opacity {
-                NumberAnimation { duration:  200 }
+
+            Control {
+                id:                     placeholder
+                Layout.fillWidth:       true
+                Layout.topMargin:       folded ? 0 : 20
+                Layout.alignment:       Qt.AlignTop
+                contentItem:            control.content
+
+                Layout.preferredHeight: folded ? 0 : placeholder.implicitHeight
+                opacity:                folded ? 0.0 : 1.0
+
+                Behavior on Layout.preferredHeight {
+                    NumberAnimation { duration:  100 }
+                }
+                Behavior on Layout.topMargin {
+                    NumberAnimation { duration:  100 }
+                }
+                Behavior on opacity {
+                    NumberAnimation { duration:  200 }
+                }
             }
         }
     }

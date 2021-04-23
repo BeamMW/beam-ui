@@ -15,7 +15,6 @@
 #include "viewmodel/ui_helpers.h"
 
 using namespace beam;
-using namespace beam::wallet;
 using namespace beamui;
 
 SwapTokenInfoItem::SwapTokenInfoItem(QObject* parent /* = nullptr */)
@@ -51,7 +50,7 @@ void SwapTokenInfoItem::setToken(const QString& token)
         if (p)
         {
             m_parameters = *p;
-            SwapOffer offer = m_parameters;
+            beam::wallet::SwapOffer offer = m_parameters;
             offer.m_isOwn = true;
             reset(offer);
 

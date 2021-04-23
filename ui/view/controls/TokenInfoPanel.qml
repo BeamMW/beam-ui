@@ -8,7 +8,7 @@ import "."
 
 Panel {
     id: control
-    property alias title:               control.title
+
     property string addressLabel:       ""
     property bool showQrCode:           true
     property alias token:               tokenLabel.text
@@ -19,7 +19,8 @@ Panel {
     property alias headerVisible:       headerPlaceholder.visible
     property alias footerItem:          footerPlaceholder.contentItem
     property alias footerVisible:       footerPlaceholder.visible
-    signal tokenCopied;
+
+    signal tokenCopied
     signal closed
 
     backgroundColor:  Style.background_button
@@ -33,15 +34,18 @@ Panel {
     }
 
     content: ColumnLayout {
-        anchors.fill:   parent
-        spacing:                     0
+        anchors.fill: parent
+        spacing: 0
+
         Control {
             id:                          headerPlaceholder
             Layout.fillWidth:            true
             visible:                     false
             bottomPadding:               20
         }
+
         RowLayout {
+            id: contentRow
             Layout.fillWidth:         true
             Layout.topMargin:         -8
             Layout.bottomMargin:      -8
@@ -100,6 +104,7 @@ Panel {
             topPadding:                  6
         }
         CustomButton {
+            id: copyButton
             Layout.topMargin:       20
             //% "Copy and close"
             text:                   qsTrId("wallet-receive-copy-and-close")

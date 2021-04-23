@@ -41,16 +41,19 @@ class SendSwapViewModel: public QObject
     Q_PROPERTY(bool          isSendBeam       READ isSendBeam                               NOTIFY tokenChanged)
     Q_PROPERTY(QString       rate             READ getRate                                  NOTIFY tokenChanged)
 
-    Q_PROPERTY(QString       secondCurrencyLabel            READ getSecondCurrencyLabel             NOTIFY secondCurrencyLabelChanged)
+    Q_PROPERTY(QString       secondCurrencyUnitName            READ getSecondCurrencyUnitName             NOTIFY secondCurrencyUnitNameChanged)
     Q_PROPERTY(QString       secondCurrencySendRateValue    READ getSecondCurrencySendRateValue     NOTIFY secondCurrencyRateChanged)
     Q_PROPERTY(QString       secondCurrencyReceiveRateValue READ getSecondCurrencyReceiveRateValue  NOTIFY secondCurrencyRateChanged)
 
-    Q_PROPERTY(WalletCurrency::Currency  receiveCurrency  READ getReceiveCurrency  NOTIFY  receiveCurrencyChanged)
-    Q_PROPERTY(WalletCurrency::Currency  sendCurrency     READ getSendCurrency     NOTIFY  sendCurrencyChanged)
+    Q_PROPERTY(OldWalletCurrency::OldCurrency  receiveCurrency  READ getReceiveCurrency  NOTIFY  receiveCurrencyChanged)
+    Q_PROPERTY(OldWalletCurrency::OldCurrency  sendCurrency     READ getSendCurrency     NOTIFY  sendCurrencyChanged)
+    Q_PROPERTY(QString       sentFeeTitle                 READ getSentFeeTitle     NOTIFY  sendCurrencyChanged)
+    Q_PROPERTY(QString       receiveFeeTitle              READ getReceiveFeeTitle  NOTIFY  receiveCurrencyChanged)
 
     Q_PROPERTY(bool isTokenGeneratedByNewVersion            READ isTokenGeneratedByNewVersion       NOTIFY  tokenGeneratebByNewAppVersion)
     Q_PROPERTY(QString tokenGeneratedByNewVersionMessage    READ tokenGeneratedByNewVersionMessage  NOTIFY  tokenGeneratebByNewAppVersion)
-    Q_PROPERTY(unsigned int minimalBeamFeeGrothes          READ getMinimalBeamFeeGrothes       NOTIFY minimalBeamFeeGrothesChanged)
+    Q_PROPERTY(unsigned int minimalBeamFeeGrothes           READ getMinimalBeamFeeGrothes       NOTIFY minimalBeamFeeGrothesChanged)
+    Q_PROPERTY(QList<QMap<QString, QVariant>> currList      READ getCurrList                    NOTIFY  currListChanged)
 
 public:
     SendSwapViewModel();
@@ -67,8 +70,8 @@ public:
     unsigned int getSendFee() const;
     void setSendFee(unsigned int amount);
 
-    Currency getSendCurrency() const;
-    void setSendCurrency(Currency value);
+    OldWalletCurrency::OldCurrency getSendCurrency() const;
+    void setSendCurrency(OldWalletCurrency::OldCurrency value);
 
     QString getReceiveAmount() const;
     void setReceiveAmount(QString value);
@@ -76,8 +79,8 @@ public:
     unsigned int getReceiveFee() const;
     void setReceiveFee(unsigned int amount);
 
-    Currency getReceiveCurrency() const;
-    void setReceiveCurrency(Currency value);
+    OldWalletCurrency::OldCurrency getReceiveCurrency() const;
+    void setReceiveCurrency(OldWalletCurrency::OldCurrency value);
 
     void setComment(const QString& value);
     QString getComment() const;
@@ -98,13 +101,17 @@ public:
     bool isSendBeam() const;
     QString getRate() const;
 
-    QString getSecondCurrencyLabel() const;
+    QString getSecondCurrencyUnitName() const;
     QString getSecondCurrencySendRateValue() const;
     QString getSecondCurrencyReceiveRateValue() const;
 
     bool isTokenGeneratedByNewVersion() const;
     QString tokenGeneratedByNewVersionMessage() const;
     unsigned int getMinimalBeamFeeGrothes() const;
+
+    QString getSentFeeTitle() const;
+    QString getReceiveFeeTitle() const;
+    QList<QMap<QString, QVariant>> getCurrList() const;
 
 public:
     Q_INVOKABLE void setParameters(const QVariant& parameters);    /// used to pass TxParameters directly without Token generation
@@ -127,14 +134,15 @@ signals:
     void enoughToReceiveChanged();
     void isSendFeeOKChanged();
     void isReceiveFeeOKChanged();
-    void secondCurrencyLabelChanged();
+    void secondCurrencyUnitNameChanged();
     void secondCurrencyRateChanged();
     void tokenGeneratebByNewAppVersion();
     void minimalBeamFeeGrothesChanged();
+    void currListChanged();
 
 public slots:
-    void onChangeCalculated(beam::Amount change);
-    void onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes);
+    void onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId);
+    void onCoinsSelectionCalculated(const beam::wallet::CoinsSelectionInfo&);
 
 private:
     void fillParameters(const beam::wallet::TxParameters& parameters);
@@ -142,10 +150,10 @@ private:
 
     beam::Amount _sendAmountGrothes;
     beam::Amount _sendFeeGrothes;
-    Currency     _sendCurrency;
+    OldWalletCurrency::OldCurrency _sendCurrency;
     beam::Amount _receiveAmountGrothes;
     beam::Amount _receiveFeeGrothes;
-    Currency     _receiveCurrency;
+    OldWalletCurrency::OldCurrency _receiveCurrency;
     beam::Amount _changeGrothes;
     QDateTime    _offeredTime;
     QDateTime    _expiresTime;
@@ -160,6 +168,5 @@ private:
     QString _tokenGeneratebByNewAppVersionMessage = "";
 
     beam::Amount _minimalBeamFeeGrothes;
-    beam::Amount _shieldedInputsFee;
     bool _feeChangedByUI = false;
 };

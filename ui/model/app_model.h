@@ -24,6 +24,7 @@
 #include "wallet/core/private_key_keeper.h"
 #include "wallet/transactions/swaps/bridges/bitcoin/bridge_holder.h"
 #include "wallet/transactions/swaps/swap_transaction.h"
+#include "viewmodel/wallet/assets_manager.h"
 #include <memory>
 
 #if defined(BEAM_HW_WALLET)
@@ -52,8 +53,8 @@ public:
     beam::io::Reactor::Ptr getWalletReactor() const;
 #endif
 
-    bool openWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper = {});
-    bool checkWalletPassword(const beam::SecString& pass) const;
+    void openWalletThrow(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper = {});
+    [[nodiscard]] bool checkWalletPassword(const beam::SecString& pass) const;
     void changeWalletPassword(const std::string& pass);
 
     void applySettingsChanges();
@@ -62,13 +63,19 @@ public:
     bool exportData();
     bool importData();
 
-    WalletModel::Ptr getWallet() const;
-    WalletSettings& getSettings() const;
-    MessageManager& getMessages();
-    NodeModel& getNode();
-    SwapCoinClientModel::Ptr getSwapCoinClient(beam::wallet::AtomicSwapCoin swapCoin) const;
-    SwapEthClientModel::Ptr getSwapEthClient() const;
+    [[nodiscard]] WalletModel::Ptr getWalletModel() const;
+    [[nodiscard]] AssetsManager::Ptr getAssets() const;
+    [[nodiscard]] WalletSettings& getSettings() const;
 
+    MessageManager& getMessages();
+
+    // Please, be very careful with this
+    // wallet db can be destroyed internally
+    [[nodiscard]] beam::wallet::IWalletDB::Ptr getWalletDB() const;
+
+    NodeModel& getNode();
+    [[nodiscard]] SwapCoinClientModel::Ptr getSwapCoinClient(beam::wallet::AtomicSwapCoin swapCoin) const;
+    [[nodiscard]] SwapEthClientModel::Ptr getSwapEthClient() const;
 public slots:
     void onStartedNode();
     void onFailedToStartNode(beam::wallet::ErrorType errorCode);
@@ -104,6 +111,7 @@ private:
     WalletModel::Ptr m_wallet;
     NodeModel m_nodeModel;
     WalletSettings& m_settings;
+    AssetsManager::Ptr m_assets;
     MessageManager m_messages;
     ECC::NoLeak<ECC::uintBig> m_passwordHash;
     beam::io::Reactor::Ptr m_walletReactor;

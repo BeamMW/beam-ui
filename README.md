@@ -1,4 +1,6 @@
 
+[![Build](https://github.com/BeamMW/beam-ui/actions/workflows/build.yml/badge.svg)](https://github.com/BeamMW/beam-ui/actions/workflows/build.yml)
+
 ![alt text](https://beam.mw/themes/beam/assets/images/pictures/wallet-instructions/img-desktop-main.png "Beam Wallet")
 
 ### Beam Desktop GUI Wallet
@@ -15,7 +17,7 @@ It is also the most beautiful application in the world implemented using QT fram
 
 [Contribution Guide](https://github.com/BeamMW/beam/wiki/Contribution-Guidelines)
 
-# Build status
-[![Build Status](https://travis-ci.org/BeamMW/beam-ui.svg?branch=master)](https://travis-ci.org/BeamMW/beam-ui)
-[![Build status](https://ci.appveyor.com/api/projects/status/03rat1ixbo5gt41y/branch/master?svg=true)](https://ci.appveyor.com/project/beam-mw/beam-ui/branch/master)
+If you would like to help us with translations, please, visit https://crowdin.com/project/beammw
+
+
 

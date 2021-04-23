@@ -16,99 +16,68 @@
 #include <QObject>
 #include "model/wallet_model.h"
 #include "notifications/exchange_rates_manager.h"
+#include "wallet/assets_manager.h"
 
 class ReceiveViewModel: public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString  amountToReceive              READ getAmountToReceive    WRITE  setAmountToReceive   NOTIFY  amountReceiveChanged)
-    Q_PROPERTY(int      addressExpires               READ getAddressExpires     WRITE  setAddressExpires    NOTIFY  addressExpiresChanged)
-    Q_PROPERTY(QString  addressComment               READ getAddressComment     WRITE  setAddressComment    NOTIFY  addressCommentChanged)
-    Q_PROPERTY(QString  receiverAddress              READ getReceiverAddress                                NOTIFY  receiverAddressChanged)
-    Q_PROPERTY(QString  receiverAddressForExchange   READ getReceiverAddressForExchange                     NOTIFY  receiverAddressForExchangeChanged)
-    Q_PROPERTY(QString  transactionToken             READ getTransactionToken   WRITE  setTranasctionToken  NOTIFY  transactionTokenChanged)
-    Q_PROPERTY(QString  offlineToken                 READ getOfflineToken       WRITE  setOfflineToken      NOTIFY  offlineTokenChanged)
-    Q_PROPERTY(bool     commentValid                 READ getCommentValid                                   NOTIFY  commentValidChanged)
-    Q_PROPERTY(QString  secondCurrencyLabel          READ getSecondCurrencyLabel                   NOTIFY secondCurrencyLabelChanged)
-    Q_PROPERTY(QString  secondCurrencyRateValue      READ getSecondCurrencyRateValue               NOTIFY secondCurrencyRateChanged)
-    Q_PROPERTY(bool     isShieldedTx                 READ isShieldedTx          WRITE setIsShieldedTx       NOTIFY isShieldedTxChanged)
-    Q_PROPERTY(bool     isPermanentAddress           READ isPermanentAddress    WRITE setIsPermanentAddress NOTIFY isPermanentAddressChanged)
-    Q_PROPERTY(QString  mpTimeLimit                  READ getMPTimeLimit        CONSTANT)
+    Q_PROPERTY(QString    amount             READ getAmount             WRITE  setAmount             NOTIFY  amountChanged)
+    Q_PROPERTY(QString    comment            READ getComment            WRITE  setComment            NOTIFY  commentChanged)
+    Q_PROPERTY(int        assetId            READ getAssetId            WRITE  setAssetId            NOTIFY  assetIdChanged)
+    Q_PROPERTY(QString    token              READ getToken              WRITE  setToken              NOTIFY  tokenChanged)
+    Q_PROPERTY(bool       commentValid       READ getCommentValid                                    NOTIFY  commentValidChanged)
+    Q_PROPERTY(bool       isMaxPrivacy       READ getIsMaxPrivacy       WRITE setIsMaxPrivacy        NOTIFY  isMaxPrivacyChanged)
+    Q_PROPERTY(QString    mpTimeLimit        READ getMPTimeLimit        CONSTANT)
 
+    Q_PROPERTY(QList<QMap<QString, QVariant>> assetsList  READ getAssetsList  NOTIFY  assetsListChanged)
 public:
     ReceiveViewModel();
-    ~ReceiveViewModel() override;
+    ~ReceiveViewModel() override = default;
 
 signals:
-    void amountReceiveChanged();
-    void addressExpiresChanged();
-    void receiverAddressChanged();
-    void receiverAddressForExchangeChanged();
-    void addressCommentChanged();
-    void transactionTokenChanged();
-    void offlineTokenChanged();
+    void amountChanged();
+    void commentChanged();
+    void assetIdChanged();
+    void tokenChanged();
     void newAddressFailed();
     void commentValidChanged();
-    void secondCurrencyLabelChanged();
-    void secondCurrencyRateChanged();
-    void isShieldedTxChanged();
-    void isPermanentAddressChanged();
+    void isMaxPrivacyChanged();
+    void assetsListChanged();
 
 public:
-    Q_INVOKABLE void initialize(const QString& address);
-    Q_INVOKABLE void generateNewReceiverAddress();
-    Q_INVOKABLE void saveReceiverAddress();
-    Q_INVOKABLE void saveExchangeAddress();
-    Q_INVOKABLE void saveOfflineAddress();
+    Q_INVOKABLE void saveAddress();
 
 private:
-    QString getAmountToReceive() const;
-    void    setAmountToReceive(QString value);
+    void setAssetId(int id);
+    [[nodiscard]] int getAssetId() const;
 
-    void setAddressExpires(int value);
-    int  getAddressExpires() const;
+    void setAmount(const QString&);
+    [[nodiscard]] QString getAmount() const;
 
-    QString getReceiverAddress() const;
-    QString getReceiverAddressForExchange() const;
+    void setComment(const QString& value);
+    [[nodiscard]] QString getComment() const;
 
-    void setAddressComment(const QString& value);
-    QString getAddressComment() const;
+    void setToken(const QString& value);
+    [[nodiscard]] QString getToken() const;
 
-    void setTranasctionToken(const QString& value);
-    QString getTransactionToken() const;
-    QString getOfflineToken() const;
-    void setOfflineToken(const QString& value);
+    [[nodiscard]] bool getCommentValid() const;
 
-    bool getCommentValid() const;
-
-    void updateTransactionToken();
-
-    QString getSecondCurrencyLabel() const;
-    QString getSecondCurrencyRateValue() const;
-
-    bool    isShieldedTx() const;
-    void    setIsShieldedTx(bool value);
-
-    bool isPermanentAddress() const;
-    void setIsPermanentAddress(bool value);
-
-    void onGeneratedReceiverAddress(const beam::wallet::WalletAddress& addr);
-    void onGeneratedExchangeAddress(const beam::wallet::WalletAddress& addr);
-    void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
-    void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments);
-    void generateOfflineAddress();
+    void setIsMaxPrivacy(bool value);
+    [[nodiscard]] bool getIsMaxPrivacy() const;
 
     QString getMPTimeLimit() const;
+    QList<QMap<QString, QVariant>> getAssetsList() const;
+
 private:
-    beam::Amount _amountToReceiveGrothes;
-    int          _addressExpires;
-    QString      _addressComment;
-    QString      _token;
-    QString      _offlineToken;
+    void updateToken();
+
+private:
+    beam::Amount    _amount  = 0UL;
+    beam::Asset::ID _assetId = beam::Asset::s_BeamID;
+    bool            _maxp    = false;
+
     beam::wallet::WalletAddress _receiverAddress;
-    beam::wallet::WalletAddress _receiverAddressForExchange;
-    beam::wallet::WalletAddress _receiverOfflineAddress;
-    bool _isShieldedTx = false;
-    bool _isPermanentAddress = false;
-    WalletModel& _walletModel;
-    ExchangeRatesManager _exchangeRatesManager;
+    WalletModel&                _walletModel;
+    ExchangeRatesManager        _exchangeRatesManager;
+    AssetsManager::Ptr          _amgr;
 };

@@ -21,13 +21,12 @@
 #include "version.h"
 
 using namespace beam;
-using namespace beam::wallet;
 using namespace beam::io;
 using namespace std;
 
 
-WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor)
-    : WalletClient(walletDB, nodeAddr, reactor)
+WalletModel::WalletModel(beam::wallet::IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor)
+    : WalletClient(Rules::get(), walletDB, nodeAddr, reactor)
 {
     qRegisterMetaType<beam::ByteBuffer>("beam::ByteBuffer");
     qRegisterMetaType<beam::wallet::WalletStatus>("beam::wallet::WalletStatus");
@@ -49,11 +48,11 @@ WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, b
     qRegisterMetaType<beam::wallet::WalletImplVerInfo>("beam::wallet::WalletImplVerInfo");
     qRegisterMetaType<ECC::uintBig>("ECC::uintBig");
     qRegisterMetaType<boost::optional<beam::wallet::WalletAddress>>("boost::optional<beam::wallet::WalletAddress>");
-    qRegisterMetaType<beam::wallet::ShieldedCoinsSelectionInfo>("beam::wallet::ShieldedCoinsSelectionInfo");
+    qRegisterMetaType<beam::wallet::CoinsSelectionInfo>("beam::wallet::CoinsSelectionInfo");
+    qRegisterMetaType<vector<beam::wallet::DexOrder>>("std::vector<beam::wallet::DexOrder>");
 
-    connect(this, SIGNAL(walletStatus(const beam::wallet::WalletStatus&)), this, SLOT(setStatus(const beam::wallet::WalletStatus&)));
-    connect(this, SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
-            this, SLOT(setAddresses(bool, const std::vector<beam::wallet::WalletAddress>&)));
+    connect(this, &WalletModel::walletStatusInternal, this, &WalletModel::onWalletStatusInternal);
+    connect(this, SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),this, SLOT(setAddresses(bool, const std::vector<beam::wallet::WalletAddress>&)));
     connect(this, SIGNAL(functionPosted(const std::function<void()>&)), this, SLOT(doFunction(const std::function<void()>&)));
 
     getAsync()->getAddresses(true);
@@ -105,7 +104,7 @@ QString WalletModel::GetErrorString(beam::wallet::ErrorType type)
     }
 }
 
-bool WalletModel::isOwnAddress(const WalletID& walletID) const
+bool WalletModel::isOwnAddress(const beam::wallet::WalletID& walletID) const
 {
     return m_myWalletIds.count(walletID);
 }
@@ -121,7 +120,7 @@ bool WalletModel::isAddressWithCommentExist(const std::string& comment) const
 
 void WalletModel::onStatus(const beam::wallet::WalletStatus& status)
 {
-    emit walletStatus(status);
+    emit walletStatusInternal(status);
 }
 
 void WalletModel::onTxStatus(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& items)
@@ -136,23 +135,17 @@ void WalletModel::onSyncProgressUpdated(int done, int total)
 
 void WalletModel::onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId)
 {
-    if (assetId == Asset::s_BeamID)
-        emit changeCalculated(changeBeam);
+    emit changeCalculated(changeAsset, changeBeam, assetId);
 }
 
-void WalletModel::onShieldedCoinsSelectionCalculated(const ShieldedCoinsSelectionInfo& selectionRes)
+void WalletModel::onCoinsSelectionCalculated(const beam::wallet::CoinsSelectionInfo& selectionRes)
 {
-    emit shieldedCoinsSelectionCalculated(selectionRes);
+    emit coinsSelectionCalculated(selectionRes);
 }
 
-void WalletModel::onNeedExtractShieldedCoins(bool val)
+void WalletModel::onNormalCoinsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
-    emit needExtractShieldedCoins(val);
-}
-
-void WalletModel::onAllUtxoChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
-{
-    emit allUtxoChanged(action, utxos);
+    emit normalCoinsChanged(action, utxos);
 }
 
 void WalletModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::ShieldedCoin>& items)
@@ -169,7 +162,7 @@ void WalletModel::onAddressesChanged(beam::wallet::ChangeAction action, const st
     {
         if (item.isOwn())
         {
-            if (action == ChangeAction::Removed)
+            if (action == beam::wallet::ChangeAction::Removed)
             {
                 m_myWalletIds.erase(item.m_walletID);
                 m_myAddrLabels.erase(item.m_label);
@@ -194,6 +187,11 @@ void WalletModel::onSwapOffersChanged(beam::wallet::ChangeAction action, const s
     emit swapOffersChanged(action, offers);
 }
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
+
+void WalletModel::onDexOrdersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::DexOrder>& offers)
+{
+    emit dexOrdersChanged(action, offers);
+}
 
 void WalletModel::onCoinsByTx(const std::vector<beam::wallet::Coin>& coins)
 {
@@ -235,10 +233,6 @@ void WalletModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& walle
     emit generatedNewAddress(walletAddr);
 }
 
-void WalletModel::onGetAddress(const WalletID& id, const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments)
-{
-    emit getAddressReturned(id, address, (int)offlinePayments);
-}
 
 void WalletModel::onNewAddressFailed()
 {
@@ -311,7 +305,7 @@ void WalletModel::onExchangeRates(const std::vector<beam::wallet::ExchangeRate>&
     emit exchangeRatesUpdate(rates);
 }
 
-void WalletModel::onNotificationsChanged(beam::wallet::ChangeAction action, const std::vector<Notification>& notifications)
+void WalletModel::onNotificationsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Notification>& notifications)
 {
     emit notificationsChanged(action, notifications);
 }
@@ -319,6 +313,11 @@ void WalletModel::onNotificationsChanged(beam::wallet::ChangeAction action, cons
 void WalletModel::onPublicAddress(const std::string& publicAddr)
 {
     emit publicAddressChanged(QString::fromStdString(publicAddr));
+}
+
+void WalletModel::onAssetInfo(beam::Asset::ID assetId, const beam::wallet::WalletAsset& info)
+{
+    emit assetInfoChanged(assetId, info);
 }
 
 beam::Version WalletModel::getLibVersion() const
@@ -332,40 +331,90 @@ uint32_t WalletModel::getClientRevision() const
     return VERSION_REVISION;
 }
 
-beam::Amount WalletModel::getAvailable() const
+std::set<beam::Asset::ID> WalletModel::getAssetsNZ() const
 {
-    auto status = m_status.GetBeamStatus();
-    return status.available + status.shielded;
+    std::set<beam::Asset::ID> assets;
+
+    // always have BEAM, even if zero
+    assets.insert(Asset::s_BeamID);
+
+    for(const auto& status: m_status.all)
+    {
+        const auto& totals = status.second;
+        if (totals.available != Zero || totals.maturing != Zero || totals.maturingMP != Zero ||
+            totals.receiving != Zero || totals.receivingChange != Zero || totals.receivingIncoming != Zero ||
+            totals.sending   != Zero || totals.shielded != Zero)
+        {
+            assets.insert(status.first);
+        }
+    }
+
+    return assets;
 }
 
-beam::Amount WalletModel::getReceiving() const
+beam::AmountBig::Type WalletModel::getAvailable(beam::Asset::ID id) const
 {
-    return m_status.GetBeamStatus().receiving;
+    const auto& status = m_status.GetStatus(id);
+
+    auto result = status.available;
+    result += status.shielded;
+
+    return result;
 }
 
-beam::Amount WalletModel::getReceivingIncoming() const
+
+beam::AmountBig::Type WalletModel::getAvailableRegular(beam::Asset::ID id) const
 {
-    return m_status.GetBeamStatus().receivingIncoming;
+    const auto& status = m_status.GetStatus(id);
+    return status.available;
 }
 
-beam::Amount WalletModel::getReceivingChange() const
+beam::AmountBig::Type WalletModel::getAvailableShielded(beam::Asset::ID id) const
 {
-    return m_status.GetBeamStatus().receivingChange;
+    const auto& status = m_status.GetStatus(id);
+    return status.shielded;
 }
 
-beam::Amount WalletModel::getSending() const
+beam::AmountBig::Type WalletModel::getReceiving(beam::Asset::ID id) const
 {
-    return m_status.GetBeamStatus().sending;
+    const auto& status = m_status.GetStatus(id);
+    return status.receiving;
 }
 
-beam::Amount WalletModel::getMaturing() const
+beam::AmountBig::Type WalletModel::getReceivingIncoming(beam::Asset::ID id) const
 {
-    return m_status.GetBeamStatus().maturing;
+    const auto& status = m_status.GetStatus(id);
+    return status.receivingIncoming;
 }
 
-beam::Amount WalletModel::getMaturingMP() const
+beam::AmountBig::Type WalletModel::getMatutingMP(beam::Asset::ID id) const
 {
-    return m_status.GetBeamStatus().maturingMP;
+    const auto& status = m_status.GetStatus(id);
+    return status.maturingMP;
+}
+
+beam::AmountBig::Type WalletModel::getShielded(beam::Asset::ID id) const
+{
+    const auto& status = m_status.GetStatus(id);
+    return status.shielded;
+}
+
+beam::AmountBig::Type WalletModel::getReceivingChange(beam::Asset::ID id) const
+{
+    const auto& status = m_status.GetStatus(id);
+    return status.receivingChange;
+}
+
+beam::AmountBig::Type WalletModel::getSending(beam::Asset::ID id) const
+{
+    const auto& status = m_status.GetStatus(id);
+    return status.sending;
+}
+
+beam::AmountBig::Type WalletModel::getMaturing(beam::Asset::ID id) const
+{
+    const auto& status = m_status.GetStatus(id);
+    return status.maturing;
 }
 
 beam::Height WalletModel::getCurrentHeight() const
@@ -383,69 +432,16 @@ beam::Block::SystemState::ID WalletModel::getCurrentStateID() const
     return m_status.stateID;
 }
 
-bool WalletModel::hasShielded() const
+bool WalletModel::hasShielded(beam::Asset::ID id) const
 {
-    return !!m_status.GetBeamStatus().shielded;
+    const auto& status = m_status.GetStatus(id);
+    return status.shielded != Zero;
 }
 
-void WalletModel::setStatus(const beam::wallet::WalletStatus& status)
+void WalletModel::onWalletStatusInternal(const beam::wallet::WalletStatus& newStatus)
 {
-    if (m_status.GetBeamStatus().available != status.GetBeamStatus().available ||
-        m_status.GetBeamStatus().shielded != status.GetBeamStatus().shielded)
-    {
-        m_status.all[Asset::s_BeamID].available = status.GetBeamStatus().available;
-        m_status.all[Asset::s_BeamID].shielded = status.GetBeamStatus().shielded;
-        emit availableChanged();
-    }
-
-    if (m_status.GetBeamStatus().receiving != status.GetBeamStatus().receiving)
-    {
-        m_status.all[Asset::s_BeamID].receiving = status.GetBeamStatus().receiving;
-        emit receivingChanged();
-    }
-
-    if (m_status.GetBeamStatus().receivingIncoming != status.GetBeamStatus().receivingIncoming)
-    {
-        m_status.all[Asset::s_BeamID].receivingIncoming = status.GetBeamStatus().receivingIncoming;
-        emit receivingIncomingChanged();
-    }
-
-    if (m_status.GetBeamStatus().receivingChange != status.GetBeamStatus().receivingChange)
-    {
-        m_status.all[Asset::s_BeamID].receivingChange = status.GetBeamStatus().receivingChange;
-        emit receivingChangeChanged();
-    }
-
-    if (m_status.GetBeamStatus().sending != status.GetBeamStatus().sending)
-    {
-        m_status.all[Asset::s_BeamID].sending = status.GetBeamStatus().sending;
-        emit sendingChanged();
-    }
-
-    if (m_status.GetBeamStatus().maturing != status.GetBeamStatus().maturing)
-    {
-        m_status.all[Asset::s_BeamID].maturing = status.GetBeamStatus().maturing;
-        emit maturingChanged();
-    }
-
-    if (m_status.GetBeamStatus().maturingMP != status.GetBeamStatus().maturingMP)
-    {
-        m_status.all[Asset::s_BeamID].maturingMP = status.GetBeamStatus().maturingMP;
-        emit maturingChanged();
-    }
-
-    if (m_status.shieldedTotalCount != status.shieldedTotalCount)
-    {
-        m_status.shieldedTotalCount = status.shieldedTotalCount;
-        emit shieldedTotalCountChanged();
-    }
-
-    if (m_status.stateID != status.stateID)
-    {
-        m_status.stateID = status.stateID;
-        m_status.update = status.update;
-        emit stateIDChanged();
-    }
+    m_status = newStatus;
+    emit walletStatusChanged();
 }
 
 void WalletModel::setAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addrs)

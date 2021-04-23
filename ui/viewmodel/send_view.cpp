@@ -15,20 +15,25 @@
 #include "model/app_model.h"
 #include "wallet/core/common.h"
 #include "wallet/core/simple_transaction.h"
-
 #include "ui_helpers.h"
 #include "qml_globals.h"
 #include "fee_helpers.h"
-
 #include <algorithm>
 #include <regex>
 #include <QLocale>
 
 namespace
 {
+    beam::AmountBig::Type getMaxInputAmount()
+    {
+        // not just const because can throw and this would cause compiler warning
+        beam::AmountBig::Type kMaxInputAmount = 10000000000000000U;
+        return kMaxInputAmount;
+    }
+
     void CopyParameter(beam::wallet::TxParameterID paramID, const beam::wallet::TxParameters& input, beam::wallet::TxParameters& dest)
     {
-        beam::wallet::ByteBuffer buf;
+        beam::ByteBuffer buf;
         if (input.GetParameter(paramID, buf))
         {
             dest.SetParameter(paramID, buf);
@@ -37,56 +42,94 @@ namespace
 }
 
 SendViewModel::SendViewModel()
-    : _feeGrothes(minimalFee(Currency::CurrBeam, false))
-    , _sendAmountGrothes(0)
-    , _changeGrothes(0)
-    , _walletModel(*AppModel::getInstance().getWallet())
-    , _minimalFeeGrothes(minimalFee(Currency::CurrBeam, false))
-    , _shieldedInputsFee(0)
+    : _walletModel(*AppModel::getInstance().getWalletModel())
+    , _amgr(AppModel::getInstance().getAssets())
 {
-    connect(&_walletModel, &WalletModel::changeCalculated, this, &SendViewModel::onChangeCalculated);
-    connect(&_walletModel, SIGNAL(sendMoneyVerified()), this, SIGNAL(sendMoneyVerified()));
-    connect(&_walletModel, SIGNAL(cantSendToExpired()), this, SIGNAL(cantSendToExpired()));
-    connect(&_walletModel, SIGNAL(availableChanged()), this, SIGNAL(availableChanged()));
-    connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyLabelChanged()));
-    connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
-    connect(&_walletModel, &WalletModel::shieldedCoinsSelectionCalculated, this, &SendViewModel::onShieldedCoinsSelectionCalculated);
-    connect(&_walletModel, &WalletModel::needExtractShieldedCoins, this, &SendViewModel::onNeedExtractShieldedCoins);
+    connect(&_walletModel,           &WalletModel::walletStatusChanged,        this,  &SendViewModel::balanceChanged);
+    connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,   this,  &SendViewModel::feeRateChanged);
+    connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged, this,  &SendViewModel::feeRateChanged);
+    connect(_amgr.get(),             &AssetsManager::assetsListChanged,        this,  &SendViewModel::assetsListChanged);
+    connect(&_walletModel,           &WalletModel::coinsSelectionCalculated,   this,  &SendViewModel::onSelectionCalculated);
+    connect(&_walletModel,           &WalletModel::sendMoneyVerified,          this,  &SendViewModel::sendMoneyVerified);
+    connect(&_walletModel,           &WalletModel::cantSendToExpired,          this,  &SendViewModel::cantSendToExpired);
 }
 
-unsigned int SendViewModel::getFeeGrothes() const
+beam::Amount SendViewModel::getTotalSpend() const
 {
-    return _feeGrothes;
-}
-
-unsigned int SendViewModel::getMinimalFeeGrothes() const
-{
-    return _minimalFeeGrothes;
-}
-
-void SendViewModel::setFeeGrothes(unsigned int value)
-{
-    if (value != _feeGrothes)
+    auto val = m_Csi.m_requestedSum;
+    if (!m_Csi.m_assetID)
     {
-        _feeGrothes = value;
-        emit feeGrothesChanged();
-        resetMinimalFee();
-
-        if (!_sendAmountGrothes || !_feeGrothes) return;
-
-        _feeChangedByUi = true;
-
-        if (_walletModel.hasShielded())
-        {
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes, beam::Asset::s_BeamID, _isShieldedTx);
-        }
-        else
-        {
-            _walletModel.getAsync()->calcChange(_sendAmountGrothes, _feeGrothes, beam::Asset::s_BeamID);
-            _feeChangedByUi = false;
-            emit canSendChanged();
-        }
+        val += m_Csi.get_TotalFee();
     }
+    return val;
+}
+
+int SendViewModel::getAssetId() const
+{
+    return static_cast<int>(m_Csi.m_assetID);
+}
+
+void SendViewModel::setAssetId(int value)
+{
+    auto valueId = value < 0 ? beam::Asset::s_BeamID : static_cast<beam::Asset::ID>(value);
+    if (m_Csi.m_assetID != valueId)
+    {
+        LOG_INFO () << "Selected asset id: " << value;
+        m_Csi.m_assetID = valueId;
+        emit assetIdChanged();
+        RefreshCsiAsync();
+    }
+}
+
+QString SendViewModel::getAssetRemaining() const
+{
+    beam::AmountBig::Type amount = getTotalSpend();
+    beam::AmountBig::Type available = _walletModel.getAvailable(m_Csi.m_assetID);
+
+    if (amount < available)
+    {
+        auto remaining = available;
+
+        amount.Negate();
+        remaining += amount;
+
+        return beamui::AmountBigToUIString(remaining);
+    }
+
+    return "0";
+}
+
+QString SendViewModel::getBeamRemaining() const
+{
+    if (m_Csi.m_assetID == beam::Asset::s_BeamID)
+    {
+        return getAssetRemaining();
+    }
+
+    const auto amount = m_Csi.m_explicitFee;
+    const auto available = beam::AmountBig::get_Lo(_walletModel.getAvailable(beam::Asset::s_BeamID));
+
+    if (amount < available)
+    {
+        return beamui::AmountToUIString(available - amount);
+    }
+
+    return "0";
+}
+
+QString SendViewModel::getFee() const
+{
+    return beamui::AmountToUIString(m_Csi.m_explicitFee);
+}
+
+QString SendViewModel::getChangeBeam() const
+{
+    return beamui::AmountBigToUIString(m_Csi.m_changeBeam);
+}
+
+QString SendViewModel::getChangeAsset() const
+{
+    return beamui::AmountBigToUIString(m_Csi.m_changeAsset);
 }
 
 QString SendViewModel::getComment() const
@@ -103,71 +146,72 @@ void SendViewModel::setComment(const QString& value)
     }
 }
 
-QString SendViewModel::getSendAmount() const
+QString SendViewModel::getFeeRateUnit() const
 {
-    LOG_DEBUG() << "ret Send amount grothes: " << _sendAmountGrothes << " 2ui: " << beamui::AmountToUIString(_sendAmountGrothes).toStdString();
-    return beamui::AmountToUIString(_sendAmountGrothes);
+    return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateCurrency());
 }
 
-void SendViewModel::setSendAmount(QString value)
+QString SendViewModel::getFeeRate() const
+{
+    auto rate = _exchangeRatesManager.getRate(beam::wallet::Currency::BEAM());
+    return beamui::AmountToUIString(rate);
+}
+
+bool SendViewModel::getIsEnough() const
+{
+    return m_Csi.m_isEnought;
+}
+
+QString SendViewModel::getSendAmount() const
+{
+    return beamui::AmountToUIString(m_Csi.m_requestedSum);
+}
+
+void SendViewModel::setSendAmount(const QString& value)
 {
     beam::Amount amount = beamui::UIStringToAmount(value);
-    if (amount != _sendAmountGrothes || _maxAvailable)
+    if (amount != m_Csi.m_requestedSum)
     {
-        if (!amount)
-        {
-            _sendAmountGrothes = amount;
-            emit sendAmountChanged();
-            resetMinimalFee();
-            onChangeCalculated(0);
-            _feeGrothes = _minimalFeeGrothes;
-            emit feeGrothesChanged();
-            return;
-        }
-
-        if (_walletModel.hasShielded())
-        {
-            if (amount < _sendAmountGrothes || _maxAvailable)
-            {
-                resetMinimalFee();
-                onChangeCalculated(0);
-                _feeGrothes = _minimalFeeGrothes;
-                emit feeGrothesChanged();
-            }
-            _sendAmountGrothes = amount;
-            emit sendAmountChanged();
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _feeGrothes, beam::Asset::s_BeamID, _isShieldedTx);
-        }
-        else
-        {
-            if (_maxAvailable) 
-            {
-                if(amount < _feeGrothes)
-                    amount = 0;
-                else
-                    amount -= _feeGrothes;
-            }
-            _sendAmountGrothes = amount;
-            emit sendAmountChanged();
-            _walletModel.getAsync()->calcChange(_sendAmountGrothes, _feeGrothes, beam::Asset::s_BeamID);
-            emit canSendChanged();
-            _maxAvailable = false;
-        }
+        _maxPossible = false;
+        m_Csi.m_requestedSum = amount;
+        RefreshCsiAsync();
     }
 }
 
-QString SendViewModel::getReceiverTA() const
+bool SendViewModel::canSend() const
 {
-    return _receiverTA;
+    if (QMLGlobals::isSwapToken(_token))
+    {
+        return false;
+    }
+
+    return getTokenValid() &&
+           m_Csi.m_requestedSum > 0 &&
+           m_Csi.m_isEnought;
 }
 
-void SendViewModel::setReceiverTA(const QString& value)
+QList<QMap<QString, QVariant>> SendViewModel::getAssetsList() const
 {
-    if (_receiverTA != value)
+    return _amgr->getAssetsList();
+}
+
+QString SendViewModel::getMaxSendAmount() const
+{
+    return beamui::AmountToUIString(m_Csi.get_NettoValue());
+}
+
+QString SendViewModel::getToken() const
+{
+    return _token;
+}
+
+void SendViewModel::setToken(const QString& value)
+{
+    if (_token != value)
     {
-        _tokenGeneratebByNewAppVersionMessage.clear();
-        _receiverTA = value;
-        emit receiverTAChanged();
+        _newTokenMsg.clear();
+        _token = value;
+        _choiceOffline = false;
 
         if (QMLGlobals::isSwapToken(value))
         {
@@ -176,544 +220,409 @@ void SendViewModel::setReceiverTA(const QString& value)
         }
         else
         {
-            if(getRreceiverTAValid())
-            {
-                extractParameters();
-            }
-            else
-            {
-                resetAddress();
-                setComment("");
-            }
-            emit canSendChanged();
+            extractParameters();
         }
-    }
-}
 
-bool SendViewModel::getRreceiverTAValid() const
-{
-    return QMLGlobals::isTAValid(_receiverTA);
-}
-
-QString SendViewModel::getReceiverAddress() const
-{
-    return _receiverAddress;
-}
-
-QString SendViewModel::getReceiverIdentity() const
-{
-    return _receiverIdentityStr;
-}
-
-bool SendViewModel::isShieldedTx() const
-{
-    return _isShieldedTx;
-}
-
-void SendViewModel::setIsShieldedTx(bool value)
-{
-    if (_isShieldedTx != value)
-    {
-        _isShieldedTx = value;
-        emit isShieldedTxChanged();
-        resetMinimalFee();
-
-        if (_walletModel.hasShielded() && _sendAmountGrothes)
-        {
-            if (_walletModel.getAvailable() - _sendAmountGrothes - _feeGrothes == 0)
-            {
-                setMaxAvailableAmount();
-            }
-            else
-            {
-                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _minimalFeeGrothes, beam::Asset::s_BeamID,  _isShieldedTx);
-            }
-        }
-        else
-        {
-            if (_walletModel.getAvailable() - _sendAmountGrothes - _feeGrothes == 0)
-            {
-                if (_sendAmountGrothes >= _minimalFeeGrothes)
-                {
-                    _sendAmountGrothes -= _minimalFeeGrothes;
-                }
-                emit sendAmountChanged();
-            }
-            setFeeGrothes(_minimalFeeGrothes);
-        }
-    }
-}
-
-bool SendViewModel::isPermanentAddress() const
-{
-    return _isPermanentAddress;
-}
-
-void SendViewModel::setIsPermanentAddress(bool value)
-{
-    if (_isPermanentAddress != value)
-    {
-        _isPermanentAddress = value;
-        emit isPermanentAddressChanged();
-    }
-}
-
-int SendViewModel::getOfflinePayments() const
-{
-    return _offlinePayments;
-}
-
-void SendViewModel::setOfflinePayments(int value)
-{
-    if (_offlinePayments != value)
-    {
-        _offlinePayments = value;
-        emit offlinePaymentsChanged();
+        emit tokenChanged();
+        emit choiceChanged();
         emit canSendChanged();
     }
 }
 
-bool SendViewModel::isOffline() const
+bool SendViewModel::getTokenValid() const
 {
-    return _isOffline;
+    return !_token.isEmpty() && QMLGlobals::isToken(_token);
 }
 
-void SendViewModel::setIsOffline(bool value)
+QString SendViewModel::getNewTokenMsg() const
 {
-    if (_isOffline != value)
+    return _newTokenMsg;
+}
+
+void SendViewModel::RefreshCsiAsync()
+{
+    if(m_Csi.m_requestedSum == 0UL)
     {
-        _isOffline = value;
-        emit isOfflineChanged();
-    }
-}
-
-bool SendViewModel::isMaxPrivacy() const
-{
-    return _isMaxPrivacy;
-}
-
-void SendViewModel::setIsMaxPrivacy(bool value)
-{
-    if (_isMaxPrivacy != value)
-    {
-        _isMaxPrivacy = value;
-        emit isMaxPrivacyChanged();
-    }
-}
-
-bool SendViewModel::isPublicOffline() const
-{
-    return _isPublicOffline;
-}
-
-void SendViewModel::setIsPublicOffline(bool value)
-{
-    if (_isPublicOffline != value)
-    {
-        _isPublicOffline = value;
-        emit isPublicOfflineChanged();
-    }
-}
-
-QString SendViewModel::getAvailable() const
-{
-    return  beamui::AmountToUIString(
-        isEnough() ? _walletModel.getAvailable() - _sendAmountGrothes - _feeGrothes - _changeGrothes : 0);
-}
-
-QString SendViewModel::getMissing() const
-{
-    return beamui::AmountToUIString(_sendAmountGrothes + _feeGrothes - _walletModel.getAvailable());
-}
-
-bool SendViewModel::isZeroBalance() const
-{
-    return _walletModel.getAvailable() == 0;
-}
-
-bool SendViewModel::isEnough() const
-{
-    return _walletModel.getAvailable() >= _sendAmountGrothes + _feeGrothes + _changeGrothes;
-}
-
-void SendViewModel::onChangeCalculated(beam::Amount change)
-{
-    _changeGrothes = change;
-    emit availableChanged();
-    emit canSendChanged();
-    emit isEnoughChanged();
-}
-
-void SendViewModel::onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes)
-{
-    if (!selectionRes.isEnought)
-    {
-        _maxWhatCanSelect = selectionRes.selectedSumBeam - selectionRes.selectedFee;
-        emit sendAmountChanged();
-    } else if (_maxWhatCanSelect)
-    {
-        _maxWhatCanSelect = 0;
-        emit sendAmountChanged();
+        // just reset everything to zero
+        return onSelectionCalculated(decltype(m_Csi)());
     }
 
-    _shieldedInputsFee = selectionRes.shieldedInputsFee;
+    using namespace beam::wallet;
+    const auto type = getTokenValid() ? GetAddressType(_token.toStdString()) : TxAddressType::Unknown;
+    bool isShielded = false;
 
-    if (!selectionRes.isEnought && _maxAvailable)
+    switch(type)
     {
-        _sendAmountGrothes = selectionRes.selectedSumBeam - selectionRes.selectedFee;
-        emit sendAmountChanged();
-        _maxAvailable = false;
+        case TxAddressType::PublicOffline:
+            isShielded = true;
+            break;
+
+        case TxAddressType::MaxPrivacy:
+            isShielded = true;
+            break;
+
+        case TxAddressType::Offline:
+            isShielded = _choiceOffline;
+            break;
+
+        case TxAddressType::Regular:
+            isShielded = false;
+            break;
+
+        default:
+            isShielded = false;
+            break;
     }
 
-    _minimalFeeGrothes = std::max(_minimalFeeGrothes, selectionRes.minimalFee);
-    emit minimalFeeGrothesChanged();
 
-    if (!_feeChangedByUi)
-    {
-        _feeGrothes = selectionRes.selectedFee;
-        emit feeGrothesChanged();
-    }
-    _feeChangedByUi = false;
-
-    onChangeCalculated(selectionRes.changeBeam);
+    _walletModel.getAsync()->calcShieldedCoinSelectionInfo(
+            m_Csi.m_requestedSum,
+            0,
+            m_Csi.m_assetID,
+            isShielded);
 }
 
-void SendViewModel::onNeedExtractShieldedCoins(bool val)
-{
-    if (_isNeedExtractShieldedCoins != val)
-    {
-        _isNeedExtractShieldedCoins = val;
-        emit isNeedExtractShieldedCoinsChanged();
-    }
-}
-
-void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
-{
-    if (address)
-    {
-        setComment(QString::fromStdString(address->m_label));
-    }
-    else
-    {
-        setComment("");
-    }
-
-    setWalletAddress(address);
-    setOfflinePayments(offlinePayments);
-
-
-}
-
-QString SendViewModel::getChange() const
-{
-    return beamui::AmountToUIString(_changeGrothes);
-}
-
-QString SendViewModel::getFee() const
-{
-    return beamui::AmountToUIString(_feeGrothes);
-}
-
-QString SendViewModel::getTotalUTXO() const
-{
-    return beamui::AmountToUIString(_sendAmountGrothes + _feeGrothes + _changeGrothes);
-}
-
-bool SendViewModel::canSend() const
-{
-    return !QMLGlobals::isSwapToken(_receiverTA) && getRreceiverTAValid()
-        && _sendAmountGrothes > 0 && isEnough()
-        && isFeeOK(_feeGrothes, Currency::CurrBeam, isShieldedTx() || _isNeedExtractShieldedCoins)
-        && _feeGrothes >= _minimalFeeGrothes
-        && (!isShieldedTx() || !isOffline() || getOfflinePayments() > 0)
-        ;// && !(isShieldedTx() && isOwnAddress());
-}
-
-bool SendViewModel::isToken() const
-{
-    return _isToken;
-}
-
-void SendViewModel::setIsToken(bool value)
-{
-    if (_isToken != value)
-    {
-        _isToken = value;
-        emit isTokenChanged();
-    }
-}
-
-bool SendViewModel::isOwnAddress() const
-{
-    return _walletModel.isOwnAddress(_receiverWalletID);
-}
-
-void SendViewModel::setMaxAvailableAmount()
-{
-    _maxAvailable = true;
-    setSendAmount(beamui::AmountToUIString(_walletModel.getAvailable()));
-}
-
-void SendViewModel::sendMoney()
+QString SendViewModel::getTokenType() const
 {
     using namespace beam::wallet;
-    assert(canSend());
-    if(canSend())
+    const auto type = getTokenValid() ? GetAddressType(_token.toStdString()) : TxAddressType::Unknown;
+
+    switch(type)
     {
-        // TODO:SWAP show 'operation in process' animation here?
-        auto messageString = _comment.toStdString();
-        saveReceiverAddress(_comment);
+        case TxAddressType::PublicOffline:
+            //% "Public offline address"
+            return qtTrId("send-public-token");
 
-        auto params = CreateSimpleTransactionParameters();
-        LoadReceiverParams(_txParameters, params);
-        params.SetParameter(TxParameterID::Amount, _sendAmountGrothes)
-              // fee for shielded inputs included automaticaly
-              .SetParameter(TxParameterID::Fee, _feeGrothes - _shieldedInputsFee)
-              .SetParameter(TxParameterID::Message, beam::ByteBuffer(messageString.begin(), messageString.end()));
+        case TxAddressType::MaxPrivacy:
+            //% "Max privacy address"
+            return qtTrId("send-maxp-token");
 
-        params.SetParameter(TxParameterID::TransactionType, isShieldedTx() ? TxType::PushTransaction : TxType::Simple);
-        if (isMaxPrivacy())
-        {
-            CopyParameter(TxParameterID::Voucher, _txParameters, params);
-            const auto& settings = AppModel::getInstance().getSettings();
-            params.SetParameter(TxParameterID::MaxPrivacyMinAnonimitySet, settings.getMaxPrivacyAnonymitySet());
-        }
-        if (isShieldedTx())
-        {
-            CopyParameter(TxParameterID::PeerOwnID, _txParameters, params);
-        }
+        case TxAddressType::Offline:
+        case TxAddressType::Regular:
+            //% "Regular address"
+            return qtTrId("send-regular-token");
 
-        if (isToken())
-        {
-            params.SetParameter(TxParameterID::OriginalToken, _receiverTA.toStdString());
-        }
-
-        _walletModel.getAsync()->startTransaction(std::move(params));
+        default:
+            //% "Unknown address"
+            return qtTrId("send-unknown-token");
     }
+}
+
+bool SendViewModel::getCanChoose() const
+{
+    using namespace beam::wallet;
+    const auto type = getTokenValid() ? GetAddressType(_token.toStdString()) : TxAddressType::Unknown;
+    return type == TxAddressType::Offline;
+}
+
+bool SendViewModel::getChoiceOffline() const
+{
+    return _choiceOffline;
+}
+
+void SendViewModel::setChoiceOffline(bool value)
+{
+    if (_choiceOffline != value)
+    {
+        _choiceOffline = value;
+        emit choiceChanged();
+        RefreshCsiAsync();
+    }
+}
+
+void SendViewModel::setMaxPossibleAmount()
+{
+    const auto amount = _walletModel.getAvailable(m_Csi.m_assetID);
+    const auto maxAmount = std::min(amount, getMaxInputAmount());
+
+    _maxPossible = true;
+    m_Csi.m_requestedSum = beam::AmountBig::get_Lo(maxAmount);
+
+    RefreshCsiAsync();
+}
+
+void SendViewModel::onSelectionCalculated(const beam::wallet::CoinsSelectionInfo& selectionRes)
+{
+    if (selectionRes.m_requestedSum != m_Csi.m_requestedSum || selectionRes.m_assetID != m_Csi.m_assetID)
+    {
+        return;
+    }
+
+    m_Csi = selectionRes;
+    if (!m_Csi.m_isEnought && _maxPossible)
+    {
+        m_Csi.m_requestedSum = m_Csi.get_NettoValue();
+        m_Csi.m_isEnought = true;
+    }
+
+    emit balanceChanged();
+    emit canSendChanged();
 }
 
 void SendViewModel::saveReceiverAddress(const QString& name)
 {
     using namespace beam::wallet;
     QString trimmed = name.trimmed();
+
     if (!_walletModel.isOwnAddress(_receiverWalletID))
     {
         WalletAddress address;
-        address.m_walletID = _receiverWalletID;
-        address.m_createTime = getTimestamp();
-        address.m_Identity = _receiverIdentity;
-        address.m_label = trimmed.toStdString();
-        address.m_duration = WalletAddress::AddressExpirationNever;
-        address.m_Address = _receiverTA.toStdString();
-        _walletModel.getAsync()->saveAddress(address, false);
+        address.m_walletID   = _receiverWalletID;
+        address.m_createTime = beam::getTimestamp();
+        address.m_Identity   = _receiverIdentity;
+        address.m_label      = trimmed.toStdString();
+        address.m_duration   = WalletAddress::AddressExpirationNever;
+        address.m_Address    = _token.toStdString();
+        _walletModel.getAsync()->saveAddress(address);
     }
     else
     {
-        _walletModel.getAsync()->getAddress(_receiverWalletID, [this, trimmed](const boost::optional<WalletAddress>& addr, size_t c)
+        if (_receiverWalletID.IsValid())
         {
-            WalletAddress address = *addr;
-            address.m_label = trimmed.toStdString();
-            _walletModel.getAsync()->saveAddress(address, true);
-        });
+            _walletModel.getAsync()->getAddress(_receiverWalletID, [this, trimmed](const boost::optional<WalletAddress>& addr, size_t c)
+            {
+                WalletAddress address = *addr;
+                address.m_label = trimmed.toStdString();
+                _walletModel.getAsync()->saveAddress(address);
+            });
+        }
+        else
+        {
+            // Max privacy & public offline tokens do not have valid PeerID (_receiverWalletID)
+            _walletModel.getAsync()->getAddressByToken(_token.toStdString(), [this, trimmed](const boost::optional<WalletAddress>& addr, size_t c)
+            {
+                WalletAddress address = *addr;
+                address.m_label = trimmed.toStdString();
+                _walletModel.getAsync()->saveAddress(address);
+            });
+        }
+    }
+}
+
+void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
+{
+    using namespace beam::wallet;
+
+    if (address)
+    {
+        setComment(QString::fromStdString(address->m_label));
+
+        [[maybe_unused]] const auto type = GetAddressType(address->m_Address);
+        if (_receiverWalletID != beam::Zero)
+        {
+            if (_receiverWalletID != address->m_walletID)
+            {
+                assert(!"unexpected wallet id in send::onGetAddressReturned");
+                throw std::runtime_error("unexpected walletID in send::onGetAddressReturned");
+            }
+        }
+        else
+        {
+            assert(type == TxAddressType::MaxPrivacy || type == TxAddressType::PublicOffline);
+            _receiverWalletID = address->m_walletID; // our maxprivacy will have id in db
+        }
+
+        if (_receiverIdentity != beam::Zero)
+        {
+            if (_receiverIdentity != address->m_Identity)
+            {
+                assert(!"unexpected identity in send::onGetAddressReturned");
+                throw std::runtime_error("unexpected identity in send::onGetAddressReturned");
+            }
+        }
+        else
+        {
+            assert(
+                   type == TxAddressType::PublicOffline ||
+                  (type == TxAddressType::Regular && _token.toStdString() == std::to_string(_receiverWalletID))
+            );
+        }
+    }
+    else
+    {
+        setComment("");
     }
 }
 
 void SendViewModel::extractParameters()
 {
     using namespace beam::wallet;
-    auto txParameters = ParseParameters(_receiverTA.toStdString());
+
+    auto txParameters = ParseParameters(_token.toStdString());
     if (!txParameters)
     {
         return;
     }
 
-    _txParameters = *txParameters;
-
-    resetAddress();
+    _txParameters     = *txParameters;
+    _receiverWalletID = beam::Zero;
+    _receiverIdentity = beam::Zero;
+    _newTokenMsg      = QString();
 
     if (auto peerID = _txParameters.GetParameter<WalletID>(TxParameterID::PeerID); peerID)
     {
         _receiverWalletID = *peerID;
-        _receiverAddress = QString::fromStdString(std::to_string(*peerID));
-        setIsToken(_receiverTA != _receiverAddress);
-        emit receiverAddressChanged();
-    }
-    else
-    {
-        _receiverWalletID = Zero;
-        _receiverAddress = "";
-        setIsToken(true);
-        emit receiverAddressChanged();
+        if (_receiverWalletID != beam::Zero)
+        {
+            if(auto vouchers = _txParameters.GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList); vouchers)
+            {
+                if (!vouchers->empty())
+                {
+                    _walletModel.getAsync()->saveVouchers(*vouchers, _receiverWalletID);
+                }
+            }
+        }
     }
 
     if (auto peerIdentity = _txParameters.GetParameter<beam::PeerID>(TxParameterID::PeerWalletIdentity); peerIdentity)
     {
         _receiverIdentity = *peerIdentity;
-        _receiverIdentityStr = QString::fromStdString(std::to_string(*peerIdentity));
-        emit receiverIdentityChanged();
-    }
-
-    if (auto isPermanent = _txParameters.GetParameter<bool>(TxParameterID::IsPermanentPeerID); isPermanent)
-    {
-        setIsPermanentAddress(*isPermanent);
-    }
-
-    if (auto txType = _txParameters.GetParameter<TxType>(TxParameterID::TransactionType); txType && *txType == TxType::PushTransaction)
-    {
-        setIsShieldedTx(true);
-        auto vouchers = _txParameters.GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList);
-        if (vouchers && !vouchers->empty())
-        {
-            if (_receiverWalletID != Zero)
-            {
-                _walletModel.getAsync()->saveVouchers(*vouchers, _receiverWalletID);
-            }
-            setIsOffline(true);
-        }
-        else
-        {
-            auto gen = _txParameters.GetParameter<ShieldedTxo::PublicGen>(TxParameterID::PublicAddreessGen);
-            if (gen)
-            {
-                setIsPublicOffline(true);
-            }
-        }
-        
-        ShieldedTxo::Voucher voucher;
-        setIsMaxPrivacy(_txParameters.GetParameter(TxParameterID::Voucher, voucher) && _receiverIdentity != Zero);
     }
 
     if (auto amount = _txParameters.GetParameter<beam::Amount>(TxParameterID::Amount); amount && *amount > 0)
     {
-        setSendAmount(beamui::AmountToUIString(*amount));
-    }
-    if (auto fee = _txParameters.GetParameter<beam::Amount>(TxParameterID::Fee); fee)
-    {
-        setFeeGrothes(*fee);
-    }
-    if (auto comment = _txParameters.GetParameter<ByteBuffer>(TxParameterID::Message); comment)
-    {
-        std::string s(comment->begin(), comment->end());
-        setComment(QString::fromStdString(s));
+        m_Csi.m_requestedSum = *amount;
     }
 
-    if (_receiverWalletID != Zero)
+    if (auto assetId = _txParameters.GetParameter<beam::Asset::ID>(TxParameterID::AssetID); assetId)
+    {
+        if (_amgr->hasAsset(*assetId))
+        {
+            m_Csi.m_assetID = *assetId;
+            emit assetIdChanged();
+        }
+    }
+
+    if (auto comment = _txParameters.GetParameter<beam::ByteBuffer>(TxParameterID::Message); comment)
+    {
+        _comment = QString::fromStdString(std::string(comment->begin(), comment->end()));
+        emit commentChanged();
+    }
+
+    if (_receiverWalletID.IsValid())
     {
         _walletModel.getAsync()->getAddress(_receiverWalletID, [this](const boost::optional<WalletAddress>& addr, size_t c)
         {
-            onGetAddressReturned(addr, (int)c);
+            onGetAddressReturned(addr, static_cast<int>(c));
         });
     }
     else
     {
-        _walletModel.getAsync()->getAddress(_receiverTA.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
+        // Max privacy & public offline tokens do not have valid PeerID (_receiverWalletID)
+        _walletModel.getAsync()->getAddressByToken(_token.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
         {
-            onGetAddressReturned(addr, (int)c);
+            onGetAddressReturned(addr, static_cast<int>(c));
         });
     }
-    
-
-    _tokenGeneratebByNewAppVersionMessage.clear();
 
     ProcessLibraryVersion(_txParameters, [this](const auto& version, const auto& myVersion)
     {
 /*% "This address generated by newer Beam library version(%1)
 Your version is: %2. Please, check for updates."
 */
-        _tokenGeneratebByNewAppVersionMessage = qtTrId("address-newer-lib")
+        _newTokenMsg = qtTrId("address-newer-lib")
             .arg(version.c_str())
             .arg(myVersion.c_str());
-        emit tokenGeneratebByNewAppVersion();
     });
 
-#ifdef BEAM_CLIENT_VERSION
+    #ifdef BEAM_CLIENT_VERSION
     ProcessClientVersion(_txParameters, AppModel::getMyName(), BEAM_CLIENT_VERSION, [this](const auto& version, const auto& myVersion)
     {
 /*% "This address generated by newer Beam client version(%1)
 Your version is: %2. Please, check for updates."
 */
-        _tokenGeneratebByNewAppVersionMessage = qtTrId("address-newer-client")
+        _newTokenMsg = qtTrId("address-newer-client")
             .arg(version.c_str())
             .arg(myVersion.c_str());
-        emit tokenGeneratebByNewAppVersion();
+
     });
-#endif // BEAM_CLIENT_VERSION
+    #endif // BEAM_CLIENT_VERSION
+
+    emit tokenChanged();
+    RefreshCsiAsync();
 }
 
-QString SendViewModel::getSecondCurrencyLabel() const
+void SendViewModel::sendMoney()
 {
-    return beamui::getCurrencyLabel(_exchangeRatesManager.getRateUnitRaw());
-}
+    using namespace beam::wallet;
 
-QString SendViewModel::getSecondCurrencyRateValue() const
-{
-    auto rate = _exchangeRatesManager.getRate(beam::wallet::ExchangeRate::Currency::Beam);
-    return beamui::AmountToUIString(rate);
-}
-
-bool SendViewModel::isNeedExtractShieldedCoins() const
-{
-    return _isNeedExtractShieldedCoins;
-}
-
-bool SendViewModel::isTokenGeneratebByNewAppVersion() const
-{
-    return !_tokenGeneratebByNewAppVersionMessage.isEmpty();
-}
-
-QString SendViewModel::tokenGeneratebByNewAppVersionMessage() const
-{
-    return _tokenGeneratebByNewAppVersionMessage;
-}
-
-bool SendViewModel::hasAddress() const
-{
-    return _receiverWalletAddress.is_initialized();
-}
-
-void SendViewModel::setWalletAddress(const boost::optional<beam::wallet::WalletAddress>& value)
-{
-    if (_receiverWalletAddress != value)
+    if (!canSend())
     {
-        _receiverWalletAddress = value;
-        emit hasAddressChanged();
+        assert(false);
+        return;
     }
+
+    auto messageString = _comment.toStdString();
+    saveReceiverAddress(_comment);
+
+    auto params = CreateSimpleTransactionParameters();
+    const auto type = GetAddressType(_token.toStdString());
+
+    if (type == TxAddressType::Unknown)
+    {
+        assert(false);
+        return;
+    }
+
+    if (type == TxAddressType::MaxPrivacy || type == TxAddressType::PublicOffline || (type == TxAddressType::Offline && _choiceOffline))
+    {
+        if (!LoadReceiverParams(_txParameters, params, type))
+        {
+            assert(false);
+            return;
+        }
+        CopyParameter(TxParameterID::PeerOwnID, _txParameters, params);
+    }
+    else
+    {
+        if(!LoadReceiverParams(_txParameters, params, TxAddressType::Regular))
+        {
+            assert(false);
+            return;
+        }
+    }
+
+    params.SetParameter(TxParameterID::Amount, m_Csi.m_requestedSum)
+          // fee for shielded inputs would be included automatically
+          .SetParameter(TxParameterID::Fee, m_Csi.m_explicitFee)
+          .SetParameter(TxParameterID::AssetID, m_Csi.m_assetID)
+          .SetParameter(TxParameterID::Message, beam::ByteBuffer(messageString.begin(), messageString.end()));
+
+    if (type == TxAddressType::MaxPrivacy)
+    {
+        CopyParameter(TxParameterID::Voucher, _txParameters, params);
+        const auto& settings = AppModel::getInstance().getSettings();
+        params.SetParameter(TxParameterID::MaxPrivacyMinAnonimitySet, settings.getMaxPrivacyAnonymitySet());
+    }
+
+    params.SetParameter(TxParameterID::OriginalToken, _token.toStdString());
+    _walletModel.getAsync()->startTransaction(std::move(params));
 }
 
-bool SendViewModel::canSendByOneTransaction() const
+QString SendViewModel::getSendType() const
 {
-    return !_maxWhatCanSelect || _maxWhatCanSelect >= _sendAmountGrothes;
+    return beamui::GetTokenTypeUIString(_token.toStdString(), _choiceOffline);
 }
 
-QString SendViewModel::getMaxSendAmount() const
+bool SendViewModel::getSendTypeOnline() const
 {
-    return beamui::AmountToUIString(_maxWhatCanSelect);
-}
+    using namespace beam::wallet;
+    const auto type = GetAddressType(_token.toStdString());
 
-void SendViewModel::resetMinimalFee()
-{
-    _minimalFeeGrothes = minimalFee(Currency::CurrBeam, _isShieldedTx);
-    emit minimalFeeGrothesChanged();
-    _shieldedInputsFee = 0;
-}
+    if (type == TxAddressType::Offline && _choiceOffline)
+    {
+        return false;
+    }
 
-void SendViewModel::resetAddress()
-{
-    setIsToken(false);
-    setIsShieldedTx(false);
-    setIsOffline(false);
-    setIsMaxPrivacy(false);
-    setIsPublicOffline(false);
-    setIsPermanentAddress(false);
-    onNeedExtractShieldedCoins(false);
-    setWalletAddress({});
-    setOfflinePayments(0);
+    if (type == TxAddressType::PublicOffline)
+    {
+        return false;
+    }
 
-    _receiverAddress.clear();
-    _receiverWalletID = beam::Zero;
-    _receiverIdentity = beam::Zero;
-    _receiverIdentityStr.clear();
+    if (type == TxAddressType::MaxPrivacy)
+    {
+        return false;
+    }
 
-    emit receiverAddressChanged();
-    emit receiverIdentityChanged();
+    return true;
 }

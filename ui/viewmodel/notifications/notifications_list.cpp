@@ -13,10 +13,12 @@
 // limitations under the License.
 
 #include "notifications_list.h"
-#include <QLocale>
+#include "model/app_model.h"
 
 NotificationsList::NotificationsList()
 {
+    _amgr = AppModel::getInstance().getAssets();
+    connect(_amgr.get(), &AssetsManager::assetInfo, this, &NotificationsList::onAssetInfo);
 }
 
 QHash<int, QByteArray> NotificationsList::roleNames() const
@@ -47,9 +49,9 @@ QVariant NotificationsList::data(const QModelIndex &index, int role) const
     switch (static_cast<Roles>(role))
     {
         case Roles::TimeCreated:
-            return value->timeCreated().time().toString(QLocale::system().timeFormat(QLocale::ShortFormat));
+            return value->timeCreated().time().toString(m_locale.timeFormat(QLocale::ShortFormat));
         case Roles::DateCreated:
-            return value->timeCreated().date().toString(QLocale::system().dateFormat(QLocale::ShortFormat));
+            return value->timeCreated().date().toString(m_locale.dateFormat(QLocale::ShortFormat));
         case Roles::TimeCreatedSort:
         {
             auto t = value->getTimestamp();
@@ -63,7 +65,7 @@ QVariant NotificationsList::data(const QModelIndex &index, int role) const
             return value->title();
 
         case Roles::Message:
-            return value->message();
+            return value->message(_amgr);
 
         case Roles::Type:
             return value->type();
@@ -76,5 +78,15 @@ QVariant NotificationsList::data(const QModelIndex &index, int role) const
 
         default:
             return QVariant();
+    }
+}
+
+void NotificationsList::onAssetInfo(beam::Asset::ID assetId)
+{
+    for (auto it = m_list.begin(); it != m_list.end(); ++it) {
+        if ((*it)->assetId() == assetId) {
+           const auto idx = it - m_list.begin();
+           ListModel::touch(idx);
+        }
     }
 }

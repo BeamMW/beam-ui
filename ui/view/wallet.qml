@@ -6,6 +6,7 @@ import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
 import Beam.Wallet 1.0
 import "controls"
+import "wallet"
 import "utils.js" as Utils
 
 Item {
@@ -36,23 +37,26 @@ Item {
         }
         Connections {
             target: tokenDuplicateChecker.model
-            onTokenPreviousAccepted: function(token) {
-                tokenDuplicateChecker.isOwn = false;
-                tokenDuplicateChecker.open();
+
+            function onTokenPreviousAccepted (token) {
+                tokenDuplicateChecker.isOwn = false
+                tokenDuplicateChecker.open()
             }
-            onTokenFirstTimeAccepted: function(token) {
-                walletStackView.pop();
+
+            function onTokenFirstTimeAccepted (token) {
+                walletStackView.pop()
                 walletStackView.push(Qt.createComponent("send_swap.qml"),
                                      {
                                          "onAccepted": tokenDuplicateChecker.onAccepted,
-                                         "onClosed": onClosed,
-                                         "swapToken": token
-                                     });
-                walletStackView.currentItem.validateCoin();
+                                         "onClosed":   onClosed,
+                                         "swapToken":  token
+                                     })
+                walletStackView.currentItem.validateCoin()
             }
-            onTokenOwnGenerated: function(token) {
-                tokenDuplicateChecker.isOwn = true;
-                tokenDuplicateChecker.open();
+
+            function onTokenOwnGenerated (token) {
+                tokenDuplicateChecker.isOwn = true
+                tokenDuplicateChecker.open()
             }
         }
     }
@@ -77,21 +81,23 @@ Item {
             Layout.fillHeight: true
             spacing: 0
 
-            function navigateSend() {
+            function navigateSend(assetId) {
+                assetId = assetId && assetId >= 0 ? assetId : 0
                 walletStackView.push(Qt.createComponent("send_regular.qml"),
-                                             {"onAccepted":      onAccepted,
-                                              "onClosed":        onClosed,
-                                              "onSwapToken":     onSwapToken,
-                                              "receiverAddress": token});
-                token = "";
+                                         {"onAccepted":     onAccepted,
+                                          "onClosed":       onClosed,
+                                          "onSwapToken":    onSwapToken,
+                                          "receiverToken":  root.token,
+                                          "assetId":        assetId})
+                root.token = ""
             }
 
-            function navigateReceive() {
-                walletStackView.push(Qt.createComponent("receive_regular.qml"), 
-                                                {"onClosed": onClosed,
-                                                 "token":    token
-                                                });
-                token = "";
+            function navigateReceive(assetId) {
+                walletStackView.push(Qt.createComponent("receive_regular.qml"),
+                                        {"onClosed": onClosed,
+                                         "token":    root.token,
+                                         "assetId":  assetId})
+                token = ""
             }
 
             Row {
@@ -110,7 +116,7 @@ Item {
                     font.pixelSize: 12
                     //font.capitalization: Font.AllUppercase
                     onClicked: {
-                        navigateSend();
+                        navigateSend(assets.selectedId);
                     }
                 }
 
@@ -124,45 +130,31 @@ Item {
                     font.pixelSize: 12
                     //font.capitalization: Font.AllUppercase
                     onClicked: {
-                        navigateReceive();
+                        navigateReceive(assets.selectedId);
                     }
                 }
             }
 
-            MaxPrivacyCoinsDialog {
-                id: mpDialog
-                locked:                     viewModel.beamLockedMaturingMP
-                secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
-            }
+            AssetsPanel {
+                id: assets
+                Layout.topMargin: 25
+                Layout.fillWidth: true
 
-            AvailablePanel {
-                Layout.topMargin:      29
-                Layout.maximumHeight:  80
-                Layout.minimumHeight:  80
-                Layout.preferredWidth: parseFloat(viewModel.beamSending) > 0 || parseFloat(viewModel.beamReceiving) > 0 ? parent.width : (parent.width / 2)
-
-                available:                  viewModel.beamAvailable
-                locked:                     viewModel.beamLocked
-                lockedMaturing:             viewModel.beamLockedMaturing
-                lockedMaturingMP:           viewModel.beamLockedMaturingMP
-                sending:                    viewModel.beamSending
-                receiving:                  viewModel.beamReceiving
-                receivingChange:            viewModel.beamReceivingChange
-                receivingIncoming:          viewModel.beamReceivingIncoming
-                secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                secondCurrencyRateValue:    viewModel.secondCurrencyRateValue
+                Binding {
+                    target:    txTable
+                    property:  "selectedAsset"
+                    value:     assets.selectedId
+                }
             }
 
             SFText {
-                Layout.topMargin: 45
-                Layout.alignment: Qt.AlignTop
-                Layout.fillWidth : true
+                Layout.topMargin: assets.folded ? 25 : 35
+                Layout.fillWidth: true
 
                 font {
                     pixelSize: 14
                     letterSpacing: 4
-                    styleName: "Bold"; weight: Font.Bold
+                    styleName: "DemiBold"; weight: Font.DemiBold
                     capitalization: Font.AllUppercase
                 }
 
@@ -173,6 +165,8 @@ Item {
             }
 
             TxTable {
+                id: txTable
+
                 Layout.topMargin:  12
                 Layout.fillWidth:  true
                 Layout.fillHeight: true
@@ -210,7 +204,8 @@ Item {
                 item.navigateSend();
                 root.openSend = false;
             }
-        } else if (root.openReceive) {
+        }
+        else if (root.openReceive) {
             var item = walletStackView.currentItem;
             if (item && item.navigateReceive && typeof item.navigateReceive == "function" ) {
                 item.navigateReceive();
@@ -226,4 +221,3 @@ Item {
         }
     }
 }
-

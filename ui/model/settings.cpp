@@ -46,13 +46,15 @@ namespace
     const char* kLocalNodePort = "localnode/port";
     const char* kLocalNodePeers = "localnode/peers";
     const char* kLocalNodePeersPersistent = "localnode/peers_persistent";
-
     const char* kDefaultLocale = "en_US";
-    const char* kDefaultAmountUnit = beam::wallet::usdCurrencyStr.data();
 
     const char* kNewVersionActive = "notifications/software_release";
     const char* kBeamNewsActive = "notifications/beam_news";
     const char* kTxStatusActive = "notifications/tx_status";
+
+    const char* kDevAppURL    = "devapp/url";
+    const char* kDevAppName   = "devapp/name";
+    const char* kDevAppApiVer = "devapp/api_version";
 
     const char* kMpAnonymitySet = "max_privacy/anonymity_set";
 
@@ -78,17 +80,26 @@ namespace
         { "ko_KR", "한국어"}
     };
 
-    const std::vector<QString> kSupportedAmountUnits {
-        beam::wallet::noSecondCurrencyStr.data(),
-        beam::wallet::usdCurrencyStr.data(),
-        beam::wallet::btcCurrencyStr.data()
-    };
-
     const vector<string> kOutDatedPeers = beam::getOutdatedDefaultPeers();
     bool isOutDatedPeer(const string& peer)
     {
         return find(kOutDatedPeers.begin(), kOutDatedPeers.end(), peer) !=
                kOutDatedPeers.end();
+    }
+
+    const beam::wallet::Currency& getDefaultRateUnit()
+    {
+        return beam::wallet::Currency::USD();
+    }
+
+    const std::vector<beam::wallet::Currency>& getSupportedRateUnits()
+    {
+        static const std::vector<beam::wallet::Currency> supportedUnits {
+            beam::wallet::Currency::UNKNOWN(),
+            beam::wallet::Currency::USD(),
+            beam::wallet::Currency::BTC()
+        };
+        return supportedUnits;
     }
 
     const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
@@ -107,6 +118,8 @@ WalletSettings::WalletSettings(const QDir& appDataDir)
     : m_data{ appDataDir.filePath(SettingsFile), QSettings::IniFormat }
     , m_appDataDir{appDataDir}
 {
+    LOG_INFO () << "UI Settings file: " << m_data.fileName().toStdString()
+                << "\n\tApp Name: " << m_data.value(kDevAppName).toString().toStdString();
 }
 
 #if defined(BEAM_HW_WALLET)
@@ -150,7 +163,7 @@ void WalletSettings::setNodeAddress(const QString& addr)
 {
     if (addr != getNodeAddress())
     {
-        auto walletModel = AppModel::getInstance().getWallet();
+        auto walletModel = AppModel::getInstance().getWalletModel();
         if (walletModel)
         {
             walletModel->getAsync()->setNodeAddress(addr.toStdString());
@@ -366,17 +379,19 @@ void WalletSettings::setLocaleByLanguageName(const QString& language)
     emit localeChanged();
 }
 
-QString WalletSettings::getSecondCurrency() const
+beam::wallet::Currency WalletSettings::getRateCurrency() const
 {
+    const auto& defaultUnit = getDefaultRateUnit();
+    const auto& supportedUnits = getSupportedRateUnits();
     Lock lock(m_mutex);
-    QString savedAmountUnit = m_data.value(kRateUnit, kDefaultAmountUnit).toString();
 
-    const auto it = find(std::begin(kSupportedAmountUnits),
-                         std::cend(kSupportedAmountUnits),
-                         savedAmountUnit);
-    if (it == std::cend(kSupportedAmountUnits))
+    auto rawUnitValue = m_data.value(kRateUnit, QString::fromStdString(defaultUnit.m_value)).toString();
+    beam::wallet::Currency savedAmountUnit(rawUnitValue.toStdString());
+
+    const auto it = find(std::begin(supportedUnits), std::cend(supportedUnits), savedAmountUnit);
+    if (it == std::cend(supportedUnits))
     {
-        return kDefaultAmountUnit;
+        return defaultUnit;
     }
     else
     {
@@ -384,19 +399,16 @@ QString WalletSettings::getSecondCurrency() const
     }
 }
 
-void WalletSettings::setSecondCurrency(const QString& name)
+void WalletSettings::setRateCurrency(const beam::wallet::Currency& curr)
 {
-    const auto& it = std::find(
-            kSupportedAmountUnits.begin(),
-            kSupportedAmountUnits.end(),
-            name);
-    auto unitName = 
-            it != kSupportedAmountUnits.end()
-                ? name
-                : QString::fromUtf8(kDefaultAmountUnit);
+    const auto& supportedUnits = getSupportedRateUnits();
+
+    const auto& it = std::find(supportedUnits.begin(), supportedUnits.end(), curr);
+    auto unit = it != supportedUnits.end() ? curr : getDefaultRateUnit();
+
     {
         Lock lock(m_mutex);
-        m_data.setValue(kRateUnit, unitName);
+        m_data.setValue(kRateUnit, QString::fromStdString(unit.m_value));
         emit secondCurrencyChanged();
     }
 }
@@ -423,7 +435,7 @@ void WalletSettings::setNewVersionActive(bool isActive)
 {
     if (isActive != isNewVersionActive())
     {
-        auto walletModel = AppModel::getInstance().getWallet();
+        auto walletModel = AppModel::getInstance().getWalletModel();
         if (walletModel)
         {
             walletModel->getAsync()->switchOnOffNotifications(
@@ -439,7 +451,7 @@ void WalletSettings::setBeamNewsActive(bool isActive)
 {
     if (isActive != isBeamNewsActive())
     {
-        auto walletModel = AppModel::getInstance().getWallet();
+        auto walletModel = AppModel::getInstance().getWalletModel();
         if (walletModel)
         {
             walletModel->getAsync()->switchOnOffNotifications(
@@ -455,7 +467,7 @@ void WalletSettings::setTxStatusActive(bool isActive)
 {
     if (isActive != isTxStatusActive())
     {
-        auto walletModel = AppModel::getInstance().getWallet();
+        auto walletModel = AppModel::getInstance().getWalletModel();
         if (walletModel)
         {
             auto asyncModel = walletModel->getAsync();
@@ -485,7 +497,7 @@ void WalletSettings::setMaxPrivacyAnonymitySet(uint8_t anonymitySet)
 
 void WalletSettings::maxPrivacyLockTimeLimitInit()
 {
-    auto walletModel = AppModel::getInstance().getWallet();
+    auto walletModel = AppModel::getInstance().getWalletModel();
     if (walletModel)
     {
         walletModel->getAsync()->getMaxPrivacyLockTimeLimitHours([this] (uint8_t limit)
@@ -506,7 +518,7 @@ void WalletSettings::setMaxPrivacyLockTimeLimitHours(uint8_t lockTimeLimit)
 {
     if (m_mpLockTimeLimit != lockTimeLimit)
     {
-        auto walletModel = AppModel::getInstance().getWallet();
+        auto walletModel = AppModel::getInstance().getWalletModel();
         if (walletModel)
         {
             {
@@ -529,18 +541,6 @@ QStringList WalletSettings::getSupportedLanguages()
                        return lang.second;
                    });
     return languagesNames;
-}
-
-// static
-QStringList WalletSettings::getSupportedRateUnits()
-{
-    QStringList unitNames;
-
-    for (const auto& n : kSupportedAmountUnits)
-    {
-        unitNames.append(n);
-    }
-    return unitNames;
 }
 
 // static
@@ -622,4 +622,78 @@ void WalletSettings::reportProblem()
 void WalletSettings::applyChanges()
 {
     AppModel::getInstance().applySettingsChanges();
+}
+
+QString WalletSettings::getDevBeamAppUrl()
+{
+    return m_data.value(kDevAppURL).toString();
+}
+
+QString WalletSettings::getDevBeamAppName()
+{
+    return m_data.value(kDevAppName).toString();
+}
+
+QString WalletSettings::getDevAppApiVer()
+{
+    return m_data.value(kDevAppApiVer).toString();
+}
+
+QString WalletSettings::getExplorerUrl() const
+{
+    #ifdef BEAM_BEAMX
+    return "https://beamx.explorer.beam.mw/";
+    #elif defined(BEAM_TESTNET)
+    return "https://testnet.explorer.beam.mw/";
+    #elif defined(BEAM_MAINNET)
+    return "https://explorer.beam.mw/";
+    #else
+    return "https://master-net.explorer.beam.mw/";
+    #endif
+}
+
+QString WalletSettings::getFaucetUrl() const
+{
+    #ifdef BEAM_BEAMX
+    return "https://faucet.beamprivacy.community/";
+    #elif defined(BEAM_TESTNET)
+    return "https://faucet.beamprivacy.community/";
+    #elif defined(BEAM_MAINNET)
+    return "https://faucet.beamprivacy.community/";
+    #else
+    return "https://faucet.beamprivacy.community/";
+    #endif
+}
+
+QString WalletSettings::getAppsUrl() const
+{
+    #ifdef BEAM_BEAMX
+    return "";
+    #elif defined(BEAM_TESTNET)
+    return "https://apps-testnet.beam.mw/appslist.json";
+    #elif defined(BEAM_MAINNET)
+    return "https://apps.beam.mw/appslist.json";
+    #else
+    return "http://3.136.182.25:80/app/appslist.json";
+    #endif
+}
+
+QString WalletSettings::getAppsCachePath() const
+{
+    const char* kCacheFolder = "appcache";
+    if (!m_appDataDir.exists(kCacheFolder))
+    {
+        m_appDataDir.mkdir(kCacheFolder);
+    }
+    return m_appDataDir.filePath(kCacheFolder);
+}
+
+QString WalletSettings::getAppsStoragePath() const
+{
+    const char* kStorageFolder = "appstorage";
+    if (!m_appDataDir.exists(kStorageFolder))
+    {
+        m_appDataDir.mkdir(kStorageFolder);
+    }
+    return m_appDataDir.filePath(kStorageFolder);
 }

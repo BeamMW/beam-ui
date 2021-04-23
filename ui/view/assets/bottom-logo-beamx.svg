@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="986" height="603" viewBox="0 0 986 603">
+    <defs>
+        <linearGradient id="bpx3ax3rla" x1="50%" x2="50%" y1="6.286%" y2="100%">
+            <stop offset="0%" stop-color="#AB38E6" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#AB38E6" stop-opacity=".585"/>
+        </linearGradient>
+        <linearGradient id="ypafei810b" x1="50%" x2="50%" y1="6.286%" y2="100%">
+            <stop offset="0%" stop-color="#AB38E6" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#AB38E6" stop-opacity=".585"/>
+        </linearGradient>
+        <linearGradient id="2jhrvrj36c" x1="50%" x2="50%" y1="0%" y2="100%">
+            <stop offset="0%" stop-color="#845EFF"/>
+            <stop offset="100%" stop-color="#C65DFF"/>
+        </linearGradient>
+    </defs>
+    <g fill="none" fill-rule="evenodd" opacity=".1">
+        <g>
+            <g>
+                <g transform="translate(-19 -224) translate(19 224) translate(0 .89)">
+                    <ellipse cx="317.957" cy="594.507" fill="#B859FF" stroke="#C748FF" stroke-width="2" rx="49.854" ry="5.199"/>
+                    <ellipse cx="679.121" cy="594.507" fill="#B859FF" stroke="#C748FF" stroke-width="2" rx="49.854" ry="5.199"/>
+                    <path fill="url(#bpx3ax3rla)" d="M0 0l354.539 18.01 354.756 582.772c-10.335.625-18.056.938-23.162.938h-19.396L0 0z" opacity=".695"/>
+                    <path fill="url(#ypafei810b)" d="M293.96 0l340.331 9.238L985.11 600.985c-9.279.49-16.69.735-22.237.735-5.545 0-13.61-.245-24.196-.735L293.96 0z" opacity=".695" transform="matrix(-1 0 0 1 1279.069 0)"/>
+                    <path fill="url(#2jhrvrj36c)" fill-rule="nonzero" d="M549.847 393.753l51.631 77.01h-44.314l-29.545-44.068 22.228-32.942zm-108.193-160.08l79.55 118.202-80.274 118.888h-44.314l80.274-118.888-79.551-118.202h44.315zm159.824 0l-51.963 76.693-22.086-32.807 29.735-43.886h44.314z"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

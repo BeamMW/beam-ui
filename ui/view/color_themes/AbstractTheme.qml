@@ -1,6 +1,9 @@
 import QtQuick 2.11
 
 QtObject {
+    property string navigation_logo;
+    property string bottom_background;
+
     property color content_main;
     property color accent_outgoing;
     property color accent_incoming;
@@ -19,37 +22,28 @@ QtObject {
     property color background_second;
     property color background_row_even;
     property color background_row_odd;
+    property color background_row_details_even;
+    property color background_row_details_odd;
     property color background_details;
     property color background_button;
     property color background_popup;
     property color row_selected;
     property color separator;
     property color table_header;
-
     property color active;
     property color passive;
-        
+    property color online;
     property color caps_warning;
-
 	property color white: "#ffffff";
-    property string linkStyle;
-    property string explorerUrl;
-    property string faucetUrl;
 
-    property color swapCurrencyPaneGrRight;
-    property color swapCurrencyPaneGrLeftBEAM;
-    property color swapCurrencyPaneGrLeftBTC;
-    property color swapCurrencyPaneGrLeftLTC;
-    property color swapCurrencyPaneGrLeftQTUM;
-    property color swapCurrencyPaneGrLeftDASH;
-    property color swapCurrencyPaneGrLeftDOGE;
-    property color swapCurrencyPaneGrLeftBCH;
-    property color swapCurrencyPaneGrLeftETH;
-    property color swapCurrencyPaneGrLeftDAI;
-    property color swapCurrencyPaneGrLeftUSDT;
-    property color swapCurrencyPaneGrLeftWBTC;
-    property color swapCurrencyPaneGrLeftOther;
-    property color swapCurrencyStateIndicator;
-    property color swapCurrencyOptionsBorder;
+    property color coinPaneRight;
+    property color coinPaneLeft;
+    property color coinPaneBorder;
+
+    property color swapStateIndicator;
     property color swapDisconnectNode;
+
+    property string linkStyle;
+    property int appsGradientOffset;
+    property int appsGradientTop;
 }

@@ -1,9 +1,22 @@
-function formatDateTime(datetime, localeName) {
+function openUrl(url) {
+    if (url.indexOf("mailto:") === 0) {
+        return Qt.openUrlExternally(url)
+    }
+
+    //
+    // if url doesn't have scheme qt would add qrc://
+    //
+    if (url.indexOf("//") === -1) {
+        url = Qt.openUrlExternally(["https://", url].join(""))
+    }
+    Qt.openUrlExternally(url)
+}
+
+function formatDateTime(datetime, localeName, neverStr) {
     var maxTime = new Date(4294967295000);
     if (datetime >= maxTime) {
-        //: time never string
         //% "Never"
-        return qsTrId("time-never");
+        return neverStr ? neverStr: qsTrId("time-never");
     }
     var timeZoneShort = datetime.getTimezoneOffset() / 60 * (-1);
     return datetime.toLocaleDateString(localeName)
@@ -15,7 +28,8 @@ function formatDateTime(datetime, localeName) {
 }
 
 function formatSecondCurrency(convertedAmount, amount,  exchangeRate, secondCurrLabel) {
-    if (convertedAmount == "0" && amount != "0") { 
+    //BeamGlobals.showMessage("Format, converted amount: " + convertedAmount + ", amount: " + amount + ", er: " + exchangeRate + ", scl: " + secondCurrLabel)
+    if (convertedAmount == "0" && amount != "0") {
         var subLabel = BeamGlobals.getCurrencySubunitFromLabel(secondCurrLabel);
         //% "< 1 %1"
         return qsTrId("format-small-amount").arg(subLabel); 
@@ -48,9 +62,16 @@ function uiStringToLocale (amount) {
     // Trim leading zeros
     var intPart = parseInt(parts[0], 10);
     var left = isNaN(intPart) ? parts[0] : intPart.toString();
-
     left = left.replace(/(\d)(?=(?:\d{3})+\b)/g, "$1" + locale.groupSeparator);
-    return parts[1] ? [left, parts[1]].join(locale.decimalPoint) : left;
+
+    var res = parts[1] ? [left, parts[1]].join(locale.decimalPoint) : left;
+
+    // amount can be ...K, ...M  &c. value, do not drop this postfix
+    if (/[a-z$]/i.test(amount)) {
+        res += amount[amount.length - 1];
+    }
+
+    return res
 }
 
 function localeDecimalToCString(amount) {
@@ -75,7 +96,7 @@ function openExternal(externalLink, settings, dialog, onFinish) {
         ? onFinish
         : function () {};
     if (settings.isAllowedBeamMWLinks) {
-        Qt.openUrlExternally(externalLink);
+        openUrl(externalLink);
         onFinishCallback();
     } else {
         dialog.externalUrl = externalLink;
@@ -104,41 +125,9 @@ function navigateToDownloads() {
     openExternalWithConfirmation("https://www.beam.mw/downloads")
 }
 
-function currenciesList() {
-    return [
-        BeamGlobals.getCurrencyLabel(Currency.CurrBeam),
-        BeamGlobals.getCurrencyLabel(Currency.CurrBitcoin),
-        BeamGlobals.getCurrencyLabel(Currency.CurrLitecoin),
-        BeamGlobals.getCurrencyLabel(Currency.CurrQtum),
-        // TODO disable BCH
-        //BeamGlobals.getCurrencyLabel(Currency.CurrBitcoinCash),
-        BeamGlobals.getCurrencyLabel(Currency.CurrDogecoin),
-        BeamGlobals.getCurrencyLabel(Currency.CurrDash),
-        BeamGlobals.getCurrencyLabel(Currency.CurrEthereum),
-        BeamGlobals.getCurrencyLabel(Currency.CurrDai),
-        BeamGlobals.getCurrencyLabel(Currency.CurrUsdt),
-        BeamGlobals.getCurrencyLabel(Currency.CurrWrappedBTC)
-    ]
-}
-
-const maxAmount   = "262799999";
-const minAmount   = "0.00000001";
-
-function createObject(component, parent, props) {
-    return Qt.createComponent(component)
-             .createObject(parent, props);
-}
-
-function createControl(component, parent, props) {
-    return createObject(["controls/", component, ".qml"].join(""), parent, props)
-}
-
-function createDialog(component, props) {
-    return createControl([component, "Dialog"].join(''), main, props)
-}
-
-function openDialog(component, props) {
-    createDialog(component, props).open()
+function getSwapTotalFeeTitle(currencyUnit) {
+    //% "%1 Transaction fee (est)"
+    return qsTrId("general-fee-total").arg(currencyUnit) + ":"
 }
 
 function formatHours(hours) {
@@ -177,3 +166,35 @@ function formatHours(hours) {
         return hh;
     }
 }
+
+function xUp(ctrl) {
+    var x = 0
+    do
+    {
+        x += ctrl.x
+        ctrl = ctrl.parent
+    }
+    while (ctrl != null)
+    return x
+}
+
+function yUp(ctrl) {
+    var y = 0
+    do
+    {
+        y += ctrl.y
+        ctrl = ctrl.parent
+    }
+    while (ctrl != null)
+    return y
+}
+
+function limitText (text, maxLen) {
+    return maxLen > 0 && text.length >= maxLen ? [text.substring(0, maxLen - 1), '\u2026'].join('') : text
+}
+
+const maxAmount = "262799999";
+const minAmount = "0.00000001";
+
+
+

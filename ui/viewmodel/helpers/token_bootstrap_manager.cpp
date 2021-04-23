@@ -19,7 +19,7 @@
 #include <iterator>
 
 TokenBootstrapManager::TokenBootstrapManager()
-    : _wallet_model(*AppModel::getInstance().getWallet())
+    : _wallet_model(*AppModel::getInstance().getWalletModel())
 {
     connect(
         &_wallet_model,

@@ -16,181 +16,110 @@
 #include <QObject>
 #include "model/wallet_model.h"
 #include "notifications/exchange_rates_manager.h"
+#include "wallet/assets_manager.h"
 
 class SendViewModel: public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(unsigned int  feeGrothes         READ getFeeGrothes         WRITE setFeeGrothes       NOTIFY feeGrothesChanged)
-    Q_PROPERTY(QString       sendAmount         READ getSendAmount         WRITE setSendAmount       NOTIFY sendAmountChanged)
-    Q_PROPERTY(QString       comment            READ getComment            WRITE setComment          NOTIFY commentChanged)
+    Q_PROPERTY(QList<QMap<QString, QVariant>> assetsList READ getAssetsList NOTIFY assetsListChanged)
 
-    // TA = Transaction or Address
-    Q_PROPERTY(QString  receiverTA         READ getReceiverTA         WRITE setReceiverTA              NOTIFY receiverTAChanged)
-    Q_PROPERTY(bool     receiverTAValid    READ getRreceiverTAValid                                    NOTIFY receiverTAChanged)
-    Q_PROPERTY(bool     isShieldedTx       READ isShieldedTx          WRITE setIsShieldedTx            NOTIFY isShieldedTxChanged)
-    Q_PROPERTY(bool     isOffline          READ isOffline             WRITE setIsOffline               NOTIFY isOfflineChanged)
-    Q_PROPERTY(bool     isMaxPrivacy       READ isMaxPrivacy          WRITE setIsMaxPrivacy            NOTIFY isMaxPrivacyChanged)
-    Q_PROPERTY(bool     isPublicOffline    READ isPublicOffline       WRITE setIsPublicOffline         NOTIFY isPublicOfflineChanged)
-    Q_PROPERTY(bool     isPermanentAddress READ isPermanentAddress    WRITE setIsPermanentAddress      NOTIFY isPermanentAddressChanged)
-    Q_PROPERTY(int      offlinePayments    READ getOfflinePayments    WRITE setOfflinePayments         NOTIFY offlinePaymentsChanged)
-
-    Q_PROPERTY(QString  receiverAddress    READ getReceiverAddress                                     NOTIFY receiverAddressChanged)
-    Q_PROPERTY(QString  receiverIdentity   READ getReceiverIdentity                                    NOTIFY receiverIdentityChanged)
-    Q_PROPERTY(QString  available          READ getAvailable                                           NOTIFY availableChanged)
-    Q_PROPERTY(QString  change             READ getChange                                              NOTIFY availableChanged)
-    Q_PROPERTY(QString  fee                READ getFee                                                 NOTIFY feeGrothesChanged)
-    Q_PROPERTY(QString  totalUTXO          READ getTotalUTXO                                           NOTIFY availableChanged)
-    Q_PROPERTY(QString  missing            READ getMissing                                             NOTIFY availableChanged)
-    Q_PROPERTY(bool     isZeroBalance      READ isZeroBalance                                          NOTIFY availableChanged)
-    Q_PROPERTY(bool     isEnough           READ isEnough                                               NOTIFY isEnoughChanged)
-    Q_PROPERTY(bool     canSend            READ canSend                                                NOTIFY canSendChanged)
-    Q_PROPERTY(bool     isToken            READ isToken                                                NOTIFY isTokenChanged)
-    Q_PROPERTY(bool     hasAddress         READ hasAddress                                             NOTIFY hasAddressChanged)
-    Q_PROPERTY(bool     isOwnAddress       READ isOwnAddress                                           NOTIFY receiverAddressChanged)
-
-    Q_PROPERTY(QString  secondCurrencyLabel         READ getSecondCurrencyLabel                        NOTIFY secondCurrencyLabelChanged)
-    Q_PROPERTY(QString  secondCurrencyRateValue     READ getSecondCurrencyRateValue                    NOTIFY secondCurrencyRateChanged)
-
-    Q_PROPERTY(bool     isTokenGeneratebByNewAppVersion      READ isTokenGeneratebByNewAppVersion      NOTIFY tokenGeneratebByNewAppVersion)
-    Q_PROPERTY(QString  tokenGeneratebByNewAppVersionMessage READ tokenGeneratebByNewAppVersionMessage NOTIFY tokenGeneratebByNewAppVersion)
-
-    Q_PROPERTY(bool         isNeedExtractShieldedCoins READ isNeedExtractShieldedCoins NOTIFY isNeedExtractShieldedCoinsChanged)
-    Q_PROPERTY(unsigned int minimalFeeGrothes          READ getMinimalFeeGrothes       NOTIFY minimalFeeGrothesChanged)
-    Q_PROPERTY(bool     canSendByOneTransaction        READ canSendByOneTransaction    NOTIFY sendAmountChanged)
-    Q_PROPERTY(QString  maxSendAmount                  READ getMaxSendAmount           NOTIFY sendAmountChanged)
+    Q_PROPERTY(int      assetId          READ getAssetId          WRITE setAssetId         NOTIFY assetIdChanged)
+    Q_PROPERTY(QString  assetRemaining   READ getAssetRemaining                            NOTIFY balanceChanged)
+    Q_PROPERTY(QString  beamRemaining    READ getBeamRemaining                             NOTIFY balanceChanged)
+    Q_PROPERTY(QString  changeBeam       READ getChangeBeam                                NOTIFY balanceChanged)
+    Q_PROPERTY(QString  changeAsset      READ getChangeAsset                               NOTIFY balanceChanged)
+    Q_PROPERTY(QString  fee              READ getFee                                       NOTIFY balanceChanged)
+    Q_PROPERTY(QString  feeRateUnit      READ getFeeRateUnit                               NOTIFY feeRateChanged)
+    Q_PROPERTY(QString  feeRate          READ getFeeRate                                   NOTIFY feeRateChanged)
+    Q_PROPERTY(QString  comment          READ getComment          WRITE setComment         NOTIFY commentChanged)
+    Q_PROPERTY(QString  sendAmount       READ getSendAmount       WRITE setSendAmount      NOTIFY balanceChanged)
+    Q_PROPERTY(bool     isEnough         READ getIsEnough                                  NOTIFY balanceChanged)
+    Q_PROPERTY(bool     canSend          READ canSend                                      NOTIFY canSendChanged)
+    Q_PROPERTY(QString  maxSendAmount    READ getMaxSendAmount                             NOTIFY balanceChanged)
+    Q_PROPERTY(bool     tokenValid       READ getTokenValid                                NOTIFY tokenChanged)
+    Q_PROPERTY(QString  token            READ getToken            WRITE setToken           NOTIFY tokenChanged)
+    Q_PROPERTY(QString  newTokenMsg      READ getNewTokenMsg                               NOTIFY tokenChanged)
+    Q_PROPERTY(QString  tokenType        READ getTokenType                                 NOTIFY tokenChanged)
+    Q_PROPERTY(bool     canChoose        READ getCanChoose                                 NOTIFY tokenChanged)
+    Q_PROPERTY(QString  sendType         READ getSendType                                  NOTIFY choiceChanged)
+    Q_PROPERTY(bool     sendTypeOnline   READ getSendTypeOnline                            NOTIFY choiceChanged)
+    Q_PROPERTY(bool     choiceOffline    READ getChoiceOffline    WRITE setChoiceOffline   NOTIFY choiceChanged)
 
 public:
     SendViewModel();
 
-    unsigned int getFeeGrothes() const;
-    unsigned int getMinimalFeeGrothes() const;
-    void setFeeGrothes(unsigned int amount);
+    [[nodiscard]] QList<QMap<QString, QVariant>> getAssetsList() const;
 
+    [[nodiscard]] int getAssetId() const;
+    void setAssetId(int);
+
+    [[nodiscard]] QString getComment() const;
     void setComment(const QString& value);
-    QString getComment() const;
 
-    QString getSendAmount() const;
-    void setSendAmount(QString value);
+    [[nodiscard]] QString getSendAmount() const;
+    void setSendAmount(const QString& value);
 
-    QString getReceiverTA() const;
-    void    setReceiverTA(const QString& value);
-    bool    getRreceiverTAValid() const;
-    QString getReceiverAddress() const;
-    QString getReceiverIdentity() const;
-    bool    isShieldedTx() const;
-    void    setIsShieldedTx(bool value);
-    bool isPermanentAddress() const;
-    void setIsPermanentAddress(bool value);
-    int getOfflinePayments() const;
-    void setOfflinePayments(int value);
+    [[nodiscard]] QString getToken() const;
+    void setToken(const QString& value);
 
-    bool isOffline() const;
-    void setIsOffline(bool value);
+    [[nodiscard]] bool getChoiceOffline() const;
+    void setChoiceOffline(bool value);
 
-    bool isMaxPrivacy() const;
-    void setIsMaxPrivacy(bool value);
-
-    bool isPublicOffline() const;
-    void setIsPublicOffline(bool value);
-
-    QString getAvailable() const;
-    QString getMissing() const;
-    QString getChange() const;
-    QString getFee() const;
-    QString getTotalUTXO() const;
-
-    bool isZeroBalance() const;
-    bool isEnough() const;
-    bool canSend() const;
-    bool isToken() const;
-    void setIsToken(bool value);
-    bool isOwnAddress() const;
-
-    QString getSecondCurrencyLabel() const;
-    QString getSecondCurrencyRateValue() const;
-
-    bool isNeedExtractShieldedCoins() const;
-
-    bool isTokenGeneratebByNewAppVersion() const;
-    QString tokenGeneratebByNewAppVersionMessage() const;
-    bool hasAddress() const;
-    void setWalletAddress(const boost::optional<beam::wallet::WalletAddress>& value);
-
-    bool canSendByOneTransaction() const;
-    QString getMaxSendAmount() const;
+    [[nodiscard]] QString getAssetRemaining() const;
+    [[nodiscard]] QString getBeamRemaining() const;
+    [[nodiscard]] QString getFee() const;
+    [[nodiscard]] QString getFeeRateUnit() const;
+    [[nodiscard]] QString getFeeRate() const;
+    [[nodiscard]] QString getChangeBeam() const;
+    [[nodiscard]] QString getChangeAsset() const;
+    [[nodiscard]] QString getMaxSendAmount() const;
+    [[nodiscard]] QString getNewTokenMsg() const;
+    [[nodiscard]] QString getTokenType() const;
+    [[nodiscard]] QString getSendType() const;
+    [[nodiscard]] bool getIsEnough() const;
+    [[nodiscard]] bool getTokenValid() const;
+    [[nodiscard]] bool canSend() const;
+    [[nodiscard]] bool getSendTypeOnline() const;
+    [[nodiscard]] bool getCanChoose() const;
 
 public:
-    Q_INVOKABLE void setMaxAvailableAmount();
+    Q_INVOKABLE void setMaxPossibleAmount();
     Q_INVOKABLE void sendMoney();
     Q_INVOKABLE void saveReceiverAddress(const QString& name);
 
 signals:
-    void feeGrothesChanged();
-    void minimalFeeGrothesChanged();
+    void assetsListChanged();
+    void assetIdChanged();
+    void balanceChanged();
+    void feeRateChanged();
     void commentChanged();
-    void sendAmountChanged();
-    void receiverTAChanged();
-    void isPermanentAddressChanged();
-    void offlinePaymentsChanged();
-    void isOfflineChanged();
-    void isMaxPrivacyChanged();
-    void isPublicOfflineChanged();
-    void availableChanged();
+    void canSendChanged();
+    void tokenChanged();
+    void choiceChanged();
     void sendMoneyVerified();
     void cantSendToExpired();
-    void canSendChanged();
-    void isEnoughChanged();
-    void secondCurrencyLabelChanged();
-    void secondCurrencyRateChanged();
-    void receiverAddressChanged();
-    void receiverIdentityChanged();
-    void tokenGeneratebByNewAppVersion();
-    void isTokenChanged();
-    void hasAddressChanged();
-    void isShieldedTxChanged();
-    void isNeedExtractShieldedCoinsChanged();
-    void canSendByOneTransactionChanged();
 
 public slots:
-    void onChangeCalculated(beam::Amount change);
-    void onShieldedCoinsSelectionCalculated(const beam::wallet::ShieldedCoinsSelectionInfo& selectionRes);
-    void onNeedExtractShieldedCoins(bool val);
+    void onSelectionCalculated(const beam::wallet::CoinsSelectionInfo&);
+
 private:
     void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
     void extractParameters();
-    void resetMinimalFee();
-    void resetAddress();
+    bool _maxPossible   = false;
 
-    beam::Amount _feeGrothes;
-    beam::Amount _sendAmountGrothes;
-    beam::Amount _changeGrothes;
+private:
+    [[nodiscard]] beam::Amount getTotalSpend() const;
+    void RefreshCsiAsync();
 
-    QString _comment;
-    QString _receiverTA;
-    QString _receiverAddress;
-    beam::wallet::WalletID _receiverWalletID = beam::Zero;
-    beam::wallet::PeerID _receiverIdentity = beam::Zero;
-    QString _receiverIdentityStr;
-    bool _isPermanentAddress = false;
-
-    bool _isOffline = false;
-    bool _isMaxPrivacy = false;
-    bool _isPublicOffline = false;
-    bool _isToken = false;
-    boost::optional<beam::wallet::WalletAddress> _receiverWalletAddress;
-    int _offlinePayments = 0;
-
-    WalletModel& _walletModel;
-    ExchangeRatesManager _exchangeRatesManager;
+    beam::wallet::CoinsSelectionInfo m_Csi;
+    beam::wallet::WalletID     _receiverWalletID;
+    beam::PeerID               _receiverIdentity;
+    QString                    _comment;
+    WalletModel&               _walletModel;
+    AssetsManager::Ptr         _amgr;
+    ExchangeRatesManager       _exchangeRatesManager;
+    QString                    _token;
+    QString                    _newTokenMsg;
+    bool                       _choiceOffline = false;
     beam::wallet::TxParameters _txParameters;
-
-    QString _tokenGeneratebByNewAppVersionMessage = "";
-
-    bool _isShieldedTx = false;
-    bool _isNeedExtractShieldedCoins = false;
-    beam::Amount _minimalFeeGrothes;
-    beam::Amount _shieldedInputsFee;
-    bool _feeChangedByUi = false;
-    bool _maxAvailable = false;
-    beam::Amount _maxWhatCanSelect = 0;
 };

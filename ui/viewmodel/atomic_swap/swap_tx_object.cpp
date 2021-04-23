@@ -23,7 +23,6 @@
 #include <qdebug.h>
 
 using namespace beam;
-using namespace beam::wallet;
 
 namespace
 {
@@ -111,7 +110,7 @@ namespace
     }
 }  // namespace
 
-SwapTxObject::SwapTxObject(const TxDescription& tx, uint32_t lockTxMinConfirmations,
+SwapTxObject::SwapTxObject(const beam::wallet::TxDescription& tx, uint32_t lockTxMinConfirmations,
     uint32_t withdrawTxMinConfirmations, double blocksPerHour, QObject* parent/* = nullptr*/)
         : TxObject(tx, parent),
           m_swapTx(tx),
@@ -138,24 +137,24 @@ bool SwapTxObject::isExpired() const
 
 bool SwapTxObject::isInProgress() const
 {
-    return  m_tx.m_status == wallet::TxStatus::Pending ||
-            m_tx.m_status == wallet::TxStatus::Registering ||
-            m_tx.m_status == wallet::TxStatus::InProgress;
+    return _tx.m_status == wallet::TxStatus::Pending ||
+           _tx.m_status == wallet::TxStatus::Registering ||
+           _tx.m_status == wallet::TxStatus::InProgress;
 }
 
 bool SwapTxObject::isPending() const
 {
-    return m_tx.m_status == wallet::TxStatus::Pending;
+    return _tx.m_status == wallet::TxStatus::Pending;
 }
 
 bool SwapTxObject::isCompleted() const
 {
-    return m_tx.m_status == wallet::TxStatus::Completed;
+    return _tx.m_status == wallet::TxStatus::Completed;
 }
 
 bool SwapTxObject::isCanceled() const
 {
-    return m_tx.m_status == wallet::TxStatus::Canceled;
+    return _tx.m_status == wallet::TxStatus::Canceled;
 }
 
 bool SwapTxObject::isFailed() const
@@ -170,9 +169,9 @@ bool SwapTxObject::isCancelAvailable() const
 
 bool SwapTxObject::isDeleteAvailable() const
 {
-    return  m_tx.m_status == wallet::TxStatus::Completed ||
-            m_tx.m_status == wallet::TxStatus::Canceled ||
-            m_tx.m_status == wallet::TxStatus::Failed;
+    return _tx.m_status == wallet::TxStatus::Completed ||
+           _tx.m_status == wallet::TxStatus::Canceled ||
+           _tx.m_status == wallet::TxStatus::Failed;
 }
 
 auto SwapTxObject::getSwapCoinName() const -> QString
@@ -182,11 +181,16 @@ auto SwapTxObject::getSwapCoinName() const -> QString
 
 QString SwapTxObject::getSentAmountWithCurrency() const
 {
-    if (m_type == TxType::AtomicSwap)
+    if (_tx.m_txType == beam::wallet::TxType::AtomicSwap)
     {
         return getSwapAmountWithCurrency(true);
     }
-    return m_tx.m_sender ? getAmountWithCurrency() : "";
+    return _tx.m_sender ? getAmountWithCurrency() : "";
+}
+
+QString SwapTxObject::getAmountWithCurrency() const
+{
+    return AmountToUIString(_tx.m_amount, beamui::Currencies::Beam);
 }
 
 QString SwapTxObject::getSentAmount() const
@@ -197,21 +201,21 @@ QString SwapTxObject::getSentAmount() const
 
 beam::Amount SwapTxObject::getSentAmountValue() const
 {
-    if (m_type == TxType::AtomicSwap)
+    if (_tx.m_txType == beam::wallet::TxType::AtomicSwap)
     {
         return getSwapAmountValue(true);
     }
 
-    return m_tx.m_sender ? m_tx.m_amount : 0;
+    return _tx.m_sender ? _tx.m_amount : 0;
 }
 
 QString SwapTxObject::getReceivedAmountWithCurrency() const
 {
-    if (m_type == TxType::AtomicSwap)
+    if (_tx.m_txType == beam::wallet::TxType::AtomicSwap)
     {
         return getSwapAmountWithCurrency(false);
     }
-    return !m_tx.m_sender ? getAmountWithCurrency() : "";
+    return !_tx.m_sender ? getAmountWithCurrency() : "";
 }
 
 QString SwapTxObject::getReceivedAmount() const
@@ -222,12 +226,11 @@ QString SwapTxObject::getReceivedAmount() const
 
 beam::Amount SwapTxObject::getReceivedAmountValue() const
 {
-    if (m_type == TxType::AtomicSwap)
+    if (_tx.m_txType == beam::wallet::TxType::AtomicSwap)
     {
         return getSwapAmountValue(false);
     }
-
-    return !m_tx.m_sender ? m_tx.m_amount : 0;
+    return !_tx.m_sender ? _tx.m_amount : 0;
 }
 
 QString SwapTxObject::getSwapAmountWithCurrency(bool sent) const
@@ -249,7 +252,7 @@ beam::Amount SwapTxObject::getSwapAmountValue(bool sent) const
     {
         return m_swapTx.getSwapAmount();
     }
-    return m_tx.m_amount;
+    return _tx.m_amount;
 }
 
 QString SwapTxObject::getFee() const
@@ -257,8 +260,7 @@ QString SwapTxObject::getFee() const
     auto fee = m_swapTx.getFee();
     if (fee)
     {
-        Amount shieldedFee = GetShieldedFee(getTxDescription(), SubTxIndex::BEAM_LOCK_TX);
-        return beamui::AmountInGrothToUIString(shieldedFee + *fee);
+        return beamui::AmountInGrothToUIString(*fee);
     }
     return QString();
 }
@@ -283,7 +285,7 @@ QString SwapTxObject::getSwapCoinFee() const
         return QString();
     }
 
-    Currency coinTypeQt = convertSwapCoinToCurrency(m_swapTx.getSwapCoin());
+    const auto coinTypeQt = convertSwapCoinToCurrency(m_swapTx.getSwapCoin());
     return calcWithdrawTxFee(coinTypeQt, *feeRate);
 }
 
@@ -307,7 +309,7 @@ QString SwapTxObject::getStateDetails() const
         case beam::wallet::TxStatus::Pending:
         case beam::wallet::TxStatus::InProgress:
         {
-            Height currentHeight = AppModel::getInstance().getWallet()->getCurrentHeight();
+            Height currentHeight = AppModel::getInstance().getWalletModel()->getCurrentHeight();
             auto state = m_swapTx.getState();
             if (state)
             {
@@ -351,14 +353,14 @@ beam::wallet::AtomicSwapCoin SwapTxObject::getSwapCoinType() const
 
 auto SwapTxObject::getStatus() const -> QString
 {
-    SwapTxStatusInterpreter interpreter(getTxDescription());
+    beam::wallet::SwapTxStatusInterpreter interpreter(getTxDescription());
     return interpreter.getStatus().c_str();
 }
 
 namespace
 {
-    template<SubTxIndex SubTxId>
-    QString getSwapCoinTxId(const SwapTxDescription& swapTxDescription)
+    template<beam::wallet::SubTxIndex SubTxId>
+    QString getSwapCoinTxId(const beam::wallet::SwapTxDescription& swapTxDescription)
     {
         if (auto res = swapTxDescription.getSwapCoinTxId<SubTxId>(); res)
         {
@@ -367,8 +369,8 @@ namespace
         else return QString();
     }
     
-    template<SubTxIndex SubTxId>
-    QString getSwapCoinTxConfirmations(const SwapTxDescription& swapTxDescription, uint32_t minTxConfirmations)
+    template<beam::wallet::SubTxIndex SubTxId>
+    QString getSwapCoinTxConfirmations(const beam::wallet::SwapTxDescription& swapTxDescription, uint32_t minTxConfirmations)
     {
         if (auto res = swapTxDescription.getSwapCoinTxConfirmations<SubTxId>(); res)
         {
@@ -387,8 +389,8 @@ namespace
         return QString();
     }
 
-    template<SubTxIndex SubTxId>
-    QString getBeamTxKernelId(const SwapTxDescription& swapTxDescription)
+    template<beam::wallet::SubTxIndex SubTxId>
+    QString getBeamTxKernelId(const beam::wallet::SwapTxDescription& swapTxDescription)
     {
         if (auto res = swapTxDescription.getBeamTxKernelId<SubTxId>(); res)
         {
@@ -420,45 +422,45 @@ bool SwapTxObject::isRefundTxProofReceived() const
 
 QString SwapTxObject::getSwapCoinLockTxId() const
 {
-    return getSwapCoinTxId<SubTxIndex::LOCK_TX>(m_swapTx);
+    return getSwapCoinTxId<beam::wallet::SubTxIndex::LOCK_TX>(m_swapTx);
 }
 
 QString SwapTxObject::getSwapCoinRedeemTxId() const
 {
-    return getSwapCoinTxId<SubTxIndex::REDEEM_TX>(m_swapTx);
+    return getSwapCoinTxId<beam::wallet::SubTxIndex::REDEEM_TX>(m_swapTx);
 }
 
 QString SwapTxObject::getSwapCoinRefundTxId() const
 {
-    return getSwapCoinTxId<SubTxIndex::REFUND_TX>(m_swapTx);
+    return getSwapCoinTxId<beam::wallet::SubTxIndex::REFUND_TX>(m_swapTx);
 }
 
 QString SwapTxObject::getSwapCoinLockTxConfirmations() const
 {
-    return getSwapCoinTxConfirmations<SubTxIndex::LOCK_TX>(m_swapTx, m_lockTxMinConfirmations);
+    return getSwapCoinTxConfirmations<beam::wallet::SubTxIndex::LOCK_TX>(m_swapTx, m_lockTxMinConfirmations);
 }
 
 QString SwapTxObject::getSwapCoinRedeemTxConfirmations() const
 {
-    return getSwapCoinTxConfirmations<SubTxIndex::REDEEM_TX>(m_swapTx, m_withdrawTxMinConfirmations);
+    return getSwapCoinTxConfirmations<beam::wallet::SubTxIndex::REDEEM_TX>(m_swapTx, m_withdrawTxMinConfirmations);
 }
 
 QString SwapTxObject::getSwapCoinRefundTxConfirmations() const
 {
-    return getSwapCoinTxConfirmations<SubTxIndex::REFUND_TX>(m_swapTx, m_withdrawTxMinConfirmations);
+    return getSwapCoinTxConfirmations<beam::wallet::SubTxIndex::REFUND_TX>(m_swapTx, m_withdrawTxMinConfirmations);
 }
 
 QString SwapTxObject::getBeamLockTxKernelId() const
 {
-    return getBeamTxKernelId<SubTxIndex::BEAM_LOCK_TX>(m_swapTx);
+    return getBeamTxKernelId<beam::wallet::SubTxIndex::BEAM_LOCK_TX>(m_swapTx);
 }
 
 QString SwapTxObject::getBeamRedeemTxKernelId() const
 {
-    return getBeamTxKernelId<SubTxIndex::REDEEM_TX>(m_swapTx);
+    return getBeamTxKernelId<beam::wallet::SubTxIndex::REDEEM_TX>(m_swapTx);
 }
 
 QString SwapTxObject::getBeamRefundTxKernelId() const
 {
-    return getBeamTxKernelId<SubTxIndex::REFUND_TX>(m_swapTx);
+    return getBeamTxKernelId<beam::wallet::SubTxIndex::REFUND_TX>(m_swapTx);
 }

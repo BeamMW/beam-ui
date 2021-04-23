@@ -15,16 +15,13 @@
 #pragma once
 
 #include <functional>
-
 #include <QObject>
 #include <QDateTime>
 #include <QTimer>
 #include <QThread>
 #include <QJSValue>
-
 #include "wallet/core/wallet_db.h"
 #include "mnemonic/mnemonic.h"
-
 #include "messages_view.h"
 
 namespace beam::wallet
@@ -41,8 +38,8 @@ class RecoveryPhraseItem : public QObject
     Q_PROPERTY(QString phrase READ getPhrase CONSTANT)
     Q_PROPERTY(int index READ getIndex CONSTANT)
 public:
-    RecoveryPhraseItem(int index, const QString& phrase);
-    ~RecoveryPhraseItem();
+    RecoveryPhraseItem(int index, QString phrase);
+    ~RecoveryPhraseItem() = default;
 
     bool isCorrect() const;
     bool isAllowed() const;
@@ -145,9 +142,6 @@ class StartViewModel : public QObject
     Q_PROPERTY(bool validateDictionary READ getValidateDictionary WRITE setValidateDictionary NOTIFY validateDictionaryChanged)
 
 public:
-
-    using DoneCallback = std::function<bool (beam::wallet::IWalletDB::Ptr db, const std::string& walletPass)>;
-
     StartViewModel();
     ~StartViewModel();
 
@@ -181,9 +175,6 @@ public:
     Q_INVOKABLE void setupRandomNode();
     Q_INVOKABLE uint coreAmount() const;
     Q_INVOKABLE void copyPhrasesToClipboard();
-    #if defined(QT_PRINTSUPPORT_LIB)
-    Q_INVOKABLE void printRecoveryPhrases(QVariant viewData);
-    #endif
     Q_INVOKABLE void resetPhrases();
     Q_INVOKABLE bool getIsRunLocalNode() const;
     Q_INVOKABLE QString chooseRandomNode() const;

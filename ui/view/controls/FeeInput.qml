@@ -7,12 +7,13 @@ import Beam.Wallet 1.0
 ColumnLayout {
     id: control
 
+    property int     maxInt:                     2147483647
     property bool    fillWidth:                  false
     property bool    readOnly:                   false
     property int     minFee:                     0
     property int     maxFee:                     0
     property int     recommendedFee:             0
-    property int     currency:                   Currency.CurrBeam
+    property int     currency:                   OldWalletCurrency.CurrBeam
     property int     fee:                        BeamGlobals.getDefaultFee(control.currency)
     property string  feeLabel:                   undefined
     property string  color:                      Style.content_main
@@ -22,8 +23,8 @@ ColumnLayout {
     property int inputPreferredWidth:            150
     property bool    showSecondCurrency:         false
     property bool    isExchangeRateAvailable:    false
-    property string  secondCurrencyAmount:       ""
-    property string  secondCurrencyLabel:        ""
+    property string  rateAmount:                 ""
+    property string  rateUnit:                   ""
     property string  minimumFeeNotificationText: ""
 
     RowLayout {
@@ -47,7 +48,12 @@ ColumnLayout {
             }
 
             onTextEdited: {
-                control.fee = text ? parseInt(text) : 0
+                if (text) {
+                    var val = parseInt(text);
+                    control.fee = val > maxInt ? control.fee : val;
+                } else {
+                    control.fee = 0;
+                }
                 feeInput.text = control.fee
             }
 
@@ -58,9 +64,13 @@ ColumnLayout {
 
             Connections {
                 target: control
-                onFeeChanged: feeInput.text = feeInput.formatFee()
                 Component.onCompleted: feeInput.text = feeInput.formatFee()
-                onCurrencyChanged: {
+
+                function onFeeChanged () {
+                    feeInput.text = feeInput.formatFee()
+                }
+
+                function onCurrencyChanged () {
                     control.fee = BeamGlobals.getDefaultFee(control.currency)
                 }
             }
@@ -68,7 +78,7 @@ ColumnLayout {
 
         SFText {
             font.pixelSize: 14
-            color:          Style.content_main
+            color:          isValid ? Style.content_main : Style.validator_error
             text:           control.feeLabel
             visible:        (control.feeLabel || "").length
         }
@@ -87,9 +97,9 @@ ColumnLayout {
         opacity:          control.isExchangeRateAvailable ? 0.5 : 1
         color:            Style.content_secondary
         text:             control.isExchangeRateAvailable
-                            ? control.secondCurrencyAmount
+                            ? control.rateAmount
                             //% "Exchange rate to %1 is not available"
-                            : qsTrId("general-exchange-rate-not-available").arg(control.secondCurrencyLabel)
+                            : qsTrId("general-exchange-rate-not-available").arg(control.rateUnit)
     }
 
 
@@ -124,7 +134,7 @@ ColumnLayout {
 
     SFText {
         Layout.fillWidth:      true
-        visible:               control.currency != Currency.CurrBeam && !recommendedFeeAbsent.visible
+        visible:               control.currency != OldWalletCurrency.CurrBeam && !recommendedFeeAbsent.visible
         font.pixelSize:        14
         font.italic:           true
         wrapMode:              Text.WordWrap
@@ -137,7 +147,7 @@ ColumnLayout {
     SFText {
         id:                    recommendedFeeAbsent
         Layout.fillWidth:      true
-        visible:               control.currency != Currency.CurrBeam && control.recommendedFee == 0 && control.fee == 0
+        visible:               control.currency != OldWalletCurrency.CurrBeam && control.recommendedFee == 0 && control.fee == 0
         font.pixelSize:        14
         font.italic:           true
         wrapMode:              Text.WordWrap

@@ -35,7 +35,7 @@ SettingsFoldable {
             ColumnLayout {
                 CustomComboBox {
                     id: language
-                    Layout.preferredWidth: tripleSwitch.width
+                    Layout.preferredWidth: secondCurrencySwitch.width
                     fontPixelSize: 14
                     enableScroll: true
 
@@ -62,7 +62,7 @@ SettingsFoldable {
             CustomComboBox {
                 id: lockTimeoutControl
                 fontPixelSize: 14
-                Layout.preferredWidth: tripleSwitch.width
+                Layout.preferredWidth: secondCurrencySwitch.width
                 currentIndex: viewModel.lockTimeout
                 model: [
                     //% "Never"
@@ -90,17 +90,17 @@ SettingsFoldable {
                 //: settings tab, general section, amounts unit label
                 //% "Show amounts in"
                 text: qsTrId("settings-general-amounts-unit")
-                color: Style.content_main
+                color: Style.content_secondary
                 font.pixelSize: 14
             }
             Item {}
-            CustomTripleSwitch {
-                id: tripleSwitch
+            CustomSecondCurrencySwitch {
+                id: secondCurrencySwitch
                 width: 210 // generalBlock.width * 0.33
                 height: 20
                 state: viewModel.secondCurrency
                 onStateChanged: {
-                    viewModel.secondCurrency = tripleSwitch.state;
+                    viewModel.secondCurrency = secondCurrencySwitch.state;
                 }
             }
         }

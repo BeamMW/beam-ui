@@ -26,10 +26,10 @@ class ExchangeRatesManager : public QObject
 public:
     ExchangeRatesManager();
 
-    beam::Amount getRate(beam::wallet::ExchangeRate::Currency) const;
-    beam::wallet::ExchangeRate::Currency getRateUnitRaw() const;
+    [[nodiscard]] beam::Amount getRate(const beam::wallet::Currency&) const;
+    [[nodiscard]] beam::wallet::Currency getRateCurrency() const;
 
-    static beam::wallet::ExchangeRate::Currency convertCurrencyToExchangeCurrency(WalletCurrency::Currency uiCurrency);
+    static beam::wallet::Currency convertCurrencyToExchangeCurrency(OldWalletCurrency::OldCurrency uiCurrency);
 
 public slots:
     void onExchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>& rates);
@@ -45,6 +45,6 @@ private:
     WalletModel& m_walletModel;
     WalletSettings& m_settings;
 
-    beam::wallet::ExchangeRate::Currency m_rateUnit;
-    std::map<beam::wallet::ExchangeRate::Currency, beam::Amount> m_rates;
+    beam::wallet::Currency m_rateUnit = beam::wallet::Currency::UNKNOWN();
+    std::map<beam::wallet::Currency, beam::Amount> m_rates;
 };

@@ -26,41 +26,49 @@ public:
     Q_INVOKABLE static void showMessage(const QString& message);
     Q_INVOKABLE static void copyToClipboard(const QString& text);
     Q_INVOKABLE QString version();
-    Q_INVOKABLE static bool isAddress(const QString& text);
-    Q_INVOKABLE static bool isTransactionToken(const QString& text);
+    Q_INVOKABLE static bool isToken(const QString& text);
     Q_INVOKABLE static bool isSwapToken(const QString& text);
-    Q_INVOKABLE static bool isTAValid(const QString& text);
     Q_INVOKABLE static QString getLocaleName();
     Q_INVOKABLE static int  maxCommentLength();
     Q_INVOKABLE static bool needPasswordToSpend();
+    Q_INVOKABLE static bool isFork3();
     Q_INVOKABLE static bool isPasswordValid(const QString& value);
+    Q_INVOKABLE static void fatal(const QString& message);
+
+    // new currency utils
+    Q_PROPERTY(QString beamUnit     READ getBeamUnit    CONSTANT)
+    Q_PROPERTY(QString beamFeeUnit  READ getBeamFeeUnit CONSTANT)
+
+    [[nodiscard]] QString getBeamUnit() const;
+    [[nodiscard]] QString getBeamFeeUnit() const;
 
     // Currency utils
     // TODO maybe to need use beam::Amount instead of int
-    Q_INVOKABLE static QString calcWithdrawTxFee(Currency currency, unsigned int feeRate);
-    Q_INVOKABLE static QString calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyLabel);
-    Q_INVOKABLE static QString calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel);
+    Q_INVOKABLE static QString calcWithdrawTxFee(OldWalletCurrency::OldCurrency currency, unsigned int feeRate);
+    Q_INVOKABLE static QString calcFeeInSecondCurrency(unsigned int fee, const QString& exchangeRate, const QString& secondCurrencyUnitName);
+    Q_INVOKABLE static QString calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrUnitName);
 
-    Q_INVOKABLE static QString getCurrencyLabel(Currency);
-    Q_INVOKABLE static QString getCurrencyName(Currency);
-    Q_INVOKABLE static QString getFeeRateLabel(Currency);
+    Q_INVOKABLE static QString roundUp(QString amount);
+    Q_INVOKABLE static QString getCurrencyUnitName(OldWalletCurrency::OldCurrency);
+    Q_INVOKABLE static QString getCurrencyName(OldWalletCurrency::OldCurrency);
+    Q_INVOKABLE static QString getFeeRateLabel(OldWalletCurrency::OldCurrency);
     Q_INVOKABLE static QString getCurrencySubunitFromLabel(const QString& currLabel);
-    Q_INVOKABLE static uint    getCurrencyDecimals(Currency);
+    Q_INVOKABLE static uint    getCurrencyDecimals(OldWalletCurrency::OldCurrency);
     
-    Q_INVOKABLE static QString getMinimalFee(Currency, bool isShielded);
-    Q_INVOKABLE static QString getMaximumFee(Currency);
-    Q_INVOKABLE static QString getRecommendedFee(Currency);
-    Q_INVOKABLE static QString getDefaultFee(Currency);
+    Q_INVOKABLE static QString getMinimalFee(OldWalletCurrency::OldCurrency, bool isShielded);
+    Q_INVOKABLE static QString getMaximumFee(OldWalletCurrency::OldCurrency);
+    Q_INVOKABLE static QString getRecommendedFee(OldWalletCurrency::OldCurrency);
+    Q_INVOKABLE static QString getDefaultFee(OldWalletCurrency::OldCurrency);
 
     // Swap & other currencies utils
     Q_INVOKABLE static bool canSwap();
-    Q_INVOKABLE static bool haveSwapClient(Currency);
-
+    Q_INVOKABLE static bool haveSwapClient(OldWalletCurrency::OldCurrency);
     Q_INVOKABLE static QString rawTxParametrsToTokenStr(const QVariant& variantTxParams);
-
-    Q_INVOKABLE static bool canReceive(Currency currency);
+    Q_INVOKABLE static bool canReceive(OldWalletCurrency::OldCurrency currency);
     Q_INVOKABLE static QString divideWithPrecision(const QString& dividend, const QString& divider, uint precision);
     Q_INVOKABLE static QString multiplyWithPrecision(const QString& first, const QString& second, uint precision);
+    Q_INVOKABLE static QString roundWithPrecision(const QString& number, uint precision);
+
 private:
     QQmlEngine& _engine;
 };

@@ -16,6 +16,7 @@
 
 #include "swap_tx_object.h"
 #include "viewmodel/helpers/list_model.h"
+#include <QLocale>
 
 class SwapTxObjectList : public ListModel<std::shared_ptr<SwapTxObject>>
 {
@@ -27,14 +28,8 @@ public:
     {
         TimeCreated = Qt::UserRole + 1,
         TimeCreatedSort,
-        AmountGeneralWithCurrency,
-        AmountGeneralWithCurrencySort,
-        AmountGeneral,
-        AmountGeneralSort,
         AddressFrom,
-        AddressFromSort,
         AddressTo,
-        AddressToSort,
         Status,
         StatusSort,
         Fee,
@@ -89,4 +84,7 @@ public:
 
     QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
+
+private:
+    QLocale m_locale; // default locale
 };

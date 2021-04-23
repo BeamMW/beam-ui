@@ -39,7 +39,7 @@ namespace
 {
     const std::map<int, uint8_t> kMPAnonymitySetVariants = { {0, 64}, {1, 32}, {2, 16}, {3, 8}, {4, 4}, {5, 2} };
     const std::map<int, uint8_t> kMPLockTimeLimits = { {0, 0}, {1, 72}, {2, 60}, {3, 48}, {4, 36}, {5, 24} };
-} // namespace
+}  // namespace
 
 SettingsViewModel::SettingsViewModel()
     : m_settings{AppModel::getInstance().getSettings()}
@@ -48,7 +48,7 @@ SettingsViewModel::SettingsViewModel()
     , m_isNeedToCheckAddress(false)
     , m_isNeedToApplyChanges(false)
     , m_supportedLanguages(WalletSettings::getSupportedLanguages())
-    , m_supportedAmountUnits(WalletSettings::getSupportedRateUnits())
+    , m_rateCurrency(beam::wallet::Currency::UNKNOWN())
 {
     undoChanges();
 
@@ -56,12 +56,12 @@ SettingsViewModel::SettingsViewModel()
     m_isPasswordReqiredToSpendMoney = m_settings.isPasswordReqiredToSpendMoney();
     m_isAllowedBeamMWLinks = m_settings.isAllowedBeamMWLinks();
     m_currentLanguageIndex = m_supportedLanguages.indexOf(m_settings.getLanguageName());
-    m_secondCurrency = m_settings.getSecondCurrency();
+    m_rateCurrency = m_settings.getRateCurrency();
 
     connect(&AppModel::getInstance().getNode(), SIGNAL(startedNode()), SLOT(onNodeStarted()));
     connect(&AppModel::getInstance().getNode(), SIGNAL(stoppedNode()), SLOT(onNodeStopped()));
-    connect(AppModel::getInstance().getWallet().get(), SIGNAL(addressChecked(const QString&, bool)), SLOT(onAddressChecked(const QString&, bool)));
-    connect(AppModel::getInstance().getWallet().get(), SIGNAL(publicAddressChanged(const QString&)), SLOT(onPublicAddressChanged(const QString&)));
+    connect(AppModel::getInstance().getWalletModel().get(), SIGNAL(addressChecked(const QString&, bool)), SLOT(onAddressChecked(const QString&, bool)));
+    connect(AppModel::getInstance().getWalletModel().get(), SIGNAL(publicAddressChanged(const QString&)), SLOT(onPublicAddressChanged(const QString&)));
     connect(&m_settings, SIGNAL(beamMWLinksChanged()), SIGNAL(beamMWLinksPermissionChanged()));
 
     m_timerId = startTimer(CHECK_INTERVAL);
@@ -275,13 +275,16 @@ void SettingsViewModel::setCurrentLanguage(QString value)
 
 QString SettingsViewModel::getSecondCurrency() const
 {
-    return m_secondCurrency;
+    return QString::fromStdString(m_rateCurrency.m_value);
 }
 
 void SettingsViewModel::setSecondCurrency(const QString& value)
 {
-    m_secondCurrency = value;
-    m_settings.setSecondCurrency(value);
+    const auto currency = beam::wallet::Currency(value.toStdString());
+
+    m_rateCurrency = currency;
+    m_settings.setRateCurrency(currency);
+
     emit secondCurrencyChanged();
 }
 
@@ -289,7 +292,7 @@ const QString& SettingsViewModel::getPublicAddress() const
 {
     if (m_publicAddress.isEmpty())
     {
-        AppModel::getInstance().getWallet()->getAsync()->getPublicAddress();
+        AppModel::getInstance().getWalletModel()->getAsync()->getPublicAddress();
     }
     return m_publicAddress;
 }
@@ -325,7 +328,7 @@ void SettingsViewModel::openUrl(const QString& url)
 
 void SettingsViewModel::refreshWallet()
 {
-    AppModel::getInstance().getWallet()->getAsync()->rescan();
+    AppModel::getInstance().getWalletModel()->getAsync()->rescan();
 }
 
 void SettingsViewModel::openFolder(const QString& path)
@@ -342,8 +345,7 @@ bool SettingsViewModel::checkWalletPassword(const QString& oldPass) const
 QString SettingsViewModel::getOwnerKey(const QString& password) const
 {
     SecString secretPass = password.toStdString();
-    const auto& ownerKey = 
-        AppModel::getInstance().getWallet()->exportOwnerKey(secretPass);
+    const auto& ownerKey = AppModel::getInstance().getWalletModel()->exportOwnerKey(secretPass);
     return QString::fromStdString(ownerKey);
 }
 
@@ -427,9 +429,7 @@ void SettingsViewModel::timerEvent(QTimerEvent *event)
     if (m_isNeedToCheckAddress && !m_localNodeRun)
     {
         m_isNeedToCheckAddress = false;
-
-        AppModel::getInstance().getWallet()->getAsync()->checkAddress(m_nodeAddress.toStdString());
-
+        AppModel::getInstance().getWalletModel()->getAsync()->checkNetworkAddress(m_nodeAddress.toStdString());
         killTimer(m_timerId);
     }
 }
@@ -505,6 +505,16 @@ void SettingsViewModel::setMaxPrivacyLockTimeLimit(int limit)
             emit maxPrivacyLockTimeLimitChanged();
         }
     }
+}
+
+QString SettingsViewModel::getExplorerUrl() const
+{
+    return m_settings.getExplorerUrl();
+}
+
+QString SettingsViewModel::getFaucetUrl() const
+{
+    return m_settings.getFaucetUrl();
 }
 
 QObject* SettingsViewModel::getEthSettings()

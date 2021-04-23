@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "swap_tx_object_list.h"
-#include <QLocale>
+#include "viewmodel/ui_helpers.h"
 
 SwapTxObjectList::SwapTxObjectList()
 {
@@ -25,14 +25,8 @@ auto SwapTxObjectList::roleNames() const -> QHash<int, QByteArray>
     {
         { static_cast<int>(Roles::TimeCreated), "timeCreated" },
         { static_cast<int>(Roles::TimeCreatedSort), "timeCreatedSort" },
-        { static_cast<int>(Roles::AmountGeneralWithCurrency), "amountGeneralWithCurrency" },
-        { static_cast<int>(Roles::AmountGeneralWithCurrencySort), "amountGeneralWithCurrencySort" },
-        { static_cast<int>(Roles::AmountGeneral), "amountGeneral" },
-        { static_cast<int>(Roles::AmountGeneralSort), "amountGeneralSort" },
         { static_cast<int>(Roles::AddressFrom), "addressFrom" },
-        { static_cast<int>(Roles::AddressFromSort), "addressFromSort" },
         { static_cast<int>(Roles::AddressTo), "addressTo" },
-        { static_cast<int>(Roles::AddressToSort), "addressToSort" },
         { static_cast<int>(Roles::Status), "status" },
         { static_cast<int>(Roles::StatusSort), "statusSort" },
         { static_cast<int>(Roles::Fee), "fee" },
@@ -97,27 +91,16 @@ auto SwapTxObjectList::data(const QModelIndex &index, int role) const -> QVarian
         {
             QDateTime datetime;
             datetime.setTime_t(value->timeCreated());
-            return datetime.toString(QLocale::system().dateTimeFormat(QLocale::ShortFormat));
+            return datetime.toString(m_locale.dateTimeFormat(QLocale::ShortFormat));
         }
         case Roles::TimeCreatedSort:
         {
             return static_cast<qulonglong>(value->timeCreated());
         }
-
-        case Roles::AmountGeneralWithCurrency:
-            return value->getAmountWithCurrency();
-        case Roles::AmountGeneral:
-            return value->getAmount();
-        case Roles::AmountGeneralSort:
-        case Roles::AmountGeneralWithCurrencySort:
-            return static_cast<qulonglong>(value->getAmountValue());
-
         case Roles::AddressFrom:
-        case Roles::AddressFromSort:
             return value->getAddressFrom();
 
         case Roles::AddressTo:
-        case Roles::AddressToSort:
             return value->getAddressTo();
 
         case Roles::Status:

@@ -159,7 +159,7 @@ QString SwapEthSettingsItem::getGeneralTitle() const
 
 QString SwapEthSettingsItem::getCoinID() const
 {
-    return beamui::getCurrencyLabel(beamui::Currencies::Ethereum);
+    return beamui::getCurrencyUnitName(beamui::Currencies::Ethereum);
 }
 
 bool SwapEthSettingsItem::getFolded() const
