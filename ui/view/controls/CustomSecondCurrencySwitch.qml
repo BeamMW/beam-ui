@@ -34,7 +34,7 @@ Item {
 
     function getButtonWidth() {
         // control width minus left/right margins and elements spacing
-        return (control.width - 6) / 2
+        return (control.width - 5) / 2
     }
 
     function getButtonHeight() {
@@ -58,6 +58,7 @@ Item {
         Rectangle {
             id: usdRectangle
             Layout.topMargin: 2
+            Layout.leftMargin: 2
             width: getButtonWidth()
             height: getButtonHeight()
             radius: 10
