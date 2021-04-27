@@ -89,7 +89,7 @@ jobs:
       shell: bash
       if: matrix.os == 'windows-2019'
       run: |
-        echo "BOOST_ROOT=${{runner.workspace}}\\boost_prebuild" >> $GITHUB_ENV
+        echo "BOOST_ROOT=${{runner.workspace}}\boost_prebuild" >> $GITHUB_ENV
 
     - name: Configure boost path [ununtu all]
       shell: bash
