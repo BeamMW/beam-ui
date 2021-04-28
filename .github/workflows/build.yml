@@ -156,9 +156,17 @@ jobs:
 ###############################################################################
 # Pack
 ###############################################################################
-    - name: CPack [macos-10.15 && ununtu all]
-      if: matrix.os != 'windows-2019'
-      run: cpack
+    # - name: CPack [macos-10.15 && ununtu all]
+    #  if: matrix.os != 'windows-2019'
+    #  run: cpack
+
+    - name AppImage [ubuntu-16.04]
+      if: matrix.os == 'ubuntu-16.04'
+      run: |
+        echo "Current folder: $(pwd)"
+        mkdir -p deploy/usr/bin
+        mkdir -p deploy/usr/share/applications
+        mkdir -p deploy/usr/share/icons/hicolor/256x256/apps
 
     - name: CPack [windows]
       shell: bash
