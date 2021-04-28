@@ -14,7 +14,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-10.15, ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2019]
+        #  os: [macos-10.15, ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2019]
+        os: [ubuntu-16.04]
 
     steps:
     - uses: actions/checkout@v2
@@ -61,7 +62,7 @@ jobs:
       if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
         sudo apt update
-        sudo apt install build-essential llvm libclang-dev -y
+        sudo apt install build-essential -y
         sudo apt install libssl-dev curl libcups2-dev mesa-common-dev ^libxcb.* libglu1-mesa-dev libglfw3-dev libgles2-mesa-dev libfontconfig1-dev libudev-dev -y
         sudo apt install libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-dev libpci-dev libicu-dev -y
         sudo apt install libwebp-dev libzstd-dev libbsd-dev uuid-dev liblzma-dev libtiff-dev -y
