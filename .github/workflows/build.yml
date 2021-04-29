@@ -215,8 +215,10 @@ jobs:
       run: |
         #cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Linux.deb Beam-Wallet$-{{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.deb
         #sha256sum Beam-Wallet$-{{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.deb > checksum.txt
-        cp Beam_Wallet_Masternet-${{env.BEAM_VERSION}}-x86_64.AppImage Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.AppImage
-        sha256sum Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.AppImage > checksum.txt
+        cp Beam_Wallet_Masternet-${{env.BEAM_VERSION}}-x86_64.AppImage BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage
+        sha256sum BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage > BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage.checksum.txt
+        chmod a+x BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage
+        tar -cvf BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.tar BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage.checksum.txt
 
     - name: Collect [windows]
       shell: bash
@@ -228,7 +230,8 @@ jobs:
 ###############################################################################
 # Upload
 ###############################################################################
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v2 [windows & mac]
+      if: matrix.os == 'windows-2019' || matrix.os == 'macos-10.15'
       with:
         name: ${{env.OS_NAME}}-Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}
         path: |
@@ -236,7 +239,14 @@ jobs:
           *checksum.txt
         if-no-files-found: error
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v2 [ubuntu]
+      if: matrix.os == 'ubuntu-16.04'
+      with:
+        name: ${{env.OS_NAME}}-Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}
+        path: BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.tar
+        if-no-files-found: error
+
+    - uses: actions/upload-artifact@v2 [windows upload pdb]
       if: matrix.os == 'windows-2019'
       with:
         name: beam-pdb${{env.BEAM_TARGET_SUFFIX}}-${{env.BEAM_VERSION}}
