@@ -159,7 +159,7 @@ jobs:
 ###############################################################################
 # Pack
 ###############################################################################
-    - name: CPack [macos-10.15 && ununtu all]
+    - name: CPack [macos-10.15] # && ununtu all]
       if: matrix.os != 'windows-2019'
       run: cpack
     
@@ -167,9 +167,18 @@ jobs:
       if: matrix.os == 'ubuntu-16.04'
       run: |
         echo "Current folder: $(pwd)"
-        mkdir -p deploy/usr/bin
-        mkdir -p deploy/usr/share/applications
-        mkdir -p deploy/usr/share/icons/hicolor/256x256/apps
+        echo $(ls)
+        mkdir -p ./deploy/usr/bin
+        mkdir -p ./deploy/usr/share/applications
+        mkdir -p ./deploy/usr/share/icons/hicolor/256x256/apps
+        сp ./ui/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}} ./deploy/usr/bin/
+        cp ./ui/beam.png ./deploy/usr/share/icons/hicolor/256x256/apps
+        cp ./ui/beam.desktop ./deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop
+        cp ./ui/beam-wallet.cfg ./deploy/usr/share/applications
+        chmod a+x ./ui/3rdparty/linuxdeployqt-7
+        export VERSION=${{env.BEAM_VERSION}}
+        ./ui/3rdparty/linuxdeployqt-7 ./deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop -verbose=2 -appimage -no-translations -always-overwrite -qmldir="./ui/view" -no-copy-copyright-files
+        echo $(ls -lah)
 
     - name: CPack [windows]
       shell: bash
@@ -203,8 +212,9 @@ jobs:
       shell: bash
       if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
-        cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Linux.deb Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb
-        sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb > checksum.txt
+        #cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Linux.deb Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb
+        #sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb > checksum.txt
+
 
     - name: Collect [windows]
       shell: bash
