@@ -167,13 +167,15 @@ jobs:
       if: matrix.os == 'ubuntu-16.04'
       run: |
         echo "Current folder: $(pwd)"
-        echo $(ls)
+        echo $(ls -l)
         echo "Creating AppImage deploy tree"
         mkdir -p ./deploy/usr/bin
         mkdir -p ./deploy/usr/share/applications
         mkdir -p ./deploy/usr/share/icons/hicolor/256x256/apps
         echo "Copying files to AppImage deploy tree"
-        echo $(ls ./ui)
+        echo $(ls ./ui -l)
+        echo "Locating CP"
+        which cp
         сp ui/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}} deploy/usr/bin/
         cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/apps/
         cp ui/beam.desktop deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop
