@@ -35,12 +35,12 @@ jobs:
     - name: OS name [macos-10.15 && windows]
       shell: bash
       if: matrix.os == 'macos-10.15' || matrix.os == 'windows-2019'
-      run: echo "OS_NAME=${{runner.os}}" >> $GITHUB_ENV
+      run: echo "PACKAGE_NAME=${{runner.os}}" >> $GITHUB_ENV
 
     - name: OS name [ununtu all]
       shell: bash
       if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
-      run: echo "OS_NAME=${{matrix.os}}" >> $GITHUB_ENV
+      run: echo "PACKAGE_NAME=linux" >> $GITHUB_ENV
 
     - name: Create Build Environment [macos-10.15]
       if: matrix.os == 'macos-10.15'
@@ -233,7 +233,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       if: matrix.os == 'windows-2019' || matrix.os == 'macos-10.15'
       with:
-        name: ${{env.OS_NAME}}-Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}
+        name: ${{env.PACKAGE_NAME}}-Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}
         path: |
           Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}*
           *checksum.txt
@@ -242,7 +242,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       if: matrix.os == 'ubuntu-16.04'
       with:
-        name: ${{env.OS_NAME}}-Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}
+        name: ${{env.PACKAGE_NAME}}-Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}
         path: BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.tar
         if-no-files-found: error
 
