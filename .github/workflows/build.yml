@@ -14,7 +14,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-10.15, ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2019]
+        #  os: [macos-10.15, ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2019]
+        os: [macos-10.15, ubuntu-16.04, windows-2019]
 
     steps:
     - uses: actions/checkout@v2
@@ -34,12 +35,12 @@ jobs:
     - name: OS name [macos-10.15 && windows]
       shell: bash
       if: matrix.os == 'macos-10.15' || matrix.os == 'windows-2019'
-      run: echo "OS_NAME=${{runner.os}}" >> $GITHUB_ENV
+      run: echo "PACKAGE_NAME=${{runner.os}}" >> $GITHUB_ENV
 
     - name: OS name [ununtu all]
       shell: bash
       if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
-      run: echo "OS_NAME=${{matrix.os}}" >> $GITHUB_ENV
+      run: echo "PACKAGE_NAME=linux" >> $GITHUB_ENV
 
     - name: Create Build Environment [macos-10.15]
       if: matrix.os == 'macos-10.15'
@@ -61,7 +62,7 @@ jobs:
       if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
         sudo apt update
-        sudo apt install build-essential llvm libclang-dev -y
+        sudo apt install build-essential -y
         sudo apt install libssl-dev curl libcups2-dev mesa-common-dev ^libxcb.* libglu1-mesa-dev libglfw3-dev libgles2-mesa-dev libfontconfig1-dev libudev-dev -y
         sudo apt install libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-dev libpci-dev libicu-dev -y
         sudo apt install libwebp-dev libzstd-dev libbsd-dev uuid-dev liblzma-dev libtiff-dev -y
@@ -70,8 +71,11 @@ jobs:
       shell: bash
       if: matrix.os == 'ubuntu-16.04'
       run: |
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-9
-        sudo update-alternatives --set gcc "/usr/bin/gcc-9"
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt-get update
+        sudo apt-get install g++-7
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 --slave /usr/bin/g++ g++ /usr/bin/g++-7
+        sudo update-alternatives --set gcc "/usr/bin/gcc-7"
 
     - name: Create Build Environment [windows]
       shell: bash
@@ -105,6 +109,7 @@ jobs:
         version: '5.15.2'
         modules: 'qtwebengine'
         cached: ${{ steps.cache-qt.outputs.cache-hit }}
+
 ###############################################################################
 # Configure CMake
 ###############################################################################
@@ -131,7 +136,6 @@ jobs:
         echo "BEAM_VERSION=$(cat beam_version.gen)" >> $GITHUB_ENV
         echo "BEAM_TARGET_SUFFIX=-masternet" >> $GITHUB_ENV
         echo "BEAM_DISPLAY_SUFFIX=Masternet" >> $GITHUB_ENV
-        echo "BEAM_DISPLAY_SUFFIX2=-Masternet" >> $GITHUB_ENV
         echo "BEAM_DISPLAY_SUFFIX3= Masternet" >> $GITHUB_ENV
         rm beam_version.gen
 
@@ -158,6 +162,23 @@ jobs:
     - name: CPack [macos-10.15 && ununtu all]
       if: matrix.os != 'windows-2019'
       run: cpack
+    
+    - name: AppImage [ubuntu-16.04]
+      if: matrix.os == 'ubuntu-16.04'
+      run: |
+        echo "Creating AppImage deploy tree"
+        mkdir -p ./deploy/usr/bin
+        mkdir -p ./deploy/usr/share/applications
+        mkdir -p ./deploy/usr/share/icons/hicolor/256x256/apps
+        echo "Copying files to AppImage deploy tree"
+        cp ui/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}} deploy/usr/bin/
+        cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/apps/
+        cp ui/beam.desktop deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop
+        cp ui/beam-wallet.cfg deploy/usr/share/applications/
+        echo "Creating AppImage"
+        chmod a+x ui/3rdparty/linuxdeployqt-7
+        export VERSION=${{env.BEAM_VERSION}}
+        ./ui/3rdparty/linuxdeployqt-7 ./deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop -appimage -no-translations -always-overwrite -qmldir="./ui/view" -no-copy-copyright-files
 
     - name: CPack [windows]
       shell: bash
@@ -171,8 +192,9 @@ jobs:
       shell: bash
       if: matrix.os == 'macos-10.15'
       run: |
-        cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Darwin.dmg Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
-        codesign --deep --force -v -s "${{secrets.MACOS_SIGN_IDENTITY}}" -o runtime --timestamp Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
+        cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Darwin.dmg Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.dmg
+        codesign --deep --force -v -s "${{secrets.MACOS_SIGN_IDENTITY}}" -o runtime --timestamp Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.dmg
+
     - name: Notarize [macos-10.15]
       shell: bash
       if: false
@@ -181,42 +203,47 @@ jobs:
         MACOS_NOTARIZE_USER: ${{ secrets.MACOS_NOTARIZE_USER }}
         MACOS_NOTARIZE_PASS: ${{ secrets.MACOS_NOTARIZE_PASS }}
         MACOS_NOTARIZE_PROVIDER: ${{ secrets.MACOS_NOTARIZE_PROVIDER }}
-        BEAM_WALLET_UI_IN: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
+        BEAM_WALLET_UI_IN: Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.dmg
       run: |
         chmod +x ./notarize.sh
         ./notarize.sh
-        shasum -a 256 Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg > checksum.txt
+        shasum -a 256 Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.dmg > checksum.txt
 
     - name: Collect [ubuntu]
       shell: bash
       if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
-        cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Linux.deb Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb
-        sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb > checksum.txt
+        #cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Linux.deb Beam-Wallet$-{{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.deb
+        #sha256sum Beam-Wallet$-{{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.deb > checksum.txt
+        cp Beam_Wallet_Masternet-${{env.BEAM_VERSION}}-x86_64.AppImage BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage
+        sha256sum BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage > BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage-checksum.txt
+        chmod a+x BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage
+        tar -cvf BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.tar BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage-checksum.txt
 
     - name: Collect [windows]
       shell: bash
       if: matrix.os == 'windows-2019'
       run: |
-        cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-win64.exe Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.exe
-        certUtil -hashfile Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.exe SHA256 > checksum.txt
+        cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-win64.exe Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.exe
+        certUtil -hashfile Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.exe SHA256 > checksum.txt
 
 ###############################################################################
 # Upload
 ###############################################################################
     - uses: actions/upload-artifact@v2
+      if: matrix.os == 'windows-2019' || matrix.os == 'macos-10.15'
       with:
-        name: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-${{env.OS_NAME}}
-        path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}*
+        name: ${{env.PACKAGE_NAME}}-Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}
+        path: |
+          Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}*
+          *checksum.txt
         if-no-files-found: error
 
     - uses: actions/upload-artifact@v2
-      if: matrix.os == 'ubuntu-18.04'
+      if: matrix.os == 'ubuntu-16.04'
       with:
-        name: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-linux
-        path: |
-          Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}*
-          checksum.txt
+        name: ${{env.PACKAGE_NAME}}-Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}
+        path: BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.tar
         if-no-files-found: error
 
     - uses: actions/upload-artifact@v2
