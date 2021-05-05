@@ -339,19 +339,16 @@ QString TxObject::getFee() const
     else if (_tx.m_fee)
     {
         // TODO(zavarza) no fee for shielded inputs after HF3
-        auto txHeight = _tx.GetParameter<beam::Height>(wallet::TxParameterID::KernelProofHeight);
-        if (!txHeight)
+        Amount shieldedInputsFee = 0;
+        std::vector<wallet::IPrivateKeyKeeper2::ShieldedInput> inputsShielded;
+        if (_tx.GetParameter(wallet::TxParameterID::InputCoinsShielded, inputsShielded))
         {
-            txHeight = _tx.GetParameter<beam::Height>(wallet::TxParameterID::MinHeight);
+            for (const auto& inputShielded : inputsShielded)
+            {
+                shieldedInputsFee += inputShielded.m_Fee;
+            }
         }
-        if (txHeight && *txHeight < Rules::get().pForks[3].m_Height)
-        {
-            std::vector<wallet::IPrivateKeyKeeper2::ShieldedInput> inputsShielded;
-            _tx.GetParameter(wallet::TxParameterID::InputCoinsShielded, inputsShielded);
-            auto& fs = beam::Transaction::FeeSettings::get(*txHeight);
-            return AmountToUIString(_tx.m_fee + fs.m_ShieldedInputTotal * inputsShielded.size());
-        }
-        return AmountToUIString(_tx.m_fee);
+        return AmountToUIString(shieldedInputsFee + _tx.m_fee);
     }
     return QString{};
 }
