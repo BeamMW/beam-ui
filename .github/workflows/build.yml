@@ -198,8 +198,7 @@ jobs:
 
     - name: Notarize [macos-10.15]
       shell: bash
-      if: false
-      # if: matrix.os == 'macos-10.15'
+      if: matrix.os == 'macos-10.15'
       env:
         MACOS_NOTARIZE_USER: ${{ secrets.MACOS_NOTARIZE_USER }}
         MACOS_NOTARIZE_PASS: ${{ secrets.MACOS_NOTARIZE_PASS }}
