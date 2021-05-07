@@ -108,10 +108,9 @@ int main (int argc, char* argv[])
 
     block_sigpipe();
     QApplication app(argc, argv);
-    QDir appDataDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
-
-    QApplication::setWindowIcon(QIcon(Theme::iconPath()));
     QApplication::setApplicationName(AppName);
+    QApplication::setWindowIcon(QIcon(Theme::iconPath()));
+    QDir appDataDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
 
     try
     {

@@ -31,6 +31,7 @@
 #include <boost/filesystem.hpp>
 #include <algorithm>
 #include <thread>
+#include <algorithm>
 
 #if defined(BEAM_HW_WALLET)
 #include "core/block_rw.h"
@@ -754,14 +755,40 @@ void StartViewModel::onNodeSettingsChanged()
 
 void StartViewModel::findExistingWalletDB()
 {
+    std::set<std::string> pathsToCheck;
+
     auto appDataPath = AppModel::getInstance().getSettings().getAppDataPath();
-    auto defaultAppDataPath = QDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation)).path().toStdString();
+    pathsToCheck.insert(appDataPath);
 
-    auto walletDBs = findAllWalletDB(appDataPath);
+    auto defaultAppDataPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation).toStdString();
+    pathsToCheck.insert(defaultAppDataPath);
 
-    if (appDataPath != defaultAppDataPath)
+    #ifdef Q_OS_LINUX
     {
-        auto additionnalWalletDBs = findAllWalletDB(defaultAppDataPath);
+        // Some 5.2 & 5.3 created folders without ' ' in name (BeamWallet instead of 'Beam Wallet')
+        // As of 6.0 this is fixed, but we need to take care of these
+        auto checkAlso = [&] (const std::string& spath)
+        {
+            boost::filesystem::path path(spath);
+            if (path.empty()) return;
+
+            auto dirname = path.filename().string();
+            std::string::iterator end_pos = std::remove(dirname.begin(), dirname.end(), ' ');
+            dirname.erase(end_pos, dirname.end());
+
+            auto nspath = path.parent_path().append(dirname);
+            pathsToCheck.insert(nspath.string());
+        };
+
+        checkAlso(appDataPath);
+        checkAlso(defaultAppDataPath);
+    }
+    #endif
+
+    std::vector<boost::filesystem::path> walletDBs;
+    for(const auto& path: pathsToCheck)
+    {
+        auto additionnalWalletDBs = findAllWalletDB(path);
         walletDBs.reserve(walletDBs.size() + additionnalWalletDBs.size());
         walletDBs.insert(std::end(walletDBs), std::begin(additionnalWalletDBs), std::end(additionnalWalletDBs));
     }
