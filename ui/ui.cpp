@@ -108,10 +108,9 @@ int main (int argc, char* argv[])
 
     block_sigpipe();
     QApplication app(argc, argv);
-    QDir appDataDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
-
-    QApplication::setWindowIcon(QIcon(Theme::iconPath()));
     QApplication::setApplicationName(AppName);
+    QApplication::setWindowIcon(QIcon(Theme::iconPath()));
+    QDir appDataDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
 
     try
     {
@@ -161,8 +160,8 @@ int main (int argc, char* argv[])
             appDataDir.setPath(newPath);
         }
 
-        int logLevel = getLogLevel(cli::LOG_LEVEL, vm, 2);
-        int fileLogLevel = getLogLevel(cli::FILE_LOG_LEVEL, vm, 2);
+        int logLevel = getLogLevel(cli::LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
+        int fileLogLevel = getLogLevel(cli::FILE_LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
 
         beam::Crash::InstallHandler(appDataDir.filePath(AppName).toStdString().c_str());
 
