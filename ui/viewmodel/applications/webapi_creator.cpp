@@ -45,7 +45,7 @@ namespace beamui::applications
 
         void printApproveLog(const std::string& preamble, const std::string& appid, const std::string& appname, const ApproveMap& info, const ApproveAmounts& amounts)
         {
-            LOG_INFO() << preamble << "(" << appname << ", " << appid << "):";
+            LOG_INFO() << preamble << " (" << appname << ", " << appid << "):";
             printMap("\t", info);
 
             if (!amounts.isEmpty())
