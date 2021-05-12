@@ -47,6 +47,7 @@ namespace beamui::applications {
         data.appName   = _appName;
 
         _walletAPI = IWalletApi::CreateInstance(version, *this, data);
+        LOG_INFO () << "WebAPI_Beam created for " << appname << ", " << appid;
     }
 
     WebAPI_Beam::~WebAPI_Beam()
@@ -59,7 +60,7 @@ namespace beamui::applications {
         //
         // THIS IS THE UI THREAD
         //
-        LOG_INFO () << "WebAPP API call: " << request.toStdString();
+        LOG_INFO () << "WebAPP API call for " << _appName << ", " << _appId << "): " << request.toStdString();
 
         const auto stdreq = request.toStdString();
         if (auto pres = _walletAPI->parseAPIRequest(stdreq.c_str(), stdreq.size()); pres)
