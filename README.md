@@ -5,7 +5,7 @@
 
 ### Beam Desktop GUI Wallet
 
-Beam is focused on usability as much as confidentiality, which is why all Beam wallets are beautiful and carefully designed to provide best experience for both new and veteran users.
+Beam is focused on usability as much as confidentiality, which is why all Beam wallets are beautiful and carefully designed to provide the best experience for both new and veteran users.
 
 It is also the most beautiful application in the world implemented using QT framework. If you think you know a more beautiful one please send it to contact@beam.mw
 
