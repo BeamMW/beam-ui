@@ -175,7 +175,7 @@ jobs:
         cp ui/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}} deploy/usr/bin/
         cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/apps/
         cp ui/beam.desktop deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop
-        cp ui/beam-wallet.cfg deploy/usr/share/applications/
+        cp ui/beam-wallet.cfg deploy/usr/bin/
         echo "Creating AppImage"
         chmod a+x ui/3rdparty/linuxdeployqt-7
         export VERSION=${{env.BEAM_VERSION}}

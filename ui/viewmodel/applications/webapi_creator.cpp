@@ -19,6 +19,46 @@
 
 namespace beamui::applications
 {
+    namespace
+    {
+        typedef QList<QMap<QString, QVariant>> ApproveAmounts;
+        typedef QMap<QString, QVariant> ApproveMap;
+
+        void printMap(const std::string& prefix, const ApproveMap& info)
+        {
+            QMapIterator<QString, QVariant> iter(info);
+
+            while (iter.hasNext())
+            {
+                iter.next();
+                if (iter.value().canConvert<QString>())
+                {
+                    LOG_INFO () << prefix << iter.key().toStdString() << "=" << iter.value().toString().toStdString();
+                }
+                else
+                {
+                    assert(false); // for now should not happen, add special case above to print correct logs
+                    LOG_INFO () << prefix << iter.key().toStdString() << "=" << "unexpected no-str convertible";
+                }
+            }
+        }
+
+        void printApproveLog(const std::string& preamble, const std::string& appid, const std::string& appname, const ApproveMap& info, const ApproveAmounts& amounts)
+        {
+            LOG_INFO() << preamble << " (" << appname << ", " << appid << "):";
+            printMap("\t", info);
+
+            if (!amounts.isEmpty())
+            {
+                for (const auto &amountMap : amounts)
+                {
+                    LOG_INFO() << "\tamount entry:";
+                    printMap("\t\t", amountMap);
+                }
+            }
+        }
+    }
+
     WebAPICreator::WebAPICreator(QObject *parent)
         : QObject(parent)
     {
@@ -47,6 +87,7 @@ namespace beamui::applications
 
         QQmlEngine::setObjectOwnership(_api.get(), QQmlEngine::CppOwnership);
         emit apiCreated(_api.get());
+        LOG_INFO() << "API created: " << stdver << ", " << appName.toStdString() << ", " << appid;
     }
 
     void WebAPICreator::AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
@@ -107,7 +148,7 @@ namespace beamui::applications
         const auto assetId = spend.begin()->first;
         const auto amount = spend.begin()->second;
 
-        QMap<QString, QVariant> info;
+        ApproveMap info;
         info.insert("amount",     AmountBigToUIString(amount));
         info.insert("fee",        AmountToUIString(fee));
         info.insert("feeRate",    AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID)));
@@ -132,19 +173,19 @@ namespace beamui::applications
             assert(!"Failed to parse token");
         }
 
+        printApproveLog("Get user consent for send", _api->getAppId(), _api->getAppName(), info, ApproveAmounts());
         emit approveSend(QString::fromStdString(request), info);
     }
 
     void WebAPICreator::UIThread_getContractInfoConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
     {
-        QMap<QString, QVariant> info;
+        ApproveMap info;
         info.insert("comment",   QString::fromStdString(pinfo.minfo.comment));
         info.insert("fee",       AmountToUIString(pinfo.minfo.fee));
         info.insert("feeRate",   AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID)));
         info.insert("rateUnit",  _amgr->getRateUnit());
 
-        QList<QMap<QString, QVariant>> amounts;
-
+        ApproveAmounts amounts;
         for(const auto& sinfo: pinfo.minfo.spend)
         {
             QMap<QString, QVariant> entry;
@@ -173,6 +214,7 @@ namespace beamui::applications
             amounts.push_back(entry);
         }
 
+        printApproveLog("Get user consent for contract tx", _api->getAppId(), _api->getAppName(), info, amounts);
         emit approveContractInfo(QString::fromStdString(request), info, amounts);
     }
 
@@ -181,6 +223,7 @@ namespace beamui::applications
         //
         // This is UI thread
         //
+        LOG_INFO() << "Contract tx rejected: " << _api->getAppName() << ", " << _api->getAppId() << ", " << request.toStdString();
         _api->AnyThread_sendApproved(request.toStdString());
     }
 
@@ -189,6 +232,7 @@ namespace beamui::applications
         //
         // This is UI thread
         //
+        LOG_INFO() << "Contract tx rejected: " << _api->getAppName() << ", " << _api->getAppId() << ", " << request.toStdString();
         _api->AnyThread_sendRejected(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
     }
 
@@ -197,6 +241,7 @@ namespace beamui::applications
         //
         // This is UI thread
         //
+        LOG_INFO() << "Contract tx rejected: " << _api->getAppName() << ", " << _api->getAppId() << ", " << request.toStdString();
         _api->AnyThread_contractInfoApproved(request.toStdString());
     }
 
@@ -205,6 +250,7 @@ namespace beamui::applications
         //
         // This is UI thread
         //
+        LOG_INFO() << "Contract tx rejected: " << _api->getAppName() << ", " << _api->getAppId() << ", " << request.toStdString();
         _api->AnyThread_contractInfoRejected(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
     }
 }

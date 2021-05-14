@@ -62,6 +62,16 @@ namespace beamui::applications
         void AnyThread_contractInfoApproved(const std::string& request);
         void AnyThread_contractInfoRejected(const std::string& request, beam::wallet::ApiError err, const std::string& message);
 
+        [[nodiscard]] std::string getAppId() const
+        {
+            return _appId;
+        }
+
+        [[nodiscard]] std::string getAppName() const
+        {
+            return _appName;
+        }
+
     private:
         // This can be called from any thread.
         void AnyThread_callWalletApiImp(const std::string& request);
