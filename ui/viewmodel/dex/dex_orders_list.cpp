@@ -9,6 +9,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "dex_orders_list.h"
+#include "viewmodel/ui_helpers.h"
 
 DexOrdersList::DexOrdersList()
 {
@@ -54,7 +55,7 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
     case Roles::RTotal:
         return QString::number(order.amount * 10) + " BEAM-X";
     case Roles::RExpiration:
-        return QString::fromStdString(order.orderID.to_string());
+        return beamui::toString(order.expiration);
     case Roles::RStatus:
         return QString("N/A");
     case Roles::RIsMine:

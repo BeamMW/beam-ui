@@ -166,12 +166,23 @@ namespace beamui
         return amount;
     }
 
+    QString toString(const QDateTime& dt)
+    {
+        return dt.toString(QLocale().dateTimeFormat(QLocale::ShortFormat));
+    }
+
     QString toString(const beam::Timestamp& ts)
     {
         QDateTime datetime;
         datetime.setTime_t(ts);
+        return toString(datetime);
+    }
 
-        return datetime.toString(QLocale().dateTimeFormat(QLocale::ShortFormat));
+    QString toString(time_t time)
+    {
+        QDateTime datetime;
+        datetime.setMSecsSinceEpoch(time);
+        return toString(datetime);
     }
 
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT

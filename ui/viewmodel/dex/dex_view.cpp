@@ -47,7 +47,8 @@ namespace beamui::dex
 
         _walletModel.getAsync()->saveAddress(_receiverAddr);
 
-        DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 1, 0, 50);
+        auto expires = std::time(0) + 1000 * 60 * 10;
+        DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 1, 0, 50, expires);
         _walletModel.getAsync()->publishDexOrder(order);
     }
 
@@ -57,7 +58,8 @@ namespace beamui::dex
 
         _walletModel.getAsync()->saveAddress(_receiverAddr);
 
-        DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 0, 1, 100);
+        auto expires = std::time(0) + 1000 * 60 * 10;
+        DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 0, 1, 100, expires);
         _walletModel.getAsync()->publishDexOrder(order);
     }
 
