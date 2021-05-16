@@ -68,7 +68,7 @@
 
 #if defined Q_OS_WIN
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
-#elif defined Q_OS_MAC
+#elif defined Q_OS_MACOS
 Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)
 #elif defined Q_OS_LINUX
 Q_IMPORT_PLUGIN(QtQmlPlugin)
@@ -88,6 +88,12 @@ Q_IMPORT_PLUGIN(QtQuickTemplates2Plugin)
 
 
 #endif
+
+#ifdef Q_OS_MACOS
+#include <sys/types.h>
+#include <sys/sysctl.h>
+#endif // Q_OS_MACOS
+
 
 using namespace beam;
 using namespace std;
@@ -120,12 +126,31 @@ int main (int argc, char* argv[])
 
         try
         {
-#ifdef Q_OS_DARWIN // on Big Sur we have broken current dir, let's restore it
+#ifdef Q_OS_MACOS // on Big Sur we have broken current dir, let's restore it
             QDir t = app.applicationDirPath();
             if (t.dirName() == "MacOS" && t.cdUp() && t.dirName() == "Contents" && t.cdUp())
             {
                 t.cdUp(); // Go up to the bundle parent directory
                 QDir::setCurrent(t.absolutePath());
+            }
+
+            // workaround for https://github.com/BeamMW/beam-ui/issues/623
+            auto isAppleTranslated = []() 
+            {
+                int    ret = 0;
+                size_t size = sizeof(ret);
+                if (sysctlbyname("sysctl.proc_translated", &ret, &size, NULL, 0) == -1)
+                {
+                    if (errno == ENOENT)
+                        return 0;
+                    return -1;
+                }
+                return ret;
+            };
+            if (isAppleTranslated() == 1)
+            {
+                LOG_INFO() << "You are on apple M1 chipset running an Intel application, forcing NativeTextRendering";
+                QQuickWindow::setTextRenderType(QQuickWindow::TextRenderType::NativeTextRendering);
             }
 #endif
             vm = getOptions(argc, argv, WalletSettings::WalletCfg, options, true);
