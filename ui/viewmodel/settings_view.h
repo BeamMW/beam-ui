@@ -48,6 +48,7 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(QString      publicAddress                   READ getPublicAddress               NOTIFY  publicAddressChanged)
     Q_PROPERTY(QString      explorerUrl                     READ getExplorerUrl                 CONSTANT)
     Q_PROPERTY(QString      faucetUrl                       READ getFaucetUrl                   CONSTANT)
+    Q_PROPERTY(int          minConfirmations                READ getMinConfirmations            WRITE  setMinConfirmations NOTIFY minConfirmationsChanged)
 
     Q_PROPERTY(QList<QObject*> swapCoinSettingsList READ getSwapCoinSettings    CONSTANT)
     Q_PROPERTY(QObject* notificationsSettings   READ getNotificationsSettings   CONSTANT)
@@ -107,6 +108,9 @@ public:
     int getMaxPrivacyLockTimeLimit() const;
     void setMaxPrivacyLockTimeLimit(int limit);
 
+    int getMinConfirmations() const;
+    void setMinConfirmations(int value);
+
     Q_INVOKABLE uint coreAmount() const;
     Q_INVOKABLE void addLocalNodePeer(const QString& localNodePeer);
     Q_INVOKABLE void deleteLocalNodePeer(int index);
@@ -148,6 +152,7 @@ signals:
     void publicAddressChanged();
     void maxPrivacyAnonymitySetChanged();
     void maxPrivacyLockTimeLimitChanged();
+    void minConfirmationsChanged();
 protected:
     void timerEvent(QTimerEvent *event) override;
 

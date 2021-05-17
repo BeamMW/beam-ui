@@ -3028,5 +3028,22 @@ Update your settings and try again.</source>
         <source>Wallet</source>
         <translation type="unfinished">Plånbok</translation>
     </message>
+    <message id="settings-general-confirmations">
+        <source>Minimum confirmations</source>
+        <extracomment>settings tab, general section, minimum confirmations</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-confirmation-status-label">
+        <source>Confirmation status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-confirming">
+        <source>confirming</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-confirmation-progress-label">
+        <source>Confirmed (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

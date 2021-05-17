@@ -507,6 +507,16 @@ void SettingsViewModel::setMaxPrivacyLockTimeLimit(int limit)
     }
 }
 
+int SettingsViewModel::getMinConfirmations() const
+{
+    return m_settings.getMinConfirmations();
+}
+
+void SettingsViewModel::setMinConfirmations(int value)
+{
+    m_settings.setMinConfirmations(value);
+}
+
 QString SettingsViewModel::getExplorerUrl() const
 {
     return m_settings.getExplorerUrl();

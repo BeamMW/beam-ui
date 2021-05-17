@@ -38,6 +38,8 @@ RowLayout {
     property bool   isShieldedTx: false
     property bool   isCompleted:  false
     property bool   isContractTx: false
+    property int minConfirmations: 0
+    property string confirmationsProgress: ""
 
     property var  assetNames
     property var  assetIcons
@@ -227,6 +229,23 @@ RowLayout {
             copyMenuEnabled:  true
             onCopyText:       textCopied(text)
             visible:          root.isContractTx
+        }
+
+        SFText {
+            Layout.alignment: Qt.AlignTop
+            font.pixelSize: 14
+            color: Style.content_secondary
+            //% "Confirmation status"
+            text: qsTrId("tx-details-confirmation-status-label") + ":"
+            visible:          root.minConfirmations
+        }
+
+        SFLabel {
+            font.pixelSize:   14
+            color:            Style.content_main
+            //% "Confirmed (%1)"
+            text:             qsTrId("tx-details-confirmation-progress-label").arg(root.confirmationsProgress)
+            visible:          root.minConfirmations
         }
 
         SFText {

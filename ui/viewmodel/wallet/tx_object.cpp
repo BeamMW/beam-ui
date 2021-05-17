@@ -154,6 +154,8 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
         _assetAmountsIncome.push_back(!_tx.m_sender);
         _assetRates.push_back(getRate(_tx.m_assetId));
     }
+
+    _minConfirmations = AppModel::getInstance().getSettings().getMinConfirmations();
 }
 
 bool TxObject::operator==(const TxObject& other) const
@@ -169,6 +171,37 @@ beam::Timestamp TxObject::timeCreated() const
 QString TxObject::getSource() const
 {
     return _source;
+}
+
+int TxObject::getMinConfirmations() const
+{
+    return _minConfirmations;
+}
+
+QString TxObject::getConfirmationProgress() const
+{
+    if (_minConfirmations)
+    {
+        auto currHeight = AppModel::getInstance().getWalletModel()->getCurrentHeight();
+        if (currHeight && _minConfirmations)
+        {
+            if (auto proofHeight = _tx.GetParameter<Height>(wallet::TxParameterID::KernelProofHeight); proofHeight)
+            {
+                std::stringstream ss;
+                auto blocksAfter = (currHeight - *proofHeight);
+                ss << (blocksAfter > _minConfirmations ? _minConfirmations : blocksAfter) << "/" << _minConfirmations;
+                return QString::fromStdString(ss.str());
+            }
+            else
+            {
+                std::stringstream ss;
+                ss << 0 << "/" << _minConfirmations;
+                return QString::fromStdString(ss.str());
+            }
+        }
+    }
+
+    return "unknown";
 }
 
 beam::wallet::TxID TxObject::getTxID() const
@@ -245,25 +278,22 @@ QString TxObject::getRate() const
 
 QString TxObject::getStatus() const
 {
+    std::unique_ptr<beam::wallet::TxStatusInterpreter> statusInterpreter;
     if (_tx.m_txType == wallet::TxType::Simple)
     {
-        beam::wallet::SimpleTxStatusInterpreter interpreter(_tx);
-        return interpreter.getStatus().c_str();
+        statusInterpreter = std::make_unique<beam::wallet::SimpleTxStatusInterpreter>(_tx);
     }
     else if (_tx.m_txType == wallet::TxType::PushTransaction)
     {
-        beam::wallet::MaxPrivacyTxStatusInterpreter interpreter(_tx);
-        return interpreter.getStatus().c_str();
+        statusInterpreter = std::make_unique<beam::wallet::MaxPrivacyTxStatusInterpreter>(_tx);
     }
     else if (_tx.m_txType >= wallet::TxType::AssetIssue && _tx.m_txType <= wallet::TxType::AssetInfo)
     {
-        beam::wallet::AssetTxStatusInterpreter interpreter(_tx);
-        return interpreter.getStatus().c_str();
+        statusInterpreter = std::make_unique<beam::wallet::AssetTxStatusInterpreter>(_tx);
     }
     else if (_tx.m_txType == wallet::TxType::Contract)
     {
-        beam::wallet::ContractTxStatusInterpreter interpreter(_tx);
-        return interpreter.getStatus().c_str();
+        statusInterpreter = std::make_unique<beam::wallet::ContractTxStatusInterpreter>(_tx);
     }
     else if (_tx.m_txType == wallet::TxType::DexSimpleSwap)
     {
@@ -275,6 +305,8 @@ QString TxObject::getStatus() const
         BOOST_ASSERT_MSG(false, kErrorUnknownTxType);
         return "unknown";
     }
+
+    return statusInterpreter ? statusInterpreter->getStatus().c_str() : "unknown";
 }
 
 bool TxObject::isCancelAvailable() const
@@ -602,7 +634,7 @@ bool TxObject::isPending() const
 
 bool TxObject::isCompleted() const
 {
-    return _tx.m_status == wallet::TxStatus::Completed;
+    return _tx.m_status == wallet::TxStatus::Completed || _tx.m_status == wallet::TxStatus::Confirming;
 }
 
 bool TxObject::isSelfTx() const

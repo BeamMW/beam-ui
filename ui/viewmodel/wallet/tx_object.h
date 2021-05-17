@@ -51,6 +51,8 @@ public:
     QString getAmountSecondCurrency();
     QString getCidsStr() const;
     QString getSource() const;
+    int getMinConfirmations() const;
+    QString getConfirmationProgress() const;
 
     const std::vector<beam::Asset::ID>& getAssetsList() const;
     const std::vector<QString>& getAssetAmounts() const;
@@ -82,6 +84,7 @@ protected:
     void restoreAddressType();
 
     beam::wallet::TxDescription _tx;
+    int _minConfirmations = 0;
     beam::wallet::Currency _secondCurrency;
     QString _amountSecondCurrency;
 

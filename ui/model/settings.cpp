@@ -697,3 +697,38 @@ QString WalletSettings::getAppsStoragePath() const
     }
     return m_appDataDir.filePath(kStorageFolder);
 }
+
+void WalletSettings::minConfirmationsInit()
+{
+    auto walletModel = AppModel::getInstance().getWalletModel();
+    if (walletModel)
+    {
+        walletModel->getAsync()->getMinConfirmationsCount([this] (int count)
+        {
+            Lock lock(m_mutex);
+            m_minConfirmations = count;
+        });
+    }
+}
+
+int WalletSettings::getMinConfirmations() const
+{
+    Lock lock(m_mutex);
+    return m_minConfirmations;
+}
+
+void WalletSettings::setMinConfirmations(int value)
+{
+    if (m_minConfirmations != value)
+    {
+        auto walletModel = AppModel::getInstance().getWalletModel();
+        if (walletModel)
+        {
+            {
+                Lock lock(m_mutex);
+                m_minConfirmations = value;
+            }
+            walletModel->getAsync()->setMinConfirmationsCount(m_minConfirmations);
+        }
+    }
+}

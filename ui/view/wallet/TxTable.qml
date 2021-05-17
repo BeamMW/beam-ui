@@ -289,23 +289,25 @@ Control {
                 delegate: TransactionDetails {
                     id: detailsPanel
                     width: transactionsTable.width
-                    sendAddress:        model && model.addressFrom ? model.addressFrom : ""
-                    receiveAddress:     model && model.addressTo ? model.addressTo : ""
-                    senderIdentity:     model && model.senderIdentity ? model.senderIdentity : ""
-                    receiverIdentity:   model && model.receiverIdentity ? model.receiverIdentity : ""
-                    comment:            model && model.comment ? model.comment : ""
-                    txID:               model && model.txID ? model.txID : ""
-                    kernelID:           model && model.kernelID ? model.kernelID : ""
-                    status:             model && model.status ? model.status : ""
-                    failureReason:      model && model.failureReason ? model.failureReason : ""
-                    isIncome:           model && model.isIncome ? model.isIncome : false
-                    hasPaymentProof:    model && model.hasPaymentProof ? model.hasPaymentProof : false
-                    isSelfTx:           model && model.isSelfTransaction ? model.isSelfTransaction : false
-                    isContractTx:       model && model.isContractTx
-                    cidsStr:            model && model.cidsStr ? model.cidsStr : ""
-                    rawTxID:            model && model.rawTxID ? model.rawTxID : null
-                    stateDetails:       model && model.stateDetails ? model.stateDetails : ""
-                    isCompleted:        model && model.isCompleted ? model.isCompleted : false
+                    sendAddress:            model && model.addressFrom ? model.addressFrom : ""
+                    receiveAddress:         model && model.addressTo ? model.addressTo : ""
+                    senderIdentity:         model && model.senderIdentity ? model.senderIdentity : ""
+                    receiverIdentity:       model && model.receiverIdentity ? model.receiverIdentity : ""
+                    comment:                model && model.comment ? model.comment : ""
+                    txID:                   model && model.txID ? model.txID : ""
+                    kernelID:               model && model.kernelID ? model.kernelID : ""
+                    status:                 model && model.status ? model.status : ""
+                    failureReason:          model && model.failureReason ? model.failureReason : ""
+                    isIncome:               model && model.isIncome ? model.isIncome : false
+                    hasPaymentProof:        model && model.hasPaymentProof ? model.hasPaymentProof : false
+                    isSelfTx:               model && model.isSelfTransaction ? model.isSelfTransaction : false
+                    isContractTx:           model && model.isContractTx
+                    cidsStr:                model && model.cidsStr ? model.cidsStr : ""
+                    rawTxID:                model && model.rawTxID ? model.rawTxID : null
+                    stateDetails:           model && model.stateDetails ? model.stateDetails : ""
+                    isCompleted:            model && model.isCompleted ? model.isCompleted : false
+                    minConfirmations:       model && model.minConfirmations ? model.minConfirmations : 0
+                    confirmationsProgress:  model && model.confirmationsProgress ? model.confirmationsProgress : ""
 
                     addressType:        {
                         if (model) {

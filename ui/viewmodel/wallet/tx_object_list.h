@@ -78,6 +78,8 @@ public:
         CidsStr,
         Source,
         SourceSort,
+        MinConfirmations,
+        ConfirmationsProgress,
     };
     Q_ENUM(Roles)
 

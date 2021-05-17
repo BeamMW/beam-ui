@@ -175,6 +175,11 @@ public offline" */
         //% "completed"
         return qtTrId("wallet-txs-status-completed");
     }
+    else if (status == "confirming")
+    {
+        //% "confirming"
+        return qtTrId("wallet-txs-status-confirming");
+    }
     else
     {
         //% "unknown"
@@ -246,7 +251,9 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::AssetRates), "assetRates"},
         { static_cast<int>(Roles::CidsStr), "cidsStr"},
         { static_cast<int>(Roles::Source), "source"},
-        { static_cast<int>(Roles::SourceSort), "sourceSort"}
+        { static_cast<int>(Roles::SourceSort), "sourceSort"},
+        { static_cast<int>(Roles::MinConfirmations), "minConfirmations"},
+        { static_cast<int>(Roles::ConfirmationsProgress), "confirmationsProgress"}
     };
     return roles;
 }
@@ -287,7 +294,9 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return value->getAddressTo();
         case Roles::Status:
         case Roles::StatusSort:
-            return getStatusTextTranslated(value->getStatus(), value->getAddressType());
+            return value->getStatus() == "confirming"
+                ? getStatusTextTranslated(value->getStatus(), value->getAddressType()) + " (" + value->getConfirmationProgress() + ")"
+                : getStatusTextTranslated(value->getStatus(), value->getAddressType());
         case Roles::Fee:
             return value->getFee();
         case Roles::Comment:
@@ -446,6 +455,10 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return value->getAmountSecondCurrency();
         case Roles::IsMultiAsset:
             return value->isMultiAsset();
+        case Roles::MinConfirmations:
+            return value->getMinConfirmations();
+        case Roles::ConfirmationsProgress:
+            return value->getConfirmationProgress();
         default:
             return QVariant();
     }
