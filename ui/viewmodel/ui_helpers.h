@@ -92,7 +92,6 @@ namespace beamui
     QString toString(const beam::PeerID&);
     QString toString(const beam::Merkle::Hash&);
     QString toString(const beam::Timestamp& ts);
-    QString toString(time_t);
     QString toString(const QDateTime&);
 
     QDateTime CalculateExpiresTime(beam::Timestamp currentHeightTime, beam::Height currentHeight, beam::Height expiresHeight);

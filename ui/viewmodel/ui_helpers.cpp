@@ -178,12 +178,6 @@ namespace beamui
         return toString(datetime);
     }
 
-    QString toString(time_t time)
-    {
-        auto datetime = QDateTime::fromTime_t(time);
-        return toString(datetime);
-    }
-
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     Currencies convertSwapCoinToCurrency(wallet::AtomicSwapCoin coin)
     {

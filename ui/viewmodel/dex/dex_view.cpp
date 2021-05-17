@@ -44,7 +44,7 @@ namespace beamui::dex
 
         _walletModel.getAsync()->saveAddress(_receiverAddr);
 
-        auto expires = std::time(nullptr);
+        auto expires = beam::getTimestamp();
         expires += 60 * 60 * 24; // 24 hours for tests
 
         DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 1, 0, 50, expires);
@@ -57,7 +57,7 @@ namespace beamui::dex
 
         _walletModel.getAsync()->saveAddress(_receiverAddr);
 
-        auto expires = std::time(nullptr);
+        auto expires = beam::getTimestamp();
         expires += 60 * 60 * 24; // 24 hours for tests
 
         DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 0, 1, 100, expires);
