@@ -703,7 +703,7 @@ void WalletSettings::minConfirmationsInit()
     auto walletModel = AppModel::getInstance().getWalletModel();
     if (walletModel)
     {
-        walletModel->getAsync()->getMinConfirmationsCount([this] (int count)
+        walletModel->getAsync()->getMinConfirmationsCount([this] (uint32_t count)
         {
             Lock lock(m_mutex);
             m_minConfirmations = count;
@@ -711,13 +711,13 @@ void WalletSettings::minConfirmationsInit()
     }
 }
 
-int WalletSettings::getMinConfirmations() const
+uint32_t WalletSettings::getMinConfirmations() const
 {
     Lock lock(m_mutex);
     return m_minConfirmations;
 }
 
-void WalletSettings::setMinConfirmations(int value)
+void WalletSettings::setMinConfirmations(uint32_t value)
 {
     if (m_minConfirmations != value)
     {

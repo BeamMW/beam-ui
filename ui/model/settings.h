@@ -102,8 +102,8 @@ public:
     QString getAppsStoragePath() const;
 
     void minConfirmationsInit();
-    int getMinConfirmations() const;
-    void setMinConfirmations(int value);
+    uint32_t getMinConfirmations() const;
+    void setMinConfirmations(uint32_t value);
 
 public:
     static const char* WalletCfg;
@@ -131,7 +131,7 @@ private:
     QSettings m_data;
     QDir m_appDataDir;
     uint8_t m_mpLockTimeLimit = 0;
-    int m_minConfirmations = 0;
+    uint32_t m_minConfirmations = 0;
     mutable std::recursive_mutex m_mutex;
     using Lock = std::unique_lock<decltype(m_mutex)>;
 };

@@ -173,7 +173,7 @@ QString TxObject::getSource() const
     return _source;
 }
 
-int TxObject::getMinConfirmations() const
+uint32_t TxObject::getMinConfirmations() const
 {
     return _minConfirmations;
 }
