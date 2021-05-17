@@ -27,6 +27,9 @@ QHash<int, QByteArray> DexOrdersList::roleNames() const
         {static_cast<int>(Roles::RExpiration), "expiration"},
         {static_cast<int>(Roles::RStatus),     "status"},
         {static_cast<int>(Roles::RIsMine),     "isMine"},
+        {static_cast<int>(Roles::RProgress),   "progress"},
+        {static_cast<int>(Roles::RIsActive),   "isActive"},
+        {static_cast<int>(Roles::RCanAccept),  "canAccept"},
     };
     return roles;
 }
@@ -57,9 +60,29 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
     case Roles::RExpiration:
         return beamui::toString(order.expiration);
     case Roles::RStatus:
-        return QString("N/A");
+        {
+            if (order.IsExpired())
+            {
+                //% "Expired"
+                return qtTrId("dex-order-expired");
+            }
+            else if (order.IsCompleted())
+            {
+                //% "Fulfilled"
+                return qtTrId("dex-order-fulfilled");
+            }
+            else
+            {
+                //% "Active"
+                return qtTrId("dex-order-active");
+            }
+        }
     case Roles::RIsMine:
         return order.isMy;
+    case Roles::RProgress:
+        return QVariant(static_cast<uint32_t>(order.progress / order.amount * 100));
+    case Roles::RCanAccept:
+        return order.CanAccept();
     default:
         return QVariant();
     }

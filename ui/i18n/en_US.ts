@@ -3043,5 +3043,21 @@ Update your settings and try again.</source>
         <source>Confirmed (%1)</source>
         <translation>Confirmed (%1)</translation>
     </message>
+    <message id="dex-order-expired">
+        <source>Expired</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-order-active">
+        <source>Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-order-fulfilled">
+        <source>Fulfilled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-progress">
+        <source>Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

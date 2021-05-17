@@ -31,9 +31,6 @@ namespace beamui::dex
          // TODO:DEX move address to the board?
          _walletModel.getAsync()->generateNewAddress();
 
-         //_orders.insert(std::make_shared<DexOrderObject>());
-         //_orders.insert(std::make_shared<DexOrderObject>());
-         //_orders.insert(std::make_shared<DexOrderObject>());
          emit ordersChanged();
     }
 
@@ -47,7 +44,9 @@ namespace beamui::dex
 
         _walletModel.getAsync()->saveAddress(_receiverAddr);
 
-        auto expires = std::time(0) + 1000 * 60 * 10;
+        auto expires = std::time(nullptr);
+        expires += 60 * 60 * 24; // 24 hours for tests
+
         DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 1, 0, 50, expires);
         _walletModel.getAsync()->publishDexOrder(order);
     }
@@ -58,7 +57,9 @@ namespace beamui::dex
 
         _walletModel.getAsync()->saveAddress(_receiverAddr);
 
-        auto expires = std::time(0) + 1000 * 60 * 10;
+        auto expires = std::time(nullptr);
+        expires += 60 * 60 * 24; // 24 hours for tests
+
         DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 0, 1, 100, expires);
         _walletModel.getAsync()->publishDexOrder(order);
     }
@@ -107,8 +108,7 @@ namespace beamui::dex
         beam::wallet::DexOrderID dexOrderId;
         if (!dexOrderId.FromHex(orderId.toStdString()))
         {
-            // TODO:DEX show error? usually this should not happen, so may be just leave LOG_ERROR as is
-            LOG_ERROR() << "DexView::acceptOrder failed, bad order id";
+            throw std::runtime_error("DexView::acceptOrder failed, bad order id");
         }
         _walletModel.getAsync()->acceptDexOrder(dexOrderId);
     }

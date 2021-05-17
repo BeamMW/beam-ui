@@ -180,8 +180,7 @@ namespace beamui
 
     QString toString(time_t time)
     {
-        QDateTime datetime;
-        datetime.setMSecsSinceEpoch(time);
+        auto datetime = QDateTime::fromTime_t(time);
         return toString(datetime);
     }
 
