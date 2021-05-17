@@ -114,7 +114,7 @@ int main (int argc, char* argv[])
 
     try
     {
-        auto [options, visibleOptions] = createOptionsDescription(GENERAL_OPTIONS | UI_OPTIONS | WALLET_OPTIONS);
+        auto [options, visibleOptions] = createOptionsDescription(GENERAL_OPTIONS | UI_OPTIONS | WALLET_OPTIONS, WalletSettings::WalletCfg);
         visibleOptions;// unused
         po::variables_map vm;
 
@@ -128,7 +128,7 @@ int main (int argc, char* argv[])
                 QDir::setCurrent(t.absolutePath());
             }
 #endif
-            vm = getOptions(argc, argv, WalletSettings::WalletCfg, options, true);
+            vm = getOptions(argc, argv, options, true);
         }
         catch (const po::error& e)
         {
