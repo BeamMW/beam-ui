@@ -38,21 +38,34 @@ namespace beamui::dex
     {
     }
 
-    void DexView::buyBEAM()
+    void DexView::sellBEAM()
     {
+        using namespace beam;
         using namespace beam::wallet;
+
 
         _walletModel.getAsync()->saveAddress(_receiverAddr);
 
         auto expires = beam::getTimestamp();
         expires += 60 * 60 * 24; // 24 hours for tests
 
-        DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 1, 0, 50, expires);
+        DexOrder order(
+            DexOrderID::generate(),
+            _receiverAddr.m_walletID,
+            _receiverAddr.m_OwnID,
+            Asset::s_BeamID,
+            beam::Rules::Coin,
+            1,
+            beam::Rules::Coin / 100,
+            expires
+         );
+
         _walletModel.getAsync()->publishDexOrder(order);
     }
 
-    void DexView::sellBEAM()
+    void DexView::buyBEAM()
     {
+        using namespace beam;
         using namespace beam::wallet;
 
         _walletModel.getAsync()->saveAddress(_receiverAddr);
@@ -60,7 +73,17 @@ namespace beamui::dex
         auto expires = beam::getTimestamp();
         expires += 60 * 60 * 24; // 24 hours for tests
 
-        DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 0, 1, 100, expires);
+        DexOrder order(
+            DexOrderID::generate(),
+            _receiverAddr.m_walletID,
+            _receiverAddr.m_OwnID,
+            1,
+            Rules::Coin,
+            Asset::s_BeamID,
+            beam::Rules::Coin * 100,
+            expires
+         );
+
         _walletModel.getAsync()->publishDexOrder(order);
     }
 

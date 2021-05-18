@@ -48,17 +48,17 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
     switch (static_cast<Roles>(role))
     {
     case Roles::RId:
-        return QString::fromStdString(order.orderID.to_string());
+        return QString::fromStdString(order.getID().to_string());
     case Roles::RType:
-        return order.sellCoin == 0 ? "Sell BEAM" : "Buy BEAM";
+        return order.getSellCoin() == 0 ? "Sell BEAM" : "Buy BEAM";
     case Roles::RPrice:
-        return QString("10 BEAM-X");
+        return "TODO"; //QString("10 BEAM-X");
     case Roles::RSize:
-        return QString::number(order.amount) + " BEAM";
+        return "TODO";// QString::number(order.amount) + " BEAM";
     case Roles::RTotal:
-        return QString::number(order.amount * 10) + " BEAM-X";
+        return "TODO"; //QString::number(order.amount * 10) + " BEAM-X";
     case Roles::RExpiration:
-        return beamui::toString(order.expiration);
+        return beamui::toString(order.getExpiration());
     case Roles::RStatus:
         {
             if (order.IsExpired())
@@ -78,9 +78,9 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
             }
         }
     case Roles::RIsMine:
-        return order.isMy;
+        return order.IsMine();
     case Roles::RProgress:
-        return QVariant(static_cast<uint32_t>(order.progress / order.amount * 100));
+        return "TODO"; //QVariant(static_cast<uint32_t>(order.progress / order.amount * 100));
     case Roles::RCanAccept:
         return order.CanAccept();
     default:
