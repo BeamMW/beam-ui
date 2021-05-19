@@ -19,17 +19,8 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QFileDialog>
-#include <QVariant>
 #include <QStandardPaths>
 #include <QJSEngine>
-#if defined(QT_PRINTSUPPORT_LIB)
-#include <QtPrintSupport/qtprintsupportglobal.h>
-#include <QPrinter>
-#include <QPrintDialog>
-#include <QPainter>
-#include <QPaintEngine>
-#include <QPrinterInfo>
-#endif
 #include "settings_view.h"
 #include "model/app_model.h"
 #include "model/keyboard.h"
@@ -40,6 +31,7 @@
 #include <boost/filesystem.hpp>
 #include <algorithm>
 #include <thread>
+#include <algorithm>
 
 #if defined(BEAM_HW_WALLET)
 #include "core/block_rw.h"
@@ -105,7 +97,9 @@ namespace
         return walletDBs;
     }
 
-    void DoJSCallback(QJSValue& jsCallback, bool res)
+
+    template<typename T>
+    void DoJSCallback(QJSValue& jsCallback, const T& res)
     {
 #if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
         #pragma GCC diagnostic push
@@ -117,18 +111,38 @@ namespace
         #pragma GCC diagnostic pop
 #endif
     }
+
+    void DoOpenWallet(QJSValue& jsCallback, std::function<void ()> openFunc)
+    {
+        try
+        {
+            openFunc();
+            DoJSCallback(jsCallback, QString());
+        }
+        catch(const beam::wallet::FileIsNotDatabaseException&)
+        {
+            //% "Invalid password provided"
+            DoJSCallback(jsCallback, qtTrId("general-pwd-invalid"));
+        }
+        catch(std::runtime_error& err)
+        {
+            QString errmsg = err.what();
+            if (errmsg.isEmpty())
+            {
+                //% "Failed to open wallet, please check logs"
+                errmsg = qtTrId("general-open-failed");
+            }
+
+            LOG_ERROR() << "Error while trying to open wallet: " << errmsg.toStdString();
+            DoJSCallback(jsCallback, errmsg);
+        }
+    }
 }
 
-RecoveryPhraseItem::RecoveryPhraseItem(int index, const QString& phrase)
+RecoveryPhraseItem::RecoveryPhraseItem(int index, QString phrase)
     : m_index(index)
-    , m_phrase(phrase)
+    , m_phrase(std::move(phrase))
 {
-
-}
-
-RecoveryPhraseItem::~RecoveryPhraseItem()
-{
-
 }
 
 bool RecoveryPhraseItem::isCorrect() const
@@ -202,12 +216,12 @@ QString WalletDBPathItem::getShortPath() const
 
 QString WalletDBPathItem::getLastWriteDateString() const
 {
-    return m_lastWriteTime.date().toString(QLocale::system().dateFormat(QLocale::ShortFormat));
+    return m_lastWriteTime.toString(QLocale().dateTimeFormat(QLocale::ShortFormat));
 }
 
 QString WalletDBPathItem::getCreationDateString() const
 {
-    return m_creationTime.date().toString(QLocale::system().dateFormat(QLocale::ShortFormat));
+    return m_creationTime.toString(QLocale().dateTimeFormat(QLocale::ShortFormat));
 }
 
 QDateTime WalletDBPathItem::getLastWriteDate() const
@@ -460,14 +474,29 @@ void StartViewModel::onTrezorOwnerKeyImported()
 {
     LOG_INFO() << "Trezor Key imported";
 
-    SecString secretPass = m_password;
     if (m_creating)
     {
-        DoJSCallback(m_callback, m_HWKeyKeeper && AppModel::getInstance().createTrezorWallet(secretPass, m_HWKeyKeeper));
+        if (!m_HWKeyKeeper)
+        {
+            //% "Hardware keykeeper is not initialized"
+            reutrn DoJSCallback(m_callback, qtTrId("start-no-hwkeeper"));
+        }
+
+        SecString secretPass
+        if(!AppModel::getInstance().createTrezorWallet(secretPass, m_HWKeyKeeper))
+        {
+            //% "Failed to create trezor wallet"
+            reutrn DoJSCallback(m_callback, qtTrId("start-trezor-error");
+        }
+
+        DoJSCallback(m_callback, "");
     }
     else
     {
-        DoJSCallback(m_callback, AppModel::getInstance().openWallet(secretPass, m_HWKeyKeeper));
+        DoOpenWallet(m_callback, [this] () {
+            SecString secretPass = m_password;
+            AppModel::getInstance().openWalletThrow(secretPass, m_HWKeyKeeper));
+        });
     }
 
     emit isOwnerKeyImportedChanged();
@@ -643,68 +672,6 @@ void StartViewModel::copyPhrasesToClipboard()
     QApplication::clipboard()->setText(phrases);
 }
 
-#if defined(QT_PRINTSUPPORT_LIB)
-void StartViewModel::printRecoveryPhrases(QVariant viewData )
-{
-    try
-    {
-        if (QPrinterInfo::availablePrinters().isEmpty())
-        {
-            //% "Printer is not found. Please, check your printer preferences."
-            AppModel::getInstance().getMessages().addMessage(qtTrId("start-view-printer-not-found-error"));
-            return;
-        }
-        //QImage image = qvariant_cast<QImage>(viewData);
-        QPrinter printer;
-        printer.setOutputFormat(QPrinter::NativeFormat);
-        printer.setColorMode(QPrinter::GrayScale);
-        QPrintDialog dialog(&printer);
-        if (dialog.exec() == QDialog::Accepted) {
-
-            QPainter painter(&printer);
-            
-            QRect rect = painter.viewport();
-            QFont f;
-            f.setPixelSize(16);
-            painter.setFont(f);
-            int x = 60, y = 30;
-
-            const int n = 4;
-            int s = rect.width() / n;
-
-            for (int i = 0; i < m_recoveryPhrases.size(); ++i)
-            {
-                if (i % n == 0)
-                {
-                    x = 60;
-                    y += 30;
-                }
-                else
-                {
-                    x += s;
-                }
-                QString t = QString::number(i + 1) % " - " % m_generatedPhrases[i].c_str();
-                painter.drawText(x, y, t);
-                
-            }
-           
-            //QRect rect = painter.viewport();
-            //QSize size = image.size();
-            //size.scale(rect.size(), Qt::KeepAspectRatio);
-            //painter.setViewport(rect.x(), rect.y() + 60, size.width(), size.height());
-            //painter.setWindow(image.rect());
-            //painter.drawImage(0, 0, image);
-            painter.end();
-        }
-    }
-    catch (...)
-    {
-        //% "Failed to print seed phrase. Please, check your printer."
-        AppModel::getInstance().getMessages().addMessage(qtTrId("start-view-printer-error"));
-    }
-}
-#endif
-
 void StartViewModel::resetPhrases()
 {
     qDeleteAll(m_recoveryPhrases);
@@ -739,8 +706,9 @@ void StartViewModel::createWallet(const QJSValue& callback)
 
     SecString secretSeed;
     secretSeed.assign(buf.data(), buf.size());
-    SecString sectretPass = m_password;
-    DoJSCallback(m_callback, AppModel::getInstance().createWallet(secretSeed, sectretPass));
+    SecString secretPass = m_password;
+
+    DoJSCallback(m_callback, AppModel::getInstance().createWallet(secretSeed, secretPass));
 }
 
 void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
@@ -756,14 +724,17 @@ void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
         }
         else
         {
-            DoJSCallback(m_callback, false);
+            //% "Hardwate wallet is not connected"
+            DoJSCallback(m_callback, qtTrId("start-hw-not-connected"));
         }
         return;
     }
 #endif
     // TODO make this secure
-    SecString secretPass = pass.toStdString();
-    DoJSCallback(m_callback, AppModel::getInstance().openWallet(secretPass));
+    DoOpenWallet(m_callback, [pass] () {
+        SecString secret = pass.toStdString();
+        AppModel::getInstance().openWalletThrow(secret);
+    });
 }
 
 bool StartViewModel::checkWalletPassword(const QString& password) const
@@ -784,14 +755,40 @@ void StartViewModel::onNodeSettingsChanged()
 
 void StartViewModel::findExistingWalletDB()
 {
+    std::set<std::string> pathsToCheck;
+
     auto appDataPath = AppModel::getInstance().getSettings().getAppDataPath();
-    auto defaultAppDataPath = QDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation)).path().toStdString();
+    pathsToCheck.insert(appDataPath);
 
-    auto walletDBs = findAllWalletDB(appDataPath);
+    auto defaultAppDataPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation).toStdString();
+    pathsToCheck.insert(defaultAppDataPath);
 
-    if (appDataPath != defaultAppDataPath)
+    #ifdef Q_OS_LINUX
     {
-        auto additionnalWalletDBs = findAllWalletDB(defaultAppDataPath);
+        // Some 5.2 & 5.3 created folders without ' ' in name (BeamWallet instead of 'Beam Wallet')
+        // As of 6.0 this is fixed, but we need to take care of these
+        auto checkAlso = [&] (const std::string& spath)
+        {
+            boost::filesystem::path path(spath);
+            if (path.empty()) return;
+
+            auto dirname = path.filename().string();
+            std::string::iterator end_pos = std::remove(dirname.begin(), dirname.end(), ' ');
+            dirname.erase(end_pos, dirname.end());
+
+            auto nspath = path.parent_path().append(dirname);
+            pathsToCheck.insert(nspath.string());
+        };
+
+        checkAlso(appDataPath);
+        checkAlso(defaultAppDataPath);
+    }
+    #endif
+
+    std::vector<boost::filesystem::path> walletDBs;
+    for(const auto& path: pathsToCheck)
+    {
+        auto additionnalWalletDBs = findAllWalletDB(path);
         walletDBs.reserve(walletDBs.size() + additionnalWalletDBs.size());
         walletDBs.insert(std::end(walletDBs), std::begin(additionnalWalletDBs), std::end(additionnalWalletDBs));
     }

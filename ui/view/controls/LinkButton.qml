@@ -15,8 +15,10 @@ Control {
     property string text
     property bool   bold: false
     signal   clicked
+    property alias fontSize: textCtrl.font.pixelSize
 
     contentItem: SFText {
+        id:             textCtrl
         anchors.fill:   parent
         text:           [linkStyle, "<a href='#'>", control.text, "</a>"].join("")
         textFormat:     Text.RichText

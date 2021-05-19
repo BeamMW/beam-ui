@@ -5,7 +5,7 @@ import "."
 Item {
 
     id: control
-    state: "off"
+    state: "unknown"
     
     property bool isOffButtonActive:  false
     property bool isUsdButtonActive:  false
@@ -24,7 +24,7 @@ Item {
 
     states: [
         State {
-            name: "off";
+            name: "unknown";
             PropertyChanges { target: control; isOffButtonActive: true }
             PropertyChanges { target: control; isUsdButtonActive: false }
             PropertyChanges { target: control; isBtcButtonActive: false }
@@ -74,7 +74,7 @@ Item {
             height: getButtonHeight()
             radius: 10
             color: control.isOffButtonActive ? control.offButtonActiveColor : control.buttonInactiveColor
-            MouseArea { anchors.fill: parent; onClicked: control.state = "off"; }
+            MouseArea { anchors.fill: parent; onClicked: control.state = "unknown"; }
             SFText {
                 anchors.fill: parent
                 horizontalAlignment: Text.AlignHCenter

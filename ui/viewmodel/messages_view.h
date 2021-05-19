@@ -11,37 +11,29 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #pragma once
-
 #include <QObject>
-
 
 class MessagesViewModel : public QObject
 {
     Q_OBJECT
-
     Q_PROPERTY(QStringList messages READ getMessages NOTIFY messagesChanged)
 
 public:
-
     Q_INVOKABLE void deleteMessage(int index);
     Q_INVOKABLE bool enableCloseMessage(int index);
     Q_INVOKABLE bool enableSaveReport(int index);
     Q_INVOKABLE void saveLogs();
 
 public:
-
     MessagesViewModel();
-
     void AddMessage(const QString& value, bool saveReport, bool closeMessage);
-
     QStringList getMessages() const;
+
 public slots:
-
     void onNewMessage(const QString& message, bool saveReport, bool closeMessage);
-signals:
 
+signals:
     void messagesChanged();
 
 private:

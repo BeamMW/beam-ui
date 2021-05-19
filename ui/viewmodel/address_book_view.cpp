@@ -21,7 +21,6 @@
 
 using namespace std;
 using namespace beam;
-using namespace beam::wallet;
 using namespace beamui;
 
 namespace
@@ -35,15 +34,20 @@ namespace
     }
 }
 
-AddressItem::AddressItem(const beam::wallet::WalletAddress& address)
-    : m_walletAddress(address)
+AddressItem::AddressItem(beam::wallet::WalletAddress address)
+    : m_walletAddress(std::move(address))
 {
 
 }
 
-QString AddressItem::getAddress() const
+QString AddressItem::getToken() const
 {
     return QString::fromStdString(m_walletAddress.m_Address);
+}
+
+QString AddressItem::getWalletID() const
+{
+    return QString::fromStdString(std::to_string(m_walletAddress.m_walletID));
 }
 
 QString AddressItem::getName() const
@@ -103,9 +107,9 @@ ContactItem::ContactItem(const beam::wallet::WalletAddress& address)
 
 }
 
-QString ContactItem::getAddress() const
+QString ContactItem::getWalletID() const
 {
-    return QString::fromStdString(m_walletAddress.m_Address);
+    return QString::fromStdString(std::to_string(m_walletAddress.m_walletID));
 }
 
 QString ContactItem::getName() const
@@ -129,24 +133,11 @@ QString ContactItem::getIdentity() const
 
 QString ContactItem::getToken() const
 {
-    if (m_walletAddress.m_walletID == Zero)
-    {
-        return QString::fromStdString(m_walletAddress.m_Address);
-    }
-    using namespace beam::wallet;
-    TxParameters params;
-    params.SetParameter(TxParameterID::TransactionType, TxType::Simple);
-    params.SetParameter(TxParameterID::PeerID, m_walletAddress.m_walletID);
-    if (m_walletAddress.m_Identity != Zero)
-    {
-        params.SetParameter(TxParameterID::PeerWalletIdentity, m_walletAddress.m_Identity);
-    }
-    params.SetParameter(TxParameterID::IsPermanentPeerID, m_walletAddress.isPermanent());
-    return QString::fromStdString(std::to_string(params));
+    return QString::fromStdString(m_walletAddress.m_Address);
 }
 
 AddressBookViewModel::AddressBookViewModel()
-    : m_model{*AppModel::getInstance().getWallet()}
+    : m_model{*AppModel::getInstance().getWalletModel()}
 {
     connect(&m_model,
             SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
@@ -161,6 +152,13 @@ AddressBookViewModel::AddressBookViewModel()
     getAddressesFromModel();
     m_model.getAsync()->getTransactions();
     startTimer(3 * 1000);
+}
+
+AddressBookViewModel::~AddressBookViewModel()
+{
+    qDeleteAll(m_contacts);
+    qDeleteAll(m_activeAddresses);
+    qDeleteAll(m_expiredAddresses);
 }
 
 QQmlListProperty<ContactItem> AddressBookViewModel::getContacts()
@@ -183,9 +181,9 @@ QString AddressBookViewModel::nameRole() const
     return "name";
 }
 
-QString AddressBookViewModel::addressRole() const
+QString AddressBookViewModel::walletIDRole() const
 {
-    return "address";
+    return "walletID";
 }
 
 QString AddressBookViewModel::categoryRole() const
@@ -206,6 +204,11 @@ QString AddressBookViewModel::expirationRole() const
 QString AddressBookViewModel::createdRole() const
 {
     return "createDate";
+}
+
+QString AddressBookViewModel::tokenRole() const
+{
+    return "token";
 }
 
 Qt::SortOrder AddressBookViewModel::activeAddrSortOrder() const
@@ -292,24 +295,24 @@ void AddressBookViewModel::setContactSortRole(QString value)
     }
 }
 
-bool AddressBookViewModel::isAddressBusy(const QString& addr)
+bool AddressBookViewModel::isWIDBusy(const QString& wid)
 {
-    WalletID walletID;
-    walletID.FromHex(addr.toStdString());
+    beam::wallet::WalletID walletID;
+    walletID.FromHex(wid.toStdString());
     return find(m_busyAddresses.cbegin(), m_busyAddresses.cend(), walletID) != m_busyAddresses.cend();
 }
 
-void AddressBookViewModel::deleteAddress(const QString& addr)
+void AddressBookViewModel::deleteAddress(const QString& token)
 {
-    m_model.getAsync()->deleteAddress(addr.toStdString());
+    m_model.getAsync()->deleteAddressByToken(token.toStdString());
 }
 
-void AddressBookViewModel::saveChanges(const QString& addr, const QString& name, uint expirationStatus)
+void AddressBookViewModel::saveChanges(const QString& wid, const QString& name, QDateTime expiration)
 {
-    WalletID walletID;
-    walletID.FromHex(addr.toStdString());
-
-    m_model.getAsync()->updateAddress(walletID, name.toStdString(), static_cast<WalletAddress::ExpirationStatus>(expirationStatus));
+    beam::Timestamp expirationStamp = expiration.toSecsSinceEpoch();
+    beam::wallet::WalletID walletID;
+    walletID.FromHex(wid.toStdString());
+    m_model.getAsync()->updateAddress(walletID, name.toStdString(), expirationStamp);
 }
 
 // static
@@ -321,20 +324,21 @@ QString AddressBookViewModel::generateQR(
 }
 
 // static
-bool AddressBookViewModel::isAddressWithCommentExist(const QString& comment) const
+bool AddressBookViewModel::commentValid(const QString& comment) const
 {
-    return m_model.isAddressWithCommentExist(comment.toStdString());
+    return !m_model.isAddressWithCommentExist(comment.toStdString());
 }
 
 void AddressBookViewModel::onAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addresses)
 {
     if (own)
     {
-        m_activeAddresses.clear();
-        m_expiredAddresses.clear();
+        qDeleteAll(m_activeAddresses); m_activeAddresses.clear();
+        qDeleteAll(m_expiredAddresses); m_expiredAddresses.clear();
 
         for (const auto& addr : addresses)
         {
+            assert(!addr.m_Address.empty());
             if (addr.isExpired())
             {
                 m_expiredAddresses.push_back(new AddressItem(addr));
@@ -350,7 +354,7 @@ void AddressBookViewModel::onAddresses(bool own, const std::vector<beam::wallet:
     }
     else
     {
-        m_contacts.clear();
+        qDeleteAll(m_contacts); m_contacts.clear();
 
         for (const auto& addr : addresses)
         {
@@ -369,6 +373,8 @@ void AddressBookViewModel::onAddressesChanged(beam::wallet::ChangeAction, const 
 
 void AddressBookViewModel::onTransactions(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& transactions)
 {
+    using namespace beam::wallet;
+
     switch (action)
     {
         case ChangeAction::Reset:
@@ -479,10 +485,16 @@ std::function<bool(const AddressItem*, const AddressItem*)> AddressBookViewModel
         return compare(lf->getName(), rt->getName(), sortOrder);
     };
 
-    if (role == addressRole())
+    if (role == tokenRole())
         return [sortOrder = order](const AddressItem* lf, const AddressItem* rt)
     {
-        return compare(lf->getAddress(), rt->getAddress(), sortOrder);
+        return compare(lf->getToken(), rt->getToken(), sortOrder);
+    };
+
+    if (role == walletIDRole())
+        return [sortOrder = order](const AddressItem* lf, const AddressItem* rt)
+    {
+        return compare(lf->getWalletID(), rt->getWalletID(), sortOrder);
     };
 
     if (role == categoryRole())
@@ -512,10 +524,16 @@ std::function<bool(const AddressItem*, const AddressItem*)> AddressBookViewModel
 
 std::function<bool(const ContactItem*, const ContactItem*)> AddressBookViewModel::generateContactComparer()
 {
-    if (m_contactSortRole == addressRole())
+    if (m_contactSortRole == walletIDRole())
         return [sortOrder = m_contactSortOrder](const ContactItem* lf, const ContactItem* rt)
     {
-        return compare(lf->getAddress(), rt->getAddress(), sortOrder);
+        return compare(lf->getWalletID(), rt->getWalletID(), sortOrder);
+    };
+
+    if (m_contactSortRole == tokenRole())
+        return [sortOrder = m_contactSortOrder](const ContactItem* lf, const ContactItem* rt)
+    {
+        return compare(lf->getToken(), rt->getToken(), sortOrder);
     };
 
     if (m_contactSortRole == categoryRole())

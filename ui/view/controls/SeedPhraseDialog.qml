@@ -192,8 +192,8 @@ Dialog {
 
                             Connections {
                                 target: modelData
-                                onValueChanged: {
-                                    control.updateIsSeedChanged();
+                                function onValueChanged () {
+                                    control.updateIsSeedChanged()
                                     control.validateFullSeedPhrase()
                                     control.updateIsAllWordsAllowed()
                                 }

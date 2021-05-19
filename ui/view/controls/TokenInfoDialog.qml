@@ -1,6 +1,5 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-
 import QtQuick.Layouts 1.11
 import Beam.Wallet 1.0
 import "."
@@ -9,13 +8,12 @@ Dialog {
     id: dialog
     modal: true
         
-    property alias token:                   viewModel.token
-    property alias ignoreStoredVouchers:    viewModel.ignoreStoredVouchers
-    property bool incoming:                 true
-    signal addressCopied
+    property alias token:                 viewModel.token
+    property alias ignoreStoredVouchers:  viewModel.ignoreStoredVouchers
+    property bool  incoming:              true
     
     TokenInfoItem {
-        id:     viewModel
+        id:  viewModel
     }
 
     x: (parent.width - width) / 2
@@ -25,10 +23,6 @@ Dialog {
     padding: 0
 
     closePolicy: Popup.NoAutoClose | Popup.CloseOnEscape
-
-    onClosed: {
-        
-    }
 
     onOpened: {
         forceActiveFocus();
@@ -73,7 +67,7 @@ Dialog {
                     color:                  Style.content_disabled
                     //% "Address type"
                     text:                   qsTrId("address-info-type") + ":"
-                    visible:                viewModel.transactionType.length
+                    visible:                !!viewModel.transactionType
                 }
 
                 SFText {
@@ -83,7 +77,7 @@ Dialog {
                     color:                  Style.content_main
                     text:                   viewModel.transactionType
                     verticalAlignment:      Text.AlignBottom
-                    visible:                viewModel.transactionType.length
+                    visible:                !!viewModel.transactionType
                 }
 
                 // Address expiration
@@ -128,7 +122,8 @@ Dialog {
                     font.pixelSize:         14
                     color:                  Style.content_main
                     text:                   viewModel.offlinePayments
-                    visible:                viewModel.offlinePayments > 0 && !viewModel.isMaxPrivacy
+                    //visible:              viewModel.offlinePayments > 0 && !viewModel.isMaxPrivacy
+                    visible:                false
                 }
 
                 // Amount
@@ -147,8 +142,12 @@ Dialog {
                     wrapMode:               Text.Wrap
                     font.pixelSize:         14
                     color:                  Style.content_main
+                    elide:                  Text.ElideRight
                     text:                   viewModel.amount
                     visible:                viewModel.amount.length
+                    onCopyText: function () {
+                        BeamGlobals.copyToClipboard(text)
+                    }
                 }
 
                 // Address
@@ -161,13 +160,16 @@ Dialog {
                     visible:                viewModel.address.length && !viewModel.isMaxPrivacy
                 }
 
-                SFText {
-                    Layout.fillWidth:       true
+                SFLabel {
                     wrapMode:               Text.Wrap
                     font.pixelSize:         14
                     color:                  Style.content_main
                     text:                   viewModel.address
                     visible:                viewModel.address.length && !viewModel.isMaxPrivacy
+                    copyMenuEnabled:        true
+                    onCopyText: function () {
+                        BeamGlobals.copyToClipboard(text)
+                    }
                 }
 
                 // Identity
@@ -180,13 +182,16 @@ Dialog {
                     visible:                viewModel.identity.length
                 }
 
-                SFText {
-                    Layout.fillWidth:       true
+                SFLabel {
                     wrapMode:               Text.Wrap
                     font.pixelSize:         14
                     color:                  Style.content_main
                     text:                   viewModel.identity
                     visible:                viewModel.identity.length
+                    copyMenuEnabled:        true
+                    onCopyText: function () {
+                        BeamGlobals.copyToClipboard(text)
+                    }
                 }
 
                 // Address
@@ -209,17 +214,14 @@ Dialog {
                         ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
                         ScrollBar.vertical.policy:    ScrollBar.AsNeeded
                         SFLabel {
-                            //Layout.fillWidth:       true
-                            //Layout.preferredWidth:  578
                             width:                    578
                             copyMenuEnabled:          true
                             wrapMode:                 Text.Wrap
                             font.pixelSize:           14
                             color:                    Style.content_main
                             text:                     viewModel.token
-                            onCopyText:               {
+                            onCopyText: function () {
                                 BeamGlobals.copyToClipboard(text)
-                                dialog.addressCopied();
                             }
                         }
                     }
@@ -231,9 +233,8 @@ Dialog {
                         icon.source:            "qrc:/assets/icon-copy-blue.svg"
                         //% "Copy"
                         ToolTip.text:           qsTrId("general-copy")
-                        onClicked: {
+                        onClicked: function () {
                             BeamGlobals.copyToClipboard(viewModel.token)
-                            dialog.addressCopied();
                         }
                     }
                 }
@@ -265,7 +266,6 @@ Dialog {
                     text:               qsTrId("address-info-copy-close")
                     onClicked: {
                         BeamGlobals.copyToClipboard(viewModel.token);
-                        dialog.addressCopied();
                         dialog.close();
                     }
                 }

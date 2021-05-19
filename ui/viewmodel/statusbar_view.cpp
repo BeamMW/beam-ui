@@ -17,7 +17,7 @@
 #include "version.h"
 
 StatusbarViewModel::StatusbarViewModel()
-    : m_model(*AppModel::getInstance().getWallet())
+    : m_model(*AppModel::getInstance().getWalletModel())
     , m_isOnline(false)
     , m_isSyncInProgress(false)
     , m_isFailedStatus(false)

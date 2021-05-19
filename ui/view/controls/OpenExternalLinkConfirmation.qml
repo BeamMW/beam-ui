@@ -3,6 +3,7 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
 import "."
+import "../utils.js" as Utils
 
 ConfirmationDialog {
     property string externalUrl
@@ -27,7 +28,7 @@ Allow to open and proceed to the website? You can always update your choice in S
 
     onAccepted: {
         onOkClicked();
-        Qt.openUrlExternally(externalUrl);
+        Utils.openUrl(externalUrl);
     }
 
     onRejected: {

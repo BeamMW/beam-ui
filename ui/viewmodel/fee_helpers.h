@@ -17,8 +17,8 @@
 #include "currencies.h"
 
 beam::Amount minFeeBeam(bool isShielded = false);
-bool isFeeOK(beam::Amount fee, Currency currency, bool isShielded);
-bool isSwapFeeOK(beam::Amount amount, beam::Amount fee, Currency currency);
-beam::Amount minimalFee(Currency, bool isShielded);
-beam::Amount maximumFee(Currency);
-QString calcWithdrawTxFee(Currency currency, beam::Amount feeRate);
+bool isFeeOK(beam::Amount fee, OldWalletCurrency::OldCurrency currency, bool isShielded);
+bool isSwapFeeOK(beam::Amount amount, beam::Amount fee, OldWalletCurrency::OldCurrency currency);
+beam::Amount minimalFee(OldWalletCurrency::OldCurrency, bool isShielded);
+beam::Amount maximumFee(OldWalletCurrency::OldCurrency);
+QString calcWithdrawTxFee(OldWalletCurrency::OldCurrency currency, beam::Amount feeRate);

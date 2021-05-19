@@ -11,9 +11,11 @@ ColumnLayout
     function themeName() {
         return Theme.name();
     }
+
     function isMainNet() {
         return themeName() == "mainnet";
     }
+
     spacing: 0
 
     Item {
@@ -35,12 +37,15 @@ ColumnLayout
         Layout.topMargin: isSqueezedHeight ? 20 : 40
         Layout.preferredHeight: 20
 
-     //% "Confidential, fast, easy to use"
+        //% "Confidential DeFi Platform"
         text: qsTrId("logo-description")
+        color: Style.active
 
-        color: Style.accent_incoming
-        font.pixelSize: 18
-        font.styleName: "Bold"; font.weight: Font.Bold
+        font {
+            styleName:  "DemiBold"
+            weight:     Font.DemiBold
+            pixelSize:  18
+        }
     }
 
     SFText
@@ -51,9 +56,13 @@ ColumnLayout
         Layout.topMargin: isSqueezedHeight ? 10 : 40
         color: Style.content_secondary
         text: themeName()
-        font.pixelSize: 18
-        font.styleName: "Bold"; font.weight: Font.Bold
-        font.capitalization: Font.AllUppercase
+
+        font {
+            styleName:      "DemiBold"
+            weight:         Font.DemiBold
+            pixelSize:      18
+            capitalization: Font.AllUppercase
+        }
     }
 
     Item {

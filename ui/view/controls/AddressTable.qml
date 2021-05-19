@@ -14,7 +14,6 @@ CustomTableView {
 
     property var parentModel
     property bool isExpired: false
-    property var editDialog
     property var showQRDialog
     anchors.fill: parent
     frameVisible: false
@@ -49,7 +48,7 @@ CustomTableView {
     }
 
     TableViewColumn {
-        role: parentModel.addressRole
+        role: parentModel.tokenRole
         //% "Address"
         title: qsTrId("general-address")
         width: 280 *  rootControl.columnResizeRatio
@@ -191,9 +190,8 @@ CustomTableView {
             onClicked: {
                 if (mouse.button == Qt.RightButton && styleData.row != undefined)
                 {
-                    contextMenu.address = rootControl.model[styleData.row].address;
-                    contextMenu.addressItem = rootControl.model[styleData.row];
-                    contextMenu.popup();
+                    contextMenu.addressItem = rootControl.model[styleData.row]
+                    contextMenu.popup()
                 }
             }
         }
@@ -221,9 +219,8 @@ CustomTableView {
                         //% "Actions"
                         ToolTip.text: qsTrId("general-actions")
                         onClicked: {
-                            contextMenu.address = rootControl.model[styleData.row].address;
-                            contextMenu.addressItem = rootControl.model[styleData.row];
-                            contextMenu.popup();
+                            contextMenu.addressItem = rootControl.model[styleData.row]
+                            contextMenu.popup()
                         }
                     }
                 }
@@ -245,9 +242,10 @@ CustomTableView {
             icon.source: "qrc:/assets/icon-receive-blue.svg"
             enabled:     contextMenu.addressItem && !contextMenu.addressItem.isExpired
             onTriggered: {
-                main.openReceiveDialog(contextMenu.address);
+                main.openReceiveDialog(contextMenu.addressItem.token)
             }
         }
+
         Action {
             id: showQRAction
             //: Entry in address table context menu to show QR
@@ -256,34 +254,38 @@ CustomTableView {
             icon.source: "qrc:/assets/icon-qr.svg"
             onTriggered: {
                 var popup = Qt.createComponent("AddressQRDialog.qml").createObject(main)
-                popup.address = contextMenu.addressItem.address;
+                popup.address = contextMenu.addressItem.token;
                  //: show qr dialog address label
                 //% "Your address"
                 popup.addressLabelText = qsTrId("show-qr-tx-token-label");
                 popup.open();
             }
         }
+
         Action {
             //: Entry in address table context menu to edit
             //% "Edit address"
             text: qsTrId("address-table-cm-edit")
             icon.source: "qrc:/assets/icon-edit.svg"
             onTriggered: {
-                editDialog.addressItem = contextMenu.addressItem;
-                editDialog.reset();
-                editDialog.open();
+                var dialog = Qt.createComponent("EditAddress.qml").createObject(main, {
+                    viewModel:   rootControl.parentModel,
+                    addressItem: contextMenu.addressItem
+                })
+                dialog.open();
             }
         }
+
         Action {
             //: Entry in address table context menu to delete
             //% "Delete address"
             text: qsTrId("address-table-cm-delete")
             icon.source: "qrc:/assets/icon-delete.svg"
             onTriggered: {
-                if (viewModel.isAddressBusy(contextMenu.address))
-                    deleteAddressDialog.open();
-                else
-                    viewModel.deleteAddress(contextMenu.address);
+                if (viewModel.isWIDBusy(contextMenu.addressItem.walletID)) {
+                    return deleteAddressDialog.open()
+                }
+                viewModel.deleteAddress(contextMenu.addressItem.token)
             }
         }
     

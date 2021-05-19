@@ -61,7 +61,7 @@ else()
 endif()
 set (CMAKE_PREFIX_PATH $ENV{QT5_ROOT_DIR})
 
-find_package(Qt5 COMPONENTS Qml Quick Svg REQUIRED)
+find_package(Qt5 COMPONENTS Qml Quick Svg WebEngine WebEngineWidgets REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -80,7 +80,9 @@ if(MSVC)
     endif()
 
     set_source_files_properties(ui.cpp PROPERTIES COMPILE_FLAGS "/wd4127") # QtCore/qvarlengtharray.h(274): warning C4127: conditional expression is constant
-
+    set_source_files_properties(viewmodel/wallet/tx_object_list.cpp PROPERTIES COMPILE_FLAGS "/wd4127")
+elseif(APPLE)
+    set(SYSTEM_TYPE MACOSX_BUNDLE)
 endif()
 
 list(APPEND SUPPORTED_LANGS "en_US")
@@ -106,6 +108,12 @@ list(APPEND SUPPORTED_LANGS "sr_SR")
 set(UI_SRC
     ui.cpp
 
+    viewmodel/applications/apps_view.h
+    viewmodel/applications/apps_view.cpp
+    viewmodel/applications/webapi_beam.h
+    viewmodel/applications/webapi_beam.cpp
+    viewmodel/applications/public.cpp
+    viewmodel/applications/public.h
     viewmodel/helpers/list_model.h
     viewmodel/helpers/sortfilterproxymodel.cpp
     viewmodel/helpers/token_bootstrap_manager.cpp
@@ -113,6 +121,7 @@ set(UI_SRC
     viewmodel/wallet/tx_object_list.cpp
     viewmodel/wallet/wallet_view.cpp
     viewmodel/wallet/tx_table.cpp
+    viewmodel/atomic_swap/swap_utils.cpp
     viewmodel/atomic_swap/swap_eth_settings_item.cpp
     viewmodel/atomic_swap/seed_phrase_item.cpp
     viewmodel/atomic_swap/swap_offer_item.cpp
@@ -177,6 +186,21 @@ set(UI_SRC
     viewmodel/el_seed_validator.cpp
     viewmodel/wallet/token_item.h
     viewmodel/wallet/token_item.cpp
+    viewmodel/wallet/assets_view.h
+    viewmodel/wallet/assets_view.cpp
+    viewmodel/wallet/assets_list.h
+    viewmodel/wallet/assets_list.cpp
+    viewmodel/wallet/asset_object.h
+    viewmodel/wallet/asset_object.cpp
+    viewmodel/wallet/assets_manager.h
+    viewmodel/wallet/assets_manager.cpp
+    viewmodel/applications/webapi_creator.cpp
+    viewmodel/applications/webapi_shaders.cpp
+    viewmodel/applications/webapi_shaders.h
+    viewmodel/dex/dex_view.h
+    viewmodel/dex/dex_view.cpp
+    viewmodel/dex/dex_order_object.cpp
+    viewmodel/dex/dex_orders_list.cpp
 
     model/wallet_model.h
     model/wallet_model.cpp
@@ -230,6 +254,8 @@ if(BEAM_TESTNET)
     set(BEAM_ICON_SUFFIX "testnet")
 elseif(BEAM_MAINNET)
     set(BEAM_ICON_SUFFIX "mainnet")
+elseif(BEAM_BEAMX)
+    set(BEAM_ICON_SUFFIX "beamx")
 endif()
 
 add_definitions(-DAPP_NAME=\"${APP_NAME}\")
@@ -257,7 +283,7 @@ if(BEAM_USE_STATIC AND LINUX)
     set(CMAKE_C_FLAGS "-no-pie ${CMAKE_C_FLAGS}")
     set(CMAKE_CXX_FLAGS "-no-pie ${CMAKE_CXX_FLAGS}")
 endif()
-add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc ${MACOSX_BUNDLE_ICON_FILE})
+add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns")
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${OUTPUT_NAME})
 
 if(BEAM_HW_WALLET)
@@ -297,11 +323,13 @@ target_link_libraries(${TARGET_NAME} quazip_static)
 target_link_libraries(${TARGET_NAME}
         beam
         wallet_client
+        wallet_api
         mnemonic 
         Qt5::Qml
         Qt5::Quick 
         Qt5::Svg
-        # Qt5::PrintSupport
+        Qt5::WebEngine
+        Qt5::WebEngineWidgets
 )
 
 if (BEAM_SIGN_PACKAGE AND WIN32)
@@ -311,7 +339,7 @@ if (BEAM_SIGN_PACKAGE AND WIN32)
     )
 endif()
 
-if(BEAM_USE_STATIC)
+if(BEAM_USE_STATIC_QT)
 
     if(WIN32)
         foreach(lib
@@ -349,7 +377,7 @@ if(BEAM_USE_STATIC)
             lib/libQt53DQuickExtras lib/libQt5FbSupport lib/libQt5PlatformCompositorSupport lib/libQt5Scxml lib/libclipper lib/libQt53DQuickInput
             lib/libQt5FontDatabaseSupport lib/libQt5Positioning lib/libQt5Sensors lib/libpoly2tri lib/libQt53DQuickRender lib/libQt5Gamepad
             lib/libQt5PositioningQuick lib/libQt5SerialBus lib/libqmapboxgl lib/libQt53DQuickScene2D lib/libQt5GraphicsSupport
-            lib/libQt5PrintSupport lib/libQt5SerialPort lib/libqtfreetype lib/libQt53DRender lib/libQt5Gui lib/libQt5Purchasing lib/libQt5Sql
+            lib/libQt5SerialPort lib/libqtfreetype lib/libQt53DRender lib/libQt5Gui lib/libQt5Purchasing lib/libQt5Sql
             lib/libqtharfbuzz lib/libQt5AccessibilitySupport lib/libQt5Help lib/libQt5Qml lib/libQt5Svg lib/libqtlibpng lib/libQt5Bluetooth
             lib/libQt5Location lib/libQt5QmlDebug lib/libQt5Test lib/libqtopenwnn lib/libQt5Bootstrap lib/libQt5MacExtras lib/libQt5QmlDevTools
             lib/libQt5TextToSpeech lib/libqtpcre2 lib/libQt5Charts lib/libQt5Multimedia lib/libQt5Quick lib/libQt5ThemeSupport lib/libqtpinyin
@@ -357,7 +385,7 @@ if(BEAM_USE_STATIC)
             qml/QtQuick.2/libqtquick2plugin qml/QtQuick/Window.2/libwindowplugin qml/QtQuick/Controls/libqtquickcontrolsplugin
             qml/QtGraphicalEffects/libqtgraphicaleffectsplugin qml/QtGraphicalEffects/private/libqtgraphicaleffectsprivate
             qml/QtQuick/Layouts/libqquicklayoutsplugin qml/QtQuick/Controls.2/libqtquickcontrols2plugin qml/QtQuick/Templates.2/libqtquicktemplates2plugin
-            plugins/platforms/libqcocoa plugins/platforms/libqminimal plugins/imageformats/libqsvg plugins/printsupport/libcocoaprintersupport)
+            plugins/platforms/libqcocoa plugins/platforms/libqminimal plugins/imageformats/libqsvg)
 
             target_link_libraries(${TARGET_NAME} ${CMAKE_PREFIX_PATH}/${lib}.a)
         endforeach()
@@ -406,7 +434,6 @@ if(BEAM_USE_STATIC)
             ${CMAKE_PREFIX_PATH}/qml/QtQuick/Templates.2/libqtquicktemplates2plugin.a
 
             ${CMAKE_PREFIX_PATH}/plugins/imageformats/libqsvg.a
-            # ${CMAKE_PREFIX_PATH}/plugins/printsupport/libcupsprintersupport.a
         )
 
         foreach(lib
@@ -441,7 +468,6 @@ if(BEAM_USE_STATIC)
         set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
     endif()
-
 endif()
 
 if(LINUX)
@@ -454,13 +480,72 @@ if(LINUX)
     install (FILES beam.desktop DESTINATION ${BEAM_DESKTOP_DIR})
     install (FILES beam.xml DESTINATION ${BEAM_DESKTOP_DIR})
     install (FILES beam.png DESTINATION ${BEAM_PIXMAPS_DIR})
+elseif(APPLE)
+    #set(MACOSX_BUNDLE_ICON_FILE "Beam Wallet${BEAM_DISPLAY_SUFFIX}.icns")
+    set(MACOSX_BUNDLE_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+    set_target_properties(${TARGET_NAME} PROPERTIES 
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
 
+    if (NOT BEAM_USE_STATIC_QT)
+        add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND macdeployqt
+            "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app"
+            -always-overwrite
+            -qmldir=${CMAKE_CURRENT_SOURCE_DIR}
+            -sign-for-notarization="${BEAM_SIGN_IDENTITY}"
+            COMMENT "Deploying Qt..."
+        )
+
+        if(BEAM_SIGN_MACOS_BINARY)
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND codesign 
+                --force
+                --deep
+                --verify
+                --verbose
+                --display
+                -s "${BEAM_SIGN_IDENTITY}"
+                -o runtime
+                --timestamp
+                #--entitlements ${CMAKE_CURRENT_SOURCE_DIR}/QtWebEngineProcess.entitlements
+                "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app"
+                COMMENT "Signing Beam Wallet${BEAM_DISPLAY_SUFFIX}.app..."
+            )
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND codesign 
+                --force
+                --verify
+                --verbose
+                --display
+                -s "${BEAM_SIGN_IDENTITY}"
+                -o runtime
+                --timestamp
+                --entitlements ${CMAKE_CURRENT_SOURCE_DIR}/QtWebEngineProcess.entitlements
+                "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/Frameworks/QtWebEngineCore.framework/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess"
+                COMMENT "Signing QtWebEngineProcess..."
+            )
+        endif()
+    endif()
+    install(TARGETS ${TARGET_NAME} DESTINATION .)
 else()
-
     if(WIN32)
-        install(FILES ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION .)
-        install(FILES ${CMAKE_PREFIX_PATH}/bin/libEGL.dll DESTINATION .)
-        install(FILES ${CMAKE_PREFIX_PATH}/bin/libGLESv2.dll DESTINATION .)
+        if (NOT BEAM_USE_STATIC_QT)
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E remove_directory "${CMAKE_CURRENT_BINARY_DIR}/windeployqt"
+                COMMAND windeployqt --release --no-virtualkeyboard --no-angle --dir "${CMAKE_CURRENT_BINARY_DIR}/windeployqt" --qmldir "${CMAKE_CURRENT_SOURCE_DIR}" "$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_NAME:${TARGET_NAME}>"
+                COMMENT "Deploying Qt..."
+            )
+            install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/windeployqt/ DESTINATION .)
+            
+            set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE) # skip default behaviour
+            include(InstallRequiredSystemLibraries) #dymanic CRT
+            install(PROGRAMS ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} DESTINATION .)
+        else()
+            install(FILES ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION .)
+            install(FILES ${CMAKE_PREFIX_PATH}/bin/libEGL.dll DESTINATION .)
+            install(FILES ${CMAKE_PREFIX_PATH}/bin/libGLESv2.dll DESTINATION .)
+        endif()
         install(FILES beam-wallet.cfg DESTINATION .)
         install(TARGETS ${TARGET_NAME} DESTINATION .)
     endif()

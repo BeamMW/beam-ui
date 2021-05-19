@@ -44,7 +44,7 @@ Item {
         //% "cancel offer"
         okButtonText:           qsTrId("atomic-swap-cancel-button")
         okButtonIconSource:     "qrc:/assets/icon-cancel-black.svg"
-        okButtonColor:          Style.swapCurrencyStateIndicator
+        okButtonColor:          Style.swapStateIndicator
         //% "back"
         cancelButtonText:       qsTrId("atomic-swap-back-button")
         cancelButtonIconSource: "qrc:/assets/icon-back.svg"
@@ -53,7 +53,7 @@ Item {
         }
         Connections {
             target: viewModel
-            onOfferRemovedFromTable: function(txId) {
+            function onOfferRemovedFromTable (txId) {
                 if (cancelOfferDialog.txId == txId) {
                     cancelOfferDialog.cancelButton.onClicked();
                 }
@@ -71,7 +71,7 @@ Item {
         //% "yes"
         okButtonText:           qsTrId("atomic-swap-tx-yes-button")
         okButtonIconSource:     "qrc:/assets/icon-done.svg"
-        okButtonColor:          Style.swapCurrencyStateIndicator
+        okButtonColor:          Style.swapStateIndicator
         //% "no"
         cancelButtonText:       qsTrId("atomic-swap-no-button")
         cancelButtonIconSource: "qrc:/assets/icon-cancel-16.svg"
@@ -147,11 +147,11 @@ Item {
                 }
                 Connections {
                     target: tokenDuplicateChecker.model
-                    onTokenPreviousAccepted: function(token) {
-                        tokenDuplicateChecker.isOwn = false;
-                        tokenDuplicateChecker.open();
+                    function onTokenPreviousAccepted (token) {
+                        tokenDuplicateChecker.isOwn = false
+                        tokenDuplicateChecker.open()
                     }
-                    onTokenFirstTimeAccepted: function(token) {
+                    function onTokenFirstTimeAccepted (token) {
                         offersStackView.pop();
                         offersStackView.push(Qt.createComponent("send_swap.qml"),
                                             {
@@ -161,9 +161,9 @@ Item {
                                             });
                         offersStackView.currentItem.validateCoin();
                     }
-                    onTokenOwnGenerated: function(token) {
+                    function onTokenOwnGenerated (token) {
                         tokenDuplicateChecker.isOwn = true;
-                        tokenDuplicateChecker.open();
+                        tokenDuplicateChecker.open()
                     }
                 }
             }
@@ -233,85 +233,30 @@ Item {
                                 .arg(viewModel.activeTxCount)
                             : "";
                     }
-                    gradLeft: Style.swapCurrencyPaneGrLeftBEAM
-                    currencyIcon: "qrc:/assets/icon-beam.svg"
-                    amount: viewModel.beamAvailable
-                    currencySymbol: BeamGlobals.getCurrencyLabel(Currency.CurrBeam)
-                    valueSecondaryStr: activeTxCountStr()
-                    visible: true
+                    gradLeft:           Style.coinPaneLeft
+                    currencyIcon:       "qrc:/assets/icon-beam.svg"
+                    amount:             viewModel.beamAvailable
+                    unitName:           BeamGlobals.beamUnit
+                    valueSecondaryStr:  activeTxCountStr()
+                    visible:            true
                 }
 
                 //% "Transaction is in progress"
                 property string kTxInProgress: qsTrId("swap-beta-tx-in-progress")
 
-                function getCurrencyIcon(currency) {
-                    switch(currency) {
-                        case Currency.CurrBitcoin:
-                            return "qrc:/assets/icon-btc.svg";
-                        case Currency.CurrLitecoin:
-                            return "qrc:/assets/icon-ltc.svg";
-                        case Currency.CurrQtum:
-                            return "qrc:/assets/icon-qtum.svg";
-                        // TODO disabled BCH
-                        /*case Currency.CurrBitcoinCash:
-                            return "qrc:/assets/icon-bch.svg";*/
-                        case Currency.CurrDash:
-                            return "qrc:/assets/icon-dash.svg";
-                        case Currency.CurrDogecoin:
-                            return "qrc:/assets/icon-doge.svg";
-                        case Currency.CurrEthereum:
-                            return "qrc:/assets/icon-eth.svg";
-                        case Currency.CurrDai:
-                            return "qrc:/assets/icon-dai.svg";
-                        case Currency.CurrUsdt:
-                            return "qrc:/assets/icon-usdt.svg";
-                        case Currency.CurrWrappedBTC:
-                            return "qrc:/assets/icon-wbtc.svg";
-                        default: return "";
-                    }
-                }
-
-                function getSwapCurrencyPaneGradient(currency)  {
-                    switch(currency) {
-                        case Currency.CurrBitcoin:
-                            return Style.swapCurrencyPaneGrLeftBTC;
-                        case Currency.CurrLitecoin:
-                            return Style.swapCurrencyPaneGrLeftLTC;
-                        case Currency.CurrQtum:
-                            return Style.swapCurrencyPaneGrLeftQTUM;
-                        // TODO disable BCH
-                        /*case Currency.CurrBitcoinCash:
-                            return Style.swapCurrencyPaneGrLeftBCH;*/
-                        case Currency.CurrDash:
-                            return Style.swapCurrencyPaneGrLeftDASH;
-                        case Currency.CurrDogecoin:
-                            return Style.swapCurrencyPaneGrLeftDOGE;
-                        case Currency.CurrEthereum:
-                            return Style.swapCurrencyPaneGrLeftETH;
-                        case Currency.CurrDai:
-                            return Style.swapCurrencyPaneGrLeftDAI;
-                        case Currency.CurrUsdt:
-                            return Style.swapCurrencyPaneGrLeftUSDT;
-                        case Currency.CurrWrappedBTC:
-                            return Style.swapCurrencyPaneGrLeftWBTC;
-                        default:
-                            return Style.swapCurrencyPaneGrLeftBTC;
-                    }
-                }
-
                 Repeater {
                     model: viewModel.swapClientList
 
                     SwapCurrencyAmountPane {
-                        gradLeft: amountPanes.getSwapCurrencyPaneGradient(modelData.currency)
-                        currencyIcon: amountPanes.getCurrencyIcon(modelData.currency)
+                        gradLeft: modelData.gradientColor
+                        currencyIcon: modelData.coinIcon
                         amount: modelData.hasActiveTx ? "" : modelData.available
-                        currencySymbol: BeamGlobals.getCurrencyLabel(modelData.currency)
+                        unitName: modelData.coinLabel
                         valueSecondaryStr: activeTxStr()
                         isOk: modelData.isConnected
                         isConnecting: modelData.isConnecting
                         visible: BeamGlobals.haveSwapClient(modelData.currency)
-                        swapSettingsPane: BeamGlobals.getCurrencyLabel(modelData.currency)
+                        swapSettingsPane: modelData.coinLabel
                         //% "Connecting..."
                         textConnecting: qsTrId("swap-connecting")
                         //% "Cannot connect to peer. Please check the address in Settings and try again."
@@ -528,18 +473,18 @@ Item {
                             fontLetterSpacing: 0.47
                             color: Style.content_main
                             textRole: 'text'
-                            model: ListModel {
-                                    ListElement{text: "ALL"; pair: ""}
-                                    ListElement{text: "BTC"; pair: "^(btc)|(btc)$"}
-                                    ListElement{text: "DAI"; pair: "^(dai)|(dai)$"}
-                                    ListElement{text: "DASH"; pair: "^(dash)|(dash)$"}
-                                    ListElement{text: "DOGE"; pair: "^(doge)|(doge)$"}
-                                    ListElement{text: "ETH"; pair: "^(eth)|(eth)$"}
-                                    ListElement{text: "LTC"; pair: "^(ltc)|(ltc)$"}
-                                    ListElement{text: "QTUM"; pair: "^(qtum)|(qtum)$"}
-                                    ListElement{text: "USDT"; pair: "^(usdt)|(usdt)$"}
-                                    ListElement{text: "WBTC"; pair: "^(wbtc)|(wbtc)$"}
-                            }
+                            model: [
+                                {text: "ALL",  pair: ""},
+                                {text: "BTC",  pair: "^(btc-)|(-btc)$"}, // We need a separator '-' to distinguish 'btc' and 'wbtc' 
+                                {text: "DAI",  pair: "^(dai-)|(-dai)$"},
+                                {text: "DASH", pair: "^(dash-)|(-dash)$"},
+                                {text: "DOGE", pair: "^(doge-)|(-doge)$"},
+                                {text: "ETH",  pair: "^(eth-)|(-eth)$"},
+                                {text: "LTC",  pair: "^(ltc-)|(-ltc)$"},
+                                {text: "QTUM", pair: "^(qtum-)|(-qtum)$"},
+                                {text: "USDT", pair: "^(usdt-)|(-usdt)$"},
+                                {text: "WBTC", pair: "^(wbtc-)|(-wbtc)$"}
+                            ]
                         }
                     }   // RowLayout
 
@@ -591,10 +536,15 @@ Item {
                             color:                Style.content_main
                             opacity:              0.5
                             lineHeight:           1.43
+
+                            text:                 offersTable.showOnlyMyOffers == false ? 
 /*% "There are no active offers at the moment.
 Please try again later or create an offer yourself."
 */
-                            text:                 qsTrId("atomic-no-offers")
+                            qsTrId("atomic-no-offers")
+                            :
+                            //% "There are no offers yet."
+                            qsTrId("atomic-no-my-offers")
                         }
 
                         Item {
@@ -637,7 +587,7 @@ Please try again later or create an offer yourself."
                                     ? viewModel.allOffersFitBalance
                                     : viewModel.allOffers
                                 filterRole: "pair"
-                                filterString: coinSelector.model.get(coinSelector.currentIndex).pair
+                                filterString: coinSelector.model[coinSelector.currentIndex].pair
                                 filterCaseSensitivity: Qt.CaseInsensitive
                             }
 
@@ -787,7 +737,7 @@ Please try again later or create an offer yourself."
 
                                         verticalAlignment:   Text.AlignVCenter
                                         font.pixelSize: 14
-                                        color: isOwnOffer ? Style.swapCurrencyStateIndicator : Style.active
+                                        color: isOwnOffer ? Style.swapStateIndicator : Style.active
                                         text: isOwnOffer
                                                         //% "Cancel offer"
                                                         ? qsTrId("atomic-swap-cancel")
@@ -827,7 +777,9 @@ Please try again later or create an offer yourself."
                     state: "filterAllTransactions"
 
                     RowLayout {
-
+                        id:     txFilters
+                        Layout.fillWidth:   true
+                        visible: viewModel.transactions.rowCount() > 0
                         TxFilter {
                             id: allTabSelector
                             //% "All"
@@ -853,16 +805,55 @@ Please try again later or create an offer yourself."
                         //}
                     }
 
+                    ColumnLayout {
+                        Layout.topMargin:   txFilters.visible ? 70 : 95
+                        Layout.fillWidth:   true
+                        Layout.fillHeight:  true
+                        visible: transactionsTable.model.count == 0
+                        SvgImage {
+                            Layout.topMargin:     30
+                            Layout.alignment:     Qt.AlignHCenter
+                            source: "qrc:/assets/atomic-empty-state.svg"
+                            sourceSize: Qt.size(60, 60)
+                        }
+
+                        SFText {
+                            id:                   emptyMessage
+                            Layout.topMargin:     30
+                            Layout.alignment:     Qt.AlignHCenter
+                            horizontalAlignment:  Text.AlignHCenter
+                            font.pixelSize:       14
+                            color:                Style.content_main
+                            opacity:              0.5
+                            lineHeight:           1.43
+                            //% "There are no transactions yet."
+                            text: qsTrId("swap-tx-empty")
+                        }
+
+                        Item {
+                            Layout.fillHeight:  true
+                            Layout.fillWidth:   true
+                        }
+                    }
+
                     states: [
                         State {
                             name: "filterAllTransactions"
                             PropertyChanges { target: allTabSelector; state: "active" }
                             PropertyChanges { target: txProxyModel; filterString: "*" }
+                            PropertyChanges { target: emptyMessage;  
+                                //% "There are no transactions yet."
+                                text: qsTrId("swap-tx-empty")
+                            }
                         },
                         State {
                             name: "filterInProgressTransactions"
                             PropertyChanges { target: inProgressTabSelector; state: "active" }
                             PropertyChanges { target: txProxyModel; filterString: "true" }
+                            PropertyChanges { target: emptyMessage;  
+                                //% "There are no in progress transactions yet."
+                                text: qsTrId("tx-in-progress-empty")
+                            }
                         }
                     ]
 
@@ -882,10 +873,11 @@ Please try again later or create an offer yourself."
                             })
                         }
 
-                        Layout.alignment: Qt.AlignTop
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        Layout.topMargin: 14
+                        Layout.alignment:       Qt.AlignTop
+                        Layout.fillWidth:       true
+                        Layout.fillHeight:      true
+                        Layout.topMargin:       14
+                        visible:                transactionsTable.model.count > 0
 
                         property int rowHeight: 56
                         property int columnWidth: (width - txSwapCoinsColumn.width - txSwapActionColumn.width) / 6
@@ -918,11 +910,12 @@ Please try again later or create an offer yourself."
                         }
 
                         rowDelegate: ExpandableRowDelegate {
-                            collapsed: true
+                            collapsed:  true
                             rowInModel: styleData.row !== undefined && styleData.row >= 0 &&  styleData.row < txProxyModel.count
-                            rowHeight: transactionsTable.rowHeight
+                            rowHeight:  transactionsTable.rowHeight
+                            tableView:  transactionsTable
                             backgroundColor: styleData.selected ? Style.row_selected : (styleData.alternate ? Style.background_row_even : Style.background_row_odd)
-                            property var  myModel:     parent.model
+                            property var myModel: parent.model
 
                             delegate: SwapTransactionDetails {
                                     width: transactionsTable.width
@@ -1198,7 +1191,7 @@ Please try again later or create an offer yourself."
                         }
                         Connections {
                             target: deleteTransactionDialog
-                            onAccepted: {
+                            function onAccepted () {
                                 viewModel.deleteTx(txContextMenu.txID);
                             }
                         }

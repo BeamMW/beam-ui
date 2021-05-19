@@ -68,11 +68,10 @@ public:
     QString getLanguageName() const;
     void setLocaleByLanguageName(const QString& language);
     static QStringList getSupportedLanguages();
-    static QStringList getSupportedRateUnits();
 
     // Second currency settings
-    QString getSecondCurrency() const;
-    void setSecondCurrency(const QString&);
+    beam::wallet::Currency getRateCurrency() const;
+    void setRateCurrency(const beam::wallet::Currency&);
 
     // Notifications settings
     bool isNewVersionActive() const;
@@ -84,12 +83,23 @@ public:
 
     static void openFolder(const QString& path);
 
+    // dev BEAM Apps
+    QString getDevBeamAppUrl();
+    QString getDevBeamAppName();
+    QString getDevAppApiVer();
+
     uint8_t getMaxPrivacyAnonymitySet() const;
     void setMaxPrivacyAnonymitySet(uint8_t anonymitySet);
 
     void maxPrivacyLockTimeLimitInit();
     uint8_t getMaxPrivacyLockTimeLimitHours() const;
     void setMaxPrivacyLockTimeLimitHours(uint8_t lockTimeLimit);
+
+    QString getExplorerUrl() const;
+    QString getFaucetUrl() const;
+    QString getAppsUrl() const;
+    QString getAppsCachePath() const;
+    QString getAppsStoragePath() const;
 
 public:
     static const char* WalletCfg;
@@ -109,7 +119,6 @@ signals:
     void localNodeRunChanged();
     void localNodePortChanged();
     void localNodePeersChanged();
-    void localNodeSynchronizedChanged();
     void localeChanged();
     void beamMWLinksChanged();
     void secondCurrencyChanged();

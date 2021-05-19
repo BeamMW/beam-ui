@@ -50,7 +50,7 @@ namespace beamui
     macro(Usdt,        "Usdt",          "USDT",          "unit?",    "gwei",      6) \
     macro(WrappedBTC , "WBTC",          "WBTC",          "satoshi",  "gwei",      8) \
     macro(Usd,         "USD",           "USD",           "cent",     "",          2) \
-    macro(Unknown,     "",              "",              "",         "",          0)
+    macro(Unknown,     "",              "",              "",         "",          6)
 
     // TODO roman.strilets deleted from CURRENCY_MAP
     //macro(BitcoinCash, "Bitcoin Cash",  "BCH",           "satoshi",  "sat/kB",    8)
@@ -64,8 +64,8 @@ namespace beamui
     QString toString(Currencies currency);
     std::string toStdString(Currencies currency);
 
-    QString getCurrencyLabel(Currencies);
-    QString getCurrencyLabel(beam::wallet::ExchangeRate::Currency);
+    QString getCurrencyUnitName(Currencies);
+    QString getCurrencyUnitName(beam::wallet::Currency);
     QString getFeeRateLabel(Currencies);
     QString getCurrencySubunitLabel(Currencies);
     QString getCurrencySubunitFromLabel(const QString& currLabel);
@@ -73,19 +73,23 @@ namespace beamui
 
     /// Convert amount to ui string with "." as a separator. With the default @coinType, no currency label added.
     QString AmountToUIString(const beam::Amount& value, Currencies coinType = Currencies::Unknown, bool currencyLabel = true);
+    QString AmountToUIString(const beam::Amount& value, const QString& unitName, uint8_t decimalPlaces = 0);
+    QString AmountBigToUIString(const beam::AmountBig::Type& value);
+
+    // value -> s"value GROTH"
     QString AmountInGrothToUIString(const beam::Amount& value);
 
     /// expects ui string with a "." as a separator
     beam::Amount UIStringToAmount(const QString& value, Currencies currency = Currencies::Unknown);
 
-    Currencies convertExchangeRateCurrencyToUiCurrency(beam::wallet::ExchangeRate::Currency);
+    Currencies convertExchangeRateCurrencyToUiCurrency(const beam::wallet::Currency&);
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     Currencies convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin coin);
     beam::wallet::AtomicSwapCoin convertCurrenciesToSwapCoin(Currencies currency);
 #endif
 
     QString toString(const beam::wallet::WalletID&);
-    QString toString(const beam::wallet::PeerID&);
+    QString toString(const beam::PeerID&);
     QString toString(const beam::Merkle::Hash&);
     QString toString(const beam::Timestamp& ts);
 
@@ -96,4 +100,5 @@ namespace beamui
     beam::Version getCurrentLibVersion();
     quint32 getCurrentUIRevision();
 
+    QString GetTokenTypeUIString(const std::string& token, bool choiceOffline);
 }  // namespace beamui

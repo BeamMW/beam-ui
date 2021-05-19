@@ -67,8 +67,8 @@ Dialog {
             Layout.alignment:       Qt.AlignHCenter
             Layout.topMargin:       50
             Layout.bottomMargin:    50
-            Layout.preferredWidth:  160
-            Layout.preferredHeight: 160
+            Layout.preferredWidth:  200
+            Layout.preferredHeight: 200
             fillMode:               Image.PreserveAspectFit
             source:                 qrCode.data
             visible:                qrCode.data.length > 0
@@ -86,7 +86,7 @@ Dialog {
         
         SFLabel {
             id:                     addressField
-            Layout.preferredWidth:  392
+            Layout.preferredWidth:  450
             Layout.topMargin:       10
             Layout.bottomMargin:    30
             horizontalAlignment:    Text.AlignHCenter

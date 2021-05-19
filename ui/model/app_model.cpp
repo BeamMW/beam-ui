@@ -22,16 +22,16 @@
 #include "utility/common.h"
 #include "utility/logger.h"
 #include "utility/fsutils.h"
-#include <boost/filesystem.hpp>
 #include <QApplication>
 #include <QTranslator>
 #include <QFileDialog>
 #include <QStandardPaths>
-
+#include <QStringBuilder>
 #include "wallet/transactions/swaps/bridges/bitcoin/bitcoin.h"
 #include "wallet/transactions/swaps/bridges/litecoin/litecoin.h"
 #include "wallet/transactions/swaps/bridges/qtum/qtum.h"
 #include "wallet/transactions/swaps/bridges/dogecoin/dogecoin.h"
+#include "wallet/transactions/dex/dex_tx.h"
 #if defined(BITCOIN_CASH_SUPPORT)
 #include "wallet/transactions/swaps/bridges/bitcoin_cash/bitcoin_cash.h"
 #endif // BITCOIN_CASH_SUPPORT
@@ -47,19 +47,14 @@
 #endif
 
 using namespace beam;
-using namespace beam::wallet;
 using namespace ECC;
 using namespace std;
 
 namespace
 {
-    void generateDefaultAddress(IWalletDB::Ptr db)
+    void generateDefaultAddress(beam::wallet::IWalletDB::Ptr db)
     {
-        // generate default address
-        WalletAddress address;
-        db->createAddress(address);
-        address.m_label = "default";
-        db->saveAddress(address);
+        db->generateAndSaveDefaultAddress();
     }
 }
 
@@ -103,7 +98,7 @@ AppModel::~AppModel()
 
 void AppModel::backupDB(const std::string& dbFilePath)
 {
-    const auto wasInitialized = WalletDB::isInitialized(dbFilePath);
+    const auto wasInitialized = beam::wallet::WalletDB::isInitialized(dbFilePath);
     m_db.reset();
 
     if (wasInitialized)
@@ -111,29 +106,38 @@ void AppModel::backupDB(const std::string& dbFilePath)
         // it seems that we are trying to restore or login to another wallet.
         // Rename/backup existing db
         std::string newName = dbFilePath + "_" + to_string(getTimestamp());
-       
-        if (fsutils::rename(dbFilePath, newName))
+
+        try
         {
+            fsutils::rename(dbFilePath, newName);
             m_walletDBBackupPath = std::move(newName);
+        }
+        catch(std::runtime_error& err)
+        {
+            LOG_ERROR() << "failed to backup DB, " << err.what();
         }
     }
 }
 
 void AppModel::restoreDBFromBackup(const std::string& dbFilePath)
 {
-    const auto wasInitialized = WalletDB::isInitialized(dbFilePath);
+    const auto wasInitialized = beam::wallet::WalletDB::isInitialized(dbFilePath);
     m_db.reset();
 
     if (!wasInitialized && !m_walletDBBackupPath.empty())
     {
-        // Restore existing db
-        bool isBackupExist = fsutils::isExist(m_walletDBBackupPath);
-        if (!isBackupExist)
+        if (fsutils::exists(m_walletDBBackupPath))
         {
-            return;
+            try
+            {
+                fsutils::rename(m_walletDBBackupPath, dbFilePath);
+                m_walletDBBackupPath = {};
+            }
+            catch(const std::runtime_error& err)
+            {
+                LOG_ERROR() << "failed to restore DB, " << err.what();
+            }
         }
-        fsutils::rename(m_walletDBBackupPath, dbFilePath);
-        m_walletDBBackupPath = {};
     }
 }
 
@@ -141,16 +145,27 @@ bool AppModel::createWallet(const SecString& seed, const SecString& pass)
 {
     const auto dbFilePath = m_settings.getWalletStorage();
     backupDB(dbFilePath);
+
     {
         io::Reactor::Scope s(*m_walletReactor); // do it in main thread
-        auto db = WalletDB::init(dbFilePath, pass, seed.hash());
+        auto db = beam::wallet::WalletDB::init(dbFilePath, pass, seed.hash());
         if (!db) 
             return false;
 
         generateDefaultAddress(db);
     }
 
-    return openWallet(pass);
+    try
+    {
+        openWalletThrow(pass);
+        return true;
+    }
+    catch (std::runtime_error& err)
+    {
+        // TODO: handle the reasons of failure
+        LOG_ERROR() << "Error while trying to open database: " << err.what();
+        return false;
+    }
 }
 
 #if defined(BEAM_HW_WALLET)
@@ -183,38 +198,39 @@ beam::io::Reactor::Ptr AppModel::getWalletReactor() const
 {
     return m_walletReactor;
 }
-
 #endif
 
-bool AppModel::openWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper)
+beam::wallet::IWalletDB::Ptr AppModel::getWalletDB() const
 {
-    assert(m_db == nullptr);
+    return m_db;
+}
 
-    try
+void AppModel::openWalletThrow(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper)
+{
+    if (m_db != nullptr)
     {
-        if (WalletDB::isInitialized(m_settings.getWalletStorage()))
-        {
-            m_db = WalletDB::open(m_settings.getWalletStorage(), pass);
-        }
-#if defined(BEAM_HW_WALLET)
-        else if (WalletDB::isInitialized(m_settings.getTrezorWalletStorage()))
-        {
-            m_db = WalletDB::open(m_settings.getTrezorWalletStorage(), pass, keyKeeper);
-        }
-#endif
-
-        if (!m_db)
-            return false;
-
-        onWalledOpened(pass);
-        return true;
-    }
-    catch (...)
-    {
-        // TODO: handle the reasons of failure
+        assert(false);
+        //% "Wallet database is already opened"
+        throw std::runtime_error(qtTrId("appmodel-already-opened").toStdString());
     }
 
-    return false;
+    if (beam::wallet::WalletDB::isInitialized(m_settings.getWalletStorage()))
+    {
+        m_db = beam::wallet::WalletDB::open(m_settings.getWalletStorage(), pass);
+    }
+    #if defined(BEAM_HW_WALLET)
+    else if (WalletDB::isInitialized(m_settings.getTrezorWalletStorage()))
+    {
+        m_db = WalletDB::open(m_settings.getTrezorWalletStorage(), pass, keyKeeper);
+    }
+    #endif
+
+    if (!m_db)
+    {
+        throw std::runtime_error("");
+    }
+
+    onWalledOpened(pass);
 }
 
 void AppModel::onWalledOpened(const beam::SecString& pass)
@@ -232,7 +248,7 @@ bool AppModel::exportData()
                 QDir(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)).filePath(fileName.c_str()),
                 "Wallet data (*.dat)");
 
-        const auto jsonData = storage::ExportDataToJson(*m_db);
+        const auto jsonData = beam::wallet::storage::ExportDataToJson(*m_db);
 
         FStream fStream;
         return fStream.Open(path.toStdString().c_str(), false) &&
@@ -302,30 +318,41 @@ void AppModel::onResetWallet()
 {
     m_walletConnections.disconnect();
 
+    assert(m_assets);
+    assert(m_assets.use_count() == 1);
+    m_assets.reset();
+
     assert(m_wallet);
     assert(m_wallet.use_count() == 1);
-    assert(m_db);
-
     m_wallet.reset();
-    resetSwapClients();
 
+    resetSwapClients();
+    assert(m_db);
     m_db.reset();
 
-    fsutils::remove(getSettings().getWalletStorage());
+    try
+    {
+        fsutils::remove(getSettings().getWalletStorage());
 
-#if defined(BEAM_HW_WALLET)
-    fsutils::remove(getSettings().getTrezorWalletStorage());
-#endif
+        #if defined(BEAM_HW_WALLET)
+        fsutils::remove(getSettings().getTrezorWalletStorage());
+        #endif
 
-    fsutils::remove(getSettings().getLocalNodeStorage());
+        fsutils::remove(getSettings().getLocalNodeStorage());
+    }
+    catch(std::runtime_error& err)
+    {
+        LOG_ERROR() << "Error while removing files in onResetWallet: " << err.what();
+    }
 
     restoreDBFromBackup(getSettings().getWalletStorage());
-
     emit walletResetCompleted();
 }
 
 void AppModel::startWallet()
 {
+    using namespace beam::wallet;
+
     assert(!m_wallet->isRunning());
 
     auto additionalTxCreators = std::make_shared<std::unordered_map<TxType, BaseTransaction::Creator::Ptr>>();
@@ -371,12 +398,16 @@ void AppModel::startWallet()
     additionalTxCreators->emplace(TxType::PushTransaction, std::make_shared<lelantus::PushTransaction::Creator>(m_db));
 #endif
 
-    bool isSecondCurrencyEnabled = m_settings.getSecondCurrency().toStdString() != noSecondCurrencyStr;
-    m_wallet->start(activeNotifications, isSecondCurrencyEnabled, additionalTxCreators);
+    /*
+    additionalTxCreators->emplace(TxType::DexSimpleSwap, std::make_shared<DexTransaction::Creator>(m_db));
+    */
+
+    bool displayRate = m_settings.getRateCurrency() != beam::wallet::Currency::UNKNOWN();
+    m_wallet->start(activeNotifications, displayRate, additionalTxCreators);
 }
 
 template<typename BridgeSide, typename Bridge, typename SettingsProvider>
-void AppModel::registerSwapFactory(AtomicSwapCoin swapCoin, beam::wallet::AtomicSwapTransaction::Creator& swapTxCreator)
+void AppModel::registerSwapFactory(beam::wallet::AtomicSwapCoin swapCoin, beam::wallet::AtomicSwapTransaction::Creator& swapTxCreator)
 {
     if (auto client = getSwapCoinClient(swapCoin); client)
     {
@@ -476,6 +507,7 @@ void AppModel::start()
     initSwapClients();
 
     m_wallet = std::make_shared<WalletModel>(m_db, nodeAddrStr, m_walletReactor);
+    m_assets = std::make_shared<AssetsManager>(m_wallet);
 
     if (m_settings.getRunLocalNode())
     {
@@ -510,7 +542,7 @@ void AppModel::changeWalletPassword(const std::string& pass)
     m_wallet->getAsync()->changeWalletPassword(pass);
 }
 
-WalletModel::Ptr AppModel::getWallet() const
+WalletModel::Ptr AppModel::getWalletModel() const
 {
     return m_wallet;
 }
@@ -518,6 +550,11 @@ WalletModel::Ptr AppModel::getWallet() const
 WalletSettings& AppModel::getSettings() const
 {
     return m_settings;
+}
+
+AssetsManager::Ptr AppModel::getAssets() const
+{
+    return m_assets;
 }
 
 MessageManager& AppModel::getMessages()
@@ -547,6 +584,8 @@ SwapEthClientModel::Ptr AppModel::getSwapEthClient() const
 
 void AppModel::initSwapClients()
 {
+    using namespace beam::wallet;
+
     initSwapClient<bitcoin::BitcoinCore017, bitcoin::Electrum, bitcoin::SettingsProvider>(AtomicSwapCoin::Bitcoin);
     initSwapClient<litecoin::LitecoinCore017, litecoin::Electrum, litecoin::SettingsProvider>(AtomicSwapCoin::Litecoin);
     initSwapClient<qtum::QtumCore017, qtum::Electrum, qtum::SettingsProvider>(AtomicSwapCoin::Qtum);

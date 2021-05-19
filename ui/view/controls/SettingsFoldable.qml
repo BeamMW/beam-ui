@@ -24,9 +24,11 @@ Control {
     contentItem: ColumnLayout {
         spacing:    0
         clip:       folded
+
         Item {
             Layout.fillWidth:  true
             Layout.alignment:  Qt.AlignTop
+            Layout.leftMargin: 20
             height: header.height
 
             RowLayout {
@@ -83,6 +85,8 @@ Control {
             Layout.fillWidth:  true
             visible: connectionError
             implicitHeight:  errorRow.height
+            Layout.leftMargin: 20
+            Layout.topMargin: 3
 
             RowLayout {
                 id: errorRow
@@ -110,9 +114,9 @@ Control {
 
         Control {
             id:                     contentControl
-            //visible:                !control.folded
             Layout.fillWidth:       true
             Layout.topMargin:       folded ? 0 : connectionError ? Math.max(5, 25 - errorRow.height) : 25
+            Layout.leftMargin:      20
             Layout.alignment:       Qt.AlignTop
             contentItem:            content
             Layout.preferredHeight: folded ? 0 : contentControl.implicitHeight
@@ -121,9 +125,11 @@ Control {
             Behavior on Layout.preferredHeight {
                 NumberAnimation { duration:  200 }
             }
+
             Behavior on Layout.topMargin {
                 NumberAnimation { duration:  200 }
             }
+
             Behavior on opacity {
                 NumberAnimation { duration:  200 }
             }
@@ -150,7 +156,7 @@ Control {
         }
     }
 
-    leftPadding:   20
+    leftPadding:   0
     rightPadding:  22
     topPadding:    20
     bottomPadding: connectionError && control.folded ? 16 : 20

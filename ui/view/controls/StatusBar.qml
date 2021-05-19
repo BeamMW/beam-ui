@@ -43,7 +43,7 @@ Item {
         anchors.left: parent.left
         width: childrenRect.width
 
-        property color color: Style.active
+        property color color: Style.online
         property int radius: rootControl.indicator_radius
 
         Rectangle {
@@ -88,7 +88,7 @@ Item {
         anchors.left: parent.left
         visible: false
 
-        property color color: Style.active
+        property color color: Style.online
         property int circle_line_width: 2
         property int animation_duration: 2000
 
@@ -177,7 +177,7 @@ Item {
             StateChangeScript {
                 name: "onlineScript"
                 script: {
-                    online_indicator.color = Style.active;
+                    online_indicator.color = Style.online;
                     rootControl.setIndicator(online_indicator);
                 }
             }

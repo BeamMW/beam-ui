@@ -26,10 +26,10 @@ ColumnLayout {
 
     function validateCoin() {
         var currency = viewModel.sendCurrency
-        if (currency == Currency.CurrBeam) {
+        if (currency == OldWalletCurrency.CurrBeam) {
             currency = viewModel.receiveCurrency;
 
-            if (currency == Currency.CurrBeam) return;
+            if (currency == OldWalletCurrency.CurrBeam) return;
         }
 
         if (!BeamGlobals.canReceive(currency)) {
@@ -111,39 +111,17 @@ please review your settings and try again"
     //
     // Title row
     //
-    Item {
+    SubtitleRow {
         Layout.fillWidth:    true
         Layout.topMargin:    100
         Layout.bottomMargin: 30
-        CustomButton {
-            anchors.left:   parent.left
-            anchors.verticalCenter: parent.verticalCenter
-            palette.button: "transparent"
-            leftPadding:    0
-            showHandCursor: true
-            //% "Back"
-            text:           qsTrId("general-back")
-            icon.source:    "qrc:/assets/icon-back.svg"
-            onClicked:      {
-                onClosed();
-            }
-        }
 
-        SFText {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            color:              Style.content_main
-            font {
-                styleName:      "Bold"
-                weight:         Font.Bold
-                pixelSize:      14
-                letterSpacing:  4
-                capitalization: Font.AllUppercase
-            }
-            //% "Accept Swap Offer"
-            text:               qsTrId("wallet-send-swap-title")
+        //% "Accept Swap Offer"
+        text: qsTrId("wallet-send-swap-title")
+        onBack: function () {
+            onClosed()
         }
-    } // Item
+    }
 
     ScrollView {
         id:                  scrollView
@@ -183,18 +161,17 @@ please review your settings and try again"
 
                         content:
                         AmountInput {
-                            id:               sendAmountInput
-                            //hasFee:           true
-                            currFeeTitle:     true
-                            amountIn:         viewModel.sendAmount
-                            currency:         viewModel.sendCurrency
-                            secondCurrencyRateValue:    viewModel.secondCurrencySendRateValue
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                            readOnlyA:        true
-                            multi:            false
-                            color:            Style.accent_outgoing
-                            currColor:        viewModel.receiveCurrency == viewModel.sendCurrency || getErrorText().length ? Style.validator_error : Style.content_main
-                            error:            getErrorText()
+                            id:           sendAmountInput
+                            amount:       viewModel.sendAmount
+                            currencies:   viewModel.currList
+                            currencyIdx:  viewModel.sendCurrency
+                            rate:         viewModel.secondCurrencySendRateValue
+                            rateUnit:     viewModel.secondCurrencyUnitName
+                            readOnlyA:    true
+                            multi:        false
+                            color:        Style.accent_outgoing
+                            currColor:    viewModel.receiveCurrency == viewModel.sendCurrency || getErrorText().length ? Style.validator_error : Style.content_main
+                            error:        getErrorText()
 
                             function getErrorText() {
                                 if(!viewModel.isSendFeeOK) {
@@ -211,7 +188,16 @@ please review your settings and try again"
 
                         Connections {
                             target: viewModel
-                            onIsSendFeeOKChanged: sendAmountInput.error = sendAmountInput.getErrorText()
+                            function onSendAmountChanged () {
+                                sendAmountInput.amount = viewModel.sendAmount
+                            }
+                        }
+
+                        Connections {
+                            target: viewModel
+                            function onIsSendFeeOKChanged () {
+                                sendAmountInput.error = sendAmountInput.getErrorText()
+                            }
                         }
                     }
 
@@ -219,28 +205,23 @@ please review your settings and try again"
                     // Send Fee
                     //
                     FoldablePanel {
-                        title:                   sendAmountInput.getFeeTitle()
+                        title:                   viewModel.sentFeeTitle
                         Layout.fillWidth:        true
                         folded:                  false
                         content: FeeInput {
                             id:                         sendFeeInput
-                            //fee:                        viewModel.sendFee
                             currency:                   viewModel.sendCurrency
-                            minFee:                     currency == Currency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
+                            minFee:                     currency == OldWalletCurrency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
                             maxFee:                     BeamGlobals.getMaximumFee(currency)
                             recommendedFee:             BeamGlobals.getRecommendedFee(currency)
                             feeLabel:                   BeamGlobals.getFeeRateLabel(currency)
                             color:                      Style.accent_outgoing
                             readOnly:                   false
                             fillWidth:                  true
-                            showSecondCurrency:         sendAmountInput.showSecondCurrency
+                            showSecondCurrency:         sendAmountInput.showRate
                             isExchangeRateAvailable:    sendAmountInput.isExchangeRateAvailable
-                            secondCurrencyAmount:       sendAmountInput.getFeeInSecondCurrency(viewModel.sendFee)
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                            //minimumFeeNotificationText: viewModel.isShieldedTx ?
-                            //    //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
-                            //    qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
-                            //    ""
+                            rateAmount:                 Utils.formatFeeToSecondCurrency(viewModel.sendFee, viewModel.secondCurrencySendRateValue, viewModel.secondCurrencyUnitName)
+                            rateUnit:                   viewModel.secondCurrencyUnitName
                         }
 
                         Binding {
@@ -251,7 +232,9 @@ please review your settings and try again"
 
                         Connections {
                             target: viewModel
-                            onSendFeeChanged: sendFeeInput.fee = viewModel.sendFee
+                            function onSendFeeChanged () {
+                                sendFeeInput.fee = viewModel.sendFee
+                            }
                         }
                     }
 
@@ -303,19 +286,17 @@ please review your settings and try again"
                         content:
 
                         AmountInput {
-                            id:                         receiveAmountInput
-                            //hasFee:           true
-                            currFeeTitle:               true
-                            amountIn:                   viewModel.receiveAmount
-                            currency:                   viewModel.receiveCurrency
-                            secondCurrencyRateValue:    viewModel.secondCurrencyReceiveRateValue
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                            readOnlyA:                  true
-                            multi:                      false
-                            color:                      Style.accent_incoming
-                            currColor:                  viewModel.receiveCurrency == viewModel.sendCurrency || getErrorText().length ? Style.validator_error : Style.content_main
-                            error:                      getErrorText()
-                            showTotalFee:               true
+                            id:            receiveAmountInput
+                            amount:        viewModel.receiveAmount
+                            currencies:    viewModel.currList
+                            currencyIdx:   viewModel.receiveCurrency
+                            rate:          viewModel.secondCurrencyReceiveRateValue
+                            rateUnit:      viewModel.secondCurrencyUnitName
+                            readOnlyA:     true
+                            multi:         false
+                            color:         Style.accent_incoming
+                            currColor:     viewModel.receiveCurrency == viewModel.sendCurrency || getErrorText().length ? Style.validator_error : Style.content_main
+                            error:         getErrorText()
 
                             function getErrorText() {
                                 if(!viewModel.isReceiveFeeOK) {
@@ -332,14 +313,23 @@ please review your settings and try again"
 
                         Connections {
                             target: viewModel
-                            onIsReceiveFeeOKChanged: receiveAmountInput.error = receiveAmountInput.getErrorText()
+                            function onReceiveAmountChanged () {
+                                receiveAmountInput.amount = viewModel.receiveAmount
+                            }
+                        }
+
+                        Connections {
+                            target: viewModel
+                            function onIsReceiveFeeOKChanged () {
+                                receiveAmountInput.error = receiveAmountInput.getErrorText()
+                            }
                         }
                     }
                     //
                     // Fee
                     //
                     FoldablePanel {
-                        title:                   receiveAmountInput.getFeeTitle()
+                        title:                   viewModel.receiveFeeTitle
                         Layout.fillWidth:        true
                         folded:                  false
                         content: FeeInput {
@@ -352,14 +342,10 @@ please review your settings and try again"
                             color:                      Style.accent_outgoing
                             readOnly:                   false
                             fillWidth:                  true
-                            showSecondCurrency:         receiveAmountInput.showSecondCurrency
+                            showSecondCurrency:         receiveAmountInput.showRate
                             isExchangeRateAvailable:    receiveAmountInput.isExchangeRateAvailable
-                            secondCurrencyAmount:       receiveAmountInput.getFeeInSecondCurrency(viewModel.receiveFee)
-                            secondCurrencyLabel:        viewModel.secondCurrencyLabel
-                            //minimumFeeNotificationText: viewModel.isShieldedTx ?
-                            //    //% "For the best privacy Max privacy coins were selected. Min transaction fee is %1 %2"
-                            //    qsTrId("max-pivacy-fee-fail").arg(Utils.uiStringToLocale(minFee)).arg(feeLabel) :
-                            //    ""
+                            rateAmount:                 Utils.formatFeeToSecondCurrency(viewModel.receiveFee, viewModel.secondCurrencyReceiveRateValue, viewModel.secondCurrencyUnitName)
+                            rateUnit:                   viewModel.secondCurrencyUnitName
                         }
 
                         Binding {
@@ -390,13 +376,13 @@ please review your settings and try again"
                                 rowSpacing:          20
                                 columns:             2
 
-                                property bool showEstimatedFee: viewModel.receiveCurrency != Currency.CurrBeam
+                                property bool showEstimatedFee: viewModel.receiveCurrency != OldWalletCurrency.CurrBeam
 
                                 SFText {
                                     Layout.alignment:       Qt.AlignTop
                                     font.pixelSize:         14
                                     color:                  Style.content_secondary
-                                    text:                   receiveAmountInput.getTotalFeeTitle() + ":"
+                                    text:                   Utils.getSwapTotalFeeTitle(receiveAmountInput.currencyUnit)
                                     visible:                parent.showEstimatedFee
                                 }
     
@@ -460,8 +446,8 @@ please review your settings and try again"
                                     font.pixelSize:   14
                                     color:            Style.content_main
                                     text:             viewModel.isSendBeam
-                                        ? ["1", sendAmountInput.currencyLabel, "=", Utils.uiStringToLocale(viewModel.rate), receiveAmountInput.currencyLabel].join(" ")
-                                        : ["1", receiveAmountInput.currencyLabel, "=", Utils.uiStringToLocale(viewModel.rate), sendAmountInput.currencyLabel].join(" ")
+                                        ? ["1", sendAmountInput.currencyUnit, "=", Utils.uiStringToLocale(viewModel.rate), receiveAmountInput.currencyUnit].join(" ")
+                                        : ["1", receiveAmountInput.currencyUnit, "=", Utils.uiStringToLocale(viewModel.rate), sendAmountInput.currencyUnit].join(" ")
                                 }
 
 
@@ -515,24 +501,34 @@ please review your settings and try again"
                 onClicked: {
                     if (!validateCoin()) return;
 
-                    const dialogComponent = Qt.createComponent("send_confirm.qml");
+                    var unitName = viewModel.currList[viewModel.sendCurrency].unitName
+                    var onlineMessage =
+                        //% "Keep your wallet online. The swap normally takes about 1 hour to complete."
+                        qsTrId("send-swap-sconfirmation-online-time") + (viewModel.sendCurrency !== OldWalletCurrency.CurrBeam ?
+                        //% " Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled."
+                        qsTrId("send-swap-fee-warning").arg(unitName)
+                        : "")
+
+                    const dialogComponent = Qt.createComponent("swap_confirm.qml");
                     var dialogObject = dialogComponent.createObject(sendSwapView,
                         {
-                            swapMode: true,
-                            addressText: viewModel.receiverAddress,
-                            typeText: qsTrId("general-swap"),
-                            currency: viewModel.sendCurrency,
-                            amount: viewModel.sendAmount,
-                            fee: viewModel.sendFee,
-                            onAcceptedCallback: acceptedCallback,
-                            secondCurrencyRate: viewModel.secondCurrencySendRateValue,
-                            secondCurrencyLabel: viewModel.secondCurrencyLabel
-                        }).open();
+                            swapMode:       true,
+                            addressText:    viewModel.receiverAddress,
+                            typeText:       qsTrId("general-swap"),
+                            amount:         viewModel.sendAmount,
+                            unitName:       unitName,
+                            fee:            viewModel.sendFee,
+                            flatFee:        viewModel.sendCurrency == OldWalletCurrency.CurrBeam,
+                            rate:           viewModel.secondCurrencySendRateValue,
+                            rateUnit:       viewModel.secondCurrencyUnitName,
+                        })
 
-                    function acceptedCallback() {
-                        viewModel.sendMoney();
-                        sendSwapView.onAccepted();
-                    }
+                    dialogObject.onAccepted.connect(function () {
+                        viewModel.sendMoney()
+                        sendSwapView.onAccepted()
+                    })
+
+                    dialogObject.open()
                 }
             }
         }  // ColumnLayout

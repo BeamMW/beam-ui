@@ -191,37 +191,62 @@ ColumnLayout {
 
                         Connections {
                             target: modelData
-                            onCanChangeConnectionChanged:        settingsControl.canChangeConnection = modelData.canChangeConnection
-                            onConnectionTypeChanged: {
+                            function onCanChangeConnectionChanged () {
+                                settingsControl.canChangeConnection = modelData.canChangeConnection
+                            }
+                            function onConnectionTypeChanged () {
                                 settingsControl.isConnected          = modelData.isConnected;
                                 settingsControl.isNodeConnection     = modelData.isNodeConnection;
                                 settingsControl.isElectrumConnection = modelData.isElectrumConnection;
                                 settingsControl.title                = modelData.title;
                             }
-                            onConnectionStatusChanged: {
-                                settingsControl.connectionStatus     = modelData.connectionStatus;
+                            function  onConnectionStatusChanged () {
+                                settingsControl.connectionStatus = modelData.connectionStatus;
                             }
-
-                            onConnectionErrorMsgChanged: {
-                                settingsControl.connectionErrorMsg   = modelData.connectionErrorMsg;
+                            function onConnectionErrorMsgChanged () {
+                                settingsControl.connectionErrorMsg = modelData.connectionErrorMsg;
                             }
 
                             //
                             // Node
                             //
-                            onNodeAddressChanged: settingsControl.address  = modelData.nodeAddress
-                            onNodePortChanged:    settingsControl.port     = modelData.nodePort
-                            onNodeUserChanged:    settingsControl.username = modelData.nodeUser
-                            onNodePassChanged:    settingsControl.password = modelData.nodePass
+                            function onNodeAddressChanged () {
+                                settingsControl.address = modelData.nodeAddress
+                            }
+
+                            function onNodePortChanged () {
+                                settingsControl.port = modelData.nodePort
+                            }
+
+                            function onNodeUserChanged () {
+                                settingsControl.username = modelData.nodeUser
+                            }
+
+                            function onNodePassChanged () {
+                                settingsControl.password = modelData.nodePass
+                            }
+
                             //
                             // Electrum
                             //
-                            onNodeAddressElectrumChanged: settingsControl.addressElectrum = modelData.nodeAddressElectrum
-                            onNodePortElectrumChanged: settingsControl.portElectrum = modelData.nodePortElectrum
-                            onSelectServerAutomaticallyChanged: settingsControl.useRandomElectrumNode = modelData.selectServerAutomatically
-                            onElectrumSeedPhrasesChanged: settingsControl.seedPhrasesElectrum = modelData.electrumSeedPhrases
-                            onIsCurrentSeedValidChanged:  settingsControl.isCurrentElectrumSeedValid = modelData.isCurrentSeedValid
-                            onIsCurrentSeedSegwitChanged: settingsControl.isCurrentElectrumSeedSegwitAndValid = modelData.isCurrentSeedSegwit
+                            function onNodeAddressElectrumChanged () {
+                                settingsControl.addressElectrum = modelData.nodeAddressElectrum
+                            }
+                            function onNodePortElectrumChanged () {
+                                settingsControl.portElectrum = modelData.nodePortElectrum
+                            }
+                            function onSelectServerAutomaticallyChanged () {
+                                settingsControl.useRandomElectrumNode = modelData.selectServerAutomatically
+                            }
+                            function onElectrumSeedPhrasesChanged () {
+                                settingsControl.seedPhrasesElectrum = modelData.electrumSeedPhrases
+                            }
+                            function onIsCurrentSeedValidChanged () {
+                                settingsControl.isCurrentElectrumSeedValid = modelData.isCurrentSeedValid
+                            }
+                            function onIsCurrentSeedSegwitChanged () {
+                                settingsControl.isCurrentElectrumSeedSegwitAndValid = modelData.isCurrentSeedSegwit
+                            }
                         }
 
                         onApplyNode:                 modelData.applyNodeSettings()
@@ -309,24 +334,40 @@ ColumnLayout {
                     accountIndex:             viewModel.ethSettings.accountIndex
 
                     Connections {
-                        target:              viewModel.ethSettings
-                        onCanChangeConnectionChanged:    swapEthSettings.canChangeConnection = viewModel.ethSettings.canChangeConnection
-                        onConnectionChanged: {
-                            swapEthSettings.isConnected        = viewModel.ethSettings.isConnected;
-                            swapEthSettings.title              = viewModel.ethSettings.title;
-                        }
-                        onConnectionStatusChanged: {
-                            swapEthSettings.connectionStatus   = viewModel.ethSettings.connectionStatus;
+                        target: viewModel.ethSettings
+
+                        function onCanChangeConnectionChanged () {
+                            swapEthSettings.canChangeConnection = viewModel.ethSettings.canChangeConnection
                         }
 
-                        onConnectionErrorMsgChanged: {
+                        function onConnectionChanged () {
+                            swapEthSettings.isConnected = viewModel.ethSettings.isConnected;
+                            swapEthSettings.title = viewModel.ethSettings.title;
+                        }
+
+                        function onConnectionStatusChanged () {
+                            swapEthSettings.connectionStatus = viewModel.ethSettings.connectionStatus;
+                        }
+
+                        function onConnectionErrorMsgChanged () {
                             swapEthSettings.connectionErrorMsg = viewModel.ethSettings.connectionErrorMsg;
                         }
 
-                        onInfuraProjectIDChanged:      swapEthSettings.infuraProjectID      = viewModel.ethSettings.infuraProjectID
-                        onAccountIndexChanged:         swapEthSettings.accountIndex         = viewModel.ethSettings.accountIndex
-                        onSeedPhrasesChanged:          swapEthSettings.seedPhrases          = viewModel.ethSettings.seedPhrases
-                        onIsCurrentSeedValidChanged:   swapEthSettings.isCurrentSeedValid   = viewModel.ethSettings.isCurrentSeedValid
+                        function onInfuraProjectIDChanged () {
+                            swapEthSettings.infuraProjectID = viewModel.ethSettings.infuraProjectID
+                        }
+
+                        function onAccountIndexChanged () {
+                            swapEthSettings.accountIndex = viewModel.ethSettings.accountIndex
+                        }
+
+                        function onSeedPhrasesChanged () {
+                            swapEthSettings.seedPhrases = viewModel.ethSettings.seedPhrases
+                        }
+
+                        function onIsCurrentSeedValidChanged () {
+                            swapEthSettings.isCurrentSeedValid   = viewModel.ethSettings.isCurrentSeedValid
+                        }
                     }
                     
                     onDisconnect:                viewModel.ethSettings.disconnect()

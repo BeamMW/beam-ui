@@ -15,24 +15,22 @@
 #include <QObject>
 #include "ui_helpers.h"
 
-class WalletCurrency: public QObject
+class OldWalletCurrency: public QObject
 {
     Q_OBJECT
 public:
-    enum class Currency {
+    enum class OldCurrency {
         CurrStart = -1,
 #define MACRO(name, label, slabel, subunut, feeLabel, dec) Curr##name,
         CURRENCY_MAP(MACRO)
 #undef MACRO
         CurrEnd
     };
-    Q_ENUMS(Currency)
+    Q_ENUM(OldCurrency)
 };
 
-typedef WalletCurrency::Currency Currency;
+beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(OldWalletCurrency::OldCurrency currency);
+OldWalletCurrency::OldCurrency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin);
 
-beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(Currency currency);
-Currency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin);
-
-beamui::Currencies convertCurrency(Currency value);
-bool isEthereumBased(Currency currency);
+beamui::Currencies convertCurrency(OldWalletCurrency::OldCurrency value);
+bool isEthereumBased(OldWalletCurrency::OldCurrency currency);

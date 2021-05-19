@@ -1,4 +1,7 @@
 [submodule "beam"]
 	path = beam
 	url = https://github.com/BeamMW/beam.git
-	branch = mainnet_5.3RC
+	branch = mainnet
+[submodule "3rdparty/zlib"]
+	path = 3rdparty/zlib
+	url = https://github.com/madler/zlib.git

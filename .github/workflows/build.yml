@@ -14,7 +14,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-10.15, ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2019]
+        #  os: [macos-10.15, ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2019]
+        os: [macos-10.15, ubuntu-16.04, windows-2019]
 
     steps:
     - uses: actions/checkout@v2
@@ -34,23 +35,18 @@ jobs:
     - name: OS name [macos-10.15 && windows]
       shell: bash
       if: matrix.os == 'macos-10.15' || matrix.os == 'windows-2019'
-      run: echo "OS_NAME=${{runner.os}}" >> $GITHUB_ENV
+      run: echo "PACKAGE_NAME=${{runner.os}}" >> $GITHUB_ENV
 
     - name: OS name [ununtu all]
       shell: bash
       if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
-      run: echo "OS_NAME=${{matrix.os}}" >> $GITHUB_ENV
+      run: echo "PACKAGE_NAME=linux" >> $GITHUB_ENV
 
     - name: Create Build Environment [macos-10.15]
       if: matrix.os == 'macos-10.15'
       run: |
         echo $GITHUB_WORKSPACE
         echo "OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1" >> $GITHUB_ENV
-        wget --no-check-certificate https://builds.beam.mw/QT5/qt5.12.9-static.tar.gz
-        mkdir ${{runner.workspace}}/qt5-static
-        tar -xf qt5.12.9-static.tar.gz -C ${{runner.workspace}}/qt5-static
-        echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
-        echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
         export TZ=GMT-3
         sudo systemsetup -gettimezone
         security create-keychain -p github macos-build.keychain
@@ -66,21 +62,20 @@ jobs:
       if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
         sudo apt update
-        sudo apt install build-essential llvm libclang-dev -y
+        sudo apt install build-essential -y
         sudo apt install libssl-dev curl libcups2-dev mesa-common-dev ^libxcb.* libglu1-mesa-dev libglfw3-dev libgles2-mesa-dev libfontconfig1-dev libudev-dev -y
         sudo apt install libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-dev libpci-dev libicu-dev -y
         sudo apt install libwebp-dev libzstd-dev libbsd-dev uuid-dev liblzma-dev libtiff-dev -y
-        git clone --depth=1 https://github.com/BeamMW/qt5.15.2-static-${{env.OS_NAME}}.git ${{runner.workspace}}/qt5-static
-        chmod +x ${{runner.workspace}}/qt5-static/bin/*
-        echo "QT5_ROOT_DIR=${{runner.workspace}}/qt5-static" >> $GITHUB_ENV
-        echo "QML_IMPORT_PATH=${{runner.workspace}}/qt5-static/qml" >> $GITHUB_ENV
 
     - name: Create Build Environment [ubuntu 16.04]
       shell: bash
       if: matrix.os == 'ubuntu-16.04'
       run: |
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-9
-        sudo update-alternatives --set gcc "/usr/bin/gcc-9"
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt-get update
+        sudo apt-get install g++-7
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 --slave /usr/bin/g++ g++ /usr/bin/g++-7
+        sudo update-alternatives --set gcc "/usr/bin/gcc-7"
 
     - name: Create Build Environment [windows]
       shell: bash
@@ -88,23 +83,32 @@ jobs:
       run: |
         git clone --depth=1 https://github.com/BeamMW/libs.git c:/beam-libs
         echo "OPENSSL_ROOT_DIR=c:\beam-libs\openssl" >> $GITHUB_ENV
-        git clone --depth=1 https://github.com/BeamMW/qt5.15.2-static-${{env.OS_NAME}}.git c:/qt5-static
-        echo "QT5_ROOT_DIR=c:\qt5-static" >> $GITHUB_ENV
-        echo "QML_IMPORT_PATH=c:\qt5-static\qml" >> $GITHUB_ENV
+        git clone https://github.com/BeamMW/boost_prebuild_${{matrix.os}}.git c:/boost_prebuild
+        echo "BOOST_ROOT=c:\boost_prebuild" >> $GITHUB_ENV
 
-    - name: Download boost [macos-10.15]
-      if: matrix.os == 'macos-10.15'
-      run: |
-        curl -O https://raw.githubusercontent.com/Homebrew/homebrew-core/5da5895add2f6b9320d654dd844d4827f6876c8b/Formula/boost.rb
-        brew install ./boost.rb
-
-    - name: Download boost [ununtu all]
+    - name: Download boost [ubuntu && macos]
+      if: matrix.os != 'windows-2019'
       shell: bash
-      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
-        git clone https://github.com/BeamMW/boost_prebuild_${{matrix.os}}.git ${{runner.workspace}}/boost_prebuild
+        git clone --depth=1 https://github.com/BeamMW/boost_prebuild_${{matrix.os}}.git ${{runner.workspace}}/boost_prebuild
         echo "BOOST_INCLUDEDIR=${{runner.workspace}}/boost_prebuild/include" >> $GITHUB_ENV
         echo "BOOST_LIBRARYDIR=${{runner.workspace}}/boost_prebuild/lib/" >> $GITHUB_ENV
+
+###############################################################################
+# Install Qt5
+###############################################################################
+    - name: Cache Qt
+      id: cache-qt
+      uses: actions/cache@v1
+      with:
+        path: ../Qt
+        key: ${{ matrix.os }}-QtCache
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: '5.15.2'
+        modules: 'qtwebengine'
+        cached: ${{ steps.cache-qt.outputs.cache-hit }}
 
 ###############################################################################
 # Configure CMake
@@ -112,21 +116,19 @@ jobs:
     - name: Configure CMake [macos-10.15]
       if: matrix.os == 'macos-10.15'
       run: |
-        export PATH=${{runner.workspace}}/qt5-static/bin:$PATH
-        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_HW_WALLET=Off .
+        #cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
+        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_SIGN_IDENTITY="${{secrets.MACOS_SIGN_IDENTITY}}" -DBEAM_HW_WALLET=Off .
 
     - name: Configure CMake [ununtu all]
       if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
-        export PATH=${{runner.workspace}}/qt5-static/bin:$PATH
-        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
+        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
 
     - name: Configure CMake [windows]
       shell: bash
       if: matrix.os == 'windows-2019'
       run: |
-        export PATH=/c/qt5-static/bin:$PATH
-        cmake -G "Visual Studio 16 2019" -A x64 -DBOOST_ROOT=$BOOST_ROOT_1_72_0 -DCMAKE_BUILD_TYPE=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
+        cmake -G "Visual Studio 16 2019" -A x64  -DOPENSSL_ROOT_DIR=/c/beam-libs/openssl -DCMAKE_CONFIGURATION_TYPES:STRING=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
 
     - name: Save version info
       shell: bash
@@ -153,7 +155,7 @@ jobs:
     - name: Build [windows]
       shell: bash
       if: matrix.os == 'windows-2019'
-      run: cmake --build . --parallel --config $BUILD_CONFIG
+      run: cmake --build . --config $BUILD_CONFIG --parallel
 
 ###############################################################################
 # Pack
@@ -161,6 +163,23 @@ jobs:
     - name: CPack [macos-10.15 && ununtu all]
       if: matrix.os != 'windows-2019'
       run: cpack
+    
+    - name: AppImage [ubuntu-16.04]
+      if: matrix.os == 'ubuntu-16.04'
+      run: |
+        echo "Creating AppImage deploy tree"
+        mkdir -p ./deploy/usr/bin
+        mkdir -p ./deploy/usr/share/applications
+        mkdir -p ./deploy/usr/share/icons/hicolor/256x256/apps
+        echo "Copying files to AppImage deploy tree"
+        cp ui/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}} deploy/usr/bin/
+        cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/apps/
+        cp ui/beam.desktop deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop
+        cp ui/beam-wallet.cfg deploy/usr/bin/
+        echo "Creating AppImage"
+        chmod a+x ui/3rdparty/linuxdeployqt-7
+        export VERSION=${{env.BEAM_VERSION}}
+        ./ui/3rdparty/linuxdeployqt-7 ./deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop -appimage -no-translations -always-overwrite -qmldir="./ui/view" -no-copy-copyright-files
 
     - name: CPack [windows]
       shell: bash
@@ -176,6 +195,7 @@ jobs:
       run: |
         cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Darwin.dmg Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
         codesign --deep --force -v -s "${{secrets.MACOS_SIGN_IDENTITY}}" -o runtime --timestamp Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
+
     - name: Notarize [macos-10.15]
       shell: bash
       if: matrix.os == 'macos-10.15'
@@ -193,8 +213,12 @@ jobs:
       shell: bash
       if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
-        cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Linux.deb Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb
-        sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb > checksum.txt
+        #cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Linux.deb Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb
+        #sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb > checksum.txt
+        cp Beam_Wallet-${{env.BEAM_VERSION}}-x86_64.AppImage BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage
+        sha256sum BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage > BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage-checksum.txt
+        chmod a+x BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage
+        tar -cvf BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.tar BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage-checksum.txt
 
     - name: Collect [windows]
       shell: bash
@@ -207,18 +231,19 @@ jobs:
 # Upload
 ###############################################################################
     - uses: actions/upload-artifact@v2
+      if: matrix.os == 'windows-2019' || matrix.os == 'macos-10.15'
       with:
-        name: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-${{env.OS_NAME}}
-        path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}*
+        name: ${{env.PACKAGE_NAME}}-Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}
+        path: |
+          Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}*
+          *checksum.txt
         if-no-files-found: error
 
     - uses: actions/upload-artifact@v2
-      if: matrix.os == 'ubuntu-18.04'
+      if: matrix.os == 'ubuntu-16.04'
       with:
-        name: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-linux
-        path: |
-          Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}*
-          checksum.txt
+        name: ${{env.PACKAGE_NAME}}-Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}
+        path: BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.tar
         if-no-files-found: error
 
     - uses: actions/upload-artifact@v2

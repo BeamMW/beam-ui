@@ -1,9 +1,10 @@
 <RCC>
     <qresource prefix="/">
-        <file>color_themes/AbstractColors.qml</file>
+        <file>color_themes/AbstractTheme.qml</file>
         <file>color_themes/Mainnet.qml</file>
         <file>color_themes/Masternet.qml</file>
         <file>color_themes/Testnet.qml</file>
+        <file>color_themes/BeamX.qml</file>
         <file>controls/Style.qml</file>
         <file>controls/qmldir</file>
         <file>controls/SvgImage.qml</file>
@@ -11,13 +12,10 @@
         <file>controls/SFLabel.qml</file>
         <file>controls/SFText.qml</file>
         <file>controls/SFTextInput.qml</file>
-        <file>controls/AvailablePanel.qml</file>
         <file>controls/Led.qml</file>
         <file>controls/TxFilter.qml</file>
-        <file>controls/TxTable.qml</file>
         <file>controls/TableItem.qml</file>
         <file>controls/ContextMenu.qml</file>
-        <file>controls/DefaultButton.qml</file>
         <file>controls/EditAddress.qml</file>
         <file>controls/ExpandableRowDelegate.qml</file>
         <file>controls/PrimaryButton.qml</file>
@@ -54,13 +52,13 @@
         <file>controls/StatusBar.qml</file>
         <file>controls/Title.qml</file>
         <file>controls/SearchBox.qml</file>
-        <file>controls/TransactionDetails.qml</file>
         <file>controls/SwapTransactionDetails.qml</file>
         <file>controls/PaymentInfoDialog.qml</file>
         <file>controls/OpenExternalLinkConfirmation.qml</file>
         <file>controls/NotificationPopup.qml</file>
         <file>controls/SeedInput.qml</file>
         <file>controls/CustomTripleSwitch.qml</file>
+        <file>controls/CustomSecondCurrencySwitch.qml</file>
         <file>controls/ConfirmRefreshDialog.qml</file>
         <file>controls/OwnerKeyDialog.qml</file>
         <file>controls/SettingsFoldable.qml</file>
@@ -73,6 +71,19 @@
         <file>controls/SettingsBeamNode.qml</file>
         <file>controls/SettingsTitle.qml</file>
         <file>controls/PublicOfflineAddressDialog.qml</file>
+        <file>controls/PanelGradient.qml</file>
+        <file>controls/AlphaTip.qml</file>
+        <file>controls/AlphaTipPopup.qml</file>
+        <file>controls/SubtitleRow.qml</file>
+        <file>controls/AddressQRDialog.qml</file>
+        <file>wallet/TxTable.qml</file>
+        <file>wallet/AssetsPanel.qml</file>
+        <file>wallet/AssetInfo.qml</file>
+        <file>wallet/AssetTip.qml</file>
+        <file>wallet/TransactionDetails.qml</file>
+        <file>wallet/CoinsList.qml</file>
+        <file>dex/MarketPanel.qml</file>
+        <file>dex/MarketTable.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
@@ -81,6 +92,8 @@
         <file>wallet.qml</file>
         <file>settings.qml</file>
         <file>addresses.qml</file>
+        <file>applications.qml</file>
+        <file>applications_nofork.qml</file>
         <file>utxo.qml</file>
         <file>atomic_swap.qml</file>
         <file>notifications.qml</file>
@@ -90,7 +103,9 @@
         <file>send_regular.qml</file>
         <file>send_swap.qml</file>
         <file>send_confirm.qml</file>
+        <file>swap_confirm.qml</file>
         <file>send_expired.qml</file>
+        <file>dex.qml</file>
         <file>assets/fonts/SF-Pro-Display-Black.otf</file>
         <file>assets/fonts/SF-Pro-Display-Light.otf</file>
         <file>assets/fonts/SF-Pro-Display-Semibold.otf</file>
@@ -109,23 +124,33 @@
         <file>assets/fonts/SF-Pro-Display-HeavyItalic.otf</file>
         <file>assets/fonts/SF-Pro-Display-RegularItalic.otf</file>
         <file>assets/fonts/SF-Pro-Display-UltralightItalic.otf</file>
+        <file>assets/bottom-logo-beamx.svg</file>
         <file>assets/beam-circle.svg</file>
         <file>assets/ltc-circle.svg</file>
         <file>assets/qtum-circle.svg</file>
         <file>assets/btc-circle.svg</file>
         <file>assets/logo.svg</file>
+        <file>assets/beamx-logo.svg</file>
         <file>assets/start-logo.svg</file>
         <file>assets/icon.png</file>
         <file>assets/icon_masternet.png</file>
         <file>assets/icon_testnet.png</file>
+        <file>assets/icon_beamx.png</file>
         <file>assets/bg.svg</file>
         <file>assets/b-grey.svg</file>
         <file>assets/b-red.svg</file>
+        <file>assets/icon-run.svg</file>
         <file>assets/icon-grey-arrow-down.svg</file>
         <file>assets/icon-grey-arrow-up.svg</file>
         <file>assets/icon-attention.svg</file>
         <file>assets/icon-dashboard.svg</file>
         <file>assets/icon-dashboard-active.svg</file>
+        <file>assets/icon-defapp.svg</file>
+        <file>assets/icon-defapp-active.svg</file>
+        <file>assets/icon-applications.svg</file>
+        <file>assets/icon-applications-active.svg</file>
+        <file>assets/icon-dex.svg</file>
+        <file>assets/icon-dex-active.svg</file>
         <file>assets/icon-addresses.svg</file>
         <file>assets/icon-addresses-active.svg</file>
         <file>assets/icon-wallet.svg</file>
@@ -146,6 +171,9 @@
         <file>assets/icon-notifications-sent.svg</file>
         <file>assets/icon-notifications-update.svg</file>
         <file>assets/icon-notifications-videos.svg</file>
+        <file>assets/icon-contract-completed.svg</file>
+        <file>assets/icon-contract-expired.svg</file>
+        <file>assets/icon-contract-failed.svg</file>
         <file>assets/icon-info.svg</file>
         <file>assets/icon-info-active.svg</file>
         <file>assets/icon-settings.svg</file>
@@ -256,9 +284,9 @@
         <file>controls/Panel.qml</file>
         <file>controls/TokenInfoPanel.qml</file>
         <file>controls/TokenInfoDialog.qml</file>
-        <file>controls/SaveAddressDialog.qml</file>
         <file>controls/FoldablePanel.qml</file>
         <file>controls/SwapTokenInfoDialog.qml</file>
+        <file>controls/BgLogo.qml</file>
         <file>assets/icon-canceled-max-online.svg</file>
         <file>assets/icon-failed-max-online.svg</file>
         <file>assets/icon-received-max-online.svg</file>
@@ -271,10 +299,39 @@
         <file>assets/icon-canceled-max-offline.svg</file>
         <file>assets/icon-sent-max-offline.svg</file>
         <file>assets/icon-sending-max-offline.svg</file>
-        <file>controls/AddressQRDialog.qml</file>
+        <file>assets/icon-inout-transactions.svg</file>
+        <file>assets/icon-incoming-transaction.svg</file>
+        <file>assets/icon-outgoing-transaction.svg</file>
+        <file>assets/asset-0.svg</file>
+        <file>assets/asset-1.svg</file>
+        <file>assets/asset-2.svg</file>
+        <file>assets/asset-3.svg</file>
+        <file>assets/asset-4.svg</file>
+        <file>assets/asset-5.svg</file>
+        <file>assets/asset-6.svg</file>
+        <file>assets/asset-7.svg</file>
+        <file>assets/asset-8.svg</file>
+        <file>assets/asset-9.svg</file>
+        <file>assets/asset-10.svg</file>
+        <file>assets/asset-11.svg</file>
+        <file>assets/asset-12.svg</file>
+        <file>assets/asset-13.svg</file>
+        <file>assets/asset-14.svg</file>
+        <file>assets/asset-15.svg</file>
+        <file>assets/asset-16.svg</file>
+        <file>assets/asset-17.svg</file>
+        <file>assets/asset-18.svg</file>
+        <file>assets/asset-19.svg</file>
+        <file>assets/asset-err.svg</file>
+        <file>assets/icon-usd.svg</file>
+        <file>assets/icon-swap-currencies-raw.svg</file>
         <file>controls/SeedPhraseDialog.qml</file>
         <file>controls/SwapEthSettings.qml</file>
         <file>controls/ShowAddressesDialog.qml</file>
         <file>controls/LoadingSpinner.qml</file>
+        <file>assets/icon-utxo-empty.svg</file>
+        <file>assets/icon-addressbook-empty.svg</file>
+        <file>assets/icon-notification-empty.svg</file>
+        <file>assets/icon-wallet-empty.svg</file>
     </qresource>
 </RCC>

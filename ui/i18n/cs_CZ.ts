@@ -37,7 +37,6 @@
     </message>
     <message id="general-cancel">
         <source>Cancel</source>
-        <extracomment>Edit address dialog, cancel button</extracomment>
         <translation>Zrušit</translation>
     </message>
     <message id="general-delete">
@@ -97,25 +96,10 @@
         <source>Invalid address</source>
         <translation>Neplatná adresa</translation>
     </message>
-    <message id="general-coinbase">
-        <source>Coinbase</source>
-        <extracomment>UTXO type Coinbase</extracomment>
-        <translation>Coinbase</translation>
-    </message>
-    <message id="general-regular">
-        <source>Regular</source>
-        <extracomment>UTXO type Regular</extracomment>
-        <translation>Běžné</translation>
-    </message>
     <message id="general-change">
         <source>Change</source>
         <extracomment>UTXO type Change</extracomment>
         <translation>Změnit</translation>
-    </message>
-    <message id="general-treasury">
-        <source>Treasury</source>
-        <extracomment>UTXO type Treasury</extracomment>
-        <translation>Pokladnice</translation>
     </message>
     <message id="general-back">
         <source>Back</source>
@@ -257,34 +241,6 @@
         <source>Delete contact</source>
         <translation>Smazat kontakt</translation>
     </message>
-    <message id="available-panel-available">
-        <source>Available</source>
-        <translation>K dispozici</translation>
-    </message>
-    <message id="available-panel-locked">
-        <source>Locked</source>
-        <translation>Uzamčeno</translation>
-    </message>
-    <message id="available-panel-sending">
-        <source>Sending</source>
-        <translation>Odesílání</translation>
-    </message>
-    <message id="available-panel-receiving">
-        <source>Receiving</source>
-        <translation>Přijímání</translation>
-    </message>
-    <message id="available-panel-maturing">
-        <source>Maturing</source>
-        <translation>Dokončování</translation>
-    </message>
-    <message id="available-panel-change">
-        <source>Change</source>
-        <translation>Změnit</translation>
-    </message>
-    <message id="available-panel-incoming">
-        <source>Incoming</source>
-        <translation>Příchozí</translation>
-    </message>
     <message id="settings-version">
         <source>v</source>
         <oldsource>Version</oldsource>
@@ -331,8 +287,9 @@
         <translation>Použít změny</translation>
     </message>
     <message id="logo-description">
-        <source>Confidential, fast, easy to use</source>
-        <translation>Soukromé, rychlé, snadno použitelné</translation>
+        <source>Confidential DeFi Platform</source>
+        <oldsource>Confidential, fast, easy to use</oldsource>
+        <translation type="unfinished">Soukromé, rychlé, snadno použitelné</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>
@@ -393,21 +350,6 @@
     <message id="open-show-wallet-button">
         <source>Show my wallet</source>
         <translation>Zobrazit mou peněženku</translation>
-    </message>
-    <message id="edit-addr-title">
-        <source>Edit address</source>
-        <extracomment>Edit address dialog title</extracomment>
-        <translation>Upravit adresu</translation>
-    </message>
-    <message id="edit-addr-addr-id">
-        <source>Address ID</source>
-        <extracomment>Edit address dialog, address label</extracomment>
-        <translation>ID adresy</translation>
-    </message>
-    <message id="edit-addr-save-button">
-        <source>Save</source>
-        <extracomment>Edit address dialog, save button</extracomment>
-        <translation>Uložit</translation>
     </message>
     <message id="payment-info-proof-verification">
         <source>Payment proof verification</source>
@@ -695,14 +637,6 @@
         <source>Connection error</source>
         <translation>Chyba připojení</translation>
     </message>
-    <message id="start-view-printer-not-found-error">
-        <source>Printer is not found. Please, check your printer preferences.</source>
-        <translation>Tiskárna nebyla nalezena. Zkontrolujte prosím nastavení tiskárny.</translation>
-    </message>
-    <message id="start-view-printer-error">
-        <source>Failed to print seed phrase. Please, check your printer.</source>
-        <translation>Tisk klíčových slov se nezdařil. Zkontrolujte prosím tiskárnu.</translation>
-    </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
         <translation>Soubor databáze SQLite (*.db)</translation>
@@ -778,42 +712,6 @@
     <message id="utxo-last-block-hash">
         <source>Last block hash</source>
         <translation>Poslední hash bloku</translation>
-    </message>
-    <message id="utxo-head-maturity">
-        <source>Maturity</source>
-        <translation>Dokončeno</translation>
-    </message>
-    <message id="utxo-head-type">
-        <source>Type</source>
-        <translation>Typ</translation>
-    </message>
-    <message id="utxo-status-available">
-        <source>Available</source>
-        <translation>K dispozici</translation>
-    </message>
-    <message id="utxo-status-maturing">
-        <source>Maturing%1(till block height %2)</source>
-        <translation>Vyzrávání%1(do výšky bloku %2)</translation>
-    </message>
-    <message id="utxo-status-unavailable">
-        <source>Unavailable%1(mining result rollback)</source>
-        <translation>Nedostupné%1(výsledek těžby obnovení)</translation>
-    </message>
-    <message id="utxo-status-outgoing">
-        <source>In progress%1(outgoing)</source>
-        <translation>Probíhá%1(odchozí)</translation>
-    </message>
-    <message id="utxo-status-change">
-        <source>In progress%1(change)</source>
-        <translation>Probíhá%1(změna)</translation>
-    </message>
-    <message id="utxo-status-incoming">
-        <source>In progress%1(incoming)</source>
-        <translation>Probíhá%1(příchozí)</translation>
-    </message>
-    <message id="utxo-status-spent">
-        <source>Spent</source>
-        <translation>Utraceno</translation>
     </message>
     <message id="settings-general-lock-screen-never">
         <source>Never</source>
@@ -933,49 +831,8 @@ Povolit otevření a pokračovat na web? Vždy můžete aktualizovat svou volbu 
         <source>blockchain explorer</source>
         <translation>průzkumník blockchainu</translation>
     </message>
-    <message id="edit-addr-24-option">
-        <source>In 24 hours from now</source>
-        <extracomment>Edit address dialog, expiration option, in 24 hours from now</extracomment>
-        <translation>Za 24 hodin</translation>
-    </message>
-    <message id="edit-addr-never-option">
-        <source>Never</source>
-        <extracomment>Edit address dialog, expiration option, never</extracomment>
-        <translation>Nikdy</translation>
-    </message>
-    <message id="edit-addr-as-is-option">
-        <source>Within 24 hours</source>
-        <extracomment>Edit address dialog, expiration option, do not change</extracomment>
-        <translation>Do 24 hodin</translation>
-    </message>
-    <message id="edit-addr-expires-label">
-        <source>Expires</source>
-        <extracomment>Edit address dialog, expires label</extracomment>
-        <translation>Vyprší</translation>
-    </message>
-    <message id="edit-addr-expire-now-label">
-        <source>Now</source>
-        <extracomment>Edit address dialog, expire now label</extracomment>
-        <translation>Nyní</translation>
-    </message>
-    <message id="edit-addr-expire-now-switch">
-        <source>Expire address now</source>
-        <extracomment>Edit address dialog, expire now switch</extracomment>
-        <translation>Ukončit platnost adresy</translation>
-    </message>
-    <message id="edit-addr-expiration-time-label">
-        <source>Expired on </source>
-        <extracomment>Edit address dialog, expiration time label</extracomment>
-        <translation>Vypršelo dne </translation>
-    </message>
-    <message id="edit-addr-activate-addr-switch">
-        <source>Activate address</source>
-        <extracomment>Edit address dialog, expiration time label</extracomment>
-        <translation>Aktivovat adresu</translation>
-    </message>
     <message id="time-never">
         <source>Never</source>
-        <extracomment>time never string</extracomment>
         <translation>Nikdy</translation>
     </message>
     <message id="start-pwd-difficulty-very-weak">
@@ -1116,24 +973,6 @@ Povolit otevření a pokračovat na web? Vždy můžete aktualizovat svou volbu 
         <source>Password</source>
         <translation>Heslo</translation>
     </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>Funkce Okamžitého převodu měn je v tuto chvíli v Beta verzi. Nedoporučujeme proto odesílat velké částky.</translation>
-    </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Okamžitý převod měn je v BETA verzi</translation>
-    </message>
-    <message id="swap-na-message">
-        <source>You do not have any 3rd-party currencies connected.
-Update your settings and try again.</source>
-        <translation>Nemáte připojené žádné měny třetích stran.
-Aktualizujte nastavení a zkuste to znovu.</translation>
-    </message>
-    <message id="wallet-receive-swap-title">
-        <source>Create a Swap Offer</source>
-        <translation>Vytvořit nabídku na výměnu</translation>
-    </message>
     <message id="receive-amount-swap-label">
         <source>Receive amount</source>
         <translation>Přijmout částku</translation>
@@ -1142,21 +981,9 @@ Aktualizujte nastavení a zkuste to znovu.</translation>
         <source>Send amount</source>
         <translation>Odeslat částku</translation>
     </message>
-    <message id="wallet-receive-offer-expires-label">
-        <source>Offer expiration time</source>
-        <translation>Čas vypršení platnosti nabídky</translation>
-    </message>
-    <message id="wallet-receive-expires-6">
-        <source>6 hours</source>
-        <translation>6 hodin</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>Směnný kurz</translation>
-    </message>
-    <message id="wallet-receive-swap-publish">
-        <source>publish offer</source>
-        <translation>publikovat token transakce</translation>
     </message>
     <message id="wallet-send-swap-title">
         <source>Accept Swap Offer</source>
@@ -1204,14 +1031,6 @@ prosím zkontrolujte nastavení a zkuste to znovu.</translation>
         <source>Expires on</source>
         <translation>Vyprší dne</translation>
     </message>
-    <message id="general-address-from">
-        <source>From</source>
-        <translation>Od</translation>
-    </message>
-    <message id="general-address-to">
-        <source>To</source>
-        <translation>Komu</translation>
-    </message>
     <message id="loading-view-estimate-calculating">
         <source>calculating...</source>
         <translation>výpočet...</translation>
@@ -1227,90 +1046,6 @@ prosím zkontrolujte nastavení a zkuste to znovu.</translation>
     <message id="loading-view-net-problems">
         <source>It may take longer than usual. Please, check your network.</source>
         <translation>Trvá to déle než obvykle. Zkontrolujte prosím síť.</translation>
-    </message>
-    <message id="atomic-swap-title">
-        <source>Atomic Swaps</source>
-        <translation>Okamžitý převod měn</translation>
-    </message>
-    <message id="atomic-swap-create">
-        <source>Create offer</source>
-        <translation>Vytvořit nabídku</translation>
-    </message>
-    <message id="atomic-swap-active-offers-tab">
-        <source>Active offers</source>
-        <translation>Aktivní nabídky</translation>
-    </message>
-    <message id="atomic-swap-transactions-tab">
-        <source>Transactions</source>
-        <translation>Platby</translation>
-    </message>
-    <message id="atomic-swap-fit-current-balance">
-        <source>Fit my current balance</source>
-        <translation>Přizpůsobit aktuální zůstatek</translation>
-    </message>
-    <message id="atomic-swap-currency">
-        <source>Currency</source>
-        <translation>Měna</translation>
-    </message>
-    <message id="atomic-swap-time-created">
-        <source>Created on</source>
-        <translation>Vytvořeno dne</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Odeslat</translation>
-    </message>
-    <message id="atomic-swap-amount-receive">
-        <source>Receive</source>
-        <translation>Přijmout</translation>
-    </message>
-    <message id="atomic-swap-rate">
-        <source>Rate</source>
-        <translation>Sazba</translation>
-    </message>
-    <message id="atomic-swap-expiration">
-        <source>Expiration</source>
-        <translation>Expirace</translation>
-    </message>
-    <message id="atomic-swap-cancel">
-        <source>Cancel offer</source>
-        <translation>Zrušit nabídku</translation>
-    </message>
-    <message id="atomic-swap-accept">
-        <source>Accept offer</source>
-        <translation>Přijmout nabídku</translation>
-    </message>
-    <message id="atomic-swap-all-transactions-tab">
-        <source>All</source>
-        <translation>Všechny</translation>
-    </message>
-    <message id="atomic-swap-in-progress-transactions-tab">
-        <source>In progress</source>
-        <translation>Probíhající</translation>
-    </message>
-    <message id="atomic-swap-tx-table-created">
-        <source>Created on</source>
-        <translation>Vytvořeno dne</translation>
-    </message>
-    <message id="atomic-swap-tx-table-from">
-        <source>From</source>
-        <translation>Od</translation>
-    </message>
-    <message id="atomic-swap-tx-table-to">
-        <source>To</source>
-        <translation>Komu</translation>
-    </message>
-    <message id="atomic-swap-tx-table-sent">
-        <source>Sent</source>
-        <translation>Odesláno</translation>
-    </message>
-    <message id="atomic-swap-tx-table-received">
-        <source>Received</source>
-        <translation>Přijato</translation>
-    </message>
-    <message id="atomic-swap-tx-table-status">
-        <source>Status</source>
-        <translation>Stav</translation>
     </message>
     <message id="general-create-trezor-wallet">
         <source>Create new Trezor wallet</source>
@@ -1368,12 +1103,6 @@ prosím zkontrolujte nastavení a zkuste to znovu.</translation>
         <source>Received</source>
         <translation>Přijato</translation>
     </message>
-    <message id="atomic-no-offers">
-        <source>There are no active offers at the moment.
-Please try again later or create an offer yourself.</source>
-        <translation>Momentálně nejsou žádné aktivní nabídky.
-Zkuste to prosím později nebo vytvořte svou nabídku.</translation>
-    </message>
     <message id="send-less-than-fee">
         <source>The swap amount must be greater than the transaction fee</source>
         <translation>Hodnota výměny musí být vyšší než poplatek za splatnost.</translation>
@@ -1391,8 +1120,9 @@ Zkuste to prosím později nebo vytvořte svou nabídku.</translation>
         <translation>odesílání na vlastní adresu</translation>
     </message>
     <message id="wallet-search-transactions-placeholder">
-        <source>Transaction or kernel ID, comment, address or contact</source>
-        <translation>Transakce nebo ID jádra, komentář, adresa nebo kontakt</translation>
+        <source>Enter search text...</source>
+        <oldsource>Transaction or kernel ID, comment, address or contact</oldsource>
+        <translation type="unfinished">Transakce nebo ID jádra, komentář, adresa nebo kontakt</translation>
     </message>
     <message id="settings-swap-node">
         <source>Node</source>
@@ -1406,26 +1136,6 @@ Zkuste to prosím později nebo vytvořte svou nabídku.</translation>
         <source>Search</source>
         <translation>Hledat</translation>
     </message>
-    <message id="atomic-swap-1active-tx-count">
-        <source>1 active transaction</source>
-        <translation>1 aktivní transakce</translation>
-    </message>
-    <message id="atomic-swap-active-tx-count">
-        <source>%1 active transactions</source>
-        <translation>%1 aktivních transakcí</translation>
-    </message>
-    <message id="swap-beta-tx-in-progress">
-        <source>Transaction is in progress</source>
-        <translation>Transakce probíhá</translation>
-    </message>
-    <message id="swap-connecting">
-        <source>Connecting...</source>
-        <translation>Připojování...</translation>
-    </message>
-    <message id="swap-beta-connection-error">
-        <source>Cannot connect to peer. Please check the address in Settings and try again.</source>
-        <translation>Nelze se připojit k klientovi. Zkontrolujte adresu v nastavení a zkuste to znovu.</translation>
-    </message>
     <message id="swap-alert-confirm-button">
         <source>I understand</source>
         <translation>Rozumím</translation>
@@ -1438,22 +1148,6 @@ Zkuste to prosím později nebo vytvořte svou nabídku.</translation>
         <source>The swap token was generated by you, and therefore cannot be accepted.</source>
         <translation>Transakční token byl vytvořen Vámi a proto není možné přijmout vlastní nabídku.
 Prosím zkontrolujte token výměny a zkuste to znovu.</translation>
-    </message>
-    <message id="swap-copy-token">
-        <source>Copy token</source>
-        <translation>Kopírovat token</translation>
-    </message>
-    <message id="atomic-swap-cancel-text">
-        <source>Are you sure you want to cancel your offer?</source>
-        <translation>Jste si jisti, že chcete zrušit  Vaši nabídku?</translation>
-    </message>
-    <message id="atomic-swap-cancel-button">
-        <source>cancel offer</source>
-        <translation>zrušit nabídku</translation>
-    </message>
-    <message id="atomic-swap-back-button">
-        <source>back</source>
-        <translation>zpět</translation>
     </message>
     <message id="swap-details-lock-tx-id">
         <source>lock transaction ID</source>
@@ -1490,10 +1184,6 @@ Prosím zkontrolujte token výměny a zkuste to znovu.</translation>
     <message id="swap-details-refund-tx-conf">
         <source>refund transaction confirmations</source>
         <translation>potvrzení transakce vráceno</translation>
-    </message>
-    <message id="swap-invalid-rate">
-        <source>Invalid rate</source>
-        <translation>Neplatná sazba</translation>
     </message>
     <message id="swap-details-tx-id">
         <source>Transaction ID</source>
@@ -1688,14 +1378,6 @@ Prosím zkontrolujte token výměny a zkuste to znovu.</translation>
         <source>Swap failed: the refund of your %2 will start in %1. The refund duration depends on the transaction fee you specified for %2.</source>
         <translation>Swap výměna se nezdařila: navrácení %2 bude zahájeno za %1. Délka vratky závisí na transakčním poplatku, který jste zadali pro %2.</translation>
     </message>
-    <message id="atomic-swap-tx-cancel">
-        <source>Cancel atomic swap</source>
-        <translation>Zrušit okamžitý převod měn</translation>
-    </message>
-    <message id="atomic-swap-tx-cancel-text">
-        <source>Are you sure you want to cancel?</source>
-        <translation>Opravdu chcete zrušit?</translation>
-    </message>
     <message id="atomic-swap-tx-yes-button">
         <source>yes</source>
         <translation>ano</translation>
@@ -1707,10 +1389,6 @@ Prosím zkontrolujte token výměny a zkuste to znovu.</translation>
     <message id="swap-tx-state-refunding">
         <source>Swap failed, the money is being released back to your wallet</source>
         <translation>Swap selhal, peníze jsou odesílány zpět do vaší peněženky</translation>
-    </message>
-    <message id="wallet-txs-status-waiting-peer">
-        <source>waiting for counterparty</source>
-        <translation>čeká na protistranu</translation>
     </message>
     <message id="send-swap-fee-warning">
         <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
@@ -1729,10 +1407,6 @@ Prosím zkontrolujte token výměny a zkuste to znovu.</translation>
         <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
         <translation>Exportovat historii transakcí</translation>
     </message>
-    <message id="atomic-swap-my-offers-tab">
-        <source>My offers</source>
-        <translation>Moje nabídky</translation>
-    </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
         <translation>Odstranit adresu</translation>
@@ -1749,14 +1423,6 @@ Prosím zkontrolujte token výměny a zkuste to znovu.</translation>
         <source>Remember to validate the expected fee rate for the blockchain (as it varies with time).</source>
         <translation>Nezapomeňte ověřit očekávanou sazbu poplatku pro blockchain (čas od času se mění).</translation>
     </message>
-    <message id="addresses-edit-warning-title">
-        <source>Edit address</source>
-        <translation>Upravit adresu</translation>
-    </message>
-    <message id="addresses-edit-warning-text">
-        <source>There is active transaction that uses this address, therefore the address expiration cannot be changed.</source>
-        <translation>Probíhá aktivní transakce, která používá tuto adresu, proto nelze změnit platnost adresy.</translation>
-    </message>
     <message id="settings-swap-seed-segwit-warning">
         <source>Segwit seed phrase is not supported yet.</source>
         <translation>Segwit-ová klíčová slova zatím nejsou podporována.</translation>
@@ -1768,18 +1434,6 @@ Prosím zkontrolujte token výměny a zkuste to znovu.</translation>
     <message id="swap-details-tx-fee-estimated">
         <source>%1 Estimated transaction fee</source>
         <translation>%1 Odhadovaný poplatek za transakci</translation>
-    </message>
-    <message id="wallet-receive-expires-30m">
-        <source>30 minutes</source>
-        <translation>30 minut</translation>
-    </message>
-    <message id="wallet-receive-expires-1">
-        <source>1 hour</source>
-        <translation>1 hodina</translation>
-    </message>
-    <message id="wallet-receive-expires-2">
-        <source>2 hours</source>
-        <translation>2 hodiny</translation>
     </message>
     <message id="settings-show-owner-key-title">
         <source>Owner key</source>
@@ -1835,10 +1489,6 @@ znát všechny Vaše prostředky (UTXO). Ujistěte se, že jste vystavili klíč
     <message id="tx-state-in-progress-long">
         <source>It is taking longer than usual. In case the transaction could not be completed it will be canceled automatically in %1.</source>
         <translation>Trvá to déle než obvykle. V případě, že transakce nebude možné dokončit, bude automaticky zrušena za %1.</translation>
-    </message>
-    <message id="amount-input-add-all">
-        <source>add all</source>
-        <translation>přidat vše</translation>
     </message>
     <message id="settings-general-no-require-pwd-to-spend-confirm-pwd-title">
         <source>Ask password on every Send</source>
@@ -1972,8 +1622,8 @@ znát všechny Vaše prostředky (UTXO). Ujistěte se, že jste vystavili klíč
         <translation>Transakce byla přijata</translation>
     </message>
     <message id="notification-transaction-sent-message">
-        <source>You sent &lt;b&gt;%1&lt;/b&gt; BEAM to &lt;b&gt;%2&lt;/b&gt;.</source>
-        <translation>Poslali jste &lt;b&gt;%1&lt;/b&gt; BEAM &lt;b&gt;%2&lt;/b&gt;.</translation>
+        <source>You sent &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt;.</source>
+        <translation>Poslali jste &lt;b&gt;%1 %2&lt;/b&gt; &lt;b&gt;%3&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-failed">
         <source>Transaction failed</source>
@@ -1988,16 +1638,16 @@ znát všechny Vaše prostředky (UTXO). Ujistěte se, že jste vystavili klíč
         <translation>&lt;b&gt;%1&lt;/b&gt; platnost adresy vypršela.</translation>
     </message>
     <message id="notification-transaction-received-message">
-        <source>You received &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt;.</source>
-        <translation>Přijali jste &lt;b&gt;%1 BEAM&lt;/b&gt; od &lt;b&gt;%2&lt;/b&gt;.</translation>
+        <source>You received &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt;.</source>
+        <translation>Přijali jste &lt;b&gt;%1 %2&lt;/b&gt; od &lt;b&gt;%3&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-send-failed-message">
-        <source>Sending &lt;b&gt;%1 BEAM&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt; failed.</source>
-        <translation>Odeslání &lt;b&gt;%1 BEAM&lt;/b&gt; uživateli &lt;b&gt;%2&lt;/b&gt; se nezdařilo.</translation>
+        <source>Sending &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt; failed.</source>
+        <translation>Odeslání &lt;b&gt;%1 %2&lt;/b&gt; uživateli &lt;b&gt;%3&lt;/b&gt; se nezdařilo.</translation>
     </message>
     <message id="notification-transaction-receive-failed-message">
-        <source>Receiving &lt;b&gt;%1 BEAM&lt;/b&gt; from &lt;b&gt;%2&lt;/b&gt; failed.</source>
-        <translation>Přijem &lt;b&gt;%1 BEAM&lt;/b&gt; od &lt;b&gt;%2&lt;/b&gt; selhal.</translation>
+        <source>Receiving &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt; failed.</source>
+        <translation>Přijem &lt;b&gt;%1 %2&lt;/b&gt; od &lt;b&gt;%3&lt;/b&gt; selhal.</translation>
     </message>
     <message id="notification-transaction-sent">
         <source>Transaction was sent</source>
@@ -2056,54 +1706,6 @@ znát všechny Vaše prostředky (UTXO). Ujistěte se, že jste vystavili klíč
         <source>activated</source>
         <translation>aktivováno</translation>
     </message>
-    <message id="tx-details-exchange-rate-not-available">
-        <source>Exchange rate to %1 was not available at the time of transaction</source>
-        <translation>Směnný kurz pro %1 nebyl v době transakce k dispozici</translation>
-    </message>
-    <message id="tx-details-second-currency-notification">
-        <source>(for the day of transaction)</source>
-        <translation>(pro den transakce)</translation>
-    </message>
-    <message id="tx-details-title">
-        <source>General transaction info</source>
-        <translation>Hlavní informace o transakci</translation>
-    </message>
-    <message id="tx-details-sending-addr-label">
-        <source>Sending address</source>
-        <translation>Odesílací adresa</translation>
-    </message>
-    <message id="tx-details-sender-identity">
-        <source>Sender identity</source>
-        <translation>Identita odesílatele</translation>
-    </message>
-    <message id="tx-details-receiving-addr-label">
-        <source>Receiving address</source>
-        <translation>Přijímací adresa</translation>
-    </message>
-    <message id="tx-details-receiver-identity">
-        <source>Receiver identity</source>
-        <translation>Identita příjemce</translation>
-    </message>
-    <message id="tx-details-amount-label">
-        <source>Amount</source>
-        <translation>Částka</translation>
-    </message>
-    <message id="tx-details-second-currency-amount-label">
-        <source>Currency amount</source>
-        <translation>Hodnota měny</translation>
-    </message>
-    <message id="tx-details-tx-id-label">
-        <source>Transaction ID</source>
-        <translation>ID transakce</translation>
-    </message>
-    <message id="open-in-explorer">
-        <source>Open in Blockchain Explorer</source>
-        <translation>Otevřít v prohlížeči Blockchainu</translation>
-    </message>
-    <message id="tx-details-error-label">
-        <source>Error</source>
-        <translation>Chyba</translation>
-    </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
         <translation>Aktivum již bylo registrováno</translation>
@@ -2135,14 +1737,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
 Your version is: %2. Please, check for updates.</source>
         <translation>Tato adresa je vygenerovaná novější verzí Beam klienta (%1)
 Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
-    </message>
-    <message id="wallet-txs-status-failing">
-        <source>failing</source>
-        <translation>selhává</translation>
-    </message>
-    <message id="wallet-receive-expires-12">
-        <source>12 hours</source>
-        <translation>12 hodin</translation>
     </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
@@ -2207,10 +1801,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>Show my wallet with Trezor</source>
         <translation>Zobrazit moji peněženku pomocí Trezoru</translation>
     </message>
-    <message id="overtop-beam-supply">
-        <source>Amount overtop total Beam supply.</source>
-        <translation>Překročení celkové nabídky Beamu.</translation>
-    </message>
     <message id="specific_node">
         <source>Specific node</source>
         <translation>Specifický uzel</translation>
@@ -2219,33 +1809,9 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>Random node</source>
         <translation>Náhodný uzel</translation>
     </message>
-    <message id="can-not-generate-new-address-message">
-        <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
-        <translation>Nelze vygenerovat novou adresu. Vaše peněženka nemá hlavní klíč.</translation>
-    </message>
-    <message id="wallet-receive-title">
-        <source>Receive</source>
-        <translation>Přijmout</translation>
-    </message>
-    <message id="wallet-receive-address-for-wallet">
-        <source>(for wallet)</source>
-        <translation>(pro peněženku)</translation>
-    </message>
-    <message id="wallet-receive-addr-message">
-        <source>Min transaction fee to send Max privacy coins is %1.</source>
-        <translation>Minimální transakční poplatek pro odeslání mincí v maximálním soukromí je %1.</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</source>
-        <translation>Pro dokončení transakce byste měli být online během 12 hodin po odeslání.</translation>
-    </message>
     <message id="wallet-receive-copy-and-close">
         <source>Copy and close</source>
         <translation>Kopírovat a zavřít</translation>
-    </message>
-    <message id="wallet-receive-address-for-exchange">
-        <source>(for exchange or mining pool)</source>
-        <translation>(pro směnárnu nebo těžební pool)</translation>
     </message>
     <message id="token-info-title">
         <source>Transaction token</source>
@@ -2255,57 +1821,14 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>Token</source>
         <translation>Token</translation>
     </message>
-    <message id="general-transaction-info">
-        <source>Transaction info</source>
-        <translation>Informace o transakci</translation>
-    </message>
-    <message id="receive-request">
-        <source>Requested amount</source>
-        <translation>Požadovaná částka</translation>
-    </message>
-    <message id="address-one-time">
-        <source>One-time use</source>
-        <translation>Jednorázové použití</translation>
-    </message>
-    <message id="address-permanent">
-        <source>Permanent</source>
-        <translation>Trvalé</translation>
-    </message>
     <message id="tx-regular">
         <source>Regular</source>
-        <translation>Běžné</translation>
+        <translation type="unfinished">Běžné</translation>
     </message>
     <message id="tx-max-privacy">
-        <source>Max privacy</source>
-        <translation>Max soukromí</translation>
-    </message>
-    <message id="address-save">
-        <source>save</source>
-        <translation>uložit</translation>
-    </message>
-    <message id="save-contact-title">
-        <source>Do you want to name the contact?</source>
-        <translation>Chcete pojmenovat kontakt?</translation>
-    </message>
-    <message id="contact-name-prompt">
-        <source>Enter the name to this contact</source>
-        <translation>Zadejte název tohoto kontaktu</translation>
-    </message>
-    <message id="receive-request-optional">
-        <source>(optional)</source>
-        <translation>(nepovinné)</translation>
-    </message>
-    <message id="save-address-no-name">
-        <source>No name</source>
-        <translation>Bez názvu</translation>
-    </message>
-    <message id="wallet-receive-online-address">
-        <source>Online address</source>
-        <translation>Online adresa</translation>
-    </message>
-    <message id="wallet-receive-offline-address">
-        <source>Offline address</source>
-        <translation>Offline adresa</translation>
+        <source>Max Privacy</source>
+        <oldsource>Max privacy</oldsource>
+        <translation type="unfinished">Max soukromí</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
@@ -2374,10 +1897,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>shielded pool</source>
         <translation>chráněný pool</translation>
     </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
-        <translation>Připojte se k integrovanému nebo vlastnímu uzlu a povolte přijímání maximálně soukromých a offline transakcí</translation>
-    </message>
     <message id="tx-address-offline">
         <source>Offline</source>
         <translation>V režimu offline</translation>
@@ -2417,11 +1936,6 @@ offline</translation>
 offline</source>
         <translation>přijato
 offline</translation>
-    </message>
-    <message id="general-shielded">
-        <source>Shielded</source>
-        <extracomment>UTXO type Shielded</extracomment>
-        <translation>Chráněné</translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
@@ -2463,58 +1977,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
 Your version is: %2. Please, check for updates.</source>
         <translation>Tato adresa je vygenerovaná novější verzí Beam klienta (%1)
 Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
-    </message>
-    <message id="save-address-title">
-        <source>Do you want to name the contact?</source>
-        <translation>Chcete pojmenovat kontakt?</translation>
-    </message>
-    <message id="send-title">
-        <source>Send</source>
-        <translation>Odeslat</translation>
-    </message>
-    <message id="send-contact-token-placeholder">
-        <source>Paste recipient token here</source>
-        <translation>Sem vložte token příjemce</translation>
-    </message>
-    <message id="send-contact-address-placeholder">
-        <source>Paste recipient address here</source>
-        <translation>Zde vložte adresu příjemce</translation>
-    </message>
-    <message id="wallet-send-invalid-address-or-token">
-        <source>Invalid wallet address</source>
-        <translation>Neplatná adresa peněženky nebo token výměny</translation>
-    </message>
-    <message id="wallet-send-permanent-note">
-        <source>Permanent address</source>
-        <translation>Trvalá adresa</translation>
-    </message>
-    <message id="wallet-send-one-time-note">
-        <source>One-time use address (expire in 12 hours after successfull transaction).</source>
-        <translation>Adresa pro jednorázové použití (vyprší za 12 hodin po úspěšné transakci).</translation>
-    </message>
-    <message id="wallet-send-max-privacy-note-address-offline">
-        <source>Offline address. Payments left: %1</source>
-        <translation>Offline adresa. Zbývající platby: %1</translation>
-    </message>
-    <message id="wallet-send-max-privacy-note-address">
-        <source>Max privacy address</source>
-        <translation>Adresa max soukromí</translation>
-    </message>
-    <message id="send-founds-fail">
-        <source>Insufficient funds: you would need %1 to complete the transaction</source>
-        <translation>Nedostatek prostředků: k dokončení transakce potřebujete %1 </translation>
-    </message>
-    <message id="max-pivacy-fee-fail">
-        <source>For the best privacy, Max privacy coins were selected. Min transaction fee is %1 %2</source>
-        <translation>Pro nejlepší soukromí byly vybrány mince max soukromí. Minimální poplatek za transakci je %1 %2</translation>
-    </message>
-    <message id="send-amount-label">
-        <source>Amount to send</source>
-        <translation>Částka k odeslání</translation>
-    </message>
-    <message id="send-remaining-label">
-        <source>Remaining</source>
-        <translation>Zbývající</translation>
     </message>
     <message id="address-info-title">
         <source>Address details</source>
@@ -2616,45 +2078,13 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <source>More details</source>
         <translation>Další podrobnosti</translation>
     </message>
-    <message id="general-address-type">
-        <source>Address Type</source>
-        <translation>Typ adresy</translation>
-    </message>
     <message id="qr-code">
         <source>QR Code</source>
         <translation>QR kód</translation>
     </message>
-    <message id="wallet-receive-address-for-wallet-label">
-        <source>Online address (for wallet)</source>
-        <translation>Online adresa (pro peněženku)</translation>
-    </message>
-    <message id="wallet-receive-address-for-exchange-label">
-        <source>Online address (for exchange or mining pool)</source>
-        <translation>Online adresa (pro směnárnu nebo těžební pool)</translation>
-    </message>
-    <message id="wallet-receive-max-privacy-address">
-        <source>Max Privacy Address</source>
-        <translation>Max Soukromá Adresa</translation>
-    </message>
-    <message id="wallet-receive-offline-payments">
-        <source>Supports %1 payments.</source>
-        <translation>Podporuje %1 plateb.</translation>
-    </message>
     <message id="address-info-payments">
         <source>Payments</source>
         <translation>Platby</translation>
-    </message>
-    <message id="available-panel-maturing-mp">
-        <source>Max privacy</source>
-        <translation>Max soukromí</translation>
-    </message>
-    <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy %2% unlinked)</source>
-        <translation>Dochází%1(maximální soukromí %2% odpojeno)</translation>
-    </message>
-    <message id="atomic-swap-more-currency">
-        <source>Connect more currencies</source>
-        <translation>Připojit více měn</translation>
     </message>
     <message id="address-info-copy-close">
         <source>copy and close</source>
@@ -2663,22 +2093,6 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
     <message id="tx-address-public-offline">
         <source>Public offline</source>
         <translation>Veřejná offline</translation>
-    </message>
-    <message id="tx-address-unknown">
-        <source>Unknown</source>
-        <translation>Neznámý</translation>
-    </message>
-    <message id="tx-address-regular-exchange">
-        <source>Regular (for exchange or mining pool)</source>
-        <translation>Obvyklé (pro směnárnu nebo těžební pool)</translation>
-    </message>
-    <message id="tx-address-regular-wallet">
-        <source>Regular (for wallet)</source>
-        <translation>Běžné (pro peněženku)</translation>
-    </message>
-    <message id="wallet-send-public-offline-address">
-        <source>Public offline address</source>
-        <translation>Veřejná offline adresa</translation>
     </message>
     <message id="tx-address-regular">
         <source>Regular</source>
@@ -2726,10 +2140,6 @@ veřejně offline</translation>
         <source>Swap in progress, cannot disconnect.</source>
         <translation>Probíhá výměna, nelze se odpojit.</translation>
     </message>
-    <message id="send-founds-fail-by-one-tx">
-        <source>Max privacy coins are selected therefore the maximum amount is %1.</source>
-        <translation>Jsou vybrány mince max soukromí, proto je maximální počet mincí %1.</translation>
-    </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
 max privacy</source>
@@ -2754,13 +2164,10 @@ offline</source>
         <translation>selhalo
 offline</translation>
     </message>
-    <message id="available-panel-maturing-details">
-        <source>More details</source>
-        <translation>Další podrobnosti</translation>
-    </message>
     <message id="max-privacy-dialog-header">
-        <source>Max privacy</source>
-        <translation>Max soukromí</translation>
+        <source>Locked Max privacy coins</source>
+        <oldsource>Max privacy</oldsource>
+        <translation type="unfinished">Max soukromí</translation>
     </message>
     <message id="max-privacy-dialog-locked">
         <source>Locked</source>
@@ -2771,8 +2178,9 @@ offline</translation>
         <translation>Částka</translation>
     </message>
     <message id="max-privacy-dialog-unlock-time">
-        <source>Latest unlocked time</source>
-        <translation>Zbývají čas do uzamčení</translation>
+        <source>Unlock Time</source>
+        <oldsource>Unlock time</oldsource>
+        <translation type="unfinished">Zbývají čas do uzamčení</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
         <source>Anonymity set for Max privacy transactions</source>
@@ -2836,15 +2244,6 @@ offline</translation>
         <oldsource>no limit</oldsource>
         <translation type="unfinished"></translation>
     </message>
-    <message id="wallet-receive-addr-message-mp">
-        <source>Max Privacy transaction can last at most %1 hours</source>
-        <oldsource>Max Privacy transaction can last at least 2 days.</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-addr-message-mp-no-limit">
-        <source>Max Privacy transaction can last indefinitely</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="general-ethereum">
         <source>Ethereum</source>
         <oldsource>ETHEREUM</oldsource>
@@ -2892,9 +2291,744 @@ much longer for a transaction to complete.</source>
         <source>Infura project ID</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="apps-title">
+        <source>DAPP Store</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-nothing">
+        <source>There are no applications at the moment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-loading-app">
+        <source>Loading &apos;%1&apos;...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-loading">
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-run">
+        <source>launch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-devapp">
+        <source>This is your dev application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-load-error">
+        <source>Failed to load applications list, %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-all-tab">
+        <source>All offers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-my-tab">
+        <source>Opened by me</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-other-tab">
+        <source>Opened by other users</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-type">
+        <source>Type</source>
+        <translation type="unfinished">Typ</translation>
+    </message>
+    <message id="dex-price">
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-size">
+        <source>Size</source>
+        <translation type="unfinished">Velikost</translation>
+    </message>
+    <message id="dex-total">
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-expiration">
+        <source>Expiration</source>
+        <translation type="unfinished">Expirace</translation>
+    </message>
+    <message id="dex-accept-order">
+        <source>Accept Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-no-orders">
+        <source>There are no active orders at the moment.
+Please try again later or create an offer yourself.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dex-title">
+        <source>Order Book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-flat-fee">
+        <source>%1 Transaction fee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-contract-no-message">
+        <source>No description provided by the contract</source>
+        <oldsource>Contract: no description provided</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-contract-completed">
+        <source>Contract transaction completed</source>
+        <oldsource>Transaction completed</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-contract-expired">
+        <source>Contract transaction expired</source>
+        <oldsource>Transaction expired</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-contract-default-comment">
+        <source>Contract transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-beta-title">
+        <source>Atomic Swaps are in BETA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-beta-message">
+        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-cancel">
+        <source>Cancel offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-cancel-text">
+        <source>Are you sure you want to cancel your offer?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-cancel-button">
+        <source>cancel offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-back-button">
+        <source>back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-tx-cancel">
+        <source>Cancel atomic swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-tx-cancel-text">
+        <source>Are you sure you want to cancel?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-title">
+        <source>Atomic Swaps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-accept">
+        <source>Accept offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-create">
+        <source>Create offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-1active-tx-count">
+        <source>1 active transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-active-tx-count">
+        <source>%1 active transactions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-beta-tx-in-progress">
+        <source>Transaction is in progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-connecting">
+        <source>Connecting...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-beta-connection-error">
+        <source>Cannot connect to peer. Please check the address in Settings and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-more-currency">
+        <source>Connect more currencies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-active-offers-tab">
+        <source>Active offers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-my-offers-tab">
+        <source>My offers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-transactions-tab">
+        <source>Transactions</source>
+        <translation type="unfinished">Platby</translation>
+    </message>
+    <message id="atomic-swap-fit-current-balance">
+        <source>Fit my current balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-currency">
+        <source>Currency</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="atomic-offers-loading">
         <source>Please wait, offers are loading.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-no-offers">
+        <source>There are no active offers at the moment.
+Please try again later or create an offer yourself.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-time-created">
+        <source>Created on</source>
+        <translation type="unfinished">Vytvořeno dne</translation>
+    </message>
+    <message id="atomic-swap-amount-send">
+        <source>Send</source>
+        <translation type="unfinished">Odeslat</translation>
+    </message>
+    <message id="atomic-swap-amount-receive">
+        <source>Receive</source>
+        <translation type="unfinished">Přijmout</translation>
+    </message>
+    <message id="atomic-swap-rate">
+        <source>Rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-expiration">
+        <source>Expiration</source>
+        <translation type="unfinished">Expirace</translation>
+    </message>
+    <message id="atomic-swap-all-transactions-tab">
+        <source>All</source>
+        <translation type="unfinished">Všechny</translation>
+    </message>
+    <message id="atomic-swap-in-progress-transactions-tab">
+        <source>In progress</source>
+        <translation type="unfinished">Probíhající</translation>
+    </message>
+    <message id="atomic-swap-tx-table-created">
+        <source>Created on</source>
+        <translation type="unfinished">Vytvořeno dne</translation>
+    </message>
+    <message id="atomic-swap-tx-table-from">
+        <source>From</source>
+        <translation type="unfinished">Od</translation>
+    </message>
+    <message id="atomic-swap-tx-table-to">
+        <source>To</source>
+        <translation type="unfinished">Komu</translation>
+    </message>
+    <message id="atomic-swap-tx-table-sent">
+        <source>Sent</source>
+        <translation type="unfinished">Odesláno</translation>
+    </message>
+    <message id="atomic-swap-tx-table-received">
+        <source>Received</source>
+        <translation type="unfinished">Přijato</translation>
+    </message>
+    <message id="atomic-swap-tx-table-status">
+        <source>Status</source>
+        <translation type="unfinished">Stav</translation>
+    </message>
+    <message id="swap-copy-token">
+        <source>Copy token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-waiting-peer">
+        <source>waiting for counterparty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-failing">
+        <source>failing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-na-message">
+        <source>You do not have any 3rd-party currencies connected.
+Update your settings and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-swap-title">
+        <source>Create a Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-offer-expires-label">
+        <source>Offer expiration time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-expires-30m">
+        <source>30 minutes</source>
+        <translation type="unfinished">30 minut</translation>
+    </message>
+    <message id="wallet-receive-expires-1">
+        <source>1 hour</source>
+        <translation type="unfinished">1 hodina</translation>
+    </message>
+    <message id="wallet-receive-expires-2">
+        <source>2 hours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-expires-6">
+        <source>6 hours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-expires-12">
+        <source>12 hours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="overtop-beam-supply">
+        <source>Amount overtop total Beam supply.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-invalid-rate">
+        <source>Invalid rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-swap-publish">
+        <source>publish offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="appmodel-already-opened">
+        <source>Wallet database is already opened</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-open-failed">
+        <source>Failed to open wallet, please check logs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-no-hwkeeper">
+        <source>Hardware keykeeper is not initialized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-trezor-error">
+        <source>Failed to create trezor wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-hw-not-connected">
+        <source>Hardwate wallet is not connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-coin">
+        <source>Coin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-multiple-assets">
+        <source>Multiple assets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-locked">
+        <source>Locked</source>
+        <translation type="unfinished">Uzamčeno</translation>
+    </message>
+    <message id="utxo-head-maturity">
+        <source>Maturity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-available">
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-maturing">
+        <source>Maturing%1(till block height %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-unavailable">
+        <source>Unavailable%1(mining result rollback)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-outgoing">
+        <source>In progress%1(outgoing)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-change">
+        <source>In progress%1(change)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-incoming">
+        <source>In progress%1(incoming)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-spent">
+        <source>Spent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-status-maturing-mp">
+        <source>Maturing%1(max privacy %2% unlinked)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="utxo-head-type">
+        <source>Type</source>
+        <translation type="unfinished">Typ</translation>
+    </message>
+    <message id="general-coinbase">
+        <source>Coinbase</source>
+        <extracomment>UTXO type Coinbase</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-regular">
+        <source>Regular</source>
+        <extracomment>UTXO type Regular</extracomment>
+        <translation type="unfinished">Běžné</translation>
+    </message>
+    <message id="general-treasury">
+        <source>Treasury</source>
+        <extracomment>UTXO type Treasury</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-shielded">
+        <source>Shielded</source>
+        <extracomment>UTXO type Shielded</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-bad-api-version">
+        <source>Unsupported API version requested: %1</source>
+        <oldsource>Unsupported API version requested: %1
+</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="can-not-generate-new-address-message">
+        <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-title">
+        <source>Receive</source>
+        <translation type="unfinished">Přijmout</translation>
+    </message>
+    <message id="general-tx-type">
+        <source>Transaction type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-max-privacy-unsupported">
+        <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="receive-request">
+        <source>Requested amount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="receive-request-optional">
+        <source>(optional)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-addr-message-mp">
+        <source>Max Privacy transaction can last at most %1 hours.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-addr-message-mp-no-limit">
+        <source>Max Privacy transaction can last indefinitely.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-addr-message">
+        <source>Min transaction fee to send Max privacy coins is %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-text-online-time">
+        <source>Sender will be given a choice between regular and offline payment. For the regular transaction to complete, you should get online during the 12 hours after coins are sent.</source>
+        <oldsource>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-public-token">
+        <source>Public offline address</source>
+        <translation type="unfinished">Veřejná offline adresa</translation>
+    </message>
+    <message id="send-maxp-token">
+        <source>Max privacy address</source>
+        <translation type="unfinished">Adresa max soukromí</translation>
+    </message>
+    <message id="send-unknown-token">
+        <source>Unknown address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-regular-token">
+        <source>Regular address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-title">
+        <source>Send</source>
+        <translation type="unfinished">Odeslat</translation>
+    </message>
+    <message id="general-send-to">
+        <source>Send to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-contact-address-placeholder">
+        <source>Paste recipient address here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-send-invalid-address-or-token">
+        <source>Invalid wallet address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-offline">
+        <source>Offline</source>
+        <translation type="unfinished">V režimu offline</translation>
+    </message>
+    <message id="send-no-funds">
+        <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="amount-input-add-max">
+        <source>max</source>
+        <oldsource>add max</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-amount-label">
+        <source>Amount to send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-remaining-label">
+        <source>Remaining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-remaining-beam-label">
+        <source>BEAM Remaining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-type-label">
+        <source>Transaction type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-balance">
+        <source>Balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-asset-info">
+        <source>Asset Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="balance-available">
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="balance-regular">
+        <source>Regular</source>
+        <translation type="unfinished">Běžné</translation>
+    </message>
+    <message id="balance-shielded">
+        <source>Shielded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="balance-locked">
+        <source>Locked</source>
+        <translation type="unfinished">Uzamčeno</translation>
+    </message>
+    <message id="balance-maturing">
+        <source>Maturing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="balance-change">
+        <source>Change</source>
+        <translation type="unfinished">Změnit</translation>
+    </message>
+    <message id="balance-mp">
+        <source>Max privacy</source>
+        <translation type="unfinished">Max soukromí</translation>
+    </message>
+    <message id="info-asset-id">
+        <source>Asset ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-name">
+        <source>Asset name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-unit">
+        <source>Unit name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-smallest">
+        <source>Smallest unit name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-short">
+        <source>Short description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-long">
+        <source>Long description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-site">
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="info-asset-paper">
+        <source>Whitepaper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-title">
+        <source>General transaction info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-sending-addr-label">
+        <source>Sending address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-sender-identity">
+        <source>Sender identity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-receiving-addr-label">
+        <source>Receiving address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-receiver-identity">
+        <source>Receiver identity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-amount-label">
+        <source>Amount</source>
+        <translation type="unfinished">Částka</translation>
+    </message>
+    <message id="tx-details-rate-notice">
+        <source>For the day of the transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-total value">
+        <source>Total value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-smth-value">
+        <source>%1 Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-exchange-rate-not-available">
+        <source>Exchange rate to %1 was not available at the time of transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-tx-id-label">
+        <source>Transaction ID</source>
+        <translation type="unfinished">ID transakce</translation>
+    </message>
+    <message id="open-in-explorer">
+        <source>Open in Blockchain Explorer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-error-label">
+        <source>Error</source>
+        <translation type="unfinished">Chyba</translation>
+    </message>
+    <message id="utxo-empty">
+        <source>Your UTXO list is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-empty">
+        <source>Your transaction list is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-in-progress-empty">
+        <source>There are no in progress transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-sent-empty">
+        <source>There are no sent transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-received-empty">
+        <source>There are no received transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="receive-addr">
+        <source>Address</source>
+        <translation type="unfinished">Adresa</translation>
+    </message>
+    <message id="edit-addr-title">
+        <source>Edit address</source>
+        <translation type="unfinished">Upravit adresu</translation>
+    </message>
+    <message id="edit-addr-addr">
+        <source>Address</source>
+        <translation type="unfinished">Adresa</translation>
+    </message>
+    <message id="edit-addr-expires-label">
+        <source>Expires on</source>
+        <translation type="unfinished">Vyprší dne</translation>
+    </message>
+    <message id="edit-addr-expire-now">
+        <source>Expire now</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="edit-addr-extend">
+        <source>Extend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="edit-addr-activate">
+        <source>Activate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="edit-addr-save-button">
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="edit-addr-no-expire">
+        <source>There is an active transaction for this address, therefore it cannot be expired.</source>
+        <translation type="unfinished">There is an active transaction for this address, therefore it cannot be expired.</translation>
+    </message>
+    <message id="edit-addr-never-expires">
+        <source>This address never expires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="edit-addr-expired">
+        <source>This address is already expired</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-contract-failed">
+        <source>Contract transaction failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="contacts-empty">
+        <source>Your contact list is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="addressbook-empty">
+        <source>Your address book is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-no-my-offers">
+        <source>There are no offers yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-tx-empty">
+        <source>There are no transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-app-confirmation-title">
+        <source>Confirm Application Transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-contract-transaction">
+        <source>Contract transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-contract-only-fee">
+        <source>You would pay only transaction fee. It can be considerable for some contracts, so please check it below.</source>
+        <oldsource>You would pay only transaction fee. It can be considerable for some contracts, so please check it below</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-fork-warning">
+        <source>DAPPs will be available in your wallet after the Hard Fork</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-cid">
+        <source>Contract ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-value">
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-source">
+        <source>Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="source-wallet">
+        <source>Wallet</source>
+        <translation type="unfinished">Peněženka</translation>
     </message>
 </context>
 </TS>

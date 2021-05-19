@@ -5,37 +5,106 @@ import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
 import "."
+import "../utils.js" as Utils
 
 ComboBox {
     id: control
     
-    spacing: 4
+    spacing: 8
+    property int dropSpacing: 20
     property int fontPixelSize: 12
+    property int dropFontPixelSize: 13
     property double fontLetterSpacing: 0
     property string color: Style.content_main
-    property bool enableScroll: false 
+    property bool colorConst: false
+    property string underlineColor: color
+    property bool enableScroll: false
+    property int textMaxLenDrop: 0
+    property int textMaxLenDisplay: 0
+    property int dropOffset: 0
+
+    property var modelWidth: control.width
+    property var calculatedWidth: Math.max(control.width, modelWidth)
+
+    TextMetrics {
+        id: textMetrics
+        font {
+            family:        "SF Pro Display"
+		    styleName:     "Regular"
+		    weight:        Font.Normal
+            pixelSize:     control.dropFontPixelSize
+            letterSpacing: control.fontLetterSpacing
+        }
+    }
 
     delegate: ItemDelegate {
         id: itemDelegate
-        width: control.width
-        contentItem: SFText {
-            text: control.textRole ? (Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]) : modelData
-            color: Style.content_main
-            elide: Text.ElideMiddle
-            verticalAlignment: Text.AlignVCenter
-			font.pixelSize: fontPixelSize
-			font.letterSpacing: fontLetterSpacing
+        width: calculatedWidth
+        padding: 0
+
+        property var iconW: Array.isArray(control.model)  ? modelData["iconWidth"]  : model["iconWidth"]
+        property var iconH: Array.isArray(control.model)  ? modelData["iconHeight"] : model["iconHeight"]
+        property var iconS: (Array.isArray(control.model) ? modelData["icon"]       : model["icon"]) || ""
+
+        contentItem: Row {
+            spacing: 0
+
+            SvgImage {
+                source:  iconS
+                width:   iconW
+                height:  iconH
+                visible: iconW > 0
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            Item {
+                visible: iconW > 0
+                width:   10
+                height:  parent.height
+            }
+
+            SFText {
+                text: {
+                    var text = modelData
+                    if (control.textRole) {
+                        text = Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]
+                    }
+                    return Utils.limitText(text, control.textMaxLenDrop)
+                }
+                color: highlighted ? Style.active : Style.content_main
+                elide: Text.ElideMiddle
+                font.pixelSize: dropFontPixelSize
+                font.letterSpacing: fontLetterSpacing
+                font.styleName: highlighted ? "DemiBold" : "Normal"
+                font.weight: highlighted ? Font.DemiBold : Font.Normal
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            Item {
+                width:  18
+                height: parent.height
+            }
         }
 
         highlighted: control.highlightedIndex === index
+        background: Item {}
+    }
 
-        background: Rectangle {
-            implicitWidth: 100
-            implicitHeight: 20
-            opacity: enabled ? 1 : 0.3
-            color:itemDelegate.highlighted ? Style.content_secondary : Style.background_details
+    function recalcSize() {
+        if (model) {
+            for(var i = 0; i < model.length; i++) {
+                textMetrics.text = Utils.limitText(control.textRole ? model[i][control.textRole] : model[i], control.textMaxLenDrop)
+                var iconW = model[i]["iconWidth"] || 0
+                modelWidth = Math.max(textMetrics.width +
+                                      iconW +
+                                      10 + // spacing between icon & text
+                                      18,  // right padding
+                                      modelWidth)
+            }
         }
     }
+
+    onModelChanged: recalcSize()
 
     indicator: SvgImage {
         source: "qrc:/assets/icon-down.svg"
@@ -44,59 +113,86 @@ ComboBox {
         visible: control.enabled
     }
 
-    contentItem: SFText {
-        leftPadding: 0
-        rightPadding: control.indicator.width + control.spacing
-        clip: true
-        text: control.editable ? control.editText : control.displayText
-        color: control.enabled ? control.color : Style.content_secondary 
-		font.pixelSize: fontPixelSize
-        verticalAlignment: Text.AlignVCenter
+    property var iconW: (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconWidth"] : 0) || 0
+    property var iconH: (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconHeight"] : 0) || 0
+    property var iconS: (control.model && control.model[currentIndex] ? control.model[currentIndex]["icon"] : "") || ""
+
+    contentItem: Row {
+        spacing: 0
+
+        SvgImage {
+            source: iconS
+            sourceSize: Qt.size(iconW, iconH)
+            anchors.verticalCenter: parent.verticalCenter
+            visible: iconW > 0
+        }
+
+        Item {
+            visible: iconW > 0
+            width:   10
+            height:  parent.height
+        }
+
+        SFText  {
+            clip: true
+            text: control.editable ? control.editText : Utils.limitText(control.displayText, control.textMaxLenDisplay)
+            color: control.enabled || control.colorConst ? control.color : Style.content_secondary 
+            font.pixelSize: fontPixelSize
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Item {
+            width:  control.indicator.width + control.spacing
+            height: parent.height
+        }
     }
 
     background: Item {
         Rectangle {
-            width: control.width
-            height: control.activeFocus || control.hovered ? 1 : 1
+            width:  control.width
+            height: 1
             y: control.height - 1
-            color: Style.content_main
+            color: control.underlineColor
             opacity: (control.activeFocus || control.hovered)? 0.3 : 0.1
         }
     }
 
-    popup: Popup {
-        y: control.height - 1
-        width: control.width
-        padding: 1
+   popup: Popup {
+        id: comboPopup
+        onAboutToShow: recalcSize
+
+        y: control.height + 7
+        x: {
+            if (iconW) return control.parent.mapToItem(parent, control.x, 0).x - comboPopup.leftPadding
+            return control.parent.mapToItem(parent, control.x, 0).x + control.width / 2 - width / 2 + control.dropOffset
+        }
+
+        width: calculatedWidth + leftPadding + rightPadding
+
+        topPadding:    20
+        bottomPadding: 20
+        leftPadding:   20
+        rightPadding:  2
 
         contentItem: ColumnLayout {
+            spacing: 0
             ListView {
                 id: listView
                 Layout.fillWidth: true
                 clip: true
-                implicitHeight: enableScroll ? 250 : contentHeight
+                spacing: control.dropSpacing
+                implicitHeight: contentHeight
                 model: control.popup.visible ? control.delegateModel : null
                 currentIndex: control.highlightedIndex
-                ScrollIndicator.vertical: ScrollIndicator { }
-            }
-            Item {
-                Layout.fillWidth: true
-                Layout.minimumHeight:10
+                ScrollBar.vertical: ScrollBar {
+                    policy: enableScroll && listView.contentHeight > listView.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
+                }
             }
         }
 
-        background: Item {
-            Rectangle {
-                color: Style.background_details
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: control.height
-            }
-            Rectangle {
-                anchors.fill: parent
-                color: Style.background_details
-                radius: 10
-            }
+        background: Rectangle {
+            anchors.fill: parent
+            color: Style.background_popup
         }
     }
 }

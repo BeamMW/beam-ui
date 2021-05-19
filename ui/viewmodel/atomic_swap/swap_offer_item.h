@@ -19,15 +19,13 @@
 #include "model/wallet_model.h"
 #include "viewmodel/ui_helpers.h"
 
-using namespace beam::wallet;
-
 class SwapOfferItem : public QObject
 {
     Q_OBJECT
 
 public:
-    SwapOfferItem(QObject* parent = nullptr);
-    SwapOfferItem(const SwapOffer& offer, const QDateTime& timeExpiration);
+    explicit SwapOfferItem(QObject* parent = nullptr);
+    SwapOfferItem(const beam::wallet::SwapOffer& offer, const QDateTime& timeExpiration);
     bool operator==(const SwapOfferItem& other) const;
 
     QDateTime timeCreated() const;
@@ -41,11 +39,11 @@ public:
     beam::Amount rawAmountSend() const;
     beam::Amount rawAmountReceive() const;
 
-    TxParameters getTxParameters() const;
-    TxID getTxID() const;
+    beam::wallet::TxParameters getTxParameters() const;
+    beam::wallet::TxID getTxID() const;
     QString getSwapCoinName() const;
 protected:
-    void reset(const SwapOffer& offer);
+    void reset(const beam::wallet::SwapOffer& offer);
 
 signals:
 

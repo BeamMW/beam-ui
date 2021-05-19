@@ -47,8 +47,8 @@ private:
     void update();
 
     QString m_addr;
-    uint m_width = 200;
-    uint m_height = 200;
+    uint m_width = 270;
+    uint m_height = 270;
     beam::Amount m_amountGrothes = 0;
     QString m_amountGrothesStr;
     QString m_qrData;

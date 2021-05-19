@@ -4,6 +4,7 @@
 #include <QTextStream>
 #include "3rdparty/libbitcoin/include/bitcoin/bitcoin/formats/base_10.hpp"
 #include "version.h"
+#include "core/common.h"
 
 #include "wallet/transactions/swaps/bridges/ethereum/common.h"
 
@@ -22,7 +23,7 @@ namespace beamui
         return "";
     }
 
-    QString toString(const beam::wallet::PeerID& peerID)
+    QString toString(const beam::PeerID& peerID)
     {
         if (peerID != Zero)
         {
@@ -38,7 +39,7 @@ namespace beamui
         return QString::fromStdString(id);
     }
     
-    QString getCurrencyLabel(Currencies currency)
+    QString getCurrencyUnitName(Currencies currency)
     {
         switch (currency)
         {
@@ -52,9 +53,9 @@ namespace beamui
         }
     }
 
-    QString getCurrencyLabel(beam::wallet::ExchangeRate::Currency currency)
+    QString getCurrencyUnitName(beam::wallet::Currency currency)
     {
-        return getCurrencyLabel(convertExchangeRateCurrencyToUiCurrency(currency));
+        return getCurrencyUnitName(convertExchangeRateCurrencyToUiCurrency(currency));
     }
 
     QString getFeeRateLabel(Currencies currency)
@@ -117,27 +118,39 @@ namespace beamui
         }
     }
 
+    int beamDecimals()
+    {
+         static auto beamDecimals = static_cast<uint8_t>(std::log10(Rules::Coin));
+         return beamDecimals;
+    }
+
+    QString AmountToUIString(const Amount& value, const QString& unitName, uint8_t decimalPlaces)
+    {
+        const auto samount = libbitcoin::encode_base10(value, decimalPlaces ? decimalPlaces : beamDecimals());
+        return QString::fromStdString(samount) + (unitName.isEmpty() ? "" : " " + unitName);
+    }
+
+     QString AmountBigToUIString(const beam::AmountBig::Type& value)
+     {
+        beam::wallet::PrintableAmount print(value, true);
+
+        std::ostringstream ss;
+        ss << print;
+
+        const auto str = ss.str();
+        return QString::fromStdString(str);
+     }
+
     /**
      *  Convert amount value to printable format.
-     *  @value      Value in coin quants (satoshi, groth and s.o.). 
+     *  @value      Value in coin quants (satoshi, groth and s.o.).
      *              Unsigned integer with the fixed decimal point.
      *              Decimal point position depends on @coinType.
      *  @coinType   Specify coint type.
      */
     QString AmountToUIString(const Amount& value, Currencies coinType, bool currencyLabel)
     {
-        std::string amountString = libbitcoin::encode_base10(value, getCurrencyDecimals(coinType));
-        QString amount = QString::fromStdString(amountString);
-        QString coinLabel = getCurrencyLabel(coinType);
-
-        if (coinLabel.isEmpty() || !currencyLabel)
-        {
-            return amount;
-        }
-        else
-        {
-            return amount + " " + coinLabel;
-        }
+        return AmountToUIString(value, currencyLabel ? getCurrencyUnitName(coinType) : "", getCurrencyDecimals(coinType));
     }
 
     QString AmountInGrothToUIString(const beam::Amount& value)
@@ -149,7 +162,7 @@ namespace beamui
     beam::Amount UIStringToAmount(const QString& value, Currencies currency)
     {
         beam::Amount amount = 0;
-        libbitcoin::decode_base10(amount, value.toStdString(), getCurrencyDecimals(currency));
+        libbitcoin::decode_base10(amount, value.toStdString(), getCurrencyDecimals(currency), true);
         return amount;
     }
 
@@ -158,7 +171,7 @@ namespace beamui
         QDateTime datetime;
         datetime.setTime_t(ts);
 
-        return datetime.toString(QLocale::system().dateTimeFormat(QLocale::ShortFormat));
+        return datetime.toString(QLocale().dateTimeFormat(QLocale::ShortFormat));
     }
 
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
@@ -226,36 +239,73 @@ namespace beamui
     }
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
-    Currencies convertExchangeRateCurrencyToUiCurrency(beam::wallet::ExchangeRate::Currency currency)
+    Currencies convertExchangeRateCurrencyToUiCurrency(const beam::wallet::Currency& currency)
     {
-        switch (currency)
+        if (currency == wallet::Currency::BEAM())
         {
-        case wallet::ExchangeRate::Currency::Beam:
             return beamui::Currencies::Beam;
-        case wallet::ExchangeRate::Currency::Bitcoin:
-            return beamui::Currencies::Bitcoin;
-        case wallet::ExchangeRate::Currency::Litecoin:
-            return beamui::Currencies::Litecoin;
-        case wallet::ExchangeRate::Currency::Qtum:
-            return beamui::Currencies::Qtum;
-        case wallet::ExchangeRate::Currency::Usd:
-            return beamui::Currencies::Usd;
-        case wallet::ExchangeRate::Currency::Dogecoin:
-            return beamui::Currencies::Dogecoin;
-        case wallet::ExchangeRate::Currency::Dash:
-            return beamui::Currencies::Dash;
-        case wallet::ExchangeRate::Currency::Ethereum:
-            return beamui::Currencies::Ethereum;
-        case wallet::ExchangeRate::Currency::Dai:
-            return beamui::Currencies::Dai;
-        case wallet::ExchangeRate::Currency::Usdt:
-            return beamui::Currencies::Usdt;
-        case wallet::ExchangeRate::Currency::WBTC:
-            return beamui::Currencies::WrappedBTC;
-        case wallet::ExchangeRate::Currency::Unknown:
-        default:
-            return beamui::Currencies::Unknown;
         }
+
+        if (currency == wallet::Currency::BTC())
+        {
+            return beamui::Currencies::Bitcoin;
+        }
+
+        if (currency == wallet::Currency::LTC())
+        {
+            return beamui::Currencies::Litecoin;
+        }
+
+        if (currency == wallet::Currency::LTC())
+        {
+            return beamui::Currencies::Litecoin;
+        }
+        if (currency == wallet::Currency::QTUM())
+        {
+            return beamui::Currencies::Qtum;
+        }
+
+        if (currency == wallet::Currency::USD())
+        {
+            return beamui::Currencies::Usd;
+        }
+
+        if (currency == wallet::Currency::DOGE())
+        {
+            return beamui::Currencies::Dogecoin;
+        }
+
+        if (currency == wallet::Currency::DASH())
+        {
+            return beamui::Currencies::Dash;
+        }
+
+        if (currency == wallet::Currency::DASH())
+        {
+            return beamui::Currencies::Dash;
+        }
+
+        if (currency == wallet::Currency::ETH())
+        {
+            return beamui::Currencies::Ethereum;
+        }
+
+        if (currency == wallet::Currency::DAI())
+        {
+            return beamui::Currencies::Dai;
+        }
+
+        if (currency == wallet::Currency::USDT())
+        {
+            return beamui::Currencies::Usdt;
+        }
+
+        if (currency == wallet::Currency::WBTC())
+        {
+            return beamui::Currencies::WrappedBTC;
+        }
+
+        return beamui::Currencies::Unknown;
     }
 
     QDateTime CalculateExpiresTime(beam::Timestamp currentHeightTime, beam::Height currentHeight, beam::Height expiresHeight)
@@ -393,6 +443,38 @@ namespace beamui
     quint32 getCurrentUIRevision()
     {
         return VERSION_REVISION;
+    }
+
+    QString GetTokenTypeUIString(const std::string& token, bool choiceOffline)
+    {
+        using namespace beam::wallet;
+        const auto type = GetAddressType(token);
+
+        //% "Regular"
+        auto regular = qtTrId("tx-regular");
+        //% "Offline"
+        auto offline = qtTrId("tx-address-offline");
+        //% "Public offline"
+        auto pubOffline = qtTrId("tx-address-public-offline");
+        //% "Max Privacy"
+        auto maxp = qtTrId("tx-max-privacy");
+
+        if (type == TxAddressType::Offline && choiceOffline)
+        {
+            return offline;
+        }
+
+        if (type == TxAddressType::PublicOffline)
+        {
+            return pubOffline;
+        }
+
+        if (type == TxAddressType::MaxPrivacy)
+        {
+            return maxp;
+        }
+
+        return regular;
     }
 
 }  // namespace beamui

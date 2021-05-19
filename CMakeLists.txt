@@ -31,6 +31,15 @@ if (BEAM_SIGN_PACKAGE AND WIN32)
     #endif()
 endif()
 
+if(BEAM_LINK_TYPE MATCHES "Static")
+    set(BEAM_USE_STATIC TRUE)
+endif()
+
+option(BEAM_USE_STATIC_QT "Build with staticaly linked QT library" FALSE)
+if (BEAM_USE_STATIC AND NOT BEAM_USE_STATIC_QT)
+    set(BEAM_USE_STATIC_RUNTIME FALSE)
+endif()
+
 # should be before project and git 
 set(BEAM_WALLET_CLIENT_LIBRARY TRUE)
 set(BEAM_TESTS_ENABLED FALSE)
@@ -81,13 +90,12 @@ endif()
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/beam)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty)
 
-
-if(BEAM_LINK_TYPE MATCHES "Static")
-    set(BEAM_USE_STATIC TRUE)
-endif()
-
 if(BEAM_USE_STATIC)
     add_definitions(-DBEAM_USE_STATIC)
+endif()
+
+if(BEAM_USE_STATIC_QT)
+    add_definitions(-DBEAM_USE_STATIC_QT)
 endif()
 
 message("BRANCH_NAME: ${BRANCH_NAME}")
@@ -119,6 +127,7 @@ if(MSVC)
 
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4100") # unreferenced formal parameter
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4324") # '__blake2b_state': structure was padded due to alignment specifier
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd5240") # qcolor.h(233): 'nodiscard': attribute is ignored in this syntactic position
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:__cplusplus")
 
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /O2")
@@ -131,7 +140,7 @@ if(MSVC)
     #target_compile_definitions(beam INTERFACE -D_WIN32_WINNT=0x0600)
     #add_definitions(-D_WIN32_WINNT=0x0600)
 
-    if(BEAM_USE_STATIC)
+    if(BEAM_USE_STATIC_RUNTIME)
        # target_compile_options(beam INTERFACE $<IF:$<CONFIG:Debug>,/MTd, /MT>)
        # target_link_options(beam INTERFACE $<IF:$<NOT:$<CONFIG:Debug>>, /OPT:REF /INCREMENTAL:NO, >)
         # use static runtime
@@ -165,6 +174,8 @@ else()
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-value") # proto.h
 endif()
 
+set(SKIP_INSTALL_ALL ON)
+add_subdirectory(3rdparty/zlib)
 add_subdirectory(3rdparty/qrcode)
 add_subdirectory(3rdparty/quazip)
 
@@ -191,16 +202,7 @@ if (WIN32)
     set(CPACK_NSIS_PACKAGE_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
 
 elseif (APPLE)
-    set(CPACK_GENERATOR "Bundle")
-    set(CPACK_BUNDLE_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
-    set(CPACK_BUNDLE_PLIST ui/Info.plist)
-    set(CPACK_BUNDLE_ICON ui/beam.icns)
-    set(CPACK_BUNDLE_STARTUP_COMMAND "ui/Beam Wallet${BEAM_DISPLAY_SUFFIX}")
-
-    if(BEAM_SIGN_MACOS_BINARY)
-        set(CPACK_COMMAND_CODESIGN "codesign -o runtime --timestamp")
-        set(CPACK_BUNDLE_APPLE_CERT_APP "Developer ID Application: Beam Development Limited (KNU2R94BJK)")
-    endif()
+    set(CPACK_GENERATOR "DragNDrop")
 elseif (LINUX)
     set(CPACK_GENERATOR "DEB")
     set(CPACK_DEBIAN_PACKAGE_NAME "beamwallet${BEAM_SUFFIX_LOWER_CASE}")

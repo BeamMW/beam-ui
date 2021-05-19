@@ -33,6 +33,7 @@
 #include "viewmodel/address_book_view.h"
 #include "viewmodel/wallet/wallet_view.h"
 #include "viewmodel/wallet/token_item.h"
+#include "viewmodel/wallet/assets_view.h"
 #include "viewmodel/wallet/tx_table.h"
 #include "viewmodel/help_view.h"
 #include "viewmodel/settings_view.h"
@@ -47,7 +48,6 @@
 #include "viewmodel/currencies.h"
 #include "model/app_model.h"
 #include "viewmodel/qml_globals.h"
-#include "viewmodel/helpers/list_model.h"
 #include "viewmodel/helpers/sortfilterproxymodel.h"
 #include "viewmodel/helpers/token_bootstrap_manager.h"
 #include "viewmodel/notifications/notifications_view.h"
@@ -57,31 +57,23 @@
 #include "utility/log_rotation.h"
 #include "core/ecc_native.h"
 #include "utility/cli/options.h"
-#include <QtCore/QtPlugin>
 #include "version.h"
-#include "utility/string_helpers.h"
 #include "utility/helpers.h"
 #include "model/translator.h"
+#include "viewmodel/applications/public.h"
 #include "model/qr.h"
+#include "viewmodel/dex/dex_view.h"
 
-#if defined(BEAM_USE_STATIC)
+#if defined(BEAM_USE_STATIC_QT)
 
 #if defined Q_OS_WIN
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
-Q_IMPORT_PLUGIN(QtQmlPlugin)
-#if defined(QT_PRINTSUPPORT_LIB)
-Q_IMPORT_PLUGIN(QWindowsPrinterSupportPlugin)
-#endif
-#elif defined Q_OS_MAC
+#elif defined Q_OS_MACOS
 Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)
-Q_IMPORT_PLUGIN(QCocoaPrinterSupportPlugin)
 #elif defined Q_OS_LINUX
 Q_IMPORT_PLUGIN(QtQmlPlugin)
 Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
 Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)
-#if defined(QT_PRINTSUPPORT_LIB)
-Q_IMPORT_PLUGIN(QCupsPrinterSupportPlugin)
-#endif
 #endif
 
 Q_IMPORT_PLUGIN(QtQuick2Plugin)
@@ -97,6 +89,12 @@ Q_IMPORT_PLUGIN(QtQuickTemplates2Plugin)
 
 #endif
 
+#ifdef Q_OS_MACOS
+#include <sys/types.h>
+#include <sys/sysctl.h>
+#endif // Q_OS_MACOS
+
+
 using namespace beam;
 using namespace std;
 using namespace ECC;
@@ -109,44 +107,50 @@ static const char* AppName = "Beam Wallet Masternet";
 
 int main (int argc, char* argv[])
 {
-#if defined Q_OS_WIN
+    wallet::g_AssetsEnabled = true;
+
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
+    QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+
     block_sigpipe();
-    //QLoggingCategory::setFilterRules(QStringLiteral("qt.qml.binding.removal.info=true"));
     QApplication app(argc, argv);
-
-	app.setWindowIcon(QIcon(Theme::iconPath()));
-
     QApplication::setApplicationName(AppName);
-
+    QApplication::setWindowIcon(QIcon(Theme::iconPath()));
     QDir appDataDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
 
     try
     {
-
-        // TODO: ugly temporary fix for unused variable, GCC only
-#if defined(__GNUC__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-variable"
-#endif
-
         auto [options, visibleOptions] = createOptionsDescription(GENERAL_OPTIONS | UI_OPTIONS | WALLET_OPTIONS);
-
-#if defined(__GNUC__)
-#pragma GCC diagnostic pop
-#endif
-
+        visibleOptions;// unused
         po::variables_map vm;
 
         try
         {
-#ifdef Q_OS_DARWIN // on Big Sur we have broken current dir, let's restore it
+#ifdef Q_OS_MACOS // on Big Sur we have broken current dir, let's restore it
             QDir t = app.applicationDirPath();
             if (t.dirName() == "MacOS" && t.cdUp() && t.dirName() == "Contents" && t.cdUp())
             {
                 t.cdUp(); // Go up to the bundle parent directory
                 QDir::setCurrent(t.absolutePath());
+            }
+
+            // workaround for https://github.com/BeamMW/beam-ui/issues/623
+            auto isAppleTranslated = []() 
+            {
+                int    ret = 0;
+                size_t size = sizeof(ret);
+                if (sysctlbyname("sysctl.proc_translated", &ret, &size, NULL, 0) == -1)
+                {
+                    if (errno == ENOENT)
+                        return 0;
+                    return -1;
+                }
+                return ret;
+            };
+            if (isAppleTranslated() == 1)
+            {
+                LOG_INFO() << "You are on apple M1 chipset running an Intel application, forcing NativeTextRendering";
+                QQuickWindow::setTextRenderType(QQuickWindow::TextRenderType::NativeTextRendering);
             }
 #endif
             vm = getOptions(argc, argv, WalletSettings::WalletCfg, options, true);
@@ -227,6 +231,9 @@ int main (int argc, char* argv[])
                         return new Theme;
                     });
 
+            qmlRegisterUncreatableType<OldWalletCurrency>("Beam.Wallet", 1, 0, "OldWalletCurrency", "You cannot create an instance of the Enums.");
+            qRegisterMetaType<OldWalletCurrency::OldCurrency>("OldWalletCurrency::OldCurrency");
+
             qmlRegisterSingletonType<QMLGlobals>(
                     "Beam.Wallet", 1, 0, "BeamGlobals",
                     [](QQmlEngine* engine, QJSEngine* scriptEngine) -> QObject* {
@@ -235,13 +242,14 @@ int main (int argc, char* argv[])
                         return new QMLGlobals(*engine);
                     });
 
-            qRegisterMetaType<Currency>("Currency");
-            qmlRegisterUncreatableType<WalletCurrency>("Beam.Wallet", 1, 0, "Currency", "Not creatable as it is an enum type.");
+            qRegisterMetaType<beam::Asset::ID>("beam::Asset::ID");
+            qRegisterMetaType<beam::wallet::WalletAsset>("beam::wallet::WalletAsset");
             qmlRegisterType<StartViewModel>("Beam.Wallet", 1, 0, "StartViewModel");
             qmlRegisterType<LoadingViewModel>("Beam.Wallet", 1, 0, "LoadingViewModel");
             qmlRegisterType<MainViewModel>("Beam.Wallet", 1, 0, "MainViewModel");
             qmlRegisterType<WalletViewModel>("Beam.Wallet", 1, 0, "WalletViewModel");
             qmlRegisterType<TxTableViewModel>("Beam.Wallet", 1, 0, "TxTableViewModel");
+            qmlRegisterType<AssetsViewModel>("Beam.Wallet", 1, 0, "AssetsViewModel");
             qmlRegisterUncreatableType<UtxoViewStatus>("Beam.Wallet", 1, 0, "UtxoStatus", "Not creatable as it is an enum type.");
             qmlRegisterUncreatableType<UtxoViewType>("Beam.Wallet", 1, 0, "UtxoType", "Not creatable as it is an enum type.");
             qmlRegisterType<UtxoViewModel>("Beam.Wallet", 1, 0, "UtxoViewModel");
@@ -257,7 +265,6 @@ int main (int argc, char* argv[])
             qmlRegisterType<SendViewModel>("Beam.Wallet", 1, 0, "SendViewModel");
             qmlRegisterType<SendSwapViewModel>("Beam.Wallet", 1, 0, "SendSwapViewModel");
             qmlRegisterType<ELSeedValidator>("Beam.Wallet", 1, 0, "ELSeedValidator");
-
             qmlRegisterType<AddressItem>("Beam.Wallet", 1, 0, "AddressItem");
             qmlRegisterType<ContactItem>("Beam.Wallet", 1, 0, "ContactItem");
             qmlRegisterType<UtxoItem>("Beam.Wallet", 1, 0, "UtxoItem");
@@ -268,26 +275,26 @@ int main (int argc, char* argv[])
             qmlRegisterType<SwapTokenInfoItem>("Beam.Wallet", 1, 0, "SwapTokenInfoItem");
             qmlRegisterType<SwapTxObjectList>("Beam.Wallet", 1, 0, "SwapTxObjectList");
             qmlRegisterType<TxObjectList>("Beam.Wallet", 1, 0, "TxObjectList");
+            qmlRegisterType<AssetsList>("Beam.Wallet", 1, 0, "AssetsList");
             qmlRegisterType<TokenInfoItem>("Beam.Wallet", 1, 0, "TokenInfoItem");
             qmlRegisterType<SwapCoinClientWrapper>("Beam.Wallet", 1, 0, "SwapCoinClientWrapper");
-            
             qmlRegisterType<TokenBootstrapManager>("Beam.Wallet", 1, 0, "TokenBootstrapManager");
             qmlRegisterType<PushNotificationManager>("Beam.Wallet", 1, 0, "PushNotificationManager");
             qmlRegisterType<ExchangeRatesManager>("Beam.Wallet", 1, 0, "ExchangeRatesManager");
-            
             qmlRegisterType<SortFilterProxyModel>("Beam.Wallet", 1, 0, "SortFilterProxyModel");
             qmlRegisterType<QR>("Beam.Wallet", 1, 0, "QR");
+            qmlRegisterType<beamui::dex::DexView>("Beam.Wallet", 1, 0, "DexViewModel");
+            beamui::applications::RegisterQMLTypes();
 
             engine.load(QUrl("qrc:/root.qml"));
-
             if (engine.rootObjects().count() < 1)
             {
                 LOG_ERROR() << "Problem with QT";
                 return -1;
             }
 
-            QObject* topLevel = engine.rootObjects().value(0);
-            QQuickWindow* window = qobject_cast<QQuickWindow*>(topLevel);
+            auto topLevel = engine.rootObjects().value(0);
+            auto window = qobject_cast<QQuickWindow*>(topLevel);
 
             if (!window)
             {
@@ -295,11 +302,10 @@ int main (int argc, char* argv[])
                 return -1;
             }
 
-            //window->setMinimumSize(QSize(768, 540));
             window->setFlag(Qt::WindowFullscreenButtonHint);
             window->show();
 
-            return app.exec();
+            return QApplication::exec();
         }
         catch (const po::error& e)
         {

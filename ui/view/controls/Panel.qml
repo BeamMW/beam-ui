@@ -8,9 +8,9 @@ import "."
 Pane {
     id: control
 
-    property alias title:            headerTitle.text
-    property alias headerText:       headerTextLabel.text
-    property alias content:          placeholder.contentItem
+    property alias title:         headerTitle.text
+    property alias titleTip:      headerTextLabel.text
+    property alias content:       placeholder.contentItem
     property color backgroundColor:  Style.background_second
     spacing: 0
     padding: 20
@@ -19,14 +19,13 @@ Pane {
         ColumnLayout {
             spacing: 0
             width: parent.width
-            //clip:    true
             RowLayout {
                 Layout.alignment: Qt.AlignTop
                 SFText {
-                    id:                 headerTitle
-                    Layout.fillWidth:   headerTextLabel.text.length == 0
+                    id: headerTitle
+                    Layout.fillWidth: headerTextLabel.text.length == 0
                     color:              Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, control.enabled ? 0.5 : 0.15)
-                
+
                     font {
                         styleName:      "Bold"
                         weight:         Font.Bold
@@ -34,14 +33,14 @@ Pane {
                         letterSpacing:  3.11
                         capitalization: Font.AllUppercase
                     }
-            
+
                     visible:              text.length > 0
                 }
                 SFText {
                     id:                 headerTextLabel
                     Layout.fillWidth:   true
                     color:              Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
-            
+
                     font {
                         styleName:      "Bold"
                         weight:         Font.Bold
@@ -51,10 +50,10 @@ Pane {
                     visible:              text.length > 0 && control.enabled
                 }
             }
+
             Control {
                 id:                placeholder
                 Layout.fillWidth:  true
-                Layout.fillHeight: true
                 Layout.topMargin:  20
                 Layout.alignment:  Qt.AlignTop
                 visible:           control.enabled

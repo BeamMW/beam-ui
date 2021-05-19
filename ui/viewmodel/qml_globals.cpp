@@ -25,11 +25,13 @@
 
 #include <boost/algorithm/string.hpp>
 #include <boost/multiprecision/cpp_dec_float.hpp>
+#include <boost/multiprecision/cpp_int.hpp>
 #include "3rdparty/libbitcoin/include/bitcoin/bitcoin/formats/base_10.hpp"
 
 #include "fee_helpers.h"
 
 using boost::multiprecision::cpp_dec_float_50;
+using boost::multiprecision::cpp_int;
 
 namespace
 {
@@ -42,72 +44,41 @@ namespace
         return c == C;
     }
 
-    QString roundWithPrecision(const QString& number, uint8_t precision)
-    {
-        //TODO rounding precision
-        const char delimeter = '.';
-        auto parts = string_helpers::split(number.toStdString(), delimeter);
-
-        std::string result;
-        std::ostringstream oss;
-        if (parts.size() == 2)
-        {    
-            cpp_dec_float_50 afterPoint("0." + parts[1]);
-
-            std::ostringstream afterPointOss;
-            afterPointOss.precision(precision);
-            afterPointOss << std::fixed << afterPoint;
-
-            auto afterPointParts = string_helpers::split(afterPointOss.str(), delimeter);
-            oss << parts[0] << delimeter << (afterPointParts.size() > 1 ? afterPointParts[1] : "0");
-            result = oss.str();
-            boost::algorithm::trim_right_if(result, char_is<'0'>);
-            boost::algorithm::trim_right_if(result, char_is<'.'>);
-        }
-        else
-        {
-            oss << parts[0];
-            result = oss.str();
-        }
-
-        return QString::fromStdString(result);
-    }
-
-    beamui::Currencies convertUiCurrencyToCurrencies(WalletCurrency::Currency currency)
+    beamui::Currencies convertUiCurrencyToCurrencies(OldWalletCurrency::OldCurrency currency)
     {
         switch (currency)
         {
-            case Currency::CurrBeam:
+            case OldWalletCurrency::OldCurrency::CurrBeam:
                 return beamui::Currencies::Beam;
 
-            case Currency::CurrBitcoin:
+            case OldWalletCurrency::OldCurrency::CurrBitcoin:
                 return beamui::Currencies::Bitcoin;
 
-            case Currency::CurrLitecoin:
+            case OldWalletCurrency::OldCurrency::CurrLitecoin:
                 return beamui::Currencies::Litecoin;
 
-            case Currency::CurrQtum:
+            case OldWalletCurrency::OldCurrency::CurrQtum:
                 return beamui::Currencies::Qtum;
 #if defined(BITCOIN_CASH_SUPPORT)
-            case Currency::CurrBitcoinCash:
+            case OldWalletCurrency::OldCurrency::CurrBitcoinCash:
                 return beamui::Currencies::BitcoinCash;
 #endif // BITCOIN_CASH_SUPPORT
-            case Currency::CurrDash:
+            case OldWalletCurrency::OldCurrency::CurrDash:
                 return beamui::Currencies::Dash;
 
-            case Currency::CurrDogecoin:
+            case OldWalletCurrency::OldCurrency::CurrDogecoin:
                 return beamui::Currencies::Dogecoin;
 
-            case Currency::CurrEthereum:
+            case OldWalletCurrency::OldCurrency::CurrEthereum:
                 return beamui::Currencies::Ethereum;
 
-            case Currency::CurrDai:
+            case OldWalletCurrency::OldCurrency::CurrDai:
                 return beamui::Currencies::Dai;
 
-            case Currency::CurrUsdt:
+            case OldWalletCurrency::OldCurrency::CurrUsdt:
                 return beamui::Currencies::Usdt;
 
-            case Currency::CurrWrappedBTC:
+            case OldWalletCurrency::OldCurrency::CurrWrappedBTC:
                 return beamui::Currencies::WrappedBTC;
 
             default:
@@ -137,22 +108,9 @@ QString QMLGlobals::version()
     return QString::fromStdString(PROJECT_VERSION);
 }
 
-bool QMLGlobals::isTAValid(const QString& text)
-{
-    return QMLGlobals::isTransactionToken(text) || QMLGlobals::isAddress(text);
-}
-
-bool QMLGlobals::isAddress(const QString& text)
+bool QMLGlobals::isToken(const QString& text)
 {
     return beam::wallet::CheckReceiverAddress(text.toStdString());
-}
-
-bool QMLGlobals::isTransactionToken(const QString& text)
-{
-    if (text.isEmpty()) return false;
-    
-    auto params = beam::wallet::ParseParameters(text.toStdString());
-    return params && params->GetParameter<beam::wallet::TxType>(beam::wallet::TxParameterID::TransactionType);
 }
 
 bool QMLGlobals::isSwapToken(const QString& text)
@@ -176,21 +134,27 @@ bool QMLGlobals::needPasswordToSpend()
     return AppModel::getInstance().getSettings().isPasswordReqiredToSpendMoney();
 }
 
+bool QMLGlobals::isFork3()
+{
+    const auto height = AppModel::getInstance().getWalletModel()->getCurrentHeight();
+    return beam::wallet::isFork3(height);
+}
+
 bool QMLGlobals::isPasswordValid(const QString& value)
 {
     beam::SecString secretPass = value.toStdString();
     return AppModel::getInstance().checkWalletPassword(secretPass);
 }
 
-QString QMLGlobals::calcWithdrawTxFee(Currency currency, unsigned int feeRate)
+QString QMLGlobals::calcWithdrawTxFee(OldWalletCurrency::OldCurrency currency, unsigned int feeRate)
 {
     return ::calcWithdrawTxFee(currency, feeRate);
 }
 
-QString QMLGlobals::calcFeeInSecondCurrency(int fee, const QString& exchangeRate, const QString& secondCurrencyLabel)
+QString QMLGlobals::calcFeeInSecondCurrency(unsigned int fee, const QString& exchangeRate, const QString& secondCurrencyUnitName)
 {
     QString feeInOriginalCurrency = beamui::AmountToUIString(fee);
-    return calcAmountInSecondCurrency(feeInOriginalCurrency, exchangeRate, secondCurrencyLabel);
+    return calcAmountInSecondCurrency(feeInOriginalCurrency, exchangeRate, secondCurrencyUnitName);
 }
 
 QString QMLGlobals::calcAmountInSecondCurrency(const QString& amount, const QString& exchangeRate, const QString& secondCurrLabel)
@@ -212,16 +176,69 @@ QString QMLGlobals::calcAmountInSecondCurrency(const QString& amount, const QStr
     return "";
 }
 
-bool QMLGlobals::canSwap()
+QString QMLGlobals::roundUp(QString amount)
 {
-    return haveSwapClient(Currency::CurrBitcoin) || haveSwapClient(Currency::CurrLitecoin) || haveSwapClient(Currency::CurrQtum)
-#if defined(BITCOIN_CASH_SUPPORT)
-        || haveSwapClient(Currency::CurrBitcoinCash) 
-#endif // BITCOIN_CASH_SUPPORT
-        || haveSwapClient(Currency::CurrDash) || haveSwapClient(Currency::CurrDogecoin) || haveSwapClient(Currency::CurrEthereum);
+    if (amount.isEmpty() || amount == "0") {
+        return amount;
+    }
+
+    const auto point = amount.indexOf('.');
+    if (point == -1)
+    {
+        if (amount.length() < 4)
+        {
+            // cannot be divide by 1000
+            return amount;
+        }
+
+        static const std::array<char, 3> postfixes = {'K', 'M', 'B'};
+        char postfix = postfixes[0];
+
+        for (size_t idx = 0; idx < postfixes.size(); ++idx)
+        {
+            if (amount[amount.length() - 1] == postfixes[idx])
+            {
+                if (idx == postfixes.size() - 1)
+                {
+                    // already rounded to max possible postfix
+                    return amount;
+                }
+                amount = amount.left(amount.length() - 1);
+                postfix = postfixes[idx + 1];
+                break;
+            }
+        }
+
+        const cpp_int original(amount.toStdString().c_str());
+        const cpp_int rounded = original / 1000 + (original % 1000 > 0 ? 1 : 0);
+        return QString(rounded.str().c_str()) + postfix;
+    }
+    else
+    {
+        const auto targetDecimals = amount.length() - point - 2;
+        const cpp_dec_float_50 scale = pow(cpp_dec_float_50(10), targetDecimals);
+
+        const cpp_dec_float_50 original(amount.toStdString().c_str());
+        const cpp_dec_float_50 rounded = ceil(original * scale) / scale;
+
+        auto roundedStr = rounded.str(targetDecimals, std::ios_base::fixed);
+        boost::algorithm::trim_right_if(roundedStr, char_is<'0'>);
+        boost::algorithm::trim_right_if(roundedStr, char_is<'.'>);
+
+        return QString(roundedStr.c_str());
+    }
 }
 
-bool QMLGlobals::haveSwapClient(Currency currency)
+bool QMLGlobals::canSwap()
+{
+    return haveSwapClient(OldWalletCurrency::OldCurrency::CurrBitcoin) || haveSwapClient(OldWalletCurrency::OldCurrency::CurrLitecoin) || haveSwapClient(OldWalletCurrency::OldCurrency::CurrQtum)
+#if defined(BITCOIN_CASH_SUPPORT)
+        || haveSwapClient(OldWalletCurrency::OldCurrency::CurrBitcoinCash)
+#endif // BITCOIN_CASH_SUPPORT
+        || haveSwapClient(OldWalletCurrency::OldCurrency::CurrDash) || haveSwapClient(OldWalletCurrency::OldCurrency::CurrDogecoin) || haveSwapClient(OldWalletCurrency::OldCurrency::CurrEthereum);
+}
+
+bool QMLGlobals::haveSwapClient(OldWalletCurrency::OldCurrency currency)
 {
     auto swapCoin = convertCurrencyToSwapCoin(currency);
     if (isEthereumBased(currency))
@@ -241,9 +258,9 @@ QString QMLGlobals::rawTxParametrsToTokenStr(const QVariant& variantTxParams)
     return "";
 }
 
-bool QMLGlobals::canReceive(Currency currency)
+bool QMLGlobals::canReceive(OldWalletCurrency::OldCurrency currency)
 {
-    if (Currency::CurrBeam == currency)
+    if (OldWalletCurrency::OldCurrency::CurrBeam == currency)
     {
         return true;
     }
@@ -258,57 +275,67 @@ bool QMLGlobals::canReceive(Currency currency)
     return client->GetSettings().IsActivated() && client->getStatus() == beam::bitcoin::Client::Status::Connected;
 }
 
-QString QMLGlobals::getCurrencyLabel(Currency currency)
+QString QMLGlobals::getBeamUnit() const
 {
-    beamui::Currencies currencyCommon = convertUiCurrencyToCurrencies(currency);
-    return beamui::getCurrencyLabel(currencyCommon);
+    return beamui::getCurrencyUnitName(beamui::Currencies::Beam);
 }
 
-QString QMLGlobals::getCurrencyName(Currency currency)
+QString QMLGlobals::getBeamFeeUnit() const
+{
+    return beamui::getFeeRateLabel(beamui::Currencies::Beam);
+}
+
+QString QMLGlobals::getCurrencyUnitName(OldWalletCurrency::OldCurrency currency)
+{
+    beamui::Currencies currencyCommon = convertUiCurrencyToCurrencies(currency);
+    return beamui::getCurrencyUnitName(currencyCommon);
+}
+
+QString QMLGlobals::getCurrencyName(OldWalletCurrency::OldCurrency currency)
 {
     switch(currency)
     {
-    case Currency::CurrBeam:
+    case OldWalletCurrency::OldCurrency::CurrBeam:
     {
         //% "BEAM"
         return qtTrId("general-beam");
     }
-    case Currency::CurrBitcoin:
+    case OldWalletCurrency::OldCurrency::CurrBitcoin:
     {
         //% "Bitcoin"
         return qtTrId("general-bitcoin");
     }
-    case Currency::CurrLitecoin:
+    case OldWalletCurrency::OldCurrency::CurrLitecoin:
     {
         //% "Litecoin"
         return qtTrId("general-litecoin");
     }
-    case Currency::CurrQtum:
+    case OldWalletCurrency::OldCurrency::CurrQtum:
     {
         //% "QTUM"
         return qtTrId("general-qtum");
     }
-    case Currency::CurrDogecoin:
+    case OldWalletCurrency::OldCurrency::CurrDogecoin:
     {
         //% "Dogecoin"
         return qtTrId("general-dogecoin");
     }
 #if defined(BITCOIN_CASH_SUPPORT)
-    case Currency::CurrBitcoinCash:
+    case OldCurrency::CurrBitcoinCash:
     {
         //% "Bitcoin Cash"
         return qtTrId("general-bitcoin-cash");
     }
 #endif // BITCOIN_CASH_SUPPORT
-    case Currency::CurrDash:
+    case OldWalletCurrency::OldCurrency::CurrDash:
     {
         //% "DASH"
         return qtTrId("general-dash");
     }
-    case Currency::CurrEthereum:
-    case Currency::CurrDai:
-    case Currency::CurrUsdt:
-    case Currency::CurrWrappedBTC:
+    case OldWalletCurrency::OldCurrency::CurrEthereum:
+    case OldWalletCurrency::OldCurrency::CurrDai:
+    case OldWalletCurrency::OldCurrency::CurrUsdt:
+    case OldWalletCurrency::OldCurrency::CurrWrappedBTC:
     {
         return qtTrId("general-ethereum").toUpper();
     }
@@ -320,7 +347,7 @@ QString QMLGlobals::getCurrencyName(Currency currency)
     }
 }
 
-QString QMLGlobals::getFeeRateLabel(Currency currency)
+QString QMLGlobals::getFeeRateLabel(OldWalletCurrency::OldCurrency currency)
 {
     beamui::Currencies currencyCommon = convertUiCurrencyToCurrencies(currency);
     return beamui::getFeeRateLabel(currencyCommon);
@@ -331,25 +358,25 @@ QString QMLGlobals::getCurrencySubunitFromLabel(const QString& currLabel)
     return beamui::getCurrencySubunitFromLabel(currLabel);
 }
 
-uint QMLGlobals::getCurrencyDecimals(Currency currency)
+uint QMLGlobals::getCurrencyDecimals(OldWalletCurrency::OldCurrency currency)
 {
     beamui::Currencies currencyCommon = convertUiCurrencyToCurrencies(currency);
     return beamui::getCurrencyDecimals(currencyCommon);
 }
 
-QString QMLGlobals::getMinimalFee(Currency currency, bool isShielded)
+QString QMLGlobals::getMinimalFee(OldWalletCurrency::OldCurrency currency, bool isShielded)
 {
     return QString::fromStdString(std::to_string(minimalFee(currency, isShielded)));
 }
 
-QString QMLGlobals::getMaximumFee(Currency currency)
+QString QMLGlobals::getMaximumFee(OldWalletCurrency::OldCurrency currency)
 {
     return QString::fromStdString(std::to_string(maximumFee(currency)));
 }
 
-QString QMLGlobals::getRecommendedFee(Currency currency)
+QString QMLGlobals::getRecommendedFee(OldWalletCurrency::OldCurrency currency)
 {
-    if (Currency::CurrBeam == currency)
+    if (OldWalletCurrency::OldCurrency::CurrBeam == currency)
     {
         return QString::fromStdString(std::to_string(0));
     }
@@ -363,9 +390,9 @@ QString QMLGlobals::getRecommendedFee(Currency currency)
     return QString::fromStdString(std::to_string(AppModel::getInstance().getSwapCoinClient(swapCoin)->getEstimatedFeeRate()));
 }
 
-QString QMLGlobals::getDefaultFee(Currency currency)
+QString QMLGlobals::getDefaultFee(OldWalletCurrency::OldCurrency currency)
 {
-    if (Currency::CurrBeam == currency)
+    if (OldWalletCurrency::OldCurrency::CurrBeam == currency)
     {
         return QString::fromStdString(std::to_string(minFeeBeam()));
     }
@@ -391,7 +418,7 @@ QString QMLGlobals::divideWithPrecision(const QString& dividend, const QString& 
     oss << std::fixed << quotient;
 
     QString result = QString::fromStdString(oss.str());
-    return roundWithPrecision(result, static_cast<uint8_t>(precision));
+    return roundWithPrecision(result, precision);
 }
 
 QString QMLGlobals::multiplyWithPrecision(const QString& first, const QString& second, uint precision)
@@ -406,5 +433,41 @@ QString QMLGlobals::multiplyWithPrecision(const QString& first, const QString& s
     oss << std::fixed << product;
 
     QString result = QString::fromStdString(oss.str());
-    return roundWithPrecision(result, static_cast<uint8_t>(precision));
+    return roundWithPrecision(result, precision);
+}
+
+QString QMLGlobals::roundWithPrecision(const QString& number, uint precision)
+{
+    //TODO rounding precision
+    const char delimeter = '.';
+    auto parts = string_helpers::split(number.toStdString(), delimeter);
+
+    std::string result;
+    std::ostringstream oss;
+    if (parts.size() == 2)
+    {    
+        cpp_dec_float_50 afterPoint("0." + parts[1]);
+
+        std::ostringstream afterPointOss;
+        afterPointOss.precision(static_cast<uint8_t>(precision));
+        afterPointOss << std::fixed << afterPoint;
+
+        auto afterPointParts = string_helpers::split(afterPointOss.str(), delimeter);
+        oss << parts[0] << delimeter << (afterPointParts.size() > 1 ? afterPointParts[1] : "0");
+        result = oss.str();
+        boost::algorithm::trim_right_if(result, char_is<'0'>);
+        boost::algorithm::trim_right_if(result, char_is<'.'>);
+    }
+    else
+    {
+        oss << parts[0];
+        result = oss.str();
+    }
+
+    return QString::fromStdString(result);
+}
+
+void QMLGlobals::fatal(const QString& message)
+{
+    throw std::runtime_error(message.toStdString());
 }

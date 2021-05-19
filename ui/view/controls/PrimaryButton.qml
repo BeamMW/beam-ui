@@ -6,7 +6,6 @@ import "."
 CustomButton {
     palette.button: Style.active
     palette.buttonText: Style.content_opposite
-    disalbedTextAlpha: 0.95
 
     SFText {
         id: text
