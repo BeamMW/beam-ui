@@ -10,6 +10,7 @@
 // limitations under the License.
 #include "dex_orders_list.h"
 #include "viewmodel/ui_helpers.h"
+#include "viewmodel/qml_globals.h"
 
 DexOrdersList::DexOrdersList()
 {
@@ -36,6 +37,10 @@ QHash<int, QByteArray> DexOrdersList::roleNames() const
 
 QVariant DexOrdersList::data(const QModelIndex &index, int role) const
 {
+    using namespace beam;
+    using namespace beamui;
+    using namespace beam::wallet;
+
     if (!index.isValid() || index.row() < 0 || index.row() >= m_list.size())
     {
         assert(false);
@@ -49,16 +54,23 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
     {
     case Roles::RId:
         return QString::fromStdString(order.getID().to_string());
+
     case Roles::RType:
-        return order.getSellCoin() == 0 ? "Sell BEAM" : "Buy BEAM";
+        return order.getSide() == DexMarketSide::Sell ? "Sell BEAM-X" : "Buy BEAM-X";
+
     case Roles::RPrice:
-        return "TODO"; //QString("10 BEAM-X");
+        return AmountToUIString(order.getPrice()) + " BEAM";
+
     case Roles::RSize:
-        return "TODO";// QString::number(order.amount) + " BEAM";
+        return AmountToUIString(order.getSize()) + " BEAM-X";
+
     case Roles::RTotal:
-        return "TODO"; //QString::number(order.amount * 10) + " BEAM-X";
+        // TODO - correct?
+        return AmountToUIString(order.getSize() * order.getPrice() / Rules::Coin) + " BEAM";
+
     case Roles::RExpiration:
         return beamui::toString(order.getExpiration());
+
     case Roles::RStatus:
         {
             if (order.IsExpired())
@@ -77,12 +89,17 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
                 return qtTrId("dex-order-active");
             }
         }
+
     case Roles::RIsMine:
         return order.IsMine();
+
     case Roles::RProgress:
-        return "TODO"; //QVariant(static_cast<uint32_t>(order.progress / order.amount * 100));
+        // TODO
+        return 0;
+
     case Roles::RCanAccept:
         return order.CanAccept();
+
     default:
         return QVariant();
     }

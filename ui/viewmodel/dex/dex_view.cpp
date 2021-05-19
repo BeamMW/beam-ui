@@ -38,11 +38,10 @@ namespace beamui::dex
     {
     }
 
-    void DexView::sellBEAM()
+    void DexView::sellBEAMX()
     {
         using namespace beam;
         using namespace beam::wallet;
-
 
         _walletModel.getAsync()->saveAddress(_receiverAddr);
 
@@ -53,17 +52,17 @@ namespace beamui::dex
             DexOrderID::generate(),
             _receiverAddr.m_walletID,
             _receiverAddr.m_OwnID,
-            Asset::s_BeamID,
-            beam::Rules::Coin,
-            1,
-            beam::Rules::Coin / 100,
+            DexMarket(1, 0),
+            DexMarketSide::Sell,
+            10 * beam::Rules::Coin,
+            beam::Rules::Coin / 2,
             expires
          );
 
         _walletModel.getAsync()->publishDexOrder(order);
     }
 
-    void DexView::buyBEAM()
+    void DexView::buyBEAMX()
     {
         using namespace beam;
         using namespace beam::wallet;
@@ -77,10 +76,10 @@ namespace beamui::dex
             DexOrderID::generate(),
             _receiverAddr.m_walletID,
             _receiverAddr.m_OwnID,
-            1,
-            Rules::Coin,
-            Asset::s_BeamID,
-            beam::Rules::Coin * 100,
+            DexMarket(1, 0),
+            DexMarketSide::Buy,
+            10 * beam::Rules::Coin,
+            beam::Rules::Coin / 2,
             expires
          );
 

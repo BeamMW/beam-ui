@@ -45,7 +45,7 @@ Control {
             TxFilter {
                 id: allTab
                 Layout.alignment: Qt.AlignVCenter
-                //% "All offers"
+                //% "All orders"
                 label: qsTrId("dex-all-tab")
                 onClicked: {
                     control.state = "allOffers"
@@ -131,7 +131,7 @@ Control {
             TableViewColumn {
                 role: "price"
                 //% "Price"
-                title:     qsTrId("dex-price")
+                title:     qsTrId("dex-price") + " (BEAM)"
                 elideMode: Text.ElideRight
                 width:     110 * ordersTable.resizeRatio
                 movable:   false
@@ -141,7 +141,7 @@ Control {
             TableViewColumn {
                 role: "size"
                 //% "Size"
-                title:     qsTrId("dex-size")
+                title:     qsTrId("dex-size") + " (BEAMX)"
                 elideMode: Text.ElideRight
                 width:     110 * ordersTable.resizeRatio
                 movable:   false
@@ -151,7 +151,7 @@ Control {
             TableViewColumn {
                 role: "total"
                 //% "Total"
-                title:     qsTrId("dex-total")
+                title:     qsTrId("dex-total") + " (BEAM)"
                 elideMode: Text.ElideRight
                 width:     140 * ordersTable.resizeRatio
                 movable:   false

@@ -13,7 +13,7 @@ Control {
         spacing: 14
 
         SFText {
-            text: "BEAM"
+            text: "BEAM-X"
             color: Style.content_main
             font {
                 styleName:      "Regular"
@@ -37,7 +37,7 @@ Control {
         }
 
         SFText {
-            text: "BEAM-X"
+            text: "BEAM"
             color: Style.content_main
             font {
                 styleName:      "Regular"

@@ -42,16 +42,16 @@ ColumnLayout {
             spacing: 15
 
             CustomButton {
-                text: "Buy 50 BEAM"
+                text: "Buy 10 BEAM-X"
                 onClicked: {
-                    viewModel.buyBEAM()
+                    viewModel.sellBEAMX()
                 }
             }
 
             CustomButton {
-                text: "Sell 100 BEAM"
+                text: "Sell 10 BEAM-X"
                 onClicked: {
-                    viewModel.sellBEAM()
+                    viewModel.buyBEAMX()
                 }
             }
         }
