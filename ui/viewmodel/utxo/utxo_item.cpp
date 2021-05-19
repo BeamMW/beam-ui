@@ -29,6 +29,7 @@ bool BaseUtxoItem::operator==(const BaseUtxoItem& other) const
 UtxoItem::UtxoItem(beam::wallet::Coin coin)
     : _coin(std::move(coin))
 {
+    _minConfirmations = AppModel::getInstance().getSettings().getMinConfirmations();
 }
 
 uint64_t UtxoItem::getHash() const
@@ -48,7 +49,7 @@ QString UtxoItem::maturity() const
 {
     if (!_coin.IsMaturityValid())
         return QString{ "-" };
-    return QString::number(_coin.m_maturity);
+    return QString::number(rawMaturity());
 }
 
 QString UtxoItem::maturityPercentage() const
@@ -112,15 +113,15 @@ const beam::wallet::Coin::ID& UtxoItem::get_ID() const
 
 beam::Height UtxoItem::rawMaturity() const
 {
-    return _coin.get_Maturity();
+    return _coin.get_Maturity(_minConfirmations);
 }
 
 uint16_t UtxoItem::rawMaturityTimeLeft() const
 {
     auto walletModel = AppModel::getInstance().getWalletModel();
-    if (walletModel->getCurrentHeight() < _coin.get_Maturity())
+    if (walletModel->getCurrentHeight() < rawMaturity())
     {
-        auto blocksLeft = _coin.get_Maturity() - walletModel->getCurrentHeight();
+        auto blocksLeft = rawMaturity() - walletModel->getCurrentHeight();
         return blocksLeft / 60;
     }
 

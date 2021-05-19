@@ -61,6 +61,7 @@ public:
     const beam::wallet::Coin::ID& get_ID() const;
 private:
     beam::wallet::Coin _coin;
+    uint32_t _minConfirmations = 0;
 };
 
 class ShieldedCoinItem : public BaseUtxoItem
