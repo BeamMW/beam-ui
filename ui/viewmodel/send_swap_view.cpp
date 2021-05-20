@@ -137,7 +137,7 @@ void SendSwapViewModel::setToken(const QString& value)
         auto parameters = beam::wallet::ParseParameters(_token.toStdString());
         if (getTokenValid() && parameters)
         {
-            fillParameters(parameters.value());
+            fillParameters(*parameters);
         }
         emit tokenChanged();
     }

@@ -130,10 +130,10 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
                     amount += _contractFee;
                 }
             }
-            _assetAmounts.push_back(AmountToUIString(std::abs(amount)));
+            _assetAmounts.emplace_back(AmountToUIString(std::abs(amount)));
             _assetsList.push_back(info.first);
             _assetAmountsIncome.push_back(amount <= 0);
-            _assetRates.push_back(getRate(info.first));
+            _assetRates.emplace_back(getRate(info.first));
         }
     }
 
@@ -150,9 +150,9 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
     if (_assetsList.empty())
     {
         _assetsList.push_back(_tx.m_assetId);
-        _assetAmounts.push_back(AmountToUIString(_tx.m_amount));
+        _assetAmounts.emplace_back(AmountToUIString(_tx.m_amount));
         _assetAmountsIncome.push_back(!_tx.m_sender);
-        _assetRates.push_back(getRate(_tx.m_assetId));
+        _assetRates.emplace_back(getRate(_tx.m_assetId));
     }
 
     _minConfirmations = AppModel::getInstance().getSettings().getMinConfirmations();
