@@ -1808,10 +1808,6 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>Random node</source>
         <translation>Willekeurige node</translation>
     </message>
-    <message id="wallet-receive-copy-and-close">
-        <source>Copy and close</source>
-        <translation>Kopieer en sluit</translation>
-    </message>
     <message id="token-info-title">
         <source>Transaction token</source>
         <translation>Transactietoken</translation>
@@ -2086,10 +2082,6 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>Payments</source>
         <translation>Betalingen</translation>
     </message>
-    <message id="address-info-copy-close">
-        <source>copy and close</source>
-        <translation>kopieer en sluit</translation>
-    </message>
     <message id="tx-address-public-offline">
         <source>Public offline</source>
         <translation>Openbaar offline</translation>
@@ -2278,10 +2270,6 @@ offline</translation>
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-swap-copy-and-close">
-        <source>copy and close</source>
-        <translation type="unfinished">kopieer en sluit</translation>
     </message>
     <message id="ethereum-show-addresses-title">
         <source>Ethereum wallet addresses</source>
@@ -3063,6 +3051,10 @@ Update your settings and try again.</source>
     <message id="dex-progress">
         <source>Progress</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="general-copy-and-close">
+        <source>copy and close</source>
+        <translation type="unfinished">kopieer en sluit</translation>
     </message>
 </context>
 </TS>

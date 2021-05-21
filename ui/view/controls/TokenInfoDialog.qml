@@ -263,7 +263,7 @@ Dialog {
                     icon.color:         Style.content_opposite
                     palette.button:     dialog.incoming ? Style.accent_incoming : Style.accent_outgoing
                     //% "copy and close"
-                    text:               qsTrId("address-info-copy-close")
+                    text:               qsTrId("general-copy-and-close")
                     onClicked: {
                         BeamGlobals.copyToClipboard(viewModel.token);
                         dialog.close();

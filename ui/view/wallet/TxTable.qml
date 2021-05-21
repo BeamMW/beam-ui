@@ -270,7 +270,8 @@ Control {
                 rowHeight:  transactionsTable.rowHeight
                 tableView:  transactionsTable
 
-                backgroundColor: styleData.selected ?
+                backgroundColor: !rowInModel ? "transparent":
+                                 styleData.selected ?
                                  Style.row_selected :
                                  (styleData.alternate ? (!collapsed || animating ? Style.background_row_details_even : Style.background_row_even)
                                                       : (!collapsed || animating ? Style.background_row_details_odd : Style.background_row_odd))

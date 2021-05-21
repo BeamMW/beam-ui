@@ -1809,10 +1809,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Random node</source>
         <translation>Выпадковы вузел</translation>
     </message>
-    <message id="wallet-receive-copy-and-close">
-        <source>Copy and close</source>
-        <translation>Скапіраваць і зачыніць</translation>
-    </message>
     <message id="token-info-title">
         <source>Transaction token</source>
         <translation type="unfinished">Transaction token</translation>
@@ -2087,10 +2083,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Payments</source>
         <translation>Плацяжы</translation>
     </message>
-    <message id="address-info-copy-close">
-        <source>copy and close</source>
-        <translation>скапіраваць і зачыніць</translation>
-    </message>
     <message id="tx-address-public-offline">
         <source>Public offline</source>
         <translation>Публічны ў аўтаномным рэжыме</translation>
@@ -2311,10 +2303,6 @@ offline</source>
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-swap-copy-and-close">
-        <source>copy and close</source>
-        <translation type="unfinished">скапіраваць і зачыніць</translation>
     </message>
     <message id="ethereum-show-addresses-title">
         <source>Ethereum wallet addresses</source>
@@ -3063,6 +3051,10 @@ Update your settings and try again.</source>
     <message id="dex-progress">
         <source>Progress</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="general-copy-and-close">
+        <source>copy and close</source>
+        <translation type="unfinished">скапіраваць і зачыніць</translation>
     </message>
 </context>
 </TS>
