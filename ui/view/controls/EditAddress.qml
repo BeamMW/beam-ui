@@ -158,12 +158,12 @@ Dialog {
 
         ColumnLayout {
             Layout.fillWidth: true
-            Layout.topMargin: 5
+            Layout.preferredWidth: addressID.width
             spacing: 0
 
             SFTextInput {
                 id: addressName
-                Layout.fillWidth: true
+                Layout.preferredWidth: addressID.width
 
                 font.pixelSize:  14
                 font.italic :    !control.commentValid
