@@ -457,7 +457,7 @@ void SendViewModel::extractParameters()
     _txParameters     = *txParameters;
     _receiverWalletID = beam::Zero;
     _receiverIdentity = beam::Zero;
-    _newTokenMsg      = QString();
+    _newTokenMsg.clear();
 
     if (auto peerID = _txParameters.GetParameter<WalletID>(TxParameterID::PeerID); peerID)
     {

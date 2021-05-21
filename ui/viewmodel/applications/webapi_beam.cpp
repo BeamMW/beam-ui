@@ -74,15 +74,16 @@ namespace beamui::applications {
                 const auto stdreq = request.toStdString();
                 if (auto pres = _walletAPI->parseAPIRequest(stdreq.c_str(), stdreq.size()); pres)
                 {
-                    if (pres->acinfo.appsAllowed)
+                    const auto& acinfo = pres->acinfo;
+                    if (acinfo.appsAllowed)
                     {
-                        if (pres->acinfo.method == "tx_send")
+                        if (acinfo.method == "tx_send")
                         {
                             _consentHandler.AnyThread_getSendConsent(stdreq, *pres);
                             return boost::none;
                         }
 
-                        if (pres->acinfo.method == "process_invoke_data")
+                        if (acinfo.method == "process_invoke_data")
                         {
                             _consentHandler.AnyThread_getContractInfoConsent(stdreq, *pres);
                             return boost::none;
@@ -90,7 +91,7 @@ namespace beamui::applications {
 
                         if (pres->minfo.fee > 0 || !pres->minfo.spend.empty())
                         {
-                            LOG_INFO() << "Application called method " << pres->acinfo.method << " that spends funds, but user consent is not handled";
+                            LOG_INFO() << "Application called method " << acinfo.method << " that spends funds, but user consent is not handled";
                             assert(false);
 
                             const auto error = _walletAPI->fromError(stdreq, ApiError::NotAllowedError, std::string());

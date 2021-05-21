@@ -1824,10 +1824,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Random node</source>
         <translation>随机节点</translation>
     </message>
-    <message id="wallet-receive-copy-and-close">
-        <source>Copy and close</source>
-        <translation>复制并关闭</translation>
-    </message>
     <message id="token-info-title">
         <source>Transaction token</source>
         <translation>交易令牌</translation>
@@ -2100,10 +2096,6 @@ Your version is: %2. Please, check for updates.</source>
         <source>Payments</source>
         <translation>支付</translation>
     </message>
-    <message id="address-info-copy-close">
-        <source>copy and close</source>
-        <translation>复制并关闭</translation>
-    </message>
     <message id="tx-address-public-offline">
         <source>Public offline</source>
         <translation>公共离线</translation>
@@ -2291,10 +2283,6 @@ offline</source>
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-swap-copy-and-close">
-        <source>copy and close</source>
-        <translation type="unfinished">复制并关闭</translation>
     </message>
     <message id="ethereum-show-addresses-title">
         <source>Ethereum wallet addresses</source>
@@ -3076,6 +3064,10 @@ Update your settings and try again.</source>
     <message id="dex-progress">
         <source>Progress</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="general-copy-and-close">
+        <source>copy and close</source>
+        <translation type="unfinished">复制并关闭</translation>
     </message>
 </context>
 </TS>

@@ -1810,10 +1810,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Random node</source>
         <translation>Nodo aleatorio</translation>
     </message>
-    <message id="wallet-receive-copy-and-close">
-        <source>Copy and close</source>
-        <translation>Copiar y cerrar</translation>
-    </message>
     <message id="token-info-title">
         <source>Transaction token</source>
         <translation type="unfinished">Transaction token</translation>
@@ -2088,10 +2084,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Payments</source>
         <translation>Pagos</translation>
     </message>
-    <message id="address-info-copy-close">
-        <source>copy and close</source>
-        <translation>copiar y cerrar</translation>
-    </message>
     <message id="tx-address-public-offline">
         <source>Public offline</source>
         <translation>Público fuera de línea</translation>
@@ -2312,10 +2304,6 @@ fuera de línea</translation>
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-swap-copy-and-close">
-        <source>copy and close</source>
-        <translation type="unfinished">copiar y cerrar</translation>
     </message>
     <message id="ethereum-show-addresses-title">
         <source>Ethereum wallet addresses</source>
@@ -3065,6 +3053,10 @@ Update your settings and try again.</source>
     <message id="dex-progress">
         <source>Progress</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="general-copy-and-close">
+        <source>copy and close</source>
+        <translation type="unfinished">copiar y cerrar</translation>
     </message>
 </context>
 </TS>

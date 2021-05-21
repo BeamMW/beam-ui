@@ -678,7 +678,7 @@ please review your settings and try again"
 
                                     CustomButton {
                                         //% "copy and close"
-                                        text:                qsTrId("wallet-receive-swap-copy-and-close")
+                                        text:                qsTrId("general-copy-and-close")
                                         palette.buttonText:  Style.content_main
                                         palette.button:      Style.background_button
                                         icon.source:         "qrc:/assets/icon-copy.svg"

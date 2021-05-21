@@ -65,7 +65,7 @@ namespace beamui
     std::string toStdString(Currencies currency);
 
     QString getCurrencyUnitName(Currencies);
-    QString getCurrencyUnitName(beam::wallet::Currency);
+    QString getCurrencyUnitName(const beam::wallet::Currency&);
     QString getFeeRateLabel(Currencies);
     QString getCurrencySubunitLabel(Currencies);
     QString getCurrencySubunitFromLabel(const QString& currLabel);

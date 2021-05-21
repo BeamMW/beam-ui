@@ -240,7 +240,7 @@ Dialog {
                     icon.color:         Style.content_opposite
                     palette.button:     Style.accent_incoming
                     //% "copy and close"
-                    text:               qsTrId("wallet-receive-swap-copy-and-close")
+                    text:               qsTrId("general-copy-and-close")
                     onClicked: {
                         BeamGlobals.copyToClipboard(viewModel.token);
                         dialog.close();

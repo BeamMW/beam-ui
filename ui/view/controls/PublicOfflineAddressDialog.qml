@@ -113,7 +113,7 @@ Dialog {
                 palette.buttonText: Style.content_opposite
                 icon.color:         Style.content_opposite
                 palette.button:     Style.accent_incoming
-                text:               qsTrId("wallet-receive-copy-and-close")
+                text:               qsTrId("general-copy-and-close")
                 onClicked: {
                     BeamGlobals.copyToClipboard(dialog.address);
                     dialog.close()

@@ -21,6 +21,7 @@
 
 SwapOfferItem::SwapOfferItem(QObject* parent /* = nullptr*/)
     : QObject(parent)
+    , m_isBeamSide(true)
 {
 
 }

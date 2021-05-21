@@ -106,8 +106,8 @@ Panel {
         CustomButton {
             id: copyButton
             Layout.topMargin:       20
-            //% "Copy and close"
-            text:                   qsTrId("wallet-receive-copy-and-close")
+            //% "copy and close"
+            text:                   qsTrId("general-copy-and-close")
             Layout.preferredHeight: 38
             palette.buttonText:     Style.content_opposite
             icon.color:             Style.content_opposite

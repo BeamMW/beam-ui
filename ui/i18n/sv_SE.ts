@@ -1806,10 +1806,6 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <source>Random node</source>
         <translation>Slumpmässig nod</translation>
     </message>
-    <message id="wallet-receive-copy-and-close">
-        <source>Copy and close</source>
-        <translation>Kopiera och stäng</translation>
-    </message>
     <message id="token-info-title">
         <source>Transaction token</source>
         <translation>Transaktionstoken</translation>
@@ -2084,10 +2080,6 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <source>Payments</source>
         <translation>Betalningar</translation>
     </message>
-    <message id="address-info-copy-close">
-        <source>copy and close</source>
-        <translation>kopiera och stäng</translation>
-    </message>
     <message id="tx-address-public-offline">
         <source>Public offline</source>
         <translation>Publik offline</translation>
@@ -2276,10 +2268,6 @@ offline</translation>
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-swap-copy-and-close">
-        <source>copy and close</source>
-        <translation type="unfinished">kopiera och stäng</translation>
     </message>
     <message id="ethereum-show-addresses-title">
         <source>Ethereum wallet addresses</source>
@@ -3061,6 +3049,10 @@ Update your settings and try again.</source>
     <message id="dex-progress">
         <source>Progress</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="general-copy-and-close">
+        <source>copy and close</source>
+        <translation type="unfinished">kopiera och stäng</translation>
     </message>
 </context>
 </TS>
