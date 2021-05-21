@@ -141,7 +141,7 @@ Control {
             TableViewColumn {
                 role: "size"
                 //% "Size"
-                title:     qsTrId("dex-size") + " (BEAMX)"
+                title:     qsTrId("dex-size") + " (DEMOX)"
                 elideMode: Text.ElideRight
                 width:     110 * ordersTable.resizeRatio
                 movable:   false

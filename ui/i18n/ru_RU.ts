@@ -2322,7 +2322,8 @@ much longer for a transaction to complete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dex-all-tab">
-        <source>All offers</source>
+        <source>All orders</source>
+        <oldsource>All offers</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dex-my-tab">

@@ -43,7 +43,6 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
 
     if (!index.isValid() || index.row() < 0 || index.row() >= m_list.size())
     {
-        assert(false);
         return QVariant();
     }
 
@@ -56,13 +55,13 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         return QString::fromStdString(order.getID().to_string());
 
     case Roles::RType:
-        return order.getSide() == DexMarketSide::Sell ? "Sell BEAM-X" : "Buy BEAM-X";
+        return order.getSide() == DexMarketSide::Sell ? "Sell DEMOX" : "Buy DEMOX";
 
     case Roles::RPrice:
         return AmountToUIString(order.getPrice()) + " BEAM";
 
     case Roles::RSize:
-        return AmountToUIString(order.getSize()) + " BEAM-X";
+        return AmountToUIString(order.getSize()) + " DEMOX";
 
     case Roles::RTotal:
         // TODO - correct?
