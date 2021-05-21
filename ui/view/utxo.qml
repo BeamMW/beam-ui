@@ -209,6 +209,62 @@ ColumnLayout {
         }
 
         TableViewColumn {
+            id: typeColumn
+            role: "type"
+            //% "Type"
+            title: qsTrId("utxo-head-type")
+            width: tableView.getAdjustedColumnWidth(typeColumn)//150 * columnResizeRatio
+            movable: false
+            delegate: Item {
+                id: utxoTypeDelegate
+                width: parent.width
+                height: tableView.rowHeight
+                property var utxoType: utxoTypeText(styleData.value)
+
+                ColumnLayout {
+                    anchors.right: parent.right
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 20
+
+                    SFLabel {
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        color: Style.content_main
+                        elide: Text.ElideRight
+                        text: utxoTypeDelegate.utxoType
+                        textFormat: Text.StyledText
+                        font.pixelSize: 14
+                    }
+                }
+
+                function utxoTypeText(value) {
+                    switch(value) {
+                        //% "Transaction fee"
+                        //: UTXO type fee
+                        case UtxoType.Comission: return qsTrId("general-fee");
+                        //% "Coinbase"
+                        //: UTXO type Coinbase
+                        case UtxoType.Coinbase: return qsTrId("general-coinbase");
+                        //% "Regular"
+                        //: UTXO type Regular
+                        case UtxoType.Regular: return qsTrId("general-regular");
+                        //% "Change"
+                        //: UTXO type Change
+                        case UtxoType.Change: return qsTrId("general-change");
+                        //% "Treasury"
+                        //: UTXO type Treasury
+                        case UtxoType.Treasury: return qsTrId("general-treasury");
+                        //% "Shielded"
+                        //: UTXO type Shielded
+                        case UtxoType.Shielded: return qsTrId("general-shielded");
+                        default : return "";
+                    }
+                }
+            }
+        }
+
+        TableViewColumn {
             role: "status"
             //% "Status"
             title: qsTrId("general-status")
@@ -227,6 +283,7 @@ ColumnLayout {
                     anchors.right: parent.right
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 20
 
                     SFLabel {
                         Layout.fillWidth: true
@@ -304,62 +361,6 @@ ColumnLayout {
                             return qsTrId("utxo-status-maturing-mp").arg(lineSeparator).arg(model ? model.maturityPercentage : "?");
                         default:
                             return "";
-                    }
-                }
-            }
-        }
-
-
-        TableViewColumn {
-            id: typeColumn
-            role: "type"
-            //% "Type"
-            title: qsTrId("utxo-head-type")
-            width: tableView.getAdjustedColumnWidth(typeColumn)//150 * columnResizeRatio
-            movable: false
-            delegate: Item {
-                id: utxoTypeDelegate
-                width: parent.width
-                height: tableView.rowHeight
-                property var utxoType: utxoTypeText(styleData.value)
-
-                ColumnLayout {
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    SFLabel {
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        color: Style.content_main
-                        elide: Text.ElideRight
-                        text: utxoTypeDelegate.utxoType
-                        textFormat: Text.StyledText
-                        font.pixelSize: 14
-                    }
-                }
-
-                function utxoTypeText(value) {
-                    switch(value) {
-                        //% "Transaction fee"
-                        //: UTXO type fee
-                        case UtxoType.Comission: return qsTrId("general-fee");
-                        //% "Coinbase"
-                        //: UTXO type Coinbase
-                        case UtxoType.Coinbase: return qsTrId("general-coinbase");
-                        //% "Regular"
-                        //: UTXO type Regular
-                        case UtxoType.Regular: return qsTrId("general-regular");
-                        //% "Change"
-                        //: UTXO type Change
-                        case UtxoType.Change: return qsTrId("general-change");
-                        //% "Treasury"
-                        //: UTXO type Treasury
-                        case UtxoType.Treasury: return qsTrId("general-treasury");
-                        //% "Shielded"
-                        //: UTXO type Shielded
-                        case UtxoType.Shielded: return qsTrId("general-shielded");
-                        default : return "";
                     }
                 }
             }
