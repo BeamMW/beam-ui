@@ -3060,5 +3060,13 @@ Update your settings and try again.</source>
         <source>Please enter the port</source>
         <translation>Please enter the port</translation>
     </message>
+    <message id="settings-export">
+        <source>Export wallet data</source>
+        <translation>Export wallet data</translation>
+    </message>
+    <message id="settings-import">
+        <source>Import wallet data</source>
+        <translation>Import wallet data</translation>
+    </message>
 </context>
 </TS>
