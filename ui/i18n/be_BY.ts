@@ -3056,5 +3056,13 @@ Update your settings and try again.</source>
         <source>copy and close</source>
         <translation type="unfinished">скапіраваць і зачыніць</translation>
     </message>
+    <message id="settings-remote-node-address-placeholder">
+        <source>Please enter the address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-local-node-port-placeholder">
+        <source>Please enter the port</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
