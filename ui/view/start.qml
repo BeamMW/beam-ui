@@ -1526,7 +1526,19 @@ Item
                     else
                     {
                         viewModel.setPassword(password.text);
-                        startWizzardView.push(nodeSetup);
+                        if (viewModel.isRecoveryMode) {
+                            viewModel.setupLocalNode(parseInt(viewModel.defaultPortToListen()), viewModel.chooseRandomNode());
+                            viewModel.createWallet(function (created) {
+                                if (created) { 
+                                    startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : true, "isCreating" : true, "cancelCallback": startWizzardView.pop});
+                                }
+                                else {
+                                    // TODO(alex.starun): error message if wallet not created
+                                }
+                            });
+                        } else {
+                            startWizzardView.push(nodeSetup);
+                        }
                     }
                 }
 
