@@ -1,13 +1,12 @@
 import QtQuick 2.11
 import QtQuick.Controls 1.2
-import QtQuick.Controls 2.3 as Controls2
 import QtQuick.Layouts 1.0
 import QtQuick.Controls.Styles 1.2
 import Beam.Wallet 1.0
 import "../utils.js" as Utils
 import "."
 
-Controls2.Dialog {
+CustomDialog {
     id: dialog
     modal: true
 
@@ -27,12 +26,6 @@ Controls2.Dialog {
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
     visible: false
-
-    background: Rectangle {
-        radius: 10
-        color: Style.background_popup
-        anchors.fill: parent            
-    }
 
     onClosed : {
         tableView.sortIndicatorOrder = Qt.AscendingOrder;

@@ -333,5 +333,6 @@
         <file>assets/icon-addressbook-empty.svg</file>
         <file>assets/icon-notification-empty.svg</file>
         <file>assets/icon-wallet-empty.svg</file>
+        <file>controls/CustomDialog.qml</file>
     </qresource>
 </RCC>
