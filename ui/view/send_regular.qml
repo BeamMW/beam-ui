@@ -245,83 +245,117 @@ ColumnLayout {
                         title: qsTrId("general-amount")
                         Layout.fillWidth: true
 
-                        content: RowLayout {
-                            spacing: 7
+                        content: ColumnLayout {
 
-                            AmountInput {
-                                id:                sendAmountInput
-                                amount:            viewModel.sendAmount
-                                color:             Style.accent_outgoing
-                                Layout.fillWidth:  true
-                                currencies:        viewModel.assetsList
-                                multi:             viewModel.assetsList.length > 1
+                            RowLayout {
+                                spacing: 7
 
-                                error: {
-                                    if (!viewModel.isEnough)
-                                    {
-                                       var maxAmount = Utils.uiStringToLocale(viewModel.maxSendAmount)
-                                       //% "Insufficient funds to complete the transaction. Maximum amount is %1 %2."
-                                       return qsTrId("send-no-funds").arg(maxAmount).arg(Utils.limitText(control.sendUnit, 6))
+                                AmountInput {
+                                    id:                sendAmountInput
+                                    amount:            viewModel.sendAmount
+                                    color:             Style.accent_outgoing
+                                    Layout.fillWidth:  true
+                                    currencies:        viewModel.assetsList
+                                    multi:             viewModel.assetsList.length > 1
+
+                                    error: {
+                                        if (!viewModel.isEnough)
+                                        {
+                                        var maxAmount = Utils.uiStringToLocale(viewModel.maxSendAmount)
+                                        //% "Insufficient funds to complete the transaction. Maximum amount is %1 %2."
+                                        return qsTrId("send-no-funds").arg(maxAmount).arg(Utils.limitText(control.sendUnit, 6))
+                                        }
+                                        return ""
                                     }
-                                    return ""
+
+                                    onCurrencyIdxChanged: function () {
+                                        var idx = sendAmountInput.currencyIdx
+                                        control.assetId = viewModel.assetsList[idx].assetId
+                                    }
                                 }
 
-                                onCurrencyIdxChanged: function () {
-                                    var idx = sendAmountInput.currencyIdx
-                                    control.assetId = viewModel.assetsList[idx].assetId
+                                Connections {
+                                    target: viewModel
+                                    function onSendAmountChanged () {
+                                        sendAmountInput.amount = viewModel.sendAmount
+                                    }
+                                }
+
+                                Binding {
+                                    target:   viewModel
+                                    property: "sendAmount"
+                                    value:    sendAmountInput.amount
                                 }
                             }
 
-                            Connections {
-                                target: viewModel
-                                function onSendAmountChanged () {
-                                    sendAmountInput.amount = viewModel.sendAmount
+                            RowLayout {
+                                Layout.topMargin: 20
+                                SFText {
+                                    font.pixelSize:   16
+                                    font.styleName:   "Bold"
+                                    font.weight:      Font.Bold
+                                    font.letterSpacing:  3.11
+                                    font.capitalization: Font.AllUppercase
+                                    color:            Style.content_secondary
+                                    //% "Available"
+                                    text:             qsTrId("send-available")
+                                    visible:          text.length > 0
                                 }
                             }
 
-                            Binding {
-                                target:   viewModel
-                                property: "sendAmount"
-                                value:    sendAmountInput.amount
-                            }
+                            RowLayout {
+                                spacing: 7
+                                BeamAmount {
+                                    Layout.alignment:  Qt.AlignTop | Qt.AlignLeft
+                                    Layout.fillWidth:  true
+                                    error:             !viewModel.isEnough
+                                    amount:            viewModel.assetRemaining
+                                    unitName:          control.sendUnit
+                                    rateUnit:          control.rateUnit
+                                    rate:              control.rate
+                                    font.styleName:    "Bold"
+                                    font.weight:       Font.Bold
+                                    font.pixelSize:    16
+                                    maxPaintedWidth:   false
+                                    maxUnitChars:      20
+                                    rateFontSize:      14
+                                }
+                                Row {
+                                    Layout.leftMargin: 10
+                                    Layout.fillHeight: true
+                                    spacing:           0
 
-                            Row {
-                                Layout.leftMargin: 10
-                                Layout.fillHeight: true
-                                spacing:           0
+                                    SvgImage {
+                                        source:     "qrc:/assets/icon-send-blue-copy-2.svg"
+                                        sourceSize: Qt.size(16, 16)
 
-                                SvgImage {
-                                    source:     "qrc:/assets/icon-send-blue-copy-2.svg"
-                                    sourceSize: Qt.size(16, 16)
-                                    y:          30
-
-                                    MouseArea {
-                                        anchors.fill:    parent
-                                        acceptedButtons: Qt.LeftButton
-                                        cursorShape:     Qt.PointingHandCursor
-                                        onClicked:       function () {
-                                            sendAmountInput.clearFocus()
-                                            viewModel.setMaxAvailableAmount()
+                                        MouseArea {
+                                            anchors.fill:    parent
+                                            acceptedButtons: Qt.LeftButton
+                                            cursorShape:     Qt.PointingHandCursor
+                                            onClicked:       function () {
+                                                sendAmountInput.clearFocus()
+                                                viewModel.setMaxAvailableAmount()
+                                            }
                                         }
                                     }
-                                }
 
-                                SFText {
-                                    font.pixelSize:   14
-                                    font.styleName:   "Bold";
-                                    font.weight:      Font.Bold
-                                    color:            Style.accent_outgoing
-                                    y:                30
-                                    //% "max"
-                                    text:             " " + qsTrId("amount-input-add-max")
+                                    SFText {
+                                        font.pixelSize:   14
+                                        font.styleName:   "Bold";
+                                        font.weight:      Font.Bold
+                                        color:            Style.accent_outgoing
+                                        //% "max"
+                                        text:             " " + qsTrId("amount-input-add-max")
 
-                                    MouseArea {
-                                        anchors.fill:    parent
-                                        acceptedButtons: Qt.LeftButton
-                                        cursorShape:     Qt.PointingHandCursor
-                                        onClicked:       function () {
-                                            sendAmountInput.clearFocus()
-                                            viewModel.setMaxPossibleAmount()
+                                        MouseArea {
+                                            anchors.fill:    parent
+                                            acceptedButtons: Qt.LeftButton
+                                            cursorShape:     Qt.PointingHandCursor
+                                            onClicked:       function () {
+                                                sendAmountInput.clearFocus()
+                                                viewModel.setMaxPossibleAmount()
+                                            }
                                         }
                                     }
                                 }

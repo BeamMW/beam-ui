@@ -3068,5 +3068,9 @@ Update your settings and try again.</source>
         <source>Import wallet data</source>
         <translation>Import wallet data</translation>
     </message>
+    <message id="send-available">
+        <source>Available</source>
+        <translation>Available</translation>
+    </message>
 </context>
 </TS>
