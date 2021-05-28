@@ -2617,7 +2617,7 @@ Update your settings and try again.</source>
     </message>
     <message id="utxo-status-available">
         <source>Available</source>
-        <translation type="unfinished"></translation>
+        <translation>Available</translation>
     </message>
     <message id="utxo-status-maturing">
         <source>Maturing%1(till block height %2)</source>
@@ -2789,7 +2789,7 @@ Update your settings and try again.</source>
     </message>
     <message id="balance-available">
         <source>Available</source>
-        <translation type="unfinished"></translation>
+        <translation>Available</translation>
     </message>
     <message id="balance-regular">
         <source>Regular</source>
