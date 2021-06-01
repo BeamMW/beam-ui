@@ -594,8 +594,9 @@
         <translation>Yhteyden muodostaminen epäonnistui</translation>
     </message>
     <message id="wallet-model-connection-refused-error">
-        <source>Cannot connect to node</source>
-        <translation>Palvelimeen (node) ei saada yhteyttä</translation>
+        <source>Connection to %1 node lost</source>
+        <oldsource>Cannot connect to node</oldsource>
+        <translation type="unfinished">Palvelimeen (node) ei saada yhteyttä</translation>
     </message>
     <message id="wallet-model-connection-host-unreach-error">
         <source>Node is unreachable</source>
@@ -642,8 +643,9 @@
         <translation>SQLiten tietokantatiedosto (*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
-        <source>Wallet is not connected to the node</source>
-        <translation>Lompakkoa ei ole yhdistetty palvelimeen (node)</translation>
+        <source>Lost connection to nodes: </source>
+        <oldsource>Wallet is not connected to the node</oldsource>
+        <translation type="unfinished">Lompakkoa ei ole yhdistetty palvelimeen (node)</translation>
     </message>
     <message id="tx-failure-undefined">
         <source>Unexpected reason, please send wallet logs to Beam support</source>

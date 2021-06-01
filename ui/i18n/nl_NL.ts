@@ -594,8 +594,9 @@
         <translation>Verbinding time-out</translation>
     </message>
     <message id="wallet-model-connection-refused-error">
-        <source>Cannot connect to node</source>
-        <translation>Kan geen verbinding maken met node</translation>
+        <source>Connection to %1 node lost</source>
+        <oldsource>Cannot connect to node</oldsource>
+        <translation type="unfinished">Kan geen verbinding maken met node</translation>
     </message>
     <message id="wallet-model-connection-host-unreach-error">
         <source>Node is unreachable</source>
@@ -642,8 +643,9 @@
         <translation>SQLite database bestand (*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
-        <source>Wallet is not connected to the node</source>
-        <translation>Wallet is niet met de node verbonden</translation>
+        <source>Lost connection to nodes: </source>
+        <oldsource>Wallet is not connected to the node</oldsource>
+        <translation type="unfinished">Wallet is niet met de node verbonden</translation>
     </message>
     <message id="tx-failure-undefined">
         <source>Unexpected reason, please send wallet logs to Beam support</source>

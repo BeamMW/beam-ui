@@ -16,6 +16,12 @@
 
 #include <QObject>
 #include "model/wallet_model.h"
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+#include "wallet/transactions/swaps/bridges/bitcoin/bridge.h"
+#include "wallet/transactions/swaps/bridges/bitcoin/client.h"
+#include "wallet/transactions/swaps/bridges/ethereum/bridge.h"
+#include "wallet/transactions/swaps/bridges/ethereum/client.h"
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
 class StatusbarViewModel : public QObject
 {
@@ -27,6 +33,10 @@ class StatusbarViewModel : public QObject
     Q_PROPERTY(int nodeSyncProgress         READ getNodeSyncProgress    NOTIFY nodeSyncProgressChanged)
     Q_PROPERTY(QString branchName           READ getBranchName          CONSTANT)
     Q_PROPERTY(QString walletStatusErrorMsg READ getWalletStatusErrorMsg NOTIFY statusErrorChanged)
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    Q_PROPERTY(bool isCoinClientFailed      READ getCoinClientFailed    NOTIFY isCoinClientFailedChanged)
+    Q_PROPERTY(QString coinClientErrorMsg   READ getCoinClientErrorMsg  NOTIFY coinClientErrorMsgChanged)
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
 public:
 
@@ -39,6 +49,11 @@ public:
     int getNodeSyncProgress() const;
     QString getBranchName() const;
     QString getWalletStatusErrorMsg() const;
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    bool getCoinClientFailed() const;
+    QString getCoinClientErrorMsg() const;
+    Q_INVOKABLE QString coinWithErrorLabel() const;
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
     void setIsOnline(bool value);
     void setIsFailedStatus(bool value);
@@ -53,6 +68,10 @@ public slots:
     void onGetWalletError(beam::wallet::ErrorType error);
     void onSyncProgressUpdated(int done, int total);
     void onNodeSyncProgressUpdated(int done, int total);
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    void onGetCoinClientError(const beam::bitcoin::IBridge::ErrorType& error);
+    void onGetCoinClientError(const beam::ethereum::IBridge::ErrorType& error);
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
 signals:
 
@@ -62,8 +81,15 @@ signals:
     void isConnectionTrustedChanged();
     void nodeSyncProgressChanged();
     void statusErrorChanged();
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    void isCoinClientFailedChanged();
+    void coinClientErrorMsgChanged();
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
 private:
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    std::string generateCoinClientErrorMsg() const;
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT
     WalletModel& m_model;
 
     bool m_isOnline;
@@ -78,4 +104,8 @@ private:
     int m_total;
 
     QString m_errorMsg;
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    bool m_isCoinClientFailed = false;
+    mutable QString m_coinWithErrorLabel;
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT
 };

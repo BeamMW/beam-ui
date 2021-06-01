@@ -594,8 +594,9 @@
         <translation>Kết nối quá hạn</translation>
     </message>
     <message id="wallet-model-connection-refused-error">
-        <source>Cannot connect to node</source>
-        <translation>Không thể kết nối với nút</translation>
+        <source>Connection to %1 node lost</source>
+        <oldsource>Cannot connect to node</oldsource>
+        <translation type="unfinished">Không thể kết nối với nút</translation>
     </message>
     <message id="wallet-model-connection-host-unreach-error">
         <source>Node is unreachable</source>
@@ -642,8 +643,9 @@
         <translation>Tệp cơ sở dữ liệu SQLite (*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
-        <source>Wallet is not connected to the node</source>
-        <translation>Ví không được kết nối với nút</translation>
+        <source>Lost connection to nodes: </source>
+        <oldsource>Wallet is not connected to the node</oldsource>
+        <translation type="unfinished">Ví không được kết nối với nút</translation>
     </message>
     <message id="tx-failure-undefined">
         <source>Unexpected reason, please send wallet logs to Beam support</source>

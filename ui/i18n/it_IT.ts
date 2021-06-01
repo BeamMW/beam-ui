@@ -594,7 +594,8 @@
         <translation type="unfinished">Connection timed out</translation>
     </message>
     <message id="wallet-model-connection-refused-error">
-        <source>Cannot connect to node</source>
+        <source>Connection to %1 node lost</source>
+        <oldsource>Cannot connect to node</oldsource>
         <translation type="unfinished">Cannot connect to node</translation>
     </message>
     <message id="wallet-model-connection-host-unreach-error">
@@ -642,7 +643,8 @@
         <translation type="unfinished">SQLite database file (*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
-        <source>Wallet is not connected to the node</source>
+        <source>Lost connection to nodes: </source>
+        <oldsource>Wallet is not connected to the node</oldsource>
         <translation type="unfinished">Wallet is not connected to the node</translation>
     </message>
     <message id="tx-failure-undefined">

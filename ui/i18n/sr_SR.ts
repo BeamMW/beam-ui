@@ -594,7 +594,8 @@
         <translation>Конекцији је истекло време</translation>
     </message>
     <message id="wallet-model-connection-refused-error">
-        <source>Cannot connect to node</source>
+        <source>Connection to %1 node lost</source>
+        <oldsource>Cannot connect to node</oldsource>
         <translation type="unfinished">Cannot connect to node</translation>
     </message>
     <message id="wallet-model-connection-host-unreach-error">
@@ -642,8 +643,9 @@
         <translation>фајл SQLite базе података (*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
-        <source>Wallet is not connected to the node</source>
-        <translation>Новчаник није повезан на чвор</translation>
+        <source>Lost connection to nodes: </source>
+        <oldsource>Wallet is not connected to the node</oldsource>
+        <translation type="unfinished">Новчаник није повезан на чвор</translation>
     </message>
     <message id="tx-failure-undefined">
         <source>Unexpected reason, please send wallet logs to Beam support</source>

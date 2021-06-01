@@ -594,8 +594,9 @@
         <translation>หมดเวลาการเชื่อมต่อ</translation>
     </message>
     <message id="wallet-model-connection-refused-error">
-        <source>Cannot connect to node</source>
-        <translation>ไม่สามารถเชื่อมต่อ Node ได้</translation>
+        <source>Connection to %1 node lost</source>
+        <oldsource>Cannot connect to node</oldsource>
+        <translation type="unfinished">ไม่สามารถเชื่อมต่อ Node ได้</translation>
     </message>
     <message id="wallet-model-connection-host-unreach-error">
         <source>Node is unreachable</source>
@@ -642,8 +643,9 @@
         <translation>ไฟล์ SQLite Database (*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
-        <source>Wallet is not connected to the node</source>
-        <translation>กระเป๋าไม่ได้เชื่อมต่อกับ Node</translation>
+        <source>Lost connection to nodes: </source>
+        <oldsource>Wallet is not connected to the node</oldsource>
+        <translation type="unfinished">กระเป๋าไม่ได้เชื่อมต่อกับ Node</translation>
     </message>
     <message id="tx-failure-undefined">
         <source>Unexpected reason, please send wallet logs to Beam support</source>

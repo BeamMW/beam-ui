@@ -70,6 +70,7 @@ Item {
     StatusBar {
         id: status_bar
         model: statusbarModel
+        z: 33
     }
 
     Component {

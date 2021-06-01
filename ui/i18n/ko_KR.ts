@@ -594,8 +594,9 @@
         <translation>연결 시간 초과</translation>
     </message>
     <message id="wallet-model-connection-refused-error">
-        <source>Cannot connect to node</source>
-        <translation>노드에 연결할 수 없습니다.</translation>
+        <source>Connection to %1 node lost</source>
+        <oldsource>Cannot connect to node</oldsource>
+        <translation type="unfinished">노드에 연결할 수 없습니다.</translation>
     </message>
     <message id="wallet-model-connection-host-unreach-error">
         <source>Node is unreachable</source>
@@ -642,8 +643,9 @@
         <translation>SQLite 데이터베이스 파일(*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
-        <source>Wallet is not connected to the node</source>
-        <translation>지갑이 노드에 연결되지 않았습니다</translation>
+        <source>Lost connection to nodes: </source>
+        <oldsource>Wallet is not connected to the node</oldsource>
+        <translation type="unfinished">지갑이 노드에 연결되지 않았습니다</translation>
     </message>
     <message id="tx-failure-undefined">
         <source>Unexpected reason, please send wallet logs to Beam support</source>
