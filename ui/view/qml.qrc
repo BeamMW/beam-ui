@@ -334,5 +334,11 @@
         <file>assets/icon-notification-empty.svg</file>
         <file>assets/icon-wallet-empty.svg</file>
         <file>controls/CustomDialog.qml</file>
+        <file>assets/icon-notifications-sent-offline.svg</file>
+        <file>assets/icon-notifications-received-offline.svg</file>
+        <file>assets/icon-notifications-failed-sent-offline.svg</file>
+        <file>assets/icon-notifications-failed-sent-privacy.svg</file>
+        <file>assets/icon-notifications-received-privacy.svg</file>
+        <file>assets/icon-notifications-sent-privacy.svg</file>
     </qresource>
 </RCC>

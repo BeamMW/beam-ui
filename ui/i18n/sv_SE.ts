@@ -3076,5 +3076,29 @@ Update your settings and try again.</source>
         <source>Available</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="notification-maxp-transaction-sent">
+        <source>Max Privacy transaction sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-maxp-transaction-received">
+        <source>Max Privacy transaction received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-offline-transaction-sent">
+        <source>Transaction sent to offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-offline-transaction-received">
+        <source>Transaction received from offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-maxp-transaction-failed">
+        <source>Max Privacy transaction failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-offline-transaction-failed">
+        <source>Offline transaction failed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

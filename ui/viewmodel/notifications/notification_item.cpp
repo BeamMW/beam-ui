@@ -86,6 +86,16 @@ namespace {
         return *p.GetParameter<bool>(beam::wallet::TxParameterID::IsSender);
     }
 
+    beam::wallet::TxAddressType getAddressType(const beam::wallet::TxParameters& p)
+    {
+        auto r = p.GetParameter<beam::wallet::TxAddressType>(beam::wallet::TxParameterID::AddressType);
+        if (r)
+        {
+            return *r;
+        }
+        return beam::wallet::TxAddressType::Unknown;
+    }
+
     beam::wallet::TxType getTxType(const beam::wallet::TxParameters& p)
     {
         using namespace beam::wallet;
@@ -243,7 +253,6 @@ QString NotificationItem::title() const
             switch (getTxType(p))
             {
             case TxType::Simple:
-            case TxType::PushTransaction:
                 if (isSender(p))
                 {
                     //% "Transaction was sent"
@@ -251,6 +260,27 @@ QString NotificationItem::title() const
                 }
                 //% "Transaction was received"
                 return qtTrId("notification-transaction-received");
+            case TxType::PushTransaction:
+            {
+                auto t = getAddressType(p);
+                if (t == TxAddressType::MaxPrivacy)
+                {
+                    if (isSender(p))
+                    {
+                        //% "Max Privacy transaction sent"
+                        return qtTrId("notification-maxp-transaction-sent");
+                    }
+                    //% "Max Privacy transaction received"
+                    return qtTrId("notification-maxp-transaction-received");
+                }
+                if (isSender(p))
+                {
+                    //% "Transaction sent to offline"
+                    return qtTrId("notification-offline-transaction-sent");
+                }
+                //% "Transaction received from offline"
+                return qtTrId("notification-offline-transaction-received");
+            }
             case TxType::AtomicSwap:
                 //% "Atomic Swap offer completed"
                 return qtTrId("notification-swap-completed");
@@ -267,9 +297,19 @@ QString NotificationItem::title() const
             switch (getTxType(p))
             {
             case TxType::Simple:
-            case TxType::PushTransaction:
                 //% "Transaction failed"
                 return qtTrId("notification-transaction-failed");
+            case TxType::PushTransaction:
+            {
+                auto t = getAddressType(p);
+                if (t == TxAddressType::MaxPrivacy)
+                {
+                     //% "Max Privacy transaction failed"
+                    return qtTrId("notification-maxp-transaction-failed");
+                }
+                //% "Offline transaction failed"
+                return qtTrId("notification-offline-transaction-failed");
+            }
             case TxType::AtomicSwap:
                 return isSwapTxExpired(p) ?
                         //% "Atomic Swap offer expired"
@@ -452,8 +492,17 @@ QString NotificationItem::type() const
             switch (getTxType(p))
             {
             case TxType::Simple:
-            case TxType::PushTransaction:
                 return (isSender(p) ? "sent" : "received");
+            case TxType::PushTransaction:
+            {
+                auto t = getAddressType(p);
+                if (t == TxAddressType::MaxPrivacy)
+                    return (isSender(p) ? "maxpSent" : "maxpReceived");
+                else if (t == TxAddressType::PublicOffline)
+                    return (isSender(p) ? "pubOfflineSent" : "pubOfflineReceived");
+                
+                return (isSender(p) ? "offlineSent" : "offlineReceived");
+            }
             case TxType::AtomicSwap:
                 return "swapCompleted";
             case TxType::Contract:
@@ -470,7 +519,14 @@ QString NotificationItem::type() const
             case TxType::Simple:
                 return (isSender(p) ? "failedToSend" : "failedToReceive");
             case TxType::PushTransaction:
-                return "failedToSend";
+            {
+                auto t = getAddressType(p);
+                if (t == TxAddressType::MaxPrivacy)
+                    return "maxpFailedToSend";
+                else if (t == TxAddressType::PublicOffline)
+                    return "pubOfflineFailedToSend";
+                return "offlineFailedToSend";
+            }
             case TxType::AtomicSwap:
                 return isSwapTxExpired(p) ? "swapExpired" : "swapFailed";
             case TxType::Contract:
