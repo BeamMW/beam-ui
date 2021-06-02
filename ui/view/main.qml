@@ -12,12 +12,40 @@ Rectangle {
     id: main
 
     property var openedNotifications: 0
+    property var notificationOffset: 0
     property alias hasNewerVersion : updateInfoProvider.hasNewerVersion
+
+    function increaseNotificationOffset(popup) {
+        popup.verticalOffset = main.notificationOffset
+        main.notificationOffset += popup.height + 2
+        popup.nextVerticalOffset = main.notificationOffset
+        
+    }
+    function decreaseNotificationOffset(popup) {
+        main.notificationOffset -= (popup.nextVerticalOffset - popup.verticalOffset)
+        if (main.notificationOffset < 0)
+            main.notificationOffset = 0
+    }
+
+    function showSimplePopup(message) {
+        var popup = Qt.createComponent("controls/SimpleNotificationPopup.qml").createObject(main);
+            popup.message = message
+            increaseNotificationOffset(popup)
+            popup.closed.connect(function() {
+                decreaseNotificationOffset(popup)
+            })
+            
+            popup.open();
+    }
 
     anchors.fill: parent
 
 	MainViewModel {
         id: viewModel
+        onClipboardChanged: function(message) {
+            showSimplePopup(message)
+        }
+
     }
 
     PushNotificationManager {
@@ -34,12 +62,11 @@ Rectangle {
             popup.onAccept = function () {
                 Utils.navigateToDownloads();
             }
-            main.openedNotifications++;
+            increaseNotificationOffset(popup)
             popup.closed.connect(function() {
-                main.openedNotifications--;
+                decreaseNotificationOffset(popup);
             })
             
-            popup.verticalOffset = (main.openedNotifications - 1) * 200;
             popup.open();
         }
     }
@@ -433,7 +460,6 @@ Rectangle {
 
     Component.onCompleted: {
         updateItem("wallet")
-        main.Window.window.closing.connect(onClosing)
     }
 
     Component.onDestruction: {

@@ -3102,5 +3102,9 @@ Update your settings and try again.</source>
         <source>Offline transaction failed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="notification-address-copied">
+        <source>Address copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

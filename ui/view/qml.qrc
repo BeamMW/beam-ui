@@ -340,5 +340,6 @@
         <file>assets/icon-notifications-failed-sent-privacy.svg</file>
         <file>assets/icon-notifications-received-privacy.svg</file>
         <file>assets/icon-notifications-sent-privacy.svg</file>
+        <file>controls/SimpleNotificationPopup.qml</file>
     </qresource>
 </RCC>
