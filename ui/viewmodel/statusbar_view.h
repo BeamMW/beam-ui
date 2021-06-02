@@ -63,14 +63,13 @@ public:
     void setWalletStatusErrorMsg(const QString& value);
 
 public slots:
-
     void onNodeConnectionChanged(bool isNodeConnected);
     void onGetWalletError(beam::wallet::ErrorType error);
     void onSyncProgressUpdated(int done, int total);
     void onNodeSyncProgressUpdated(int done, int total);
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
-    void onGetCoinClientError(const beam::bitcoin::IBridge::ErrorType& error);
-    void onGetCoinClientError(const beam::ethereum::IBridge::ErrorType& error);
+    void onGetCoinClientStatus(beam::bitcoin::Client::Status status);
+    void onGetCoinClientStatus(beam::ethereum::Client::Status status);
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
 signals:
@@ -88,7 +87,39 @@ signals:
 
 private:
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    template <typename TStatus>
+    void onGetCoinClientStatusImpl(TStatus status)
+    {
+        static_assert(std::is_same_v<TStatus, beam::bitcoin::Client::Status> ||
+                      std::is_same_v<TStatus, beam::ethereum::Client::Status>);
+        if (status == TStatus::Failed)
+        {
+            m_isCoinClientFailed = true;
+            setIsConnectionTrusted(false);
+        }
+        else
+        {
+            m_isCoinClientFailed = false;
+            setIsConnectionTrusted(m_model.isConnectionTrusted());
+            if (status == TStatus::Connecting)
+            {
+                if constexpr (std::is_same_v<TStatus, beam::bitcoin::Client::Status>)
+                {
+                    recheckCoinClients();
+                }
+                else if constexpr (std::is_same_v<TStatus, beam::ethereum::Client::Status>)
+                {
+                    recheckEthClient();
+                }
+            }
+        }
+
+        emit isCoinClientFailedChanged();
+        emit coinClientErrorMsgChanged();
+    }
     std::string generateCoinClientErrorMsg() const;
+    void recheckCoinClients(bool reconnect = false);
+    void recheckEthClient(bool reconnect = false);
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
     WalletModel& m_model;
 

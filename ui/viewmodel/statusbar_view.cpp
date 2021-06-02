@@ -36,37 +36,8 @@ StatusbarViewModel::StatusbarViewModel()
 
 {
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
-    for (int32_t i = static_cast<int32_t>(AtomicSwapCoin::Bitcoin);
-         i < static_cast<int32_t>(AtomicSwapCoin::Unknown);
-         ++i)
-    {
-        auto coinClient = AppModel::getInstance().getSwapCoinClient(static_cast<AtomicSwapCoin>(i));
-        if (coinClient)
-        {
-            connect(coinClient.get(), SIGNAL(gotConnectionError(const beam::bitcoin::IBridge::ErrorType&)),
-                SLOT(onGetCoinClientError(const beam::bitcoin::IBridge::ErrorType&)));
-
-            const auto& settings = coinClient->GetSettings();
-            if (settings.IsActivated())
-            {
-                coinClient->GetAsync()->GetBalance();
-                onGetCoinClientError(coinClient->getConnectionError());
-            }
-        }
-    }
-
-    auto ethClient = AppModel::getInstance().getSwapEthClient();
-    if (ethClient)
-    {
-        connect(ethClient.get(), SIGNAL(gotConnectionError(const beam::ethereum::IBridge::ErrorType&)),
-                SLOT(onGetCoinClientError(const beam::ethereum::IBridge::ErrorType&)));
-        const auto& settings = ethClient->GetSettings();
-        if (settings.IsActivated())
-        {
-            ethClient->GetAsync()->EstimateGasPrice();
-            onGetCoinClientError(ethClient->getConnectionError());
-        }
-    }
+    recheckCoinClients(true);
+    recheckEthClient(true);
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
     connect(&m_model, SIGNAL(nodeConnectionChanged(bool)),
@@ -202,7 +173,11 @@ void StatusbarViewModel::setWalletStatusErrorMsg(const QString& value)
 
 void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
 {
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    setIsConnectionTrusted(m_model.isConnectionTrusted() && !m_isCoinClientFailed);
+#else
     setIsConnectionTrusted(m_model.isConnectionTrusted());
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
     if (isNodeConnected == getIsOnline())
     {
@@ -267,37 +242,14 @@ void StatusbarViewModel::onNodeSyncProgressUpdated(int done, int total)
 }
 
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
-void StatusbarViewModel::onGetCoinClientError(const beam::bitcoin::IBridge::ErrorType& error)
+void StatusbarViewModel::onGetCoinClientStatus(beam::bitcoin::Client::Status status)
 {
-    if (error == beam::bitcoin::IBridge::ErrorType::None)
-    {
-        m_isCoinClientFailed = false;
-        setIsConnectionTrusted(m_model.isConnectionTrusted());
-    }
-    else
-    {
-        m_isCoinClientFailed = true;
-        setIsConnectionTrusted(false);
-    }
-    emit isCoinClientFailedChanged();
-    emit coinClientErrorMsgChanged();
+    onGetCoinClientStatusImpl(status);
 }
 
-void StatusbarViewModel::onGetCoinClientError(const beam::ethereum::IBridge::ErrorType& error)
+void StatusbarViewModel::onGetCoinClientStatus(beam::ethereum::Client::Status status)
 {
-    if (error == beam::ethereum::IBridge::ErrorType::None)
-    {
-        m_isCoinClientFailed = false;
-        setIsConnectionTrusted(m_model.isConnectionTrusted());
-    }
-    else
-    {
-        m_isCoinClientFailed = true;
-        setIsConnectionTrusted(false);
-        emit coinClientErrorMsgChanged();
-    }
-    emit isCoinClientFailedChanged();
-    emit coinClientErrorMsgChanged();
+    onGetCoinClientStatusImpl(status);
 }
 
 std::string StatusbarViewModel::generateCoinClientErrorMsg() const
@@ -366,4 +318,47 @@ std::string StatusbarViewModel::generateCoinClientErrorMsg() const
 
     return  ss.str();
 }
+
+void StatusbarViewModel::recheckCoinClients(bool reconnect /* = false*/)
+{
+    for (int32_t i = static_cast<int32_t>(AtomicSwapCoin::Bitcoin);
+         i < static_cast<int32_t>(AtomicSwapCoin::Unknown);
+         ++i)
+    {
+        auto coinClient = AppModel::getInstance().getSwapCoinClient(static_cast<AtomicSwapCoin>(i));
+        if (coinClient)
+        {
+            if (reconnect)
+            {
+                connect(coinClient.get(), SIGNAL(gotStatus(beam::bitcoin::Client::Status)), this,
+                        SLOT(onGetCoinClientStatus(beam::bitcoin::Client::Status)));
+            }
+
+            const auto& settings = coinClient->GetSettings();
+            if (settings.IsActivated())
+            {
+                coinClient->GetAsync()->GetStatus();
+            }
+        }
+    }
+}
+
+void StatusbarViewModel::recheckEthClient(bool reconnect /* = false*/)
+{
+    auto ethClient = AppModel::getInstance().getSwapEthClient();
+    if (ethClient)
+    {
+        if (reconnect)
+        {
+            connect(ethClient.get(), SIGNAL(gotStatus(beam::ethereum::Client::Status)),
+                    SLOT(onGetCoinClientStatus(beam::ethereum::Client::Status)));
+        }
+        const auto& settings = ethClient->GetSettings();
+        if (settings.IsActivated())
+        {
+            ethClient->GetAsync()->GetStatus();
+        }
+    }
+}
+
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
