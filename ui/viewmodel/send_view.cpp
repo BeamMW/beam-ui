@@ -43,6 +43,7 @@ namespace
 
 SendViewModel::SendViewModel()
     : _walletModel(*AppModel::getInstance().getWalletModel())
+    , _settings(AppModel::getInstance().getSettings())
     , _amgr(AppModel::getInstance().getAssets())
 {
     connect(&_walletModel,           &WalletModel::walletStatusChanged,        this,  &SendViewModel::balanceChanged);
@@ -313,6 +314,15 @@ bool SendViewModel::getCanChoose() const
     using namespace beam::wallet;
     const auto type = getTokenValid() ? GetAddressType(_token.toStdString()) : TxAddressType::Unknown;
     return type == TxAddressType::Offline;
+}
+
+uint SendViewModel::getCurrencyChoiceIdx() const
+{
+    return _settings.getLastCurrencyChoice();
+}
+void SendViewModel::setCurrencyChoiceIdx(uint idx)
+{
+    _settings.setLastCurrencyChoice(idx);
 }
 
 bool SendViewModel::getChoiceOffline() const
@@ -596,6 +606,15 @@ void SendViewModel::sendMoney()
     }
 
     params.SetParameter(TxParameterID::OriginalToken, _token.toStdString());
+
+    beam::AmountBig::Type amount = getTotalSpend();
+    beam::AmountBig::Type available = _walletModel.getAvailable(m_Csi.m_assetID);
+
+    if (amount >= available)
+    {
+        _settings.setLastCurrencyChoice(0);
+    }
+
     _walletModel.getAsync()->startTransaction(std::move(params));
 }
 

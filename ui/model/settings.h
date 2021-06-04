@@ -105,6 +105,9 @@ public:
     uint32_t getMinConfirmations() const;
     void setMinConfirmations(uint32_t value);
 
+    uint getLastCurrencyChoice() const;
+    void setLastCurrencyChoice(uint idx);
+
 public:
     static const char* WalletCfg;
     static const char* LogsFolder;

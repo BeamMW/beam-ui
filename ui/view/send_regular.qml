@@ -256,6 +256,7 @@ ColumnLayout {
                                     color:             Style.accent_outgoing
                                     Layout.fillWidth:  true
                                     currencies:        viewModel.assetsList
+                                    currencyIdx:       viewModel.currencyChoiceIdx
                                     multi:             viewModel.assetsList.length > 1
 
                                     error: {
@@ -269,8 +270,9 @@ ColumnLayout {
                                     }
 
                                     onCurrencyIdxChanged: function () {
-                                        var idx = sendAmountInput.currencyIdx
-                                        control.assetId = viewModel.assetsList[idx].assetId
+                                        var idx = sendAmountInput.currencyIdx;
+                                        control.assetId = viewModel.assetsList[idx].assetId;
+                                        viewModel.currencyChoiceIdx = idx;
                                     }
                                 }
 
