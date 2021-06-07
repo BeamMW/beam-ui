@@ -688,7 +688,7 @@ Control {
                     icon.source: "qrc:/assets/icon-delete.svg"
                     enabled: txContextMenu.deleteEnabled
                     onTriggered: {
-                        transactionsTable.showDeleteTransactionDialog(contractTxContextMenu.txID);
+                        transactionsTable.showDeleteTransactionDialog(txContextMenu.txID);
                     }
                 }
             }
