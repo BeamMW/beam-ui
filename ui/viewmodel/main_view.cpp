@@ -14,6 +14,9 @@
 
 #include "main_view.h"
 #include "model/app_model.h"
+#include <QApplication>
+#include <QClipboard>
+#include "qml_globals.h"
 
 namespace
 {
@@ -49,6 +52,7 @@ MainViewModel::MainViewModel()
     connect(walletModelPtr, SIGNAL(hideTrezorMessage()), this, SIGNAL(hideTrezorMessage()));
     connect(walletModelPtr, SIGNAL(showTrezorError(const QString&)), this, SIGNAL(showTrezorError(const QString&)));
 #endif
+    connect(QApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(onClipboardDataChanged()));
 
     onLockTimeoutChanged();
     m_settings.maxPrivacyLockTimeLimitInit();
@@ -78,6 +82,16 @@ void MainViewModel::onLockTimeoutChanged()
     else
     {
         m_timer.stop();
+    }
+}
+
+void MainViewModel::onClipboardDataChanged()
+{
+    auto text = QApplication::clipboard()->text();
+    if (QMLGlobals::isToken(text))
+    {
+        //% "Address copied to clipboard"
+        emit clipboardChanged(qtTrId("notification-address-copied"));
     }
 }
 

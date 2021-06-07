@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.0
 import Beam.Wallet 1.0
 import "."
 
-Dialog {
+CustomDialog {
 	property var settingsViewModel: function() {
 		return {
 			checkWalletPassword: function() {
@@ -45,11 +45,6 @@ Dialog {
 	visible:        false
 	parent:         Overlay.overlay
 	padding:        30
-
-	background: Rectangle {
-		radius: 10
-        color: Style.background_popup
-    }
 
     contentItem: ColumnLayout {
 		spacing: 30

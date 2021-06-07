@@ -622,10 +622,19 @@ Control {
             }
 
             function showContextMenu(row) {
-                txContextMenu.cancelEnabled = transactionsTable.model.getRoleValue(row, "isCancelAvailable");
-                txContextMenu.deleteEnabled = transactionsTable.model.getRoleValue(row, "isDeleteAvailable");
-                txContextMenu.txID = transactionsTable.model.getRoleValue(row, "rawTxID");
-                txContextMenu.popup();
+                if (transactionsTable.model.getRoleValue(row, "isContractTx"))
+                {
+                    contractTxContextMenu.deleteEnabled = transactionsTable.model.getRoleValue(row, "isDeleteAvailable");
+                    contractTxContextMenu.txID = transactionsTable.model.getRoleValue(row, "rawTxID");
+                    contractTxContextMenu.popup();
+                }
+                else
+                {
+                    txContextMenu.cancelEnabled = transactionsTable.model.getRoleValue(row, "isCancelAvailable");
+                    txContextMenu.deleteEnabled = transactionsTable.model.getRoleValue(row, "isDeleteAvailable");
+                    txContextMenu.txID = transactionsTable.model.getRoleValue(row, "rawTxID");
+                    txContextMenu.popup();
+                }
             }
 
             Component {
@@ -647,6 +656,13 @@ Control {
                         }
                     }
                 }
+            }
+
+            function showDeleteTransactionDialog(txId) {
+                //% "The transaction will be deleted. This operation can not be undone"
+                deleteTransactionDialog.text = qsTrId("wallet-txs-delete-message");
+                deleteTransactionDialog.txID = txId;
+                deleteTransactionDialog.open();
             }
 
             ContextMenu {
@@ -672,10 +688,25 @@ Control {
                     icon.source: "qrc:/assets/icon-delete.svg"
                     enabled: txContextMenu.deleteEnabled
                     onTriggered: {
-                        //% "The transaction will be deleted. This operation can not be undone"
-                        deleteTransactionDialog.text = qsTrId("wallet-txs-delete-message");
-                        deleteTransactionDialog.txID = txContextMenu.txID
-                        deleteTransactionDialog.open();
+                        transactionsTable.showDeleteTransactionDialog(contractTxContextMenu.txID);
+                    }
+                }
+            }
+
+            ContextMenu {
+                id: contractTxContextMenu
+                modal: true
+                dim: false
+                property bool deleteEnabled
+                property var txID
+
+                Action {
+                    //% "Delete"
+                    text: qsTrId("general-delete")
+                    icon.source: "qrc:/assets/icon-delete.svg"
+                    enabled: contractTxContextMenu.deleteEnabled
+                    onTriggered: {
+                        transactionsTable.showDeleteTransactionDialog(contractTxContextMenu.txID);
                     }
                 }
             }

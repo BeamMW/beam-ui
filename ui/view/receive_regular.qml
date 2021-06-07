@@ -258,6 +258,7 @@ ColumnLayout {
                                 color:            viewModel.commentValid ? Style.content_main : Style.validator_error
                                 focus:            true
                                 text:             viewModel.comment
+                                placeholderText:  qsTrId("general-comment-local")
                                 maximumLength:    BeamGlobals.maxCommentLength()
                             }
                  

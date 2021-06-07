@@ -3,7 +3,7 @@ import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.0
 import "."
 
-Dialog {
+CustomDialog {
     id: control
 
     property alias text: messageText.text
@@ -32,12 +32,6 @@ Dialog {
     parent:  Overlay.overlay
     visible: false
     modal:   true
-
-    background: Rectangle {
-        radius: 10
-        color: Style.background_popup
-        anchors.fill: parent
-    }
 
     header: SFText {
         text: control.title

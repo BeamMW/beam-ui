@@ -36,12 +36,14 @@ signals:
     void showTrezorError(const QString&);
     void unsafeTxCountChanged();
     void unreadNotificationsChanged();
+    void clipboardChanged(const QString& message);
 
 public slots:
 	void update(int page);
     void lockWallet();
     void onLockTimeoutChanged();
-
+private slots:
+    void onClipboardDataChanged();
 private:
     int getUnsafeTxCount() const;
     int getUnreadNotifications() const;

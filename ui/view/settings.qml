@@ -141,11 +141,15 @@ ColumnLayout {
                     connectionErrorMsg: status_bar.error_msg
 
                     function getStatus() {
-                        var status = status_bar.status;
-                        if (status == "error") return "error"
-                        if (status == "updating") return "connected";
-                        if (status == "online") return "connected";
-                        return "disconnected"
+                        var statusBarModel = status_bar.model;
+                        if (statusBarModel.isFailedStatus)
+                            return "error";
+                        else if (statusBarModel.isSyncInProgress)
+                            return "connected";
+                        else if (statusBarModel.isOnline)
+                            return "connected";
+                        else
+                            return "disconnected";
                     }
                 }
 

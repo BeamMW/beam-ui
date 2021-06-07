@@ -3,7 +3,7 @@ import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.0
 import "."
 
-Dialog {
+CustomDialog {
     id: control
 
     width:       800
@@ -81,12 +81,6 @@ Dialog {
             }
         }
         isAllWordsAllowed = true;
-    }
-
-    background: Rectangle {
-        radius:       10
-        color:        Style.background_popup
-        anchors.fill: parent
     }
 
     contentItem: 

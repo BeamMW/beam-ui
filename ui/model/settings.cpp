@@ -41,6 +41,7 @@ namespace
     const char* kIsAlowedBeamMWLink = "beam_mw_links_allowed";
     const char* kshowSwapBetaWarning = "show_swap_beta_warning";
     const char* kRateUnit = "rateUnit";
+    const char* kLastCurrencyChoice = "lastCurrencyChoice";
 
     const char* kLocalNodeRun = "localnode/run";
     const char* kLocalNodePort = "localnode/port";
@@ -732,3 +733,16 @@ void WalletSettings::setMinConfirmations(uint32_t value)
         }
     }
 }
+
+uint WalletSettings::getLastCurrencyChoice() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kLastCurrencyChoice, 0).toUInt();
+}
+
+void WalletSettings::setLastCurrencyChoice(uint idx)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kLastCurrencyChoice, idx);
+}
+

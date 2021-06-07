@@ -3,7 +3,6 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.3
-//import QtQuick.Shapes 1.11
 import "controls"
 import "utils.js" as Utils
 import Beam.Wallet 1.0
@@ -104,6 +103,7 @@ Item {
     StatusBar {
         id: status_bar
         model: statusbarModel
+        z: 33
     }
 
     Component {

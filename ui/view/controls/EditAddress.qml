@@ -5,7 +5,7 @@ import Beam.Wallet 1.0
 import "../utils.js" as Utils
 import "."
 
-Dialog {
+CustomDialog {
 	id:      control
 	modal:   true
 	x:       (parent.width - width) / 2
@@ -24,11 +24,6 @@ Dialog {
     property bool    neverExpires:  expiration.getTime() == (new Date(4294967295000)).getTime()
     property bool    commentValid:  comment == "" || comment == addressItem.name || viewModel.commentValid(comment)
     property bool    extended:      false
-
-    background: Rectangle {
-		radius: 10
-        color:  Style.background_popup
-    }
 
     contentItem: Item { ColumnLayout {
         spacing: 0

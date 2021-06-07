@@ -11,6 +11,8 @@ Item {
     property var model
 
     function getStatus() {
+        if (model.isCoinClientFailed)
+            return "error_3rd";
         if (model.isFailedStatus)
             return "error";
         else if (model.isSyncInProgress)
@@ -22,12 +24,12 @@ Item {
     }
     
     property string status: getStatus()
-
-    state: "connecting"
+    state: getStatus()
 
     property int indicator_radius: 5
     property Item indicator: online_indicator
     property string error_msg: model.walletStatusErrorMsg
+    property string error_msg_3rd_client: model.coinClientErrorMsg
 
     function setIndicator(indicator) {
         if (indicator !== rootControl.indicator) {
@@ -150,10 +152,22 @@ Item {
         value: model.nodeSyncProgress / 100
     }
 
+    LinkButton {
+        text: "Change settings"
+        visible: model.isCoinClientFailed || model.isFailedStatus
+        anchors.top: parent.top
+        anchors.left: status_text.right
+        anchors.leftMargin: 5
+        anchors.topMargin: -1
+        fontSize: 12
+        onClicked: {
+            main.openSwapSettings(model.coinWithErrorLabel());
+        }
+    }
+
     states: [
         State {
             name: "connecting"
-            when: (rootControl.status === "connecting")
             PropertyChanges {
                 target: status_text;
                 //% "connecting"
@@ -168,7 +182,6 @@ Item {
         },
         State {
             name: "online"
-            when: (rootControl.status === "online")
             PropertyChanges {
                 target: status_text;
                 //% "online"
@@ -184,7 +197,6 @@ Item {
         },
         State {
             name: "updating"
-            when: (rootControl.status === "updating")
             PropertyChanges {
                 target: status_text;
                 //% "updating"
@@ -199,10 +211,23 @@ Item {
         },
         State {
             name: "error"
-            when: (rootControl.status === "error")
             PropertyChanges {
                 target: status_text;
                 text: rootControl.error_msg + model.branchName
+            }
+            StateChangeScript {
+                name: "errorScript"
+                script: {
+                    online_indicator.color = "#ff746b";
+                    rootControl.setIndicator(online_indicator);
+                }
+            }
+        },
+         State {
+            name: "error_3rd"
+            PropertyChanges {
+                target: status_text;
+                text: rootControl.error_msg_3rd_client + model.branchName
             }
             StateChangeScript {
                 name: "errorScript"

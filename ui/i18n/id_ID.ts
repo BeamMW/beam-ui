@@ -594,7 +594,8 @@
         <translation>Koneksi berakhir</translation>
     </message>
     <message id="wallet-model-connection-refused-error">
-        <source>Cannot connect to node</source>
+        <source>Connection to %1 node lost</source>
+        <oldsource>Cannot connect to node</oldsource>
         <translation type="unfinished">Cannot connect to node</translation>
     </message>
     <message id="wallet-model-connection-host-unreach-error">
@@ -642,7 +643,8 @@
         <translation type="unfinished">SQLite database file (*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
-        <source>Wallet is not connected to the node</source>
+        <source>Lost connection to nodes: </source>
+        <oldsource>Wallet is not connected to the node</oldsource>
         <translation type="unfinished">Wallet is not connected to the node</translation>
     </message>
     <message id="tx-failure-undefined">
@@ -3056,6 +3058,54 @@ Update your settings and try again.</source>
     <message id="general-copy-and-close">
         <source>copy and close</source>
         <translation type="unfinished">copy and close</translation>
+    </message>
+    <message id="settings-remote-node-address-placeholder">
+        <source>Please enter the address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-local-node-port-placeholder">
+        <source>Please enter the port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-export">
+        <source>Export wallet data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-import">
+        <source>Import wallet data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-available">
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-maxp-transaction-sent">
+        <source>Max Privacy transaction sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-maxp-transaction-received">
+        <source>Max Privacy transaction received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-offline-transaction-sent">
+        <source>Transaction sent to offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-offline-transaction-received">
+        <source>Transaction received from offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-maxp-transaction-failed">
+        <source>Max Privacy transaction failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-offline-transaction-failed">
+        <source>Offline transaction failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-address-copied">
+        <source>Address copied to clipboard</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

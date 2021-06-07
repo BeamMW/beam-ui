@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.11
 import Beam.Wallet 1.0
 import "."
 
-Dialog {
+CustomDialog {
     property PaymentInfoItem model
     property bool shouldVerify: false
     
@@ -31,11 +31,6 @@ Dialog {
         {
             paymentProofInput.forceActiveFocus();
         }
-    }
-
-    background: Rectangle {
-        radius: 10
-        color: Style.background_popup
     }
 
     contentItem: Item {

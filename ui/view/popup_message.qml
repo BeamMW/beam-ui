@@ -7,7 +7,7 @@ import QtQuick.Layouts 1.3
 import Beam.Wallet 1.0
 import "controls"
 
-Dialog {
+CustomDialog {
     property string message
 
     onVisibleChanged: {
@@ -24,12 +24,6 @@ Dialog {
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
     visible: false
-
-    background: Rectangle {
-        radius: 10
-        color: Style.background_popup
-        anchors.fill: parent
-    }
 
     contentItem: Column {
         anchors.fill: parent

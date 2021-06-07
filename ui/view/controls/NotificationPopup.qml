@@ -11,6 +11,7 @@ Popup {
     property alias message: contentText.text
     property alias acceptButtonText: acceptButton.text
     property var verticalOffset: 0
+    property var nextVerticalOffset: 0
     property var onCancel: function () {}
     property var onAccept: function () {}
 
@@ -31,14 +32,14 @@ Popup {
         id: showAnimation
         
         NumberAnimation { target: popup; property: "opacity"; from: 0.0; to: 1.0; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: popup; property: "height"; from: 0.0; to: 198; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: popup; property: "height"; from: 0.0; to: height; easing.type: Easing.InOutQuad }
     }
   
     ParallelAnimation {
         id: hideAnimation
         
         NumberAnimation { target: popup; property: "opacity"; from: 1.0; to: 0.0; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: popup; property: "height"; from: 198; to: 0.0; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: popup; property: "height"; from: height; to: 0.0; easing.type: Easing.InOutQuad }
         onStopped: popup.close()
     }
 

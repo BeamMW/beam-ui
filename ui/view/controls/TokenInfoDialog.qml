@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.11
 import Beam.Wallet 1.0
 import "."
 
-Dialog {
+CustomDialog {
     id: dialog
     modal: true
         
@@ -26,12 +26,6 @@ Dialog {
 
     onOpened: {
         forceActiveFocus();
-    }
-
-    background: Rectangle {
-        radius: 10
-        color: Style.background_popup
-        anchors.fill: parent
     }
 
     contentItem: Item {

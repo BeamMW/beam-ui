@@ -3,7 +3,7 @@ import QtQuick.Controls 2.3
 import "."
 import Beam.Wallet 1.0
 
-Dialog {
+CustomDialog {
 	id: control
 
 	property var settingsViewModel: function() {
@@ -22,12 +22,6 @@ Dialog {
 	x: (parent.width - width) / 2
 	y: (parent.height - height) / 2
 	visible: false
-
-	background: Rectangle {
-		radius: 10
-        color: Style.background_popup
-        anchors.fill: parent            
-    }
 
     contentItem: Column {
     	anchors.fill: parent

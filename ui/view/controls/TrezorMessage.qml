@@ -3,7 +3,7 @@ import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.0
 import "."
 
-Dialog {
+CustomDialog {
     id: control
 
     property string message
@@ -13,12 +13,6 @@ Dialog {
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
     visible: false
-
-    background: Rectangle {
-        radius: 10
-        color: Style.background_popup
-        anchors.fill: parent
-    }
 
     SFText {
         anchors.fill: parent

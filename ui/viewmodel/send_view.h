@@ -23,27 +23,28 @@ class SendViewModel: public QObject
     Q_OBJECT
     Q_PROPERTY(QList<QMap<QString, QVariant>> assetsList READ getAssetsList NOTIFY assetsListChanged)
 
-    Q_PROPERTY(int      assetId          READ getAssetId          WRITE setAssetId         NOTIFY assetIdChanged)
-    Q_PROPERTY(QString  assetRemaining   READ getAssetRemaining                            NOTIFY balanceChanged)
-    Q_PROPERTY(QString  beamRemaining    READ getBeamRemaining                             NOTIFY balanceChanged)
-    Q_PROPERTY(QString  changeBeam       READ getChangeBeam                                NOTIFY balanceChanged)
-    Q_PROPERTY(QString  changeAsset      READ getChangeAsset                               NOTIFY balanceChanged)
-    Q_PROPERTY(QString  fee              READ getFee                                       NOTIFY balanceChanged)
-    Q_PROPERTY(QString  feeRateUnit      READ getFeeRateUnit                               NOTIFY feeRateChanged)
-    Q_PROPERTY(QString  feeRate          READ getFeeRate                                   NOTIFY feeRateChanged)
-    Q_PROPERTY(QString  comment          READ getComment          WRITE setComment         NOTIFY commentChanged)
-    Q_PROPERTY(QString  sendAmount       READ getSendAmount       WRITE setSendAmount      NOTIFY balanceChanged)
-    Q_PROPERTY(bool     isEnough         READ getIsEnough                                  NOTIFY balanceChanged)
-    Q_PROPERTY(bool     canSend          READ canSend                                      NOTIFY canSendChanged)
-    Q_PROPERTY(QString  maxSendAmount    READ getMaxSendAmount                             NOTIFY balanceChanged)
-    Q_PROPERTY(bool     tokenValid       READ getTokenValid                                NOTIFY tokenChanged)
-    Q_PROPERTY(QString  token            READ getToken            WRITE setToken           NOTIFY tokenChanged)
-    Q_PROPERTY(QString  newTokenMsg      READ getNewTokenMsg                               NOTIFY tokenChanged)
-    Q_PROPERTY(QString  tokenType        READ getTokenType                                 NOTIFY tokenChanged)
-    Q_PROPERTY(bool     canChoose        READ getCanChoose                                 NOTIFY tokenChanged)
-    Q_PROPERTY(QString  sendType         READ getSendType                                  NOTIFY choiceChanged)
-    Q_PROPERTY(bool     sendTypeOnline   READ getSendTypeOnline                            NOTIFY choiceChanged)
-    Q_PROPERTY(bool     choiceOffline    READ getChoiceOffline    WRITE setChoiceOffline   NOTIFY choiceChanged)
+    Q_PROPERTY(int      assetId           READ getAssetId           WRITE setAssetId             NOTIFY assetIdChanged)
+    Q_PROPERTY(QString  assetRemaining    READ getAssetRemaining                                 NOTIFY balanceChanged)
+    Q_PROPERTY(QString  beamRemaining     READ getBeamRemaining                                  NOTIFY balanceChanged)
+    Q_PROPERTY(QString  changeBeam        READ getChangeBeam                                     NOTIFY balanceChanged)
+    Q_PROPERTY(QString  changeAsset       READ getChangeAsset                                    NOTIFY balanceChanged)
+    Q_PROPERTY(QString  fee               READ getFee                                            NOTIFY balanceChanged)
+    Q_PROPERTY(QString  feeRateUnit       READ getFeeRateUnit                                    NOTIFY feeRateChanged)
+    Q_PROPERTY(QString  feeRate           READ getFeeRate                                        NOTIFY feeRateChanged)
+    Q_PROPERTY(QString  comment           READ getComment           WRITE setComment             NOTIFY commentChanged)
+    Q_PROPERTY(QString  sendAmount        READ getSendAmount        WRITE setSendAmount          NOTIFY balanceChanged)
+    Q_PROPERTY(bool     isEnough          READ getIsEnough                                       NOTIFY balanceChanged)
+    Q_PROPERTY(bool     canSend           READ canSend                                           NOTIFY canSendChanged)
+    Q_PROPERTY(QString  maxSendAmount     READ getMaxSendAmount                                  NOTIFY balanceChanged)
+    Q_PROPERTY(bool     tokenValid        READ getTokenValid                                     NOTIFY tokenChanged)
+    Q_PROPERTY(QString  token             READ getToken             WRITE setToken               NOTIFY tokenChanged)
+    Q_PROPERTY(QString  newTokenMsg       READ getNewTokenMsg                                    NOTIFY tokenChanged)
+    Q_PROPERTY(QString  tokenType         READ getTokenType                                      NOTIFY tokenChanged)
+    Q_PROPERTY(bool     canChoose         READ getCanChoose                                      NOTIFY tokenChanged)
+    Q_PROPERTY(QString  sendType          READ getSendType                                       NOTIFY choiceChanged)
+    Q_PROPERTY(bool     sendTypeOnline    READ getSendTypeOnline                                 NOTIFY choiceChanged)
+    Q_PROPERTY(bool     choiceOffline     READ getChoiceOffline     WRITE setChoiceOffline       NOTIFY choiceChanged)
+    Q_PROPERTY(uint     currencyChoiceIdx READ getCurrencyChoiceIdx WRITE setCurrencyChoiceIdx   NOTIFY assetIdChanged)
 
 public:
     SendViewModel();
@@ -82,6 +83,9 @@ public:
     [[nodiscard]] bool getSendTypeOnline() const;
     [[nodiscard]] bool getCanChoose() const;
 
+    [[nodiscard]] uint getCurrencyChoiceIdx() const;
+    void setCurrencyChoiceIdx(uint idx);
+
 public:
     Q_INVOKABLE void setMaxPossibleAmount();
     Q_INVOKABLE void sendMoney();
@@ -116,6 +120,7 @@ private:
     beam::PeerID               _receiverIdentity;
     QString                    _comment;
     WalletModel&               _walletModel;
+    WalletSettings&             _settings;
     AssetsManager::Ptr         _amgr;
     ExchangeRatesManager       _exchangeRatesManager;
     QString                    _token;

@@ -332,6 +332,60 @@ ColumnLayout {
             action:     navigateToTransaction,
             icon:       "qrc:/assets/icon-notifications-sent.svg"
         },
+        offlineReceived: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-received-offline.svg"
+        },
+        offlineSent: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-sent-offline.svg"
+        },
+        offlineFailedToSend: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-failed-sent-offline.svg"
+        },
+        pubOfflineReceived: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-received-offline.svg"
+        },
+        pubOfflineSent: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-sent-offline.svg"
+        },
+        pubOfflineFailedToSend: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-failed-sent-offline.svg"
+        },
+        maxpReceived: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-received-privacy.svg"
+        },
+        maxpSent: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-sent-privacy.svg"
+        },
+        maxpFailedToSend: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-failed-sent-privacy.svg"
+        },
         failedToSend: {
             label:      labels.detailsLabel,
             actionIcon: icons.detailsIcon,
