@@ -17,11 +17,10 @@ TableView {
 
     // Scrollbar fine-tuning
     __scrollBarTopMargin: tableView.headerHeight
-    verticalScrollBarPolicy: __scroller.contentHeight > __scroller.availableHeight ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAlwaysOff
+    verticalScrollBarPolicy: hoverArea.containsMouse && __scroller.contentHeight > __scroller.availableHeight ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAlwaysOff
 
     style: TableViewStyle {
-        // #607 correct scroll behaviour implemented by #512
-        transientScrollBars: false
+        transientScrollBars: !hoverArea.containsMouse
         minimumHandleLength: 30
 
         handle: Rectangle {
@@ -141,6 +140,15 @@ TableView {
 
             text: styleData.value
         }
+    }
+
+    MouseArea {
+        id:               hoverArea
+        anchors.fill:     parent
+        acceptedButtons:  Qt.NoButton
+        hoverEnabled:     true
+        propagateComposedEvents: true
+        preventStealing: true
     }
 
     Component.onCompleted: {
