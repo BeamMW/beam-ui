@@ -543,10 +543,10 @@ else()
             install(PROGRAMS ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} DESTINATION .)
         else()
             install(FILES ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION .)
-            
+            install(FILES ${CMAKE_PREFIX_PATH}/bin/libEGL.dll DESTINATION .)
+            install(FILES ${CMAKE_PREFIX_PATH}/bin/libGLESv2.dll DESTINATION .)
         endif()
-        install(FILES ${CMAKE_PREFIX_PATH}/bin/libEGL.dll DESTINATION .)
-        install(FILES ${CMAKE_PREFIX_PATH}/bin/libGLESv2.dll DESTINATION .)
+        
         install(FILES ${OPENSSL_ROOT_DIR}/bin/libcrypto-1_1-x64.dll DESTINATION .)
         install(FILES ${OPENSSL_ROOT_DIR}/bin/libssl-1_1-x64.dll DESTINATION .)
         install(FILES beam-wallet.cfg DESTINATION .)
