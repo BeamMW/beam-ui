@@ -427,10 +427,18 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
 
         if (_receiverIdentity != beam::Zero)
         {
-            if (_receiverIdentity != address->m_Identity)
+            if (address->m_Identity != beam::Zero)
             {
-                assert(!"unexpected identity in send::onGetAddressReturned");
-                throw std::runtime_error("unexpected identity in send::onGetAddressReturned");
+                if (_receiverIdentity != address->m_Identity)
+                {
+                    assert(!"unexpected identity in send::onGetAddressReturned");
+                    throw std::runtime_error("unexpected identity in send::onGetAddressReturned");
+                }
+            }
+            else
+            {
+                // old SBBS address existed in address book, new token pasted for the same sbbs address
+                assert(type == TxAddressType::Regular);
             }
         }
         else
