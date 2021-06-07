@@ -44,7 +44,6 @@ class SendViewModel: public QObject
     Q_PROPERTY(QString  sendType          READ getSendType                                       NOTIFY choiceChanged)
     Q_PROPERTY(bool     sendTypeOnline    READ getSendTypeOnline                                 NOTIFY choiceChanged)
     Q_PROPERTY(bool     choiceOffline     READ getChoiceOffline     WRITE setChoiceOffline       NOTIFY choiceChanged)
-    Q_PROPERTY(uint     currencyChoiceIdx READ getCurrencyChoiceIdx WRITE setCurrencyChoiceIdx   NOTIFY assetIdChanged)
 
 public:
     SendViewModel();
@@ -83,9 +82,6 @@ public:
     [[nodiscard]] bool getSendTypeOnline() const;
     [[nodiscard]] bool getCanChoose() const;
 
-    [[nodiscard]] uint getCurrencyChoiceIdx() const;
-    void setCurrencyChoiceIdx(uint idx);
-
 public:
     Q_INVOKABLE void setMaxPossibleAmount();
     Q_INVOKABLE void sendMoney();
@@ -120,7 +116,7 @@ private:
     beam::PeerID               _receiverIdentity;
     QString                    _comment;
     WalletModel&               _walletModel;
-    WalletSettings&             _settings;
+    WalletSettings&            _settings;
     AssetsManager::Ptr         _amgr;
     ExchangeRatesManager       _exchangeRatesManager;
     QString                    _token;

@@ -59,7 +59,7 @@ Pane {
                     SFText {
                         id:    headerTitle
                         text:  title
-                        color: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 1)
+                        color: Style.content_main
 
                         font {
                             styleName:      "Bold"

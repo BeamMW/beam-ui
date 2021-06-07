@@ -246,67 +246,62 @@ ColumnLayout {
                         Layout.fillWidth: true
 
                         content: ColumnLayout {
+                            spacing: 0
 
-                            RowLayout {
-                                spacing: 7
+                            AmountInput {
+                                id:                sendAmountInput
+                                amount:            viewModel.sendAmount
+                                color:             Style.accent_outgoing
+                                Layout.fillWidth:  true
+                                currencies:        viewModel.assetsList
+                                multi:             viewModel.assetsList.length > 1
 
-                                AmountInput {
-                                    id:                sendAmountInput
-                                    amount:            viewModel.sendAmount
-                                    color:             Style.accent_outgoing
-                                    Layout.fillWidth:  true
-                                    currencies:        viewModel.assetsList
-                                    currencyIdx:       viewModel.currencyChoiceIdx
-                                    multi:             viewModel.assetsList.length > 1
-
-                                    error: {
-                                        if (!viewModel.isEnough)
-                                        {
+                                error: {
+                                    if (!viewModel.isEnough)
+                                    {
                                         var maxAmount = Utils.uiStringToLocale(viewModel.maxSendAmount)
                                         //% "Insufficient funds to complete the transaction. Maximum amount is %1 %2."
                                         return qsTrId("send-no-funds").arg(maxAmount).arg(Utils.limitText(control.sendUnit, 6))
-                                        }
-                                        return ""
                                     }
-
-                                    onCurrencyIdxChanged: function () {
-                                        var idx = sendAmountInput.currencyIdx;
-                                        control.assetId = viewModel.assetsList[idx].assetId;
-                                        viewModel.currencyChoiceIdx = idx;
-                                    }
+                                    return ""
                                 }
 
-                                Connections {
-                                    target: viewModel
-                                    function onSendAmountChanged () {
-                                        sendAmountInput.amount = viewModel.sendAmount
-                                    }
-                                }
-
-                                Binding {
-                                    target:   viewModel
-                                    property: "sendAmount"
-                                    value:    sendAmountInput.amount
+                                onCurrencyIdxChanged: function () {
+                                    var idx = sendAmountInput.currencyIdx
+                                    control.assetId = viewModel.assetsList[idx].assetId
                                 }
                             }
 
-                            RowLayout {
-                                Layout.topMargin: 20
-                                SFText {
-                                    font.pixelSize:   16
-                                    font.styleName:   "Bold"
-                                    font.weight:      Font.Bold
-                                    font.letterSpacing:  3.11
-                                    font.capitalization: Font.AllUppercase
-                                    color:            Style.content_secondary
-                                    //% "Available"
-                                    text:             qsTrId("send-available")
-                                    visible:          text.length > 0
+                            Connections {
+                                target: viewModel
+                                function onSendAmountChanged () {
+                                    sendAmountInput.amount = viewModel.sendAmount
                                 }
                             }
 
+                            Binding {
+                                target:   viewModel
+                                property: "sendAmount"
+                                value:    sendAmountInput.amount
+                            }
+
+                            SFText {
+                                Layout.topMargin:    20
+                                font.pixelSize:      14
+                                font.styleName:      "Bold"
+                                font.weight:         Font.Bold
+                                font.letterSpacing:  3.11
+                                font.capitalization: Font.AllUppercase
+                                color:               Style.content_secondary
+                                //% "Available"
+                                text:             qsTrId("send-available")
+                                visible:          text.length > 0
+                            }
+
                             RowLayout {
-                                spacing: 7
+                                spacing: 0
+                                Layout.topMargin: 10
+
                                 BeamAmount {
                                     Layout.alignment:  Qt.AlignTop | Qt.AlignLeft
                                     Layout.fillWidth:  true
@@ -317,11 +312,12 @@ ColumnLayout {
                                     rate:              control.rate
                                     font.styleName:    "Bold"
                                     font.weight:       Font.Bold
-                                    font.pixelSize:    16
+                                    font.pixelSize:    14
                                     maxPaintedWidth:   false
                                     maxUnitChars:      20
-                                    rateFontSize:      14
+                                    rateFontSize:      12
                                 }
+
                                 Row {
                                     Layout.leftMargin: 10
                                     Layout.fillHeight: true

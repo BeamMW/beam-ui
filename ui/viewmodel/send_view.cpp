@@ -318,15 +318,6 @@ bool SendViewModel::getCanChoose() const
     return type == TxAddressType::Offline;
 }
 
-uint SendViewModel::getCurrencyChoiceIdx() const
-{
-    return _settings.getLastCurrencyChoice();
-}
-void SendViewModel::setCurrencyChoiceIdx(uint idx)
-{
-    _settings.setLastCurrencyChoice(idx);
-}
-
 bool SendViewModel::getChoiceOffline() const
 {
     return _choiceOffline;
@@ -608,15 +599,6 @@ void SendViewModel::sendMoney()
     }
 
     params.SetParameter(TxParameterID::OriginalToken, _token.toStdString());
-
-    beam::AmountBig::Type amount = getTotalSpend();
-    beam::AmountBig::Type available = _walletModel.getAvailable(m_Csi.m_assetID);
-
-    if (amount >= available)
-    {
-        _settings.setLastCurrencyChoice(0);
-    }
-
     _walletModel.getAsync()->startTransaction(std::move(params));
 }
 

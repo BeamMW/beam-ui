@@ -29,7 +29,7 @@ Pane {
                     font {
                         styleName:      "Bold"
                         weight:         Font.Bold
-                        pixelSize:      16
+                        pixelSize:      14
                         letterSpacing:  3.11
                         capitalization: Font.AllUppercase
                     }
