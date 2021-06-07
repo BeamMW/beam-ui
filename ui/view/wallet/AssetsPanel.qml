@@ -9,29 +9,43 @@ Control {
 
     AssetsViewModel {
         id: viewModel
-        onAssetsChanged: {
-            if (selectedId > 0) {
-                var roleid = viewModel.assets.getRoleId("id")
-                for (var idx = 0; idx < viewModel.assets.rowCount(); ++idx) {
-                    var modelIdx = viewModel.assets.index(idx, 0);
-                    var data = viewModel.assets.data(modelIdx, 258)
-                    if (selectedId == data) {
-                        // currently selected asset is still present, do nothing
-                        return
-                    }
+
+        onAssetsChanged: function () {
+            control.updateSelection()
+        }
+
+        onSelectedAssetChanged: function () {
+            control.updateSelection()
+        }
+    }
+
+    function updateSelection () {
+        if (selectedId >= 0) {
+            var roleid = viewModel.assets.getRoleId("id")
+            for (var idx = 0; idx < viewModel.assets.rowCount(); ++idx) {
+                var modelIdx = viewModel.assets.index(idx, 0);
+                var data = viewModel.assets.data(modelIdx, 258)
+                if (selectedId == data) {
+                    // currently selected asset is still present
+                    selectedIdx = idx
+                    return
                 }
-                // there is no previously selected asset,
-                // reset selection to nothing
-                selectedId  = -1
-                selectedIdx = -1
             }
         }
+        // there is no previously selected asset,
+        // reset selection to nothing
+        selectedId  = -1
+        selectedIdx = -1
+    }
+
+    Component.onCompleted: function () {
+        updateSelection()
     }
 
     property real   hSpacing:       10
     property real   vSpacing:       10
     property int    maxVisibleRows: 3
-    property int    selectedId:     -1
+    property alias  selectedId:     viewModel.selectedAsset
     property int    selectedIdx:    -1
 
     readonly property int   assetsCount:     viewModel.assets.rowCount()

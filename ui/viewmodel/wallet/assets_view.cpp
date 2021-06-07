@@ -21,16 +21,15 @@ namespace
 
 AssetsViewModel::AssetsViewModel()
     : _wallet (*AppModel::getInstance().getWalletModel())
+    , _settings (AppModel::getInstance().getSettings())
 {
     connect(&_wallet, &WalletModel::walletStatusChanged, this, &AssetsViewModel::onWalletStatus);
 
-    auto assetBEAM  = std::make_shared<AssetObject>(0);
-
-    VAssets all = {assetBEAM};
-    _assets.reset(all);
-
     formAssetsList();
+    _selectedAsset = _settings.getLastAssetSelection();
+
     emit assetsChanged();
+    emit selectedAssetChanged();
 }
 
 QAbstractItemModel* AssetsViewModel::getAssets()
@@ -45,24 +44,31 @@ void AssetsViewModel::formAssetsList()
     const auto assets = _wallet.getAssetsNZ();
     for (auto assetId: assets)
     {
-        /* bool found = false;
-        for (const auto& asset: _assets)
-        {
-            if((found = asset->id() == assetId)) {
-                break;
-            }
-        }
-
-        if(!found)
-        {
-            _assets.insert(std::make_shared<AssetObject>(assetId));
-        }
-        */
-
         all.insert(all.begin(),std::make_shared<AssetObject>(assetId));
     }
 
     _assets.reset(all);
+}
+
+int AssetsViewModel::getSelectedAsset() const
+{
+    return _selectedAsset.is_initialized() ? static_cast<int>(*_selectedAsset) : -1;
+}
+
+void AssetsViewModel::setSelectedAsset(int assetId)
+{
+    auto newSelection = decltype(_selectedAsset)(boost::none);
+    if (assetId >= 0)
+    {
+        newSelection = static_cast<beam::Asset::ID>(assetId);
+    }
+
+    if (_selectedAsset != newSelection)
+    {
+        _selectedAsset = newSelection;
+        _settings.setLastAssetSelection(_selectedAsset);
+        emit selectedAssetChanged();
+    }
 }
 
 void AssetsViewModel::onWalletStatus()

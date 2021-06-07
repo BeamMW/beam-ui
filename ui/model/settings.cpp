@@ -41,7 +41,7 @@ namespace
     const char* kIsAlowedBeamMWLink = "beam_mw_links_allowed";
     const char* kshowSwapBetaWarning = "show_swap_beta_warning";
     const char* kRateUnit = "rateUnit";
-    const char* kLastCurrencyChoice = "lastCurrencyChoice";
+    const char* kLastAssetSelection = "lastAssetSelection";
 
     const char* kLocalNodeRun = "localnode/run";
     const char* kLocalNodePort = "localnode/port";
@@ -740,15 +740,29 @@ void WalletSettings::setMinConfirmations(uint32_t value)
     }
 }
 
-uint WalletSettings::getLastCurrencyChoice() const
+boost::optional<beam::Asset::ID> WalletSettings::getLastAssetSelection() const
 {
     Lock lock(m_mutex);
-    return m_data.value(kLastCurrencyChoice, 0).toUInt();
+
+    if (m_data.contains(kLastAssetSelection))
+    {
+        return m_data.value(kLastAssetSelection).toInt();
+    }
+    else
+    {
+        return boost::none;
+    }
 }
 
-void WalletSettings::setLastCurrencyChoice(uint idx)
+void WalletSettings::setLastAssetSelection(boost::optional<beam::Asset::ID> selection)
 {
     Lock lock(m_mutex);
-    m_data.setValue(kLastCurrencyChoice, idx);
+    if (selection.is_initialized())
+    {
+        m_data.setValue(kLastAssetSelection, *selection);
+    }
+    else
+    {
+        m_data.remove(kLastAssetSelection);
+    }
 }
-

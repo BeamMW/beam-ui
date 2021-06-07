@@ -105,8 +105,8 @@ public:
     uint32_t getMinConfirmations() const;
     void setMinConfirmations(uint32_t value);
 
-    uint getLastCurrencyChoice() const;
-    void setLastCurrencyChoice(uint idx);
+    [[nodiscard]] boost::optional<beam::Asset::ID> getLastAssetSelection() const;
+    void setLastAssetSelection(boost::optional<beam::Asset::ID> selection);
 
 public:
     static const char* WalletCfg;

@@ -21,14 +21,19 @@
 class AssetsViewModel : public QObject {
     Q_OBJECT
     Q_PROPERTY(QAbstractItemModel* assets READ getAssets NOTIFY assetsChanged)
+    Q_PROPERTY(int selectedAsset READ getSelectedAsset WRITE setSelectedAsset NOTIFY selectedAssetChanged)
+
 public:
     AssetsViewModel();
     ~AssetsViewModel() override = default;
 
     QAbstractItemModel* getAssets();
+    [[nodiscard]] int getSelectedAsset() const;
+    void setSelectedAsset(int assetId);
 
 signals:
     void assetsChanged();
+    void selectedAssetChanged();
 
 private slots:
     void onWalletStatus();
@@ -36,6 +41,8 @@ private slots:
 private:
     void formAssetsList();
 
-    AssetsList   _assets;
-    WalletModel& _wallet;
+    AssetsList       _assets;
+    WalletModel&     _wallet;
+    WalletSettings&  _settings;
+    boost::optional<beam::Asset::ID> _selectedAsset;
 };
