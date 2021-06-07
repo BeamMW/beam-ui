@@ -681,21 +681,27 @@ QString WalletSettings::getAppsUrl() const
 
 QString WalletSettings::getAppsCachePath() const
 {
+    Lock lock(m_mutex);
+
     const char* kCacheFolder = "appcache";
     if (!m_appDataDir.exists(kCacheFolder))
     {
         m_appDataDir.mkdir(kCacheFolder);
     }
+
     return m_appDataDir.filePath(kCacheFolder);
 }
 
 QString WalletSettings::getAppsStoragePath() const
 {
+    Lock lock(m_mutex);
+
     const char* kStorageFolder = "appstorage";
     if (!m_appDataDir.exists(kStorageFolder))
     {
         m_appDataDir.mkdir(kStorageFolder);
     }
+
     return m_appDataDir.filePath(kStorageFolder);
 }
 
