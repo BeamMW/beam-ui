@@ -187,11 +187,11 @@ QString QMLGlobals::roundUp(QString amount)
     {
         if (amount.length() < 4)
         {
-            // cannot be divide by 1000
+            // cannot be divided by 1000
             return amount;
         }
 
-        static const std::array<char, 3> postfixes = {'K', 'M', 'B'};
+        static const std::array<char, 12> postfixes = {'K', 'M', 'B', 't', 'q', 'Q', 's', 'S', 'o', 'n', 'd', 'U'};
         char postfix = postfixes[0];
 
         for (size_t idx = 0; idx < postfixes.size(); ++idx)
