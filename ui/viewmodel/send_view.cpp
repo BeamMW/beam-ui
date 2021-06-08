@@ -243,8 +243,10 @@ void SendViewModel::RefreshCsiAsync()
 {
     if(m_Csi.m_requestedSum == 0UL)
     {
-        // just reset everything to zero
-        return onSelectionCalculated(decltype(m_Csi)());
+        // just reset everything to zero except asset id
+        decltype(m_Csi) zeroCsi;
+        zeroCsi.m_assetID = m_Csi.m_assetID;
+        return onSelectionCalculated(zeroCsi);
     }
 
     using namespace beam::wallet;

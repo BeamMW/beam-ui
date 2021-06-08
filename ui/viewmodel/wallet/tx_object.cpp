@@ -338,7 +338,17 @@ QString TxObject::getFee() const
     }
     else if (_tx.m_fee)
     {
-        return AmountToUIString(_tx.m_fee);
+        // TODO(zavarza) no fee for shielded inputs after HF3
+        Amount shieldedInputsFee = 0;
+        std::vector<wallet::IPrivateKeyKeeper2::ShieldedInput> inputsShielded;
+        if (_tx.GetParameter(wallet::TxParameterID::InputCoinsShielded, inputsShielded))
+        {
+            for (const auto& inputShielded : inputsShielded)
+            {
+                shieldedInputsFee += inputShielded.m_Fee;
+            }
+        }
+        return AmountToUIString(shieldedInputsFee + _tx.m_fee);
     }
     return QString{};
 }
