@@ -335,6 +335,7 @@ Control {
                     assetAmounts:       model ? model.assetAmounts: []
                     assetIncome:        model ? model.assetAmountsIncome: []
                     assetRates:         model ? model.assetRates: []
+                    assetIDs:           model ? model.assetIDs: []
                     totalValue:         model ? model.amountSecondCurrency : "0"
                     rateUnit:           tableViewModel.rateUnit
 

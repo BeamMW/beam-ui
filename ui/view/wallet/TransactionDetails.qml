@@ -46,6 +46,7 @@ RowLayout {
     property var  assetAmounts
     property var  assetIncome
     property var  assetRates
+    property var  assetIDs
     property var  rateUnit
     property var  totalValue
     readonly property int assetCount: assetNames ? assetNames.length : 0
@@ -266,24 +267,47 @@ RowLayout {
             Repeater {
                 model: root.assetCount
 
-                BeamAmount {
+                RowLayout {
                     Layout.fillWidth: true
+                    Layout.maximumWidth : 450
+                    BeamAmount {
+                        Layout.fillWidth: true
 
-                    visible:      true //isTextFieldVisible(root.assetAmounts[index])
-                    amount:       root.assetAmounts[index]
-                    unitName:     root.assetNames[index]
-                    iconSource:   root.assetCount > 1 ? root.assetIcons[index] : ""
-                    iconSize:     Qt.size(20, 20)
-                    color:        root.assetIncome[index] ? Style.accent_incoming : Style.accent_outgoing
-                    prefix:       this.amount == "0" ? "" : (root.assetIncome[index] ? "+ " : "- ")
-                    rate:         root.assetRates[index]
-                    rateUnit:     this.rate != "0" ? root.rateUnit : ""
-                    showTip:      false
-                    //maxPaintedWidth: this.width don't enable, causes freeze of animations, neet to refactor
-                    font {
-                       styleName:  "Bold"
-                       weight:     Font.Bold
-                       pixelSize:  14
+                        visible:      true //isTextFieldVisible(root.assetAmounts[index])
+                        amount:       root.assetAmounts[index]
+                        unitName:     root.assetNames[index]
+                        iconSource:   root.assetCount > 1 ? root.assetIcons[index] : ""
+                        iconSize:     Qt.size(20, 20)
+                        color:        root.assetIncome[index] ? Style.accent_incoming : Style.accent_outgoing
+                        prefix:       this.amount == "0" ? "" : (root.assetIncome[index] ? "+ " : "- ")
+                        rate:         root.assetRates[index]
+                        rateUnit:     this.rate != "0" ? root.rateUnit : ""
+                        showTip:      false
+                        //maxPaintedWidth: this.width don't enable, causes freeze of animations, neet to refactor
+                        font {
+                        styleName:  "Bold"
+                        weight:     Font.Bold
+                        pixelSize:  14
+                        }
+                    }
+
+                    SFText {
+                        Layout.alignment: Qt.AlignTop
+                        font.pixelSize: 14
+                        color: Style.content_secondary
+                        //% "Confidential asset ID"
+                        text: qsTrId("general-ca-id") + ":"
+                        visible: root.assetIDs[index] != "0"
+                    }
+                    SFLabel {
+                        Layout.alignment: Qt.AlignTop
+                        Layout.fillWidth: true
+                        copyMenuEnabled: true
+                        font.pixelSize: 14
+                        color: Style.content_main
+                        text: root.assetIDs[index]
+                        onCopyText: textCopied(root.kernelID)
+                        visible: root.assetIDs[index] != "0"
                     }
                 }
             }

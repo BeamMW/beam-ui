@@ -74,6 +74,7 @@ public:
         AssetAmounts,
         AssetAmountsIncome,
         AssetRates,
+        AssetIDs,
         IsDexTx,
         CidsStr,
         Source,
