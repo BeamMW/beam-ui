@@ -134,6 +134,10 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
             _assetsList.push_back(info.first);
             _assetAmountsIncome.push_back(amount <= 0);
             _assetRates.emplace_back(getRate(info.first));
+
+            std::stringstream ss;
+            ss << info.first;
+            _assetIDs.emplace_back(QString::fromStdString(ss.str()));
         }
     }
 
@@ -153,6 +157,10 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
         _assetAmounts.emplace_back(AmountToUIString(_tx.m_amount));
         _assetAmountsIncome.push_back(!_tx.m_sender);
         _assetRates.emplace_back(getRate(_tx.m_assetId));
+
+        std::stringstream ss;
+        ss << _tx.m_assetId;
+        _assetIDs.emplace_back(QString::fromStdString(ss.str()));
     }
 
     _minConfirmations = AppModel::getInstance().getSettings().getMinConfirmations();
@@ -728,6 +736,11 @@ const std::vector<bool>& TxObject::getAssetAmountsIncome() const
 const std::vector<QString>& TxObject::getAssetRates() const
 {
     return _assetRates;
+}
+
+const std::vector<QString>& TxObject::getAssetIds() const
+{
+    return _assetIDs;
 }
 
 QString TxObject::getAmountSecondCurrency()

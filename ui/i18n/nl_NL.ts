@@ -3106,5 +3106,9 @@ Update your settings and try again.</source>
         <source>Address copied to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="general-ca-id">
+        <source>Confidential asset ID</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
