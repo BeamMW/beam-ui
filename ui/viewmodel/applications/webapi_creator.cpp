@@ -61,9 +61,10 @@ namespace beamui::applications
 
     WebAPICreator::WebAPICreator(QObject *parent)
         : QObject(parent)
+        , _amgr(AppModel::getInstance().getAssets())
+        , _asyncWallet(AppModel::getInstance().getWalletModel()->getAsync())
     {
-        _amgr = AppModel::getInstance().getAssets();
-        _asyncWallet = AppModel::getInstance().getWalletModel()->getAsync();
+        connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &WebAPICreator::assetsChanged);
     }
 
     void WebAPICreator::createApi(const QString &version, const QString &appName, const QString &appUrl)
@@ -87,6 +88,7 @@ namespace beamui::applications
 
         QQmlEngine::setObjectOwnership(_api.get(), QQmlEngine::CppOwnership);
         emit apiCreated(_api.get());
+
         LOG_INFO() << "API created: " << stdver << ", " << appName.toStdString() << ", " << appid;
     }
 
@@ -111,7 +113,7 @@ namespace beamui::applications
 
     void WebAPICreator::AnyThread_getContractInfoConsent(const std::string &request, const beam::wallet::IWalletApi::ParseResult& pinfo)
     {
-        std::weak_ptr<bool> wp = _sendConsentGuard;
+        std::weak_ptr<bool> wp = _contractConsentGuard;
         _asyncWallet->makeIWTCall([] () -> boost::any {return boost::none;},
             [this, wp, request, pinfo](const boost::any&)
             {
@@ -131,6 +133,7 @@ namespace beamui::applications
     void WebAPICreator::UIThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
     {
         using namespace beam::wallet;
+        decltype(_mappedAssets)().swap(_mappedAssets);
 
         //
         // Do not assume thread here
@@ -147,13 +150,13 @@ namespace beamui::applications
 
         const auto assetId = spend.begin()->first;
         const auto amount = spend.begin()->second;
+        _mappedAssets.insert(assetId);
 
         ApproveMap info;
         info.insert("amount",     AmountBigToUIString(amount));
         info.insert("fee",        AmountToUIString(fee));
         info.insert("feeRate",    AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID)));
-        info.insert("unitName",   _amgr->getUnitName(assetId, AssetsManager::NoShorten));
-        info.insert("rate",       AmountToUIString(_amgr->getRate(assetId)));
+        info.insert("assetID",    assetId);
         info.insert("rateUnit",   _amgr->getRateUnit());
         info.insert("token",      QString::fromStdString(pinfo.minfo.token));
         info.insert("tokenType",  GetTokenTypeUIString(pinfo.minfo.token, pinfo.minfo.spendOffline));
@@ -179,6 +182,8 @@ namespace beamui::applications
 
     void WebAPICreator::UIThread_getContractInfoConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
     {
+        decltype(_mappedAssets)().swap(_mappedAssets);
+
         ApproveMap info;
         info.insert("comment",   QString::fromStdString(pinfo.minfo.comment));
         info.insert("fee",       AmountToUIString(pinfo.minfo.fee));
@@ -192,9 +197,9 @@ namespace beamui::applications
             const auto assetId = sinfo.first;
             const auto amount  = sinfo.second;
 
-            entry.insert("amount",    AmountBigToUIString(amount));
-            entry.insert("unitName", _amgr->getUnitName(assetId, AssetsManager::NoShorten));
-            entry.insert("rate",     AmountToUIString(_amgr->getRate(assetId)));
+            _mappedAssets.insert(assetId);
+            entry.insert("amount",   AmountBigToUIString(amount));
+            entry.insert("assetID",  assetId);
             entry.insert("spend",    true);
 
             amounts.push_back(entry);
@@ -206,9 +211,9 @@ namespace beamui::applications
             const auto assetId = sinfo.first;
             const auto amount  = sinfo.second;
 
-            entry.insert("amount",    AmountBigToUIString(amount));
-            entry.insert("unitName", _amgr->getUnitName(assetId, AssetsManager::NoShorten));
-            entry.insert("rate",     AmountToUIString(_amgr->getRate(assetId)));
+            _mappedAssets.insert(assetId);
+            entry.insert("amount",   AmountBigToUIString(amount));
+            entry.insert("assetID",   assetId);
             entry.insert("spend",    false);
 
             amounts.push_back(entry);
@@ -252,5 +257,10 @@ namespace beamui::applications
         //
         LOG_INFO() << "Contract tx rejected: " << _api->getAppName() << ", " << _api->getAppId() << ", " << request.toStdString();
         _api->AnyThread_contractInfoRejected(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
+    }
+
+    QMap<QString, QVariant> WebAPICreator::getAssets()
+    {
+        return _amgr->getAssetsMap(_mappedAssets);
     }
 }

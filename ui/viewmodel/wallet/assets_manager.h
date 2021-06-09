@@ -31,7 +31,7 @@ public:
     ~AssetsManager() override = default;
 
     // SYNC
-    QString getIcon(beam::Asset::ID);
+    [[nodiscard]] QString getIcon(beam::Asset::ID);
 
     enum Shorten {
         ShortenTxt,
@@ -39,19 +39,20 @@ public:
         NoShorten
     };
 
-    QString getUnitName(beam::Asset::ID, Shorten shorten);
-    QString getName(beam::Asset::ID);
-    QString getSmallestUnitName(beam::Asset::ID);
-    QString getShortDesc(beam::Asset::ID);
-    QString getLongDesc(beam::Asset::ID);
-    QColor  getColor(beam::Asset::ID);
-    QColor  getSelectionColor(beam::Asset::ID);
-    QString getSiteUrl(beam::Asset::ID);
-    QString getPaperUrl(beam::Asset::ID);
-    beam::Amount getRate(beam::Asset::ID);
-    QString getRateUnit();
-    QList<QMap<QString, QVariant>> getAssetsList();
-    bool hasAsset(beam::Asset::ID) const;
+    [[nodiscard]] QString getUnitName(beam::Asset::ID, Shorten shorten);
+    [[nodiscard]] QString getName(beam::Asset::ID);
+    [[nodiscard]] QString getSmallestUnitName(beam::Asset::ID);
+    [[nodiscard]] QString getShortDesc(beam::Asset::ID);
+    [[nodiscard]] QString getLongDesc(beam::Asset::ID);
+    [[nodiscard]] QColor  getColor(beam::Asset::ID);
+    [[nodiscard]] QColor  getSelectionColor(beam::Asset::ID);
+    [[nodiscard]] QString getSiteUrl(beam::Asset::ID);
+    [[nodiscard]] QString getPaperUrl(beam::Asset::ID);
+    [[nodiscard]] beam::Amount getRate(beam::Asset::ID);
+    [[nodiscard]] QString getRateUnit();
+    [[nodiscard]] QList<QMap<QString, QVariant>> getAssetsList();
+    [[nodiscard]] QMap<QString, QVariant> getAssetsMap(const std::set<beam::Asset::ID>& assets);
+    [[nodiscard]] bool hasAsset(beam::Asset::ID) const;
 
 signals:
     void assetInfo(beam::Asset::ID assetId);
@@ -68,6 +69,7 @@ private:
     typedef std::shared_ptr<beam::wallet::WalletAsset> AssetPtr;
     typedef std::pair<AssetPtr, MetaPtr> InfoPair;
     MetaPtr getAsset(beam::Asset::ID);
+    QMap<QString, QVariant> getAssetProps(beam::Asset::ID);
 
     WalletModel::Ptr _wallet;
     ExchangeRatesManager _exchangeRatesManager;

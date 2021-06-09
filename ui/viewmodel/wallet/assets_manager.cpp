@@ -104,6 +104,8 @@ void AssetsManager::onAssetInfo(beam::Asset::ID id, const beam::wallet::WalletAs
 
         emit assetInfo(id);
     }
+
+    emit assetsListChanged();
 }
 
 AssetsManager::MetaPtr AssetsManager::getAsset(beam::Asset::ID id)
@@ -324,30 +326,46 @@ QString AssetsManager::getRateUnit()
     return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateCurrency());
 }
 
+QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
+{
+    QMap<QString, QVariant> asset;
+
+    beam::wallet::Currency assetCurr(assetId);
+    const bool isBEAM = assetId == beam::Asset::s_BeamID;
+
+    asset.insert("isBEAM",     isBEAM);
+    asset.insert("unitName",   getUnitName(assetId, AssetsManager::NoShorten));
+    asset.insert("rate",       beamui::AmountToUIString(_exchangeRatesManager.getRate(assetCurr)));
+    asset.insert("rateUnit",   getRateUnit());
+    asset.insert("assetId",    static_cast<int>(assetId));
+    asset.insert("icon",       getIcon(assetId));
+    asset.insert("iconWidth",  22);
+    asset.insert("iconHeight", 22);
+    asset.insert("decimals",   static_cast<uint8_t>(std::log10(beam::Rules::Coin)));
+
+    return asset;
+}
+
 QList<QMap<QString, QVariant>> AssetsManager::getAssetsList()
 {
-    const auto assets   = _wallet->getAssetsNZ();
-    const auto rateUnit = getRateUnit();
+    const auto assets = _wallet->getAssetsNZ();
     QList<QMap<QString, QVariant>> result;
 
     for(auto assetId: assets)
     {
-        QMap<QString, QVariant> asset;
+        result.push_back(getAssetProps(assetId));
+    }
 
-        beam::wallet::Currency assetCurr(assetId);
-        const bool isBEAM = assetId == beam::Asset::s_BeamID;
+    return result;
+}
 
-        asset.insert("isBEAM",      isBEAM);
-        asset.insert("unitName",   getUnitName(assetId, AssetsManager::NoShorten));
-        asset.insert("rate",       beamui::AmountToUIString(_exchangeRatesManager.getRate(assetCurr)));
-        asset.insert("rateUnit",    rateUnit);
-        asset.insert("assetId",     static_cast<int>(assetId));
-        asset.insert("icon",       getIcon(assetId));
-        asset.insert("iconWidth",  22);
-        asset.insert("iconHeight", 22);
-        asset.insert("decimals",    static_cast<uint8_t>(std::log10(beam::Rules::Coin)));
+QMap<QString, QVariant> AssetsManager::getAssetsMap(const std::set<beam::Asset::ID>& assets)
+{
+    QMap<QString, QVariant> result;
 
-        result.push_back(asset);
+    for(auto assetId: assets)
+    {
+        result.insert(QString::number(assetId), getAssetProps(assetId));
     }
 
     return result;

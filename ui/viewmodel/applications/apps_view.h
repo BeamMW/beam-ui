@@ -24,12 +24,12 @@ namespace beamui::applications {
 
     public:
         AppsViewModel();
-        ~AppsViewModel();
+        ~AppsViewModel() override;
 
-        Q_INVOKABLE QString getDevAppUrl() const;
-        Q_INVOKABLE QString getDevAppName() const;
-        Q_INVOKABLE QString getAppsUrl() const;
-        Q_INVOKABLE QString getDevAppApiVer() const;
+        Q_INVOKABLE [[nodiscard]] QString getDevAppUrl() const;
+        Q_INVOKABLE [[nodiscard]] QString getDevAppName() const;
+        Q_INVOKABLE [[nodiscard]] QString getAppsUrl() const;
+        Q_INVOKABLE [[nodiscard]] QString getDevAppApiVer() const;
 
     public:
         Q_INVOKABLE void onCompleted(QObject *webView);

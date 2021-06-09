@@ -17,6 +17,7 @@
 #include "consent_handler.h"
 #include "webapi_beam.h"
 #include "webapi_shaders.h"
+#include "viewmodel/wallet/assets_list.h"
 
 namespace beamui::applications
 {
@@ -25,6 +26,8 @@ namespace beamui::applications
         , public IConsentHandler
     {
         Q_OBJECT
+        Q_PROPERTY(QMap<QString, QVariant> assets READ getAssets NOTIFY assetsChanged)
+
     public:
         explicit WebAPICreator(QObject *parent = nullptr);
         ~WebAPICreator() override = default;
@@ -35,10 +38,13 @@ namespace beamui::applications
         Q_INVOKABLE void contractInfoApproved(const QString& request);
         Q_INVOKABLE void contractInfoRejected(const QString& request);
 
+        [[nodiscard]] QMap<QString, QVariant> getAssets();
+
     signals:
         void apiCreated(QObject* api);
         void approveSend(const QString& request, const QMap<QString, QVariant>& info);
         void approveContractInfo(const QString& request, const QMap<QString, QVariant>& info, QList<QMap<QString, QVariant>> amounts);
+        void assetsChanged();
 
     private:
         void AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&) override;
@@ -54,5 +60,7 @@ namespace beamui::applications
 
         std::shared_ptr<bool> _sendConsentGuard = std::make_shared<bool>(true);
         std::shared_ptr<bool> _contractConsentGuard = std::make_shared<bool>(true);
+
+        std::set<beam::Asset::ID> _mappedAssets;
     };
 }

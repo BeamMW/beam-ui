@@ -61,15 +61,16 @@ ColumnLayout {
             const instance = dialog.createObject(control,
                 {
                     //% "Contract transaction"
-                    typeText:     qsTrId("general-contract-transaction"),
-                    amounts:      amounts,
-                    rateUnit:     info["rateUnit"],
-                    fee:          info["fee"],
-                    feeRate:      info["feeRate"],
-                    comment:      info["comment"],
-                    appMode:      true,
-                    isOnline:     false,
-                    showPrefix:   true,
+                    typeText:       qsTrId("general-contract-transaction"),
+                    amounts:        amounts,
+                    rateUnit:       info["rateUnit"],
+                    fee:            info["fee"],
+                    feeRate:        info["feeRate"],
+                    comment:        info["comment"],
+                    appMode:        true,
+                    isOnline:       false,
+                    showPrefix:     true,
+                    assetsProvider: webapiCreator
                 })
 
             instance.Component.onDestruction.connect(function () {
@@ -85,24 +86,24 @@ ColumnLayout {
         }
 
         onApproveSend: function(request, info) {
-            var dialog = Qt.createComponent("send_confirm.qml")
+            var dialog   = Qt.createComponent("send_confirm.qml")
             var instance = dialog.createObject(control,
                 {
-                    addressText:  info["token"],
-                    typeText:     info["tokenType"],
-                    isOnline:     info["isOnline"],
+                    addressText:    info["token"],
+                    typeText:       info["tokenType"],
+                    isOnline:       info["isOnline"],
                     amounts: [{
+                        assetID:  info["assetID"],
                         amount:   info["amount"],
-                        unitName: info["unitName"],
-                        rate:     info["rate"],
                         spend:    true
                     }],
-                    rateUnit:     info["rateUnit"],
-                    fee:          info["fee"],
-                    feeRate:      info["feeRate"],
-                    comment:      info["comment"],
-                    appMode:      true,
-                    showPrefix:   true
+                    rateUnit:       info["rateUnit"],
+                    fee:            info["fee"],
+                    feeRate:        info["feeRate"],
+                    comment:        info["comment"],
+                    appMode:        true,
+                    showPrefix:     true,
+                    assetsProvider: webapiCreator
                 })
 
             instance.Component.onDestruction.connect(function () {

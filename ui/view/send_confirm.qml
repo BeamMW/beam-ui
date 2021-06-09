@@ -23,6 +23,7 @@ ConfirmationDialog {
     property bool   showPrefix:  false
     property alias  comment:     commentCtrl.text
     property var    amounts
+    property var    assetsProvider
     property bool   hasAmounts:  amounts && amounts.length > 0
 
     property string rateUnit: ""
@@ -189,8 +190,8 @@ ConfirmationDialog {
                         Layout.fillWidth:    true
 
                         amount:           modelData.amount
-                        unitName:         modelData.unitName
-                        rate:             modelData.rate
+                        unitName:         modelData.unitName || control.assetsProvider.assets[modelData.assetID].unitName
+                        rate:             model.rate || control.assetsProvider.assets[modelData.assetID].rate
                         prefix:           control.showPrefix ? (modelData.spend ? "- " : "+ ") : ""
                         rateUnit:         control.rateUnit
                         maxPaintedWidth:  true
