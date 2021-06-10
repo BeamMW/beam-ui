@@ -1975,8 +1975,8 @@ Your version is: %2. Please, check for updates.</source>
 Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="address-info-title">
-        <source>Address details</source>
-        <translation>Address details</translation>
+        <source>address details</source>
+        <translation>address details</translation>
     </message>
     <message id="address-expiration">
         <source>Address expiration</source>
@@ -3103,6 +3103,10 @@ Update your settings and try again.</source>
     <message id="general-ca-id">
         <source>Confidential asset ID</source>
         <translation>Confidential asset ID</translation>
+    </message>
+    <message id="address-info-copy-and-close">
+        <source>copy address and close</source>
+        <translation>copy address and close</translation>
     </message>
 </context>
 </TS>

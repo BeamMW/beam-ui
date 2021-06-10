@@ -1978,8 +1978,9 @@ Your version is: %2. Please, check for updates.</source>
 Ваша версія: %2. Калі ласка, праверце наяўнасць абнаўленняў.</translation>
     </message>
     <message id="address-info-title">
-        <source>Address details</source>
-        <translation>Звесткі пра адрас</translation>
+        <source>address details</source>
+        <oldsource>Address details</oldsource>
+        <translation type="unfinished">Звесткі пра адрас</translation>
     </message>
     <message id="address-expiration">
         <source>Address expiration</source>
@@ -3108,6 +3109,10 @@ Update your settings and try again.</source>
     </message>
     <message id="general-ca-id">
         <source>Confidential asset ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-copy-and-close">
+        <source>copy address and close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

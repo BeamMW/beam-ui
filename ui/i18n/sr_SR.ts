@@ -1979,7 +1979,8 @@ Your version is: %2. Please, check for updates.</source>
 Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="address-info-title">
-        <source>Address details</source>
+        <source>address details</source>
+        <oldsource>Address details</oldsource>
         <translation type="unfinished">Address details</translation>
     </message>
     <message id="address-expiration">
@@ -3109,6 +3110,10 @@ Update your settings and try again.</source>
     </message>
     <message id="general-ca-id">
         <source>Confidential asset ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-copy-and-close">
+        <source>copy address and close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

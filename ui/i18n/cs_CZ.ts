@@ -1977,8 +1977,9 @@ Your version is: %2. Please, check for updates.</source>
 Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
     </message>
     <message id="address-info-title">
-        <source>Address details</source>
-        <translation>Detaily adresy</translation>
+        <source>address details</source>
+        <oldsource>Address details</oldsource>
+        <translation type="unfinished">Detaily adresy</translation>
     </message>
     <message id="address-expiration">
         <source>Address expiration</source>
@@ -3108,6 +3109,10 @@ Update your settings and try again.</source>
     </message>
     <message id="general-ca-id">
         <source>Confidential asset ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-copy-and-close">
+        <source>copy address and close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

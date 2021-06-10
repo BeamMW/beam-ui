@@ -1991,8 +1991,9 @@ Your version is: %2. Please, check for updates.</source>
 你的版本是： %2。请检查更新。</translation>
     </message>
     <message id="address-info-title">
-        <source>Address details</source>
-        <translation>地址详情</translation>
+        <source>address details</source>
+        <oldsource>Address details</oldsource>
+        <translation type="unfinished">地址详情</translation>
     </message>
     <message id="address-expiration">
         <source>Address expiration</source>
@@ -3121,6 +3122,10 @@ Update your settings and try again.</source>
     </message>
     <message id="general-ca-id">
         <source>Confidential asset ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-copy-and-close">
+        <source>copy address and close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

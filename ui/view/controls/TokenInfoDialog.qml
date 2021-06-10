@@ -49,30 +49,30 @@ CustomDialog {
                         font.styleName:     "Bold"
                         font.weight:        Font.Bold
                         color:              Style.content_main
-                        //% "Address details"
-                        text:               qsTrId("address-info-title")
+                        //% "address details"
+                        text:               viewModel.transactionType + " " + qsTrId("address-info-title")
                     }
                 }
 
-                // Address type:
-                SFText {
-                    Layout.alignment:       Qt.AlignTop
-                    font.pixelSize:         14
-                    color:                  Style.content_disabled
-                    //% "Address type"
-                    text:                   qsTrId("address-info-type") + ":"
-                    visible:                !!viewModel.transactionType
-                }
+                // // Address type:
+                // SFText {
+                //     Layout.alignment:       Qt.AlignTop
+                //     font.pixelSize:         14
+                //     color:                  Style.content_disabled
+                //     //% "Address type"
+                //     text:                   qsTrId("address-info-type") + ":"
+                //     visible:                !!viewModel.transactionType
+                // }
 
-                SFText {
-                    Layout.fillWidth:       true
-                    wrapMode:               Text.Wrap
-                    font.pixelSize:         14
-                    color:                  Style.content_main
-                    text:                   viewModel.transactionType
-                    verticalAlignment:      Text.AlignBottom
-                    visible:                !!viewModel.transactionType
-                }
+                // SFText {
+                //     Layout.fillWidth:       true
+                //     wrapMode:               Text.Wrap
+                //     font.pixelSize:         14
+                //     color:                  Style.content_main
+                //     text:                   viewModel.transactionType
+                //     verticalAlignment:      Text.AlignBottom
+                //     visible:                !!viewModel.transactionType
+                // }
 
                 // Address expiration
                 SFText {
@@ -154,15 +154,31 @@ CustomDialog {
                     visible:                viewModel.address.length && !viewModel.isMaxPrivacy
                 }
 
-                SFLabel {
-                    wrapMode:               Text.Wrap
-                    font.pixelSize:         14
-                    color:                  Style.content_main
-                    text:                   viewModel.address
+                RowLayout {
+                    Layout.fillWidth:           true
                     visible:                viewModel.address.length && !viewModel.isMaxPrivacy
-                    copyMenuEnabled:        true
-                    onCopyText: function () {
-                        BeamGlobals.copyToClipboard(text)
+                    SFLabel {
+                        Layout.alignment:       Qt.AlignTop
+                        Layout.preferredWidth:  578
+                        wrapMode:               Text.Wrap
+                        font.pixelSize:         14
+                        color:                  Style.content_main
+                        text:                   viewModel.address
+                        copyMenuEnabled:        true
+                        onCopyText: function () {
+                            BeamGlobals.copyToClipboard(text)
+                        }
+                    }
+                    CustomToolButton {
+                        Layout.alignment:       Qt.AlignTop
+                        Layout.leftMargin:      4
+                        Layout.topMargin:       -8
+                        icon.source:            "qrc:/assets/icon-copy-blue.svg"
+                        //% "Copy"
+                        ToolTip.text:           qsTrId("general-copy")
+                        onClicked: function () {
+                            BeamGlobals.copyToClipboard(viewModel.address)
+                        }
                     }
                 }
 
@@ -256,8 +272,8 @@ CustomDialog {
                     palette.buttonText: Style.content_opposite
                     icon.color:         Style.content_opposite
                     palette.button:     dialog.incoming ? Style.accent_incoming : Style.accent_outgoing
-                    //% "copy and close"
-                    text:               qsTrId("general-copy-and-close")
+                    //% "copy address and close"
+                    text:               qsTrId("address-info-copy-and-close")
                     onClicked: {
                         BeamGlobals.copyToClipboard(viewModel.token);
                         dialog.close();
