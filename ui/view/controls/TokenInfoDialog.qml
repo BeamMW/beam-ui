@@ -54,26 +54,6 @@ CustomDialog {
                     }
                 }
 
-                // // Address type:
-                // SFText {
-                //     Layout.alignment:       Qt.AlignTop
-                //     font.pixelSize:         14
-                //     color:                  Style.content_disabled
-                //     //% "Address type"
-                //     text:                   qsTrId("address-info-type") + ":"
-                //     visible:                !!viewModel.transactionType
-                // }
-
-                // SFText {
-                //     Layout.fillWidth:       true
-                //     wrapMode:               Text.Wrap
-                //     font.pixelSize:         14
-                //     color:                  Style.content_main
-                //     text:                   viewModel.transactionType
-                //     verticalAlignment:      Text.AlignBottom
-                //     visible:                !!viewModel.transactionType
-                // }
-
                 // Address expiration
                 SFText {
                     Layout.alignment:       Qt.AlignTop
