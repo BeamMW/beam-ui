@@ -24,7 +24,7 @@ using namespace beam::wallet;
 StatusbarViewModel::StatusbarViewModel()
     : m_model(*AppModel::getInstance().getWalletModel())
     , m_isOnline(false)
-    , m_isSyncInProgress(false)
+    , m_isSyncInProgress(!m_model.isSynced())
     , m_isFailedStatus(false)
     , m_isConnectionTrusted(false)
     , m_nodeSyncProgress(0)
@@ -188,6 +188,7 @@ void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
     {
         setIsFailedStatus(false);
         setIsOnline(true);
+        setIsSyncInProgress(!m_model.isSynced());
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
         if (m_isCoinClientFailed)
         {
