@@ -101,17 +101,8 @@ private:
         {
             m_isCoinClientFailed = false;
             setIsConnectionTrusted(m_model.isConnectionTrusted());
-            if (status == TStatus::Connecting)
-            {
-                if constexpr (std::is_same_v<TStatus, beam::bitcoin::Client::Status>)
-                {
-                    recheckCoinClients();
-                }
-                else if constexpr (std::is_same_v<TStatus, beam::ethereum::Client::Status>)
-                {
-                    recheckEthClient();
-                }
-            }
+            recheckCoinClients();
+            recheckEthClient();
         }
 
         emit isCoinClientFailedChanged();

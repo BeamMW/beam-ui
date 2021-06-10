@@ -264,7 +264,7 @@ std::string StatusbarViewModel::generateCoinClientErrorMsg() const
     {
         AtomicSwapCoin coinT = static_cast<AtomicSwapCoin>(i);
         auto coinClient = AppModel::getInstance().getSwapCoinClient(coinT);
-        if (coinClient)
+        if (coinClient && coinClient->getStatus() == beam::bitcoin::Client::Status::Failed)
         {
             auto error = coinClient->getConnectionError();
             if (error != beam::bitcoin::IBridge::ErrorType::None)
@@ -322,10 +322,6 @@ std::string StatusbarViewModel::generateCoinClientErrorMsg() const
     {
         m_coinWithErrorLabel = beamui::getCurrencyUnitName(beamui::Currencies::Ethereum);
         ss << qtTrId("wallet-model-connection-refused-error").arg("Ethereum").toStdString();
-    }
-    else if (m_isFailedStatus)
-    {
-        ss << getWalletStatusErrorMsg().toStdString();
     }
     else if(errorsCount == 1){
         ss << qtTrId("wallet-model-connection-refused-error")
