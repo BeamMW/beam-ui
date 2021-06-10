@@ -26,6 +26,7 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.alignment: Qt.AlignTop
         Layout.bottomMargin: 10
+        Layout.topMargin: 30
 
         height: 80
         spacing: 10
