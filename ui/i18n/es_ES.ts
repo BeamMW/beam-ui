@@ -643,8 +643,8 @@
         <translation>SQLite archivo de la base de datos (*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
-        <source>Lost connection to nodes: </source>
-        <oldsource>Wallet is not connected to the node</oldsource>
+        <source>Connection to %1 nodes lost</source>
+        <oldsource>Lost connection to nodes: </oldsource>
         <translation type="unfinished">La Wallet no está conectada al nodo</translation>
     </message>
     <message id="tx-failure-undefined">

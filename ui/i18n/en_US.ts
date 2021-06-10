@@ -642,8 +642,8 @@
         <translation>SQLite database file (*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
-        <source>Lost connection to nodes: </source>
-        <translation>Lost connection to nodes: </translation>
+        <source>Connection to %1 nodes lost</source>
+        <translation>Connection to %1 nodes lost</translation>
     </message>
     <message id="tx-failure-undefined">
         <source>Unexpected reason, please send wallet logs to Beam support</source>

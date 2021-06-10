@@ -643,8 +643,8 @@
         <translation>ไฟล์ SQLite Database (*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
-        <source>Lost connection to nodes: </source>
-        <oldsource>Wallet is not connected to the node</oldsource>
+        <source>Connection to %1 nodes lost</source>
+        <oldsource>Lost connection to nodes: </oldsource>
         <translation type="unfinished">กระเป๋าไม่ได้เชื่อมต่อกับ Node</translation>
     </message>
     <message id="tx-failure-undefined">

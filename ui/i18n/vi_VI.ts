@@ -643,8 +643,8 @@
         <translation>Tệp cơ sở dữ liệu SQLite (*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
-        <source>Lost connection to nodes: </source>
-        <oldsource>Wallet is not connected to the node</oldsource>
+        <source>Connection to %1 nodes lost</source>
+        <oldsource>Lost connection to nodes: </oldsource>
         <translation type="unfinished">Ví không được kết nối với nút</translation>
     </message>
     <message id="tx-failure-undefined">

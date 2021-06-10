@@ -16,6 +16,7 @@
 #include "model/app_model.h"
 #include "version.h"
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
+#include "settings_helpers.h"
 #include "wallet/transactions/swaps/common.h"
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
@@ -269,8 +270,17 @@ std::string StatusbarViewModel::generateCoinClientErrorMsg() const
             if (error != beam::bitcoin::IBridge::ErrorType::None)
             {
                 const auto& settings = coinClient->GetSettings();
-                auto connectionsOptions = settings.GetConnectionOptions();
-                failedClients.emplace_back(std::make_pair(coinT, connectionsOptions.m_address.str()));
+                std::string addr;
+                if (settings.IsElectrumActivated())
+                {
+                    auto connectionsOptions = settings.GetElectrumConnectionOptions();
+                    addr = connectionsOptions.m_address;
+                }
+                else {
+                    auto connectionsOptions = settings.GetConnectionOptions();
+                    addr = connectionsOptions.m_address.str();
+                }
+                failedClients.emplace_back(std::make_pair(coinT, addr));
             }
         }
     }
@@ -290,29 +300,36 @@ std::string StatusbarViewModel::generateCoinClientErrorMsg() const
     std::stringstream ss;
     if (errorsCount > 1)
     {
-        //% "Lost connection to nodes: "
-        ss << qtTrId("status-bar-view-not-connected").toStdString();
-        if (m_isFailedStatus) ss << beamui::getCurrencyUnitName(beamui::Currencies::Beam).toStdString() << ", ";
-        if (ethClientFailed) ss << std::to_string(AtomicSwapCoin::Ethereum) << ", ";
+        std::string failedNodes;
+        if (m_isFailedStatus) failedNodes += (beamui::getCurrencyUnitName(beamui::Currencies::Beam).toStdString() + ", ");
         for (const auto& p: failedClients)
         {
-            ss << std::to_string(p.first) << ", ";
+            failedNodes += (std::to_string(p.first) + ", ");
         }
-        ss.seekp(-2, std::ios_base::end);
-        ss << '\0';
+        if (ethClientFailed) failedNodes += (std::to_string(AtomicSwapCoin::Ethereum) + ", ");
+        failedNodes.erase(failedNodes.end() - 2, failedNodes.end());
+
+        std::size_t found = failedNodes.find(",");
+        if (found != std::string::npos)
+        {
+            m_coinWithErrorLabel = QString::fromStdString(failedNodes.substr(0, found));
+        }
+
+        //% "Connection to %1 nodes lost"
+        ss << qtTrId("status-bar-view-not-connected").arg(QString::fromStdString(failedNodes)).toStdString();
     }
     else if (ethClientFailed)
     {
-        ss << qtTrId("wallet-model-connection-refused-error")
-              .arg(beamui::getCurrencyUnitName(beamui::Currencies::Ethereum)).toStdString();
+        m_coinWithErrorLabel = beamui::getCurrencyUnitName(beamui::Currencies::Ethereum);
+        ss << qtTrId("wallet-model-connection-refused-error").arg("Ethereum").toStdString();
     }
     else if (m_isFailedStatus)
     {
         ss << getWalletStatusErrorMsg().toStdString();
     }
-    else if(errorsCount){
+    else if(errorsCount == 1){
         ss << qtTrId("wallet-model-connection-refused-error")
-              .arg(QString::fromStdString(std::to_string(failedClients[0].first))).toStdString();
+              .arg(getCoinTitle(failedClients[0].first)).toStdString();
         ss << " : " << failedClients[0].second;
         m_coinWithErrorLabel = QString::fromStdString(std::to_string(failedClients[0].first));
     }

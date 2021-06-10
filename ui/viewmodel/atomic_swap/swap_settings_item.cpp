@@ -132,34 +132,7 @@ QString SwapCoinSettingsItem::getShowAddressesDialogTitle() const
 
 QString SwapCoinSettingsItem::getGeneralTitle() const
 {
-    switch (m_swapCoin)
-    {
-    case wallet::AtomicSwapCoin::Bitcoin:
-        //% "Bitcoin"
-        return qtTrId("general-bitcoin");
-    case wallet::AtomicSwapCoin::Litecoin:
-        //% "Litecoin"
-        return qtTrId("general-litecoin");
-    case wallet::AtomicSwapCoin::Qtum:
-        //% "QTUM"
-        return qtTrId("general-qtum");
-    case wallet::AtomicSwapCoin::Dogecoin:
-        //% "Dogecoin"
-        return qtTrId("general-dogecoin");
-#if defined(BITCOIN_CASH_SUPPORT)
-    case wallet::AtomicSwapCoin::Bitcoin_Cash:
-        //% "Bitcoin Cash"
-        return qtTrId("general-bitcoin-cash");
-#endif // BITCOIN_CASH_SUPPORT
-    case wallet::AtomicSwapCoin::Dash:
-        //% "DASH"
-        return qtTrId("general-dash");
-    default:
-    {
-        assert(false && "unexpected swap coin!");
-        return QString();
-    }
-    }
+    return getCoinTitle(m_swapCoin);
 }
 
 QString SwapCoinSettingsItem::getConnectedNodeTitle() const
