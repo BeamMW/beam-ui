@@ -1582,34 +1582,6 @@ deploy the key at the node you trust completely.</source>
         <extracomment>settings tab, general section, amounts unit label</extracomment>
         <translation>Toon bedragen in</translation>
     </message>
-    <message id="notifications-title">
-        <source>Notifications</source>
-        <translation>Meldingen</translation>
-    </message>
-    <message id="notifications-clear-all">
-        <source>clear all</source>
-        <translation>alles wissen</translation>
-    </message>
-    <message id="notifications-empty">
-        <source>There are no notifications yet.</source>
-        <translation>Er zijn nog geen meldingen.</translation>
-    </message>
-    <message id="notifications-read">
-        <source>read</source>
-        <translation>lezen</translation>
-    </message>
-    <message id="notifications-update-now">
-        <source>update now</source>
-        <translation>nu updaten</translation>
-    </message>
-    <message id="notifications-activate">
-        <source>activate</source>
-        <translation>activeren</translation>
-    </message>
-    <message id="notifications-details">
-        <source>details</source>
-        <translation>details</translation>
-    </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
         <translation>Nieuwe versie v %1 is beschikbaar</translation>
@@ -1702,10 +1674,6 @@ deploy the key at the node you trust completely.</source>
     <message id="general-identity">
         <source>Identity</source>
         <translation>Identiteit</translation>
-    </message>
-    <message id="notifications-activated">
-        <source>activated</source>
-        <translation>geactiveerd</translation>
     </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
@@ -2366,13 +2334,13 @@ Please try again later or create an offer yourself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-completed">
-        <source>Contract transaction completed</source>
-        <oldsource>Transaction completed</oldsource>
+        <source>DAPP transaction completed</source>
+        <oldsource>Contract transaction completed</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-expired">
-        <source>Contract transaction expired</source>
-        <oldsource>Transaction expired</oldsource>
+        <source>DAPP transaction expired</source>
+        <oldsource>Contract transaction expired</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-contract-default-comment">
@@ -2970,7 +2938,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-failed">
-        <source>Contract transaction failed</source>
+        <source>DAPP transaction failed</source>
+        <oldsource>Contract transaction failed</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="contacts-empty">
@@ -3113,6 +3082,42 @@ Update your settings and try again.</source>
     </message>
     <message id="address-info-copy-and-close">
         <source>copy address and close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notifications-title">
+        <source>Notifications</source>
+        <translation type="unfinished">Meldingen</translation>
+    </message>
+    <message id="notifications-clear-all">
+        <source>clear all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notifications-empty">
+        <source>There are no notifications yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notifications-read">
+        <source>read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notifications-update-now">
+        <source>update now</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notifications-activate">
+        <source>activate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notifications-activated">
+        <source>activated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notifications-details">
+        <source>details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notifications-open-dapp">
+        <source>open the app</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

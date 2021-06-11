@@ -298,7 +298,9 @@ ColumnLayout {
         //% "activated"
         activatedLabel: qsTrId("notifications-activated"),
         //% "details"
-        detailsLabel:   qsTrId("notifications-details")
+        detailsLabel:   qsTrId("notifications-details"),
+        //% "open the app"
+        openDappLabel:  qsTrId("notifications-open-dapp")
     })
 
     property var notifications: ({
@@ -417,19 +419,19 @@ ColumnLayout {
             icon:       "qrc:/assets/icon-notifications-swap-completed.svg"
         },
         contractCompleted: {
-            label:      labels.detailsLabel,
+            label:      labels.openDappLabel,
             actionIcon: icons.detailsIcon,
             action:     navigateToTransaction,
             icon:       "qrc:/assets/icon-contract-completed.svg"
         },
         contractExpired: {
-            label:      labels.detailsLabel,
+            label:      labels.openDappLabel,
             actionIcon: icons.detailsIcon,
             action:     navigateToTransaction,
             icon:       "qrc:/assets/icon-contract-expired.svg"
         },
         contractFailed: {
-            label:      labels.detailsLabel,
+            label:      labels.openDappLabel,
             actionIcon: icons.detailsIcon,
             action:     navigateToTransaction,
             icon:       "qrc:/assets/icon-contract-failed.svg"
