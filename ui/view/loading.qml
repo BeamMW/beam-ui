@@ -100,157 +100,102 @@ Item
         rootLoading.parent.setSource("qrc:/start.qml", {"isBadPortMode": true});
     }
 
-    Rectangle
-    {
+    StartLayout {
         anchors.fill: parent
-        color: Style.background_main
 
-        Image {
-            fillMode: Image.PreserveAspectCrop
-            anchors.fill: parent
-            source: "qrc:/assets/bg.svg"
+        Item {
+            Layout.preferredHeight: 30
         }
 
-        BgLogo {
+        SFText {
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+            Layout.preferredHeight: 16
+            text: !isCreating ? 
+                    //% "Loading wallet..."
+                    qsTrId("loading-loading") :
+                    ( isRecoveryMode ?
+                        //% "Restoring wallet..."
+                        qsTrId("loading-restoring") :
+                        //% "Creating wallet..."
+                        qsTrId("loading-creating"))
+            font.pixelSize: 14
+            color: Style.content_main
         }
 
-        ColumnLayout {
-            anchors.fill: parent
-            spacing: 0
-            Item {
-                Layout.preferredHeight: Utils.getLogoTopGapSize(parent.height)
+        SFText {
+            Layout.topMargin: 6
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+            text: viewModel.progressMessage
+            font.pixelSize: 14
+            opacity: 0.5
+            color: Style.content_main
+        }
+
+        CustomProgressBar {
+            Layout.alignment: Qt.AlignHCenter
+            Layout.topMargin: Utils.isSqueezedHeight(rootLoading.height) ? 10 : 24
+            id: bar
+            value: viewModel.progress
+        }
+
+        SFText {
+            Layout.alignment: Qt.AlignHCenter
+            Layout.topMargin: Utils.isSqueezedHeight(rootLoading.height) ? 10 : 30
+            width: 584
+            //% "Please wait for synchronization and do not close or minimize the application."
+            text: qsTrId("loading-restore-message-line1")
+            font.pixelSize: 14
+            color: Style.content_secondary
+            font.italic: true
+            visible: isRecoveryMode
+        }
+        Row {
+            Layout.alignment: Qt.AlignHCenter
+            Layout.topMargin: Utils.isSqueezedHeight(rootLoading.height) ? 10 : 20
+            SFText {
+                horizontalAlignment: Text.AlignHCenter
+                width: 548
+                height: 30
+                //% "Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain."
+                text: qsTrId("loading-restore-message-line2")
+                font.pixelSize: 14
+                color: Style.content_secondary
+                wrapMode: Text.Wrap
+                font.italic: true
+                visible: isRecoveryMode
+            }
+        }
+
+        Row {
+            property int tp: Utils.isSqueezedHeight(rootLoading.height)
+            Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
+            Layout.topMargin: {
+                if (Utils.isSqueezedHeight(rootLoading.height))
+                    return isRecoveryMode ? 20 : 32;
+                else
+                    return isRecoveryMode ? 40 : 52;
             }
 
-            LogoComponent {
-                Layout.alignment: Qt.AlignHCenter
-                isSqueezedHeight: Utils.isSqueezedHeight(rootLoading.height)
-            }
-
-            Item {
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-
-                ColumnLayout {
-                    anchors.fill: parent
-                    spacing: 0
-
-                    Item {
-                        Layout.preferredHeight: 30
-                    }
-
-                    SFText {
-                        Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-                        Layout.preferredHeight: 16
-                        text: !isCreating ? 
-                                //% "Loading wallet..."
-                                qsTrId("loading-loading") :
-                                ( isRecoveryMode ?
-                                    //% "Restoring wallet..."
-                                    qsTrId("loading-restoring") :
-                                    //% "Creating wallet..."
-                                    qsTrId("loading-creating"))
-                        font.pixelSize: 14
-                        color: Style.content_main
-                    }
-
-                    SFText {
-                        Layout.topMargin: 6
-                        Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-                        text: viewModel.progressMessage
-                        font.pixelSize: 14
-                        opacity: 0.5
-                        color: Style.content_main
-                    }
-
-                    CustomProgressBar {
-                        Layout.alignment: Qt.AlignHCenter
-                        Layout.topMargin: Utils.isSqueezedHeight(rootLoading.height) ? 10 : 24
-                        id: bar
-                        value: viewModel.progress
-                    }
-
-                    SFText {
-                        Layout.alignment: Qt.AlignHCenter
-                        Layout.topMargin: Utils.isSqueezedHeight(rootLoading.height) ? 10 : 30
-                        width: 584
-                        //% "Please wait for synchronization and do not close or minimize the application."
-                        text: qsTrId("loading-restore-message-line1")
-                        font.pixelSize: 14
-                        color: Style.content_secondary
-                        font.italic: true
-                        visible: isRecoveryMode
-                    }
-                    Row {
-                        Layout.alignment: Qt.AlignHCenter
-                        Layout.topMargin: Utils.isSqueezedHeight(rootLoading.height) ? 10 : 20
-                        SFText {
-                            horizontalAlignment: Text.AlignHCenter
-                            width: 548
-                            height: 30
-                            //% "Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain."
-                            text: qsTrId("loading-restore-message-line2")
-                            font.pixelSize: 14
-                            color: Style.content_secondary
-                            wrapMode: Text.Wrap
-                            font.italic: true
-                            visible: isRecoveryMode
-                        }
-                    }
-
-                    Row {
-                        property int tp: Utils.isSqueezedHeight(rootLoading.height)
-                        Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
-                        Layout.topMargin: {
-                            if (Utils.isSqueezedHeight(rootLoading.height))
-                                return isRecoveryMode ? 20 : 32;
-                            else
-                                return isRecoveryMode ? 40 : 52;
-                        }
-
-                        CustomButton {
-                            visible: (isCreating || isRecoveryMode)
-                            enabled: true
-                            //% "Cancel"
-                            text: qsTrId("general-cancel")
-                            icon.source: "qrc:/assets/icon-cancel.svg"
-                            onClicked: {
-                                this.enabled = false;
-                                cancelCreating();
-                            }
-                        }
-                    }
-
-                    Item {
-                        Layout.fillHeight: true
-                        Layout.minimumHeight: {
-                            if (Utils.isSqueezedHeight(rootLoading.height))
-                                return isRecoveryMode ? 37 : 57;
-                            else
-                                return isRecoveryMode ? 47 : 67;
-                        }
-                    }
-
-                    SFText {
-                        Layout.alignment:    Qt.AlignHCenter
-                        font.pixelSize:      12
-                        color:               Qt.rgba(255, 255, 255, 0.3)
-                        text:                [qsTrId("settings-version"), BeamGlobals.version()].join(' ')
-                    }
-
-                    Item {
-                        Layout.minimumHeight: 35
-                    }
+            CustomButton {
+                visible: (isCreating || isRecoveryMode)
+                enabled: true
+                //% "Cancel"
+                text: qsTrId("general-cancel")
+                icon.source: "qrc:/assets/icon-cancel.svg"
+                onClicked: {
+                    this.enabled = false;
+                    cancelCreating();
                 }
             }
         }
+    }
 
-        Timer {
-            interval: 1000
-            running: true
-            repeat: true
-            onTriggered: {
-                viewModel.recalculateProgress();
-            }
+    Timer {
+        interval: 1000
+        running: true
+        repeat: true
+        onTriggered: {
+            viewModel.recalculateProgress();
         }
     }
 }

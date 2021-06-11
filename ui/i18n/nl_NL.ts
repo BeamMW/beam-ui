@@ -287,8 +287,8 @@
         <translation>Wijzigingen toepassen</translation>
     </message>
     <message id="logo-description">
-        <source>Confidential DeFi Platform</source>
-        <oldsource>Confidential, fast, easy to use</oldsource>
+        <source>Confidential DeFi Platform and Cryptocurrency</source>
+        <oldsource>Confidential DeFi Platform</oldsource>
         <translation type="unfinished">Vertrouwelijk, snel, eenvoudig te gebruiken</translation>
     </message>
     <message id="change-pwd-old-empty">

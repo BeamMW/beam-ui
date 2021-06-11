@@ -87,10 +87,6 @@ function isSqueezedHeight(parentHeight) {
     return parentHeight <= 768;
 }
 
-function getLogoTopGapSize(parentHeight) {
-    return parentHeight * (isSqueezedHeight(parentHeight) ? 0.13 : 0.18)
-}
-
 function openExternal(externalLink, settings, dialog, onFinish) {
     var onFinishCallback = onFinish && (typeof onFinish === "function")
         ? onFinish

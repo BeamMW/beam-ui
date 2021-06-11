@@ -287,8 +287,8 @@
         <translation>Použít změny</translation>
     </message>
     <message id="logo-description">
-        <source>Confidential DeFi Platform</source>
-        <oldsource>Confidential, fast, easy to use</oldsource>
+        <source>Confidential DeFi Platform and Cryptocurrency</source>
+        <oldsource>Confidential DeFi Platform</oldsource>
         <translation type="unfinished">Soukromé, rychlé, snadno použitelné</translation>
     </message>
     <message id="change-pwd-old-empty">

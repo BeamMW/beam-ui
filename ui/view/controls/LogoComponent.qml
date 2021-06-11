@@ -26,8 +26,8 @@ ColumnLayout
     SvgImage
     {
         Layout.alignment: Qt.AlignHCenter
-        Layout.preferredWidth: 242
-        Layout.preferredHeight: 208
+        Layout.preferredWidth: 329
+        Layout.preferredHeight: 329
         source: "qrc:/assets/start-logo.svg"
     }
 
@@ -35,9 +35,8 @@ ColumnLayout
     {
         Layout.alignment: Qt.AlignHCenter
         Layout.topMargin: isSqueezedHeight ? 20 : 40
-        Layout.preferredHeight: 20
 
-        //% "Confidential DeFi Platform"
+        //% "Confidential DeFi Platform and Cryptocurrency"
         text: qsTrId("logo-description")
         color: Style.active
 

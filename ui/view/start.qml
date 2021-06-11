@@ -154,35 +154,16 @@ Item
 
         Component {
             id: start
-            Rectangle
+            StartLayout
             {
-                color: Style.background_main
-
-                Image {
-                    fillMode: Image.PreserveAspectCrop
-                    anchors.fill: parent
-                    source: "qrc:/assets/bg.svg"
-                }
-
-                BgLogo {
-                }
-
                 property Item defaultFocusItem: createNewWallet
 
                 ColumnLayout {
                     id: startColumn
-                    anchors.fill: parent
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
                     spacing: 0
-                    Item {
-                        Layout.preferredHeight: Utils.getLogoTopGapSize(parent.height)
-                    }
-
-                    LogoComponent {
-                        id: logoComponent
-                        Layout.alignment: Qt.AlignHCenter
-                        isSqueezedHeight: Utils.isSqueezedHeight(startColumn.height)
-                    }
-
+                    
                     Item {
                         Layout.fillHeight: true
                         Layout.fillWidth: true
@@ -267,22 +248,6 @@ Item
                                     hoverEnabled: true
                                 }
                             }
-
-                            Item {
-                                Layout.fillHeight: true
-                                Layout.minimumHeight: 67
-                            }
-
-                            SFText {
-                                Layout.alignment:    Qt.AlignHCenter
-                                font.pixelSize:      12
-                                color:               Qt.rgba(255, 255, 255, 0.3)
-                                text:                [qsTrId("settings-version"), BeamGlobals.version()].join(' ')
-                            }
-
-                            Item {
-                                Layout.minimumHeight: 35
-                            }
                         }
                     }
                 }
@@ -291,34 +256,15 @@ Item
 
         Component {
             id: migrate
-            Rectangle
+            StartLayout
             {
-                color: Style.background_main
-
-                Image {
-                    fillMode: Image.PreserveAspectCrop
-                    anchors.fill: parent
-                    source: "qrc:/assets/bg.svg"
-                }
-
-                BgLogo {
-                }
-
                 property Item defaultFocusItem: startMigration
 
                 ColumnLayout {
                     id: migrateColumn
-                    anchors.fill: parent
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
                     spacing: 0
-                    Item {
-                        Layout.preferredHeight: Utils.getLogoTopGapSize(parent.height)
-                    }
-
-                    LogoComponent {
-                        id: logoComponent
-                        Layout.alignment: Qt.AlignHCenter
-                        isSqueezedHeight: Utils.isSqueezedHeight(migrateColumn.height)
-                    }
 
                     Item {
                         Layout.fillHeight: true
@@ -396,22 +342,6 @@ Item
                                     }
                                     hoverEnabled: true
                                 }
-                            }
-
-                            Item {
-                                Layout.fillHeight: true
-                                Layout.minimumHeight: 67
-                            }
-
-                            SFText {
-                                Layout.alignment:    Qt.AlignHCenter
-                                font.pixelSize:      12
-                                color:               Qt.rgba(255, 255, 255, 0.3)
-                                text:                [qsTrId("settings-version"), BeamGlobals.version()].join(' ')
-                            }
-
-                            Item {
-                                Layout.minimumHeight: 35
                             }
                         }
                     }
@@ -2048,7 +1978,8 @@ Item
 
         Component {
             id: open
-            Rectangle
+
+            StartLayout
             {
                 property Item defaultFocusItem: openPassword
 
@@ -2074,8 +2005,6 @@ Item
                 Component.onCompleted: root.parent.activated.connect(checkCapsLockOnActivation)
                 Component.onDestruction: root.parent.activated.disconnect(checkCapsLockOnActivation)
 
-                color: Style.background_main
-
                 Keys.onPressed: {
                     // Linux hack, X11 return caps state with delay
                     if (Qt.platform.os == "linux") {
@@ -2095,28 +2024,11 @@ Item
                     }
                 }
 
-                Image {
-                    fillMode: Image.PreserveAspectCrop
-                    anchors.fill: parent
-                    source: "qrc:/assets/bg.svg"
-                }
-
-                BgLogo {
-                }
-
                 ColumnLayout {
                     id: openColumn
-                    anchors.fill: parent
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
                     spacing: 0
-                    Item {
-                        Layout.preferredHeight: Utils.getLogoTopGapSize(openColumn.height)
-                    }
-
-                    LogoComponent {
-                        id: logoComponent
-                        Layout.alignment: Qt.AlignHCenter
-                        isSqueezedHeight: Utils.isSqueezedHeight(openColumn.height)
-                    }
 
                     Item {
                         Layout.fillHeight: true
@@ -2262,22 +2174,6 @@ Item
                                     }
                                     hoverEnabled: true
                                 }
-                            }
-
-                            Item {
-                                Layout.fillHeight: true
-                                Layout.minimumHeight: Utils.isSqueezedHeight(openColumn.height) ? 15 : 40
-                            }
-
-                            SFText {
-                                Layout.alignment:    Qt.AlignHCenter
-                                font.pixelSize:      12
-                                color:               Qt.rgba(255, 255, 255, 0.3)
-                                text:                [qsTrId("settings-version"), BeamGlobals.version()].join(' ')
-                            }
-
-                            Item {
-                                Layout.minimumHeight: 35
                             }
                         }
                     }

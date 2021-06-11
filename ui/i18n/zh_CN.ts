@@ -289,8 +289,8 @@
         <translation>应用更改</translation>
     </message>
     <message id="logo-description">
-        <source>Confidential DeFi Platform</source>
-        <oldsource>Confidential, fast, easy to use</oldsource>
+        <source>Confidential DeFi Platform and Cryptocurrency</source>
+        <oldsource>Confidential DeFi Platform</oldsource>
         <translation type="unfinished">机密，快速，便于使用</translation>
     </message>
     <message id="change-pwd-old-empty">

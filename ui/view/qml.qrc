@@ -341,5 +341,9 @@
         <file>assets/icon-notifications-received-privacy.svg</file>
         <file>assets/icon-notifications-sent-privacy.svg</file>
         <file>controls/SimpleNotificationPopup.qml</file>
+        <file>controls/StartLayout.qml</file>
+        <file>assets/bg-pic.png</file>
+        <file>assets/bg-pic@2x.png</file>
+        <file>assets/bg-pic@3x.png</file>
     </qresource>
 </RCC>
