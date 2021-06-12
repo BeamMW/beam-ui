@@ -675,7 +675,7 @@ QString WalletSettings::getAppsUrl() const
     #elif defined(BEAM_MAINNET)
     return "https://apps.beam.mw/appslist.json";
     #else
-    return "http://3.136.182.25:80/app/appslist.json";
+    return "http://3.19.141.112/app/appslist.json";
     #endif
 }
 
