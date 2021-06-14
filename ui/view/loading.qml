@@ -6,7 +6,7 @@ import QtGraphicalEffects 1.0
 import "controls"
 import "utils.js" as Utils
 import Beam.Wallet 1.0
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.12
 
 Item
 {
@@ -103,12 +103,9 @@ Item
     StartLayout {
         anchors.fill: parent
 
-        Item {
-            Layout.preferredHeight: 30
-        }
-
         SFText {
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+            Layout.alignment:       Qt.AlignHCenter | Qt.AlignTop
+            Layout.topMargin:       Utils.isSqueezedHeight(rootLoading.height) ? 10 : 30
             Layout.preferredHeight: 16
             text: !isCreating ? 
                     //% "Loading wallet..."

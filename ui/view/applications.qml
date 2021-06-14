@@ -1,5 +1,5 @@
 import QtQuick          2.11
-import QtQuick.Layouts  1.0
+import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.4
 import QtWebEngine      1.4
 import QtWebChannel     1.0

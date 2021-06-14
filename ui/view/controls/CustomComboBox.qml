@@ -3,7 +3,7 @@ import QtQuick.Controls 2.4
 import QtQuick.Controls.impl 2.4
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.12
 import "."
 import "../utils.js" as Utils
 

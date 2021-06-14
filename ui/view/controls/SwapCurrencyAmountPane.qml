@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.12
 import "../utils.js" as Utils
 import Beam.Wallet 1.0
 import "."

@@ -3,6 +3,7 @@ import QtQuick 2.11
 Rectangle {
     id: rowItem
 
+    property Item expandedItem : null
     property bool collapsed: true
     property bool animating: false
     property bool rowInModel: true 
@@ -22,6 +23,11 @@ Rectangle {
             ? rowItem.rowHeight
             : rowItem.rowHeight + txDetails.maximumHeight
         txDetails.height = collapsed ? 0 : txDetails.maximumHeight
+        
+        //console.log("onCollapsedChanged: " + collapsed)
+        //if (collapsed == false && animating == true)
+        //    transactionsTable.positionViewAtRow(styleData.row, ListView.Contain)
+
     }
 
     onRowInModelChanged: {
@@ -40,8 +46,13 @@ Rectangle {
             txDetails.onDelegateImplicitHeightChanged();
         }
 
-        if (animate) expandAnimation.start()
-        else collapsed = false
+        if (animate) {
+                    //console.log("onCollapsedChanged: " + collapsed)
+        
+            //transactionsTable.positionViewAtRow(styleData.row, ListView.Contain)
+            expandAnimation.start()
+        } else
+            collapsed = false
     }
 
     function collapse(animate) {

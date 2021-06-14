@@ -345,5 +345,6 @@
         <file>assets/bg-pic.png</file>
         <file>assets/bg-pic@2x.png</file>
         <file>assets/bg-pic@3x.png</file>
+        <file>controls/VersionFooter.qml</file>
     </qresource>
 </RCC>
