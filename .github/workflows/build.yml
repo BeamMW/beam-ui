@@ -179,7 +179,7 @@ jobs:
         echo "Creating AppImage"
         chmod a+x ui/3rdparty/linuxdeployqt-7
         export VERSION=${{env.BEAM_VERSION}}
-        ./ui/3rdparty/linuxdeployqt-7 ./deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop -appimage -no-translations -always-overwrite -qmldir="./ui/view" -no-copy-copyright-files
+        ./ui/3rdparty/linuxdeployqt-7 ./deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop -appimage -no-translations -always-overwrite -qmldir="./ui/view" -no-copy-copyright-files -exclude-libs="libnss3.so,libnssutil3.so"
 
     - name: CPack [windows]
       shell: bash
