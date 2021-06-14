@@ -3106,7 +3106,7 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notifications-open-dapp">
-        <source>open the app</source>
+        <source>open the dapp</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -299,7 +299,7 @@ ColumnLayout {
         activatedLabel: qsTrId("notifications-activated"),
         //% "details"
         detailsLabel:   qsTrId("notifications-details"),
-        //% "open the app"
+        //% "open the dapp"
         openDappLabel:  qsTrId("notifications-open-dapp")
     })
 
