@@ -101,8 +101,11 @@ private:
         {
             m_isCoinClientFailed = false;
             setIsConnectionTrusted(m_model.isConnectionTrusted());
-            recheckCoinClients();
-            recheckEthClient();
+            if (status != TStatus::Connected && status != TStatus::Connecting)
+            {
+                recheckCoinClients();
+                recheckEthClient();
+            }
         }
 
         emit isCoinClientFailedChanged();

@@ -287,7 +287,7 @@ std::string StatusbarViewModel::generateCoinClientErrorMsg() const
 
     bool ethClientFailed = false;
     auto ethClient = AppModel::getInstance().getSwapEthClient();
-    if (ethClient)
+    if (ethClient && ethClient->getStatus() == beam::ethereum::Client::Status::Failed)
     {
         ethClientFailed = ethClient->getConnectionError() != beam::ethereum::IBridge::ErrorType::None;
     }
