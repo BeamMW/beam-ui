@@ -35,7 +35,7 @@ ColumnLayout
     SFText
     {
         Layout.alignment: Qt.AlignHCenter
-        Layout.topMargin: 13//isSqueezedHeight ? 20 : 40
+        Layout.topMargin: 13
 
         //% "Confidential DeFi Platform and Cryptocurrency"
         text:       qsTrId("logo-description")

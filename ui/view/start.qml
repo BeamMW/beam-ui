@@ -1887,6 +1887,7 @@ Item
 
             StartLayout
             {
+                id:    startLayout
                 property Item defaultFocusItem: openPassword
 
                 // default methods for open wallet, can be changed for unlock wallet
@@ -1940,7 +1941,7 @@ Item
                     SFText {
                         Layout.alignment:       Qt.AlignHCenter
                         Layout.preferredHeight: 16
-                        Layout.bottomMargin:    Utils.isSqueezedHeight(openColumn.height) ? 18 : 48
+                        Layout.bottomMargin:    startLayout.isSqueezedHeight  ? 18 : 48
                         //% "Enter your password to access the wallet"
                         text: qsTrId("start-open-pwd-invitation")
                         color: Style.content_main
@@ -1982,7 +1983,7 @@ Item
 
                     Row {
                         Layout.alignment: Qt.AlignHCenter
-                        Layout.topMargin: Utils.isSqueezedHeight(openColumn.height) ? 8 : 18
+                        Layout.topMargin: startLayout.isSqueezedHeight  ? 8 : 18
                         Layout.preferredHeight: 38
                         spacing:          20
                                 
@@ -2031,7 +2032,7 @@ Item
                     Item {
                         Layout.alignment: Qt.AlignHCenter
                         Layout.preferredHeight: 36
-                        Layout.topMargin: Utils.isSqueezedHeight(openColumn.height) ? 9 : 20
+                        Layout.topMargin: startLayout.isSqueezedHeight  ? 9 : 20
                         Layout.bottomMargin: 9
                         Rectangle {
                             id: capsWarning
@@ -2075,7 +2076,7 @@ Item
                     Item {
                         Layout.fillWidth:       true
                         Layout.fillHeight:      true
-                        Layout.minimumHeight:   Utils.isSqueezedHeight(openColumn.height) ? 15 : 40
+                        Layout.minimumHeight:   startLayout.isSqueezedHeight  ? 15 : 40
                     }
 
                     ConfirmationDialog {

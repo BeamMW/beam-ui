@@ -10,6 +10,8 @@ Rectangle
 {
     id: root
 
+    readonly property bool isSqueezedHeight : Utils.isSqueezedHeight(root.height)
+
     color: Style.background_main
     default property alias content: contentLayout.children
 
@@ -36,9 +38,9 @@ Rectangle
         spacing: 0
 
         LogoComponent {
-            Layout.topMargin:   Utils.isSqueezedHeight(rootColumn.height) ? 13 : 83
+            Layout.topMargin:   root.isSqueezedHeight ? 13 : 83
             Layout.alignment:   Qt.AlignHCenter
-            isSqueezedHeight:   Utils.isSqueezedHeight(rootColumn.height)
+            isSqueezedHeight:   root.isSqueezedHeight
         }
 
         ColumnLayout {
