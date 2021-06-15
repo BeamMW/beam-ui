@@ -190,8 +190,8 @@ ConfirmationDialog {
                         Layout.fillWidth:    true
 
                         amount:           modelData.amount
-                        unitName:         modelData.unitName || control.assetsProvider.assets[modelData.assetID].unitName
-                        rate:             model.rate || control.assetsProvider.assets[modelData.assetID].rate
+                        unitName:         (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).unitName
+                        rate:             (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).rate
                         prefix:           control.showPrefix ? (modelData.spend ? "- " : "+ ") : ""
                         rateUnit:         control.rateUnit
                         maxPaintedWidth:  true
