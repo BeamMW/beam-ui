@@ -24,6 +24,7 @@ public:
     QMLGlobals(QQmlEngine&);
 
     Q_INVOKABLE static void showMessage(const QString& message);
+    Q_INVOKABLE static void logInfo(const QString& message);
     Q_INVOKABLE static void copyToClipboard(const QString& text);
     Q_INVOKABLE QString version();
     Q_INVOKABLE static bool isToken(const QString& text);

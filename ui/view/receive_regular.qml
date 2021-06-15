@@ -30,13 +30,24 @@ ColumnLayout {
     property alias assetIdx:  amountInput.currencyIdx
     property var   assetInfo: viewModel.assetsList[control.assetIdx]
 
-    Component.onCompleted: function () {
-        // asset id might be passed by other parts of the UI as a parameter to the receive view
+    function syncIdx () {
         for (var idx = 0; idx < viewModel.assetsList.length; ++idx) {
             if (viewModel.assetsList[idx].assetId == assetId) {
-                 assetIdx = idx
+                 if (assetIdx != idx) {
+                    assetIdx = idx
+                 }
             }
         }
+    }
+
+    onAssetIdChanged: function () {
+        // C++ sometimes provides asset id, combobox exepects index, need to fix this at some point
+        syncIdx()
+    }
+
+    Component.onCompleted: function () {
+        // asset id might be passed by other parts of the UI as a parameter to the receive view
+        syncIdx()
     }
 
     Component.onDestruction: function () {

@@ -126,12 +126,11 @@ void ReceiveViewModel::setToken(const QString& token)
                     emit amountChanged();
                 }
 
-                // this doesn't work at the moment
-                //if (auto assetId = params->GetParameter<beam::Asset::ID>(TxParameterID::AssetID))
-                //{
-                //    _assetId = *assetId;
-                //    emit assetIdChanged();
-                //}
+                if (auto assetId = params->GetParameter<beam::Asset::ID>(TxParameterID::AssetID))
+                {
+                    _assetId = *assetId;
+                    emit assetIdChanged();
+                }
             }
 
             updateToken();

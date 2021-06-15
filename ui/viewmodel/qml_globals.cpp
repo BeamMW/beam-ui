@@ -97,6 +97,11 @@ void QMLGlobals::showMessage(const QString& message)
     QMessageBox::information(nullptr, "BeamWalletUI", message);
 }
 
+void QMLGlobals::logInfo(const QString& message)
+{
+    LOG_INFO () << message.toStdString();
+}
+
 void QMLGlobals::copyToClipboard(const QString& text)
 {
     QApplication::clipboard()->setText(text);
