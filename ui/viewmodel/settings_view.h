@@ -60,7 +60,7 @@ class SettingsViewModel : public QObject
 public:
 
     SettingsViewModel();
-    virtual ~SettingsViewModel();
+    ~SettingsViewModel() override;
 
     QString getNodeAddress() const;
     void setNodeAddress(const QString& value);

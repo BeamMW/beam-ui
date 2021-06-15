@@ -21,7 +21,7 @@ class QMLGlobals : public QObject
 {
     Q_OBJECT
 public:
-    QMLGlobals(QQmlEngine&);
+    explicit QMLGlobals(QQmlEngine&);
 
     Q_INVOKABLE static void showMessage(const QString& message);
     Q_INVOKABLE static void logInfo(const QString& message);

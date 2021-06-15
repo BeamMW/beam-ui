@@ -8,11 +8,11 @@ import "."
 CustomDialog {
     id: dialog
     modal: true
-    property alias address:                 addressField.text
+    property alias address: addressField.text
 
     QR {
-        id:         qrCode
-        address:    dialog.address
+        id: qrCode
+        address: dialog.address
     }
 
     x: (parent.width - width) / 2
@@ -20,11 +20,10 @@ CustomDialog {
 
     parent: Overlay.overlay
     padding: 30
-
     closePolicy: Popup.NoAutoClose | Popup.CloseOnEscape
 
     onOpened: {
-        forceActiveFocus();
+        forceActiveFocus()
     }
 
     contentItem: ColumnLayout {

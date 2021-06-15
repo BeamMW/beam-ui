@@ -101,6 +101,7 @@ signals:
 
 public slots:
     void onSelectionCalculated(const beam::wallet::CoinsSelectionInfo&);
+    void onPublicAddress(const QString&);
 
 private:
     void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
@@ -121,6 +122,7 @@ private:
     ExchangeRatesManager       _exchangeRatesManager;
     QString                    _token;
     QString                    _newTokenMsg;
+    QString                    _publicOfflineAddr;
     bool                       _choiceOffline = false;
     beam::wallet::TxParameters _txParameters;
 };

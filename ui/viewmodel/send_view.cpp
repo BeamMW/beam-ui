@@ -53,6 +53,9 @@ SendViewModel::SendViewModel()
     connect(&_walletModel,           &WalletModel::coinsSelectionCalculated,   this,  &SendViewModel::onSelectionCalculated);
     connect(&_walletModel,           &WalletModel::sendMoneyVerified,          this,  &SendViewModel::sendMoneyVerified);
     connect(&_walletModel,           &WalletModel::cantSendToExpired,          this,  &SendViewModel::cantSendToExpired);
+    connect(&_walletModel,           &WalletModel::publicAddressChanged,       this,  &SendViewModel::onPublicAddress);
+
+    _walletModel.getAsync()->getPublicAddress();
 }
 
 beam::Amount SendViewModel::getTotalSpend() const
@@ -344,6 +347,11 @@ void SendViewModel::setMaxPossibleAmount()
     RefreshCsiAsync();
 }
 
+void SendViewModel::onPublicAddress(const QString& pubAddr)
+{
+    _publicOfflineAddr = pubAddr;
+}
+
 void SendViewModel::onSelectionCalculated(const beam::wallet::CoinsSelectionInfo& selectionRes)
 {
     if (selectionRes.m_requestedSum != m_Csi.m_requestedSum || selectionRes.m_assetID != m_Csi.m_assetID)
@@ -362,12 +370,16 @@ void SendViewModel::onSelectionCalculated(const beam::wallet::CoinsSelectionInfo
     emit canSendChanged();
 }
 
-void SendViewModel::saveReceiverAddress(const QString& name)
+void SendViewModel::saveReceiverAddress(const QString& comment)
 {
     using namespace beam::wallet;
-    QString trimmed = name.trimmed();
+    QString trimmed = comment.trimmed();
 
-    if (!_walletModel.isOwnAddress(_receiverWalletID))
+    if (_publicOfflineAddr == _token)
+    {
+        // just skip, never save own public address
+    }
+    else if (!_walletModel.isOwnAddress(_receiverWalletID))
     {
         WalletAddress address;
         address.m_walletID   = _receiverWalletID;
