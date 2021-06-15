@@ -287,7 +287,8 @@ ColumnLayout {
     property var icons: ({
         updateIcon: { source: 'qrc:/assets/icon-repeat-white.svg', height: 16},
         detailsIcon: { source: 'qrc:/assets/icon-details.svg', height: 12},
-        activateIcon: { source: 'qrc:/assets/icon-activate.svg', height: 16}
+        activateIcon: { source: 'qrc:/assets/icon-activate.svg', height: 16},
+        goToAppIcon: { source: 'qrc:/assets/icon-go-to-app.svg', height: 16}
     })
 
     property var labels: ({
@@ -414,25 +415,25 @@ ColumnLayout {
         },
         swapCompleted: {
             label:      labels.detailsLabel,
-            actionIcon: icons.detailsIcon,
+            actionIcon: icons.goToAppIcon,
             action:     navigateToSwapTransaction,
             icon:       "qrc:/assets/icon-notifications-swap-completed.svg"
         },
         contractCompleted: {
             label:      labels.openDappLabel,
-            actionIcon: icons.detailsIcon,
+            actionIcon: icons.goToAppIcon,
             action:     navigateToTransaction,
             icon:       "qrc:/assets/icon-contract-completed.svg"
         },
         contractExpired: {
             label:      labels.openDappLabel,
-            actionIcon: icons.detailsIcon,
+            actionIcon: icons.goToAppIcon,
             action:     navigateToTransaction,
             icon:       "qrc:/assets/icon-contract-expired.svg"
         },
         contractFailed: {
             label:      labels.openDappLabel,
-            actionIcon: icons.detailsIcon,
+            actionIcon: icons.goToAppIcon,
             action:     navigateToTransaction,
             icon:       "qrc:/assets/icon-contract-failed.svg"
         }
