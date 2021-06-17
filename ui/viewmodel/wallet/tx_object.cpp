@@ -667,12 +667,12 @@ bool TxObject::isDexTx() const
 
 beam::wallet::TxAddressType TxObject::getAddressType()
 {
-    restoreAddressType();
+    if (!_addressType)
+    {
+        _addressType = _tx.GetParameter<beam::wallet::TxAddressType>(beam::wallet::TxParameterID::AddressType);
+    }
 
-    if (_addressType)
-        return *_addressType;
-
-    return beam::wallet::TxAddressType::Unknown;
+    return _addressType ? *_addressType : beam::wallet::TxAddressType::Unknown;
 }
 
 bool TxObject::isSent() const
@@ -698,24 +698,6 @@ bool TxObject::isFailed() const
 bool TxObject::isExpired() const
 {
     return isFailed() && _tx.m_failureReason == beam::wallet::TxFailureReason::TransactionExpired;
-}
-
-void TxObject::restoreAddressType()
-{
-    auto storedType = _tx.GetParameter<beam::wallet::TxAddressType>(beam::wallet::TxParameterID::AddressType);
-    if (storedType)
-    {
-        _addressType = storedType;
-        return;
-    }
-
-    if (!_tx.m_sender || _addressType)
-    {
-        return;
-    }
-
-    _addressType = GetAddressType(_tx);
-    _tx.SetParameter(beam::wallet::TxParameterID::AddressType, *_addressType);
 }
 
 const std::vector<beam::Asset::ID>& TxObject::getAssetsList() const
