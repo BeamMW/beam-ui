@@ -139,6 +139,7 @@ ColumnLayout {
                     hasStatusIndicatior: true
                     connectionStatus: getStatus()
                     connectionErrorMsg: status_bar.error_msg
+                    folded: swapMode != "BEAM"
 
                     function getStatus() {
                         var statusBarModel = status_bar.model;

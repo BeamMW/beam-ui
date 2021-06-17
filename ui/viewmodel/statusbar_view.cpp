@@ -98,6 +98,7 @@ QString StatusbarViewModel::getBranchName() const
 
 QString StatusbarViewModel::getWalletStatusErrorMsg() const
 {
+    m_coinWithErrorLabel = beamui::getCurrencyUnitName(beamui::Currencies::Beam);
     return m_errorMsg;
 }
 
