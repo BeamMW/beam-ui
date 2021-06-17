@@ -83,13 +83,20 @@ Item {
             spacing: 0
 
             function navigateSend(assetId) {
-                assetId = assetId && assetId >= 0 ? assetId : 0
-                walletStackView.push(Qt.createComponent("send_regular.qml"),
-                                         {"onAccepted":     onAccepted,
-                                          "onClosed":       onClosed,
-                                          "onSwapToken":    onSwapToken,
-                                          "receiverToken":  root.token,
-                                          "assetId":        assetId})
+                var params = {
+                    "onAccepted":    onAccepted,
+                    "onClosed":      onClosed,
+                    "onSwapToken":   onSwapToken,
+                    "receiverToken": root.token,
+                    "assetId":       assetId
+                }
+
+                if (assetId != undefined)
+                {
+                    params["assetId"] = assetId >= 0 ? assetId : 0
+                }
+
+                walletStackView.push(Qt.createComponent("send_regular.qml"), params)
                 root.token = ""
             }
 
