@@ -13,8 +13,6 @@
 // limitations under the License.
 #pragma once
 
-#include <QWebEngineView>
-
 namespace beamui::applications {
     class AppsViewModel : public QObject
     {
