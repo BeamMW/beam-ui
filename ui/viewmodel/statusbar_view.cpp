@@ -365,7 +365,9 @@ void StatusbarViewModel::connectCoinClients()
         if (coinClient)
         {
             connect(coinClient.get(), SIGNAL(statusChanged()), this, SLOT(onCoinClientStatusChanged()));
-            m_coinClientStatuses.push_back({coinClient, beam::bitcoin::Client::Status::Uninitialized, coin});
+            auto status = coinClient->getStatus();
+            if (status == beam::bitcoin::Client::Status::Failed) m_isCoinClientFailed = true;
+            m_coinClientStatuses.push_back({coinClient, status, coin});
 
             const auto& settings = coinClient->GetSettings();
             if (settings.IsActivated())
@@ -382,7 +384,9 @@ void StatusbarViewModel::connectEthClient()
     if (ethClient)
     {
         connect(ethClient.get(), SIGNAL(statusChanged()), this, SLOT(onCoinClientStatusChanged()));
-        m_ethCleintStatus = std::make_pair(ethClient, beam::ethereum::Client::Status::Uninitialized);
+        auto status = ethClient->getStatus();
+        if (status == beam::ethereum::Client::Status::Failed) m_isCoinClientFailed = true;
+        m_ethCleintStatus = std::make_pair(ethClient, status);
         const auto& settings = ethClient->GetSettings();
         if (settings.IsActivated())
         {
