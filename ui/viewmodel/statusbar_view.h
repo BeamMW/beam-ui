@@ -95,12 +95,10 @@ private:
         if (status == TStatus::Failed)
         {
             m_isCoinClientFailed = true;
-            setIsConnectionTrusted(false);
         }
         else
         {
             m_isCoinClientFailed = false;
-            setIsConnectionTrusted(m_model.isConnectionTrusted());
             if (status != TStatus::Connected && status != TStatus::Connecting)
             {
                 recheckCoinClients();

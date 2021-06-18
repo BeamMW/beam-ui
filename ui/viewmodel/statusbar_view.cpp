@@ -98,6 +98,7 @@ QString StatusbarViewModel::getBranchName() const
 
 QString StatusbarViewModel::getWalletStatusErrorMsg() const
 {
+    m_coinWithErrorLabel = beamui::getCurrencyUnitName(beamui::Currencies::Beam);
     return m_errorMsg;
 }
 
@@ -174,11 +175,7 @@ void StatusbarViewModel::setWalletStatusErrorMsg(const QString& value)
 
 void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
 {
-#ifdef BEAM_ATOMIC_SWAP_SUPPORT
-    setIsConnectionTrusted(m_model.isConnectionTrusted() && !m_isCoinClientFailed);
-#else
     setIsConnectionTrusted(m_model.isConnectionTrusted());
-#endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
     if (isNodeConnected == getIsOnline())
     {

@@ -59,7 +59,7 @@ Item {
             height:     rootControl.indicator_radius * 2
             radius:     rootControl.indicator_radius
             color:      parent.color
-            visible:    !model.isConnectionTrusted
+            visible:    !model.isConnectionTrusted || model.isCoinClientFailed
         }
 
         SvgImage {
@@ -72,14 +72,14 @@ Item {
             height: 10
             sourceSize:     Qt.size(10, 10)
             source:         "qrc:/assets/icon-trusted-node-status.svg"
-            visible:        model.isConnectionTrusted
+            visible:        model.isConnectionTrusted && !model.isCoinClientFailed
         }
 
         DropShadow {
-            anchors.fill: model.isConnectionTrusted ? onlineTrusted : online_rect
+            anchors.fill: model.isConnectionTrusted && !model.isCoinClientFailed ? onlineTrusted : online_rect
             radius: 5
             samples: 9
-            source: model.isConnectionTrusted ? onlineTrusted : online_rect
+            source: model.isConnectionTrusted && !model.isCoinClientFailed ? onlineTrusted : online_rect
             color: parent.color
         }
     }
