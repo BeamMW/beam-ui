@@ -17,10 +17,13 @@
 #include <QObject>
 #include "model/wallet_model.h"
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
+#include "model/swap_eth_client_model.h"
+#include "model/swap_coin_client_model.h"
 #include "wallet/transactions/swaps/bridges/bitcoin/bridge.h"
 #include "wallet/transactions/swaps/bridges/bitcoin/client.h"
 #include "wallet/transactions/swaps/bridges/ethereum/bridge.h"
 #include "wallet/transactions/swaps/bridges/ethereum/client.h"
+#include "wallet/transactions/swaps/common.h"
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
 class StatusbarViewModel : public QObject
@@ -68,8 +71,7 @@ public slots:
     void onSyncProgressUpdated(int done, int total);
     void onNodeSyncProgressUpdated(int done, int total);
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
-    void onGetCoinClientStatus(beam::bitcoin::Client::Status status);
-    void onGetCoinClientStatus(beam::ethereum::Client::Status status);
+    void onCoinClientStatusChanged();
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
 signals:
@@ -87,31 +89,9 @@ signals:
 
 private:
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
-    template <typename TStatus>
-    void onGetCoinClientStatusImpl(TStatus status)
-    {
-        static_assert(std::is_same_v<TStatus, beam::bitcoin::Client::Status> ||
-                      std::is_same_v<TStatus, beam::ethereum::Client::Status>);
-        if (status == TStatus::Failed)
-        {
-            m_isCoinClientFailed = true;
-        }
-        else
-        {
-            m_isCoinClientFailed = false;
-            if (status != TStatus::Connected && status != TStatus::Connecting)
-            {
-                recheckCoinClients();
-                recheckEthClient();
-            }
-        }
-
-        emit isCoinClientFailedChanged();
-        emit coinClientErrorMsgChanged();
-    }
     std::string generateCoinClientErrorMsg() const;
-    void recheckCoinClients(bool reconnect = false);
-    void recheckEthClient(bool reconnect = false);
+    void connectCoinClients();
+    void connectEthClient();
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
     WalletModel& m_model;
 
@@ -130,5 +110,14 @@ private:
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     bool m_isCoinClientFailed = false;
     mutable QString m_coinWithErrorLabel;
+    // mutable size_t m_errorsCount = 0;
+
+    struct SwapClientStatus {
+        SwapCoinClientModel::Ptr m_client;
+        beam::bitcoin::Client::Status m_status;
+        beam::wallet::AtomicSwapCoin m_coin;
+    };
+    std::vector<SwapClientStatus> m_coinClientStatuses;
+    std::pair<SwapEthClientModel::Ptr, beam::ethereum::Client::Status> m_ethCleintStatus;
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 };
