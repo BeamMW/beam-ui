@@ -19,6 +19,7 @@
 #include "utility/logger.h"
 #include "model/settings.h"
 #include "model/app_model.h"
+#include "version.h"
 
 namespace beamui::applications {
     AppsViewModel::AppsViewModel()
@@ -27,9 +28,13 @@ namespace beamui::applications {
 
         auto& settings = AppModel::getInstance().getSettings();
         auto defaultProfile = QWebEngineProfile::defaultProfile();
+
+        defaultProfile->setHttpCacheType(QWebEngineProfile::HttpCacheType::DiskHttpCache);
+        defaultProfile->setPersistentCookiesPolicy(QWebEngineProfile::PersistentCookiesPolicy::AllowPersistentCookies);
         defaultProfile->setCachePath(settings.getAppsCachePath());
         defaultProfile->setPersistentStoragePath(settings.getAppsStoragePath());
-        defaultProfile->setHttpCacheType(QWebEngineProfile::HttpCacheType::DiskHttpCache);
+
+        _userAgent = defaultProfile->httpUserAgent() + " BEAM/" + QString::fromStdString(PROJECT_VERSION);
     }
 
     AppsViewModel::~AppsViewModel()
@@ -64,5 +69,22 @@ namespace beamui::applications {
     {
         auto& settings = AppModel::getInstance().getSettings();
         return settings.getDevAppApiVer();
+    }
+
+    QString AppsViewModel::getAppCachePath(const QString& appname) const
+    {
+        auto& settings = AppModel::getInstance().getSettings();
+        return settings.getAppsStoragePath(appname);
+    }
+
+    QString AppsViewModel::getAppStoragePath(const QString& appname) const
+    {
+        auto& settings = AppModel::getInstance().getSettings();
+        return settings.getAppsCachePath(appname);
+    }
+
+    QString AppsViewModel::getUserAgent() const
+    {
+        return _userAgent;
     }
 }

@@ -98,8 +98,8 @@ public:
     QString getExplorerUrl() const;
     QString getFaucetUrl() const;
     QString getAppsUrl() const;
-    QString getAppsCachePath() const;
-    QString getAppsStoragePath() const;
+    QString getAppsCachePath(const QString& name = QString()) const;
+    QString getAppsStoragePath(const QString& name = QString()) const;
 
     void minConfirmationsInit();
     uint32_t getMinConfirmations() const;

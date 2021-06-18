@@ -679,30 +679,38 @@ QString WalletSettings::getAppsUrl() const
     #endif
 }
 
-QString WalletSettings::getAppsCachePath() const
+QString WalletSettings::getAppsCachePath(const QString& name) const
 {
     Lock lock(m_mutex);
+    const QString kCacheFolder = "appcache";
 
-    const char* kCacheFolder = "appcache";
-    if (!m_appDataDir.exists(kCacheFolder))
-    {
-        m_appDataDir.mkdir(kCacheFolder);
-    }
+    QString cachePath = QDir::cleanPath(
+            QStandardPaths::writableLocation(QStandardPaths::StandardLocation::CacheLocation) +
+            QDir::separator() + kCacheFolder +
+            QDir::separator() + name
+    );
 
-    return m_appDataDir.filePath(kCacheFolder);
+    auto adir = m_appDataDir;
+    adir.mkpath(cachePath);
+
+    return cachePath;
 }
 
-QString WalletSettings::getAppsStoragePath() const
+QString WalletSettings::getAppsStoragePath(const QString& name) const
 {
     Lock lock(m_mutex);
 
     const char* kStorageFolder = "appstorage";
-    if (!m_appDataDir.exists(kStorageFolder))
-    {
-        m_appDataDir.mkdir(kStorageFolder);
-    }
+    QString storagePath = QDir::cleanPath(
+            m_appDataDir.path() +
+            QDir::separator() + kStorageFolder +
+            QDir::separator() + name
+    );
 
-    return m_appDataDir.filePath(kStorageFolder);
+    auto adir = m_appDataDir;
+    adir.mkpath(storagePath);
+
+    return storagePath;
 }
 
 void WalletSettings::minConfirmationsInit()

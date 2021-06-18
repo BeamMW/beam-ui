@@ -13,6 +13,8 @@
 // limitations under the License.
 #pragma once
 
+#include <QWebEngineView>
+
 namespace beamui::applications {
     class AppsViewModel : public QObject
     {
@@ -21,17 +23,24 @@ namespace beamui::applications {
         Q_PROPERTY(QString devAppName    READ getDevAppName    CONSTANT)
         Q_PROPERTY(QString devAppApiVer  READ getDevAppApiVer  CONSTANT)
         Q_PROPERTY(QString appsUrl       READ getAppsUrl       CONSTANT)
+        Q_PROPERTY(QString userAgent     READ getUserAgent     CONSTANT)
 
     public:
         AppsViewModel();
         ~AppsViewModel() override;
 
-        Q_INVOKABLE [[nodiscard]] QString getDevAppUrl() const;
-        Q_INVOKABLE [[nodiscard]] QString getDevAppName() const;
-        Q_INVOKABLE [[nodiscard]] QString getAppsUrl() const;
-        Q_INVOKABLE [[nodiscard]] QString getDevAppApiVer() const;
+        [[nodiscard]] QString getDevAppUrl() const;
+        [[nodiscard]] QString getDevAppName() const;
+        [[nodiscard]] QString getAppsUrl() const;
+        [[nodiscard]] QString getDevAppApiVer() const;
+        [[nodiscard]] QString getUserAgent() const;
 
     public:
         Q_INVOKABLE void onCompleted(QObject *webView);
+        Q_INVOKABLE QString getAppCachePath(const QString& appname) const;
+        Q_INVOKABLE QString getAppStoragePath(const QString& appname) const;
+
+    private:
+        QString _userAgent;
     };
 }

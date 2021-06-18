@@ -135,8 +135,13 @@ ColumnLayout {
         visible: false
         backgroundColor: "transparent"
 
-        profile {
-            httpCacheType: WebEngineProfile.DiskHttpCache
+        profile: WebEngineProfile {
+            httpCacheType:           WebEngineProfile.DiskHttpCache
+            persistentCookiesPolicy: WebEngineProfile.AllowPersistentCookies
+            offTheRecord:            false
+            spellCheckEnabled:       false
+            httpUserAgent:           viewModel.userAgent
+            httpCacheMaximumSize:    0
         }
 
         settings {
@@ -183,6 +188,11 @@ ColumnLayout {
                 control.errorMessage = ""
                 webapiBEAM.api = api
                 webView.visible = false
+
+                var appname = ["app", app.name.replace(/\W/g, '').toLowerCase()].join('') // regex removes all non alnum chars
+                webView.profile.cachePath = viewModel.getAppCachePath(appname)
+                webView.profile.persistentStoragePath = viewModel.getAppStoragePath(appname)
+
                 webView.url = app.url
             })
 
