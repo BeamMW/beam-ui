@@ -97,9 +97,6 @@ QString StatusbarViewModel::getBranchName() const
 
 QString StatusbarViewModel::getWalletStatusErrorMsg() const
 {
-#ifdef BEAM_ATOMIC_SWAP_SUPPORT
-    m_coinWithErrorLabel = beamui::getCurrencyUnitName(beamui::Currencies::Beam);
-#endif  // BEAM_ATOMIC_SWAP_SUPPORT
     return m_errorMsg;
 }
 
@@ -111,7 +108,7 @@ bool StatusbarViewModel::getCoinClientFailed() const
 
 QString StatusbarViewModel::getCoinClientErrorMsg() const
 {
-    return getCoinClientFailed() ? QString::fromStdString(generateCoinClientErrorMsg()) : "";
+    return getCoinClientFailed() ? m_coinClientErrorMsg : "";
 }
 
 QString StatusbarViewModel::coinWithErrorLabel() const
@@ -170,6 +167,9 @@ void StatusbarViewModel::setWalletStatusErrorMsg(const QString& value)
     if (m_errorMsg != value)
     {
         m_errorMsg = value;
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+        m_coinWithErrorLabel = beamui::getCurrencyUnitName(beamui::Currencies::Beam);
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT
         emit statusErrorChanged();
     }
 }
@@ -191,6 +191,7 @@ void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
         if (m_isCoinClientFailed)
         {
+            m_coinClientErrorMsg = QString::fromStdString(generateCoinClientErrorMsg());
             emit coinClientErrorMsgChanged();
         }
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
@@ -216,6 +217,7 @@ void StatusbarViewModel::onGetWalletError(beam::wallet::ErrorType error)
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     if (m_isCoinClientFailed)
     {
+        m_coinClientErrorMsg = QString::fromStdString(generateCoinClientErrorMsg());
         emit coinClientErrorMsgChanged();
     }
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
@@ -278,10 +280,14 @@ void StatusbarViewModel::onCoinClientStatusChanged()
         emit isCoinClientFailedChanged();
     }
 
-    if (changedStatusesCount) emit coinClientErrorMsgChanged();
+    if (changedStatusesCount)
+    {
+        m_coinClientErrorMsg = QString::fromStdString(generateCoinClientErrorMsg());
+        emit coinClientErrorMsgChanged();
+    }
 }
 
-std::string StatusbarViewModel::generateCoinClientErrorMsg() const
+std::string StatusbarViewModel::generateCoinClientErrorMsg()
 {
     m_coinWithErrorLabel.clear();
 
@@ -338,7 +344,7 @@ std::string StatusbarViewModel::generateCoinClientErrorMsg() const
         m_coinWithErrorLabel = beamui::getCurrencyUnitName(beamui::Currencies::Ethereum);
         ss << qtTrId("wallet-model-connection-refused-error").arg("Ethereum").toStdString();
     }
-    else if(errorsCount == 1){
+    else if(errorsCount == 1 && m_isCoinClientFailed){
         ss << qtTrId("wallet-model-connection-refused-error")
               .arg(getCoinTitle(failedClients[0].first)).toStdString();
         ss << " : " << failedClients[0].second;

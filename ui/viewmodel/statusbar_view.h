@@ -89,7 +89,7 @@ signals:
 
 private:
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
-    std::string generateCoinClientErrorMsg() const;
+    std::string generateCoinClientErrorMsg();
     void connectCoinClients();
     void connectEthClient();
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
@@ -109,8 +109,8 @@ private:
     QString m_errorMsg;
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     bool m_isCoinClientFailed = false;
-    mutable QString m_coinWithErrorLabel;
-    // mutable size_t m_errorsCount = 0;
+    QString m_coinWithErrorLabel;
+    QString m_coinClientErrorMsg;
 
     struct SwapClientStatus {
         SwapCoinClientModel::Ptr m_client;
