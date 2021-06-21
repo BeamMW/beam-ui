@@ -14,40 +14,16 @@
 #include "assets_view.h"
 #include "model/app_model.h"
 
-namespace
-{
-    typedef std::vector<std::shared_ptr<AssetObject>> VAssets;
-}
-
 AssetsViewModel::AssetsViewModel()
-    : _wallet (*AppModel::getInstance().getWalletModel())
-    , _settings (AppModel::getInstance().getSettings())
+    : _settings (AppModel::getInstance().getSettings())
 {
-    connect(&_wallet, &WalletModel::walletStatusChanged, this, &AssetsViewModel::onWalletStatus);
-
-    formAssetsList();
     _selectedAsset = _settings.getLastAssetSelection();
-
-    emit assetsChanged();
     emit selectedAssetChanged();
 }
 
 QAbstractItemModel* AssetsViewModel::getAssets()
 {
     return &_assets;
-}
-
-void AssetsViewModel::formAssetsList()
-{
-    VAssets all;
-
-    const auto assets = _wallet.getAssetsNZ();
-    for (auto assetId: assets)
-    {
-        all.insert(all.begin(),std::make_shared<AssetObject>(assetId));
-    }
-
-    _assets.reset(all);
 }
 
 int AssetsViewModel::getSelectedAsset() const
@@ -69,10 +45,4 @@ void AssetsViewModel::setSelectedAsset(int assetId)
         _settings.setLastAssetSelection(_selectedAsset);
         emit selectedAssetChanged();
     }
-}
-
-void AssetsViewModel::onWalletStatus()
-{
-    formAssetsList();
-    emit assetsChanged();
 }

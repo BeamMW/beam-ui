@@ -10,19 +10,24 @@ Control {
     AssetsViewModel {
         id: viewModel
 
-        onAssetsChanged: function () {
-            control.updateSelection()
-        }
-
         onSelectedAssetChanged: function () {
-            control.updateSelection()
+            control.updateView()
         }
     }
 
-    function updateSelection () {
+    Connections {
+        target: viewModel.assets
+        function onDataChanged () {
+            control.updateView()
+        }
+    }
+
+    function updateView () {
+        control.assetsCount = viewModel.assets.rowCount()
+
         if (selectedId >= 0) {
             var roleid = viewModel.assets.getRoleId("id")
-            for (var idx = 0; idx < viewModel.assets.rowCount(); ++idx) {
+            for (var idx = 0; idx < control.assetsCount; ++idx) {
                 var modelIdx = viewModel.assets.index(idx, 0);
                 var data = viewModel.assets.data(modelIdx, 258)
                 if (selectedId == data) {
@@ -38,18 +43,15 @@ Control {
         selectedIdx = -1
     }
 
-    Component.onCompleted: function () {
-        updateSelection()
-    }
+    property real   hSpacing:        10
+    property real   vSpacing:        10
+    property int    maxVisibleRows:  3
+    property alias  selectedId:      viewModel.selectedAsset
+    property int    selectedIdx:     -1
+    property int    assetsCount:     1
+    property var    visibleTip
 
-    property real   hSpacing:       10
-    property real   vSpacing:       10
-    property int    maxVisibleRows: 3
-    property alias  selectedId:     viewModel.selectedAsset
-    property int    selectedIdx:    -1
-
-    readonly property int   assetsCount:     viewModel.assets.rowCount()
-    readonly property real  itemHeight:      75
+    readonly property real  itemHeight:  75
 
     readonly property real itemWidth: {
         if (assetsCount == 1) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
@@ -73,7 +75,7 @@ Control {
     }
 
     readonly property int gridRows: {
-        var modelLength = viewModel.assets.rowCount()
+        var modelLength = control.assetsCount
         var gridCols    = control.gridColumns
         var rowsCnt     = Math.floor(modelLength / gridCols) + (modelLength % gridCols ? 1 : 0)
         return rowsCnt
@@ -128,11 +130,15 @@ Control {
                                 control.selectedId  = model.id
                             }
                         }
+
+                        Component.onCompleted: {
+                            BeamGlobals.logInfo("Created for: " + model.id)
+                        }
                     }
 
                     Item {
                        Layout.fillWidth: true
-                       visible: viewModel.assets.rowCount() > 1
+                       visible: control.assetsCount > 1
                     }
                 }
             }

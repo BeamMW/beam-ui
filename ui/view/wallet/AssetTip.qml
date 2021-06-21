@@ -113,7 +113,7 @@ AlphaTipPopup {
         ScrollView {
             clip: true
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-            ScrollBar.vertical.policy: assetTip.visible && contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+            ScrollBar.vertical.policy: assetTip.visible && contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
             visible: stateLayout.state == "balance"
 
             property var minWidth: tabsRow.width + tabsRow.Layout.leftMargin + tabsRow.Layout.rightMargin

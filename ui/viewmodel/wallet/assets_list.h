@@ -64,8 +64,9 @@ private slots:
     void onTransactionsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& items);
 
 private:
-    void touch(beam::Asset::ID id);
-    std::shared_ptr<AssetObject> get(beam::Asset::ID id);
+    bool touch(beam::Asset::ID id);
+    std::shared_ptr<AssetObject> getAsset(beam::Asset::ID id);
+    bool hasAsset(beam::Asset::ID id);
 
     AssetsManager::Ptr _amgr;
     mutable ExchangeRatesManager _ermgr;

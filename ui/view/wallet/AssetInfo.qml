@@ -76,7 +76,7 @@ Control {
             {
                 var assetTip = Qt.createComponent("AssetTip.qml").createObject(Overlay.overlay, {
                     hasBalanceTip: control.hasBalanceTip,
-                    assetInfo: Object.assign({}, control.assetInfo)
+                    assetInfo: control.assetInfo
                 });
 
                 amountCtrl.tipCtrl = assetTip
@@ -84,7 +84,11 @@ Control {
                 assetTip.y = amountCtrl.tipY
 
                 assetTip.onVisibleChanged.connect(function () {
-                    if (!assetTip.visible) {
+                    if (assetTip.visible) {
+                        panel.visibleTip = assetTip
+                    }
+                    else {
+                        panel.visibleTip = null
                         assetTip.destroy()
                         if (amountCtrl) {
                             amountCtrl.tipCtrl = fakeTip
