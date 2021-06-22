@@ -14,7 +14,6 @@ Control {
     property alias  color:         back.leftColor
     property alias  borderColor:   back.leftBorderColor
     property bool   selected:      false
-    property var    panel
 
     readonly property bool hasBalanceTip: amountCtrl.hasTip || assetInfo.locked != "0" || assetInfo.amountShielded != "0"
 
@@ -84,15 +83,8 @@ Control {
                 assetTip.x = amountCtrl.tipX
                 assetTip.y = amountCtrl.tipY
 
-                // if AssetInfo would be removed (asset goes to 0), control.xxxx would be not avaialable
-                // so let the closure keep the necessary variables
-                var myPanel = control.panel
                 assetTip.onVisibleChanged.connect(function () {
-                    if (assetTip.visible) {
-                        myPanel.visibleTip = assetTip
-                    }
-                    else {
-                        myPanel.visibleTip = null
+                    if (!assetTip.visible) {
                         assetTip.destroy()
                         if (amountCtrl) {
                             amountCtrl.tipCtrl = fakeTip
@@ -100,7 +92,7 @@ Control {
                     }
                 })
 
-                panel.Component.onDestruction.connect(function() {
+                control.Component.onDestruction.connect(function() {
                     assetTip.visible = false
                 })
 

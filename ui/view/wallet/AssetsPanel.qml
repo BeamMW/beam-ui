@@ -25,10 +25,7 @@ Control {
     function updateView () {
         control.assetsCount = viewModel.assets.rowCount()
 
-        var selectedIdxFound = -1
-        var tipIdxFound = false
-
-        if (selectedId >= 0 || visibleTip) {
+        if (selectedId >= 0) {
             var roleid = viewModel.assets.getRoleId("id")
             for (var idx = 0; idx < control.assetsCount; ++idx) {
                 var modelIdx = viewModel.assets.index(idx, 0);
@@ -36,44 +33,21 @@ Control {
 
                 if (selectedId >=0 && selectedId == data) {
                     // currently selected asset is still present
-                    selectedIdxFound = idx
-                }
-
-                if (visibleTip && visibleTip.assetId == data) {
-                    tipIdxFound = true
+                    return
                 }
             }
         }
 
-        if (selectedId >= 0)
-        {
-            if (selectedIdxFound >= 0)
-            {
-                selectedIdx = selectedIdxFound
-            }
-            else
-            {
-                // there is no previously selected asset
-                // reset selection to nothing
-                selectedId  = -1
-                selectedIdx = -1
-            }
-        }
-
-        if (visibleTip && !tipIdxFound) {
-            // Tip is visible but asset with the given id is gone
-            // So we need to hide this tip
-            visibleTip.visible = false
-        }
+        // there is no previously selected asset
+        // reset selection to nothing
+        selectedId  = -1
     }
 
     property real   hSpacing:        10
     property real   vSpacing:        10
     property int    maxVisibleRows:  3
     property alias  selectedId:      viewModel.selectedAsset
-    property int    selectedIdx:     -1
     property int    assetsCount:     1
-    property var    visibleTip
 
     readonly property real  itemHeight:  75
 
@@ -141,18 +115,11 @@ Control {
                         implicitHeight: control.itemHeight
                         implicitWidth:  control.itemWidth
                         assetInfo:      model
-                        opacity:        control.selectedIdx < 0 ? 1 : (model.index == control.selectedIdx ? 1 : 0.6)
-                        selected:       model.index == control.selectedIdx
-                        panel:          control
+                        selected:       model.id == control.selectedId
+                        opacity:        control.selectedId < 0 ? 1 : (selected ? 1 : 0.6)
 
                         onClicked: function () {
-                            if (control.selectedIdx == model.index) {
-                                control.selectedIdx = -1
-                                control.selectedId = -1
-                            } else {
-                                control.selectedIdx = model.index
-                                control.selectedId  = model.id
-                            }
+                            control.selectedId = control.selectedId == model.id ? -1 : model.id
                         }
 
                         Component.onCompleted: {
