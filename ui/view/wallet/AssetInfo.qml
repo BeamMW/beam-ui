@@ -76,6 +76,7 @@ Control {
             {
                 var assetTip = Qt.createComponent("AssetTip.qml").createObject(Overlay.overlay, {
                     hasBalanceTip: control.hasBalanceTip,
+                    assetId: control.assetInfo.id,
                     assetInfo: control.assetInfo
                 });
 
@@ -83,12 +84,15 @@ Control {
                 assetTip.x = amountCtrl.tipX
                 assetTip.y = amountCtrl.tipY
 
+                // if AssetInfo would be removed (asset goes to 0), control.xxxx would be not avaialable
+                // so let the closure keep the necessary variables
+                var myPanel = control.panel
                 assetTip.onVisibleChanged.connect(function () {
                     if (assetTip.visible) {
-                        panel.visibleTip = assetTip
+                        myPanel.visibleTip = assetTip
                     }
                     else {
-                        panel.visibleTip = null
+                        myPanel.visibleTip = null
                         assetTip.destroy()
                         if (amountCtrl) {
                             amountCtrl.tipCtrl = fakeTip

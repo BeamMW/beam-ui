@@ -197,14 +197,17 @@ void AssetsList::onNewRates()
 
 void AssetsList::onWalletStatus()
 {
+    //
+    // Update/Add new assets
+    //
     auto anz = _wallet.getAssetsNZ();
-    std::vector<beam::Asset::ID> anew;
+    std::set<beam::Asset::ID> anew;
 
     for (auto aid: anz)
     {
         if (!touch(aid))
         {
-            anew.push_back(aid);
+            anew.insert(aid);
         }
     }
 
@@ -231,6 +234,19 @@ void AssetsList::onWalletStatus()
         }
         insert_at(std::make_shared<AssetObject>(aid), pos);
     }
+
+    //
+    // Remove old assets
+    //
+    std::vector<std::shared_ptr<AssetObject>> aold;
+    for (auto& ai: m_list)
+    {
+        if (anz.find(ai->id()) == anz.end())
+        {
+            aold.push_back(ai);
+        }
+    }
+    remove(aold);
 }
 
 void AssetsList::onAssetInfo(beam::Asset::ID assetId)

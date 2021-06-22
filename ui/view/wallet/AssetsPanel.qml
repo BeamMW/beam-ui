@@ -25,22 +25,46 @@ Control {
     function updateView () {
         control.assetsCount = viewModel.assets.rowCount()
 
-        if (selectedId >= 0) {
+        var selectedIdxFound = -1
+        var tipIdxFound = false
+
+        if (selectedId >= 0 || visibleTip) {
             var roleid = viewModel.assets.getRoleId("id")
             for (var idx = 0; idx < control.assetsCount; ++idx) {
                 var modelIdx = viewModel.assets.index(idx, 0);
                 var data = viewModel.assets.data(modelIdx, 258)
-                if (selectedId == data) {
+
+                if (selectedId >=0 && selectedId == data) {
                     // currently selected asset is still present
-                    selectedIdx = idx
-                    return
+                    selectedIdxFound = idx
+                }
+
+                if (visibleTip && visibleTip.assetId == data) {
+                    tipIdxFound = true
                 }
             }
         }
-        // there is no previously selected asset,
-        // reset selection to nothing
-        selectedId  = -1
-        selectedIdx = -1
+
+        if (selectedId >= 0)
+        {
+            if (selectedIdxFound >= 0)
+            {
+                selectedIdx = selectedIdxFound
+            }
+            else
+            {
+                // there is no previously selected asset
+                // reset selection to nothing
+                selectedId  = -1
+                selectedIdx = -1
+            }
+        }
+
+        if (visibleTip && !tipIdxFound) {
+            // Tip is visible but asset with the given id is gone
+            // So we need to hide this tip
+            visibleTip.visible = false
+        }
     }
 
     property real   hSpacing:        10

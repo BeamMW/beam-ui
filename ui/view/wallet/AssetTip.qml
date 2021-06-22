@@ -16,6 +16,7 @@ AlphaTipPopup {
     width:        (state == "ainfo" ? ainfoData.preferredWidth : balanceData.preferredWidth ) + leftPadding + rightPadding
     rightPadding: 0
 
+    property int  assetId: -1
     property var  assetInfo
     property var  onLink
     property var  onMPDetails
