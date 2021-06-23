@@ -16,7 +16,10 @@ Control {
         id: tableViewModel
     }
 
-    property int selectedAsset: -1
+    property int    selectedAsset: -1
+    property int    emptyMessageMargin: 90
+    property alias  headerShaderVisible: transactionsTable.headerShaderVisible
+    property bool   dappOnly: false
 
     state: "all"
 
@@ -173,7 +176,7 @@ Control {
         }
 
         ColumnLayout {
-            Layout.topMargin: 90
+            Layout.topMargin: emptyMessageMargin
             Layout.alignment: Qt.AlignHCenter
             visible: transactionsTable.model.count == 0
 
@@ -185,7 +188,7 @@ Control {
 
             SFText {
                 id:                   emptyMessage
-                Layout.topMargin:     30
+                Layout.topMargin:     emptyMessageMargin / 3
                 Layout.alignment:     Qt.AlignHCenter
                 horizontalAlignment:  Text.AlignHCenter
                 font.pixelSize:       14
@@ -205,11 +208,12 @@ Control {
             id: transactionsTable
             Component.onCompleted: {
                 transactionsTable.model.modelReset.connect(function(){
-                    if (root.openedTxID != "") {
+                    if (root && root.openedTxID != "") {
                         var index = tableViewModel.transactions.index(0, 0);
                         var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, root.openedTxID)
                         if (indexList.length > 0) {
-                            index = assetFilterProxy.mapFromSource(indexList[0])
+                            index = dappFilterProxy.mapFromSource(indexList[0])
+                            index = assetFilterProxy.mapFromSource(index)
                             index = searchProxyModel.mapFromSource(index)
                             index = txProxyModel.mapFromSource(index)
                             transactionsTable.positionViewAtRow(index.row, ListView.Beginning)
@@ -253,7 +257,15 @@ Control {
                         filterRole:   "assetFilter"
                         filterString: control.selectedAsset < 0 ? "" : ["\\b", control.selectedAsset, "\\b"].join("")
                         filterSyntax: SortFilterProxyModel.RegExp
-                        source:       tableViewModel.transactions
+
+                        source: SortFilterProxyModel {
+                            id:          dappFilterProxy
+                            filterRole:  "isDappTx"
+                            filterString: dappOnly ? "true" : ""
+                            filterSyntax: SortFilterProxyModel.FixedString
+                            filterCaseSensitivity: Qt.CaseInsensitive
+                            source: tableViewModel.transactions
+                        }
                     }
                 }
 

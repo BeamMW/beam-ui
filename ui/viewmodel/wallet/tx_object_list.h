@@ -81,6 +81,7 @@ public:
         SourceSort,
         MinConfirmations,
         ConfirmationsProgress,
+        IsDappTx,
     };
     Q_ENUM(Roles)
 

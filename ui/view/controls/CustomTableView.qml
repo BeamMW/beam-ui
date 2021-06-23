@@ -14,6 +14,7 @@ TableView {
     property var mainBackgroundRect: null
     property var backgroundRect: mainBackgroundRect != null ? mainBackgroundRect : main.backgroundRect
     property color headerColor: Style.table_header
+    property bool headerShaderVisible: true
 
     // Scrollbar fine-tuning
     __scrollBarTopMargin: tableView.headerHeight
@@ -72,6 +73,7 @@ TableView {
         function getY() {
             return rect.mapToItem(backgroundRect, rect.x, rect.y).y;
         }
+
         function updateShader() {
             shaderSrc.sourceRect.x = getX()
             shaderSrc.sourceRect.y = getY()
@@ -107,13 +109,14 @@ TableView {
             width: rect.width
             height: rect.height
             sourceItem: backgroundRect
-            visible: true
+            visible: headerShaderVisible
         }
 
         property bool lastColumn: styleData.column == tableView.columnCount-1
         property bool firstOrLastColumn : styleData.column == 0 || lastColumn
         
         clip: firstOrLastColumn
+
         Rectangle {
             x: lastColumn ? -12 : 0
             width: parent.width + (firstOrLastColumn ? 12 : 0)

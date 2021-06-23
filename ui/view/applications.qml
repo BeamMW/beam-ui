@@ -5,6 +5,7 @@ import QtWebEngine      1.4
 import QtWebChannel     1.0
 import Beam.Wallet      1.0
 import "controls"
+import "wallet"
 
 ColumnLayout {
     id: control
@@ -124,6 +125,35 @@ ColumnLayout {
         registeredObjects: [webapiBEAM]
     }
 
+    function launchApp(app) {
+        control.activeApp = app
+
+        try
+        {
+            var apiVersion = app.api_version || "current";
+
+            webapiCreator.onApiCreated.connect(function(api) {
+                control.errorMessage = ""
+                webapiBEAM.api = api
+                webView.visible = false
+
+                var appname = ["app", app.name.replace(/\W/g, '').toLowerCase()].join('') // regex removes all non alnum chars
+                webView.profile.cachePath = viewModel.getAppCachePath(appname)
+                webView.profile.persistentStoragePath = viewModel.getAppStoragePath(appname)
+
+                webView.url = app.url
+            })
+
+            webapiCreator.createApi(apiVersion, app.name, app.url)
+            return
+        }
+        catch (err)
+        {
+            control.errorMessage = err.toString()
+            return
+        }
+    }
+
     WebEngineView {
         id: webView
 
@@ -177,35 +207,6 @@ ColumnLayout {
         }
     }
 
-    function launchApp(app) {
-        control.activeApp = app
-
-        try
-        {
-            var apiVersion = app.api_version || "current";
-
-            webapiCreator.onApiCreated.connect(function(api) {
-                control.errorMessage = ""
-                webapiBEAM.api = api
-                webView.visible = false
-
-                var appname = ["app", app.name.replace(/\W/g, '').toLowerCase()].join('') // regex removes all non alnum chars
-                webView.profile.cachePath = viewModel.getAppCachePath(appname)
-                webView.profile.persistentStoragePath = viewModel.getAppStoragePath(appname)
-
-                webView.url = app.url
-            })
-
-            webapiCreator.createApi(apiVersion, app.name, app.url)
-            return
-        }
-        catch (err)
-        {
-            control.errorMessage = err.toString()
-            return
-        }
-    }
-
     Item {
         Layout.fillHeight: true
         Layout.fillWidth:  true
@@ -244,122 +245,145 @@ ColumnLayout {
         }
     }
 
-    // Actuall apps list
-    ScrollView {
+    ColumnLayout {
         id: appsView
         Layout.topMargin:  50
         Layout.fillHeight: true
         Layout.fillWidth:  true
         Layout.bottomMargin: 10
-        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical.policy: ScrollBar.AsNeeded
-        clip: true
         visible: control.hasApps && !control.activeApp
+        spacing: 20
 
-        ColumnLayout
-        {
-            width: parent.width
-            spacing: 15
+        // Actuall apps list
+        ScrollView {
+            Layout.fillHeight: true
+            Layout.fillWidth:  true
 
-            Repeater {
-                model: control.appsList
-                delegate: Item {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 100
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            ScrollBar.vertical.policy: ScrollBar.AsNeeded
+            clip: true
 
-                    Rectangle {
-                        anchors.fill: parent
-                        radius:       10
-                        color:        Style.active
-                        opacity:      hoverArea.containsMouse ? 0.15 : 0.1
-                    }
+            ColumnLayout
+            {
+                width: parent.width
+                spacing: 15
 
-                    RowLayout {
-                        anchors.fill: parent
+                Repeater {
+                    model: control.appsList
+                    delegate: Item {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 100
 
                         Rectangle {
-                            Layout.leftMargin: 30
-                            width:  60
-                            height: 60
-                            radius: 30
-                            color:  Style.background_main
-
-                            SvgImage {
-                                id: defaultIcon
-                                source: hoverArea.containsMouse ? "qrc:/assets/icon-defapp-active.svg" : "qrc:/assets/icon-defapp.svg"
-                                sourceSize: Qt.size(30, 30)
-                                anchors.verticalCenter: parent.verticalCenter
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                visible: !customIcon.visible
-                            }
-
-                            SvgImage {
-                                id: customIcon
-                                source: modelData.icon ? modelData.icon : "qrc:/assets/icon-defapp.svg"
-                                sourceSize: Qt.size(30, 30)
-                                anchors.verticalCenter: parent.verticalCenter
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                smooth: true
-                                visible: !!modelData.icon && progress == 1.0
-                            }
+                            anchors.fill: parent
+                            radius:       10
+                            color:        Style.active
+                            opacity:      hoverArea.containsMouse ? 0.15 : 0.1
                         }
 
-                        Column {
-                            Layout.leftMargin: 20
-                            spacing: 10
+                        RowLayout {
+                            anchors.fill: parent
 
-                            SFText {
-                                text: modelData.name
-                                font {
-                                    styleName:  "DemiBold"
-                                    weight:     Font.DemiBold
-                                    pixelSize:  18
+                            Rectangle {
+                                Layout.leftMargin: 30
+                                width:  60
+                                height: 60
+                                radius: 30
+                                color:  Style.background_main
+
+                                SvgImage {
+                                    id: defaultIcon
+                                    source: hoverArea.containsMouse ? "qrc:/assets/icon-defapp-active.svg" : "qrc:/assets/icon-defapp.svg"
+                                    sourceSize: Qt.size(30, 30)
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    visible: !customIcon.visible
                                 }
-                                color: Style.content_main
-                            }
-                            SFText {
-                                text: modelData.description
-                                font {
-                                    pixelSize:  14
+
+                                SvgImage {
+                                    id: customIcon
+                                    source: modelData.icon ? modelData.icon : "qrc:/assets/icon-defapp.svg"
+                                    sourceSize: Qt.size(30, 30)
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    smooth: true
+                                    visible: !!modelData.icon && progress == 1.0
                                 }
-                                color: Style.content_main
+                            }
+
+                            Column {
+                                Layout.leftMargin: 20
+                                spacing: 10
+
+                                SFText {
+                                    text: modelData.name
+                                    font {
+                                        styleName:  "DemiBold"
+                                        weight:     Font.DemiBold
+                                        pixelSize:  18
+                                    }
+                                    color: Style.content_main
+                                }
+                                SFText {
+                                    text: modelData.description
+                                    font {
+                                        pixelSize:  14
+                                    }
+                                    color: Style.content_main
+                                }
+                            }
+
+                            Item {
+                                Layout.fillWidth: true
+                            }
+
+                            CustomButton {
+                                Layout.rightMargin: 20
+                                height: 40
+                                palette.button: Style.background_second
+                                palette.buttonText : Style.content_main
+                                icon.source: "qrc:/assets/icon-run.svg"
+                                icon.height: 16
+                                //% "launch"
+                                text: qsTrId("apps-run")
+
+                                MouseArea {
+                                    anchors.fill:     parent
+                                    acceptedButtons:  Qt.LeftButton
+                                    hoverEnabled:     true
+                                    propagateComposedEvents: true
+                                    preventStealing:  true
+                                    onClicked:        launchApp(modelData)
+                                }
                             }
                         }
 
-                        Item {
-                            Layout.fillWidth: true
+                        MouseArea {
+                            id:               hoverArea
+                            anchors.fill:     parent
+                           // acceptedButtons:  Qt.LeftButton
+                            hoverEnabled:     true
+                            propagateComposedEvents: true
+                            preventStealing: true
                         }
-
-                        CustomButton {
-                            Layout.rightMargin: 20
-                            height: 40
-                            palette.button: Style.background_second
-                            palette.buttonText : Style.content_main
-                            icon.source: "qrc:/assets/icon-run.svg"
-                            icon.height: 16
-                            //% "launch"
-                            text: qsTrId("apps-run")
-
-                            MouseArea {
-                                anchors.fill:     parent
-                                acceptedButtons:  Qt.LeftButton
-                                hoverEnabled:     true
-                                propagateComposedEvents: true
-                                preventStealing:  true
-                                onClicked:        launchApp(modelData)
-                            }
-                        }
-                    }
-
-                    MouseArea {
-                        id:               hoverArea
-                        anchors.fill:     parent
-                       // acceptedButtons:  Qt.LeftButton
-                        hoverEnabled:     true
-                        propagateComposedEvents: true
-                        preventStealing: true
                     }
                 }
+            }
+        }
+
+        FoldablePanel {
+            title:             qsTrId("wallet-transactions-title")
+            folded:            true
+            titleOpacity:      0.5
+            Layout.fillWidth:  true
+            contentItemHeight: appsView.height * 0.4
+            bottomPadding:     folded ? 20 : 5
+
+            content: TxTable {
+                id: allctTable
+                emptyMessageMargin: 60
+                headerShaderVisible: false
+                dappOnly: true
             }
         }
     }

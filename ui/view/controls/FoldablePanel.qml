@@ -11,10 +11,11 @@ Pane {
     property string title
     property string titleTip
 
-    property bool  folded:          true
-    property var   content:         null
-    property var   headerContent:   null
-    property int   minHeaderHeight: 0
+    property bool  folded:            true
+    property var   content:           null
+    property var   headerContent:     null
+    property alias titleOpacity:      headerTitle.opacity
+    property int   contentItemHeight: 0
 
     spacing: 0
     padding: 20
@@ -42,7 +43,6 @@ Pane {
             width: parent.width
             RowLayout {
                 Layout.alignment: Qt.AlignTop
-                Layout.minimumHeight: minHeaderHeight
                 Layout.fillWidth: true
                 spacing: 0
 
@@ -138,7 +138,7 @@ Pane {
                 Layout.alignment:       Qt.AlignTop
                 contentItem:            control.content
 
-                Layout.preferredHeight: folded ? 0 : placeholder.implicitHeight
+                Layout.preferredHeight: folded ? 0 : (control.contentItemHeight ? control.contentItemHeight : placeholder.implicitHeight)
                 opacity:                folded ? 0.0 : 1.0
 
                 Behavior on Layout.preferredHeight {

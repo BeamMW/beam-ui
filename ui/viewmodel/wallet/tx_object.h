@@ -53,6 +53,8 @@ public:
     QString getSource() const;
     uint32_t getMinConfirmations() const;
     QString getConfirmationProgress() const;
+    const std::string& getAppId();
+    bool isDappTx();
 
     const std::vector<beam::Asset::ID>& getAssetsList() const;
     const std::vector<QString>& getAssetAmounts() const;
@@ -81,7 +83,6 @@ public:
 protected:
     [[nodiscard]] const beam::wallet::TxDescription& getTxDescription() const;
     [[nodiscard]] QString getReasonString(beam::wallet::TxFailureReason reason) const;
-    [[nodiscard]] QString getIdentity(bool isSender) const;
 
     beam::wallet::TxDescription _tx;
     uint32_t _minConfirmations = 0;
@@ -91,6 +92,7 @@ protected:
     mutable QString _kernelIDStr;
     mutable QString _comment;
     boost::optional<beam::wallet::TxAddressType> _addressType;
+    boost::optional<std::string> _appid;
 
     beam::Amount _contractFee = 0UL;
     beam::bvm2::FundsMap _contractSpend;
