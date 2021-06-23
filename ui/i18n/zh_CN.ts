@@ -2989,8 +2989,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="address-info-cid">
-        <source>Contract ID</source>
-        <translation type="unfinished"></translation>
+        <source>Shader ID</source>
+        <translation type="unfinished">Shader ID</translation>
     </message>
     <message id="general-value">
         <source>Value</source>
@@ -3132,6 +3132,14 @@ Update your settings and try again.</source>
     <message id="notifications-open-dapp">
         <source>open the dapp</source>
         <oldsource>open the app</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-description">
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-dapp">
+        <source>DAPP name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
