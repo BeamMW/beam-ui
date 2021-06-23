@@ -75,8 +75,10 @@ TableView {
         }
 
         function updateShader() {
-            shaderSrc.sourceRect.x = getX()
-            shaderSrc.sourceRect.y = getY()
+            if (headerShaderVisible) {
+                shaderSrc.sourceRect.x = getX()
+                shaderSrc.sourceRect.y = getY()
+            }
         }
 
         Connections {

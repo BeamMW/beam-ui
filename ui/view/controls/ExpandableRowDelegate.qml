@@ -23,11 +23,6 @@ Rectangle {
             ? rowItem.rowHeight
             : rowItem.rowHeight + txDetails.maximumHeight
         txDetails.height = collapsed ? 0 : txDetails.maximumHeight
-        
-        //console.log("onCollapsedChanged: " + collapsed)
-        //if (collapsed == false && animating == true)
-        //    transactionsTable.positionViewAtRow(styleData.row, ListView.Contain)
-
     }
 
     onRowInModelChanged: {
