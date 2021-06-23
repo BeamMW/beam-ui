@@ -53,7 +53,7 @@ public:
     QString getSource() const;
     uint32_t getMinConfirmations() const;
     QString getConfirmationProgress() const;
-    const std::string& getAppId();
+    QString getAppId();
     bool isDappTx();
 
     const std::vector<beam::Asset::ID>& getAssetsList() const;
@@ -92,7 +92,7 @@ protected:
     mutable QString _kernelIDStr;
     mutable QString _comment;
     boost::optional<beam::wallet::TxAddressType> _addressType;
-    boost::optional<std::string> _appid;
+    boost::optional<QString> _appid;
 
     beam::Amount _contractFee = 0UL;
     beam::bvm2::FundsMap _contractSpend;

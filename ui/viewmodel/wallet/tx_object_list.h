@@ -82,6 +82,8 @@ public:
         MinConfirmations,
         ConfirmationsProgress,
         IsDappTx,
+        DAppId,
+        DAppName,
     };
     Q_ENUM(Roles)
 

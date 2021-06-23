@@ -19,7 +19,8 @@ Control {
     property int    selectedAsset: -1
     property int    emptyMessageMargin: 90
     property alias  headerShaderVisible: transactionsTable.headerShaderVisible
-    property bool   dappOnly: false
+    property var    dappFilter: undefined
+    readonly property bool sourceVisible: dappFilter ? dappFilter == "all" : true
 
     state: "all"
 
@@ -227,9 +228,10 @@ Control {
             Layout.fillHeight:    true
             Layout.bottomMargin:  9
             visible:              transactionsTable.model.count > 0
+
             property real rowHeight: 56
-            property real resizableWidth: transactionsTable.width - 140 /*actionsColumn.width + coinColumn.width*/
-            property real columnResizeRatio: resizableWidth / 610
+            property real resizableWidth: transactionsTable.width - 140
+            property real columnResizeRatio: resizableWidth / (610 - (sourceVisible ? 0 : 140))
 
             selectionMode: SelectionMode.NoSelection
             sortIndicatorVisible: true
@@ -259,9 +261,9 @@ Control {
                         filterSyntax: SortFilterProxyModel.RegExp
 
                         source: SortFilterProxyModel {
-                            id:          dappFilterProxy
-                            filterRole:  "isDappTx"
-                            filterString: dappOnly ? "true" : ""
+                            id:           dappFilterProxy
+                            filterRole:   dappFilter ? (dappFilter == "all" ? "isDappTx" : "dappId") : ""
+                            filterString: dappFilter ? (dappFilter == "all" ? "true" : dappFilter) : ""
                             filterSyntax: SortFilterProxyModel.FixedString
                             filterCaseSensitivity: Qt.CaseInsensitive
                             source: tableViewModel.transactions
@@ -321,6 +323,7 @@ Control {
                     isCompleted:            model && model.isCompleted ? model.isCompleted : false
                     minConfirmations:       model && model.minConfirmations ? model.minConfirmations : 0
                     confirmationsProgress:  model && model.confirmationsProgress ? model.confirmationsProgress : ""
+                    dappName:               model && model.dappName ? model.dappName : ""
 
                     addressType:        {
                         if (model) {
@@ -513,6 +516,7 @@ Control {
                 width:      140 * transactionsTable.columnResizeRatio
                 movable:    false
                 resizable:  false
+                visible:    sourceVisible
             }
 
             TableViewColumn {

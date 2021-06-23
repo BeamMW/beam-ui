@@ -132,16 +132,15 @@ ColumnLayout {
         {
             var apiVersion = app.api_version || "current";
 
-            webapiCreator.onApiCreated.connect(function(api) {
+            webapiCreator.onApiCreated.connect(function(api, appid) {
                 control.errorMessage = ""
                 webapiBEAM.api = api
-                webView.visible = false
+                webLayout.visible = false
 
-                var appname = ["app", app.name.replace(/\W/g, '').toLowerCase()].join('') // regex removes all non alnum chars
-                webView.profile.cachePath = viewModel.getAppCachePath(appname)
-                webView.profile.persistentStoragePath = viewModel.getAppStoragePath(appname)
-
+                webView.profile.cachePath = viewModel.getAppCachePath(appid)
+                webView.profile.persistentStoragePath = viewModel.getAppStoragePath(appid)
                 webView.url = app.url
+                appctTable.dappFilter = appid
             })
 
             webapiCreator.createApi(apiVersion, app.name, app.url)
@@ -154,63 +153,88 @@ ColumnLayout {
         }
     }
 
-    WebEngineView {
-        id: webView
+    ColumnLayout {
+        id: webLayout
 
-        Layout.fillWidth:    true
         Layout.fillHeight:   true
+        Layout.fillWidth:    true
         Layout.bottomMargin: 10
-
-        webChannel: apiChannel
         visible: false
-        backgroundColor: "transparent"
 
-        profile: WebEngineProfile {
-            httpCacheType:           WebEngineProfile.DiskHttpCache
-            persistentCookiesPolicy: WebEngineProfile.AllowPersistentCookies
-            offTheRecord:            false
-            spellCheckEnabled:       false
-            httpUserAgent:           viewModel.userAgent
-            httpCacheMaximumSize:    0
-        }
+        WebEngineView {
+            id: webView
 
-        settings {
-            javascriptCanOpenWindows: false
-        }
+            Layout.fillWidth:    true
+            Layout.fillHeight:   true
+            Layout.bottomMargin: 10
 
-        onLoadingChanged: {
-            // do not change this to declarative style, it flickers somewhy, probably because of delays
-            if (control.activeApp && !this.loading) {
-                viewModel.onCompleted(webView)
+            webChannel: apiChannel
+            visible: true
+            backgroundColor: "transparent"
 
-                if(loadRequest.status === WebEngineLoadRequest.LoadFailedStatus) {
-                    // code in this 'if' will cause next 'if' to be called
-                    control.errorMessage = loadRequest.errorString
-                    return
+            profile: WebEngineProfile {
+                httpCacheType:           WebEngineProfile.DiskHttpCache
+                persistentCookiesPolicy: WebEngineProfile.AllowPersistentCookies
+                offTheRecord:            false
+                spellCheckEnabled:       false
+                httpUserAgent:           viewModel.userAgent
+                httpCacheMaximumSize:    0
+            }
+
+            settings {
+                javascriptCanOpenWindows: false
+            }
+
+            onLoadingChanged: {
+                // do not change this to declarative style, it flickers somewhy, probably because of delays
+                if (control.activeApp && !this.loading) {
+                    viewModel.onCompleted(webView)
+
+                    if(loadRequest.status === WebEngineLoadRequest.LoadFailedStatus) {
+                        // code in this 'if' will cause next 'if' to be called
+                        control.errorMessage = loadRequest.errorString
+                        return
+                    }
+
+                    if (control.errorMessage.length) {
+                        webLayout.visible = false
+                        return
+                    }
+
+                    webLayout.visible = true
                 }
+            }
 
-                if (control.errorMessage.length) {
-                    this.visible = false
-                    return
+            onContextMenuRequested: function (req) {
+                if (req.mediaType == ContextMenuRequest.MediaTypeNone && !req.linkText) {
+                    if (req.isContentEditable) return
+                    if (req.selectedText) return
                 }
-
-                this.visible = true
+                req.accepted = true
             }
         }
 
-        onContextMenuRequested: function (req) {
-            if (req.mediaType == ContextMenuRequest.MediaTypeNone && !req.linkText) {
-                if (req.isContentEditable) return
-                if (req.selectedText) return
+        FoldablePanel {
+            title:             qsTrId("wallet-transactions-title")
+            folded:            true
+            titleOpacity:      0.5
+            Layout.fillWidth:  true
+            contentItemHeight: appsView.height * 0.4
+            bottomPadding:     folded ? 20 : 5
+
+            content: TxTable {
+                id: appctTable
+                emptyMessageMargin: 60
+                headerShaderVisible: false
+                dappFilter: "all"
             }
-            req.accepted = true
         }
     }
 
     Item {
         Layout.fillHeight: true
         Layout.fillWidth:  true
-        visible: !appsView.visible && !webView.visible
+        visible: !appsView.visible && !webLayout.visible
 
         SFText {
             anchors.horizontalCenter: parent.horizontalCenter
@@ -383,7 +407,7 @@ ColumnLayout {
                 id: allctTable
                 emptyMessageMargin: 60
                 headerShaderVisible: false
-                dappOnly: true
+                dappFilter: "all"
             }
         }
     }

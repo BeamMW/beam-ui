@@ -87,7 +87,7 @@ namespace beamui::applications
         _api = std::make_unique<WebAPI_Beam>(*this, _webShaders, stdver, appid, appName.toStdString());
 
         QQmlEngine::setObjectOwnership(_api.get(), QQmlEngine::CppOwnership);
-        emit apiCreated(_api.get());
+        emit apiCreated(_api.get(), QString::fromStdString(appid));
 
         LOG_INFO() << "API created: " << stdver << ", " << appName.toStdString() << ", " << appid;
     }

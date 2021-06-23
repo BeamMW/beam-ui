@@ -41,7 +41,7 @@ namespace beamui::applications
         [[nodiscard]] QMap<QString, QVariant> getAssets();
 
     signals:
-        void apiCreated(QObject* api);
+        void apiCreated(QObject* api, const QString& appid);
         void approveSend(const QString& request, const QMap<QString, QVariant>& info);
         void approveContractInfo(const QString& request, const QMap<QString, QVariant>& info, QList<QMap<QString, QVariant>> amounts);
         void assetsChanged();

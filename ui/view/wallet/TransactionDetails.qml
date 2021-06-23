@@ -31,15 +31,16 @@ RowLayout {
     property string feeRate
     property string feeRateUnit
 
-    property string cidsStr
-    property string searchFilter: ""
-    property bool   hideFiltered: false
-    property string addressType
-    property bool   isShieldedTx: false
-    property bool   isCompleted:  false
-    property bool   isContractTx: false
-    property int minConfirmations: 0
-    property string confirmationsProgress: ""
+    property string  cidsStr
+    property string  searchFilter: ""
+    property bool    hideFiltered: false
+    property string  addressType
+    property bool    isShieldedTx: false
+    property bool    isCompleted:  false
+    property bool    isContractTx: false
+    property int     minConfirmations: 0
+    property string  confirmationsProgress: ""
+    property string  dappName: ""
 
     property var  assetNames
     property var  assetIcons
@@ -211,27 +212,6 @@ RowLayout {
             visible:                !root.isContractTx && isTextFieldVisible(root.addressType)
         }
 
-        // CID
-        SFText {
-            Layout.alignment:       Qt.AlignTop
-            font.pixelSize:         14
-            color:                  Style.content_secondary
-            //% "Contract ID"
-            text:                   qsTrId("address-info-cid") + ":"
-            visible:                cidText.visible
-        }
-
-        SFLabel {
-            id:               cidText
-            font.pixelSize:   14
-            color:            Style.content_main
-            text:             root.cidsStr
-            elide:            Text.ElideRight
-            copyMenuEnabled:  true
-            onCopyText:       textCopied(text)
-            visible:          root.isContractTx
-        }
-
         SFText {
             Layout.alignment: Qt.AlignTop
             font.pixelSize: 14
@@ -380,13 +360,59 @@ RowLayout {
             rate:      root.feeRate
             showTip:   false
         }
+
+        // CID
+        SFText {
+            Layout.alignment:       Qt.AlignTop
+            font.pixelSize:         14
+            color:                  Style.content_secondary
+            //% "DAPP name"
+            text:                   qsTrId("address-info-dapp") + ":"
+            visible:                dappNameText.visible
+        }
+
+        SFLabel {
+            id:               dappNameText
+            font.pixelSize:   14
+            color:            Style.content_main
+            text:             root.dappName
+            elide:            Text.ElideRight
+            copyMenuEnabled:  false
+            visible:          root.isContractTx
+        }
+
+        // CID
+        SFText {
+            Layout.alignment:       Qt.AlignTop
+            font.pixelSize:         14
+            color:                  Style.content_secondary
+            //% "Shader ID"
+            text:                   qsTrId("address-info-cid") + ":"
+            visible:                cidText.visible
+        }
+
+        SFLabel {
+            id:               cidText
+            font.pixelSize:   14
+            color:            Style.content_main
+            text:             root.cidsStr
+            elide:            Text.ElideRight
+            copyMenuEnabled:  true
+            onCopyText:       textCopied(text)
+            visible:          root.isContractTx
+        }
         
         SFText {
             Layout.alignment: Qt.AlignTop
             font.pixelSize: 14
             color: Style.content_secondary
-            //% "Comment"
-            text: qsTrId("general-comment") + ":"
+
+            text: isContractTx ?
+                //% "Description"
+                qsTrId("general-description") + ":" :
+                //% "Comment"
+                qsTrId("general-comment") + ":"
+
             visible: commentTx.visible
         }
 
@@ -402,6 +428,7 @@ RowLayout {
             onCopyText: textCopied(root.comment)
             visible: isTextFieldVisible(root.comment)
         }
+
         SFText {
             Layout.alignment: Qt.AlignTop
             font.pixelSize: 14

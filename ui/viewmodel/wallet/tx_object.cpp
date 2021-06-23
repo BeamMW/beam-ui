@@ -665,14 +665,17 @@ bool TxObject::isDexTx() const
     return _tx.m_txType == beam::wallet::TxType::DexSimpleSwap;
 }
 
-const std::string& TxObject::getAppId()
+QString TxObject::getAppId()
 {
     if (!_appid.is_initialized())
     {
-        _appid = _tx.GetParameter<std::string>(beam::wallet::TxParameterID::AppID);
-        if(!_appid.is_initialized())
+        if(auto appid = _tx.GetParameter<std::string>(beam::wallet::TxParameterID::AppID))
         {
-            _appid = std::string();
+            _appid = QString::fromStdString(*appid);
+        }
+        else
+        {
+            _appid = "";
         }
     }
     return *_appid;
@@ -680,7 +683,7 @@ const std::string& TxObject::getAppId()
 
 bool TxObject::isDappTx()
 {
-    return !getAppId().empty();
+    return !getAppId().isEmpty();
 }
 
 beam::wallet::TxAddressType TxObject::getAddressType()
