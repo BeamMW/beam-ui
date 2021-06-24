@@ -36,6 +36,7 @@ SettingsFoldable {
         RowLayout {
             Layout.preferredHeight: 32
             Layout.fillWidth:       true
+
             SFText {
                 property string beamUrl: "<a href='https://www.beam.mw/'>beam.mw</a>"
                 //% "blockchain explorer"
@@ -103,6 +104,20 @@ SettingsFoldable {
                 confirmPasswordDialog.onDialogAccepted = onDialogAccepted
                 confirmPasswordDialog.onDialogRejected = onDialogRejected
                 confirmPasswordDialog.open()
+            }
+        }
+
+        CustomSwitch {
+            id: dappsAllowed
+            //% "Allow to launch DApps"
+            text: qsTrId("settings-dapps-allowed")
+            Layout.fillWidth: true
+
+            checked: viewModel.dappsAllowed
+            Binding {
+                target:   viewModel
+                property: "dappsAllowed"
+                value:    dappsAllowed.checked
             }
         }
 

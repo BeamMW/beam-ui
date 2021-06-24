@@ -393,6 +393,9 @@ Rectangle {
        details.open()
     }
 
+    function openWallet () {
+        updateItem("wallet")
+    }
     function openSendDialog(receiver) {
         updateItem("wallet", {"openSend": true, "token" : receiver})
     }
@@ -459,7 +462,7 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        updateItem("wallet")
+        openWallet()
     }
 
     Component.onDestruction: {

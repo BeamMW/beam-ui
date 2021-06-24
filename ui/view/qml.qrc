@@ -76,6 +76,7 @@
         <file>controls/AlphaTipPopup.qml</file>
         <file>controls/SubtitleRow.qml</file>
         <file>controls/AddressQRDialog.qml</file>
+        <file>controls/OpenApplicationsDialog.qml</file>
         <file>wallet/TxTable.qml</file>
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>

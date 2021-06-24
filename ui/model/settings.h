@@ -43,6 +43,9 @@ public:
     bool showSwapBetaWarning();
     void setShowSwapBetaWarning(bool value);
 
+    bool getDAppsAllowed () const;
+    void setDAppsAllowed (bool val);
+
 #if defined(BEAM_HW_WALLET)
     std::string getTrezorWalletStorage() const;
 #endif
@@ -129,6 +132,7 @@ signals:
     void localeChanged();
     void beamMWLinksChanged();
     void secondCurrencyChanged();
+    void dappsAllowedChanged();
 
 private:
     QSettings m_data;

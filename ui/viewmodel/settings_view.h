@@ -49,6 +49,8 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(QString      explorerUrl                     READ getExplorerUrl                 CONSTANT)
     Q_PROPERTY(QString      faucetUrl                       READ getFaucetUrl                   CONSTANT)
     Q_PROPERTY(int          minConfirmations                READ getMinConfirmations            WRITE  setMinConfirmations NOTIFY minConfirmationsChanged)
+    Q_PROPERTY(bool         dappsAllowed                    READ getDAppsAllowed                WRITE  setDAppsAllowed NOTIFY dappsAllowedChanged)
+
 
     Q_PROPERTY(QList<QObject*> swapCoinSettingsList READ getSwapCoinSettings    CONSTANT)
     Q_PROPERTY(QObject* notificationsSettings   READ getNotificationsSettings   CONSTANT)
@@ -111,6 +113,9 @@ public:
     int getMinConfirmations() const;
     void setMinConfirmations(int value);
 
+    bool getDAppsAllowed () const;
+    void setDAppsAllowed (bool val);
+
     Q_INVOKABLE uint coreAmount() const;
     Q_INVOKABLE void addLocalNodePeer(const QString& localNodePeer);
     Q_INVOKABLE void deleteLocalNodePeer(int index);
@@ -153,6 +158,8 @@ signals:
     void maxPrivacyAnonymitySetChanged();
     void maxPrivacyLockTimeLimitChanged();
     void minConfirmationsChanged();
+    void dappsAllowedChanged();
+
 protected:
     void timerEvent(QTimerEvent *event) override;
 

@@ -3131,5 +3131,19 @@ Update your settings and try again.</source>
         <source>DAPP name</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="dapps-privacy-title">
+        <source>DApps Privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-privacy-warning">
+        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
+
+Allow to proceed ? You can always update your choice in Settings later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-dapps-allowed">
+        <source>Allow to launch DApps</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

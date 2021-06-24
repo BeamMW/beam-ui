@@ -63,6 +63,7 @@ SettingsViewModel::SettingsViewModel()
     connect(AppModel::getInstance().getWalletModel().get(), SIGNAL(addressChecked(const QString&, bool)), SLOT(onAddressChecked(const QString&, bool)));
     connect(AppModel::getInstance().getWalletModel().get(), SIGNAL(publicAddressChanged(const QString&)), SLOT(onPublicAddressChanged(const QString&)));
     connect(&m_settings, SIGNAL(beamMWLinksChanged()), SIGNAL(beamMWLinksPermissionChanged()));
+    connect(&m_settings, &WalletSettings::dappsAllowedChanged, this, &SettingsViewModel::dappsAllowedChanged);
 
     m_timerId = startTimer(CHECK_INTERVAL);
 }
@@ -239,6 +240,16 @@ void SettingsViewModel::allowBeamMWLinks(bool value)
     {
         m_settings.setAllowedBeamMWLinks(value);
     }
+}
+
+bool SettingsViewModel::getDAppsAllowed () const
+{
+    return m_settings.getDAppsAllowed();
+}
+
+void SettingsViewModel::setDAppsAllowed (bool val)
+{
+    m_settings.setDAppsAllowed(val);
 }
 
 QStringList SettingsViewModel::getSupportedLanguages() const

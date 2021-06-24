@@ -427,7 +427,7 @@ ColumnLayout {
         return arr
     }
 
-    Component.onCompleted: {
+    function loadAppsList () {
         if (viewModel.appsUrl.length) {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function()
@@ -451,7 +451,30 @@ ColumnLayout {
             xhr.open('GET', viewModel.appsUrl, true)
             xhr.send('')
         }
-
         control.appsList = appendDevApp(undefined)
+    }
+
+    SettingsViewModel {
+        id: settings
+    }
+
+    OpenApplicationsDialog {
+        id: appsDialog
+        onRejected: function () {
+            settings.dappsAllowed = false
+            main.openWallet()
+        }
+        onAccepted: function () {
+            settings.dappsAllowed = true
+            loadAppsList()
+        }
+    }
+
+    Component.onCompleted: {
+        if (settings.dappsAllowed) {
+            loadAppsList()
+        } else {
+            appsDialog.open()
+        }
     }
 }
