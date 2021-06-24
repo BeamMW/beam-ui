@@ -37,6 +37,7 @@ namespace beamui::applications
         Q_INVOKABLE void sendRejected(const QString& request);
         Q_INVOKABLE void contractInfoApproved(const QString& request);
         Q_INVOKABLE void contractInfoRejected(const QString& request);
+        Q_INVOKABLE bool apiSupported(const QString& apiVersion) const;
 
         [[nodiscard]] QMap<QString, QVariant> getAssets();
 

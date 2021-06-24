@@ -263,4 +263,9 @@ namespace beamui::applications
     {
         return _amgr->getAssetsMap(_mappedAssets);
     }
+
+    bool WebAPICreator::apiSupported(const QString& apiVersion) const
+    {
+        return beam::wallet::IWalletApi::ValidateAPIVersion(apiVersion.toStdString());
+    }
 }

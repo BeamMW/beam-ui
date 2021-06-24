@@ -3145,5 +3145,9 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <source>Allow to launch DApps</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="apps-update-wallet">
+        <source>Update Beam Wallet to launch</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

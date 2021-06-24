@@ -6,6 +6,7 @@ import QtWebChannel     1.0
 import Beam.Wallet      1.0
 import "controls"
 import "wallet"
+import "./utils.js" as Utils
 
 ColumnLayout {
     id: control
@@ -348,11 +349,11 @@ ColumnLayout {
                                     }
                                     color: Style.content_main
                                 }
+
                                 SFText {
-                                    text: modelData.description
-                                    font {
-                                        pixelSize:  14
-                                    }
+                                    text: Utils.limitText(modelData.description, 80)
+                                    font.pixelSize:  14
+                                    elide: Text.ElideRight
                                     color: Style.content_main
                                 }
                             }
@@ -362,12 +363,14 @@ ColumnLayout {
                             }
 
                             CustomButton {
+                                id: launchBtn
                                 Layout.rightMargin: 20
                                 height: 40
                                 palette.button: Style.background_second
                                 palette.buttonText : Style.content_main
                                 icon.source: "qrc:/assets/icon-run.svg"
                                 icon.height: 16
+                                visible: webapiCreator.apiSupported(model.api_version || "current")
                                 //% "launch"
                                 text: qsTrId("apps-run")
 
@@ -380,12 +383,20 @@ ColumnLayout {
                                     onClicked:        launchApp(modelData)
                                 }
                             }
+
+                            SFText {
+                                Layout.rightMargin: 25
+                                //% "Update Beam Wallet to launch"
+                                text: qsTrId("apps-update-wallet")
+                                color: Style.validator_error
+                                visible: !launchBtn.visible
+                            }
                         }
 
                         MouseArea {
                             id:               hoverArea
                             anchors.fill:     parent
-                           // acceptedButtons:  Qt.LeftButton
+                            // acceptedButtons:  Qt.LeftButton
                             hoverEnabled:     true
                             propagateComposedEvents: true
                             preventStealing: true
