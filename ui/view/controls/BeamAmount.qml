@@ -27,7 +27,7 @@ Control {
     property int     captionFontSize:     12
     property string  prefix:              ""
     property bool    maxPaintedWidth:     true
-    property int     maxUnitChars:        6
+    property int     maxUnitChars:        -1
     property int     minUnitChars:        6
     property real    vSpacing:            5
 
@@ -78,8 +78,6 @@ Control {
     }
 
     function calcMaxTextWidth () {
-        //var pos = control.mapFromItem(amountText.parent, amountText.x, amountText.y)
-        //return control.maxPaintedWidth - pos.x - ((showDropCircular || showDrop) ? dropIconCtrl.width + amountText.parent.spacing : 0)
         return control.width - contentRow.spacing - assetIcon.width - (showDrop ? dropIconCtrl.width + amountText.parent.spacing : 0)
     }
 
@@ -88,6 +86,11 @@ Control {
 
         var samount = amount.toString()
         var unamed  = false
+
+        if (maxUnitChars > 0 && uname.length > maxUnitChars) {
+            uname  = uname.substr(0, maxUnitChars)
+            unamed = true
+        }
 
         while (true) {
            var result = formatAmount(samount, [uname, unamed ? '\u2026' : ''].join(''))

@@ -151,6 +151,7 @@ AlphaTipPopup {
                     font.weight:     Font.DemiBold
                     font.pixelSize:  13
                     maxPaintedWidth: false
+                    maxUnitChars:    20
                     Layout.rightMargin: 14
                 }
 
@@ -181,6 +182,7 @@ AlphaTipPopup {
                     font.weight:     Font.DemiBold
                     font.pixelSize:  13
                     maxPaintedWidth: false
+                    maxUnitChars:    20
                     Layout.rightMargin: 14
                 }
 
@@ -211,6 +213,7 @@ AlphaTipPopup {
                     font.weight:     Font.DemiBold
                     font.pixelSize:  13
                     maxPaintedWidth: false
+                    maxUnitChars:    20
                     Layout.rightMargin: 14
                 }
 
@@ -251,6 +254,7 @@ AlphaTipPopup {
                     font.weight:     Font.DemiBold
                     font.pixelSize:  13
                     maxPaintedWidth: false
+                    maxUnitChars:    20
                     Layout.rightMargin: 14
                 }
 
@@ -280,6 +284,7 @@ AlphaTipPopup {
                     font.weight:     Font.DemiBold
                     font.pixelSize:  13
                     maxPaintedWidth: false
+                    maxUnitChars:    20
                     Layout.rightMargin: 14
                 }
 
@@ -309,6 +314,7 @@ AlphaTipPopup {
                     font.weight:     Font.DemiBold
                     font.pixelSize:  13
                     maxPaintedWidth: false
+                    maxUnitChars:    20
                     Layout.rightMargin: 14
                 }
 
@@ -343,6 +349,7 @@ AlphaTipPopup {
                         font.weight:     Font.DemiBold
                         font.pixelSize:  13
                         maxPaintedWidth: false
+                        maxUnitChars:    20
                     }
 
                     LinkButton {

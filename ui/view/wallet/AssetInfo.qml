@@ -57,6 +57,8 @@ Control {
             font.weight:       Font.Normal
             font.pixelSize:    16
             showTip:           true
+            maxPaintedWidth:   true
+            maxUnitChars:      15
         }
     }
 

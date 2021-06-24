@@ -263,7 +263,7 @@ RowLayout {
                         rate:         root.assetRates[index]
                         rateUnit:     this.rate != "0" ? root.rateUnit : ""
                         showTip:      false
-                        //maxPaintedWidth: this.width don't enable, causes freeze of animations, neet to refactor
+                        //maxPaintedWidth: this.width - don't enable, causes freeze of animations, neet to refactor
                         font {
                         styleName:  "Bold"
                         weight:     Font.Bold
