@@ -17,11 +17,12 @@ namespace beamui::applications {
     class AppsViewModel : public QObject
     {
         Q_OBJECT
-        Q_PROPERTY(QString devAppUrl     READ getDevAppUrl     CONSTANT)
-        Q_PROPERTY(QString devAppName    READ getDevAppName    CONSTANT)
-        Q_PROPERTY(QString devAppApiVer  READ getDevAppApiVer  CONSTANT)
-        Q_PROPERTY(QString appsUrl       READ getAppsUrl       CONSTANT)
-        Q_PROPERTY(QString userAgent     READ getUserAgent     CONSTANT)
+        Q_PROPERTY(QString devAppUrl        READ getDevAppUrl        CONSTANT)
+        Q_PROPERTY(QString devAppName       READ getDevAppName       CONSTANT)
+        Q_PROPERTY(QString devAppApiVer     READ getDevAppApiVer     CONSTANT)
+        Q_PROPERTY(QString devAppMinApiVer  READ getDevAppMinApiVer  CONSTANT)
+        Q_PROPERTY(QString appsUrl          READ getAppsUrl          CONSTANT)
+        Q_PROPERTY(QString userAgent        READ getUserAgent        CONSTANT)
 
     public:
         AppsViewModel();
@@ -31,6 +32,7 @@ namespace beamui::applications {
         [[nodiscard]] QString getDevAppName() const;
         [[nodiscard]] QString getAppsUrl() const;
         [[nodiscard]] QString getDevAppApiVer() const;
+        [[nodiscard]] QString getDevAppMinApiVer() const;
         [[nodiscard]] QString getUserAgent() const;
 
     public:

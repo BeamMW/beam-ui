@@ -90,6 +90,7 @@ public:
     QString getDevBeamAppUrl();
     QString getDevBeamAppName();
     QString getDevAppApiVer();
+    QString getDevAppMinApiVer();
 
     uint8_t getMaxPrivacyAnonymitySet() const;
     void setMaxPrivacyAnonymitySet(uint8_t anonymitySet);

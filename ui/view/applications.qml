@@ -131,7 +131,8 @@ ColumnLayout {
 
         try
         {
-            var apiVersion = app.api_version || "current";
+            var verWant = app.api_version || "current"
+            var verMin  = app.min_api_version || ""
 
             webapiCreator.onApiCreated.connect(function(api, appid) {
                 control.errorMessage = ""
@@ -144,7 +145,7 @@ ColumnLayout {
                 appctTable.dappFilter = appid
             })
 
-            webapiCreator.createApi(apiVersion, app.name, app.url)
+            webapiCreator.createApi(verWant, verMin, app.name, app.url)
             return
         }
         catch (err)
@@ -370,7 +371,8 @@ ColumnLayout {
                                 palette.buttonText : Style.content_main
                                 icon.source: "qrc:/assets/icon-run.svg"
                                 icon.height: 16
-                                visible: webapiCreator.apiSupported(model.api_version || "current")
+                                visible: webapiCreator.apiSupported(model.api_version || "current") ||
+                                         webapiCreator.apiSupported(model.min_api_version || "")
                                 //% "launch"
                                 text: qsTrId("apps-run")
 
@@ -428,10 +430,11 @@ ColumnLayout {
             arr = arr || []
             arr.unshift({
                 //% "This is your dev application"
-                "description":  qsTrId("apps-devapp"),
-                "name":         viewModel.devAppName,
-                "url":          viewModel.devAppUrl,
-                "api_version":  viewModel.devAppApiVer
+                "description":     qsTrId("apps-devapp"),
+                "name":            viewModel.devAppName,
+                "url":             viewModel.devAppUrl,
+                "api_version":     viewModel.devAppApiVer,
+                "min_api_version": viewModel.devAppMinApiVer
             })
             return arr
         }

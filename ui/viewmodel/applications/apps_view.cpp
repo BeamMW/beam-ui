@@ -71,6 +71,12 @@ namespace beamui::applications {
         return settings.getDevAppApiVer();
     }
 
+    QString AppsViewModel::getDevAppMinApiVer() const
+    {
+        auto& settings = AppModel::getInstance().getSettings();
+        return settings.getDevAppMinApiVer();
+    }
+
     QString AppsViewModel::getAppCachePath(const QString& appname) const
     {
         auto& settings = AppModel::getInstance().getSettings();

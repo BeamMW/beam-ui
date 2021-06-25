@@ -54,9 +54,10 @@ namespace
     const char* kBeamNewsActive = "notifications/beam_news";
     const char* kTxStatusActive = "notifications/tx_status";
 
-    const char* kDevAppURL    = "devapp/url";
-    const char* kDevAppName   = "devapp/name";
-    const char* kDevAppApiVer = "devapp/api_version";
+    const char* kDevAppURL       = "devapp/url";
+    const char* kDevAppName      = "devapp/name";
+    const char* kDevAppApiVer    = "devapp/api_version";
+    const char* kDevAppMinApiVer = "devapp/min_api_version";
 
     const char* kMpAnonymitySet = "max_privacy/anonymity_set";
 
@@ -664,6 +665,11 @@ QString WalletSettings::getDevBeamAppName()
 QString WalletSettings::getDevAppApiVer()
 {
     return m_data.value(kDevAppApiVer).toString();
+}
+
+QString WalletSettings::getDevAppMinApiVer()
+{
+    return m_data.value(kDevAppMinApiVer).toString();
 }
 
 QString WalletSettings::getExplorerUrl() const

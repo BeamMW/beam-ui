@@ -32,7 +32,7 @@ namespace beamui::applications
         explicit WebAPICreator(QObject *parent = nullptr);
         ~WebAPICreator() override = default;
 
-        Q_INVOKABLE void createApi(const QString& version, const QString& appName, const QString& appUrl);
+        Q_INVOKABLE void createApi(const QString& verWant, const QString& verMin, const QString& appName, const QString& appUrl);
         Q_INVOKABLE void sendApproved(const QString& request);
         Q_INVOKABLE void sendRejected(const QString& request);
         Q_INVOKABLE void contractInfoApproved(const QString& request);

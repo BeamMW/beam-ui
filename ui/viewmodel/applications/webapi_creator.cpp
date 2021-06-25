@@ -67,15 +67,29 @@ namespace beamui::applications
         connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &WebAPICreator::assetsChanged);
     }
 
-    void WebAPICreator::createApi(const QString &version, const QString &appName, const QString &appUrl)
+    void WebAPICreator::createApi(const QString& verWant, const QString& verMin, const QString &appName, const QString &appUrl)
     {
         using namespace beam::wallet;
 
-        const auto stdver = version.toStdString();
-        if (!IWalletApi::ValidateAPIVersion(stdver))
+        //
+        // if can, create verWant API, otherwise verMin
+        // if cannot to create any of these two just fail
+        //
+        std::string version;
+        if (IWalletApi::ValidateAPIVersion(verWant.toStdString()))
+        {
+            version = verWant.toStdString();
+        }
+        else if (IWalletApi::ValidateAPIVersion(verMin.toStdString()))
+        {
+            version = verMin.toStdString();
+        }
+
+        if(version.empty())
         {
             //% "Unsupported API version requested: %1"
-            const auto error = qtTrId("apps-bad-api-version").arg(version);
+            auto error = qtTrId("apps-bad-api-version").arg(verWant);
+            if (!verMin.isEmpty()) error += "-" + verMin;
             return qmlEngine(this)->throwError(error);
         }
 
@@ -84,12 +98,12 @@ namespace beamui::applications
         const auto appid = std::string("appid:") + hv.str();
 
         _webShaders = std::make_shared<WebAPI_Shaders>(appid, appName.toStdString());
-        _api = std::make_unique<WebAPI_Beam>(*this, _webShaders, stdver, appid, appName.toStdString());
+        _api = std::make_unique<WebAPI_Beam>(*this, _webShaders, version, appid, appName.toStdString());
 
         QQmlEngine::setObjectOwnership(_api.get(), QQmlEngine::CppOwnership);
         emit apiCreated(_api.get(), QString::fromStdString(appid));
 
-        LOG_INFO() << "API created: " << stdver << ", " << appName.toStdString() << ", " << appid;
+        LOG_INFO() << "API created: " << version << ", " << appName.toStdString() << ", " << appid;
     }
 
     void WebAPICreator::AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
