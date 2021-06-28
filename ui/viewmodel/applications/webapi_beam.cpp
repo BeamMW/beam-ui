@@ -37,7 +37,7 @@ namespace beamui::applications {
         , _appId(appid)
         , _appName(appname)
     {
-        IWalletApi::InitData data;
+        ApiInitData data;
 
         data.contracts = std::move(shaders);
         data.swaps     = nullptr;
