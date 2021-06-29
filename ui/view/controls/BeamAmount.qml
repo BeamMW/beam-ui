@@ -242,15 +242,15 @@ Control {
 
                 Item {
                     height:  amountText.height
-                    width:   control.dropSize.width + 5
+                    width:   dropIconCtrl.width + 5
                     visible: showDrop
 
                     SvgImage {
                         id:         dropIconCtrl
-
                         source:     "qrc:/assets/icon-down.svg"
                         width:      control.dropSize.width
                         height:     control.dropSize.height
+                        fillMode:   Image.PreserveAspectFit
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.right: parent.right
                     }

@@ -109,6 +109,8 @@ CustomDialog {
                     amount:   model.amount
                     unitName: model.unitName
                     showTip:  false
+                    maxPaintedWidth: true
+                    maxUnitChars: 30
                 }}
             }
 

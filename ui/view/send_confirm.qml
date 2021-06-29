@@ -194,7 +194,9 @@ ConfirmationDialog {
                         rate:             (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).rate
                         prefix:           control.showPrefix ? (modelData.spend ? "- " : "+ ") : ""
                         rateUnit:         control.rateUnit
-                        maxPaintedWidth:  true
+                        maxPaintedWidth:  false
+                        maxUnitChars:     15
+
                         color:            modelData.spend ? Style.accent_outgoing : Style.accent_incoming
 
                         font.pixelSize:   24

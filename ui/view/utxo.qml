@@ -198,6 +198,8 @@ ColumnLayout {
                 amount: model ? model.amount : "0"
                 unitName: model ? model.unitName : ""
                 showTip: false
+                maxPaintedWidth: true
+                maxUnitChars: 30
             }}
         }
 

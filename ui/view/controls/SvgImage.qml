@@ -6,8 +6,8 @@ Image {
 
 	property real dpr: Screen.devicePixelRatio
 
-    sourceSize.width:  originalSizeImage.sourceSize.width  * (dpr == 1.0 ? 2 : dpr)
-    sourceSize.height: originalSizeImage.sourceSize.height * (dpr == 1.0 ? 2 : dpr)
+    sourceSize.width:  originalSizeImage.sourceSize.width  * 2
+    sourceSize.height: originalSizeImage.sourceSize.height * 2
 
     width:  originalSizeImage.sourceSize.width
     height: originalSizeImage.sourceSize.height
