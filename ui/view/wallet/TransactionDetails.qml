@@ -263,16 +263,15 @@ RowLayout {
                         rate:         root.assetRates[index]
                         rateUnit:     this.rate != "0" ? root.rateUnit : ""
                         showTip:      false
-                        //maxPaintedWidth: this.width - don't enable, causes freeze of animations, neet to refactor
+                        maxUnitChars: 30
                         font {
-                        styleName:  "Bold"
-                        weight:     Font.Bold
-                        pixelSize:  14
+                            styleName:  "Bold"
+                            weight:     Font.Bold
+                            pixelSize:  14
                         }
                     }
 
                     SFText {
-                        Layout.alignment: Qt.AlignTop
                         font.pixelSize: 14
                         color: Style.content_secondary
                         //% "Confidential asset ID"
@@ -280,8 +279,6 @@ RowLayout {
                         visible: root.assetIDs[index] != "0"
                     }
                     SFLabel {
-                        Layout.alignment: Qt.AlignTop
-                        Layout.fillWidth: true
                         copyMenuEnabled: true
                         font.pixelSize: 14
                         color: Style.content_main
@@ -359,6 +356,7 @@ RowLayout {
             rateUnit:  root.feeRateUnit
             rate:      root.feeRate
             showTip:   false
+            maxPaintedWidth: false
         }
 
         // CID
