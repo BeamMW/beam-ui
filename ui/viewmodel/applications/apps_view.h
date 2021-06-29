@@ -37,8 +37,8 @@ namespace beamui::applications {
 
     public:
         Q_INVOKABLE void onCompleted(QObject *webView);
-        Q_INVOKABLE QString getAppCachePath(const QString& appname) const;
-        Q_INVOKABLE QString getAppStoragePath(const QString& appname) const;
+        Q_INVOKABLE [[nodiscard]] QString getAppCachePath(const QString& appname) const;
+        Q_INVOKABLE [[nodiscard]] QString getAppStoragePath(const QString& appname) const;
 
     private:
         QString _userAgent;

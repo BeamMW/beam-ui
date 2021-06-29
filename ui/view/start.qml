@@ -2076,7 +2076,6 @@ Item
                     Item {
                         Layout.fillWidth:       true
                         Layout.fillHeight:      true
-                        Layout.minimumHeight:   startLayout.isSqueezedHeight  ? 15 : 40
                     }
 
                     ConfirmationDialog {

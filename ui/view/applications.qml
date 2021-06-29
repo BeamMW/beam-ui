@@ -223,6 +223,7 @@ ColumnLayout {
             Layout.fillWidth:  true
             contentItemHeight: appsView.height * 0.4
             bottomPadding:     folded ? 20 : 5
+            foldsUp:           false
 
             content: TxTable {
                 id: appctTable
@@ -415,6 +416,7 @@ ColumnLayout {
             Layout.fillWidth:  true
             contentItemHeight: appsView.height * 0.4
             bottomPadding:     folded ? 20 : 5
+            foldsUp:           false
 
             content: TxTable {
                 id: allctTable
