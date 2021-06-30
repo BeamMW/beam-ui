@@ -46,8 +46,22 @@ namespace beamui::applications {
         data.appId     = _appId;
         data.appName   = _appName;
 
-        _walletAPI = IWalletApi::CreateInstance(version, *this, data);
-        LOG_INFO () << "WebAPI_Beam created for " << appname << ", " << appid;
+        std::weak_ptr<bool> wp = _guard;
+        getAsyncWallet().makeIWTCall(
+            [this, wp, version, data]() -> boost::any {
+                if (!wp.lock())
+                {
+                    // this means that api is disconnected and destroyed already, this is normal
+                    return boost::none;
+                }
+
+                _walletAPI = IWalletApi::CreateInstance(version, *this, data);
+                LOG_INFO () << "WebAPI_Beam created for " << data.appName << ", " << data.appId;
+                return boost::none;
+            },
+            [] (const boost::any&) {
+            }
+        );
     }
 
     WebAPI_Beam::~WebAPI_Beam()
@@ -62,7 +76,7 @@ namespace beamui::applications {
         //
         LOG_INFO () << "WebAPP API call for " << _appName << ", " << _appId << "): " << request.toStdString();
 
-        IWalletApi::WeakPtr wp = _walletAPI;
+        std::weak_ptr<bool> wp = _guard;
         getAsyncWallet().makeIWTCall(
             [wp, this, request]() -> boost::any {
                 if (!wp.lock())
@@ -126,17 +140,18 @@ namespace beamui::applications {
         // Do not assume thread here
         // Should be safe to call from any thread
         //
-        IWalletApi::WeakPtr wp = _walletAPI;
+        std::weak_ptr<bool> wp = _guard;
         getAsyncWallet().makeIWTCall(
-            [wp, request]() -> boost::any {
-                if(auto sp = wp.lock())
+            [wp, this, request]() -> boost::any {
+                if(!wp.lock())
                 {
-                    sp->executeAPIRequest(request.c_str(), request.size());
+                    // this means that api is disconnected and destroyed already
+                    // well, okay, nothing to do then
                     return boost::none;
                 }
-                // this means that api is disconnected and destroyed already
-                // well, okay, nothing to do then
-                return std::string();
+
+                _walletAPI->executeAPIRequest(request.c_str(), request.size());
+                return boost::none;
             },
             [] (const boost::any&) {
             }

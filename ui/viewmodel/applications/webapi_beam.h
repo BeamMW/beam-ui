@@ -87,6 +87,8 @@ namespace beamui::applications
 
         // API should be accessed only in context of the reactor thread
         beam::wallet::IWalletApi::Ptr _walletAPI;
+        std::shared_ptr<bool> _guard = std::make_shared<bool>(true);
+
         IConsentHandler& _consentHandler;
         std::string _appId;
         std::string _appName;

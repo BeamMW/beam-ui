@@ -135,6 +135,7 @@ ColumnLayout {
             var verMin  = app.min_api_version || ""
 
             webapiCreator.onApiCreated.connect(function(api, appid) {
+                BeamGlobals.showMessage("API CREATED")
                 control.errorMessage = ""
                 webapiBEAM.api = api
                 webLayout.visible = false
