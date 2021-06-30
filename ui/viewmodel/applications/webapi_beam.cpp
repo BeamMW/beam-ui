@@ -67,6 +67,14 @@ namespace beamui::applications {
     WebAPI_Beam::~WebAPI_Beam()
     {
         AppModel::getInstance().getWalletModel()->releaseAppsShaders(_appId);
+        getAsyncWallet().makeIWTCall(
+            [api = std::move(_walletAPI)] () -> boost::any {
+                // here api is released
+                // api should be destroyed in context of the wallet thread
+                return boost::none;
+            },
+        [] (const boost::any&){
+        });
     }
 
     void WebAPI_Beam::callWalletApi(const QString& request)
