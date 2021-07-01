@@ -37,6 +37,9 @@ namespace beamui::applications {
         , _appId(appid)
         , _appName(appname)
     {
+        //
+        // THIS IS UI THREAD
+        //
         ApiInitData data;
 
         data.contracts = std::move(shaders);
@@ -46,31 +49,20 @@ namespace beamui::applications {
         data.appId     = _appId;
         data.appName   = _appName;
 
-        std::weak_ptr<bool> wp = _guard;
-        getAsyncWallet().makeIWTCall(
-            [this, wp, version, data]() -> boost::any {
-                if (!wp.lock())
-                {
-                    // this means that api is disconnected and destroyed already, this is normal
-                    return boost::none;
-                }
-
-                _walletAPI = IWalletApi::CreateInstance(version, *this, data);
-                LOG_INFO () << "WebAPI_Beam created for " << data.appName << ", " << data.appId;
-                return boost::none;
-            },
-            [] (const boost::any&) {
-            }
-        );
+        _walletAPI = IWalletApi::CreateInstance(version, *this, data);
+        LOG_INFO () << "WebAPI_Beam created for " << data.appName << ", " << data.appId;
     }
 
     WebAPI_Beam::~WebAPI_Beam()
     {
+        //
+        // THIS IS UI THREAD
+        //
         AppModel::getInstance().getWalletModel()->releaseAppsShaders(_appId);
         getAsyncWallet().makeIWTCall(
-            [api = std::move(_walletAPI)] () -> boost::any {
-                // here api is released
+            [api = std::move(_walletAPI)] () mutable -> boost::any {
                 // api should be destroyed in context of the wallet thread
+                api.reset();
                 return boost::none;
             },
         [] (const boost::any&){
@@ -80,7 +72,7 @@ namespace beamui::applications {
     void WebAPI_Beam::callWalletApi(const QString& request)
     {
         //
-        // THIS IS THE UI THREAD
+        // THIS IS UI THREAD
         //
         LOG_INFO () << "WebAPP API call for " << _appName << ", " << _appId << "): " << request.toStdString();
 
@@ -172,6 +164,7 @@ namespace beamui::applications {
         // This is reactor thread
         //
         AnyThread_sendAPIResponse(result);
+        LOG_INFO() << "sendAPIResponse: " << result.dump();
     }
 
     void WebAPI_Beam::AnyThread_sendAPIResponse(const beam::wallet::json& result)
@@ -181,6 +174,7 @@ namespace beamui::applications {
         // Should be safe to call from any thread
         //
         auto str = result.dump();
+        LOG_INFO() << "AnyThread_sendAPIResponse: " << str;
         if (!str.empty())
         {
             emit callWalletApiResult(QString::fromStdString(str));
