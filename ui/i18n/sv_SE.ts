@@ -3145,9 +3145,5 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <source>Update Beam Wallet to launch</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="apps-already-created">
-        <source>API already created</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 </TS>
