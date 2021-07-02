@@ -2822,10 +2822,6 @@ Update your settings and try again.</source>
         <source>Whitepaper</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="tx-details-title">
-        <source>General transaction info</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="tx-details-sending-addr-label">
         <source>Sending address</source>
         <translation type="unfinished"></translation>
@@ -3145,6 +3141,10 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     </message>
     <message id="apps-update-wallet">
         <source>Update Beam Wallet to launch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-popup-title">
+        <source>Transaction info</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

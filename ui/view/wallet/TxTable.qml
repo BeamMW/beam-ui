@@ -81,13 +81,6 @@ Control {
        }
     }
 
-    PaymentInfoDialog {
-        id: paymentInfoDialog
-        onTextCopied: function(text) {
-            BeamGlobals.copyToClipboard(text);
-        }
-    }
-
     PaymentInfoItem {
         id: verifyInfo
     }
@@ -100,6 +93,17 @@ Control {
         onTextCopied: function(text) {
             BeamGlobals.copyToClipboard(text);
         }
+    }
+
+    TransactionDetailsPopup {
+        id: txDetails
+        onTextCopied: function(text) {
+            BeamGlobals.copyToClipboard(text);
+        }
+        onOpenExternal: function(kernelID) {
+            var url = tableViewModel.explorerUrl + "block?kernel_id=" + kernelID;
+            Utils.openExternalWithConfirmation(url);
+        };
     }
 
     contentItem: ColumnLayout {
@@ -280,7 +284,7 @@ Control {
             rowDelegate: ExpandableRowDelegate {
                 id:         rowItem
                 collapsed:  true
-                rowInModel: styleData.row !== undefined && styleData.row >= 0 &&  styleData.row < txProxyModel.count
+                rowInModel: styleData.row !== undefined && styleData.row >= 0 && styleData.row < txProxyModel.count
                 rowHeight:  transactionsTable.rowHeight
                 tableView:  transactionsTable
 
@@ -292,114 +296,91 @@ Control {
 
                 property var model: parent.model
                 property bool hideFiltered: true
-
-                onLeftClick: function() {
-                    if (!collapsed && searchBox.text.length && hideFiltered) {
-                        hideFiltered = false;
-                        return false;
+                property string searchBoxText: searchBox.text
+                property int rowNumber: styleData.row !== undefined? styleData.row : "-1"
+                onSearchBoxTextChanged: function() {
+                    if (searchBoxText.length == 0) {
+                        collapse(false);
+                        return;
                     }
-                    return true;
+                    if (rowNumber == 0 && collapsed)
+                        expand(false);
+
+                    if (rowNumber != 0 && !collapsed)
+                        collapse(false);
                 }
 
-                delegate: TransactionDetails {
+                onRowNumberChanged: function() {
+                    if(searchBoxText.length && rowNumber == 0 && collapsed)
+                        expand(false);
+                }
+
+                onLeftClick: function() {
+                    txDetails.sendAddress = model && model.addressFrom ? model.addressFrom : "";
+                    txDetails.receiveAddress = model && model.addressTo ? model.addressTo : "";
+                    txDetails.senderIdentity = model && model.senderIdentity ? model.senderIdentity : "";
+                    txDetails.receiverIdentity = model && model.receiverIdentity ? model.receiverIdentity : "";
+                    txDetails.comment = model && model.comment ? model.comment : "";
+                    txDetails.txID = model && model.txID ? model.txID : "";
+                    txDetails.kernelID = model && model.kernelID ? model.kernelID : "";
+                    txDetails.status = model && model.status ? model.status : "";
+                    txDetails.failureReason = model && model.failureReason ? model.failureReason : "";
+                    txDetails.isIncome = model && model.isIncome ? model.isIncome : false;
+                    txDetails.hasPaymentProof = model && model.hasPaymentProof ? model.hasPaymentProof : false;
+                    txDetails.isSelfTx = model && model.isSelfTransaction ? model.isSelfTransaction : false;
+                    txDetails.isContractTx = model && model.isContractTx;
+                    txDetails.cidsStr = model && model.cidsStr ? model.cidsStr : "";
+                    txDetails.rawTxID = model && model.rawTxID ? model.rawTxID : null;
+                    txDetails.stateDetails = model && model.stateDetails ? model.stateDetails : "";
+                    txDetails.isCompleted = model && model.isCompleted ? model.isCompleted : false;
+                    txDetails.minConfirmations = model && model.minConfirmations ? model.minConfirmations : 0;
+                    txDetails.confirmationsProgress = model && model.confirmationsProgress ? model.confirmationsProgress : "";
+                    txDetails.dappName = model && model.dappName ? model.dappName : "";
+                    txDetails.addressType = Utils.getAddrTypeFromModel(model);
+
+                    txDetails.assetNames = model && model.assetNames ? model.assetNames : [];
+                    txDetails.assetIcons = model ? model.assetIcons: [];
+                    txDetails.assetAmounts = model ? model.assetAmounts: [];
+                    txDetails.assetIncome = model ? model.assetAmountsIncome: [];
+                    txDetails.assetRates = model ? model.assetRates: [];
+                    txDetails.assetIDs = model ? model.assetIDs: [];
+                    txDetails.totalValue = model ? model.amountSecondCurrency : "0";
+                    txDetails.rateUnit = tableViewModel.rateUnit;
+
+                    txDetails.fee = model && model.fee ? model.fee : "0";
+                    txDetails.feeRate = model && model.feeRate ? model.feeRate : "0";
+                    txDetails.feeUnit = qsTrId("general-beam");
+                    txDetails.feeRateUnit = tableViewModel.rateUnit;
+
+                    txDetails.searchFilter = searchBoxText;
+                    txDetails.token = model ? model.token : "";
+                    txDetails.isShieldedTx = model && model.isShieldedTx;
+                    txDetails.initialState = "tx_info";
+
+                    txDetails.getPaymentProof = function(rawTxID) {
+                        return rawTxID ? tableViewModel.getPaymentInfo(rawTxID) : null;
+                    }
+
+                    txDetails.open();
+                    return false;
+                }
+
+                delegate: TransactionsSearchHighlighter {
                     id: detailsPanel
                     width: transactionsTable.width
                     sendAddress:            model && model.addressFrom ? model.addressFrom : ""
                     receiveAddress:         model && model.addressTo ? model.addressTo : ""
                     senderIdentity:         model && model.senderIdentity ? model.senderIdentity : ""
                     receiverIdentity:       model && model.receiverIdentity ? model.receiverIdentity : ""
-                    comment:                model && model.comment ? model.comment : ""
                     txID:                   model && model.txID ? model.txID : ""
                     kernelID:               model && model.kernelID ? model.kernelID : ""
-                    status:                 model && model.status ? model.status : ""
-                    failureReason:          model && model.failureReason ? model.failureReason : ""
-                    isIncome:               model && model.isIncome ? model.isIncome : false
-                    hasPaymentProof:        model && model.hasPaymentProof ? model.hasPaymentProof : false
-                    isSelfTx:               model && model.isSelfTransaction ? model.isSelfTransaction : false
-                    isContractTx:           model && model.isContractTx
-                    cidsStr:                model && model.cidsStr ? model.cidsStr : ""
-                    rawTxID:                model && model.rawTxID ? model.rawTxID : null
-                    stateDetails:           model && model.stateDetails ? model.stateDetails : ""
-                    isCompleted:            model && model.isCompleted ? model.isCompleted : false
-                    minConfirmations:       model && model.minConfirmations ? model.minConfirmations : 0
-                    confirmationsProgress:  model && model.confirmationsProgress ? model.confirmationsProgress : ""
-                    dappName:               model && model.dappName ? model.dappName : ""
 
-                    addressType:        {
-                        if (model) {
-                            if (model.isMaxPrivacy) {
-                                //% "Max privacy"
-                                return qsTrId("tx-address-max-privacy")
-                            }
-                            if (model.isOfflineToken) {
-                                //% "Offline"
-                                return qsTrId("tx-address-offline") 
-                            }
-                            if (model.isPublicOffline) {
-                                //% "Public offline"
-                                return qsTrId("tx-address-public-offline") 
-                            }
-                            //% "Regular"
-                            return qsTrId("tx-address-regular");
-                        }
-                        return ""
-                    }
-
-                    assetNames:         model && model.assetNames ? model.assetNames : []
-                    assetIcons:         model ? model.assetIcons: []
-                    assetAmounts:       model ? model.assetAmounts: []
-                    assetIncome:        model ? model.assetAmountsIncome: []
-                    assetRates:         model ? model.assetRates: []
-                    assetIDs:           model ? model.assetIDs: []
-                    totalValue:         model ? model.amountSecondCurrency : "0"
-                    rateUnit:           tableViewModel.rateUnit
-
-                    fee:             model && model.fee ? model.fee : "0"
-                    feeRate:         model && model.feeRate ? model.feeRate : "0"
-                    feeUnit:         qsTrId("general-beam")
-                    feeRateUnit:     tableViewModel.rateUnit
-
-                    searchFilter:    searchBox.text
+                    searchFilter:    searchBoxText
                     hideFiltered:    rowItem.hideFiltered
                     token:           model ? model.token : ""
-                    isShieldedTx:    model && model.isShieldedTx ? true : false
-
-                    onSearchFilterChanged: function(text) {
-                        rowItem.collapsed = searchBox.text.length == 0;
-                        rowItem.hideFiltered = true;
-                    }
-
-                    onOpenExternal : function() {
-                        var url = tableViewModel.explorerUrl + "block?kernel_id=" + detailsPanel.kernelID;
-                        Utils.openExternalWithConfirmation(url);
-                    }
 
                     onTextCopied: function (text) {
                         BeamGlobals.copyToClipboard(text);
-                    }
-
-                    onCopyPaymentProof: function() {
-                        if (detailsPanel.rawTxID)
-                        {
-                            var paymentInfo = tableViewModel.getPaymentInfo(detailsPanel.rawTxID);
-                            if (paymentInfo.paymentProof.length === 0)
-                            {
-                                paymentInfo.paymentProofChanged.connect(function() {
-                                    textCopied(paymentInfo.paymentProof);
-                                });
-                            }
-                            else
-                            {
-                                textCopied(paymentInfo.paymentProof);
-                            }
-                        }
-                    }
-                    onShowPaymentProof: {
-                        if (detailsPanel.rawTxID)
-                        {
-                            paymentInfoDialog.model = tableViewModel.getPaymentInfo(detailsPanel.rawTxID);
-                            paymentInfoDialog.open();
-                        }
                     }
                 }
             }

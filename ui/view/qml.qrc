@@ -80,7 +80,8 @@
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>
         <file>wallet/AssetTip.qml</file>
-        <file>wallet/TransactionDetails.qml</file>
+        <file>wallet/TransactionDetailsPopup.qml</file>
+        <file>wallet/TransactionsSearchHighlighter.qml</file>
         <file>wallet/CoinsList.qml</file>
         <file>dex/MarketPanel.qml</file>
         <file>dex/MarketTable.qml</file>

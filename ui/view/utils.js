@@ -192,5 +192,43 @@ function limitText (text, maxLen) {
 const maxAmount = "262799999";
 const minAmount = "0.00000001";
 
+function isZeroed(s) {
+    for (var i = 0; i < s.length; ++i) {
+        if (s[i] != '0')
+            return false;
+    }
+    return true;
+}
 
+function getAddrTypeFromModel(model) {
+    if (model) {
+        if (model.isMaxPrivacy) {
+            //% "Max privacy"
+            return qsTrId("tx-address-max-privacy");
+        }
+        if (model.isOfflineToken) {
+            //% "Offline"
+            return qsTrId("tx-address-offline");
+        }
+        if (model.isPublicOffline) {
+            //% "Public offline"
+            return qsTrId("tx-address-public-offline");
+        }
+        //% "Regular"
+        return qsTrId("tx-address-regular");
+    }
+    return "";
+}
 
+function getHighlitedText(str, substr, color) {
+    if (substr.length == 0)
+        return str;
+
+    var searchRegExp2 = new RegExp("(" + substr + ")", "i");
+    var start = str.search(searchRegExp2);
+    if (start == -1)
+        return str;
+
+    var searchRegExp = new RegExp("(" + substr + ")", "gi");
+    return str.replace(searchRegExp, '<font color="' + color + '">$1</font>');
+}

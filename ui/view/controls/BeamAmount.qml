@@ -200,7 +200,7 @@ Control {
             width:       control.iconSize.width
             height:      control.iconSize.height
             visible:     !!control.iconSource
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.top: parent.top
         }
 
         Column {
