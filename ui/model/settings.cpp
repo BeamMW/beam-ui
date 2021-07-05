@@ -100,7 +100,8 @@ namespace
         static const std::vector<beam::wallet::Currency> supportedUnits {
             beam::wallet::Currency::UNKNOWN(),
             beam::wallet::Currency::USD(),
-            beam::wallet::Currency::BTC()
+            beam::wallet::Currency::BTC(),
+            beam::wallet::Currency::ETH()
         };
         return supportedUnits;
     }
