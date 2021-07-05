@@ -67,6 +67,8 @@ CustomDialog {
                 font.weight:       Font.Bold
                 font.pixelSize:    12
                 showTip:           true
+                maxUnitChars:      15
+                maxPaintedWidth:   true
             }
         }
 
@@ -110,7 +112,7 @@ CustomDialog {
                     unitName: model.unitName
                     showTip:  false
                     maxPaintedWidth: true
-                    maxUnitChars: 30
+                    maxUnitChars: 15
                 }}
             }
 
