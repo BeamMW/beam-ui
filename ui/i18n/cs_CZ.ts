@@ -3151,5 +3151,9 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <source>Insufficient funds to pay transaction fee.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="apps-inprogress-tip">
+        <source>(%1 active)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

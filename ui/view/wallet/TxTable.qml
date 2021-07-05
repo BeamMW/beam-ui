@@ -18,6 +18,7 @@ Control {
 
     property int    selectedAsset: -1
     property int    emptyMessageMargin: 90
+    property int    activeTxCnt: 0
     property alias  headerShaderVisible: transactionsTable.headerShaderVisible
     property var    dappFilter: undefined
     readonly property bool sourceVisible: dappFilter ? dappFilter == "all" : true
@@ -211,7 +212,17 @@ Control {
 
         CustomTableView {
             id: transactionsTable
-            Component.onCompleted: {
+            Component.onCompleted: function () {
+                txProxyModel.source.countChanged.connect(function() {
+                    control.activeTxCnt = 0
+                    var source = txProxyModel.source
+                    for (var idx = 0; idx < source.count; ++idx) {
+                        var qindex = source.index(idx, 0);
+                        if (source.data(qindex, TxObjectList.Roles.IsActive)) {
+                            ++control.activeTxCnt
+                        }
+                    }
+                })
                 transactionsTable.model.modelReset.connect(function(){
                     if (root && root.openedTxID != "") {
                         var index = tableViewModel.transactions.index(0, 0);

@@ -49,6 +49,14 @@ Pane {
                             letterSpacing:  3.11
                             capitalization: Font.AllUppercase
                         }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape:  Qt.PointingHandCursor
+                            onClicked: {
+                                control.folded = !control.folded;
+                            }
+                        }
                     }
 
                     Item {
@@ -67,6 +75,14 @@ Pane {
                             weight:         Font.Bold
                             pixelSize:      14
                             letterSpacing:  0.35
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape:  Qt.PointingHandCursor
+                            onClicked: {
+                                control.folded = !control.folded;
+                            }
                         }
                     }
                 }

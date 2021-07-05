@@ -231,6 +231,9 @@ ColumnLayout {
                 headerShaderVisible: false
                 dappFilter: "all"
             }
+
+            //% "(%1 active)"
+            titleTip: appctTable.activeTxCnt ? qsTrId("apps-inprogress-tip").arg(appctTable.activeTxCnt) : ""
         }
     }
 

@@ -284,6 +284,16 @@ QString TxObject::getRate() const
     return getRate(_tx.m_assetId);
 }
 
+bool TxObject::isActive() const
+{
+    using namespace beam::wallet;
+
+    return _tx.m_status == TxStatus::Pending ||
+           _tx.m_status == TxStatus::InProgress ||
+           _tx.m_status == TxStatus::Registering ||
+           _tx.m_status == TxStatus::Confirming;
+}
+
 QString TxObject::getStatus() const
 {
     std::unique_ptr<beam::wallet::TxStatusInterpreter> statusInterpreter;
