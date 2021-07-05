@@ -286,7 +286,7 @@ CustomDialog {
                             iconSize:     Qt.size(20, 20)
                             color:        dialog.assetIncome[index] ? Style.accent_incoming : Style.accent_outgoing
                             prefix:       this.amount == "0" ? "" : (dialog.assetIncome[index] ? "+ " : "- ")
-                            rate:         dialog.assetRates.length ? dialog.assetRates[index] : ""
+                            rate:         dialog.assetRates ? (dialog.assetRates[index] || "") : ""
                             rateUnit:     this.rate != "0" ? dialog.rateUnit : ""
                             showTip:      false
                             maxUnitChars: 30
