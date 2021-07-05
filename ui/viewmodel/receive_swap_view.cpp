@@ -80,7 +80,7 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     connect(&_walletModel, &WalletModel::walletStatusChanged, this, &ReceiveSwapViewModel::updateTransactionToken);
     connect(&_exchangeRatesManager, &ExchangeRatesManager::rateUnitChanged, this, &ReceiveSwapViewModel::secondCurrencyUnitNameChanged);
     connect(&_exchangeRatesManager, &ExchangeRatesManager::activeRateChanged, this, &ReceiveSwapViewModel::secondCurrencyRateChanged);
-    connect(&_walletModel, &WalletModel::coinsSelectionCalculated, this, &ReceiveSwapViewModel::onCoinsSelectionCalculated);
+    connect(&_walletModel, &WalletModel::coinsSelected, this, &ReceiveSwapViewModel::onCoinsSeleced);
 
     generateNewAddress();
     updateTransactionToken();
@@ -181,7 +181,7 @@ void ReceiveSwapViewModel::onSwapParamsLoaded(const beam::ByteBuffer& params)
    _saveParamsAllowed = true;
 }
 
-void ReceiveSwapViewModel::onCoinsSelectionCalculated(const beam::wallet::CoinsSelectionInfo& selectionRes)
+void ReceiveSwapViewModel::onCoinsSeleced(const beam::wallet::CoinsSelectionInfo& selectionRes)
 {
     if (_sentCurrency == OldWalletCurrency::OldCurrency::CurrBeam)
     {
@@ -248,7 +248,7 @@ void ReceiveSwapViewModel::setAmountSent(QString value)
             }
             if (_amountSentGrothes)
             {
-                _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes, beam::Asset::s_BeamID);
+                _walletModel.getAsync()->selectCoins(_amountSentGrothes, _sentFeeGrothes, beam::Asset::s_BeamID);
             }
         }
     }
@@ -272,7 +272,7 @@ void ReceiveSwapViewModel::setSentFee(unsigned int value)
         if (_sentCurrency == OldWalletCurrency::OldCurrency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID) && _amountSentGrothes)
         {
             _feeChangedByUI = true;
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_amountSentGrothes, _sentFeeGrothes, beam::Asset::s_BeamID);
+            _walletModel.getAsync()->selectCoins(_amountSentGrothes, _sentFeeGrothes, beam::Asset::s_BeamID);
         }
     }
 }

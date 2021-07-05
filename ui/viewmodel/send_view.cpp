@@ -50,7 +50,7 @@ SendViewModel::SendViewModel()
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,   this,  &SendViewModel::feeRateChanged);
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged, this,  &SendViewModel::feeRateChanged);
     connect(_amgr.get(),             &AssetsManager::assetsListChanged,        this,  &SendViewModel::assetsListChanged);
-    connect(&_walletModel,           &WalletModel::coinsSelectionCalculated,   this,  &SendViewModel::onSelectionCalculated);
+    connect(&_walletModel,           &WalletModel::coinsSelected,       this,  &SendViewModel::onCoinsSelected);
     connect(&_walletModel,           &WalletModel::sendMoneyVerified,          this,  &SendViewModel::sendMoneyVerified);
     connect(&_walletModel,           &WalletModel::cantSendToExpired,          this,  &SendViewModel::cantSendToExpired);
     connect(&_walletModel,           &WalletModel::publicAddressChanged,       this,  &SendViewModel::onPublicAddress);
@@ -85,7 +85,7 @@ void SendViewModel::setAssetId(int value)
     }
 }
 
-QString SendViewModel::getAssetTotal() const
+QString SendViewModel::getAssetAvailable() const
 {
     beam::AmountBig::Type available = _walletModel.getAvailable(m_Csi.m_assetID);
     return beamui::AmountBigToUIString(available);
@@ -172,6 +172,23 @@ bool SendViewModel::getIsEnough() const
     return m_Csi.m_isEnought;
 }
 
+bool SendViewModel::getIsEnoughAmount() const
+{
+    return m_Csi.m_requestedSum <= m_Csi.m_selectedSumAsset;
+}
+
+bool SendViewModel::getIsEnoughFee() const
+{
+    if (m_Csi.m_assetID)
+    {
+        return m_Csi.get_TotalFee() <= m_Csi.m_selectedSumBeam;
+    }
+    else
+    {
+        return m_Csi.get_TotalFee() + m_Csi.m_requestedSum <= m_Csi.m_selectedSumBeam;
+    }
+}
+
 QString SendViewModel::getSendAmount() const
 {
     return beamui::AmountToUIString(m_Csi.m_requestedSum);
@@ -256,7 +273,7 @@ void SendViewModel::RefreshCsiAsync()
         // just reset everything to zero
         auto csi = decltype(m_Csi)();
         csi.m_assetID = m_Csi.m_assetID;
-        return onSelectionCalculated(csi);
+        return onCoinsSelected(csi);
     }
 
     using namespace beam::wallet;
@@ -286,8 +303,7 @@ void SendViewModel::RefreshCsiAsync()
             break;
     }
 
-
-    _walletModel.getAsync()->calcShieldedCoinSelectionInfo(
+    _walletModel.getAsync()->selectCoins(
             m_Csi.m_requestedSum,
             0,
             m_Csi.m_assetID,
@@ -358,7 +374,7 @@ void SendViewModel::onPublicAddress(const QString& pubAddr)
     _publicOfflineAddr = pubAddr;
 }
 
-void SendViewModel::onSelectionCalculated(const beam::wallet::CoinsSelectionInfo& selectionRes)
+void SendViewModel::onCoinsSelected(const beam::wallet::CoinsSelectionInfo& selectionRes)
 {
     if (selectionRes.m_requestedSum != m_Csi.m_requestedSum || selectionRes.m_assetID != m_Csi.m_assetID)
     {
@@ -366,10 +382,14 @@ void SendViewModel::onSelectionCalculated(const beam::wallet::CoinsSelectionInfo
     }
 
     m_Csi = selectionRes;
-    if (!m_Csi.m_isEnought && _maxPossible)
+    if (!m_Csi.m_isEnought)
     {
-        m_Csi.m_requestedSum = m_Csi.get_NettoValue();
-        m_Csi.m_isEnought = true;
+        if(_maxPossible && m_Csi.m_requestedSum != m_Csi.get_NettoValue())
+        {
+            m_Csi.m_requestedSum = m_Csi.get_NettoValue();
+            RefreshCsiAsync();
+            return;
+        }
     }
 
     emit balanceChanged();

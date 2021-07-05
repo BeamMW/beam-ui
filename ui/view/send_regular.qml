@@ -257,11 +257,16 @@ ColumnLayout {
                                 multi:             viewModel.assetsList.length > 1
 
                                 error: {
-                                    if (!viewModel.isEnough)
+                                    if (!viewModel.isEnoughAmount)
                                     {
                                         var maxAmount = Utils.uiStringToLocale(viewModel.maxSendAmount)
                                         //% "Insufficient funds to complete the transaction. Maximum amount is %1 %2."
-                                        return qsTrId("send-no-funds").arg(maxAmount).arg(Utils.limitText(control.sendUnit, 6))
+                                        return qsTrId("send-no-funds").arg(maxAmount).arg(Utils.limitText(control.sendUnit, 10))
+                                    }
+                                    else if (!viewModel.isEnoughFee)
+                                    {
+                                        //% "Insufficient funds to pay transaction fee."
+                                        return qsTrId("send-no-funds-for-fee")
                                     }
                                     return ""
                                 }
@@ -305,8 +310,7 @@ ColumnLayout {
                                 BeamAmount {
                                     Layout.alignment:  Qt.AlignTop | Qt.AlignLeft
                                     Layout.fillWidth:  true
-                                    error:             !viewModel.isEnough
-                                    amount:            viewModel.assetTotal
+                                    amount:            viewModel.assetAvailable
                                     unitName:          control.sendUnit
                                     rateUnit:          control.rateUnit
                                     rate:              control.rate

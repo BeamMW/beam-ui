@@ -3145,5 +3145,9 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <source>Transaction info</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="send-no-funds-for-fee">
+        <source>Insufficient funds to pay transaction fee.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -39,7 +39,7 @@ SendSwapViewModel::SendSwapViewModel()
     connect(&_walletModel, &WalletModel::walletStatusChanged, this, &SendSwapViewModel::recalcAvailable);
     connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyUnitNameChanged()));
     connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
-    connect(&_walletModel, &WalletModel::coinsSelectionCalculated, this, &SendSwapViewModel::onCoinsSelectionCalculated);
+    connect(&_walletModel, &WalletModel::coinsSelected, this, &SendSwapViewModel::onCoinsSeleced);
 }
 
 QString SendSwapViewModel::getToken() const
@@ -171,7 +171,7 @@ void SendSwapViewModel::setSendAmount(QString value)
 
         if (_sendCurrency == OldWalletCurrency::OldCurrency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID))
         {
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
+            _walletModel.getAsync()->selectCoins(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
         }
     }
 }
@@ -193,7 +193,7 @@ void SendSwapViewModel::setSendFee(unsigned int value)
         if (_sendCurrency == OldWalletCurrency::OldCurrency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID) && _sendAmountGrothes)
         {
             _feeChangedByUI = true;
-            _walletModel.getAsync()->calcShieldedCoinSelectionInfo(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
+            _walletModel.getAsync()->selectCoins(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
         }
     }
 }
@@ -322,7 +322,7 @@ void SendSwapViewModel::onChangeCalculated(beam::Amount changeAsset, beam::Amoun
     emit canSendChanged();
 }
 
-void SendSwapViewModel::onCoinsSelectionCalculated(const beam::wallet::CoinsSelectionInfo& selectionRes)
+void SendSwapViewModel::onCoinsSeleced(const beam::wallet::CoinsSelectionInfo& selectionRes)
 {
     if (_sendCurrency == OldWalletCurrency::OldCurrency::CurrBeam)
     {

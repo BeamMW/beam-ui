@@ -134,7 +134,7 @@ private:
 private slots:
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onSwapParamsLoaded(const beam::ByteBuffer& token);
-    void onCoinsSelectionCalculated(const beam::wallet::CoinsSelectionInfo&);
+    void onCoinsSeleced(const beam::wallet::CoinsSelectionInfo&);
 
 private:
     beam::Amount _amountToReceiveGrothes;
