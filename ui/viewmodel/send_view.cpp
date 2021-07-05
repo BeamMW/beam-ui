@@ -481,10 +481,17 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
         }
         else
         {
-            assert(
-                   type == TxAddressType::PublicOffline ||
-                  (type == TxAddressType::Regular && _token.toStdString() == std::to_string(_receiverWalletID))
-            );
+            if (address->m_Identity != beam::Zero)
+            {
+                _receiverIdentity = address->m_Identity;
+            }
+            else
+            {
+                assert(
+                    type == TxAddressType::PublicOffline ||
+                    (type == TxAddressType::Regular && _token.toStdString() == std::to_string(_receiverWalletID))
+                );
+            }
         }
     }
     else
