@@ -85,6 +85,12 @@ void SendViewModel::setAssetId(int value)
     }
 }
 
+QString SendViewModel::getAssetTotal() const
+{
+    beam::AmountBig::Type available = _walletModel.getAvailable(m_Csi.m_assetID);
+    return beamui::AmountBigToUIString(available);
+}
+
 QString SendViewModel::getAssetRemaining() const
 {
     beam::AmountBig::Type amount = getTotalSpend();

@@ -306,7 +306,7 @@ ColumnLayout {
                                     Layout.alignment:  Qt.AlignTop | Qt.AlignLeft
                                     Layout.fillWidth:  true
                                     error:             !viewModel.isEnough
-                                    amount:            viewModel.assetRemaining
+                                    amount:            viewModel.assetTotal
                                     unitName:          control.sendUnit
                                     rateUnit:          control.rateUnit
                                     rate:              control.rate

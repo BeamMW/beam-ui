@@ -24,6 +24,7 @@ class SendViewModel: public QObject
     Q_PROPERTY(QList<QMap<QString, QVariant>> assetsList READ getAssetsList NOTIFY assetsListChanged)
 
     Q_PROPERTY(int      assetId           READ getAssetId           WRITE setAssetId             NOTIFY assetIdChanged)
+    Q_PROPERTY(QString  assetTotal        READ getAssetTotal                                     NOTIFY assetIdChanged)
     Q_PROPERTY(QString  assetRemaining    READ getAssetRemaining                                 NOTIFY balanceChanged)
     Q_PROPERTY(QString  beamRemaining     READ getBeamRemaining                                  NOTIFY balanceChanged)
     Q_PROPERTY(QString  changeBeam        READ getChangeBeam                                     NOTIFY balanceChanged)
@@ -65,6 +66,7 @@ public:
     [[nodiscard]] bool getChoiceOffline() const;
     void setChoiceOffline(bool value);
 
+    [[nodiscard]] QString getAssetTotal() const;
     [[nodiscard]] QString getAssetRemaining() const;
     [[nodiscard]] QString getBeamRemaining() const;
     [[nodiscard]] QString getFee() const;
