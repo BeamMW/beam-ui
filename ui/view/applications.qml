@@ -72,7 +72,8 @@ ColumnLayout {
                     appMode:        true,
                     isOnline:       false,
                     showPrefix:     true,
-                    assetsProvider: webapiCreator
+                    assetsProvider: webapiCreator,
+                    isEnough:       info.isEnough
                 })
 
             instance.Component.onDestruction.connect(function () {
@@ -105,7 +106,8 @@ ColumnLayout {
                     comment:        info["comment"],
                     appMode:        true,
                     showPrefix:     true,
-                    assetsProvider: webapiCreator
+                    assetsProvider: webapiCreator,
+                    isEnough:       info.isEnough
                 })
 
             instance.Component.onDestruction.connect(function () {

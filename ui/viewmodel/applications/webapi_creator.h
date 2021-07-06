@@ -57,9 +57,11 @@ namespace beamui::applications
         std::unique_ptr<WebAPI_Beam> _api;
         WebAPI_Shaders::Ptr _webShaders;
         AssetsManager::Ptr _amgr;
+        WalletModel::Ptr _wallet;
         beam::wallet::IWalletModelAsync::Ptr _asyncWallet;
 
         std::shared_ptr<bool> _sendConsentGuard = std::make_shared<bool>(true);
+        std::shared_ptr<bool> _sendCSIGuard = std::make_shared<bool>(true);
         std::shared_ptr<bool> _contractConsentGuard = std::make_shared<bool>(true);
 
         std::set<beam::Asset::ID> _mappedAssets;

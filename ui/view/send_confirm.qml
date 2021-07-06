@@ -18,7 +18,7 @@ ConfirmationDialog {
 
     property alias  addressText: addressLabel.text
     property alias  typeText:    typeLabel.text
-    property alias  isOnline:    onlineMessageText.visible
+    property bool   isOnline:    true
     property bool   appMode:     false
     property bool   showPrefix:  false
     property alias  comment:     commentCtrl.text
@@ -30,6 +30,7 @@ ConfirmationDialog {
     property string fee:      "0"
     property string feeRate:  "0"
     property string feeUnit:  BeamGlobals.beamUnit
+    property bool   isEnough: true
 
     defaultFocusItem: BeamGlobals.needPasswordToSpend() ? requirePasswordInput : cancelButton
 
@@ -37,7 +38,7 @@ ConfirmationDialog {
     okButtonText:            qsTrId("general-send")
     okButtonColor:           Style.accent_outgoing
     okButtonIconSource:      "qrc:/assets/icon-send-blue.svg"
-    okButtonEnable:          BeamGlobals.needPasswordToSpend() ? !!requirePasswordInput.text : true
+    okButtonEnable:          isEnough && (BeamGlobals.needPasswordToSpend() ? !!requirePasswordInput.text : true)
     cancelButtonIconSource:  "qrc:/assets/icon-cancel-white.svg"
 
     beforeAccept: function () {
@@ -78,6 +79,7 @@ ConfirmationDialog {
 
         GridLayout {
             Layout.fillWidth:       true
+            Layout.bottomMargin:    10
             columnSpacing:          14
             rowSpacing:             14
             columns:                2
@@ -156,7 +158,6 @@ ConfirmationDialog {
             // Amount
             //
             SFText {
-                Layout.topMargin:  8
                 font.pixelSize:    14
                 color:             Style.content_disabled
                 //% "Amount"
@@ -165,7 +166,6 @@ ConfirmationDialog {
 
             SFText {
                 Layout.maximumWidth: 290
-                Layout.topMargin:    8
                 font.pixelSize:      14
                 color:               Style.content_main
                 visible:             !control.hasAmounts
@@ -178,7 +178,6 @@ ConfirmationDialog {
             ColumnLayout {
                 Layout.maximumWidth: 290
                 Layout.fillWidth:    true
-                Layout.topMargin:    8
                 visible:             control.hasAmounts
                 spacing:             8
 
@@ -235,14 +234,27 @@ ConfirmationDialog {
                 }
             }
 
+            SFText {
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
+                visible: !isEnough
+                color: Style.validator_error
+                font.italic: true
+                font.pixelSize:         14
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.Wrap
+                //% "There is not enough funds to complete the transaction"
+                text: qsTrId("send-not-enough")
+            }
+
             //
             // Password confirmation
             //
             SFText {
                 id:                     requirePasswordLabel
-                visible:                BeamGlobals.needPasswordToSpend()
+                visible:                isEnough && BeamGlobals.needPasswordToSpend()
                 Layout.columnSpan:      2
-                Layout.topMargin:       16
+                Layout.topMargin:       8
                 horizontalAlignment:    Text.AlignHCenter
                 Layout.fillWidth:       true
                 Layout.minimumHeight:   16
@@ -257,12 +269,11 @@ ConfirmationDialog {
                 Layout.minimumWidth: 340
                 Layout.columnSpan:   2
                 spacing: 0
+                visible: isEnough && BeamGlobals.needPasswordToSpend()
 
                 SFTextInput {
                     id:                requirePasswordInput
-                    visible:           BeamGlobals.needPasswordToSpend()
                     width:             parent.width
-
                     font.pixelSize:    14
                     color:             requirePasswordError.text ? Style.validator_error : Style.content_main
                     backgroundColor:   requirePasswordError.text ? Style.validator_error : Style.content_main
@@ -280,7 +291,6 @@ ConfirmationDialog {
                 Item {
                     SFText {
                         id:              requirePasswordError
-                        visible:         BeamGlobals.needPasswordToSpend()
                         color:           Style.validator_error
                         font.pixelSize:  12
                         font.italic:     true
@@ -291,19 +301,14 @@ ConfirmationDialog {
             SFText {
                 id:                     onlineMessageText
                 Layout.columnSpan:      2
-                Layout.topMargin:       8
                 horizontalAlignment:    Text.AlignHCenter
                 Layout.maximumWidth:    420
                 font.pixelSize:         14
                 color:                  Style.content_disabled
                 wrapMode:               Text.WordWrap
+                visible:                isEnough && isOnline
                 //% "For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards."
                 text:                   qsTrId("send-confirmation-pwd-text-online-time")
-            }
-
-            Item {
-                // just some additional space
-                height: 15
             }
         }
     }

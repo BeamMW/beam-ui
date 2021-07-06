@@ -62,6 +62,7 @@ namespace beamui::applications
     WebAPICreator::WebAPICreator(QObject *parent)
         : QObject(parent)
         , _amgr(AppModel::getInstance().getAssets())
+        , _wallet(AppModel::getInstance().getWalletModel())
         , _asyncWallet(AppModel::getInstance().getWalletModel()->getAsync())
     {
         connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &WebAPICreator::assetsChanged);
@@ -153,13 +154,14 @@ namespace beamui::applications
         // Do not assume thread here
         // Should be safe to call from any thread
         //
-        const auto& spend = pinfo.minfo.spend;
+        const auto &spend = pinfo.minfo.spend;
         const auto fee = pinfo.minfo.fee;
 
         if (spend.size() != 1)
         {
             assert(!"tx_send must spend strictly 1 asset");
-            return _api->AnyThread_sendRejected(request, ApiError::NotAllowedError, "tx_send must spend strictly 1 asset");
+            return _api->AnyThread_sendRejected(request, ApiError::NotAllowedError,
+                                                "tx_send must spend strictly 1 asset");
         }
 
         const auto assetId = spend.begin()->first;
@@ -190,8 +192,20 @@ namespace beamui::applications
             assert(!"Failed to parse token");
         }
 
-        printApproveLog("Get user consent for send", _api->getAppId(), _api->getAppName(), info, ApproveAmounts());
-        emit approveSend(QString::fromStdString(request), info);
+        std::weak_ptr<bool> wp = _sendCSIGuard;
+        _asyncWallet->selectCoins(beam::AmountBig::get_Lo(amount), fee, assetId, false, [this, wp, request, info](const CoinsSelectionInfo& csi) mutable {
+            if (wp.lock())
+            {
+                info.insert("isEnough", csi.m_isEnought);
+                printApproveLog("Get user consent for send", _api->getAppId(), _api->getAppName(), info,ApproveAmounts());
+                emit approveSend(QString::fromStdString(request), info);
+            }
+            else
+            {
+                // Can happen if user leaves the application
+                LOG_WARNING() << "UIT send CSI arrived but creator is already destroyed";
+            }
+        });
     }
 
     void WebAPICreator::UIThread_getContractInfoConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
@@ -204,6 +218,7 @@ namespace beamui::applications
         info.insert("feeRate",   AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID)));
         info.insert("rateUnit",  _amgr->getRateUnit());
 
+        bool isEnough = true;
         ApproveAmounts amounts;
         for(const auto& sinfo: pinfo.minfo.spend)
         {
@@ -215,8 +230,15 @@ namespace beamui::applications
             entry.insert("amount",   AmountBigToUIString(amount));
             entry.insert("assetID",  assetId);
             entry.insert("spend",    true);
-
             amounts.push_back(entry);
+
+            auto totalAmount = amount;
+            if (assetId == beam::Asset::s_BeamID)
+            {
+                totalAmount += beam::AmountBig::Type(pinfo.minfo.fee);
+            }
+
+            isEnough = isEnough && (totalAmount <= _wallet->getAvailable(assetId));
         }
 
         for(const auto& sinfo: pinfo.minfo.receive)
@@ -227,12 +249,13 @@ namespace beamui::applications
 
             _mappedAssets.insert(assetId);
             entry.insert("amount",   AmountBigToUIString(amount));
-            entry.insert("assetID",   assetId);
+            entry.insert("assetID",  assetId);
             entry.insert("spend",    false);
 
             amounts.push_back(entry);
         }
 
+        info.insert("isEnough", isEnough);
         printApproveLog("Get user consent for contract tx", _api->getAppId(), _api->getAppName(), info, amounts);
         emit approveContractInfo(QString::fromStdString(request), info, amounts);
     }
