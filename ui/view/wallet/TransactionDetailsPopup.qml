@@ -140,84 +140,116 @@ CustomDialog {
             columns: 2
             
             SFText {
-                Layout.alignment: Qt.AlignTop
                 font.pixelSize: 14
                 color: Style.content_secondary
                 //% "Sending address"
                 text: qsTrId("tx-details-sending-addr-label") + ":"
-                visible: sendAddressField.visible
+                visible: sendAddressField.parent.visible
             }
-            SFLabel {
-                id: sendAddressField
-                Layout.fillWidth: true
-                copyMenuEnabled: true
-                font.pixelSize: 14
-                color: Style.content_main
-                elide: Text.ElideMiddle
-                text: getHighlitedText(dialog.sendAddress)
-                onCopyText: textCopied(dialog.sendAddress)
+            RowLayout {
                 visible: dialog.sendAddress.length && !(isIncome && isShieldedTx)
+                SFLabel {
+                    id: sendAddressField
+                    Layout.fillWidth: true
+                    copyMenuEnabled: true
+                    font.pixelSize: 14
+                    color: Style.content_main
+                    elide: Text.ElideMiddle
+                    text: getHighlitedText(dialog.sendAddress)
+                    onCopyText: textCopied(dialog.sendAddress)
+                }
+                CustomToolButton {
+                    Layout.alignment: Qt.AlignRight
+                    icon.source: "qrc:/assets/icon-copy.svg"
+                    onClicked: textCopied(sendAddressField.text)
+                    padding: 0
+                    background.implicitHeight: 16
+                }
             }
 
             SFText {
-                Layout.alignment: Qt.AlignTop
                 font.pixelSize: 14
                 color: Style.content_secondary
                 //% "Sender identity"
                 text: qsTrId("tx-details-sender-identity") + ":"
-                visible: senderIdentityField.visible
+                visible: senderIdentityField.parent.visible
             }
-            SFLabel {
-                id: senderIdentityField
-                Layout.fillWidth: true
-                copyMenuEnabled: true
-                font.pixelSize: 14
-                color: Style.content_main
-                elide: Text.ElideMiddle
-                text: getHighlitedText(dialog.senderIdentity)
-                onCopyText: textCopied(dialog.senderIdentity)
+            RowLayout {
                 visible: dialog.senderIdentity.length > 0 && (dialog.receiverIdentity.length > 0 || dialog.isShieldedTx )
+                SFLabel {
+                    id: senderIdentityField
+                    Layout.fillWidth: true
+                    copyMenuEnabled: true
+                    font.pixelSize: 14
+                    color: Style.content_main
+                    elide: Text.ElideMiddle
+                    text: getHighlitedText(dialog.senderIdentity)
+                    onCopyText: textCopied(dialog.senderIdentity)
+                }
+                CustomToolButton {
+                    Layout.alignment: Qt.AlignRight
+                    icon.source: "qrc:/assets/icon-copy.svg"
+                    onClicked: textCopied(senderIdentityField.text)
+                    padding: 0
+                    background.implicitHeight: 16
+                }
             }
 
             SFText {
-                Layout.alignment: Qt.AlignTop
                 font.pixelSize: 14
                 color: Style.content_secondary
                 //% "Receiving address"
                 text: qsTrId("tx-details-receiving-addr-label") + ":"
-                visible: receiveAddressField.visible
+                visible: receiveAddressField.parent.visible
             }
-            SFLabel {
-                property var receiveAddressOrToken : hasToken ? dialog.token : dialog.receiveAddress
-                id: receiveAddressField
-                Layout.fillWidth: true
-                copyMenuEnabled: true
-                font.pixelSize: 14
-                color: Style.content_main
-                elide: Text.ElideMiddle
-                text: getHighlitedText(receiveAddressOrToken)
-                onCopyText: textCopied(receiveAddressOrToken)
-                visible: receiveAddressOrToken.length
+            RowLayout {
+                visible: !dialog.isContractTx && receiveAddressField.receiveAddressOrToken.length
+                SFLabel {
+                    property var receiveAddressOrToken : hasToken ? dialog.token : dialog.receiveAddress
+                    id: receiveAddressField
+                    Layout.fillWidth: true
+                    copyMenuEnabled: true
+                    font.pixelSize: 14
+                    color: Style.content_main
+                    elide: Text.ElideMiddle
+                    text: getHighlitedText(receiveAddressOrToken)
+                    onCopyText: textCopied(receiveAddressOrToken)
+                }
+                CustomToolButton {
+                    Layout.alignment:Qt.AlignRight
+                    icon.source: "qrc:/assets/icon-copy.svg"
+                    onClicked: textCopied(receiveAddressField.text)
+                    padding: 0
+                    background.implicitHeight: 16
+                }
             }
 
             SFText {
-                Layout.alignment: Qt.AlignTop
                 font.pixelSize: 14
                 color: Style.content_secondary
                 //% "Receiver identity"
                 text: qsTrId("tx-details-receiver-identity") + ":"
                 visible: receiverIdentityField.visible
             }
-            SFLabel {
-                id: receiverIdentityField
-                Layout.fillWidth: true
-                copyMenuEnabled: true
-                font.pixelSize: 14
-                color: Style.content_main
-                elide: Text.ElideMiddle
-                text: getHighlitedText(dialog.receiverIdentity)
-                onCopyText: textCopied(dialog.receiverIdentity)
+            RowLayout {
                 visible: dialog.senderIdentity.length > 0 && dialog.receiverIdentity.length > 0
+                SFLabel {
+                    id: receiverIdentityField
+                    Layout.fillWidth: true
+                    copyMenuEnabled: true
+                    font.pixelSize: 14
+                    color: Style.content_main
+                    elide: Text.ElideMiddle
+                    text: getHighlitedText(dialog.receiverIdentity)
+                    onCopyText: textCopied(dialog.receiverIdentity)
+                }
+                CustomToolButton {
+                    Layout.alignment: Qt.AlignRight
+                    icon.source: "qrc:/assets/icon-copy.svg"
+                    onClicked: textCopied(receiverIdentityField.text)
+                    padding: 0
+                    background.implicitHeight: 16
+                }
             }
 
             // Address type
@@ -411,25 +443,33 @@ CustomDialog {
 
             // CID
             SFText {
-                Layout.alignment:       Qt.AlignTop
                 font.pixelSize:         14
                 color:                  Style.content_secondary
                 //% "Shader ID"
                 text:                   qsTrId("address-info-cid") + ":"
-                visible:                cidText.visible && stm.state == "tx_info"
+                visible:                cidText.parent.visible && stm.state == "tx_info"
             }
 
-            SFLabel {
-                id:               cidText
-                font.pixelSize:   14
-                color:            Style.content_main
-                text:             dialog.cidsStr
-                elide:            Text.ElideRight
-                copyMenuEnabled:  true
-                onCopyText:       textCopied(text)
+            RowLayout {
                 visible:          dialog.isContractTx && stm.state == "tx_info"
+                SFLabel {
+                    id:               cidText
+                    font.pixelSize:   14
+                    color:            Style.content_main
+                    text:             dialog.cidsStr
+                    elide:            Text.ElideRight
+                    copyMenuEnabled:  true
+                    onCopyText:       textCopied(text)
+                }
+                CustomToolButton {
+                    Layout.alignment: Qt.AlignRight
+                    icon.source: "qrc:/assets/icon-copy.svg"
+                    onClicked: textCopied(cidText.text)
+                    padding: 0
+                    background.implicitHeight: 16
+                }
             }
-            
+
             SFText {
                 Layout.alignment: Qt.AlignTop
                 font.pixelSize: 14
@@ -458,43 +498,58 @@ CustomDialog {
             }
 
             SFText {
-                Layout.alignment: Qt.AlignTop
                 font.pixelSize: 14
                 color: Style.content_secondary
                 //% "Transaction ID"
                 text: qsTrId("tx-details-tx-id-label") + ":"
-                visible: transactionID.visible && stm.state == "tx_info"
+                visible: transactionID.parent.visible && stm.state == "tx_info"
             }
-            SFLabel {
-                Layout.fillWidth: true
-                id: transactionID
-                copyMenuEnabled: true
-                font.pixelSize: 14
-                color: Style.content_main
-                text: getHighlitedText(dialog.txID)
-                elide: Text.ElideMiddle
-                onCopyText: textCopied(dialog.txID)
+            RowLayout {
                 visible: !Utils.isZeroed(dialog.txID) && stm.state == "tx_info"
+                SFLabel {
+                    Layout.fillWidth: true
+                    id: transactionID
+                    copyMenuEnabled: true
+                    font.pixelSize: 14
+                    color: Style.content_main
+                    text: getHighlitedText(dialog.txID)
+                    elide: Text.ElideMiddle
+                    onCopyText: textCopied(dialog.txID)
+                }
+                CustomToolButton {
+                    Layout.alignment: Qt.AlignTop | Qt.AlignRight
+                    icon.source: "qrc:/assets/icon-copy.svg"
+                    onClicked: textCopied(transactionID.text)
+                    padding: 0
+                    background.implicitHeight: 16
+                }
             }
             SFText {
-                Layout.alignment: Qt.AlignTop
                 font.pixelSize: 14
                 color: Style.content_secondary
                 //% "Kernel ID"
                 text: qsTrId("general-kernel-id") + ":"
-                visible: kernelID.visible
+                visible: kernelID.parent.visible
             }
-            SFLabel {
-                Layout.fillWidth: true
-                id: kernelID
-                copyMenuEnabled: true
-                font.pixelSize: 14
-                color: Style.content_main
-                //wrapMode: Text.Wrap
-                text: getHighlitedText(dialog.kernelID)
-                elide: Text.ElideMiddle
-                onCopyText: textCopied(dialog.kernelID)
+            RowLayout {
                 visible: !Utils.isZeroed(dialog.kernelID)
+                SFLabel {
+                    Layout.fillWidth: true
+                    id: kernelID
+                    copyMenuEnabled: true
+                    font.pixelSize: 14
+                    color: Style.content_main
+                    text: getHighlitedText(dialog.kernelID)
+                    elide: Text.ElideMiddle
+                    onCopyText: textCopied(dialog.kernelID)
+                }
+                CustomToolButton {
+                    Layout.alignment: Qt.AlignRight
+                    icon.source: "qrc:/assets/icon-copy.svg"
+                    onClicked: textCopied(kernelID.text)
+                    padding: 0
+                    background.implicitHeight: 16
+                }
             }
 
             Item {
@@ -594,20 +649,31 @@ CustomDialog {
                 visible: dialog.hasPaymentProof && stm.state == "payment_proof"
             }
 
-            ScrollView {
-                Layout.fillWidth:             true
-                Layout.maximumHeight:         120
-                clip:                         true
-                ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
-                ScrollBar.vertical.policy:    ScrollBar.AsNeeded
-                SFText {
-                    width:              500
-                    wrapMode:           Text.Wrap
-                    font.pixelSize:     14
-                    text:               paymentInfo ? paymentInfo.paymentProof : ""
-                    color:              Style.content_main
-                }
+            RowLayout {
                 visible: dialog.hasPaymentProof && stm.state == "payment_proof"
+                ScrollView {
+                    Layout.alignment: Qt.AlignTop
+                    Layout.fillWidth:             true
+                    Layout.maximumHeight:         120
+                    clip:                         true
+                    ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
+                    ScrollBar.vertical.policy:    ScrollBar.AsNeeded
+                    SFText {
+                        width:              450
+                        wrapMode:           Text.Wrap
+                        font.pixelSize:     14
+                        text:               paymentInfo ? paymentInfo.paymentProof : ""
+                        color:              Style.content_main
+                    }
+                }
+
+                CustomToolButton {
+                    Layout.alignment: Qt.AlignTop | Qt.AlignRight
+                    icon.source: "qrc:/assets/icon-copy.svg"
+                    onClicked: textCopied(paymentInfo ? paymentInfo.paymentProof : "")
+                    padding: 0
+                    background.implicitHeight: 16
+                }
             }
         }
     }
