@@ -3168,5 +3168,9 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <source>(%1 active)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="tx-details-general-info">
+        <source>General info</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

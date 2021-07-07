@@ -63,7 +63,7 @@ CustomDialog {
 
     modal: true
     width: 760
-    height: 590
+    height: 650
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
     parent: Overlay.overlay
@@ -72,6 +72,23 @@ CustomDialog {
     closePolicy: Popup.NoAutoClose | Popup.CloseOnEscape
 
     header: ColumnLayout {
+        SFText {
+            Layout.topMargin: 30
+            Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 18
+            font.styleName: "Bold";
+            font.weight: Font.Bold
+            color: Style.content_main
+            //% "Transaction info"
+            text: qsTrId("tx-details-popup-title")
+        }
+    }
+
+    contentItem: ColumnLayout {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+
         id: stm
         state: "tx_info"
         states: [
@@ -86,56 +103,41 @@ CustomDialog {
         ]
         
         RowLayout {
-            spacing: 20
-            Layout.topMargin: 30
             Layout.alignment: Qt.AlignHCenter
 
-            TxFilter{
-                id: txInfo
-                //% "Transaction info"
-                label: qsTrId("tx-details-popup-title")
-                font.pixelSize: 18
-                font.styleName: "Bold"; font.weight: Font.Bold
-                capitalization: Font.MixedCase
-                inactiveColor: Style.content_disabled
-                showLed: false
-                onClicked: stm.state = "tx_info"
-            }
-            TxFilter{
-                id: paymentProof
-                //% "Payment proof"
-                label: qsTrId("general-payment-proof")
-                font.pixelSize: 18
-                font.styleName: "Bold"; font.weight: Font.Bold
-                capitalization: Font.MixedCase
-                inactiveColor: Style.content_disabled
-                showLed: false
-                visible: dialog.hasPaymentProof
-                onClicked: {
-                    if (getPaymentProof && typeof getPaymentProof == "function") {
-                        dialog.paymentInfo = getPaymentProof(dialog.rawTxID);
-                        stm.state = "payment_proof";
+            Row {
+                TxFilter {
+                    id: txInfo
+                    //% "General info"
+                    label: qsTrId("tx-details-general-info")
+                    inactiveColor: Style.content_disabled
+                    onClicked: stm.state = "tx_info"
+                }
+
+                TxFilter {
+                    id: paymentProof
+                    //% "Payment proof"
+                    label: qsTrId("general-payment-proof")
+                    inactiveColor: Style.content_disabled
+                    onClicked: {
+                        if (dialog.hasPaymentProof && getPaymentProof && typeof getPaymentProof == "function") {
+                            dialog.paymentInfo = getPaymentProof(dialog.rawTxID);
+                            stm.state = "payment_proof";
+                        }
                     }
                 }
             }
         }
-    }
-
-    contentItem: ColumnLayout {
-        Layout.fillWidth: true
-        Layout.fillHeight: true
 
         GridLayout {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
             Layout.leftMargin: 30
             Layout.rightMargin: 30
+            Layout.topMargin: 30
             Layout.bottomMargin: 30
             Layout.alignment: Qt.AlignTop
             columnSpacing: 40
             rowSpacing: 14
             columns: 2
-            visible: stm.state == "tx_info"
             
             SFText {
                 Layout.alignment: Qt.AlignTop
@@ -225,7 +227,7 @@ CustomDialog {
                 color:                  Style.content_secondary
                 //% "Address type"
                 text:                   qsTrId("address-info-type") + ":"
-                visible:                addrTypeText.visible
+                visible:                addrTypeText.visible && stm.state == "tx_info"
             }
                 
             SFText {
@@ -235,7 +237,7 @@ CustomDialog {
                 font.pixelSize:         14
                 text:                   dialog.addressType
                 color:                  Style.content_main
-                visible:                !dialog.isContractTx
+                visible:                !dialog.isContractTx && stm.state == "tx_info"
             }
 
             SFText {
@@ -244,7 +246,7 @@ CustomDialog {
                 color: Style.content_secondary
                 //% "Confirmation status"
                 text: qsTrId("tx-details-confirmation-status-label") + ":"
-                visible:          dialog.minConfirmations
+                visible:          dialog.minConfirmations && stm.state == "tx_info"
             }
 
             SFLabel {
@@ -252,7 +254,7 @@ CustomDialog {
                 color:            Style.content_main
                 //% "Confirmed (%1)"
                 text:             qsTrId("tx-details-confirmation-progress-label").arg(dialog.confirmationsProgress)
-                visible:          dialog.minConfirmations
+                visible:          dialog.minConfirmations && stm.state == "tx_info"
             }
 
             SFText {
@@ -268,7 +270,7 @@ CustomDialog {
                 id: amountsList
                 Layout.fillWidth: true
                 spacing: 10
-                visible: true// visibleChildren.length > 0
+                visible: true
 
                 Repeater {
                     model: dialog.assetCount
@@ -320,7 +322,7 @@ CustomDialog {
                 Layout.alignment: Qt.AlignTop
                 font.pixelSize:   14
                 color:            Style.content_secondary
-                visible:          totalValueCtrl.visible || totalWarningCtrl.visible
+                visible:          (totalValueCtrl.visible || totalWarningCtrl.visible) && stm.state == "tx_info"
 
                 text: (dialog.isContractTx ?
                         //% "Total value"
@@ -333,7 +335,7 @@ CustomDialog {
             ColumnLayout {
                 Layout.fillWidth: true
                 id:               totalValueCtrl
-                visible:          dialog.totalValue != "0"
+                visible:          dialog.totalValue != "0" && stm.state == "tx_info"
                 spacing:          2
 
                 SFText {
@@ -356,7 +358,7 @@ CustomDialog {
             SFText
             {
                 id:               totalWarningCtrl
-                visible:          dialog.totalValue == "0"
+                visible:          dialog.totalValue == "0" && stm.state == "tx_info"
                 Layout.fillWidth: true
                 font.pixelSize:   14
                 color:            Style.content_secondary
@@ -370,12 +372,12 @@ CustomDialog {
                 color: Style.content_secondary
                 //% "Transaction fee"
                 text: qsTrId("general-fee") + ": "
-                visible: dialog.fee.length
+                visible: dialog.fee.length && stm.state == "tx_info"
             }
 
             BeamAmount {
                 Layout.fillWidth: true
-                visible: dialog.fee.length
+                visible: dialog.fee.length && stm.state == "tx_info"
 
                 amount:    dialog.fee
                 unitName:  dialog.feeUnit
@@ -383,6 +385,8 @@ CustomDialog {
                 rate:      dialog.feeRate
                 showTip:   false
                 maxPaintedWidth: false
+                iconSource:   "qrc:/assets/icon-beam.svg"
+                iconSize:     Qt.size(20, 20)
             }
 
             // CID
@@ -392,7 +396,7 @@ CustomDialog {
                 color:                  Style.content_secondary
                 //% "DAPP name"
                 text:                   qsTrId("address-info-dapp") + ":"
-                visible:                dappNameText.visible
+                visible:                dappNameText.visible && stm.state == "tx_info"
             }
 
             SFLabel {
@@ -402,7 +406,7 @@ CustomDialog {
                 text:             dialog.dappName
                 elide:            Text.ElideRight
                 copyMenuEnabled:  false
-                visible:          dialog.isContractTx
+                visible:          dialog.isContractTx && stm.state == "tx_info"
             }
 
             // CID
@@ -412,7 +416,7 @@ CustomDialog {
                 color:                  Style.content_secondary
                 //% "Shader ID"
                 text:                   qsTrId("address-info-cid") + ":"
-                visible:                cidText.visible
+                visible:                cidText.visible && stm.state == "tx_info"
             }
 
             SFLabel {
@@ -423,7 +427,7 @@ CustomDialog {
                 elide:            Text.ElideRight
                 copyMenuEnabled:  true
                 onCopyText:       textCopied(text)
-                visible:          dialog.isContractTx
+                visible:          dialog.isContractTx && stm.state == "tx_info"
             }
             
             SFText {
@@ -437,7 +441,7 @@ CustomDialog {
                     //% "Comment"
                     qsTrId("general-comment") + ":"
 
-                visible: commentTx.visible
+                visible: commentTx.visible && stm.state == "tx_info"
             }
 
             SFLabel {
@@ -450,6 +454,7 @@ CustomDialog {
                 text: getHighlitedText(dialog.comment)
                 elide: Text.ElideRight
                 onCopyText: textCopied(dialog.comment)
+                visible: stm.state == "tx_info"
             }
 
             SFText {
@@ -458,7 +463,7 @@ CustomDialog {
                 color: Style.content_secondary
                 //% "Transaction ID"
                 text: qsTrId("tx-details-tx-id-label") + ":"
-                visible: transactionID.visible 
+                visible: transactionID.visible && stm.state == "tx_info"
             }
             SFLabel {
                 Layout.fillWidth: true
@@ -469,7 +474,7 @@ CustomDialog {
                 text: getHighlitedText(dialog.txID)
                 elide: Text.ElideMiddle
                 onCopyText: textCopied(dialog.txID)
-                visible: !Utils.isZeroed(dialog.txID)
+                visible: !Utils.isZeroed(dialog.txID) && stm.state == "tx_info"
             }
             SFText {
                 Layout.alignment: Qt.AlignTop
@@ -527,7 +532,7 @@ CustomDialog {
                     hoverEnabled: true
                 }
             }
-            
+
             RowLayout {
                 Layout.columnSpan: 2
                 Layout.fillWidth: true
@@ -555,7 +560,7 @@ CustomDialog {
                 color: Style.content_secondary
                 //% "Error"
                 text: qsTrId("tx-details-error-label") + ":"
-                visible: dialog.failureReason.length > 0
+                visible: dialog.failureReason.length > 0 && stm.state == "tx_info"
             }
             SFLabel {
                 id: failureReason
@@ -564,38 +569,34 @@ CustomDialog {
                 font.pixelSize: 14
                 color: Style.content_main
                 wrapMode: Text.Wrap
-                visible: dialog.failureReason.length > 0
+                visible: dialog.failureReason.length > 0 && stm.state == "tx_info"
                 text: dialog.failureReason.length > 0 ? dialog.failureReason : ""
                 elide: Text.ElideRight
                 onCopyText: textCopied(text)
             }
-        }
 
-        GridLayout {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.leftMargin: 30
-            Layout.rightMargin: 30
-            Layout.bottomMargin: 30
-            Layout.alignment: Qt.AlignTop
-            columnSpacing: 40
-            rowSpacing: 14
-            columns: 2
-            visible: stm.state == "payment_proof"
+            Rectangle {
+                width: parent.width
+                height: 1
+                color: Style.background_button
+                Layout.columnSpan: 2
+                visible: dialog.hasPaymentProof && stm.state == "payment_proof"
+            }
 
             SFText {
                 Layout.alignment: Qt.AlignTop
                 font.pixelSize: 14
                 font.styleName: "Bold"
                 font.weight: Font.Bold
-                color: Style.content_main
+                color: Style.content_secondary
                 //% "Code"
                 text: qsTrId("payment-info-proof-code-label") + ":"
+                visible: dialog.hasPaymentProof && stm.state == "payment_proof"
             }
 
             ScrollView {
                 Layout.fillWidth:             true
-                Layout.maximumHeight:         200
+                Layout.maximumHeight:         120
                 clip:                         true
                 ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
                 ScrollBar.vertical.policy:    ScrollBar.AsNeeded
@@ -604,101 +605,9 @@ CustomDialog {
                     wrapMode:           Text.Wrap
                     font.pixelSize:     14
                     text:               paymentInfo ? paymentInfo.paymentProof : ""
-                    color:              Style.content_disabled
+                    color:              Style.content_main
                 }
-            }
-            SFText {
-                Layout.alignment: Qt.AlignHCenter
-                Layout.topMargin: 10
-                Layout.columnSpan: 2
-                font.pixelSize: 18
-                font.styleName: "Bold";
-                font.weight: Font.Bold
-                color: Style.content_main
-                //% "Details"
-                text: qsTrId("general-details")
-                visible: paymentInfo ? paymentInfo.isValid : false
-            }
-
-            SFText {
-                Layout.alignment: Qt.AlignTop
-                font.pixelSize: 14
-                font.styleName: "Bold"
-                font.weight: Font.Bold
-                color: Style.content_main
-                //% "Sender"
-                text: qsTrId("payment-info-proof-sender-label") + ":"
-                visible: paymentInfo ? paymentInfo.isValid : false
-            }
-
-            SFText {
-                Layout.fillWidth: true
-                wrapMode: Text.Wrap
-                font.pixelSize: 14
-                color: Style.content_disabled
-                text: paymentInfo ? paymentInfo.sender : ""
-                verticalAlignment: Text.AlignBottom
-                visible: paymentInfo ? paymentInfo.isValid : false
-            }
-
-            SFText {
-                Layout.alignment: Qt.AlignTop
-                font.pixelSize: 14
-                font.styleName: "Bold"
-                font.weight: Font.Bold
-                color: Style.content_main
-                //% "Receiver"
-                text: qsTrId("payment-info-proof-receiver-label") + ":"
-                visible: paymentInfo ? paymentInfo.isValid : false
-            }
-
-            SFText {
-                Layout.fillWidth: true
-                wrapMode: Text.Wrap
-                font.pixelSize: 14
-                color: Style.content_disabled
-                text: paymentInfo ? paymentInfo.receiver : ""
-                visible: paymentInfo ? paymentInfo.isValid : false
-            }
-
-            SFText {
-                Layout.alignment: Qt.AlignTop
-                font.pixelSize: 14
-                font.styleName: "Bold"
-                font.weight: Font.Bold
-                color: Style.content_main
-                //% "Amount"
-                text: qsTrId("general-amount") + ":"
-                visible: paymentInfo ? paymentInfo.isValid : false
-            }
-
-            SFText {
-                Layout.fillWidth: true
-                wrapMode: Text.Wrap
-                font.pixelSize: 14
-                color: Style.content_disabled
-                text: paymentInfo ? paymentInfo.amount : ""
-                visible: paymentInfo ? paymentInfo.isValid : false
-            }
-
-            SFText {
-                Layout.alignment: Qt.AlignTop
-                font.pixelSize: 14
-                font.styleName: "Bold"
-                font.weight: Font.Bold
-                color: Style.content_main
-                //% "Kernel ID"
-                text: qsTrId("general-kernel-id") + ":"
-                visible: paymentInfo ? paymentInfo.isValid : false
-            }
-
-            SFText {
-                Layout.fillWidth: true
-                wrapMode: Text.Wrap
-                font.pixelSize: 14
-                color: Style.content_disabled
-                text: paymentInfo ? paymentInfo.kernelID : ""
-                visible: paymentInfo ? paymentInfo.isValid : false
+                visible: dialog.hasPaymentProof && stm.state == "payment_proof"
             }
         }
     }
@@ -714,31 +623,6 @@ CustomDialog {
                 text:               qsTrId("general-close")
                 icon.source:        "qrc:/assets/icon-cancel-16.svg"
                 onClicked:          dialog.close()
-            }
-            CustomButton {
-                icon.source: "qrc:/assets/icon-copy.svg"
-                //% "Copy details"
-                text: qsTrId("payment-info-copy-details-button")
-                visible: hasPaymentProof && stm.state == "payment_proof"
-                onClicked: {
-                    if (paymentInfo && paymentInfo.isValid) {
-                        textCopied("Sender: " + paymentInfo.sender + "\nReceiver: " + paymentInfo.receiver + "\nAmount: " + paymentInfo.amountValue + " BEAM" + "\nKernel ID: " + paymentInfo.kernelID);
-                    }
-                }
-            }
-
-            CustomButton {
-                icon.source: "qrc:/assets/icon-copy-blue.svg"
-                //% "Copy code"
-                text: qsTrId("payment-info-copy-code-button")
-                visible: hasPaymentProof && stm.state == "payment_proof"
-                palette.button: Style.accent_incoming
-                palette.buttonText: Style.content_opposite
-                onClicked: {
-                    if (paymentInfo && paymentInfo.isValid) {
-                        textCopied(paymentInfo.paymentProof);
-                    }
-                }
             }
         }
     }

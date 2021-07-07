@@ -3137,11 +3137,15 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     </message>
     <message id="send-no-funds-for-fee">
         <source>Insufficient funds to pay transaction fee.</source>
-        <translation type="unfinished"></translation>
+        <translation>Insufficient funds to pay transaction fee.</translation>
     </message>
     <message id="apps-inprogress-tip">
         <source>(%1 active)</source>
-        <translation type="unfinished"></translation>
+        <translation>(%1 active)</translation>
+    </message>
+    <message id="tx-details-general-info">
+        <source>General info</source>
+        <translation>General info</translation>
     </message>
 </context>
 </TS>
