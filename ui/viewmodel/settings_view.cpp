@@ -49,6 +49,7 @@ SettingsViewModel::SettingsViewModel()
     , m_isNeedToApplyChanges(false)
     , m_supportedLanguages(WalletSettings::getSupportedLanguages())
     , m_rateCurrency(beam::wallet::Currency::UNKNOWN())
+    , m_walletModel{*AppModel::getInstance().getWalletModel()}
 {
     undoChanges();
 
@@ -64,6 +65,7 @@ SettingsViewModel::SettingsViewModel()
     connect(AppModel::getInstance().getWalletModel().get(), SIGNAL(publicAddressChanged(const QString&)), SLOT(onPublicAddressChanged(const QString&)));
     connect(&m_settings, SIGNAL(beamMWLinksChanged()), SIGNAL(beamMWLinksPermissionChanged()));
     connect(&m_settings, &WalletSettings::dappsAllowedChanged, this, &SettingsViewModel::dappsAllowedChanged);
+    connect(&m_walletModel, &WalletModel::walletStatusChanged, this, &SettingsViewModel::stateChanged);
 
     m_timerId = startTimer(CHECK_INTERVAL);
 }
@@ -250,6 +252,11 @@ bool SettingsViewModel::getDAppsAllowed () const
 void SettingsViewModel::setDAppsAllowed (bool val)
 {
     m_settings.setDAppsAllowed(val);
+}
+
+QString SettingsViewModel::getCurrentHeight() const
+{
+    return QString::fromStdString(to_string(m_walletModel.getCurrentStateID().m_Height));
 }
 
 QStringList SettingsViewModel::getSupportedLanguages() const
