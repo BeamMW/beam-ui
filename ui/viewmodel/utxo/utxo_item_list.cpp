@@ -38,7 +38,8 @@ QHash<int, QByteArray> UtxoItemList::roleNames() const
         { static_cast<int>(Roles::MaturityPercentageSort), "maturityPercentageSort" },
         { static_cast<int>(Roles::MaturityTimeLeft), "maturityTimeLeft" },
         { static_cast<int>(Roles::MaturityTimeLeftSort), "maturityTimeLeftSort" },
-        { static_cast<int>(Roles::UnitName), "unitName" }
+        { static_cast<int>(Roles::UnitName), "unitName" },
+        { static_cast<int>(Roles::IconSource), "iconSource" }
     };
     return roles;
 }
@@ -76,6 +77,8 @@ auto UtxoItemList::data(const QModelIndex &index, int role) const -> QVariant
             return value->rawMaturityTimeLeft();
         case Roles::UnitName:
             return _amgr->getUnitName(value->getAssetId(), AssetsManager::NoShorten);
+        case Roles::IconSource:
+            return _amgr->getIcon(value->getAssetId());
         default:
             return QVariant();
     }

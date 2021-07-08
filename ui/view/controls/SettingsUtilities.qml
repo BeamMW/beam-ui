@@ -24,6 +24,10 @@ SettingsFoldable {
         id: publicOfflineAddressDialog;
     }
 
+    UtxoDialog {
+        id: utxoDialog
+    }
+
     content: ColumnLayout {
         spacing: 30
 
@@ -77,6 +81,16 @@ SettingsFoldable {
             enabled: /*statusbarModel.isConnectionTrusted &&*/ statusbarModel.isOnline && confirmRefreshDialog.canRefresh 
             onClicked: {
                 confirmRefreshDialog.open()
+            }
+        }
+
+        LinkButton {
+            //% "Show UTXO"
+            text: qsTrId("settings-utilities-show-utxo")
+            linkColor: "#ffffff"
+            bold: true
+            onClicked: {
+                utxoDialog.open()
             }
         }
 

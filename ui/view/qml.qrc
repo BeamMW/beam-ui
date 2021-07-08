@@ -76,6 +76,7 @@
         <file>controls/SubtitleRow.qml</file>
         <file>controls/AddressQRDialog.qml</file>
         <file>controls/OpenApplicationsDialog.qml</file>
+        <file>controls/UtxoDialog.qml</file>
         <file>wallet/TxTable.qml</file>
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>
@@ -95,7 +96,6 @@
         <file>addresses.qml</file>
         <file>applications.qml</file>
         <file>applications_nofork.qml</file>
-        <file>utxo.qml</file>
         <file>atomic_swap.qml</file>
         <file>notifications.qml</file>
         <file>receive_regular.qml</file>
@@ -216,8 +216,7 @@
         <file>assets/icon-add.svg</file>
         <file>assets/icon-add-blue.svg</file>
         <file>assets/icon-add-green.svg</file>
-        <file>assets/icon-utxo.svg</file>
-        <file>assets/icon-utxo-active.svg</file>
+
         <file>assets/icon-copy.svg</file>
         <file>assets/icon-down.svg</file>
         <file>assets/icon-send.svg</file>

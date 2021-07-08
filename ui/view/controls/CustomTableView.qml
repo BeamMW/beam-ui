@@ -14,6 +14,7 @@ TableView {
     property var mainBackgroundRect: null
     property var backgroundRect: mainBackgroundRect != null ? mainBackgroundRect : main.backgroundRect
     property color headerColor: Style.table_header
+    // property var headerOpacity: 1
     property bool headerShaderVisible: true
 
     // Scrollbar fine-tuning
@@ -124,6 +125,7 @@ TableView {
             width: parent.width + (firstOrLastColumn ? 12 : 0)
             height: parent.height + (firstOrLastColumn ? 12 : 0)
             color: headerColor
+            // opacity: tableView.headerOpacity
             radius: firstOrLastColumn ? 10 : 0
         }
 

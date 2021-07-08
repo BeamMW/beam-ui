@@ -414,7 +414,7 @@ Control {
                 id: coinColumn
 
                 //% "Coin"
-                title:     qsTrId("wallet-txs-coin")
+                title:     qsTrId("general-coin")
                 width:     100
                 movable:   false
                 resizable: false

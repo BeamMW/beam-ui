@@ -707,14 +707,6 @@
         <source>UTXO</source>
         <translation>Đầu ra chưa được xác định từ giao dịch</translation>
     </message>
-    <message id="utxo-blockchain-height">
-        <source>Blockchain Height</source>
-        <translation>Chiều cao chuỗi khối</translation>
-    </message>
-    <message id="utxo-last-block-hash">
-        <source>Last block hash</source>
-        <translation>Hàm băm cuối cùng</translation>
-    </message>
     <message id="settings-general-lock-screen-never">
         <source>Never</source>
         <translation>Không bao giờ</translation>
@@ -2571,10 +2563,6 @@ Update your settings and try again.</source>
         <source>Hardwate wallet is not connected</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="wallet-txs-coin">
-        <source>Coin</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="general-multiple-assets">
         <source>Multiple assets</source>
         <translation type="unfinished"></translation>
@@ -3161,6 +3149,14 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     </message>
     <message id="general-wallet-signature">
         <source>Wallet&apos;s signature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-utilities-show-utxo">
+        <source>Show UTXO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-coin">
+        <source>Coin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

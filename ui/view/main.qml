@@ -158,7 +158,6 @@ Rectangle {
         // {name: "dex"},
 		{name: "addresses"},
         {name: "notifications"},
-		{name: "utxo"},
 		{name: "applications", qml: function () {
 		    return BeamGlobals.isFork3() ? "applications" : "applications_nofork"
 		}},
