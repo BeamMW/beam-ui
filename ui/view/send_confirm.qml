@@ -288,13 +288,11 @@ ConfirmationDialog {
                     }
                 }
 
-                Item {
-                    SFText {
-                        id:              requirePasswordError
-                        color:           Style.validator_error
-                        font.pixelSize:  12
-                        font.italic:     true
-                    }
+                SFText {
+                    id:              requirePasswordError
+                    color:           Style.validator_error
+                    font.pixelSize:  12
+                    font.italic:     true
                 }
             }
 
