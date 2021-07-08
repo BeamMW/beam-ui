@@ -1671,10 +1671,6 @@ deploy the key at the node you trust completely.</source>
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
         <translation>Aanbieding &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; met transactie ID &lt;b&gt;%4&lt;/b&gt; is verlopen.</translation>
     </message>
-    <message id="general-identity">
-        <source>Identity</source>
-        <translation>Identiteit</translation>
-    </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
         <translation>Asset is al geregistreerd</translation>
@@ -1919,8 +1915,9 @@ offline</translation>
         <translation>Asset transacties zijn uitgeschakeld in de blockchain configuratie</translation>
     </message>
     <message id="tx-failure-identity-required">
-        <source>Peer Identity required</source>
-        <translation>Peer identiteit vereist</translation>
+        <source>Peer wallet&apos;s signature required</source>
+        <oldsource>Peer Identity required</oldsource>
+        <translation type="unfinished">Peer identiteit vereist</translation>
     </message>
     <message id="tx-failure-cannot-get-vouchers">
         <source>The sender cannot get vouchers for max privacy transaction</source>
@@ -2826,7 +2823,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender identity</source>
+        <source>Sender wallet&apos;s signature</source>
+        <oldsource>Sender identity</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-receiving-addr-label">
@@ -2834,7 +2832,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver identity</source>
+        <source>Receiver wallet&apos;s signature</source>
+        <oldsource>Receiver identity</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-amount-label">
@@ -3157,6 +3156,10 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     </message>
     <message id="tx-details-general-info">
         <source>General info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-wallet-signature">
+        <source>Wallet&apos;s signature</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

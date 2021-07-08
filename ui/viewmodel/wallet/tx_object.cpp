@@ -527,7 +527,7 @@ QString TxObject::getReasonString(beam::wallet::TxFailureReason reason) const
         qtTrId("tx-failure-assets-disabled-receiver"),
         //% "Asset transactions are disabled in blockchain configuration"
         qtTrId("tx-failure-assets-disabled-blockchain"),
-        //% "Peer Identity required"
+        //% "Peer wallet's signature required"
         qtTrId("tx-failure-identity-required"),
         //% "The sender cannot get vouchers for max privacy transaction"
         qtTrId("tx-failure-cannot-get-vouchers")

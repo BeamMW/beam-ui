@@ -74,7 +74,7 @@ RowLayout {
             Layout.alignment: Qt.AlignTop
             font.pixelSize: 14
             color: Style.content_secondary
-            //% "Sender identity"
+            //% "Sender wallet's signature"
             text: qsTrId("tx-details-sender-identity") + ":"
             visible: senderIdentityField.visible
         }
@@ -115,7 +115,7 @@ RowLayout {
             Layout.alignment: Qt.AlignTop
             font.pixelSize: 14
             color: Style.content_secondary
-            //% "Receiver identity"
+            //% "Receiver wallet's signature"
             text: qsTrId("tx-details-receiver-identity") + ":"
             visible: receiverIdentityField.visible
         }

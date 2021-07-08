@@ -1672,10 +1672,6 @@ deploy the key at the node you trust completely.</translation>
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
         <translation type="unfinished">Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</translation>
     </message>
-    <message id="general-identity">
-        <source>Identity</source>
-        <translation>신원</translation>
-    </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
         <translation type="unfinished">Asset has been already registered</translation>
@@ -1920,7 +1916,8 @@ offline</translation>
         <translation type="unfinished">Asset transactions are disabled in blockchain configuration</translation>
     </message>
     <message id="tx-failure-identity-required">
-        <source>Peer Identity required</source>
+        <source>Peer wallet&apos;s signature required</source>
+        <oldsource>Peer Identity required</oldsource>
         <translation type="unfinished">Peer Identity required</translation>
     </message>
     <message id="tx-failure-cannot-get-vouchers">
@@ -2827,7 +2824,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender identity</source>
+        <source>Sender wallet&apos;s signature</source>
+        <oldsource>Sender identity</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-receiving-addr-label">
@@ -2835,7 +2833,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver identity</source>
+        <source>Receiver wallet&apos;s signature</source>
+        <oldsource>Receiver identity</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-amount-label">
@@ -3158,6 +3157,10 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     </message>
     <message id="tx-details-general-info">
         <source>General info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-wallet-signature">
+        <source>Wallet&apos;s signature</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

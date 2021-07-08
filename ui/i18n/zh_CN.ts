@@ -1687,10 +1687,6 @@ deploy the key at the node you trust completely.</source>
         <translation>提供 &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; 交易ID &lt;b&gt;%4&lt;/b&gt;过期.
 </translation>
     </message>
-    <message id="general-identity">
-        <source>Identity</source>
-        <translation>身份</translation>
-    </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
         <translation>资产已注册</translation>
@@ -1934,8 +1930,9 @@ offline</source>
         <translation>在配置中禁用了资产交易</translation>
     </message>
     <message id="tx-failure-identity-required">
-        <source>Peer Identity required</source>
-        <translation>需要用户身份</translation>
+        <source>Peer wallet&apos;s signature required</source>
+        <oldsource>Peer Identity required</oldsource>
+        <translation type="unfinished">需要用户身份</translation>
     </message>
     <message id="tx-failure-cannot-get-vouchers">
         <source>The sender cannot get vouchers for max privacy transaction</source>
@@ -2839,7 +2836,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender identity</source>
+        <source>Sender wallet&apos;s signature</source>
+        <oldsource>Sender identity</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-receiving-addr-label">
@@ -2847,7 +2845,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver identity</source>
+        <source>Receiver wallet&apos;s signature</source>
+        <oldsource>Receiver identity</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-amount-label">
@@ -3170,6 +3169,10 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     </message>
     <message id="tx-details-general-info">
         <source>General info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-wallet-signature">
+        <source>Wallet&apos;s signature</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

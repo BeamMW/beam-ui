@@ -167,8 +167,8 @@ CustomDialog {
                     Layout.alignment:       Qt.AlignTop
                     font.pixelSize:         14
                     color:                  Style.content_disabled
-                    //% "Identity"
-                    text:                   qsTrId("general-identity") + ":"
+                    //% "Wallet's signature"
+                    text:                   qsTrId("general-wallet-signature") + ":"
                     visible:                viewModel.identity.length
                 }
 

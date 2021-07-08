@@ -1672,10 +1672,6 @@ znát všechny Vaše prostředky (UTXO). Ujistěte se, že jste vystavili klíč
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
         <translation>Platnost nabídky &lt;b&gt;%1 %3 &lt;unk&gt; %2 BEAM&lt;/b&gt; s ID transakce &lt;b&gt;%4&lt;/b&gt; vypršela.</translation>
     </message>
-    <message id="general-identity">
-        <source>Identity</source>
-        <translation>Identita</translation>
-    </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
         <translation>Aktivum již bylo registrováno</translation>
@@ -1920,8 +1916,9 @@ offline</translation>
         <translation>Transakce aktiv jsou zakázány v konfiguraci blockchainu</translation>
     </message>
     <message id="tx-failure-identity-required">
-        <source>Peer Identity required</source>
-        <translation>Je vyžadována identita partnera</translation>
+        <source>Peer wallet&apos;s signature required</source>
+        <oldsource>Peer Identity required</oldsource>
+        <translation type="unfinished">Je vyžadována identita partnera</translation>
     </message>
     <message id="tx-failure-cannot-get-vouchers">
         <source>The sender cannot get vouchers for max privacy transaction</source>
@@ -2826,7 +2823,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender identity</source>
+        <source>Sender wallet&apos;s signature</source>
+        <oldsource>Sender identity</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-receiving-addr-label">
@@ -2834,7 +2832,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver identity</source>
+        <source>Receiver wallet&apos;s signature</source>
+        <oldsource>Receiver identity</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-amount-label">
@@ -3157,6 +3156,10 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     </message>
     <message id="tx-details-general-info">
         <source>General info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-wallet-signature">
+        <source>Wallet&apos;s signature</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
