@@ -39,7 +39,7 @@ SendSwapViewModel::SendSwapViewModel()
     connect(&_walletModel, &WalletModel::walletStatusChanged, this, &SendSwapViewModel::recalcAvailable);
     connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyUnitNameChanged()));
     connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
-    connect(&_walletModel, &WalletModel::coinsSelected, this, &SendSwapViewModel::onCoinsSeleced);
+    connect(&_walletModel, &WalletModel::coinsSelected, this, &SendSwapViewModel::onCoinsSelected);
 }
 
 QString SendSwapViewModel::getToken() const
@@ -322,7 +322,7 @@ void SendSwapViewModel::onChangeCalculated(beam::Amount changeAsset, beam::Amoun
     emit canSendChanged();
 }
 
-void SendSwapViewModel::onCoinsSeleced(const beam::wallet::CoinsSelectionInfo& selectionRes)
+void SendSwapViewModel::onCoinsSelected(const beam::wallet::CoinsSelectionInfo& selectionRes)
 {
     if (_sendCurrency == OldWalletCurrency::OldCurrency::CurrBeam)
     {

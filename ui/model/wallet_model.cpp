@@ -138,7 +138,7 @@ void WalletModel::onChangeCalculated(beam::Amount changeAsset, beam::Amount chan
     emit changeCalculated(changeAsset, changeBeam, assetId);
 }
 
-void WalletModel::onCoinsSeleced(const beam::wallet::CoinsSelectionInfo& selectionRes)
+void WalletModel::onCoinsSelected(const beam::wallet::CoinsSelectionInfo& selectionRes)
 {
     emit coinsSelected(selectionRes);
 }

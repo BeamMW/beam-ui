@@ -80,7 +80,7 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     connect(&_walletModel, &WalletModel::walletStatusChanged, this, &ReceiveSwapViewModel::updateTransactionToken);
     connect(&_exchangeRatesManager, &ExchangeRatesManager::rateUnitChanged, this, &ReceiveSwapViewModel::secondCurrencyUnitNameChanged);
     connect(&_exchangeRatesManager, &ExchangeRatesManager::activeRateChanged, this, &ReceiveSwapViewModel::secondCurrencyRateChanged);
-    connect(&_walletModel, &WalletModel::coinsSelected, this, &ReceiveSwapViewModel::onCoinsSeleced);
+    connect(&_walletModel, &WalletModel::coinsSelected, this, &ReceiveSwapViewModel::onCoinsSelected);
 
     generateNewAddress();
     updateTransactionToken();
@@ -181,7 +181,7 @@ void ReceiveSwapViewModel::onSwapParamsLoaded(const beam::ByteBuffer& params)
    _saveParamsAllowed = true;
 }
 
-void ReceiveSwapViewModel::onCoinsSeleced(const beam::wallet::CoinsSelectionInfo& selectionRes)
+void ReceiveSwapViewModel::onCoinsSelected(const beam::wallet::CoinsSelectionInfo& selectionRes)
 {
     if (_sentCurrency == OldWalletCurrency::OldCurrency::CurrBeam)
     {

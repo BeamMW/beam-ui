@@ -142,7 +142,7 @@ signals:
 
 public slots:
     void onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId);
-    void onCoinsSeleced(const beam::wallet::CoinsSelectionInfo&);
+    void onCoinsSelected(const beam::wallet::CoinsSelectionInfo&);
 
 private:
     void fillParameters(const beam::wallet::TxParameters& parameters);
