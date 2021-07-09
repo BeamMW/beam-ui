@@ -160,8 +160,7 @@ Rectangle {
         {name: "notifications"},
 		{name: "applications", qml: function () {
 		    return BeamGlobals.isFork3() ? "applications" : "applications_nofork"
-		}},
-		{name: "settings"}
+		}}
 	]
 
     property int selectedItem
@@ -178,6 +177,14 @@ Rectangle {
             color: Style.navigation_background
             opacity: 0.1
             border.width: 0
+        }
+
+        SvgImage {
+            id: image
+            y:  50
+            anchors.horizontalCenter: parent.horizontalCenter
+            source: Style.navigation_logo
+            smooth: true
         }
 
         Column {
@@ -201,13 +208,13 @@ Rectangle {
                     activeFocusOnTab: true
 
                     SvgImage {
-						id: icon
+                        id: icon
                         x: 21
                         y: 16
                         width: 28
                         height: 28
                         source: "qrc:/assets/icon-" + modelData.name + (selectedItem == index ? "-active" : "") + ".svg"
-					}
+                    }
                     Item {
                         Rectangle {
                             id: indicator
@@ -225,7 +232,7 @@ Rectangle {
                             source: indicator
                         }
 
-    					visible: selectedItem == index
+                        visible: selectedItem == index
                     }
 
                     Item {
@@ -255,6 +262,14 @@ Rectangle {
                         }
                     }
 
+                    Rectangle {
+                        x: 10
+                        width: parent.width - 20
+                        height: 2
+                        color: Style.background_button
+                        visible: contentItems[index].name == 'applications'
+                    }
+
                     Keys.onPressed: {
                         if ((event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space) && selectedItem != index) 
                             updateItem(index);
@@ -268,50 +283,26 @@ Rectangle {
                             if (selectedItem != index)
                                 updateItem(index)
                         }
-						hoverEnabled: true
+                        hoverEnabled: true
                     }
                 }
             }
         }
 
-        SvgImage {
-            id: image
-            y:  50
-            anchors.horizontalCenter: parent.horizontalCenter
-            source: Style.navigation_logo
-            smooth: true
-        }
-
         Item {
-            property bool clicked: false
-            id: whereToBuyControl
+            id: control
             width: parent.width
-            anchors.bottom: parent.bottom
             height: 66
             activeFocusOnTab: true
-
-            function clickHandler() {
-                whereToBuyControl.clicked = true;
-            }
-
-            onClickedChanged: {
-                if (clicked) {
-                    Utils.openExternalWithConfirmation(
-                        "https://www.beam.mw/#exchanges",
-                        function () {
-                            whereToBuyControl.clicked = false;
-                        });
-                }
-            }
+            anchors.bottom: parent.bottom
 
             SvgImage {
+                id: icon
                 x: 21
                 y: 16
                 width: 28
                 height: 28
-                source: whereToBuyControl.clicked
-                    ? "qrc:/assets/icon-where-to-buy-beam-green.svg"
-                    : "qrc:/assets/icon-where-to-buy-beam-gray.svg"
+                source: "qrc:/assets/icon-settings" + (selectedItem == -1 ? "-active" : "") + ".svg"
             }
             Item {
                 Rectangle {
@@ -319,7 +310,7 @@ Rectangle {
                     y: 6
                     width: 4
                     height: 48
-                    color: whereToBuyControl.clicked ? Style.active : Style.passive
+                    color: selectedItem == -1 ? Style.active : Style.passive
                 }
 
                 DropShadow {
@@ -330,18 +321,21 @@ Rectangle {
                     source: indicator
                 }
 
-                visible: whereToBuyControl.activeFocus
+                visible: selectedItem == -1
             }
+
             Keys.onPressed: {
-                if ((event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space) && whereToBuyControl.activeFocus)
-                    whereToBuyControl.clickHandler();
+                if ((event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space) && selectedItem != index) 
+                    updateItem(-1);
             }
 
             MouseArea {
                 id: mouseArea
                 anchors.fill: parent
                 onClicked: {
-                    whereToBuyControl.clickHandler();
+                    control.focus = true
+                    if (selectedItem != -1)
+                        updateItem(-1)
                 }
                 hoverEnabled: true
             }
@@ -362,16 +356,24 @@ Rectangle {
     function updateItem(indexOrID, props)
     {
         var update = function(index) {
-            selectedItem = index
-            controls.itemAt(index).focus = true;
+            selectedItem = index;
+            var source = "";
+            if (index >= 0) {
+                controls.itemAt(index).focus = true;
 
-            var source = ["qrc:/", contentItems[index].qml ? contentItems[index].qml() : contentItems[index].name, ".qml"].join('')
+                source = ["qrc:/", contentItems[index].qml ? contentItems[index].qml() : contentItems[index].name, ".qml"].join('')
+            } else if (index == -1) {
+                source = "qrc:/settings.qml";
+            }
             content.setSource(source, Object.assign({"openSend": false}, props))
 
             viewModel.update(index)
         }
 
         if (typeof(indexOrID) == "string") {
+            if (indexOrID == "settings")
+                return update(-1);
+
             for (var index = 0; index < contentItems.length; index++) {
                 if (contentItems[index].name == indexOrID) {
                     return update(index);
