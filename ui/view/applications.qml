@@ -16,6 +16,7 @@ ColumnLayout {
     property bool    hasApps:  !!appsList && appsList.length > 0
     property string  errorMessage: ""
     property var     activeApp: undefined
+    property string  appCmd: ""
 
     ApplicationsViewModel {
         id: viewModel
@@ -493,9 +494,16 @@ ColumnLayout {
 
     Component.onCompleted: {
         if (settings.dappsAllowed) {
-            loadAppsList()
+            if (appCmd.length && appCmd == "daocore") {
+                // TODO(chapati): load daocore from here
+                // https://github.com/BeamMW/beam-ui/issues/695
+                console.log("open daocore");
+                loadAppsList();
+            } else {
+                loadAppsList();
+            }
         } else {
-            appsDialog.open()
+            appsDialog.open();
         }
     }
 }

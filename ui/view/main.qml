@@ -153,15 +153,17 @@ Rectangle {
     }
 
     property var contentItems : [
-		{name: "wallet"},
+        {name: "wallet"},
         {name: "atomic_swap"},
         // {name: "dex"},
-		{name: "addresses"},
+        {name: "addresses"},
         {name: "notifications"},
-		{name: "applications", qml: function () {
-		    return BeamGlobals.isFork3() ? "applications" : "applications_nofork"
-		}}
-	]
+        {name: "applications", qml: function () {
+            return BeamGlobals.isFork3() ? "applications" : "applications_nofork"
+            }
+        },
+        {name: "daocore"}
+    ]
 
     property int selectedItem
 
@@ -358,14 +360,26 @@ Rectangle {
         var update = function(index) {
             selectedItem = index;
             var source = "";
+            var args = Object.assign({"openSend": false}, props);
             if (index >= 0) {
                 controls.itemAt(index).focus = true;
 
-                source = ["qrc:/", contentItems[index].qml ? contentItems[index].qml() : contentItems[index].name, ".qml"].join('')
+                function isApp(element, index, array) {
+                    return element.qml && (contentItems[index].qml() == "applications" || contentItems[index].qml() == "applications_nofork");
+                }
+
+                var appIndex = contentItems.findIndex(isApp);
+                if (appIndex >= 0 && index > appIndex) {
+                    source = "qrc:/applications.qml";
+                    args = Object.assign({"appCmd": contentItems[index].name}, args);
+                } else {
+                    source = ["qrc:/", contentItems[index].qml ? contentItems[index].qml() : contentItems[index].name, ".qml"].join('');
+                }
+
             } else if (index == -1) {
                 source = "qrc:/settings.qml";
             }
-            content.setSource(source, Object.assign({"openSend": false}, props))
+            content.setSource(source, args)
 
             viewModel.update(index)
         }
