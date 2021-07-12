@@ -86,8 +86,7 @@ CustomDialog {
                         unitName: model ? model.unitName : ""
                         iconSource: model ? model.iconSource : ""
                         showTip: false
-                        maxPaintedWidth: true
-                        maxUnitChars: 30
+                        maxUnitChars: 18
                     }
                 }
             }
@@ -187,6 +186,7 @@ CustomDialog {
                             textFormat: Text.StyledText
                             font.italic: true
                             font.pixelSize: 14
+                            font.capitalization: Font.AllLowercase
                         }
 
                         SFLabel {
@@ -208,6 +208,7 @@ CustomDialog {
                                 return Style.active;
                             case UtxoStatus.Maturing:
                             case UtxoStatus.MaturingMP:
+                                return Style.content_main
                             case UtxoStatus.Spent:
                             case UtxoStatus.Outgoing:
                                 return Style.accent_outgoing;
