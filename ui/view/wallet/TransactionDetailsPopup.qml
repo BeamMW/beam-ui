@@ -310,6 +310,7 @@ CustomDialog {
                     RowLayout {
                         Layout.fillWidth: true
                         Layout.maximumWidth : 450
+                        Layout.rightMargin: 16
                         BeamAmount {
                             Layout.fillWidth: true
 
@@ -323,7 +324,7 @@ CustomDialog {
                             rate:         dialog.assetRates ? (dialog.assetRates[index] || "") : ""
                             rateUnit:     this.rate != "0" ? dialog.rateUnit : ""
                             showTip:      false
-                            maxUnitChars: 30
+                            maxUnitChars: 25
                             font {
                                 styleName:  "Bold"
                                 weight:     Font.Bold

@@ -224,13 +224,16 @@ CustomDialog {
                     visible: model? model.isValid : false
                 }
 
-                SFText {
+                BeamAmount {
                     Layout.fillWidth: true
-                    wrapMode: Text.Wrap
-                    font.pixelSize: 14
+
+                    visible: model ? model.amountValue : ""
+                    amount: model ? model.amountValue : ""
+                    unitName: model ? model.unitName : ""
                     color: Style.content_disabled
-                    text: model ? model.amount : ""
-                    visible: model? model.isValid : false
+                    showTip: false
+                    maxUnitChars: 30
+                    font.pixelSize: 14
                 }
 
                 SFText {
