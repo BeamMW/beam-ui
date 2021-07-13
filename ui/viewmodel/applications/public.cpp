@@ -41,4 +41,13 @@ namespace beamui::applications
         qmlRegisterType<AppsViewModel>("Beam.Wallet", 1, 0, "ApplicationsViewModel");
         qmlRegisterType<WebAPICreator>("Beam.Wallet", 1, 0, "WebAPICreator");
     }
+
+    std::string GenerateAppID(const std::string& appName, const std::string& appUrl)
+    {
+        ECC::Hash::Value hv;
+        ECC::Hash::Processor() << appName << appUrl >> hv;
+
+        const auto appid = std::string("appid:") + hv.str();
+        return appid;
+    }
 }

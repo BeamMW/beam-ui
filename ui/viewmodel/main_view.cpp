@@ -17,6 +17,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include "qml_globals.h"
+#include "applications/public.h"
 
 namespace
 {
@@ -112,3 +113,21 @@ int MainViewModel::getUnreadNotifications() const
 {
     return static_cast<int>(AppModel::getInstance().getWalletModel()->getUnreadNotificationsCount());
 }
+
+QString MainViewModel::getDaoCoreAppID() const
+{
+    const std::string appName = "BEAM DAO CORE";
+    std::string appURL  = "";
+
+    #if defined(BEAM_TESTNET)
+    appURL = "https://apps-testnet.beam.mw/app/plugin-dao/index.html";
+    #elif defined(BEAM_MAINNET)
+    appURL = "https://apps.beam.mw/app/plugin-dao/index.html";
+    #else
+    appURL = "http://3.19.141.112:80/app/plugin-dao/index.html";
+    #endif
+
+    const auto appid = beamui::applications::GenerateAppID(appName, appURL);
+    return QString::fromStdString(appid);
+}
+

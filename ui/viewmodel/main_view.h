@@ -24,6 +24,7 @@ class MainViewModel : public QObject
 	Q_OBJECT
     Q_PROPERTY(int unsafeTxCount        READ getUnsafeTxCount       NOTIFY unsafeTxCountChanged)
     Q_PROPERTY(int unreadNotifications  READ getUnreadNotifications NOTIFY unreadNotificationsChanged)
+    Q_PROPERTY(QString daoCoreAppID     READ getDaoCoreAppID        CONSTANT)
 public:
     MainViewModel();
 
@@ -45,8 +46,9 @@ public slots:
 private slots:
     void onClipboardDataChanged();
 private:
-    int getUnsafeTxCount() const;
-    int getUnreadNotifications() const;
+    [[nodiscard]] int getUnsafeTxCount() const;
+    [[nodiscard]] int getUnreadNotifications() const;
+    [[nodiscard]] QString getDaoCoreAppID() const;
 private:
     WalletSettings& m_settings;
     QTimer m_timer;

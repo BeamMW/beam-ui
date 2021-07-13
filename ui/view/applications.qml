@@ -13,10 +13,11 @@ ColumnLayout {
     Layout.fillWidth: true
 
     property var     appsList: undefined
-    property bool    hasApps:  !!appsList && appsList.length > 0
+    property bool    listLoading: !appsList
+    property bool    hasApps: !!appsList && appsList.length > 0
     property string  errorMessage: ""
     property var     activeApp: undefined
-    property string  appCmd: ""
+    property var     appToOpen: undefined
 
     ApplicationsViewModel {
         id: viewModel
@@ -127,6 +128,11 @@ ColumnLayout {
     WebChannel {
         id: apiChannel
         registeredObjects: [webapiBEAM]
+    }
+
+    function appSupported(app) {
+        return webapiCreator.apiSupported(app.api_version || "current") ||
+               webapiCreator.apiSupported(app.min_api_version || "")
     }
 
     function launchApp(app) {
@@ -249,7 +255,7 @@ ColumnLayout {
             anchors.horizontalCenter: parent.horizontalCenter
             y:       parent.height / 2 - this.height / 2 - 40
             color:   control.errorMessage.length ? Style.validator_error : Style.content_main
-            opacity: control.hasApps ? 0.5 : 1
+            opacity: 0.5
 
             font {
                 styleName: "DemiBold"
@@ -262,18 +268,20 @@ ColumnLayout {
                     return control.errorMessage
                 }
 
-                if (!control.hasApps) {
-                    //% "There are no applications at the moment"
-                    return qsTrId("apps-nothing")
-                }
-
-                if (control.activeApp) {
+                if (control.activeApp || control.appToOpen) {
                     //% "Loading '%1'..."
-                    return qsTrId("apps-loading-app").arg(control.activeApp.name)
+                    return qsTrId("apps-loading-app").arg(
+                        (control.activeApp || control.appToOpen).name
+                    )
                 }
 
-                //% "Loading..."
-                return qsTrId("apps-loading")
+                if (control.listLoading) {
+                    //% "Loading..."
+                    return qsTrId("apps-loading")
+                }
+
+                //% "There are no applications at the moment"
+                return qsTrId("apps-nothing")
             }
         }
     }
@@ -378,8 +386,7 @@ ColumnLayout {
                                 palette.buttonText : Style.content_main
                                 icon.source: "qrc:/assets/icon-run.svg"
                                 icon.height: 16
-                                visible: webapiCreator.apiSupported(model.api_version || "current") ||
-                                         webapiCreator.apiSupported(model.min_api_version || "")
+                                visible: appSupported(model)
                                 //% "launch"
                                 text: qsTrId("apps-run")
 
@@ -462,9 +469,24 @@ ColumnLayout {
                     {
                         var list = JSON.parse(xhr.responseText)
                         control.appsList = appendDevApp(list)
+                        if (control.appToOpen) {
+                            for (let app of control.appsList)
+                            {
+                                if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
+                                    if (appSupported(app)) {
+                                        launchApp(app)
+                                    } else {
+                                        //% "Update Wallet to launch %1 application
+                                        BeamGlobals.showMessage(qsTrId("apps-update-message").arg(app.name))
+                                    }
+                                }
+                            }
+                            control.appToOpen = undefined
+                        }
                     }
                     else
                     {
+                        control.appsList = []
                         var errMsg = errTemplate.arg(["code", xhr.status].join(" "))
                         control.errorMessage = errMsg
                     }
@@ -473,6 +495,7 @@ ColumnLayout {
             xhr.open('GET', viewModel.appsUrl, true)
             xhr.send('')
         }
+
         control.appsList = appendDevApp(undefined)
     }
 
@@ -494,14 +517,7 @@ ColumnLayout {
 
     Component.onCompleted: {
         if (settings.dappsAllowed) {
-            if (appCmd.length && appCmd == "daocore") {
-                // TODO(chapati): load daocore from here
-                // https://github.com/BeamMW/beam-ui/issues/695
-                console.log("open daocore");
-                loadAppsList();
-            } else {
-                loadAppsList();
-            }
+            loadAppsList();
         } else {
             appsDialog.open();
         }

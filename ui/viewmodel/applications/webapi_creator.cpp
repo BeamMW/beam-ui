@@ -16,6 +16,7 @@
 #include "wallet/api/i_wallet_api.h"
 #include "wallet/core/common.h"
 #include "bvm/invoke_data.h"
+#include "public.h"
 
 namespace beamui::applications
 {
@@ -94,10 +95,7 @@ namespace beamui::applications
             return qmlEngine(this)->throwError(error);
         }
 
-        ECC::Hash::Value hv;
-        ECC::Hash::Processor() << appName.toStdString() << appUrl.toStdString() >> hv;
-        const auto appid = std::string("appid:") + hv.str();
-
+        const auto appid = GenerateAppID(appName.toStdString(), appUrl.toStdString());
         _webShaders = std::make_shared<WebAPI_Shaders>(appid, appName.toStdString());
         _api = std::make_unique<WebAPI_Beam>(*this, _webShaders, version, appid, appName.toStdString());
 
@@ -304,5 +302,11 @@ namespace beamui::applications
     bool WebAPICreator::apiSupported(const QString& apiVersion) const
     {
         return beam::wallet::IWalletApi::ValidateAPIVersion(apiVersion.toStdString());
+    }
+
+    QString WebAPICreator::generateAppID(const QString& appName, const QString& appUrl)
+    {
+        const auto appid = GenerateAppID(appName.toStdString(), appUrl.toStdString());
+        return QString::fromStdString(appid);
     }
 }

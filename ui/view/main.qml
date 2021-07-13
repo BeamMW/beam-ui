@@ -46,7 +46,6 @@ Rectangle {
         onClipboardChanged: function(message) {
             showSimplePopup(message)
         }
-
     }
 
     PushNotificationManager {
@@ -157,9 +156,12 @@ Rectangle {
         return BeamGlobals.isFork3() ? "applications" : "applications_nofork"
     }
 
-    function appArgs (id) {
+    function appArgs (name, id) {
         return {
-            "appCmd": id
+            "appToOpen": {
+                "name": name,
+                "appid": id
+            }
         }
     }
 
@@ -170,7 +172,7 @@ Rectangle {
         {name: "addresses"},
         {name: "notifications"},
         {name: "applications", qml: appsQml},
-        {name: "daocore", qml: appsQml, args: () => appArgs("daocore")},
+        {name: "daocore", qml: appsQml, args: () => appArgs("BEAM DAO CORE", viewModel.daoCoreAppID)},
         {name: "settings"}
     ]
 
@@ -292,7 +294,9 @@ Rectangle {
 
                         Keys.onPressed: {
                             if ((event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space))
+                            if (selectedItem != index) {
                                 updateItem(index);
+                            }
                         }
 
                         MouseArea {
@@ -300,7 +304,9 @@ Rectangle {
                             anchors.fill: parent
                             onClicked: {
                                 control.focus = true
-                                updateItem(index)
+                                if (selectedItem != index) {
+                                    updateItem(index);
+                                }
                             }
                             hoverEnabled: true
                         }
@@ -343,9 +349,7 @@ Rectangle {
         }
 
         // here we always have a number
-        if (selectedItem != indexOrID) {
-            update(indexOrID)
-        }
+        update(indexOrID)
     }
 
     function openMaxPrivacyCoins (assetId, unitName, lockedAmount) {

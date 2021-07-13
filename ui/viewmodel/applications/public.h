@@ -13,6 +13,8 @@
 // limitations under the License.
 #pragma once
 
-namespace beamui::applications {
+namespace beamui::applications
+{
     void RegisterQMLTypes();
+    std::string GenerateAppID(const std::string& appName, const std::string& appUrl);
 }
