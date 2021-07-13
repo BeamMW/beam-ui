@@ -690,6 +690,15 @@ Control {
                 property var txID
 
                 Action {
+                    //% "Show details"
+                    text: qsTrId("general-show-tx-details")
+                    icon.source: "qrc:/assets/icon-show_tx_details.svg"
+                    onTriggered: {
+                        console.log("open tx details");
+                    }
+                }
+
+                Action {
                     //% "Cancel"
                     text: qsTrId("general-cancel")
                     icon.source: "qrc:/assets/icon-cancel.svg"

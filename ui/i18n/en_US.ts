@@ -3139,5 +3139,9 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <source>Coin</source>
         <translation>Coin</translation>
     </message>
+    <message id="general-show-tx-details">
+        <source>Show details</source>
+        <translation>Show details</translation>
+    </message>
 </context>
 </TS>

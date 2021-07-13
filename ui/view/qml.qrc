@@ -349,5 +349,6 @@
         <file>assets/icon-go-to-app.svg</file>
         <file>assets/icon-daocore.svg</file>
         <file>assets/icon-daocore-active.svg</file>
+        <file>assets/icon-show_tx_details.svg</file>
     </qresource>
 </RCC>

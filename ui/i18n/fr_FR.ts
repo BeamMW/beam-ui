@@ -3160,5 +3160,10 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <source>Coin</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="general-show-tx-details">
+        <source>Show details</source>
+        <oldsource>show details</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
