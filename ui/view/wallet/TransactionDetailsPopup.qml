@@ -125,6 +125,7 @@ CustomDialog {
                             stm.state = "payment_proof";
                         }
                     }
+                    visible: dialog.hasPaymentProof
                 }
             }
         }
@@ -310,7 +311,6 @@ CustomDialog {
                     RowLayout {
                         Layout.fillWidth: true
                         Layout.maximumWidth : 450
-                        Layout.rightMargin: 16
                         BeamAmount {
                             Layout.fillWidth: true
 
@@ -346,6 +346,14 @@ CustomDialog {
                             text: dialog.assetIDs.length ? dialog.assetIDs[index] : ""
                             onCopyText: textCopied(dialog.assetIDs[index])
                             visible: dialog.assetIDs[index] != "0"
+                        }
+                        CustomToolButton {
+                            Layout.alignment: Qt.AlignRight
+                            icon.source: "qrc:/assets/icon-copy.svg"
+                            onClicked: textCopied(dialog.assetIDs[index])
+                            visible: dialog.assetIDs[index] != "0"
+                            padding: 0
+                            background.implicitHeight: 16
                         }
                     }
                 }
@@ -446,7 +454,7 @@ CustomDialog {
             SFText {
                 font.pixelSize:         14
                 color:                  Style.content_secondary
-                //% "Shader ID"
+                //% "Application shader ID"
                 text:                   qsTrId("address-info-cid") + ":"
                 visible:                cidText.parent.visible && stm.state == "tx_info"
             }
@@ -495,7 +503,7 @@ CustomDialog {
                 text: getHighlitedText(dialog.comment)
                 elide: Text.ElideRight
                 onCopyText: textCopied(dialog.comment)
-                visible: stm.state == "tx_info"
+                visible: stm.state == "tx_info" && dialog.comment.length
             }
 
             SFText {

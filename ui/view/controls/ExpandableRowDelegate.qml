@@ -11,7 +11,8 @@ Rectangle {
     property color backgroundColor: Style.background_row_even
     property var onLeftClick: function() { return true; }
     property var tableView
-    default property Component delegate  
+    default property Component delegate
+    property alias hovered: rowMouseArea.containsMouse
 
     height:         rowHeight
     anchors.left:   parent.left
@@ -79,11 +80,11 @@ Rectangle {
     }
 
     MouseArea {
-        anchors.top:      parent.top
-        anchors.left:     parent.left
-        height:           rowItem.rowHeight
-        width:            parent.width
+        id: rowMouseArea
+        anchors.fill:     parent
         acceptedButtons:  Qt.LeftButton | Qt.RightButton
+        hoverEnabled:     true
+        propagateComposedEvents: true
 
         onClicked: {
             if (!rowInModel)

@@ -16,13 +16,16 @@ TableView {
     property color headerColor: Style.table_header
     // property var headerOpacity: 1
     property bool headerShaderVisible: true
+    // Scrollbar fine-tuning outside control if enableOwnMouseArea == false
+    property bool enableOwnMouseArea: true
+    property bool containsMouse: false
 
     // Scrollbar fine-tuning
     __scrollBarTopMargin: tableView.headerHeight
-    verticalScrollBarPolicy: hoverArea.containsMouse && __scroller.contentHeight > __scroller.availableHeight ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAlwaysOff
+    verticalScrollBarPolicy: containsMouse && __scroller.contentHeight > __scroller.availableHeight ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAlwaysOff
 
     style: TableViewStyle {
-        transientScrollBars: !hoverArea.containsMouse
+        transientScrollBars: !containsMouse
         minimumHandleLength: 30
 
         handle: Rectangle {
@@ -155,11 +158,16 @@ TableView {
         acceptedButtons:  Qt.NoButton
         hoverEnabled:     true
         propagateComposedEvents: true
-        preventStealing: true
+        preventStealing:  true
+        visible: enableOwnMouseArea
+
+        onContainsMouseChanged: {
+            tableView.containsMouse = hoverArea.containsMouse;
+        }
     }
 
     Component.onCompleted: {
-        var numchilds = __scroller.children.length
-        __scroller.children[numchilds -1].anchors.rightMargin = 0
+        var numchilds = __scroller.children.length;
+        __scroller.children[numchilds -1].anchors.rightMargin = 0;
     }
 }

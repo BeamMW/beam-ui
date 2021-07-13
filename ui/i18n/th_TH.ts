@@ -749,10 +749,9 @@
         <translation>เปิดลิงก์ภายนอก</translation>
     </message>
     <message id="open-external-message">
-        <source>Beam Wallet app requires a permission to open external links to Beam website in your default browser. This action will expose your IP to the web server.
-
-Allow to open and proceed to the website? You can always update your choice in Settings.</source>
-        <translation>แอพกระเป๋า Beam ต้องการการขออนุญาตในการเปิดเวบไซต์ของ Beam ในเบราเซอร์ของคุณ ซึ่งการกระทำนี้จะเป็นการเปิดเผยเลข IP ของคุณแสดงไปยังเว็บเซิร์ฟเวอร์
+        <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</source>
+        <oldsource>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose </oldsource>
+        <translation type="unfinished">แอพกระเป๋า Beam ต้องการการขออนุญาตในการเปิดเวบไซต์ของ Beam ในเบราเซอร์ของคุณ ซึ่งการกระทำนี้จะเป็นการเปิดเผยเลข IP ของคุณแสดงไปยังเว็บเซิร์ฟเวอร์
 
 อนุญาตให้เปิดและเข้าถึงเว็บไซต์หรือไม่? และคุณสามารถตั้งค่าใหม่ได้เสมอในเมนูการตั้งค่าของแอพ</translation>
     </message>
@@ -2961,7 +2960,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="address-info-cid">
-        <source>Shader ID</source>
+        <source>Application shader ID</source>
+        <oldsource>Shader ID</oldsource>
         <translation type="unfinished">Shader ID</translation>
     </message>
     <message id="general-value">

@@ -746,12 +746,8 @@
         <translation>Open external link</translation>
     </message>
     <message id="open-external-message">
-        <source>Beam Wallet app requires a permission to open external links to Beam website in your default browser. This action will expose your IP to the web server.
-
-Allow to open and proceed to the website? You can always update your choice in Settings.</source>
-        <translation>Beam Wallet app requires a permission to open external links to Beam website in your default browser. This action will expose your IP to the web server.
-
-Allow to open and proceed to the website? You can always update your choice in Settings.</translation>
+        <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</source>
+        <translation>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</translation>
     </message>
     <message id="start-open-change-wallet-message">
         <source>If you&apos;ll restore a wallet all transaction history and addresses will be lost.</source>
@@ -2945,8 +2941,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="address-info-cid">
-        <source>Shader ID</source>
-        <translation>Shader ID</translation>
+        <source>Application shader ID</source>
+        <translation>Application shader ID</translation>
     </message>
     <message id="general-value">
         <source>Value</source>

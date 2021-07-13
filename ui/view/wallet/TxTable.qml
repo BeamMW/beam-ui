@@ -243,6 +243,7 @@ Control {
             Layout.fillHeight:    true
             Layout.bottomMargin:  9
             visible:              transactionsTable.model.count > 0
+            // enableOwnMouseArea:   false
 
             property real rowHeight: 56
             property real resizableWidth: transactionsTable.width - 140
@@ -293,7 +294,7 @@ Control {
             }
 
             rowDelegate: ExpandableRowDelegate {
-                id:         rowItem
+                id:         rowItemDelegate
                 collapsed:  true
                 rowInModel: styleData.row !== undefined && styleData.row >= 0 && styleData.row < txProxyModel.count
                 rowHeight:  transactionsTable.rowHeight
@@ -302,8 +303,10 @@ Control {
                 backgroundColor: !rowInModel ? "transparent":
                                  styleData.selected ?
                                  Style.row_selected :
-                                 (styleData.alternate ? (!collapsed || animating ? Style.background_row_details_even : Style.background_row_even)
-                                                      : (!collapsed || animating ? Style.background_row_details_odd : Style.background_row_odd))
+                                 hovered 
+                                    ? Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.1)
+                                    : (styleData.alternate ? (!collapsed || animating ? Style.background_row_details_even : Style.background_row_even)
+                                                           : (!collapsed || animating ? Style.background_row_details_odd : Style.background_row_odd))
 
                 property var model: parent.model
                 property bool hideFiltered: true
@@ -319,6 +322,10 @@ Control {
 
                     if (rowNumber != 0 && !collapsed)
                         collapse(false);
+                }
+
+                onHoveredChanged: function() {
+                    transactionsTable.containsMouse = hovered;
                 }
 
                 onRowNumberChanged: function() {
@@ -387,7 +394,7 @@ Control {
                     kernelID:               model && model.kernelID ? model.kernelID : ""
 
                     searchFilter:    searchBoxText
-                    hideFiltered:    rowItem.hideFiltered
+                    hideFiltered:    rowItemDelegate.hideFiltered
                     token:           model ? model.token : ""
 
                     onTextCopied: function (text) {

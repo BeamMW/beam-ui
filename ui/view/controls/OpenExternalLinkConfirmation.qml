@@ -21,9 +21,7 @@ ConfirmationDialog {
     //% "Open external link"
     title: qsTrId("open-external-title")
 
-    /*% "Beam Wallet app requires a permission to open external links to Beam website in your default browser. This action will expose your IP to the web server.
-
-Allow to open and proceed to the website? You can always update your choice in Settings."*/
+    /*% "Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose \"Cancel\". You can chage your choice in app setting anytime."*/
     text: qsTrId("open-external-message")
 
     onAccepted: {

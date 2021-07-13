@@ -749,10 +749,9 @@
         <translation>Open externe link</translation>
     </message>
     <message id="open-external-message">
-        <source>Beam Wallet app requires a permission to open external links to Beam website in your default browser. This action will expose your IP to the web server.
-
-Allow to open and proceed to the website? You can always update your choice in Settings.</source>
-        <translation>Beam Wallet heeft toestemming nodig om externe links naar de Beam website in uw standaardbrowser te openen. Met deze actie wordt uw IP adres aan de webserver blootgesteld.
+        <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</source>
+        <oldsource>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose </oldsource>
+        <translation type="unfinished">Beam Wallet heeft toestemming nodig om externe links naar de Beam website in uw standaardbrowser te openen. Met deze actie wordt uw IP adres aan de webserver blootgesteld.
 
 Toestaan om te openen en door te gaan naar de website? U kunt uw keuze altijd wijzigen in de Instellingen.</translation>
     </message>
@@ -2959,7 +2958,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="address-info-cid">
-        <source>Shader ID</source>
+        <source>Application shader ID</source>
+        <oldsource>Shader ID</oldsource>
         <translation type="unfinished">Shader ID</translation>
     </message>
     <message id="general-value">
