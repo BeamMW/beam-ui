@@ -243,7 +243,7 @@ Control {
             Layout.fillHeight:    true
             Layout.bottomMargin:  9
             visible:              transactionsTable.model.count > 0
-            // enableOwnMouseArea:   false
+            enableOwnMouseArea:   false
 
             property real rowHeight: 56
             property real resizableWidth: transactionsTable.width - 140
