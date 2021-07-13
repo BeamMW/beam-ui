@@ -3143,5 +3143,9 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <source>Show details</source>
         <translation>Show details</translation>
     </message>
+    <message id="apps-update-message">
+        <source>Update Wallet to launch %1 application</source>
+        <translation>Update Wallet to launch %1 application</translation>
+    </message>
 </context>
 </TS>
