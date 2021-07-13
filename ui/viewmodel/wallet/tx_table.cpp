@@ -189,6 +189,19 @@ PaymentInfoItem* TxTableViewModel::getPaymentInfo(const QVariant& variantTxID)
     else return Q_NULLPTR;
 }
 
+// TxObject* TxTableViewModel::getTxObject(const QVariant& variantTxID)
+// {
+//     if (!variantTxID.isNull() && variantTxID.isValid())
+//     {
+//         for (const auto& it: _transactionsList)
+//         {
+//             if (it->getTransactionID() == *variantTxID)
+//                 return *it;
+//         }
+//     }
+//     else return Q_NULLPTR;
+// }
+
 QString TxTableViewModel::getExplorerUrl() const
 {
      const auto& settings = AppModel::getInstance().getSettings();
