@@ -1,6 +1,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.4
+import QtQuick.Layouts 1.12
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
 import QtQuick.Window 2.2
@@ -152,33 +153,41 @@ Rectangle {
         resetLockTimer()
     }
 
+    function appsQml () {
+        return BeamGlobals.isFork3() ? "applications" : "applications_nofork"
+    }
+
+    function appArgs (id) {
+        return {
+            "appCmd": id
+        }
+    }
+
     property var contentItems : [
         {name: "wallet"},
         {name: "atomic_swap"},
         // {name: "dex"},
         {name: "addresses"},
         {name: "notifications"},
-        {name: "applications", qml: function () {
-            return BeamGlobals.isFork3() ? "applications" : "applications_nofork"
-            }
-        },
-        {name: "daocore"}
+        {name: "applications", qml: appsQml},
+        {name: "daocore", qml: appsQml, args: () => appArgs("daocore")},
+        {name: "settings"}
     ]
 
-    property int selectedItem
+    property int selectedItem: -1
 
     Item {
-        id: sidebar
-        width: 70
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.top: parent.top
+        id:              sidebar
+        width:           70
+        anchors.bottom:  parent.bottom
+        anchors.left:    parent.left
+        anchors.top:     parent.top
 
         Rectangle {
             anchors.fill: parent
-            color: Style.navigation_background
             opacity: 0.1
             border.width: 0
+            color: Style.navigation_background
         }
 
         SvgImage {
@@ -189,160 +198,116 @@ Rectangle {
             smooth: true
         }
 
-        Column {
-            width: 0
-            height: 0
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            anchors.top: parent.top
-            anchors.topMargin: 130
+        ColumnLayout {
+            anchors.left:       parent.left
+            anchors.right:      parent.right
+            anchors.top:        parent.top
+            anchors.bottom:     parent.bottom
+            anchors.topMargin:  130
+            spacing:            0
 
-            Repeater{
+            Repeater {
                 id: controls
                 model: contentItems
 
-                Item {
-                    id: control
-                    width: parent.width
-                    height: 66
-                    activeFocusOnTab: true
+                ColumnLayout {
+                    Layout.fillWidth:  true
+                    Layout.fillHeight: modelData.name =='settings'
 
-                    SvgImage {
-                        id: icon
-                        x: 21
-                        y: 16
-                        width: 28
-                        height: 28
-                        source: "qrc:/assets/icon-" + modelData.name + (selectedItem == index ? "-active" : "") + ".svg"
-                    }
                     Item {
-                        Rectangle {
-                            id: indicator
-                            y: 6
-                            width: 4
-                            height: 48
-                            color: selectedItem == index ? Style.active : Style.passive
-                        }
-
-                        DropShadow {
-                            anchors.fill: indicator
-                            radius: 5
-                            samples: 9
-                            color: Style.active
-                            source: indicator
-                        }
-
-                        visible: selectedItem == index
+                        Layout.fillHeight: true
+                        visible: modelData.name == 'settings'
                     }
 
                     Item {
-                        visible: contentItems[index].name == 'notifications' && viewModel.unreadNotifications > 0
-                        Rectangle {
-                            id: counter
-                            x: 42
-                            y: 9
-                            width: 16
-                            height: 16
-                            radius: width/2
-                            color: Style.active
+                        id: control
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 66
+                        Layout.alignment: Qt.AlignBottom
+                        activeFocusOnTab: true
 
-                            SFText {
-                                height: 14
-                                text: viewModel.unreadNotifications
-                                font.pixelSize: 12
-                                anchors.centerIn: counter
+                        SvgImage {
+                            id: icon
+                            x: 21
+                            y: 16
+                            width: 28
+                            height: 28
+                            source: "qrc:/assets/icon-" + modelData.name + (selectedItem == index ? "-active" : "") + ".svg"
+                        }
+
+                        Item {
+                            Rectangle {
+                                id: indicator
+                                y: 6
+                                width: 4
+                                height: 48
+                                color: selectedItem == index ? Style.active : Style.passive
+                            }
+
+                            DropShadow {
+                                anchors.fill: indicator
+                                radius: 5
+                                samples: 9
+                                color: Style.active
+                                source: indicator
+                            }
+
+                            visible: selectedItem == index
+                        }
+
+                        Item {
+                            visible: modelData.name == 'notifications' && viewModel.unreadNotifications > 0
+                            Rectangle {
+                                id: counter
+                                x: 42
+                                y: 9
+                                width: 16
+                                height: 16
+                                radius: width/2
+                                color: Style.active
+
+                                SFText {
+                                    height: 14
+                                    text: viewModel.unreadNotifications
+                                    font.pixelSize: 12
+                                    anchors.centerIn: counter
+                                }
+                            }
+                            DropShadow {
+                                anchors.fill: counter
+                                radius: 5
+                                samples: 9
+                                source: counter
+                                color: Style.active
                             }
                         }
-                        DropShadow {
-                            anchors.fill: counter
-                            radius: 5
-                            samples: 9
-                            source: counter
-                            color: Style.active
+
+                        Rectangle {
+                            x: 10
+                            width: parent.width - 20
+                            height: 2
+                            color: Style.background_button
+                            visible: modelData.name == 'applications'
                         }
-                    }
 
-                    Rectangle {
-                        x: 10
-                        width: parent.width - 20
-                        height: 2
-                        color: Style.background_button
-                        visible: contentItems[index].name == 'applications'
-                    }
+                        Keys.onPressed: {
+                            if ((event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space))
+                                updateItem(index);
+                        }
 
-                    Keys.onPressed: {
-                        if ((event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space) && selectedItem != index) 
-                            updateItem(index);
-                    }
-
-                    MouseArea {
-                        id: mouseArea
-                        anchors.fill: parent
-                        onClicked: {
-                            control.focus = true
-                            if (selectedItem != index)
+                        MouseArea {
+                            id: mouseArea
+                            anchors.fill: parent
+                            onClicked: {
+                                control.focus = true
                                 updateItem(index)
+                            }
+                            hoverEnabled: true
                         }
-                        hoverEnabled: true
                     }
                 }
             }
         }
-
-        Item {
-            id: control
-            width: parent.width
-            height: 66
-            activeFocusOnTab: true
-            anchors.bottom: parent.bottom
-
-            SvgImage {
-                id: icon
-                x: 21
-                y: 16
-                width: 28
-                height: 28
-                source: "qrc:/assets/icon-settings" + (selectedItem == -1 ? "-active" : "") + ".svg"
-            }
-            Item {
-                Rectangle {
-                    id: indicator
-                    y: 6
-                    width: 4
-                    height: 48
-                    color: selectedItem == -1 ? Style.active : Style.passive
-                }
-
-                DropShadow {
-                    anchors.fill: indicator
-                    radius: 5
-                    samples: 9
-                    color: Style.active
-                    source: indicator
-                }
-
-                visible: selectedItem == -1
-            }
-
-            Keys.onPressed: {
-                if ((event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space) && selectedItem != index) 
-                    updateItem(-1);
-            }
-
-            MouseArea {
-                id: mouseArea
-                anchors.fill: parent
-                onClicked: {
-                    control.focus = true
-                    if (selectedItem != -1)
-                        updateItem(-1)
-                }
-                hoverEnabled: true
-            }
-        }
-
     }
 
     Loader {
@@ -358,45 +323,29 @@ Rectangle {
     function updateItem(indexOrID, props)
     {
         var update = function(index) {
-            selectedItem = index;
-            var source = "";
-            var args = Object.assign({"openSend": false}, props);
-            if (index >= 0) {
-                controls.itemAt(index).focus = true;
+            selectedItem = index
+            controls.itemAt(index).focus = true;
 
-                function isApp(element, index, array) {
-                    return element.qml && (contentItems[index].qml() == "applications" || contentItems[index].qml() == "applications_nofork");
-                }
+            var item   = contentItems[index]
+            var source = ["qrc:/", item.qml ? item.qml() : item.name, ".qml"].join('')
+            var args   = item.args ? item.args() : {}
 
-                var appIndex = contentItems.findIndex(isApp);
-                if (appIndex >= 0 && index > appIndex) {
-                    source = "qrc:/applications.qml";
-                    args = Object.assign({"appCmd": contentItems[index].name}, args);
-                } else {
-                    source = ["qrc:/", contentItems[index].qml ? contentItems[index].qml() : contentItems[index].name, ".qml"].join('');
-                }
-
-            } else if (index == -1) {
-                source = "qrc:/settings.qml";
-            }
-            content.setSource(source, args)
-
+            content.setSource(source, Object.assign(args, props))
             viewModel.update(index)
         }
 
         if (typeof(indexOrID) == "string") {
-            if (indexOrID == "settings")
-                return update(-1);
-
             for (var index = 0; index < contentItems.length; index++) {
                 if (contentItems[index].name == indexOrID) {
-                    return update(index);
+                    indexOrID = index
                 }
             }
         }
 
-        // plain index passed
-        update(indexOrID)
+        // here we always have a number
+        if (selectedItem != indexOrID) {
+            update(indexOrID)
+        }
     }
 
     function openMaxPrivacyCoins (assetId, unitName, lockedAmount) {

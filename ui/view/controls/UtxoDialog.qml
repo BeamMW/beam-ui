@@ -87,6 +87,7 @@ CustomDialog {
                         iconSource: model ? model.iconSource : ""
                         showTip: false
                         maxUnitChars: 18
+                        maxPaintedWidth: false
                     }
                 }
             }
