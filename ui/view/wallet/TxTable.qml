@@ -297,6 +297,20 @@ Control {
                 }
             }
 
+            property var showDetails: function (rawTxID) {
+                var id = rawTxID;
+                if (typeof id != "string") {
+                    id = BeamGlobals.rawTxIdToStr(id);
+                }
+
+                if (!id.length) return;
+
+                var index = tableViewModel.transactions.index(0, 0);
+                var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, id);
+                initTxDetailsFromRow(transactionsTable.model, index.row);
+                txDetails.open();
+            }
+
             Component.onCompleted: function () {
                 txProxyModel.source.countChanged.connect(function() {
                     control.activeTxCnt = 0
@@ -324,13 +338,6 @@ Control {
                         }
                     }
                 });
-
-                root.onOpenedTxIDChanged.connect(function() {
-                    var index = tableViewModel.transactions.index(0, 0);
-                    var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, root.openedTxID);
-                    initTxDetailsFromRow(transactionsTable.model, index.row);
-                    txDetails.open();
-                })
             }
 
             Layout.alignment:     Qt.AlignTop
@@ -745,11 +752,7 @@ Control {
                     text: qsTrId("general-show-tx-details")
                     icon.source: "qrc:/assets/icon-show_tx_details.svg"
                     onTriggered: {
-                        var id = txContextMenu.txID;
-                        if (typeof id != "string") {
-                            id = BeamGlobals.rawTxIdToStr(id);
-                        }
-                        root.openedTxID = id;
+                        transactionsTable.showDetails(txContextMenu.txID);
                     }
                 }
 
@@ -785,11 +788,7 @@ Control {
                     text: qsTrId("general-show-tx-details")
                     icon.source: "qrc:/assets/icon-show_tx_details.svg"
                     onTriggered: {
-                        var id = contractTxContextMenu.txID;
-                        if (typeof id != "string") {
-                            id = BeamGlobals.rawTxIdToStr(id);
-                        }
-                        root.openedTxID = id;
+                        transactionsTable.showDetails(contractTxContextMenu.txID);
                     }
                 }
 
