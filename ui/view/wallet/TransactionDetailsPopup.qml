@@ -67,13 +67,13 @@ CustomDialog {
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
     parent: Overlay.overlay
-    padding: 30
 
     closePolicy: Popup.NoAutoClose | Popup.CloseOnEscape
 
     header: ColumnLayout {
         SFText {
             Layout.topMargin: 30
+            Layout.bottomMargin: 30
             Layout.alignment: Qt.AlignHCenter
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 18
@@ -101,7 +101,7 @@ CustomDialog {
                 PropertyChanges {target: paymentProof; state: "active"}
             }
         ]
-        
+
         RowLayout {
             Layout.alignment: Qt.AlignHCenter
 
@@ -131,10 +131,10 @@ CustomDialog {
         }
 
         GridLayout {
+            id: grid
             Layout.leftMargin: 30
             Layout.rightMargin: 30
             Layout.topMargin: 30
-            Layout.bottomMargin: 30
             Layout.alignment: Qt.AlignTop
             columnSpacing: 40
             rowSpacing: 14
@@ -310,7 +310,8 @@ CustomDialog {
 
                     RowLayout {
                         Layout.fillWidth: true
-                        Layout.maximumWidth : 450
+                        Layout.maximumWidth : 478
+
                         BeamAmount {
                             Layout.fillWidth: true
 
@@ -325,6 +326,7 @@ CustomDialog {
                             rateUnit:     this.rate != "0" ? dialog.rateUnit : ""
                             showTip:      false
                             maxUnitChars: 25
+                            maxPaintedWidth: false
                             font {
                                 styleName:  "Bold"
                                 weight:     Font.Bold
@@ -562,14 +564,14 @@ CustomDialog {
             }
 
             Item {
-                Layout.preferredHeight: 16
-                visible: dialog.isCompleted && kernelID.visible
+                height: 16
+                visible: dialog.isCompleted && kernelID.parent.visible
             }
             Item {
                 Layout.preferredWidth: openInExplorer.width + 10 + openInExplorerIcon.width
-                Layout.preferredHeight: 16
-                visible: dialog.isCompleted && kernelID.visible
-            
+                height: 16
+                visible: dialog.isCompleted && kernelID.parent.visible
+
                 SFText {
                     id: openInExplorer
                     font.pixelSize: 14
@@ -600,7 +602,7 @@ CustomDialog {
             RowLayout {
                 Layout.columnSpan: 2
                 Layout.fillWidth: true
-                visible: dialog.stateDetails != ""
+                visible: stm.state == "tx_info" && dialog.stateDetails != ""
                 SvgImage {
                     Layout.alignment: Qt.AlignTop
                     sourceSize: Qt.size(16, 16)
@@ -691,6 +693,7 @@ CustomDialog {
         RowLayout {
             Layout.alignment: Qt.AlignHCenter
             Layout.bottomMargin: 30
+            Layout.topMargin: 30
             spacing: 20
 
             CustomButton {
@@ -700,5 +703,9 @@ CustomDialog {
                 onClicked:          dialog.close()
             }
         }
+    }
+
+    onOpened: {
+        dialog.height = grid.height + 260;
     }
 }

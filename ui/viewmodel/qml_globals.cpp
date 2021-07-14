@@ -472,6 +472,16 @@ QString QMLGlobals::roundWithPrecision(const QString& number, uint precision)
     return QString::fromStdString(result);
 }
 
+QString QMLGlobals::rawTxIdToStr(const QVariant& txId)
+{
+    if (!txId.isNull() && txId.isValid())
+    {
+        auto rawTxId = txId.value<beam::wallet::TxID>();
+        return QString::fromStdString(std::to_string(rawTxId));
+    }
+    return "";
+}
+
 void QMLGlobals::fatal(const QString& message)
 {
     throw std::runtime_error(message.toStdString());

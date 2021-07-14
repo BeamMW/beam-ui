@@ -482,7 +482,7 @@ ColumnLayout {
                                     if (appSupported(app)) {
                                         launchApp(app)
                                     } else {
-                                        //% "Update Wallet to launch %1 application
+                                        //% "Update Wallet to launch %1 application"
                                         BeamGlobals.showMessage(qsTrId("apps-update-message").arg(app.name))
                                     }
                                 }

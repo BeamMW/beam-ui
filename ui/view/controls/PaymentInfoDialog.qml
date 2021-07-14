@@ -267,7 +267,7 @@ CustomDialog {
                 {
                     if (model)
                     {
-                        textCopied("Sender: " + model.sender + "\nReceiver: " + model.receiver + "\nAmount: " + model.amountValue + " BEAM" + "\nKernel ID: " + model.kernelID);
+                        textCopied("Sender: " + model.sender + "\nReceiver: " + model.receiver + "\nAmount: " + model.amountValue + " " + model.unitName + "\nKernel ID: " + model.kernelID);
                     }
                 }
 
