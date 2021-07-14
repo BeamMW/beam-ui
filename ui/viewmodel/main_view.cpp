@@ -120,14 +120,13 @@ QString MainViewModel::getDaoCoreAppID() const
     std::string appURL  = "";
 
     #if defined(BEAM_TESTNET)
-    appURL = "https://apps-testnet.beam.mw/app/plugin-dao/index.html";
+    appURL = "https://apps-testnet.beam.mw/app/plugin-dao-core/index.html";
     #elif defined(BEAM_MAINNET)
-    appURL = "https://apps.beam.mw/app/plugin-dao/index.html";
+    appURL = "https://apps.beam.mw/app/plugin-dao-core/index.html";
     #else
-    appURL = "http://3.19.141.112:80/app/plugin-dao/index.html";
+    appURL = "http://3.19.141.112:80/app/plugin-dao-core/index.html";
     #endif
 
     const auto appid = beamui::applications::GenerateAppID(appName, appURL);
     return QString::fromStdString(appid);
 }
-
