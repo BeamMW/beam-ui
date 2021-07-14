@@ -67,13 +67,13 @@ CustomDialog {
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
     parent: Overlay.overlay
-    padding: 30
 
     closePolicy: Popup.NoAutoClose | Popup.CloseOnEscape
 
     header: ColumnLayout {
         SFText {
             Layout.topMargin: 30
+            Layout.bottomMargin: 30
             Layout.alignment: Qt.AlignHCenter
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 18
@@ -101,7 +101,7 @@ CustomDialog {
                 PropertyChanges {target: paymentProof; state: "active"}
             }
         ]
-        
+
         RowLayout {
             Layout.alignment: Qt.AlignHCenter
 
@@ -131,10 +131,10 @@ CustomDialog {
         }
 
         GridLayout {
+            id: grid
             Layout.leftMargin: 30
             Layout.rightMargin: 30
             Layout.topMargin: 30
-            Layout.bottomMargin: 30
             Layout.alignment: Qt.AlignTop
             columnSpacing: 40
             rowSpacing: 14
@@ -691,6 +691,7 @@ CustomDialog {
         RowLayout {
             Layout.alignment: Qt.AlignHCenter
             Layout.bottomMargin: 30
+            Layout.topMargin: 30
             spacing: 20
 
             CustomButton {
@@ -700,5 +701,10 @@ CustomDialog {
                 onClicked:          dialog.close()
             }
         }
+    }
+
+    onOpened: {
+        console.log(grid.height);
+        dialog.height = grid.height + 260;
     }
 }
