@@ -14,7 +14,7 @@ Item {
     anchors.fill: parent
 
     property string openedTxID: ""
-
+    
     function onAccepted() { walletStackView.pop(); }
     function onClosed() { walletStackView.pop(); }
     function onSwapToken(token) {

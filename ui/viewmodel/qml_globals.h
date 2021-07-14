@@ -69,6 +69,7 @@ public:
     Q_INVOKABLE static QString divideWithPrecision(const QString& dividend, const QString& divider, uint precision);
     Q_INVOKABLE static QString multiplyWithPrecision(const QString& first, const QString& second, uint precision);
     Q_INVOKABLE static QString roundWithPrecision(const QString& number, uint precision);
+    Q_INVOKABLE static QString rawTxIdToStr(const QVariant& txId);
 
 private:
     QQmlEngine& _engine;

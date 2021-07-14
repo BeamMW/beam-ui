@@ -212,6 +212,91 @@ Control {
 
         CustomTableView {
             id: transactionsTable
+
+            property var initTxDetailsFromRow: function (model, row) {
+                var addressFrom = model.getRoleValue(row, "addressFrom");
+                txDetails.sendAddress = addressFrom ? addressFrom : "";
+                var addressTo = model.getRoleValue(row, "addressTo");
+                txDetails.receiveAddress = addressTo ? addressTo : "";
+                var senderIdentity = model.getRoleValue(row, "senderIdentity");
+                txDetails.senderIdentity = senderIdentity ? senderIdentity : "";
+                var receiverIdentity = model.getRoleValue(row, "receiverIdentity");
+                txDetails.receiverIdentity = receiverIdentity ? receiverIdentity : "";
+                var comment = model.getRoleValue(row, "comment");
+                txDetails.comment = comment ? comment : "";
+                var txID = model.getRoleValue(row, "txID");
+                txDetails.txID = txID ? txID : "";
+                var kernelID = model.getRoleValue(row, "kernelID");
+                txDetails.kernelID = kernelID ? kernelID : "";
+                var status = model.getRoleValue(row, "status");
+                txDetails.status = status ? status : "";
+                var failureReason = model.getRoleValue(row, "failureReason");
+                txDetails.failureReason = failureReason ? failureReason : "";
+                var isIncome = model.getRoleValue(row, "isIncome");
+                txDetails.isIncome = isIncome;
+                var hasPaymentProof = model.getRoleValue(row, "hasPaymentProof");
+                txDetails.hasPaymentProof = hasPaymentProof;
+                var isSelfTransaction = model.getRoleValue(row, "isSelfTransaction");
+                txDetails.isSelfTx = isSelfTransaction;
+                var isContractTx = model.getRoleValue(row, "isContractTx");
+                txDetails.isContractTx = isContractTx;
+                var cidsStr = model.getRoleValue(row, "cidsStr");
+                txDetails.cidsStr = cidsStr ? cidsStr : "";
+                var rawTxID = model.getRoleValue(row, "rawTxID");
+                txDetails.rawTxID = rawTxID ? rawTxID : null;
+                var stateDetails = model.getRoleValue(row, "stateDetails");
+                txDetails.stateDetails = stateDetails ? stateDetails : "";
+                var isCompleted = model.getRoleValue(row, "isCompleted");
+                txDetails.isCompleted = isCompleted;
+                var minConfirmations = model.getRoleValue(row, "minConfirmations");
+                txDetails.minConfirmations = minConfirmations ? minConfirmations : 0;
+                var confirmationsProgress = model.getRoleValue(row, "confirmationsProgress");
+                txDetails.confirmationsProgress = confirmationsProgress ? confirmationsProgress : "";
+                var dappName = model.getRoleValue(row, "dappName");
+                txDetails.dappName = dappName ? dappName : "";
+
+                var addrModel = {
+                    isMaxPrivacy: model.getRoleValue(row, "isMaxPrivacy"),
+                    isOfflineToken: model.getRoleValue(row, "isOfflineToken"),
+                    isPublicOffline: model.getRoleValue(row, "isPublicOffline")
+                };
+                txDetails.addressType = Utils.getAddrTypeFromModel(addrModel);
+
+                var assetNames = model.getRoleValue(row, "assetNames");
+                txDetails.assetNames = assetNames ? assetNames : [];
+                var assetIcons = model.getRoleValue(row, "assetIcons");
+                txDetails.assetIcons = assetIcons ? assetIcons: [];
+                var assetAmounts = model.getRoleValue(row, "assetAmounts");
+                txDetails.assetAmounts = assetAmounts ? assetAmounts: [];
+                var assetAmountsIncome = model.getRoleValue(row, "assetAmountsIncome");
+                txDetails.assetIncome = assetAmountsIncome ? assetAmountsIncome: [];
+                var assetRates = model.getRoleValue(row, "assetRates");
+                txDetails.assetRates = assetRates ? assetRates: [];
+                var assetIDs = model.getRoleValue(row, "assetIDs");
+                txDetails.assetIDs = assetIDs ? assetIDs: [];
+                var amountSecondCurrency = model.getRoleValue(row, "amountSecondCurrency");
+                txDetails.totalValue = amountSecondCurrency ? amountSecondCurrency : "0";
+                txDetails.rateUnit = tableViewModel.rateUnit;
+
+                var fee = model.getRoleValue(row, "fee");
+                txDetails.fee = fee ? fee : "0";
+                var feeRate = model.getRoleValue(row, "feeRate");
+                txDetails.feeRate = feeRate ? feeRate : "0";
+                txDetails.feeUnit = qsTrId("general-beam");
+                txDetails.feeRateUnit = tableViewModel.rateUnit;
+
+                txDetails.searchFilter = searchBox.text;
+                var addressFrom = model.getRoleValue(row, "token");
+                txDetails.token = token ? token : "";
+                var isShieldedTx = model.getRoleValue(row, "isShieldedTx");
+                txDetails.isShieldedTx = isShieldedTx;
+                txDetails.initialState = "tx_info";
+
+                txDetails.getPaymentProof = function(rawTxID) {
+                    return rawTxID ? tableViewModel.getPaymentInfo(rawTxID) : null;
+                }
+            }
+
             Component.onCompleted: function () {
                 txProxyModel.source.countChanged.connect(function() {
                     control.activeTxCnt = 0
@@ -223,18 +308,28 @@ Control {
                         }
                     }
                 })
-                transactionsTable.model.modelReset.connect(function(){
+                transactionsTable.model.modelReset.connect(function() {
                     if (root && root.openedTxID != "") {
                         var index = tableViewModel.transactions.index(0, 0);
-                        var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, root.openedTxID)
+                        var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, root.openedTxID);
                         if (indexList.length > 0) {
-                            index = dappFilterProxy.mapFromSource(indexList[0])
-                            index = assetFilterProxy.mapFromSource(index)
-                            index = searchProxyModel.mapFromSource(index)
-                            index = txProxyModel.mapFromSource(index)
-                            transactionsTable.positionViewAtRow(index.row, ListView.Beginning)
+                            index = dappFilterProxy.mapFromSource(indexList[0]);
+                            index = assetFilterProxy.mapFromSource(index);
+                            index = searchProxyModel.mapFromSource(index);
+                            index = txProxyModel.mapFromSource(index);
+                            transactionsTable.positionViewAtRow(index.row, ListView.Beginning);
+
+                            initTxDetailsFromRow(transactionsTable.model, index.row);
+                            txDetails.open();
                         }
                     }
+                });
+
+                root.onOpenedTxIDChanged.connect(function() {
+                    var index = tableViewModel.transactions.index(0, 0);
+                    var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, root.openedTxID);
+                    initTxDetailsFromRow(transactionsTable.model, index.row);
+                    txDetails.open();
                 })
             }
 
@@ -334,51 +429,7 @@ Control {
                 }
 
                 onLeftClick: function() {
-                    txDetails.sendAddress = model && model.addressFrom ? model.addressFrom : "";
-                    txDetails.receiveAddress = model && model.addressTo ? model.addressTo : "";
-                    txDetails.senderIdentity = model && model.senderIdentity ? model.senderIdentity : "";
-                    txDetails.receiverIdentity = model && model.receiverIdentity ? model.receiverIdentity : "";
-                    txDetails.comment = model && model.comment ? model.comment : "";
-                    txDetails.txID = model && model.txID ? model.txID : "";
-                    txDetails.kernelID = model && model.kernelID ? model.kernelID : "";
-                    txDetails.status = model && model.status ? model.status : "";
-                    txDetails.failureReason = model && model.failureReason ? model.failureReason : "";
-                    txDetails.isIncome = model && model.isIncome ? model.isIncome : false;
-                    txDetails.hasPaymentProof = model && model.hasPaymentProof ? model.hasPaymentProof : false;
-                    txDetails.isSelfTx = model && model.isSelfTransaction ? model.isSelfTransaction : false;
-                    txDetails.isContractTx = model && model.isContractTx;
-                    txDetails.cidsStr = model && model.cidsStr ? model.cidsStr : "";
-                    txDetails.rawTxID = model && model.rawTxID ? model.rawTxID : null;
-                    txDetails.stateDetails = model && model.stateDetails ? model.stateDetails : "";
-                    txDetails.isCompleted = model && model.isCompleted ? model.isCompleted : false;
-                    txDetails.minConfirmations = model && model.minConfirmations ? model.minConfirmations : 0;
-                    txDetails.confirmationsProgress = model && model.confirmationsProgress ? model.confirmationsProgress : "";
-                    txDetails.dappName = model && model.dappName ? model.dappName : "";
-                    txDetails.addressType = Utils.getAddrTypeFromModel(model);
-
-                    txDetails.assetNames = model && model.assetNames ? model.assetNames : [];
-                    txDetails.assetIcons = model ? model.assetIcons: [];
-                    txDetails.assetAmounts = model ? model.assetAmounts: [];
-                    txDetails.assetIncome = model ? model.assetAmountsIncome: [];
-                    txDetails.assetRates = model ? model.assetRates: [];
-                    txDetails.assetIDs = model ? model.assetIDs: [];
-                    txDetails.totalValue = model ? model.amountSecondCurrency : "0";
-                    txDetails.rateUnit = tableViewModel.rateUnit;
-
-                    txDetails.fee = model && model.fee ? model.fee : "0";
-                    txDetails.feeRate = model && model.feeRate ? model.feeRate : "0";
-                    txDetails.feeUnit = qsTrId("general-beam");
-                    txDetails.feeRateUnit = tableViewModel.rateUnit;
-
-                    txDetails.searchFilter = searchBoxText;
-                    txDetails.token = model ? model.token : "";
-                    txDetails.isShieldedTx = model && model.isShieldedTx;
-                    txDetails.initialState = "tx_info";
-
-                    txDetails.getPaymentProof = function(rawTxID) {
-                        return rawTxID ? tableViewModel.getPaymentInfo(rawTxID) : null;
-                    }
-
+                    transactionsTable.initTxDetailsFromRow(transactionsTable.model, rowNumber);
                     txDetails.open();
                     return false;
                 }
@@ -694,7 +745,11 @@ Control {
                     text: qsTrId("general-show-tx-details")
                     icon.source: "qrc:/assets/icon-show_tx_details.svg"
                     onTriggered: {
-                        console.log("open tx details");
+                        var id = txContextMenu.txID;
+                        if (typeof id != "string") {
+                            id = BeamGlobals.rawTxIdToStr(id);
+                        }
+                        main.openTransactionDetails(id);
                     }
                 }
 
@@ -724,6 +779,19 @@ Control {
                 dim: false
                 property bool deleteEnabled
                 property var txID
+
+                Action {
+                    //% "Show details"
+                    text: qsTrId("general-show-tx-details")
+                    icon.source: "qrc:/assets/icon-show_tx_details.svg"
+                    onTriggered: {
+                        var id = contractTxContextMenu.txID;
+                        if (typeof id != "string") {
+                            id = BeamGlobals.rawTxIdToStr(id);
+                        }
+                        main.openTransactionDetails(id);
+                    }
+                }
 
                 Action {
                     //% "Delete"

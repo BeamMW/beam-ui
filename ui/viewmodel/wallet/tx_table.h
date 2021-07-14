@@ -39,7 +39,6 @@ public:
     Q_INVOKABLE void cancelTx(const QVariant& variantTxID);
     Q_INVOKABLE void deleteTx(const QVariant& variantTxID);
     Q_INVOKABLE PaymentInfoItem* getPaymentInfo(const QVariant& variantTxID);
-    // Q_INVOKABLE TxObject* getTxObject(const QVariant& variantTxID);
 
 public slots:
     void onTxHistoryExportedToCsv(const QString& data);

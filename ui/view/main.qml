@@ -329,6 +329,8 @@ Rectangle {
     function updateItem(indexOrID, props)
     {
         var update = function(index) {
+            var sameTab = selectedItem == index;
+
             selectedItem = index
             controls.itemAt(index).focus = true;
 
@@ -336,8 +338,14 @@ Rectangle {
             var source = ["qrc:/", item.qml ? item.qml() : item.name, ".qml"].join('')
             var args   = item.args ? item.args() : {}
 
-            content.setSource(source, Object.assign(args, props))
-            viewModel.update(index)
+            if (!sameTab) {
+                content.setSource(source, Object.assign(args, props))
+                viewModel.update(index)
+            } else {
+                for (var prop in props) {
+                    content.item[prop] = props[prop];
+                }
+            }
         }
 
         if (typeof(indexOrID) == "string") {
