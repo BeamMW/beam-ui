@@ -23,8 +23,9 @@ Item {
         }
 
         //% "Back"
-        text:           qsTrId("general-back")
-        icon.source:    "qrc:/assets/icon-back.svg"
+        text:         qsTrId("general-back")
+        icon.source:  "qrc:/assets/icon-back.svg"
+        visible:      !!control.text
 
         onClicked: control.onBack()
     }

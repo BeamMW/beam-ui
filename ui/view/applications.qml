@@ -36,13 +36,19 @@ ColumnLayout {
         model: statusbarModel
     }
 
+    // Subtitle row is invisible only when we display appslit
+    // In all other cases we display it
+    //   - if app, with back button & app title
+    //   - if no app (loading) without back button & title.
+    //     This is to avoid 'Loading (appname)...' message jumping vertically
     SubtitleRow {
+        id: backRow
         Layout.fillWidth:    true
         Layout.topMargin:    50
         Layout.bottomMargin: 20
+        visible: !appsView.visible
 
-        text: (control.activeApp || {}).name || ""
-        visible: !!control.activeApp
+        text: ((control.activeApp || {}).name || "")
 
         onBack: function () {
             main.openApplications()
