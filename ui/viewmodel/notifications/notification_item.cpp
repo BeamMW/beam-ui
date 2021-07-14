@@ -234,7 +234,7 @@ QString NotificationItem::title() const
             if (fromByteBuffer(m_notification.m_content, info))
             {
                 QString ver = QString::fromStdString(
-                    info.m_version.to_string() + "." + std::to_string(info.m_UIrevision));
+                    std::to_string(info.m_version) + "." + std::to_string(info.m_UIrevision));
                 //% "New version v %1 is available"
                 return qtTrId("notification-update-title").arg(ver);
             }
@@ -347,7 +347,7 @@ QString NotificationItem::message(AssetsManager::Ptr amgr) const
             if (fromByteBuffer(m_notification.m_content, info))
             {
                 QString currentVer = QString::fromStdString(
-                    beamui::getCurrentLibVersion().to_string() + "." + std::to_string(beamui::getCurrentUIRevision()));
+                    std::to_string(beamui::getCurrentLibVersion()) + "." + std::to_string(beamui::getCurrentUIRevision()));
                 QString message("Your current version is v ");
                 message.append(currentVer);
                 message.append(". Please update to get the most of your Beam wallet.");
