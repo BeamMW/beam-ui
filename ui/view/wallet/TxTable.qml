@@ -749,7 +749,7 @@ Control {
                         if (typeof id != "string") {
                             id = BeamGlobals.rawTxIdToStr(id);
                         }
-                        main.openTransactionDetails(id);
+                        root.openedTxID = id;
                     }
                 }
 
@@ -789,7 +789,7 @@ Control {
                         if (typeof id != "string") {
                             id = BeamGlobals.rawTxIdToStr(id);
                         }
-                        main.openTransactionDetails(id);
+                        root.openedTxID = id;
                     }
                 }
 
