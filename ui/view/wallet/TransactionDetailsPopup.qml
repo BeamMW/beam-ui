@@ -310,7 +310,8 @@ CustomDialog {
 
                     RowLayout {
                         Layout.fillWidth: true
-                        Layout.maximumWidth : 450
+                        Layout.maximumWidth : 478
+
                         BeamAmount {
                             Layout.fillWidth: true
 
@@ -325,6 +326,7 @@ CustomDialog {
                             rateUnit:     this.rate != "0" ? dialog.rateUnit : ""
                             showTip:      false
                             maxUnitChars: 25
+                            maxPaintedWidth: false
                             font {
                                 styleName:  "Bold"
                                 weight:     Font.Bold
@@ -562,14 +564,14 @@ CustomDialog {
             }
 
             Item {
-                Layout.preferredHeight: 16
-                visible: dialog.isCompleted && kernelID.visible
+                height: 16
+                visible: dialog.isCompleted && kernelID.parent.visible
             }
             Item {
                 Layout.preferredWidth: openInExplorer.width + 10 + openInExplorerIcon.width
-                Layout.preferredHeight: 16
-                visible: dialog.isCompleted && kernelID.visible
-            
+                height: 16
+                visible: dialog.isCompleted && kernelID.parent.visible
+
                 SFText {
                     id: openInExplorer
                     font.pixelSize: 14
@@ -600,7 +602,7 @@ CustomDialog {
             RowLayout {
                 Layout.columnSpan: 2
                 Layout.fillWidth: true
-                visible: dialog.stateDetails != ""
+                visible: stm.state == "tx_info" && dialog.stateDetails != ""
                 SvgImage {
                     Layout.alignment: Qt.AlignTop
                     sourceSize: Qt.size(16, 16)
@@ -704,7 +706,6 @@ CustomDialog {
     }
 
     onOpened: {
-        console.log(grid.height);
         dialog.height = grid.height + 260;
     }
 }
