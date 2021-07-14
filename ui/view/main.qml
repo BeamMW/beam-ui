@@ -338,14 +338,8 @@ Rectangle {
             var source = ["qrc:/", item.qml ? item.qml() : item.name, ".qml"].join('')
             var args   = item.args ? item.args() : {}
 
-            if (!sameTab) {
-                content.setSource(source, Object.assign(args, props))
-                viewModel.update(index)
-            } else {
-                for (var prop in props) {
-                    content.item[prop] = props[prop];
-                }
-            }
+            content.setSource(source, Object.assign(args, props))
+            viewModel.update(index)
         }
 
         if (typeof(indexOrID) == "string") {
