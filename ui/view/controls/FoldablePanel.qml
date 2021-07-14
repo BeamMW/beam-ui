@@ -16,6 +16,7 @@ Pane {
     property var   content:           null
     property var   headerContent:     null
     property alias titleOpacity:      headerTitle.opacity
+    property alias bkColor:           background.color
     property int   contentItemHeight: 0
 
     spacing: 0
@@ -148,6 +149,7 @@ Pane {
     }
 
     background: Rectangle {
+        id:      background
         radius:  10
         color:   Style.background_second
 

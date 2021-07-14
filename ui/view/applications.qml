@@ -236,9 +236,10 @@ ColumnLayout {
             folded:            true
             titleOpacity:      0.5
             Layout.fillWidth:  true
-            contentItemHeight: appsView.height * 0.4
+            contentItemHeight: webLayout.height * 0.4
             bottomPadding:     folded ? 20 : 5
             foldsUp:           false
+            bkColor:           Style.background_appstx
 
             content: TxTable {
                 id: appctTable
@@ -443,6 +444,9 @@ ColumnLayout {
                 headerShaderVisible: false
                 dappFilter: "all"
             }
+
+            //% "(%1 active)"
+            titleTip: allctTable.activeTxCnt ? qsTrId("apps-inprogress-tip").arg(allctTable.activeTxCnt) : ""
         }
     }
 
