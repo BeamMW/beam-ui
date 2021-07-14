@@ -149,6 +149,9 @@ Control {
 
     onAmountChanged: {
         amountText.text = fitText()
+    }
+
+    onLockedAmountChanged: {
         lockedText.text = fitLocked()
     }
 
