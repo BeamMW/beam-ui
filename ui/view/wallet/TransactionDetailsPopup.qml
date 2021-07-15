@@ -67,6 +67,7 @@ CustomDialog {
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
     parent: Overlay.overlay
+    padding: 0
 
     closePolicy: Popup.NoAutoClose | Popup.CloseOnEscape
 
@@ -230,7 +231,7 @@ CustomDialog {
                 color: Style.content_secondary
                 //% "Receiver wallet's signature"
                 text: qsTrId("tx-details-receiver-identity") + ":"
-                visible: receiverIdentityField.visible
+                visible: receiverIdentityField.parent.visible
             }
             RowLayout {
                 visible: dialog.senderIdentity.length > 0 && dialog.receiverIdentity.length > 0
@@ -260,7 +261,7 @@ CustomDialog {
                 color:                  Style.content_secondary
                 //% "Address type"
                 text:                   qsTrId("address-info-type") + ":"
-                visible:                addrTypeText.visible && stm.state == "tx_info"
+                visible:                addrTypeText.visible
             }
                 
             SFText {
@@ -279,10 +280,11 @@ CustomDialog {
                 color: Style.content_secondary
                 //% "Confirmation status"
                 text: qsTrId("tx-details-confirmation-status-label") + ":"
-                visible:          dialog.minConfirmations && stm.state == "tx_info"
+                visible:          minConfirmationsField.visible
             }
 
             SFLabel {
+                id:               minConfirmationsField
                 font.pixelSize:   14
                 color:            Style.content_main
                 //% "Confirmed (%1)"
@@ -296,23 +298,23 @@ CustomDialog {
                 color: Style.content_secondary
                 //% "Amount"
                 text: qsTrId("tx-details-amount-label") + ":"
-                visible: amountsList.visible
             }
 
             ColumnLayout {
                 id: amountsList
                 Layout.fillWidth: true
                 spacing: 10
-                visible: true
 
                 Repeater {
                     model: dialog.assetCount
 
                     RowLayout {
                         Layout.fillWidth: true
-                        Layout.maximumWidth : 478
+                        Layout.maximumWidth : receiverIdentityField.parent.width
+                        Layout.maximumHeight: amountField.rate == "0" ? 34 : 20
 
                         BeamAmount {
+                            id: amountField
                             Layout.fillWidth: true
 
                             visible:      true
@@ -365,7 +367,7 @@ CustomDialog {
                 Layout.alignment: Qt.AlignTop
                 font.pixelSize:   14
                 color:            Style.content_secondary
-                visible:          (totalValueCtrl.visible || totalWarningCtrl.visible) && stm.state == "tx_info"
+                visible:          stm.state == "tx_info"
 
                 text: (dialog.isContractTx ?
                         //% "Total value"
@@ -377,12 +379,12 @@ CustomDialog {
 
             ColumnLayout {
                 Layout.fillWidth: true
-                id:               totalValueCtrl
-                visible:          dialog.totalValue != "0" && stm.state == "tx_info"
+                visible:          stm.state == "tx_info"
                 spacing:          2
 
                 SFText {
                     Layout.fillWidth: true
+                    visible:          dialog.totalValue != "0"
                     font.pixelSize:   14
                     color:            Style.content_secondary
                     text:             [dialog.totalValue, dialog.rateUnit].join(' ')
@@ -390,23 +392,23 @@ CustomDialog {
 
                 SFText {
                     Layout.fillWidth: true
+                    visible:          dialog.totalValue != "0"
                     font.pixelSize:   13
                     font.italic:      true
                     color:            Style.content_secondary
                     //% "For the day of the transaction"
                     text: qsTrId("tx-details-rate-notice")
                 }
-            }
 
-            SFText
-            {
-                id:               totalWarningCtrl
-                visible:          dialog.totalValue == "0" && stm.state == "tx_info"
-                Layout.fillWidth: true
-                font.pixelSize:   14
-                color:            Style.content_secondary
-                //% "Exchange rate to %1 was not available at the time of transaction"
-                text:             qsTrId("tx-details-exchange-rate-not-available").arg(dialog.rateUnit)
+                SFText
+                {
+                    visible:          dialog.totalValue == "0"
+                    Layout.fillWidth: true
+                    font.pixelSize:   14
+                    color:            Style.content_secondary
+                    //% "Exchange rate to %1 was not available at the time of transaction"
+                    text:             qsTrId("tx-details-exchange-rate-not-available").arg(dialog.rateUnit)
+                }
             }
 
             SFText {
@@ -415,21 +417,25 @@ CustomDialog {
                 color: Style.content_secondary
                 //% "Transaction fee"
                 text: qsTrId("general-fee") + ": "
-                visible: dialog.fee.length && stm.state == "tx_info"
+                visible: feeField.parent.visible
             }
 
-            BeamAmount {
-                Layout.fillWidth: true
+            RowLayout {
                 visible: dialog.fee.length && stm.state == "tx_info"
+                Layout.maximumHeight: dialog.feeRate == "0" ? 34 : 20
+                BeamAmount {
+                    id: feeField
+                    Layout.fillWidth: true
 
-                amount:    dialog.fee
-                unitName:  dialog.feeUnit
-                rateUnit:  dialog.feeRateUnit
-                rate:      dialog.feeRate
-                showTip:   false
-                maxPaintedWidth: false
-                iconSource:   "qrc:/assets/icon-beam.svg"
-                iconSize:     Qt.size(20, 20)
+                    amount:    dialog.fee
+                    unitName:  dialog.feeUnit
+                    rateUnit:  dialog.feeRateUnit
+                    rate:      dialog.feeRate
+                    showTip:   false
+                    maxPaintedWidth: false
+                    iconSource:   "qrc:/assets/icon-beam.svg"
+                    iconSize:     Qt.size(20, 20)
+                }
             }
 
             // CID
@@ -439,7 +445,7 @@ CustomDialog {
                 color:                  Style.content_secondary
                 //% "DAPP name"
                 text:                   qsTrId("address-info-dapp") + ":"
-                visible:                dappNameText.visible && stm.state == "tx_info"
+                visible:                dappNameText.visible
             }
 
             SFLabel {
@@ -458,7 +464,7 @@ CustomDialog {
                 color:                  Style.content_secondary
                 //% "Application shader ID"
                 text:                   qsTrId("address-info-cid") + ":"
-                visible:                cidText.parent.visible && stm.state == "tx_info"
+                visible:                cidText.parent.visible
             }
 
             RowLayout {
@@ -492,7 +498,7 @@ CustomDialog {
                     //% "Comment"
                     qsTrId("general-comment") + ":"
 
-                visible: commentTx.visible && stm.state == "tx_info"
+                visible: commentTx.visible
             }
 
             SFLabel {
@@ -513,7 +519,7 @@ CustomDialog {
                 color: Style.content_secondary
                 //% "Transaction ID"
                 text: qsTrId("tx-details-tx-id-label") + ":"
-                visible: transactionID.parent.visible && stm.state == "tx_info"
+                visible: transactionID.parent.visible
             }
             RowLayout {
                 visible: !Utils.isZeroed(dialog.txID) && stm.state == "tx_info"
@@ -602,7 +608,7 @@ CustomDialog {
             RowLayout {
                 Layout.columnSpan: 2
                 Layout.fillWidth: true
-                visible: stm.state == "tx_info" && dialog.stateDetails != ""
+                visible: stm.state == "tx_info" && dialog.stateDetails.length
                 SvgImage {
                     Layout.alignment: Qt.AlignTop
                     sourceSize: Qt.size(16, 16)
@@ -626,7 +632,7 @@ CustomDialog {
                 color: Style.content_secondary
                 //% "Error"
                 text: qsTrId("tx-details-error-label") + ":"
-                visible: dialog.failureReason.length > 0 && stm.state == "tx_info"
+                visible: dialog.failureReason.length
             }
             SFLabel {
                 id: failureReason
@@ -707,5 +713,9 @@ CustomDialog {
 
     onOpened: {
         dialog.height = grid.height + 260;
+    }
+
+    onClosed: {
+        dialog.height = 650;
     }
 }
