@@ -311,7 +311,7 @@ CustomDialog {
                     RowLayout {
                         Layout.fillWidth: true
                         Layout.maximumWidth : receiverIdentityField.parent.width
-                        Layout.maximumHeight: amountField.rate == "0" ? 34 : 20
+                        Layout.maximumHeight: !amountField.rate.length || amountField.rate == "0" ? 20 : 34
 
                         BeamAmount {
                             id: amountField
@@ -422,7 +422,7 @@ CustomDialog {
 
             RowLayout {
                 visible: dialog.fee.length && stm.state == "tx_info"
-                Layout.maximumHeight: dialog.feeRate == "0" ? 34 : 20
+                Layout.maximumHeight: !dialog.feeRate.length || dialog.feeRate == "0" ? 20 : 34
                 BeamAmount {
                     id: feeField
                     Layout.fillWidth: true
