@@ -412,11 +412,11 @@ ColumnLayout {
 
     FoldablePanel {
         title:               qsTrId("wallet-transactions-title")
-        folded:              root.openedTxID.length == 0
+        folded:              !root.openedTxID
         titleOpacity:        0.5
         Layout.fillWidth:    true
         Layout.bottomMargin: 10
-        contentItemHeight:   root.height * 0.3
+        contentItemHeight:   root.height * 0.32
         bottomPadding:       folded ? 20 : 5
         foldsUp:             false
         visible:             appsView.visible || webLayout.visible

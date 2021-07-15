@@ -54,7 +54,7 @@
         <file>controls/SwapTransactionDetails.qml</file>
         <file>controls/PaymentInfoDialog.qml</file>
         <file>controls/OpenExternalLinkConfirmation.qml</file>
-        <file>controls/NotificationPopup.qml</file>
+
         <file>controls/SeedInput.qml</file>
         <file>controls/CustomTripleSwitch.qml</file>
         <file>controls/CustomSecondCurrencySwitch.qml</file>
@@ -77,6 +77,23 @@
         <file>controls/AddressQRDialog.qml</file>
         <file>controls/OpenApplicationsDialog.qml</file>
         <file>controls/UtxoDialog.qml</file>
+        <file>controls/Panel.qml</file>
+        <file>controls/TokenInfoPanel.qml</file>
+        <file>controls/TokenInfoDialog.qml</file>
+        <file>controls/FoldablePanel.qml</file>
+        <file>controls/SwapTokenInfoDialog.qml</file>
+        <file>controls/BgLogo.qml</file>
+        <file>controls/VersionFooter.qml</file>
+        <file>controls/SeedPhraseDialog.qml</file>
+        <file>controls/SwapEthSettings.qml</file>
+        <file>controls/ShowAddressesDialog.qml</file>
+        <file>controls/LoadingSpinner.qml</file>
+        <file>controls/CustomDialog.qml</file>
+        <file>controls/StartLayout.qml</file>
+        <file>controls/BaseNotification.qml</file>
+        <file>controls/UpdateNotification.qml</file>
+        <file>controls/SimpleNotification.qml</file>
+        <file>controls/AppTxNotification.qml</file>
         <file>wallet/TxTable.qml</file>
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>
@@ -216,7 +233,6 @@
         <file>assets/icon-add.svg</file>
         <file>assets/icon-add-blue.svg</file>
         <file>assets/icon-add-green.svg</file>
-
         <file>assets/icon-copy.svg</file>
         <file>assets/icon-down.svg</file>
         <file>assets/icon-send.svg</file>
@@ -281,12 +297,6 @@
         <file>assets/icon-notifications-swap-failed.svg</file>
         <file>assets/icon-notifications-receiving-failed.svg</file>
         <file>assets/icon-notifications-sending-failed.svg</file>
-        <file>controls/Panel.qml</file>
-        <file>controls/TokenInfoPanel.qml</file>
-        <file>controls/TokenInfoDialog.qml</file>
-        <file>controls/FoldablePanel.qml</file>
-        <file>controls/SwapTokenInfoDialog.qml</file>
-        <file>controls/BgLogo.qml</file>
         <file>assets/icon-canceled-max-online.svg</file>
         <file>assets/icon-failed-max-online.svg</file>
         <file>assets/icon-received-max-online.svg</file>
@@ -325,27 +335,19 @@
         <file>assets/asset-err.svg</file>
         <file>assets/icon-usd.svg</file>
         <file>assets/icon-swap-currencies-raw.svg</file>
-        <file>controls/SeedPhraseDialog.qml</file>
-        <file>controls/SwapEthSettings.qml</file>
-        <file>controls/ShowAddressesDialog.qml</file>
-        <file>controls/LoadingSpinner.qml</file>
         <file>assets/icon-utxo-empty.svg</file>
         <file>assets/icon-addressbook-empty.svg</file>
         <file>assets/icon-notification-empty.svg</file>
         <file>assets/icon-wallet-empty.svg</file>
-        <file>controls/CustomDialog.qml</file>
         <file>assets/icon-notifications-sent-offline.svg</file>
         <file>assets/icon-notifications-received-offline.svg</file>
         <file>assets/icon-notifications-failed-sent-offline.svg</file>
         <file>assets/icon-notifications-failed-sent-privacy.svg</file>
         <file>assets/icon-notifications-received-privacy.svg</file>
-        <file>assets/icon-notifications-sent-privacy.svg</file>
-        <file>controls/SimpleNotificationPopup.qml</file>
-        <file>controls/StartLayout.qml</file>
+        <file>assets/icon-notifications-sent-privacy.svg</file>        
         <file>assets/bg-pic.png</file>
         <file>assets/bg-pic@2x.png</file>
         <file>assets/bg-pic@3x.png</file>
-        <file>controls/VersionFooter.qml</file>
         <file>assets/icon-go-to-app.svg</file>
         <file>assets/icon-daocore.svg</file>
         <file>assets/icon-daocore-active.svg</file>

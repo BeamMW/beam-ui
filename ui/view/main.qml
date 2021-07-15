@@ -12,34 +12,61 @@ import "utils.js" as Utils
 Rectangle {
     id: main
 
-    property var openedNotifications: 0
-    property var notificationOffset: 0
-    property alias hasNewerVersion : updateInfoProvider.hasNewerVersion
+    property var    openedNotifications: 0
+    property var    notificationOffset: 0
+    property alias  hasNewerVersion : updateInfoProvider.hasNewerVersion
+    anchors.fill:   parent
 
     function increaseNotificationOffset(popup) {
         popup.verticalOffset = main.notificationOffset
-        main.notificationOffset += popup.height + 2
+        main.notificationOffset += popup.height + 10
         popup.nextVerticalOffset = main.notificationOffset
-        
     }
+
     function decreaseNotificationOffset(popup) {
         main.notificationOffset -= (popup.nextVerticalOffset - popup.verticalOffset)
-        if (main.notificationOffset < 0)
-            main.notificationOffset = 0
+        if (main.notificationOffset < 0) main.notificationOffset = 0
+    }
+
+    function showPopup(popup) {
+        increaseNotificationOffset(popup)
+        popup.closed.connect(function () {
+            if (main) {
+                main.decreaseNotificationOffset(popup)
+            }
+        })
+        popup.open();
     }
 
     function showSimplePopup(message) {
-        var popup = Qt.createComponent("controls/SimpleNotificationPopup.qml").createObject(main);
-            popup.message = message
-            increaseNotificationOffset(popup)
-            popup.closed.connect(function() {
-                decreaseNotificationOffset(popup)
-            })
-            
-            popup.open();
+        var popup = Qt.createComponent("controls/SimpleNotification.qml").createObject(main, {
+            message
+        })
+        showPopup(popup)
     }
 
-    anchors.fill: parent
+    function showAppTxPopup (comment, appname, txid) {
+        var popup = Qt.createComponent("controls/AppTxNotification.qml").createObject(main, {
+            comment, appname, txid
+        })
+        showPopup(popup)
+    }
+
+    function showUpdatePopup (newVersion, currentVersion, id) {
+         var popup = Qt.createComponent("controls/UpdateNotification.qml").createObject(main, {
+            title: ["New version v", newVersion, "is avalable"].join(" "),
+            message: ["Your current version is v", currentVersion, ".Please update to get the most of your Beam wallet."].join(" "),
+            acceptButtonText: "update now",
+            onCancel: function () {
+                updateInfoProvider.onCancelPopup(id);
+                popup.close();
+            },
+            onAccept: function () {
+                Utils.navigateToDownloads();
+            }
+         });
+         showPopup(popup)
+    }
 
 	MainViewModel {
         id: viewModel
@@ -50,24 +77,8 @@ Rectangle {
 
     PushNotificationManager {
         id: updateInfoProvider
-        onShowUpdateNotification: function(newVersion, currentVersion, id) {
-            var popup = Qt.createComponent("controls/NotificationPopup.qml").createObject(main);
-            popup.title = "New version v " + newVersion + " is avalable";
-            popup.message = "Your current version is v " + currentVersion + ". Please update to get the most of your Beam wallet.";
-            popup.acceptButtonText = "update now";
-            popup.onCancel = function () {
-                updateInfoProvider.onCancelPopup(id);
-                popup.close();
-            }
-            popup.onAccept = function () {
-                Utils.navigateToDownloads();
-            }
-            increaseNotificationOffset(popup)
-            popup.closed.connect(function() {
-                decreaseNotificationOffset(popup);
-            })
-            
-            popup.open();
+        onShowUpdateNotification: function (newVersion, currentVersion, id) {
+            showUpdatePopup (newVersion, currentVersion, id)
         }
     }
 

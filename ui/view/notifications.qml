@@ -470,9 +470,7 @@ ColumnLayout {
     }
 
     function navigateToDAppTransaction(id) {
-        var txID = viewModel.getItemTxID(id);
-        if (txID.length > 0) {
-            main.openDAppTransactionDetails(txID);
-        }
+        var txID = viewModel.getItemTxID(id)
+        if (txID) main.openDAppTransactionDetails(txID)
     }
 } // Item
