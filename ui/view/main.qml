@@ -386,6 +386,10 @@ Rectangle {
         updateItem("wallet", {"openedTxID": id})
     }
 
+    function openDAppTransactionDetails(id) {
+        updateItem("applications", {"openedTxID": id})
+    }
+
     function openSwapTransactionDetails(id) {
         updateItem("atomic_swap", {"openedTxID": id})
     }

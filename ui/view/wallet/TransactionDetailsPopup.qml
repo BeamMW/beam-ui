@@ -652,7 +652,7 @@ CustomDialog {
                 height: 1
                 color: Style.background_button
                 Layout.columnSpan: 2
-                visible: dialog.hasPaymentProof && stm.state == "payment_proof"
+                visible: stm.state == "payment_proof" && dialog.hasPaymentProof
             }
 
             SFText {
@@ -663,11 +663,11 @@ CustomDialog {
                 color: Style.content_secondary
                 //% "Code"
                 text: qsTrId("payment-info-proof-code-label") + ":"
-                visible: dialog.hasPaymentProof && stm.state == "payment_proof"
+                visible: stm.state == "payment_proof" && dialog.hasPaymentProof
             }
 
             RowLayout {
-                visible: dialog.hasPaymentProof && stm.state == "payment_proof"
+                visible: stm.state == "payment_proof" && dialog.hasPaymentProof
                 ScrollView {
                     Layout.alignment: Qt.AlignTop
                     Layout.fillWidth:             true

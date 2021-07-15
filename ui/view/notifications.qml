@@ -422,19 +422,19 @@ ColumnLayout {
         contractCompleted: {
             label:      labels.openDappLabel,
             actionIcon: icons.goToAppIcon,
-            action:     navigateToTransaction,
+            action:     navigateToDAppTransaction,
             icon:       "qrc:/assets/icon-contract-completed.svg"
         },
         contractExpired: {
             label:      labels.openDappLabel,
             actionIcon: icons.goToAppIcon,
-            action:     navigateToTransaction,
+            action:     navigateToDAppTransaction,
             icon:       "qrc:/assets/icon-contract-expired.svg"
         },
         contractFailed: {
             label:      labels.openDappLabel,
             actionIcon: icons.goToAppIcon,
-            action:     navigateToTransaction,
+            action:     navigateToDAppTransaction,
             icon:       "qrc:/assets/icon-contract-failed.svg"
         }
     })
@@ -467,5 +467,12 @@ ColumnLayout {
 
     function getActionButtonIcon(notificationType) {
         return control.notifications[notificationType].actionIcon || ''
+    }
+
+    function navigateToDAppTransaction(id) {
+        var txID = viewModel.getItemTxID(id);
+        if (txID.length > 0) {
+            main.openDAppTransactionDetails(txID);
+        }
     }
 } // Item

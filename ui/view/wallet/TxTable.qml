@@ -286,7 +286,7 @@ Control {
                 txDetails.feeRateUnit = tableViewModel.rateUnit;
 
                 txDetails.searchFilter = searchBox.text;
-                var addressFrom = model.getRoleValue(row, "token");
+                var token = model.getRoleValue(row, "token");
                 txDetails.token = token ? token : "";
                 var isShieldedTx = model.getRoleValue(row, "isShieldedTx");
                 txDetails.isShieldedTx = isShieldedTx;
@@ -323,9 +323,15 @@ Control {
                     }
                 })
                 transactionsTable.model.modelReset.connect(function() {
-                    if (root && root.openedTxID != "") {
+                    var activeTxId = "";
+                    if (root && root != undefined && root.openedTxID != undefined && root.openedTxID != "") {
+                        // wallet && applications view
+                        activeTxId = root.openedTxID;
+                    }
+
+                    if (activeTxId != "") {
                         var index = tableViewModel.transactions.index(0, 0);
-                        var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, root.openedTxID);
+                        var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, activeTxId);
                         if (indexList.length > 0) {
                             index = dappFilterProxy.mapFromSource(indexList[0]);
                             index = assetFilterProxy.mapFromSource(index);
