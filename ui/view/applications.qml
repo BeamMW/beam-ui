@@ -143,6 +143,7 @@ ColumnLayout {
     }
 
     function launchApp(app) {
+        app["appid"] = webapiCreator.generateAppID(app.name, app.url)
         root.activeApp = app
 
         try
@@ -158,7 +159,6 @@ ColumnLayout {
                 webView.profile.cachePath = viewModel.getAppCachePath(appid)
                 webView.profile.persistentStoragePath = viewModel.getAppStoragePath(appid)
                 webView.url = app.url
-                appctTable.dappFilter = appid
             })
 
             webapiCreator.createApi(verWant, verMin, app.name, app.url)
@@ -411,25 +411,26 @@ ColumnLayout {
     }
 
     FoldablePanel {
-        title:             qsTrId("wallet-transactions-title")
-        folded:            root.openedTxID.length == 0
-        titleOpacity:      0.5
-        Layout.fillWidth:  true
+        title:               qsTrId("wallet-transactions-title")
+        folded:              root.openedTxID.length == 0
+        titleOpacity:        0.5
+        Layout.fillWidth:    true
         Layout.bottomMargin: 10
-        contentItemHeight: root.height * 0.4 - 70
-        bottomPadding:     folded ? 20 : 5
-        foldsUp:           false
-        visible:           appsView.visible || webLayout.visible
+        contentItemHeight:   root.height * 0.3
+        bottomPadding:       folded ? 20 : 5
+        foldsUp:             false
+        visible:             appsView.visible || webLayout.visible
+        bkColor:             Style.background_appstx
 
         content: TxTable {
-            id: allctTable
+            id: txTable
             emptyMessageMargin: 60
             headerShaderVisible: false
-            dappFilter: "all"
+            dappFilter: (root.activeApp || {}).appid || "all"
         }
 
         //% "(%1 active)"
-        titleTip: allctTable.activeTxCnt ? qsTrId("apps-inprogress-tip").arg(allctTable.activeTxCnt) : ""
+        titleTip: txTable.activeTxCnt ? qsTrId("apps-inprogress-tip").arg(txTable.activeTxCnt) : ""
     }
 
     function appendDevApp (arr) {
