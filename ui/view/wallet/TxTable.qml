@@ -457,6 +457,9 @@ Control {
                     receiverIdentity:       model && model.receiverIdentity ? model.receiverIdentity : ""
                     txID:                   model && model.txID ? model.txID : ""
                     kernelID:               model && model.kernelID ? model.kernelID : ""
+                    comment:                model && model.comment ? model.comment : ""
+                    isContractTx:           model && model.isContractTx
+                    isShieldedTx:           model && model.isShieldedTx
 
                     searchFilter:    searchBoxText
                     hideFiltered:    rowItemDelegate.hideFiltered
