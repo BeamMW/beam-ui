@@ -21,15 +21,6 @@
 using namespace beam;
 
 namespace {
-    beam::wallet::TxParameters getTxParameters(const beam::wallet::Notification &notification)
-    {
-        beam::wallet::TxToken token;
-        Deserializer d;
-        d.reset(notification.m_content);
-        d & token;
-        return token.UnpackParameters();
-    }
-
     QString getAmount(const beam::wallet::TxParameters &p)
     {
         return beamui::AmountToUIString(*p.GetParameter<Amount>(beam::wallet::TxParameterID::Amount));
