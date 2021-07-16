@@ -352,7 +352,6 @@ Control {
             Layout.fillHeight:    true
             Layout.bottomMargin:  9
             visible:              transactionsTable.model.count > 0
-            enableOwnMouseArea:   false
 
             property real rowHeight: 56
             property real resizableWidth: transactionsTable.width - 140
@@ -431,10 +430,6 @@ Control {
 
                     if (rowNumber != 0 && !collapsed)
                         collapse(false);
-                }
-
-                onHoveredChanged: function() {
-                    transactionsTable.containsMouse = hovered;
                 }
 
                 onRowNumberChanged: function() {

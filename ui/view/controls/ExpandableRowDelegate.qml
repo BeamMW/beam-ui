@@ -12,7 +12,7 @@ Rectangle {
     property var onLeftClick: function() { return true; }
     property var tableView
     default property Component delegate
-    property alias hovered: rowMouseArea.containsMouse
+    property bool hovered: false
 
     height:         rowHeight
     anchors.left:   parent.left
@@ -101,6 +101,14 @@ Rectangle {
                     parent.collapsed ? expand(true) : collapse(true);
                 }
             }
+        }
+
+        onEntered: {
+            rowItem.hovered = true;
+        }
+
+        onExited: {
+            rowItem.hovered = false;
         }
     }
 
