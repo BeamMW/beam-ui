@@ -308,8 +308,16 @@ Control {
 
                 var index = tableViewModel.transactions.index(0, 0);
                 var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, id);
-                initTxDetailsFromRow(transactionsTable.model, index.row);
-                txDetails.open();
+                if (indexList.length > 0) {
+                    index = dappFilterProxy.mapFromSource(indexList[0]);
+                    index = assetFilterProxy.mapFromSource(index);
+                    index = searchProxyModel.mapFromSource(index);
+                    index = txProxyModel.mapFromSource(index);
+                    transactionsTable.positionViewAtRow(index.row, ListView.Beginning);
+
+                    initTxDetailsFromRow(transactionsTable.model, index.row);
+                    txDetails.open();
+                }
             }
 
             Component.onCompleted: function () {
@@ -329,21 +337,7 @@ Control {
                         // wallet && applications view
                         activeTxId = owner.openedTxID;
                     }
-
-                    if (activeTxId != "") {
-                        var index = tableViewModel.transactions.index(0, 0);
-                        var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, activeTxId);
-                        if (indexList.length > 0) {
-                            index = dappFilterProxy.mapFromSource(indexList[0]);
-                            index = assetFilterProxy.mapFromSource(index);
-                            index = searchProxyModel.mapFromSource(index);
-                            index = txProxyModel.mapFromSource(index);
-                            transactionsTable.positionViewAtRow(index.row, ListView.Beginning);
-
-                            initTxDetailsFromRow(transactionsTable.model, index.row);
-                            txDetails.open();
-                        }
-                    }
+                    showDetails(activeTxId);
                 });
             }
 
