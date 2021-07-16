@@ -14,18 +14,45 @@ Control {
 
     TxTableViewModel {
         id: tableViewModel
+
+        onTransactionsChanged: function () {
+            txNotify.forEach(function (txid) {
+                control.showAppTxNotifcation(txid)
+            })
+        }
     }
 
-    property int    selectedAsset: -1
-    property int    emptyMessageMargin: 90
-    property int    activeTxCnt: 0
-    property alias  headerShaderVisible: transactionsTable.headerShaderVisible
-    property var    dappFilter: undefined
-    readonly property bool sourceVisible: dappFilter ? dappFilter == "all" : true
-    property var    owner
+    property int       selectedAsset: -1
+    property int       emptyMessageMargin: 90
+    property int       activeTxCnt: 0
+    property alias     headerShaderVisible: transactionsTable.headerShaderVisible
+    property var       dappFilter: undefined
+    readonly property  bool sourceVisible: dappFilter ? dappFilter == "all" : true
+    property var       owner
+    property var       txNotify: new Set()
+
+    function showAppTxNotifcation (txid) {
+        var list  = tableViewModel.transactions
+        var index = list.index(0, 0)
+        var ilist = list.match(index, TxObjectList.Roles.TxID, txid)
+        if (ilist.length)
+        {
+            txNotify.delete(txid)
+            main.showAppTxPopup(
+                list.data(ilist[0], TxObjectList.Roles.Comment),
+                list.data(ilist[0], TxObjectList.Roles.DAppName),
+                txid
+            )
+        }
+        else
+        {
+            // model not yet updated, transaction is still invisble for the list
+            // safe for the future
+            txNotify.add(txid)
+        }
+    }
 
     state: "all"
-
     states: [
         State {
             name: "all"

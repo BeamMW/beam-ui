@@ -159,6 +159,18 @@ ColumnLayout {
                 webView.profile.cachePath = viewModel.getAppCachePath(appid)
                 webView.profile.persistentStoragePath = viewModel.getAppStoragePath(appid)
                 webView.url = app.url
+
+                api.callWalletApiResult.connect(function (sjson) {
+                    try
+                    {
+                        var json = JSON.parse(sjson)
+                        var txid = ((json || {}).result || {}).txid
+                        if (txid) txTable.showAppTxNotifcation(txid)
+                    }
+                    catch (e) {
+                        BeamGlobals.logInfo(["callWalletApiResult json parse fail:", e].join(": "))
+                    }
+                })
             })
 
             webapiCreator.createApi(verWant, verMin, app.name, app.url)

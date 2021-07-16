@@ -15,6 +15,7 @@ Popup {
     parent:       Overlay.overlay
     x:            parent.width - width - 20
     y:            parent.height - height - 20 - verticalOffset
+    z:            100
     padding:      20
     closePolicy:  Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
 
