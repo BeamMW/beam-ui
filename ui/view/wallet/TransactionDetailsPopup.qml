@@ -318,9 +318,9 @@ CustomDialog {
                             Layout.fillWidth: true
 
                             visible:      true
-                            amount:       dialog.assetAmounts.length ? dialog.assetAmounts[index] : ""
-                            unitName:     dialog.assetNames[index]
-                            iconSource:   dialog.assetCount >= 1 ? dialog.assetIcons[index] : ""
+                            amount:       dialog.assetAmounts ? (dialog.assetAmounts[index] || "") : ""
+                            unitName:     dialog.assetNames[index] || ""
+                            iconSource:   dialog.assetIcons[index] || ""
                             iconSize:     Qt.size(20, 20)
                             color:        dialog.assetIncome[index] ? Style.accent_incoming : Style.accent_outgoing
                             prefix:       this.amount == "0" ? "" : (dialog.assetIncome[index] ? "+ " : "- ")
@@ -348,7 +348,7 @@ CustomDialog {
                             copyMenuEnabled: true
                             font.pixelSize: 14
                             color: Style.content_main
-                            text: dialog.assetIDs.length ? dialog.assetIDs[index] : ""
+                            text: dialog.assetIDs[index] || ""
                             onCopyText: textCopied(dialog.assetIDs[index])
                             visible: dialog.assetIDs[index] != "0"
                         }
