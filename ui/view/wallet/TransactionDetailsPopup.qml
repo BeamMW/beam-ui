@@ -310,7 +310,7 @@ CustomDialog {
 
                     RowLayout {
                         Layout.fillWidth: true
-                        Layout.maximumWidth : receiverIdentityField.parent.width
+                        Layout.maximumWidth : dialog.width - 60
                         Layout.maximumHeight: !amountField.rate.length || amountField.rate == "0" ? 20 : 34
 
                         BeamAmount {
@@ -341,9 +341,10 @@ CustomDialog {
                             color: Style.content_secondary
                             //% "Confidential asset ID"
                             text: qsTrId("general-ca-id") + ":"
-                            visible: dialog.assetIDs[index] != "0"
+                            visible: assetIdField.visible
                         }
                         SFLabel {
+                            id: assetIdField
                             copyMenuEnabled: true
                             font.pixelSize: 14
                             color: Style.content_main
@@ -471,6 +472,7 @@ CustomDialog {
                 visible:          dialog.isContractTx && stm.state == "tx_info"
                 SFLabel {
                     id:               cidText
+                    Layout.fillWidth: true
                     font.pixelSize:   14
                     color:            Style.content_main
                     text:             dialog.cidsStr
