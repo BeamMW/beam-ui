@@ -7,14 +7,17 @@ import "../controls"
 import "."
 
 RowLayout {
-    id: "root"
+    id: "control"
     property var sendAddress
     property var receiveAddress
     property var senderIdentity
     property var receiverIdentity
     property var txID
     property var kernelID
-    property var searchRegExp2:  new RegExp("("+root.searchFilter+")", "i")
+    property var comment
+    property var isContractTx
+    property var isShieldedTx
+    property var searchRegExp2:  new RegExp("("+control.searchFilter+")", "i")
     property string token
 
     property string  searchFilter: ""
@@ -25,16 +28,16 @@ RowLayout {
     spacing: 0
 
     function isFieldVisible() {
-        return root.searchFilter.length == 0 || hideFiltered == false;
+        return control.searchFilter.length == 0 || hideFiltered == false;
     }
 
     function isTextFieldVisible(text) {
         return isFieldVisible()
-        || (root.searchFilter.length > 0 && text.search(root.searchRegExp2) >= 0);
+        || (control.searchFilter.length > 0 && text.search(control.searchRegExp2) >= 0);
     }
 
     function getHighlitedText(text) {
-        return Utils.getHighlitedText(text, root.searchFilter, Style.active.toString());
+        return Utils.getHighlitedText(text, control.searchFilter, Style.active.toString());
     }
 
     property bool hasToken: token.length > 0 
@@ -65,9 +68,9 @@ RowLayout {
             font.pixelSize: 14
             color: Style.content_main
             elide: Text.ElideMiddle
-            text: getHighlitedText(root.sendAddress)
-            onCopyText: textCopied(root.sendAddress)
-            visible: isTextFieldVisible(root.sendAddress) && root.sendAddress.length
+            text: getHighlitedText(control.sendAddress)
+            onCopyText: textCopied(control.sendAddress)
+            visible: isTextFieldVisible(control.sendAddress) && control.sendAddress.length
         }
 
         SFText {
@@ -85,9 +88,9 @@ RowLayout {
             font.pixelSize: 14
             color: Style.content_main
             elide: Text.ElideMiddle
-            text: getHighlitedText(root.senderIdentity)
-            onCopyText: textCopied(root.senderIdentity)
-            visible: root.senderIdentity.length > 0 && (root.receiverIdentity.length > 0 || root.isShieldedTx ) && isTextFieldVisible(root.senderIdentity)
+            text: getHighlitedText(control.senderIdentity)
+            onCopyText: textCopied(control.senderIdentity)
+            visible: control.senderIdentity.length > 0 && (control.receiverIdentity.length > 0 || control.isShieldedTx ) && isTextFieldVisible(control.senderIdentity)
         }
 
         SFText {
@@ -99,7 +102,7 @@ RowLayout {
             visible: receiveAddressField.visible
         }
         SFLabel {
-            property var receiveAddressOrToken : hasToken ? root.token : root.receiveAddress
+            property var receiveAddressOrToken : hasToken ? control.token : control.receiveAddress
             id: receiveAddressField
             Layout.fillWidth: true
             copyMenuEnabled: true
@@ -126,9 +129,9 @@ RowLayout {
             font.pixelSize: 14
             color: Style.content_main
             elide: Text.ElideMiddle
-            text: getHighlitedText(root.receiverIdentity)
-            onCopyText: textCopied(root.receiverIdentity)
-            visible: root.senderIdentity.length > 0 && root.receiverIdentity.length > 0 && isTextFieldVisible(root.receiverIdentity)
+            text: getHighlitedText(control.receiverIdentity)
+            onCopyText: textCopied(control.receiverIdentity)
+            visible: control.senderIdentity.length > 0 && control.receiverIdentity.length > 0 && isTextFieldVisible(control.receiverIdentity)
         }
 
         SFText {
@@ -145,10 +148,10 @@ RowLayout {
             copyMenuEnabled: true
             font.pixelSize: 14
             color: Style.content_main
-            text: getHighlitedText(root.txID)
+            text: getHighlitedText(control.txID)
             elide: Text.ElideMiddle
-            onCopyText: textCopied(root.txID)
-            visible: isTextFieldVisible(root.txID) && !Utils.isZeroed(root.txID)
+            onCopyText: textCopied(control.txID)
+            visible: isTextFieldVisible(control.txID) && !Utils.isZeroed(control.txID)
         }
         SFText {
             Layout.alignment: Qt.AlignTop
@@ -165,10 +168,36 @@ RowLayout {
             font.pixelSize: 14
             color: Style.content_main
             //wrapMode: Text.Wrap
-            text: getHighlitedText(root.kernelID)
+            text: getHighlitedText(control.kernelID)
             elide: Text.ElideMiddle
-            onCopyText: textCopied(root.kernelID)
-            visible: isTextFieldVisible(root.kernelID) && !Utils.isZeroed(root.kernelID)
+            onCopyText: textCopied(control.kernelID)
+            visible: isTextFieldVisible(control.kernelID) && !Utils.isZeroed(control.kernelID)
+        }
+        SFText {
+            Layout.alignment: Qt.AlignTop
+            font.pixelSize: 14
+            color: Style.content_secondary
+
+            text: control.isContractTx ?
+                //% "Description"
+                qsTrId("general-description") + ":" :
+                //% "Comment"
+                qsTrId("general-comment") + ":"
+
+            visible: commentTx.visible
+        }
+
+        SFLabel {
+            Layout.fillWidth: true
+            id: commentTx
+            copyMenuEnabled: true
+            font.pixelSize: 14
+            color: Style.content_main
+            wrapMode: Text.WrapAnywhere 
+            text: getHighlitedText(control.comment)
+            elide: Text.ElideRight
+            onCopyText: textCopied(control.comment)
+            visible: isTextFieldVisible(control.comment)
         }
     }
 }

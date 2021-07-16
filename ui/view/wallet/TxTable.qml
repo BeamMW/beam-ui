@@ -335,8 +335,16 @@ Control {
 
                 var index = tableViewModel.transactions.index(0, 0);
                 var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, id);
-                initTxDetailsFromRow(transactionsTable.model, index.row);
-                txDetails.open();
+                if (indexList.length > 0) {
+                    index = dappFilterProxy.mapFromSource(indexList[0]);
+                    index = assetFilterProxy.mapFromSource(index);
+                    index = searchProxyModel.mapFromSource(index);
+                    index = txProxyModel.mapFromSource(index);
+                    transactionsTable.positionViewAtRow(index.row, ListView.Beginning);
+
+                    initTxDetailsFromRow(transactionsTable.model, index.row);
+                    txDetails.open();
+                }
             }
 
             Component.onCompleted: function () {
@@ -356,21 +364,7 @@ Control {
                         // wallet && applications view
                         activeTxId = owner.openedTxID;
                     }
-
-                    if (activeTxId != "") {
-                        var index = tableViewModel.transactions.index(0, 0);
-                        var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, activeTxId);
-                        if (indexList.length > 0) {
-                            index = dappFilterProxy.mapFromSource(indexList[0]);
-                            index = assetFilterProxy.mapFromSource(index);
-                            index = searchProxyModel.mapFromSource(index);
-                            index = txProxyModel.mapFromSource(index);
-                            transactionsTable.positionViewAtRow(index.row, ListView.Beginning);
-
-                            initTxDetailsFromRow(transactionsTable.model, index.row);
-                            txDetails.open();
-                        }
-                    }
+                    showDetails(activeTxId);
                 });
             }
 
@@ -379,7 +373,6 @@ Control {
             Layout.fillHeight:    true
             Layout.bottomMargin:  9
             visible:              transactionsTable.model.count > 0
-            enableOwnMouseArea:   false
 
             property real rowHeight: 56
             property real resizableWidth: transactionsTable.width - 140
@@ -460,10 +453,6 @@ Control {
                         collapse(false);
                 }
 
-                onHoveredChanged: function() {
-                    transactionsTable.containsMouse = hovered;
-                }
-
                 onRowNumberChanged: function() {
                     if(searchBoxText.length && rowNumber == 0 && collapsed)
                         expand(false);
@@ -484,6 +473,9 @@ Control {
                     receiverIdentity:       model && model.receiverIdentity ? model.receiverIdentity : ""
                     txID:                   model && model.txID ? model.txID : ""
                     kernelID:               model && model.kernelID ? model.kernelID : ""
+                    comment:                model && model.comment ? model.comment : ""
+                    isContractTx:           model && model.isContractTx
+                    isShieldedTx:           model && model.isShieldedTx
 
                     searchFilter:    searchBoxText
                     hideFiltered:    rowItemDelegate.hideFiltered
