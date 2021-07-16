@@ -173,7 +173,8 @@ Item {
             }
 
             TxTable {
-                id: txTable
+                id:    txTable
+                owner: root
 
                 Layout.topMargin:  12
                 Layout.fillWidth:  true

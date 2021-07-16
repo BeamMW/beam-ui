@@ -22,6 +22,7 @@ Control {
     property alias  headerShaderVisible: transactionsTable.headerShaderVisible
     property var    dappFilter: undefined
     readonly property bool sourceVisible: dappFilter ? dappFilter == "all" : true
+    property var    owner
 
     state: "all"
 
@@ -324,9 +325,9 @@ Control {
                 })
                 transactionsTable.model.modelReset.connect(function() {
                     var activeTxId = "";
-                    if (root && root != undefined && root.openedTxID != undefined && root.openedTxID != "") {
+                    if (owner && owner != undefined && owner.openedTxID != undefined && owner.openedTxID != "") {
                         // wallet && applications view
-                        activeTxId = root.openedTxID;
+                        activeTxId = owner.openedTxID;
                     }
 
                     if (activeTxId != "") {

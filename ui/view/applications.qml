@@ -9,7 +9,7 @@ import "wallet"
 import "./utils.js" as Utils
 
 ColumnLayout {
-    id: root
+    id: control
     Layout.fillWidth: true
 
     property var     appsList: undefined
@@ -49,7 +49,7 @@ ColumnLayout {
         Layout.bottomMargin: 20
         visible: !appsView.visible
 
-        text: ((root.activeApp || {}).name || "")
+        text: ((control.activeApp || {}).name || "")
 
         onBack: function () {
             main.openApplications()
@@ -69,7 +69,7 @@ ColumnLayout {
 
         onApproveContractInfo: function(request, info, amounts) {
             const dialog = Qt.createComponent("send_confirm.qml")
-            const instance = dialog.createObject(root,
+            const instance = dialog.createObject(control,
                 {
                     //% "Contract transaction"
                     typeText:       qsTrId("general-contract-transaction"),
@@ -99,7 +99,7 @@ ColumnLayout {
 
         onApproveSend: function(request, info) {
             var dialog   = Qt.createComponent("send_confirm.qml")
-            var instance = dialog.createObject(root,
+            var instance = dialog.createObject(control,
                 {
                     addressText:    info["token"],
                     typeText:       info["tokenType"],
@@ -144,7 +144,7 @@ ColumnLayout {
 
     function launchApp(app) {
         app["appid"] = webapiCreator.generateAppID(app.name, app.url)
-        root.activeApp = app
+        control.activeApp = app
 
         try
         {
@@ -152,7 +152,7 @@ ColumnLayout {
             var verMin  = app.min_api_version || ""
 
             webapiCreator.onApiCreated.connect(function(api, appid) {
-                root.errorMessage = ""
+                control.errorMessage = ""
                 webapiBEAM.api = api
                 webLayout.visible = false
 
@@ -166,7 +166,7 @@ ColumnLayout {
         }
         catch (err)
         {
-            root.errorMessage = err.toString()
+            control.errorMessage = err.toString()
             return
         }
     }
@@ -179,7 +179,7 @@ ColumnLayout {
         SFText {
             anchors.horizontalCenter: parent.horizontalCenter
             y:       parent.height / 2 - this.height / 2 - 40
-            color:   root.errorMessage.length ? Style.validator_error : Style.content_main
+            color:   control.errorMessage.length ? Style.validator_error : Style.content_main
             opacity: 0.5
 
             font {
@@ -189,18 +189,18 @@ ColumnLayout {
             }
 
             text: {
-                if (root.errorMessage.length) {
-                    return root.errorMessage
+                if (control.errorMessage.length) {
+                    return control.errorMessage
                 }
 
-                if (root.activeApp || root.appToOpen) {
+                if (control.activeApp || control.appToOpen) {
                     //% "Loading '%1'..."
                     return qsTrId("apps-loading-app").arg(
-                        (root.activeApp || root.appToOpen).name
+                        (control.activeApp || control.appToOpen).name
                     )
                 }
 
-                if (root.listLoading) {
+                if (control.listLoading) {
                     //% "Loading..."
                     return qsTrId("apps-loading")
                 }
@@ -245,16 +245,16 @@ ColumnLayout {
 
             onLoadingChanged: {
                 // do not change this to declarative style, it flickers somewhy, probably because of delays
-                if (root.activeApp && !this.loading) {
+                if (control.activeApp && !this.loading) {
                     viewModel.onCompleted(webView)
 
                     if(loadRequest.status === WebEngineLoadRequest.LoadFailedStatus) {
                         // code in this 'if' will cause next 'if' to be called
-                        root.errorMessage = loadRequest.errorString
+                        control.errorMessage = loadRequest.errorString
                         return
                     }
 
-                    if (root.errorMessage.length) {
+                    if (control.errorMessage.length) {
                         webLayout.visible = false
                         return
                     }
@@ -279,7 +279,7 @@ ColumnLayout {
         Layout.fillHeight: true
         Layout.fillWidth:  true
         Layout.bottomMargin: 10
-        visible: root.hasApps && !root.activeApp
+        visible: control.hasApps && !control.activeApp
         spacing: 20
 
         // Actuall apps list
@@ -297,7 +297,7 @@ ColumnLayout {
                 spacing: 15
 
                 Repeater {
-                    model: root.appsList
+                    model: control.appsList
                     delegate: Item {
                         Layout.fillWidth: true
                         Layout.preferredHeight: 100
@@ -412,21 +412,22 @@ ColumnLayout {
 
     FoldablePanel {
         title:               qsTrId("wallet-transactions-title")
-        folded:              !root.openedTxID
+        folded:              !control.openedTxID
         titleOpacity:        0.5
         Layout.fillWidth:    true
         Layout.bottomMargin: 10
-        contentItemHeight:   root.height * 0.32
+        contentItemHeight:   control.height * 0.32
         bottomPadding:       folded ? 20 : 5
         foldsUp:             false
         visible:             appsView.visible || webLayout.visible
         bkColor:             Style.background_appstx
 
         content: TxTable {
-            id: txTable
+            id:    txTable
+            owner: control
             emptyMessageMargin: 60
             headerShaderVisible: false
-            dappFilter: (root.activeApp || {}).appid || "all"
+            dappFilter: (control.activeApp || {}).appid || "all"
         }
 
         //% "(%1 active)"
@@ -461,9 +462,9 @@ ColumnLayout {
                     if (xhr.status === 200)
                     {
                         var list = JSON.parse(xhr.responseText)
-                        root.appsList = appendDevApp(list)
-                        if (root.appToOpen) {
-                            for (let app of root.appsList)
+                        control.appsList = appendDevApp(list)
+                        if (control.appToOpen) {
+                            for (let app of control.appsList)
                             {
                                 if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
                                     if (appSupported(app)) {
@@ -474,14 +475,14 @@ ColumnLayout {
                                     }
                                 }
                             }
-                            root.appToOpen = undefined
+                            control.appToOpen = undefined
                         }
                     }
                     else
                     {
-                        root.appsList = []
+                        control.appsList = []
                         var errMsg = errTemplate.arg(["code", xhr.status].join(" "))
-                        root.errorMessage = errMsg
+                        control.errorMessage = errMsg
                     }
                 }
             }
@@ -489,7 +490,7 @@ ColumnLayout {
             xhr.send('')
         }
 
-        root.appsList = appendDevApp(undefined)
+        control.appsList = appendDevApp(undefined)
     }
 
     SettingsViewModel {
