@@ -2134,8 +2134,9 @@ offline</translation>
         <translation type="unfinished">Laatste ontgrendelde tijd</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
-        <source>Anonymity set for Max privacy transactions</source>
-        <translation>Anonimiteit ingesteld voor Max privacytransacties</translation>
+        <source>Maximum anonymity set size</source>
+        <oldsource>Anonymity set for Max privacy transactions</oldsource>
+        <translation type="unfinished">Anonimiteit ingesteld voor Max privacytransacties</translation>
     </message>
     <message id="settings-privacy-mp-notice">
         <source>Received coins can be spent immediately.</source>

@@ -2136,8 +2136,9 @@ offline</source>
         <translation type="unfinished">Последнее время разблокировки</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
-        <source>Anonymity set for Max privacy transactions</source>
-        <translation>Размер анонимного множества для макс. приватных транзакций</translation>
+        <source>Maximum anonymity set size</source>
+        <oldsource>Anonymity set for Max privacy transactions</oldsource>
+        <translation type="unfinished">Размер анонимного множества для макс. приватных транзакций</translation>
     </message>
     <message id="settings-privacy-mp-notice">
         <source>Received coins can be spent immediately.</source>

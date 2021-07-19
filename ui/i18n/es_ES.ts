@@ -2167,7 +2167,8 @@ fuera de línea</translation>
         <translation type="unfinished">Última hora de desbloqueo</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
-        <source>Anonymity set for Max privacy transactions</source>
+        <source>Maximum anonymity set size</source>
+        <oldsource>Anonymity set for Max privacy transactions</oldsource>
         <translation type="unfinished">Anonymity set for Max privacy transactions</translation>
     </message>
     <message id="settings-privacy-mp-notice">

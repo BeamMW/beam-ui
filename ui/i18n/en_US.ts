@@ -2125,8 +2125,8 @@ offline</translation>
         <translation>Unlock Time</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
-        <source>Anonymity set for Max privacy transactions</source>
-        <translation>Anonymity set for Max privacy transactions</translation>
+        <source>Maximum anonymity set size</source>
+        <translation>Maximum anonymity set size</translation>
     </message>
     <message id="settings-privacy-mp-notice">
         <source>Received coins can be spent immediately.</source>

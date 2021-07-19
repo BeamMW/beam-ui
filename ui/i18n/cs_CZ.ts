@@ -2134,8 +2134,9 @@ offline</translation>
         <translation type="unfinished">Zbývají čas do uzamčení</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
-        <source>Anonymity set for Max privacy transactions</source>
-        <translation>Anonymita nastavena pro transakce týkající se maximálního soukromí</translation>
+        <source>Maximum anonymity set size</source>
+        <oldsource>Anonymity set for Max privacy transactions</oldsource>
+        <translation type="unfinished">Anonymita nastavena pro transakce týkající se maximálního soukromí</translation>
     </message>
     <message id="settings-privacy-mp-notice">
         <source>Received coins can be spent immediately.</source>
