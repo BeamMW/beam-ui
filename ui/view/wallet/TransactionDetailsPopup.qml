@@ -326,9 +326,9 @@ CustomDialog {
                             rate:         dialog.assetRates ? (dialog.assetRates[index] || "") : ""
                             rateUnit:     dialog.rateUnit// this.rate != "0" ? dialog.rateUnit : ""
                             ratePostfix:  this.rate != "0"
-                                // % "calculated with the exchange rate by the day of transaction"
+                                //% "calculated with the exchange rate by the day of transaction"
                                 ? "(" + qsTrId("tx-details-rate-notice") + ")"
-                                // % "exchange rate was not available by the time of transaction"
+                                //% "exchange rate was not available by the time of transaction"
                                 : "(" + qsTrId("tx-details-exchange-rate-not-available") + ")"
                             showTip:      false
                             maxUnitChars: 25
