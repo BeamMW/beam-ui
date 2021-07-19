@@ -132,88 +132,6 @@ ColumnLayout {
                     Layout.preferredWidth:  400
                     spacing:                10
 
-                    Panel {
-                        //% "Transaction type"
-                        title: qsTrId("general-tx-type")
-                        Layout.fillWidth: true
-
-                        content: ColumnLayout {
-                            spacing: 20
-                            id: addressType
-                            property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
-
-                            Pane {
-                                padding: 2
-
-                                background: Rectangle {
-                                    color:  Qt.rgba(1, 1, 1, 0.1)
-                                    radius: 16
-                                }
-
-                                ButtonGroup {
-                                    id: txTypeGroup
-                                }
-
-                                RowLayout {
-                                    spacing: 0
-
-                                    CustomButton {
-                                        Layout.preferredHeight: 30
-                                        Layout.preferredWidth: maxPrivacyCheck.width
-                                        id: regularCheck
-
-                                        //% "Regular"
-                                        text:               qsTrId("tx-regular")
-                                        ButtonGroup.group:  txTypeGroup
-                                        checkable:          true
-                                        hasShadow:          false
-                                        checked:            !viewModel.isMaxPrivacy
-                                        radius:             16
-                                        border.width:       1
-                                        border.color:       checked ? Style.active : "transparent"
-                                        palette.button:     checked ? Qt.rgba(0, 252/255, 207/255, 0.1) : "transparent"
-                                        palette.buttonText: checked ? Style.active : Style.content_secondary
-                                    }
-
-                                    CustomButton {
-                                        Layout.preferredHeight: 30
-                                        Layout.minimumWidth: 137
-                                        id: maxPrivacyCheck
-                                        //% "Max Privacy"
-                                        text:               qsTrId("tx-max-privacy")
-                                        ButtonGroup.group:  txTypeGroup
-                                        checkable:          true
-                                        checked:            viewModel.isMaxPrivacy
-                                        enabled:            addressType.isShieldedSupported
-                                        hasShadow:          false
-                                        radius:             16
-                                        border.width:       1
-                                        border.color:       checked ? Style.active : "transparent"
-                                        palette.button:     checked ? Qt.rgba(0, 252/255, 207/255, 0.1) : "transparent"
-                                        palette.buttonText: checked ? Style.active : Style.content_secondary
-                                    }
-
-                                    Binding {
-                                        target:   viewModel
-                                        property: "isMaxPrivacy"
-                                        value:    maxPrivacyCheck.checked
-                                    }
-                                }
-                            }
-
-                            SFText {
-                                Layout.fillWidth: true
-                                visible:          !parent.isShieldedSupported
-                                color:            Style.content_secondary
-                                font.italic:      true
-                                font.pixelSize:   14
-                                wrapMode:         Text.WordWrap
-                                //% "Connect to integrated or own node to enable receiving max privacy and offline transactions"
-                                text: qsTrId("wallet-receive-max-privacy-unsupported")
-                            }
-                        }
-                    }
-
                     //
                     // Requested amount
                     //
@@ -289,6 +207,43 @@ ColumnLayout {
                                     visible:        !viewModel.commentValid
                                     font.italic:    true
                                 }
+                            }
+                        }
+                    }
+
+                    FoldablePanel {
+                        //% "Advanced"
+                        title: qsTrId("general-advanced")
+                        Layout.fillWidth: true
+                        folded: true
+
+                        content: ColumnLayout {
+                            spacing: 20
+                            id: addressType
+                            property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
+
+                            CustomSwitch {
+                                id: txType
+                                //% "Maximum anonymity set"
+                                text: qsTrId("receive-max-set")
+                                checked: viewModel.isMaxPrivacy
+
+                                Binding {
+                                    target: viewModel
+                                    property: "isMaxPrivacy"
+                                    value: txType.checked
+                                }
+                            }
+
+                            SFText {
+                                Layout.fillWidth: true
+                                visible:          !parent.isShieldedSupported
+                                color:            Style.content_secondary
+                                font.italic:      true
+                                font.pixelSize:   14
+                                wrapMode:         Text.WordWrap
+                                //% "Connect to integrated or own node to enable receiving max privacy and offline transactions"
+                                text: qsTrId("wallet-receive-max-privacy-unsupported")
                             }
                         }
                     }
@@ -409,12 +364,10 @@ ColumnLayout {
                 horizontalAlignment:   Text.AlignHCenter
                 visible:               viewModel.isMaxPrivacy
                 text: (mpLockTimeLimit != "0" ?
-                    //% "Max Privacy transaction can last at most %1 hours."
+                    //% " Transaction can last at most %1 hours."
                     qsTrId("wallet-receive-addr-message-mp").arg(mpLockTimeLimit) :
-                    //% "Max Privacy transaction can last indefinitely."
-                    qsTrId("wallet-receive-addr-message-mp-no-limit")) + "\n" +
-                    //% "Min transaction fee to send Max privacy coins is %1."
-                    qsTrId("wallet-receive-addr-message").arg("~%1 BEAM".arg(Utils.uiStringToLocale("0.01")))
+                    //% "Transaction can last indefinitely."
+                    qsTrId("wallet-receive-addr-message-mp-no-limit")) + "\n"
             }
 
             SFText {
@@ -427,7 +380,7 @@ ColumnLayout {
                 color:                 Style.content_disabled
                 wrapMode:              Text.WordWrap
                 horizontalAlignment:   Text.AlignHCenter
-                //% "Sender will be given a choice between regular and offline payment. For the regular transaction to complete, you should get online during the 12 hours after coins are sent."
+                //% "Sender will be given a choice between online and offline payment. For an online payment to complete, you should get online during the 12 hours after coins are sent."
                 text: qsTrId("wallet-receive-text-online-time")
                 visible:               !viewModel.isMaxPrivacy
             }

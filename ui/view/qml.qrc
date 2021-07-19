@@ -78,7 +78,6 @@
         <file>controls/OpenApplicationsDialog.qml</file>
         <file>controls/UtxoDialog.qml</file>
         <file>controls/Panel.qml</file>
-        <file>controls/TokenInfoPanel.qml</file>
         <file>controls/TokenInfoDialog.qml</file>
         <file>controls/FoldablePanel.qml</file>
         <file>controls/SwapTokenInfoDialog.qml</file>

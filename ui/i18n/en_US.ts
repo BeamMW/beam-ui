@@ -1831,10 +1831,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Address type</source>
         <translation>Address type</translation>
     </message>
-    <message id="token-info-dialog-one-time">
-        <source>One time</source>
-        <translation>One time</translation>
-    </message>
     <message id="swap-expired">
         <source>Expired.</source>
         <translation>Expired.</translation>
@@ -1929,21 +1925,13 @@ Your version is: %2. Please, check for updates.</translation>
         <source>address details</source>
         <translation>address details</translation>
     </message>
-    <message id="address-expiration">
-        <source>Address expiration</source>
-        <translation>Address expiration</translation>
-    </message>
-    <message id="address-info-dialog-permanent">
-        <source>Permanent</source>
-        <translation>Permanent</translation>
-    </message>
     <message id="address-info-type">
         <source>Address type</source>
         <translation>Address type</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>SBBS Address</source>
-        <translation>SBBS Address</translation>
+        <source>Online (SBBS) Address</source>
+        <translation>Online (SBBS) Address</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
@@ -2024,14 +2012,6 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="more-details">
         <source>More details</source>
         <translation>More details</translation>
-    </message>
-    <message id="qr-code">
-        <source>QR Code</source>
-        <translation>QR Code</translation>
-    </message>
-    <message id="address-info-payments">
-        <source>Payments</source>
-        <translation>Payments</translation>
     </message>
     <message id="tx-address-public-offline">
         <source>Public offline</source>
@@ -2647,20 +2627,18 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-addr-message-mp">
-        <source>Max Privacy transaction can last at most %1 hours.</source>
+        <source> Transaction can last at most %1 hours.</source>
+        <oldsource>Max Privacy transaction can last at most %1 hours.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
-        <source>Max Privacy transaction can last indefinitely.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-receive-addr-message">
-        <source>Min transaction fee to send Max privacy coins is %1.</source>
+        <source>Transaction can last indefinitely.</source>
+        <oldsource>Max Privacy transaction can last indefinitely.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between regular and offline payment. For the regular transaction to complete, you should get online during the 12 hours after coins are sent.</source>
-        <oldsource>For the transaction to complete, you should get online during the 12 hours after Beams are sent.</oldsource>
+        <source>Sender will be given a choice between online and offline payment. For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
+        <oldsource>Sender will be given a choice between online and offline payment. For online payment to complete, you should get online during the 12 hours after coins are sent.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-public-token">
@@ -3146,6 +3124,22 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
         <translation>Update Wallet to launch %1 application</translation>
+    </message>
+    <message id="general-advanced">
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="receive-max-set">
+        <source>Maximum anonymity set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-title-mp">
+        <source>Address details with max anonymity set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-regular-notice">
+        <source>Regular address includes both online and offline addresses.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
