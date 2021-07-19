@@ -2116,8 +2116,9 @@ offline</source>
         <translation type="unfinished">Последнее время разблокировки</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
-        <source>Anonymity set for Max privacy transactions</source>
-        <translation>Размер анонимного множества для макс. приватных транзакций</translation>
+        <source>Maximum anonymity set size</source>
+        <oldsource>Anonymity set for Max privacy transactions</oldsource>
+        <translation type="unfinished">Размер анонимного множества для макс. приватных транзакций</translation>
     </message>
     <message id="settings-privacy-mp-notice">
         <source>Received coins can be spent immediately.</source>
@@ -2808,19 +2809,13 @@ Update your settings and try again.</source>
         <translation type="unfinished">Сумма</translation>
     </message>
     <message id="tx-details-rate-notice">
-        <source>For the day of the transaction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="general-total value">
-        <source>Total value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="general-smth-value">
-        <source>%1 Value</source>
+        <source>calculated with the exchange rate by the day of transaction</source>
+        <oldsource>For the day of the transaction</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
-        <source>Exchange rate to %1 was not available at the time of transaction</source>
+        <source>exchange rate was not available by the time of transaction</source>
+        <oldsource>Exchange rate to %1 was not available at the time of transaction</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-tx-id-label">

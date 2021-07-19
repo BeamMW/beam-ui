@@ -126,7 +126,7 @@ SettingsFoldable {
             ColumnLayout {
                 SFText {
                     Layout.fillWidth: true
-                    //% "Anonymity set for Max privacy transactions"
+                    //% "Maximum anonymity set size"
                     text: qsTrId("settings-privacy-mp-anonymity-set")
                     wrapMode:   Text.WordWrap
                     color: Style.content_main

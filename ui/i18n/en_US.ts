@@ -2105,8 +2105,8 @@ offline</translation>
         <translation>Unlock Time</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
-        <source>Anonymity set for Max privacy transactions</source>
-        <translation>Anonymity set for Max privacy transactions</translation>
+        <source>Maximum anonymity set size</source>
+        <translation>Maximum anonymity set size</translation>
     </message>
     <message id="settings-privacy-mp-notice">
         <source>Received coins can be spent immediately.</source>
@@ -2791,20 +2791,12 @@ Update your settings and try again.</source>
         <translation type="unfinished">Amount</translation>
     </message>
     <message id="tx-details-rate-notice">
-        <source>For the day of the transaction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="general-total value">
-        <source>Total value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="general-smth-value">
-        <source>%1 Value</source>
-        <translation type="unfinished"></translation>
+        <source>calculated with the exchange rate by the day of transaction</source>
+        <translation>calculated with the exchange rate by the day of transaction</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
-        <source>Exchange rate to %1 was not available at the time of transaction</source>
-        <translation type="unfinished"></translation>
+        <source>exchange rate was not available by the time of transaction</source>
+        <translation>exchange rate was not available by the time of transaction</translation>
     </message>
     <message id="tx-details-tx-id-label">
         <source>Transaction ID</source>
