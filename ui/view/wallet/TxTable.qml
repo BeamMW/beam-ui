@@ -31,6 +31,10 @@ Control {
     property var       owner
     property var       txNotify: new Set()
 
+    function showTxDetails (txid) {
+        transactionsTable.showDetails (txid)
+    }
+
     function showAppTxNotifcation (txid) {
         var list  = tableViewModel.transactions
         var index = list.index(0, 0)

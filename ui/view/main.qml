@@ -397,7 +397,10 @@ Rectangle {
         updateItem("wallet", {"openedTxID": id})
     }
 
-    function openDAppTransactionDetails(id) {
+    function openDAppTransactionDetails(txid) {
+        if (content.item.openAppTx) {
+            return content.item.openAppTx(txid)
+        }
         updateItem("applications", {"openedTxID": id})
     }
 

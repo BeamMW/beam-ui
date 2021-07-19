@@ -20,6 +20,11 @@ ColumnLayout {
     property var     appToOpen: undefined
     property string  openedTxID: ""
 
+    function openAppTx (txid) {
+        openedTxID = txid
+        txTable.showTxDetails(txid)
+    }
+
     ApplicationsViewModel {
         id: viewModel
     }
