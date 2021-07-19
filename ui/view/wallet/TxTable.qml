@@ -306,8 +306,6 @@ Control {
                 txDetails.assetRates = assetRates ? assetRates: [];
                 var assetIDs = model.getRoleValue(row, "assetIDs");
                 txDetails.assetIDs = assetIDs ? assetIDs: [];
-                var amountSecondCurrency = model.getRoleValue(row, "amountSecondCurrency");
-                txDetails.totalValue = amountSecondCurrency ? amountSecondCurrency : "0";
                 txDetails.rateUnit = tableViewModel.rateUnit;
 
                 var fee = model.getRoleValue(row, "fee");

@@ -55,7 +55,9 @@ Control {
 
     function formatRate () {
         var formatted = Utils.formatAmountToSecondCurrency(control.amount, control.rate, control.rateUnit);
-        return formatted == "" ?  ["-", control.rateUnit].join(" ") : control.prefix + formatted + (control.ratePostfix ? " " + control.ratePostfix : "");
+        return control.ratePostfix.length
+            ? (formatted == "" ?  [control.prefix, "0", control.rateUnit].join(" ") : control.prefix + formatted) + " " + control.ratePostfix
+            : (formatted == "" ?  ["-", control.rateUnit].join(" ") : control.prefix + formatted);
     }
 
     TextMetrics {
@@ -273,7 +275,7 @@ Control {
 
             SFLabel {
                 id:              secondCurrencyAmountText
-                visible:         rate  != "0"
+                visible:         (rate.length && rate != "0") || control.ratePostfix.length
                 font.pixelSize:  control.rateFontSize
                 font.styleName:  "Regular"
                 font.weight:     Font.Normal

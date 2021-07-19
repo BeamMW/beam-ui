@@ -47,7 +47,6 @@ CustomDialog {
     property var assetRates: []
     property var assetIDs: []
     property string rateUnit
-    property string totalValue
     readonly property int assetCount: assetNames ? assetNames.length : 0
 
     property alias initialState: stm.state
@@ -311,7 +310,7 @@ CustomDialog {
                     RowLayout {
                         Layout.fillWidth: true
                         Layout.maximumWidth : dialog.width - 60
-                        Layout.maximumHeight: !amountField.rate.length || amountField.rate == "0" ? 20 : 34
+                        Layout.maximumHeight: 34
 
                         BeamAmount {
                             id: amountField
@@ -325,7 +324,12 @@ CustomDialog {
                             color:        dialog.assetIncome[index] ? Style.accent_incoming : Style.accent_outgoing
                             prefix:       this.amount == "0" ? "" : (dialog.assetIncome[index] ? "+ " : "- ")
                             rate:         dialog.assetRates ? (dialog.assetRates[index] || "") : ""
-                            rateUnit:     this.rate != "0" ? dialog.rateUnit : ""
+                            rateUnit:     dialog.rateUnit// this.rate != "0" ? dialog.rateUnit : ""
+                            ratePostfix:  this.rate != "0"
+                                // % "calculated with the exchange rate by the day of transaction"
+                                ? "(" + qsTrId("tx-details-rate-notice") + ")"
+                                // % "exchange rate was not available by the time of transaction"
+                                : "(" + qsTrId("tx-details-exchange-rate-not-available") + ")"
                             showTip:      false
                             maxUnitChars: 25
                             maxPaintedWidth: false
@@ -361,54 +365,6 @@ CustomDialog {
                             background.implicitHeight: 16
                         }
                     }
-                }
-            }
-
-            SFText {
-                Layout.alignment: Qt.AlignTop
-                font.pixelSize:   14
-                color:            Style.content_secondary
-                visible:          stm.state == "tx_info"
-
-                text: (dialog.isContractTx ?
-                        //% "Total value"
-                        qsTrId("general-total value") :
-                        //% "%1 Value"
-                        qsTrId("general-smth-value").arg(dialog.rateUnit)
-                    ) + ": "
-            }
-
-            ColumnLayout {
-                Layout.fillWidth: true
-                visible:          stm.state == "tx_info"
-                spacing:          2
-
-                SFText {
-                    Layout.fillWidth: true
-                    visible:          dialog.totalValue != "0"
-                    font.pixelSize:   14
-                    color:            Style.content_secondary
-                    text:             [dialog.totalValue, dialog.rateUnit].join(' ')
-                }
-
-                SFText {
-                    Layout.fillWidth: true
-                    visible:          dialog.totalValue != "0"
-                    font.pixelSize:   13
-                    font.italic:      true
-                    color:            Style.content_secondary
-                    //% "For the day of the transaction"
-                    text: qsTrId("tx-details-rate-notice")
-                }
-
-                SFText
-                {
-                    visible:          dialog.totalValue == "0"
-                    Layout.fillWidth: true
-                    font.pixelSize:   14
-                    color:            Style.content_secondary
-                    //% "Exchange rate to %1 was not available at the time of transaction"
-                    text:             qsTrId("tx-details-exchange-rate-not-available").arg(dialog.rateUnit)
                 }
             }
 
