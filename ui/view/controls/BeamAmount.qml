@@ -57,7 +57,7 @@ Control {
 
     function formatRate () {
         var formatted = Utils.formatAmountToSecondCurrency(control.amount, control.rate, control.rateUnit);
-        return (formatted == "" ?  ["-", control.rateUnit].join(" ") : control.prefix + formatted) + (control.ratePostfix ? " " + control.ratePostfix : "")
+        return (formatted == "" ?  "" : control.prefix + formatted) + (control.ratePostfix ? " " + control.ratePostfix : "");
     }
 
     TextMetrics {
