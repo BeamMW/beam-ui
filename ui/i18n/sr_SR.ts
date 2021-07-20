@@ -741,11 +741,13 @@
         <translation type="unfinished">Language</translation>
     </message>
     <message id="open-external-open">
-        <source>proceed</source>
+        <source>open</source>
+        <oldsource>proceed</oldsource>
         <translation type="unfinished">proceed</translation>
     </message>
     <message id="open-external-title">
-        <source>Open external link</source>
+        <source>External link</source>
+        <oldsource>Open external link</oldsource>
         <translation type="unfinished">Open external link</translation>
     </message>
     <message id="open-external-message">
@@ -2790,8 +2792,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender wallet&apos;s signature</source>
-        <oldsource>Sender identity</oldsource>
+        <source>Sender&apos;s wallet signature</source>
+        <oldsource>Sender wallet&apos;s signature</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-receiving-addr-label">
@@ -2799,8 +2801,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver wallet&apos;s signature</source>
-        <oldsource>Receiver identity</oldsource>
+        <source>Receiver&apos;s wallet signature</source>
+        <oldsource>Receiver wallet&apos;s signature</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-amount-label">

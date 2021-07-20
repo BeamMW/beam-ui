@@ -741,12 +741,14 @@
         <translation>Idioma</translation>
     </message>
     <message id="open-external-open">
-        <source>proceed</source>
-        <translation>continuar</translation>
+        <source>open</source>
+        <oldsource>proceed</oldsource>
+        <translation type="unfinished">continuar</translation>
     </message>
     <message id="open-external-title">
-        <source>Open external link</source>
-        <translation>Abrir enlace externo</translation>
+        <source>External link</source>
+        <oldsource>Open external link</oldsource>
+        <translation type="unfinished">Abrir enlace externo</translation>
     </message>
     <message id="open-external-message">
         <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</source>
@@ -2791,16 +2793,18 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender wallet&apos;s signature</source>
-        <translation>Sender wallet&apos;s signature</translation>
+        <source>Sender&apos;s wallet signature</source>
+        <oldsource>Sender wallet&apos;s signature</oldsource>
+        <translation type="unfinished">Sender wallet&apos;s signature</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver wallet&apos;s signature</source>
-        <translation>Receiver wallet&apos;s signature</translation>
+        <source>Receiver&apos;s wallet signature</source>
+        <oldsource>Receiver wallet&apos;s signature</oldsource>
+        <translation type="unfinished">Receiver wallet&apos;s signature</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
