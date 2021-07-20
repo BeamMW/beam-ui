@@ -738,12 +738,12 @@
         <translation>Language</translation>
     </message>
     <message id="open-external-open">
-        <source>proceed</source>
-        <translation>proceed</translation>
+        <source>open</source>
+        <translation>open</translation>
     </message>
     <message id="open-external-title">
-        <source>Open external link</source>
-        <translation>Open external link</translation>
+        <source>External link</source>
+        <translation>External link</translation>
     </message>
     <message id="open-external-message">
         <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</source>
@@ -2775,16 +2775,16 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender wallet&apos;s signature</source>
-        <translation>Sender wallet&apos;s signature</translation>
+        <source>Sender&apos;s wallet signature</source>
+        <translation>Sender&apos;s wallet signature</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver wallet&apos;s signature</source>
-        <translation>Receiver wallet&apos;s signature</translation>
+        <source>Receiver&apos;s wallet signature</source>
+        <translation>Receiver&apos;s wallet signature</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>

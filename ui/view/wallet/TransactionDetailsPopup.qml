@@ -125,7 +125,7 @@ CustomDialog {
                             stm.state = "payment_proof";
                         }
                     }
-                    visible: dialog.hasPaymentProof
+                    visible: dialog.hasPaymentProof && !dialog.isSelfTx
                 }
             }
         }
@@ -148,7 +148,7 @@ CustomDialog {
                 visible: sendAddressField.parent.visible
             }
             RowLayout {
-                visible: dialog.sendAddress.length && !(isIncome && isShieldedTx)
+                visible: stm.state == "tx_info" && dialog.sendAddress.length && !(isIncome && isShieldedTx)
                 SFLabel {
                     id: sendAddressField
                     Layout.fillWidth: true
@@ -171,12 +171,12 @@ CustomDialog {
             SFText {
                 font.pixelSize: 14
                 color: Style.content_secondary
-                //% "Sender wallet's signature"
+                //% "Sender's wallet signature"
                 text: qsTrId("tx-details-sender-identity") + ":"
                 visible: senderIdentityField.parent.visible
             }
             RowLayout {
-                visible: dialog.senderIdentity.length > 0 && (dialog.receiverIdentity.length > 0 || dialog.isShieldedTx )
+                visible: stm.state == "payment_proof" && dialog.senderIdentity.length > 0 && (dialog.receiverIdentity.length > 0 || dialog.isShieldedTx )
                 SFLabel {
                     id: senderIdentityField
                     Layout.fillWidth: true
@@ -204,7 +204,7 @@ CustomDialog {
                 visible: receiveAddressField.parent.visible
             }
             RowLayout {
-                visible: !dialog.isContractTx && receiveAddressField.receiveAddressOrToken.length
+                visible: stm.state == "tx_info" && !dialog.isContractTx && receiveAddressField.receiveAddressOrToken.length
                 SFLabel {
                     property var receiveAddressOrToken : hasToken ? dialog.token : dialog.receiveAddress
                     id: receiveAddressField
@@ -228,12 +228,12 @@ CustomDialog {
             SFText {
                 font.pixelSize: 14
                 color: Style.content_secondary
-                //% "Receiver wallet's signature"
+                //% "Receiver's wallet signature"
                 text: qsTrId("tx-details-receiver-identity") + ":"
                 visible: receiverIdentityField.parent.visible
             }
             RowLayout {
-                visible: dialog.senderIdentity.length > 0 && dialog.receiverIdentity.length > 0
+                visible: stm.state == "payment_proof" && dialog.senderIdentity.length > 0 && dialog.receiverIdentity.length > 0
                 SFLabel {
                     id: receiverIdentityField
                     Layout.fillWidth: true

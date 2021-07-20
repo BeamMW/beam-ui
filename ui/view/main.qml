@@ -451,6 +451,7 @@ Rectangle {
 
     Component.onCompleted: {
         openWallet()
+        main.Window.window.closing.connect(onClosing)
     }
 
     Component.onDestruction: {
