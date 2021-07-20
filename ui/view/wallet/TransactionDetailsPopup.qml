@@ -320,7 +320,7 @@ CustomDialog {
                             amount:       dialog.assetAmounts ? (dialog.assetAmounts[index] || "") : ""
                             unitName:     dialog.assetNames[index] || ""
                             iconSource:   dialog.assetIcons[index] || ""
-                            verified:     dialog.assetVerified[index]
+                            verified:     dialog.assetVerified[index] || false
                             iconSize:     Qt.size(20, 20)
                             color:        dialog.assetIncome[index] ? Style.accent_incoming : Style.accent_outgoing
                             prefix:       this.amount == "0" ? "" : (dialog.assetIncome[index] ? "+ " : "- ")
