@@ -49,6 +49,7 @@ public:
         RLongDesc,
         RSiteUrl,
         RWhitePaper,
+        RVerified,
     };
 
     Q_ENUM(Roles)

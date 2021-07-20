@@ -370,3 +370,16 @@ QMap<QString, QVariant> AssetsManager::getAssetsMap(const std::set<beam::Asset::
 
     return result;
 }
+
+bool AssetsManager::isVerified(beam::Asset::ID assetId) const
+{
+    #ifdef BEAM_BEAMX
+    return false;
+    #elif defined(BEAM_TESTNET)
+    return false;
+    #elif defined(BEAM_MAINNET)
+    return false;
+    #else
+    return assetId == 5;
+    #endif
+}
