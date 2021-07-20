@@ -351,5 +351,6 @@
         <file>assets/icon-daocore.svg</file>
         <file>assets/icon-daocore-active.svg</file>
         <file>assets/icon-show_tx_details.svg</file>
+        <file>assets/dapp-loading.svg</file>
     </qresource>
 </RCC>

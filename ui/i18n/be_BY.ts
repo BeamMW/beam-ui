@@ -2077,8 +2077,8 @@ public offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-loading-app">
-        <source>Loading &apos;%1&apos;...</source>
-        <translation type="unfinished"></translation>
+        <source>Please wait, %1 is loading.</source>
+        <translation type="unfinished">Please wait, %1 is loading.</translation>
     </message>
     <message id="apps-nothing">
         <source>There are no applications at the moment</source>

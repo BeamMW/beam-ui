@@ -12,13 +12,12 @@ ColumnLayout {
     id: control
     Layout.fillWidth: true
 
-    property var     appsList: undefined
-    property bool    listLoading: !appsList
-    property bool    hasApps: !!appsList && appsList.length > 0
-    property string  errorMessage: ""
-    property var     activeApp: undefined
-    property var     appToOpen: undefined
-    property string  openedTxID: ""
+    property string   errorMessage: ""
+    property var      appsList: undefined
+    property var      activeApp: undefined
+    property var      appToOpen: undefined
+    property string   openedTxID: ""
+    readonly property bool hasApps: !!appsList && appsList.length > 0
 
     function openAppTx (txid) {
         openedTxID = txid
@@ -193,37 +192,59 @@ ColumnLayout {
         Layout.fillWidth:  true
         visible: !appsView.visible && !webLayout.visible
 
-        SFText {
+        ColumnLayout {
             anchors.horizontalCenter: parent.horizontalCenter
-            y:       parent.height / 2 - this.height / 2 - 40
-            color:   control.errorMessage.length ? Style.validator_error : Style.content_main
-            opacity: 0.5
+            y: parent.height / 2 - this.height / 2 - 40
+            spacing: 40
 
-            font {
-                styleName: "DemiBold"
-                weight:    Font.DemiBold
-                pixelSize: 18
+            SFText {
+                Layout.alignment: Qt.AlignHCenter
+                color: control.errorMessage.length ? Style.validator_error : Style.content_main
+                opacity: 0.5
+
+                font {
+                    italic:    true
+                    pixelSize: 16
+                }
+
+                text: {
+                    if (control.errorMessage.length) {
+                        return control.errorMessage
+                    }
+
+                    if (control.activeApp || control.appToOpen) {
+                        //% "Please wait, %1 is loading."
+                        return qsTrId("apps-loading-app").arg(
+                            (control.activeApp || control.appToOpen).name
+                        )
+                    }
+
+                    if (!control.appsList) {
+                        //% "Loading..."
+                        return qsTrId("apps-loading")
+                    }
+
+                    //% "There are no applications at the moment"
+                    return qsTrId("apps-nothing")
+                }
             }
 
-            text: {
-                if (control.errorMessage.length) {
-                    return control.errorMessage
-                }
+            SvgImage {
+                Layout.alignment: Qt.AlignHCenter
+                source: "qrc:/assets/dapp-loading.svg"
+                sourceSize: Qt.size(245, 140)
 
-                if (control.activeApp || control.appToOpen) {
-                    //% "Loading '%1'..."
-                    return qsTrId("apps-loading-app").arg(
-                        (control.activeApp || control.appToOpen).name
-                    )
-                }
+                visible: {
+                    if (control.errorMessage.length) {
+                        return false
+                    }
 
-                if (control.listLoading) {
-                    //% "Loading..."
-                    return qsTrId("apps-loading")
-                }
+                    if (control.activeApp || control.appToOpen) {
+                        return true
+                    }
 
-                //% "There are no applications at the moment"
-                return qsTrId("apps-nothing")
+                    return false
+                }
             }
         }
     }
@@ -527,9 +548,12 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
-        if (settings.dappsAllowed) {
+        if (settings.dappsAllowed)
+        {
             loadAppsList();
-        } else {
+        }
+        else
+        {
             appsDialog.open();
         }
     }
