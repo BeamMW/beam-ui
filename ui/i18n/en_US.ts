@@ -2791,12 +2791,12 @@ Update your settings and try again.</source>
         <translation type="unfinished">Amount</translation>
     </message>
     <message id="tx-details-rate-notice">
-        <source>calculated with the exchange rate by the day of transaction</source>
-        <translation>calculated with the exchange rate by the day of transaction</translation>
+        <source>calculated with the exchange rate at the day of transaction</source>
+        <translation type="unfinished">calculated with the exchange rate at the day of transaction</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
-        <source>exchange rate was not available by the time of transaction</source>
-        <translation>exchange rate was not available by the time of transaction</translation>
+        <source>exchange rate was not available at the time of transaction</source>
+        <translation>exchange rate was not available at the time of transaction</translation>
     </message>
     <message id="tx-details-tx-id-label">
         <source>Transaction ID</source>
