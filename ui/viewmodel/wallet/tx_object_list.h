@@ -73,6 +73,7 @@ public:
         AssetIcons,
         AssetAmounts,
         AssetAmountsIncome,
+        AssetVerified,
         AssetRates,
         AssetIDs,
         IsDexTx,

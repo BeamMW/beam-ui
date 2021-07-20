@@ -46,6 +46,7 @@ Control {
             rateUnit:          assetInfo.rateUnit
             rate:              assetInfo.rate
             iconSource:        assetInfo.icon
+            verified:          assetInfo.verified
             Layout.fillWidth:  true
             spacing:           12
             iconSize:          Qt.size(26, 26)

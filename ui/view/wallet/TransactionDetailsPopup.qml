@@ -46,6 +46,7 @@ CustomDialog {
     property var assetIncome: []
     property var assetRates: []
     property var assetIDs: []
+    property var assetVerified: []
     property string rateUnit
     readonly property int assetCount: assetNames ? assetNames.length : 0
 
@@ -319,11 +320,12 @@ CustomDialog {
                             amount:       dialog.assetAmounts ? (dialog.assetAmounts[index] || "") : ""
                             unitName:     dialog.assetNames[index] || ""
                             iconSource:   dialog.assetIcons[index] || ""
+                            verified:     dialog.assetVerified[index]
                             iconSize:     Qt.size(20, 20)
                             color:        dialog.assetIncome[index] ? Style.accent_incoming : Style.accent_outgoing
                             prefix:       this.amount == "0" ? "" : (dialog.assetIncome[index] ? "+ " : "- ")
                             rate:         dialog.assetRates ? (dialog.assetRates[index] || "") : ""
-                            rateUnit:     dialog.rateUnit// this.rate != "0" ? dialog.rateUnit : ""
+                            rateUnit:     this.rate != "0" ? dialog.rateUnit : ""
                             ratePostfix:  this.rate != "0"
                                 //% "calculated with the exchange rate at the day of transaction"
                                 ? "(" + qsTrId("tx-details-rate-notice") + ")"

@@ -38,6 +38,7 @@ public:
         MaturityTimeLeftSort,
         UnitName,
         IconSource,
+        Verified,
     };
 
     UtxoItemList();

@@ -85,6 +85,7 @@ CustomDialog {
                         amount: model ? model.amount : "0"
                         unitName: model ? model.unitName : ""
                         iconSource: model ? model.iconSource : ""
+                        verified: model ? model.verified : false
                         showTip: false
                         maxUnitChars: 18
                         maxPaintedWidth: false

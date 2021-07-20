@@ -40,9 +40,10 @@ ComboBox {
         width: calculatedWidth
         padding: 0
 
-        property var iconW: (Array.isArray(control.model)  ? modelData["iconWidth"]  : model["iconWidth"]) || 0
-        property var iconH: (Array.isArray(control.model)  ? modelData["iconHeight"] : model["iconHeight"]) || 0
-        property var iconS: (Array.isArray(control.model)  ? modelData["icon"]       : model["icon"]) || ""
+        property var  iconW:    (Array.isArray(control.model)  ? modelData["iconWidth"]  : model["iconWidth"]) || 0
+        property var  iconH:    (Array.isArray(control.model)  ? modelData["iconHeight"] : model["iconHeight"]) || 0
+        property var  iconS:    (Array.isArray(control.model)  ? modelData["icon"]       : model["icon"]) || ""
+        property bool verified: (Array.isArray(control.model)  ? modelData["verified"]   : model["verified"]) || false
 
         contentItem: RowLayout {
             spacing: 0
@@ -54,6 +55,17 @@ ComboBox {
                 Layout.rightMargin: 10
                 Layout.preferredWidth: iconW
                 Layout.preferredHeight: iconH
+
+                SvgImage {
+                    source: "qrc:/assets/icon-verified-asset.svg";
+                    visible: verified
+
+                    x: parent.width - width / 1.6
+                    y: - height / 3.6
+
+                    width:  18 * parent.width / 26
+                    height: 18 * parent.width / 26
+                }
             }
 
             SFText {
@@ -95,9 +107,10 @@ ComboBox {
     onModelChanged: recalcSize()
     indicator: Item {}
 
-    property var iconW: (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconWidth"] : 0) || 0
-    property var iconH: (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconHeight"] : 0) || 0
-    property var iconS: (control.model && control.model[currentIndex] ? control.model[currentIndex]["icon"] : "") || ""
+    property var  iconW:    (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconWidth"] : 0) || 0
+    property var  iconH:    (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconHeight"] : 0) || 0
+    property var  iconS:    (control.model && control.model[currentIndex] ? control.model[currentIndex]["icon"] : "") || ""
+    property bool verified: (control.model && control.model[currentIndex] ? control.model[currentIndex]["verified"] : false) || false
 
     contentItem: RowLayout {
         spacing: 0
@@ -108,6 +121,17 @@ ComboBox {
             visible: iconW > 0
             Layout.alignment: Qt.AlignVCenter
             Layout.rightMargin: 10
+
+            SvgImage {
+                source: "qrc:/assets/icon-verified-asset.svg";
+                visible: verified
+
+                x: parent.width - width / 1.6
+                y: - height / 3.6
+
+                width:  18 * parent.width / 26
+                height: 18 * parent.width / 26
+            }
         }
 
         SFText  {

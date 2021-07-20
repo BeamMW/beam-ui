@@ -247,84 +247,53 @@ Control {
             id: transactionsTable
 
             property var initTxDetailsFromRow: function (model, row) {
-                var addressFrom = model.getRoleValue(row, "addressFrom");
-                txDetails.sendAddress = addressFrom ? addressFrom : "";
-                var addressTo = model.getRoleValue(row, "addressTo");
-                txDetails.receiveAddress = addressTo ? addressTo : "";
-                var senderIdentity = model.getRoleValue(row, "senderIdentity");
-                txDetails.senderIdentity = senderIdentity ? senderIdentity : "";
-                var receiverIdentity = model.getRoleValue(row, "receiverIdentity");
-                txDetails.receiverIdentity = receiverIdentity ? receiverIdentity : "";
-                var comment = model.getRoleValue(row, "comment");
-                txDetails.comment = comment ? comment : "";
-                var txID = model.getRoleValue(row, "txID");
-                txDetails.txID = txID ? txID : "";
-                var kernelID = model.getRoleValue(row, "kernelID");
-                txDetails.kernelID = kernelID ? kernelID : "";
-                var status = model.getRoleValue(row, "status");
-                txDetails.status = status ? status : "";
-                var failureReason = model.getRoleValue(row, "failureReason");
-                txDetails.failureReason = failureReason ? failureReason : "";
-                var isIncome = model.getRoleValue(row, "isIncome");
-                txDetails.isIncome = isIncome;
-                var hasPaymentProof = model.getRoleValue(row, "hasPaymentProof");
-                txDetails.hasPaymentProof = hasPaymentProof;
-                var isSelfTransaction = model.getRoleValue(row, "isSelfTransaction");
-                txDetails.isSelfTx = isSelfTransaction;
-                var isContractTx = model.getRoleValue(row, "isContractTx");
-                txDetails.isContractTx = isContractTx;
-                var cidsStr = model.getRoleValue(row, "cidsStr");
-                txDetails.cidsStr = cidsStr ? cidsStr : "";
-                var rawTxID = model.getRoleValue(row, "rawTxID");
-                txDetails.rawTxID = rawTxID ? rawTxID : null;
-                var stateDetails = model.getRoleValue(row, "stateDetails");
-                txDetails.stateDetails = stateDetails ? stateDetails : "";
-                var isCompleted = model.getRoleValue(row, "isCompleted");
-                txDetails.isCompleted = isCompleted;
-                var minConfirmations = model.getRoleValue(row, "minConfirmations");
-                txDetails.minConfirmations = minConfirmations ? minConfirmations : 0;
-                var confirmationsProgress = model.getRoleValue(row, "confirmationsProgress");
-                txDetails.confirmationsProgress = confirmationsProgress ? confirmationsProgress : "";
-                var dappName = model.getRoleValue(row, "dappName");
-                txDetails.dappName = dappName ? dappName : "";
+                txDetails.sendAddress      =  model.getRoleValue(row, "addressFrom") || ""
+                txDetails.receiveAddress   =  model.getRoleValue(row, "addressTo") || ""
+                txDetails.senderIdentity   =  model.getRoleValue(row, "senderIdentity") || ""
+                txDetails.receiverIdentity =  model.getRoleValue(row, "receiverIdentity") || ""
+                txDetails.comment          =  model.getRoleValue(row, "comment") || ""
+                txDetails.txID             =  model.getRoleValue(row, "txID") || ""
+                txDetails.kernelID         =  model.getRoleValue(row, "kernelID") || ""
+                txDetails.status           =  model.getRoleValue(row, "status") || ""
+                txDetails.failureReason    =  model.getRoleValue(row, "failureReason") || ""
+                txDetails.isIncome         =  model.getRoleValue(row, "isIncome")
+                txDetails.hasPaymentProof  =  model.getRoleValue(row, "hasPaymentProof")
+                txDetails.isSelfTx         =  model.getRoleValue(row, "isSelfTransaction")
+                txDetails.isContractTx     =  model.getRoleValue(row, "isContractTx")
+                txDetails.cidsStr          =  model.getRoleValue(row, "cidsStr") || ""
+                txDetails.rawTxID          =  model.getRoleValue(row, "rawTxID") || null
+                txDetails.stateDetails     =  model.getRoleValue(row, "stateDetails") || ""
+                txDetails.isCompleted      =  model.getRoleValue(row, "isCompleted")
+                txDetails.minConfirmations =  model.getRoleValue(row, "minConfirmations") || 0
+                txDetails.dappName         =   model.getRoleValue(row, "dappName") || ""
+                txDetails.confirmationsProgress = model.getRoleValue(row, "confirmationsProgress") || ""
 
                 var addrModel = {
                     isMaxPrivacy: model.getRoleValue(row, "isMaxPrivacy"),
                     isOfflineToken: model.getRoleValue(row, "isOfflineToken"),
                     isPublicOffline: model.getRoleValue(row, "isPublicOffline")
-                };
-                txDetails.addressType = Utils.getAddrTypeFromModel(addrModel);
+                }
 
-                var assetNames = model.getRoleValue(row, "assetNames");
-                txDetails.assetNames = assetNames ? assetNames : [];
-                var assetIcons = model.getRoleValue(row, "assetIcons");
-                txDetails.assetIcons = assetIcons ? assetIcons: [];
-                var assetAmounts = model.getRoleValue(row, "assetAmounts");
-                txDetails.assetAmounts = assetAmounts ? assetAmounts: [];
-                var assetAmountsIncome = model.getRoleValue(row, "assetAmountsIncome");
-                txDetails.assetIncome = assetAmountsIncome ? assetAmountsIncome: [];
-                var assetRates = model.getRoleValue(row, "assetRates");
-                txDetails.assetRates = assetRates ? assetRates: [];
-                var assetIDs = model.getRoleValue(row, "assetIDs");
-                txDetails.assetIDs = assetIDs ? assetIDs: [];
-                txDetails.rateUnit = tableViewModel.rateUnit;
-
-                var fee = model.getRoleValue(row, "fee");
-                txDetails.fee = fee ? fee : "0";
-                var feeRate = model.getRoleValue(row, "feeRate");
-                txDetails.feeRate = feeRate ? feeRate : "0";
-                txDetails.feeUnit = qsTrId("general-beam");
-                txDetails.feeRateUnit = tableViewModel.rateUnit;
-
-                txDetails.searchFilter = searchBox.text;
-                var token = model.getRoleValue(row, "token");
-                txDetails.token = token ? token : "";
-                var isShieldedTx = model.getRoleValue(row, "isShieldedTx");
-                txDetails.isShieldedTx = isShieldedTx;
-                txDetails.initialState = "tx_info";
+                txDetails.addressType    =  Utils.getAddrTypeFromModel(addrModel)
+                txDetails.assetNames     =  model.getRoleValue(row, "assetNames") || []
+                txDetails.assetVerified  =  model.getRoleValue(row, "assetVerified") || []
+                txDetails.assetIcons     =  model.getRoleValue(row, "assetIcons") || []
+                txDetails.assetAmounts   =  model.getRoleValue(row, "assetAmounts") || []
+                txDetails.assetIncome    =  model.getRoleValue(row, "assetAmountsIncome") || []
+                txDetails.assetRates     =  model.getRoleValue(row, "assetRates") || []
+                txDetails.assetIDs       =  model.getRoleValue(row, "assetIDs") || []
+                txDetails.rateUnit       =  tableViewModel.rateUnit
+                txDetails.fee            =  model.getRoleValue(row, "fee") || "0"
+                txDetails.feeRate        =  model.getRoleValue(row, "feeRate") || "0"
+                txDetails.feeUnit        =  qsTrId("general-beam");
+                txDetails.feeRateUnit    =  tableViewModel.rateUnit
+                txDetails.searchFilter   =  searchBox.text;
+                txDetails.token          =  model.getRoleValue(row, "token") || ""
+                txDetails.isShieldedTx   =  !!model.getRoleValue(row, "isShieldedTx")
+                txDetails.initialState   =  "tx_info";
 
                 txDetails.getPaymentProof = function(rawTxID) {
-                    return rawTxID ? tableViewModel.getPaymentInfo(rawTxID) : null;
+                    return rawTxID ? tableViewModel.getPaymentInfo(rawTxID) : null
                 }
             }
 
@@ -516,8 +485,9 @@ Control {
                 delegate: Item { CoinsList {
                     width:  parent.width
                     height: transactionsTable.rowHeight
-                    icons:  model ? model.assetIcons : undefined
-                    names:  model ? model.assetNames : undefined
+                    icons:    model ? model.assetIcons : undefined
+                    names:    model ? model.assetNames : undefined
+                    verified: model ? model.assetVerified: undefined
                 }}
             }
 

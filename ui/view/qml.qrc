@@ -352,5 +352,7 @@
         <file>assets/icon-daocore-active.svg</file>
         <file>assets/icon-show_tx_details.svg</file>
         <file>assets/dapp-loading.svg</file>
+        <file>assets/icon-verified-asset.svg</file>
+        <file>assets/asset-beamx.svg</file>
     </qresource>
 </RCC>

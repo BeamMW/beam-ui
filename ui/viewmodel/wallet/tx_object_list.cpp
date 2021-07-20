@@ -236,6 +236,7 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::IsOfflineToken), "isOfflineToken"},
         { static_cast<int>(Roles::AssetNames), "assetNames"},
         { static_cast<int>(Roles::AssetNamesSort), "assetNamesSort"},
+        { static_cast<int>(Roles::AssetVerified), "assetVerified"},
         { static_cast<int>(Roles::IsSent), "isSent"},
         { static_cast<int>(Roles::IsReceived), "isReceived"},
         { static_cast<int>(Roles::IsPublicOffline), "isPublicOffline"},
@@ -405,6 +406,18 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             }
             QVariant result;
             result.setValue(namesList);
+            return result;
+        }
+        case Roles::AssetVerified:
+        {
+            QList<bool> verifiedList;
+            const auto& alist = value->getAssetsList();
+            for(const auto& assetID: alist)
+            {
+                verifiedList.append(_amgr->isVerified(assetID));
+            }
+            QVariant result;
+            result.setValue(verifiedList);
             return result;
         }
         case Roles::AssetIcons:

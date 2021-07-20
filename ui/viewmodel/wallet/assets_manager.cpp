@@ -26,7 +26,17 @@ AssetsManager::AssetsManager (WalletModel::Ptr wallet)
     _icons[2]  = "qrc:/assets/asset-2.svg";
     _icons[3]  = "qrc:/assets/asset-3.svg";
     _icons[4]  = "qrc:/assets/asset-4.svg";
+
+    #ifdef BEAM_BEAMX
     _icons[5]  = "qrc:/assets/asset-5.svg";
+    #elif defined(BEAM_TESTNET)
+    _icons[5]  = "qrc:/assets/asset-5.svg";
+    #elif defined(BEAM_MAINNET)
+    _icons[5]  = "qrc:/assets/asset-5.svg";
+    #else
+    _icons[5]  = "qrc:/assets/asset-beamx.svg";
+    #endif
+
     _icons[6]  = "qrc:/assets/asset-6.svg";
     _icons[7]  = "qrc:/assets/asset-7.svg";
     _icons[8]  = "qrc:/assets/asset-8.svg";
@@ -48,7 +58,17 @@ AssetsManager::AssetsManager (WalletModel::Ptr wallet)
     _colors[2] = QColor("#ffbb54"); _colors[2].setAlpha(alpha);
     _colors[3] = QColor("#d885ff"); _colors[3].setAlpha(alpha);
     _colors[4] = QColor("#008eff"); _colors[4].setAlpha(alpha);
+
+    #ifdef BEAM_BEAMX
     _colors[5] = QColor("#ff746b"); _colors[5].setAlpha(alpha);
+    #elif defined(BEAM_TESTNET)
+    _colors[5] = QColor("#ff746b"); _colors[5].setAlpha(alpha);
+    #elif defined(BEAM_MAINNET)
+    _colors[5] = QColor("#ff746b"); _colors[5].setAlpha(alpha);
+    #else
+    _colors[5] = QColor("#a37dff"); _colors[5].setAlpha(alpha);
+    #endif
+
     _colors[6] = QColor("#91e300"); _colors[6].setAlpha(alpha);
     _colors[7] = QColor("#ffe75a"); _colors[7].setAlpha(alpha);
     _colors[8] = QColor("#9643ff"); _colors[8].setAlpha(alpha);
@@ -342,6 +362,7 @@ QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
     asset.insert("iconWidth",  22);
     asset.insert("iconHeight", 22);
     asset.insert("decimals",   static_cast<uint8_t>(std::log10(beam::Rules::Coin)));
+    asset.insert("verified",   isVerified(assetId));
 
     return asset;
 }

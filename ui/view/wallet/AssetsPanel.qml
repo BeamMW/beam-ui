@@ -117,13 +117,10 @@ Control {
                         assetInfo:      model
                         selected:       model.id == control.selectedId
                         opacity:        control.selectedId < 0 ? 1 : (selected ? 1 : 0.6)
+                        layer.enabled:  model.verified
 
                         onClicked: function () {
                             control.selectedId = control.selectedId == model.id ? -1 : model.id
-                        }
-
-                        Component.onCompleted: {
-                            BeamGlobals.logInfo("Created for: " + model.id)
                         }
                     }
 

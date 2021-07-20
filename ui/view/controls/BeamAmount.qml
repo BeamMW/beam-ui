@@ -9,6 +9,7 @@ Control {
     id: control
     spacing: 8
 
+    property bool    verified:            false
     property string  amount:              "0"
     property string  lockedAmount:        "0"
     property string  unitName:            BeamGlobals.beamUnit
@@ -199,13 +200,25 @@ Control {
         id: contentRow
 
         SvgImage {
-            id:          assetIcon
-            source:      control.iconSource
-            width:       control.iconSize.width
-            height:      control.iconSize.height
-            visible:     !!control.iconSource
+            id:       assetIcon
+            source:   control.iconSource
+            width:    control.iconSize.width
+            height:   control.iconSize.height
+            visible:  !!control.iconSource
+
             anchors.top: control.iconAnchorCenter ? undefined : parent.top // undefined resets property
             anchors.verticalCenter: control.iconAnchorCenter ? parent.verticalCenter : undefined // undefined resets property
+
+            SvgImage {
+                source: "qrc:/assets/icon-verified-asset.svg";
+                visible: control.verified
+
+                x: parent.width - width / 1.6
+                y: - height / 3.6
+
+                width:  18 * parent.width / 26
+                height: 18 * parent.width / 26
+            }
         }
 
         Column {
