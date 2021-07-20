@@ -34,6 +34,7 @@ Control {
     property var     dropIcon:            dropIconCtrl
     property bool    showDrop:            false
     property size    dropSize:            Qt.size(5, 3)
+    property bool    iconAnchorCenter:    true
 
     font {
         pixelSize:  14
@@ -203,6 +204,8 @@ Control {
             width:       control.iconSize.width
             height:      control.iconSize.height
             visible:     !!control.iconSource
+            anchors.top: control.iconAnchorCenter ? undefined : parent.top // undefined resets property
+            anchors.verticalCenter: control.iconAnchorCenter ? parent.verticalCenter : undefined // undefined resets property
         }
 
         Column {
