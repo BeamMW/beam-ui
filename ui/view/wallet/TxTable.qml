@@ -16,8 +16,9 @@ Control {
         id: tableViewModel
 
         onTransactionsChanged: function () {
-            txNotify.forEach(function (txid) {
-                control.showAppTxNotifcation(txid)
+            txNotify.forEach(function (json) {
+                var obj = JSON.parse(json)
+                control.showAppTxNotifcation(obj.txid, obj.appicon)
             })
         }
     }
@@ -35,24 +36,24 @@ Control {
         transactionsTable.showDetails (txid)
     }
 
-    function showAppTxNotifcation (txid) {
+    function showAppTxNotifcation (txid, appicon) {
         var list  = tableViewModel.transactions
         var index = list.index(0, 0)
         var ilist = list.match(index, TxObjectList.Roles.TxID, txid)
         if (ilist.length)
         {
-            txNotify.delete(txid)
+            txNotify.delete(JSON.stringify({txid, appicon}))
             main.showAppTxPopup(
                 list.data(ilist[0], TxObjectList.Roles.Comment),
                 list.data(ilist[0], TxObjectList.Roles.DAppName),
-                txid
+                appicon, txid
             )
         }
         else
         {
             // model not yet updated, transaction is still invisble for the list
             // safe for the future
-            txNotify.add(txid)
+            txNotify.add(JSON.stringify({txid, appicon}))
         }
     }
 

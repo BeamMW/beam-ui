@@ -45,9 +45,9 @@ Rectangle {
         showPopup(popup)
     }
 
-    function showAppTxPopup (comment, appname, txid) {
+    function showAppTxPopup (comment, appname, appicon, txid) {
         var popup = Qt.createComponent("controls/AppTxNotification.qml").createObject(main, {
-            comment, appname, txid
+            comment, appname, appicon, txid
         })
         showPopup(popup)
     }

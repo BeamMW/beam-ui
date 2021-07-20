@@ -170,7 +170,7 @@ ColumnLayout {
                     {
                         var json = JSON.parse(sjson)
                         var txid = ((json || {}).result || {}).txid
-                        if (txid) txTable.showAppTxNotifcation(txid)
+                        if (txid) txTable.showAppTxNotifcation(txid, app.icon)
                     }
                     catch (e) {
                         BeamGlobals.logInfo(["callWalletApiResult json parse fail:", e].join(": "))
