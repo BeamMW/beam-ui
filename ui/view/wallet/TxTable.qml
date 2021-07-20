@@ -788,7 +788,7 @@ Control {
                 Action {
                     //% "Cancel"
                     text: qsTrId("general-cancel")
-                    icon.source: "qrc:/assets/icon-cancel.svg"
+                    icon.source: "qrc:/assets/icon-cancel-white.svg"
                     enabled: txContextMenu.cancelEnabled
                     onTriggered: {
                         tableViewModel.cancelTx(txContextMenu.txID);
