@@ -329,9 +329,10 @@ CustomDialog {
                                 ? "(" + qsTrId("tx-details-rate-notice") + ")"
                                 //% "exchange rate was not available at the time of transaction"
                                 : "(" + qsTrId("tx-details-exchange-rate-not-available") + ")"
-                            showTip:      false
-                            maxUnitChars: 25
-                            maxPaintedWidth: false
+                            showTip:          false
+                            maxUnitChars:     25
+                            maxPaintedWidth:  false
+                            iconAnchorCenter: false
                             font {
                                 styleName:  "Bold"
                                 weight:     Font.Bold
@@ -390,6 +391,7 @@ CustomDialog {
                     maxPaintedWidth: false
                     iconSource:   "qrc:/assets/icon-beam.svg"
                     iconSize:     Qt.size(20, 20)
+                    iconAnchorCenter: false
                 }
             }
 

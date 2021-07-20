@@ -53,6 +53,7 @@ public:
     [[nodiscard]] QList<QMap<QString, QVariant>> getAssetsList();
     [[nodiscard]] QMap<QString, QVariant> getAssetsMap(const std::set<beam::Asset::ID>& assets);
     [[nodiscard]] bool hasAsset(beam::Asset::ID) const;
+    [[nodiscard]] bool isVerified(beam::Asset::ID) const;
 
 signals:
     void assetInfo(beam::Asset::ID assetId);

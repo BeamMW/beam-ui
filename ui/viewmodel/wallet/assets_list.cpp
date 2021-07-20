@@ -55,6 +55,7 @@ QHash<int, QByteArray> AssetsList::roleNames() const
         {static_cast<int>(Roles::RLongDesc),        "longDesc"},
         {static_cast<int>(Roles::RSiteUrl),         "siteUrl"},
         {static_cast<int>(Roles::RWhitePaper),      "whitePaper"},
+        {static_cast<int>(Roles::RVerified),        "verified"},
     };
     return roles;
 }
@@ -143,6 +144,8 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
             return _amgr->getSiteUrl(assetId);
         case Roles::RWhitePaper:
             return _amgr->getPaperUrl(assetId);
+        case Roles::RVerified:
+            return _amgr->isVerified(assetId);
         case Roles::RRate:
             {
                 auto rate = _ermgr.getRate(beam::wallet::Currency(assetId));
