@@ -145,7 +145,7 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
         case Roles::RWhitePaper:
             return _amgr->getPaperUrl(assetId);
         case Roles::RVerified:
-            return _amg->isVerified(assetId);
+            return _amgr->isVerified(assetId);
         case Roles::RRate:
             {
                 auto rate = _ermgr.getRate(beam::wallet::Currency(assetId));
