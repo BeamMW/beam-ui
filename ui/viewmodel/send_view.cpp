@@ -251,6 +251,7 @@ void SendViewModel::setToken(const QString& value)
         }
 
         emit tokenChanged();
+        emit tokenTipChanged();
         emit choiceChanged();
         emit canSendChanged();
     }
@@ -310,32 +311,6 @@ void SendViewModel::RefreshCsiAsync()
             isShielded);
 }
 
-QString SendViewModel::getTokenType() const
-{
-    using namespace beam::wallet;
-    const auto type = getTokenValid() ? GetAddressType(_token.toStdString()) : TxAddressType::Unknown;
-
-    switch(type)
-    {
-        case TxAddressType::PublicOffline:
-            //% "Public offline address"
-            return qtTrId("send-public-token");
-
-        case TxAddressType::MaxPrivacy:
-            //% "Max privacy address"
-            return qtTrId("send-maxp-token");
-
-        case TxAddressType::Offline:
-        case TxAddressType::Regular:
-            //% "Regular address"
-            return qtTrId("send-regular-token");
-
-        default:
-            //% "Unknown address"
-            return qtTrId("send-unknown-token");
-    }
-}
-
 bool SendViewModel::getCanChoose() const
 {
     using namespace beam::wallet;
@@ -354,6 +329,7 @@ void SendViewModel::setChoiceOffline(bool value)
     {
         _choiceOffline = value;
         emit choiceChanged();
+        emit tokenTipChanged();
         RefreshCsiAsync();
     }
 }
@@ -493,6 +469,9 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
                 );
             }
         }
+
+        _vouchersLeft = offlinePayments;
+        emit tokenTipChanged();
     }
     else
     {
@@ -513,6 +492,7 @@ void SendViewModel::extractParameters()
     _txParameters     = *txParameters;
     _receiverWalletID = beam::Zero;
     _receiverIdentity = beam::Zero;
+    _vouchersLeft     = 0;
     _newTokenMsg.clear();
 
     if (auto peerID = _txParameters.GetParameter<WalletID>(TxParameterID::PeerID); peerID)
@@ -525,6 +505,7 @@ void SendViewModel::extractParameters()
                 if (!vouchers->empty())
                 {
                     _walletModel.getAsync()->saveVouchers(*vouchers, _receiverWalletID);
+                    _vouchersLeft = vouchers->size();
                 }
             }
         }
@@ -597,6 +578,7 @@ Your version is: %2. Please, check for updates."
     #endif // BEAM_CLIENT_VERSION
 
     emit tokenChanged();
+    emit tokenTipChanged();
     RefreshCsiAsync();
 }
 
@@ -683,4 +665,55 @@ bool SendViewModel::getSendTypeOnline() const
     }
 
     return true;
+}
+
+QString SendViewModel::getTokenTip() const
+{
+    using namespace beam::wallet;
+    const auto type = GetAddressType(_token.toStdString());
+
+    if (type == TxAddressType::Regular || (type == TxAddressType::Offline && !_choiceOffline))
+    {
+        return "Online address. The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.";
+    }
+
+    if (type == TxAddressType::Offline && _choiceOffline)
+    {
+        QString left;
+
+        if (_vouchersLeft == 1)
+        {
+            //% "Offline address: %1 transaction left."
+            left = qtTrId("send-offline-tip-single").arg(_vouchersLeft);
+        }
+        else
+        {
+            //% "Offline address: %1 transactions left."
+            left = qtTrId("send-offline-tip-many").arg(_vouchersLeft);
+        }
+
+        if (_vouchersLeft < 4)
+        {
+            //% "Ask receiver to come online to support more offline transactions."
+            left += QString(" ") + qtTrId("send-receiver-online-tip");
+        }
+
+        //% "An offline transaction does not allow refund if funds have been sent."
+        QString noCancel = qtTrId("send-offline-refund");
+        return left + (_vouchersLeft < 4 ? QString("\n") : QString(" ")) + noCancel;
+    }
+
+    if (type == TxAddressType::MaxPrivacy)
+    {
+        return "Guarantees anonymity set of up to 64K. Transaction can last up to 72 hours.";
+    }
+
+    if (type == TxAddressType::PublicOffline)
+    {
+        //% "Public offline address"
+        return qtTrId("send-public-token");
+    }
+
+    //% "Unknown address"
+    return qtTrId("send-unknown-token");
 }

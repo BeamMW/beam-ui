@@ -162,8 +162,8 @@ ColumnLayout {
                                 font.italic:        true
                                 font.pixelSize:     12
                                 wrapMode:           Text.Wrap
-                                text:               viewModel.tokenType
                                 visible:            viewModel.tokenValid
+                                text:               viewModel.tokenTip
                             }
                         }
                     }
@@ -197,8 +197,8 @@ ColumnLayout {
                                         Layout.preferredHeight: 30
                                         Layout.preferredWidth: offlineCheck.width
                                         id: regularCheck
-                                        //% "Regular"
-                                        text:               qsTrId("tx-regular")
+                                        //% "Online"
+                                        text:               qsTrId("tx-online")
                                         ButtonGroup.group:  txTypeGroup
                                         checkable:          true
                                         hasShadow:          false

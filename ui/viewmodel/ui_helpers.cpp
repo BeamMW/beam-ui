@@ -468,11 +468,11 @@ namespace beamui
 
         if (type == TxAddressType::MaxPrivacy)
         {
-            //% "Max Privacy"
+            //% "Max Anonymity Set"
             return qtTrId("tx-max-privacy");
         }
 
-        //% "Regular"
+        //% "Online"
         return qtTrId("tx-regular");
     }
 

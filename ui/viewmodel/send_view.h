@@ -42,11 +42,11 @@ class SendViewModel: public QObject
     Q_PROPERTY(bool     tokenValid        READ getTokenValid                                     NOTIFY tokenChanged)
     Q_PROPERTY(QString  token             READ getToken             WRITE setToken               NOTIFY tokenChanged)
     Q_PROPERTY(QString  newTokenMsg       READ getNewTokenMsg                                    NOTIFY tokenChanged)
-    Q_PROPERTY(QString  tokenType         READ getTokenType                                      NOTIFY tokenChanged)
     Q_PROPERTY(bool     canChoose         READ getCanChoose                                      NOTIFY tokenChanged)
+    Q_PROPERTY(bool     choiceOffline     READ getChoiceOffline     WRITE setChoiceOffline       NOTIFY choiceChanged)
     Q_PROPERTY(QString  sendType          READ getSendType                                       NOTIFY choiceChanged)
     Q_PROPERTY(bool     sendTypeOnline    READ getSendTypeOnline                                 NOTIFY choiceChanged)
-    Q_PROPERTY(bool     choiceOffline     READ getChoiceOffline     WRITE setChoiceOffline       NOTIFY choiceChanged)
+    Q_PROPERTY(QString  tokenTip          READ getTokenTip                                       NOTIFY tokenTipChanged)
 
 public:
     SendViewModel();
@@ -78,8 +78,8 @@ public:
     [[nodiscard]] QString getChangeAsset() const;
     [[nodiscard]] QString getMaxSendAmount() const;
     [[nodiscard]] QString getNewTokenMsg() const;
-    [[nodiscard]] QString getTokenType() const;
     [[nodiscard]] QString getSendType() const;
+    [[nodiscard]] QString getTokenTip() const;
     [[nodiscard]] bool getIsEnough() const;
     [[nodiscard]] bool getIsEnoughAmount() const;
     [[nodiscard]] bool getIsEnoughFee() const;
@@ -101,6 +101,7 @@ signals:
     void commentChanged();
     void canSendChanged();
     void tokenChanged();
+    void tokenTipChanged();
     void choiceChanged();
     void sendMoneyVerified();
     void cantSendToExpired();
@@ -112,7 +113,7 @@ public slots:
 private:
     void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
     void extractParameters();
-    bool _maxPossible   = false;
+
 
 private:
     [[nodiscard]] beam::Amount getTotalSpend() const;
@@ -131,4 +132,6 @@ private:
     QString                    _publicOfflineAddr;
     bool                       _choiceOffline = false;
     beam::wallet::TxParameters _txParameters;
+    bool                       _maxPossible = false;
+    unsigned                   _vouchersLeft = 0;
 };

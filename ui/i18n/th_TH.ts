@@ -1778,12 +1778,13 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>โทเค็น</translation>
     </message>
     <message id="tx-regular">
-        <source>Regular</source>
+        <source>Online</source>
+        <oldsource>Regular</oldsource>
         <translation type="unfinished">ปกติ</translation>
     </message>
     <message id="tx-max-privacy">
-        <source>Max Privacy</source>
-        <oldsource>Max privacy</oldsource>
+        <source>Max Anonymity Set</source>
+        <oldsource>Max Privacy</oldsource>
         <translation type="unfinished">Max privacy</translation>
     </message>
     <message id="error-peer-exists">
@@ -2665,16 +2666,8 @@ For an online payment to complete, you should get online during the 12 hours aft
         <source>Public offline address</source>
         <translation type="unfinished">Public offline address</translation>
     </message>
-    <message id="send-maxp-token">
-        <source>Max privacy address</source>
-        <translation type="unfinished">Max privacy address</translation>
-    </message>
     <message id="send-unknown-token">
         <source>Unknown address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-regular-token">
-        <source>Regular address</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-title">
@@ -3158,6 +3151,26 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     </message>
     <message id="address-info-regular-notice">
         <source>Regular address includes both online and offline addresses.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-online">
+        <source>Online</source>
+        <translation type="unfinished">ปกติ</translation>
+    </message>
+    <message id="send-offline-tip-single">
+        <source>Offline address: %1 transaction left.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-offline-tip-many">
+        <source>Offline address: %1 transactions left.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-receiver-online-tip">
+        <source>Ask receiver to come online to support more offline transactions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-offline-refund">
+        <source>An offline transaction does not allow refund if funds have been sent.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
