@@ -111,7 +111,7 @@ public slots:
     void onPublicAddress(const QString&);
 
 private:
-    void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments);
+    void onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments);
     void extractParameters();
 
 
@@ -133,5 +133,5 @@ private:
     bool                       _choiceOffline = false;
     beam::wallet::TxParameters _txParameters;
     bool                       _maxPossible = false;
-    unsigned                   _vouchersLeft = 0;
+    size_t                     _vouchersLeft = 0;
 };

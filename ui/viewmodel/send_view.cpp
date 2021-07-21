@@ -416,7 +416,7 @@ void SendViewModel::saveReceiverAddress(const QString& comment)
     }
 }
 
-void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
+void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments)
 {
     using namespace beam::wallet;
 
@@ -540,7 +540,7 @@ void SendViewModel::extractParameters()
     {
         _walletModel.getAsync()->getAddress(_receiverWalletID, [this](const boost::optional<WalletAddress>& addr, size_t c)
         {
-            onGetAddressReturned(addr, static_cast<int>(c));
+            onGetAddressReturned(addr, c);
         });
     }
     else
@@ -548,7 +548,7 @@ void SendViewModel::extractParameters()
         // Max privacy & public offline tokens do not have valid PeerID (_receiverWalletID)
         _walletModel.getAsync()->getAddressByToken(_token.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
         {
-            onGetAddressReturned(addr, static_cast<int>(c));
+            onGetAddressReturned(addr, c);
         });
     }
 
