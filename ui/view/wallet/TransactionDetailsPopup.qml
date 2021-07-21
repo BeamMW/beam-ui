@@ -674,7 +674,6 @@ CustomDialog {
     }
 
     onOpened: {
-        console.log(grid.height);
         dialog.height = grid.height + 260;
     }
 
