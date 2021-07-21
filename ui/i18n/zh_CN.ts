@@ -2667,9 +2667,10 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment. For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <oldsource>Sender will be given a choice between online and offline payment. For online payment to complete, you should get online during the 12 hours after coins are sent.</oldsource>
-        <translation type="unfinished"></translation>
+        <source>Sender will be given a choice between online and offline payment.
+For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
+        <translation type="unfinished">Sender will be given a choice between online and offline payment.
+For an online payment to complete, you should get online during the 12 hours after coins are sent.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address</source>

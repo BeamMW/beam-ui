@@ -99,6 +99,7 @@ CustomDialog {
                                 font.pixelSize: 14
                                 font.italic:    true
                                 color:          Style.content_disabled
+                                visible:        !viewModel.isMaxPrivacy
                                 //% "Regular address includes both online and offline addresses."
                                 text: qsTrId("address-info-regular-notice")
                             }

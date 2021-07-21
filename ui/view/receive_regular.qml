@@ -380,7 +380,7 @@ ColumnLayout {
                 color:                 Style.content_disabled
                 wrapMode:              Text.WordWrap
                 horizontalAlignment:   Text.AlignHCenter
-                //% "Sender will be given a choice between online and offline payment. For an online payment to complete, you should get online during the 12 hours after coins are sent."
+                //% "Sender will be given a choice between online and offline payment.\nFor an online payment to complete, you should get online during the 12 hours after coins are sent."
                 text: qsTrId("wallet-receive-text-online-time")
                 visible:               !viewModel.isMaxPrivacy
             }
