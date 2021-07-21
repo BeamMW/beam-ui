@@ -311,6 +311,7 @@ CustomDialog {
                     RowLayout {
                         Layout.fillWidth: true
                         Layout.maximumWidth : dialog.width - 60
+                        Layout.maximumHeight: 34
 
                         BeamAmount {
                             id: amountField
@@ -381,6 +382,7 @@ CustomDialog {
 
             RowLayout {
                 visible: dialog.fee.length && stm.state == "tx_info"
+                Layout.maximumHeight: !dialog.feeRate.length || dialog.feeRate == "0" ? 20 : 34
                 BeamAmount {
                     id: feeField
                     Layout.fillWidth: true
@@ -672,6 +674,7 @@ CustomDialog {
     }
 
     onOpened: {
+        console.log(grid.height);
         dialog.height = grid.height + 260;
     }
 
