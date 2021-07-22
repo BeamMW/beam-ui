@@ -303,8 +303,8 @@ ColumnLayout {
 
             onContextMenuRequested: function (req) {
                 if (req.mediaType == ContextMenuRequest.MediaTypeNone && !req.linkText) {
-                    if (req.isContentEditable) return
-                    if (req.selectedText) return
+                  // if (req.isContentEditable) return
+                  if (req.selectedText) return
                 }
                 req.accepted = true
             }
