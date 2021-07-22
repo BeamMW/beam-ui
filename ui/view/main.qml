@@ -401,7 +401,7 @@ Rectangle {
         if (content.item.openAppTx) {
             return content.item.openAppTx(txid)
         }
-        updateItem("applications", {"openedTxID": id})
+        updateItem("applications", {"openedTxID": txid})
     }
 
     function openSwapTransactionDetails(id) {

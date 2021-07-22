@@ -267,6 +267,7 @@ ColumnLayout {
 
                 onClicked: {
                     if (enabled) {
+                        viewModel.markItemAsRead(model.rawID);
                         control.notifications[type].action(model.rawID);
                     }
                 }
