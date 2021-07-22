@@ -75,19 +75,22 @@ ColumnLayout {
             const dialog = Qt.createComponent("send_confirm.qml")
             const instance = dialog.createObject(control,
                 {
-                    //% "Contract transaction"
-                    typeText:       qsTrId("general-contract-transaction"),
                     amounts:        amounts,
                     rateUnit:       info["rateUnit"],
                     fee:            info["fee"],
                     feeRate:        info["feeRate"],
                     comment:        info["comment"],
+                    isSpend:        info["isSpend"],
                     appMode:        true,
                     isOnline:       false,
                     showPrefix:     true,
                     assetsProvider: webapiCreator,
                     isEnough:       info.isEnough
                 })
+
+            if (info["title"]) {
+                instance.title = info["title"]
+            }
 
             instance.Component.onDestruction.connect(function () {
                  if (instance.result == Dialog.Accepted) {
@@ -102,7 +105,7 @@ ColumnLayout {
         }
 
         onApproveSend: function(request, info) {
-            var dialog   = Qt.createComponent("send_confirm.qml")
+            var dialog = Qt.createComponent("send_confirm.qml")
             var instance = dialog.createObject(control,
                 {
                     addressText:    info["token"],
@@ -122,6 +125,10 @@ ColumnLayout {
                     assetsProvider: webapiCreator,
                     isEnough:       info.isEnough
                 })
+
+            if (info["title"]) {
+                instance.title = info["title"]
+            }
 
             instance.Component.onDestruction.connect(function () {
                  if (instance.result == Dialog.Accepted) {

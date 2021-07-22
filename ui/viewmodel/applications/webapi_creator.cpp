@@ -172,23 +172,14 @@ namespace beamui::applications
         info.insert("feeRate",    AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID)));
         info.insert("assetID",    assetId);
         info.insert("rateUnit",   _amgr->getRateUnit());
-        info.insert("token",      QString::fromStdString(pinfo.minfo.token));
-        info.insert("tokenType",  GetTokenTypeUIString(pinfo.minfo.token, pinfo.minfo.spendOffline));
+        info.insert("token",      QString::fromStdString(pinfo.minfo.token ? *pinfo.minfo.token : std::string()));
         info.insert("isOnline",   !pinfo.minfo.spendOffline);
-        info.insert("comment",    QString::fromStdString(pinfo.minfo.comment));
 
-        if (const auto params = ParseParameters(pinfo.minfo.token))
-        {
-            if (const auto walletID = params->GetParameter<beam::wallet::WalletID>(TxParameterID::PeerID))
-            {
-                const auto widStr = std::to_string(*walletID);
-                info.insert("walletID", QString::fromStdString(widStr));
-            }
-        }
-        else
-        {
-            assert(!"Failed to parse token");
-        }
+        std::string comment = pinfo.minfo.confirm_comment ? *pinfo.minfo.confirm_comment : (pinfo.minfo.comment ? *pinfo.minfo.comment : std::string());
+        info.insert("comment", QString::fromStdString(comment));
+
+        const auto title = pinfo.minfo.confirm_title ? *pinfo.minfo.confirm_title : std::string();
+        info.insert("title", QString::fromStdString(title));
 
         std::weak_ptr<bool> wp = _sendCSIGuard;
         _asyncWallet->selectCoins(beam::AmountBig::get_Lo(amount), fee, assetId, false, [this, wp, request, info](const CoinsSelectionInfo& csi) mutable {
@@ -211,10 +202,17 @@ namespace beamui::applications
         decltype(_mappedAssets)().swap(_mappedAssets);
 
         ApproveMap info;
-        info.insert("comment",   QString::fromStdString(pinfo.minfo.comment));
+        info.insert("comment",   QString::fromStdString(pinfo.minfo.comment ? *pinfo.minfo.comment : std::string()));
         info.insert("fee",       AmountToUIString(pinfo.minfo.fee));
         info.insert("feeRate",   AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID)));
         info.insert("rateUnit",  _amgr->getRateUnit());
+        info.insert("isSpend",   !pinfo.minfo.spend.empty());
+
+        std::string comment = pinfo.minfo.confirm_comment ? *pinfo.minfo.confirm_comment : (pinfo.minfo.comment ? *pinfo.minfo.comment : std::string());
+        info.insert("comment", QString::fromStdString(comment));
+
+        const auto title = pinfo.minfo.confirm_title ? *pinfo.minfo.confirm_title : std::string();
+        info.insert("title", QString::fromStdString(title));
 
         bool isEnough = true;
         ApproveAmounts amounts;

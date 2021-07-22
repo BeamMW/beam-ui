@@ -2907,11 +2907,8 @@ For an online payment to complete, you should get online during the 12 hours aft
         <translation type="unfinished"></translation>
     </message>
     <message id="send-app-confirmation-title">
-        <source>Confirm Application Transaction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="general-contract-transaction">
-        <source>Contract transaction</source>
+        <source>Confirm application transaction</source>
+        <oldsource>Confirm Application Transaction</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-contract-only-fee">
@@ -3167,6 +3164,10 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     </message>
     <message id="send-offline-refund">
         <source>An offline transaction does not allow refund if funds have been sent.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-confirm">
+        <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
