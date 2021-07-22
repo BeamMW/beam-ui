@@ -226,15 +226,26 @@ ConfirmationDialog {
 
         SFText {
             Layout.columnSpan: 2
+            Layout.topMargin: 2
             Layout.fillWidth: true
-            visible: !isEnough
-            color: Style.validator_error
-            font.italic: true
-            font.pixelSize:         14
             horizontalAlignment: Text.AlignHCenter
+
+            visible:  !isEnough || (appMode && isSpend)
+            color:    Style.validator_error
             wrapMode: Text.Wrap
-            //% "There is not enough funds to complete the transaction"
-            text: qsTrId("send-not-enough")
+
+            font {
+                italic: true
+                pixelSize: 14
+            }
+
+            text: {
+                //% "There is not enough funds to complete the transaction"
+                if (!isEnough) return qsTrId("send-not-enough")
+
+                //% "Clicking confirm would spend funds"
+                return qsTrId("send-spend-warning")
+            }
         }
 
         //
@@ -301,7 +312,7 @@ ConfirmationDialog {
 
         Item {
             Layout.columnSpan: 2
-            height: 10
+            height: 1
         }
     }
 }

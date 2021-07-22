@@ -3173,5 +3173,9 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="send-spend-warning">
+        <source>Clicking confirm would spend funds</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
