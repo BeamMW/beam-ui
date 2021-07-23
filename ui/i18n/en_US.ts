@@ -3164,5 +3164,9 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
         <translation>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</translation>
     </message>
+    <message id="send-mp-tip">
+        <source>Transaction can last up to 72 hours.</source>
+        <translation>Transaction can last up to 72 hours.</translation>
+    </message>
 </context>
 </TS>

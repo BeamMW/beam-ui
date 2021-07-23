@@ -737,7 +737,7 @@ QString SendViewModel::getTokenTip2() const
 
     if (type == TxAddressType::MaxPrivacy)
     {
-        //% "Transaction can last up to 72 hours.";
+        //% "Transaction can last up to 72 hours."
         return qtTrId("send-mp-tip");
     }
 
