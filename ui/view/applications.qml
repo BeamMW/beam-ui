@@ -222,7 +222,7 @@ ColumnLayout {
                     }
 
                     if (control.activeApp || control.appToOpen) {
-                        //% "Please wait, %1 is loading."
+                        //% "Please wait, %1 is loading"
                         return qsTrId("apps-loading-app").arg(
                             (control.activeApp || control.appToOpen).name
                         )
