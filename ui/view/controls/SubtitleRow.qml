@@ -5,6 +5,7 @@ Item {
     id: control
 
     property alias text: title.text
+    property alias showBack: backBtn.visible
     property var onBack
 
     CustomButton {
@@ -25,7 +26,7 @@ Item {
         //% "Back"
         text:         qsTrId("general-back")
         icon.source:  "qrc:/assets/icon-back.svg"
-        visible:      !!control.text
+        visible:      true
 
         onClicked: control.onBack()
     }

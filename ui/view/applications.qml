@@ -17,6 +17,7 @@ ColumnLayout {
     property var      activeApp: undefined
     property var      appToOpen: undefined
     property string   openedTxID: ""
+    property bool     showBack: true
     readonly property bool hasApps: !!appsList && appsList.length > 0
 
     function openAppTx (txid) {
@@ -51,9 +52,10 @@ ColumnLayout {
         Layout.fillWidth:    true
         Layout.topMargin:    50
         Layout.bottomMargin: 20
-        visible: !appsView.visible
 
-        text: ((control.activeApp || {}).name || "")
+        visible:  !appsView.visible
+        showBack: control.showBack && !!text
+        text:     ((control.activeApp || {}).name || "")
 
         onBack: function () {
             main.openApplications()

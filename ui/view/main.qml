@@ -167,12 +167,10 @@ Rectangle {
         return BeamGlobals.isFork3() ? "applications" : "applications_nofork"
     }
 
-    function appArgs (name, id) {
+    function appArgs (name, appid, showBack) {
         return {
-            "appToOpen": {
-                "name": name,
-                "appid": id
-            }
+            "appToOpen": { name, appid},
+            showBack
         }
     }
 
@@ -183,7 +181,7 @@ Rectangle {
         {name: "addresses"},
         {name: "notifications"},
         {name: "applications", qml: appsQml},
-        {name: "daocore", qml: appsQml, args: () => appArgs("BEAM DAO CORE", viewModel.daoCoreAppID)},
+        {name: "daocore", qml: appsQml, args: () => appArgs("BEAM DAO CORE", viewModel.daoCoreAppID, false)},
         {name: "settings"}
     ]
 
