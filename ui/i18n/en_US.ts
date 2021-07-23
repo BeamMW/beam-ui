@@ -3130,18 +3130,19 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     </message>
     <message id="send-offline-tip-single">
         <source>Offline address: %1 transaction left.</source>
-        <translation type="unfinished"></translation>
+        <translation>Offline address: %1 transaction left.</translation>
     </message>
     <message id="send-offline-tip-many">
         <source>Offline address: %1 transactions left.</source>
-        <translation type="unfinished"></translation>
+        <translation>Offline address: %1 transactions left.</translation>
     </message>
     <message id="send-receiver-online-tip">
         <source>Ask receiver to come online to support more offline transactions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ask receiver to come online to support more offline transactions.</translation>
     </message>
     <message id="send-offline-refund">
-        <source>An offline transaction does not allow refund if funds have been sent.</source>
+        <source>Make sure the address is correct as offline transactions cannot be canceled.</source>
+        <oldsource>An offline transaction does not allow refund if funds have been sent.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="general-confirm">
@@ -3150,6 +3151,14 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     </message>
     <message id="send-spend-warning">
         <source>Clicking confirm would spend funds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-online-address">
+        <source>Online address.</source>
+        <translation>Online address.</translation>
+    </message>
+    <message id="send-anon-set">
+        <source></source>
         <translation type="unfinished"></translation>
     </message>
 </context>
