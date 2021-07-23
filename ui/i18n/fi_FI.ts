@@ -3167,8 +3167,10 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <translation type="unfinished">Ask receiver to come online to support more offline transactions.</translation>
     </message>
     <message id="send-offline-refund">
-        <source>Make sure the address is correct as offline transactions cannot be canceled.</source>
-        <translation type="unfinished">Make sure the address is correct as offline transactions cannot be canceled.</translation>
+        <source>Make sure the address is correct as offline transactions
+cannot be canceled.</source>
+        <translation type="unfinished">Make sure the address is correct as offline transactions
+cannot be canceled.</translation>
     </message>
     <message id="general-confirm">
         <source>Confirm</source>

@@ -537,9 +537,8 @@ ColumnLayout {
             // Footers
             //
             CustomButton {
-                Layout.alignment:    Qt.AlignHCenter
-                Layout.topMargin:    30
-                Layout.bottomMargin: 30
+                Layout.alignment: Qt.AlignHCenter
+                Layout.topMargin: 30
                 //% "Send"
                 text:                qsTrId("general-send")
                 palette.buttonText:  Style.content_opposite
@@ -579,17 +578,18 @@ ColumnLayout {
                 Layout.alignment:      Qt.AlignHCenter
                 Layout.preferredWidth: 400
                 Layout.topMargin:      15
-                Layout.bottomMargin:   50
                 font.pixelSize:        14
                 font.italic:           true
                 color:                 Style.content_disabled
                 wrapMode:              Text.WordWrap
                 horizontalAlignment:   Text.AlignHCenter
                 text:                  viewModel.tokenTip2
+                visible:               !!text
             }
 
             Item {
                 Layout.fillHeight: true
+                Layout.bottomMargin: 20
             }
         }  // ColumnLayout
     }  // ScrollView

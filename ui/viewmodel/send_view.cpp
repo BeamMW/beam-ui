@@ -731,7 +731,7 @@ QString SendViewModel::getTokenTip2() const
 
     if (type == TxAddressType::Offline && _choiceOffline)
     {
-        //% "Make sure the address is correct as offline transactions cannot be canceled."
+        //% "Make sure the address is correct as offline transactions\ncannot be canceled."
         return qtTrId("send-offline-refund");
     }
 
