@@ -2644,8 +2644,8 @@ For an online payment to complete, you should get online during the 12 hours aft
 For an online payment to complete, you should get online during the 12 hours after coins are sent.</translation>
     </message>
     <message id="send-public-token">
-        <source>Public offline address</source>
-        <translation type="unfinished">Public offline address</translation>
+        <source>Public offline address.</source>
+        <translation>Public offline address.</translation>
     </message>
     <message id="send-unknown-token">
         <source>Unknown address</source>
@@ -3158,8 +3158,8 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <translation>Online address.</translation>
     </message>
     <message id="send-anon-set">
-        <source></source>
-        <translation type="unfinished"></translation>
+        <source>Guarantees anonymity set of up to 64K.</source>
+        <translation>Guarantees anonymity set of up to 64K.</translation>
     </message>
 </context>
 </TS>

@@ -2663,7 +2663,7 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="send-public-token">
         <source>Public offline address</source>
-        <translation type="unfinished">Dirección pública fuera de línea</translation>
+        <translation>Dirección pública fuera de línea.</translation>
     </message>
     <message id="send-unknown-token">
         <source>Unknown address</source>
@@ -3183,8 +3183,8 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <translation type="unfinished">Online address.</translation>
     </message>
     <message id="send-anon-set">
-        <source></source>
-        <translation type="unfinished"></translation>
+        <source>Guarantees anonymity set of up to 64K.</source>
+        <translation type="unfinished">Guarantees anonymity set of up to 64K.</translation>
     </message>
 </context>
 </TS>

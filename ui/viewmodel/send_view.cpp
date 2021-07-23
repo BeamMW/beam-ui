@@ -704,17 +704,17 @@ QString SendViewModel::getTokenTip() const
 
     if (type == TxAddressType::MaxPrivacy)
     {
-        //% "Guarantees anonymity set of up to 64K.";
+        //% "Guarantees anonymity set of up to 64K."
         return qtTrId("send-anon-set");
     }
 
     if (type == TxAddressType::PublicOffline)
     {
-        //% "Public offline address"
+        //% "Public offline address."
         return qtTrId("send-public-token");
     }
 
-    //% "Unknown address"
+    //% "Unknown address."
     return qtTrId("send-unknown-token");
 }
 
@@ -725,7 +725,8 @@ QString SendViewModel::getTokenTip2() const
 
     if (type == TxAddressType::Regular || (type == TxAddressType::Offline && !_choiceOffline))
     {
-        return "The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.";
+        //% "The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards."
+        return qtTrId("send-online-tip");
     }
 
     if (type == TxAddressType::Offline && _choiceOffline)
