@@ -2665,8 +2665,8 @@ For an online payment to complete, you should get online during the 12 hours aft
         <translation type="unfinished">Veřejná offline adresa.</translation>
     </message>
     <message id="send-unknown-token">
-        <source>Unknown address</source>
-        <translation type="unfinished"></translation>
+        <source>Unknown address.</source>
+        <translation type="unfinished">Unknown address.</translation>
     </message>
     <message id="send-title">
         <source>Send</source>
@@ -3166,8 +3166,7 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     </message>
     <message id="send-offline-refund">
         <source>Make sure the address is correct as offline transactions cannot be canceled.</source>
-        <oldsource>An offline transaction does not allow refund if funds have been sent.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Make sure the address is correct as offline transactions cannot be canceled.</translation>
     </message>
     <message id="general-confirm">
         <source>Confirm</source>
@@ -3184,6 +3183,10 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     <message id="send-anon-set">
         <source>Guarantees anonymity set of up to 64K.</source>
         <translation type="unfinished">Guarantees anonymity set of up to 64K.</translation>
+    </message>
+    <message id="send-online-tip">
+        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
+        <translation type="unfinished">The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</translation>
     </message>
 </context>
 </TS>
