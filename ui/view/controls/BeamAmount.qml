@@ -239,7 +239,7 @@ Control {
 
                 SFLabel {
                     id:               amountText
-                    font.pixelSize:   control.font.pixelSize
+                    font:             control.font
                     color:            control.error ? Style.validator_error : control.color
                     onCopyText:       BeamGlobals.copyToClipboard(amount)
                     copyMenuEnabled:  true

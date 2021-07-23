@@ -332,6 +332,7 @@ CustomDialog {
                                 ? "(" + qsTrId("tx-details-rate-notice") + ")"
                                 //% "exchange rate was not available at the time of transaction"
                                 : "(" + qsTrId("tx-details-exchange-rate-not-available") + ")"
+                            rateFontSize:     12
                             showTip:          false
                             maxUnitChars:     25
                             maxPaintedWidth:  false
@@ -387,14 +388,15 @@ CustomDialog {
                     id: feeField
                     Layout.fillWidth: true
 
-                    amount:    dialog.fee
-                    unitName:  dialog.feeUnit
-                    rateUnit:  dialog.feeRateUnit
-                    rate:      dialog.feeRate
-                    showTip:   false
-                    maxPaintedWidth: false
-                    iconSource:   "qrc:/assets/icon-beam.svg"
-                    iconSize:     Qt.size(20, 20)
+                    amount:           dialog.fee
+                    unitName:         dialog.feeUnit
+                    rateUnit:         dialog.feeRateUnit
+                    rate:             dialog.feeRate
+                    rateFontSize:     12
+                    showTip:          false
+                    maxPaintedWidth:  false
+                    iconSource:       "qrc:/assets/icon-beam.svg"
+                    iconSize:         Qt.size(20, 20)
                     iconAnchorCenter: false
                 }
             }
