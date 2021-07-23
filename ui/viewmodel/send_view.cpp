@@ -674,7 +674,8 @@ QString SendViewModel::getTokenTip() const
 
     if (type == TxAddressType::Regular || (type == TxAddressType::Offline && !_choiceOffline))
     {
-        return "Online address. The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.";
+        //% "Online address."
+        return qtTrId("send-online-address");
     }
 
     if (type == TxAddressType::Offline && _choiceOffline)
@@ -698,14 +699,13 @@ QString SendViewModel::getTokenTip() const
             left += QString(" ") + qtTrId("send-receiver-online-tip");
         }
 
-        //% "An offline transaction does not allow refund if funds have been sent."
-        QString noCancel = qtTrId("send-offline-refund");
-        return left + (_vouchersLeft < 4 ? QString("\n") : QString(" ")) + noCancel;
+        return left;
     }
 
     if (type == TxAddressType::MaxPrivacy)
     {
-        return "Guarantees anonymity set of up to 64K. Transaction can last up to 72 hours.";
+        //% "Guarantees anonymity set of up to 64K.";
+        return qtTrId("send-anon-set");
     }
 
     if (type == TxAddressType::PublicOffline)
@@ -716,4 +716,28 @@ QString SendViewModel::getTokenTip() const
 
     //% "Unknown address"
     return qtTrId("send-unknown-token");
+}
+
+QString SendViewModel::getTokenTip2() const
+{
+    using namespace beam::wallet;
+    const auto type = GetAddressType(_token.toStdString());
+
+    if (type == TxAddressType::Regular || (type == TxAddressType::Offline && !_choiceOffline))
+    {
+        return "The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.";
+    }
+
+    if (type == TxAddressType::Offline && _choiceOffline)
+    {
+        //% "Make sure the address is correct as offline transactions cannot be canceled."
+        return qtTrId("send-offline-refund");
+    }
+
+    if (type == TxAddressType::MaxPrivacy)
+    {
+        return "Transaction can last up to 72 hours.";
+    }
+
+    return "";
 }

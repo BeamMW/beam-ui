@@ -47,6 +47,7 @@ class SendViewModel: public QObject
     Q_PROPERTY(QString  sendType          READ getSendType                                       NOTIFY choiceChanged)
     Q_PROPERTY(bool     sendTypeOnline    READ getSendTypeOnline                                 NOTIFY choiceChanged)
     Q_PROPERTY(QString  tokenTip          READ getTokenTip                                       NOTIFY tokenTipChanged)
+    Q_PROPERTY(QString  tokenTip2         READ getTokenTip2                                      NOTIFY tokenTipChanged)
 
 public:
     SendViewModel();
@@ -80,6 +81,7 @@ public:
     [[nodiscard]] QString getNewTokenMsg() const;
     [[nodiscard]] QString getSendType() const;
     [[nodiscard]] QString getTokenTip() const;
+    [[nodiscard]] QString getTokenTip2() const;
     [[nodiscard]] bool getIsEnough() const;
     [[nodiscard]] bool getIsEnoughAmount() const;
     [[nodiscard]] bool getIsEnoughFee() const;

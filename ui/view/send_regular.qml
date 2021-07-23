@@ -575,6 +575,19 @@ ColumnLayout {
                 }
             }
 
+            SFText {
+                Layout.alignment:      Qt.AlignHCenter
+                Layout.preferredWidth: 400
+                Layout.topMargin:      15
+                Layout.bottomMargin:   50
+                font.pixelSize:        14
+                font.italic:           true
+                color:                 Style.content_disabled
+                wrapMode:              Text.WordWrap
+                horizontalAlignment:   Text.AlignHCenter
+                text:                  viewModel.tokenTip2
+            }
+
             Item {
                 Layout.fillHeight: true
             }
