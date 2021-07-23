@@ -74,7 +74,6 @@ CustomDialog {
     header: ColumnLayout {
         SFText {
             Layout.topMargin: 30
-            Layout.bottomMargin: 30
             Layout.alignment: Qt.AlignHCenter
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 18
@@ -105,6 +104,8 @@ CustomDialog {
 
         RowLayout {
             Layout.alignment: Qt.AlignHCenter
+            Layout.topMargin: 30
+            visible:          dialog.hasPaymentProof && !dialog.isSelfTx
 
             Row {
                 TxFilter {
@@ -126,7 +127,6 @@ CustomDialog {
                             stm.state = "payment_proof";
                         }
                     }
-                    visible: dialog.hasPaymentProof && !dialog.isSelfTx
                 }
             }
         }
@@ -135,7 +135,7 @@ CustomDialog {
             id: grid
             Layout.leftMargin: 30
             Layout.rightMargin: 30
-            Layout.topMargin: 30
+            Layout.topMargin: dialog.hasPaymentProof && !dialog.isSelfTx ? 30 : 40
             Layout.alignment: Qt.AlignTop
             columnSpacing: 40
             rowSpacing: 14
@@ -345,6 +345,7 @@ CustomDialog {
                         }
 
                         SFText {
+                            Layout.alignment: Qt.AlignTop
                             font.pixelSize: 14
                             color: Style.content_secondary
                             //% "Confidential asset ID"
@@ -353,6 +354,7 @@ CustomDialog {
                         }
                         SFLabel {
                             id: assetIdField
+                            Layout.alignment: Qt.AlignTop
                             copyMenuEnabled: true
                             font.pixelSize: 14
                             color: Style.content_main
@@ -361,7 +363,7 @@ CustomDialog {
                             visible: dialog.assetIDs[index] != "0"
                         }
                         CustomToolButton {
-                            Layout.alignment: Qt.AlignRight
+                            Layout.alignment: Qt.AlignRight | Qt.AlignTop
                             icon.source: "qrc:/assets/icon-copy.svg"
                             onClicked: textCopied(dialog.assetIDs[index])
                             visible: dialog.assetIDs[index] != "0"
@@ -677,7 +679,7 @@ CustomDialog {
     }
 
     onOpened: {
-        dialog.height = grid.height + (dialog.hasPaymentProof ? 280 : 260);
+        dialog.height = grid.height + (dialog.hasPaymentProof && !dialog.isSelfTx ? 280 : 200);
     }
 
     onClosed: {
