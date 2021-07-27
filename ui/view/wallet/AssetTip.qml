@@ -147,8 +147,8 @@ AlphaTipPopup {
                     rate:           assetInfo.rate
                     color:          assetTip.defTextColor
 
-                    font.styleName:  "DemiBold"
-                    font.weight:     Font.DemiBold
+                    font.styleName:  "Normal"
+                    font.weight:     Font.Normal
                     font.pixelSize:  13
                     maxPaintedWidth: false
                     maxUnitChars:    20
@@ -178,8 +178,8 @@ AlphaTipPopup {
                     color:          assetTip.defTextColor
                     visible:        amount != "0"
 
-                    font.styleName:  "DemiBold"
-                    font.weight:     Font.DemiBold
+                    font.styleName:  "Normal"
+                    font.weight:     Font.Normal
                     font.pixelSize:  13
                     maxPaintedWidth: false
                     maxUnitChars:    20
@@ -209,8 +209,8 @@ AlphaTipPopup {
                     color:          assetTip.defTextColor
                     visible:        amount != "0"
 
-                    font.styleName:  "DemiBold"
-                    font.weight:     Font.DemiBold
+                    font.styleName:  "Normal"
+                    font.weight:     Font.Normal
                     font.pixelSize:  13
                     maxPaintedWidth: false
                     maxUnitChars:    20
@@ -250,8 +250,8 @@ AlphaTipPopup {
                     amount:       assetInfo.locked
                     visible:      amount != "0"
 
-                    font.styleName:  "DemiBold"
-                    font.weight:     Font.DemiBold
+                    font.styleName:  "Normal"
+                    font.weight:     Font.Normal
                     font.pixelSize:  13
                     maxPaintedWidth: false
                     maxUnitChars:    20
@@ -280,8 +280,8 @@ AlphaTipPopup {
                     amount:       assetInfo.maturingRegular
                     visible:      amount != "0"
 
-                    font.styleName:  "DemiBold"
-                    font.weight:     Font.DemiBold
+                    font.styleName:  "Normal"
+                    font.weight:     Font.Normal
                     font.pixelSize:  13
                     maxPaintedWidth: false
                     maxUnitChars:    20
@@ -310,8 +310,8 @@ AlphaTipPopup {
                     amount:       assetInfo.change
                     visible:      amount != "0"
 
-                    font.styleName:  "DemiBold"
-                    font.weight:     Font.DemiBold
+                    font.styleName:  "Normal"
+                    font.weight:     Font.Normal
                     font.pixelSize:  13
                     maxPaintedWidth: false
                     maxUnitChars:    20
@@ -345,8 +345,8 @@ AlphaTipPopup {
                         color:        assetTip.defTextColor
                         amount:       assetInfo.maturingMP
 
-                        font.styleName:  "DemiBold"
-                        font.weight:     Font.DemiBold
+                        font.styleName:  "Normal"
+                        font.weight:     Font.Normal
                         font.pixelSize:  13
                         maxPaintedWidth: false
                         maxUnitChars:    20
