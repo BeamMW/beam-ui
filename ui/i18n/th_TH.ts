@@ -3178,7 +3178,7 @@ cannot be canceled.</translation>
     </message>
     <message id="send-type-label">
         <source>Transaction type</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ประเภทธุรกรรม</translation>
     </message>
     <message id="send-twoway-warning">
         <source>%1 Dapp will change the balances of your wallet</source>
