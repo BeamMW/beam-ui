@@ -241,7 +241,7 @@ ConfirmationDialog {
                 Layout.minimumHeight:   16
                 font.pixelSize:         14
                 color:                  Style.content_main
-                //% "To broadcast your transaction please enter your password"
+                //% "To approve the transaction please enter your password"
                 text:                   qsTrId("send-confirmation-pwd-require-message")
             }
 

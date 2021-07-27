@@ -20,6 +20,7 @@ ConfirmationDialog {
     property alias  typeText:    typeLabel.text
     property bool   isOnline:    true
     property bool   appMode:     false
+    property string appName:     ""
     property bool   showPrefix:  false
     property alias  comment:     commentCtrl.text
     property var    amounts
@@ -31,14 +32,46 @@ ConfirmationDialog {
     property string feeRate:  "0"
     property string feeUnit:  BeamGlobals.beamUnit
     property bool   isEnough: true
-    property bool   isSpend:  true
+
+    readonly property bool isSpend:  {
+        for (var idx = 0; idx < amounts.length; ++idx) {
+            if (amounts[idx].spend) {
+                return true
+            }
+        }
+        return false
+    }
+
+    readonly property bool isReceive: {
+        for (var idx = 0; idx < amounts.length; ++idx) {
+            if (!amounts[idx].spend) {
+                return true
+            }
+        }
+        return false
+    }
 
     defaultFocusItem: BeamGlobals.needPasswordToSpend() ? requirePasswordInput : cancelButton
-    title: control.appMode ?
+    title: {
+        if (control.appMode) {
+            if (isReceive && isSpend) {
+                //% "Confirm withdraw & deposit"
+                return qsTrId("send-app-twoway-confirmation-title")
+            }
+            if (isSpend) {
+                //% "Confirm deposit from the wallet"
+                return qsTrId("send-app-spend-confirmation-title")
+            }
+            if (isReceive) {
+                //% "Confirm withdraw to the wallet"
+                return qsTrId("send-app-receive-confirmation-title")
+            }
             //% "Confirm application transaction"
-            qsTrId("send-app-confirmation-title") :
-            //% "Confirm transaction details"
-            qsTrId("send-confirmation-title")
+            return qsTrId("send-app-confirmation-title")
+        }
+        //% "Confirm transaction details"
+        return qsTrId("send-confirmation-title")
+    }
 
     okButtonText: control.appMode ?
         //% "Confirm"
@@ -46,11 +79,22 @@ ConfirmationDialog {
         //% "Send"
         qsTrId("general-send")
 
-    okButtonColor:           control.isSpend ? Style.accent_outgoing : Style.accent_incoming
-    okButtonIconSource:      control.isSpend ? "qrc:/assets/icon-send-blue.svg" : "qrc:/assets/icon-receive-blue.svg"
+    okButtonColor: control.isSpend ? Style.accent_outgoing : Style.accent_incoming
+    okButtonIconSource: {
+        if (control.appMode) {
+            if (control.isSpend && control.isReceive) {
+                return "qrc:/assets/icon-send-receive-blue.svg"
+            }
+            if (control.isSpend) {
+                return "qrc:/assets/icon-send-blue.svg"
+            }
+            return "qrc:/assets/icon-receive-blue.svg"
+        }
+        return "qrc:/assets/icon-send-blue.svg"
+    }
 
-    okButtonEnable:          isEnough && (BeamGlobals.needPasswordToSpend() ? !!requirePasswordInput.text : true)
-    cancelButtonIconSource:  "qrc:/assets/icon-cancel-white.svg"
+    okButtonEnable: isEnough && (BeamGlobals.needPasswordToSpend() ? !!requirePasswordInput.text : true)
+    cancelButtonIconSource: "qrc:/assets/icon-cancel-white.svg"
 
     beforeAccept: function () {
         if (BeamGlobals.needPasswordToSpend()) {
@@ -70,168 +114,183 @@ ConfirmationDialog {
     }
 
     topPadding: 30
-    contentItem: GridLayout {
-        columnSpacing:          typeLabel.visible ? 14 : 60
-        rowSpacing:             14
-        columns:                2
+    contentItem: Item { ColumnLayout {
+        spacing: 22
 
-        //
-        // Recipient/Address
-        //
-        SFText {
-            font.pixelSize:         14
-            color:                  Style.content_disabled
-            //% "Recipient"
-            text:                   qsTrId("send-confirmation-recipient-label") + ":"
-            verticalAlignment:      Text.AlignTop
-            visible:                addressLabel.visible
-        }
+        GridLayout {
+            Layout.alignment:  Qt.AlignHCenter
+            Layout.fillWidth:  false
+            Layout.fillHeight: false
+            columnSpacing:     typeLabel.visible ? 14 : 30
+            rowSpacing:        14
+            columns:           2
 
-        SFLabel {
-            id:                     addressLabel
-            Layout.maximumWidth:    290
-            wrapMode:               Text.NoWrap
-            elide:                  Text.ElideMiddle
-            font.pixelSize:         14
-            color:                  Style.content_main
-            copyMenuEnabled:        true
-            onCopyText:             BeamGlobals.copyToClipboard(text)
-            visible:                !!text
-        }
+            //
+            // Recipient/Address
+            //
+            SFText {
+                font.pixelSize:         14
+                color:                  Style.content_disabled
+                //% "Recipient"
+                text:                   qsTrId("send-confirmation-recipient-label") + ":"
+                verticalAlignment:      Text.AlignTop
+                visible:                addressLabel.visible
+            }
 
-        //
-        // Comment
-        //
-        SFText {
-            font.pixelSize:    14
-            color:             Style.content_disabled
-            //% "Comment"
-            text:              qsTrId("general-comment") + ":"
-            visible:           commentCtrl.visible
-        }
+            SFLabel {
+                id:                     addressLabel
+                Layout.maximumWidth:    290
+                wrapMode:               Text.NoWrap
+                elide:                  Text.ElideMiddle
+                font.pixelSize:         14
+                color:                  Style.content_main
+                copyMenuEnabled:        true
+                onCopyText:             BeamGlobals.copyToClipboard(text)
+                visible:                !!text
+            }
 
-        SFLabel {
-            id:                   commentCtrl
-            Layout.maximumWidth:  290
-            wrapMode:             Text.Wrap
-            elide:                Text.ElideRight
-            font.pixelSize:       14
-            color:                Style.content_main
-            copyMenuEnabled:      true
-            onCopyText:           BeamGlobals.copyToClipboard(text)
-            maximumLineCount:     4
-            visible:              !!text
-        }
+            //
+            // Comment
+            //
+            SFText {
+                font.pixelSize:    14
+                color:             Style.content_disabled
+                //% "Comment"
+                text:              qsTrId("general-comment") + ":"
+                visible:           commentCtrl.visible
+            }
 
-        //
-        // Address type
-        //
-        SFText {
-            font.pixelSize:         14
-            color:                  Style.content_disabled
-            //% "Transaction type"
-            text:                   qsTrId("send-type-label") + ":"
-            verticalAlignment:      Text.AlignTop
-            visible:                typeLabel.visible
-        }
+            SFLabel {
+                id:                   commentCtrl
+                Layout.maximumWidth:  290
+                wrapMode:             Text.Wrap
+                elide:                Text.ElideRight
+                font.pixelSize:       14
+                color:                Style.content_main
+                copyMenuEnabled:      true
+                onCopyText:           BeamGlobals.copyToClipboard(text)
+                maximumLineCount:     4
+                visible:              !!text
+            }
 
-        SFText {
-            id:                     typeLabel
-            Layout.maximumWidth:    290
-            wrapMode:               Text.Wrap
-            maximumLineCount:       2
-            font.pixelSize:         14
-            color:                  Style.content_main
-            visible:                text.length > 0
-        }
+            //
+            // Address type
+            //
+            SFText {
+                font.pixelSize:         14
+                color:                  Style.content_disabled
+                //% "Transaction type"
+                text:                   qsTrId("send-type-label") + ":"
+                verticalAlignment:      Text.AlignTop
+                visible:                typeLabel.visible
+            }
 
-        //
-        // Amount
-        //
-        SFText {
-            font.pixelSize:    14
-            color:             Style.content_disabled
-            //% "Amount"
-            text: qsTrId("general-amount") + ":"
-        }
+            SFText {
+                id:                     typeLabel
+                Layout.maximumWidth:    290
+                wrapMode:               Text.Wrap
+                maximumLineCount:       2
+                font.pixelSize:         14
+                color:                  Style.content_main
+                visible:                text.length > 0
+            }
 
-        SFText {
-            Layout.maximumWidth: 290
-            font.pixelSize:      14
-            color:               Style.content_main
-            visible:             !control.hasAmounts
-            maximumLineCount:    4
-            wrapMode:            Text.Wrap
-            //% "You would pay only transaction fee. It can be considerable for some contracts, so please check it below."
-            text: qsTrId("send-contract-only-fee")
-        }
+            //
+            // Amounts
+            //
+            SFText {
+                Layout.alignment: Qt.AlignTop
+                font.pixelSize: 14
+                color: Style.content_disabled
+                //% "Amount"
+                text: qsTrId("general-amount") + ":"
+            }
 
-        ColumnLayout {
-            Layout.maximumWidth: 290
-            visible:             control.hasAmounts
-            spacing:             8
+            SFText {
+                Layout.alignment:  Qt.AlignTop
+                Layout.leftMargin: 27
+                font.pixelSize:    14
+                color:   Style.content_main
+                visible: !control.hasAmounts
 
-            Repeater {
-                model: control.amounts
+                font {
+                    pixelSize: 14
+                    styleName: "Bold"
+                    weight:    Font.Bold
+                }
 
-                BeamAmount  {
-                    Layout.maximumWidth: 290
-                    Layout.fillWidth:    true
+                text: "-"
+            }
 
-                    amount:           modelData.amount
-                    unitName:         (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).unitName
-                    rate:             (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).rate
-                    prefix:           control.showPrefix ? (modelData.spend ? "- " : "+ ") : ""
-                    rateUnit:         control.rateUnit
-                    maxPaintedWidth:  false
-                    maxUnitChars:     15
+            ColumnLayout {
+                Layout.maximumWidth: 290
+                visible:  control.hasAmounts
+                spacing:  8
 
-                    color:            modelData.spend ? Style.accent_outgoing : Style.accent_incoming
+                Repeater {
+                    model: control.amounts
 
-                    font.pixelSize:   24
-                    font.styleName:   "Bold"
-                    font.weight:      Font.Bold
-                    rateFontSize:     14
-                    spacing:          15
-                    copyMenuEnabled:  true
+                    BeamAmount  {
+                        amount:           modelData.amount
+                        unitName:         (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).unitName
+                        rate:             (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).rate
+                        prefix:           control.showPrefix ? (modelData.spend ? "- " : "+ ") : ""
+                        rateUnit:         control.rateUnit
+                        maxPaintedWidth:  false
+                        maxUnitChars:     7
+                        color:            modelData.spend ? Style.accent_outgoing : Style.accent_incoming
+                        iconSize:         Qt.size(20, 20)
+                        iconSource:       (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).icon || ""
+                        iconAnchorCenter: false
+
+                        font.pixelSize:   14
+                        font.styleName:   "DemiBold"
+                        font.weight:      Font.DemiBold
+                        rateFontSize:     12
+                        copyMenuEnabled:  true
+                    }
                 }
             }
-        }
 
-        //
-        // Fee
-        //
-        SFText {
-            font.pixelSize:         14
-            color:                  Style.content_disabled
-            //% "Fee"
-            text:                   [qsTrId("send-regular-fee"), ":"].join("")
-        }
-
-        ColumnLayout {
+            //
+            // Fee
+            //
             SFText {
-                id:              feeLabel
-                font.pixelSize:  14
-                color:           Style.content_main
-                text:            [Utils.uiStringToLocale(control.fee), control.feeUnit].join(" ")
+                Layout.alignment: Qt.AlignTop
+                font.pixelSize:   14
+                color:            Style.content_disabled
+                //% "Fee"
+                text:             [qsTrId("send-regular-fee"), ":"].join("")
             }
-            SFText {
-                id:                 secondCurrencyFeeLabel
-                visible:            control.feeRate != "0"
-                font.pixelSize:     14
-                color:              Style.content_disabled
-                text:               Utils.formatAmountToSecondCurrency(control.fee, control.feeRate, control.rateUnit)
+
+            BeamAmount  {
+                Layout.maximumWidth: 290
+
+                amount:           control.fee
+                unitName:         control.feeUnit
+                rate:             control.feeRate
+                rateUnit:         control.rateUnit
+                maxPaintedWidth:  false
+                maxUnitChars:     7
+                color:            Style.content_main
+                iconSize:         Qt.size(20, 20)
+                iconSource:       assetsProvider ? assetsProvider.assets[0].icon : ""
+                iconAnchorCenter: false
+
+                font.pixelSize:   14
+                font.styleName:   "DemiBold"
+                font.weight:      Font.DemiBold
+                rateFontSize:     12
+                copyMenuEnabled:  true
             }
         }
 
         SFText {
-            Layout.columnSpan: 2
-            Layout.topMargin: 2
+            Layout.topMargin: 8
             Layout.fillWidth: true
-            horizontalAlignment: Text.AlignHCenter
 
-            visible:  !isEnough || (appMode && isSpend)
-            color:    Style.validator_error
+            visible:  !!text
+            color:    !isEnough ? Style.validator_error : Style.content_disabled
             wrapMode: Text.Wrap
 
             font {
@@ -243,42 +302,66 @@ ConfirmationDialog {
                 //% "There is not enough funds to complete the transaction"
                 if (!isEnough) return qsTrId("send-not-enough")
 
-                //% "Clicking confirm would spend funds"
-                return qsTrId("send-spend-warning")
+                if (control.appMode) {
+                    if (isSpend && isReceive) {
+                        //% "%1 Dapp will change the balances of your wallet"
+                        return qsTrId("send-twoway-warning").arg(control.appName)
+                    }
+
+                    if (isSpend) {
+                        //% "%1 Dapp will take the funds from your wallet"
+                        return qsTrId("send-dapp-spend-warning").arg(control.appName)
+                    }
+
+                    if (isReceive) {
+                        //% "%1 Dapp will send the funds to your wallet"
+                        return qsTrId("send-dapp-receive-warning").arg(control.appName)
+                    }
+
+                    //% "The transaction fee would be deducted from your balance"
+                    return qsTrId("send-contract-only-fee")
+                }
+
+                return ""
             }
         }
 
         //
         // Password confirmation
         //
+        Rectangle {
+            Layout.fillWidth:  true
+            height:   1
+            color:    Qt.rgba(1, 1, 1, 0.1)
+            visible:  isEnough && BeamGlobals.needPasswordToSpend()
+        }
+
         SFText {
-            id:                     requirePasswordLabel
-            visible:                isEnough && BeamGlobals.needPasswordToSpend()
-            Layout.columnSpan:      2
-            Layout.topMargin:       8
-            horizontalAlignment:    Text.AlignHCenter
-            Layout.fillWidth:       true
-            Layout.minimumHeight:   16
-            font.pixelSize:         14
-            color:                  Style.content_main
-            //% "To broadcast your transaction please enter your password"
-            text:                   qsTrId("send-confirmation-pwd-require-message")
+            id:                   requirePasswordLabel
+            visible:              isEnough && BeamGlobals.needPasswordToSpend()
+            horizontalAlignment:  Text.AlignHCenter
+            Layout.fillWidth:     true
+            font.pixelSize:       14
+            color:                Style.content_disabled
+            //% "To approve the transaction please enter your password"
+            text:                 qsTrId("send-confirmation-pwd-require-message")
         }
 
         Column {
             Layout.fillWidth:    true
             Layout.minimumWidth: 340
-            Layout.columnSpan:   2
             spacing: 0
             visible: isEnough && BeamGlobals.needPasswordToSpend()
 
             SFTextInput {
-                id:                requirePasswordInput
-                width:             parent.width
-                font.pixelSize:    14
-                color:             requirePasswordError.text ? Style.validator_error : Style.content_main
-                backgroundColor:   requirePasswordError.text ? Style.validator_error : Style.content_main
-                echoMode:          TextInput.Password
+                id:               requirePasswordInput
+                width:            parent.width
+                font.pixelSize:   14
+                color:            requirePasswordError.text ? Style.validator_error : Style.content_main
+                backgroundColor:  requirePasswordError.text ? Style.validator_error : Style.content_main
+                echoMode:         TextInput.Password
+                leftPadding:      14
+                rightPadding:     14
 
                 onAccepted: function () {
                     control.okButton.clicked()
@@ -286,6 +369,12 @@ ConfirmationDialog {
 
                 onTextChanged: function () {
                     requirePasswordError.text = ""
+                }
+
+                background: Rectangle  {
+                    color:        Qt.rgba(1, 1, 1, 0.05)
+                    radius:       10
+
                 }
             }
 
@@ -299,7 +388,6 @@ ConfirmationDialog {
 
         SFText {
             id:                     onlineMessageText
-            Layout.columnSpan:      2
             horizontalAlignment:    Text.AlignHCenter
             Layout.maximumWidth:    420
             font.pixelSize:         14
@@ -311,8 +399,7 @@ ConfirmationDialog {
         }
 
         Item {
-            Layout.columnSpan: 2
             height: 1
         }
-    }
+    }}
 }

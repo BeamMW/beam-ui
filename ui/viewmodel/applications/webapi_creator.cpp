@@ -178,9 +178,6 @@ namespace beamui::applications
         std::string comment = pinfo.minfo.confirm_comment ? *pinfo.minfo.confirm_comment : (pinfo.minfo.comment ? *pinfo.minfo.comment : std::string());
         info.insert("comment", QString::fromStdString(comment));
 
-        const auto title = pinfo.minfo.confirm_title ? *pinfo.minfo.confirm_title : std::string();
-        info.insert("title", QString::fromStdString(title));
-
         std::weak_ptr<bool> wp = _sendCSIGuard;
         _asyncWallet->selectCoins(beam::AmountBig::get_Lo(amount), fee, assetId, false, [this, wp, request, info](const CoinsSelectionInfo& csi) mutable {
             if (wp.lock())
@@ -210,9 +207,6 @@ namespace beamui::applications
 
         std::string comment = pinfo.minfo.confirm_comment ? *pinfo.minfo.confirm_comment : (pinfo.minfo.comment ? *pinfo.minfo.comment : std::string());
         info.insert("comment", QString::fromStdString(comment));
-
-        const auto title = pinfo.minfo.confirm_title ? *pinfo.minfo.confirm_title : std::string();
-        info.insert("title", QString::fromStdString(title));
 
         bool isEnough = true;
         ApproveAmounts amounts;

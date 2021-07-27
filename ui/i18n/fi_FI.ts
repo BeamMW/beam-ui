@@ -426,8 +426,8 @@
         <translation>Saaja</translation>
     </message>
     <message id="send-confirmation-pwd-require-message">
-        <source>To broadcast your transaction please enter your password</source>
-        <translation>Suorittaaksesi maksutapahtuman kirjoita salasanasi</translation>
+        <source>To approve the transaction please enter your password</source>
+        <translation type="unfinished">Suorittaaksesi maksutapahtuman kirjoita salasanasi</translation>
     </message>
     <message id="wallet-title">
         <source>Wallet</source>
@@ -2711,10 +2711,6 @@ For an online payment to complete, you should get online during the 12 hours aft
         <source>BEAM Remaining</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="send-type-label">
-        <source>Transaction type</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="general-balance">
         <source>Balance</source>
         <translation type="unfinished"></translation>
@@ -2908,16 +2904,6 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="swap-tx-empty">
         <source>There are no transactions yet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-app-confirmation-title">
-        <source>Confirm application transaction</source>
-        <oldsource>Confirm Application Transaction</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-contract-only-fee">
-        <source>You would pay only transaction fee. It can be considerable for some contracts, so please check it below.</source>
-        <oldsource>You would pay only transaction fee. It can be considerable for some contracts, so please check it below</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-fork-warning">
@@ -3172,14 +3158,6 @@ cannot be canceled.</source>
         <translation type="unfinished">Make sure the address is correct as offline transactions
 cannot be canceled.</translation>
     </message>
-    <message id="general-confirm">
-        <source>Confirm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="send-spend-warning">
-        <source>Clicking confirm would spend funds</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="send-online-address">
         <source>Online address.</source>
         <translation type="unfinished">Online address.</translation>
@@ -3195,6 +3173,49 @@ cannot be canceled.</translation>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation type="unfinished">Transaction can last up to 72 hours.</translation>
+    </message>
+    <message id="send-app-twoway-confirmation-title">
+        <source>Confirm withdraw &amp; deposit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-app-spend-confirmation-title">
+        <source>Confirm deposit from the wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-app-receive-confirmation-title">
+        <source>Confirm withdraw to the wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-app-confirmation-title">
+        <source>Confirm application transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-confirm">
+        <source>Confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-type-label">
+        <source>Transaction type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-twoway-warning">
+        <source>%1 Dapp will change the balances of your wallet</source>
+        <oldsource>%1 will change the balances of your wallet</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-dapp-spend-warning">
+        <source>%1 Dapp will take the funds from your wallet</source>
+        <oldsource>%1 will take the funds from your wallet</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-dapp-receive-warning">
+        <source>%1 Dapp will send the funds to your wallet</source>
+        <oldsource>%1 will send the funds to your wallet</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-contract-only-fee">
+        <source>The transaction fee would be deducted from your balance</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

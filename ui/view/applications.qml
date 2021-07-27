@@ -84,15 +84,12 @@ ColumnLayout {
                     comment:        info["comment"],
                     isSpend:        info["isSpend"],
                     appMode:        true,
+                    appName:        activeApp.name,
                     isOnline:       false,
                     showPrefix:     true,
                     assetsProvider: webapiCreator,
                     isEnough:       info.isEnough
                 })
-
-            if (info["title"]) {
-                instance.title = info["title"]
-            }
 
             instance.Component.onDestruction.connect(function () {
                  if (instance.result == Dialog.Accepted) {
@@ -123,14 +120,11 @@ ColumnLayout {
                     feeRate:        info["feeRate"],
                     comment:        info["comment"],
                     appMode:        true,
+                    appName:        activeApp.name,
                     showPrefix:     true,
                     assetsProvider: webapiCreator,
                     isEnough:       info.isEnough
                 })
-
-            if (info["title"]) {
-                instance.title = info["title"]
-            }
 
             instance.Component.onDestruction.connect(function () {
                  if (instance.result == Dialog.Accepted) {
