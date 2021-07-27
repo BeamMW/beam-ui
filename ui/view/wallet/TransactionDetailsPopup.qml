@@ -400,6 +400,12 @@ CustomDialog {
                     iconSource:       "qrc:/assets/icon-beam.svg"
                     iconSize:         Qt.size(20, 20)
                     iconAnchorCenter: false
+                    color:            Style.white
+                    font {
+                        styleName:  "Bold"
+                        weight:     Font.Bold
+                        pixelSize:  14
+                    }
                 }
             }
 
