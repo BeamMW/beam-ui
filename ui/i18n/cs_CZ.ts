@@ -2137,8 +2137,9 @@ offline</translation>
         <translation>24h</translation>
     </message>
     <message id="remote-node-lelantus-warning">
-        <source>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
-        <translation>Chcete-li mít jistotu největšího soukromí při transakci max soukromí a offline transakci, připojte se k integrovanému uzlu nebo k vlastnímu uzlu konfigurovanému vaším vlastnickým klíčem.</translation>
+        <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
+        <oldsource>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</oldsource>
+        <translation type="unfinished">Chcete-li mít jistotu největšího soukromí při transakci max soukromí a offline transakci, připojte se k integrovanému uzlu nebo k vlastnímu uzlu konfigurovanému vaším vlastnickým klíčem.</translation>
     </message>
     <message id="time-hour">
         <source>hour</source>
@@ -2620,8 +2621,9 @@ Aktualizujte nastavení a zkuste to znovu.</translation>
         <translation>Druh transakce</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
-        <translation>Připojte se k integrovanému nebo vlastnímu uzlu a povolte přijímání maximálně soukromých a offline transakcí</translation>
+        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions</source>
+        <oldsource>Connect to integrated or own node to enable receiving max privacy and offline transactions</oldsource>
+        <translation type="unfinished">Připojte se k integrovanému nebo vlastnímu uzlu a povolte přijímání maximálně soukromých a offline transakcí</translation>
     </message>
     <message id="receive-request">
         <source>Requested amount</source>
@@ -3196,6 +3198,20 @@ cannot be canceled.</translation>
     </message>
     <message id="send-contract-only-fee">
         <source>The transaction fee would be deducted from your balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="status-online-remote">
+        <source>connected node supports online transactions only</source>
+        <oldsource>remote node supports online transactions only</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-title-online">
+        <source>Online (SBBS) address details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-remote-node-warning">
+        <source>You are currently connected to node that supports only online transactions.</source>
+        <oldsource>You are currently connected to random node that supports only online transactions.</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -30,6 +30,10 @@ Item {
     property Item indicator: online_indicator
     property string error_msg: model.walletStatusErrorMsg
     property string error_msg_3rd_client: model.coinClientErrorMsg
+    //% "online"
+    property string statusOnline: qsTrId("status-online")
+    //% "connected node supports online transactions only"
+    property string statusOnlineRemote: qsTrId("status-online-remote")
 
     function setIndicator(indicator) {
         if (indicator !== rootControl.indicator) {
@@ -154,14 +158,17 @@ Item {
 
     LinkButton {
         text: "Change settings"
-        visible: model.isCoinClientFailed || model.isFailedStatus
+        visible: model.isCoinClientFailed || model.isFailedStatus || (model.isOnline && !model.isConnectionTrusted)
         anchors.top: parent.top
         anchors.left: status_text.right
         anchors.leftMargin: 5
         anchors.topMargin: -1
         fontSize: 12
         onClicked: {
-            main.openSwapSettings(model.coinWithErrorLabel());
+            if (model.isCoinClientFailed || model.isFailedStatus)
+                main.openSwapSettings(model.coinWithErrorLabel());
+            else
+                main.openSwapSettings("BEAM");
         }
     }
 
@@ -184,8 +191,7 @@ Item {
             name: "online"
             PropertyChanges {
                 target: status_text;
-                //% "online"
-                text: qsTrId("status-online") + model.branchName
+                text: statusOnline + (model.isConnectionTrusted ? "" : ": " + statusOnlineRemote) + model.branchName
             }
             StateChangeScript {
                 name: "onlineScript"

@@ -24,6 +24,7 @@ ColumnLayout {
 
     property var defaultFocusItem: null
     property var onClosed: function () {} // set by parent
+    property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
 
     property alias token:     viewModel.token
     property alias assetId:   viewModel.assetId
@@ -63,6 +64,7 @@ ColumnLayout {
         id:       tokenInfoDialog
         token:    viewModel.token
         incoming: true
+        isShieldedSupported: control.isShieldedSupported
     }
 
     function isValid () {
@@ -71,7 +73,7 @@ ColumnLayout {
 
     function copyAndClose() {
         if (isValid()) {
-            BeamGlobals.copyToClipboard(viewModel.token)
+            BeamGlobals.copyToClipboard(control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress);
             viewModel.saveAddress();
             control.onClosed()
         }
@@ -79,7 +81,7 @@ ColumnLayout {
 
     function copyAndSave() {
          if (isValid()) {
-            BeamGlobals.copyToClipboard(viewModel.token)
+            BeamGlobals.copyToClipboard(control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress);
             viewModel.saveAddress();
          }
     }
@@ -101,7 +103,7 @@ ColumnLayout {
 
     QR {
         id: qrCode
-        address: viewModel.token
+        address: control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress
     }
 
     ScrollView {
@@ -220,12 +222,14 @@ ColumnLayout {
                         content: ColumnLayout {
                             spacing: 20
                             id: addressType
-                            property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
+                            // property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
 
                             CustomSwitch {
                                 id: txType
                                 //% "Maximum anonymity set"
                                 text: qsTrId("receive-max-set")
+                                enabled: control.isShieldedSupported
+                                palette.text: control.isShieldedSupported ? Style.content_main : Style.content_secondary
                                 checked: viewModel.isMaxPrivacy
 
                                 Binding {
@@ -237,12 +241,12 @@ ColumnLayout {
 
                             SFText {
                                 Layout.fillWidth: true
-                                visible:          !parent.isShieldedSupported
+                                visible:          !control.isShieldedSupported
                                 color:            Style.content_secondary
                                 font.italic:      true
                                 font.pixelSize:   14
                                 wrapMode:         Text.WordWrap
-                                //% "Connect to integrated or own node to enable receiving max privacy and offline transactions"
+                                //% "Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions"
                                 text: qsTrId("wallet-receive-max-privacy-unsupported")
                             }
                         }
@@ -291,7 +295,7 @@ ColumnLayout {
 
                                     SFText {
                                         Layout.fillWidth:   true
-                                        text:  viewModel.token
+                                        text:  control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress
                                         width: parent.width
                                         color: Style.content_main
                                         elide: Text.ElideMiddle

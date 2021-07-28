@@ -11,6 +11,7 @@ CustomDialog {
     property alias token:                 viewModel.token
     property alias ignoreStoredVouchers:  viewModel.ignoreStoredVouchers
     property bool  incoming:              true
+    property bool  isShieldedSupported:   true
     
     TokenInfoItem {
         id:  viewModel
@@ -33,11 +34,81 @@ CustomDialog {
             id: contentColumn
 
             GridLayout {
+                id: contentOnlineGrid
+                Layout.margins:         30
+                columns:                2
+                visible:                !dialog.isShieldedSupported
+
+                RowLayout {
+                    Layout.columnSpan: 2
+
+                    SFText {
+                        Layout.fillWidth:   true
+                        horizontalAlignment:Text.AlignHCenter
+                        leftPadding:        30
+                        font.pixelSize:     18
+                        font.styleName:     "Bold"
+                        font.weight:        Font.Bold
+                        color:              Style.content_main
+
+                        //% "Online (SBBS) address details"
+                        text: qsTrId("address-info-title-online")
+                    }
+                }
+
+                RowLayout {
+                    Layout.columnSpan: 2
+                    Layout.topMargin:  20
+
+                    SFLabel {
+                        Layout.alignment:       Qt.AlignTop
+                        Layout.preferredWidth:  510
+                        wrapMode:               Text.Wrap
+                        font.pixelSize:         14
+                        color:                  Style.content_main
+                        text:                   viewModel.address
+                        copyMenuEnabled:        true
+                        elide:                  Text.ElideMiddle
+                        onCopyText: function () {
+                            BeamGlobals.copyToClipboard(text)
+                        }
+                    }
+
+                    CustomToolButton {
+                        Layout.alignment:       Qt.AlignTop
+                        Layout.leftMargin:      4
+                        Layout.topMargin:       -8
+                        icon.source:            "qrc:/assets/icon-copy-blue.svg"
+                        //% "Copy"
+                        ToolTip.text:           qsTrId("general-copy")
+                        onClicked: function () {
+                            BeamGlobals.copyToClipboard(viewModel.address)
+                        }
+                    }
+                }
+
+                RowLayout {
+                    Layout.columnSpan: 2
+                    // Layout.topMargin: -10
+
+                    SFText {
+                        Layout.fillWidth:   true
+                        horizontalAlignment:Text.AlignHCenter
+                        leftPadding:        30
+                        color:              Style.content_secondary
+                        //% "You are currently connected to node that supports only online transactions."
+                        text: qsTrId("address-info-remote-node-warning")
+                    }
+                }
+            }
+
+            GridLayout {
                 id: contentGrid
                 Layout.margins:         30
                 rowSpacing:             25
                 columnSpacing:          25
                 columns:                2
+                visible:                dialog.isShieldedSupported
 
                 RowLayout {
                     Layout.columnSpan: 2
@@ -197,7 +268,10 @@ CustomDialog {
                     //% "copy address and close"
                     text:               qsTrId("address-info-copy-and-close")
                     onClicked: {
-                        BeamGlobals.copyToClipboard(viewModel.token);
+                        if (dialog.isShieldedSupported)
+                            BeamGlobals.copyToClipboard(viewModel.token);
+                        else
+                            BeamGlobals.copyToClipboard(viewModel.address);
                         dialog.close();
                     }
                 }
