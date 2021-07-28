@@ -29,7 +29,7 @@ bool BaseUtxoItem::operator==(const BaseUtxoItem& other) const
 UtxoItem::UtxoItem(beam::wallet::Coin coin)
     : _coin(std::move(coin))
 {
-    _minConfirmations = AppModel::getInstance().getSettings().getMinConfirmations();
+    _minConfirmations = _coin.m_offset;
 }
 
 uint64_t UtxoItem::getHash() const
