@@ -13,6 +13,8 @@
 // limitations under the License.
 #include "apps_server.h"
 
+#include <stdexcept>
+
 namespace beamui::applications
 {
     AppsServer::AppsServer(const QString& serveFrom, uint32_t port)
