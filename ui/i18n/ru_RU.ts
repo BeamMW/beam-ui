@@ -2623,8 +2623,8 @@ Update your settings and try again.</source>
         <translation type="unfinished">Transaction type</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions</source>
-        <oldsource>Connect to integrated or own node to enable receiving max privacy and offline transactions</oldsource>
+        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
+        <oldsource>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions</oldsource>
         <translation type="unfinished">Подключитесь к интегрированному или собственному узлу, чтобы включить получение макс. приватных и оффлайн транзакций</translation>
     </message>
     <message id="receive-request">
@@ -2646,9 +2646,10 @@ Update your settings and try again.</source>
         <translation>Транзакция может длиться бесконечно.</translation>
     </message>
     <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.
-For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>Отправителю будет предоставлен выбор между оплатой онлайн и оффлайн.
+        <source>Sender will be given a choice between online and offline payment.</source>
+        <oldsource>Sender will be given a choice between online and offline payment.
+For an online payment to complete, you should get online during the 12 hours after coins are sent.</oldsource>
+        <translation type="unfinished">Отправителю будет предоставлен выбор между оплатой онлайн и оффлайн.
 Для того, чтобы совершить онлайновый платеж, Вы должны выйти в Интернет в течение 12 часов после отправки монет.</translation>
     </message>
     <message id="send-public-token">
@@ -3214,6 +3215,10 @@ cannot be canceled.</source>
     <message id="address-info-remote-node-warning">
         <source>You are currently connected to node that supports only online transactions.</source>
         <oldsource>You are currently connected to random node that supports only online transactions.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-stay-online">
+        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
