@@ -78,7 +78,7 @@ SettingsFoldable {
             text: qsTrId("general-rescan")
             linkColor: "#ffffff"
             bold: true
-            enabled: /*statusbarModel.isConnectionTrusted &&*/ statusbarModel.isOnline && confirmRefreshDialog.canRefresh 
+            enabled: statusbarModel.isConnectionTrusted && statusbarModel.isOnline && confirmRefreshDialog.canRefresh 
             onClicked: {
                 confirmRefreshDialog.open()
             }

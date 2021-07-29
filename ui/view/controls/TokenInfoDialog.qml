@@ -89,13 +89,13 @@ CustomDialog {
 
                 RowLayout {
                     Layout.columnSpan: 2
-                    // Layout.topMargin: -10
 
                     SFText {
                         Layout.fillWidth:   true
                         horizontalAlignment:Text.AlignHCenter
                         leftPadding:        30
                         color:              Style.content_secondary
+                        font.italic:        true
                         //% "You are currently connected to node that supports only online transactions."
                         text: qsTrId("address-info-remote-node-warning")
                     }

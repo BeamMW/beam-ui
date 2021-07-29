@@ -238,17 +238,6 @@ ColumnLayout {
                                     value: txType.checked
                                 }
                             }
-
-                            SFText {
-                                Layout.fillWidth: true
-                                visible:          !control.isShieldedSupported
-                                color:            Style.content_secondary
-                                font.italic:      true
-                                font.pixelSize:   14
-                                wrapMode:         Text.WordWrap
-                                //% "Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions"
-                                text: qsTrId("wallet-receive-max-privacy-unsupported")
-                            }
                         }
                     }
                 }
@@ -384,8 +373,11 @@ ColumnLayout {
                 color:                 Style.content_disabled
                 wrapMode:              Text.WordWrap
                 horizontalAlignment:   Text.AlignHCenter
-                //% "Sender will be given a choice between online and offline payment.\nFor an online payment to complete, you should get online during the 12 hours after coins are sent."
-                text: qsTrId("wallet-receive-text-online-time")
+                text: control.isShieldedSupported
+                    //% "Sender will be given a choice between online and offline payment.\nFor an online payment to complete, you should get online during the 12 hours after coins are sent."
+                    ? qsTrId("wallet-receive-text-online-time")
+                    //% "Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions"
+                    : qsTrId("wallet-receive-max-privacy-unsupported")
                 visible:               !viewModel.isMaxPrivacy
             }
         }  // ColumnLayout
