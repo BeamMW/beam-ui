@@ -24,6 +24,8 @@ ColumnLayout {
         model: statusbarModel
     }
 
+    property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
+
     ConfirmationDialog {
 		id: confirmationDialog
         property bool isOwn
@@ -121,6 +123,7 @@ ColumnLayout {
                 model: viewModel.activeAddresses
                 parentModel: viewModel
                 visible: activeAddressesView.model.length > 0
+                isShieldedSupported: control.isShieldedSupported
 
                 sortIndicatorVisible: true
                 sortIndicatorColumn: 0
@@ -149,6 +152,7 @@ ColumnLayout {
                 visible: expiredAddressesView.model.length > 0
                 parentModel: viewModel
                 isExpired: true
+                isShieldedSupported: control.isShieldedSupported
         
                 sortIndicatorVisible: true
                 sortIndicatorColumn: 0
@@ -209,7 +213,7 @@ ColumnLayout {
                 }
             
                 TableViewColumn {
-                    role: viewModel.tokenRole
+                    role: control.isShieldedSupported ? viewModel.tokenRole : viewModel.walletIDRole
                     title: qsTrId("general-address")
                     width: 280 * contactsView.columnResizeRatio
                     movable: false

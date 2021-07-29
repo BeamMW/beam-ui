@@ -14,6 +14,7 @@ CustomDialog {
 
     property var  viewModel
     property var  addressItem
+    property bool isShieldedSupported: true
 
     property var     token:         addressItem.token
     property var     walletID:      addressItem.walletID
@@ -61,7 +62,7 @@ CustomDialog {
                 wrapMode:                 Text.Wrap
                 font.pixelSize:           14
                 color:                    Style.content_main
-                text:                     control.token
+                text:                     isShieldedSupported ? control.token : control.walletID
 
                 onCopyText: function () {
                     BeamGlobals.copyToClipboard(text)
