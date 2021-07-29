@@ -147,6 +147,7 @@ namespace beamui::applications
     {
         using namespace beam::wallet;
         decltype(_mappedAssets)().swap(_mappedAssets);
+        _mappedAssets.insert(beam::Asset::s_BeamID);
 
         //
         // Do not assume thread here
@@ -197,6 +198,7 @@ namespace beamui::applications
     void WebAPICreator::UIThread_getContractInfoConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
     {
         decltype(_mappedAssets)().swap(_mappedAssets);
+        _mappedAssets.insert(beam::Asset::s_BeamID);
 
         ApproveMap info;
         info.insert("comment",   QString::fromStdString(pinfo.minfo.comment ? *pinfo.minfo.comment : std::string()));
