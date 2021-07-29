@@ -25,6 +25,7 @@ class ReceiveViewModel: public QObject
     Q_PROPERTY(QString    comment            READ getComment            WRITE  setComment            NOTIFY  commentChanged)
     Q_PROPERTY(int        assetId            READ getAssetId            WRITE  setAssetId            NOTIFY  assetIdChanged)
     Q_PROPERTY(QString    token              READ getToken              WRITE  setToken              NOTIFY  tokenChanged)
+    Q_PROPERTY(QString    sbbsAddress        READ getSbbsAddress                                     NOTIFY  tokenChanged)
     Q_PROPERTY(bool       commentValid       READ getCommentValid                                    NOTIFY  commentValidChanged)
     Q_PROPERTY(bool       isMaxPrivacy       READ getIsMaxPrivacy       WRITE setIsMaxPrivacy        NOTIFY  isMaxPrivacyChanged)
     Q_PROPERTY(QString    mpTimeLimit        READ getMPTimeLimit        CONSTANT)
@@ -59,6 +60,8 @@ private:
 
     void setToken(const QString& value);
     [[nodiscard]] QString getToken() const;
+
+    [[nodiscard]] QString getSbbsAddress() const;
 
     [[nodiscard]] bool getCommentValid() const;
 

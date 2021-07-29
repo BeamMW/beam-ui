@@ -29,7 +29,6 @@ bool BaseUtxoItem::operator==(const BaseUtxoItem& other) const
 UtxoItem::UtxoItem(beam::wallet::Coin coin)
     : _coin(std::move(coin))
 {
-    _minConfirmations = AppModel::getInstance().getSettings().getMinConfirmations();
 }
 
 uint64_t UtxoItem::getHash() const
@@ -113,7 +112,7 @@ const beam::wallet::Coin::ID& UtxoItem::get_ID() const
 
 beam::Height UtxoItem::rawMaturity() const
 {
-    return _coin.get_Maturity(_minConfirmations);
+    return _coin.get_Maturity();
 }
 
 uint16_t UtxoItem::rawMaturityTimeLeft() const

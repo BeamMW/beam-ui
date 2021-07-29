@@ -24,6 +24,7 @@ ColumnLayout {
 
     property var defaultFocusItem: null
     property var onClosed: function () {} // set by parent
+    property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
 
     property alias token:     viewModel.token
     property alias assetId:   viewModel.assetId
@@ -63,6 +64,7 @@ ColumnLayout {
         id:       tokenInfoDialog
         token:    viewModel.token
         incoming: true
+        isShieldedSupported: control.isShieldedSupported
     }
 
     function isValid () {
@@ -71,7 +73,7 @@ ColumnLayout {
 
     function copyAndClose() {
         if (isValid()) {
-            BeamGlobals.copyToClipboard(viewModel.token)
+            BeamGlobals.copyToClipboard(control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress);
             viewModel.saveAddress();
             control.onClosed()
         }
@@ -79,7 +81,7 @@ ColumnLayout {
 
     function copyAndSave() {
          if (isValid()) {
-            BeamGlobals.copyToClipboard(viewModel.token)
+            BeamGlobals.copyToClipboard(control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress);
             viewModel.saveAddress();
          }
     }
@@ -101,7 +103,7 @@ ColumnLayout {
 
     QR {
         id: qrCode
-        address: viewModel.token
+        address: control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress
     }
 
     ScrollView {
@@ -220,12 +222,14 @@ ColumnLayout {
                         content: ColumnLayout {
                             spacing: 20
                             id: addressType
-                            property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
+                            // property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
 
                             CustomSwitch {
                                 id: txType
                                 //% "Maximum anonymity set"
                                 text: qsTrId("receive-max-set")
+                                enabled: control.isShieldedSupported
+                                palette.text: control.isShieldedSupported ? Style.content_main : Style.content_secondary
                                 checked: viewModel.isMaxPrivacy
 
                                 Binding {
@@ -233,17 +237,6 @@ ColumnLayout {
                                     property: "isMaxPrivacy"
                                     value: txType.checked
                                 }
-                            }
-
-                            SFText {
-                                Layout.fillWidth: true
-                                visible:          !parent.isShieldedSupported
-                                color:            Style.content_secondary
-                                font.italic:      true
-                                font.pixelSize:   14
-                                wrapMode:         Text.WordWrap
-                                //% "Connect to integrated or own node to enable receiving max privacy and offline transactions"
-                                text: qsTrId("wallet-receive-max-privacy-unsupported")
                             }
                         }
                     }
@@ -291,7 +284,7 @@ ColumnLayout {
 
                                     SFText {
                                         Layout.fillWidth:   true
-                                        text:  viewModel.token
+                                        text:  control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress
                                         width: parent.width
                                         color: Style.content_main
                                         elide: Text.ElideMiddle
@@ -371,6 +364,8 @@ ColumnLayout {
             }
 
             SFText {
+                //% "For an online payment to complete, you should get online during the 12 hours after coins are sent."
+                property string stayOnline: qsTrId("wallet-receive-stay-online")
                 Layout.alignment:      Qt.AlignHCenter
                 Layout.preferredWidth: 400
                 Layout.topMargin:      15
@@ -380,8 +375,11 @@ ColumnLayout {
                 color:                 Style.content_disabled
                 wrapMode:              Text.WordWrap
                 horizontalAlignment:   Text.AlignHCenter
-                //% "Sender will be given a choice between online and offline payment.\nFor an online payment to complete, you should get online during the 12 hours after coins are sent."
-                text: qsTrId("wallet-receive-text-online-time")
+                text: control.isShieldedSupported
+                    //% "Sender will be given a choice between online and offline payment."
+                    ? qsTrId("wallet-receive-text-online-time") + "\n" + stayOnline
+                    //% "Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions."
+                    : qsTrId("wallet-receive-max-privacy-unsupported") + "\n" + stayOnline
                 visible:               !viewModel.isMaxPrivacy
             }
         }  // ColumnLayout

@@ -143,6 +143,11 @@ QString ReceiveViewModel::getToken() const
     return QString::fromStdString(_receiverAddress.m_Address);
 }
 
+QString ReceiveViewModel::getSbbsAddress() const
+{
+    return beamui::toString(_receiverAddress.m_walletID);
+}
+
 bool ReceiveViewModel::getCommentValid() const
 {
     return _walletModel.isOwnAddress(_receiverAddress.m_walletID) || !_walletModel.isAddressWithCommentExist(_receiverAddress.m_label);

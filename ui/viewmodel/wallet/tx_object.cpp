@@ -163,7 +163,7 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
         _assetIDs.emplace_back(QString::fromStdString(ss.str()));
     }
 
-    _minConfirmations = AppModel::getInstance().getSettings().getMinConfirmations();
+    _tx.GetParameter(beam::wallet::TxParameterID::MinConfirmations, _minConfirmations);
 }
 
 bool TxObject::operator==(const TxObject& other) const
@@ -183,7 +183,7 @@ QString TxObject::getSource() const
 
 uint32_t TxObject::getMinConfirmations() const
 {
-    return _minConfirmations;
+    return _tx.m_txType == wallet::TxType::Simple ? _minConfirmations : 0;
 }
 
 QString TxObject::getConfirmationProgress() const

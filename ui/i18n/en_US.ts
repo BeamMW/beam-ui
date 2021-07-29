@@ -2138,8 +2138,8 @@ offline</translation>
         <translation>24h</translation>
     </message>
     <message id="remote-node-lelantus-warning">
-        <source>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
-        <translation>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</translation>
+        <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
+        <translation>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</translation>
     </message>
     <message id="time-hour">
         <source>hour</source>
@@ -2616,8 +2616,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
-        <translation type="unfinished"></translation>
+        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
+        <translation>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</translation>
     </message>
     <message id="receive-request">
         <source>Requested amount</source>
@@ -2638,10 +2638,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.
-For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>Sender will be given a choice between online and offline payment.
-For an online payment to complete, you should get online during the 12 hours after coins are sent.</translation>
+        <source>Sender will be given a choice between online and offline payment.</source>
+        <translation>Sender will be given a choice between online and offline payment.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -3191,6 +3189,22 @@ cannot be canceled.</translation>
     <message id="send-contract-only-fee">
         <source>The transaction fee would be deducted from your balance</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="status-online-remote">
+        <source>connected node supports online transactions only</source>
+        <translation>connected node supports online transactions only</translation>
+    </message>
+    <message id="address-info-title-online">
+        <source>Online (SBBS) address details</source>
+        <translation>Online (SBBS) address details</translation>
+    </message>
+    <message id="address-info-remote-node-warning">
+        <source>You are currently connected to node that supports only online transactions.</source>
+        <translation>You are currently connected to node that supports only online transactions.</translation>
+    </message>
+    <message id="wallet-receive-stay-online">
+        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
+        <translation>For an online payment to complete, you should get online during the 12 hours after coins are sent.</translation>
     </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>

@@ -469,14 +469,14 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
                 );
             }
         }
-
-        _vouchersLeft = offlinePayments;
-        emit tokenTipChanged();
     }
     else
     {
         setComment("");
     }
+
+    _vouchersLeft = offlinePayments;
+    emit tokenTipChanged();
 }
 
 void SendViewModel::extractParameters()

@@ -2139,8 +2139,9 @@ offline</source>
         <translation>24 часа</translation>
     </message>
     <message id="remote-node-lelantus-warning">
-        <source>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
-        <translation>Чтобы получат макс. приватные и оффлайн транзакции, пожалуйста, подключитесь к интегрированному узлу или к удаленному узлу, настроенному с вашим ключом владельца.</translation>
+        <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
+        <oldsource>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</oldsource>
+        <translation type="unfinished">Чтобы получат макс. приватные и оффлайн транзакции, пожалуйста, подключитесь к интегрированному узлу или к удаленному узлу, настроенному с вашим ключом владельца.</translation>
     </message>
     <message id="time-hour">
         <source>hour</source>
@@ -2622,8 +2623,9 @@ Update your settings and try again.</source>
         <translation type="unfinished">Transaction type</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving max privacy and offline transactions</source>
-        <translation>Подключитесь к интегрированному или собственному узлу, чтобы включить получение макс. приватных и оффлайн транзакций</translation>
+        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
+        <oldsource>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions</oldsource>
+        <translation type="unfinished">Подключитесь к интегрированному или собственному узлу, чтобы включить получение макс. приватных и оффлайн транзакций</translation>
     </message>
     <message id="receive-request">
         <source>Requested amount</source>
@@ -2644,9 +2646,10 @@ Update your settings and try again.</source>
         <translation>Транзакция может длиться бесконечно.</translation>
     </message>
     <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.
-For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>Отправителю будет предоставлен выбор между оплатой онлайн и оффлайн.
+        <source>Sender will be given a choice between online and offline payment.</source>
+        <oldsource>Sender will be given a choice between online and offline payment.
+For an online payment to complete, you should get online during the 12 hours after coins are sent.</oldsource>
+        <translation type="unfinished">Отправителю будет предоставлен выбор между оплатой онлайн и оффлайн.
 Для того, чтобы совершить онлайновый платеж, Вы должны выйти в Интернет в течение 12 часов после отправки монет.</translation>
     </message>
     <message id="send-public-token">
@@ -3198,6 +3201,24 @@ cannot be canceled.</source>
     </message>
     <message id="send-contract-only-fee">
         <source>The transaction fee would be deducted from your balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="status-online-remote">
+        <source>connected node supports online transactions only</source>
+        <oldsource>remote node supports online transactions only</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-title-online">
+        <source>Online (SBBS) address details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="address-info-remote-node-warning">
+        <source>You are currently connected to node that supports only online transactions.</source>
+        <oldsource>You are currently connected to random node that supports only online transactions.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-stay-online">
+        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-dapps-port">

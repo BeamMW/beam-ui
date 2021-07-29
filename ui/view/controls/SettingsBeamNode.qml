@@ -160,12 +160,14 @@ SettingsFoldable {
         SFText {
             Layout.fillWidth:   true
             Layout.topMargin:   20
+            Layout.leftMargin:  20
+            Layout.rightMargin: 20
             color:              Style.content_main
             opacity:            0.5
             font.pixelSize:     14
             horizontalAlignment:Text.AlignHCenter
             wrapMode:           Text.Wrap
-            //% "To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key."
+            //% "To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key."
             text:               qsTrId("remote-node-lelantus-warning")
             visible:            !viewModel.localNodeRun && !statusbarModel.isConnectionTrusted
         }
