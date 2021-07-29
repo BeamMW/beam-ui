@@ -479,19 +479,7 @@ ColumnLayout {
     }
 
     function appendDevApp (arr) {
-        if (viewModel.devAppName) {
-            arr = arr || []
-            arr.unshift({
-                //% "This is your dev application"
-                "description":     qsTrId("apps-devapp"),
-                "name":            viewModel.devAppName,
-                "url":             viewModel.devAppUrl,
-                "api_version":     viewModel.devAppApiVer,
-                "min_api_version": viewModel.devAppMinApiVer
-            })
-            return arr
-        }
-        return arr
+        return viewModel.localApps.concat(arr || [])
     }
 
     function loadAppsList () {

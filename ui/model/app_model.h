@@ -125,3 +125,8 @@ private:
     mutable std::shared_ptr<beam::wallet::HWWallet> m_hwWallet;
 #endif
 };
+
+inline WalletSettings& AppSettings()
+{
+    return AppModel::getInstance().getSettings();
+}

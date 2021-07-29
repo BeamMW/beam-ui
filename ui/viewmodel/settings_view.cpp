@@ -185,6 +185,20 @@ void SettingsViewModel::setLocalNodePort(const QString& value)
     }
 }
 
+int SettingsViewModel::getAppsPort() const
+{
+    return static_cast<int>(AppSettings().getAppsServerPort());
+}
+
+void SettingsViewModel::setAppsPort(int port)
+{
+    if (AppSettings().getAppsServerPort() != port)
+    {
+        AppSettings().setAppsServerPort(port);
+        emit appsPortChanged();
+    }
+}
+
 QString SettingsViewModel::getRemoteNodePort() const
 {
     return m_remoteNodePort;
@@ -246,12 +260,12 @@ void SettingsViewModel::allowBeamMWLinks(bool value)
 
 bool SettingsViewModel::getDAppsAllowed () const
 {
-    return m_settings.getDAppsAllowed();
+    return m_settings.getAppsAllowed();
 }
 
 void SettingsViewModel::setDAppsAllowed (bool val)
 {
-    m_settings.setDAppsAllowed(val);
+    m_settings.setAppsAllowed(val);
 }
 
 QString SettingsViewModel::getCurrentHeight() const

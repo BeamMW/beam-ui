@@ -13,27 +13,24 @@
 // limitations under the License.
 #pragma once
 
-namespace beamui::applications {
+#include "apps_server.h"
+
+namespace beamui::applications
+{
     class AppsViewModel : public QObject
     {
         Q_OBJECT
-        Q_PROPERTY(QString devAppUrl        READ getDevAppUrl        CONSTANT)
-        Q_PROPERTY(QString devAppName       READ getDevAppName       CONSTANT)
-        Q_PROPERTY(QString devAppApiVer     READ getDevAppApiVer     CONSTANT)
-        Q_PROPERTY(QString devAppMinApiVer  READ getDevAppMinApiVer  CONSTANT)
-        Q_PROPERTY(QString appsUrl          READ getAppsUrl          CONSTANT)
-        Q_PROPERTY(QString userAgent        READ getUserAgent        CONSTANT)
+        Q_PROPERTY(QString appsUrl     READ getAppsUrl    CONSTANT)
+        Q_PROPERTY(QString userAgent   READ getUserAgent  CONSTANT)
+        Q_PROPERTY(QList<QMap<QString, QVariant>> localApps READ getLocalApps CONSTANT)
 
     public:
         AppsViewModel();
         ~AppsViewModel() override;
 
-        [[nodiscard]] QString getDevAppUrl() const;
-        [[nodiscard]] QString getDevAppName() const;
         [[nodiscard]] QString getAppsUrl() const;
-        [[nodiscard]] QString getDevAppApiVer() const;
-        [[nodiscard]] QString getDevAppMinApiVer() const;
         [[nodiscard]] QString getUserAgent() const;
+        [[nodiscard]] QList<QMap<QString, QVariant>> getLocalApps();
 
     public:
         Q_INVOKABLE void onCompleted(QObject *webView);
@@ -41,6 +38,12 @@ namespace beamui::applications {
         Q_INVOKABLE [[nodiscard]] QString getAppStoragePath(const QString& appname) const;
 
     private:
+        [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
+        void launchAppServer();
+        void stopServer();
+
         QString _userAgent;
+        QString _serverAddr;
+        std::unique_ptr<AppsServer> _server;
     };
 }

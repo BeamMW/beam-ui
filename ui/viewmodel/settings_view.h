@@ -50,6 +50,7 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(QString      faucetUrl                       READ getFaucetUrl                   CONSTANT)
     Q_PROPERTY(int          minConfirmations                READ getMinConfirmations            WRITE  setMinConfirmations NOTIFY minConfirmationsChanged)
     Q_PROPERTY(bool         dappsAllowed                    READ getDAppsAllowed                WRITE  setDAppsAllowed NOTIFY dappsAllowedChanged)
+    Q_PROPERTY(int          appsServerPort                  READ getAppsPort                    WRITE  setAppsPort     NOTIFY appsPortChanged)
 
 
     Q_PROPERTY(QList<QObject*> swapCoinSettingsList READ getSwapCoinSettings    CONSTANT)
@@ -117,6 +118,8 @@ public:
 
     bool getDAppsAllowed () const;
     void setDAppsAllowed (bool val);
+    int getAppsPort() const;
+    void setAppsPort(int port);
 
     QString getCurrentHeight() const;
 
@@ -164,6 +167,7 @@ signals:
     void minConfirmationsChanged();
     void dappsAllowedChanged();
     void stateChanged();
+    void appsPortChanged();
 
 protected:
     void timerEvent(QTimerEvent *event) override;

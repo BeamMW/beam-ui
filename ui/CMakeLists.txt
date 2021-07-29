@@ -108,6 +108,8 @@ list(APPEND SUPPORTED_LANGS "sr_SR")
 set(UI_SRC
     ui.cpp
 
+    viewmodel/applications/apps_server.h
+    viewmodel/applications/apps_server.cpp
     viewmodel/applications/apps_view.h
     viewmodel/applications/apps_view.cpp
     viewmodel/applications/webapi_beam.h
@@ -295,7 +297,12 @@ configure_file("${PROJECT_SOURCE_DIR}/version.h.in" "${CMAKE_CURRENT_BINARY_DIR}
 add_definitions(-DBEAM_LIB_VERSION="${BEAM_VERSION}")
 add_definitions(-DBEAM_CLIENT_VERSION="${PROJECT_VERSION}")
 
+#qrcode library
 target_link_libraries(${TARGET_NAME} qrcode cli)
+
+# QHttpEngine library
+target_link_libraries(${TARGET_NAME} qhttpengine)
+
 if (LINUX)
     target_link_libraries(${TARGET_NAME} X11)
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -309,7 +316,6 @@ endif()
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_PREFIX_PATH}/include/QtZlib)
 target_include_directories(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/beam/3rdparty/quazip)
 add_definitions(-DQUAZIP_STATIC)
-
 target_link_libraries(${TARGET_NAME} quazip_static)
 
 #if (BEAM_WALLET_WITH_NODE)

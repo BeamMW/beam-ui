@@ -106,6 +106,11 @@ ColumnLayout {
                     viewModel: viewModel
                 }
 
+                SettingsApps {
+                    id: appsBlock
+                    viewModel: viewModel
+                }
+
                 SettingsTitle {
                     topPadding: 30
                     //% "Troubleshooting"

@@ -21,12 +21,11 @@
 #include <mutex>
 #include "model/wallet_model.h"
 
-
 class WalletSettings : public QObject
 {
     Q_OBJECT
 public:
-    WalletSettings(const QDir& appDataDir);
+    explicit WalletSettings(const QDir& appDataDir);
 
     QString getNodeAddress() const;
     void setNodeAddress(const QString& value);
@@ -42,9 +41,6 @@ public:
 
     bool showSwapBetaWarning();
     void setShowSwapBetaWarning(bool value);
-
-    bool getDAppsAllowed () const;
-    void setDAppsAllowed (bool val);
 
 #if defined(BEAM_HW_WALLET)
     std::string getTrezorWalletStorage() const;
@@ -86,11 +82,21 @@ public:
 
     static void openFolder(const QString& path);
 
-    // dev BEAM Apps
-    QString getDevBeamAppUrl();
-    QString getDevBeamAppName();
-    QString getDevAppApiVer();
-    QString getDevAppMinApiVer();
+    //
+    // DApps
+    //
+    QString getDevAppUrl() const;
+    QString getDevAppName() const;
+    QString getDevAppApiVer() const;
+    QString getDevAppMinApiVer() const;
+
+    bool getAppsAllowed() const;
+    void setAppsAllowed(bool val);
+    QString getLocalAppsPath() const;
+    QString getAppsCachePath(const QString& name = QString()) const;
+    QString getAppsStoragePath(const QString& name = QString()) const;
+    int getAppsServerPort() const;
+    void setAppsServerPort(int port);
 
     uint8_t getMaxPrivacyAnonymitySet() const;
     void setMaxPrivacyAnonymitySet(uint8_t anonymitySet);
@@ -102,8 +108,7 @@ public:
     QString getExplorerUrl() const;
     QString getFaucetUrl() const;
     QString getAppsUrl() const;
-    QString getAppsCachePath(const QString& name = QString()) const;
-    QString getAppsStoragePath(const QString& name = QString()) const;
+
 
     void minConfirmationsInit();
     uint32_t getMinConfirmations() const;

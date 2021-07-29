@@ -3197,5 +3197,10 @@ cannot be canceled.</translation>
         <source>The transaction fee would be deducted from your balance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settings-dapps-port">
+        <source>Local server port</source>
+        <extracomment>settings tab, daps section, local apps server port label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

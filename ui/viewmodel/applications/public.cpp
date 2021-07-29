@@ -44,10 +44,13 @@ namespace beamui::applications
 
     std::string GenerateAppID(const std::string& appName, const std::string& appUrl)
     {
-        ECC::Hash::Value hv;
-        ECC::Hash::Processor() << appName << appUrl >> hv;
+        QUrl url(QString::fromStdString(appUrl));
+        const auto normalizedUrl = url.toString(QUrl::RemovePort).toStdString();
 
-        const auto appid = std::string("appid:") + hv.str();
+        ECC::Hash::Value hv;
+        ECC::Hash::Processor() << appName << normalizedUrl >> hv;
+
+        auto appid = std::string("appid:") + hv.str();
         return appid;
     }
 }

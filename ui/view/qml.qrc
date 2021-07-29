@@ -93,6 +93,7 @@
         <file>controls/UpdateNotification.qml</file>
         <file>controls/SimpleNotification.qml</file>
         <file>controls/AppTxNotification.qml</file>
+        <file>controls/SettingsApps.qml</file>
         <file>wallet/TxTable.qml</file>
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>

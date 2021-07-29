@@ -58,6 +58,7 @@ namespace
     const char* kDevAppName      = "devapp/name";
     const char* kDevAppApiVer    = "devapp/api_version";
     const char* kDevAppMinApiVer = "devapp/min_api_version";
+    const char* kLocalAppsPort   = "apps/local_port";
 
     const char* kMpAnonymitySet = "max_privacy/anonymity_set";
 
@@ -227,13 +228,13 @@ void WalletSettings::setAllowedBeamMWLinks(bool value)
     emit beamMWLinksChanged();
 }
 
-bool WalletSettings::getDAppsAllowed() const
+bool WalletSettings::getAppsAllowed() const
 {
     Lock lock(m_mutex);
     return m_data.value(kDAppsAllowed, false).toBool();
 }
 
-void WalletSettings::setDAppsAllowed(bool value)
+void WalletSettings::setAppsAllowed(bool value)
 {
     bool changed = false;
 
@@ -653,26 +654,6 @@ void WalletSettings::applyChanges()
     AppModel::getInstance().applySettingsChanges();
 }
 
-QString WalletSettings::getDevBeamAppUrl()
-{
-    return m_data.value(kDevAppURL).toString();
-}
-
-QString WalletSettings::getDevBeamAppName()
-{
-    return m_data.value(kDevAppName).toString();
-}
-
-QString WalletSettings::getDevAppApiVer()
-{
-    return m_data.value(kDevAppApiVer).toString();
-}
-
-QString WalletSettings::getDevAppMinApiVer()
-{
-    return m_data.value(kDevAppMinApiVer).toString();
-}
-
 QString WalletSettings::getExplorerUrl() const
 {
     #ifdef BEAM_BEAMX
@@ -712,6 +693,26 @@ QString WalletSettings::getAppsUrl() const
     #endif
 }
 
+QString WalletSettings::getDevAppUrl() const
+{
+    return m_data.value(kDevAppURL).toString();
+}
+
+QString WalletSettings::getDevAppName() const
+{
+    return m_data.value(kDevAppName).toString();
+}
+
+QString WalletSettings::getDevAppApiVer() const
+{
+    return m_data.value(kDevAppApiVer).toString();
+}
+
+QString WalletSettings::getDevAppMinApiVer() const
+{
+    return m_data.value(kDevAppMinApiVer).toString();
+}
+
 QString WalletSettings::getAppsCachePath(const QString& name) const
 {
     Lock lock(m_mutex);
@@ -744,6 +745,34 @@ QString WalletSettings::getAppsStoragePath(const QString& name) const
     adir.mkpath(storagePath);
 
     return storagePath;
+}
+
+QString WalletSettings::getLocalAppsPath() const
+{
+    Lock lock(m_mutex);
+
+    const char* kLocalAppsFolder = "localapps";
+    QString localAppsPath = QDir::cleanPath(
+            m_appDataDir.path() +
+            QDir::separator() + kLocalAppsFolder
+    );
+
+    auto adir = m_appDataDir;
+    adir.mkpath(localAppsPath);
+
+    return localAppsPath;
+}
+
+int WalletSettings::getAppsServerPort() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kLocalAppsPort, 34700).toInt();
+}
+
+void WalletSettings::setAppsServerPort(int port)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kLocalAppsPort, port);
 }
 
 void WalletSettings::minConfirmationsInit()
