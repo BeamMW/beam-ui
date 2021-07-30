@@ -115,6 +115,7 @@ namespace beamui::applications {
         getAsyncWallet().makeIWTCall(
             [proxy = std::move(_walletAPIProxy), api = std::move(_walletAPI)] () mutable -> boost::any {
                 // api should be destroyed in context of the wallet thread
+                // it is ASSUMED to be the last call in api calls chain
                 api.reset();
                 proxy.reset();
                 return boost::none;
