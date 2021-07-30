@@ -36,11 +36,9 @@ namespace beamui::applications
         [[nodiscard]] QObject* getApi();
 
     signals:
-        void apiCreated(const QString& appid);
         void apiChanged();
 
     private:
         std::shared_ptr<WebAPI_Beam> _api;
-        WalletModel::Ptr _wallet;
     };
 }

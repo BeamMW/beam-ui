@@ -92,8 +92,16 @@ namespace beamui::applications {
         data.appId     = _appId;
         data.appName   = _appName;
 
-        _walletAPI = IWalletApi::CreateInstance(version, *this, data);
+        _walletAPIProxy = std::make_shared<ApiHandlerProxy>();
+        _walletAPI = IWalletApi::CreateInstance(version, *_walletAPIProxy, data);
         LOG_INFO () << "WebAPI_Beam created for " << data.appName << ", " << data.appId;
+    }
+
+    std::shared_ptr<WebAPI_Beam> WebAPI_Beam::Create(const std::string& version, const std::string& appid, const std::string& appname)
+    {
+        auto result = std::make_shared<WebAPI_Beam>(version, appid, appname);
+        result->_walletAPIProxy->_handler = result;
+        return result;
     }
 
     WebAPI_Beam::~WebAPI_Beam()
@@ -105,9 +113,10 @@ namespace beamui::applications {
         //
         AppModel::getInstance().getWalletModel()->releaseAppsShaders(_appId);
         getAsyncWallet().makeIWTCall(
-            [api = std::move(_walletAPI)] () mutable -> boost::any {
+            [proxy = std::move(_walletAPIProxy), api = std::move(_walletAPI)] () mutable -> boost::any {
                 // api should be destroyed in context of the wallet thread
                 api.reset();
+                proxy.reset();
                 return boost::none;
             },
         [] (const boost::any&){
@@ -185,7 +194,7 @@ namespace beamui::applications {
         );
     }
 
-    void WebAPI_Beam::AnyThread_callWalletApiImp(const std::string& request)
+    void WebAPI_Beam::UIThread_callWalletApiImp(const std::string& request)
     {
         //
         // Do not assume thread here
@@ -249,42 +258,6 @@ namespace beamui::applications {
         return 42;
     }
 
-    void WebAPI_Beam::AnyThread_sendApproved(const std::string& request)
-    {
-        //
-        // Do not assume thread here
-        // Should be safe to call from any thread
-        //
-        AnyThread_callWalletApiImp(request);
-    }
-
-    void WebAPI_Beam::AnyThread_sendRejected(const std::string& request, ApiError code, const std::string& message)
-    {
-        //
-        // Do not assume thread here
-        // Should be safe to call from any thread
-        //
-        AnyThread_sendError(request, code, message);
-    }
-
-    void WebAPI_Beam::AnyThread_contractInfoApproved(const std::string& request)
-    {
-        //
-        // Do not assume thread here
-        // Should be safe to call from any thread
-        //
-        AnyThread_callWalletApiImp(request);
-    }
-
-    void WebAPI_Beam::AnyThread_contractInfoRejected(const std::string& request, ApiError code, const std::string& message)
-    {
-        //
-        // Do not assume thread here
-        // Should be safe to call from any thread
-        //
-        AnyThread_sendError(request, code, message);
-    }
-
     void WebAPI_Beam::AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
     {
         std::weak_ptr<WebAPI_Beam> wp = shared_from_this();
@@ -314,7 +287,7 @@ namespace beamui::applications {
                 if (spend.size() != 1)
                 {
                     assert(!"tx_send must spend strictly 1 asset");
-                    return AnyThread_sendRejected(request, ApiError::NotAllowedError, "tx_send must spend strictly 1 asset");
+                    return AnyThread_sendError(request, ApiError::NotAllowedError, "tx_send must spend strictly 1 asset");
                 }
 
                 const auto assetId = spend.begin()->first;
@@ -429,7 +402,7 @@ namespace beamui::applications {
         // This is UI thread
         //
         LOG_INFO() << "Contract tx rejected: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
-        AnyThread_sendApproved(request.toStdString());
+        UIThread_callWalletApiImp(request.toStdString());
     }
 
     void WebAPI_Beam::sendRejected(const QString& request)
@@ -438,7 +411,7 @@ namespace beamui::applications {
         // This is UI thread
         //
         LOG_INFO() << "Contract tx rejected: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
-        AnyThread_sendRejected(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
+        AnyThread_sendError(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
     }
 
     void WebAPI_Beam::contractInfoApproved(const QString& request)
@@ -447,7 +420,7 @@ namespace beamui::applications {
         // This is UI thread
         //
         LOG_INFO() << "Contract tx rejected: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
-        AnyThread_contractInfoApproved(request.toStdString());
+        UIThread_callWalletApiImp(request.toStdString());
     }
 
     void WebAPI_Beam::contractInfoRejected(const QString& request)
@@ -456,6 +429,6 @@ namespace beamui::applications {
         // This is UI thread
         //
         LOG_INFO() << "Contract tx rejected: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
-        AnyThread_contractInfoRejected(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
+        AnyThread_sendError(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
     }
 }

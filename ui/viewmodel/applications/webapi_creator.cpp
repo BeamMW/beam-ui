@@ -23,7 +23,6 @@ namespace beamui::applications
     WebAPICreator::WebAPICreator(QObject *parent)
         : QObject(parent)
     {
-
     }
 
     WebAPICreator::~WebAPICreator()
@@ -58,10 +57,8 @@ namespace beamui::applications
         }
 
         const auto appid = GenerateAppID(appName.toStdString(), appUrl.toStdString());
-        _api = std::make_shared<WebAPI_Beam>(version, appid, appName.toStdString());
-
+        _api = WebAPI_Beam::Create(version, appid, appName.toStdString());
         emit apiChanged();
-        emit apiCreated(QString::fromStdString(appid));
 
         LOG_INFO() << "API created: " << version << ", " << appName.toStdString() << ", " << appid;
     }

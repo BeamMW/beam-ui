@@ -92,12 +92,12 @@ ColumnLayout {
     WebAPICreator {
         id: webapiCreator
 
-        onApiCreated: function (appid) {
+        onApiChanged: function () {
             control.errorMessage = ""
             webLayout.visible = false
 
-            webView.profile.cachePath = viewModel.getAppCachePath(appid)
-            webView.profile.persistentStoragePath = viewModel.getAppStoragePath(appid)
+            webView.profile.cachePath = viewModel.getAppCachePath(control.activeApp["appid"])
+            webView.profile.persistentStoragePath = viewModel.getAppStoragePath(control.activeApp["appid"])
             webView.url = control.activeApp.url
 
             webapiCreator.api.callWalletApiResult.connect(function (result) {
