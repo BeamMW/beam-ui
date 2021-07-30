@@ -27,10 +27,11 @@ namespace beamui::applications
     {
         Q_OBJECT
         Q_PROPERTY(QMap<QString, QVariant> assets READ getAssets NOTIFY assetsChanged)
+        Q_PROPERTY(QObject* api READ getApi NOTIFY apiChanged)
 
     public:
         explicit WebAPICreator(QObject *parent = nullptr);
-        ~WebAPICreator() override = default;
+        ~WebAPICreator() override;
 
         Q_INVOKABLE void createApi(const QString& verWant, const QString& verMin, const QString& appName, const QString& appUrl);
         Q_INVOKABLE void sendApproved(const QString& request);
@@ -41,12 +42,14 @@ namespace beamui::applications
         Q_INVOKABLE QString generateAppID(const QString& appName, const QString& appUrl);
 
         [[nodiscard]] QMap<QString, QVariant> getAssets();
+        [[nodiscard]] QObject* getApi();
 
     signals:
-        void apiCreated(QObject* api, const QString& appid);
+        void apiCreated(const QString& appid);
         void approveSend(const QString& request, const QMap<QString, QVariant>& info);
         void approveContractInfo(const QString& request, const QMap<QString, QVariant>& info, QList<QMap<QString, QVariant>> amounts);
         void assetsChanged();
+        void apiChanged();
 
     private:
         void AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&) override;
@@ -56,7 +59,6 @@ namespace beamui::applications
         void UIThread_getContractInfoConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&);
 
         std::unique_ptr<WebAPI_Beam> _api;
-        WebAPI_Shaders::Ptr _webShaders;
         AssetsManager::Ptr _amgr;
         WalletModel::Ptr _wallet;
         beam::wallet::IWalletModelAsync::Ptr _asyncWallet;

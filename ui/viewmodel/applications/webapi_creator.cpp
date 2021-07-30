@@ -69,6 +69,11 @@ namespace beamui::applications
         connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &WebAPICreator::assetsChanged);
     }
 
+    WebAPICreator::~WebAPICreator()
+    {
+        LOG_INFO () << "WebAPICreator destroyed";
+    }
+
     void WebAPICreator::createApi(const QString& verWant, const QString& verMin, const QString &appName, const QString &appUrl)
     {
         using namespace beam::wallet;
@@ -96,13 +101,18 @@ namespace beamui::applications
         }
 
         const auto appid = GenerateAppID(appName.toStdString(), appUrl.toStdString());
-        _webShaders = std::make_shared<WebAPI_Shaders>(appid, appName.toStdString());
-        _api = std::make_unique<WebAPI_Beam>(*this, _webShaders, version, appid, appName.toStdString());
+        _api = std::make_unique<WebAPI_Beam>(*this, version, appid, appName.toStdString());
 
         QQmlEngine::setObjectOwnership(_api.get(), QQmlEngine::CppOwnership);
-        emit apiCreated(_api.get(), QString::fromStdString(appid));
+        emit apiChanged();
+        emit apiCreated(QString::fromStdString(appid));
 
         LOG_INFO() << "API created: " << version << ", " << appName.toStdString() << ", " << appid;
+    }
+
+    QObject* WebAPICreator::getApi()
+    {
+        return _api.get();
     }
 
     void WebAPICreator::AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)

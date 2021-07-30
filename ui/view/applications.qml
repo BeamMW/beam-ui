@@ -62,16 +62,54 @@ ColumnLayout {
         }
     }
 
+    //
+    // This object is visible to web
+    //
     QtObject {
         id: webapiBEAM
         WebChannel.id: "BEAM"
 
         property var style: Style
-        property var api
+        property var api: QtObject
+        {
+            function callWalletApi (request)
+            {
+                callWalletApiCall(request)
+            }
+
+            signal callWalletApiResult (string result)
+            signal callWalletApiCall   (string request)
+        }
     }
 
     WebAPICreator {
         id: webapiCreator
+
+        onApiCreated: function (appid) {
+            control.errorMessage = ""
+            webLayout.visible = false
+
+            webView.profile.cachePath = viewModel.getAppCachePath(appid)
+            webView.profile.persistentStoragePath = viewModel.getAppStoragePath(appid)
+            webView.url = control.activeApp.url
+
+            webapiCreator.api.callWalletApiResult.connect(function (result) {
+                webapiBEAM.api.callWalletApiResult(result)
+                try
+                {
+                    var json = JSON.parse(sjson)
+                    var txid = ((json || {}).result || {}).txid
+                    if (txid) txTable.showAppTxNotifcation(txid, control.activeApp.icon)
+                }
+                catch (e) {
+                    BeamGlobals.logInfo(["callWalletApiResult json parse fail:", e].join(": "))
+                }
+            })
+
+            webapiBEAM.api.callWalletApiCall.connect(function (request){
+                webapiCreator.api.callWalletApi(request)
+            })
+        }
 
         onApproveContractInfo: function(request, info, amounts) {
             const dialog = Qt.createComponent("send_confirm.qml")
@@ -157,36 +195,11 @@ ColumnLayout {
         {
             var verWant = app.api_version || "current"
             var verMin  = app.min_api_version || ""
-
-            webapiCreator.onApiCreated.connect(function(api, appid) {
-                control.errorMessage = ""
-                webapiBEAM.api = api
-                webLayout.visible = false
-
-                webView.profile.cachePath = viewModel.getAppCachePath(appid)
-                webView.profile.persistentStoragePath = viewModel.getAppStoragePath(appid)
-                webView.url = app.url
-
-                api.callWalletApiResult.connect(function (sjson) {
-                    try
-                    {
-                        var json = JSON.parse(sjson)
-                        var txid = ((json || {}).result || {}).txid
-                        if (txid) txTable.showAppTxNotifcation(txid, app.icon)
-                    }
-                    catch (e) {
-                        BeamGlobals.logInfo(["callWalletApiResult json parse fail:", e].join(": "))
-                    }
-                })
-            })
-
             webapiCreator.createApi(verWant, verMin, app.name, app.url)
-            return
         }
         catch (err)
         {
             control.errorMessage = err.toString()
-            return
         }
     }
 

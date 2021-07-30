@@ -26,27 +26,18 @@ namespace beamui::applications
         Q_OBJECT
     public:
         explicit WebAPI_Beam(IConsentHandler& handler,
-                             beam::wallet::IShadersManager::Ptr shaders,
                              const std::string& version,
                              const std::string& appid,
                              const std::string& appname);
 
         ~WebAPI_Beam() override;
 
-    //
-    // SLOTS ARE VISIBLE TO WEB
-    // Slots below are called by web in context of the UI thread
-    //
     public slots:
        int test();
        void callWalletApi(const QString& request);
 
-    //
-    // SIGNALS ARE VISIBLE TO WEB
-    // Signals are received by web
-    //
     signals:
-        void callWalletApiResult(const QString& result);
+       void callWalletApiResult(const QString& result);
 
     //
     // Regular non-slots & non-signals are not visible to Web as of Qt 5.15.2
@@ -86,10 +77,13 @@ namespace beamui::applications
         void sendAPIResponse(const beam::wallet::json& result) override;
 
         // API should be accessed only in context of the reactor thread
-        beam::wallet::IWalletApi::Ptr _walletAPI;
+        using ApiPtr = beam::wallet::IWalletApi::Ptr;
+        using WeakApiPtr = beam::wallet::IWalletApi::WeakPtr;
+
+        ApiPtr _walletAPI;
+        IConsentHandler& _consentHandler;
         std::shared_ptr<bool> _guard = std::make_shared<bool>(true);
 
-        IConsentHandler& _consentHandler;
         std::string _appId;
         std::string _appName;
     };

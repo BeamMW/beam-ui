@@ -31,7 +31,7 @@ namespace beamui::applications {
         }
     }
 
-    WebAPI_Beam::WebAPI_Beam(IConsentHandler& handler, IShadersManager::Ptr shaders, const std::string& version, const std::string& appid, const std::string& appname)
+    WebAPI_Beam::WebAPI_Beam(IConsentHandler& handler, const std::string& version, const std::string& appid, const std::string& appname)
         : QObject(nullptr)
         , _consentHandler(handler)
         , _appId(appid)
@@ -42,7 +42,7 @@ namespace beamui::applications {
         //
         ApiInitData data;
 
-        data.contracts = std::move(shaders);
+        data.contracts = std::make_shared<WebAPI_Shaders>(appid, appname);
         data.swaps     = nullptr;
         data.wallet    = AppModel::getInstance().getWalletModel()->getWallet();
         data.walletDB  = AppModel::getInstance().getWalletDB();
@@ -55,6 +55,8 @@ namespace beamui::applications {
 
     WebAPI_Beam::~WebAPI_Beam()
     {
+        LOG_INFO () << "WebAPI_Beam Destroyed";
+
         //
         // THIS IS UI THREAD
         //
