@@ -58,7 +58,7 @@ namespace beamui::applications
         void UIThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&);
         void UIThread_getContractInfoConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&);
 
-        std::unique_ptr<WebAPI_Beam> _api;
+        std::shared_ptr<WebAPI_Beam> _api;
         AssetsManager::Ptr _amgr;
         WalletModel::Ptr _wallet;
         beam::wallet::IWalletModelAsync::Ptr _asyncWallet;

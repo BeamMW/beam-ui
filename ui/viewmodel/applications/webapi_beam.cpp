@@ -78,10 +78,11 @@ namespace beamui::applications {
         //
         LOG_INFO () << "WebAPP API call for " << _appName << ", " << _appId << "): " << request.toStdString();
 
-        std::weak_ptr<bool> wp = _guard;
+        std::weak_ptr<WebAPI_Beam> wp = shared_from_this();
         getAsyncWallet().makeIWTCall(
             [wp, this, request]() -> boost::any {
-                if (!wp.lock())
+                auto locked = wp.lock();
+                if (!locked)
                 {
                     // this means that api is disconnected and destroyed already, this is normal
                     return boost::none;
@@ -142,10 +143,11 @@ namespace beamui::applications {
         // Do not assume thread here
         // Should be safe to call from any thread
         //
-        std::weak_ptr<bool> wp = _guard;
+        std::weak_ptr<WebAPI_Beam> wp = shared_from_this();
         getAsyncWallet().makeIWTCall(
             [wp, this, request]() -> boost::any {
-                if(!wp.lock())
+                auto locked = wp.lock();
+                if (!locked)
                 {
                     // this means that api is disconnected and destroyed already
                     // well, okay, nothing to do then

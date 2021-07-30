@@ -22,14 +22,12 @@ namespace beamui::applications
     class WebAPI_Beam
         : public QObject
         , public beam::wallet::IWalletApiHandler
+        , public std::enable_shared_from_this<WebAPI_Beam>
     {
         Q_OBJECT
-    public:
-        explicit WebAPI_Beam(IConsentHandler& handler,
-                             const std::string& version,
-                             const std::string& appid,
-                             const std::string& appname);
 
+    public:
+        WebAPI_Beam(IConsentHandler& handler, const std::string& version, const std::string& appid, const std::string& appname);
         ~WebAPI_Beam() override;
 
     public slots:
@@ -82,7 +80,6 @@ namespace beamui::applications
 
         ApiPtr _walletAPI;
         IConsentHandler& _consentHandler;
-        std::shared_ptr<bool> _guard = std::make_shared<bool>(true);
 
         std::string _appId;
         std::string _appName;

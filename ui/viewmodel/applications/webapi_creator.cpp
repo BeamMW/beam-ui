@@ -101,9 +101,8 @@ namespace beamui::applications
         }
 
         const auto appid = GenerateAppID(appName.toStdString(), appUrl.toStdString());
-        _api = std::make_unique<WebAPI_Beam>(*this, version, appid, appName.toStdString());
+        _api = std::make_shared<WebAPI_Beam>(*this, version, appid, appName.toStdString());
 
-        QQmlEngine::setObjectOwnership(_api.get(), QQmlEngine::CppOwnership);
         emit apiChanged();
         emit apiCreated(QString::fromStdString(appid));
 

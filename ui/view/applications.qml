@@ -63,7 +63,9 @@ ColumnLayout {
     }
 
     //
-    // This object is visible to web
+    // This object is visible to web. We create such proxy
+    // to ensure that nothing (methods, events, props &c)
+    // is leaked to the web from real API
     //
     QtObject {
         id: webapiBEAM
@@ -80,6 +82,11 @@ ColumnLayout {
             signal callWalletApiResult (string result)
             signal callWalletApiCall   (string request)
         }
+    }
+
+    WebChannel {
+        id: apiChannel
+        registeredObjects: [webapiBEAM]
     }
 
     WebAPICreator {
@@ -175,11 +182,6 @@ ColumnLayout {
 
             instance.open()
         }
-    }
-
-    WebChannel {
-        id: apiChannel
-        registeredObjects: [webapiBEAM]
     }
 
     function appSupported(app) {
