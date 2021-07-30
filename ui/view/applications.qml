@@ -116,71 +116,71 @@ ColumnLayout {
             webapiBEAM.api.callWalletApiCall.connect(function (request){
                 webapiCreator.api.callWalletApi(request)
             })
-        }
 
-        onApproveContractInfo: function(request, info, amounts) {
-            const dialog = Qt.createComponent("send_confirm.qml")
-            const instance = dialog.createObject(control,
-                {
-                    amounts:        amounts,
-                    rateUnit:       info["rateUnit"],
-                    fee:            info["fee"],
-                    feeRate:        info["feeRate"],
-                    comment:        info["comment"],
-                    isSpend:        info["isSpend"],
-                    appMode:        true,
-                    appName:        activeApp.name,
-                    isOnline:       false,
-                    showPrefix:     true,
-                    assetsProvider: webapiCreator,
-                    isEnough:       info.isEnough
+            webapiCreator.api.approveSend.connect(function(request, info) {
+                var dialog = Qt.createComponent("send_confirm.qml")
+                var instance = dialog.createObject(control,
+                    {
+                        addressText:    info["token"],
+                        typeText:       info["tokenType"],
+                        isOnline:       info["isOnline"],
+                        amounts: [{
+                            assetID:  info["assetID"],
+                            amount:   info["amount"],
+                            spend:    true
+                        }],
+                        rateUnit:       info["rateUnit"],
+                        fee:            info["fee"],
+                        feeRate:        info["feeRate"],
+                        comment:        info["comment"],
+                        appMode:        true,
+                        appName:        activeApp.name,
+                        showPrefix:     true,
+                        assetsProvider: webapiCreator.api,
+                        isEnough:       info.isEnough
+                    })
+
+                instance.Component.onDestruction.connect(function () {
+                     if (instance.result == Dialog.Accepted) {
+                        webapiCreator.api.sendApproved(request)
+                        return
+                    }
+                    webapiCreator.api.sendRejected(request)
+                    return
                 })
 
-            instance.Component.onDestruction.connect(function () {
-                 if (instance.result == Dialog.Accepted) {
-                    webapiCreator.contractInfoApproved(request)
-                    return
-                }
-                webapiCreator.contractInfoRejected(request)
-                return
+                instance.open()
             })
 
-            instance.open()
-        }
+            webapiCreator.api.approveContractInfo.connect(function(request, info, amounts) {
+                const dialog = Qt.createComponent("send_confirm.qml")
+                const instance = dialog.createObject(control,
+                    {
+                        amounts:        amounts,
+                        rateUnit:       info["rateUnit"],
+                        fee:            info["fee"],
+                        feeRate:        info["feeRate"],
+                        comment:        info["comment"],
+                        isSpend:        info["isSpend"],
+                        appMode:        true,
+                        appName:        activeApp.name,
+                        isOnline:       false,
+                        showPrefix:     true,
+                        assetsProvider: webapiCreator.api,
+                        isEnough:       info.isEnough
+                    })
 
-        onApproveSend: function(request, info) {
-            var dialog = Qt.createComponent("send_confirm.qml")
-            var instance = dialog.createObject(control,
-                {
-                    addressText:    info["token"],
-                    typeText:       info["tokenType"],
-                    isOnline:       info["isOnline"],
-                    amounts: [{
-                        assetID:  info["assetID"],
-                        amount:   info["amount"],
-                        spend:    true
-                    }],
-                    rateUnit:       info["rateUnit"],
-                    fee:            info["fee"],
-                    feeRate:        info["feeRate"],
-                    comment:        info["comment"],
-                    appMode:        true,
-                    appName:        activeApp.name,
-                    showPrefix:     true,
-                    assetsProvider: webapiCreator,
-                    isEnough:       info.isEnough
+                instance.Component.onDestruction.connect(function () {
+                     if (instance.result == Dialog.Accepted) {
+                        webapiCreator.api.contractInfoApproved(request)
+                        return
+                    }
+                    webapiCreator.api.contractInfoRejected(request)
+                    return
                 })
 
-            instance.Component.onDestruction.connect(function () {
-                 if (instance.result == Dialog.Accepted) {
-                    webapiCreator.sendApproved(request)
-                    return
-                }
-                webapiCreator.sendRejected(request)
-                return
+                instance.open()
             })
-
-            instance.open()
         }
     }
 

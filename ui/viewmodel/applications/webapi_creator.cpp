@@ -20,53 +20,10 @@
 
 namespace beamui::applications
 {
-    namespace
-    {
-        typedef QList<QMap<QString, QVariant>> ApproveAmounts;
-        typedef QMap<QString, QVariant> ApproveMap;
-
-        void printMap(const std::string& prefix, const ApproveMap& info)
-        {
-            QMapIterator<QString, QVariant> iter(info);
-
-            while (iter.hasNext())
-            {
-                iter.next();
-                if (iter.value().canConvert<QString>())
-                {
-                    LOG_INFO () << prefix << iter.key().toStdString() << "=" << iter.value().toString().toStdString();
-                }
-                else
-                {
-                    assert(false); // for now should not happen, add special case above to print correct logs
-                    LOG_INFO () << prefix << iter.key().toStdString() << "=" << "unexpected no-str convertible";
-                }
-            }
-        }
-
-        void printApproveLog(const std::string& preamble, const std::string& appid, const std::string& appname, const ApproveMap& info, const ApproveAmounts& amounts)
-        {
-            LOG_INFO() << preamble << " (" << appname << ", " << appid << "):";
-            printMap("\t", info);
-
-            if (!amounts.isEmpty())
-            {
-                for (const auto &amountMap : amounts)
-                {
-                    LOG_INFO() << "\tamount entry:";
-                    printMap("\t\t", amountMap);
-                }
-            }
-        }
-    }
-
     WebAPICreator::WebAPICreator(QObject *parent)
         : QObject(parent)
-        , _amgr(AppModel::getInstance().getAssets())
-        , _wallet(AppModel::getInstance().getWalletModel())
-        , _asyncWallet(AppModel::getInstance().getWalletModel()->getAsync())
     {
-        connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &WebAPICreator::assetsChanged);
+
     }
 
     WebAPICreator::~WebAPICreator()
@@ -101,7 +58,7 @@ namespace beamui::applications
         }
 
         const auto appid = GenerateAppID(appName.toStdString(), appUrl.toStdString());
-        _api = std::make_shared<WebAPI_Beam>(*this, version, appid, appName.toStdString());
+        _api = std::make_shared<WebAPI_Beam>(version, appid, appName.toStdString());
 
         emit apiChanged();
         emit apiCreated(QString::fromStdString(appid));
@@ -112,194 +69,6 @@ namespace beamui::applications
     QObject* WebAPICreator::getApi()
     {
         return _api.get();
-    }
-
-    void WebAPICreator::AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
-    {
-        std::weak_ptr<bool> wp = _sendConsentGuard;
-        _asyncWallet->makeIWTCall([] () -> boost::any {return boost::none;},
-            [this, wp, request, pinfo](const boost::any&)
-            {
-                if (wp.lock())
-                {
-                    UIThread_getSendConsent(request, pinfo);
-                }
-                else
-                {
-                    // Can happen if user leaves the application
-                    LOG_WARNING() << "AT -> UIT send consent arrived but creator is already destroyed";
-                }
-            }
-        );
-    }
-
-    void WebAPICreator::AnyThread_getContractInfoConsent(const std::string &request, const beam::wallet::IWalletApi::ParseResult& pinfo)
-    {
-        std::weak_ptr<bool> wp = _contractConsentGuard;
-        _asyncWallet->makeIWTCall([] () -> boost::any {return boost::none;},
-            [this, wp, request, pinfo](const boost::any&)
-            {
-                if (wp.lock())
-                {
-                    UIThread_getContractInfoConsent(request, pinfo);
-                }
-                else
-                {
-                    // Can happen if user leaves the application
-                    LOG_WARNING() << "AT -> UIT contract consent arrived but creator is already destroyed";
-                }
-            }
-        );
-    }
-
-    void WebAPICreator::UIThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
-    {
-        using namespace beam::wallet;
-        decltype(_mappedAssets)().swap(_mappedAssets);
-        _mappedAssets.insert(beam::Asset::s_BeamID);
-
-        //
-        // Do not assume thread here
-        // Should be safe to call from any thread
-        //
-        const auto &spend = pinfo.minfo.spend;
-        const auto fee = pinfo.minfo.fee;
-
-        if (spend.size() != 1)
-        {
-            assert(!"tx_send must spend strictly 1 asset");
-            return _api->AnyThread_sendRejected(request, ApiError::NotAllowedError,
-                                                "tx_send must spend strictly 1 asset");
-        }
-
-        const auto assetId = spend.begin()->first;
-        const auto amount = spend.begin()->second;
-        _mappedAssets.insert(assetId);
-
-        ApproveMap info;
-        info.insert("amount",     AmountBigToUIString(amount));
-        info.insert("fee",        AmountToUIString(fee));
-        info.insert("feeRate",    AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID)));
-        info.insert("assetID",    assetId);
-        info.insert("rateUnit",   _amgr->getRateUnit());
-        info.insert("token",      QString::fromStdString(pinfo.minfo.token ? *pinfo.minfo.token : std::string()));
-        info.insert("isOnline",   !pinfo.minfo.spendOffline);
-
-        std::string comment = pinfo.minfo.confirm_comment ? *pinfo.minfo.confirm_comment : (pinfo.minfo.comment ? *pinfo.minfo.comment : std::string());
-        info.insert("comment", QString::fromStdString(comment));
-
-        std::weak_ptr<bool> wp = _sendCSIGuard;
-        _asyncWallet->selectCoins(beam::AmountBig::get_Lo(amount), fee, assetId, false, [this, wp, request, info](const CoinsSelectionInfo& csi) mutable {
-            if (wp.lock())
-            {
-                info.insert("isEnough", csi.m_isEnought);
-                printApproveLog("Get user consent for send", _api->getAppId(), _api->getAppName(), info,ApproveAmounts());
-                emit approveSend(QString::fromStdString(request), info);
-            }
-            else
-            {
-                // Can happen if user leaves the application
-                LOG_WARNING() << "UIT send CSI arrived but creator is already destroyed";
-            }
-        });
-    }
-
-    void WebAPICreator::UIThread_getContractInfoConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
-    {
-        decltype(_mappedAssets)().swap(_mappedAssets);
-        _mappedAssets.insert(beam::Asset::s_BeamID);
-
-        ApproveMap info;
-        info.insert("comment",   QString::fromStdString(pinfo.minfo.comment ? *pinfo.minfo.comment : std::string()));
-        info.insert("fee",       AmountToUIString(pinfo.minfo.fee));
-        info.insert("feeRate",   AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID)));
-        info.insert("rateUnit",  _amgr->getRateUnit());
-        info.insert("isSpend",   !pinfo.minfo.spend.empty());
-
-        std::string comment = pinfo.minfo.confirm_comment ? *pinfo.minfo.confirm_comment : (pinfo.minfo.comment ? *pinfo.minfo.comment : std::string());
-        info.insert("comment", QString::fromStdString(comment));
-
-        bool isEnough = true;
-        ApproveAmounts amounts;
-        for(const auto& sinfo: pinfo.minfo.spend)
-        {
-            QMap<QString, QVariant> entry;
-            const auto assetId = sinfo.first;
-            const auto amount  = sinfo.second;
-
-            _mappedAssets.insert(assetId);
-            entry.insert("amount",   AmountBigToUIString(amount));
-            entry.insert("assetID",  assetId);
-            entry.insert("spend",    true);
-            amounts.push_back(entry);
-
-            auto totalAmount = amount;
-            if (assetId == beam::Asset::s_BeamID)
-            {
-                totalAmount += beam::AmountBig::Type(pinfo.minfo.fee);
-            }
-
-            isEnough = isEnough && (totalAmount <= _wallet->getAvailable(assetId));
-        }
-
-        for(const auto& sinfo: pinfo.minfo.receive)
-        {
-            QMap<QString, QVariant> entry;
-            const auto assetId = sinfo.first;
-            const auto amount  = sinfo.second;
-
-            _mappedAssets.insert(assetId);
-            entry.insert("amount",   AmountBigToUIString(amount));
-            entry.insert("assetID",  assetId);
-            entry.insert("spend",    false);
-
-            amounts.push_back(entry);
-        }
-
-        info.insert("isEnough", isEnough);
-        printApproveLog("Get user consent for contract tx", _api->getAppId(), _api->getAppName(), info, amounts);
-        emit approveContractInfo(QString::fromStdString(request), info, amounts);
-    }
-
-    void WebAPICreator::sendApproved(const QString& request)
-    {
-        //
-        // This is UI thread
-        //
-        LOG_INFO() << "Contract tx rejected: " << _api->getAppName() << ", " << _api->getAppId() << ", " << request.toStdString();
-        _api->AnyThread_sendApproved(request.toStdString());
-    }
-
-    void WebAPICreator::sendRejected(const QString& request)
-    {
-        //
-        // This is UI thread
-        //
-        LOG_INFO() << "Contract tx rejected: " << _api->getAppName() << ", " << _api->getAppId() << ", " << request.toStdString();
-        _api->AnyThread_sendRejected(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
-    }
-
-    void WebAPICreator::contractInfoApproved(const QString& request)
-    {
-        //
-        // This is UI thread
-        //
-        LOG_INFO() << "Contract tx rejected: " << _api->getAppName() << ", " << _api->getAppId() << ", " << request.toStdString();
-        _api->AnyThread_contractInfoApproved(request.toStdString());
-    }
-
-    void WebAPICreator::contractInfoRejected(const QString& request)
-    {
-        //
-        // This is UI thread
-        //
-        LOG_INFO() << "Contract tx rejected: " << _api->getAppName() << ", " << _api->getAppId() << ", " << request.toStdString();
-        _api->AnyThread_contractInfoRejected(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
-    }
-
-    QMap<QString, QVariant> WebAPICreator::getAssets()
-    {
-        return _amgr->getAssetsMap(_mappedAssets);
     }
 
     bool WebAPICreator::apiSupported(const QString& apiVersion) const

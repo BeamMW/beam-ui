@@ -14,7 +14,6 @@
 #pragma once
 
 #include "wallet/core/contracts/i_shaders_manager.h"
-#include "consent_handler.h"
 #include "model/app_model.h"
 
 namespace beamui::applications

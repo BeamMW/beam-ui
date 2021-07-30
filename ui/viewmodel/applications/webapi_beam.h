@@ -15,7 +15,7 @@
 
 #include "model/app_model.h"
 #include "webapi_shaders.h"
-#include "consent_handler.h"
+#include "wallet/api/i_wallet_api.h"
 
 namespace beamui::applications
 {
@@ -25,10 +25,17 @@ namespace beamui::applications
         , public std::enable_shared_from_this<WebAPI_Beam>
     {
         Q_OBJECT
+        Q_PROPERTY(QMap<QString, QVariant> assets READ getAssets NOTIFY assetsChanged)
 
     public:
-        WebAPI_Beam(IConsentHandler& handler, const std::string& version, const std::string& appid, const std::string& appname);
+        WebAPI_Beam(const std::string& version, const std::string& appid, const std::string& appname);
         ~WebAPI_Beam() override;
+
+        [[nodiscard]] QMap<QString, QVariant> getAssets();
+        Q_INVOKABLE void sendApproved(const QString& request);
+        Q_INVOKABLE void sendRejected(const QString& request);
+        Q_INVOKABLE void contractInfoApproved(const QString& request);
+        Q_INVOKABLE void contractInfoRejected(const QString& request);
 
     public slots:
        int test();
@@ -36,6 +43,9 @@ namespace beamui::applications
 
     signals:
        void callWalletApiResult(const QString& result);
+       void assetsChanged();
+       void approveSend(const QString& request, const QMap<QString, QVariant>& info);
+       void approveContractInfo(const QString& request, const QMap<QString, QVariant>& info, QList<QMap<QString, QVariant>> amounts);
 
     //
     // Regular non-slots & non-signals are not visible to Web as of Qt 5.15.2
@@ -62,6 +72,10 @@ namespace beamui::applications
         }
 
     private:
+        void AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&);
+        void AnyThread_getContractInfoConsent(const std::string &request, const beam::wallet::IWalletApi::ParseResult &);
+
+    private:
         // This can be called from any thread.
         void AnyThread_callWalletApiImp(const std::string& request);
 
@@ -76,12 +90,12 @@ namespace beamui::applications
 
         // API should be accessed only in context of the reactor thread
         using ApiPtr = beam::wallet::IWalletApi::Ptr;
-        using WeakApiPtr = beam::wallet::IWalletApi::WeakPtr;
-
         ApiPtr _walletAPI;
-        IConsentHandler& _consentHandler;
 
         std::string _appId;
         std::string _appName;
+
+        AssetsManager::Ptr _amgr;
+        std::set<beam::Asset::ID> _mappedAssets;
     };
 }
