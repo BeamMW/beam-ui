@@ -8,6 +8,8 @@ import "../utils.js" as Utils
 CustomTableView {
     id: rootControl
 
+    property bool isShieldedSupported: true
+
     property int rowHeight: 56
     property int resizableWidth: parent.width - actions.width
     property double columnResizeRatio: resizableWidth / 914
@@ -48,7 +50,7 @@ CustomTableView {
     }
 
     TableViewColumn {
-        role: parentModel.tokenRole
+        role: rootControl.isShieldedSupported ? parentModel.tokenRole : parentModel.walletIDRole
         //% "Address"
         title: qsTrId("general-address")
         width: 280 *  rootControl.columnResizeRatio
@@ -269,8 +271,9 @@ CustomTableView {
             icon.source: "qrc:/assets/icon-edit.svg"
             onTriggered: {
                 var dialog = Qt.createComponent("EditAddress.qml").createObject(main, {
-                    viewModel:   rootControl.parentModel,
-                    addressItem: contextMenu.addressItem
+                    viewModel:           rootControl.parentModel,
+                    addressItem:         contextMenu.addressItem,
+                    isShieldedSupported: rootControl.isShieldedSupported
                 })
                 dialog.open();
             }
