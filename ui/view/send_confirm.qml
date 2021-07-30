@@ -288,6 +288,7 @@ ConfirmationDialog {
         SFText {
             Layout.topMargin: 8
             Layout.fillWidth: true
+            horizontalAlignment: Text.AlignHCenter
 
             visible:  !!text
             color:    !isEnough ? Style.validator_error : Style.content_disabled
