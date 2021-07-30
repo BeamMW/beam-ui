@@ -104,7 +104,7 @@ ColumnLayout {
                 webapiBEAM.api.callWalletApiResult(result)
                 try
                 {
-                    var json = JSON.parse(sjson)
+                    var json = JSON.parse(result)
                     var txid = ((json || {}).result || {}).txid
                     if (txid) txTable.showAppTxNotifcation(txid, control.activeApp.icon)
                 }
