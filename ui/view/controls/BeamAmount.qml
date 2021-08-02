@@ -23,6 +23,7 @@ Control {
     property int     rateFontSize:        10
     property string  iconSource:          ""
     property size    iconSize:            Qt.size(22, 22)
+    property size    verifiedIconSize:    Qt.size(18 * iconSize.width / 22, 18 * iconSize.height / 22)
     property alias   copyMenuEnabled:     amountText.copyMenuEnabled
     property alias   caption:             captionText.text
     property int     captionFontSize:     12
@@ -210,14 +211,15 @@ Control {
             anchors.verticalCenter: control.iconAnchorCenter ? parent.verticalCenter : undefined // undefined resets property
 
             SvgImage {
+                id: assetIconVer
                 source: "qrc:/assets/icon-verified-asset.svg";
                 visible: control.verified
 
                 x: parent.width - width / 1.6
                 y: - height / 3.6
 
-                width:  18 * parent.width / 26
-                height: 18 * parent.width / 26
+                width:  verifiedIconSize.width
+                height: verifiedIconSize.height
             }
         }
 

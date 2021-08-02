@@ -50,6 +50,7 @@ Control {
             Layout.fillWidth:  true
             spacing:           12
             iconSize:          Qt.size(26, 26)
+            verifiedIconSize:  Qt.size(18, 18)
             copyMenuEnabled:   true
             showDrop:          control.hasBalanceTip || assetInfo.id != 0
             dropSize:          Qt.size(8, 4.8)

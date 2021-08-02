@@ -242,6 +242,7 @@ ConfirmationDialog {
                         iconSize:         Qt.size(20, 20)
                         iconSource:       (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).icon || ""
                         iconAnchorCenter: false
+                        verified:         !!(assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).verified
 
                         font.pixelSize:   14
                         font.styleName:   "DemiBold"
