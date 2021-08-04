@@ -3226,5 +3226,22 @@ cannot be canceled.</translation>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message id="apps-install-from-file">
+        <source>Install DApp from file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="applications-install-title">
+        <source>Select application to install</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="appliactions-install-ok">
+        <source>&apos;%1&apos; is successfully installed</source>
+        <oldsource>%1 is successfully installed</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="appliactions-install-fail">
+        <source>Failed to install DAPP: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

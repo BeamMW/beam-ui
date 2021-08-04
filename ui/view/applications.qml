@@ -1,5 +1,5 @@
 import QtQuick          2.11
-import QtQuick.Layouts 1.12
+import QtQuick.Layouts  1.12
 import QtQuick.Controls 2.4
 import QtWebEngine      1.4
 import QtWebChannel     1.0
@@ -462,6 +462,62 @@ ColumnLayout {
                             hoverEnabled:     true
                             propagateComposedEvents: true
                             preventStealing: true
+                        }
+                    }
+                }
+
+                Item {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 60
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: 10
+                        color: "transparent"
+                        opacity: 0.3
+
+                        border {
+                            width: 1
+                            color: "#1af6d6"
+                        }
+                    }
+
+                    RowLayout {
+                        anchors.fill: parent
+                        spacing: 6
+
+                        SvgImage {
+                            Layout.alignment:   Qt.AlignVCenter
+                            Layout.leftMargin:  20
+                            source:             "qrc:/assets/icon-add-green.svg"
+                            sourceSize:         Qt.size(18, 18)
+                        }
+
+                        SFText {
+                            Layout.alignment:    Qt.AlignVCenter
+                            Layout.fillWidth:    true
+                            font {
+                                styleName: "Normal"
+                                weight:    Font.Normal
+                                pixelSize: 14
+                            }
+                            color: Style.active
+                            wrapMode: Text.WordWrap
+                            //% "Install DApp from file"
+                            text: qsTrId("apps-install-from-file")
+                        }
+                    }
+
+                    MouseArea {
+                        id:               clickArea
+                        anchors.fill:     parent
+                        acceptedButtons:  Qt.LeftButton
+                        hoverEnabled:     true
+                        cursorShape:      Qt.PointingHandCursor
+                        onClicked: function () {
+                            if (viewModel.installFromFile()) {
+                                loadAppsList()
+                            }
                         }
                     }
                 }

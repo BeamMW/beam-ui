@@ -15,11 +15,16 @@
 #include <QMessageBox>
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QWebEngineProfile>
+#include <QFileDialog>
 #include "apps_view.h"
 #include "utility/logger.h"
 #include "model/settings.h"
 #include "model/app_model.h"
 #include "version.h"
+#include "quazip/quazip.h"
+#include "quazip/quazipfile.h"
+#include "quazip/JlCompress.h"
+#include "viewmodel/qml_globals.h"
 
 namespace beamui::applications
 {
@@ -69,6 +74,86 @@ namespace beamui::applications
         return _userAgent;
     }
 
+    QMap<QString, QVariant> AppsViewModel::validateAppManifest(QTextStream& in, const QString& appFolder)
+    {
+        QMap<QString, QVariant> app;
+
+        const auto content = in.readAll();
+        if (content.isEmpty())
+        {
+            throw std::runtime_error("Failed to read the manifest file");
+        }
+
+        const auto utf = content.toUtf8();
+
+        // do not make json const or it will throw on missing keys
+        auto json = nlohmann::json::parse(utf.begin(), utf.end());
+        if (!json.is_object() || json.empty())
+        {
+            throw std::runtime_error("Invalid manifest file");
+        }
+
+        const auto& guid = json["guid"];
+        if (!guid.is_string() || guid.empty())
+        {
+            throw std::runtime_error("Invalid GUID in the manifest file");
+        }
+        app.insert("guid", QString::fromStdString(guid.get<std::string>()));
+
+        const auto& desc = json["description"];
+        if (!desc.is_string() || desc.empty())
+        {
+            throw std::runtime_error("Invalid description in the manifest file");
+        }
+        app.insert("description", QString::fromStdString(desc.get<std::string>()));
+
+        const auto& name = json["name"];
+        if (!name.is_string() || name.empty())
+        {
+            throw std::runtime_error("Invalid app name in the manifest file");
+        }
+        app.insert("name", QString::fromStdString(name.get<std::string>()));
+
+        const auto& url = json["url"];
+        if (!url.is_string() || url.empty())
+        {
+            throw std::runtime_error("Invalid url in the manifest file");
+        }
+        app.insert("url", expandLocalUrl(appFolder, url.get<std::string>()));
+
+        const auto& icon = json["icon"];
+        if (!url.empty())
+        {
+            if (!icon.is_string())
+            {
+                throw std::runtime_error("Invalid icon in the manifest file");
+            }
+            app.insert("icon", expandLocalUrl(appFolder, icon.get<std::string>()));
+        }
+
+        const auto& av = json["api_version"];
+        if (!av.empty())
+        {
+            if (!av.is_string())
+            {
+                throw std::runtime_error("Invalid api_version in the manifest file");
+            }
+            app.insert("api_version", QString::fromStdString(av.get<std::string>()));
+        }
+
+        const auto& mav = json["min_api_version"];
+        if (!mav.empty())
+        {
+            if (!mav.is_string())
+            {
+                app.insert("min_api_version", QString::fromStdString(mav.get<std::string>()));
+            }
+            throw std::runtime_error("Invalid min_api_version in the manifest file");
+        }
+
+        return app;
+    }
+
     QList<QMap<QString, QVariant>> AppsViewModel::getLocalApps()
     {
         QList<QMap<QString, QVariant>> result;
@@ -107,75 +192,9 @@ namespace beamui::applications
                 }
 
                 QTextStream in(&file);
-                const auto content = in.readAll();
-                if (content.isEmpty())
-                {
-                    throw std::runtime_error("File is empty or failed to read");
-                }
-
-                QMap<QString, QVariant> app;
-                const auto utf = content.toUtf8();
-
-                // do not make json const or it will throw on missing keys
-                auto json = nlohmann::json::parse(utf.begin(), utf.end());
-                if (!json.is_object() || json.empty())
-                {
-                    throw std::runtime_error("Invalid json");
-                }
-
-                const auto& desc = json["description"];
-                if (!desc.is_string() || desc.empty())
-                {
-                    throw std::runtime_error("Invalid description");
-                }
-                app.insert("description", QString::fromStdString(desc.get<std::string>()));
-
-                const auto& name = json["name"];
-                if (!name.is_string() || name.empty())
-                {
-                    throw std::runtime_error("Invalid name");
-                }
-                app.insert("name", QString::fromStdString(name.get<std::string>()));
-
-                const auto& url = json["url"];
-                if (!url.is_string() || url.empty())
-                {
-                    throw std::runtime_error("Invalid url");
-                }
-                app.insert("url", expandLocalUrl(justFolder, url.get<std::string>()));
-
-                const auto& icon = json["icon"];
-                if (!url.empty())
-                {
-                    if (!icon.is_string())
-                    {
-                        throw std::runtime_error("Invalid icon");
-                    }
-                    app.insert("icon", expandLocalUrl(justFolder, icon.get<std::string>()));
-                }
-
-                const auto& av = json["api_version"];
-                if (!av.empty())
-                {
-                    if (!av.is_string())
-                    {
-                        throw std::runtime_error("Invalid api_version");
-                    }
-                    app.insert("api_version", QString::fromStdString(av.get<std::string>()));
-                }
-
-                const auto& mav = json["min_api_version"];
-                if (!mav.empty())
-                {
-                    if (!mav.is_string())
-                    {
-                        app.insert("min_api_version", QString::fromStdString(mav.get<std::string>()));
-                    }
-                    throw std::runtime_error("Invalid min_api_version");
-                }
-
-                hasLocalApps = true;
+                auto app = validateAppManifest(in, justFolder);
                 result.push_back(app);
+                hasLocalApps = true;
             }
             catch(std::runtime_error& err)
             {
@@ -219,6 +238,84 @@ namespace beamui::applications
         if(_server)
         {
             _server->Stop();
+        }
+    }
+
+    bool AppsViewModel::installFromFile()
+    {
+        QFileDialog dialog(nullptr,
+                        //% "Select application to install"
+                        qtTrId("applications-install-title"),
+                        "",
+                        "BEAM DApp files (*.dapp)");
+        dialog.setWindowModality(Qt::WindowModality::ApplicationModal);
+        if (!dialog.exec())
+        {
+            return false;
+        }
+
+        try
+        {
+            QString archiveName = dialog.selectedFiles().value(0);
+            QuaZip zip(archiveName);
+            if(!zip.open(QuaZip::Mode::mdUnzip))
+            {
+                throw std::runtime_error("Failed to open the DApp file");
+            }
+
+            QString guid, appName;
+            for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
+            {
+                const auto fname = zip.getCurrentFileName();
+                if (fname == "manifest.json")
+                {
+                    QuaZipFile mfile(zip.getZipName(), fname);
+                    if (!mfile.open(QIODevice::ReadOnly))
+                    {
+                        throw std::runtime_error("Failed to read the DApp file");
+                    }
+
+                    QTextStream in(&mfile);
+                    const auto app = validateAppManifest(in, "");
+                    guid = app["guid"].value<QString>();
+                    appName = app["name"].value<QString>();
+                }
+            }
+
+            if (guid.isEmpty())
+            {
+                throw std::runtime_error("Invalid DAPP file");
+            }
+
+            const auto appsPath = AppSettings().getLocalAppsPath();
+            const auto appFolder = QDir(appsPath).filePath(guid);
+
+            if (QDir(appFolder).exists())
+            {
+                if(!QDir(appFolder).removeRecursively())
+                {
+                    throw std::runtime_error("Failed to prepare folder");
+                }
+            }
+
+            QDir(appsPath).mkdir(guid);
+            if(JlCompress::extractDir(archiveName, appFolder).isEmpty())
+            {
+                //cleanupFolder(appFolder)
+                throw std::runtime_error("DAPP Installation failed");
+            }
+
+            //% "'%1' is successfully installed"
+            QMLGlobals::showMessage(qtTrId("appliactions-install-ok").arg(appName));
+            return true;
+        }
+        catch(std::exception& err)
+        {
+            //% "Failed to install DAPP: %1"
+            const auto errMsg = qtTrId("appliactions-install-fail").arg(err.what());
+            LOG_ERROR() << errMsg.toStdString();
+            QMLGlobals::showMessage(errMsg);
+            return false;
         }
     }
 }
