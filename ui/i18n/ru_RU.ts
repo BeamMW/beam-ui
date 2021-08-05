@@ -3150,7 +3150,8 @@ cannot be canceled.</source>
         <translation>Онлайн адрес.</translation>
     </message>
     <message id="send-anon-set">
-        <source>Guarantees anonymity set of up to 64K.</source>
+        <source>Guarantees maximum anonymity set of up to 64K.</source>
+        <oldsource>Guarantees anonymity set of up to 64K.</oldsource>
         <translation type="unfinished">Guarantees anonymity set of up to 64K.</translation>
     </message>
     <message id="send-online-tip">

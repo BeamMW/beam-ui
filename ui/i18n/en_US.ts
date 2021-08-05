@@ -3136,8 +3136,8 @@ cannot be canceled.</translation>
         <translation>Online address.</translation>
     </message>
     <message id="send-anon-set">
-        <source>Guarantees anonymity set of up to 64K.</source>
-        <translation>Guarantees anonymity set of up to 64K.</translation>
+        <source>Guarantees maximum anonymity set of up to 64K.</source>
+        <translation>Guarantees maximum anonymity set of up to 64K.</translation>
     </message>
     <message id="send-online-tip">
         <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
