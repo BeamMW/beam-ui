@@ -13,30 +13,26 @@
 // limitations under the License.
 #include "assets_manager.h"
 
+namespace
+{
+    const unsigned char ACAlpha = 252;
+}
+
 AssetsManager::AssetsManager (WalletModel::Ptr wallet)
     : _wallet(wallet)
 {
-    qRegisterMetaType<beam::Asset::ID>("beam::wallet::AssetID");
     connect(_wallet.get(), &WalletModel::assetInfoChanged, this, &AssetsManager::onAssetInfo);
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,   this,  &AssetsManager::assetsListChanged);
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged, this,  &AssetsManager::assetsListChanged);
+    connect(_wallet.get(), &WalletModel::verificationInfoUpdate, this, &AssetsManager::onAssetVerification);
+    _wallet->getAsync()->getVerificationInfo();
 
     _icons[0]  = "qrc:/assets/asset-0.svg";
     _icons[1]  = "qrc:/assets/asset-1.svg";
     _icons[2]  = "qrc:/assets/asset-2.svg";
     _icons[3]  = "qrc:/assets/asset-3.svg";
     _icons[4]  = "qrc:/assets/asset-4.svg";
-
-    #ifdef BEAM_BEAMX
     _icons[5]  = "qrc:/assets/asset-5.svg";
-    #elif defined(BEAM_TESTNET)
-    _icons[5]  = "qrc:/assets/asset-5.svg";
-    #elif defined(BEAM_MAINNET)
-    _icons[5]  = "qrc:/assets/asset-5.svg";
-    #else
-    _icons[5]  = "qrc:/assets/asset-beamx.svg";
-    #endif
-
     _icons[6]  = "qrc:/assets/asset-6.svg";
     _icons[7]  = "qrc:/assets/asset-7.svg";
     _icons[8]  = "qrc:/assets/asset-8.svg";
@@ -52,37 +48,26 @@ AssetsManager::AssetsManager (WalletModel::Ptr wallet)
     _icons[18]  = "qrc:/assets/asset-18.svg";
     _icons[19]  = "qrc:/assets/asset-19.svg";
 
-    const unsigned char alpha = 252;
-    _colors[0] = QColor("#72fdff"); _colors[0].setAlpha(alpha);
-    _colors[1] = QColor("#2acf1d"); _colors[1].setAlpha(alpha);
-    _colors[2] = QColor("#ffbb54"); _colors[2].setAlpha(alpha);
-    _colors[3] = QColor("#d885ff"); _colors[3].setAlpha(alpha);
-    _colors[4] = QColor("#008eff"); _colors[4].setAlpha(alpha);
-
-    #ifdef BEAM_BEAMX
-    _colors[5] = QColor("#ff746b"); _colors[5].setAlpha(alpha);
-    #elif defined(BEAM_TESTNET)
-    _colors[5] = QColor("#ff746b"); _colors[5].setAlpha(alpha);
-    #elif defined(BEAM_MAINNET)
-    _colors[5] = QColor("#ff746b"); _colors[5].setAlpha(alpha);
-    #else
-    _colors[5] = QColor("#a37dff"); _colors[5].setAlpha(alpha);
-    #endif
-
-    _colors[6] = QColor("#91e300"); _colors[6].setAlpha(alpha);
-    _colors[7] = QColor("#ffe75a"); _colors[7].setAlpha(alpha);
-    _colors[8] = QColor("#9643ff"); _colors[8].setAlpha(alpha);
-    _colors[9] = QColor("#395bff"); _colors[9].setAlpha(alpha);
-    _colors[10] = QColor("#ff3b3b"); _colors[10].setAlpha(alpha);
-    _colors[11] = QColor("#73ff7c"); _colors[11].setAlpha(alpha);
-    _colors[12] = QColor("#ffa86c"); _colors[12].setAlpha(alpha);
-    _colors[13] = QColor("#ff3abe"); _colors[13].setAlpha(alpha);
-    _colors[14] = QColor("#00aee1"); _colors[14].setAlpha(alpha);
-    _colors[15] = QColor("#ff5200"); _colors[15].setAlpha(alpha);
-    _colors[16] = QColor("#6464ff"); _colors[16].setAlpha(alpha);
-    _colors[17] = QColor("#ff7a21"); _colors[17].setAlpha(alpha);
-    _colors[18] = QColor("#63afff"); _colors[18].setAlpha(alpha);
-    _colors[19] = QColor("#c81f68"); _colors[19].setAlpha(alpha);
+    _colors[0] = QColor("#72fdff"); _colors[0].setAlpha(ACAlpha);
+    _colors[1] = QColor("#2acf1d"); _colors[1].setAlpha(ACAlpha);
+    _colors[2] = QColor("#ffbb54"); _colors[2].setAlpha(ACAlpha);
+    _colors[3] = QColor("#d885ff"); _colors[3].setAlpha(ACAlpha);
+    _colors[4] = QColor("#008eff"); _colors[4].setAlpha(ACAlpha);
+    _colors[5] = QColor("#ff746b"); _colors[5].setAlpha(ACAlpha);
+    _colors[6] = QColor("#91e300"); _colors[6].setAlpha(ACAlpha);
+    _colors[7] = QColor("#ffe75a"); _colors[7].setAlpha(ACAlpha);
+    _colors[8] = QColor("#9643ff"); _colors[8].setAlpha(ACAlpha);
+    _colors[9] = QColor("#395bff"); _colors[9].setAlpha(ACAlpha);
+    _colors[10] = QColor("#ff3b3b"); _colors[10].setAlpha(ACAlpha);
+    _colors[11] = QColor("#73ff7c"); _colors[11].setAlpha(ACAlpha);
+    _colors[12] = QColor("#ffa86c"); _colors[12].setAlpha(ACAlpha);
+    _colors[13] = QColor("#ff3abe"); _colors[13].setAlpha(ACAlpha);
+    _colors[14] = QColor("#00aee1"); _colors[14].setAlpha(ACAlpha);
+    _colors[15] = QColor("#ff5200"); _colors[15].setAlpha(ACAlpha);
+    _colors[16] = QColor("#6464ff"); _colors[16].setAlpha(ACAlpha);
+    _colors[17] = QColor("#ff7a21"); _colors[17].setAlpha(ACAlpha);
+    _colors[18] = QColor("#63afff"); _colors[18].setAlpha(ACAlpha);
+    _colors[19] = QColor("#c81f68"); _colors[19].setAlpha(ACAlpha);
 }
 
 void AssetsManager::collectAssetInfo(beam::Asset::ID assetId)
@@ -147,10 +132,18 @@ AssetsManager::MetaPtr AssetsManager::getAsset(beam::Asset::ID id)
 
 QString AssetsManager::getIcon(beam::Asset::ID id)
 {
-     if (id < 1)
-     {
-         return "qrc:/assets/icon-beam.svg";
-     }
+    if (id < 1)
+    {
+        return "qrc:/assets/icon-beam.svg";
+    }
+
+    for(const auto& info: m_vi)
+    {
+        if (info.m_assetID == id && !info.m_icon.empty())
+        {
+            return QString("qrc:/assets/") + QString::fromStdString(info.m_icon);
+        }
+    }
 
      const auto it = _info.find(id);
      if (it != _info.end())
@@ -311,7 +304,17 @@ QColor AssetsManager::getColor(beam::Asset::ID id)
 {
     if (id < 1)
     {
-        return QColor( 0, 246, 210, 252);
+        return QColor( 0, 246, 210, ACAlpha);
+    }
+
+    for(const auto& info: m_vi)
+    {
+        if (info.m_assetID == id && !info.m_color.empty())
+        {
+            auto color = QColor(info.m_color.c_str());
+            color.setAlpha(ACAlpha);
+            return color;
+        }
     }
 
     if (auto meta = getAsset(id))
@@ -392,15 +395,20 @@ QMap<QString, QVariant> AssetsManager::getAssetsMap(const std::set<beam::Asset::
     return result;
 }
 
+void AssetsManager::onAssetVerification(const std::vector<beam::wallet::VerificationInfo>& vi)
+{
+    m_vi = vi;
+    emit assetsListChanged();
+}
+
 bool AssetsManager::isVerified(beam::Asset::ID assetId) const
 {
-    #ifdef BEAM_BEAMX
+    for(const auto& info: m_vi)
+    {
+        if (info.m_assetID == assetId)
+        {
+            return info.m_verified;
+        }
+    }
     return false;
-    #elif defined(BEAM_TESTNET)
-    return false;
-    #elif defined(BEAM_MAINNET)
-    return false;
-    #else
-    return assetId == 5;
-    #endif
 }

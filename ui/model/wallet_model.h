@@ -104,6 +104,7 @@ signals:
     void exchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>&);
     void notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&);
     void publicAddressChanged(const QString& publicAddr);
+    void verificationInfoUpdate(const std::vector<beam::wallet::VerificationInfo>&);
 private:
     void onStatus(const beam::wallet::WalletStatus& status) override;
     void onTxStatus(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items) override;
@@ -135,6 +136,7 @@ private:
     void onExportDataToJson(const std::string& data) override;
     void onExportTxHistoryToCsv(const std::string& data) override;
     void onExchangeRates(const std::vector<beam::wallet::ExchangeRate>&) override;
+    void onVerificationInfo(const std::vector<beam::wallet::VerificationInfo>&) override;
     void onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&) override;
     void onPublicAddress(const std::string& publicAddr) override;
     void onAssetInfo(beam::Asset::ID, const beam::wallet::WalletAsset&) override;

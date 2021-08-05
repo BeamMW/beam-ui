@@ -243,6 +243,7 @@ int main (int argc, char* argv[])
                     });
 
             qRegisterMetaType<beam::Asset::ID>("beam::Asset::ID");
+            qRegisterMetaType<std::vector<beam::wallet::VerificationInfo>>("std::vector<beam::wallet::VerificationInfo>");
             qRegisterMetaType<beam::wallet::WalletAsset>("beam::wallet::WalletAsset");
             qmlRegisterType<StartViewModel>("Beam.Wallet", 1, 0, "StartViewModel");
             qmlRegisterType<LoadingViewModel>("Beam.Wallet", 1, 0, "LoadingViewModel");

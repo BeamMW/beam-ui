@@ -61,6 +61,7 @@ signals:
 
 private slots:
     void onAssetInfo(beam::Asset::ID, const beam::wallet::WalletAsset&);
+    void onAssetVerification(const std::vector<beam::wallet::VerificationInfo>&);
 
 private:
     // ASYNC
@@ -74,6 +75,7 @@ private:
 
     WalletModel::Ptr _wallet;
     ExchangeRatesManager _exchangeRatesManager;
+    std::vector<beam::wallet::VerificationInfo> m_vi;
     std::map<beam::Asset::ID, InfoPair> _info;
     std::set<beam::Asset::ID> _requested;
 

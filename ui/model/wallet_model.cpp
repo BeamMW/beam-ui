@@ -305,6 +305,11 @@ void WalletModel::onExchangeRates(const std::vector<beam::wallet::ExchangeRate>&
     emit exchangeRatesUpdate(rates);
 }
 
+void WalletModel::onVerificationInfo(const std::vector<beam::wallet::VerificationInfo>& info)
+{
+    emit verificationInfoUpdate(info);
+}
+
 void WalletModel::onNotificationsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Notification>& notifications)
 {
     emit notificationsChanged(action, notifications);
