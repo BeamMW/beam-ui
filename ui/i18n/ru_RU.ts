@@ -2795,8 +2795,9 @@ For an online payment to complete, you should get online during the 12 hours aft
         <translation type="unfinished">рассчитывается по курсу в день транзакции</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
-        <source>exchange rate was not available at the time of transaction</source>
-        <translation>обменный курс был недоступен во время транзакции</translation>
+        <source>exchange rate was not available at the time of the transaction</source>
+        <oldsource>exchange rate was not available at the time of transaction</oldsource>
+        <translation type="unfinished">обменный курс был недоступен во время транзакции</translation>
     </message>
     <message id="tx-details-tx-id-label">
         <source>Transaction ID</source>

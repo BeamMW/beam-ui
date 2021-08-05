@@ -2783,8 +2783,8 @@ Update your settings and try again.</source>
         <translation>calculated with the exchange rate at the time of the transaction</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
-        <source>exchange rate was not available at the time of transaction</source>
-        <translation>exchange rate was not available at the time of transaction</translation>
+        <source>exchange rate was not available at the time of the transaction</source>
+        <translation>exchange rate was not available at the time of the transaction</translation>
     </message>
     <message id="tx-details-tx-id-label">
         <source>Transaction ID</source>

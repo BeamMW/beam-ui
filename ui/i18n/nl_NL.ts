@@ -2792,7 +2792,8 @@ For an online payment to complete, you should get online during the 12 hours aft
         <translation type="unfinished">calculated with the exchange rate at the day of transaction</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
-        <source>exchange rate was not available at the time of transaction</source>
+        <source>exchange rate was not available at the time of the transaction</source>
+        <oldsource>exchange rate was not available at the time of transaction</oldsource>
         <translation type="unfinished">exchange rate was not available at the time of transaction</translation>
     </message>
     <message id="tx-details-tx-id-label">

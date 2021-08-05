@@ -330,7 +330,7 @@ CustomDialog {
                             ratePostfix:  this.rate != "0"
                                 //% "calculated with the exchange rate at the time of the transaction"
                                 ? "(" + qsTrId("tx-details-rate-notice") + ")"
-                                //% "exchange rate was not available at the time of transaction"
+                                //% "exchange rate was not available at the time of the transaction"
                                 : "(" + qsTrId("tx-details-exchange-rate-not-available") + ")"
                             rateFontSize:     12
                             showTip:          false
