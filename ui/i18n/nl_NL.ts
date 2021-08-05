@@ -2787,7 +2787,8 @@ For an online payment to complete, you should get online during the 12 hours aft
         <translation>Aantal</translation>
     </message>
     <message id="tx-details-rate-notice">
-        <source>calculated with the exchange rate at the day of transaction</source>
+        <source>calculated with the exchange rate at the time of the transaction</source>
+        <oldsource>calculated with the exchange rate at the day of transaction</oldsource>
         <translation type="unfinished">calculated with the exchange rate at the day of transaction</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">

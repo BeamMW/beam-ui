@@ -2779,8 +2779,8 @@ Update your settings and try again.</source>
         <translation type="unfinished">Amount</translation>
     </message>
     <message id="tx-details-rate-notice">
-        <source>calculated with the exchange rate at the day of transaction</source>
-        <translation type="unfinished">calculated with the exchange rate at the day of transaction</translation>
+        <source>calculated with the exchange rate at the time of the transaction</source>
+        <translation>calculated with the exchange rate at the time of the transaction</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
         <source>exchange rate was not available at the time of transaction</source>

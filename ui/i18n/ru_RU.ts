@@ -2790,8 +2790,9 @@ For an online payment to complete, you should get online during the 12 hours aft
         <translation>Сумма</translation>
     </message>
     <message id="tx-details-rate-notice">
-        <source>calculated with the exchange rate at the day of transaction</source>
-        <translation>рассчитывается по курсу в день транзакции</translation>
+        <source>calculated with the exchange rate at the time of the transaction</source>
+        <oldsource>calculated with the exchange rate at the day of transaction</oldsource>
+        <translation type="unfinished">рассчитывается по курсу в день транзакции</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
         <source>exchange rate was not available at the time of transaction</source>
