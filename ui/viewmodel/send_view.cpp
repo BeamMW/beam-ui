@@ -704,7 +704,7 @@ QString SendViewModel::getTokenTip() const
 
     if (type == TxAddressType::MaxPrivacy)
     {
-        //% "Guarantees anonymity set of up to 64K."
+        //% "Guarantees maximum anonymity set of up to 64K."
         return qtTrId("send-anon-set");
     }
 

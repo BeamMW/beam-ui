@@ -2790,11 +2790,13 @@ For an online payment to complete, you should get online during the 12 hours aft
         <translation>Montant</translation>
     </message>
     <message id="tx-details-rate-notice">
-        <source>calculated with the exchange rate at the day of transaction</source>
+        <source>calculated with the exchange rate at the time of the transaction</source>
+        <oldsource>calculated with the exchange rate at the day of transaction</oldsource>
         <translation type="unfinished">calculated with the exchange rate at the day of transaction</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
-        <source>exchange rate was not available at the time of transaction</source>
+        <source>exchange rate was not available at the time of the transaction</source>
+        <oldsource>exchange rate was not available at the time of transaction</oldsource>
         <translation type="unfinished">exchange rate was not available at the time of transaction</translation>
     </message>
     <message id="tx-details-tx-id-label">
@@ -3149,7 +3151,8 @@ cannot be canceled.</translation>
         <translation type="unfinished">Online address.</translation>
     </message>
     <message id="send-anon-set">
-        <source>Guarantees anonymity set of up to 64K.</source>
+        <source>Guarantees maximum anonymity set of up to 64K.</source>
+        <oldsource>Guarantees anonymity set of up to 64K.</oldsource>
         <translation type="unfinished">Guarantees anonymity set of up to 64K.</translation>
     </message>
     <message id="send-online-tip">

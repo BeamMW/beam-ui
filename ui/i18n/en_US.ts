@@ -2779,12 +2779,12 @@ Update your settings and try again.</source>
         <translation type="unfinished">Amount</translation>
     </message>
     <message id="tx-details-rate-notice">
-        <source>calculated with the exchange rate at the day of transaction</source>
-        <translation type="unfinished">calculated with the exchange rate at the day of transaction</translation>
+        <source>calculated with the exchange rate at the time of the transaction</source>
+        <translation>calculated with the exchange rate at the time of the transaction</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
-        <source>exchange rate was not available at the time of transaction</source>
-        <translation>exchange rate was not available at the time of transaction</translation>
+        <source>exchange rate was not available at the time of the transaction</source>
+        <translation>exchange rate was not available at the time of the transaction</translation>
     </message>
     <message id="tx-details-tx-id-label">
         <source>Transaction ID</source>
@@ -3136,8 +3136,8 @@ cannot be canceled.</translation>
         <translation>Online address.</translation>
     </message>
     <message id="send-anon-set">
-        <source>Guarantees anonymity set of up to 64K.</source>
-        <translation>Guarantees anonymity set of up to 64K.</translation>
+        <source>Guarantees maximum anonymity set of up to 64K.</source>
+        <translation>Guarantees maximum anonymity set of up to 64K.</translation>
     </message>
     <message id="send-online-tip">
         <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
