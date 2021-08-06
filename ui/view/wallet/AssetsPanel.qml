@@ -41,8 +41,6 @@ Control {
         // there is no previously selected asset
         // reset selection to nothing
         selectedId  = -1
-
-        showFaucetPromo = viewModel.showFaucetPromo
     }
 
     property real   hSpacing:        10

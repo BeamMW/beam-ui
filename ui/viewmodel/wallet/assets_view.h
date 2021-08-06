@@ -34,12 +34,19 @@ public:
     bool getShowFaucetPromo();
     void setShowFaucetPromo(bool value);
 
+public slots:
+    void onNormalCoinsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
+    void onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& items);
+
 signals:
     void selectedAssetChanged();
     void showFaucetPromoChanged();
 
 private:
+    bool hasBeamAmount() const;
+
     AssetsList _assets;
     WalletSettings& _settings;
+    WalletModel& _wallet;
     boost::optional<beam::Asset::ID> _selectedAsset;
 };

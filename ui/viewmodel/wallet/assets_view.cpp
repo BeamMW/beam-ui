@@ -16,7 +16,10 @@
 
 AssetsViewModel::AssetsViewModel()
     : _settings (AppModel::getInstance().getSettings())
+    , _wallet(*AppModel::getInstance().getWalletModel())
 {
+    connect(&_wallet, &WalletModel::normalCoinsChanged,  this, &AssetsViewModel::onNormalCoinsChanged);
+    connect(&_wallet, &WalletModel::shieldedCoinChanged, this, &AssetsViewModel::onShieldedCoinChanged);
     _selectedAsset = _settings.getLastAssetSelection();
     emit selectedAssetChanged();
 }
@@ -49,11 +52,30 @@ void AssetsViewModel::setSelectedAsset(int assetId)
 
 bool AssetsViewModel::getShowFaucetPromo()
 {
-    return _settings.showFaucetPromo() && !_assets.hasBeamAmount();
+    return _settings.showFaucetPromo() && !hasBeamAmount();
 }
 
 void AssetsViewModel::setShowFaucetPromo(bool value)
 {
     _settings.setShowFacetPromo(value);
     emit showFaucetPromoChanged();
+}
+
+void AssetsViewModel::onNormalCoinsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
+{
+    emit showFaucetPromoChanged();
+}
+
+void AssetsViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::ShieldedCoin>& items)
+{
+    emit showFaucetPromoChanged();
+}
+
+bool AssetsViewModel::hasBeamAmount() const
+{
+return _wallet.getAvailable(beam::Asset::s_BeamID) != beam::Zero
+    || _wallet.getAvailableRegular(beam::Asset::s_BeamID) != beam::Zero
+    || _wallet.getAvailableShielded(beam::Asset::s_BeamID) != beam::Zero
+    || _wallet.getMaturing(beam::Asset::s_BeamID) != beam::Zero
+    || _wallet.getMatutingMP(beam::Asset::s_BeamID) != beam::Zero;
 }
