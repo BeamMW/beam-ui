@@ -157,6 +157,15 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
     }
 }
 
+bool AssetsList::hasBeamAmount() const
+{
+return _wallet.getAvailable(beam::Asset::s_BeamID) != beam::Zero
+    || _wallet.getAvailableRegular(beam::Asset::s_BeamID) != beam::Zero
+    || _wallet.getAvailableShielded(beam::Asset::s_BeamID) != beam::Zero
+    || _wallet.getMaturing(beam::Asset::s_BeamID) != beam::Zero
+    || _wallet.getMatutingMP(beam::Asset::s_BeamID) != beam::Zero;
+}
+
 bool AssetsList::hasAsset(beam::Asset::ID id)
 {
      for (auto obj: m_list)

@@ -109,6 +109,8 @@ public:
     QString getFaucetUrl() const;
     QString getAppsUrl() const;
 
+    bool showFaucetPromo() const;
+    void setShowFacetPromo(bool value);
 
     void minConfirmationsInit();
     uint32_t getMinConfirmations() const;

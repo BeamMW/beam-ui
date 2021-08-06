@@ -41,6 +41,8 @@ Control {
         // there is no previously selected asset
         // reset selection to nothing
         selectedId  = -1
+
+        showFaucetPromo = viewModel.showFaucetPromo
     }
 
     property real   hSpacing:        10
@@ -48,11 +50,12 @@ Control {
     property int    maxVisibleRows:  3
     property alias  selectedId:      viewModel.selectedAsset
     property int    assetsCount:     1
+    property bool   showFaucetPromo: viewModel.showFaucetPromo
 
     readonly property real  itemHeight:  75
 
     readonly property real itemWidth: {
-        if (assetsCount == 1) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
+        if (assetsCount == 1 && !showFaucetPromo) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
         return 220
     }
 
@@ -100,7 +103,6 @@ Control {
         Grid {
             id: grid
 
-            Layout.fillWidth: true
             columnSpacing: control.hSpacing
             rowSpacing:    control.vSpacing
             columns:       control.gridColumns
@@ -127,6 +129,75 @@ Control {
                     Item {
                        Layout.fillWidth: true
                        visible: control.assetsCount > 1
+                    }
+                }
+            }
+
+            Panel {
+                width:  678
+                height: 75
+                visible: showFaucetPromo && control.assetsCount == 1
+
+                content: RowLayout {
+                    SFText {
+                        Layout.topMargin:    -12
+                        font.pixelSize:      14
+                        color:               Style.content_main
+                        //% "See the wallet in action. Get a small amount of Beams from the Faucet DAPP."
+                        text:                qsTrId("faucet-promo")
+                    }
+                    Item {
+                        Layout.preferredWidth: openFaucet.width + 10 + openFaucetIcon.width
+                        height: 16
+                        Layout.topMargin:    -12
+                        Layout.rightMargin:  20
+                        SvgImage {
+                            id: openFaucetIcon
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            source: "qrc:/assets/icon-receive-skyblue.svg"
+                        }
+                        SFText {
+                            id: openFaucet
+                            anchors.right: parent.right
+                            anchors.top: parent.top
+                            font.pixelSize:      14
+                            font.styleName:      "Bold"
+                            font.weight:         Font.Bold
+                            color:               Style.accent_incoming
+                            //% "get coins"
+                            text:                qsTrId("faucet-promo-get-coins")
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                console.log("open faucet");
+                                main.openFaucet();
+                            }
+                            hoverEnabled: true
+                        }
+                    }
+                    Item {
+                        width:  16
+                        height: 16
+                        Layout.topMargin: -50
+                        Layout.rightMargin: -9
+                        SvgImage {
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            source: "qrc:/assets/icon-cancel-white.svg"
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                viewModel.showFaucetPromo = false;
+                            }
+                            hoverEnabled: true
+                        }
                     }
                 }
             }

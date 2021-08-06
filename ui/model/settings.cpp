@@ -43,6 +43,7 @@ namespace
     const char* kshowSwapBetaWarning = "show_swap_beta_warning";
     const char* kRateUnit = "rateUnit";
     const char* kLastAssetSelection = "lastAssetSelection";
+    const char* kShowFaucetPromo = "showFaucetPromo";
 
     const char* kLocalNodeRun = "localnode/run";
     const char* kLocalNodePort = "localnode/port";
@@ -691,6 +692,18 @@ QString WalletSettings::getAppsUrl() const
     #else
     return "http://3.19.141.112/app/appslist.json";
     #endif
+}
+
+bool WalletSettings::showFaucetPromo() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kShowFaucetPromo, true).toBool();
+}
+
+void WalletSettings::setShowFacetPromo(bool value)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kShowFaucetPromo, value);
 }
 
 QString WalletSettings::getDevAppUrl() const
