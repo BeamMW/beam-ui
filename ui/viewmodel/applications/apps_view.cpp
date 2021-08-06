@@ -44,7 +44,10 @@ namespace beamui::applications
 
     AppsViewModel::~AppsViewModel()
     {
-        stopServer();
+        if (_server)
+        {
+            _server.reset();
+        }
         LOG_INFO() << "AppsViewModel destroyed";
     }
 
@@ -225,11 +228,6 @@ namespace beamui::applications
                 LOG_WARNING() << "Failed to launch local apps server: " << err.what();
             }
         }
-    }
-
-    void AppsViewModel::stopServer()
-    {
-        _server.reset();
     }
 
     bool AppsViewModel::installFromFile()

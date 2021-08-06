@@ -42,7 +42,6 @@ namespace beamui::applications
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
         QMap<QString, QVariant> validateAppManifest(QTextStream& io, const QString& appFolder);
-        void stopServer();
 
         QString _userAgent;
         QString _serverAddr;

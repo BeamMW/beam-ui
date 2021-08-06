@@ -33,6 +33,12 @@ namespace beamui::applications
         if (_server)
         {
             _server->close();
+            _server.reset();
+        }
+
+        if (_handler)
+        {
+            _handler.reset();
         }
     }
 }
