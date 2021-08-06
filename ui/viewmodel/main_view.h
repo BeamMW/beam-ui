@@ -25,6 +25,7 @@ class MainViewModel : public QObject
     Q_PROPERTY(int unsafeTxCount        READ getUnsafeTxCount       NOTIFY unsafeTxCountChanged)
     Q_PROPERTY(int unreadNotifications  READ getUnreadNotifications NOTIFY unreadNotificationsChanged)
     Q_PROPERTY(QString daoCoreAppID     READ getDaoCoreAppID        CONSTANT)
+    Q_PROPERTY(QString faucetAppID      READ getFaucetAppID         CONSTANT)
 public:
     MainViewModel();
 
@@ -49,6 +50,7 @@ private:
     [[nodiscard]] int getUnsafeTxCount() const;
     [[nodiscard]] int getUnreadNotifications() const;
     [[nodiscard]] QString getDaoCoreAppID() const;
+    [[nodiscard]] QString getFaucetAppID() const;
 private:
     WalletSettings& m_settings;
     QTimer m_timer;

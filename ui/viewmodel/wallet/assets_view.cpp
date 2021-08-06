@@ -46,3 +46,14 @@ void AssetsViewModel::setSelectedAsset(int assetId)
         emit selectedAssetChanged();
     }
 }
+
+bool AssetsViewModel::getShowFaucetPromo()
+{
+    return _settings.showFaucetPromo() && !_assets.hasBeamAmount();
+}
+
+void AssetsViewModel::setShowFaucetPromo(bool value)
+{
+    _settings.setShowFacetPromo(value);
+    emit showFaucetPromoChanged();
+}

@@ -22,6 +22,7 @@ class AssetsViewModel : public QObject {
     Q_OBJECT
     Q_PROPERTY(QAbstractItemModel* assets READ getAssets CONSTANT)
     Q_PROPERTY(int selectedAsset READ getSelectedAsset WRITE setSelectedAsset NOTIFY selectedAssetChanged)
+    Q_PROPERTY(bool showFaucetPromo READ getShowFaucetPromo WRITE setShowFaucetPromo NOTIFY showFaucetPromoChanged)
 
 public:
     AssetsViewModel();
@@ -30,9 +31,12 @@ public:
     QAbstractItemModel* getAssets();
     [[nodiscard]] int getSelectedAsset() const;
     void setSelectedAsset(int assetId);
+    bool getShowFaucetPromo();
+    void setShowFaucetPromo(bool value);
 
 signals:
     void selectedAssetChanged();
+    void showFaucetPromoChanged();
 
 private:
     AssetsList _assets;

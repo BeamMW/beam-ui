@@ -414,6 +414,11 @@ Rectangle {
         viewModel.resetLockTimer();
     }
 
+    function openFaucet () {
+        var args = appArgs("BEAM Faucet", viewModel.faucetAppID, false);
+        updateItem("applications", args);
+    }
+
     property var trezor_popups : []
 
     Connections {
