@@ -75,7 +75,7 @@ private:
 
     WalletModel::Ptr _wallet;
     ExchangeRatesManager _exchangeRatesManager;
-    std::vector<beam::wallet::VerificationInfo> m_vi;
+    std::map<beam::Asset::ID, beam::wallet::VerificationInfo> m_vi;
     std::map<beam::Asset::ID, InfoPair> _info;
     std::set<beam::Asset::ID> _requested;
 

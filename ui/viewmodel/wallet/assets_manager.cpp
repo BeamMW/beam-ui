@@ -137,11 +137,16 @@ QString AssetsManager::getIcon(beam::Asset::ID id)
         return "qrc:/assets/icon-beam.svg";
     }
 
-    for(const auto& info: m_vi)
+    if (auto it = m_vi.find(id); it != m_vi.end())
     {
-        if (info.m_assetID == id && !info.m_icon.empty())
+        if(!it->second.m_icon.empty())
         {
-            return QString("qrc:/assets/") + QString::fromStdString(info.m_icon);
+            const auto iconCheck = QString(":/assets/") + QString::fromStdString(it->second.m_icon);
+            if(QFile::exists(iconCheck))
+            {
+                auto iconRet = QString("qrc:/assets/") + QString::fromStdString(it->second.m_icon);
+                return iconRet;
+            }
         }
     }
 
@@ -307,11 +312,11 @@ QColor AssetsManager::getColor(beam::Asset::ID id)
         return QColor( 0, 246, 210, ACAlpha);
     }
 
-    for(const auto& info: m_vi)
+    if (auto it = m_vi.find(id); it != m_vi.end())
     {
-        if (info.m_assetID == id && !info.m_color.empty())
+        if(!it->second.m_color.empty())
         {
-            auto color = QColor(info.m_color.c_str());
+            auto color = QColor(it->second.m_color.c_str());
             color.setAlpha(ACAlpha);
             return color;
         }
@@ -395,20 +400,21 @@ QMap<QString, QVariant> AssetsManager::getAssetsMap(const std::set<beam::Asset::
     return result;
 }
 
-void AssetsManager::onAssetVerification(const std::vector<beam::wallet::VerificationInfo>& vi)
+void AssetsManager::onAssetVerification(const std::vector<beam::wallet::VerificationInfo>& changed)
 {
-    m_vi = vi;
+    for (const auto& info: changed)
+    {
+        m_vi[info.m_assetID] = info;
+        emit assetInfo(info.m_assetID);
+    }
     emit assetsListChanged();
 }
 
 bool AssetsManager::isVerified(beam::Asset::ID assetId) const
 {
-    for(const auto& info: m_vi)
+    if (auto it = m_vi.find(assetId); it != m_vi.end())
     {
-        if (info.m_assetID == assetId)
-        {
-            return info.m_verified;
-        }
+        return it->second.m_verified;
     }
     return false;
 }
