@@ -22,9 +22,7 @@ namespace beamui::applications
     {
     public:
         AppsServer(const QString& serveFrom, uint32_t port);
-        ~AppsServer() = default;
-
-        void Stop();
+        ~AppsServer();
 
     private:
         std::unique_ptr<QHttpEngine::FilesystemHandler> _handler;

@@ -174,7 +174,6 @@ namespace beamui::applications
         }
 
         QDir appsdir(AppSettings().getLocalAppsPath());
-        bool hasLocalApps = false;
         auto list = appsdir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
 
         for (const auto& finfo: list)
@@ -193,18 +192,13 @@ namespace beamui::applications
 
                 QTextStream in(&file);
                 auto app = validateAppManifest(in, justFolder);
+                app.insert("local", true);
                 result.push_back(app);
-                hasLocalApps = true;
             }
             catch(std::runtime_error& err)
             {
                 LOG_WARNING() << "Error while reading local app from " << mpath.toStdString() << ", " << err.what();
             }
-        }
-
-        if(hasLocalApps)
-        {
-            launchAppServer();
         }
 
         return result;
@@ -235,10 +229,7 @@ namespace beamui::applications
 
     void AppsViewModel::stopServer()
     {
-        if(_server)
-        {
-            _server->Stop();
-        }
+        _server.reset();
     }
 
     bool AppsViewModel::installFromFile()

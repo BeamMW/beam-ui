@@ -28,8 +28,11 @@ namespace beamui::applications
         }
     }
 
-    void AppsServer::Stop()
+    AppsServer::~AppsServer()
     {
-        _server->close();
+        if (_server)
+        {
+            _server->close();
+        }
     }
 }
