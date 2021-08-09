@@ -204,6 +204,11 @@ namespace beamui::applications
             }
         }
 
+        if (!result.empty())
+        {
+            launchAppServer();
+        }
+
         return result;
     }
 
