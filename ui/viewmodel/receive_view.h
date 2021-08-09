@@ -79,7 +79,7 @@ private:
     beam::Asset::ID _assetId = beam::Asset::s_BeamID;
     bool            _maxp    = false;
 
-    beam::wallet::WalletAddress _receiverAddress;
+    boost::optional<beam::wallet::WalletAddress> _receiverAddress;
     WalletModel&                _walletModel;
     ExchangeRatesManager        _exchangeRatesManager;
     AssetsManager::Ptr          _amgr;
