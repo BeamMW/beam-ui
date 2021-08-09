@@ -131,7 +131,7 @@ namespace beamui::applications
             {
                 throw std::runtime_error("Invalid icon in the manifest file");
             }
-            app.insert("icon", expandLocalUrl(appFolder, icon.get<std::string>()));
+            app.insert("icon", expandLocalFile(appFolder, icon.get<std::string>()));
         }
 
         const auto& av = json["api_version"];
@@ -211,6 +211,14 @@ namespace beamui::applications
     {
         QString result = QString::fromStdString(url);
         result.replace("localapp", QString("http://") + _serverAddr + "/" + folder);
+        return result;
+    }
+
+    QString AppsViewModel::expandLocalFile(const QString& folder, const std::string& url) const
+    {
+        auto path = QDir(AppSettings().getLocalAppsPath()).filePath(folder);
+        auto result = QString::fromStdString(url);
+        result.replace("localapp", QString("file://") + path);
         return result;
     }
 
