@@ -193,6 +193,10 @@ ColumnLayout {
         app["appid"] = webapiCreator.generateAppID(app.name, app.url)
         control.activeApp = app
 
+        if (app.local) {
+            viewModel.launchAppServer()
+        }
+
         try
         {
             var verWant = app.api_version || "current"
