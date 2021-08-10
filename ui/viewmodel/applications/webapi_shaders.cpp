@@ -20,20 +20,14 @@ namespace beamui::applications
         _realShaders = AppModel::getInstance().getWalletModel()->getAppsShaders(appid, appname);
     }
 
-    void WebAPI_Shaders::CompileAppShader(const std::vector<uint8_t> &shader)
+    void WebAPI_Shaders::CallShaderAndStartTx(const std::vector<uint8_t>& shader, const std::string &args, unsigned method, DoneAllHandler doneHandler)
     {
-        assert(_realShaders != nullptr);
-        return _realShaders->CompileAppShader(shader);
+        _realShaders->CallShaderAndStartTx(shader, args, method, doneHandler);
     }
 
-    void WebAPI_Shaders::CallShaderAndStartTx(const std::string &args, unsigned method, DoneAllHandler doneHandler)
+    void WebAPI_Shaders::CallShader(const std::vector<uint8_t>& shader, const std::string &args, unsigned method, DoneCallHandler doneHandler)
     {
-        _realShaders->CallShaderAndStartTx(args, method, doneHandler);
-    }
-
-    void WebAPI_Shaders::CallShader(const std::string &args, unsigned method, DoneCallHandler doneHandler)
-    {
-        _realShaders->CallShader(args, method, doneHandler);
+        _realShaders->CallShader(shader, args, method, doneHandler);
     }
 
     void WebAPI_Shaders::ProcessTxData(const beam::ByteBuffer& data, DoneTxHandler doneHandler)

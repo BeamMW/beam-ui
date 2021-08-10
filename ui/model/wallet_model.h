@@ -41,23 +41,6 @@ public:
     bool isOwnAddress(const beam::wallet::WalletID& walletID) const;
     bool isAddressWithCommentExist(const std::string& comment) const;
 
-    std::set<beam::Asset::ID> getAssetsNZ() const;
-    beam::AmountBig::Type getAvailable(beam::Asset::ID) const;
-    beam::AmountBig::Type getAvailableRegular(beam::Asset::ID) const;
-    beam::AmountBig::Type getAvailableShielded(beam::Asset::ID) const;
-    beam::AmountBig::Type getReceiving(beam::Asset::ID) const;
-    beam::AmountBig::Type getReceivingIncoming(beam::Asset::ID) const;
-    beam::AmountBig::Type getReceivingChange(beam::Asset::ID) const;
-    beam::AmountBig::Type getSending(beam::Asset::ID) const;
-    beam::AmountBig::Type getMaturing(beam::Asset::ID) const;
-    beam::AmountBig::Type getMatutingMP(beam::Asset::ID) const;
-    beam::AmountBig::Type getShielded(beam::Asset::ID) const;
-    bool hasShielded(beam::Asset::ID) const;
-
-    beam::Height getCurrentHeight() const;
-    beam::Timestamp getCurrentHeightTimestamp() const;
-    beam::Block::SystemState::ID getCurrentStateID() const;
-
 signals:
     // INTERNAL SIGNALS, DO NOT SUBSCRIBE IN OTHER UI OBJECTS.
     // Subscribe to non-internal counterparts
@@ -157,5 +140,4 @@ private slots:
 private:
     std::set<beam::wallet::WalletID> m_myWalletIds;
     std::set<std::string> m_myAddrLabels;
-    beam::wallet::WalletStatus m_status;
 };

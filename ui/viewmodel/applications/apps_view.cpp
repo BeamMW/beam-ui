@@ -170,7 +170,7 @@ namespace beamui::applications
             //% "This is your dev application"
             devapp.insert("description",     qtTrId("apps-devapp"));
             devapp.insert("name",            AppSettings().getDevAppName());
-            devapp.insert("url",             AppSettings().getAppsUrl());
+            devapp.insert("url",             AppSettings().getDevAppUrl());
             devapp.insert("api_version",     AppSettings().getDevAppApiVer());
             devapp.insert("min_api_version", AppSettings().getDevAppMinApiVer());
             result.push_back(devapp);
