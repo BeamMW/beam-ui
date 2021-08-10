@@ -61,6 +61,7 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(QObject* ethSettings   READ getEthSettings   CONSTANT)
 
     Q_PROPERTY(QString currentHeight READ getCurrentHeight NOTIFY stateChanged)
+    Q_PROPERTY(bool    isSeedValidated READ getIsSeedValidated NOTIFY isSeedValidatedChanged)
 
 public:
 
@@ -122,6 +123,7 @@ public:
     void setAppsPort(int port);
 
     QString getCurrentHeight() const;
+    bool getIsSeedValidated() const;
 
     Q_INVOKABLE uint coreAmount() const;
     Q_INVOKABLE void addLocalNodePeer(const QString& localNodePeer);
@@ -168,6 +170,7 @@ signals:
     void dappsAllowedChanged();
     void stateChanged();
     void appsPortChanged();
+    void isSeedValidatedChanged();
 
 protected:
     void timerEvent(QTimerEvent *event) override;
@@ -197,6 +200,7 @@ private:
     QString m_publicAddress;
     mutable int m_mpAnonymitySetIndex = 0;
     mutable int m_mpLockTimeLimitIndex = 1;
+    std::string m_seed;
 
     WalletModel& m_walletModel;
 

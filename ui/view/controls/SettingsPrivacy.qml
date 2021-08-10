@@ -248,5 +248,20 @@ SettingsFoldable {
                 // TODO:SETTINGS
             }
         }*/
+
+        SeedValidationHelper { id: seedValidationHelper }
+
+        LinkButton {
+            //% "Complete wallet verification"
+            text: qsTrId("general-complete-verification")
+            linkColor: "#ffffff"
+            bold: true
+            visible: !viewModel.isSeedValidated
+            onClicked: {
+                seedValidationHelper.isSeedValidatiomMode = true;
+                seedValidationHelper.isTriggeredFromSettings = true;
+                main.parent.setSource("qrc:/start.qml");
+            }
+        }
     }
 }

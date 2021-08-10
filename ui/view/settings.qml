@@ -16,6 +16,8 @@ ColumnLayout {
     property string  swapMode:   ""
     property bool    creating:   true
 
+    property bool settingsPrivacyFolded: true
+
     Component.onCompleted: {
         settingsView.creating = false
     }
@@ -104,6 +106,7 @@ ColumnLayout {
                 SettingsPrivacy {
                     id: privacyBlock
                     viewModel: viewModel
+                    folded: settingsPrivacyFolded
                 }
 
                 SettingsApps {

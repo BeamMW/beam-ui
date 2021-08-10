@@ -45,7 +45,7 @@ public:
     AppModel(WalletSettings& settings);
     ~AppModel() override;
 
-    bool createWallet(const beam::SecString& seed, const beam::SecString& pass);
+    bool createWallet(const beam::SecString& seed, const beam::SecString& pass, const std::string& rawSeed = "");
 
 #if defined(BEAM_HW_WALLET)
     bool createTrezorWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper);
@@ -62,6 +62,10 @@ public:
     void resetWallet();
     bool exportData();
     bool importData();
+    bool isSeedValidationMode() const;
+    void setSeedValidationMode(bool value);
+    bool isSeedValidationTriggeredFromSetting() const;
+    void setSeedValidationTriggeredFromSetting(bool value);
 
     [[nodiscard]] WalletModel::Ptr getWalletModel() const;
     [[nodiscard]] AssetsManager::Ptr getAssets() const;
@@ -120,6 +124,9 @@ private:
     Connections m_walletConnections;
     static AppModel* s_instance;
     std::string m_walletDBBackupPath;
+
+    bool m_isSeedValidationMode = false;
+    bool m_isSeedValidationTriggeredFromSettings = false;
 
 #if defined(BEAM_HW_WALLET)
     mutable std::shared_ptr<beam::wallet::HWWallet> m_hwWallet;
