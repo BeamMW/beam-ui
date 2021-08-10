@@ -30,15 +30,9 @@ namespace beamui::applications
 
     AppsServer::~AppsServer()
     {
-        if (_server)
-        {
-            _server->close();
-            _server.reset();
-        }
-
-        if (_handler)
-        {
-            _handler.reset();
-        }
+        _server->setHandler(nullptr);
+        _server->close();
+        _handler.reset();
+        _server.reset();
     }
 }
