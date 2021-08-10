@@ -553,7 +553,7 @@ ColumnLayout {
         titleTip: txTable.activeTxCnt ? qsTrId("apps-inprogress-tip").arg(txTable.activeTxCnt) : ""
     }
 
-    function appendDevApp (arr) {
+    function appendLocalApps (arr) {
         return viewModel.localApps.concat(arr || [])
     }
 
@@ -569,7 +569,7 @@ ColumnLayout {
                     if (xhr.status === 200)
                     {
                         var list = JSON.parse(xhr.responseText)
-                        control.appsList = appendDevApp(list)
+                        control.appsList = appendLocalApps(list)
                         if (control.appToOpen) {
                             for (let app of control.appsList)
                             {
@@ -597,7 +597,7 @@ ColumnLayout {
             xhr.send('')
         }
 
-        control.appsList = appendDevApp(undefined)
+        control.appsList = appendLocalApps(undefined)
     }
 
     SettingsViewModel {

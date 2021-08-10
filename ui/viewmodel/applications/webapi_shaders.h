@@ -27,9 +27,8 @@ namespace beamui::applications
         ~WebAPI_Shaders() override = default;
 
     private:
-        void CompileAppShader(const std::vector<uint8_t>& shader) override;
-        void CallShaderAndStartTx(const std::string& args, unsigned method, DoneAllHandler doneHandler) override;
-        void CallShader(const std::string& args, unsigned method, DoneCallHandler) override;
+        void CallShaderAndStartTx(const std::vector<uint8_t>& shader, const std::string& args, unsigned method, DoneAllHandler doneHandler) override;
+        void CallShader(const std::vector<uint8_t>& shader, const std::string& args, unsigned method, DoneCallHandler) override;
         void ProcessTxData(const beam::ByteBuffer& data, DoneTxHandler doneHandler) override;
         [[nodiscard]] bool IsDone() const override;
 
