@@ -61,7 +61,7 @@ namespace beamui::applications
        void callWalletApiResult(const QString& result);
        void assetsChanged();
        void approveSend(const QString& request, const QMap<QString, QVariant>& info);
-       void approveContractInfo(const QString& request, const QMap<QString, QVariant>& info, QList<QMap<QString, QVariant>> amounts);
+       void approveContractInfo(const QString& request, const QMap<QString, QVariant>& info, const QList<QMap<QString, QVariant>>& amounts);
 
     public:
         [[nodiscard]] std::string getAppId() const
