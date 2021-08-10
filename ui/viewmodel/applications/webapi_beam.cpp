@@ -72,7 +72,7 @@ namespace beamui::applications {
         }
     }
 
-    WebAPI_Beam::WebAPI_Beam(const std::string& version, const std::string& appid, const std::string& appname)
+    WebAPI_Beam::WebAPI_Beam(beam::wallet::IShadersManager::Ptr shaders, const std::string& version, const std::string& appid, const std::string& appname)
         : QObject(nullptr)
         , _appId(appid)
         , _appName(appname)
@@ -81,11 +81,11 @@ namespace beamui::applications {
         connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &WebAPI_Beam::assetsChanged);
 
         //
-        // THIS IS UI THREAD
+        // THIS SHOULD BE UI THREAD to let Qt to register metatypes
         //
         ApiInitData data;
 
-        data.contracts = std::make_shared<WebAPI_Shaders>(appid, appname);
+        data.contracts = std::move(shaders);
         data.swaps     = nullptr;
         data.wallet    = AppModel::getInstance().getWalletModel()->getWallet();
         data.walletDB  = AppModel::getInstance().getWalletDB();
@@ -97,11 +97,29 @@ namespace beamui::applications {
         LOG_INFO () << "WebAPI_Beam created for " << data.appName << ", " << data.appId;
     }
 
-    std::shared_ptr<WebAPI_Beam> WebAPI_Beam::Create(const std::string& version, const std::string& appid, const std::string& appname)
+    void WebAPI_Beam::Create(const std::string& version, const std::string& appid, const std::string& appname, std::function<void (Ptr)> cback)
     {
-        auto result = std::make_shared<WebAPI_Beam>(version, appid, appname);
-        result->_walletAPIProxy->_handler = result;
-        return result;
+        //
+        // THIS IS UI THREAD
+        //
+        getAsyncWallet().makeIWTCall(
+            [appid, appname]() -> boost::any {
+                //
+                // THIS IS REACTOR THREAD
+                //
+                auto result = AppModel::getInstance().getWalletModel()->IWThread_createAppShaders(appid, appname);
+                return result;
+            },
+            [cback, version, appid, appname](boost::any aptr) {
+                //
+                // THIS IS UI THREAD
+                //
+                auto shaders = boost::any_cast<IShadersManager::Ptr>(aptr);
+                auto wapi = std::make_shared<WebAPI_Beam>(shaders, version, appid, appname);
+                wapi->_walletAPIProxy->_handler = wapi;
+                cback(wapi);
+            }
+        );
     }
 
     WebAPI_Beam::~WebAPI_Beam()
@@ -111,7 +129,6 @@ namespace beamui::applications {
         //
         // THIS IS UI THREAD
         //
-        AppModel::getInstance().getWalletModel()->releaseAppsShaders(_appId);
         getAsyncWallet().makeIWTCall(
             [proxy = std::move(_walletAPIProxy), api = std::move(_walletAPI)] () mutable -> boost::any {
                 // api should be destroyed in context of the wallet thread

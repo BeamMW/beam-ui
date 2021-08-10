@@ -15,7 +15,6 @@
 
 #include <QObject>
 #include "webapi_beam.h"
-#include "webapi_shaders.h"
 #include "viewmodel/wallet/assets_list.h"
 
 namespace beamui::applications

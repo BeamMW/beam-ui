@@ -14,8 +14,8 @@
 #pragma once
 
 #include "model/app_model.h"
-#include "webapi_shaders.h"
 #include "wallet/api/i_wallet_api.h"
+#include "wallet/core/contracts/i_shaders_manager.h"
 
 namespace beamui::applications
 {
@@ -41,10 +41,11 @@ namespace beamui::applications
 
     public:
         // Do not call directly, use ::Create instead
-        WebAPI_Beam(const std::string& version, const std::string& appid, const std::string& appname);
+        WebAPI_Beam(beam::wallet::IShadersManager::Ptr shaders, const std::string& version, const std::string& appid, const std::string& appname);
         ~WebAPI_Beam() override;
 
-        static std::shared_ptr<WebAPI_Beam> Create(const std::string& version, const std::string& appid, const std::string& appname);
+        typedef std::shared_ptr<WebAPI_Beam> Ptr;
+        static void Create(const std::string& version, const std::string& appid, const std::string& appname, std::function<void (Ptr)> cback);
 
         [[nodiscard]] QMap<QString, QVariant> getAssets();
         Q_INVOKABLE void sendApproved(const QString& request);

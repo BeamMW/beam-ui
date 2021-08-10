@@ -56,11 +56,23 @@ namespace beamui::applications
             return qmlEngine(this)->throwError(error);
         }
 
+        QPointer<WebAPICreator> guard = this;
         const auto appid = GenerateAppID(appName.toStdString(), appUrl.toStdString());
-        _api = WebAPI_Beam::Create(version, appid, appName.toStdString());
-        emit apiChanged();
 
-        LOG_INFO() << "API created: " << version << ", " << appName.toStdString() << ", " << appid;
+        WebAPI_Beam::Create(version, appid, appName.toStdString(),
+            [this, guard, version, appName, appid] (WebAPI_Beam::Ptr api) {
+                if (guard)
+                {
+                    _api = std::move(api);
+                    emit apiChanged();
+                    LOG_INFO() << "API created: " << version << ", " << appName.toStdString() << ", " << appid;
+                }
+                else
+                {
+                    LOG_INFO() << "WebAPICreator destroyed before api created:" << version << ", " << appName.toStdString() << ", " << appid;
+                }
+            }
+        );
     }
 
     QObject* WebAPICreator::getApi()
