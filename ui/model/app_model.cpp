@@ -37,7 +37,7 @@
 #endif // BITCOIN_CASH_SUPPORT
 #include "wallet/transactions/swaps/bridges/dash/dash.h"
 #include "wallet/transactions/swaps/bridges/ethereum/ethereum.h"
-
+#include "wallet/transactions/assets/ainfo_transaction.h"
 #include "keykeeper/local_private_key_keeper.h"
 
 #if defined(BEAM_HW_WALLET)
@@ -424,6 +424,7 @@ void AppModel::startWallet()
 #endif
 
     additionalTxCreators->emplace(TxType::DexSimpleSwap, std::make_shared<DexTransaction::Creator>(m_db));
+    additionalTxCreators->emplace(TxType::AssetInfo, std::make_shared<AssetInfoTransaction::Creator>());
 
     bool displayRate = m_settings.getRateCurrency() != beam::wallet::Currency::UNKNOWN();
     m_wallet->start(activeNotifications, displayRate, additionalTxCreators);
