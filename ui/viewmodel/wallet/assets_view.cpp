@@ -22,6 +22,12 @@ AssetsViewModel::AssetsViewModel()
     connect(&_wallet, &WalletModel::shieldedCoinChanged, this, &AssetsViewModel::onShieldedCoinChanged);
     _selectedAsset = _settings.getLastAssetSelection();
     emit selectedAssetChanged();
+
+    _wallet.getAsync()->readRawSeedPhrase([this] (const std::string& seed)
+    {
+        _seed = seed;
+        emit isSeedValidatedChanged();
+    });
 }
 
 QAbstractItemModel* AssetsViewModel::getAssets()
@@ -61,14 +67,34 @@ void AssetsViewModel::setShowFaucetPromo(bool value)
     emit showFaucetPromoChanged();
 }
 
+bool AssetsViewModel::getHideSeedValidationPromo() const
+{
+    return _settings.hideSeedValidationPromo() && getCanHideSeedValidationPromo();
+}
+
+void AssetsViewModel::setHideSeedValidationPromo(bool value)
+{
+    _settings.setHideSeedValidationPromo(value);
+    emit hideSeedValidationPromoChanged();
+}
+
+bool AssetsViewModel::getCanHideSeedValidationPromo() const
+{
+    auto availableH = beam::AmountBig::get_Hi(_wallet.getAvailable(beam::Asset::s_BeamID));
+    auto availableL = beam::AmountBig::get_Lo(_wallet.getAvailable(beam::Asset::s_BeamID));
+    return !availableH && availableL < 1000000000;
+}
+
 void AssetsViewModel::onNormalCoinsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
     emit showFaucetPromoChanged();
+    emit hideSeedValidationPromoChanged();
 }
 
 void AssetsViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::ShieldedCoin>& items)
 {
     emit showFaucetPromoChanged();
+    emit hideSeedValidationPromoChanged();
 }
 
 bool AssetsViewModel::hasBeamAmount() const
@@ -78,4 +104,9 @@ return _wallet.getAvailable(beam::Asset::s_BeamID) != beam::Zero
     || _wallet.getAvailableShielded(beam::Asset::s_BeamID) != beam::Zero
     || _wallet.getMaturing(beam::Asset::s_BeamID) != beam::Zero
     || _wallet.getMatutingMP(beam::Asset::s_BeamID) != beam::Zero;
+}
+
+bool AssetsViewModel::getIsSeedValidated() const
+{
+    return _seed.empty();
 }

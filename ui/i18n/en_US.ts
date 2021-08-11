@@ -3252,5 +3252,13 @@ cannot be canceled.</translation>
         <source>Complete verification</source>
         <translation>Complete verification</translation>
     </message>
+    <message id="seed-validation-promo">
+        <source>Write down and validate your seed phrase so you can always recover your funds.</source>
+        <translation>Write down and validate your seed phrase so you can always recover your funds.</translation>
+    </message>
+    <message id="seed-validation-link">
+        <source>Secure your phrase</source>
+        <translation>Secure your phrase</translation>
+    </message>
 </context>
 </TS>

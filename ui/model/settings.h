@@ -112,6 +112,9 @@ public:
     bool showFaucetPromo() const;
     void setShowFacetPromo(bool value);
 
+    bool hideSeedValidationPromo() const;
+    void setHideSeedValidationPromo(bool value);
+
     void minConfirmationsInit();
     uint32_t getMinConfirmations() const;
     void setMinConfirmations(uint32_t value);
