@@ -49,6 +49,8 @@ Control {
     property alias  selectedId:      viewModel.selectedAsset
     property int    assetsCount:     1
     property bool   showFaucetPromo: viewModel.showFaucetPromo
+    property bool   isSeedValidated: viewModel.isSeedValidated
+    property bool   hideSeedValidationPromo: viewModel.hideSeedValidationPromo
 
     readonly property real  itemHeight:  75
 
@@ -91,7 +93,7 @@ Control {
     contentItem: ScrollView {
         id: scroll
 
-        implicitHeight: control.scrollViewHeight
+        implicitHeight: !isSeedValidated && !hideSeedValidationPromo && showFaucetPromo ? control.scrollViewHeight + 95 : control.scrollViewHeight
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         ScrollBar.vertical.policy: control.hasScroll && hovered ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
 
@@ -132,7 +134,7 @@ Control {
             }
 
             Panel {
-                width:  678
+                width:  683
                 height: 75
                 visible: showFaucetPromo && control.assetsCount == 1
 
@@ -171,7 +173,6 @@ Control {
                             acceptedButtons: Qt.LeftButton
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
-                                console.log("open faucet");
                                 main.openFaucet();
                             }
                             hoverEnabled: true
@@ -193,6 +194,83 @@ Control {
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
                                 viewModel.showFaucetPromo = false;
+                            }
+                            hoverEnabled: true
+                        }
+                    }
+                }
+            }
+        }
+
+        Row {
+            id: seedValidationRow
+            width: showFaucetPromo ? parent.width : parent.width / 2 - 5
+            topPadding: showFaucetPromo ? grid.height + 10 : 0
+            leftPadding: showFaucetPromo ? 0 : itemWidth + 10
+            visible: !isSeedValidated && !hideSeedValidationPromo
+
+            Panel {
+                width: parent.width
+                height: 75
+                backgroundColor: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.1)
+
+                content: RowLayout {
+                    SFText {
+                        Layout.topMargin:    -22
+                        Layout.fillWidth:    !showFaucetPromo
+                        horizontalAlignment: Text.AlignHCenter
+                        height: 32
+                        font.pixelSize:      14
+                        color:               Style.content_main
+                        //% "Write down and validate your seed phrase so you can always recover your funds."
+                        text:                qsTrId("seed-validation-promo")
+                        wrapMode:            Text.WordWrap
+                    }
+
+                    SeedValidationHelper { id: seedValidationHelper }
+
+                    SFText {
+                        Layout.topMargin:    -22
+                        Layout.fillWidth:    !showFaucetPromo
+                        Layout.leftMargin: 10
+                        font.pixelSize:      14
+                        color:               Style.active
+                        //% "Secure your phrase"
+                        text:                qsTrId("seed-validation-link")
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                seedValidationHelper.isSeedValidatiomMode = true;
+                                main.parent.setSource("qrc:/start.qml");
+                            }
+                            hoverEnabled: true
+                        }
+                    }
+
+                    Item {
+                        height: 16
+                        Layout.fillWidth: true
+                        Layout.minimumWidth: showFaucetPromo ? 0 : 25
+                    }
+                    Item {
+                        width:  16
+                        height: 16
+                        Layout.topMargin:   -55
+                        Layout.rightMargin: -9
+                        visible: viewModel.canHideSeedValidationPromo
+                        SvgImage {
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            source: "qrc:/assets/icon-cancel-white.svg"
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                viewModel.hideSeedValidationPromo = true;
                             }
                             hoverEnabled: true
                         }

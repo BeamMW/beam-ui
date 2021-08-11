@@ -23,6 +23,9 @@ class AssetsViewModel : public QObject {
     Q_PROPERTY(QAbstractItemModel* assets READ getAssets CONSTANT)
     Q_PROPERTY(int selectedAsset READ getSelectedAsset WRITE setSelectedAsset NOTIFY selectedAssetChanged)
     Q_PROPERTY(bool showFaucetPromo READ getShowFaucetPromo WRITE setShowFaucetPromo NOTIFY showFaucetPromoChanged)
+    Q_PROPERTY(bool hideSeedValidationPromo READ getHideSeedValidationPromo WRITE setHideSeedValidationPromo NOTIFY hideSeedValidationPromoChanged)
+    Q_PROPERTY(bool canHideSeedValidationPromo READ getCanHideSeedValidationPromo NOTIFY canHideSeedValidationPromoChanged)
+    Q_PROPERTY(bool isSeedValidated READ getIsSeedValidated NOTIFY isSeedValidatedChanged)
 
 public:
     AssetsViewModel();
@@ -33,6 +36,10 @@ public:
     void setSelectedAsset(int assetId);
     bool getShowFaucetPromo();
     void setShowFaucetPromo(bool value);
+    bool getIsSeedValidated() const;
+    bool getHideSeedValidationPromo() const;
+    void setHideSeedValidationPromo(bool value);
+    bool getCanHideSeedValidationPromo() const;
 
 public slots:
     void onNormalCoinsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
@@ -41,6 +48,9 @@ public slots:
 signals:
     void selectedAssetChanged();
     void showFaucetPromoChanged();
+    void isSeedValidatedChanged();
+    void hideSeedValidationPromoChanged();
+    void canHideSeedValidationPromoChanged();
 
 private:
     bool hasBeamAmount() const;
@@ -49,4 +59,5 @@ private:
     WalletSettings& _settings;
     WalletModel& _wallet;
     boost::optional<beam::Asset::ID> _selectedAsset;
+    std::string _seed;
 };

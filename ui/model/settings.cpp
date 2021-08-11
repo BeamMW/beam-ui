@@ -44,6 +44,7 @@ namespace
     const char* kRateUnit = "rateUnit";
     const char* kLastAssetSelection = "lastAssetSelection";
     const char* kShowFaucetPromo = "showFaucetPromo";
+    const char* kHideSeedValidationPromo = "hideSeedValidationPromo";
 
     const char* kLocalNodeRun = "localnode/run";
     const char* kLocalNodePort = "localnode/port";
@@ -704,6 +705,18 @@ void WalletSettings::setShowFacetPromo(bool value)
 {
     Lock lock(m_mutex);
     m_data.setValue(kShowFaucetPromo, value);
+}
+
+bool WalletSettings::hideSeedValidationPromo() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kHideSeedValidationPromo, false).toBool();
+}
+
+void WalletSettings::setHideSeedValidationPromo(bool value)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kHideSeedValidationPromo, value);
 }
 
 QString WalletSettings::getDevAppUrl() const
