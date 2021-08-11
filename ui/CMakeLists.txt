@@ -117,8 +117,12 @@ set(UI_SRC
     viewmodel/applications/public.cpp
     viewmodel/applications/public.h
     viewmodel/helpers/list_model.h
+    viewmodel/helpers/sortfilterproxymodel.h
     viewmodel/helpers/sortfilterproxymodel.cpp
+    viewmodel/helpers/token_bootstrap_manager.h
     viewmodel/helpers/token_bootstrap_manager.cpp
+    viewmodel/helpers/seed_validation_helper.h
+    viewmodel/helpers/seed_validation_helper.cpp
     viewmodel/wallet/tx_object.cpp
     viewmodel/wallet/tx_object_list.cpp
     viewmodel/wallet/wallet_view.cpp

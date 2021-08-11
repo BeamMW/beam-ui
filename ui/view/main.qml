@@ -110,6 +110,8 @@ Rectangle {
         modal: true
     }
 
+    SeedValidationHelper { id: seedValidationHelper }
+
     function onClosing (close) {
         if (viewModel.unsafeTxCount > 0) {
             close.accepted = false;
@@ -419,6 +421,10 @@ Rectangle {
         updateItem("applications", args);
     }
 
+    function validationSeedBackToSettings() {
+        updateItem("settings", { "settingsPrivacyFolded": false});
+    }
+
     property var trezor_popups : []
 
     Connections {
@@ -453,8 +459,11 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        openWallet()
-        main.Window.window.closing.connect(onClosing)
+        if (seedValidationHelper.isTriggeredFromSettings)
+            validationSeedBackToSettings();
+        else
+            openWallet();
+        main.Window.window.closing.connect(onClosing);
     }
 
     Component.onDestruction: {

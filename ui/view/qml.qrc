@@ -106,6 +106,8 @@
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
+        <file>CheckRecoveryPhrase.qml</file>
+        <file>GenerateRecoveryPhrase.qml</file>
         <file>loading.qml</file>
         <file>main.qml</file>
         <file>wallet.qml</file>
@@ -267,6 +269,7 @@
         <file>assets/icon-recovery.svg</file>
         <file>assets/password.svg</file>
         <file>assets/icon-next-blue.svg</file>
+        <file>assets/icon-next-white.svg</file>
         <file>assets/icon-file.svg</file>
         <file>assets/icon-restore-blue.svg</file>
         <file>assets/icon-try-again.svg</file>

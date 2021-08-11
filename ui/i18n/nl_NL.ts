@@ -3251,5 +3251,22 @@ cannot be canceled.</translation>
         <source>get coins</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="general-seed-phrase">
+        <source>Seed phrase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-do-later">
+        <source>I will do it later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-complete-verification">
+        <source>Complete wallet verification</source>
+        <oldsource>complete verification</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-complete-verification-button">
+        <source>Complete verification</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -141,7 +141,7 @@ void AppModel::restoreDBFromBackup(const std::string& dbFilePath)
     }
 }
 
-bool AppModel::createWallet(const SecString& seed, const SecString& pass)
+bool AppModel::createWallet(const SecString& seed, const SecString& pass, const std::string& rawSeed)
 {
     const auto dbFilePath = m_settings.getWalletStorage();
     backupDB(dbFilePath);
@@ -151,6 +151,11 @@ bool AppModel::createWallet(const SecString& seed, const SecString& pass)
         auto db = beam::wallet::WalletDB::init(dbFilePath, pass, seed.hash());
         if (!db) 
             return false;
+
+        if (!rawSeed.empty())
+        {
+            db->setVarRaw(beam::wallet::SEED_PARAM_NAME, rawSeed.c_str(), rawSeed.size());
+        }
 
         generateDefaultAddress(db);
     }
@@ -293,6 +298,26 @@ bool AppModel::importData()
     {
         return false;
     }
+}
+
+bool AppModel::isSeedValidationMode() const
+{
+    return m_isSeedValidationMode;
+}
+
+void AppModel::setSeedValidationMode(bool value)
+{
+    m_isSeedValidationMode = value;
+}
+
+bool AppModel::isSeedValidationTriggeredFromSetting() const
+{
+    return m_isSeedValidationTriggeredFromSettings;
+}
+
+void AppModel::setSeedValidationTriggeredFromSetting(bool value)
+{
+    m_isSeedValidationTriggeredFromSettings = value;
 }
 
 void AppModel::resetWallet()
