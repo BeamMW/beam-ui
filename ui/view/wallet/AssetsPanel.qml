@@ -93,7 +93,7 @@ Control {
     contentItem: ScrollView {
         id: scroll
 
-        implicitHeight: !isSeedValidated && !hideSeedValidationPromo && showFaucetPromo ? control.scrollViewHeight + 95 : control.scrollViewHeight
+        implicitHeight: !isSeedValidated && !hideSeedValidationPromo && (showFaucetPromo || control.assetsCount > 1) ? control.scrollViewHeight + 95 : control.scrollViewHeight
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         ScrollBar.vertical.policy: control.hasScroll && hovered ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
 
@@ -204,9 +204,9 @@ Control {
 
         Row {
             id: seedValidationRow
-            width: showFaucetPromo ? parent.width : parent.width / 2 - 5
-            topPadding: showFaucetPromo ? grid.height + 10 : 0
-            leftPadding: showFaucetPromo ? 0 : itemWidth + 10
+            width: showFaucetPromo || control.assetsCount > 1 ? parent.width : parent.width / 2 - 5
+            topPadding: showFaucetPromo || control.assetsCount > 1 ? grid.height + 10 : 0
+            leftPadding: showFaucetPromo || control.assetsCount > 1 ? 0 : itemWidth + 10
             visible: !isSeedValidated && !hideSeedValidationPromo
 
             Panel {
@@ -217,7 +217,7 @@ Control {
                 content: RowLayout {
                     SFText {
                         Layout.topMargin:    -22
-                        Layout.fillWidth:    !showFaucetPromo
+                        Layout.fillWidth:    !(showFaucetPromo || control.assetsCount > 1)
                         horizontalAlignment: Text.AlignHCenter
                         height: 32
                         font.pixelSize:      14
@@ -231,8 +231,8 @@ Control {
 
                     SFText {
                         Layout.topMargin:    -22
-                        Layout.fillWidth:    !showFaucetPromo
-                        Layout.leftMargin: 10
+                        Layout.fillWidth:    !(showFaucetPromo || control.assetsCount > 1)
+                        Layout.leftMargin:   10
                         font.pixelSize:      14
                         color:               Style.active
                         //% "Secure your phrase"
