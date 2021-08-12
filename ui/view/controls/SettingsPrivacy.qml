@@ -256,7 +256,7 @@ SettingsFoldable {
             text: qsTrId("general-complete-verification")
             linkColor: "#ffffff"
             bold: true
-            visible: !viewModel.isSeedValidated
+            visible: !seedValidationHelper.isSeedValidated
             onClicked: {
                 seedValidationHelper.isSeedValidatiomMode = true;
                 seedValidationHelper.isTriggeredFromSettings = true;

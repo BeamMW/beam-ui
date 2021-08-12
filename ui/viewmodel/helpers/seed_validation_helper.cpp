@@ -16,7 +16,18 @@
 
 #include "model/app_model.h"
 
-SeedValidationHelper::SeedValidationHelper(){};
+SeedValidationHelper::SeedValidationHelper()
+{
+    auto model = AppModel::getInstance().getWalletModel();
+    if (model)
+    {
+        model->getAsync()->readRawSeedPhrase([this] (const std::string& seed)
+        {
+            m_seed = seed;
+            emit isSeedValidatedChanged();
+        });
+    }
+};
 SeedValidationHelper::~SeedValidationHelper(){};
 
 bool SeedValidationHelper::getIsSeedValidatiomMode() const
@@ -44,4 +55,9 @@ void SeedValidationHelper::validate()
     auto model = AppModel::getInstance().getWalletModel();
     if (model)
         model->getAsync()->removeRawSeedPhrase();
+}
+
+bool SeedValidationHelper::getIsSeedValidated() const
+{
+    return m_seed.empty();
 }

@@ -20,6 +20,7 @@ class SeedValidationHelper: public QObject
     Q_OBJECT
     Q_PROPERTY(bool isSeedValidatiomMode READ getIsSeedValidatiomMode WRITE setIsSeedValidationMode NOTIFY isSeedValidatiomModeChanged)
     Q_PROPERTY(bool isTriggeredFromSettings READ getIsTriggeredFromSettings WRITE setIsTriggeredFromSettings NOTIFY isTriggeredFromSettingsChanged)
+    Q_PROPERTY(bool isSeedValidated READ getIsSeedValidated NOTIFY isSeedValidatedChanged)
 
   public:
     SeedValidationHelper();
@@ -29,10 +30,15 @@ class SeedValidationHelper: public QObject
     void setIsSeedValidationMode(bool value);
     bool getIsTriggeredFromSettings() const;
     void setIsTriggeredFromSettings(bool value);
+    bool getIsSeedValidated() const;
 
     Q_INVOKABLE void validate();
 
   signals:
     void isSeedValidatiomModeChanged();
     void isTriggeredFromSettingsChanged();
+    void isSeedValidatedChanged();
+
+  private:
+    std::string m_seed;
 };

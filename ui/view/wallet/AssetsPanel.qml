@@ -43,13 +43,15 @@ Control {
         selectedId  = -1
     }
 
+    SeedValidationHelper { id: seedValidationHelper }
+
     property real   hSpacing:        10
     property real   vSpacing:        10
     property int    maxVisibleRows:  3
     property alias  selectedId:      viewModel.selectedAsset
     property int    assetsCount:     1
     property bool   showFaucetPromo: viewModel.showFaucetPromo
-    property bool   isSeedValidated: viewModel.isSeedValidated
+    property bool   isSeedValidated: seedValidationHelper.isSeedValidated
     property bool   hideSeedValidationPromo: viewModel.hideSeedValidationPromo
 
     readonly property real  itemHeight:  75
@@ -226,8 +228,6 @@ Control {
                         text:                qsTrId("seed-validation-promo")
                         wrapMode:            Text.WordWrap
                     }
-
-                    SeedValidationHelper { id: seedValidationHelper }
 
                     SFText {
                         Layout.topMargin:    -22
