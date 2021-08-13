@@ -214,7 +214,9 @@ Control {
             Panel {
                 width: parent.width
                 height: 75
-                backgroundColor: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.1)
+                backgroundColor: viewModel.canHideSeedValidationPromo ?
+                    Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.1) :
+                    Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.2)
 
                 content: RowLayout {
                     SFText {
