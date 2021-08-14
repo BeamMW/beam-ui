@@ -22,12 +22,6 @@ AssetsViewModel::AssetsViewModel()
     connect(&_wallet, &WalletModel::shieldedCoinChanged, this, &AssetsViewModel::onShieldedCoinChanged);
     _selectedAsset = _settings.getLastAssetSelection();
     emit selectedAssetChanged();
-
-    _wallet.getAsync()->readRawSeedPhrase([this] (const std::string& seed)
-    {
-        _seed = seed;
-        emit isSeedValidatedChanged();
-    });
 }
 
 QAbstractItemModel* AssetsViewModel::getAssets()
@@ -88,13 +82,13 @@ bool AssetsViewModel::getCanHideSeedValidationPromo() const
 void AssetsViewModel::onNormalCoinsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
     emit showFaucetPromoChanged();
-    emit hideSeedValidationPromoChanged();
+    emit canHideSeedValidationPromoChanged();
 }
 
 void AssetsViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::ShieldedCoin>& items)
 {
     emit showFaucetPromoChanged();
-    emit hideSeedValidationPromoChanged();
+    emit canHideSeedValidationPromoChanged();
 }
 
 bool AssetsViewModel::hasBeamAmount() const
@@ -104,9 +98,4 @@ return _wallet.getAvailable(beam::Asset::s_BeamID) != beam::Zero
     || _wallet.getAvailableShielded(beam::Asset::s_BeamID) != beam::Zero
     || _wallet.getMaturing(beam::Asset::s_BeamID) != beam::Zero
     || _wallet.getMatutingMP(beam::Asset::s_BeamID) != beam::Zero;
-}
-
-bool AssetsViewModel::getIsSeedValidated() const
-{
-    return _seed.empty();
 }

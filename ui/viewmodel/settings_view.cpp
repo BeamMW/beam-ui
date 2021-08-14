@@ -68,13 +68,6 @@ SettingsViewModel::SettingsViewModel()
     connect(&m_walletModel, &WalletModel::walletStatusChanged, this, &SettingsViewModel::stateChanged);
 
     m_timerId = startTimer(CHECK_INTERVAL);
-
-    m_walletModel.getAsync()->readRawSeedPhrase([this] (const std::string& seed)
-    {
-        m_seed = seed;
-        emit isSeedValidatedChanged();
-    });
-
 }
 
 SettingsViewModel::~SettingsViewModel()
@@ -278,11 +271,6 @@ void SettingsViewModel::setDAppsAllowed (bool val)
 QString SettingsViewModel::getCurrentHeight() const
 {
     return QString::fromStdString(to_string(m_walletModel.getCurrentStateID().m_Height));
-}
-
-bool SettingsViewModel::getIsSeedValidated() const
-{
-    return m_seed.empty();
 }
 
 QStringList SettingsViewModel::getSupportedLanguages() const
