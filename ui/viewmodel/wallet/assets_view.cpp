@@ -82,12 +82,14 @@ bool AssetsViewModel::getCanHideSeedValidationPromo() const
 void AssetsViewModel::onNormalCoinsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
     emit showFaucetPromoChanged();
+    emit hideSeedValidationPromoChanged();
     emit canHideSeedValidationPromoChanged();
 }
 
 void AssetsViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::ShieldedCoin>& items)
 {
     emit showFaucetPromoChanged();
+    emit hideSeedValidationPromoChanged();
     emit canHideSeedValidationPromoChanged();
 }
 
