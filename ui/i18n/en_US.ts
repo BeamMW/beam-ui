@@ -3172,23 +3172,20 @@ cannot be canceled.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-twoway-warning">
-        <source>%1 Dapp will change the balances of your wallet</source>
-        <oldsource>%1 will change the balances of your wallet</oldsource>
-        <translation type="unfinished"></translation>
+        <source>%1 will change the balances of your wallet</source>
+        <translation>%1 will change the balances of your wallet</translation>
     </message>
     <message id="send-dapp-spend-warning">
-        <source>%1 Dapp will take the funds from your wallet</source>
-        <oldsource>%1 will take the funds from your wallet</oldsource>
-        <translation type="unfinished"></translation>
+        <source>%1 will take the funds from your wallet</source>
+        <translation>%1 will take the funds from your wallet</translation>
     </message>
     <message id="send-dapp-receive-warning">
-        <source>%1 Dapp will send the funds to your wallet</source>
-        <oldsource>%1 will send the funds to your wallet</oldsource>
-        <translation type="unfinished"></translation>
+        <source>%1 will send the funds to your wallet</source>
+        <translation>%1 will send the funds to your wallet</translation>
     </message>
     <message id="send-contract-only-fee">
         <source>The transaction fee would be deducted from your balance</source>
-        <translation type="unfinished"></translation>
+        <translation>The transaction fee would be deducted from your balance</translation>
     </message>
     <message id="status-online-remote">
         <source>connected node supports online transactions only</source>
@@ -3209,7 +3206,7 @@ cannot be canceled.</translation>
     <message id="settings-dapps-port">
         <source>Local server port</source>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Local server port</translation>
     </message>
     <message id="apps-install-from-file">
         <source>Install DApp from file</source>

@@ -183,7 +183,7 @@ Rectangle {
         {name: "addresses"},
         {name: "notifications"},
         {name: "applications", qml: appsQml},
-        {name: "daocore", qml: appsQml, args: () => appArgs("BEAM DAO CORE", viewModel.daoCoreAppID, false)},
+        {name: "daocore", qml: appsQml, args: () => appArgs("BeamX DAO", viewModel.daoCoreAppID, false)},
         {name: "settings"}
     ]
 

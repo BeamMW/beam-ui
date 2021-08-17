@@ -245,6 +245,7 @@ Control {
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
                                 seedValidationHelper.isSeedValidatiomMode = true;
+                                seedValidationHelper.isTriggeredFromSettings = false;
                                 main.parent.setSource("qrc:/start.qml");
                             }
                             hoverEnabled: true

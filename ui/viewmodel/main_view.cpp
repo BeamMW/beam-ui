@@ -116,7 +116,7 @@ int MainViewModel::getUnreadNotifications() const
 
 QString MainViewModel::getDaoCoreAppID() const
 {
-    const std::string appName = "BEAM DAO CORE";
+    const std::string appName = "BeamX DAO";
     std::string appURL  = "";
 
     #if defined(BEAM_TESTNET)

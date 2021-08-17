@@ -3187,18 +3187,15 @@ cannot be canceled.</translation>
         <translation type="unfinished">Transaction type</translation>
     </message>
     <message id="send-twoway-warning">
-        <source>%1 Dapp will change the balances of your wallet</source>
-        <oldsource>%1 will change the balances of your wallet</oldsource>
+        <source>%1 will change the balances of your wallet</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-dapp-spend-warning">
-        <source>%1 Dapp will take the funds from your wallet</source>
-        <oldsource>%1 will take the funds from your wallet</oldsource>
+        <source>%1 will take the funds from your wallet</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-dapp-receive-warning">
-        <source>%1 Dapp will send the funds to your wallet</source>
-        <oldsource>%1 will send the funds to your wallet</oldsource>
+        <source>%1 will send the funds to your wallet</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-contract-only-fee">
