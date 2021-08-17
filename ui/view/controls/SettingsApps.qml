@@ -15,6 +15,10 @@ SettingsFoldable {
         appsServerPort.text = viewModel.appsServerPort
     }
 
+    function applyChanges () {
+        viewModel.appsServerPort = parseInt(appsServerPort.text)
+    }
+
     title: "DApps"
     content: ColumnLayout {
         spacing: 0
@@ -95,16 +99,15 @@ SettingsFoldable {
                 leftPadding:  25
                 rightPadding: 25
                 spacing: 12
+
                 //% "Apply changes"
                 text: qsTrId("settings-apply")
                 icon.source: "qrc:/assets/icon-done.svg"
                 enabled: control.isChanged && control.isValid
-                //enabled: {
-                //    if (!viewModel.isNodeChanged) return false;
-                //    if (!localNodeRun.checked) return viewModel.localNodePeers.length > 0 && localNodePort.acceptableInput
-                //    return viewModel.isValidNodeAddress && nodeAddress.acceptableInput && remoteNodePort.acceptableInput
-                //}
-                //onClicked: viewModel.applyChanges()
+
+                onClicked: function () {
+                    control.applyChanges()
+                }
             }
         }
     }
