@@ -306,17 +306,17 @@ ConfirmationDialog {
 
                 if (control.appMode) {
                     if (isSpend && isReceive) {
-                        //% "%1 Dapp will change the balances of your wallet"
+                        //% "%1 will change the balances of your wallet"
                         return qsTrId("send-twoway-warning").arg(control.appName)
                     }
 
                     if (isSpend) {
-                        //% "%1 Dapp will take the funds from your wallet"
+                        //% "%1 will take the funds from your wallet"
                         return qsTrId("send-dapp-spend-warning").arg(control.appName)
                     }
 
                     if (isReceive) {
-                        //% "%1 Dapp will send the funds to your wallet"
+                        //% "%1 will send the funds to your wallet"
                         return qsTrId("send-dapp-receive-warning").arg(control.appName)
                     }
 
