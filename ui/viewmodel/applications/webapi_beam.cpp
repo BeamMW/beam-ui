@@ -74,8 +74,7 @@ namespace beamui::applications {
 
     WebAPI_Beam::WebAPI_Beam(beam::wallet::IShadersManager::Ptr shaders, const std::string& version, const std::string& appid, const std::string& appname)
         : QObject(nullptr)
-        , _appId(appid)
-        , _appName(appname)
+        , AppsApi(appid, appname)
         , _amgr(AppModel::getInstance().getAssets())
     {
         connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &WebAPI_Beam::assetsChanged);
@@ -89,8 +88,8 @@ namespace beamui::applications {
         data.swaps     = nullptr;
         data.wallet    = AppModel::getInstance().getWalletModel()->getWallet();
         data.walletDB  = AppModel::getInstance().getWalletDB();
-        data.appId     = _appId;
-        data.appName   = _appName;
+        data.appId     = appid;
+        data.appName   = appname;
 
         _walletAPIProxy = std::make_shared<ApiHandlerProxy>();
         _walletAPI = IWalletApi::CreateInstance(version, *_walletAPIProxy, data);
@@ -151,7 +150,7 @@ namespace beamui::applications {
         //
         // THIS IS UI THREAD
         //
-        LOG_INFO () << "WebAPP API call for " << _appName << ", " << _appId << "): " << request.toStdString();
+        LOG_INFO () << "WebAPP API call for " << getAppName() << ", " << getAppId() << "): " << request.toStdString();
 
         std::weak_ptr<WebAPI_Beam> wp = shared_from_this();
         getAsyncWallet().makeIWTCall(

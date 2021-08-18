@@ -16,6 +16,7 @@
 #include "model/app_model.h"
 #include "wallet/api/i_wallet_api.h"
 #include "wallet/core/contracts/i_shaders_manager.h"
+#include "wallet/client/apps_api/apps_api.h"
 
 namespace beamui::applications
 {
@@ -23,6 +24,7 @@ namespace beamui::applications
         : public QObject
         , public beam::wallet::IWalletApiHandler
         , public std::enable_shared_from_this<WebAPI_Beam>
+        , public beam::wallet::AppsApi
     {
         struct ApiHandlerProxy: beam::wallet::IWalletApiHandler
         {
@@ -63,17 +65,6 @@ namespace beamui::applications
        void approveSend(const QString& request, const QMap<QString, QVariant>& info);
        void approveContractInfo(const QString& request, const QMap<QString, QVariant>& info, const QList<QMap<QString, QVariant>>& amounts);
 
-    public:
-        [[nodiscard]] std::string getAppId() const
-        {
-            return _appId;
-        }
-
-        [[nodiscard]] std::string getAppName() const
-        {
-            return _appName;
-        }
-
     private:
         void AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&);
         void AnyThread_getContractInfoConsent(const std::string &request, const beam::wallet::IWalletApi::ParseResult &);
@@ -94,9 +85,6 @@ namespace beamui::applications
         using ApiPtr = beam::wallet::IWalletApi::Ptr;
         ApiPtr _walletAPI;
         std::shared_ptr<ApiHandlerProxy> _walletAPIProxy;
-
-        std::string _appId;
-        std::string _appName;
 
         AssetsManager::Ptr _amgr;
         std::set<beam::Asset::ID> _mappedAssets;
