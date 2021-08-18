@@ -13,7 +13,7 @@ ConfirmationDialog {
     title: isOwn
         //% "You cannot accept your own offer"
         ? qsTrId("accept-own-offer-allert-head")
-        //% "Оffer is already accepted"
+        //% "Offer is already accepted"
         : qsTrId("swap-offer-duplicate-title")
     
     text: isOwn

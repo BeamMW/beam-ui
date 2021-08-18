@@ -327,8 +327,9 @@
         <translation>Confirmer votre nouveau mot de passe</translation>
     </message>
     <message id="change-pwd-ok">
-        <source>Сhange password</source>
-        <translation>Modifier mot de passe</translation>
+        <source>Change password</source>
+        <oldsource>Сhange password</oldsource>
+        <translation type="unfinished">Modifier mot de passe</translation>
     </message>
     <message id="loading-loading">
         <source>Loading wallet...</source>
@@ -747,7 +748,8 @@ Vous essayez de restaurer un portefeuille Beam existant. Veuillez noter que si v
         <translation>Lien externe</translation>
     </message>
     <message id="open-external-message">
-        <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</source>
+        <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can change your choice in app setting anytime.</source>
+        <oldsource>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</oldsource>
         <translation type="unfinished">Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</translation>
     </message>
     <message id="start-open-change-wallet-message">
@@ -1218,7 +1220,8 @@ Please check the swap token and try again.</source>
 Please check the swap token and try again.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
-        <source>Оffer is already accepted</source>
+        <source>Offer is already accepted</source>
+        <oldsource>Оffer is already accepted</oldsource>
         <translation type="unfinished">Оffer is already accepted</translation>
     </message>
     <message id="swap-offer-duplicate-confirm-button">

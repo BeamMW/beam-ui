@@ -327,8 +327,9 @@
         <translation>새로운 비밀번호를 확인하세요</translation>
     </message>
     <message id="change-pwd-ok">
-        <source>Сhange password</source>
-        <translation>비밀번호 바꾸기</translation>
+        <source>Change password</source>
+        <oldsource>Сhange password</oldsource>
+        <translation type="unfinished">비밀번호 바꾸기</translation>
     </message>
     <message id="loading-loading">
         <source>Loading wallet...</source>
@@ -746,7 +747,8 @@
         <translation>외부 링크</translation>
     </message>
     <message id="open-external-message">
-        <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</source>
+        <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can change your choice in app setting anytime.</source>
+        <oldsource>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</oldsource>
         <translation type="unfinished">Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</translation>
     </message>
     <message id="start-open-change-wallet-message">
@@ -1217,8 +1219,9 @@ Please check the swap token and try again.</source>
 Please check the swap token and try again.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
-        <source>Оffer is already accepted</source>
-        <translation>오퍼가 이미 수락되었습니다</translation>
+        <source>Offer is already accepted</source>
+        <oldsource>Оffer is already accepted</oldsource>
+        <translation type="unfinished">오퍼가 이미 수락되었습니다</translation>
     </message>
     <message id="swap-offer-duplicate-confirm-button">
         <source>ok</source>

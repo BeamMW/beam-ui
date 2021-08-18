@@ -327,7 +327,7 @@
         <translation>Confirm new password</translation>
     </message>
     <message id="change-pwd-ok">
-        <source>Сhange password</source>
+        <source>Change password</source>
         <translation>Change password</translation>
     </message>
     <message id="loading-loading">
@@ -746,8 +746,8 @@
         <translation>External link</translation>
     </message>
     <message id="open-external-message">
-        <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</source>
-        <translation>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</translation>
+        <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can change your choice in app setting anytime.</source>
+        <translation>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can change your choice in app setting anytime.</translation>
     </message>
     <message id="start-open-change-wallet-message">
         <source>If you&apos;ll restore a wallet all transaction history and addresses will be lost.</source>
@@ -1217,8 +1217,8 @@ Please check the swap token and try again.</source>
 Please check the swap token and try again.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
-        <source>Оffer is already accepted</source>
-        <translation>Оffer is already accepted</translation>
+        <source>Offer is already accepted</source>
+        <translation>Offer is already accepted</translation>
     </message>
     <message id="swap-offer-duplicate-confirm-button">
         <source>ok</source>

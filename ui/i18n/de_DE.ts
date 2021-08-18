@@ -327,8 +327,9 @@
         <translation>Neues Passwort bestätigen</translation>
     </message>
     <message id="change-pwd-ok">
-        <source>Сhange password</source>
-        <translation>Passwort ändern</translation>
+        <source>Change password</source>
+        <oldsource>Сhange password</oldsource>
+        <translation type="unfinished">Passwort ändern</translation>
     </message>
     <message id="loading-loading">
         <source>Loading wallet...</source>
@@ -746,7 +747,8 @@
         <translation>Externer Link</translation>
     </message>
     <message id="open-external-message">
-        <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</source>
+        <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can change your choice in app setting anytime.</source>
+        <oldsource>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</oldsource>
         <translation type="unfinished">Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</translation>
     </message>
     <message id="start-open-change-wallet-message">
@@ -1218,8 +1220,9 @@ Please check the swap token and try again.</source>
 Bitte überprüfen Sie das Swap-Token und versuchen Sie es erneut.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
-        <source>Оffer is already accepted</source>
-        <translation>Das Angebot wurde bereits angenommen</translation>
+        <source>Offer is already accepted</source>
+        <oldsource>Оffer is already accepted</oldsource>
+        <translation type="unfinished">Das Angebot wurde bereits angenommen</translation>
     </message>
     <message id="swap-offer-duplicate-confirm-button">
         <source>ok</source>
