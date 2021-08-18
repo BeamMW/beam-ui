@@ -682,16 +682,8 @@ QString SendViewModel::getTokenTip() const
     {
         QString left;
 
-        if (_vouchersLeft == 1)
-        {
-            //% "Offline address: %1 transaction left."
-            left = qtTrId("send-offline-tip-single").arg(_vouchersLeft);
-        }
-        else
-        {
-            //% "Offline address: %1 transactions left."
-            left = qtTrId("send-offline-tip-many").arg(_vouchersLeft);
-        }
+        //% "Offline address: %n transaction(s) left."
+        left = qtTrId("send-offline-tip", static_cast<int>(_vouchersLeft));
 
         if (_vouchersLeft < 4)
         {

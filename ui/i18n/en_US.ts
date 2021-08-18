@@ -3113,14 +3113,6 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <source>Online</source>
         <translation>Online</translation>
     </message>
-    <message id="send-offline-tip-single">
-        <source>Offline address: %1 transaction left.</source>
-        <translation>Offline address: %1 transaction left.</translation>
-    </message>
-    <message id="send-offline-tip-many">
-        <source>Offline address: %1 transactions left.</source>
-        <translation>Offline address: %1 transactions left.</translation>
-    </message>
     <message id="send-receiver-online-tip">
         <source>Ask receiver to come online to support more offline transactions.</source>
         <translation>Ask receiver to come online to support more offline transactions.</translation>
@@ -3256,6 +3248,13 @@ cannot be canceled.</translation>
     <message id="seed-validation-link">
         <source>Secure your phrase</source>
         <translation>Secure your phrase</translation>
+    </message>
+    <message id="send-offline-tip" numerus="yes">
+        <source>Offline address: %n transaction(s) left.</source>
+        <translation type="unfinished">
+            <numerusform>Offline address: %n transaction left.</numerusform>
+            <numerusform>Offline address: %n transactions left.</numerusform>
+        </translation>
     </message>
 </context>
 </TS>
