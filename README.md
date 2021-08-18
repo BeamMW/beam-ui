@@ -1,5 +1,6 @@
 
 [![Build](https://github.com/BeamMW/beam-ui/actions/workflows/build.yml/badge.svg)](https://github.com/BeamMW/beam-ui/actions/workflows/build.yml)
+[![Crowdin](https://badges.crowdin.net/beammw/localized.svg)](https://crowdin.com/project/beammw)
 
 ![alt text](https://beam.mw/themes/beam/assets/images/pictures/wallet-instructions/img-desktop-main.png "Beam Wallet")
 
