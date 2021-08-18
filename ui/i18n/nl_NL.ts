@@ -328,8 +328,7 @@
     </message>
     <message id="change-pwd-ok">
         <source>Change password</source>
-        <oldsource>Сhange password</oldsource>
-        <translation type="unfinished">Wachtwoord wijzigen</translation>
+        <translation>Wachtwoord wijzigen</translation>
     </message>
     <message id="loading-loading">
         <source>Loading wallet...</source>
@@ -427,7 +426,7 @@
     </message>
     <message id="send-confirmation-pwd-require-message">
         <source>To approve the transaction please enter your password</source>
-        <translation type="unfinished">Voer uw wachtwoord in om uw transactie te verzenden</translation>
+        <translation>Voer uw wachtwoord in om de transactie goed te keuren</translation>
     </message>
     <message id="wallet-title">
         <source>Wallet</source>
@@ -740,7 +739,7 @@
     </message>
     <message id="open-external-open">
         <source>open</source>
-        <translation type="unfinished">open</translation>
+        <translation>open</translation>
     </message>
     <message id="open-external-title">
         <source>External link</source>
@@ -748,8 +747,7 @@
     </message>
     <message id="open-external-message">
         <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can change your choice in app setting anytime.</source>
-        <oldsource>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</oldsource>
-        <translation type="unfinished">Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</translation>
+        <translation>Beam Wallet app vereist toestemming om externe link in de browser te openen. Deze actie zal uw IP blootstellen aan de webserver. Om dit te voorkomen kiest u voor &quot;Annuleren&quot;. U kunt uw keuze op ieder moment wijzigen in de instellingen.</translation>
     </message>
     <message id="start-open-change-wallet-message">
         <source>If you&apos;ll restore a wallet all transaction history and addresses will be lost.</source>
@@ -1221,8 +1219,7 @@ Controleer de swaptoken en probeer het opnieuw.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
         <source>Offer is already accepted</source>
-        <oldsource>Оffer is already accepted</oldsource>
-        <translation type="unfinished">Aanbod is al geaccepteerd</translation>
+        <translation>Aanbod is al geaccepteerd</translation>
     </message>
     <message id="swap-offer-duplicate-confirm-button">
         <source>ok</source>
@@ -1777,7 +1774,7 @@ Uw versie is: %2. Controleer op updates.</translation>
     <message id="tx-max-privacy">
         <source>Max Anonymity Set</source>
         <oldsource>Max Privacy</oldsource>
-        <translation type="unfinished">Max Anonymity Set</translation>
+        <translation>Maximale Anonimiteitsset</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
@@ -1934,7 +1931,7 @@ Uw versie is: %2. Controleer op updates.</translation>
     </message>
     <message id="address-info-sbbs-address">
         <source>Online (SBBS) Address</source>
-        <translation type="unfinished">Online (SBBS) Address</translation>
+        <translation>Online (SBBS) adres</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
@@ -2109,7 +2106,7 @@ offline</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
         <source>Maximum anonymity set size</source>
-        <translation type="unfinished">Maximum anonymity set size</translation>
+        <translation>Maximale anonimiteitssetgrootte</translation>
     </message>
     <message id="settings-privacy-mp-notice">
         <source>Received coins can be spent immediately.</source>
@@ -2141,8 +2138,7 @@ offline</translation>
     </message>
     <message id="remote-node-lelantus-warning">
         <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
-        <oldsource>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</oldsource>
-        <translation type="unfinished">Om Max privacy en offline transacties te ondersteunen maakt u verbinding met een geïntegreerde of eigen node, geconfigureerd met uw eigenaarssleutel.</translation>
+        <translation>Om maximale anonimiteitsset en offline transacties te ondersteunen, maakt u verbinding met een geïntegreerde node of een eigen node dat is geconfigureerd met uw eigenaarssleutel.</translation>
     </message>
     <message id="time-hour">
         <source>hour</source>
@@ -2222,7 +2218,7 @@ Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernst
     </message>
     <message id="apps-loading-app">
         <source>Please wait, %1 is loading</source>
-        <translation type="unfinished">Please wait, %1 is loading</translation>
+        <translation>Een ogenblik geduld, %1 wordt geladen</translation>
     </message>
     <message id="apps-loading">
         <source>Loading...</source>
@@ -2518,27 +2514,27 @@ Update uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="appmodel-already-opened">
         <source>Wallet database is already opened</source>
-        <translation type="unfinished">Wallet database is already opened</translation>
+        <translation>Wallet database is al geopend</translation>
     </message>
     <message id="general-open-failed">
         <source>Failed to open wallet, please check logs</source>
-        <translation type="unfinished">Failed to open wallet, please check logs</translation>
+        <translation>Openen van wallet mislukt, controleer de logbestanden</translation>
     </message>
     <message id="start-no-hwkeeper">
         <source>Hardware keykeeper is not initialized</source>
-        <translation type="unfinished">Hardware keykeeper is not initialized</translation>
+        <translation>Hardware sleutelhouder is niet geïnitialiseerd</translation>
     </message>
     <message id="start-trezor-error">
         <source>Failed to create trezor wallet</source>
-        <translation type="unfinished">Failed to create trezor wallet</translation>
+        <translation>Aanmaken van trezor wallet mislukt</translation>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardwate wallet is not connected</source>
-        <translation type="unfinished">Hardwate wallet is not connected</translation>
+        <translation>Hardware wallet is niet verbonden</translation>
     </message>
     <message id="general-multiple-assets">
         <source>Multiple assets</source>
-        <translation type="unfinished">Multiple assets</translation>
+        <translation>Meerdere assets</translation>
     </message>
     <message id="general-locked">
         <source>Locked</source>
@@ -2608,7 +2604,7 @@ Update uw instellingen en probeer opnieuw.</translation>
         <source>Unsupported API version requested: %1</source>
         <oldsource>Unsupported API version requested: %1
 </oldsource>
-        <translation type="unfinished">Unsupported API version requested: %1</translation>
+        <translation>Niet-ondersteunde API-versie aangevraagd: %1</translation>
     </message>
     <message id="can-not-generate-new-address-message">
         <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
@@ -2624,8 +2620,7 @@ Update uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
         <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <oldsource>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions</oldsource>
-        <translation type="unfinished">Verbind met geïntegreerde of eigen node om maximale privacy en offline transacties te kunnen ontvangen</translation>
+        <translation>Maak verbinding met geïntegreerde of eigen node om maximale anonimiteitsset en offline transacties te kunnen ontvangen.</translation>
     </message>
     <message id="receive-request">
         <source>Requested amount</source>
@@ -2638,27 +2633,24 @@ Update uw instellingen en probeer opnieuw.</translation>
     <message id="wallet-receive-addr-message-mp">
         <source> Transaction can last at most %1 hours.</source>
         <oldsource>Max Privacy transaction can last at most %1 hours.</oldsource>
-        <translation type="unfinished"> Transaction can last at most %1 hours.</translation>
+        <translation> Transactie kan maximaal %1 uur duren.</translation>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <oldsource>Max Privacy transaction can last indefinitely.</oldsource>
-        <translation type="unfinished">Transaction can last indefinitely.</translation>
+        <translation>Transactie kan onbepaalde tijd duren.</translation>
     </message>
     <message id="wallet-receive-text-online-time">
         <source>Sender will be given a choice between online and offline payment.</source>
-        <oldsource>Sender will be given a choice between online and offline payment.
-For an online payment to complete, you should get online during the 12 hours after coins are sent.</oldsource>
-        <translation type="unfinished">Sender will be given a choice between online and offline payment.
-For an online payment to complete, you should get online during the 12 hours after coins are sent.</translation>
+        <translation>Afzender krijgt een keuze tussen online en offline betaling.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
-        <translation type="unfinished">Public offline address.</translation>
+        <translation>Openbaar offline adres.</translation>
     </message>
     <message id="send-unknown-token">
         <source>Unknown address.</source>
-        <translation type="unfinished">Unknown address.</translation>
+        <translation>Onbekend adres.</translation>
     </message>
     <message id="send-title">
         <source>Send</source>
@@ -2682,12 +2674,12 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="send-no-funds">
         <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
-        <translation type="unfinished">Insufficient funds to complete the transaction. Maximum amount is %1 %2.</translation>
+        <translation>Onvoldoende saldo om de transactie te voltooien. Maximale bedrag is %1 %2.</translation>
     </message>
     <message id="amount-input-add-max">
         <source>max</source>
         <oldsource>add max</oldsource>
-        <translation type="unfinished">max</translation>
+        <translation>max</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
@@ -2699,15 +2691,15 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="send-remaining-beam-label">
         <source>BEAM Remaining</source>
-        <translation type="unfinished">BEAM Remaining</translation>
+        <translation>BEAM Resterend</translation>
     </message>
     <message id="general-balance">
         <source>Balance</source>
-        <translation type="unfinished">Balance</translation>
+        <translation>Saldo</translation>
     </message>
     <message id="general-asset-info">
         <source>Asset Info</source>
-        <translation type="unfinished">Asset Info</translation>
+        <translation>Asset Info</translation>
     </message>
     <message id="balance-available">
         <source>Available</source>
@@ -2739,35 +2731,35 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="info-asset-id">
         <source>Asset ID</source>
-        <translation type="unfinished">Asset ID</translation>
+        <translation>Asset ID</translation>
     </message>
     <message id="info-asset-name">
         <source>Asset name</source>
-        <translation type="unfinished">Asset name</translation>
+        <translation>Asset naam</translation>
     </message>
     <message id="info-asset-unit">
         <source>Unit name</source>
-        <translation type="unfinished">Unit name</translation>
+        <translation>Eenheidsnaam</translation>
     </message>
     <message id="info-asset-smallest">
         <source>Smallest unit name</source>
-        <translation type="unfinished">Smallest unit name</translation>
+        <translation>Kleinste eenheidsnaam</translation>
     </message>
     <message id="info-asset-short">
         <source>Short description</source>
-        <translation type="unfinished">Short description</translation>
+        <translation>Korte omschrijving</translation>
     </message>
     <message id="info-asset-long">
         <source>Long description</source>
-        <translation type="unfinished">Long description</translation>
+        <translation>Uitgebreide omschrijving</translation>
     </message>
     <message id="info-asset-site">
         <source>Website</source>
-        <translation type="unfinished">Website</translation>
+        <translation>Website</translation>
     </message>
     <message id="info-asset-paper">
         <source>Whitepaper</source>
-        <translation type="unfinished">Whitepaper</translation>
+        <translation>Whitepaper</translation>
     </message>
     <message id="tx-details-sending-addr-label">
         <source>Sending address</source>
@@ -2775,7 +2767,7 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="tx-details-sender-identity">
         <source>Sender&apos;s wallet signature</source>
-        <translation type="unfinished">Sender&apos;s wallet signature</translation>
+        <translation>Ondertekening wallet van afzender</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
@@ -2783,7 +2775,7 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="tx-details-receiver-identity">
         <source>Receiver&apos;s wallet signature</source>
-        <translation type="unfinished">Receiver&apos;s wallet signature</translation>
+        <translation>Ondertekening wallet van ontvanger</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
@@ -2791,13 +2783,11 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="tx-details-rate-notice">
         <source>calculated with the exchange rate at the time of the transaction</source>
-        <oldsource>calculated with the exchange rate at the day of transaction</oldsource>
-        <translation type="unfinished">calculated with the exchange rate at the day of transaction</translation>
+        <translation>berekend met de wisselkoers op het moment van de transactie</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
         <source>exchange rate was not available at the time of the transaction</source>
-        <oldsource>exchange rate was not available at the time of transaction</oldsource>
-        <translation type="unfinished">exchange rate was not available at the time of transaction</translation>
+        <translation>wisselkoers was niet beschikbaar op het moment van de transactie</translation>
     </message>
     <message id="tx-details-tx-id-label">
         <source>Transaction ID</source>
@@ -2821,15 +2811,15 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="tx-in-progress-empty">
         <source>There are no in progress transactions yet.</source>
-        <translation type="unfinished">There are no in progress transactions yet.</translation>
+        <translation>Er zijn nog geen lopende transacties.</translation>
     </message>
     <message id="tx-sent-empty">
         <source>There are no sent transactions yet.</source>
-        <translation type="unfinished">There are no sent transactions yet.</translation>
+        <translation>Er zijn nog geen verzonden transacties.</translation>
     </message>
     <message id="tx-received-empty">
         <source>There are no received transactions yet.</source>
-        <translation type="unfinished">There are no received transactions yet.</translation>
+        <translation>Er zijn nog geen ontvangen transacties.</translation>
     </message>
     <message id="receive-addr">
         <source>Address</source>
@@ -2849,11 +2839,11 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="edit-addr-expire-now">
         <source>Expire now</source>
-        <translation type="unfinished">Expire now</translation>
+        <translation>Laat nu vervallen</translation>
     </message>
     <message id="edit-addr-extend">
         <source>Extend</source>
-        <translation type="unfinished">Extend</translation>
+        <translation>Verlengen</translation>
     </message>
     <message id="edit-addr-activate">
         <source>Activate</source>
@@ -2865,51 +2855,51 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="edit-addr-no-expire">
         <source>There is an active transaction for this address, therefore it cannot be expired.</source>
-        <translation type="unfinished">There is an active transaction for this address, therefore it cannot be expired.</translation>
+        <translation>Er is een actieve transactie voor dit adres, daarom kan deze niet vervallen.</translation>
     </message>
     <message id="edit-addr-never-expires">
         <source>This address never expires</source>
-        <translation type="unfinished">This address never expires</translation>
+        <translation>Dit adres vervalt nooit</translation>
     </message>
     <message id="edit-addr-expired">
         <source>This address is already expired</source>
-        <translation type="unfinished">This address is already expired</translation>
+        <translation>Dit adres is al vervallen</translation>
     </message>
     <message id="notification-contract-failed">
         <source>DAPP transaction failed</source>
-        <translation type="unfinished">DAPP transaction failed</translation>
+        <translation>DAPP transactie mislukt</translation>
     </message>
     <message id="contacts-empty">
         <source>Your contact list is empty</source>
-        <translation type="unfinished">Your contact list is empty</translation>
+        <translation>Uw contactenlijst is leeg</translation>
     </message>
     <message id="addressbook-empty">
         <source>Your address book is empty</source>
-        <translation type="unfinished">Your address book is empty</translation>
+        <translation>Uw adresboek is leeg</translation>
     </message>
     <message id="atomic-no-my-offers">
         <source>There are no offers yet.</source>
-        <translation type="unfinished">There are no offers yet.</translation>
+        <translation>Er zijn nog geen aanbiedingen.</translation>
     </message>
     <message id="swap-tx-empty">
         <source>There are no transactions yet.</source>
-        <translation type="unfinished">There are no transactions yet.</translation>
+        <translation>Er zijn nog geen transacties.</translation>
     </message>
     <message id="apps-fork-warning">
         <source>DAPPs will be available in your wallet after the Hard Fork</source>
-        <translation type="unfinished">DAPPs will be available in your wallet after the Hard Fork</translation>
+        <translation>DAPP&apos;s zijn na de Hard Fork beschikbaar in uw wallet</translation>
     </message>
     <message id="address-info-cid">
         <source>Application shader ID</source>
-        <translation type="unfinished">Application shader ID</translation>
+        <translation>Applicatie shader ID</translation>
     </message>
     <message id="general-value">
         <source>Value</source>
-        <translation type="unfinished">Value</translation>
+        <translation>Waarde</translation>
     </message>
     <message id="wallet-txs-source">
         <source>Source</source>
-        <translation type="unfinished">Source</translation>
+        <translation>Bron</translation>
     </message>
     <message id="source-wallet">
         <source>Wallet</source>
@@ -2918,19 +2908,19 @@ For an online payment to complete, you should get online during the 12 hours aft
     <message id="settings-general-confirmations">
         <source>Minimum confirmations</source>
         <extracomment>settings tab, general section, minimum confirmations</extracomment>
-        <translation type="unfinished">Minimum confirmations</translation>
+        <translation>Minimum aantal bevestigingen</translation>
     </message>
     <message id="tx-details-confirmation-status-label">
         <source>Confirmation status</source>
-        <translation type="unfinished">Confirmation status</translation>
+        <translation>Bevestigingsstatus</translation>
     </message>
     <message id="wallet-txs-status-confirming">
         <source>confirming</source>
-        <translation type="unfinished">confirming</translation>
+        <translation>bevestigen</translation>
     </message>
     <message id="tx-details-confirmation-progress-label">
         <source>Confirmed (%1)</source>
-        <translation type="unfinished">Confirmed (%1)</translation>
+        <translation>Bevestigd (%1)</translation>
     </message>
     <message id="dex-order-expired">
         <source>Expired</source>
@@ -2942,11 +2932,11 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="dex-order-fulfilled">
         <source>Fulfilled</source>
-        <translation type="unfinished">Fulfilled</translation>
+        <translation>Vervuld</translation>
     </message>
     <message id="dex-progress">
         <source>Progress</source>
-        <translation type="unfinished">Progress</translation>
+        <translation>Voortgang</translation>
     </message>
     <message id="general-copy-and-close">
         <source>copy and close</source>
@@ -2954,11 +2944,11 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="settings-remote-node-address-placeholder">
         <source>Please enter the address</source>
-        <translation type="unfinished">Please enter the address</translation>
+        <translation>Voer het adres in</translation>
     </message>
     <message id="settings-local-node-port-placeholder">
         <source>Please enter the port</source>
-        <translation type="unfinished">Please enter the port</translation>
+        <translation>Voer de poort in</translation>
     </message>
     <message id="settings-export">
         <source>Export wallet data</source>
@@ -2974,11 +2964,11 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="notification-maxp-transaction-sent">
         <source>Max Privacy transaction sent</source>
-        <translation type="unfinished">Max Privacy transaction sent</translation>
+        <translation>Max Privacy transactie verzonden</translation>
     </message>
     <message id="notification-maxp-transaction-received">
         <source>Max Privacy transaction received</source>
-        <translation type="unfinished">Max Privacy transaction received</translation>
+        <translation>Max Privacy transactie ontvangen</translation>
     </message>
     <message id="notification-offline-transaction-sent">
         <source>Transaction sent to offline</source>
@@ -2990,11 +2980,11 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="notification-maxp-transaction-failed">
         <source>Max Privacy transaction failed</source>
-        <translation type="unfinished">Max Privacy transaction failed</translation>
+        <translation>Max Privacy transactie mislukt</translation>
     </message>
     <message id="notification-offline-transaction-failed">
         <source>Offline transaction failed</source>
-        <translation type="unfinished">Offline transaction failed</translation>
+        <translation>Offline transactie mislukt</translation>
     </message>
     <message id="notification-address-copied">
         <source>Address copied to clipboard</source>
@@ -3002,11 +2992,11 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="general-ca-id">
         <source>Confidential asset ID</source>
-        <translation type="unfinished">Confidential asset ID</translation>
+        <translation>Confidential asset ID</translation>
     </message>
     <message id="address-info-copy-and-close">
         <source>copy address and close</source>
-        <translation type="unfinished">copy address and close</translation>
+        <translation>adres kopiëren en sluiten</translation>
     </message>
     <message id="notifications-title">
         <source>Notifications</source>
@@ -3042,35 +3032,35 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="notifications-open-dapp">
         <source>open the dapp</source>
-        <translation type="unfinished">open the dapp</translation>
+        <translation>open de dapp</translation>
     </message>
     <message id="general-description">
         <source>Description</source>
-        <translation type="unfinished">Description</translation>
+        <translation>Omschrijving</translation>
     </message>
     <message id="address-info-dapp">
         <source>DAPP name</source>
-        <translation type="unfinished">DAPP name</translation>
+        <translation>DAPP naam</translation>
     </message>
     <message id="dapps-privacy-title">
         <source>DApps Privacy</source>
-        <translation type="unfinished">DApps Privacy</translation>
+        <translation>DApps Privacy</translation>
     </message>
     <message id="dapps-privacy-warning">
         <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
 
 Allow to proceed ? You can always update your choice in Settings later.</source>
-        <translation type="unfinished">Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
+        <translation>Beam Wallet vereist toestemming om gedistribueerde applicaties te starten. Deze actie kan uw informatie, inclusief maar niet beperkt tot het IP-adres, blootstellen aan webservers en/of contracten van derden.
 
-Allow to proceed ? You can always update your choice in Settings later.</translation>
+Wilt u doorgaan? U kunt uw keuze later altijd wijzigen in Instellingen.</translation>
     </message>
     <message id="settings-dapps-allowed">
         <source>Allow to launch DApps</source>
-        <translation type="unfinished">Allow to launch DApps</translation>
+        <translation>DApps starten toestaan</translation>
     </message>
     <message id="apps-update-wallet">
         <source>Update Beam Wallet to launch</source>
-        <translation type="unfinished">Update Beam Wallet to launch</translation>
+        <translation>Update Beam Wallet om te starten</translation>
     </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
@@ -3078,35 +3068,35 @@ Allow to proceed ? You can always update your choice in Settings later.</transla
     </message>
     <message id="send-no-funds-for-fee">
         <source>Insufficient funds to pay transaction fee.</source>
-        <translation type="unfinished">Insufficient funds to pay transaction fee.</translation>
+        <translation>Onvoldoende saldo om transactiekosten te voldoen.</translation>
     </message>
     <message id="apps-inprogress-tip">
         <source>(%1 active)</source>
-        <translation type="unfinished">(%1 active)</translation>
+        <translation>(%1 actief)</translation>
     </message>
     <message id="tx-details-general-info">
         <source>General info</source>
-        <translation type="unfinished">General info</translation>
+        <translation>Algemene informatie</translation>
     </message>
     <message id="general-wallet-signature">
         <source>Wallet&apos;s signature</source>
-        <translation type="unfinished">Wallet&apos;s signature</translation>
+        <translation>Wallet&apos;s ondertekening</translation>
     </message>
     <message id="settings-utilities-show-utxo">
         <source>Show UTXO</source>
-        <translation type="unfinished">Show UTXO</translation>
+        <translation>Toon UTXO</translation>
     </message>
     <message id="general-coin">
         <source>Coin</source>
-        <translation type="unfinished">Coin</translation>
+        <translation>Coin</translation>
     </message>
     <message id="general-show-tx-details">
         <source>Show details</source>
-        <translation type="unfinished">Show details</translation>
+        <translation>Toon details</translation>
     </message>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
-        <translation type="unfinished">Update Wallet to launch %1 application</translation>
+        <translation>Update Wallet om %1 applicatie te starten</translation>
     </message>
     <message id="general-advanced">
         <source>Advanced</source>
@@ -3114,15 +3104,15 @@ Allow to proceed ? You can always update your choice in Settings later.</transla
     </message>
     <message id="receive-max-set">
         <source>Maximum anonymity set</source>
-        <translation type="unfinished">Maximum anonymity set</translation>
+        <translation>Maximale anonimiteitsset</translation>
     </message>
     <message id="address-info-title-mp">
         <source>Address details with max anonymity set</source>
-        <translation type="unfinished">Address details with max anonymity set</translation>
+        <translation>Adresgegevens met maximale anonimiteitsset</translation>
     </message>
     <message id="address-info-regular-notice">
         <source>Regular address includes both online and offline addresses.</source>
-        <translation type="unfinished">Regular address includes both online and offline addresses.</translation>
+        <translation>Regulier adres bevat zowel online als offline adressen.</translation>
     </message>
     <message id="tx-online">
         <source>Online</source>
@@ -3130,150 +3120,144 @@ Allow to proceed ? You can always update your choice in Settings later.</transla
     </message>
     <message id="send-receiver-online-tip">
         <source>Ask receiver to come online to support more offline transactions.</source>
-        <translation type="unfinished">Ask receiver to come online to support more offline transactions.</translation>
+        <translation>Vraag de ontvanger online te komen om meer offline transacties te ondersteunen.</translation>
     </message>
     <message id="send-offline-refund">
         <source>Make sure the address is correct as offline transactions
 cannot be canceled.</source>
-        <translation type="unfinished">Make sure the address is correct as offline transactions
-cannot be canceled.</translation>
+        <translation>Zorg ervoor dat het adres correct is, offline transacties kunnen niet worden geannuleerd.</translation>
     </message>
     <message id="send-online-address">
         <source>Online address.</source>
-        <translation type="unfinished">Online address.</translation>
+        <translation>Online adres.</translation>
     </message>
     <message id="send-anon-set">
         <source>Guarantees maximum anonymity set of up to 64K.</source>
-        <oldsource>Guarantees anonymity set of up to 64K.</oldsource>
-        <translation type="unfinished">Guarantees anonymity set of up to 64K.</translation>
+        <translation>Garandeert maximale anonimiteit tot 64K.</translation>
     </message>
     <message id="send-online-tip">
         <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation type="unfinished">The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</translation>
+        <translation>De ontvanger moet binnen de komende 12 uur online zijn en u moet binnen 2 uur daarna online zijn.</translation>
     </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
-        <translation type="unfinished">Transaction can last up to 72 hours.</translation>
+        <translation>Transactie kan maximaal 72 uur duren.</translation>
     </message>
     <message id="send-app-twoway-confirmation-title">
         <source>Confirm withdraw &amp; deposit</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevestig opname &amp; storting</translation>
     </message>
     <message id="send-app-spend-confirmation-title">
         <source>Confirm deposit from the wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevestig de storting vanuit de wallet</translation>
     </message>
     <message id="send-app-receive-confirmation-title">
         <source>Confirm withdraw to the wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevestig de opname naar de wallet</translation>
     </message>
     <message id="send-app-confirmation-title">
         <source>Confirm application transaction</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevestig aanvraag transactie</translation>
     </message>
     <message id="general-confirm">
         <source>Confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevestigen</translation>
     </message>
     <message id="send-type-label">
         <source>Transaction type</source>
-        <translation type="unfinished">Transactietype</translation>
+        <translation>Transactietype</translation>
     </message>
     <message id="send-twoway-warning">
         <source>%1 will change the balances of your wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 zal het het saldo van uw wallet veranderen</translation>
     </message>
     <message id="send-dapp-spend-warning">
         <source>%1 will take the funds from your wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 zal het geld uit uw wallet halen</translation>
     </message>
     <message id="send-dapp-receive-warning">
         <source>%1 will send the funds to your wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 zal het geld naar uw wallet sturen</translation>
     </message>
     <message id="send-contract-only-fee">
         <source>The transaction fee would be deducted from your balance</source>
-        <translation type="unfinished"></translation>
+        <translation>De transactiekosten worden van uw saldo afgetrokken</translation>
     </message>
     <message id="status-online-remote">
         <source>connected node supports online transactions only</source>
-        <oldsource>remote node supports online transactions only</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>verbonden node ondersteunt alleen online transacties</translation>
     </message>
     <message id="address-info-title-online">
         <source>Online (SBBS) address details</source>
-        <translation type="unfinished"></translation>
+        <translation>Online (SBBS) adresgegevens</translation>
     </message>
     <message id="address-info-remote-node-warning">
         <source>You are currently connected to node that supports only online transactions.</source>
-        <oldsource>You are currently connected to random node that supports only online transactions.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>U bent momenteel verbonden met een node die alleen online transacties ondersteunt.</translation>
     </message>
     <message id="wallet-receive-stay-online">
         <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Om een online betaling te voltooien moet u binnen 12 uur nadat de munten zijn verzonden online zijn.</translation>
     </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Lokale server poort</translation>
     </message>
     <message id="apps-install-from-file">
         <source>Install DApp from file</source>
-        <translation type="unfinished"></translation>
+        <translation>DApp installeren vanuit bestand</translation>
     </message>
     <message id="applications-install-title">
         <source>Select application to install</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer applicatie om te installeren</translation>
     </message>
     <message id="appliactions-install-ok">
         <source>&apos;%1&apos; is successfully installed</source>
         <oldsource>%1 is successfully installed</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; is succesvol geïnstalleerd</translation>
     </message>
     <message id="appliactions-install-fail">
         <source>Failed to install DAPP: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Installatie van DAPP %1 is mislukt</translation>
     </message>
     <message id="faucet-promo">
         <source>See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bekijk de wallet in gebruik. Ontvang een kleine hoeveelheid Beam van de Faucet DAPP.</translation>
     </message>
     <message id="faucet-promo-get-coins">
         <source>get coins</source>
-        <translation type="unfinished"></translation>
+        <translation>ontvang coins</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Herstelzin</translation>
     </message>
     <message id="general-do-later">
         <source>I will do it later</source>
-        <translation type="unfinished"></translation>
+        <translation>ik zal het later doen</translation>
     </message>
     <message id="general-complete-verification">
         <source>Complete wallet verification</source>
-        <oldsource>complete verification</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Wallet verificatie voltooien</translation>
     </message>
     <message id="general-complete-verification-button">
         <source>Complete verification</source>
-        <translation type="unfinished"></translation>
+        <translation>Verificatie voltooien</translation>
     </message>
     <message id="seed-validation-promo">
         <source>Write down and validate your seed phrase so you can always recover your funds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Schrijf uw herstelzin op en valideer deze zodat u uw saldo altijd kunt herstellen.</translation>
     </message>
     <message id="seed-validation-link">
         <source>Secure your phrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Beveilig je herstelzin</translation>
     </message>
     <message id="send-offline-tip" numerus="yes">
         <source>Offline address: %n transaction(s) left.</source>
-        <oldsource>Offline address: %1 transaction(s) left.</oldsource>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Offline address: %n transaction(s) left.</numerusform>
+            <numerusform>Offline address: %n transaction(s) left.</numerusform>
         </translation>
     </message>
 </context>

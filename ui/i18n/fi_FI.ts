@@ -328,8 +328,7 @@
     </message>
     <message id="change-pwd-ok">
         <source>Change password</source>
-        <oldsource>Сhange password</oldsource>
-        <translation type="unfinished">Vaihda salasana</translation>
+        <translation>Vaihda salasana</translation>
     </message>
     <message id="loading-loading">
         <source>Loading wallet...</source>
@@ -427,7 +426,7 @@
     </message>
     <message id="send-confirmation-pwd-require-message">
         <source>To approve the transaction please enter your password</source>
-        <translation type="unfinished">Suorittaaksesi maksutapahtuman kirjoita salasanasi</translation>
+        <translation type="unfinished">To approve the transaction please enter your password</translation>
     </message>
     <message id="wallet-title">
         <source>Wallet</source>
@@ -748,8 +747,7 @@
     </message>
     <message id="open-external-message">
         <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can change your choice in app setting anytime.</source>
-        <oldsource>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</oldsource>
-        <translation type="unfinished">Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</translation>
+        <translation type="unfinished">Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can change your choice in app setting anytime.</translation>
     </message>
     <message id="start-open-change-wallet-message">
         <source>If you&apos;ll restore a wallet all transaction history and addresses will be lost.</source>
@@ -1221,8 +1219,7 @@ Tarkista swap-tunniste ja yritä uudelleen.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
         <source>Offer is already accepted</source>
-        <oldsource>Оffer is already accepted</oldsource>
-        <translation type="unfinished">Tarjous on jo hyväksytty</translation>
+        <translation type="unfinished">Offer is already accepted</translation>
     </message>
     <message id="swap-offer-duplicate-confirm-button">
         <source>ok</source>
@@ -2143,8 +2140,7 @@ offline</translation>
     </message>
     <message id="remote-node-lelantus-warning">
         <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
-        <oldsource>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</oldsource>
-        <translation type="unfinished">To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</translation>
+        <translation type="unfinished">To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</translation>
     </message>
     <message id="time-hour">
         <source>hour</source>
@@ -2627,8 +2623,7 @@ Päivitä asetuksesi ja yritä uudelleen.</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
         <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <oldsource>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions</oldsource>
-        <translation type="unfinished">Connect to integrated or own node to enable receiving max privacy and offline transactions</translation>
+        <translation type="unfinished">Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</translation>
     </message>
     <message id="receive-request">
         <source>Requested amount</source>
@@ -2650,10 +2645,7 @@ Päivitä asetuksesi ja yritä uudelleen.</translation>
     </message>
     <message id="wallet-receive-text-online-time">
         <source>Sender will be given a choice between online and offline payment.</source>
-        <oldsource>Sender will be given a choice between online and offline payment.
-For an online payment to complete, you should get online during the 12 hours after coins are sent.</oldsource>
-        <translation type="unfinished">Sender will be given a choice between online and offline payment.
-For an online payment to complete, you should get online during the 12 hours after coins are sent.</translation>
+        <translation type="unfinished">Sender will be given a choice between online and offline payment.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2794,13 +2786,11 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="tx-details-rate-notice">
         <source>calculated with the exchange rate at the time of the transaction</source>
-        <oldsource>calculated with the exchange rate at the day of transaction</oldsource>
-        <translation type="unfinished">calculated with the exchange rate at the day of transaction</translation>
+        <translation type="unfinished">calculated with the exchange rate at the time of the transaction</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
         <source>exchange rate was not available at the time of the transaction</source>
-        <oldsource>exchange rate was not available at the time of transaction</oldsource>
-        <translation type="unfinished">exchange rate was not available at the time of transaction</translation>
+        <translation type="unfinished">exchange rate was not available at the time of the transaction</translation>
     </message>
     <message id="tx-details-tx-id-label">
         <source>Transaction ID</source>
@@ -3147,8 +3137,7 @@ cannot be canceled.</translation>
     </message>
     <message id="send-anon-set">
         <source>Guarantees maximum anonymity set of up to 64K.</source>
-        <oldsource>Guarantees anonymity set of up to 64K.</oldsource>
-        <translation type="unfinished">Guarantees anonymity set of up to 64K.</translation>
+        <translation type="unfinished">Guarantees maximum anonymity set of up to 64K.</translation>
     </message>
     <message id="send-online-tip">
         <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
@@ -3160,23 +3149,23 @@ cannot be canceled.</translation>
     </message>
     <message id="send-app-twoway-confirmation-title">
         <source>Confirm withdraw &amp; deposit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Confirm withdraw &amp; deposit</translation>
     </message>
     <message id="send-app-spend-confirmation-title">
         <source>Confirm deposit from the wallet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Confirm deposit from the wallet</translation>
     </message>
     <message id="send-app-receive-confirmation-title">
         <source>Confirm withdraw to the wallet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Confirm withdraw to the wallet</translation>
     </message>
     <message id="send-app-confirmation-title">
         <source>Confirm application transaction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Confirm application transaction</translation>
     </message>
     <message id="general-confirm">
         <source>Confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Vahvista</translation>
     </message>
     <message id="send-type-label">
         <source>Transaction type</source>
@@ -3184,99 +3173,95 @@ cannot be canceled.</translation>
     </message>
     <message id="send-twoway-warning">
         <source>%1 will change the balances of your wallet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 will change the balances of your wallet</translation>
     </message>
     <message id="send-dapp-spend-warning">
         <source>%1 will take the funds from your wallet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 will take the funds from your wallet</translation>
     </message>
     <message id="send-dapp-receive-warning">
         <source>%1 will send the funds to your wallet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 will send the funds to your wallet</translation>
     </message>
     <message id="send-contract-only-fee">
         <source>The transaction fee would be deducted from your balance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">The transaction fee would be deducted from your balance</translation>
     </message>
     <message id="status-online-remote">
         <source>connected node supports online transactions only</source>
-        <oldsource>remote node supports online transactions only</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">connected node supports online transactions only</translation>
     </message>
     <message id="address-info-title-online">
         <source>Online (SBBS) address details</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Online (SBBS) address details</translation>
     </message>
     <message id="address-info-remote-node-warning">
         <source>You are currently connected to node that supports only online transactions.</source>
-        <oldsource>You are currently connected to random node that supports only online transactions.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">You are currently connected to node that supports only online transactions.</translation>
     </message>
     <message id="wallet-receive-stay-online">
         <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">For an online payment to complete, you should get online during the 12 hours after coins are sent.</translation>
     </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Local server port</translation>
     </message>
     <message id="apps-install-from-file">
         <source>Install DApp from file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Install DApp from file</translation>
     </message>
     <message id="applications-install-title">
         <source>Select application to install</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Select application to install</translation>
     </message>
     <message id="appliactions-install-ok">
         <source>&apos;%1&apos; is successfully installed</source>
         <oldsource>%1 is successfully installed</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&apos;%1&apos; is successfully installed</translation>
     </message>
     <message id="appliactions-install-fail">
         <source>Failed to install DAPP: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Failed to install DAPP: %1</translation>
     </message>
     <message id="faucet-promo">
         <source>See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</translation>
     </message>
     <message id="faucet-promo-get-coins">
         <source>get coins</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">get coins</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Seed phrase</translation>
     </message>
     <message id="general-do-later">
         <source>I will do it later</source>
-        <translation type="unfinished"></translation>
+        <translation>myöhemmin</translation>
     </message>
     <message id="general-complete-verification">
         <source>Complete wallet verification</source>
-        <oldsource>complete verification</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Complete wallet verification</translation>
     </message>
     <message id="general-complete-verification-button">
         <source>Complete verification</source>
-        <translation type="unfinished"></translation>
+        <translation>Suorita varmennus</translation>
     </message>
     <message id="seed-validation-promo">
         <source>Write down and validate your seed phrase so you can always recover your funds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kirjoita ylös ja tarkista seed phrasesi, jotta voit palauttaa saldosi tarvittaessa.</translation>
     </message>
     <message id="seed-validation-link">
         <source>Secure your phrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Suojaa seed phrasesi</translation>
     </message>
     <message id="send-offline-tip" numerus="yes">
         <source>Offline address: %n transaction(s) left.</source>
-        <oldsource>Offline address: %1 transaction(s) left.</oldsource>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Offline address: %n transaction(s) left.</numerusform>
+            <numerusform>Offline address: %n transaction(s) left.</numerusform>
         </translation>
     </message>
 </context>
