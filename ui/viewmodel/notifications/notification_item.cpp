@@ -21,15 +21,6 @@
 using namespace beam;
 
 namespace {
-    beam::wallet::TxParameters getTxParameters(const beam::wallet::Notification &notification)
-    {
-        beam::wallet::TxToken token;
-        Deserializer d;
-        d.reset(notification.m_content);
-        d & token;
-        return token.UnpackParameters();
-    }
-
     QString getAmount(const beam::wallet::TxParameters &p)
     {
         return beamui::AmountToUIString(*p.GetParameter<Amount>(beam::wallet::TxParameterID::Amount));
@@ -84,6 +75,16 @@ namespace {
     bool isSender(const beam::wallet::TxParameters& p)
     {
         return *p.GetParameter<bool>(beam::wallet::TxParameterID::IsSender);
+    }
+
+    beam::wallet::TxAddressType getAddressType(const beam::wallet::TxParameters& p)
+    {
+        auto r = p.GetParameter<beam::wallet::TxAddressType>(beam::wallet::TxParameterID::AddressType);
+        if (r)
+        {
+            return *r;
+        }
+        return beam::wallet::TxAddressType::Unknown;
     }
 
     beam::wallet::TxType getTxType(const beam::wallet::TxParameters& p)
@@ -224,7 +225,7 @@ QString NotificationItem::title() const
             if (fromByteBuffer(m_notification.m_content, info))
             {
                 QString ver = QString::fromStdString(
-                    info.m_version.to_string() + "." + std::to_string(info.m_UIrevision));
+                    std::to_string(info.m_version) + "." + std::to_string(info.m_UIrevision));
                 //% "New version v %1 is available"
                 return qtTrId("notification-update-title").arg(ver);
             }
@@ -243,7 +244,6 @@ QString NotificationItem::title() const
             switch (getTxType(p))
             {
             case TxType::Simple:
-            case TxType::PushTransaction:
                 if (isSender(p))
                 {
                     //% "Transaction was sent"
@@ -251,11 +251,32 @@ QString NotificationItem::title() const
                 }
                 //% "Transaction was received"
                 return qtTrId("notification-transaction-received");
+            case TxType::PushTransaction:
+            {
+                auto t = getAddressType(p);
+                if (t == TxAddressType::MaxPrivacy)
+                {
+                    if (isSender(p))
+                    {
+                        //% "Max Privacy transaction sent"
+                        return qtTrId("notification-maxp-transaction-sent");
+                    }
+                    //% "Max Privacy transaction received"
+                    return qtTrId("notification-maxp-transaction-received");
+                }
+                if (isSender(p))
+                {
+                    //% "Transaction sent to offline"
+                    return qtTrId("notification-offline-transaction-sent");
+                }
+                //% "Transaction received from offline"
+                return qtTrId("notification-offline-transaction-received");
+            }
             case TxType::AtomicSwap:
                 //% "Atomic Swap offer completed"
                 return qtTrId("notification-swap-completed");
             case TxType::Contract:
-                //% "Contract transaction completed"
+                //% "DAPP transaction completed"
                 return qtTrId("notification-contract-completed");
             default:
                 return "error";
@@ -267,9 +288,19 @@ QString NotificationItem::title() const
             switch (getTxType(p))
             {
             case TxType::Simple:
-            case TxType::PushTransaction:
                 //% "Transaction failed"
                 return qtTrId("notification-transaction-failed");
+            case TxType::PushTransaction:
+            {
+                auto t = getAddressType(p);
+                if (t == TxAddressType::MaxPrivacy)
+                {
+                     //% "Max Privacy transaction failed"
+                    return qtTrId("notification-maxp-transaction-failed");
+                }
+                //% "Offline transaction failed"
+                return qtTrId("notification-offline-transaction-failed");
+            }
             case TxType::AtomicSwap:
                 return isSwapTxExpired(p) ?
                         //% "Atomic Swap offer expired"
@@ -279,9 +310,9 @@ QString NotificationItem::title() const
                         qtTrId("notification-swap-failed");
             case TxType::Contract:
                 return isExpired(p) ?
-                    //% "Contract transaction expired"
+                    //% "DAPP transaction expired"
                     qtTrId("notification-contract-expired") :
-                    //% "Contract transaction failed"
+                    //% "DAPP transaction failed"
                     qtTrId("notification-contract-failed");
             default:
                 return "error";
@@ -307,7 +338,7 @@ QString NotificationItem::message(AssetsManager::Ptr amgr) const
             if (fromByteBuffer(m_notification.m_content, info))
             {
                 QString currentVer = QString::fromStdString(
-                    beamui::getCurrentLibVersion().to_string() + "." + std::to_string(beamui::getCurrentUIRevision()));
+                    std::to_string(beamui::getCurrentLibVersion()) + "." + std::to_string(beamui::getCurrentUIRevision()));
                 QString message("Your current version is v ");
                 message.append(currentVer);
                 message.append(". Please update to get the most of your Beam wallet.");
@@ -452,8 +483,17 @@ QString NotificationItem::type() const
             switch (getTxType(p))
             {
             case TxType::Simple:
-            case TxType::PushTransaction:
                 return (isSender(p) ? "sent" : "received");
+            case TxType::PushTransaction:
+            {
+                auto t = getAddressType(p);
+                if (t == TxAddressType::MaxPrivacy)
+                    return (isSender(p) ? "maxpSent" : "maxpReceived");
+                else if (t == TxAddressType::PublicOffline)
+                    return (isSender(p) ? "pubOfflineSent" : "pubOfflineReceived");
+                
+                return (isSender(p) ? "offlineSent" : "offlineReceived");
+            }
             case TxType::AtomicSwap:
                 return "swapCompleted";
             case TxType::Contract:
@@ -470,7 +510,14 @@ QString NotificationItem::type() const
             case TxType::Simple:
                 return (isSender(p) ? "failedToSend" : "failedToReceive");
             case TxType::PushTransaction:
-                return "failedToSend";
+            {
+                auto t = getAddressType(p);
+                if (t == TxAddressType::MaxPrivacy)
+                    return "maxpFailedToSend";
+                else if (t == TxAddressType::PublicOffline)
+                    return "pubOfflineFailedToSend";
+                return "offlineFailedToSend";
+            }
             case TxType::AtomicSwap:
                 return isSwapTxExpired(p) ? "swapExpired" : "swapFailed";
             case TxType::Contract:

@@ -41,23 +41,6 @@ public:
     bool isOwnAddress(const beam::wallet::WalletID& walletID) const;
     bool isAddressWithCommentExist(const std::string& comment) const;
 
-    std::set<beam::Asset::ID> getAssetsNZ() const;
-    beam::AmountBig::Type getAvailable(beam::Asset::ID) const;
-    beam::AmountBig::Type getAvailableRegular(beam::Asset::ID) const;
-    beam::AmountBig::Type getAvailableShielded(beam::Asset::ID) const;
-    beam::AmountBig::Type getReceiving(beam::Asset::ID) const;
-    beam::AmountBig::Type getReceivingIncoming(beam::Asset::ID) const;
-    beam::AmountBig::Type getReceivingChange(beam::Asset::ID) const;
-    beam::AmountBig::Type getSending(beam::Asset::ID) const;
-    beam::AmountBig::Type getMaturing(beam::Asset::ID) const;
-    beam::AmountBig::Type getMatutingMP(beam::Asset::ID) const;
-    beam::AmountBig::Type getShielded(beam::Asset::ID) const;
-    bool hasShielded(beam::Asset::ID) const;
-
-    beam::Height getCurrentHeight() const;
-    beam::Timestamp getCurrentHeightTimestamp() const;
-    beam::Block::SystemState::ID getCurrentStateID() const;
-
 signals:
     // INTERNAL SIGNALS, DO NOT SUBSCRIBE IN OTHER UI OBJECTS.
     // Subscribe to non-internal counterparts
@@ -75,7 +58,7 @@ signals:
     void transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items);
     void syncProgressUpdated(int done, int total);
     void changeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID);
-    void coinsSelectionCalculated(const beam::wallet::CoinsSelectionInfo&);
+    void coinsSelected(const beam::wallet::CoinsSelectionInfo&);
     void normalCoinsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
 #ifdef BEAM_LELANTUS_SUPPORT
     void shieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& coins);
@@ -104,12 +87,13 @@ signals:
     void exchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>&);
     void notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&);
     void publicAddressChanged(const QString& publicAddr);
+    void verificationInfoUpdate(const std::vector<beam::wallet::VerificationInfo>&);
 private:
     void onStatus(const beam::wallet::WalletStatus& status) override;
     void onTxStatus(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items) override;
     void onSyncProgressUpdated(int done, int total) override;
     void onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId) override;
-    void onCoinsSelectionCalculated(const beam::wallet::CoinsSelectionInfo&) override;
+    void onCoinsSelected(const beam::wallet::CoinsSelectionInfo&) override;
     void onNormalCoinsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos) override;
     void onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& items) override;
     void onAddressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>& items) override;
@@ -135,6 +119,7 @@ private:
     void onExportDataToJson(const std::string& data) override;
     void onExportTxHistoryToCsv(const std::string& data) override;
     void onExchangeRates(const std::vector<beam::wallet::ExchangeRate>&) override;
+    void onVerificationInfo(const std::vector<beam::wallet::VerificationInfo>&) override;
     void onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&) override;
     void onPublicAddress(const std::string& publicAddr) override;
     void onAssetInfo(beam::Asset::ID, const beam::wallet::WalletAsset&) override;
@@ -155,5 +140,4 @@ private slots:
 private:
     std::set<beam::wallet::WalletID> m_myWalletIds;
     std::set<std::string> m_myAddrLabels;
-    beam::wallet::WalletStatus m_status;
 };

@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Layouts 1.1
+import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.4
 import Beam.Wallet 1.0
 import "controls"
@@ -162,8 +162,8 @@ ColumnLayout {
                                 font.italic:        true
                                 font.pixelSize:     12
                                 wrapMode:           Text.Wrap
-                                text:               viewModel.tokenType
                                 visible:            viewModel.tokenValid
+                                text:               viewModel.tokenTip
                             }
                         }
                     }
@@ -197,8 +197,8 @@ ColumnLayout {
                                         Layout.preferredHeight: 30
                                         Layout.preferredWidth: offlineCheck.width
                                         id: regularCheck
-                                        //% "Regular"
-                                        text:               qsTrId("tx-regular")
+                                        //% "Online"
+                                        text:               qsTrId("tx-online")
                                         ButtonGroup.group:  txTypeGroup
                                         checkable:          true
                                         hasShadow:          false
@@ -245,8 +245,8 @@ ColumnLayout {
                         title: qsTrId("general-amount")
                         Layout.fillWidth: true
 
-                        content: RowLayout {
-                            spacing: 7
+                        content: ColumnLayout {
+                            spacing: 0
 
                             AmountInput {
                                 id:                sendAmountInput
@@ -257,11 +257,16 @@ ColumnLayout {
                                 multi:             viewModel.assetsList.length > 1
 
                                 error: {
-                                    if (!viewModel.isEnough)
+                                    if (!viewModel.isEnoughAmount)
                                     {
-                                       var maxAmount = Utils.uiStringToLocale(viewModel.maxSendAmount)
-                                       //% "Insufficient funds to complete the transaction. Maximum amount is %1 %2."
-                                       return qsTrId("send-no-funds").arg(maxAmount).arg(Utils.limitText(control.sendUnit, 6))
+                                        var maxAmount = Utils.uiStringToLocale(viewModel.maxSendAmount)
+                                        //% "Insufficient funds to complete the transaction. Maximum amount is %1 %2."
+                                        return qsTrId("send-no-funds").arg(maxAmount).arg(Utils.limitText(control.sendUnit, 10))
+                                    }
+                                    else if (!viewModel.isEnoughFee)
+                                    {
+                                        //% "Insufficient funds to pay transaction fee."
+                                        return qsTrId("send-no-funds-for-fee")
                                     }
                                     return ""
                                 }
@@ -285,43 +290,74 @@ ColumnLayout {
                                 value:    sendAmountInput.amount
                             }
 
-                            Row {
-                                Layout.leftMargin: 10
-                                Layout.fillHeight: true
-                                spacing:           0
+                            SFText {
+                                Layout.topMargin:    20
+                                font.pixelSize:      14
+                                font.styleName:      "Bold"
+                                font.weight:         Font.Bold
+                                font.letterSpacing:  3.11
+                                font.capitalization: Font.AllUppercase
+                                color:               Style.content_secondary
+                                //% "Available"
+                                text:             qsTrId("send-available")
+                                visible:          text.length > 0
+                            }
 
-                                SvgImage {
-                                    source:     "qrc:/assets/icon-send-blue-copy-2.svg"
-                                    sourceSize: Qt.size(16, 16)
-                                    y:          30
+                            RowLayout {
+                                spacing: 0
+                                Layout.topMargin: 10
 
-                                    MouseArea {
-                                        anchors.fill:    parent
-                                        acceptedButtons: Qt.LeftButton
-                                        cursorShape:     Qt.PointingHandCursor
-                                        onClicked:       function () {
-                                            sendAmountInput.clearFocus()
-                                            viewModel.setMaxAvailableAmount()
-                                        }
-                                    }
+                                BeamAmount {
+                                    Layout.alignment:  Qt.AlignTop | Qt.AlignLeft
+                                    Layout.fillWidth:  true
+                                    amount:            viewModel.assetAvailable
+                                    unitName:          control.sendUnit
+                                    rateUnit:          control.rateUnit
+                                    rate:              control.rate
+                                    font.styleName:    "Bold"
+                                    font.weight:       Font.Bold
+                                    font.pixelSize:    14
+                                    maxPaintedWidth:   false
+                                    maxUnitChars:      20
+                                    rateFontSize:      12
                                 }
 
-                                SFText {
-                                    font.pixelSize:   14
-                                    font.styleName:   "Bold";
-                                    font.weight:      Font.Bold
-                                    color:            Style.accent_outgoing
-                                    y:                30
-                                    //% "max"
-                                    text:             " " + qsTrId("amount-input-add-max")
+                                Row {
+                                    Layout.leftMargin: 10
+                                    Layout.fillHeight: true
+                                    spacing:           0
 
-                                    MouseArea {
-                                        anchors.fill:    parent
-                                        acceptedButtons: Qt.LeftButton
-                                        cursorShape:     Qt.PointingHandCursor
-                                        onClicked:       function () {
-                                            sendAmountInput.clearFocus()
-                                            viewModel.setMaxPossibleAmount()
+                                    SvgImage {
+                                        source:     "qrc:/assets/icon-send-blue-copy-2.svg"
+                                        sourceSize: Qt.size(16, 16)
+
+                                        MouseArea {
+                                            anchors.fill:    parent
+                                            acceptedButtons: Qt.LeftButton
+                                            cursorShape:     Qt.PointingHandCursor
+                                            onClicked:       function () {
+                                                sendAmountInput.clearFocus()
+                                                viewModel.setMaxAvailableAmount()
+                                            }
+                                        }
+                                    }
+
+                                    SFText {
+                                        font.pixelSize:   14
+                                        font.styleName:   "Bold";
+                                        font.weight:      Font.Bold
+                                        color:            Style.accent_outgoing
+                                        //% "max"
+                                        text:             " " + qsTrId("amount-input-add-max")
+
+                                        MouseArea {
+                                            anchors.fill:    parent
+                                            acceptedButtons: Qt.LeftButton
+                                            cursorShape:     Qt.PointingHandCursor
+                                            onClicked:       function () {
+                                                sendAmountInput.clearFocus()
+                                                viewModel.setMaxPossibleAmount()
+                                            }
                                         }
                                     }
                                 }
@@ -501,9 +537,8 @@ ColumnLayout {
             // Footers
             //
             CustomButton {
-                Layout.alignment:    Qt.AlignHCenter
-                Layout.topMargin:    30
-                Layout.bottomMargin: 30
+                Layout.alignment: Qt.AlignHCenter
+                Layout.topMargin: 30
                 //% "Send"
                 text:                qsTrId("general-send")
                 palette.buttonText:  Style.content_opposite
@@ -539,8 +574,22 @@ ColumnLayout {
                 }
             }
 
+            SFText {
+                Layout.alignment:      Qt.AlignHCenter
+                Layout.preferredWidth: 400
+                Layout.topMargin:      15
+                font.pixelSize:        14
+                font.italic:           true
+                color:                 Style.content_disabled
+                wrapMode:              Text.WordWrap
+                horizontalAlignment:   Text.AlignHCenter
+                text:                  viewModel.tokenTip2
+                visible:               !!text
+            }
+
             Item {
                 Layout.fillHeight: true
+                Layout.bottomMargin: 20
             }
         }  // ColumnLayout
     }  // ScrollView

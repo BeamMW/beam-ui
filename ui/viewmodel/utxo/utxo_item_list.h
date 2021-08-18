@@ -37,6 +37,8 @@ public:
         MaturityTimeLeft,
         MaturityTimeLeftSort,
         UnitName,
+        IconSource,
+        Verified,
     };
 
     UtxoItemList();

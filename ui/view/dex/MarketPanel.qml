@@ -1,6 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.4
+import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 import Beam.Wallet 1.0
 import "../controls"
@@ -13,7 +13,7 @@ Control {
         spacing: 14
 
         SFText {
-            text: "BEAM"
+            text: "DEMOX"
             color: Style.content_main
             font {
                 styleName:      "Regular"
@@ -37,7 +37,7 @@ Control {
         }
 
         SFText {
-            text: "BEAM-X"
+            text: "BEAM"
             color: Style.content_main
             font {
                 styleName:      "Regular"

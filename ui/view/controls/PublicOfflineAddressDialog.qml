@@ -1,18 +1,18 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
 
-import QtQuick.Layouts 1.11
+import QtQuick.Layouts 1.12
 import Beam.Wallet 1.0
 import "."
 
-Dialog {
+CustomDialog {
     id: dialog
     modal: true
-    property alias address:                 addressField.text
+    property alias address: addressField.text
 
     QR {
-        id:         qrCode
-        address:    dialog.address
+        id: qrCode
+        address: dialog.address
     }
 
     x: (parent.width - width) / 2
@@ -20,16 +20,10 @@ Dialog {
 
     parent: Overlay.overlay
     padding: 30
-
     closePolicy: Popup.NoAutoClose | Popup.CloseOnEscape
 
     onOpened: {
-        forceActiveFocus();
-    }
-
-    background: Rectangle {
-        radius: 10
-        color: Style.background_popup
+        forceActiveFocus()
     }
 
     contentItem: ColumnLayout {
@@ -113,7 +107,7 @@ Dialog {
                 palette.buttonText: Style.content_opposite
                 icon.color:         Style.content_opposite
                 palette.button:     Style.accent_incoming
-                text:               qsTrId("wallet-receive-copy-and-close")
+                text:               qsTrId("general-copy-and-close")
                 onClicked: {
                     BeamGlobals.copyToClipboard(dialog.address);
                     dialog.close()

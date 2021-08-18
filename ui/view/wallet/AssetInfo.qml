@@ -1,6 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.4
+import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 import Beam.Wallet 1.0
 import "../controls"
@@ -14,7 +14,6 @@ Control {
     property alias  color:         back.leftColor
     property alias  borderColor:   back.leftBorderColor
     property bool   selected:      false
-    property var    panel
 
     readonly property bool hasBalanceTip: amountCtrl.hasTip || assetInfo.locked != "0" || assetInfo.amountShielded != "0"
 
@@ -47,9 +46,11 @@ Control {
             rateUnit:          assetInfo.rateUnit
             rate:              assetInfo.rate
             iconSource:        assetInfo.icon
+            verified:          assetInfo.verified
             Layout.fillWidth:  true
             spacing:           12
             iconSize:          Qt.size(26, 26)
+            verifiedIconSize:  Qt.size(18, 18)
             copyMenuEnabled:   true
             showDrop:          control.hasBalanceTip || assetInfo.id != 0
             dropSize:          Qt.size(8, 4.8)
@@ -58,6 +59,8 @@ Control {
             font.weight:       Font.Normal
             font.pixelSize:    16
             showTip:           true
+            maxPaintedWidth:   true
+            maxUnitChars:      15
         }
     }
 
@@ -76,7 +79,8 @@ Control {
             {
                 var assetTip = Qt.createComponent("AssetTip.qml").createObject(Overlay.overlay, {
                     hasBalanceTip: control.hasBalanceTip,
-                    assetInfo: Object.assign({}, control.assetInfo)
+                    assetId: control.assetInfo.id,
+                    assetInfo: control.assetInfo
                 });
 
                 amountCtrl.tipCtrl = assetTip
@@ -92,7 +96,7 @@ Control {
                     }
                 })
 
-                panel.Component.onDestruction.connect(function() {
+                control.Component.onDestruction.connect(function() {
                     assetTip.visible = false
                 })
 

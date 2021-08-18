@@ -49,6 +49,7 @@ SettingsViewModel::SettingsViewModel()
     , m_isNeedToApplyChanges(false)
     , m_supportedLanguages(WalletSettings::getSupportedLanguages())
     , m_rateCurrency(beam::wallet::Currency::UNKNOWN())
+    , m_walletModel{*AppModel::getInstance().getWalletModel()}
 {
     undoChanges();
 
@@ -63,6 +64,8 @@ SettingsViewModel::SettingsViewModel()
     connect(AppModel::getInstance().getWalletModel().get(), SIGNAL(addressChecked(const QString&, bool)), SLOT(onAddressChecked(const QString&, bool)));
     connect(AppModel::getInstance().getWalletModel().get(), SIGNAL(publicAddressChanged(const QString&)), SLOT(onPublicAddressChanged(const QString&)));
     connect(&m_settings, SIGNAL(beamMWLinksChanged()), SIGNAL(beamMWLinksPermissionChanged()));
+    connect(&m_settings, &WalletSettings::dappsAllowedChanged, this, &SettingsViewModel::dappsAllowedChanged);
+    connect(&m_walletModel, &WalletModel::walletStatusChanged, this, &SettingsViewModel::stateChanged);
 
     m_timerId = startTimer(CHECK_INTERVAL);
 }
@@ -182,6 +185,20 @@ void SettingsViewModel::setLocalNodePort(const QString& value)
     }
 }
 
+int SettingsViewModel::getAppsPort() const
+{
+    return static_cast<int>(AppSettings().getAppsServerPort());
+}
+
+void SettingsViewModel::setAppsPort(int port)
+{
+    if (AppSettings().getAppsServerPort() != port)
+    {
+        AppSettings().setAppsServerPort(port);
+        emit appsPortChanged();
+    }
+}
+
 QString SettingsViewModel::getRemoteNodePort() const
 {
     return m_remoteNodePort;
@@ -239,6 +256,21 @@ void SettingsViewModel::allowBeamMWLinks(bool value)
     {
         m_settings.setAllowedBeamMWLinks(value);
     }
+}
+
+bool SettingsViewModel::getDAppsAllowed () const
+{
+    return m_settings.getAppsAllowed();
+}
+
+void SettingsViewModel::setDAppsAllowed (bool val)
+{
+    m_settings.setAppsAllowed(val);
+}
+
+QString SettingsViewModel::getCurrentHeight() const
+{
+    return QString::fromStdString(to_string(m_walletModel.getCurrentStateID().m_Height));
 }
 
 QStringList SettingsViewModel::getSupportedLanguages() const
@@ -505,6 +537,16 @@ void SettingsViewModel::setMaxPrivacyLockTimeLimit(int limit)
             emit maxPrivacyLockTimeLimitChanged();
         }
     }
+}
+
+int SettingsViewModel::getMinConfirmations() const
+{
+    return m_settings.getMinConfirmations();
+}
+
+void SettingsViewModel::setMinConfirmations(int value)
+{
+    m_settings.setMinConfirmations(value);
 }
 
 QString SettingsViewModel::getExplorerUrl() const

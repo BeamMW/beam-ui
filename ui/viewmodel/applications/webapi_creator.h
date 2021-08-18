@@ -14,45 +14,30 @@
 #pragma once
 
 #include <QObject>
-#include "consent_handler.h"
 #include "webapi_beam.h"
-#include "webapi_shaders.h"
+#include "viewmodel/wallet/assets_list.h"
 
 namespace beamui::applications
 {
     class WebAPICreator
         : public QObject
-        , public IConsentHandler
     {
         Q_OBJECT
+        Q_PROPERTY(QObject* api READ getApi NOTIFY apiChanged)
+
     public:
         explicit WebAPICreator(QObject *parent = nullptr);
-        ~WebAPICreator() override = default;
+        ~WebAPICreator() override;
 
-        Q_INVOKABLE void createApi(const QString& version, const QString& appName, const QString& appUrl);
-        Q_INVOKABLE void sendApproved(const QString& request);
-        Q_INVOKABLE void sendRejected(const QString& request);
-        Q_INVOKABLE void contractInfoApproved(const QString& request);
-        Q_INVOKABLE void contractInfoRejected(const QString& request);
+        Q_INVOKABLE void createApi(const QString& verWant, const QString& verMin, const QString& appName, const QString& appUrl);
+        Q_INVOKABLE [[nodiscard]] bool apiSupported(const QString& apiVersion) const;
+        Q_INVOKABLE [[nodiscard]] QString generateAppID(const QString& appName, const QString& appUrl);
+        [[nodiscard]] QObject* getApi();
 
     signals:
-        void apiCreated(QObject* api);
-        void approveSend(const QString& request, const QMap<QString, QVariant>& info);
-        void approveContractInfo(const QString& request, const QMap<QString, QVariant>& info, QList<QMap<QString, QVariant>> amounts);
+        void apiChanged();
 
     private:
-        void AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&) override;
-        void AnyThread_getContractInfoConsent(const std::string &request, const beam::wallet::IWalletApi::ParseResult &) override;
-
-        void UIThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&);
-        void UIThread_getContractInfoConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&);
-
-        std::unique_ptr<WebAPI_Beam> _api;
-        WebAPI_Shaders::Ptr _webShaders;
-        AssetsManager::Ptr _amgr;
-        beam::wallet::IWalletModelAsync::Ptr _asyncWallet;
-
-        std::shared_ptr<bool> _sendConsentGuard = std::make_shared<bool>(true);
-        std::shared_ptr<bool> _contractConsentGuard = std::make_shared<bool>(true);
+        std::shared_ptr<WebAPI_Beam> _api;
     };
 }

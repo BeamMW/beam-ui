@@ -73,11 +73,19 @@ public:
         AssetIcons,
         AssetAmounts,
         AssetAmountsIncome,
+        AssetVerified,
         AssetRates,
+        AssetIDs,
         IsDexTx,
         CidsStr,
         Source,
         SourceSort,
+        MinConfirmations,
+        ConfirmationsProgress,
+        IsDappTx,
+        DAppId,
+        DAppName,
+        IsActive
     };
     Q_ENUM(Roles)
 

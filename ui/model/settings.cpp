@@ -39,8 +39,12 @@ namespace
     const char* kLockTimeoutName = "lock_timeout";
     const char* kRequirePasswordToSpendMoney = "require_password_to_spend_money";
     const char* kIsAlowedBeamMWLink = "beam_mw_links_allowed";
+    const char* kDAppsAllowed = "dapps_allowed";
     const char* kshowSwapBetaWarning = "show_swap_beta_warning";
     const char* kRateUnit = "rateUnit";
+    const char* kLastAssetSelection = "lastAssetSelection";
+    const char* kShowFaucetPromo = "showFaucetPromo";
+    const char* kHideSeedValidationPromo = "hideSeedValidationPromo";
 
     const char* kLocalNodeRun = "localnode/run";
     const char* kLocalNodePort = "localnode/port";
@@ -52,9 +56,11 @@ namespace
     const char* kBeamNewsActive = "notifications/beam_news";
     const char* kTxStatusActive = "notifications/tx_status";
 
-    const char* kDevAppURL    = "devapp/url";
-    const char* kDevAppName   = "devapp/name";
-    const char* kDevAppApiVer = "devapp/api_version";
+    const char* kDevAppURL       = "devapp/url";
+    const char* kDevAppName      = "devapp/name";
+    const char* kDevAppApiVer    = "devapp/api_version";
+    const char* kDevAppMinApiVer = "devapp/min_api_version";
+    const char* kLocalAppsPort   = "apps/local_port";
 
     const char* kMpAnonymitySet = "max_privacy/anonymity_set";
 
@@ -97,7 +103,8 @@ namespace
         static const std::vector<beam::wallet::Currency> supportedUnits {
             beam::wallet::Currency::UNKNOWN(),
             beam::wallet::Currency::USD(),
-            beam::wallet::Currency::BTC()
+            beam::wallet::Currency::BTC(),
+            beam::wallet::Currency::ETH()
         };
         return supportedUnits;
     }
@@ -221,6 +228,31 @@ void WalletSettings::setAllowedBeamMWLinks(bool value)
         m_data.setValue(kIsAlowedBeamMWLink, value);
     }
     emit beamMWLinksChanged();
+}
+
+bool WalletSettings::getAppsAllowed() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kDAppsAllowed, false).toBool();
+}
+
+void WalletSettings::setAppsAllowed(bool value)
+{
+    bool changed = false;
+
+    {
+        Lock lock(m_mutex);
+        if (m_data.value(kDAppsAllowed, false).toBool() != value)
+        {
+            m_data.setValue(kDAppsAllowed, value);
+            changed = true;
+        }
+    }
+
+    if (changed)
+    {
+        emit dappsAllowedChanged();
+    }
 }
 
 bool WalletSettings::showSwapBetaWarning()
@@ -624,21 +656,6 @@ void WalletSettings::applyChanges()
     AppModel::getInstance().applySettingsChanges();
 }
 
-QString WalletSettings::getDevBeamAppUrl()
-{
-    return m_data.value(kDevAppURL).toString();
-}
-
-QString WalletSettings::getDevBeamAppName()
-{
-    return m_data.value(kDevAppName).toString();
-}
-
-QString WalletSettings::getDevAppApiVer()
-{
-    return m_data.value(kDevAppApiVer).toString();
-}
-
 QString WalletSettings::getExplorerUrl() const
 {
     #ifdef BEAM_BEAMX
@@ -674,26 +691,174 @@ QString WalletSettings::getAppsUrl() const
     #elif defined(BEAM_MAINNET)
     return "https://apps.beam.mw/appslist.json";
     #else
-    return "http://3.136.182.25:80/app/appslist.json";
+    return "http://3.19.141.112/app/appslist.json";
     #endif
 }
 
-QString WalletSettings::getAppsCachePath() const
+bool WalletSettings::showFaucetPromo() const
 {
-    const char* kCacheFolder = "appcache";
-    if (!m_appDataDir.exists(kCacheFolder))
-    {
-        m_appDataDir.mkdir(kCacheFolder);
-    }
-    return m_appDataDir.filePath(kCacheFolder);
+    Lock lock(m_mutex);
+    return m_data.value(kShowFaucetPromo, true).toBool();
 }
 
-QString WalletSettings::getAppsStoragePath() const
+void WalletSettings::setShowFacetPromo(bool value)
 {
+    Lock lock(m_mutex);
+    m_data.setValue(kShowFaucetPromo, value);
+}
+
+bool WalletSettings::hideSeedValidationPromo() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kHideSeedValidationPromo, false).toBool();
+}
+
+void WalletSettings::setHideSeedValidationPromo(bool value)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kHideSeedValidationPromo, value);
+}
+
+QString WalletSettings::getDevAppUrl() const
+{
+    return m_data.value(kDevAppURL).toString();
+}
+
+QString WalletSettings::getDevAppName() const
+{
+    return m_data.value(kDevAppName).toString();
+}
+
+QString WalletSettings::getDevAppApiVer() const
+{
+    return m_data.value(kDevAppApiVer).toString();
+}
+
+QString WalletSettings::getDevAppMinApiVer() const
+{
+    return m_data.value(kDevAppMinApiVer).toString();
+}
+
+QString WalletSettings::getAppsCachePath(const QString& name) const
+{
+    Lock lock(m_mutex);
+    const QString kCacheFolder = "appcache";
+
+    QString cachePath = QDir::cleanPath(
+            QStandardPaths::writableLocation(QStandardPaths::StandardLocation::CacheLocation) +
+            QDir::separator() + kCacheFolder +
+            QDir::separator() + name
+    );
+
+    auto adir = m_appDataDir;
+    adir.mkpath(cachePath);
+
+    return cachePath;
+}
+
+QString WalletSettings::getAppsStoragePath(const QString& name) const
+{
+    Lock lock(m_mutex);
+
     const char* kStorageFolder = "appstorage";
-    if (!m_appDataDir.exists(kStorageFolder))
+    QString storagePath = QDir::cleanPath(
+            m_appDataDir.path() +
+            QDir::separator() + kStorageFolder +
+            QDir::separator() + name
+    );
+
+    auto adir = m_appDataDir;
+    adir.mkpath(storagePath);
+
+    return storagePath;
+}
+
+QString WalletSettings::getLocalAppsPath() const
+{
+    Lock lock(m_mutex);
+
+    const char* kLocalAppsFolder = "localapps";
+    QString localAppsPath = QDir::cleanPath(
+            m_appDataDir.path() +
+            QDir::separator() + kLocalAppsFolder
+    );
+
+    auto adir = m_appDataDir;
+    adir.mkpath(localAppsPath);
+
+    return localAppsPath;
+}
+
+int WalletSettings::getAppsServerPort() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kLocalAppsPort, 34700).toInt();
+}
+
+void WalletSettings::setAppsServerPort(int port)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kLocalAppsPort, port);
+}
+
+void WalletSettings::minConfirmationsInit()
+{
+    auto walletModel = AppModel::getInstance().getWalletModel();
+    if (walletModel)
     {
-        m_appDataDir.mkdir(kStorageFolder);
+        walletModel->getAsync()->getCoinConfirmationsOffset([this] (uint32_t count)
+        {
+            Lock lock(m_mutex);
+            m_minConfirmations = count;
+        });
     }
-    return m_appDataDir.filePath(kStorageFolder);
+}
+
+uint32_t WalletSettings::getMinConfirmations() const
+{
+    Lock lock(m_mutex);
+    return m_minConfirmations;
+}
+
+void WalletSettings::setMinConfirmations(uint32_t value)
+{
+    if (m_minConfirmations != value)
+    {
+        auto walletModel = AppModel::getInstance().getWalletModel();
+        if (walletModel)
+        {
+            {
+                Lock lock(m_mutex);
+                m_minConfirmations = value;
+            }
+            walletModel->getAsync()->setCoinConfirmationsOffset(m_minConfirmations);
+        }
+    }
+}
+
+boost::optional<beam::Asset::ID> WalletSettings::getLastAssetSelection() const
+{
+    Lock lock(m_mutex);
+
+    if (m_data.contains(kLastAssetSelection))
+    {
+        return m_data.value(kLastAssetSelection).toInt();
+    }
+    else
+    {
+        return boost::none;
+    }
+}
+
+void WalletSettings::setLastAssetSelection(boost::optional<beam::Asset::ID> selection)
+{
+    Lock lock(m_mutex);
+    if (selection.is_initialized())
+    {
+        m_data.setValue(kLastAssetSelection, *selection);
+    }
+    else
+    {
+        m_data.remove(kLastAssetSelection);
+    }
 }

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+    <g fill="none" fill-rule="evenodd">
+        <g stroke="#FFF">
+            <g>
+                <g>
+                    <g transform="translate(-832.000000, -483.000000) translate(90.000000, 409.000000) translate(712.000000, 63.000000) translate(30.000000, 11.000000)">
+                        <rect width="5.357" height="5.357" x=".75" y=".75" stroke-width="1.5" rx="2"/>
+                        <rect width="5.357" height="5.357" x=".75" y="9.893" stroke-width="1.5" rx="2"/>
+                        <rect width="5.357" height="5.357" x="9.893" y=".75" stroke-width="1.5" rx="2"/>
+                        <g fill="#FFF" stroke-width=".8" transform="translate(8.400000, 8.542857)">
+                            <rect width="1.143" height="6.857" x="3" rx=".571"/>
+                            <path d="M3.571 0c.316 0 .572.256.572.571v5.715c0 .315-.256.571-.572.571-.315 0-.571-.256-.571-.571V.57C3 .256 3.256 0 3.571 0z" transform="translate(3.571429, 3.428571) rotate(-270.000000) translate(-3.571429, -3.428571)"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

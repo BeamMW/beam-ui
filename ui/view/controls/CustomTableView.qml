@@ -1,7 +1,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 1.2
 import QtQuick.Controls.impl 2.4
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.12
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
 import "."
@@ -14,13 +14,14 @@ TableView {
     property var mainBackgroundRect: null
     property var backgroundRect: mainBackgroundRect != null ? mainBackgroundRect : main.backgroundRect
     property color headerColor: Style.table_header
+    // property var headerOpacity: 1
+    property bool headerShaderVisible: true
 
     // Scrollbar fine-tuning
     __scrollBarTopMargin: tableView.headerHeight
-    verticalScrollBarPolicy: hoverArea.containsMouse && __scroller.contentHeight > __scroller.availableHeight ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAlwaysOff
+    verticalScrollBarPolicy: Qt.ScrollBarAsNeeded
 
     style: TableViewStyle {
-        transientScrollBars: !hoverArea.containsMouse
         minimumHandleLength: 30
 
         handle: Rectangle {
@@ -72,9 +73,12 @@ TableView {
         function getY() {
             return rect.mapToItem(backgroundRect, rect.x, rect.y).y;
         }
+
         function updateShader() {
-            shaderSrc.sourceRect.x = getX()
-            shaderSrc.sourceRect.y = getY()
+            if (headerShaderVisible) {
+                shaderSrc.sourceRect.x = getX()
+                shaderSrc.sourceRect.y = getY()
+            }
         }
 
         Connections {
@@ -107,18 +111,20 @@ TableView {
             width: rect.width
             height: rect.height
             sourceItem: backgroundRect
-            visible: true
+            visible: headerShaderVisible
         }
 
         property bool lastColumn: styleData.column == tableView.columnCount-1
         property bool firstOrLastColumn : styleData.column == 0 || lastColumn
         
         clip: firstOrLastColumn
+
         Rectangle {
             x: lastColumn ? -12 : 0
             width: parent.width + (firstOrLastColumn ? 12 : 0)
             height: parent.height + (firstOrLastColumn ? 12 : 0)
             color: headerColor
+            // opacity: tableView.headerOpacity
             radius: firstOrLastColumn ? 10 : 0
         }
 
@@ -142,17 +148,8 @@ TableView {
         }
     }
 
-    MouseArea {
-        id:               hoverArea
-        anchors.fill:     parent
-        acceptedButtons:  Qt.NoButton
-        hoverEnabled:     true
-        propagateComposedEvents: true
-        preventStealing: true
-    }
-
     Component.onCompleted: {
-        var numchilds = __scroller.children.length
-        __scroller.children[numchilds -1].anchors.rightMargin = 0
+        var numchilds = __scroller.children.length;
+        __scroller.children[numchilds -1].anchors.rightMargin = 0;
     }
 }

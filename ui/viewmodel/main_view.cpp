@@ -14,6 +14,10 @@
 
 #include "main_view.h"
 #include "model/app_model.h"
+#include <QApplication>
+#include <QClipboard>
+#include "qml_globals.h"
+#include "applications/public.h"
 
 namespace
 {
@@ -49,9 +53,11 @@ MainViewModel::MainViewModel()
     connect(walletModelPtr, SIGNAL(hideTrezorMessage()), this, SIGNAL(hideTrezorMessage()));
     connect(walletModelPtr, SIGNAL(showTrezorError(const QString&)), this, SIGNAL(showTrezorError(const QString&)));
 #endif
+    connect(QApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(onClipboardDataChanged()));
 
     onLockTimeoutChanged();
     m_settings.maxPrivacyLockTimeLimitInit();
+    m_settings.minConfirmationsInit();
 }
 
 void MainViewModel::update(int page)
@@ -80,6 +86,16 @@ void MainViewModel::onLockTimeoutChanged()
     }
 }
 
+void MainViewModel::onClipboardDataChanged()
+{
+    auto text = QApplication::clipboard()->text();
+    if (QMLGlobals::isToken(text))
+    {
+        //% "Address copied to clipboard"
+        emit clipboardChanged(qtTrId("notification-address-copied"));
+    }
+}
+
 void MainViewModel::resetLockTimer()
 {
     if (m_timer.isActive() && (m_timer.interval() - m_timer.remainingTime() > minResetPeriodInMs))
@@ -96,4 +112,38 @@ int MainViewModel::getUnsafeTxCount() const
 int MainViewModel::getUnreadNotifications() const
 {
     return static_cast<int>(AppModel::getInstance().getWalletModel()->getUnreadNotificationsCount());
+}
+
+QString MainViewModel::getDaoCoreAppID() const
+{
+    const std::string appName = "BeamX DAO";
+    std::string appURL  = "";
+
+    #if defined(BEAM_TESTNET)
+    appURL = "https://apps-testnet.beam.mw/app/plugin-dao-core/index.html";
+    #elif defined(BEAM_MAINNET)
+    appURL = "https://apps.beam.mw/app/plugin-dao-core/index.html";
+    #else
+    appURL = "http://3.19.141.112:80/app/plugin-dao-core/index.html";
+    #endif
+
+    const auto appid = beamui::applications::GenerateAppID(appName, appURL);
+    return QString::fromStdString(appid);
+}
+
+QString MainViewModel::getFaucetAppID() const
+{
+    const std::string appName = "BEAM Faucet";
+    std::string appURL  = "";
+
+    #if defined(BEAM_TESTNET)
+    appURL = "https://apps-testnet.beam.mw/app/plugin-faucet/index.html";
+    #elif defined(BEAM_MAINNET)
+    appURL = "https://apps.beam.mw/app/plugin-faucet/index.html";
+    #else
+    appURL = "http://3.19.141.112:80/app/plugin-faucet/index.html";
+    #endif
+
+    const auto appid = beamui::applications::GenerateAppID(appName, appURL);
+    return QString::fromStdString(appid);
 }

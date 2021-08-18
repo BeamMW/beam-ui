@@ -2,7 +2,7 @@ import QtQuick 2.11
 import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.12
 import "."
 
 Pane {
@@ -11,46 +11,28 @@ Pane {
     property string title
     property string titleTip
 
-    property bool  folded:          true
-    property var   content:         null
-    property var   headerContent:   null
-    property int   minHeaderHeight: 0
+    property bool  folded:            true
+    property bool  foldsUp:           true
+    property var   content:           null
+    property var   headerContent:     null
+    property alias titleOpacity:      headerTitle.opacity
+    property alias bkColor:           background.color
+    property int   contentItemHeight: 0
 
     spacing: 0
     padding: 20
-
-    Component {
-        id: foldClick
-
-        Rectangle {
-            color: "transparent"
-            MouseArea {
-                anchors.fill:    parent
-                acceptedButtons: Qt.LeftButton
-                cursorShape:     Qt.PointingHandCursor
-                onClicked: {
-                    control.folded = !control.folded;
-                }
-            }
-        }
-    }
 
     contentItem: Item {
         ColumnLayout {
             spacing: 0
             clip:    folded
             width: parent.width
+
             RowLayout {
+                id: headerRow
                 Layout.alignment: Qt.AlignTop
-                Layout.minimumHeight: minHeaderHeight
                 Layout.fillWidth: true
                 spacing: 0
-
-                Loader {
-                    width: parent.width
-                    height: parent.height
-                    sourceComponent: foldClick
-                }
 
                 RowLayout {
                     Layout.fillHeight: true
@@ -59,7 +41,7 @@ Pane {
                     SFText {
                         id:    headerTitle
                         text:  title
-                        color: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+                        color: Style.content_main
 
                         font {
                             styleName:      "Bold"
@@ -69,9 +51,12 @@ Pane {
                             capitalization: Font.AllUppercase
                         }
 
-                        Loader {
+                        MouseArea {
                             anchors.fill: parent
-                            sourceComponent: foldClick
+                            cursorShape:  Qt.PointingHandCursor
+                            onClicked: {
+                                control.folded = !control.folded;
+                            }
                         }
                     }
 
@@ -82,7 +67,7 @@ Pane {
                     }
 
                     SFText {
-                        color:   Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+                        color:   Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 1)
                         text:    titleTip
                         visible: titleTip.length != 0
 
@@ -93,9 +78,12 @@ Pane {
                             letterSpacing:  0.35
                         }
 
-                        Loader {
+                        MouseArea {
                             anchors.fill: parent
-                            sourceComponent: foldClick
+                            cursorShape:  Qt.PointingHandCursor
+                            onClicked: {
+                                control.folded = !control.folded;
+                            }
                         }
                     }
                 }
@@ -112,10 +100,16 @@ Pane {
                 }
 
                 SvgImage {
+                    id: arrow
                     Layout.alignment:       Qt.AlignCenter
                     Layout.maximumHeight:   8
                     Layout.maximumWidth:    13
                     source:                 control.folded ? "qrc:/assets/icon-grey-arrow-down.svg" : "qrc:/assets/icon-grey-arrow-up.svg"
+                    transform: Rotation {
+                        angle: foldsUp ? 0 : 180
+                        origin.x: arrow.width/2
+                        origin.y: arrow.height/2
+                    }
                 }
 
                 Item {
@@ -138,7 +132,7 @@ Pane {
                 Layout.alignment:       Qt.AlignTop
                 contentItem:            control.content
 
-                Layout.preferredHeight: folded ? 0 : placeholder.implicitHeight
+                Layout.preferredHeight: folded ? 0 : (control.contentItemHeight ? control.contentItemHeight : placeholder.implicitHeight)
                 opacity:                folded ? 0.0 : 1.0
 
                 Behavior on Layout.preferredHeight {
@@ -155,7 +149,22 @@ Pane {
     }
 
     background: Rectangle {
+        id:      background
         radius:  10
         color:   Style.background_second
+
+        MouseArea {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+            height:  control.topPadding + headerRow.height +
+                    ( control.folded ? control.bottomPadding : 0 ) +
+                    ( placeholder.visible ? placeholder.Layout.topMargin : 0 )
+
+            cursorShape:  Qt.PointingHandCursor
+            onClicked: {
+                control.folded = !control.folded;
+            }
+        }
     }
 }

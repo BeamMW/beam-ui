@@ -1,10 +1,10 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.3
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.12
 import Beam.Wallet 1.0
 import "."
 
-Dialog {
+CustomDialog {
     id: control
 
     width:   460
@@ -18,12 +18,6 @@ Dialog {
 
     // hack
     implicitHeight: (addresses != undefined && addresses.length > 1) ? 400 : 220
-
-    background: Rectangle {
-        radius:       10
-        color:        Style.background_popup
-        anchors.fill: parent
-    }
 
     contentItem: ColumnLayout {
         spacing: 0

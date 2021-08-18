@@ -3,7 +3,7 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.12
 import Beam.Wallet 1.0
 import "controls"
 import "./utils.js" as Utils
@@ -24,19 +24,31 @@ ColumnLayout {
 
     property var defaultFocusItem: null
     property var onClosed: function () {} // set by parent
+    property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
 
     property alias token:     viewModel.token
     property alias assetId:   viewModel.assetId
     property alias assetIdx:  amountInput.currencyIdx
     property var   assetInfo: viewModel.assetsList[control.assetIdx]
 
-    Component.onCompleted: function () {
-        // asset id might be passed by other parts of the UI as a parameter to the receive view
+    function syncIdx () {
         for (var idx = 0; idx < viewModel.assetsList.length; ++idx) {
             if (viewModel.assetsList[idx].assetId == assetId) {
-                 assetIdx = idx
+                 if (assetIdx != idx) {
+                    assetIdx = idx
+                 }
             }
         }
+    }
+
+    onAssetIdChanged: function () {
+        // C++ sometimes provides asset id, combobox exepects index, need to fix this at some point
+        syncIdx()
+    }
+
+    Component.onCompleted: function () {
+        // asset id might be passed by other parts of the UI as a parameter to the receive view
+        syncIdx()
     }
 
     Component.onDestruction: function () {
@@ -52,6 +64,7 @@ ColumnLayout {
         id:       tokenInfoDialog
         token:    viewModel.token
         incoming: true
+        isShieldedSupported: control.isShieldedSupported
     }
 
     function isValid () {
@@ -60,7 +73,7 @@ ColumnLayout {
 
     function copyAndClose() {
         if (isValid()) {
-            BeamGlobals.copyToClipboard(viewModel.token)
+            BeamGlobals.copyToClipboard(control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress);
             viewModel.saveAddress();
             control.onClosed()
         }
@@ -68,7 +81,7 @@ ColumnLayout {
 
     function copyAndSave() {
          if (isValid()) {
-            BeamGlobals.copyToClipboard(viewModel.token)
+            BeamGlobals.copyToClipboard(control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress);
             viewModel.saveAddress();
          }
     }
@@ -90,7 +103,7 @@ ColumnLayout {
 
     QR {
         id: qrCode
-        address: viewModel.token
+        address: control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress
     }
 
     ScrollView {
@@ -120,88 +133,6 @@ ColumnLayout {
                     Layout.fillWidth:       true
                     Layout.preferredWidth:  400
                     spacing:                10
-
-                    Panel {
-                        //% "Transaction type"
-                        title: qsTrId("general-tx-type")
-                        Layout.fillWidth: true
-
-                        content: ColumnLayout {
-                            spacing: 20
-                            id: addressType
-                            property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
-
-                            Pane {
-                                padding: 2
-
-                                background: Rectangle {
-                                    color:  Qt.rgba(1, 1, 1, 0.1)
-                                    radius: 16
-                                }
-
-                                ButtonGroup {
-                                    id: txTypeGroup
-                                }
-
-                                RowLayout {
-                                    spacing: 0
-
-                                    CustomButton {
-                                        Layout.preferredHeight: 30
-                                        Layout.preferredWidth: maxPrivacyCheck.width
-                                        id: regularCheck
-
-                                        //% "Regular"
-                                        text:               qsTrId("tx-regular")
-                                        ButtonGroup.group:  txTypeGroup
-                                        checkable:          true
-                                        hasShadow:          false
-                                        checked:            !viewModel.isMaxPrivacy
-                                        radius:             16
-                                        border.width:       1
-                                        border.color:       checked ? Style.active : "transparent"
-                                        palette.button:     checked ? Qt.rgba(0, 252/255, 207/255, 0.1) : "transparent"
-                                        palette.buttonText: checked ? Style.active : Style.content_secondary
-                                    }
-
-                                    CustomButton {
-                                        Layout.preferredHeight: 30
-                                        Layout.minimumWidth: 137
-                                        id: maxPrivacyCheck
-                                        //% "Max Privacy"
-                                        text:               qsTrId("tx-max-privacy")
-                                        ButtonGroup.group:  txTypeGroup
-                                        checkable:          true
-                                        checked:            viewModel.isMaxPrivacy
-                                        enabled:            addressType.isShieldedSupported
-                                        hasShadow:          false
-                                        radius:             16
-                                        border.width:       1
-                                        border.color:       checked ? Style.active : "transparent"
-                                        palette.button:     checked ? Qt.rgba(0, 252/255, 207/255, 0.1) : "transparent"
-                                        palette.buttonText: checked ? Style.active : Style.content_secondary
-                                    }
-
-                                    Binding {
-                                        target:   viewModel
-                                        property: "isMaxPrivacy"
-                                        value:    maxPrivacyCheck.checked
-                                    }
-                                }
-                            }
-
-                            SFText {
-                                Layout.fillWidth: true
-                                visible:          !parent.isShieldedSupported
-                                color:            Style.content_secondary
-                                font.italic:      true
-                                font.pixelSize:   14
-                                wrapMode:         Text.WordWrap
-                                //% "Connect to integrated or own node to enable receiving max privacy and offline transactions"
-                                text: qsTrId("wallet-receive-max-privacy-unsupported")
-                            }
-                        }
-                    }
 
                     //
                     // Requested amount
@@ -258,6 +189,7 @@ ColumnLayout {
                                 color:            viewModel.commentValid ? Style.content_main : Style.validator_error
                                 focus:            true
                                 text:             viewModel.comment
+                                placeholderText:  qsTrId("general-comment-local")
                                 maximumLength:    BeamGlobals.maxCommentLength()
                             }
                  
@@ -276,6 +208,34 @@ ColumnLayout {
                                     font.pixelSize: 12
                                     visible:        !viewModel.commentValid
                                     font.italic:    true
+                                }
+                            }
+                        }
+                    }
+
+                    FoldablePanel {
+                        //% "Advanced"
+                        title: qsTrId("general-advanced")
+                        Layout.fillWidth: true
+                        folded: true
+
+                        content: ColumnLayout {
+                            spacing: 20
+                            id: addressType
+                            // property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
+
+                            CustomSwitch {
+                                id: txType
+                                //% "Maximum anonymity set"
+                                text: qsTrId("receive-max-set")
+                                enabled: control.isShieldedSupported
+                                palette.text: control.isShieldedSupported ? Style.content_main : Style.content_secondary
+                                checked: viewModel.isMaxPrivacy
+
+                                Binding {
+                                    target: viewModel
+                                    property: "isMaxPrivacy"
+                                    value: txType.checked
                                 }
                             }
                         }
@@ -324,7 +284,7 @@ ColumnLayout {
 
                                     SFText {
                                         Layout.fillWidth:   true
-                                        text:  viewModel.token
+                                        text:  control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress
                                         width: parent.width
                                         color: Style.content_main
                                         elide: Text.ElideMiddle
@@ -368,8 +328,8 @@ ColumnLayout {
                 id: copyButton
                 Layout.topMargin:       30
                 Layout.alignment:       Qt.AlignHCenter
-                //% "Copy and close"
-                text:                   qsTrId("wallet-receive-copy-and-close")
+                //% "copy and close"
+                text:                   qsTrId("general-copy-and-close")
                 Layout.preferredHeight: 38
                 palette.buttonText:     Style.content_opposite
                 icon.color:             Style.content_opposite
@@ -397,15 +357,15 @@ ColumnLayout {
                 horizontalAlignment:   Text.AlignHCenter
                 visible:               viewModel.isMaxPrivacy
                 text: (mpLockTimeLimit != "0" ?
-                    //% "Max Privacy transaction can last at most %1 hours."
+                    //% " Transaction can last at most %1 hours."
                     qsTrId("wallet-receive-addr-message-mp").arg(mpLockTimeLimit) :
-                    //% "Max Privacy transaction can last indefinitely."
-                    qsTrId("wallet-receive-addr-message-mp-no-limit")) + "\n" +
-                    //% "Min transaction fee to send Max privacy coins is %1."
-                    qsTrId("wallet-receive-addr-message").arg("~%1 BEAM".arg(Utils.uiStringToLocale("0.01")))
+                    //% "Transaction can last indefinitely."
+                    qsTrId("wallet-receive-addr-message-mp-no-limit")) + "\n"
             }
 
             SFText {
+                //% "For an online payment to complete, you should get online during the 12 hours after coins are sent."
+                property string stayOnline: qsTrId("wallet-receive-stay-online")
                 Layout.alignment:      Qt.AlignHCenter
                 Layout.preferredWidth: 400
                 Layout.topMargin:      15
@@ -415,8 +375,11 @@ ColumnLayout {
                 color:                 Style.content_disabled
                 wrapMode:              Text.WordWrap
                 horizontalAlignment:   Text.AlignHCenter
-                //% "Sender will be given a choice between regular and offline payment. For the regular transaction to complete, you should get online during the 12 hours after coins are sent."
-                text: qsTrId("wallet-receive-text-online-time")
+                text: control.isShieldedSupported
+                    //% "Sender will be given a choice between online and offline payment."
+                    ? qsTrId("wallet-receive-text-online-time") + "\n" + stayOnline
+                    //% "Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions."
+                    : qsTrId("wallet-receive-max-privacy-unsupported") + "\n" + stayOnline
                 visible:               !viewModel.isMaxPrivacy
             }
         }  // ColumnLayout

@@ -11,6 +11,8 @@ Item {
     property var model
 
     function getStatus() {
+        if (model.isCoinClientFailed)
+            return "error_3rd";
         if (model.isFailedStatus)
             return "error";
         else if (model.isSyncInProgress)
@@ -22,12 +24,16 @@ Item {
     }
     
     property string status: getStatus()
-
-    state: "connecting"
+    state: getStatus()
 
     property int indicator_radius: 5
     property Item indicator: online_indicator
     property string error_msg: model.walletStatusErrorMsg
+    property string error_msg_3rd_client: model.coinClientErrorMsg
+    //% "online"
+    property string statusOnline: qsTrId("status-online")
+    //% "connected node supports online transactions only"
+    property string statusOnlineRemote: qsTrId("status-online-remote")
 
     function setIndicator(indicator) {
         if (indicator !== rootControl.indicator) {
@@ -57,7 +63,7 @@ Item {
             height:     rootControl.indicator_radius * 2
             radius:     rootControl.indicator_radius
             color:      parent.color
-            visible:    !model.isConnectionTrusted
+            visible:    !model.isConnectionTrusted || model.isCoinClientFailed
         }
 
         SvgImage {
@@ -70,14 +76,14 @@ Item {
             height: 10
             sourceSize:     Qt.size(10, 10)
             source:         "qrc:/assets/icon-trusted-node-status.svg"
-            visible:        model.isConnectionTrusted
+            visible:        model.isConnectionTrusted && !model.isCoinClientFailed
         }
 
         DropShadow {
-            anchors.fill: model.isConnectionTrusted ? onlineTrusted : online_rect
+            anchors.fill: model.isConnectionTrusted && !model.isCoinClientFailed ? onlineTrusted : online_rect
             radius: 5
             samples: 9
-            source: model.isConnectionTrusted ? onlineTrusted : online_rect
+            source: model.isConnectionTrusted && !model.isCoinClientFailed ? onlineTrusted : online_rect
             color: parent.color
         }
     }
@@ -150,10 +156,25 @@ Item {
         value: model.nodeSyncProgress / 100
     }
 
+    LinkButton {
+        text: "Change settings"
+        visible: model.isCoinClientFailed || model.isFailedStatus || (model.isOnline && !model.isConnectionTrusted)
+        anchors.top: parent.top
+        anchors.left: status_text.right
+        anchors.leftMargin: 5
+        anchors.topMargin: -1
+        fontSize: 12
+        onClicked: {
+            if (model.isCoinClientFailed || model.isFailedStatus)
+                main.openSwapSettings(model.coinWithErrorLabel());
+            else
+                main.openSwapSettings("BEAM");
+        }
+    }
+
     states: [
         State {
             name: "connecting"
-            when: (rootControl.status === "connecting")
             PropertyChanges {
                 target: status_text;
                 //% "connecting"
@@ -168,11 +189,9 @@ Item {
         },
         State {
             name: "online"
-            when: (rootControl.status === "online")
             PropertyChanges {
                 target: status_text;
-                //% "online"
-                text: qsTrId("status-online") + model.branchName
+                text: statusOnline + (model.isConnectionTrusted ? "" : ": " + statusOnlineRemote) + model.branchName
             }
             StateChangeScript {
                 name: "onlineScript"
@@ -184,7 +203,6 @@ Item {
         },
         State {
             name: "updating"
-            when: (rootControl.status === "updating")
             PropertyChanges {
                 target: status_text;
                 //% "updating"
@@ -199,10 +217,23 @@ Item {
         },
         State {
             name: "error"
-            when: (rootControl.status === "error")
             PropertyChanges {
                 target: status_text;
                 text: rootControl.error_msg + model.branchName
+            }
+            StateChangeScript {
+                name: "errorScript"
+                script: {
+                    online_indicator.color = "#ff746b";
+                    rootControl.setIndicator(online_indicator);
+                }
+            }
+        },
+         State {
+            name: "error_3rd"
+            PropertyChanges {
+                target: status_text;
+                text: rootControl.error_msg_3rd_client + model.branchName
             }
             StateChangeScript {
                 name: "errorScript"

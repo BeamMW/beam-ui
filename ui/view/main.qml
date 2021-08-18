@@ -1,6 +1,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.4
+import QtQuick.Layouts 1.12
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
 import QtQuick.Window 2.2
@@ -11,36 +12,73 @@ import "utils.js" as Utils
 Rectangle {
     id: main
 
-    property var openedNotifications: 0
-    property alias hasNewerVersion : updateInfoProvider.hasNewerVersion
+    property var    openedNotifications: 0
+    property var    notificationOffset: 0
+    property alias  hasNewerVersion : updateInfoProvider.hasNewerVersion
+    anchors.fill:   parent
 
-    anchors.fill: parent
+    function increaseNotificationOffset(popup) {
+        popup.verticalOffset = main.notificationOffset
+        main.notificationOffset += popup.height + 10
+        popup.nextVerticalOffset = main.notificationOffset
+    }
+
+    function decreaseNotificationOffset(popup) {
+        main.notificationOffset -= (popup.nextVerticalOffset - popup.verticalOffset)
+        if (main.notificationOffset < 0) main.notificationOffset = 0
+    }
+
+    function showPopup(popup) {
+        increaseNotificationOffset(popup)
+        popup.closed.connect(function () {
+            if (main) {
+                main.decreaseNotificationOffset(popup)
+            }
+        })
+        popup.open();
+    }
+
+    function showSimplePopup(message) {
+        var popup = Qt.createComponent("controls/SimpleNotification.qml").createObject(main, {
+            message
+        })
+        showPopup(popup)
+    }
+
+    function showAppTxPopup (comment, appname, appicon, txid) {
+        var popup = Qt.createComponent("controls/AppTxNotification.qml").createObject(main, {
+            comment, appname, appicon, txid
+        })
+        showPopup(popup)
+    }
+
+    function showUpdatePopup (newVersion, currentVersion, id) {
+         var popup = Qt.createComponent("controls/UpdateNotification.qml").createObject(main, {
+            title: ["New version v", newVersion, "is avalable"].join(" "),
+            message: ["Your current version is v", currentVersion, ".Please update to get the most of your Beam wallet."].join(" "),
+            acceptButtonText: "update now",
+            onCancel: function () {
+                updateInfoProvider.onCancelPopup(id);
+                popup.close();
+            },
+            onAccept: function () {
+                Utils.navigateToDownloads();
+            }
+         });
+         showPopup(popup)
+    }
 
 	MainViewModel {
         id: viewModel
+        onClipboardChanged: function(message) {
+            showSimplePopup(message)
+        }
     }
 
     PushNotificationManager {
         id: updateInfoProvider
-        onShowUpdateNotification: function(newVersion, currentVersion, id) {
-            var popup = Qt.createComponent("controls/NotificationPopup.qml").createObject(main);
-            popup.title = "New version v " + newVersion + " is avalable";
-            popup.message = "Your current version is v " + currentVersion + ". Please update to get the most of your Beam wallet.";
-            popup.acceptButtonText = "update now";
-            popup.onCancel = function () {
-                updateInfoProvider.onCancelPopup(id);
-                popup.close();
-            }
-            popup.onAccept = function () {
-                Utils.navigateToDownloads();
-            }
-            main.openedNotifications++;
-            popup.closed.connect(function() {
-                main.openedNotifications--;
-            })
-            
-            popup.verticalOffset = (main.openedNotifications - 1) * 200;
-            popup.open();
+        onShowUpdateNotification: function (newVersion, currentVersion, id) {
+            showUpdatePopup (newVersion, currentVersion, id)
         }
     }
 
@@ -71,6 +109,8 @@ Rectangle {
         }
         modal: true
     }
+
+    SeedValidationHelper { id: seedValidationHelper }
 
     function onClosing (close) {
         if (viewModel.unsafeTxCount > 0) {
@@ -125,126 +165,42 @@ Rectangle {
         resetLockTimer()
     }
 
-    property var contentItems : [
-		{name: "wallet"},
-        {name: "atomic_swap"},
-		{name: "addresses"},
-        {name: "notifications"},
-		{name: "utxo"},
-		{name: "applications", qml: function () {
-		    return BeamGlobals.isFork3() ? "applications" : "applications_nofork"
-		}},
-		{name: "settings"}
-	]
+    function appsQml () {
+        return BeamGlobals.isFork3() ? "applications" : "applications_nofork"
+    }
 
-    property int selectedItem
+    function appArgs (name, appid, showBack) {
+        return {
+            "appToOpen": { name, appid},
+            showBack
+        }
+    }
+
+    property var contentItems : [
+        {name: "wallet"},
+        {name: "atomic_swap"},
+        // {name: "dex"},
+        {name: "addresses"},
+        {name: "notifications"},
+        {name: "applications", qml: appsQml},
+        {name: "daocore", qml: appsQml, args: () => appArgs("BeamX DAO", viewModel.daoCoreAppID, false)},
+        {name: "settings"}
+    ]
+
+    property int selectedItem: -1
 
     Item {
-        id: sidebar
-        width: 70
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.top: parent.top
+        id:              sidebar
+        width:           70
+        anchors.bottom:  parent.bottom
+        anchors.left:    parent.left
+        anchors.top:     parent.top
 
         Rectangle {
             anchors.fill: parent
-            color: Style.navigation_background
             opacity: 0.1
             border.width: 0
-        }
-
-        Column {
-            width: 0
-            height: 0
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            anchors.top: parent.top
-            anchors.topMargin: 130
-
-            Repeater{
-                id: controls
-                model: contentItems
-
-                Item {
-                    id: control
-                    width: parent.width
-                    height: 66
-                    activeFocusOnTab: true
-
-                    SvgImage {
-						id: icon
-                        x: 21
-                        y: 16
-                        width: 28
-                        height: 28
-                        source: "qrc:/assets/icon-" + modelData.name + (selectedItem == index ? "-active" : "") + ".svg"
-					}
-                    Item {
-                        Rectangle {
-                            id: indicator
-                            y: 6
-                            width: 4
-                            height: 48
-                            color: selectedItem == index ? Style.active : Style.passive
-                        }
-
-                        DropShadow {
-                            anchors.fill: indicator
-                            radius: 5
-                            samples: 9
-                            color: Style.active
-                            source: indicator
-                        }
-
-    					visible: selectedItem == index
-                    }
-
-                    Item {
-                        visible: contentItems[index].name == 'notifications' && viewModel.unreadNotifications > 0
-                        Rectangle {
-                            id: counter
-                            x: 42
-                            y: 9
-                            width: 16
-                            height: 16
-                            radius: width/2
-                            color: Style.active
-
-                            SFText {
-                                height: 14
-                                text: viewModel.unreadNotifications
-                                font.pixelSize: 12
-                                anchors.centerIn: counter
-                            }
-                        }
-                        DropShadow {
-                            anchors.fill: counter
-                            radius: 5
-                            samples: 9
-                            source: counter
-                            color: Style.active
-                        }
-                    }
-
-                    Keys.onPressed: {
-                        if ((event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space) && selectedItem != index) 
-                            updateItem(index);
-                    }
-
-                    MouseArea {
-                        id: mouseArea
-                        anchors.fill: parent
-                        onClicked: {
-                            control.focus = true
-                            if (selectedItem != index)
-                                updateItem(index)
-                        }
-						hoverEnabled: true
-                    }
-                }
-            }
+            color: Style.navigation_background
         }
 
         SvgImage {
@@ -255,71 +211,120 @@ Rectangle {
             smooth: true
         }
 
-        Item {
-            property bool clicked: false
-            id: whereToBuyControl
-            width: parent.width
-            anchors.bottom: parent.bottom
-            height: 66
-            activeFocusOnTab: true
+        ColumnLayout {
+            anchors.left:       parent.left
+            anchors.right:      parent.right
+            anchors.top:        parent.top
+            anchors.bottom:     parent.bottom
+            anchors.topMargin:  130
+            spacing:            0
 
-            function clickHandler() {
-                whereToBuyControl.clicked = true;
-            }
+            Repeater {
+                id: controls
+                model: contentItems
 
-            onClickedChanged: {
-                if (clicked) {
-                    Utils.openExternalWithConfirmation(
-                        "https://www.beam.mw/#exchanges",
-                        function () {
-                            whereToBuyControl.clicked = false;
-                        });
+                ColumnLayout {
+                    Layout.fillWidth:  true
+                    Layout.fillHeight: modelData.name =='settings'
+
+                    Item {
+                        Layout.fillHeight: true
+                        visible: modelData.name == 'settings'
+                    }
+
+                    Item {
+                        id: control
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 66
+                        Layout.alignment: Qt.AlignBottom
+                        activeFocusOnTab: true
+
+                        SvgImage {
+                            id: icon
+                            x: 21
+                            y: 16
+                            width: 28
+                            height: 28
+                            source: "qrc:/assets/icon-" + modelData.name + (selectedItem == index ? "-active" : "") + ".svg"
+                        }
+
+                        Item {
+                            Rectangle {
+                                id: indicator
+                                y: 6
+                                width: 4
+                                height: 48
+                                color: selectedItem == index ? Style.active : Style.passive
+                            }
+
+                            DropShadow {
+                                anchors.fill: indicator
+                                radius: 5
+                                samples: 9
+                                color: Style.active
+                                source: indicator
+                            }
+
+                            visible: selectedItem == index
+                        }
+
+                        Item {
+                            visible: modelData.name == 'notifications' && viewModel.unreadNotifications > 0
+                            Rectangle {
+                                id: counter
+                                x: 42
+                                y: 9
+                                width: 16
+                                height: 16
+                                radius: width/2
+                                color: Style.active
+
+                                SFText {
+                                    height: 14
+                                    text: viewModel.unreadNotifications
+                                    font.pixelSize: 12
+                                    anchors.centerIn: counter
+                                }
+                            }
+                            DropShadow {
+                                anchors.fill: counter
+                                radius: 5
+                                samples: 9
+                                source: counter
+                                color: Style.active
+                            }
+                        }
+
+                        Rectangle {
+                            x: 10
+                            width: parent.width - 20
+                            height: 2
+                            color: Style.background_button
+                            visible: modelData.name == 'applications'
+                        }
+
+                        Keys.onPressed: {
+                            if ((event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space))
+                            if (selectedItem != index) {
+                                updateItem(index);
+                            }
+                        }
+
+                        MouseArea {
+                            id: mouseArea
+                            anchors.fill: parent
+                            onClicked: {
+                                control.focus = true
+                                if (selectedItem != index) {
+                                    updateItem(index);
+                                }
+                            }
+                            hoverEnabled: true
+                        }
+                    }
                 }
-            }
-
-            SvgImage {
-                x: 21
-                y: 16
-                width: 28
-                height: 28
-                source: whereToBuyControl.clicked
-                    ? "qrc:/assets/icon-where-to-buy-beam-green.svg"
-                    : "qrc:/assets/icon-where-to-buy-beam-gray.svg"
-            }
-            Item {
-                Rectangle {
-                    id: indicator
-                    y: 6
-                    width: 4
-                    height: 48
-                    color: whereToBuyControl.clicked ? Style.active : Style.passive
-                }
-
-                DropShadow {
-                    anchors.fill: indicator
-                    radius: 5
-                    samples: 9
-                    color: Style.active
-                    source: indicator
-                }
-
-                visible: whereToBuyControl.activeFocus
-            }
-            Keys.onPressed: {
-                if ((event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space) && whereToBuyControl.activeFocus)
-                    whereToBuyControl.clickHandler();
-            }
-
-            MouseArea {
-                id: mouseArea
-                anchors.fill: parent
-                onClicked: {
-                    whereToBuyControl.clickHandler();
-                }
-                hoverEnabled: true
             }
         }
-
     }
 
     Loader {
@@ -335,24 +340,28 @@ Rectangle {
     function updateItem(indexOrID, props)
     {
         var update = function(index) {
+            var sameTab = selectedItem == index;
+
             selectedItem = index
             controls.itemAt(index).focus = true;
 
-            var source = ["qrc:/", contentItems[index].qml ? contentItems[index].qml() : contentItems[index].name, ".qml"].join('')
-            content.setSource(source, Object.assign({"openSend": false}, props))
+            var item   = contentItems[index]
+            var source = ["qrc:/", item.qml ? item.qml() : item.name, ".qml"].join('')
+            var args   = item.args ? item.args() : {}
 
+            content.setSource(source, Object.assign(args, props))
             viewModel.update(index)
         }
 
         if (typeof(indexOrID) == "string") {
             for (var index = 0; index < contentItems.length; index++) {
                 if (contentItems[index].name == indexOrID) {
-                    return update(index);
+                    indexOrID = index
                 }
             }
         }
 
-        // plain index passed
+        // here we always have a number
         update(indexOrID)
     }
 
@@ -365,6 +374,9 @@ Rectangle {
        details.open()
     }
 
+    function openWallet () {
+        updateItem("wallet")
+    }
     function openSendDialog(receiver) {
         updateItem("wallet", {"openSend": true, "token" : receiver})
     }
@@ -385,6 +397,13 @@ Rectangle {
         updateItem("wallet", {"openedTxID": id})
     }
 
+    function openDAppTransactionDetails(txid) {
+        if (content.item.openAppTx) {
+            return content.item.openAppTx(txid)
+        }
+        updateItem("applications", {"openedTxID": txid})
+    }
+
     function openSwapTransactionDetails(id) {
         updateItem("atomic_swap", {"openedTxID": id})
     }
@@ -395,6 +414,15 @@ Rectangle {
 
     function resetLockTimer() {
         viewModel.resetLockTimer();
+    }
+
+    function openFaucet () {
+        var args = appArgs("BEAM Faucet", viewModel.faucetAppID, false);
+        updateItem("applications", args);
+    }
+
+    function validationSeedBackToSettings() {
+        updateItem("settings", { "settingsPrivacyFolded": false});
     }
 
     property var trezor_popups : []
@@ -431,8 +459,11 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        updateItem("wallet")
-        main.Window.window.closing.connect(onClosing)
+        if (seedValidationHelper.isTriggeredFromSettings)
+            validationSeedBackToSettings();
+        else
+            openWallet();
+        main.Window.window.closing.connect(onClosing);
     }
 
     Component.onDestruction: {

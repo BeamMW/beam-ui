@@ -3,6 +3,7 @@ import QtQuick 2.11
 Rectangle {
     id: rowItem
 
+    property Item expandedItem : null
     property bool collapsed: true
     property bool animating: false
     property bool rowInModel: true 
@@ -10,7 +11,8 @@ Rectangle {
     property color backgroundColor: Style.background_row_even
     property var onLeftClick: function() { return true; }
     property var tableView
-    default property Component delegate  
+    default property Component delegate
+    property bool hovered: false
 
     height:         rowHeight
     anchors.left:   parent.left
@@ -40,8 +42,13 @@ Rectangle {
             txDetails.onDelegateImplicitHeightChanged();
         }
 
-        if (animate) expandAnimation.start()
-        else collapsed = false
+        if (animate) {
+                    //console.log("onCollapsedChanged: " + collapsed)
+        
+            //transactionsTable.positionViewAtRow(styleData.row, ListView.Contain)
+            expandAnimation.start()
+        } else
+            collapsed = false
     }
 
     function collapse(animate) {
@@ -73,11 +80,11 @@ Rectangle {
     }
 
     MouseArea {
-        anchors.top:      parent.top
-        anchors.left:     parent.left
-        height:           rowItem.rowHeight
-        width:            parent.width
+        id: rowMouseArea
+        anchors.fill:     parent
         acceptedButtons:  Qt.LeftButton | Qt.RightButton
+        hoverEnabled:     true
+        propagateComposedEvents: true
 
         onClicked: {
             if (!rowInModel)
@@ -94,6 +101,14 @@ Rectangle {
                     parent.collapsed ? expand(true) : collapse(true);
                 }
             }
+        }
+
+        onEntered: {
+            rowItem.hovered = true;
+        }
+
+        onExited: {
+            rowItem.hovered = false;
         }
     }
 

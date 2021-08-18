@@ -1,10 +1,10 @@
 #include <string>
 
-const unsigned VERSION_MAJOR = @VERSION_MAJOR@;
-const unsigned VERSION_MINOR = @VERSION_MINOR@;
-const unsigned VERSION_REVISION = @VERSION_REVISION@;
-const std::string GIT_COMMIT_HASH = "@GIT_COMMIT_HASH@";
-const std::string PROJECT_VERSION = "@PROJECT_VERSION@";
-const std::string BRANCH_NAME = "@BRANCH_NAME@";
-const std::string BEAM_BRANCH_NAME = "@BEAM_BRANCH_NAME@";
-const std::string BEAM_VERSION = "@BEAM_VERSION@";
+inline const unsigned VERSION_MAJOR = @VERSION_MAJOR@;
+inline const unsigned VERSION_MINOR = @VERSION_MINOR@;
+inline const unsigned VERSION_REVISION = @VERSION_REVISION@;
+inline const std::string GIT_COMMIT_HASH = "@GIT_COMMIT_HASH@";
+inline const std::string PROJECT_VERSION = "@PROJECT_VERSION@";
+inline const std::string BRANCH_NAME = "@BRANCH_NAME@";
+inline const std::string BEAM_BRANCH_NAME = "@BEAM_BRANCH_NAME@";
+inline const std::string BEAM_VERSION = "@BEAM_VERSION@";

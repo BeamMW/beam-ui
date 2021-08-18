@@ -38,9 +38,9 @@ void PushNotificationManager::onNewSoftwareUpdateAvailable(
         if (showPopup)
         {
             QString newVersion = QString::fromStdString(
-                info.m_version.to_string() + "." + std::to_string(info.m_UIrevision));
+                std::to_string(info.m_version) + "." + std::to_string(info.m_UIrevision));
             QString currentVersion = QString::fromStdString(
-                currentLibVersion.to_string() + "." + std::to_string(currentUIRevision));
+                std::to_string(currentLibVersion) + "." + std::to_string(currentUIRevision));
             QVariant id = QVariant::fromValue(notificationID);
         
             emit showUpdateNotification(newVersion, currentVersion, id);

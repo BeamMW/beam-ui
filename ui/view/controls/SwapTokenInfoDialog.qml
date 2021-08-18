@@ -1,11 +1,11 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
 
-import QtQuick.Layouts 1.11
+import QtQuick.Layouts 1.12
 import Beam.Wallet 1.0
 import "."
 
-Dialog {
+CustomDialog {
     id: dialog
     modal: true
         
@@ -34,12 +34,6 @@ Dialog {
 
     onOpened: {
         forceActiveFocus();
-    }
-
-    background: Rectangle {
-        radius: 10
-        color: Style.background_popup
-        anchors.fill: parent
     }
 
     contentItem: Item {
@@ -240,7 +234,7 @@ Dialog {
                     icon.color:         Style.content_opposite
                     palette.button:     Style.accent_incoming
                     //% "copy and close"
-                    text:               qsTrId("wallet-receive-swap-copy-and-close")
+                    text:               qsTrId("general-copy-and-close")
                     onClicked: {
                         BeamGlobals.copyToClipboard(viewModel.token);
                         dialog.close();

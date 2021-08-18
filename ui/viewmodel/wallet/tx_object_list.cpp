@@ -175,6 +175,11 @@ public offline" */
         //% "completed"
         return qtTrId("wallet-txs-status-completed");
     }
+    else if (status == "confirming")
+    {
+        //% "confirming"
+        return qtTrId("wallet-txs-status-confirming");
+    }
     else
     {
         //% "unknown"
@@ -231,6 +236,7 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::IsOfflineToken), "isOfflineToken"},
         { static_cast<int>(Roles::AssetNames), "assetNames"},
         { static_cast<int>(Roles::AssetNamesSort), "assetNamesSort"},
+        { static_cast<int>(Roles::AssetVerified), "assetVerified"},
         { static_cast<int>(Roles::IsSent), "isSent"},
         { static_cast<int>(Roles::IsReceived), "isReceived"},
         { static_cast<int>(Roles::IsPublicOffline), "isPublicOffline"},
@@ -244,9 +250,16 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::FeeRate), "feeRate"},
         { static_cast<int>(Roles::AssetAmountsIncome), "assetAmountsIncome"},
         { static_cast<int>(Roles::AssetRates), "assetRates"},
+        { static_cast<int>(Roles::AssetIDs), "assetIDs"},
         { static_cast<int>(Roles::CidsStr), "cidsStr"},
         { static_cast<int>(Roles::Source), "source"},
-        { static_cast<int>(Roles::SourceSort), "sourceSort"}
+        { static_cast<int>(Roles::SourceSort), "sourceSort"},
+        { static_cast<int>(Roles::MinConfirmations), "minConfirmations"},
+        { static_cast<int>(Roles::ConfirmationsProgress), "confirmationsProgress"},
+        { static_cast<int>(Roles::IsDappTx), "isDappTx"},
+        { static_cast<int>(Roles::DAppId), "dappId"},
+        { static_cast<int>(Roles::DAppName), "dappName"},
+        { static_cast<int>(Roles::IsActive), "isActive"}
     };
     return roles;
 }
@@ -287,7 +300,9 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return value->getAddressTo();
         case Roles::Status:
         case Roles::StatusSort:
-            return getStatusTextTranslated(value->getStatus(), value->getAddressType());
+            return value->getStatus() == "confirming"
+                ? getStatusTextTranslated(value->getStatus(), value->getAddressType()) + " (" + value->getConfirmationProgress() + ")"
+                : getStatusTextTranslated(value->getStatus(), value->getAddressType());
         case Roles::Fee:
             return value->getFee();
         case Roles::Comment:
@@ -393,6 +408,18 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             result.setValue(namesList);
             return result;
         }
+        case Roles::AssetVerified:
+        {
+            QList<bool> verifiedList;
+            const auto& alist = value->getAssetsList();
+            for(const auto& assetID: alist)
+            {
+                verifiedList.append(_amgr->isVerified(assetID));
+            }
+            QVariant result;
+            result.setValue(verifiedList);
+            return result;
+        }
         case Roles::AssetIcons:
         {
             QList<QString> iconsList;
@@ -426,6 +453,13 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             result.setValue(rates);
             return result;
         }
+        case Roles::AssetIDs:
+        {
+            const auto& rates = value->getAssetIds();
+            QVariant result;
+            result.setValue(rates);
+            return result;
+        }
         case Roles::AssetFilter:
         {
             const auto& alist = value->getAssetsList();
@@ -446,6 +480,18 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return value->getAmountSecondCurrency();
         case Roles::IsMultiAsset:
             return value->isMultiAsset();
+        case Roles::MinConfirmations:
+            return value->getMinConfirmations();
+        case Roles::ConfirmationsProgress:
+            return value->getConfirmationProgress();
+        case Roles::IsDappTx:
+            return value->isDappTx();
+        case Roles::DAppId:
+            return value->getAppId();
+        case Roles::DAppName:
+            return value->isContractTx() ? value->getSource() : "";
+        case Roles::IsActive:
+            return value->isActive();
         default:
             return QVariant();
     }

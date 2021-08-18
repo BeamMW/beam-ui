@@ -21,9 +21,10 @@ class QMLGlobals : public QObject
 {
     Q_OBJECT
 public:
-    QMLGlobals(QQmlEngine&);
+    explicit QMLGlobals(QQmlEngine&);
 
     Q_INVOKABLE static void showMessage(const QString& message);
+    Q_INVOKABLE static void logInfo(const QString& message);
     Q_INVOKABLE static void copyToClipboard(const QString& text);
     Q_INVOKABLE QString version();
     Q_INVOKABLE static bool isToken(const QString& text);
@@ -68,6 +69,7 @@ public:
     Q_INVOKABLE static QString divideWithPrecision(const QString& dividend, const QString& divider, uint precision);
     Q_INVOKABLE static QString multiplyWithPrecision(const QString& first, const QString& second, uint precision);
     Q_INVOKABLE static QString roundWithPrecision(const QString& number, uint precision);
+    Q_INVOKABLE static QString rawTxIdToStr(const QVariant& txId);
 
 private:
     QQmlEngine& _engine;

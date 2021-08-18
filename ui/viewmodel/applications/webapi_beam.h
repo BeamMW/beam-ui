@@ -14,44 +14,56 @@
 #pragma once
 
 #include "model/app_model.h"
-#include "webapi_shaders.h"
-#include "consent_handler.h"
+#include "wallet/api/i_wallet_api.h"
+#include "wallet/core/contracts/i_shaders_manager.h"
 
 namespace beamui::applications
 {
     class WebAPI_Beam
         : public QObject
         , public beam::wallet::IWalletApiHandler
+        , public std::enable_shared_from_this<WebAPI_Beam>
     {
-        Q_OBJECT
-    public:
-        explicit WebAPI_Beam(IConsentHandler& handler,
-                             beam::wallet::IShadersManager::Ptr shaders,
-                             const std::string& version,
-                             const std::string& appid,
-                             const std::string& appname);
+        struct ApiHandlerProxy: beam::wallet::IWalletApiHandler
+        {
+            void sendAPIResponse(const beam::wallet::json& result) override
+            {
+                if (auto handler = _handler.lock())
+                {
+                    handler->sendAPIResponse(result);
+                }
+            }
+            std::weak_ptr<beam::wallet::IWalletApiHandler> _handler;
+        };
 
+        Q_OBJECT
+        Q_PROPERTY(QMap<QString, QVariant> assets READ getAssets NOTIFY assetsChanged)
+
+    public:
+        // Do not call directly, use ::Create instead
+        WebAPI_Beam(beam::wallet::IShadersManager::Ptr shaders, const std::string& version, const std::string& appid, const std::string& appname);
         ~WebAPI_Beam() override;
 
-    //
-    // Slots below are called by web in context of the UI thread
-    //
+        typedef std::shared_ptr<WebAPI_Beam> Ptr;
+        static void Create(const std::string& version, const std::string& appid, const std::string& appname, std::function<void (Ptr)> cback);
+
+        [[nodiscard]] QMap<QString, QVariant> getAssets();
+        Q_INVOKABLE void sendApproved(const QString& request);
+        Q_INVOKABLE void sendRejected(const QString& request);
+        Q_INVOKABLE void contractInfoApproved(const QString& request);
+        Q_INVOKABLE void contractInfoRejected(const QString& request);
+
     public slots:
        int test();
        void callWalletApi(const QString& request);
 
-    //
-    // Signals are received by web
-    //
     signals:
-        void callWalletApiResult(const QString& result);
+       void callWalletApiResult(const QString& result);
+       void assetsChanged();
+       void approveSend(const QString& request, const QMap<QString, QVariant>& info);
+       void approveContractInfo(const QString& request, const QMap<QString, QVariant>& info, const QList<QMap<QString, QVariant>>& amounts);
 
     public:
-        void AnyThread_sendApproved(const std::string& request);
-        void AnyThread_sendRejected(const std::string& request, beam::wallet::ApiError err, const std::string& message);
-        void AnyThread_contractInfoApproved(const std::string& request);
-        void AnyThread_contractInfoRejected(const std::string& request, beam::wallet::ApiError err, const std::string& message);
-
         [[nodiscard]] std::string getAppId() const
         {
             return _appId;
@@ -63,8 +75,11 @@ namespace beamui::applications
         }
 
     private:
-        // This can be called from any thread.
-        void AnyThread_callWalletApiImp(const std::string& request);
+        void AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&);
+        void AnyThread_getContractInfoConsent(const std::string &request, const beam::wallet::IWalletApi::ParseResult &);
+
+    private:
+        void UIThread_callWalletApiImp(const std::string& request);
 
         // This can be called from any thread
         void AnyThread_sendError(const std::string& request, beam::wallet::ApiError err, const std::string& message);
@@ -76,9 +91,14 @@ namespace beamui::applications
         void sendAPIResponse(const beam::wallet::json& result) override;
 
         // API should be accessed only in context of the reactor thread
-        beam::wallet::IWalletApi::Ptr _walletAPI;
-        IConsentHandler& _consentHandler;
+        using ApiPtr = beam::wallet::IWalletApi::Ptr;
+        ApiPtr _walletAPI;
+        std::shared_ptr<ApiHandlerProxy> _walletAPIProxy;
+
         std::string _appId;
         std::string _appName;
+
+        AssetsManager::Ptr _amgr;
+        std::set<beam::Asset::ID> _mappedAssets;
     };
 }

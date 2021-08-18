@@ -3,7 +3,7 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.12
 import Beam.Wallet 1.0
 import "controls"
 import "./utils.js" as Utils
@@ -678,7 +678,7 @@ please review your settings and try again"
 
                                     CustomButton {
                                         //% "copy and close"
-                                        text:                qsTrId("wallet-receive-swap-copy-and-close")
+                                        text:                qsTrId("general-copy-and-close")
                                         palette.buttonText:  Style.content_main
                                         palette.button:      Style.background_button
                                         icon.source:         "qrc:/assets/icon-copy.svg"

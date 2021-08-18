@@ -2,7 +2,7 @@ import QtQuick 2.11
 import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.12
 import "controls"
 import "utils.js" as Utils
 import Beam.Wallet 1.0
@@ -15,6 +15,8 @@ ColumnLayout {
     property string  linkStyle:  "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
     property string  swapMode:   ""
     property bool    creating:   true
+
+    property bool settingsPrivacyFolded: true
 
     Component.onCompleted: {
         settingsView.creating = false
@@ -104,6 +106,12 @@ ColumnLayout {
                 SettingsPrivacy {
                     id: privacyBlock
                     viewModel: viewModel
+                    folded: settingsPrivacyFolded
+                }
+
+                SettingsApps {
+                    id: appsBlock
+                    viewModel: viewModel
                 }
 
                 SettingsTitle {
@@ -139,13 +147,18 @@ ColumnLayout {
                     hasStatusIndicatior: true
                     connectionStatus: getStatus()
                     connectionErrorMsg: status_bar.error_msg
+                    folded: swapMode != "BEAM"
 
                     function getStatus() {
-                        var status = status_bar.status;
-                        if (status == "error") return "error"
-                        if (status == "updating") return "connected";
-                        if (status == "online") return "connected";
-                        return "disconnected"
+                        var statusBarModel = status_bar.model;
+                        if (statusBarModel.isFailedStatus)
+                            return "error";
+                        else if (statusBarModel.isSyncInProgress)
+                            return "connected";
+                        else if (statusBarModel.isOnline)
+                            return "connected";
+                        else
+                            return "disconnected";
                     }
                 }
 

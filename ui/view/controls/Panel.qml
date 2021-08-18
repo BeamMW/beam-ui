@@ -2,7 +2,7 @@ import QtQuick 2.11
 import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.12
 import "."
 
 Pane {
@@ -24,7 +24,7 @@ Pane {
                 SFText {
                     id: headerTitle
                     Layout.fillWidth: headerTextLabel.text.length == 0
-                    color:              Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, control.enabled ? 0.5 : 0.15)
+                    color:              Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, control.enabled ? 1 : 0.15)
 
                     font {
                         styleName:      "Bold"

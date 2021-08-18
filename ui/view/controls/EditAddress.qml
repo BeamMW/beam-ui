@@ -1,11 +1,11 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.3
-import QtQuick.Layouts 1.11
+import QtQuick.Layouts 1.12
 import Beam.Wallet 1.0
 import "../utils.js" as Utils
 import "."
 
-Dialog {
+CustomDialog {
 	id:      control
 	modal:   true
 	x:       (parent.width - width) / 2
@@ -14,6 +14,7 @@ Dialog {
 
     property var  viewModel
     property var  addressItem
+    property bool isShieldedSupported: true
 
     property var     token:         addressItem.token
     property var     walletID:      addressItem.walletID
@@ -24,11 +25,6 @@ Dialog {
     property bool    neverExpires:  expiration.getTime() == (new Date(4294967295000)).getTime()
     property bool    commentValid:  comment == "" || comment == addressItem.name || viewModel.commentValid(comment)
     property bool    extended:      false
-
-    background: Rectangle {
-		radius: 10
-        color:  Style.background_popup
-    }
 
     contentItem: Item { ColumnLayout {
         spacing: 0
@@ -66,7 +62,7 @@ Dialog {
                 wrapMode:                 Text.Wrap
                 font.pixelSize:           14
                 color:                    Style.content_main
-                text:                     control.token
+                text:                     isShieldedSupported ? control.token : control.walletID
 
                 onCopyText: function () {
                     BeamGlobals.copyToClipboard(text)

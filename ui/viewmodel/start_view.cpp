@@ -28,6 +28,7 @@
 #include "wallet/core/secstring.h"
 #include "wallet/core/default_peers.h"
 
+#include <boost/algorithm/string.hpp>
 #include <boost/filesystem.hpp>
 #include <algorithm>
 #include <thread>
@@ -45,6 +46,7 @@ using namespace std;
 namespace
 {
     const QChar PHRASES_SEPARATOR = ';';
+    const uint8_t kPhraseSize = 12;
 
     boost::filesystem::path pathFromStdString(const std::string& path)
     {
@@ -137,7 +139,7 @@ namespace
             DoJSCallback(jsCallback, errmsg);
         }
     }
-}
+}  // namespace
 
 RecoveryPhraseItem::RecoveryPhraseItem(int index, QString phrase)
     : m_index(index)
@@ -303,6 +305,20 @@ void StartViewModel::setUseHWWallet(bool value)
     {
         m_useHWWallet = value;
         emit isUseHWWalletChanged();
+    }
+}
+
+bool StartViewModel::getSaveSeed() const
+{
+    return m_saveSeed;
+}
+
+void StartViewModel::setSaveSeed(bool value)
+{
+    if (m_saveSeed != value)
+    {
+        m_saveSeed = value;
+        emit saveSeedChanged();
     }
 }
 
@@ -535,7 +551,7 @@ void StartViewModel::setIsRecoveryMode(bool value)
 
 const QList<QObject*>& StartViewModel::getRecoveryPhrases()
 {
-    if (m_recoveryPhrases.empty())
+    if (m_recoveryPhrases.empty() && !AppModel::getInstance().isSeedValidationMode())
     {
         if (!m_isRecoveryMode)
         {
@@ -543,9 +559,9 @@ const QList<QObject*>& StartViewModel::getRecoveryPhrases()
         }
         else
         {
-            m_generatedPhrases.resize(12);
+            m_generatedPhrases.resize(kPhraseSize);
         }
-        assert(m_generatedPhrases.size() == 12);
+        assert(m_generatedPhrases.size() == kPhraseSize);
         m_recoveryPhrases.reserve(static_cast<int>(m_generatedPhrases.size()));
         int i = 0;
         for (const auto& p : m_generatedPhrases)
@@ -664,12 +680,7 @@ uint StartViewModel::coreAmount() const
 
 void StartViewModel::copyPhrasesToClipboard()
 {
-    QString phrases;
-    for (const auto& p : m_generatedPhrases)
-    {
-        phrases = phrases % p.c_str() % PHRASES_SEPARATOR;
-    }
-    QApplication::clipboard()->setText(phrases);
+    QApplication::clipboard()->setText(getPhrases());
 }
 
 void StartViewModel::resetPhrases()
@@ -708,7 +719,8 @@ void StartViewModel::createWallet(const QJSValue& callback)
     secretSeed.assign(buf.data(), buf.size());
     SecString secretPass = m_password;
 
-    DoJSCallback(m_callback, AppModel::getInstance().createWallet(secretSeed, secretPass));
+    std::string rawSeed = m_saveSeed ? getPhrases().toStdString() : "";
+    DoJSCallback(m_callback, AppModel::getInstance().createWallet(secretSeed, secretPass, rawSeed));
 }
 
 void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
@@ -916,6 +928,37 @@ void StartViewModel::openFolder(const QString& path) const
     WalletSettings::openFolder(path);
 }
 
+void StartViewModel::loadRecoveryPhraseForValidation()
+{
+    auto walletModel = AppModel::getInstance().getWalletModel();
+    if (walletModel)
+    {
+        walletModel->getAsync()->readRawSeedPhrase([this] (const std::string& savedSeed)
+        {
+            if (savedSeed.empty()) return;
+
+            m_generatedPhrases.clear();
+            m_recoveryPhrases.clear();
+
+            std::vector<std::string> savedPhrases;
+            boost::split(savedPhrases, savedSeed, [](char c){return c == PHRASES_SEPARATOR;});
+            if (savedPhrases.size() > kPhraseSize)
+                savedPhrases.erase(savedPhrases.begin() + kPhraseSize, savedPhrases.end());
+
+            m_recoveryPhrases.reserve(kPhraseSize);
+            int i = 0;
+            for (const auto& p : savedPhrases)
+            {
+                m_generatedPhrases.push_back(p);
+                m_recoveryPhrases.push_back(new RecoveryPhraseItem(i++, QString::fromStdString(p)));
+            }
+
+            emit recoveryPhrasesChanged();
+        });
+    }
+
+}
+
 bool StartViewModel::getValidateDictionary() const
 {
     return m_validateDictionary;
@@ -928,4 +971,14 @@ void StartViewModel::setValidateDictionary(bool value)
         m_validateDictionary = value;
         emit validateDictionaryChanged();
     }
+}
+
+QString StartViewModel::getPhrases() const
+{
+    QString phrases;
+    for (const auto& p : m_generatedPhrases)
+    {
+        phrases = phrases % p.c_str() % PHRASES_SEPARATOR;
+    }
+    return phrases;
 }
