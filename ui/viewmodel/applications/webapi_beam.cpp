@@ -74,7 +74,7 @@ namespace beamui::applications {
 
     WebAPI_Beam::WebAPI_Beam(beam::wallet::IShadersManager::Ptr shaders, const std::string& version, const std::string& appid, const std::string& appname)
         : QObject(nullptr)
-        , AppsApi(appid, appname)
+        , AppsApi<WebAPI_Beam>(appid, appname)
         , _amgr(AppModel::getInstance().getAssets())
     {
         connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &WebAPI_Beam::assetsChanged);
@@ -91,34 +91,8 @@ namespace beamui::applications {
         data.appId     = appid;
         data.appName   = appname;
 
-        _walletAPIProxy = std::make_shared<ApiHandlerProxy>();
         _walletAPI = IWalletApi::CreateInstance(version, *_walletAPIProxy, data);
         LOG_INFO () << "WebAPI_Beam created for " << data.appName << ", " << data.appId;
-    }
-
-    void WebAPI_Beam::Create(const std::string& version, const std::string& appid, const std::string& appname, std::function<void (Ptr)> cback)
-    {
-        //
-        // THIS IS UI THREAD
-        //
-        getAsyncWallet().makeIWTCall(
-            [appid, appname]() -> boost::any {
-                //
-                // THIS IS REACTOR THREAD
-                //
-                auto result = AppModel::getInstance().getWalletModel()->IWThread_createAppShaders(appid, appname);
-                return result;
-            },
-            [cback, version, appid, appname](boost::any aptr) {
-                //
-                // THIS IS UI THREAD
-                //
-                auto shaders = boost::any_cast<IShadersManager::Ptr>(aptr);
-                auto wapi = std::make_shared<WebAPI_Beam>(shaders, version, appid, appname);
-                wapi->_walletAPIProxy->_handler = wapi;
-                cback(wapi);
-            }
-        );
     }
 
     WebAPI_Beam::~WebAPI_Beam()

@@ -201,7 +201,7 @@ set(UI_SRC
     viewmodel/wallet/assets_manager.h
     viewmodel/wallet/assets_manager.cpp
     viewmodel/applications/webapi_creator.cpp
-        viewmodel/dex/dex_view.h
+    viewmodel/dex/dex_view.h
     viewmodel/dex/dex_view.cpp
     viewmodel/dex/dex_order_object.cpp
     viewmodel/dex/dex_orders_list.cpp

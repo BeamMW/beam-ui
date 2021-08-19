@@ -24,31 +24,16 @@ namespace beamui::applications
         : public QObject
         , public beam::wallet::IWalletApiHandler
         , public std::enable_shared_from_this<WebAPI_Beam>
-        , public beam::wallet::AppsApi
+        , public beam::wallet::AppsApi<WebAPI_Beam>
     {
-        struct ApiHandlerProxy: beam::wallet::IWalletApiHandler
-        {
-            void sendAPIResponse(const beam::wallet::json& result) override
-            {
-                if (auto handler = _handler.lock())
-                {
-                    handler->sendAPIResponse(result);
-                }
-            }
-            std::weak_ptr<beam::wallet::IWalletApiHandler> _handler;
-        };
-
         Q_OBJECT
         Q_PROPERTY(QMap<QString, QVariant> assets READ getAssets NOTIFY assetsChanged)
 
-    public:
-        // Do not call directly, use ::Create instead
+        friend class beam::wallet::AppsApi<WebAPI_Beam>;
         WebAPI_Beam(beam::wallet::IShadersManager::Ptr shaders, const std::string& version, const std::string& appid, const std::string& appname);
         ~WebAPI_Beam() override;
 
-        typedef std::shared_ptr<WebAPI_Beam> Ptr;
-        static void Create(const std::string& version, const std::string& appid, const std::string& appname, std::function<void (Ptr)> cback);
-
+    public:
         [[nodiscard]] QMap<QString, QVariant> getAssets();
         Q_INVOKABLE void sendApproved(const QString& request);
         Q_INVOKABLE void sendRejected(const QString& request);
@@ -84,7 +69,6 @@ namespace beamui::applications
         // API should be accessed only in context of the reactor thread
         using ApiPtr = beam::wallet::IWalletApi::Ptr;
         ApiPtr _walletAPI;
-        std::shared_ptr<ApiHandlerProxy> _walletAPIProxy;
 
         AssetsManager::Ptr _amgr;
         std::set<beam::Asset::ID> _mappedAssets;

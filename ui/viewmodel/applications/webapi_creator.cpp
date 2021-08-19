@@ -20,6 +20,13 @@
 
 namespace beamui::applications
 {
+    namespace
+    {
+        WalletModel::Ptr getWalletModel() {
+            return AppModel::getInstance().getWalletModel();
+        }
+    }
+
     WebAPICreator::WebAPICreator(QObject *parent)
         : QObject(parent)
     {
@@ -59,7 +66,7 @@ namespace beamui::applications
         QPointer<WebAPICreator> guard = this;
         const auto appid = GenerateAppID(appName.toStdString(), appUrl.toStdString());
 
-        WebAPI_Beam::Create(version, appid, appName.toStdString(),
+        WebAPI_Beam::UIThread_Create(getWalletModel().get(), version, appid, appName.toStdString(),
             [this, guard, version, appName, appid] (WebAPI_Beam::Ptr api) {
                 if (guard)
                 {
