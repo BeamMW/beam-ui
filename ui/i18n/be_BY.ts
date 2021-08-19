@@ -426,7 +426,7 @@
     </message>
     <message id="send-confirmation-pwd-require-message">
         <source>To approve the transaction please enter your password</source>
-        <translation type="unfinished">To approve the transaction please enter your password</translation>
+        <translation>Каб здзейсніць транзакцыю, увядзіце пароль</translation>
     </message>
     <message id="wallet-title">
         <source>Wallet</source>
@@ -443,7 +443,7 @@
     <message id="start-migration-message">
         <source>Your wallet will be migrated to v </source>
         <oldsource>Your wallet will be migrated to v.</oldsource>
-        <translation type="unfinished">Your wallet will be migrated to v </translation>
+        <translation>Ваш кашалёк будзе абноўлены да версіі: </translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>
@@ -574,7 +574,7 @@
     <message id="appmodel-failed-start-node">
         <source>Failed to start node. Please save wallet logs and contact support.</source>
         <oldsource>Failed to start node. Please check your node configuration</oldsource>
-        <translation type="unfinished">Failed to start node. Please save wallet logs and contact support.</translation>
+        <translation>Не атрымалася запусціць вузел. Калі ласка, захавайце файлы часопісаў кашалька і звярніцеся ў службу падтрымкі.</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
         <source>Node protocol error!</source>
@@ -739,7 +739,7 @@
     </message>
     <message id="open-external-open">
         <source>open</source>
-        <translation type="unfinished">open</translation>
+        <translation>адчыніць</translation>
     </message>
     <message id="open-external-title">
         <source>External link</source>
@@ -1108,7 +1108,7 @@ please review your settings and try again.</translation>
     </message>
     <message id="wallet-search-transactions-placeholder">
         <source>Enter search text...</source>
-        <translation type="unfinished">Enter search text...</translation>
+        <translation>Увядзіце тэкст для пошуку...</translation>
     </message>
     <message id="settings-swap-node">
         <source>Node</source>
@@ -2749,15 +2749,15 @@ Update your settings and try again.</source>
     </message>
     <message id="info-asset-short">
         <source>Short description</source>
-        <translation type="unfinished">Short description</translation>
+        <translation>Кароткае апісанне</translation>
     </message>
     <message id="info-asset-long">
         <source>Long description</source>
-        <translation type="unfinished">Long description</translation>
+        <translation>Поўнае апісанне</translation>
     </message>
     <message id="info-asset-site">
         <source>Website</source>
-        <translation type="unfinished">Website</translation>
+        <translation>Сайт</translation>
     </message>
     <message id="info-asset-paper">
         <source>Whitepaper</source>

@@ -3255,9 +3255,9 @@ cannot be canceled.</source>
     </message>
     <message id="send-offline-tip" numerus="yes">
         <source>Offline address: %n transaction(s) left.</source>
-        <translation type="unfinished">
-            <numerusform>Offline address: %n transaction(s) left.</numerusform>
-            <numerusform>Offline address: %n transaction(s) left.</numerusform>
+        <translation>
+            <numerusform>Offline adres: %n transactie over.</numerusform>
+            <numerusform>Offline adres: %n transacties over.</numerusform>
         </translation>
     </message>
 </context>
