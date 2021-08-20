@@ -20,18 +20,18 @@
 
 namespace beamui::applications
 {
-    class WebAPI_Beam
+    class AppsApiUI
         : public QObject
-        , public beam::wallet::AppsApi<WebAPI_Beam>
-        , public std::enable_shared_from_this<WebAPI_Beam>
+        , public beam::wallet::AppsApi<AppsApiUI>
+        , public std::enable_shared_from_this<AppsApiUI>
     {
     private:
         Q_OBJECT
         Q_PROPERTY(QMap<QString, QVariant> assets READ getAssets NOTIFY assetsChanged)
 
-        friend class beam::wallet::AppsApi<WebAPI_Beam>;
-        WebAPI_Beam(const std::string& appid, const std::string& appname);
-        ~WebAPI_Beam() override = default;
+        friend class beam::wallet::AppsApi<AppsApiUI>;
+        AppsApiUI(const std::string& appid, const std::string& appname);
+        ~AppsApiUI() override = default;
 
         void AnyThread_sendApiResponse(const std::string& result) override;
         void ClientThread_getSendConsent(const std::string& request, const nlohmann::json& info, const nlohmann::json& amounts) override;

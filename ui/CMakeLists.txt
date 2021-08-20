@@ -112,8 +112,8 @@ set(UI_SRC
     viewmodel/applications/apps_server.cpp
     viewmodel/applications/apps_view.h
     viewmodel/applications/apps_view.cpp
-    viewmodel/applications/webapi_beam.h
-    viewmodel/applications/webapi_beam.cpp
+    viewmodel/applications/apps_api_ui.h
+    viewmodel/applications/apps_api_ui.cpp
     viewmodel/applications/public.cpp
     viewmodel/applications/public.h
     viewmodel/helpers/list_model.h

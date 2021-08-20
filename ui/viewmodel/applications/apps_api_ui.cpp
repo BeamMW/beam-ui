@@ -14,7 +14,7 @@
 #include <QObject>
 #include <QMessageBox>
 #include <sstream>
-#include "webapi_beam.h"
+#include "apps_api_ui.h"
 #include "utility/logger.h"
 #include "model/app_model.h"
 
@@ -30,16 +30,16 @@ namespace beamui::applications {
         }
     }
 
-    WebAPI_Beam::WebAPI_Beam(const std::string& appid, const std::string& appname)
+    AppsApiUI::AppsApiUI(const std::string& appid, const std::string& appname)
         : QObject(nullptr)
-        , AppsApi<WebAPI_Beam>(appid, appname)
+        , AppsApi<AppsApiUI>(appid, appname)
         , _amgr(AppModel::getInstance().getAssets())
     {
         // THIS SHOULD BE UI THREAD to let Qt register metatypes
-        connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &WebAPI_Beam::assetsChanged);
+        connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &AppsApiUI::assetsChanged);
     }
 
-    void WebAPI_Beam::AnyThread_sendApiResponse(const std::string& result)
+    void AppsApiUI::AnyThread_sendApiResponse(const std::string& result)
     {
         //
         // Do not assume thread here
@@ -48,18 +48,18 @@ namespace beamui::applications {
         emit callWalletApiResult(QString::fromStdString(result));
     }
 
-    QMap<QString, QVariant> WebAPI_Beam::getAssets()
+    QMap<QString, QVariant> AppsApiUI::getAssets()
     {
         return _amgr->getAssetsMap(_mappedAssets);
     }
 
-    int WebAPI_Beam::test()
+    int AppsApiUI::test()
     {
         // only for test, always 42
         return 42;
     }
 
-    void WebAPI_Beam::sendApproved(const QString& request)
+    void AppsApiUI::sendApproved(const QString& request)
     {
         //
         // This is UI thread
@@ -68,7 +68,7 @@ namespace beamui::applications {
         AnyThread_callWalletApiDirectly(request.toStdString());
     }
 
-    void WebAPI_Beam::sendRejected(const QString& request)
+    void AppsApiUI::sendRejected(const QString& request)
     {
         //
         // This is UI thread
@@ -77,7 +77,7 @@ namespace beamui::applications {
         AnyThread_sendApiError(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
     }
 
-    void WebAPI_Beam::contractInfoApproved(const QString& request)
+    void AppsApiUI::contractInfoApproved(const QString& request)
     {
         //
         // This is UI thread
@@ -86,7 +86,7 @@ namespace beamui::applications {
         AnyThread_callWalletApiDirectly(request.toStdString());
     }
 
-    void WebAPI_Beam::contractInfoRejected(const QString& request)
+    void AppsApiUI::contractInfoRejected(const QString& request)
     {
         //
         // This is UI thread
@@ -95,12 +95,12 @@ namespace beamui::applications {
         AnyThread_sendApiError(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
     }
 
-    void WebAPI_Beam::callWalletApi(const QString& request)
+    void AppsApiUI::callWalletApi(const QString& request)
     {
         AnyThread_callWalletApiChecked(request.toStdString());
     }
 
-    void WebAPI_Beam::ClientThread_getSendConsent(const std::string& request, const nlohmann::json& jinfo, const nlohmann::json& amounts)
+    void AppsApiUI::ClientThread_getSendConsent(const std::string& request, const nlohmann::json& jinfo, const nlohmann::json& amounts)
     {
         ApproveMap info;
 
@@ -131,10 +131,14 @@ namespace beamui::applications {
         const auto assetID = (*amounts.begin())["assetID"].get<beam::Asset::ID>();
         info.insert("assetID", assetID);
 
+        decltype(_mappedAssets)().swap(_mappedAssets);
+        _mappedAssets.insert(beam::Asset::s_BeamID);
+        _mappedAssets.insert(assetID);
+
         emit approveSend(QString::fromStdString(request), info);
     }
 
-    void WebAPI_Beam::ClientThread_getContractConsent(const std::string& request, const nlohmann::json& jinfo, const nlohmann::json& jamounts)
+    void AppsApiUI::ClientThread_getContractConsent(const std::string& request, const nlohmann::json& jinfo, const nlohmann::json& jamounts)
     {
         ApproveMap info;
 

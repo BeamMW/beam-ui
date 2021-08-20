@@ -14,7 +14,7 @@
 #pragma once
 
 #include <QObject>
-#include "webapi_beam.h"
+#include "apps_api_ui.h"
 #include "viewmodel/wallet/assets_list.h"
 
 namespace beamui::applications
@@ -38,6 +38,6 @@ namespace beamui::applications
         void apiChanged();
 
     private:
-        std::shared_ptr<WebAPI_Beam> _api;
+        std::shared_ptr<AppsApiUI> _api;
     };
 }

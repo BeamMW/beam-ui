@@ -16,7 +16,7 @@
 
 #include "public.h"
 #include "apps_view.h"
-#include "webapi_beam.h"
+#include "apps_api_ui.h"
 #include "webapi_creator.h"
 
 namespace beamui::applications
