@@ -22,54 +22,38 @@ namespace beamui::applications
 {
     class WebAPI_Beam
         : public QObject
-        , public beam::wallet::IWalletApiHandler
-        , public std::enable_shared_from_this<WebAPI_Beam>
         , public beam::wallet::AppsApi<WebAPI_Beam>
+        , public std::enable_shared_from_this<WebAPI_Beam>
     {
+    private:
         Q_OBJECT
         Q_PROPERTY(QMap<QString, QVariant> assets READ getAssets NOTIFY assetsChanged)
 
         friend class beam::wallet::AppsApi<WebAPI_Beam>;
-        WebAPI_Beam(beam::wallet::IShadersManager::Ptr shaders, const std::string& version, const std::string& appid, const std::string& appname);
-        ~WebAPI_Beam() override;
+        WebAPI_Beam(const std::string& appid, const std::string& appname);
+        ~WebAPI_Beam() override = default;
+
+        void AnyThread_sendApiResponse(const std::string& result) override;
+        void ClientThread_getSendConsent(const std::string& request, const nlohmann::json& info, const nlohmann::json& amounts) override;
+        void ClientThread_getContractConsent(const std::string& request, const nlohmann::json& info, const nlohmann::json& amounts) override;
 
     public:
         [[nodiscard]] QMap<QString, QVariant> getAssets();
+
+        Q_INVOKABLE int test();
+        Q_INVOKABLE void callWalletApi(const QString& request);
         Q_INVOKABLE void sendApproved(const QString& request);
         Q_INVOKABLE void sendRejected(const QString& request);
         Q_INVOKABLE void contractInfoApproved(const QString& request);
         Q_INVOKABLE void contractInfoRejected(const QString& request);
 
-    public slots:
-       int test();
-       void callWalletApi(const QString& request);
-
     signals:
-       void callWalletApiResult(const QString& result);
-       void assetsChanged();
-       void approveSend(const QString& request, const QMap<QString, QVariant>& info);
-       void approveContractInfo(const QString& request, const QMap<QString, QVariant>& info, const QList<QMap<QString, QVariant>>& amounts);
+        void callWalletApiResult(const QString& result);
+        void assetsChanged();
+        void approveSend(const QString& request, const QMap<QString, QVariant>& info);
+        void approveContractInfo(const QString& request, const QMap<QString, QVariant>& info, const QList<QMap<QString, QVariant>>& amounts);
 
     private:
-        void AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult&);
-        void AnyThread_getContractInfoConsent(const std::string &request, const beam::wallet::IWalletApi::ParseResult &);
-
-    private:
-        void UIThread_callWalletApiImp(const std::string& request);
-
-        // This can be called from any thread
-        void AnyThread_sendError(const std::string& request, beam::wallet::ApiError err, const std::string& message);
-
-        // This can be called from any thread
-        void AnyThread_sendAPIResponse(const beam::wallet::json& result);
-
-        // This is called from API (REACTOR) thread
-        void sendAPIResponse(const beam::wallet::json& result) override;
-
-        // API should be accessed only in context of the reactor thread
-        using ApiPtr = beam::wallet::IWalletApi::Ptr;
-        ApiPtr _walletAPI;
-
         AssetsManager::Ptr _amgr;
         std::set<beam::Asset::ID> _mappedAssets;
     };

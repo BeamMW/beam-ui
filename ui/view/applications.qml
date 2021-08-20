@@ -310,8 +310,8 @@ ColumnLayout {
 
                     if(loadRequest.status === WebEngineLoadRequest.LoadFailedStatus) {
                         // code in this 'if' will cause next 'if' to be called
-                        control.errorMessage = loadRequest.errorString
-                        return
+                        control.errorMessage = ["Failed to load:", JSON.stringify(loadRequest, null, 4)].join('\n')
+                        // no return
                     }
 
                     if (control.errorMessage.length) {
