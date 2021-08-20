@@ -23,7 +23,6 @@ namespace beamui::applications
     class AppsApiUI
         : public QObject
         , public beam::wallet::AppsApi<AppsApiUI>
-        , public std::enable_shared_from_this<AppsApiUI>
     {
     private:
         Q_OBJECT
