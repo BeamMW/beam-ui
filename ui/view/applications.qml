@@ -117,18 +117,16 @@ ColumnLayout {
                 webapiCreator.api.callWalletApi(request)
             })
 
-            webapiCreator.api.approveSend.connect(function(request, info) {
+            webapiCreator.api.approveSend.connect(function(request, info, amounts) {
+                info = JSON.parse(info)
+                amounts = JSON.parse(amounts)
                 var dialog = Qt.createComponent("send_confirm.qml")
                 var instance = dialog.createObject(control,
                     {
+                        amounts:        amounts,
                         addressText:    info["token"],
                         typeText:       info["tokenType"],
                         isOnline:       info["isOnline"],
-                        amounts: [{
-                            assetID:  info["assetID"],
-                            amount:   info["amount"],
-                            spend:    true
-                        }],
                         rateUnit:       info["rateUnit"],
                         fee:            info["fee"],
                         feeRate:        info["feeRate"],
@@ -153,6 +151,8 @@ ColumnLayout {
             })
 
             webapiCreator.api.approveContractInfo.connect(function(request, info, amounts) {
+                info = JSON.parse(info)
+                amounts = JSON.parse(amounts)
                 const dialog = Qt.createComponent("send_confirm.qml")
                 const instance = dialog.createObject(control,
                     {

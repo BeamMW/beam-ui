@@ -21,15 +21,6 @@
 namespace beamui::applications {
     using namespace beam::wallet;
 
-    namespace
-    {
-        namespace
-        {
-            typedef QList<QMap<QString, QVariant>> ApproveAmounts;
-            typedef QMap<QString, QVariant> ApproveMap;
-        }
-    }
-
     AppsApiUI::AppsApiUI(const std::string& appid, const std::string& appname)
         : QObject(nullptr)
         , AppsApi<AppsApiUI>(appid, appname)
@@ -100,82 +91,69 @@ namespace beamui::applications {
         AnyThread_callWalletApiChecked(request.toStdString());
     }
 
-    void AppsApiUI::ClientThread_getSendConsent(const std::string& request, const nlohmann::json& jinfo, const nlohmann::json& amounts)
+    QString AppsApiUI::prepareInfo4QT(const nlohmann::json& info)
     {
-        ApproveMap info;
-
-        const auto comment = QString::fromStdString(jinfo["comment"].get<std::string>());
-        info.insert("comment", comment);
-
-        const auto fee = AmountToUIString(jinfo["fee"].get<beam::Amount>());
-        info.insert("fee", fee);
-
-        const auto feeRate = AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID));
-        info.insert("feeRate", feeRate);
-
-        const auto token = QString::fromStdString(jinfo["token"].get<std::string>());
-        info.insert("token", token);
-
-        info.insert("rateUnit", _amgr->getRateUnit());
-        info.insert("isOnline",  jinfo["isOnline"].get<bool>());
-
-        if (!amounts.is_array() || amounts.size() != 1)
+        nlohmann::json result = json::object();
+        for (const auto& kv: info.items())
         {
-            assert(!"send must spend strictly 1 asset");
+            if (kv.key() == "fee")
+            {
+                const auto fee = AmountToUIString(info["fee"].get<beam::Amount>());
+                result["fee"] = fee.toStdString();
+
+                const auto feeRate = AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID));
+                result["feeRate"]  = feeRate.toStdString();
+                result["rateUnit"] = _amgr->getRateUnit().toStdString();
+            }
+            else
+            {
+                result.push_back({kv.key(), kv.value()});
+            }
+        }
+
+        return QString::fromStdString(result.dump());
+    }
+
+    QString AppsApiUI::prepareAmounts4QT(const nlohmann::json& amounts)
+    {
+        decltype(_mappedAssets)().swap(_mappedAssets);
+        _mappedAssets.insert(beam::Asset::s_BeamID);
+
+        nlohmann::json result = json::array();
+        for (const auto& val: amounts)
+        {
+            const auto assetId = val["assetID"].get<beam::Asset::ID>();
+            const auto amount = val["amount"].get<beam::Amount>();
+            const auto spend = val["spend"].get<bool>();
+
+            _mappedAssets.insert(assetId);
+            result.push_back({
+                {"assetID", assetId},
+                {"amount", AmountToUIString(amount).toStdString()},
+                {"spend", spend}
+            });
+        }
+
+        return QString::fromStdString(result.dump());
+    }
+
+    void AppsApiUI::ClientThread_getSendConsent(const std::string& request, const nlohmann::json& jinfo, const nlohmann::json& jamounts)
+    {
+        if (!jamounts.is_array() || jamounts.size() != 1)
+        {
+            assert(false);
             return AnyThread_sendApiError(request, ApiError::NotAllowedError, "send must spend strictly 1 asset");
         }
 
-        const auto amount = (*amounts.begin())["amount"].get<beam::Amount>();
-        info.insert("amount", AmountToUIString(amount));
-
-        const auto assetID = (*amounts.begin())["assetID"].get<beam::Asset::ID>();
-        info.insert("assetID", assetID);
-
-        decltype(_mappedAssets)().swap(_mappedAssets);
-        _mappedAssets.insert(beam::Asset::s_BeamID);
-        _mappedAssets.insert(assetID);
-
-        emit approveSend(QString::fromStdString(request), info);
+        const auto info = prepareInfo4QT(jinfo);
+        const auto amounts = prepareAmounts4QT(jamounts);
+        emit approveSend(QString::fromStdString(request), info, amounts);
     }
 
     void AppsApiUI::ClientThread_getContractConsent(const std::string& request, const nlohmann::json& jinfo, const nlohmann::json& jamounts)
     {
-        ApproveMap info;
-
-        const auto comment = QString::fromStdString(jinfo["comment"].get<std::string>());
-        info.insert("comment", comment);
-
-        const auto fee = AmountToUIString(jinfo["fee"].get<beam::Amount>());
-        info.insert("fee", fee);
-
-        const auto feeRate = AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID));
-        info.insert("feeRate", feeRate);
-
-        info.insert("rateUnit", _amgr->getRateUnit());
-        info.insert("isSpend",  jinfo["isSpend"].get<bool>());
-        info.insert("isEnough", jinfo["isEnough"].get<bool>());
-
-        decltype(_mappedAssets)().swap(_mappedAssets);
-        _mappedAssets.insert(beam::Asset::s_BeamID);
-
-        ApproveAmounts amounts;
-        for(const auto& jamount: jamounts)
-        {
-            const auto assetId = jamount["assetID"].get<beam::Asset::ID>();
-            _mappedAssets.insert(assetId);
-
-            QMap<QString, QVariant> entry;
-
-            const auto amount = AmountToUIString(jamount["amount"].get<beam::Amount>());
-            entry.insert("amount", amount);
-
-            const auto spend = jamount["spend"].get<bool>();
-            entry.insert("spend", spend);
-
-            entry.insert("assetID", assetId);
-            amounts.push_back(entry);
-        }
-
+        const auto info = prepareInfo4QT(jinfo);
+        const auto amounts = prepareAmounts4QT(jamounts);
         emit approveContractInfo(QString::fromStdString(request), info, amounts);
     }
 }

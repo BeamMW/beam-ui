@@ -50,11 +50,14 @@ namespace beamui::applications
     signals:
         void callWalletApiResult(const QString& result);
         void assetsChanged();
-        void approveSend(const QString& request, const QMap<QString, QVariant>& info);
-        void approveContractInfo(const QString& request, const QMap<QString, QVariant>& info, const QList<QMap<QString, QVariant>>& amounts);
+        void approveSend(const QString& request, const QString& info, const QString& amounts);
+        void approveContractInfo(const QString& request, const QString& info, const QString& amounts);
 
     private:
         AssetsManager::Ptr _amgr;
         std::set<beam::Asset::ID> _mappedAssets;
+
+        QString prepareInfo4QT(const nlohmann::json& info);
+        QString prepareAmounts4QT(const nlohmann::json& amounts);
     };
 }
