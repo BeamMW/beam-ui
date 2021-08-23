@@ -66,7 +66,7 @@ namespace beamui::applications
         QPointer<WebAPICreator> guard = this;
         const auto appid = GenerateAppID(appName.toStdString(), appUrl.toStdString());
 
-        AppsApiUI::UIThread_Create(getWalletModel().get(), version, appid, appName.toStdString(),
+        AppsApiUI::ClientThread_Create(getWalletModel().get(), version, appid, appName.toStdString(),
             [this, guard, version, appName, appid] (AppsApiUI::Ptr api) {
                 if (guard)
                 {

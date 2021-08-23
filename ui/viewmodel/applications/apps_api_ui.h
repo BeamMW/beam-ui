@@ -30,13 +30,13 @@ namespace beamui::applications
 
         friend class beam::wallet::AppsApi<AppsApiUI>;
         AppsApiUI(const std::string& appid, const std::string& appname);
-        ~AppsApiUI() override = default;
 
         void AnyThread_sendApiResponse(const std::string& result) override;
         void ClientThread_getSendConsent(const std::string& request, const nlohmann::json& info, const nlohmann::json& amounts) override;
         void ClientThread_getContractConsent(const std::string& request, const nlohmann::json& info, const nlohmann::json& amounts) override;
 
     public:
+        ~AppsApiUI() override = default;
         [[nodiscard]] QMap<QString, QVariant> getAssets();
 
         Q_INVOKABLE int test();
