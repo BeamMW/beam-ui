@@ -29,16 +29,17 @@ namespace beamui::applications
         Q_PROPERTY(QMap<QString, QVariant> assets READ getAssets NOTIFY assetsChanged)
 
         friend class beam::wallet::AppsApi<AppsApiUI>;
-        AppsApiUI(const std::string& appid, const std::string& appname);
+
 
         void AnyThread_sendApiResponse(const std::string& result) override;
         void ClientThread_getSendConsent(const std::string& request, const nlohmann::json& info, const nlohmann::json& amounts) override;
         void ClientThread_getContractConsent(const std::string& request, const nlohmann::json& info, const nlohmann::json& amounts) override;
 
     public:
+        AppsApiUI(const std::string& appid, const std::string& appname);
         ~AppsApiUI() override = default;
-        [[nodiscard]] QMap<QString, QVariant> getAssets();
 
+        [[nodiscard]] QMap<QString, QVariant> getAssets();
         Q_INVOKABLE int test();
         Q_INVOKABLE void callWalletApi(const QString& request);
         Q_INVOKABLE void sendApproved(const QString& request);
