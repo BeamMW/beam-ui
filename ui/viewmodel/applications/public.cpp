@@ -21,6 +21,11 @@
 
 namespace beamui::applications
 {
+    namespace
+    {
+        const std::string kAppIDPrefix = "appid:";
+    }
+
     void RegisterQMLTypes()
     {
         qmlRegisterType<AppsViewModel>("Beam.Wallet", 1, 0, "ApplicationsViewModel");
@@ -35,7 +40,20 @@ namespace beamui::applications
         ECC::Hash::Value hv;
         ECC::Hash::Processor() << appName << normalizedUrl >> hv;
 
-        auto appid = std::string("appid:") + hv.str();
+        auto appid = kAppIDPrefix + hv.str();
         return appid;
+    }
+
+    std::string StripAppIDPrefix(const std::string& appId)
+    {
+        auto res = appId;
+
+        size_t pos = appId.find(kAppIDPrefix);
+        if (pos != std::string::npos)
+        {
+            res.erase(pos, kAppIDPrefix.length());
+        }
+
+        return res;
     }
 }

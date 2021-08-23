@@ -17,4 +17,5 @@ namespace beamui::applications
 {
     void RegisterQMLTypes();
     std::string GenerateAppID(const std::string& appName, const std::string& appUrl);
+    std::string StripAppIDPrefix(const std::string& appId);
 }

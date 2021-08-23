@@ -1118,7 +1118,7 @@ Please try again later or create an offer yourself."
                         }
 
                         function showContextMenu(row) {
-                            txContextMenu.canCopyToken = transactionsTable.model.getRoleValue(row, "isPending");;
+                            txContextMenu.canCopyToken = transactionsTable.model.getRoleValue(row, "isPending");
                             txContextMenu.token = transactionsTable.model.getRoleValue(row, "token");
                             txContextMenu.cancelEnabled = transactionsTable.model.getRoleValue(row, "isCancelAvailable");
                             txContextMenu.deleteEnabled = transactionsTable.model.getRoleValue(row, "isDeleteAvailable");
@@ -1171,7 +1171,7 @@ Please try again later or create an offer yourself."
                         Action {
                             //% "Cancel"
                             text: qsTrId("general-cancel")
-                            icon.source: "qrc:/assets/icon-cancel.svg"
+                            icon.source: "qrc:/assets/icon-cancel-white.svg"
                             enabled: txContextMenu.cancelEnabled
                             onTriggered: {
                                 cancelSwapDialog.txId = txContextMenu.txID;

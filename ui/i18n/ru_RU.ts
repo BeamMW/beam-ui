@@ -245,7 +245,7 @@
         <source>v</source>
         <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation type="unfinished">v</translation>
+        <translation>вер. </translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -327,7 +327,7 @@
         <translation>Подтвердить новый пароль</translation>
     </message>
     <message id="change-pwd-ok">
-        <source>Сhange password</source>
+        <source>Change password</source>
         <translation>Поменять пароль</translation>
     </message>
     <message id="loading-loading">
@@ -426,7 +426,7 @@
     </message>
     <message id="send-confirmation-pwd-require-message">
         <source>To approve the transaction please enter your password</source>
-        <translation type="unfinished">Чтобы совершить транзакцию, введите пароль</translation>
+        <translation>Для подтверждения транзакции введите пароль</translation>
     </message>
     <message id="wallet-title">
         <source>Wallet</source>
@@ -746,8 +746,8 @@
         <translation>Внешняя ссылка</translation>
     </message>
     <message id="open-external-message">
-        <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</source>
-        <translation type="unfinished">Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can chage your choice in app setting anytime.</translation>
+        <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can change your choice in app setting anytime.</source>
+        <translation>Кошелек пытается открыть внешнюю ссылку в браузере. Это действие может раскрыть ваш IP адрес серверу. Чтобы избежать этого, нажмите &quot;Отмена&quot;. Вы можете изменить свой выбор в настройках в любое время.</translation>
     </message>
     <message id="start-open-change-wallet-message">
         <source>If you&apos;ll restore a wallet all transaction history and addresses will be lost.</source>
@@ -1217,7 +1217,7 @@ Please check the swap token and try again.</source>
 Пожалуйста, проверьте токен и повторите попытку.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
-        <source>Оffer is already accepted</source>
+        <source>Offer is already accepted</source>
         <translation>Оффер уже принят</translation>
     </message>
     <message id="swap-offer-duplicate-confirm-button">
@@ -2140,8 +2140,7 @@ offline</source>
     </message>
     <message id="remote-node-lelantus-warning">
         <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
-        <oldsource>To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key.</oldsource>
-        <translation type="unfinished">Чтобы получат макс. приватные и оффлайн транзакции, пожалуйста, подключитесь к интегрированному узлу или к удаленному узлу, настроенному с вашим ключом владельца.</translation>
+        <translation type="unfinished">To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</translation>
     </message>
     <message id="time-hour">
         <source>hour</source>
@@ -2156,12 +2155,12 @@ offline</source>
     <message id="time-day">
         <source>day</source>
         <extracomment>time &quot;day&quot; string</extracomment>
-        <translation type="unfinished">day</translation>
+        <translation>день</translation>
     </message>
     <message id="time-days">
         <source>days</source>
         <extracomment>time &quot;days&quot; string</extracomment>
-        <translation type="unfinished">days</translation>
+        <translation>дней</translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit">
         <source>No limit</source>
@@ -2182,7 +2181,7 @@ offline</source>
     </message>
     <message id="settings-account-index">
         <source>Account index</source>
-        <translation type="unfinished">Account index</translation>
+        <translation>Индекс аккаунта</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>
@@ -2214,7 +2213,7 @@ much longer for a transaction to complete.</source>
     </message>
     <message id="apps-title">
         <source>DAPP Store</source>
-        <translation type="unfinished">DAPP Store</translation>
+        <translation>DAPP Store</translation>
     </message>
     <message id="apps-nothing">
         <source>There are no applications at the moment</source>
@@ -2222,7 +2221,7 @@ much longer for a transaction to complete.</source>
     </message>
     <message id="apps-loading-app">
         <source>Please wait, %1 is loading</source>
-        <translation type="unfinished">Please wait, %1 is loading</translation>
+        <translation>%1 загружается, пожалуйста, подождите</translation>
     </message>
     <message id="apps-loading">
         <source>Loading...</source>
@@ -2275,17 +2274,17 @@ much longer for a transaction to complete.</source>
     </message>
     <message id="dex-accept-order">
         <source>Accept Order</source>
-        <translation type="unfinished">Accept Order</translation>
+        <translation>Принять заказ</translation>
     </message>
     <message id="dex-no-orders">
         <source>There are no active orders at the moment.
 Please try again later or create an offer yourself.</source>
-        <translation type="unfinished">There are no active orders at the moment.
-Please try again later or create an offer yourself.</translation>
+        <translation>На данный момент активных заказов нет.
+Пожалуйста, повторите попытку позже или создайте заказ самостоятельно.</translation>
     </message>
     <message id="dex-title">
         <source>Order Book</source>
-        <translation type="unfinished">Order Book</translation>
+        <translation>Книга заказов</translation>
     </message>
     <message id="send-flat-fee">
         <source>%1 Transaction fee</source>
@@ -2294,7 +2293,7 @@ Please try again later or create an offer yourself.</translation>
     <message id="notification-contract-no-message">
         <source>No description provided by the contract</source>
         <oldsource>Contract: no description provided</oldsource>
-        <translation type="unfinished">No description provided by the contract</translation>
+        <translation>Описание не предоставлено контрактом</translation>
     </message>
     <message id="notification-contract-completed">
         <source>DAPP transaction completed</source>
@@ -2302,7 +2301,7 @@ Please try again later or create an offer yourself.</translation>
     </message>
     <message id="notification-contract-expired">
         <source>DAPP transaction expired</source>
-        <translation type="unfinished">DAPP transaction expired</translation>
+        <translation>Срок действия транзакции DAPP истёк</translation>
     </message>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
@@ -2530,7 +2529,7 @@ Update your settings and try again.</source>
     </message>
     <message id="start-trezor-error">
         <source>Failed to create trezor wallet</source>
-        <translation type="unfinished">Failed to create trezor wallet</translation>
+        <translation>Не удалось создать кошелек trezor</translation>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardwate wallet is not connected</source>
@@ -2620,12 +2619,11 @@ Update your settings and try again.</source>
     </message>
     <message id="general-tx-type">
         <source>Transaction type</source>
-        <translation type="unfinished">Transaction type</translation>
+        <translation>Тип транзакции</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
         <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <oldsource>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions</oldsource>
-        <translation type="unfinished">Подключитесь к интегрированному или собственному узлу, чтобы включить получение макс. приватных и оффлайн транзакций</translation>
+        <translation>Подключитесь к интегрированному или собственному узлу, чтобы включить получение транзакций с максимальным anonimity set и оффлайн транзакций.</translation>
     </message>
     <message id="receive-request">
         <source>Requested amount</source>
@@ -2647,10 +2645,7 @@ Update your settings and try again.</source>
     </message>
     <message id="wallet-receive-text-online-time">
         <source>Sender will be given a choice between online and offline payment.</source>
-        <oldsource>Sender will be given a choice between online and offline payment.
-For an online payment to complete, you should get online during the 12 hours after coins are sent.</oldsource>
-        <translation type="unfinished">Отправителю будет предоставлен выбор между оплатой онлайн и оффлайн.
-Для того, чтобы совершить онлайновый платеж, Вы должны выйти в Интернет в течение 12 часов после отправки монет.</translation>
+        <translation>Отправителю будет предоставлен выбор между оплатой онлайн и оффлайн.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2678,7 +2673,7 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="tx-offline">
         <source>Offline</source>
-        <translation>Отключен от сети</translation>
+        <translation>Автономная</translation>
     </message>
     <message id="send-no-funds">
         <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
@@ -2791,13 +2786,11 @@ For an online payment to complete, you should get online during the 12 hours aft
     </message>
     <message id="tx-details-rate-notice">
         <source>calculated with the exchange rate at the time of the transaction</source>
-        <oldsource>calculated with the exchange rate at the day of transaction</oldsource>
-        <translation type="unfinished">рассчитывается по курсу в день транзакции</translation>
+        <translation>рассчитывается по обменному курсу во время транзакции</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
         <source>exchange rate was not available at the time of the transaction</source>
-        <oldsource>exchange rate was not available at the time of transaction</oldsource>
-        <translation type="unfinished">обменный курс был недоступен во время транзакции</translation>
+        <translation>обменный курс был недоступен во время транзакции</translation>
     </message>
     <message id="tx-details-tx-id-label">
         <source>Transaction ID</source>
@@ -3114,7 +3107,7 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     </message>
     <message id="receive-max-set">
         <source>Maximum anonymity set</source>
-        <translation type="unfinished">Maximum anonymity set</translation>
+        <translation>Максимальный anonymity set</translation>
     </message>
     <message id="address-info-title-mp">
         <source>Address details with max anonymity set</source>
@@ -3122,23 +3115,15 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     </message>
     <message id="address-info-regular-notice">
         <source>Regular address includes both online and offline addresses.</source>
-        <translation type="unfinished">Regular address includes both online and offline addresses.</translation>
+        <translation>Регулярный адрес включает как онлайн, так и оффлайн адреса.</translation>
     </message>
     <message id="tx-online">
         <source>Online</source>
-        <translation>В сети</translation>
-    </message>
-    <message id="send-offline-tip-single">
-        <source>Offline address: %1 transaction left.</source>
-        <translation type="unfinished">Offline address: %1 transaction left.</translation>
-    </message>
-    <message id="send-offline-tip-many">
-        <source>Offline address: %1 transactions left.</source>
-        <translation type="unfinished">Offline address: %1 transactions left.</translation>
+        <translation>Онлайн</translation>
     </message>
     <message id="send-receiver-online-tip">
         <source>Ask receiver to come online to support more offline transactions.</source>
-        <translation type="unfinished">Ask receiver to come online to support more offline transactions.</translation>
+        <translation>Попросите получателя прийти в сеть, чтобы иметь возможность получать больше оффлайн транзакций.</translation>
     </message>
     <message id="send-offline-refund">
         <source>Make sure the address is correct as offline transactions
@@ -3152,12 +3137,11 @@ cannot be canceled.</source>
     </message>
     <message id="send-anon-set">
         <source>Guarantees maximum anonymity set of up to 64K.</source>
-        <oldsource>Guarantees anonymity set of up to 64K.</oldsource>
-        <translation type="unfinished">Guarantees anonymity set of up to 64K.</translation>
+        <translation type="unfinished">Guarantees maximum anonymity set of up to 64K.</translation>
     </message>
     <message id="send-online-tip">
         <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation type="unfinished">The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</translation>
+        <translation>Получатель должен войти в сеть в течение следующих 12 часов, а вы должны быть в сети в течение 2 часов после.</translation>
     </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
@@ -3165,116 +3149,121 @@ cannot be canceled.</source>
     </message>
     <message id="send-app-twoway-confirmation-title">
         <source>Confirm withdraw &amp; deposit</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтвердите вывод средств и депозит</translation>
     </message>
     <message id="send-app-spend-confirmation-title">
         <source>Confirm deposit from the wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтвердите депозит из кошелька</translation>
     </message>
     <message id="send-app-receive-confirmation-title">
         <source>Confirm withdraw to the wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтвердить вывод на кошелек</translation>
     </message>
     <message id="send-app-confirmation-title">
         <source>Confirm application transaction</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтвердите транзакцию приложения</translation>
     </message>
     <message id="general-confirm">
         <source>Confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтвердить</translation>
     </message>
     <message id="send-type-label">
         <source>Transaction type</source>
-        <translation type="unfinished">Transaction type</translation>
+        <translation>Тип транзакции</translation>
     </message>
     <message id="send-twoway-warning">
         <source>%1 will change the balances of your wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 изменит баланс вашего кошелька</translation>
     </message>
     <message id="send-dapp-spend-warning">
         <source>%1 will take the funds from your wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 заберет средства с вашего кошелька</translation>
     </message>
     <message id="send-dapp-receive-warning">
         <source>%1 will send the funds to your wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 отправит средства на ваш кошелек</translation>
     </message>
     <message id="send-contract-only-fee">
         <source>The transaction fee would be deducted from your balance</source>
-        <translation type="unfinished"></translation>
+        <translation>Комиссия за транзакцию будет вычтена с вашего баланса</translation>
     </message>
     <message id="status-online-remote">
         <source>connected node supports online transactions only</source>
-        <oldsource>remote node supports online transactions only</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>подключенный узел поддерживает только онлайн транзакции</translation>
     </message>
     <message id="address-info-title-online">
         <source>Online (SBBS) address details</source>
-        <translation type="unfinished"></translation>
+        <translation>Детали онлайн адреса (SBBS)</translation>
     </message>
     <message id="address-info-remote-node-warning">
         <source>You are currently connected to node that supports only online transactions.</source>
-        <oldsource>You are currently connected to random node that supports only online transactions.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>В настоящее время вы подключены к узлу, который поддерживает только онлайн-транзакции.</translation>
     </message>
     <message id="wallet-receive-stay-online">
         <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Чтобы оплатить онлайн, вы должны быть в сети в течение 12 часов после отправки монет.</translation>
     </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Порт локального сервера</translation>
     </message>
     <message id="apps-install-from-file">
         <source>Install DApp from file</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить DAPP из файла</translation>
     </message>
     <message id="applications-install-title">
         <source>Select application to install</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите приложение для установки</translation>
     </message>
     <message id="appliactions-install-ok">
         <source>&apos;%1&apos; is successfully installed</source>
         <oldsource>%1 is successfully installed</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; успешно установлено</translation>
     </message>
     <message id="appliactions-install-fail">
         <source>Failed to install DAPP: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось установить DAPP: %1</translation>
     </message>
     <message id="faucet-promo">
         <source>See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</source>
-        <translation type="unfinished"></translation>
+        <translation>Посмотрите кошелек в действии. Получите небольшое количество Beam от Faucet DAPP.</translation>
     </message>
     <message id="faucet-promo-get-coins">
         <source>get coins</source>
-        <translation type="unfinished"></translation>
+        <translation>получить монеты</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Контрольная фраза</translation>
     </message>
     <message id="general-do-later">
         <source>I will do it later</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтвердить позже</translation>
     </message>
     <message id="general-complete-verification">
         <source>Complete wallet verification</source>
-        <oldsource>complete verification</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Завершить верификацию кошелька</translation>
     </message>
     <message id="general-complete-verification-button">
         <source>Complete verification</source>
-        <translation type="unfinished"></translation>
+        <translation>Завершить верификацию</translation>
     </message>
     <message id="seed-validation-promo">
         <source>Write down and validate your seed phrase so you can always recover your funds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Запишите и подтвердите свою ключевую фразу, чтобы вы всегда могли восстановить свои средства.</translation>
     </message>
     <message id="seed-validation-link">
         <source>Secure your phrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Защитите вашу фразу</translation>
+    </message>
+    <message id="send-offline-tip" numerus="yes">
+        <source>Offline address: %n transaction(s) left.</source>
+        <translation type="unfinished">
+            <numerusform>Оффлайн адрес: осталась %n транзакция.</numerusform>
+            <numerusform>Оффлайн адрес: осталось %n транзакции.</numerusform>
+            <numerusform>Оффлайн адрес: осталось %n транзакций.</numerusform>
+        </translation>
     </message>
 </context>
 </TS>

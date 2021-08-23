@@ -130,7 +130,7 @@ CustomDialog {
 			}
 
 			PrimaryButton {
-				//% "Сhange password"
+				//% "Change password"
 				text: qsTrId("change-pwd-ok")
 				onClicked: {
 					if(oldPass.text.length == 0)
