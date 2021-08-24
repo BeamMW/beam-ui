@@ -60,6 +60,12 @@ ColumnLayout {
         onBack: function () {
             main.openApplications()
         }
+
+        onRefresh: function () {
+            var app = control.activeApp
+            control.activeApp = undefined
+            launchApp(app)
+        }
     }
 
     //

@@ -15,6 +15,7 @@ Rectangle {
     property var    openedNotifications: 0
     property var    notificationOffset: 0
     property alias  hasNewerVersion : updateInfoProvider.hasNewerVersion
+    readonly property bool devMode: viewModel.isDevMode
     anchors.fill:   parent
 
     function increaseNotificationOffset(popup) {

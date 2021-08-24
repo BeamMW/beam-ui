@@ -40,6 +40,7 @@ namespace
     const char* kLastAssetSelection = "lastAssetSelection";
     const char* kShowFaucetPromo = "showFaucetPromo";
     const char* kHideSeedValidationPromo = "hideSeedValidationPromo";
+    const char* kDevMode ="dev_mode";
 
     const char* kLocalNodeRun = "localnode/run";
     const char* kLocalNodePort = "localnode/port";
@@ -229,6 +230,12 @@ bool WalletSettings::getAppsAllowed() const
 {
     Lock lock(m_mutex);
     return m_data.value(kDAppsAllowed, false).toBool();
+}
+
+bool WalletSettings::getDevMode() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kDevMode, false).toBool();
 }
 
 void WalletSettings::setAppsAllowed(bool value)

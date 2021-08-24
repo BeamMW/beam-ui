@@ -360,5 +360,6 @@
         <file>assets/dapp-loading.svg</file>
         <file>assets/icon-verified-asset.svg</file>
         <file>assets/asset-beamx.svg</file>
+        <file>assets/icon-refresh.svg</file>
     </qresource>
 </RCC>

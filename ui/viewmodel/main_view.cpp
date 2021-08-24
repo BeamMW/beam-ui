@@ -147,3 +147,8 @@ QString MainViewModel::getFaucetAppID() const
     const auto appid = beamui::applications::GenerateAppID(appName, appURL);
     return QString::fromStdString(appid);
 }
+
+bool MainViewModel::getDevMode() const
+{
+    return m_settings.getDevMode();
+}
