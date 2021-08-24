@@ -125,7 +125,7 @@ namespace beamui::applications
         app.insert("url", expandLocalUrl(appFolder, url.get<std::string>()));
 
         const auto& icon = json["icon"];
-        if (!url.empty())
+        if (!icon.empty())
         {
             if (!icon.is_string())
             {

@@ -81,7 +81,10 @@ Rectangle {
 
     MouseArea {
         id: rowMouseArea
-        anchors.fill:     parent
+        anchors.top:    parent.top
+        anchors.left:   parent.left
+        anchors.right:  parent.right
+        height:         rowItem.rowHeight
         acceptedButtons:  Qt.LeftButton | Qt.RightButton
         hoverEnabled:     true
         propagateComposedEvents: true
