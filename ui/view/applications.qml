@@ -310,8 +310,8 @@ ColumnLayout {
 
                     if(loadRequest.status === WebEngineLoadRequest.LoadFailedStatus) {
                         // code in this 'if' will cause next 'if' to be called
-                        control.errorMessage = loadRequest.errorString
-                        return
+                        control.errorMessage = ["Failed to load:", JSON.stringify(loadRequest, null, 4)].join('\n')
+                        // no return
                     }
 
                     if (control.errorMessage.length) {
@@ -473,17 +473,28 @@ ColumnLayout {
                 Item {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 60
+                    opacity: 0.3
 
-                    Rectangle {
+                    Canvas {
                         anchors.fill: parent
-                        radius: 10
-                        color: "transparent"
-                        opacity: 0.3
+                        antialiasing: true
 
-                        border {
-                            width: 1
-                            color: "#1af6d6"
-                        }
+                        onPaint: function (rect) {
+                            var radius = 10
+                            var ctx = getContext("2d")
+                            ctx.save()
+                            ctx.setLineDash([5, 5])
+                            ctx.beginPath()
+                                ctx.moveTo(0,0)
+                                ctx.lineTo(rect.width, 0)
+                                ctx.lineTo(rect.width, rect.height)
+                                ctx.lineTo(0, rect.height)
+                                ctx.lineTo(0, 0)
+                                ctx.closePath()
+                            ctx.strokeStyle = "#1af6d6"
+                            ctx.stroke()
+                            ctx.restore()
+                         }
                     }
 
                     RowLayout {

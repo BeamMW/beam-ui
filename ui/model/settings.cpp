@@ -11,22 +11,17 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #include "settings.h"
-
 #include <algorithm>
 #include <map>
-
 #include <QFileDialog>
 #include <QtQuick>
 
 #include "model/app_model.h"
-
 #include "wallet/core/default_peers.h"
-
 #include "version.h"
 #include "wallet/client/extensions/news_channels/interface.h"
-
+#include "viewmodel/applications/public.h"
 #include "quazip/quazip.h"
 #include "quazip/quazipfile.h"
 
@@ -739,15 +734,16 @@ QString WalletSettings::getDevAppMinApiVer() const
     return m_data.value(kDevAppMinApiVer).toString();
 }
 
-QString WalletSettings::getAppsCachePath(const QString& name) const
+QString WalletSettings::getAppsCachePath(const QString& appid) const
 {
     Lock lock(m_mutex);
     const QString kCacheFolder = "appcache";
+    auto rawAppID = beamui::applications::StripAppIDPrefix(appid.toStdString());
 
     QString cachePath = QDir::cleanPath(
             QStandardPaths::writableLocation(QStandardPaths::StandardLocation::CacheLocation) +
             QDir::separator() + kCacheFolder +
-            QDir::separator() + name
+            QDir::separator() + QString::fromStdString(rawAppID)
     );
 
     auto adir = m_appDataDir;
@@ -756,15 +752,16 @@ QString WalletSettings::getAppsCachePath(const QString& name) const
     return cachePath;
 }
 
-QString WalletSettings::getAppsStoragePath(const QString& name) const
+QString WalletSettings::getAppsStoragePath(const QString& appid) const
 {
     Lock lock(m_mutex);
-
     const char* kStorageFolder = "appstorage";
+    auto rawAppID = beamui::applications::StripAppIDPrefix(appid.toStdString());
+
     QString storagePath = QDir::cleanPath(
             m_appDataDir.path() +
             QDir::separator() + kStorageFolder +
-            QDir::separator() + name
+            QDir::separator() + QString::fromStdString(rawAppID)
     );
 
     auto adir = m_appDataDir;

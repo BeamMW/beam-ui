@@ -62,14 +62,14 @@ namespace beamui::applications
         return settings.getAppsUrl();
     }
 
-    QString AppsViewModel::getAppCachePath(const QString& appname) const
+    QString AppsViewModel::getAppCachePath(const QString& appid) const
     {
-        return AppSettings().getAppsStoragePath(appname);
+        return AppSettings().getAppsStoragePath(appid);
     }
 
-    QString AppsViewModel::getAppStoragePath(const QString& appname) const
+    QString AppsViewModel::getAppStoragePath(const QString& appid) const
     {
-        return AppSettings().getAppsCachePath(appname);
+        return AppSettings().getAppsCachePath(appid);
     }
 
     QString AppsViewModel::getUserAgent() const

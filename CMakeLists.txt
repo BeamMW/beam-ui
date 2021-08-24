@@ -177,10 +177,10 @@ else()
 endif()
 
 set(SKIP_INSTALL_ALL ON)
-add_subdirectory(3rdparty/zlib)
+add_subdirectory(3rdparty/zlib EXCLUDE_FROM_ALL)
 add_subdirectory(3rdparty/qrcode)
 add_subdirectory(3rdparty/quazip)
-add_subdirectory(3rdparty/qhttpengine)
+add_subdirectory(3rdparty/qhttpengine EXCLUDE_FROM_ALL)
 add_subdirectory(ui)
 
 
