@@ -126,6 +126,7 @@ class StartViewModel : public QObject
     Q_PROPERTY(QChar phrasesSeparator READ getPhrasesSeparator CONSTANT)
     Q_PROPERTY(bool isTrezorEnabled READ isTrezorEnabled CONSTANT)
     Q_PROPERTY(bool useHWWallet READ useHWWallet WRITE setUseHWWallet NOTIFY isUseHWWalletChanged)
+    Q_PROPERTY(bool saveSeed    READ getSaveSeed WRITE setSaveSeed NOTIFY saveSeedChanged)
 
 #if defined(BEAM_HW_WALLET)
     Q_PROPERTY(bool isTrezorConnected READ isTrezorConnected NOTIFY isTrezorConnectedChanged)
@@ -149,6 +150,8 @@ public:
     bool isTrezorEnabled() const;
     bool useHWWallet() const;
     void setUseHWWallet(bool value);
+    bool getSaveSeed() const;
+    void setSaveSeed(bool value);
 
 #if defined(BEAM_HW_WALLET)
     bool isTrezorConnected() const;
@@ -187,6 +190,7 @@ public:
     Q_INVOKABLE QString defaultRemoteNodeAddr() const;
     Q_INVOKABLE void checkCapsLock();
     Q_INVOKABLE void openFolder(const QString& path) const;
+    Q_INVOKABLE void loadRecoveryPhraseForValidation();
 
 #if defined(BEAM_HW_WALLET)
     Q_INVOKABLE void startOwnerKeyImporting(bool creating);
@@ -201,6 +205,7 @@ signals:
     void capsLockStateMayBeChanged();
     void validateDictionaryChanged();
     void isUseHWWalletChanged();
+    void saveSeedChanged();
 
 #if defined(BEAM_HW_WALLET)
     void isTrezorConnectedChanged();
@@ -223,6 +228,7 @@ public slots:
 private:
 
     void findExistingWalletDB();
+    QString getPhrases() const;
 
     QList<QObject*> m_recoveryPhrases;
     QList<QObject*> m_checkPhrases;
@@ -236,6 +242,7 @@ private:
     QJSValue m_callback;
 
     bool m_useHWWallet;
+    bool m_saveSeed = false;
 
 #if defined(BEAM_HW_WALLET)
     std::shared_ptr<beam::wallet::HWWallet> m_hwWallet;

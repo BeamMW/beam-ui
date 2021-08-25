@@ -21,12 +21,11 @@
 #include <mutex>
 #include "model/wallet_model.h"
 
-
 class WalletSettings : public QObject
 {
     Q_OBJECT
 public:
-    WalletSettings(const QDir& appDataDir);
+    explicit WalletSettings(const QDir& appDataDir);
 
     QString getNodeAddress() const;
     void setNodeAddress(const QString& value);
@@ -83,10 +82,21 @@ public:
 
     static void openFolder(const QString& path);
 
-    // dev BEAM Apps
-    QString getDevBeamAppUrl();
-    QString getDevBeamAppName();
-    QString getDevAppApiVer();
+    //
+    // DApps
+    //
+    QString getDevAppUrl() const;
+    QString getDevAppName() const;
+    QString getDevAppApiVer() const;
+    QString getDevAppMinApiVer() const;
+
+    bool getAppsAllowed() const;
+    void setAppsAllowed(bool val);
+    QString getLocalAppsPath() const;
+    QString getAppsCachePath(const QString& name = QString()) const;
+    QString getAppsStoragePath(const QString& name = QString()) const;
+    int getAppsServerPort() const;
+    void setAppsServerPort(int port);
 
     uint8_t getMaxPrivacyAnonymitySet() const;
     void setMaxPrivacyAnonymitySet(uint8_t anonymitySet);
@@ -98,8 +108,19 @@ public:
     QString getExplorerUrl() const;
     QString getFaucetUrl() const;
     QString getAppsUrl() const;
-    QString getAppsCachePath() const;
-    QString getAppsStoragePath() const;
+
+    bool showFaucetPromo() const;
+    void setShowFacetPromo(bool value);
+
+    bool hideSeedValidationPromo() const;
+    void setHideSeedValidationPromo(bool value);
+
+    void minConfirmationsInit();
+    uint32_t getMinConfirmations() const;
+    void setMinConfirmations(uint32_t value);
+
+    [[nodiscard]] boost::optional<beam::Asset::ID> getLastAssetSelection() const;
+    void setLastAssetSelection(boost::optional<beam::Asset::ID> selection);
 
 public:
     static const char* WalletCfg;
@@ -122,11 +143,13 @@ signals:
     void localeChanged();
     void beamMWLinksChanged();
     void secondCurrencyChanged();
+    void dappsAllowedChanged();
 
 private:
     QSettings m_data;
     QDir m_appDataDir;
     uint8_t m_mpLockTimeLimit = 0;
+    uint32_t m_minConfirmations = 0;
     mutable std::recursive_mutex m_mutex;
     using Lock = std::unique_lock<decltype(m_mutex)>;
 };

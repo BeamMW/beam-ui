@@ -53,7 +53,7 @@ namespace beamui
         }
     }
 
-    QString getCurrencyUnitName(beam::wallet::Currency currency)
+    QString getCurrencyUnitName(const beam::wallet::Currency& currency)
     {
         return getCurrencyUnitName(convertExchangeRateCurrencyToUiCurrency(currency));
     }
@@ -166,12 +166,16 @@ namespace beamui
         return amount;
     }
 
+    QString toString(const QDateTime& dt)
+    {
+        return dt.toString(QLocale().dateTimeFormat(QLocale::ShortFormat));
+    }
+
     QString toString(const beam::Timestamp& ts)
     {
         QDateTime datetime;
         datetime.setTime_t(ts);
-
-        return datetime.toString(QLocale().dateTimeFormat(QLocale::ShortFormat));
+        return toString(datetime);
     }
 
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
@@ -450,31 +454,26 @@ namespace beamui
         using namespace beam::wallet;
         const auto type = GetAddressType(token);
 
-        //% "Regular"
-        auto regular = qtTrId("tx-regular");
-        //% "Offline"
-        auto offline = qtTrId("tx-address-offline");
-        //% "Public offline"
-        auto pubOffline = qtTrId("tx-address-public-offline");
-        //% "Max Privacy"
-        auto maxp = qtTrId("tx-max-privacy");
-
         if (type == TxAddressType::Offline && choiceOffline)
         {
-            return offline;
+            //% "Offline"
+            return qtTrId("tx-address-offline");
         }
 
         if (type == TxAddressType::PublicOffline)
         {
-            return pubOffline;
+            //% "Public offline"
+            return qtTrId("tx-address-public-offline");
         }
 
         if (type == TxAddressType::MaxPrivacy)
         {
-            return maxp;
+            //% "Max Anonymity Set"
+            return qtTrId("tx-max-privacy");
         }
 
-        return regular;
+        //% "Online"
+        return qtTrId("tx-regular");
     }
 
 }  // namespace beamui

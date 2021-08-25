@@ -13,18 +13,19 @@
 // limitations under the License.
 #pragma once
 
-#include <string>
-#include "wallet/api/i_wallet_api.h"
+#include <qhttpengine/filesystemhandler.h>
+#include <qhttpengine/server.h>
 
 namespace beamui::applications
 {
-    struct IConsentHandler
+    class AppsServer
     {
-        //
-        // Do not assume threading here
-        // All consent functions should be safe to call from ANY thread
-        //
-        virtual void AnyThread_getSendConsent(const std::string &request, const beam::wallet::IWalletApi::ParseResult &) = 0;
-        virtual void AnyThread_getContractInfoConsent(const std::string &request, const beam::wallet::IWalletApi::ParseResult &) = 0;
+    public:
+        AppsServer(const QString& serveFrom, uint32_t port);
+        ~AppsServer();
+
+    private:
+        std::unique_ptr<QHttpEngine::FilesystemHandler> _handler;
+        std::unique_ptr<QHttpEngine::Server> _server;
     };
 }

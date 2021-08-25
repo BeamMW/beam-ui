@@ -2,7 +2,7 @@ import QtQuick 2.11
 import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 import Beam.Wallet 1.0
 import "."
@@ -78,16 +78,18 @@ SettingsFoldable {
 
                 SFTextInput {
                     id: nodeAddress
-                    Layout.preferredWidth: 170
+                    Layout.fillWidth: true
                     Layout.alignment: Qt.AlignLeft
                     topPadding: 0
                     focus: true
                     activeFocusOnTab: true
                     font.pixelSize: 14
-                    color:  (!viewModel.isValidNodeAddress || !nodeAddress.acceptableInput) ? Style.validator_error : Style.content_main
-                    backgroundColor:  (!viewModel.isValidNodeAddress || !nodeAddress.acceptableInput) ? Style.validator_error : Style.content_main
+                    color:  (nodeAddress.text.length && (!viewModel.isValidNodeAddress || !nodeAddress.acceptableInput)) ? Style.validator_error : Style.content_main
+                    backgroundColor:  (nodeAddress.text.length && (!viewModel.isValidNodeAddress || !nodeAddress.acceptableInput)) ? Style.validator_error : Style.content_main
                     validator: RegExpValidator { regExp: /^(\s|\x180E)*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([\w.-]+(?:\.[\w\.-]+)+))(\s|\x180E)*$/ }
                     text: viewModel.nodeAddress
+                    //% "Please enter the address"
+                    placeholderText:  qsTrId("settings-remote-node-address-placeholder")
                     Binding {
                         target: viewModel
                         property: "nodeAddress"
@@ -103,7 +105,7 @@ SettingsFoldable {
                         font.pixelSize: 12
                         font.italic:    true
                         text:           qsTrId("general-invalid-address")
-                        visible:        (!viewModel.isValidNodeAddress || !nodeAddress.acceptableInput)
+                        visible:        (nodeAddress.text.length && (!viewModel.isValidNodeAddress || !nodeAddress.acceptableInput))
                     }
                 }
             }
@@ -124,13 +126,15 @@ SettingsFoldable {
                 SFTextInput {
                     id: remoteNodePort
                     Layout.alignment: Qt.AlignRight
-                    Layout.preferredWidth: 170
+                    Layout.fillWidth: true
                     activeFocusOnTab: true
                     font.pixelSize: 14
-                    color: !remoteNodePort.acceptableInput ? Style.validator_error : Style.content_main
+                    color: (text.length && !remoteNodePort.acceptableInput) ? Style.validator_error : Style.content_main
+                    backgroundColor: (text.length && !remoteNodePort.acceptableInput) ? Style.validator_error : Style.content_main
                     text: viewModel.remoteNodePort
+                    //% "Please enter the port"
+                    placeholderText:  qsTrId("settings-local-node-port-placeholder")
                     validator: RegExpValidator {regExp: /^([1-9][0-9]{0,3}|[1-5][0-9]{2,4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/g}
-                    backgroundColor: !remoteNodePort.acceptableInput ? Style.validator_error : Style.content_main
                     Binding {
                         target: viewModel
                         property: "remoteNodePort"
@@ -148,7 +152,7 @@ SettingsFoldable {
                         //: settings tab, node section, port error label
                         //% "Port is mandatory"
                         text:           qsTrId("general-invalid-port")
-                        visible:        !remoteNodePort.acceptableInput
+                        visible:        remoteNodePort.text.length && !remoteNodePort.acceptableInput
                     }
                 }
             }
@@ -156,12 +160,14 @@ SettingsFoldable {
         SFText {
             Layout.fillWidth:   true
             Layout.topMargin:   20
+            Layout.leftMargin:  20
+            Layout.rightMargin: 20
             color:              Style.content_main
             opacity:            0.5
             font.pixelSize:     14
             horizontalAlignment:Text.AlignHCenter
             wrapMode:           Text.Wrap
-            //% "To support Max privacy and offline transactions please connect to integrated node or to own node configured with your owner key."
+            //% "To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key."
             text:               qsTrId("remote-node-lelantus-warning")
             visible:            !viewModel.localNodeRun && !statusbarModel.isConnectionTrusted
         }

@@ -97,6 +97,11 @@ void QMLGlobals::showMessage(const QString& message)
     QMessageBox::information(nullptr, "BeamWalletUI", message);
 }
 
+void QMLGlobals::logInfo(const QString& message)
+{
+    LOG_INFO () << message.toStdString();
+}
+
 void QMLGlobals::copyToClipboard(const QString& text)
 {
     QApplication::clipboard()->setText(text);
@@ -187,11 +192,11 @@ QString QMLGlobals::roundUp(QString amount)
     {
         if (amount.length() < 4)
         {
-            // cannot be divide by 1000
+            // cannot be divided by 1000
             return amount;
         }
 
-        static const std::array<char, 3> postfixes = {'K', 'M', 'B'};
+        static const std::array<char, 12> postfixes = {'K', 'M', 'B', 't', 'q', 'Q', 's', 'S', 'o', 'n', 'd', 'U'};
         char postfix = postfixes[0];
 
         for (size_t idx = 0; idx < postfixes.size(); ++idx)
@@ -465,6 +470,16 @@ QString QMLGlobals::roundWithPrecision(const QString& number, uint precision)
     }
 
     return QString::fromStdString(result);
+}
+
+QString QMLGlobals::rawTxIdToStr(const QVariant& txId)
+{
+    if (!txId.isNull() && txId.isValid())
+    {
+        auto rawTxId = txId.value<beam::wallet::TxID>();
+        return QString::fromStdString(std::to_string(rawTxId));
+    }
+    return "";
 }
 
 void QMLGlobals::fatal(const QString& message)

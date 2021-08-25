@@ -32,6 +32,9 @@ public:
         RExpiration,
         RStatus,
         RIsMine,
+        RIsActive,
+        RProgress,
+        RCanAccept,
     };
 
     Q_ENUM(Roles)

@@ -13,13 +13,19 @@
 // limitations under the License.
 #include "assets_manager.h"
 
+namespace
+{
+    const unsigned char ACAlpha = 252;
+}
+
 AssetsManager::AssetsManager (WalletModel::Ptr wallet)
     : _wallet(wallet)
 {
-    qRegisterMetaType<beam::Asset::ID>("beam::wallet::AssetID");
     connect(_wallet.get(), &WalletModel::assetInfoChanged, this, &AssetsManager::onAssetInfo);
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,   this,  &AssetsManager::assetsListChanged);
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged, this,  &AssetsManager::assetsListChanged);
+    connect(_wallet.get(), &WalletModel::verificationInfoUpdate, this, &AssetsManager::onAssetVerification);
+    _wallet->getAsync()->getVerificationInfo();
 
     _icons[0]  = "qrc:/assets/asset-0.svg";
     _icons[1]  = "qrc:/assets/asset-1.svg";
@@ -42,27 +48,26 @@ AssetsManager::AssetsManager (WalletModel::Ptr wallet)
     _icons[18]  = "qrc:/assets/asset-18.svg";
     _icons[19]  = "qrc:/assets/asset-19.svg";
 
-    const unsigned char alpha = 252;
-    _colors[0] = QColor("#72fdff"); _colors[0].setAlpha(alpha);
-    _colors[1] = QColor("#2acf1d"); _colors[1].setAlpha(alpha);
-    _colors[2] = QColor("#ffbb54"); _colors[2].setAlpha(alpha);
-    _colors[3] = QColor("#d885ff"); _colors[3].setAlpha(alpha);
-    _colors[4] = QColor("#008eff"); _colors[4].setAlpha(alpha);
-    _colors[5] = QColor("#ff746b"); _colors[5].setAlpha(alpha);
-    _colors[6] = QColor("#91e300"); _colors[6].setAlpha(alpha);
-    _colors[7] = QColor("#ffe75a"); _colors[7].setAlpha(alpha);
-    _colors[8] = QColor("#9643ff"); _colors[8].setAlpha(alpha);
-    _colors[9] = QColor("#395bff"); _colors[9].setAlpha(alpha);
-    _colors[10] = QColor("#ff3b3b"); _colors[10].setAlpha(alpha);
-    _colors[11] = QColor("#73ff7c"); _colors[11].setAlpha(alpha);
-    _colors[12] = QColor("#ffa86c"); _colors[12].setAlpha(alpha);
-    _colors[13] = QColor("#ff3abe"); _colors[13].setAlpha(alpha);
-    _colors[14] = QColor("#00aee1"); _colors[14].setAlpha(alpha);
-    _colors[15] = QColor("#ff5200"); _colors[15].setAlpha(alpha);
-    _colors[16] = QColor("#6464ff"); _colors[16].setAlpha(alpha);
-    _colors[17] = QColor("#ff7a21"); _colors[17].setAlpha(alpha);
-    _colors[18] = QColor("#63afff"); _colors[18].setAlpha(alpha);
-    _colors[19] = QColor("#c81f68"); _colors[19].setAlpha(alpha);
+    _colors[0] = QColor("#72fdff"); _colors[0].setAlpha(ACAlpha);
+    _colors[1] = QColor("#2acf1d"); _colors[1].setAlpha(ACAlpha);
+    _colors[2] = QColor("#ffbb54"); _colors[2].setAlpha(ACAlpha);
+    _colors[3] = QColor("#d885ff"); _colors[3].setAlpha(ACAlpha);
+    _colors[4] = QColor("#008eff"); _colors[4].setAlpha(ACAlpha);
+    _colors[5] = QColor("#ff746b"); _colors[5].setAlpha(ACAlpha);
+    _colors[6] = QColor("#91e300"); _colors[6].setAlpha(ACAlpha);
+    _colors[7] = QColor("#ffe75a"); _colors[7].setAlpha(ACAlpha);
+    _colors[8] = QColor("#9643ff"); _colors[8].setAlpha(ACAlpha);
+    _colors[9] = QColor("#395bff"); _colors[9].setAlpha(ACAlpha);
+    _colors[10] = QColor("#ff3b3b"); _colors[10].setAlpha(ACAlpha);
+    _colors[11] = QColor("#73ff7c"); _colors[11].setAlpha(ACAlpha);
+    _colors[12] = QColor("#ffa86c"); _colors[12].setAlpha(ACAlpha);
+    _colors[13] = QColor("#ff3abe"); _colors[13].setAlpha(ACAlpha);
+    _colors[14] = QColor("#00aee1"); _colors[14].setAlpha(ACAlpha);
+    _colors[15] = QColor("#ff5200"); _colors[15].setAlpha(ACAlpha);
+    _colors[16] = QColor("#6464ff"); _colors[16].setAlpha(ACAlpha);
+    _colors[17] = QColor("#ff7a21"); _colors[17].setAlpha(ACAlpha);
+    _colors[18] = QColor("#63afff"); _colors[18].setAlpha(ACAlpha);
+    _colors[19] = QColor("#c81f68"); _colors[19].setAlpha(ACAlpha);
 }
 
 void AssetsManager::collectAssetInfo(beam::Asset::ID assetId)
@@ -104,6 +109,8 @@ void AssetsManager::onAssetInfo(beam::Asset::ID id, const beam::wallet::WalletAs
 
         emit assetInfo(id);
     }
+
+    emit assetsListChanged();
 }
 
 AssetsManager::MetaPtr AssetsManager::getAsset(beam::Asset::ID id)
@@ -125,10 +132,23 @@ AssetsManager::MetaPtr AssetsManager::getAsset(beam::Asset::ID id)
 
 QString AssetsManager::getIcon(beam::Asset::ID id)
 {
-     if (id < 1)
-     {
-         return "qrc:/assets/icon-beam.svg";
-     }
+    if (id < 1)
+    {
+        return "qrc:/assets/icon-beam.svg";
+    }
+
+    if (auto it = m_vi.find(id); it != m_vi.end())
+    {
+        if(!it->second.m_icon.empty())
+        {
+            const auto iconCheck = QString(":/assets/") + QString::fromStdString(it->second.m_icon);
+            if(QFile::exists(iconCheck))
+            {
+                auto iconRet = QString("qrc:/assets/") + QString::fromStdString(it->second.m_icon);
+                return iconRet;
+            }
+        }
+    }
 
      const auto it = _info.find(id);
      if (it != _info.end())
@@ -289,7 +309,17 @@ QColor AssetsManager::getColor(beam::Asset::ID id)
 {
     if (id < 1)
     {
-        return QColor( 0, 246, 210, 252);
+        return QColor( 0, 246, 210, ACAlpha);
+    }
+
+    if (auto it = m_vi.find(id); it != m_vi.end())
+    {
+        if(!it->second.m_color.empty())
+        {
+            auto color = QColor(it->second.m_color.c_str());
+            color.setAlpha(ACAlpha);
+            return color;
+        }
     }
 
     if (auto meta = getAsset(id))
@@ -324,31 +354,67 @@ QString AssetsManager::getRateUnit()
     return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateCurrency());
 }
 
+QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
+{
+    QMap<QString, QVariant> asset;
+
+    beam::wallet::Currency assetCurr(assetId);
+    const bool isBEAM = assetId == beam::Asset::s_BeamID;
+
+    asset.insert("isBEAM",     isBEAM);
+    asset.insert("unitName",   getUnitName(assetId, AssetsManager::NoShorten));
+    asset.insert("rate",       beamui::AmountToUIString(_exchangeRatesManager.getRate(assetCurr)));
+    asset.insert("rateUnit",   getRateUnit());
+    asset.insert("assetId",    static_cast<int>(assetId));
+    asset.insert("icon",       getIcon(assetId));
+    asset.insert("iconWidth",  22);
+    asset.insert("iconHeight", 22);
+    asset.insert("decimals",   static_cast<uint8_t>(std::log10(beam::Rules::Coin)));
+    asset.insert("verified",   isVerified(assetId));
+
+    return asset;
+}
+
 QList<QMap<QString, QVariant>> AssetsManager::getAssetsList()
 {
-    const auto assets   = _wallet->getAssetsNZ();
-    const auto rateUnit = getRateUnit();
+    const auto assets = _wallet->getAssetsNZ();
     QList<QMap<QString, QVariant>> result;
 
     for(auto assetId: assets)
     {
-        QMap<QString, QVariant> asset;
-
-        beam::wallet::Currency assetCurr(assetId);
-        const bool isBEAM = assetId == beam::Asset::s_BeamID;
-
-        asset.insert("isBEAM",      isBEAM);
-        asset.insert("unitName",   getUnitName(assetId, AssetsManager::NoShorten));
-        asset.insert("rate",       beamui::AmountToUIString(_exchangeRatesManager.getRate(assetCurr)));
-        asset.insert("rateUnit",    rateUnit);
-        asset.insert("assetId",     static_cast<int>(assetId));
-        asset.insert("icon",       getIcon(assetId));
-        asset.insert("iconWidth",  22);
-        asset.insert("iconHeight", 22);
-        asset.insert("decimals",    static_cast<uint8_t>(std::log10(beam::Rules::Coin)));
-
-        result.push_back(asset);
+        result.push_back(getAssetProps(assetId));
     }
 
     return result;
+}
+
+QMap<QString, QVariant> AssetsManager::getAssetsMap(const std::set<beam::Asset::ID>& assets)
+{
+    QMap<QString, QVariant> result;
+
+    for(auto assetId: assets)
+    {
+        result.insert(QString::number(assetId), getAssetProps(assetId));
+    }
+
+    return result;
+}
+
+void AssetsManager::onAssetVerification(const std::vector<beam::wallet::VerificationInfo>& changed)
+{
+    for (const auto& info: changed)
+    {
+        m_vi[info.m_assetID] = info;
+        emit assetInfo(info.m_assetID);
+    }
+    emit assetsListChanged();
+}
+
+bool AssetsManager::isVerified(beam::Asset::ID assetId) const
+{
+    if (auto it = m_vi.find(assetId); it != m_vi.end())
+    {
+        return it->second.m_verified;
+    }
+    return false;
 }

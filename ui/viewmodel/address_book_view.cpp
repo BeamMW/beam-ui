@@ -307,7 +307,7 @@ void AddressBookViewModel::deleteAddress(const QString& token)
     m_model.getAsync()->deleteAddressByToken(token.toStdString());
 }
 
-void AddressBookViewModel::saveChanges(const QString& wid, const QString& name, QDateTime expiration)
+void AddressBookViewModel::saveChanges(const QString& wid, const QString& name, const QDateTime& expiration)
 {
     beam::Timestamp expirationStamp = expiration.toSecsSinceEpoch();
     beam::wallet::WalletID walletID;

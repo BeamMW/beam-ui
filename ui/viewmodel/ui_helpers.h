@@ -65,7 +65,7 @@ namespace beamui
     std::string toStdString(Currencies currency);
 
     QString getCurrencyUnitName(Currencies);
-    QString getCurrencyUnitName(beam::wallet::Currency);
+    QString getCurrencyUnitName(const beam::wallet::Currency&);
     QString getFeeRateLabel(Currencies);
     QString getCurrencySubunitLabel(Currencies);
     QString getCurrencySubunitFromLabel(const QString& currLabel);
@@ -92,6 +92,7 @@ namespace beamui
     QString toString(const beam::PeerID&);
     QString toString(const beam::Merkle::Hash&);
     QString toString(const beam::Timestamp& ts);
+    QString toString(const QDateTime&);
 
     QDateTime CalculateExpiresTime(beam::Timestamp currentHeightTime, beam::Height currentHeight, beam::Height expiresHeight);
     QString getEstimateTimeStr(int estimate);

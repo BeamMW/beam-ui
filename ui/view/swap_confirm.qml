@@ -1,6 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.1
+import QtQuick.Layouts 1.12
 import Beam.Wallet 1.0
 import "controls"
 import "./utils.js" as Utils
@@ -195,6 +195,7 @@ ConfirmationDialog {
                 rateUnit:          control.showRate ? control.rateUnit: ""
                 color:             Style.accent_outgoing
                 maxPaintedWidth:   false
+                maxUnitChars:      15
                 Layout.fillWidth:  true
             }
 
@@ -240,7 +241,7 @@ ConfirmationDialog {
                 Layout.minimumHeight:   16
                 font.pixelSize:         14
                 color:                  Style.content_main
-                //% "To broadcast your transaction please enter your password"
+                //% "To approve the transaction please enter your password"
                 text:                   qsTrId("send-confirmation-pwd-require-message")
             }
 

@@ -2,7 +2,7 @@ import QtQuick 2.11
 import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.4
+import QtQuick.Layouts 1.12
 import "controls"
 import "utils.js" as Utils
 import Beam.Wallet 1.0
@@ -267,6 +267,7 @@ ColumnLayout {
 
                 onClicked: {
                     if (enabled) {
+                        viewModel.markItemAsRead(model.rawID);
                         control.notifications[type].action(model.rawID);
                     }
                 }
@@ -287,7 +288,8 @@ ColumnLayout {
     property var icons: ({
         updateIcon: { source: 'qrc:/assets/icon-repeat-white.svg', height: 16},
         detailsIcon: { source: 'qrc:/assets/icon-details.svg', height: 12},
-        activateIcon: { source: 'qrc:/assets/icon-activate.svg', height: 16}
+        activateIcon: { source: 'qrc:/assets/icon-activate.svg', height: 16},
+        goToAppIcon: { source: 'qrc:/assets/icon-go-to-app.svg', height: 16}
     })
 
     property var labels: ({
@@ -298,7 +300,9 @@ ColumnLayout {
         //% "activated"
         activatedLabel: qsTrId("notifications-activated"),
         //% "details"
-        detailsLabel:   qsTrId("notifications-details")
+        detailsLabel:   qsTrId("notifications-details"),
+        //% "open the dapp"
+        openDappLabel:  qsTrId("notifications-open-dapp")
     })
 
     property var notifications: ({
@@ -332,6 +336,60 @@ ColumnLayout {
             action:     navigateToTransaction,
             icon:       "qrc:/assets/icon-notifications-sent.svg"
         },
+        offlineReceived: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-received-offline.svg"
+        },
+        offlineSent: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-sent-offline.svg"
+        },
+        offlineFailedToSend: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-failed-sent-offline.svg"
+        },
+        pubOfflineReceived: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-received-offline.svg"
+        },
+        pubOfflineSent: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-sent-offline.svg"
+        },
+        pubOfflineFailedToSend: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-failed-sent-offline.svg"
+        },
+        maxpReceived: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-received-privacy.svg"
+        },
+        maxpSent: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-sent-privacy.svg"
+        },
+        maxpFailedToSend: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-notifications-failed-sent-privacy.svg"
+        },
         failedToSend: {
             label:      labels.detailsLabel,
             actionIcon: icons.detailsIcon,
@@ -358,26 +416,26 @@ ColumnLayout {
         },
         swapCompleted: {
             label:      labels.detailsLabel,
-            actionIcon: icons.detailsIcon,
+            actionIcon: icons.goToAppIcon,
             action:     navigateToSwapTransaction,
             icon:       "qrc:/assets/icon-notifications-swap-completed.svg"
         },
         contractCompleted: {
-            label:      labels.detailsLabel,
-            actionIcon: icons.detailsIcon,
-            action:     navigateToTransaction,
+            label:      labels.openDappLabel,
+            actionIcon: icons.goToAppIcon,
+            action:     navigateToDAppTransaction,
             icon:       "qrc:/assets/icon-contract-completed.svg"
         },
         contractExpired: {
-            label:      labels.detailsLabel,
-            actionIcon: icons.detailsIcon,
-            action:     navigateToTransaction,
+            label:      labels.openDappLabel,
+            actionIcon: icons.goToAppIcon,
+            action:     navigateToDAppTransaction,
             icon:       "qrc:/assets/icon-contract-expired.svg"
         },
         contractFailed: {
-            label:      labels.detailsLabel,
-            actionIcon: icons.detailsIcon,
-            action:     navigateToTransaction,
+            label:      labels.openDappLabel,
+            actionIcon: icons.goToAppIcon,
+            action:     navigateToDAppTransaction,
             icon:       "qrc:/assets/icon-contract-failed.svg"
         }
     })
@@ -410,5 +468,10 @@ ColumnLayout {
 
     function getActionButtonIcon(notificationType) {
         return control.notifications[notificationType].actionIcon || ''
+    }
+
+    function navigateToDAppTransaction(id) {
+        var txID = viewModel.getItemTxID(id)
+        if (txID) main.openDAppTransactionDetails(txID)
     }
 } // Item

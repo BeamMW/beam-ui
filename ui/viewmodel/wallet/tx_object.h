@@ -51,11 +51,17 @@ public:
     QString getAmountSecondCurrency();
     QString getCidsStr() const;
     QString getSource() const;
+    uint32_t getMinConfirmations() const;
+    QString getConfirmationProgress() const;
+    bool isActive() const;
+    QString getAppId();
+    bool isDappTx();
 
     const std::vector<beam::Asset::ID>& getAssetsList() const;
     const std::vector<QString>& getAssetAmounts() const;
     const std::vector<bool>& getAssetAmountsIncome() const;
     const std::vector<QString>& getAssetRates() const;
+    const std::vector<QString>& getAssetIds() const;
 
     bool isIncome() const;
     bool isSelfTx() const;
@@ -78,16 +84,16 @@ public:
 protected:
     [[nodiscard]] const beam::wallet::TxDescription& getTxDescription() const;
     [[nodiscard]] QString getReasonString(beam::wallet::TxFailureReason reason) const;
-    [[nodiscard]] QString getIdentity(bool isSender) const;
-    void restoreAddressType();
 
     beam::wallet::TxDescription _tx;
+    uint32_t _minConfirmations = 0;
     beam::wallet::Currency _secondCurrency;
     QString _amountSecondCurrency;
 
     mutable QString _kernelIDStr;
     mutable QString _comment;
     boost::optional<beam::wallet::TxAddressType> _addressType;
+    boost::optional<QString> _appid;
 
     beam::Amount _contractFee = 0UL;
     beam::bvm2::FundsMap _contractSpend;
@@ -98,4 +104,5 @@ protected:
     std::vector<QString>         _assetAmounts;
     std::vector<bool>            _assetAmountsIncome;
     std::vector<QString>         _assetRates;
+    std::vector<QString>         _assetIDs;
 };

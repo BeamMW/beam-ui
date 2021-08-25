@@ -13,25 +13,39 @@
 // limitations under the License.
 #pragma once
 
-namespace beamui::applications {
+#include "apps_server.h"
+
+namespace beamui::applications
+{
     class AppsViewModel : public QObject
     {
         Q_OBJECT
-        Q_PROPERTY(QString devAppUrl     READ getDevAppUrl     CONSTANT)
-        Q_PROPERTY(QString devAppName    READ getDevAppName    CONSTANT)
-        Q_PROPERTY(QString devAppApiVer  READ getDevAppApiVer  CONSTANT)
-        Q_PROPERTY(QString appsUrl       READ getAppsUrl       CONSTANT)
+        Q_PROPERTY(QString appsUrl     READ getAppsUrl    CONSTANT)
+        Q_PROPERTY(QString userAgent   READ getUserAgent  CONSTANT)
+        Q_PROPERTY(QList<QMap<QString, QVariant>> localApps READ getLocalApps CONSTANT)
 
     public:
         AppsViewModel();
-        ~AppsViewModel();
+        ~AppsViewModel() override;
 
-        Q_INVOKABLE QString getDevAppUrl() const;
-        Q_INVOKABLE QString getDevAppName() const;
-        Q_INVOKABLE QString getAppsUrl() const;
-        Q_INVOKABLE QString getDevAppApiVer() const;
+        [[nodiscard]] QString getAppsUrl() const;
+        [[nodiscard]] QString getUserAgent() const;
+        [[nodiscard]] QList<QMap<QString, QVariant>> getLocalApps();
 
     public:
         Q_INVOKABLE void onCompleted(QObject *webView);
+        Q_INVOKABLE [[nodiscard]] QString getAppCachePath(const QString& appid) const;
+        Q_INVOKABLE [[nodiscard]] QString getAppStoragePath(const QString& appid) const;
+        Q_INVOKABLE [[nodiscard]] bool installFromFile();
+        Q_INVOKABLE void launchAppServer();
+
+    private:
+        [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
+        [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
+        QMap<QString, QVariant> validateAppManifest(QTextStream& io, const QString& appFolder);
+
+        QString _userAgent;
+        QString _serverAddr;
+        std::unique_ptr<AppsServer> _server;
     };
 }

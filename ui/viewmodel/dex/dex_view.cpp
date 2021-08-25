@@ -31,9 +31,6 @@ namespace beamui::dex
          // TODO:DEX move address to the board?
          _walletModel.getAsync()->generateNewAddress();
 
-         //_orders.insert(std::make_shared<DexOrderObject>());
-         //_orders.insert(std::make_shared<DexOrderObject>());
-         //_orders.insert(std::make_shared<DexOrderObject>());
          emit ordersChanged();
     }
 
@@ -41,23 +38,51 @@ namespace beamui::dex
     {
     }
 
-    void DexView::buyBEAM()
+    void DexView::sellBEAMX()
     {
+        using namespace beam;
         using namespace beam::wallet;
 
         _walletModel.getAsync()->saveAddress(_receiverAddr);
 
-        DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 1, 0, 50);
+        auto expires = beam::getTimestamp();
+        expires += 60 * 60 * 24; // 24 hours for tests
+
+        DexOrder order(
+            DexOrderID::generate(),
+            _receiverAddr.m_walletID,
+            _receiverAddr.m_OwnID,
+            DexMarket(5, 0),
+            DexMarketSide::Sell,
+            10 * beam::Rules::Coin,
+            beam::Rules::Coin / 2,
+            expires
+         );
+
         _walletModel.getAsync()->publishDexOrder(order);
     }
 
-    void DexView::sellBEAM()
+    void DexView::buyBEAMX()
     {
+        using namespace beam;
         using namespace beam::wallet;
 
         _walletModel.getAsync()->saveAddress(_receiverAddr);
 
-        DexOrder order(DexOrderID::generate(), _receiverAddr.m_walletID, _receiverAddr.m_OwnID, 0, 1, 100);
+        auto expires = beam::getTimestamp();
+        expires += 60 * 60 * 24; // 24 hours for tests
+
+        DexOrder order(
+            DexOrderID::generate(),
+            _receiverAddr.m_walletID,
+            _receiverAddr.m_OwnID,
+            DexMarket(5, 0),
+            DexMarketSide::Buy,
+            10 * beam::Rules::Coin,
+            beam::Rules::Coin / 2,
+            expires
+         );
+
         _walletModel.getAsync()->publishDexOrder(order);
     }
 
@@ -105,8 +130,7 @@ namespace beamui::dex
         beam::wallet::DexOrderID dexOrderId;
         if (!dexOrderId.FromHex(orderId.toStdString()))
         {
-            // TODO:DEX show error? usually this should not happen, so may be just leave LOG_ERROR as is
-            LOG_ERROR() << "DexView::acceptOrder failed, bad order id";
+            throw std::runtime_error("DexView::acceptOrder failed, bad order id");
         }
         _walletModel.getAsync()->acceptDexOrder(dexOrderId);
     }

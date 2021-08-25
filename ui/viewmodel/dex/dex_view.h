@@ -32,8 +32,8 @@ namespace beamui::dex {
         //
         // Methods
         //
-        Q_INVOKABLE void buyBEAM();
-        Q_INVOKABLE void sellBEAM();
+        Q_INVOKABLE void buyBEAMX();
+        Q_INVOKABLE void sellBEAMX();
         Q_INVOKABLE void acceptOrder(const QString& orderId);
 
     signals:

@@ -18,7 +18,7 @@
 class AssetObject
 {
 public:
-    AssetObject(uint64_t id);
+    explicit AssetObject(uint64_t id);
     bool operator==(const AssetObject& other) const;
 
     [[nodiscard]] uint64_t id() const;

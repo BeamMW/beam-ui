@@ -3,7 +3,7 @@ import QtQuick.Controls 2.4
 import QtQuick.Controls.impl 2.4
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.12
 import "."
 import "../utils.js" as Utils
 
@@ -20,8 +20,6 @@ ComboBox {
     property string underlineColor: color
     property bool enableScroll: false
     property int textMaxLenDrop: 0
-    property int textMaxLenDisplay: 0
-    property int dropOffset: 0
 
     property var modelWidth: control.width
     property var calculatedWidth: Math.max(control.width, modelWidth)
@@ -42,47 +40,51 @@ ComboBox {
         width: calculatedWidth
         padding: 0
 
-        property var iconW: Array.isArray(control.model)  ? modelData["iconWidth"]  : model["iconWidth"]
-        property var iconH: Array.isArray(control.model)  ? modelData["iconHeight"] : model["iconHeight"]
-        property var iconS: (Array.isArray(control.model) ? modelData["icon"]       : model["icon"]) || ""
+        property var  iconW:    (Array.isArray(control.model)  ? modelData["iconWidth"]  : model["iconWidth"]) || 0
+        property var  iconH:    (Array.isArray(control.model)  ? modelData["iconHeight"] : model["iconHeight"]) || 0
+        property var  iconS:    (Array.isArray(control.model)  ? modelData["icon"]       : model["icon"]) || ""
+        property bool verified: (Array.isArray(control.model)  ? modelData["verified"]   : model["verified"]) || false
 
-        contentItem: Row {
+        contentItem: RowLayout {
             spacing: 0
 
             SvgImage {
-                source:  iconS
-                width:   iconW
-                height:  iconH
+                source: iconS
                 visible: iconW > 0
-                anchors.verticalCenter: parent.verticalCenter
-            }
+                Layout.alignment: Qt.AlignVCenter
+                Layout.rightMargin: 10
+                Layout.preferredWidth: iconW
+                Layout.preferredHeight: iconH
 
-            Item {
-                visible: iconW > 0
-                width:   10
-                height:  parent.height
+                SvgImage {
+                    source: "qrc:/assets/icon-verified-asset.svg";
+                    visible: verified
+
+                    x: parent.width - width / 1.6
+                    y: - height / 3.6
+
+                    width:  18 * parent.width / 26
+                    height: 18 * parent.width / 26
+                }
             }
 
             SFText {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignVCenter
+
                 text: {
                     var text = modelData
                     if (control.textRole) {
                         text = Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]
                     }
-                    return Utils.limitText(text, control.textMaxLenDrop)
+                    return text
                 }
                 color: highlighted ? Style.active : Style.content_main
-                elide: Text.ElideMiddle
+                elide: Text.ElideRight
                 font.pixelSize: dropFontPixelSize
                 font.letterSpacing: fontLetterSpacing
                 font.styleName: highlighted ? "DemiBold" : "Normal"
                 font.weight: highlighted ? Font.DemiBold : Font.Normal
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
-            Item {
-                width:  18
-                height: parent.height
             }
         }
 
@@ -96,54 +98,60 @@ ComboBox {
                 textMetrics.text = Utils.limitText(control.textRole ? model[i][control.textRole] : model[i], control.textMaxLenDrop)
                 var iconW = model[i]["iconWidth"] || 0
                 modelWidth = Math.max(textMetrics.width +
-                                      iconW +
-                                      10 + // spacing between icon & text
-                                      18,  // right padding
+                                      iconW + 10, // spacing between icon & text
                                       modelWidth)
             }
         }
     }
 
     onModelChanged: recalcSize()
+    indicator: Item {}
 
-    indicator: SvgImage {
-        source: "qrc:/assets/icon-down.svg"
-        anchors.right: control.right
-        anchors.verticalCenter: control.verticalCenter
-        visible: control.enabled
-    }
+    property var  iconW:    (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconWidth"] : 0) || 0
+    property var  iconH:    (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconHeight"] : 0) || 0
+    property var  iconS:    (control.model && control.model[currentIndex] ? control.model[currentIndex]["icon"] : "") || ""
+    property bool verified: (control.model && control.model[currentIndex] ? control.model[currentIndex]["verified"] : false) || false
 
-    property var iconW: (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconWidth"] : 0) || 0
-    property var iconH: (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconHeight"] : 0) || 0
-    property var iconS: (control.model && control.model[currentIndex] ? control.model[currentIndex]["icon"] : "") || ""
-
-    contentItem: Row {
+    contentItem: RowLayout {
         spacing: 0
 
         SvgImage {
             source: iconS
             sourceSize: Qt.size(iconW, iconH)
-            anchors.verticalCenter: parent.verticalCenter
             visible: iconW > 0
-        }
+            Layout.alignment: Qt.AlignVCenter
+            Layout.rightMargin: 10
 
-        Item {
-            visible: iconW > 0
-            width:   10
-            height:  parent.height
+            SvgImage {
+                source: "qrc:/assets/icon-verified-asset.svg";
+                visible: verified
+
+                x: parent.width - width / 1.6
+                y: - height / 3.6
+
+                width:  18 * parent.width / 26
+                height: 18 * parent.width / 26
+            }
         }
 
         SFText  {
+            Layout.fillWidth:   true
+            Layout.alignment:   Qt.AlignVCenter
+            Layout.rightMargin: control.enabled ? 10 : 0
+
             clip: true
-            text: control.editable ? control.editText : Utils.limitText(control.displayText, control.textMaxLenDisplay)
+            text: control.editable ? control.editText : control.displayText
             color: control.enabled || control.colorConst ? control.color : Style.content_secondary 
             font.pixelSize: fontPixelSize
-            anchors.verticalCenter: parent.verticalCenter
+            elide: Text.ElideRight
         }
 
-        Item {
-            width:  control.indicator.width + control.spacing
-            height: parent.height
+        SvgImage {
+            id: img
+            source: "qrc:/assets/icon-down.svg"
+            Layout.alignment: Qt.AlignVCenter
+            visible: control.enabled
+            sourceSize: Qt.size(5, 3)
         }
     }
 
@@ -164,7 +172,7 @@ ComboBox {
         y: control.height + 7
         x: {
             if (iconW) return control.parent.mapToItem(parent, control.x, 0).x - comboPopup.leftPadding
-            return control.parent.mapToItem(parent, control.x, 0).x + control.width / 2 - width / 2 + control.dropOffset
+            return control.parent.mapToItem(parent, control.x, 0).x + control.width / 2 - width / 2
         }
 
         width: calculatedWidth + leftPadding + rightPadding
@@ -172,7 +180,7 @@ ComboBox {
         topPadding:    20
         bottomPadding: 20
         leftPadding:   20
-        rightPadding:  2
+        rightPadding:  20
 
         contentItem: ColumnLayout {
             spacing: 0

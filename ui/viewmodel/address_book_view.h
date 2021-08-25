@@ -107,7 +107,7 @@ public:
     Q_INVOKABLE bool    isWIDBusy(const QString& walletID);
     Q_INVOKABLE bool    commentValid(const QString& comment) const;
     Q_INVOKABLE void    deleteAddress(const QString& walletID);
-    Q_INVOKABLE void    saveChanges(const QString& walletID, const QString& name, QDateTime expirationDate);
+    Q_INVOKABLE void    saveChanges(const QString& walletID, const QString& name, const QDateTime& expirationDate);
     Q_INVOKABLE QString generateQR(const QString& addr, uint width, uint height);
 
 public:

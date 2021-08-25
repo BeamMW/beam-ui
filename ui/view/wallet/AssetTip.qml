@@ -1,6 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.4
+import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 import Beam.Wallet 1.0
 import "../controls"
@@ -16,6 +16,7 @@ AlphaTipPopup {
     width:        (state == "ainfo" ? ainfoData.preferredWidth : balanceData.preferredWidth ) + leftPadding + rightPadding
     rightPadding: 0
 
+    property int  assetId: -1
     property var  assetInfo
     property var  onLink
     property var  onMPDetails
@@ -113,7 +114,7 @@ AlphaTipPopup {
         ScrollView {
             clip: true
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-            ScrollBar.vertical.policy: assetTip.visible && contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+            ScrollBar.vertical.policy: assetTip.visible && contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
             visible: stateLayout.state == "balance"
 
             property var minWidth: tabsRow.width + tabsRow.Layout.leftMargin + tabsRow.Layout.rightMargin
@@ -146,10 +147,11 @@ AlphaTipPopup {
                     rate:           assetInfo.rate
                     color:          assetTip.defTextColor
 
-                    font.styleName:  "DemiBold"
-                    font.weight:     Font.DemiBold
+                    font.styleName:  "Normal"
+                    font.weight:     Font.Normal
                     font.pixelSize:  13
                     maxPaintedWidth: false
+                    maxUnitChars:    20
                     Layout.rightMargin: 14
                 }
 
@@ -176,10 +178,11 @@ AlphaTipPopup {
                     color:          assetTip.defTextColor
                     visible:        amount != "0"
 
-                    font.styleName:  "DemiBold"
-                    font.weight:     Font.DemiBold
+                    font.styleName:  "Normal"
+                    font.weight:     Font.Normal
                     font.pixelSize:  13
                     maxPaintedWidth: false
+                    maxUnitChars:    20
                     Layout.rightMargin: 14
                 }
 
@@ -206,10 +209,11 @@ AlphaTipPopup {
                     color:          assetTip.defTextColor
                     visible:        amount != "0"
 
-                    font.styleName:  "DemiBold"
-                    font.weight:     Font.DemiBold
+                    font.styleName:  "Normal"
+                    font.weight:     Font.Normal
                     font.pixelSize:  13
                     maxPaintedWidth: false
+                    maxUnitChars:    20
                     Layout.rightMargin: 14
                 }
 
@@ -246,10 +250,11 @@ AlphaTipPopup {
                     amount:       assetInfo.locked
                     visible:      amount != "0"
 
-                    font.styleName:  "DemiBold"
-                    font.weight:     Font.DemiBold
+                    font.styleName:  "Normal"
+                    font.weight:     Font.Normal
                     font.pixelSize:  13
                     maxPaintedWidth: false
+                    maxUnitChars:    20
                     Layout.rightMargin: 14
                 }
 
@@ -275,10 +280,11 @@ AlphaTipPopup {
                     amount:       assetInfo.maturingRegular
                     visible:      amount != "0"
 
-                    font.styleName:  "DemiBold"
-                    font.weight:     Font.DemiBold
+                    font.styleName:  "Normal"
+                    font.weight:     Font.Normal
                     font.pixelSize:  13
                     maxPaintedWidth: false
+                    maxUnitChars:    20
                     Layout.rightMargin: 14
                 }
 
@@ -304,10 +310,11 @@ AlphaTipPopup {
                     amount:       assetInfo.change
                     visible:      amount != "0"
 
-                    font.styleName:  "DemiBold"
-                    font.weight:     Font.DemiBold
+                    font.styleName:  "Normal"
+                    font.weight:     Font.Normal
                     font.pixelSize:  13
                     maxPaintedWidth: false
+                    maxUnitChars:    20
                     Layout.rightMargin: 14
                 }
 
@@ -338,10 +345,11 @@ AlphaTipPopup {
                         color:        assetTip.defTextColor
                         amount:       assetInfo.maturingMP
 
-                        font.styleName:  "DemiBold"
-                        font.weight:     Font.DemiBold
+                        font.styleName:  "Normal"
+                        font.weight:     Font.Normal
                         font.pixelSize:  13
                         maxPaintedWidth: false
+                        maxUnitChars:    20
                     }
 
                     LinkButton {

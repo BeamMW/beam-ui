@@ -37,7 +37,7 @@
 #endif // BITCOIN_CASH_SUPPORT
 #include "wallet/transactions/swaps/bridges/dash/dash.h"
 #include "wallet/transactions/swaps/bridges/ethereum/ethereum.h"
-
+#include "wallet/transactions/assets/ainfo_transaction.h"
 #include "keykeeper/local_private_key_keeper.h"
 
 #if defined(BEAM_HW_WALLET)
@@ -141,7 +141,7 @@ void AppModel::restoreDBFromBackup(const std::string& dbFilePath)
     }
 }
 
-bool AppModel::createWallet(const SecString& seed, const SecString& pass)
+bool AppModel::createWallet(const SecString& seed, const SecString& pass, const std::string& rawSeed)
 {
     const auto dbFilePath = m_settings.getWalletStorage();
     backupDB(dbFilePath);
@@ -151,6 +151,11 @@ bool AppModel::createWallet(const SecString& seed, const SecString& pass)
         auto db = beam::wallet::WalletDB::init(dbFilePath, pass, seed.hash());
         if (!db) 
             return false;
+
+        if (!rawSeed.empty())
+        {
+            db->setVarRaw(beam::wallet::SEED_PARAM_NAME, rawSeed.c_str(), rawSeed.size());
+        }
 
         generateDefaultAddress(db);
     }
@@ -295,6 +300,26 @@ bool AppModel::importData()
     }
 }
 
+bool AppModel::isSeedValidationMode() const
+{
+    return m_isSeedValidationMode;
+}
+
+void AppModel::setSeedValidationMode(bool value)
+{
+    m_isSeedValidationMode = value;
+}
+
+bool AppModel::isSeedValidationTriggeredFromSetting() const
+{
+    return m_isSeedValidationTriggeredFromSettings;
+}
+
+void AppModel::setSeedValidationTriggeredFromSetting(bool value)
+{
+    m_isSeedValidationTriggeredFromSettings = value;
+}
+
 void AppModel::resetWallet()
 {
     if (m_nodeModel.isNodeRunning())
@@ -398,9 +423,8 @@ void AppModel::startWallet()
     additionalTxCreators->emplace(TxType::PushTransaction, std::make_shared<lelantus::PushTransaction::Creator>(m_db));
 #endif
 
-    /*
     additionalTxCreators->emplace(TxType::DexSimpleSwap, std::make_shared<DexTransaction::Creator>(m_db));
-    */
+    additionalTxCreators->emplace(TxType::AssetInfo, std::make_shared<AssetInfoTransaction::Creator>());
 
     bool displayRate = m_settings.getRateCurrency() != beam::wallet::Currency::UNKNOWN();
     m_wallet->start(activeNotifications, displayRate, additionalTxCreators);

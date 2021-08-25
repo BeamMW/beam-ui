@@ -12,33 +12,48 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if defined(_MSC_VER)
-#pragma warning (push)
-#pragma warning (disable: 4127)
-#endif
 #include <QQmlEngine>
-#if defined(_MSC_VER)
-#pragma warning (pop)
-#endif
 
 #include "public.h"
 #include "apps_view.h"
-
-#if defined(_MSC_VER)
-#pragma warning (push)
-#pragma warning (disable: 4251)
-#endif
 #include "webapi_beam.h"
 #include "webapi_creator.h"
-#if defined(_MSC_VER)
-#pragma warning (pop)
-#endif
 
 namespace beamui::applications
 {
+    namespace
+    {
+        const std::string kAppIDPrefix = "appid:";
+    }
+
     void RegisterQMLTypes()
     {
         qmlRegisterType<AppsViewModel>("Beam.Wallet", 1, 0, "ApplicationsViewModel");
         qmlRegisterType<WebAPICreator>("Beam.Wallet", 1, 0, "WebAPICreator");
+    }
+
+    std::string GenerateAppID(const std::string& appName, const std::string& appUrl)
+    {
+        QUrl url(QString::fromStdString(appUrl));
+        const auto normalizedUrl = url.toString(QUrl::RemovePort).toStdString();
+
+        ECC::Hash::Value hv;
+        ECC::Hash::Processor() << appName << normalizedUrl >> hv;
+
+        auto appid = kAppIDPrefix + hv.str();
+        return appid;
+    }
+
+    std::string StripAppIDPrefix(const std::string& appId)
+    {
+        auto res = appId;
+
+        size_t pos = appId.find(kAppIDPrefix);
+        if (pos != std::string::npos)
+        {
+            res.erase(pos, kAppIDPrefix.length());
+        }
+
+        return res;
     }
 }

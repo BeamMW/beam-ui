@@ -24,6 +24,7 @@ class PaymentInfoItem : public QObject
     Q_PROPERTY(QString receiver            READ getReceiver            NOTIFY paymentProofChanged)
     Q_PROPERTY(QString amount              READ getAmount              NOTIFY paymentProofChanged)
     Q_PROPERTY(QString amountValue         READ getAmountValue         NOTIFY paymentProofChanged)
+    Q_PROPERTY(QString unitName            READ getUnitName            NOTIFY paymentProofChanged)
     Q_PROPERTY(QString kernelID            READ getKernelID            NOTIFY paymentProofChanged)
     Q_PROPERTY(bool isValid                READ isValid                NOTIFY paymentProofChanged)
     Q_PROPERTY(QString paymentProof        READ getPaymentProof WRITE setPaymentProof NOTIFY paymentProofChanged )
@@ -34,6 +35,7 @@ public:
     QString getReceiver() const;
     QString getAmount() const;
     QString getAmountValue() const;
+    QString getUnitName() const;
     QString getKernelID() const;
     bool isValid() const;
     QString getPaymentProof() const;

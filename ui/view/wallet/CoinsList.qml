@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.12
 import "../controls"
 
 RowLayout {
@@ -7,6 +7,7 @@ RowLayout {
 
     property var icons
     property var names
+    property var verified
     readonly property int count: icons ? icons.length : 0
 
     spacing: 0
@@ -20,6 +21,17 @@ RowLayout {
             source: icons[index]
             sourceSize: Qt.size(20, 20)
             z: -index
+
+             SvgImage {
+                source: "qrc:/assets/icon-verified-asset.svg";
+                visible: verified && verified[index]
+
+                x: parent.width - width / 1.6
+                y: - height / 3.6
+
+                width:  18 * parent.width / 26
+                height: 18 * parent.width / 26
+            }
         }
     }
 
