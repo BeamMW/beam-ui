@@ -216,10 +216,10 @@ jobs:
       run: |
         #cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Linux.deb Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb
         #sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb > checksum.txt
-        cp Beam_Wallet_Masternet-${{env.BEAM_VERSION}}-x86_64.AppImage Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.AppImage
-        sha256sum Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.AppImage > Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.AppImage-checksum.txt
-        chmod a+x Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.AppImage
-        tar -cvf Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.tar Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.AppImage
+        cp Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-x86_64.AppImage Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
+        sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage > Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage-checksum.txt
+        chmod a+x Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
+        tar -cvf Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.tar Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
 
     - name: Collect [windows]
       shell: bash
