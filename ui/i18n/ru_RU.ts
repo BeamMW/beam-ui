@@ -1775,7 +1775,7 @@ Your version is: %2. Please, check for updates.</source>
     <message id="tx-max-privacy">
         <source>Max Anonymity Set</source>
         <oldsource>Max Privacy</oldsource>
-        <translation type="unfinished">Max Anonymity Set</translation>
+        <translation>Максимальная анонимность</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
@@ -2108,7 +2108,7 @@ offline</source>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
         <source>Maximum anonymity set size</source>
-        <translation type="unfinished">Maximum anonymity set size</translation>
+        <translation>Размер максимального набора анонимности</translation>
     </message>
     <message id="settings-privacy-mp-notice">
         <source>Received coins can be spent immediately.</source>
@@ -2140,7 +2140,7 @@ offline</source>
     </message>
     <message id="remote-node-lelantus-warning">
         <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
-        <translation type="unfinished">To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</translation>
+        <translation>Чтобы поддерживать максимальную анонимность и оффлайн транзакции, пожалуйста, подключитесь к интегрированному узлу или к собственному узлу, настроенному с вашим ключом владельца.</translation>
     </message>
     <message id="time-hour">
         <source>hour</source>
@@ -2150,7 +2150,7 @@ offline</source>
     <message id="time-hours">
         <source>hours</source>
         <extracomment>time &quot;hours&quot; string</extracomment>
-        <translation type="unfinished">hours</translation>
+        <translation>часа</translation>
     </message>
     <message id="time-day">
         <source>day</source>
@@ -2623,7 +2623,7 @@ Update your settings and try again.</source>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
         <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>Подключитесь к интегрированному или собственному узлу, чтобы включить получение транзакций с максимальным anonimity set и оффлайн транзакций.</translation>
+        <translation>Подключитесь к интегрированному или собственному узлу, чтобы включить получение транзакций с максимальной анонимностью и оффлайн транзакций.</translation>
     </message>
     <message id="receive-request">
         <source>Requested amount</source>
@@ -3111,7 +3111,7 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     </message>
     <message id="address-info-title-mp">
         <source>Address details with max anonymity set</source>
-        <translation type="unfinished">Address details with max anonymity set</translation>
+        <translation>Детали адреса с максимальной анонимностью</translation>
     </message>
     <message id="address-info-regular-notice">
         <source>Regular address includes both online and offline addresses.</source>
@@ -3137,7 +3137,7 @@ cannot be canceled.</source>
     </message>
     <message id="send-anon-set">
         <source>Guarantees maximum anonymity set of up to 64K.</source>
-        <translation type="unfinished">Guarantees maximum anonymity set of up to 64K.</translation>
+        <translation>Гарантирует максимальный анонимный набор до 64K.</translation>
     </message>
     <message id="send-online-tip">
         <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
