@@ -200,7 +200,7 @@
     </message>
     <message id="wallet-txs-status-failed">
         <source>failed</source>
-        <translation>felad</translation>
+        <translation>misslyckades</translation>
     </message>
     <message id="wallet-txs-status-unknown">
         <source>unknown</source>
