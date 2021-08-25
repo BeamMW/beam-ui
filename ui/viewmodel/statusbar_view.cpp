@@ -15,11 +15,16 @@
 #include "statusbar_view.h"
 #include "model/app_model.h"
 #include "version.h"
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+#include "settings_helpers.h"
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT
+
+using namespace beam::wallet;
 
 StatusbarViewModel::StatusbarViewModel()
     : m_model(*AppModel::getInstance().getWalletModel())
     , m_isOnline(false)
-    , m_isSyncInProgress(false)
+    , m_isSyncInProgress(!m_model.isSynced())
     , m_isFailedStatus(false)
     , m_isConnectionTrusted(false)
     , m_nodeSyncProgress(0)
@@ -30,6 +35,11 @@ StatusbarViewModel::StatusbarViewModel()
     , m_errorMsg{}
 
 {
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    connectCoinClients();
+    connectEthClient();
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT
+
     connect(&m_model, SIGNAL(nodeConnectionChanged(bool)),
         SLOT(onNodeConnectionChanged(bool)));
 
@@ -90,6 +100,23 @@ QString StatusbarViewModel::getWalletStatusErrorMsg() const
     return m_errorMsg;
 }
 
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+bool StatusbarViewModel::getCoinClientFailed() const
+{
+    return m_isCoinClientFailed;
+}
+
+QString StatusbarViewModel::getCoinClientErrorMsg() const
+{
+    return getCoinClientFailed() ? m_coinClientErrorMsg : "";
+}
+
+QString StatusbarViewModel::coinWithErrorLabel() const
+{
+    return m_coinWithErrorLabel;
+}
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT
+
 void StatusbarViewModel::setIsOnline(bool value)
 {
     if (m_isOnline != value)
@@ -140,6 +167,9 @@ void StatusbarViewModel::setWalletStatusErrorMsg(const QString& value)
     if (m_errorMsg != value)
     {
         m_errorMsg = value;
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+        m_coinWithErrorLabel = beamui::getCurrencyUnitName(beamui::Currencies::Beam);
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT
         emit statusErrorChanged();
     }
 }
@@ -157,6 +187,14 @@ void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
     {
         setIsFailedStatus(false);
         setIsOnline(true);
+        setIsSyncInProgress(!m_model.isSynced());
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+        if (m_isCoinClientFailed)
+        {
+            m_coinClientErrorMsg = QString::fromStdString(generateCoinClientErrorMsg());
+            emit coinClientErrorMsgChanged();
+        }
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT
         return;
     }
 
@@ -164,9 +202,7 @@ void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
 
     if (!m_isFailedStatus)
     {
-        // Failed status must have arrived already
-        //% "Wallet is not connected to the node"
-        setWalletStatusErrorMsg(qtTrId("status-bar-view-not-connected"));
+        setWalletStatusErrorMsg(qtTrId("wallet-model-connection-refused-error").arg("BEAM"));
         setIsFailedStatus(true);
     }
 }
@@ -177,6 +213,14 @@ void StatusbarViewModel::onGetWalletError(beam::wallet::ErrorType error)
     setWalletStatusErrorMsg(m_model.GetErrorString(error));
     setIsFailedStatus(true);
     setIsConnectionTrusted(false);
+
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    if (m_isCoinClientFailed)
+    {
+        m_coinClientErrorMsg = QString::fromStdString(generateCoinClientErrorMsg());
+        emit coinClientErrorMsgChanged();
+    }
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT
 }
 
 void StatusbarViewModel::onSyncProgressUpdated(int done, int total)
@@ -198,3 +242,157 @@ void StatusbarViewModel::onNodeSyncProgressUpdated(int done, int total)
 
     setIsSyncInProgress(!((m_done + m_nodeDone) == (m_total + m_nodeTotal)));
 }
+
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+void StatusbarViewModel::onCoinClientStatusChanged()
+{
+    size_t failedClientsCount = 0;
+    size_t changedStatusesCount = 0;
+
+    for(auto& it : m_coinClientStatuses)
+    {
+        auto status = it.m_client->getStatus();
+        if(status != it.m_status)
+        {
+            it.m_status = status;
+            ++changedStatusesCount;
+        }
+        if (status == beam::bitcoin::Client::Status::Failed) ++failedClientsCount;
+    }
+
+    {
+        auto status = m_ethCleintStatus.first->getStatus();
+        if(status != m_ethCleintStatus.second)
+        {
+            m_ethCleintStatus.second = status;
+            ++changedStatusesCount;
+        }
+        if (status == beam::ethereum::Client::Status::Failed) ++failedClientsCount;
+    }
+
+    if (!m_isCoinClientFailed && failedClientsCount)
+    {
+        m_isCoinClientFailed = true;
+        emit isCoinClientFailedChanged();
+    } else if (m_isCoinClientFailed && failedClientsCount == 0)
+    {
+        m_isCoinClientFailed = false;
+        emit isCoinClientFailedChanged();
+    }
+
+    if (changedStatusesCount)
+    {
+        m_coinClientErrorMsg = QString::fromStdString(generateCoinClientErrorMsg());
+        emit coinClientErrorMsgChanged();
+    }
+}
+
+std::string StatusbarViewModel::generateCoinClientErrorMsg()
+{
+    m_coinWithErrorLabel.clear();
+
+    std::vector<std::pair<AtomicSwapCoin, std::string>> failedClients;
+    for (const auto& cs : m_coinClientStatuses)
+    {
+        if (cs.m_status == beam::bitcoin::Client::Status::Failed)
+        {
+            const auto& settings = cs.m_client->GetSettings();
+            std::string addr;
+            if (settings.IsElectrumActivated())
+            {
+                auto connectionsOptions = settings.GetElectrumConnectionOptions();
+                addr = connectionsOptions.m_address;
+            }
+            else {
+                auto connectionsOptions = settings.GetConnectionOptions();
+                addr = connectionsOptions.m_address.str();
+            }
+            failedClients.emplace_back(std::make_pair(cs.m_coin, addr));
+        }
+    }
+
+    bool ethClientFailed = m_ethCleintStatus.second == beam::ethereum::Client::Status::Failed;
+
+    size_t errorsCount = failedClients.size();
+    if (ethClientFailed) ++errorsCount;
+    if (m_isFailedStatus) ++errorsCount;
+
+
+    std::stringstream ss;
+    if (errorsCount > 1)
+    {
+        std::string failedNodes;
+        if (m_isFailedStatus) failedNodes += (beamui::getCurrencyUnitName(beamui::Currencies::Beam).toStdString() + ", ");
+        for (const auto& p: failedClients)
+        {
+            failedNodes += (std::to_string(p.first) + ", ");
+        }
+        if (ethClientFailed) failedNodes += (std::to_string(AtomicSwapCoin::Ethereum) + ", ");
+        failedNodes.erase(failedNodes.end() - 2, failedNodes.end());
+
+        std::size_t found = failedNodes.find(",");
+        if (found != std::string::npos)
+        {
+            m_coinWithErrorLabel = QString::fromStdString(failedNodes.substr(0, found));
+        }
+
+        //% "Connection to %1 nodes lost"
+        ss << qtTrId("status-bar-view-not-connected").arg(QString::fromStdString(failedNodes)).toStdString();
+    }
+    else if (ethClientFailed)
+    {
+        m_coinWithErrorLabel = beamui::getCurrencyUnitName(beamui::Currencies::Ethereum);
+        ss << qtTrId("wallet-model-connection-refused-error").arg("Ethereum").toStdString();
+    }
+    else if(errorsCount == 1 && m_isCoinClientFailed){
+        ss << qtTrId("wallet-model-connection-refused-error")
+              .arg(getCoinTitle(failedClients[0].first)).toStdString();
+        ss << " : " << failedClients[0].second;
+        m_coinWithErrorLabel = QString::fromStdString(std::to_string(failedClients[0].first));
+    }
+
+    return  ss.str();
+}
+
+void StatusbarViewModel::connectCoinClients()
+{
+    for (int32_t i = static_cast<int32_t>(AtomicSwapCoin::Bitcoin);
+         i < static_cast<int32_t>(AtomicSwapCoin::Unknown);
+         ++i)
+    {
+        AtomicSwapCoin coin = static_cast<AtomicSwapCoin>(i);
+        auto coinClient = AppModel::getInstance().getSwapCoinClient(coin);
+        if (coinClient)
+        {
+            connect(coinClient.get(), SIGNAL(statusChanged()), this, SLOT(onCoinClientStatusChanged()));
+            auto status = coinClient->getStatus();
+            if (status == beam::bitcoin::Client::Status::Failed) m_isCoinClientFailed = true;
+            m_coinClientStatuses.push_back({coinClient, status, coin});
+
+            const auto& settings = coinClient->GetSettings();
+            if (settings.IsActivated())
+            {
+                coinClient->GetAsync()->GetStatus();
+            }
+        }
+    }
+}
+
+void StatusbarViewModel::connectEthClient()
+{
+    auto ethClient = AppModel::getInstance().getSwapEthClient();
+    if (ethClient)
+    {
+        connect(ethClient.get(), SIGNAL(statusChanged()), this, SLOT(onCoinClientStatusChanged()));
+        auto status = ethClient->getStatus();
+        if (status == beam::ethereum::Client::Status::Failed) m_isCoinClientFailed = true;
+        m_ethCleintStatus = std::make_pair(ethClient, status);
+        const auto& settings = ethClient->GetSettings();
+        if (settings.IsActivated())
+        {
+            ethClient->GetAsync()->GetStatus();
+        }
+    }
+}
+
+#endif  // BEAM_ATOMIC_SWAP_SUPPORT

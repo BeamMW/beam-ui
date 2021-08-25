@@ -21,7 +21,9 @@ AssetsList::AssetsList()
     connect(&_wallet,    &WalletModel::transactionsChanged,        this,  &AssetsList::onTransactionsChanged);
     connect(_amgr.get(), &AssetsManager::assetInfo,                this,  &AssetsList::onAssetInfo);
 
+    _wallet.getAsync()->getWalletStatus();
     // Transactions table would be created later and get this for us
+    // Need to refactor multiple requests in the future
     //_wallet.getAsync()->getTransactions();
 }
 
@@ -53,6 +55,7 @@ QHash<int, QByteArray> AssetsList::roleNames() const
         {static_cast<int>(Roles::RLongDesc),        "longDesc"},
         {static_cast<int>(Roles::RSiteUrl),         "siteUrl"},
         {static_cast<int>(Roles::RWhitePaper),      "whitePaper"},
+        {static_cast<int>(Roles::RVerified),        "verified"},
     };
     return roles;
 }
@@ -141,6 +144,8 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
             return _amgr->getSiteUrl(assetId);
         case Roles::RWhitePaper:
             return _amgr->getPaperUrl(assetId);
+        case Roles::RVerified:
+            return _amgr->isVerified(assetId);
         case Roles::RRate:
             {
                 auto rate = _ermgr.getRate(beam::wallet::Currency(assetId));
@@ -152,7 +157,19 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
     }
 }
 
-std::shared_ptr<AssetObject> AssetsList::get(beam::Asset::ID id)
+bool AssetsList::hasAsset(beam::Asset::ID id)
+{
+     for (auto obj: m_list)
+     {
+         if (obj->id() == id)
+         {
+             return true;
+         }
+     }
+     return false;
+}
+
+std::shared_ptr<AssetObject> AssetsList::getAsset(beam::Asset::ID id)
 {
      for (auto obj: m_list)
      {
@@ -164,14 +181,16 @@ std::shared_ptr<AssetObject> AssetsList::get(beam::Asset::ID id)
      return std::shared_ptr<AssetObject>();
 }
 
-void AssetsList::touch(beam::Asset::ID id)
+bool AssetsList::touch(beam::Asset::ID id)
 {
     for (auto it = m_list.begin(); it != m_list.end(); ++it) {
         if ((*it)->id() == id) {
            const auto idx = it - m_list.begin();
            ListModel::touch(idx);
+           return true;
         }
     }
+    return false;
 }
 
 void AssetsList::onNewRates()
@@ -181,10 +200,56 @@ void AssetsList::onNewRates()
 
 void AssetsList::onWalletStatus()
 {
-    for(const auto& asset: m_list)
+    //
+    // Update/Add new assets
+    //
+    auto anz = _wallet.getAssetsNZ();
+    std::set<beam::Asset::ID> anew;
+
+    for (auto aid: anz)
     {
-        touch(asset->id());
+        if (!touch(aid))
+        {
+            anew.insert(aid);
+        }
     }
+
+    if (m_list.empty())
+    {
+        std::vector<std::shared_ptr<AssetObject>> newobj;
+        for (auto aid: anew)
+        {
+            newobj.insert(newobj.begin(), std::make_shared<AssetObject>(aid));
+        }
+        reset(newobj);
+        return;
+    }
+
+    for (auto aid: anew)
+    {
+        int pos = 0;
+        for (; pos < m_list.size(); ++pos)
+        {
+            if (m_list[pos]->id() > aid)
+            {
+                break;
+            }
+        }
+        insert_at(std::make_shared<AssetObject>(aid), pos);
+    }
+
+    //
+    // Remove old assets
+    //
+    std::vector<std::shared_ptr<AssetObject>> aold;
+    for (auto& ai: m_list)
+    {
+        if (anz.find(ai->id()) == anz.end())
+        {
+            aold.push_back(ai);
+        }
+    }
+    remove(aold);
 }
 
 void AssetsList::onAssetInfo(beam::Asset::ID assetId)
@@ -247,7 +312,7 @@ void AssetsList::onTransactionsChanged(beam::wallet::ChangeAction action, const 
     }
 
     for(const auto& tx: _txlist) {
-        if (auto obj = get(tx.m_assetId))
+        if (auto obj = getAsset(tx.m_assetId))
         {
             if(tx.m_status == beam::wallet::TxStatus::Pending ||
                tx.m_status == beam::wallet::TxStatus::InProgress ||

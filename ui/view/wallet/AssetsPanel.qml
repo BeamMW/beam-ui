@@ -1,6 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.12
 import Beam.Wallet 1.0
 import "../controls"
 
@@ -9,36 +9,55 @@ Control {
 
     AssetsViewModel {
         id: viewModel
-        onAssetsChanged: {
-            if (selectedId > 0) {
-                var roleid = viewModel.assets.getRoleId("id")
-                for (var idx = 0; idx < viewModel.assets.rowCount(); ++idx) {
-                    var modelIdx = viewModel.assets.index(idx, 0);
-                    var data = viewModel.assets.data(modelIdx, 258)
-                    if (selectedId == data) {
-                        // currently selected asset is still present, do nothing
-                        return
-                    }
-                }
-                // there is no previously selected asset,
-                // reset selection to nothing
-                selectedId  = -1
-                selectedIdx = -1
-            }
+
+        onSelectedAssetChanged: function () {
+            control.updateView()
         }
     }
 
-    property real   hSpacing:       10
-    property real   vSpacing:       10
-    property int    maxVisibleRows: 3
-    property int    selectedId:     -1
-    property int    selectedIdx:    -1
+    Connections {
+        target: viewModel.assets
+        function onDataChanged () {
+            control.updateView()
+        }
+    }
 
-    readonly property int   assetsCount:     viewModel.assets.rowCount()
-    readonly property real  itemHeight:      75
+    function updateView () {
+        control.assetsCount = viewModel.assets.rowCount()
+
+        if (selectedId >= 0) {
+            var roleid = viewModel.assets.getRoleId("id")
+            for (var idx = 0; idx < control.assetsCount; ++idx) {
+                var modelIdx = viewModel.assets.index(idx, 0);
+                var data = viewModel.assets.data(modelIdx, 258)
+
+                if (selectedId >=0 && selectedId == data) {
+                    // currently selected asset is still present
+                    return
+                }
+            }
+        }
+
+        // there is no previously selected asset
+        // reset selection to nothing
+        selectedId  = -1
+    }
+
+    SeedValidationHelper { id: seedValidationHelper }
+
+    property real   hSpacing:        10
+    property real   vSpacing:        10
+    property int    maxVisibleRows:  3
+    property alias  selectedId:      viewModel.selectedAsset
+    property int    assetsCount:     1
+    property bool   showFaucetPromo: viewModel.showFaucetPromo
+    property bool   isSeedValidated: seedValidationHelper.isSeedValidated
+    property bool   hideSeedValidationPromo: viewModel.hideSeedValidationPromo
+
+    readonly property real  itemHeight:  75
 
     readonly property real itemWidth: {
-        if (assetsCount == 1) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
+        if (assetsCount == 1 && !showFaucetPromo) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
         return 220
     }
 
@@ -59,7 +78,7 @@ Control {
     }
 
     readonly property int gridRows: {
-        var modelLength = viewModel.assets.rowCount()
+        var modelLength = control.assetsCount
         var gridCols    = control.gridColumns
         var rowsCnt     = Math.floor(modelLength / gridCols) + (modelLength % gridCols ? 1 : 0)
         return rowsCnt
@@ -76,7 +95,7 @@ Control {
     contentItem: ScrollView {
         id: scroll
 
-        implicitHeight: control.scrollViewHeight
+        implicitHeight: !isSeedValidated && !hideSeedValidationPromo && (showFaucetPromo || control.assetsCount > 1) ? control.scrollViewHeight + 95 : control.scrollViewHeight
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         ScrollBar.vertical.policy: control.hasScroll && hovered ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
 
@@ -86,7 +105,6 @@ Control {
         Grid {
             id: grid
 
-            Layout.fillWidth: true
             columnSpacing: control.hSpacing
             rowSpacing:    control.vSpacing
             columns:       control.gridColumns
@@ -101,24 +119,164 @@ Control {
                         implicitHeight: control.itemHeight
                         implicitWidth:  control.itemWidth
                         assetInfo:      model
-                        opacity:        control.selectedIdx < 0 ? 1 : (model.index == control.selectedIdx ? 1 : 0.6)
-                        selected:       model.index == control.selectedIdx
-                        panel:          control
+                        selected:       model.id == control.selectedId
+                        opacity:        control.selectedId < 0 ? 1 : (selected ? 1 : 0.6)
+                        layer.enabled:  model.verified
 
                         onClicked: function () {
-                            if (control.selectedIdx == model.index) {
-                                control.selectedIdx = -1
-                                control.selectedId = -1
-                            } else {
-                                control.selectedIdx = model.index
-                                control.selectedId  = model.id
-                            }
+                            control.selectedId = control.selectedId == model.id ? -1 : model.id
                         }
                     }
 
                     Item {
                        Layout.fillWidth: true
-                       visible: viewModel.assets.rowCount() > 1
+                       visible: control.assetsCount > 1
+                    }
+                }
+            }
+
+            Panel {
+                width:  683
+                height: 75
+                visible: showFaucetPromo && control.assetsCount == 1
+
+                content: RowLayout {
+                    SFText {
+                        Layout.topMargin:    -12
+                        font.pixelSize:      14
+                        color:               Style.content_main
+                        //% "See the wallet in action. Get a small amount of Beams from the Faucet DAPP."
+                        text:                qsTrId("faucet-promo")
+                    }
+                    Item {
+                        Layout.preferredWidth: openFaucet.width + 10 + openFaucetIcon.width
+                        height: 16
+                        Layout.topMargin:    -12
+                        Layout.rightMargin:  20
+                        SvgImage {
+                            id: openFaucetIcon
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            source: "qrc:/assets/icon-receive-skyblue.svg"
+                        }
+                        SFText {
+                            id: openFaucet
+                            anchors.right: parent.right
+                            anchors.top: parent.top
+                            font.pixelSize:      14
+                            font.styleName:      "Bold"
+                            font.weight:         Font.Bold
+                            color:               Style.accent_incoming
+                            //% "get coins"
+                            text:                qsTrId("faucet-promo-get-coins")
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                main.openFaucet();
+                            }
+                            hoverEnabled: true
+                        }
+                    }
+                    Item {
+                        width:  16
+                        height: 16
+                        Layout.topMargin: -50
+                        Layout.rightMargin: -9
+                        SvgImage {
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            source: "qrc:/assets/icon-cancel-white.svg"
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                viewModel.showFaucetPromo = false;
+                            }
+                            hoverEnabled: true
+                        }
+                    }
+                }
+            }
+        }
+
+        Row {
+            id: seedValidationRow
+            width: showFaucetPromo || control.assetsCount > 1 ? parent.width : parent.width / 2 - 5
+            topPadding: showFaucetPromo || control.assetsCount > 1 ? grid.height + 10 : 0
+            leftPadding: showFaucetPromo || control.assetsCount > 1 ? 0 : itemWidth + 10
+            visible: !isSeedValidated && !hideSeedValidationPromo
+
+            Panel {
+                width: parent.width
+                height: 75
+                backgroundColor: viewModel.canHideSeedValidationPromo ?
+                    Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.1) :
+                    Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.2)
+
+                content: RowLayout {
+                    SFText {
+                        Layout.topMargin:    -22
+                        Layout.fillWidth:    !(showFaucetPromo || control.assetsCount > 1)
+                        horizontalAlignment: Text.AlignHCenter
+                        height: 32
+                        font.pixelSize:      14
+                        color:               Style.content_main
+                        //% "Write down and validate your seed phrase so you can always recover your funds."
+                        text:                qsTrId("seed-validation-promo")
+                        wrapMode:            Text.WordWrap
+                    }
+
+                    SFText {
+                        Layout.topMargin:    -22
+                        Layout.fillWidth:    !(showFaucetPromo || control.assetsCount > 1)
+                        Layout.leftMargin:   10
+                        font.pixelSize:      14
+                        color:               Style.active
+                        //% "Secure your phrase"
+                        text:                qsTrId("seed-validation-link")
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                seedValidationHelper.isSeedValidatiomMode = true;
+                                seedValidationHelper.isTriggeredFromSettings = false;
+                                main.parent.setSource("qrc:/start.qml");
+                            }
+                            hoverEnabled: true
+                        }
+                    }
+
+                    Item {
+                        height: 16
+                        Layout.fillWidth: true
+                        Layout.minimumWidth: showFaucetPromo ? 0 : 25
+                    }
+                    Item {
+                        width:  16
+                        height: 16
+                        Layout.topMargin:   -55
+                        Layout.rightMargin: -9
+                        visible: viewModel.canHideSeedValidationPromo
+                        SvgImage {
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            source: "qrc:/assets/icon-cancel-white.svg"
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                viewModel.hideSeedValidationPromo = true;
+                            }
+                            hoverEnabled: true
+                        }
                     }
                 }
             }

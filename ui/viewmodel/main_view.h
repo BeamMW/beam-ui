@@ -24,6 +24,8 @@ class MainViewModel : public QObject
 	Q_OBJECT
     Q_PROPERTY(int unsafeTxCount        READ getUnsafeTxCount       NOTIFY unsafeTxCountChanged)
     Q_PROPERTY(int unreadNotifications  READ getUnreadNotifications NOTIFY unreadNotificationsChanged)
+    Q_PROPERTY(QString daoCoreAppID     READ getDaoCoreAppID        CONSTANT)
+    Q_PROPERTY(QString faucetAppID      READ getFaucetAppID         CONSTANT)
 public:
     MainViewModel();
 
@@ -36,15 +38,19 @@ signals:
     void showTrezorError(const QString&);
     void unsafeTxCountChanged();
     void unreadNotificationsChanged();
+    void clipboardChanged(const QString& message);
 
 public slots:
 	void update(int page);
     void lockWallet();
     void onLockTimeoutChanged();
-
+private slots:
+    void onClipboardDataChanged();
 private:
-    int getUnsafeTxCount() const;
-    int getUnreadNotifications() const;
+    [[nodiscard]] int getUnsafeTxCount() const;
+    [[nodiscard]] int getUnreadNotifications() const;
+    [[nodiscard]] QString getDaoCoreAppID() const;
+    [[nodiscard]] QString getFaucetAppID() const;
 private:
     WalletSettings& m_settings;
     QTimer m_timer;

@@ -15,7 +15,6 @@
 #include "settings_helpers.h"
 
 #include "model/helpers.h"
-
 #include "utility/io/address.h"
 
 
@@ -52,4 +51,36 @@ UnpackedAddress parseAddress(const QString& address)
         res.address = address;
     }
     return res;
+}
+
+QString getCoinTitle(beam::wallet::AtomicSwapCoin swapCoin)
+{
+    switch (swapCoin)
+    {
+    case beam::wallet::AtomicSwapCoin::Bitcoin:
+        //% "Bitcoin"
+        return qtTrId("general-bitcoin");
+    case beam::wallet::AtomicSwapCoin::Litecoin:
+        //% "Litecoin"
+        return qtTrId("general-litecoin");
+    case beam::wallet::AtomicSwapCoin::Qtum:
+        //% "QTUM"
+        return qtTrId("general-qtum");
+    case beam::wallet::AtomicSwapCoin::Dogecoin:
+        //% "Dogecoin"
+        return qtTrId("general-dogecoin");
+#if defined(BITCOIN_CASH_SUPPORT)
+    case wallet::AtomicSwapCoin::Bitcoin_Cash:
+        //% "Bitcoin Cash"
+        return qtTrId("general-bitcoin-cash");
+#endif // BITCOIN_CASH_SUPPORT
+    case beam::wallet::AtomicSwapCoin::Dash:
+        //% "DASH"
+        return qtTrId("general-dash");
+    default:
+    {
+        assert(false && "unexpected swap coin!");
+        return QString();
+    }
+    }
 }

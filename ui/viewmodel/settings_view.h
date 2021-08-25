@@ -48,6 +48,10 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(QString      publicAddress                   READ getPublicAddress               NOTIFY  publicAddressChanged)
     Q_PROPERTY(QString      explorerUrl                     READ getExplorerUrl                 CONSTANT)
     Q_PROPERTY(QString      faucetUrl                       READ getFaucetUrl                   CONSTANT)
+    Q_PROPERTY(int          minConfirmations                READ getMinConfirmations            WRITE  setMinConfirmations NOTIFY minConfirmationsChanged)
+    Q_PROPERTY(bool         dappsAllowed                    READ getDAppsAllowed                WRITE  setDAppsAllowed NOTIFY dappsAllowedChanged)
+    Q_PROPERTY(int          appsServerPort                  READ getAppsPort                    WRITE  setAppsPort     NOTIFY appsPortChanged)
+
 
     Q_PROPERTY(QList<QObject*> swapCoinSettingsList READ getSwapCoinSettings    CONSTANT)
     Q_PROPERTY(QObject* notificationsSettings   READ getNotificationsSettings   CONSTANT)
@@ -55,11 +59,13 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(int  maxPrivacyAnonymitySet  READ geMaxPrivacyAnonymitySet   WRITE setMaxPrivacyAnonymitySet NOTIFY maxPrivacyAnonymitySetChanged)
     Q_PROPERTY(int  maxPrivacyLockTimeLimit READ getMaxPrivacyLockTimeLimit WRITE setMaxPrivacyLockTimeLimit NOTIFY maxPrivacyLockTimeLimitChanged)
     Q_PROPERTY(QObject* ethSettings   READ getEthSettings   CONSTANT)
-    
+
+    Q_PROPERTY(QString currentHeight READ getCurrentHeight NOTIFY stateChanged)
+
 public:
 
     SettingsViewModel();
-    virtual ~SettingsViewModel();
+    ~SettingsViewModel() override;
 
     QString getNodeAddress() const;
     void setNodeAddress(const QString& value);
@@ -107,6 +113,16 @@ public:
     int getMaxPrivacyLockTimeLimit() const;
     void setMaxPrivacyLockTimeLimit(int limit);
 
+    int getMinConfirmations() const;
+    void setMinConfirmations(int value);
+
+    bool getDAppsAllowed () const;
+    void setDAppsAllowed (bool val);
+    int getAppsPort() const;
+    void setAppsPort(int port);
+
+    QString getCurrentHeight() const;
+
     Q_INVOKABLE uint coreAmount() const;
     Q_INVOKABLE void addLocalNodePeer(const QString& localNodePeer);
     Q_INVOKABLE void deleteLocalNodePeer(int index);
@@ -148,6 +164,11 @@ signals:
     void publicAddressChanged();
     void maxPrivacyAnonymitySetChanged();
     void maxPrivacyLockTimeLimitChanged();
+    void minConfirmationsChanged();
+    void dappsAllowedChanged();
+    void stateChanged();
+    void appsPortChanged();
+
 protected:
     void timerEvent(QTimerEvent *event) override;
 
@@ -176,6 +197,8 @@ private:
     QString m_publicAddress;
     mutable int m_mpAnonymitySetIndex = 0;
     mutable int m_mpLockTimeLimitIndex = 1;
+
+    WalletModel& m_walletModel;
 
     const int CHECK_INTERVAL = 1000;
 };

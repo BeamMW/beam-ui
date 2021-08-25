@@ -2662,8 +2662,8 @@ Your version is: %2. Please, check for updates.</oldsource>
         <translation type="unfinished">Тип</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>SBBS Address</source>
-        <translation type="unfinished"></translation>
+        <source>Online (SBBS) Address</source>
+        <translation type="unfinished">Online (SBBS) Address</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>

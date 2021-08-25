@@ -1,7 +1,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.4
+import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 import Beam.Wallet 1.0
 import "../controls"
@@ -45,7 +45,7 @@ Control {
             TxFilter {
                 id: allTab
                 Layout.alignment: Qt.AlignVCenter
-                //% "All offers"
+                //% "All orders"
                 label: qsTrId("dex-all-tab")
                 onClicked: {
                     control.state = "allOffers"
@@ -85,7 +85,7 @@ Control {
 
             selectionMode:        SelectionMode.NoSelection
             sortIndicatorVisible: true
-            sortIndicatorColumn:  0
+            sortIndicatorColumn:  5
             sortIndicatorOrder:   Qt.DescendingOrder
 
             model: SortFilterProxyModel {
@@ -118,24 +118,12 @@ Control {
                 onCopyText: BeamGlobals.copyToClipboard(styleData.value)
             }
 
-            /*
-            TableViewColumn {
-                role: "timestamp"
-                //% "Date | Time"
-                title:     qsTrId("dex-date-time")
-                elideMode: Text.ElideRight
-                width:     130 * ordersTable.resizeRatio
-                movable:   false
-                resizable: false
-            }
-            */
-
             TableViewColumn {
                 role: "type"
                 //% "Type"
                 title:     qsTrId("dex-type")
                 elideMode: Text.ElideRight
-                width:     130 * ordersTable.resizeRatio
+                width:     110 * ordersTable.resizeRatio
                 movable:   false
                 resizable: false
             }
@@ -143,9 +131,9 @@ Control {
             TableViewColumn {
                 role: "price"
                 //% "Price"
-                title:     qsTrId("dex-price")
+                title:     qsTrId("dex-price") + " (BEAM)"
                 elideMode: Text.ElideRight
-                width:     130 * ordersTable.resizeRatio
+                width:     110 * ordersTable.resizeRatio
                 movable:   false
                 resizable: false
             }
@@ -153,9 +141,9 @@ Control {
             TableViewColumn {
                 role: "size"
                 //% "Size"
-                title:     qsTrId("dex-size")
+                title:     qsTrId("dex-size") + " (DEMOX)"
                 elideMode: Text.ElideRight
-                width:     130 * ordersTable.resizeRatio
+                width:     110 * ordersTable.resizeRatio
                 movable:   false
                 resizable: false
             }
@@ -163,48 +151,43 @@ Control {
             TableViewColumn {
                 role: "total"
                 //% "Total"
-                title:     qsTrId("dex-total")
+                title:     qsTrId("dex-total") + " (BEAM)"
                 elideMode: Text.ElideRight
-                width:     130 * ordersTable.resizeRatio
-                movable:   false
-                resizable: false
-            }
-
-            /*TableViewColumn {
-                role: "amountA"
-                //% "Amount"
-                title:     qsTrId("general-amount")
-                elideMode: Text.ElideRight
-                width:     130 * ordersTable.resizeRatio
+                width:     140 * ordersTable.resizeRatio
                 movable:   false
                 resizable: false
             }
 
             TableViewColumn {
-                role: "amountB"
-                //% "Amount"
-                title:     qsTrId("general-amount")
+                role: "progress"
+                //% "Progress"
+                title:     qsTrId("dex-progress")
                 elideMode: Text.ElideRight
-                width:     130 * ordersTable.resizeRatio
+                width:     90 * ordersTable.resizeRatio
                 movable:   false
                 resizable: false
-            }
 
-            TableViewColumn {
-                role: "rate"
-                //% "Exchange Rate"
-                title:     qsTrId("general-rate")
-                width:     130 * ordersTable.resizeRatio
-                movable:   false
-                resizable: false
+                delegate: SFText {
+                    width:  parent.width
+                    height: ordersTable.rowHeight
+                    text:   [model && model.progress ? model.progress : 0, "%"].join('')
+                    elide:  Text.ElideRight
+                    color:  Style.content_main
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font {
+                        styleName: "Normal"
+                        weight:    Font.Normal
+                        pixelSize: 14
+                    }
+                }
             }
-            */
 
             TableViewColumn {
                 role: "expiration"
                 //% "Expiration"
                 title:     qsTrId("dex-expiration")
-                width:     130 * ordersTable.resizeRatio
+                width:     140 * ordersTable.resizeRatio
                 movable:   false
                 resizable: false
             }
@@ -228,10 +211,14 @@ Control {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.verticalCenter
                     icon.source: "qrc:/assets/icon-actions.svg"
+
                     //% "Actions"
                     ToolTip.text: qsTrId("general-actions")
+
                     onClicked: function () {
-                        orderMenu.orderID = ordersTable.model.getRoleValue(styleData.row, "id");
+                        BeamGlobals.showMessage(ordersTable.model.getRoleValue(styleData.row, "isMine"))
+                        orderMenu.orderID = ordersTable.model.getRoleValue(styleData.row, "id")
+                        orderMenu.canAccept =  ordersTable.model.getRoleValue(styleData.row, "canAccept")
                         orderMenu.popup()
                     }
                 }
@@ -241,12 +228,17 @@ Control {
                 id:    orderMenu
                 modal: true
                 dim:   false
-                property var orderID
+
+                property var  orderID
+                property bool canAccept
 
                 Action {
                     //% "Accept Order"
                     text: qsTrId("dex-accept-order")
+
                     icon.source: "qrc:/assets/icon-accept-offer.svg"
+                    enabled:     orderMenu.canAccept
+
                     onTriggered: {
                         viewModel.acceptOrder(orderMenu.orderID)
                     }

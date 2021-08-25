@@ -16,7 +16,7 @@ jobs:
       matrix:
         #  os: [macos-10.15, ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2019]
         os: [macos-10.15, ubuntu-16.04, windows-2019]
-
+        # os: [ubuntu-16.04, windows-2019]
     steps:
     - uses: actions/checkout@v2
       with:
@@ -40,7 +40,7 @@ jobs:
     - name: OS name [ununtu all]
       shell: bash
       if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
-      run: echo "PACKAGE_NAME=linux" >> $GITHUB_ENV
+      run: echo "PACKAGE_NAME=Linux" >> $GITHUB_ENV
 
     - name: Create Build Environment [macos-10.15]
       if: matrix.os == 'macos-10.15'
@@ -216,10 +216,10 @@ jobs:
       run: |
         #cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Linux.deb Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb
         #sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb > checksum.txt
-        cp Beam_Wallet-${{env.BEAM_VERSION}}-x86_64.AppImage BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage
-        sha256sum BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage > BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage-checksum.txt
-        chmod a+x BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage
-        tar -cvf BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.tar BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.AppImage-checksum.txt
+        cp Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-x86_64.AppImage Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
+        sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage > Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage-checksum.txt
+        chmod a+x Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
+        tar -cvf Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.tar Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
 
     - name: Collect [windows]
       shell: bash
@@ -244,7 +244,7 @@ jobs:
       if: matrix.os == 'ubuntu-16.04'
       with:
         name: ${{env.PACKAGE_NAME}}-Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}
-        path: BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.tar
+        path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.tar
         if-no-files-found: error
 
     - uses: actions/upload-artifact@v2

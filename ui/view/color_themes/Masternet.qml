@@ -28,6 +28,7 @@ AbstractTheme {
 
     property color background_button:     Qt.rgba(255, 255, 255, 0.1)
     property color background_popup:      "#323232"
+    property color background_appstx:     "#232323"
     property color row_selected:          "#353636"
     property color separator:             "#353636"
     property color table_header:          "#323232"

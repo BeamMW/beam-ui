@@ -9,6 +9,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "dex_orders_list.h"
+#include "viewmodel/ui_helpers.h"
+#include "viewmodel/qml_globals.h"
 
 DexOrdersList::DexOrdersList()
 {
@@ -26,15 +28,21 @@ QHash<int, QByteArray> DexOrdersList::roleNames() const
         {static_cast<int>(Roles::RExpiration), "expiration"},
         {static_cast<int>(Roles::RStatus),     "status"},
         {static_cast<int>(Roles::RIsMine),     "isMine"},
+        {static_cast<int>(Roles::RProgress),   "progress"},
+        {static_cast<int>(Roles::RIsActive),   "isActive"},
+        {static_cast<int>(Roles::RCanAccept),  "canAccept"},
     };
     return roles;
 }
 
 QVariant DexOrdersList::data(const QModelIndex &index, int role) const
 {
+    using namespace beam;
+    using namespace beamui;
+    using namespace beam::wallet;
+
     if (!index.isValid() || index.row() < 0 || index.row() >= m_list.size())
     {
-        assert(false);
         return QVariant();
     }
 
@@ -44,21 +52,53 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
     switch (static_cast<Roles>(role))
     {
     case Roles::RId:
-        return QString::fromStdString(order.orderID.to_string());
+        return QString::fromStdString(order.getID().to_string());
+
     case Roles::RType:
-        return order.sellCoin == 0 ? "Sell BEAM" : "Buy BEAM";
+        return order.getSide() == DexMarketSide::Sell ? "Sell DEMOX" : "Buy DEMOX";
+
     case Roles::RPrice:
-        return QString("10 BEAM-X");
+        return AmountToUIString(order.getPrice()) + " BEAM";
+
     case Roles::RSize:
-        return QString::number(order.amount) + " BEAM";
+        return AmountToUIString(order.getSize()) + " DEMOX";
+
     case Roles::RTotal:
-        return QString::number(order.amount * 10) + " BEAM-X";
+        // TODO - correct?
+        return AmountToUIString(order.getSize() * order.getPrice() / Rules::Coin) + " BEAM";
+
     case Roles::RExpiration:
-        return QString::fromStdString(order.orderID.to_string());
+        return beamui::toString(order.getExpiration());
+
     case Roles::RStatus:
-        return QString("N/A");
+        {
+            if (order.IsExpired())
+            {
+                //% "Expired"
+                return qtTrId("dex-order-expired");
+            }
+            else if (order.IsCompleted())
+            {
+                //% "Fulfilled"
+                return qtTrId("dex-order-fulfilled");
+            }
+            else
+            {
+                //% "Active"
+                return qtTrId("dex-order-active");
+            }
+        }
+
     case Roles::RIsMine:
-        return order.isMy;
+        return order.IsMine();
+
+    case Roles::RProgress:
+        // TODO
+        return 0;
+
+    case Roles::RCanAccept:
+        return order.CanAccept();
+
     default:
         return QVariant();
     }

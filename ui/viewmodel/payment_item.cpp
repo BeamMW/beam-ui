@@ -86,6 +86,20 @@ QString PaymentInfoItem::getAmountValue() const
     return "";
 }
 
+QString PaymentInfoItem::getUnitName() const
+{
+    if (m_paymentInfo)
+    {
+        return _amgr->getUnitName(m_paymentInfo->m_AssetID, AssetsManager::NoShorten);
+    }
+    else if (m_shieldedPaymentInfo)
+    {
+        return _amgr->getUnitName(m_shieldedPaymentInfo->m_AssetID, AssetsManager::NoShorten);
+    }
+
+    return "";
+}
+
 QString PaymentInfoItem::getKernelID() const
 {
     if (m_paymentInfo)

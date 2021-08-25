@@ -50,6 +50,7 @@
 #include "viewmodel/qml_globals.h"
 #include "viewmodel/helpers/sortfilterproxymodel.h"
 #include "viewmodel/helpers/token_bootstrap_manager.h"
+#include "viewmodel/helpers/seed_validation_helper.h"
 #include "viewmodel/notifications/notifications_view.h"
 #include "viewmodel/notifications/push_notification_manager.h"
 #include "viewmodel/notifications/exchange_rates_manager.h"
@@ -120,7 +121,7 @@ int main (int argc, char* argv[])
 
     try
     {
-        auto [options, visibleOptions] = createOptionsDescription(GENERAL_OPTIONS | UI_OPTIONS | WALLET_OPTIONS);
+        auto [options, visibleOptions] = createOptionsDescription(GENERAL_OPTIONS | UI_OPTIONS | WALLET_OPTIONS, WalletSettings::WalletCfg);
         visibleOptions;// unused
         po::variables_map vm;
 
@@ -153,7 +154,7 @@ int main (int argc, char* argv[])
                 QQuickWindow::setTextRenderType(QQuickWindow::TextRenderType::NativeTextRendering);
             }
 #endif
-            vm = getOptions(argc, argv, WalletSettings::WalletCfg, options, true);
+            vm = getOptions(argc, argv, options, true);
         }
         catch (const po::error& e)
         {
@@ -243,6 +244,7 @@ int main (int argc, char* argv[])
                     });
 
             qRegisterMetaType<beam::Asset::ID>("beam::Asset::ID");
+            qRegisterMetaType<std::vector<beam::wallet::VerificationInfo>>("std::vector<beam::wallet::VerificationInfo>");
             qRegisterMetaType<beam::wallet::WalletAsset>("beam::wallet::WalletAsset");
             qmlRegisterType<StartViewModel>("Beam.Wallet", 1, 0, "StartViewModel");
             qmlRegisterType<LoadingViewModel>("Beam.Wallet", 1, 0, "LoadingViewModel");
@@ -282,6 +284,7 @@ int main (int argc, char* argv[])
             qmlRegisterType<PushNotificationManager>("Beam.Wallet", 1, 0, "PushNotificationManager");
             qmlRegisterType<ExchangeRatesManager>("Beam.Wallet", 1, 0, "ExchangeRatesManager");
             qmlRegisterType<SortFilterProxyModel>("Beam.Wallet", 1, 0, "SortFilterProxyModel");
+            qmlRegisterType<SeedValidationHelper>("Beam.Wallet", 1, 0, "SeedValidationHelper");
             qmlRegisterType<QR>("Beam.Wallet", 1, 0, "QR");
             qmlRegisterType<beamui::dex::DexView>("Beam.Wallet", 1, 0, "DexViewModel");
             beamui::applications::RegisterQMLTypes();

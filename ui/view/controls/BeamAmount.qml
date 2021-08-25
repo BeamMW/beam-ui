@@ -9,6 +9,7 @@ Control {
     id: control
     spacing: 8
 
+    property bool    verified:            false
     property string  amount:              "0"
     property string  lockedAmount:        "0"
     property string  unitName:            BeamGlobals.beamUnit
@@ -22,18 +23,20 @@ Control {
     property int     rateFontSize:        10
     property string  iconSource:          ""
     property size    iconSize:            Qt.size(22, 22)
+    property size    verifiedIconSize:    Qt.size(18 * iconSize.width / 22, 18 * iconSize.height / 22)
     property alias   copyMenuEnabled:     amountText.copyMenuEnabled
     property alias   caption:             captionText.text
     property int     captionFontSize:     12
     property string  prefix:              ""
     property bool    maxPaintedWidth:     true
-    property int     maxUnitChars:        6
+    property int     maxUnitChars:        -1
     property int     minUnitChars:        6
     property real    vSpacing:            5
 
     property var     dropIcon:            dropIconCtrl
     property bool    showDrop:            false
     property size    dropSize:            Qt.size(5, 3)
+    property bool    iconAnchorCenter:    true
 
     font {
         pixelSize:  14
@@ -55,7 +58,7 @@ Control {
 
     function formatRate () {
         var formatted = Utils.formatAmountToSecondCurrency(control.amount, control.rate, control.rateUnit);
-        return formatted == "" ?  ["-", control.rateUnit].join(" ") : control.prefix + formatted + (control.ratePostfix ? " " + control.ratePostfix : "");
+        return (formatted == "" ?  "" : control.prefix + formatted) + (control.ratePostfix ? " " + control.ratePostfix : "");
     }
 
     TextMetrics {
@@ -78,8 +81,6 @@ Control {
     }
 
     function calcMaxTextWidth () {
-        //var pos = control.mapFromItem(amountText.parent, amountText.x, amountText.y)
-        //return control.maxPaintedWidth - pos.x - ((showDropCircular || showDrop) ? dropIconCtrl.width + amountText.parent.spacing : 0)
         return control.width - contentRow.spacing - assetIcon.width - (showDrop ? dropIconCtrl.width + amountText.parent.spacing : 0)
     }
 
@@ -88,6 +89,11 @@ Control {
 
         var samount = amount.toString()
         var unamed  = false
+
+        if (maxUnitChars > 0 && uname.length > maxUnitChars) {
+            uname  = uname.substr(0, maxUnitChars)
+            unamed = true
+        }
 
         while (true) {
            var result = formatAmount(samount, [uname, unamed ? '\u2026' : ''].join(''))
@@ -146,6 +152,9 @@ Control {
 
     onAmountChanged: {
         amountText.text = fitText()
+    }
+
+    onLockedAmountChanged: {
         lockedText.text = fitLocked()
     }
 
@@ -192,12 +201,26 @@ Control {
         id: contentRow
 
         SvgImage {
-            id:          assetIcon
-            source:      control.iconSource
-            width:       control.iconSize.width
-            height:      control.iconSize.height
-            visible:     !!control.iconSource
-            anchors.verticalCenter: parent.verticalCenter
+            id:       assetIcon
+            source:   control.iconSource
+            width:    control.iconSize.width
+            height:   control.iconSize.height
+            visible:  !!control.iconSource
+
+            anchors.top: control.iconAnchorCenter ? undefined : parent.top // undefined resets property
+            anchors.verticalCenter: control.iconAnchorCenter ? parent.verticalCenter : undefined // undefined resets property
+
+            SvgImage {
+                id: assetIconVer
+                source: "qrc:/assets/icon-verified-asset.svg";
+                visible: control.verified
+
+                x: parent.width - width / 1.6
+                y: - height / 3.6
+
+                width:  verifiedIconSize.width
+                height: verifiedIconSize.height
+            }
         }
 
         Column {
@@ -218,7 +241,7 @@ Control {
 
                 SFLabel {
                     id:               amountText
-                    font.pixelSize:   control.font.pixelSize
+                    font:             control.font
                     color:            control.error ? Style.validator_error : control.color
                     onCopyText:       BeamGlobals.copyToClipboard(amount)
                     copyMenuEnabled:  true
@@ -239,15 +262,15 @@ Control {
 
                 Item {
                     height:  amountText.height
-                    width:   control.dropSize.width + 5
+                    width:   dropIconCtrl.width + 5
                     visible: showDrop
 
                     SvgImage {
                         id:         dropIconCtrl
-
                         source:     "qrc:/assets/icon-down.svg"
                         width:      control.dropSize.width
                         height:     control.dropSize.height
+                        fillMode:   Image.PreserveAspectFit
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.right: parent.right
                     }
@@ -268,7 +291,7 @@ Control {
 
             SFLabel {
                 id:              secondCurrencyAmountText
-                visible:         rate  != "0"
+                visible:         (rate.length && rate != "0") || control.ratePostfix.length
                 font.pixelSize:  control.rateFontSize
                 font.styleName:  "Regular"
                 font.weight:     Font.Normal

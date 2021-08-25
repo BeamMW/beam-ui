@@ -1,7 +1,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.3
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.12
 import QtQuick.Controls.Styles 1.2
 import "controls"
 import Beam.Wallet 1.0
@@ -23,6 +23,8 @@ ColumnLayout {
         id: status_bar
         model: statusbarModel
     }
+
+    property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
 
     ConfirmationDialog {
 		id: confirmationDialog
@@ -121,6 +123,7 @@ ColumnLayout {
                 model: viewModel.activeAddresses
                 parentModel: viewModel
                 visible: activeAddressesView.model.length > 0
+                isShieldedSupported: control.isShieldedSupported
 
                 sortIndicatorVisible: true
                 sortIndicatorColumn: 0
@@ -149,6 +152,7 @@ ColumnLayout {
                 visible: expiredAddressesView.model.length > 0
                 parentModel: viewModel
                 isExpired: true
+                isShieldedSupported: control.isShieldedSupported
         
                 sortIndicatorVisible: true
                 sortIndicatorColumn: 0
@@ -209,7 +213,7 @@ ColumnLayout {
                 }
             
                 TableViewColumn {
-                    role: viewModel.tokenRole
+                    role: control.isShieldedSupported ? viewModel.tokenRole : viewModel.walletIDRole
                     title: qsTrId("general-address")
                     width: 280 * contactsView.columnResizeRatio
                     movable: false
@@ -238,8 +242,8 @@ ColumnLayout {
                 TableViewColumn {
                     id: identityColumn
                     role: viewModel.identityRole
-                    //% "Identity"
-                    title: qsTrId("general-identity")
+                    //% "Wallet's signature"
+                    title: qsTrId("general-wallet-signature")
                     width: contactsView.getAdjustedColumnWidth(identityColumn)
                     movable: false
                     delegate:

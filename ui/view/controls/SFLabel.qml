@@ -35,7 +35,6 @@ Label {
         height: control.height
         width: control.width
         acceptedButtons: Qt.RightButton
-        hoverEnabled: true
 
         onClicked: {
             var contextMenu = contextMenuComponent.createObject(control)

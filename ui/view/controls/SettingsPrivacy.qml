@@ -2,7 +2,7 @@ import QtQuick 2.11
 import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.12
 import Beam.Wallet 1.0
 import "."
 import "../utils.js" as Utils
@@ -36,6 +36,7 @@ SettingsFoldable {
         RowLayout {
             Layout.preferredHeight: 32
             Layout.fillWidth:       true
+
             SFText {
                 property string beamUrl: "<a href='https://www.beam.mw/'>beam.mw</a>"
                 //% "blockchain explorer"
@@ -106,12 +107,26 @@ SettingsFoldable {
             }
         }
 
+        CustomSwitch {
+            id: dappsAllowed
+            //% "Allow to launch DApps"
+            text: qsTrId("settings-dapps-allowed")
+            Layout.fillWidth: true
+
+            checked: viewModel.dappsAllowed
+            Binding {
+                target:   viewModel
+                property: "dappsAllowed"
+                value:    dappsAllowed.checked
+            }
+        }
+
         RowLayout {
             Layout.fillWidth:       true
             ColumnLayout {
                 SFText {
                     Layout.fillWidth: true
-                    //% "Anonymity set for Max privacy transactions"
+                    //% "Maximum anonymity set size"
                     text: qsTrId("settings-privacy-mp-anonymity-set")
                     wrapMode:   Text.WordWrap
                     color: Style.content_main
@@ -233,5 +248,20 @@ SettingsFoldable {
                 // TODO:SETTINGS
             }
         }*/
+
+        SeedValidationHelper { id: seedValidationHelper }
+
+        LinkButton {
+            //% "Complete wallet verification"
+            text: qsTrId("general-complete-verification")
+            linkColor: "#ffffff"
+            bold: true
+            visible: !seedValidationHelper.isSeedValidated
+            onClicked: {
+                seedValidationHelper.isSeedValidatiomMode = true;
+                seedValidationHelper.isTriggeredFromSettings = true;
+                main.parent.setSource("qrc:/start.qml");
+            }
+        }
     }
 }

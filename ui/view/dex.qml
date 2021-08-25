@@ -1,5 +1,5 @@
 import QtQuick          2.11
-import QtQuick.Layouts  1.0
+import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.4
 import Beam.Wallet      1.0
 import "controls"
@@ -42,16 +42,16 @@ ColumnLayout {
             spacing: 15
 
             CustomButton {
-                text: "Buy 50 BEAM"
+                text: "Buy 10 DEMOX"
                 onClicked: {
-                    viewModel.buyBEAM()
+                    viewModel.buyBEAMX()
                 }
             }
 
             CustomButton {
-                text: "Sell 100 BEAM"
+                text: "Sell 10 DEMOX"
                 onClicked: {
-                    viewModel.sellBEAM()
+                    viewModel.sellBEAMX()
                 }
             }
         }

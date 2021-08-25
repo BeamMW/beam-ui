@@ -21,7 +21,8 @@
 namespace beamui::applications {
     using namespace beam::wallet;
 
-    namespace {
+    namespace
+    {
         WalletModel& getWallet() {
             return *AppModel::getInstance().getWalletModel();
         }
@@ -29,15 +30,60 @@ namespace beamui::applications {
         IWalletModelAsync& getAsyncWallet() {
             return *getWallet().getAsync();
         }
+
+        namespace
+        {
+            typedef QList<QMap<QString, QVariant>> ApproveAmounts;
+            typedef QMap<QString, QVariant> ApproveMap;
+
+            void printMap(const std::string& prefix, const ApproveMap& info)
+            {
+                QMapIterator<QString, QVariant> iter(info);
+
+                while (iter.hasNext())
+                {
+                    iter.next();
+                    if (iter.value().canConvert<QString>())
+                    {
+                        LOG_INFO () << prefix << iter.key().toStdString() << "=" << iter.value().toString().toStdString();
+                    }
+                    else
+                    {
+                        assert(false); // for now should not happen, add special case above to print correct logs
+                        LOG_INFO () << prefix << iter.key().toStdString() << "=" << "unexpected no-str convertible";
+                    }
+                }
+            }
+
+            void printApproveLog(const std::string& preamble, const std::string& appid, const std::string& appname, const ApproveMap& info, const ApproveAmounts& amounts)
+            {
+                LOG_INFO() << preamble << " (" << appname << ", " << appid << "):";
+                printMap("\t", info);
+
+                if (!amounts.isEmpty())
+                {
+                    for (const auto &amountMap : amounts)
+                    {
+                        LOG_INFO() << "\tamount entry:";
+                        printMap("\t\t", amountMap);
+                    }
+                }
+            }
+        }
     }
 
-    WebAPI_Beam::WebAPI_Beam(IConsentHandler& handler, IShadersManager::Ptr shaders, const std::string& version, const std::string& appid, const std::string& appname)
+    WebAPI_Beam::WebAPI_Beam(beam::wallet::IShadersManager::Ptr shaders, const std::string& version, const std::string& appid, const std::string& appname)
         : QObject(nullptr)
-        , _consentHandler(handler)
         , _appId(appid)
         , _appName(appname)
+        , _amgr(AppModel::getInstance().getAssets())
     {
-        IWalletApi::InitData data;
+        connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &WebAPI_Beam::assetsChanged);
+
+        //
+        // THIS SHOULD BE UI THREAD to let Qt to register metatypes
+        //
+        ApiInitData data;
 
         data.contracts = std::move(shaders);
         data.swaps     = nullptr;
@@ -46,26 +92,72 @@ namespace beamui::applications {
         data.appId     = _appId;
         data.appName   = _appName;
 
-        _walletAPI = IWalletApi::CreateInstance(version, *this, data);
-        LOG_INFO () << "WebAPI_Beam created for " << appname << ", " << appid;
+        _walletAPIProxy = std::make_shared<ApiHandlerProxy>();
+        _walletAPI = IWalletApi::CreateInstance(version, *_walletAPIProxy, data);
+        LOG_INFO () << "WebAPI_Beam created for " << data.appName << ", " << data.appId;
+    }
+
+    void WebAPI_Beam::Create(const std::string& version, const std::string& appid, const std::string& appname, std::function<void (Ptr)> cback)
+    {
+        //
+        // THIS IS UI THREAD
+        //
+        getAsyncWallet().makeIWTCall(
+            [appid, appname]() -> boost::any {
+                //
+                // THIS IS REACTOR THREAD
+                //
+                auto result = AppModel::getInstance().getWalletModel()->IWThread_createAppShaders(appid, appname);
+                return result;
+            },
+            [cback, version, appid, appname](boost::any aptr) {
+                //
+                // THIS IS UI THREAD
+                //
+                auto shaders = boost::any_cast<IShadersManager::Ptr>(aptr);
+                auto wapi = std::make_shared<WebAPI_Beam>(shaders, version, appid, appname);
+                wapi->_walletAPIProxy->_handler = wapi;
+                cback(wapi);
+            }
+        );
     }
 
     WebAPI_Beam::~WebAPI_Beam()
     {
-        AppModel::getInstance().getWalletModel()->releaseAppsShaders(_appId);
+        LOG_INFO () << "WebAPI_Beam Destroyed";
+
+        //
+        // THIS IS UI THREAD
+        //
+        getAsyncWallet().makeIWTCall(
+            [proxy = std::move(_walletAPIProxy), api = std::move(_walletAPI)] () mutable -> boost::any {
+                // api should be destroyed in context of the wallet thread
+                // it is ASSUMED to be the last call in api calls chain
+                api.reset();
+                proxy.reset();
+                return boost::none;
+            },
+        [] (const boost::any&){
+        });
+    }
+
+    QMap<QString, QVariant> WebAPI_Beam::getAssets()
+    {
+        return _amgr->getAssetsMap(_mappedAssets);
     }
 
     void WebAPI_Beam::callWalletApi(const QString& request)
     {
         //
-        // THIS IS THE UI THREAD
+        // THIS IS UI THREAD
         //
         LOG_INFO () << "WebAPP API call for " << _appName << ", " << _appId << "): " << request.toStdString();
 
-        IWalletApi::WeakPtr wp = _walletAPI;
+        std::weak_ptr<WebAPI_Beam> wp = shared_from_this();
         getAsyncWallet().makeIWTCall(
             [wp, this, request]() -> boost::any {
-                if (!wp.lock())
+                auto locked = wp.lock();
+                if (!locked)
                 {
                     // this means that api is disconnected and destroyed already, this is normal
                     return boost::none;
@@ -74,23 +166,24 @@ namespace beamui::applications {
                 const auto stdreq = request.toStdString();
                 if (auto pres = _walletAPI->parseAPIRequest(stdreq.c_str(), stdreq.size()); pres)
                 {
-                    if (pres->acinfo.appsAllowed)
+                    const auto& acinfo = pres->acinfo;
+                    if (acinfo.appsAllowed)
                     {
-                        if (pres->acinfo.method == "tx_send")
+                        if (acinfo.method == "tx_send")
                         {
-                            _consentHandler.AnyThread_getSendConsent(stdreq, *pres);
+                            AnyThread_getSendConsent(stdreq, *pres);
                             return boost::none;
                         }
 
-                        if (pres->acinfo.method == "process_invoke_data")
+                        if (acinfo.method == "process_invoke_data")
                         {
-                            _consentHandler.AnyThread_getContractInfoConsent(stdreq, *pres);
+                            AnyThread_getContractInfoConsent(stdreq, *pres);
                             return boost::none;
                         }
 
                         if (pres->minfo.fee > 0 || !pres->minfo.spend.empty())
                         {
-                            LOG_INFO() << "Application called method " << pres->acinfo.method << " that spends funds, but user consent is not handled";
+                            LOG_INFO() << "Application called method " << acinfo.method << " that spends funds, but user consent is not handled";
                             assert(false);
 
                             const auto error = _walletAPI->fromError(stdreq, ApiError::NotAllowedError, std::string());
@@ -119,23 +212,25 @@ namespace beamui::applications {
         );
     }
 
-    void WebAPI_Beam::AnyThread_callWalletApiImp(const std::string& request)
+    void WebAPI_Beam::UIThread_callWalletApiImp(const std::string& request)
     {
         //
         // Do not assume thread here
         // Should be safe to call from any thread
         //
-        IWalletApi::WeakPtr wp = _walletAPI;
+        std::weak_ptr<WebAPI_Beam> wp = shared_from_this();
         getAsyncWallet().makeIWTCall(
-            [wp, request]() -> boost::any {
-                if(auto sp = wp.lock())
+            [wp, this, request]() -> boost::any {
+                auto locked = wp.lock();
+                if (!locked)
                 {
-                    sp->executeAPIRequest(request.c_str(), request.size());
+                    // this means that api is disconnected and destroyed already
+                    // well, okay, nothing to do then
                     return boost::none;
                 }
-                // this means that api is disconnected and destroyed already
-                // well, okay, nothing to do then
-                return std::string();
+
+                _walletAPI->executeAPIRequest(request.c_str(), request.size());
+                return boost::none;
             },
             [] (const boost::any&) {
             }
@@ -148,6 +243,7 @@ namespace beamui::applications {
         // This is reactor thread
         //
         AnyThread_sendAPIResponse(result);
+        LOG_INFO() << "sendAPIResponse: " << result.dump();
     }
 
     void WebAPI_Beam::AnyThread_sendAPIResponse(const beam::wallet::json& result)
@@ -157,6 +253,7 @@ namespace beamui::applications {
         // Should be safe to call from any thread
         //
         auto str = result.dump();
+        LOG_INFO() << "AnyThread_sendAPIResponse: " << str;
         if (!str.empty())
         {
             emit callWalletApiResult(QString::fromStdString(str));
@@ -179,39 +276,177 @@ namespace beamui::applications {
         return 42;
     }
 
-    void WebAPI_Beam::AnyThread_sendApproved(const std::string& request)
+    void WebAPI_Beam::AnyThread_getSendConsent(const std::string& request, const beam::wallet::IWalletApi::ParseResult& pinfo)
     {
-        //
-        // Do not assume thread here
-        // Should be safe to call from any thread
-        //
-        AnyThread_callWalletApiImp(request);
+        std::weak_ptr<WebAPI_Beam> wp = shared_from_this();
+        getAsyncWallet().makeIWTCall([] () -> boost::any {return boost::none;},
+            [this, wp, request, pinfo](const boost::any&)
+            {
+                auto locked = wp.lock();
+                if (!locked)
+                {
+                    // Can happen if user leaves the application
+                    LOG_WARNING() << "AT -> UIT send consent arrived but creator is already destroyed";
+                }
+
+                //
+                // THIS IS THE UI THREAD
+                //
+                decltype(_mappedAssets)().swap(_mappedAssets);
+                _mappedAssets.insert(beam::Asset::s_BeamID);
+
+                //
+                // Do not assume thread here
+                // Should be safe to call from any thread
+                //
+                const auto &spend = pinfo.minfo.spend;
+                const auto fee = pinfo.minfo.fee;
+
+                if (spend.size() != 1)
+                {
+                    assert(!"tx_send must spend strictly 1 asset");
+                    return AnyThread_sendError(request, ApiError::NotAllowedError, "tx_send must spend strictly 1 asset");
+                }
+
+                const auto assetId = spend.begin()->first;
+                const auto amount = spend.begin()->second;
+                _mappedAssets.insert(assetId);
+
+                ApproveMap info;
+                info.insert("amount",     AmountBigToUIString(amount));
+                info.insert("fee",        AmountToUIString(fee));
+                info.insert("feeRate",    AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID)));
+                info.insert("assetID",    assetId);
+                info.insert("rateUnit",   _amgr->getRateUnit());
+                info.insert("token",      QString::fromStdString(pinfo.minfo.token ? *pinfo.minfo.token : std::string()));
+                info.insert("isOnline",   !pinfo.minfo.spendOffline);
+
+                std::string comment = pinfo.minfo.confirm_comment ? *pinfo.minfo.confirm_comment : (pinfo.minfo.comment ? *pinfo.minfo.comment : std::string());
+                info.insert("comment", QString::fromStdString(comment));
+
+                std::weak_ptr<WebAPI_Beam> wpsel = shared_from_this();
+                getAsyncWallet().selectCoins(beam::AmountBig::get_Lo(amount), fee, assetId, false, [this, wpsel, request, info](const CoinsSelectionInfo& csi) mutable {
+                    auto locked = wpsel.lock();
+                    if (!locked)
+                    {
+                        // Can happen if user leaves the application
+                        LOG_WARNING() << "UIT send CSI arrived but creator is already destroyed";
+                    }
+
+                    info.insert("isEnough", csi.m_isEnought);
+                    printApproveLog("Get user consent for send", getAppId(), getAppName(), info,ApproveAmounts());
+                    emit approveSend(QString::fromStdString(request), info);
+                });
+            }
+        );
     }
 
-    void WebAPI_Beam::AnyThread_sendRejected(const std::string& request, ApiError code, const std::string& message)
+    void WebAPI_Beam::AnyThread_getContractInfoConsent(const std::string &request, const beam::wallet::IWalletApi::ParseResult& pinfo)
     {
-        //
-        // Do not assume thread here
-        // Should be safe to call from any thread
-        //
-        AnyThread_sendError(request, code, message);
+        std::weak_ptr<WebAPI_Beam> wp = shared_from_this();
+        getAsyncWallet().makeIWTCall([] () -> boost::any {return boost::none;},
+            [this, wp, request, pinfo](const boost::any&)
+            {
+                auto locked = wp.lock();
+                if (!locked)
+                {
+                    // Can happen if user leaves the application
+                    LOG_WARNING() << "AT -> UIT contract consent arrived but creator is already destroyed";
+                }
+
+                //
+                // THIS IS THE UI THREAD
+                //
+                decltype(_mappedAssets)().swap(_mappedAssets);
+                _mappedAssets.insert(beam::Asset::s_BeamID);
+
+                ApproveMap info;
+                info.insert("comment",   QString::fromStdString(pinfo.minfo.comment ? *pinfo.minfo.comment : std::string()));
+                info.insert("fee",       AmountToUIString(pinfo.minfo.fee));
+                info.insert("feeRate",         AmountToUIString(_amgr->getRate(beam::Asset::s_BeamID)));
+                info.insert("rateUnit",        _amgr->getRateUnit());
+                info.insert("isSpend",   !pinfo.minfo.spend.empty());
+
+                std::string comment = pinfo.minfo.confirm_comment ? *pinfo.minfo.confirm_comment : (pinfo.minfo.comment ? *pinfo.minfo.comment : std::string());
+                info.insert("comment", QString::fromStdString(comment));
+
+                bool isEnough = true;
+                ApproveAmounts amounts;
+                for(const auto& sinfo: pinfo.minfo.spend)
+                {
+                    QMap<QString, QVariant> entry;
+                    const auto assetId = sinfo.first;
+                    const auto amount  = sinfo.second;
+
+                    _mappedAssets.insert(assetId);
+                    entry.insert("amount",   AmountBigToUIString(amount));
+                    entry.insert("assetID",  assetId);
+                    entry.insert("spend",    true);
+                    amounts.push_back(entry);
+
+                    auto totalAmount = amount;
+                    if (assetId == beam::Asset::s_BeamID)
+                    {
+                        totalAmount += beam::AmountBig::Type(pinfo.minfo.fee);
+                    }
+
+                    isEnough = isEnough && (totalAmount <= getWallet().getAvailable(assetId));
+                }
+
+                for(const auto& sinfo: pinfo.minfo.receive)
+                {
+                    QMap<QString, QVariant> entry;
+                    const auto assetId = sinfo.first;
+                    const auto amount  = sinfo.second;
+
+                    _mappedAssets.insert(assetId);
+                    entry.insert("amount",   AmountBigToUIString(amount));
+                    entry.insert("assetID",  assetId);
+                    entry.insert("spend",    false);
+
+                    amounts.push_back(entry);
+                }
+
+                info.insert("isEnough", isEnough);
+                printApproveLog("Get user consent for contract tx", getAppId(), getAppName(), info, amounts);
+                emit approveContractInfo(QString::fromStdString(request), info, amounts);
+            }
+        );
     }
 
-    void WebAPI_Beam::AnyThread_contractInfoApproved(const std::string& request)
+    void WebAPI_Beam::sendApproved(const QString& request)
     {
         //
-        // Do not assume thread here
-        // Should be safe to call from any thread
+        // This is UI thread
         //
-        AnyThread_callWalletApiImp(request);
+        LOG_INFO() << "Contract tx rejected: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
+        UIThread_callWalletApiImp(request.toStdString());
     }
 
-    void WebAPI_Beam::AnyThread_contractInfoRejected(const std::string& request, ApiError code, const std::string& message)
+    void WebAPI_Beam::sendRejected(const QString& request)
     {
         //
-        // Do not assume thread here
-        // Should be safe to call from any thread
+        // This is UI thread
         //
-        AnyThread_sendError(request, code, message);
+        LOG_INFO() << "Contract tx rejected: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
+        AnyThread_sendError(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
+    }
+
+    void WebAPI_Beam::contractInfoApproved(const QString& request)
+    {
+        //
+        // This is UI thread
+        //
+        LOG_INFO() << "Contract tx rejected: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
+        UIThread_callWalletApiImp(request.toStdString());
+    }
+
+    void WebAPI_Beam::contractInfoRejected(const QString& request)
+    {
+        //
+        // This is UI thread
+        //
+        LOG_INFO() << "Contract tx rejected: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
+        AnyThread_sendError(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
     }
 }

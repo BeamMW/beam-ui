@@ -1,11 +1,11 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
 
-import QtQuick.Layouts 1.11
+import QtQuick.Layouts 1.12
 import Beam.Wallet 1.0
 import "."
 
-Dialog {
+CustomDialog {
     property PaymentInfoItem model
     property bool shouldVerify: false
     
@@ -31,11 +31,6 @@ Dialog {
         {
             paymentProofInput.forceActiveFocus();
         }
-    }
-
-    background: Rectangle {
-        radius: 10
-        color: Style.background_popup
     }
 
     contentItem: Item {
@@ -229,13 +224,16 @@ Dialog {
                     visible: model? model.isValid : false
                 }
 
-                SFText {
+                BeamAmount {
                     Layout.fillWidth: true
-                    wrapMode: Text.Wrap
-                    font.pixelSize: 14
+
+                    visible: model ? model.amountValue : ""
+                    amount: model ? model.amountValue : ""
+                    unitName: model ? model.unitName : ""
                     color: Style.content_disabled
-                    text: model ? model.amount : ""
-                    visible: model? model.isValid : false
+                    showTip: false
+                    maxUnitChars: 30
+                    font.pixelSize: 14
                 }
 
                 SFText {
@@ -269,7 +267,7 @@ Dialog {
                 {
                     if (model)
                     {
-                        textCopied("Sender: " + model.sender + "\nReceiver: " + model.receiver + "\nAmount: " + model.amountValue + " BEAM" + "\nKernel ID: " + model.kernelID);
+                        textCopied("Sender: " + model.sender + "\nReceiver: " + model.receiver + "\nAmount: " + model.amountValue + " " + model.unitName + "\nKernel ID: " + model.kernelID);
                     }
                 }
 

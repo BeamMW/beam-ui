@@ -43,15 +43,19 @@ namespace
 
 SendViewModel::SendViewModel()
     : _walletModel(*AppModel::getInstance().getWalletModel())
+    , _settings(AppModel::getInstance().getSettings())
     , _amgr(AppModel::getInstance().getAssets())
 {
     connect(&_walletModel,           &WalletModel::walletStatusChanged,        this,  &SendViewModel::balanceChanged);
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,   this,  &SendViewModel::feeRateChanged);
     connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged, this,  &SendViewModel::feeRateChanged);
     connect(_amgr.get(),             &AssetsManager::assetsListChanged,        this,  &SendViewModel::assetsListChanged);
-    connect(&_walletModel,           &WalletModel::coinsSelectionCalculated,   this,  &SendViewModel::onSelectionCalculated);
+    connect(&_walletModel,           &WalletModel::coinsSelected,       this,  &SendViewModel::onCoinsSelected);
     connect(&_walletModel,           &WalletModel::sendMoneyVerified,          this,  &SendViewModel::sendMoneyVerified);
     connect(&_walletModel,           &WalletModel::cantSendToExpired,          this,  &SendViewModel::cantSendToExpired);
+    connect(&_walletModel,           &WalletModel::publicAddressChanged,       this,  &SendViewModel::onPublicAddress);
+
+    _walletModel.getAsync()->getPublicAddress();
 }
 
 beam::Amount SendViewModel::getTotalSpend() const
@@ -79,6 +83,12 @@ void SendViewModel::setAssetId(int value)
         emit assetIdChanged();
         RefreshCsiAsync();
     }
+}
+
+QString SendViewModel::getAssetAvailable() const
+{
+    beam::AmountBig::Type available = _walletModel.getAvailable(m_Csi.m_assetID);
+    return beamui::AmountBigToUIString(available);
 }
 
 QString SendViewModel::getAssetRemaining() const
@@ -162,6 +172,23 @@ bool SendViewModel::getIsEnough() const
     return m_Csi.m_isEnought;
 }
 
+bool SendViewModel::getIsEnoughAmount() const
+{
+    return m_Csi.m_requestedSum <= m_Csi.m_selectedSumAsset;
+}
+
+bool SendViewModel::getIsEnoughFee() const
+{
+    if (m_Csi.m_assetID)
+    {
+        return m_Csi.get_TotalFee() <= m_Csi.m_selectedSumBeam;
+    }
+    else
+    {
+        return m_Csi.get_TotalFee() + m_Csi.m_requestedSum <= m_Csi.m_selectedSumBeam;
+    }
+}
+
 QString SendViewModel::getSendAmount() const
 {
     return beamui::AmountToUIString(m_Csi.m_requestedSum);
@@ -224,6 +251,7 @@ void SendViewModel::setToken(const QString& value)
         }
 
         emit tokenChanged();
+        emit tokenTipChanged();
         emit choiceChanged();
         emit canSendChanged();
     }
@@ -243,10 +271,10 @@ void SendViewModel::RefreshCsiAsync()
 {
     if(m_Csi.m_requestedSum == 0UL)
     {
-        // just reset everything to zero except asset id
-        decltype(m_Csi) zeroCsi;
-        zeroCsi.m_assetID = m_Csi.m_assetID;
-        return onSelectionCalculated(zeroCsi);
+        // just reset everything to zero
+        auto csi = decltype(m_Csi)();
+        csi.m_assetID = m_Csi.m_assetID;
+        return onCoinsSelected(csi);
     }
 
     using namespace beam::wallet;
@@ -276,38 +304,11 @@ void SendViewModel::RefreshCsiAsync()
             break;
     }
 
-
-    _walletModel.getAsync()->calcShieldedCoinSelectionInfo(
+    _walletModel.getAsync()->selectCoins(
             m_Csi.m_requestedSum,
             0,
             m_Csi.m_assetID,
             isShielded);
-}
-
-QString SendViewModel::getTokenType() const
-{
-    using namespace beam::wallet;
-    const auto type = getTokenValid() ? GetAddressType(_token.toStdString()) : TxAddressType::Unknown;
-
-    switch(type)
-    {
-        case TxAddressType::PublicOffline:
-            //% "Public offline address"
-            return qtTrId("send-public-token");
-
-        case TxAddressType::MaxPrivacy:
-            //% "Max privacy address"
-            return qtTrId("send-maxp-token");
-
-        case TxAddressType::Offline:
-        case TxAddressType::Regular:
-            //% "Regular address"
-            return qtTrId("send-regular-token");
-
-        default:
-            //% "Unknown address"
-            return qtTrId("send-unknown-token");
-    }
 }
 
 bool SendViewModel::getCanChoose() const
@@ -328,6 +329,7 @@ void SendViewModel::setChoiceOffline(bool value)
     {
         _choiceOffline = value;
         emit choiceChanged();
+        emit tokenTipChanged();
         RefreshCsiAsync();
     }
 }
@@ -343,7 +345,12 @@ void SendViewModel::setMaxPossibleAmount()
     RefreshCsiAsync();
 }
 
-void SendViewModel::onSelectionCalculated(const beam::wallet::CoinsSelectionInfo& selectionRes)
+void SendViewModel::onPublicAddress(const QString& pubAddr)
+{
+    _publicOfflineAddr = pubAddr;
+}
+
+void SendViewModel::onCoinsSelected(const beam::wallet::CoinsSelectionInfo& selectionRes)
 {
     if (selectionRes.m_requestedSum != m_Csi.m_requestedSum || selectionRes.m_assetID != m_Csi.m_assetID)
     {
@@ -351,22 +358,30 @@ void SendViewModel::onSelectionCalculated(const beam::wallet::CoinsSelectionInfo
     }
 
     m_Csi = selectionRes;
-    if (!m_Csi.m_isEnought && _maxPossible)
+    if (!m_Csi.m_isEnought)
     {
-        m_Csi.m_requestedSum = m_Csi.get_NettoValue();
-        m_Csi.m_isEnought = true;
+        if(_maxPossible && m_Csi.m_requestedSum != m_Csi.get_NettoValue())
+        {
+            m_Csi.m_requestedSum = m_Csi.get_NettoValue();
+            RefreshCsiAsync();
+            return;
+        }
     }
 
     emit balanceChanged();
     emit canSendChanged();
 }
 
-void SendViewModel::saveReceiverAddress(const QString& name)
+void SendViewModel::saveReceiverAddress(const QString& comment)
 {
     using namespace beam::wallet;
-    QString trimmed = name.trimmed();
+    QString trimmed = comment.trimmed();
 
-    if (!_walletModel.isOwnAddress(_receiverWalletID))
+    if (_publicOfflineAddr == _token)
+    {
+        // just skip, never save own public address
+    }
+    else if (!_walletModel.isOwnAddress(_receiverWalletID))
     {
         WalletAddress address;
         address.m_walletID   = _receiverWalletID;
@@ -401,7 +416,7 @@ void SendViewModel::saveReceiverAddress(const QString& name)
     }
 }
 
-void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, int offlinePayments)
+void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::WalletAddress>& address, size_t offlinePayments)
 {
     using namespace beam::wallet;
 
@@ -426,24 +441,42 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
 
         if (_receiverIdentity != beam::Zero)
         {
-            if (_receiverIdentity != address->m_Identity)
+            if (address->m_Identity != beam::Zero)
             {
-                assert(!"unexpected identity in send::onGetAddressReturned");
-                throw std::runtime_error("unexpected identity in send::onGetAddressReturned");
+                if (_receiverIdentity != address->m_Identity)
+                {
+                    assert(!"unexpected identity in send::onGetAddressReturned");
+                    throw std::runtime_error("unexpected identity in send::onGetAddressReturned");
+                }
+            }
+            else
+            {
+                // old SBBS address existed in address book, new token pasted for the same sbbs address
+                assert(type == TxAddressType::Regular);
             }
         }
         else
         {
-            assert(
-                   type == TxAddressType::PublicOffline ||
-                  (type == TxAddressType::Regular && _token.toStdString() == std::to_string(_receiverWalletID))
-            );
+            if (address->m_Identity != beam::Zero)
+            {
+                _receiverIdentity = address->m_Identity;
+            }
+            else
+            {
+                assert(
+                    type == TxAddressType::PublicOffline ||
+                    (type == TxAddressType::Regular && _token.toStdString() == std::to_string(_receiverWalletID))
+                );
+            }
         }
     }
     else
     {
         setComment("");
     }
+
+    _vouchersLeft = offlinePayments;
+    emit tokenTipChanged();
 }
 
 void SendViewModel::extractParameters()
@@ -459,7 +492,8 @@ void SendViewModel::extractParameters()
     _txParameters     = *txParameters;
     _receiverWalletID = beam::Zero;
     _receiverIdentity = beam::Zero;
-    _newTokenMsg      = QString();
+    _vouchersLeft     = 0;
+    _newTokenMsg.clear();
 
     if (auto peerID = _txParameters.GetParameter<WalletID>(TxParameterID::PeerID); peerID)
     {
@@ -471,6 +505,7 @@ void SendViewModel::extractParameters()
                 if (!vouchers->empty())
                 {
                     _walletModel.getAsync()->saveVouchers(*vouchers, _receiverWalletID);
+                    _vouchersLeft = vouchers->size();
                 }
             }
         }
@@ -505,7 +540,7 @@ void SendViewModel::extractParameters()
     {
         _walletModel.getAsync()->getAddress(_receiverWalletID, [this](const boost::optional<WalletAddress>& addr, size_t c)
         {
-            onGetAddressReturned(addr, static_cast<int>(c));
+            onGetAddressReturned(addr, c);
         });
     }
     else
@@ -513,12 +548,14 @@ void SendViewModel::extractParameters()
         // Max privacy & public offline tokens do not have valid PeerID (_receiverWalletID)
         _walletModel.getAsync()->getAddressByToken(_token.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
         {
-            onGetAddressReturned(addr, static_cast<int>(c));
+            onGetAddressReturned(addr, c);
         });
     }
 
-    ProcessLibraryVersion(_txParameters, [this](const auto& version, const auto& myVersion)
+    std::string libVersion;
+    ProcessLibraryVersion(_txParameters, [this, &libVersion](const auto& version, const auto& myVersion)
     {
+        libVersion = version;
 /*% "This address generated by newer Beam library version(%1)
 Your version is: %2. Please, check for updates."
 */
@@ -528,7 +565,7 @@ Your version is: %2. Please, check for updates."
     });
 
     #ifdef BEAM_CLIENT_VERSION
-    ProcessClientVersion(_txParameters, AppModel::getMyName(), BEAM_CLIENT_VERSION, [this](const auto& version, const auto& myVersion)
+    ProcessClientVersion(_txParameters, AppModel::getMyName(), BEAM_CLIENT_VERSION, libVersion, [this](const auto& version, const auto& myVersion)
     {
 /*% "This address generated by newer Beam client version(%1)
 Your version is: %2. Please, check for updates."
@@ -541,6 +578,7 @@ Your version is: %2. Please, check for updates."
     #endif // BEAM_CLIENT_VERSION
 
     emit tokenChanged();
+    emit tokenTipChanged();
     RefreshCsiAsync();
 }
 
@@ -627,4 +665,73 @@ bool SendViewModel::getSendTypeOnline() const
     }
 
     return true;
+}
+
+QString SendViewModel::getTokenTip() const
+{
+    using namespace beam::wallet;
+    const auto type = GetAddressType(_token.toStdString());
+
+    if (type == TxAddressType::Regular || (type == TxAddressType::Offline && !_choiceOffline))
+    {
+        //% "Online address."
+        return qtTrId("send-online-address");
+    }
+
+    if (type == TxAddressType::Offline && _choiceOffline)
+    {
+        QString left;
+
+        //% "Offline address: %n transaction(s) left."
+        left = qtTrId("send-offline-tip", static_cast<int>(_vouchersLeft));
+
+        if (_vouchersLeft < 4)
+        {
+            //% "Ask receiver to come online to support more offline transactions."
+            left += QString(" ") + qtTrId("send-receiver-online-tip");
+        }
+
+        return left;
+    }
+
+    if (type == TxAddressType::MaxPrivacy)
+    {
+        //% "Guarantees maximum anonymity set of up to 64K."
+        return qtTrId("send-anon-set");
+    }
+
+    if (type == TxAddressType::PublicOffline)
+    {
+        //% "Public offline address."
+        return qtTrId("send-public-token");
+    }
+
+    //% "Unknown address."
+    return qtTrId("send-unknown-token");
+}
+
+QString SendViewModel::getTokenTip2() const
+{
+    using namespace beam::wallet;
+    const auto type = GetAddressType(_token.toStdString());
+
+    if (type == TxAddressType::Regular || (type == TxAddressType::Offline && !_choiceOffline))
+    {
+        //% "The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards."
+        return qtTrId("send-online-tip");
+    }
+
+    if (type == TxAddressType::Offline && _choiceOffline)
+    {
+        //% "Make sure the address is correct as offline transactions\ncannot be canceled."
+        return qtTrId("send-offline-refund");
+    }
+
+    if (type == TxAddressType::MaxPrivacy)
+    {
+        //% "Transaction can last up to 72 hours."
+        return qtTrId("send-mp-tip");
+    }
+
+    return "";
 }

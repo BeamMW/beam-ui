@@ -1,9 +1,9 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.3
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.12
 import "."
 
-Dialog {
+CustomDialog {
     id: control
 
     width:       800
@@ -81,12 +81,6 @@ Dialog {
             }
         }
         isAllWordsAllowed = true;
-    }
-
-    background: Rectangle {
-        radius:       10
-        color:        Style.background_popup
-        anchors.fill: parent
     }
 
     contentItem: 
@@ -289,9 +283,9 @@ Dialog {
                 id: copyButtonId
                 visible:                false
                 Layout.minimumWidth:    124
-                text:                   qsTrId("general-copy")
+                text:                   qsTrId("general-copy-and-close")
                 icon.source:            "qrc:/assets/icon-copy-blue.svg"
-                onClicked:              control.copySeedElectrum();
+                onClicked:              control.copySeedElectrum(), control.close();
             }
 
             Item {

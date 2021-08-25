@@ -1,17 +1,16 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-
-import QtQuick.Layouts 1.11
+import QtQuick.Layouts 1.12
 import Beam.Wallet 1.0
 import "."
 
-Dialog {
+CustomDialog {
     id: dialog
     modal: true
     property alias address:                 addressField.text
     property string addressLabelText:       ""
     property alias amount:                  qrCode.amount
-    signal addressCopied;
+    signal addressCopied
 
     QR {
         id:         qrCode
@@ -32,11 +31,6 @@ Dialog {
 
     onClosed : {
         dialog.destroy();
-    }
-    
-    background: Rectangle {
-        radius:         10
-        color:          Style.background_popup
     }
 
     contentItem: ColumnLayout {

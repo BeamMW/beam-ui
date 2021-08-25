@@ -2,7 +2,7 @@ import QtQuick 2.11
 import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.12
 import Beam.Wallet 1.0
 import "."
 
@@ -80,6 +80,28 @@ SettingsFoldable {
                 ]
                 onActivated: {
                     viewModel.lockTimeout = lockTimeoutControl.currentIndex
+                }
+            }
+        }
+
+        RowLayout {
+            SFText {
+                Layout.fillWidth: true
+                //: settings tab, general section, minimum confirmations
+                //% "Minimum confirmations"
+                text: qsTrId("settings-general-confirmations")
+                color: Style.content_secondary
+                font.pixelSize: 14
+            }
+            Item {}
+            CustomComboBox {
+                id: minConfirmationsControl
+                fontPixelSize: 14
+                Layout.preferredWidth: secondCurrencySwitch.width
+                currentIndex: viewModel.minConfirmations
+                model: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                onActivated: {
+                    viewModel.minConfirmations = minConfirmationsControl.currentIndex
                 }
             }
         }

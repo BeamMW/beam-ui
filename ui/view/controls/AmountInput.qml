@@ -1,4 +1,4 @@
-import QtQuick.Layouts 1.11
+import QtQuick.Layouts 1.12
 import QtQuick 2.11
 import "../utils.js" as Utils
 import Beam.Wallet 1.0
@@ -117,12 +117,11 @@ ColumnLayout {
         CustomComboBox {
             id:                  currCombo
             Layout.topMargin:    22
-            Layout.minimumWidth: 95
+            Layout.maximumWidth: 140
             dropSpacing:         18
             spacing:             0
             fontPixelSize:       20
             dropFontPixelSize:   14
-            dropOffset:          15
             currentIndex:        control.currencyIdx
             color:               error.length ? Style.validator_error : control.currColor
             underlineColor:      "transparent"
@@ -131,7 +130,6 @@ ColumnLayout {
             model:               control.currencies
             textRole:            "unitName"
             textMaxLenDrop:      10
-            textMaxLenDisplay:   5
             enableScroll:        true
 
             onActivated: {

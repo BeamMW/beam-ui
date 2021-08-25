@@ -108,6 +108,8 @@ list(APPEND SUPPORTED_LANGS "sr_SR")
 set(UI_SRC
     ui.cpp
 
+    viewmodel/applications/apps_server.h
+    viewmodel/applications/apps_server.cpp
     viewmodel/applications/apps_view.h
     viewmodel/applications/apps_view.cpp
     viewmodel/applications/webapi_beam.h
@@ -115,8 +117,12 @@ set(UI_SRC
     viewmodel/applications/public.cpp
     viewmodel/applications/public.h
     viewmodel/helpers/list_model.h
+    viewmodel/helpers/sortfilterproxymodel.h
     viewmodel/helpers/sortfilterproxymodel.cpp
+    viewmodel/helpers/token_bootstrap_manager.h
     viewmodel/helpers/token_bootstrap_manager.cpp
+    viewmodel/helpers/seed_validation_helper.h
+    viewmodel/helpers/seed_validation_helper.cpp
     viewmodel/wallet/tx_object.cpp
     viewmodel/wallet/tx_object_list.cpp
     viewmodel/wallet/wallet_view.cpp
@@ -195,9 +201,7 @@ set(UI_SRC
     viewmodel/wallet/assets_manager.h
     viewmodel/wallet/assets_manager.cpp
     viewmodel/applications/webapi_creator.cpp
-    viewmodel/applications/webapi_shaders.cpp
-    viewmodel/applications/webapi_shaders.h
-    viewmodel/dex/dex_view.h
+        viewmodel/dex/dex_view.h
     viewmodel/dex/dex_view.cpp
     viewmodel/dex/dex_order_object.cpp
     viewmodel/dex/dex_orders_list.cpp
@@ -295,7 +299,12 @@ configure_file("${PROJECT_SOURCE_DIR}/version.h.in" "${CMAKE_CURRENT_BINARY_DIR}
 add_definitions(-DBEAM_LIB_VERSION="${BEAM_VERSION}")
 add_definitions(-DBEAM_CLIENT_VERSION="${PROJECT_VERSION}")
 
+#qrcode library
 target_link_libraries(${TARGET_NAME} qrcode cli)
+
+# QHttpEngine library
+target_link_libraries(${TARGET_NAME} qhttpengine)
+
 if (LINUX)
     target_link_libraries(${TARGET_NAME} X11)
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -309,7 +318,6 @@ endif()
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_PREFIX_PATH}/include/QtZlib)
 target_include_directories(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/beam/3rdparty/quazip)
 add_definitions(-DQUAZIP_STATIC)
-
 target_link_libraries(${TARGET_NAME} quazip_static)
 
 #if (BEAM_WALLET_WITH_NODE)

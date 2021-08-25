@@ -14,12 +14,50 @@ Control {
 
     TxTableViewModel {
         id: tableViewModel
+
+        onTransactionsChanged: function () {
+            txNotify.forEach(function (json) {
+                var obj = JSON.parse(json)
+                control.showAppTxNotifcation(obj.txid, obj.appicon)
+            })
+        }
     }
 
-    property int selectedAsset: -1
+    property int       selectedAsset: -1
+    property int       emptyMessageMargin: 90
+    property int       activeTxCnt: 0
+    property alias     headerShaderVisible: transactionsTable.headerShaderVisible
+    property var       dappFilter: undefined
+    readonly property  bool sourceVisible: dappFilter ? dappFilter == "all" : true
+    property var       owner
+    property var       txNotify: new Set()
+
+    function showTxDetails (txid) {
+        transactionsTable.showDetails (txid)
+    }
+
+    function showAppTxNotifcation (txid, appicon) {
+        var list  = tableViewModel.transactions
+        var index = list.index(0, 0)
+        var ilist = list.match(index, TxObjectList.Roles.TxID, txid)
+        if (ilist.length)
+        {
+            txNotify.delete(JSON.stringify({txid, appicon}))
+            main.showAppTxPopup(
+                list.data(ilist[0], TxObjectList.Roles.Comment),
+                list.data(ilist[0], TxObjectList.Roles.DAppName),
+                appicon, txid
+            )
+        }
+        else
+        {
+            // model not yet updated, transaction is still invisble for the list
+            // safe for the future
+            txNotify.add(JSON.stringify({txid, appicon}))
+        }
+    }
 
     state: "all"
-
     states: [
         State {
             name: "all"
@@ -77,13 +115,6 @@ Control {
        }
     }
 
-    PaymentInfoDialog {
-        id: paymentInfoDialog
-        onTextCopied: function(text) {
-            BeamGlobals.copyToClipboard(text);
-        }
-    }
-
     PaymentInfoItem {
         id: verifyInfo
     }
@@ -96,6 +127,17 @@ Control {
         onTextCopied: function(text) {
             BeamGlobals.copyToClipboard(text);
         }
+    }
+
+    TransactionDetailsPopup {
+        id: txDetails
+        onTextCopied: function(text) {
+            BeamGlobals.copyToClipboard(text);
+        }
+        onOpenExternal: function(kernelID) {
+            var url = tableViewModel.explorerUrl + "block?kernel_id=" + kernelID;
+            Utils.openExternalWithConfirmation(url);
+        };
     }
 
     contentItem: ColumnLayout {
@@ -173,7 +215,7 @@ Control {
         }
 
         ColumnLayout {
-            Layout.topMargin: 90
+            Layout.topMargin: emptyMessageMargin
             Layout.alignment: Qt.AlignHCenter
             visible: transactionsTable.model.count == 0
 
@@ -185,7 +227,7 @@ Control {
 
             SFText {
                 id:                   emptyMessage
-                Layout.topMargin:     30
+                Layout.topMargin:     emptyMessageMargin / 3
                 Layout.alignment:     Qt.AlignHCenter
                 horizontalAlignment:  Text.AlignHCenter
                 font.pixelSize:       14
@@ -203,19 +245,99 @@ Control {
 
         CustomTableView {
             id: transactionsTable
-            Component.onCompleted: {
-                transactionsTable.model.modelReset.connect(function(){
-                    if (root.openedTxID != "") {
-                        var index = tableViewModel.transactions.index(0, 0);
-                        var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, root.openedTxID)
-                        if (indexList.length > 0) {
-                            index = assetFilterProxy.mapFromSource(indexList[0])
-                            index = searchProxyModel.mapFromSource(index)
-                            index = txProxyModel.mapFromSource(index)
-                            transactionsTable.positionViewAtRow(index.row, ListView.Beginning)
+
+            property var initTxDetailsFromRow: function (model, row) {
+                txDetails.sendAddress      =  model.getRoleValue(row, "addressFrom") || ""
+                txDetails.receiveAddress   =  model.getRoleValue(row, "addressTo") || ""
+                txDetails.senderIdentity   =  model.getRoleValue(row, "senderIdentity") || ""
+                txDetails.receiverIdentity =  model.getRoleValue(row, "receiverIdentity") || ""
+                txDetails.comment          =  model.getRoleValue(row, "comment") || ""
+                txDetails.txID             =  model.getRoleValue(row, "txID") || ""
+                txDetails.kernelID         =  model.getRoleValue(row, "kernelID") || ""
+                txDetails.status           =  model.getRoleValue(row, "status") || ""
+                txDetails.failureReason    =  model.getRoleValue(row, "failureReason") || ""
+                txDetails.isIncome         =  model.getRoleValue(row, "isIncome")
+                txDetails.hasPaymentProof  =  model.getRoleValue(row, "hasPaymentProof")
+                txDetails.isSelfTx         =  model.getRoleValue(row, "isSelfTransaction")
+                txDetails.isContractTx     =  model.getRoleValue(row, "isContractTx")
+                txDetails.cidsStr          =  model.getRoleValue(row, "cidsStr") || ""
+                txDetails.rawTxID          =  model.getRoleValue(row, "rawTxID") || null
+                txDetails.stateDetails     =  model.getRoleValue(row, "stateDetails") || ""
+                txDetails.isCompleted      =  model.getRoleValue(row, "isCompleted")
+                txDetails.minConfirmations =  model.getRoleValue(row, "minConfirmations") || 0
+                txDetails.dappName         =   model.getRoleValue(row, "dappName") || ""
+                txDetails.confirmationsProgress = model.getRoleValue(row, "confirmationsProgress") || ""
+
+                var addrModel = {
+                    isMaxPrivacy: model.getRoleValue(row, "isMaxPrivacy"),
+                    isOfflineToken: model.getRoleValue(row, "isOfflineToken"),
+                    isPublicOffline: model.getRoleValue(row, "isPublicOffline")
+                }
+
+                txDetails.addressType    =  Utils.getAddrTypeFromModel(addrModel)
+                txDetails.assetNames     =  model.getRoleValue(row, "assetNames") || []
+                txDetails.assetVerified  =  model.getRoleValue(row, "assetVerified") || []
+                txDetails.assetIcons     =  model.getRoleValue(row, "assetIcons") || []
+                txDetails.assetAmounts   =  model.getRoleValue(row, "assetAmounts") || []
+                txDetails.assetIncome    =  model.getRoleValue(row, "assetAmountsIncome") || []
+                txDetails.assetRates     =  model.getRoleValue(row, "assetRates") || []
+                txDetails.assetIDs       =  model.getRoleValue(row, "assetIDs") || []
+                txDetails.rateUnit       =  tableViewModel.rateUnit
+                txDetails.fee            =  model.getRoleValue(row, "fee") || "0"
+                txDetails.feeRate        =  model.getRoleValue(row, "feeRate") || "0"
+                txDetails.feeUnit        =  qsTrId("general-beam");
+                txDetails.feeRateUnit    =  tableViewModel.rateUnit
+                txDetails.searchFilter   =  searchBox.text;
+                txDetails.token          =  model.getRoleValue(row, "token") || ""
+                txDetails.isShieldedTx   =  !!model.getRoleValue(row, "isShieldedTx")
+                txDetails.initialState   =  "tx_info";
+
+                txDetails.getPaymentProof = function(rawTxID) {
+                    return rawTxID ? tableViewModel.getPaymentInfo(rawTxID) : null
+                }
+            }
+
+            property var showDetails: function (rawTxID) {
+                var id = rawTxID;
+                if (typeof id != "string") {
+                    id = BeamGlobals.rawTxIdToStr(id);
+                }
+
+                if (!id.length) return;
+
+                var index = tableViewModel.transactions.index(0, 0);
+                var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, id);
+                if (indexList.length > 0) {
+                    index = dappFilterProxy.mapFromSource(indexList[0]);
+                    index = assetFilterProxy.mapFromSource(index);
+                    index = searchProxyModel.mapFromSource(index);
+                    index = txProxyModel.mapFromSource(index);
+                    transactionsTable.positionViewAtRow(index.row, ListView.Beginning);
+
+                    initTxDetailsFromRow(transactionsTable.model, index.row);
+                    txDetails.open();
+                }
+            }
+
+            Component.onCompleted: function () {
+                txProxyModel.source.countChanged.connect(function() {
+                    control.activeTxCnt = 0
+                    var source = txProxyModel.source
+                    for (var idx = 0; idx < source.count; ++idx) {
+                        var qindex = source.index(idx, 0);
+                        if (source.data(qindex, TxObjectList.Roles.IsActive)) {
+                            ++control.activeTxCnt
                         }
                     }
                 })
+                transactionsTable.model.modelReset.connect(function() {
+                    var activeTxId = "";
+                    if (owner && owner != undefined && owner.openedTxID != undefined && owner.openedTxID != "") {
+                        // wallet && applications view
+                        activeTxId = owner.openedTxID;
+                    }
+                    showDetails(activeTxId);
+                });
             }
 
             Layout.alignment:     Qt.AlignTop
@@ -223,9 +345,10 @@ Control {
             Layout.fillHeight:    true
             Layout.bottomMargin:  9
             visible:              transactionsTable.model.count > 0
+
             property real rowHeight: 56
-            property real resizableWidth: transactionsTable.width - 140 /*actionsColumn.width + coinColumn.width*/
-            property real columnResizeRatio: resizableWidth / 610
+            property real resizableWidth: transactionsTable.width - 140
+            property real columnResizeRatio: resizableWidth / (610 - (sourceVisible ? 0 : 140))
 
             selectionMode: SelectionMode.NoSelection
             sortIndicatorVisible: true
@@ -253,7 +376,15 @@ Control {
                         filterRole:   "assetFilter"
                         filterString: control.selectedAsset < 0 ? "" : ["\\b", control.selectedAsset, "\\b"].join("")
                         filterSyntax: SortFilterProxyModel.RegExp
-                        source:       tableViewModel.transactions
+
+                        source: SortFilterProxyModel {
+                            id:           dappFilterProxy
+                            filterRole:   dappFilter ? (dappFilter == "all" ? "isDappTx" : "dappId") : ""
+                            filterString: dappFilter ? (dappFilter == "all" ? "true" : dappFilter) : ""
+                            filterSyntax: SortFilterProxyModel.FixedString
+                            filterCaseSensitivity: Qt.CaseInsensitive
+                            source: tableViewModel.transactions
+                        }
                     }
                 }
 
@@ -264,123 +395,66 @@ Control {
             }
 
             rowDelegate: ExpandableRowDelegate {
-                id:         rowItem
+                id:         rowItemDelegate
                 collapsed:  true
-                rowInModel: styleData.row !== undefined && styleData.row >= 0 &&  styleData.row < txProxyModel.count
+                rowInModel: styleData.row !== undefined && styleData.row >= 0 && styleData.row < txProxyModel.count
                 rowHeight:  transactionsTable.rowHeight
                 tableView:  transactionsTable
 
-                backgroundColor: styleData.selected ?
+                backgroundColor: !rowInModel ? "transparent":
+                                 styleData.selected ?
                                  Style.row_selected :
-                                 (styleData.alternate ? (!collapsed || animating ? Style.background_row_details_even : Style.background_row_even)
-                                                      : (!collapsed || animating ? Style.background_row_details_odd : Style.background_row_odd))
+                                 hovered 
+                                    ? Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.1)
+                                    : (styleData.alternate ? (!collapsed || animating ? Style.background_row_details_even : Style.background_row_even)
+                                                           : (!collapsed || animating ? Style.background_row_details_odd : Style.background_row_odd))
 
                 property var model: parent.model
                 property bool hideFiltered: true
-
-                onLeftClick: function() {
-                    if (!collapsed && searchBox.text.length && hideFiltered) {
-                        hideFiltered = false;
-                        return false;
+                property string searchBoxText: searchBox.text
+                property int rowNumber: styleData.row !== undefined? styleData.row : "-1"
+                onSearchBoxTextChanged: function() {
+                    if (searchBoxText.length == 0) {
+                        collapse(false);
+                        return;
                     }
-                    return true;
+                    if (rowNumber == 0 && collapsed)
+                        expand(false);
+
+                    if (rowNumber != 0 && !collapsed)
+                        collapse(false);
                 }
 
-                delegate: TransactionDetails {
+                onRowNumberChanged: function() {
+                    if(searchBoxText.length && rowNumber == 0 && collapsed)
+                        expand(false);
+                }
+
+                onLeftClick: function() {
+                    transactionsTable.initTxDetailsFromRow(transactionsTable.model, rowNumber);
+                    txDetails.open();
+                    return false;
+                }
+
+                delegate: TransactionsSearchHighlighter {
                     id: detailsPanel
                     width: transactionsTable.width
-                    sendAddress:        model && model.addressFrom ? model.addressFrom : ""
-                    receiveAddress:     model && model.addressTo ? model.addressTo : ""
-                    senderIdentity:     model && model.senderIdentity ? model.senderIdentity : ""
-                    receiverIdentity:   model && model.receiverIdentity ? model.receiverIdentity : ""
-                    comment:            model && model.comment ? model.comment : ""
-                    txID:               model && model.txID ? model.txID : ""
-                    kernelID:           model && model.kernelID ? model.kernelID : ""
-                    status:             model && model.status ? model.status : ""
-                    failureReason:      model && model.failureReason ? model.failureReason : ""
-                    isIncome:           model && model.isIncome ? model.isIncome : false
-                    hasPaymentProof:    model && model.hasPaymentProof ? model.hasPaymentProof : false
-                    isSelfTx:           model && model.isSelfTransaction ? model.isSelfTransaction : false
-                    isContractTx:       model && model.isContractTx
-                    cidsStr:            model && model.cidsStr ? model.cidsStr : ""
-                    rawTxID:            model && model.rawTxID ? model.rawTxID : null
-                    stateDetails:       model && model.stateDetails ? model.stateDetails : ""
-                    isCompleted:        model && model.isCompleted ? model.isCompleted : false
+                    sendAddress:            model && model.addressFrom ? model.addressFrom : ""
+                    receiveAddress:         model && model.addressTo ? model.addressTo : ""
+                    senderIdentity:         model && model.senderIdentity ? model.senderIdentity : ""
+                    receiverIdentity:       model && model.receiverIdentity ? model.receiverIdentity : ""
+                    txID:                   model && model.txID ? model.txID : ""
+                    kernelID:               model && model.kernelID ? model.kernelID : ""
+                    comment:                model && model.comment ? model.comment : ""
+                    isContractTx:           model && model.isContractTx
+                    isShieldedTx:           model && model.isShieldedTx
 
-                    addressType:        {
-                        if (model) {
-                            if (model.isMaxPrivacy) {
-                                //% "Max privacy"
-                                return qsTrId("tx-address-max-privacy")
-                            }
-                            if (model.isOfflineToken) {
-                                //% "Offline"
-                                return qsTrId("tx-address-offline") 
-                            }
-                            if (model.isPublicOffline) {
-                                //% "Public offline"
-                                return qsTrId("tx-address-public-offline") 
-                            }
-                            //% "Regular"
-                            return qsTrId("tx-address-regular");
-                        }
-                        return ""
-                    }
-
-                    assetNames:         model && model.assetNames ? model.assetNames : []
-                    assetIcons:         model ? model.assetIcons: []
-                    assetAmounts:       model ? model.assetAmounts: []
-                    assetIncome:        model ? model.assetAmountsIncome: []
-                    assetRates:         model ? model.assetRates: []
-                    totalValue:         model ? model.amountSecondCurrency : "0"
-                    rateUnit:           tableViewModel.rateUnit
-
-                    fee:             model && model.fee ? model.fee : "0"
-                    feeRate:         model && model.feeRate ? model.feeRate : "0"
-                    feeUnit:         qsTrId("general-beam")
-                    feeRateUnit:     tableViewModel.rateUnit
-
-                    searchFilter:    searchBox.text
-                    hideFiltered:    rowItem.hideFiltered
+                    searchFilter:    searchBoxText
+                    hideFiltered:    rowItemDelegate.hideFiltered
                     token:           model ? model.token : ""
-                    isShieldedTx:    model && model.isShieldedTx ? true : false
-
-                    onSearchFilterChanged: function(text) {
-                        rowItem.collapsed = searchBox.text.length == 0;
-                        rowItem.hideFiltered = true;
-                    }
-
-                    onOpenExternal : function() {
-                        var url = tableViewModel.explorerUrl + "block?kernel_id=" + detailsPanel.kernelID;
-                        Utils.openExternalWithConfirmation(url);
-                    }
 
                     onTextCopied: function (text) {
                         BeamGlobals.copyToClipboard(text);
-                    }
-
-                    onCopyPaymentProof: function() {
-                        if (detailsPanel.rawTxID)
-                        {
-                            var paymentInfo = tableViewModel.getPaymentInfo(detailsPanel.rawTxID);
-                            if (paymentInfo.paymentProof.length === 0)
-                            {
-                                paymentInfo.paymentProofChanged.connect(function() {
-                                    textCopied(paymentInfo.paymentProof);
-                                });
-                            }
-                            else
-                            {
-                                textCopied(paymentInfo.paymentProof);
-                            }
-                        }
-                    }
-                    onShowPaymentProof: {
-                        if (detailsPanel.rawTxID)
-                        {
-                            paymentInfoDialog.model = tableViewModel.getPaymentInfo(detailsPanel.rawTxID);
-                            paymentInfoDialog.open();
-                        }
                     }
                 }
             }
@@ -403,7 +477,7 @@ Control {
                 id: coinColumn
 
                 //% "Coin"
-                title:     qsTrId("wallet-txs-coin")
+                title:     qsTrId("general-coin")
                 width:     100
                 movable:   false
                 resizable: false
@@ -411,8 +485,9 @@ Control {
                 delegate: Item { CoinsList {
                     width:  parent.width
                     height: transactionsTable.rowHeight
-                    icons:  model ? model.assetIcons : undefined
-                    names:  model ? model.assetNames : undefined
+                    icons:    model ? model.assetIcons : undefined
+                    names:    model ? model.assetNames : undefined
+                    verified: model ? model.assetVerified: undefined
                 }}
             }
 
@@ -497,6 +572,7 @@ Control {
                 width:      140 * transactionsTable.columnResizeRatio
                 movable:    false
                 resizable:  false
+                visible:    sourceVisible
             }
 
             TableViewColumn {
@@ -619,10 +695,19 @@ Control {
             }
 
             function showContextMenu(row) {
-                txContextMenu.cancelEnabled = transactionsTable.model.getRoleValue(row, "isCancelAvailable");
-                txContextMenu.deleteEnabled = transactionsTable.model.getRoleValue(row, "isDeleteAvailable");
-                txContextMenu.txID = transactionsTable.model.getRoleValue(row, "rawTxID");
-                txContextMenu.popup();
+                if (transactionsTable.model.getRoleValue(row, "isContractTx"))
+                {
+                    contractTxContextMenu.deleteEnabled = transactionsTable.model.getRoleValue(row, "isDeleteAvailable");
+                    contractTxContextMenu.txID = transactionsTable.model.getRoleValue(row, "rawTxID");
+                    contractTxContextMenu.popup();
+                }
+                else
+                {
+                    txContextMenu.cancelEnabled = transactionsTable.model.getRoleValue(row, "isCancelAvailable");
+                    txContextMenu.deleteEnabled = transactionsTable.model.getRoleValue(row, "isDeleteAvailable");
+                    txContextMenu.txID = transactionsTable.model.getRoleValue(row, "rawTxID");
+                    txContextMenu.popup();
+                }
             }
 
             Component {
@@ -646,6 +731,13 @@ Control {
                 }
             }
 
+            function showDeleteTransactionDialog(txId) {
+                //% "The transaction will be deleted. This operation can not be undone"
+                deleteTransactionDialog.text = qsTrId("wallet-txs-delete-message");
+                deleteTransactionDialog.txID = txId;
+                deleteTransactionDialog.open();
+            }
+
             ContextMenu {
                 id: txContextMenu
                 modal: true
@@ -655,9 +747,18 @@ Control {
                 property var txID
 
                 Action {
+                    //% "Show details"
+                    text: qsTrId("general-show-tx-details")
+                    icon.source: "qrc:/assets/icon-show_tx_details.svg"
+                    onTriggered: {
+                        transactionsTable.showDetails(txContextMenu.txID);
+                    }
+                }
+
+                Action {
                     //% "Cancel"
                     text: qsTrId("general-cancel")
-                    icon.source: "qrc:/assets/icon-cancel.svg"
+                    icon.source: "qrc:/assets/icon-cancel-white.svg"
                     enabled: txContextMenu.cancelEnabled
                     onTriggered: {
                         tableViewModel.cancelTx(txContextMenu.txID);
@@ -669,10 +770,34 @@ Control {
                     icon.source: "qrc:/assets/icon-delete.svg"
                     enabled: txContextMenu.deleteEnabled
                     onTriggered: {
-                        //% "The transaction will be deleted. This operation can not be undone"
-                        deleteTransactionDialog.text = qsTrId("wallet-txs-delete-message");
-                        deleteTransactionDialog.txID = txContextMenu.txID
-                        deleteTransactionDialog.open();
+                        transactionsTable.showDeleteTransactionDialog(txContextMenu.txID);
+                    }
+                }
+            }
+
+            ContextMenu {
+                id: contractTxContextMenu
+                modal: true
+                dim: false
+                property bool deleteEnabled
+                property var txID
+
+                Action {
+                    //% "Show details"
+                    text: qsTrId("general-show-tx-details")
+                    icon.source: "qrc:/assets/icon-show_tx_details.svg"
+                    onTriggered: {
+                        transactionsTable.showDetails(contractTxContextMenu.txID);
+                    }
+                }
+
+                Action {
+                    //% "Delete"
+                    text: qsTrId("general-delete")
+                    icon.source: "qrc:/assets/icon-delete.svg"
+                    enabled: contractTxContextMenu.deleteEnabled
+                    onTriggered: {
+                        transactionsTable.showDeleteTransactionDialog(contractTxContextMenu.txID);
                     }
                 }
             }

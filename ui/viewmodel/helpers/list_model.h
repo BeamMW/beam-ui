@@ -59,6 +59,15 @@ public:
         endInsertRows();
     }
 
+    void insert_at(const T& item, int index)
+    {
+        beginInsertRows(QModelIndex(), index, index);
+        auto at = m_list.begin();
+        std::advance(at, index);
+        m_list.insert(at, item);
+        endInsertRows();
+    }
+
     void insert(const std::vector<T>& items)
     {
         if (items.size() == 0)
