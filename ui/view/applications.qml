@@ -62,9 +62,7 @@ ColumnLayout {
         }
 
         onRefresh: function () {
-            var app = control.activeApp
-            control.activeApp = undefined
-            launchApp(app)
+            webView.reload()
         }
     }
 
