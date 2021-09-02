@@ -316,6 +316,10 @@
         <file>assets/icon-inout-transactions.svg</file>
         <file>assets/icon-incoming-transaction.svg</file>
         <file>assets/icon-outgoing-transaction.svg</file>
+        <file>assets/icon-sending-max-privacy-own.svg</file>
+        <file>assets/icon-sent-max-privacy-own.svg</file>
+        <file>assets/icon-sending-own-offline.svg</file>
+        <file>assets/icon-sent-own-offline.svg</file>
         <file>assets/asset-0.svg</file>
         <file>assets/asset-1.svg</file>
         <file>assets/asset-2.svg</file>
