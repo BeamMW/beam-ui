@@ -49,7 +49,7 @@ namespace beamui
         CURRENCY_MAP(MACRO)
 #undef MACRO
         default:
-            return "";
+            return QString();
         }
     }
 
@@ -82,7 +82,7 @@ namespace beamui
         CURRENCY_MAP(MACRO)
 #undef MACRO
         default:
-            return "";
+            return QString();
         }
     }
 
@@ -95,7 +95,7 @@ namespace beamui
         } 
         CURRENCY_MAP(MACRO)
 #undef MACRO
-        return "";
+        return QString();
     }
 
     // TODO(alex.starun): find better solution / mb use CURRENCY_MAP

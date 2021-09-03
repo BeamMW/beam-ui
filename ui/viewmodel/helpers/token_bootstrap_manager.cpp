@@ -73,7 +73,7 @@ void TokenBootstrapManager::checkTokenForDuplicate(const QString& token)
         return;
     }
 
-    auto parametrsValue = parameters.value();
+    auto parametrsValue = *parameters;
     auto peerID = parametrsValue.GetParameter<beam::wallet::WalletID>(
         beam::wallet::TxParameterID::PeerID);
     if (peerID && _wallet_model.isOwnAddress(*peerID))
