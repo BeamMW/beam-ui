@@ -492,6 +492,12 @@ QString QMLGlobals::rawTxIdToStr(const QVariant& txId)
     return "";
 }
 
+QString QMLGlobals::getExplorerUrl()
+{
+    const auto& settings = AppModel::getInstance().getSettings();
+    return settings.getExplorerUrl();
+}
+
 void QMLGlobals::fatal(const QString& message)
 {
     throw std::runtime_error(message.toStdString());

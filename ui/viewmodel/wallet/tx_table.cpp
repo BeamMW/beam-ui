@@ -188,9 +188,3 @@ PaymentInfoItem* TxTableViewModel::getPaymentInfo(const QVariant& variantTxID)
     }
     else return Q_NULLPTR;
 }
-
-QString TxTableViewModel::getExplorerUrl() const
-{
-     const auto& settings = AppModel::getInstance().getSettings();
-     return settings.getExplorerUrl();
-}

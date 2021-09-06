@@ -548,35 +548,10 @@ CustomDialog {
                 height: 16
                 visible: dialog.isCompleted && kernelID.parent.visible
             }
-            Item {
-                Layout.preferredWidth: openInExplorer.width + 10 + openInExplorerIcon.width
-                height: 16
+            OpenInBlockchainExplorer {
                 visible: dialog.isCompleted && kernelID.parent.visible
-
-                SFText {
-                    id: openInExplorer
-                    font.pixelSize: 14
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    anchors.rightMargin: 10
-                    color: Style.active
-                    //% "Open in Blockchain Explorer"
-                    text: qsTrId("open-in-explorer")
-                }
-                SvgImage {
-                    id: openInExplorerIcon
-                    anchors.top: parent.top
-                    anchors.right: parent.right
-                    source: "qrc:/assets/icon-external-link-green.svg"
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        openExternal(dialog.kernelID);
-                    }
-                    hoverEnabled: true
+                onTriggered: function(kernelID) {
+                    openExternal(dialog.kernelID);
                 }
             }
 
