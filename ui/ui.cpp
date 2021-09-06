@@ -100,12 +100,6 @@ using namespace beam;
 using namespace std;
 using namespace ECC;
 
-#ifdef APP_NAME
-static const char* AppName = APP_NAME;
-#else
-static const char* AppName = "Beam Wallet Masternet";
-#endif
-
 int main (int argc, char* argv[])
 {
     wallet::g_AssetsEnabled = true;
@@ -115,7 +109,7 @@ int main (int argc, char* argv[])
 
     block_sigpipe();
     QApplication app(argc, argv);
-    QApplication::setApplicationName(AppName);
+    QApplication::setApplicationName(QMLGlobals::getAppName());
     QApplication::setWindowIcon(QIcon(Theme::iconPath()));
     QDir appDataDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
 
@@ -189,7 +183,7 @@ int main (int argc, char* argv[])
         int logLevel = getLogLevel(cli::LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
         int fileLogLevel = getLogLevel(cli::FILE_LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
 
-        beam::Crash::InstallHandler(appDataDir.filePath(AppName).toStdString().c_str());
+        beam::Crash::InstallHandler(appDataDir.filePath(QMLGlobals::getAppName()).toStdString().c_str());
 
 #define LOG_FILES_PREFIX "beam_ui_"
 

@@ -429,7 +429,7 @@ QString TxObject::getKernelID() const
 {
     if (_kernelIDStr.isEmpty())
     {
-        _kernelIDStr = QString::fromStdString(to_hex(_tx.m_kernelID.m_pData, _tx.m_kernelID.nBytes));
+        _kernelIDStr = QString::fromStdString(to_hex(_tx.m_kernelID.m_pData, static_cast<size_t>(_tx.m_kernelID.nBytes)));
     }
     return _kernelIDStr;
 }

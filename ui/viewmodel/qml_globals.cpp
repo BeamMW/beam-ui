@@ -92,6 +92,16 @@ QMLGlobals::QMLGlobals(QQmlEngine& engine)
 {
 }
 
+QString QMLGlobals::getAppName()
+{
+#ifdef APP_NAME
+static const char* AppName = APP_NAME;
+#else
+static const char* AppName = "Beam Wallet Masternet";
+#endif
+    return AppName;
+}
+
 void QMLGlobals::showMessage(const QString& message)
 {
     QMessageBox::information(nullptr, "BeamWalletUI", message);

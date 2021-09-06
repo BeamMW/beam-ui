@@ -9,6 +9,7 @@ Window  {
     id: appWindow
     property alias source: rootLoader.source
     flags: Qt.Window | Qt.WindowFullscreenButtonHint
+    title: BeamGlobals.getAppName()
 
     function cellResize() {
         if(appWindow.visibility != ApplicationWindow.Maximized) {

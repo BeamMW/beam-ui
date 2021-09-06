@@ -3260,5 +3260,29 @@ cannot be canceled.</translation>
         <source>Assets Swap</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-txs-status-in-progress-max-to-own">
+        <source>sending max privacy
+to own address</source>
+        <translation>sending max privacy
+to own address</translation>
+    </message>
+    <message id="wallet-txs-status-in-progress-offline-to-own">
+        <source>sending offline
+to own address</source>
+        <translation>sending offline
+to own address</translation>
+    </message>
+    <message id="wallet-txs-status-sent-max-to-own">
+        <source>sent max privacy
+to own address</source>
+        <translation>sent max privacy
+to own address</translation>
+    </message>
+    <message id="wallet-txs-status-sent-offline-to-own">
+        <source>sent offline
+to own address</source>
+        <translation>sent offline
+to own address</translation>
+    </message>
 </context>
 </TS>

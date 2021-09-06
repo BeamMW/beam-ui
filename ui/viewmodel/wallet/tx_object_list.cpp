@@ -82,6 +82,12 @@ QString getStatusTextTranslated(const QString& status, beam::wallet::TxAddressTy
 max privacy" */
         return qtTrId("wallet-txs-status-in-progress-max");
     }
+    else if (status == "sending max privacy to own address")
+    {
+        /*% "sending max privacy
+to own address" */
+        return qtTrId("wallet-txs-status-in-progress-max-to-own");
+    }
     else if (status == "in progress offline")
     {
         /*% "in progress
@@ -93,6 +99,12 @@ offline" */
         /*% "in progress
 public offline" */
         return qtTrId("wallet-txs-status-in-progress-public-offline");
+    }
+    else if (status == "sending offline to own address")
+    {
+        /*% "sending offline
+to own address" */
+        return qtTrId("wallet-txs-status-in-progress-offline-to-own");
     }
     // sent
     else if (status == "sent max privacy")
@@ -112,6 +124,18 @@ offline" */
         /*% "sent
 public offline" */
         return qtTrId("wallet-txs-status-sent-public-offline");
+    }
+    else if (status == "sent max privacy to own address")
+    {
+        /*% "sent max privacy
+to own address" */
+        return qtTrId("wallet-txs-status-sent-max-to-own");
+    }
+    else if (status == "sent offline to own address")
+    {
+        /*% "sent offline
+to own address" */
+        return qtTrId("wallet-txs-status-sent-offline-to-own");
     }
     // received
     else if (status == "received max privacy")

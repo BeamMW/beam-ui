@@ -621,6 +621,10 @@ Control {
                                     }
                                     if (model.isInProgress) {
                                         if (model.isSelfTransaction) {
+                                            if (model.isOfflineToken || model.isPublicOffline)
+                                                return "qrc:/assets/icon-sending-own-offline.svg";
+                                            if (model.isShieldedTx)
+                                                return "qrc:/assets/icon-sending-max-privacy-own.svg";
                                             return "qrc:/assets/icon-sending-own.svg";
                                         }
                                         return model.isIncome
@@ -631,6 +635,10 @@ Control {
                                     }
                                     else if (model.isCompleted) {
                                         if (model.isSelfTransaction) {
+                                            if (model.isOfflineToken || model.isPublicOffline)
+                                                return "qrc:/assets/icon-sent-own-offline.svg";
+                                            if (model.isShieldedTx)
+                                                return "qrc:/assets/icon-sent-max-privacy-own.svg";
                                             return "qrc:/assets/icon-sent-own.svg";
                                         }
                                         return model.isIncome

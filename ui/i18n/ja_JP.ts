@@ -3262,6 +3262,26 @@ cannot be canceled.</translation>
             <numerusform>Offline address: %n transaction(s) left.</numerusform>
         </translation>
     </message>
+    <message id="wallet-txs-status-in-progress-max-to-own">
+        <source>sending max privacy
+to own address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-in-progress-offline-to-own">
+        <source>sending offline
+to own address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-sent-max-to-own">
+        <source>sent max privacy
+to own address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-sent-offline-to-own">
+        <source>sent offline
+to own address</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="source-dex">
         <source>Assets Swap</source>
         <translation type="unfinished"></translation>

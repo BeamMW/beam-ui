@@ -23,6 +23,7 @@ class QMLGlobals : public QObject
 public:
     explicit QMLGlobals(QQmlEngine&);
 
+    Q_INVOKABLE static QString getAppName();
     Q_INVOKABLE static void showMessage(const QString& message);
     Q_INVOKABLE static void logInfo(const QString& message);
     Q_INVOKABLE static void copyToClipboard(const QString& text);

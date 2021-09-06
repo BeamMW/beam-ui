@@ -330,7 +330,7 @@ std::string StatusbarViewModel::generateCoinClientErrorMsg()
         if (ethClientFailed) failedNodes += (std::to_string(AtomicSwapCoin::Ethereum) + ", ");
         failedNodes.erase(failedNodes.end() - 2, failedNodes.end());
 
-        std::size_t found = failedNodes.find(",");
+        std::size_t found = failedNodes.find(',');
         if (found != std::string::npos)
         {
             m_coinWithErrorLabel = QString::fromStdString(failedNodes.substr(0, found));
