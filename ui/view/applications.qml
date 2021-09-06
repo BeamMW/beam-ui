@@ -343,14 +343,15 @@ ColumnLayout {
 
     ColumnLayout {
         id: appsView
-        Layout.topMargin:  50
+        Layout.topMargin:  50 - (unsupportedCnt ? errCntMessage.height + spacing : 0)
         Layout.fillHeight: true
         Layout.fillWidth:  true
         Layout.bottomMargin: 10
         visible: control.hasApps && !control.activeApp
-        spacing: 20
+        spacing: 10
 
         SFText {
+            id: errCntMessage
             Layout.alignment: Qt.AlignRight
             color: Style.validator_error
             visible: unsupportedCnt > 0
