@@ -180,7 +180,7 @@ Rectangle {
     property var contentItems : [
         {name: "wallet"},
         {name: "atomic_swap"},
-        // {name: "dex"},
+        {name: "dex"},
         {name: "addresses"},
         {name: "notifications"},
         {name: "applications", qml: appsQml},

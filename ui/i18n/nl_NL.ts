@@ -3058,10 +3058,6 @@ Wilt u doorgaan? U kunt uw keuze later altijd wijzigen in Instellingen.</transla
         <source>Allow to launch DApps</source>
         <translation>DApps starten toestaan</translation>
     </message>
-    <message id="apps-update-wallet">
-        <source>Update Beam Wallet to launch</source>
-        <translation>Update Beam Wallet om te starten</translation>
-    </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
         <translation>Transactie informatie</translation>
@@ -3283,6 +3279,17 @@ to own address</source>
         <source>sent offline
 to own address</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-version-error">
+        <source>This DApp requires version %1 of Beam Wallet or higher. Please update.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-err-cnt" numerus="yes">
+        <source>%n DApp(s) is not available</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 </TS>
