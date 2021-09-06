@@ -209,14 +209,13 @@ Control {
                 resizable: false
                 delegate:  CustomToolButton {
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
                     icon.source: "qrc:/assets/icon-actions.svg"
 
                     //% "Actions"
                     ToolTip.text: qsTrId("general-actions")
 
                     onClicked: function () {
-                        BeamGlobals.showMessage(ordersTable.model.getRoleValue(styleData.row, "isMine"))
                         orderMenu.orderID = ordersTable.model.getRoleValue(styleData.row, "id")
                         orderMenu.canAccept =  ordersTable.model.getRoleValue(styleData.row, "canAccept")
                         orderMenu.popup()

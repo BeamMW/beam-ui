@@ -3260,5 +3260,9 @@ cannot be canceled.</source>
             <numerusform>Offline adres: %n transacties over.</numerusform>
         </translation>
     </message>
+    <message id="source-dex">
+        <source>Assets Swap</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

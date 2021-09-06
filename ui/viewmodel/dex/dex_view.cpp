@@ -130,7 +130,7 @@ namespace beamui::dex
         beam::wallet::DexOrderID dexOrderId;
         if (!dexOrderId.FromHex(orderId.toStdString()))
         {
-            throw std::runtime_error("DexView::acceptOrder failed, bad order id");
+            throw std::runtime_error("DexView::acceptOrder bad order id");
         }
         _walletModel.getAsync()->acceptDexOrder(dexOrderId);
     }

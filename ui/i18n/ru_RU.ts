@@ -3265,5 +3265,9 @@ cannot be canceled.</source>
             <numerusform>Оффлайн адрес: осталось %n транзакций.</numerusform>
         </translation>
     </message>
+    <message id="source-dex">
+        <source>Assets Swap</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
