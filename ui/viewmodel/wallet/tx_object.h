@@ -56,12 +56,12 @@ public:
     bool isActive() const;
     QString getAppId();
     bool isDappTx();
+    bool isFeeOnly() const;
 
     const std::vector<beam::Asset::ID>& getAssetsList() const;
     const std::vector<QString>& getAssetAmounts() const;
     const std::vector<bool>& getAssetAmountsIncome() const;
     const std::vector<QString>& getAssetRates() const;
-    const std::vector<QString>& getAssetIds() const;
 
     bool isIncome() const;
     bool isSelfTx() const;
@@ -104,5 +104,4 @@ protected:
     std::vector<QString>         _assetAmounts;
     std::vector<bool>            _assetAmountsIncome;
     std::vector<QString>         _assetRates;
-    std::vector<QString>         _assetIDs;
 };

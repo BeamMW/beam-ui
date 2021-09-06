@@ -274,6 +274,7 @@ Control {
                     isPublicOffline: model.getRoleValue(row, "isPublicOffline")
                 }
 
+                txDetails.feeOnly        =  model.getRoleValue(row, "isFeeOnly")
                 txDetails.addressType    =  Utils.getAddrTypeFromModel(addrModel)
                 txDetails.assetNames     =  model.getRoleValue(row, "assetNames") || []
                 txDetails.assetVerified  =  model.getRoleValue(row, "assetVerified") || []
@@ -483,8 +484,8 @@ Control {
                 resizable: false
 
                 delegate: Item { CoinsList {
-                    width:  parent.width
-                    height: transactionsTable.rowHeight
+                    width:    parent.width
+                    height:   transactionsTable.rowHeight
                     icons:    model ? model.assetIcons : undefined
                     names:    model ? model.assetNames : undefined
                     verified: model ? model.assetVerified: undefined

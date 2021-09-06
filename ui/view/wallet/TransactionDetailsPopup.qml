@@ -25,6 +25,7 @@ CustomDialog {
     property string token
     property bool hasToken: token.length > 0 
 
+    property bool   feeOnly
     property string fee
     property string feeUnit
     property string feeRate
@@ -298,12 +299,14 @@ CustomDialog {
                 color: Style.content_secondary
                 //% "Amount"
                 text: qsTrId("tx-details-amount-label") + ":"
+                visible: !dialog.feeOnly
             }
 
             ColumnLayout {
                 id: amountsList
                 Layout.fillWidth: true
                 spacing: 10
+                visible: !dialog.feeOnly
 
                 Repeater {
                     model: dialog.assetCount

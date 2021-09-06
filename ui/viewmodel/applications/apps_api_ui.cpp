@@ -73,7 +73,7 @@ namespace beamui::applications {
         //
         // This is UI thread
         //
-        LOG_INFO() << "Contract tx rejected: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
+        LOG_INFO() << "Contract tx approved: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
         AnyThread_callWalletApiDirectly(request.toStdString());
     }
 

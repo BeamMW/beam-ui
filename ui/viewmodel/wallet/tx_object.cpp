@@ -93,18 +93,28 @@ TxObject::TxObject(beam::wallet::TxDescription tx, QObject* parent)
 TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency secondCurrency, QObject* parent)
     : QObject(parent)
     , _tx(std::move(tx))
-    , _secondCurrency(std::move(secondCurrency))
+    , _secondCurrency(secondCurrency)
 {
+    using namespace beam;
+    using namespace beam::wallet;
+
     Height h = tx.m_minHeight;
     _contractFee = std::max(_tx.m_fee, Transaction::FeeSettings::get(h).get_DefaultStd());
 
-    if (_tx.m_txType == beam::wallet::TxType::Contract)
+    auto appendAsset = [&](Asset::ID aid, Amount amount, bool income) {
+        _assetAmounts.push_back(AmountToUIString(amount));
+        _assetsList.push_back(aid);
+        _assetAmountsIncome.push_back(income);
+        _assetRates.push_back(getRate(aid));
+    };
+
+    if (_tx.m_txType == wallet::TxType::Contract)
     {
-        beam::bvm2::ContractInvokeData vData;
-        if(_tx.GetParameter(beam::wallet::TxParameterID::ContractDataPacked, vData))
+        bvm2::ContractInvokeData vData;
+        if(_tx.GetParameter(TxParameterID::ContractDataPacked, vData))
         {
-            _contractFee = beam::bvm2::getFullFee(vData, h);
-            _contractSpend = beam::bvm2::getFullSpend(vData);
+            _contractFee = bvm2::getFullFee(vData, h);
+            _contractSpend = bvm2::getFullSpend(vData);
         }
 
         if (!vData.empty())
@@ -130,37 +140,44 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
                     amount += _contractFee;
                 }
             }
-            _assetAmounts.emplace_back(AmountToUIString(std::abs(amount)));
-            _assetsList.push_back(info.first);
-            _assetAmountsIncome.push_back(amount <= 0);
-            _assetRates.emplace_back(getRate(info.first));
-
-            std::stringstream ss;
-            ss << info.first;
-            _assetIDs.emplace_back(QString::fromStdString(ss.str()));
+            appendAsset(info.first, std::abs(amount), amount <= 0);
         }
+
+        if (isFeeOnly())
+        {
+            appendAsset(0, _contractFee, false);
+        }
+    }
+    else if (_tx.m_txType == beam::wallet::TxType::DexSimpleSwap)
+    {
+        const auto rasset  = _tx.GetParameter<Asset::ID>(TxParameterID::DexReceiveAsset);
+        const auto ramount = _tx.GetParameter<Amount>(TxParameterID::DexReceiveAmount);
+        if (!rasset || !ramount)
+        {
+            throw std::runtime_error("No rasset/ramount on DEX tx");
+        }
+
+        appendAsset(*rasset, *ramount, true);
+        appendAsset(_tx.m_assetId, _tx.m_amount, false);
+    }
+    else
+    {
+        appendAsset(_tx.m_assetId, _tx.m_amount, !_tx.m_sender);
     }
 
     if (auto strdesc = _tx.GetParameter<std::string>(beam::wallet::TxParameterID::AppName); strdesc)
     {
         _source = QString::fromStdString(*strdesc);
     }
+    else if (_tx.m_txType == wallet::TxType::DexSimpleSwap)
+    {
+        //% "Assets Swap"
+        _source = qtTrId("source-dex");
+    }
     else
     {
         //% "Wallet"
         _source = qtTrId("source-wallet");
-    }
-
-    if (_assetsList.empty())
-    {
-        _assetsList.push_back(_tx.m_assetId);
-        _assetAmounts.emplace_back(AmountToUIString(_tx.m_amount));
-        _assetAmountsIncome.push_back(!_tx.m_sender);
-        _assetRates.emplace_back(getRate(_tx.m_assetId));
-
-        std::stringstream ss;
-        ss << _tx.m_assetId;
-        _assetIDs.emplace_back(QString::fromStdString(ss.str()));
     }
 
     _tx.GetParameter(beam::wallet::TxParameterID::MinConfirmations, _minConfirmations);
@@ -221,6 +238,12 @@ bool TxObject::isIncome() const
 {
     if (isContractTx())
     {
+        if (isFeeOnly())
+        {
+            // this is a fee-only transaction
+            return false;
+        }
+
         for (const auto& info : _contractSpend) {
             if (info.second > 0)
                 return false;
@@ -315,8 +338,7 @@ QString TxObject::getStatus() const
     }
     else if (_tx.m_txType == wallet::TxType::DexSimpleSwap)
     {
-        // TODO:DEX implement
-        return "NOT IMPLEMENTED";
+        statusInterpreter = std::make_unique<beam::wallet::SimpleTxStatusInterpreter>(_tx);
     }
     else
     {
@@ -363,11 +385,6 @@ QString TxObject::getAmountGeneral() const
 {
     if (isContractTx())
     {
-        if (_assetAmounts.empty())
-        {
-            return QString("0");
-        }
-
         return *_assetAmounts.begin();
     }
     else
@@ -736,6 +753,11 @@ const std::vector<beam::Asset::ID>& TxObject::getAssetsList() const
     return _assetsList;
 }
 
+bool TxObject::isFeeOnly() const
+{
+    return isContractTx() && _contractSpend.empty();
+}
+
 const std::vector<QString>& TxObject::getAssetAmounts() const
 {
     return _assetAmounts;
@@ -749,11 +771,6 @@ const std::vector<bool>& TxObject::getAssetAmountsIncome() const
 const std::vector<QString>& TxObject::getAssetRates() const
 {
     return _assetRates;
-}
-
-const std::vector<QString>& TxObject::getAssetIds() const
-{
-    return _assetIDs;
 }
 
 QString TxObject::getAmountSecondCurrency()

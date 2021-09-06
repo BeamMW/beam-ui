@@ -85,7 +85,8 @@ public:
         IsDappTx,
         DAppId,
         DAppName,
-        IsActive
+        IsActive,
+        IsFeeOnly
     };
     Q_ENUM(Roles)
 

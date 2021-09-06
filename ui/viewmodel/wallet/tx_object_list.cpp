@@ -259,7 +259,8 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::IsDappTx), "isDappTx"},
         { static_cast<int>(Roles::DAppId), "dappId"},
         { static_cast<int>(Roles::DAppName), "dappName"},
-        { static_cast<int>(Roles::IsActive), "isActive"}
+        { static_cast<int>(Roles::IsActive), "isActive"},
+        { static_cast<int>(Roles::IsFeeOnly), "isFeeOnly"}
     };
     return roles;
 }
@@ -274,10 +275,11 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
     auto& value = m_list[index.row()];
     switch (static_cast<Roles>(role))
     {
+        case Roles::IsFeeOnly:
+            return value->isFeeOnly();
         case Roles::Source:
         case Roles::SourceSort:
             return value->getSource();
-
         case Roles::TimeCreated:
         {
             QDateTime datetime;
@@ -455,9 +457,9 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
         }
         case Roles::AssetIDs:
         {
-            const auto& rates = value->getAssetIds();
+            const auto& assets = value->getAssetsList();
             QVariant result;
-            result.setValue(rates);
+            result.setValue(assets);
             return result;
         }
         case Roles::AssetFilter:
