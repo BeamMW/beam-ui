@@ -19,7 +19,7 @@ Popup {
             anchors.fill: parent
             Rectangle {
                 anchors.fill: parent
-                color:  Qt.rgba(Style.background_main.r, Style.background_main.g, Style.background_main.b, 0.5)
+                color:  Qt.rgba(Style.background_main.r, Style.background_main.g, Style.background_main.b, 0.7)
                 radius: 10
             }
             Rectangle {
