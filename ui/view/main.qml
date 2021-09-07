@@ -209,7 +209,6 @@ Rectangle {
             y:  50
             anchors.horizontalCenter: parent.horizontalCenter
             source: Style.navigation_logo
-            smooth: true
         }
 
         ColumnLayout {

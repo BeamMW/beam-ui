@@ -43,7 +43,6 @@ BaseNotification {
                 sourceSize: Qt.size(30, 30)
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
-                smooth: true
                 visible: !!control.appicon && progress == 1.0
             }
         }
