@@ -1,6 +1,5 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.12
 
 Popup {
@@ -27,12 +26,6 @@ Popup {
                 color: defBkColor
                 radius: 10
             }
-        }
-        FastBlur {
-            anchors.fill:       back
-            source:             back
-            radius:             4
-            transparentBorder:  true
         }
     }
 }
