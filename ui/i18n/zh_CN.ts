@@ -1860,37 +1860,49 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="wallet-txs-status-in-progress-max">
         <source>in progress
-max privacy</source>
-        <translation>正在进行
+(maximum anonymity)</source>
+        <oldsource>in progress
+max privacy</oldsource>
+        <translation type="unfinished">正在进行
 最大隐私</translation>
     </message>
     <message id="wallet-txs-status-sent-max">
         <source>sent
-max privacy</source>
-        <translation>发送
+(maximum anonymity)</source>
+        <oldsource>sent
+max privacy</oldsource>
+        <translation type="unfinished">发送
 最大隐私</translation>
     </message>
     <message id="wallet-txs-status-received-max">
         <source>received
-max privacy</source>
-        <translation>接收
+(maximum anonymity)</source>
+        <oldsource>received
+max privacy</oldsource>
+        <translation type="unfinished">接收
 最大隐私</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
         <source>in progress
-offline</source>
-        <translation>正在进行
+(offline)</source>
+        <oldsource>in progress
+offline</oldsource>
+        <translation type="unfinished">正在进行
 离线中</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
         <source>sent
-offline</source>
-        <translation>离线发送</translation>
+(offline)</source>
+        <oldsource>sent
+offline</oldsource>
+        <translation type="unfinished">离线发送</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
         <source>received
-offline</source>
-        <translation>接收
+(offline)</source>
+        <oldsource>received
+offline</oldsource>
+        <translation type="unfinished">接收
 离线</translation>
     </message>
     <message id="tx-failure-out-of-slots">
@@ -2040,32 +2052,42 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress
-public offline</source>
-        <translation>正在进行
+(public offline)</source>
+        <oldsource>in progress
+public offline</oldsource>
+        <translation type="unfinished">正在进行
 公开脱机中</translation>
     </message>
     <message id="wallet-txs-status-sent-public-offline">
         <source>sent
-public offline</source>
-        <translation>发送
+(public offline)</source>
+        <oldsource>sent
+public offline</oldsource>
+        <translation type="unfinished">发送
 公共离线</translation>
     </message>
     <message id="wallet-txs-status-received-public-offline">
         <source>received
-public offline</source>
-        <translation>接收
+(public offline)</source>
+        <oldsource>received
+public offline</oldsource>
+        <translation type="unfinished">接收
 公共离线</translation>
     </message>
     <message id="wallet-txs-status-canceled-public-offline">
         <source>canceled
-public offline</source>
-        <translation>取消
+(public offline)</source>
+        <oldsource>canceled
+public offline</oldsource>
+        <translation type="unfinished">取消
 公共离线</translation>
     </message>
     <message id="wallet-txs-status-failed-public-offline">
         <source>failed
-public offline</source>
-        <translation>失败
+(public offline)</source>
+        <oldsource>failed
+public offline</oldsource>
+        <translation type="unfinished">失败
 公共离线</translation>
     </message>
     <message id="settings-node-progress">
@@ -2078,26 +2100,34 @@ public offline</source>
     </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
-max privacy</source>
-        <translation>取消
+(maximum anonymity)</source>
+        <oldsource>canceled
+max privacy</oldsource>
+        <translation type="unfinished">取消
 最大隐私</translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
         <source>canceled
-offline</source>
-        <translation>取消
+(offline)</source>
+        <oldsource>canceled
+offline</oldsource>
+        <translation type="unfinished">取消
 离线</translation>
     </message>
     <message id="wallet-txs-status-failed-max">
         <source>failed
-max privacy</source>
-        <translation>失败
+(maximum anonymity)</source>
+        <oldsource>failed
+max privacy</oldsource>
+        <translation type="unfinished">失败
 最大隐私</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
         <source>failed
-offline</source>
-        <translation>离线失败</translation>
+(offline)</source>
+        <oldsource>failed
+offline</oldsource>
+        <translation type="unfinished">离线失败</translation>
     </message>
     <message id="max-privacy-dialog-header">
         <source>Locked Max privacy coins</source>
@@ -3275,23 +3305,31 @@ cannot be canceled.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-to-own">
-        <source>sending max privacy
+        <source>sending (maximum anonymity)
 to own address</source>
+        <oldsource>sending max privacy
+to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-in-progress-offline-to-own">
-        <source>sending offline
+        <source>sending (offline)
 to own address</source>
+        <oldsource>sending offline
+to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-sent-max-to-own">
-        <source>sent max privacy
+        <source>sent (maximum anonymity)
 to own address</source>
+        <oldsource>sent max privacy
+to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-sent-offline-to-own">
-        <source>sent offline
+        <source>sent (offline)
 to own address</source>
+        <oldsource>sent offline
+to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-version-error">

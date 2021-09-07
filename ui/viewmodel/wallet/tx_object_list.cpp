@@ -79,30 +79,30 @@ QString getStatusTextTranslated(const QString& status, beam::wallet::TxAddressTy
     else if (status == "in progress max privacy")
     {
         /*% "in progress
-max privacy" */
+(maximum anonymity)" */
         return qtTrId("wallet-txs-status-in-progress-max");
     }
     else if (status == "sending max privacy to own address")
     {
-        /*% "sending max privacy
+        /*% "sending (maximum anonymity)
 to own address" */
         return qtTrId("wallet-txs-status-in-progress-max-to-own");
     }
     else if (status == "in progress offline")
     {
         /*% "in progress
-offline" */
+(offline)" */
         return qtTrId("wallet-txs-status-in-progress-max-offline");
     }
     else if (status == "in progress public offline")
     {
         /*% "in progress
-public offline" */
+(public offline)" */
         return qtTrId("wallet-txs-status-in-progress-public-offline");
     }
     else if (status == "sending offline to own address")
     {
-        /*% "sending offline
+        /*% "sending (offline)
 to own address" */
         return qtTrId("wallet-txs-status-in-progress-offline-to-own");
     }
@@ -110,30 +110,30 @@ to own address" */
     else if (status == "sent max privacy")
     {
         /*% "sent
-max privacy"*/
+(maximum anonymity)"*/
         return qtTrId("wallet-txs-status-sent-max");
     }
     else if (status == "sent offline")
     {
         /*% "sent
-offline" */
+(offline)" */
         return qtTrId("wallet-txs-status-sent-max-offline");
     }
     else if (status == "sent public offline")
     {
         /*% "sent
-public offline" */
+(public offline)" */
         return qtTrId("wallet-txs-status-sent-public-offline");
     }
     else if (status == "sent max privacy to own address")
     {
-        /*% "sent max privacy
+        /*% "sent (maximum anonymity)
 to own address" */
         return qtTrId("wallet-txs-status-sent-max-to-own");
     }
     else if (status == "sent offline to own address")
     {
-        /*% "sent offline
+        /*% "sent (offline)
 to own address" */
         return qtTrId("wallet-txs-status-sent-offline-to-own");
     }
@@ -141,57 +141,57 @@ to own address" */
     else if (status == "received max privacy")
     {
         /*% "received
-max privacy" */
+(maximum anonymity)" */
         return qtTrId("wallet-txs-status-received-max");
     }
     else if (status == "received offline")
     {
         /*% "received
-offline" */
+(offline)" */
         return qtTrId("wallet-txs-status-received-max-offline");
     }
     else if (status == "received public offline")
     {
         /*% "received
-public offline" */
+(public offline)" */
         return qtTrId("wallet-txs-status-received-public-offline");
     }
     // canceled
     else if (status == "canceled max privacy")
     {
         /*% "canceled
-max privacy" */
+(maximum anonymity)" */
         return qtTrId("wallet-txs-status-canceled-max");
     }
     else if (status == "canceled offline")
     {
         /*% "canceled
-offline" */
+(offline)" */
         return qtTrId("wallet-txs-status-canceled-max-offline");
     }
     else if (status == "canceled public offline")
     {
         /*% "canceled
-public offline" */
+(public offline)" */
         return qtTrId("wallet-txs-status-canceled-public-offline");
     }
     // failed
     else if (status == "failed max privacy")
     {
         /*% "failed
-max privacy" */
+(maximum anonymity)" */
         return qtTrId("wallet-txs-status-failed-max");
     }
     else if (status == "failed offline")
     {
         /*% "failed
-offline" */
+(offline)" */
         return qtTrId("wallet-txs-status-failed-max-offline");
     }
     else if (status == "failed public offline")
     {
         /*% "failed
-public offline" */
+(public offline)" */
         return qtTrId("wallet-txs-status-failed-public-offline");
     }
     else if (status == "completed")
