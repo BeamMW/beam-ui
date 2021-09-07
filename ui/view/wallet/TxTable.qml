@@ -135,7 +135,7 @@ Control {
             BeamGlobals.copyToClipboard(text);
         }
         onOpenExternal: function(kernelID) {
-            var url = tableViewModel.explorerUrl + "block?kernel_id=" + kernelID;
+            var url = BeamGlobals.getExplorerUrl() + "block?kernel_id=" + kernelID;
             Utils.openExternalWithConfirmation(url);
         };
     }

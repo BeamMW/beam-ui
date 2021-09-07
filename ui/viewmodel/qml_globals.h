@@ -72,6 +72,8 @@ public:
     Q_INVOKABLE static QString roundWithPrecision(const QString& number, uint precision);
     Q_INVOKABLE static QString rawTxIdToStr(const QVariant& txId);
 
+    Q_INVOKABLE static QString getExplorerUrl();
+
 private:
     QQmlEngine& _engine;
 };

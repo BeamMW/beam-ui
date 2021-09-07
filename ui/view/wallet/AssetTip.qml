@@ -4,10 +4,11 @@ import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 import Beam.Wallet 1.0
 import "../controls"
+import "../utils.js" as Utils
 
 AlphaTipPopup {
     id:           assetTip
-    defBkColor:   Qt.rgba(55 / 255, 93  / 255, 123 / 255, 0.75)
+    defBkColor:   Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.05)
     defTextColor: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.8)
     parent:       Overlay.overlay
     visible:      false
@@ -551,6 +552,17 @@ AlphaTipPopup {
 
                     Layout.rightMargin:        14
                     visible:                   !!longText
+                }
+
+                Item {
+                    height: 16
+                }
+                OpenInBlockchainExplorer {
+                    Layout.rightMargin: 14
+                    onTriggered: function() {
+                        var url = BeamGlobals.getExplorerUrl() + "assets/details/" + assetInfo.id;
+                        Utils.openExternalWithConfirmation(url);
+                    }
                 }
             }
         }

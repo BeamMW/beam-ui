@@ -14,6 +14,7 @@ ColumnLayout {
 
     property string   errorMessage: ""
     property var      appsList: undefined
+    property var      unsupportedCnt: 0
     property var      activeApp: undefined
     property var      appToOpen: undefined
     property string   openedTxID: ""
@@ -342,12 +343,22 @@ ColumnLayout {
 
     ColumnLayout {
         id: appsView
-        Layout.topMargin:  50
+        Layout.topMargin:  50 - (unsupportedCnt ? errCntMessage.height + spacing : 0)
         Layout.fillHeight: true
         Layout.fillWidth:  true
         Layout.bottomMargin: 10
         visible: control.hasApps && !control.activeApp
-        spacing: 20
+        spacing: 10
+
+        SFText {
+            id: errCntMessage
+            Layout.alignment: Qt.AlignRight
+            color: Style.validator_error
+            visible: unsupportedCnt > 0
+            font.italic: true
+            //% "%n DApp(s) is not available"
+            text: qsTrId("apps-err-cnt", unsupportedCnt)
+        }
 
         // Actuall apps list
         ScrollView {
@@ -365,9 +376,11 @@ ColumnLayout {
 
                 Repeater {
                     model: control.appsList
+
                     delegate: Item {
                         Layout.fillWidth: true
                         Layout.preferredHeight: 100
+                        property var supported: appSupported(modelData)
 
                         Rectangle {
                             anchors.fill: parent
@@ -425,6 +438,16 @@ ColumnLayout {
                                     font.pixelSize:  14
                                     elide: Text.ElideRight
                                     color: Style.content_main
+                                    visible: supported
+                                }
+
+                                SFText {
+                                    elide: Text.ElideRight
+                                    color: Style.validator_error
+                                    visible: !supported
+                                    font.italic: true
+                                    //% "This DApp requires version %1 of Beam Wallet or higher. Please update."
+                                    text: qsTrId("apps-version-error").arg(modelData.min_api_version || modelData.api_version)
                                 }
                             }
 
@@ -433,14 +456,13 @@ ColumnLayout {
                             }
 
                             CustomButton {
-                                id: launchBtn
                                 Layout.rightMargin: 20
                                 height: 40
                                 palette.button: Style.background_second
                                 palette.buttonText : Style.content_main
                                 icon.source: "qrc:/assets/icon-run.svg"
                                 icon.height: 16
-                                visible: appSupported(model)
+                                visible: supported
                                 //% "launch"
                                 text: qsTrId("apps-run")
 
@@ -452,14 +474,6 @@ ColumnLayout {
                                     preventStealing:  true
                                     onClicked:        launchApp(modelData)
                                 }
-                            }
-
-                            SFText {
-                                Layout.rightMargin: 25
-                                //% "Update Beam Wallet to launch"
-                                text: qsTrId("apps-update-wallet")
-                                color: Style.validator_error
-                                visible: !launchBtn.visible
                             }
                         }
 
@@ -585,6 +599,8 @@ ColumnLayout {
                     {
                         var list = JSON.parse(xhr.responseText)
                         control.appsList = appendLocalApps(list)
+                        updateErrCnt()
+
                         if (control.appToOpen) {
                             for (let app of control.appsList)
                             {
@@ -603,6 +619,8 @@ ColumnLayout {
                     else
                     {
                         control.appsList = []
+                        updateErrCnt()
+
                         var errMsg = errTemplate.arg(["code", xhr.status].join(" "))
                         control.errorMessage = errMsg
                     }
@@ -613,6 +631,14 @@ ColumnLayout {
         }
 
         control.appsList = appendLocalApps(undefined)
+        updateErrCnt()
+    }
+
+    function updateErrCnt () {
+        unsupportedCnt = 0
+        for (let app of appsList) {
+            if (!appSupported(app)) ++unsupportedCnt
+        }
     }
 
     SettingsViewModel {

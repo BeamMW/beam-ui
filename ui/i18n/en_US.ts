@@ -3053,10 +3053,6 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <source>Allow to launch DApps</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="apps-update-wallet">
-        <source>Update Beam Wallet to launch</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
         <translation>Transaction info</translation>
@@ -3283,6 +3279,17 @@ to own address</translation>
 to own address</source>
         <translation>sent offline
 to own address</translation>
+    </message>
+    <message id="apps-version-error">
+        <source>This DApp requires version %1 of Beam Wallet or higher. Please update.</source>
+        <translation>This DApp requires version %1 of Beam Wallet or higher. Please update.</translation>
+    </message>
+    <message id="apps-err-cnt" numerus="yes">
+        <source>%n DApp(s) is not available</source>
+        <translation>
+            <numerusform>%n DApp is not available</numerusform>
+            <numerusform>%n DApps are not available</numerusform>
+        </translation>
     </message>
 </context>
 </TS>

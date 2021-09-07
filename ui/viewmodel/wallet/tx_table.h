@@ -24,7 +24,6 @@ class TxTableViewModel: public QObject {
     Q_OBJECT
     Q_PROPERTY(QAbstractItemModel*  transactions READ   getTransactions     NOTIFY transactionsChanged)
     Q_PROPERTY(QString rateUnit     READ getRateUnit    NOTIFY rateChanged)
-    Q_PROPERTY(QString explorerUrl  READ getExplorerUrl CONSTANT)
 
 public:
     TxTableViewModel();
@@ -33,7 +32,6 @@ public:
     QAbstractItemModel* getTransactions();
     QString getRateUnit() const;
     QString getRate() const;
-    QString getExplorerUrl() const;
 
     Q_INVOKABLE void exportTxHistoryToCsv();
     Q_INVOKABLE void cancelTx(const QVariant& variantTxID);
