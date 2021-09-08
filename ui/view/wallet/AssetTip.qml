@@ -8,7 +8,7 @@ import "../utils.js" as Utils
 
 AlphaTipPopup {
     id:           assetTip
-    defBkColor:   Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.05)
+    defBkColor:   Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.2)
     defTextColor: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.8)
     parent:       Overlay.overlay
     visible:      false

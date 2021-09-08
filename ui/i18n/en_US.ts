@@ -1846,39 +1846,39 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max">
         <source>in progress
-max privacy</source>
+(maximum anonymity)</source>
         <translation>in progress
-max privacy</translation>
+(maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-sent-max">
         <source>sent
-max privacy</source>
+(maximum anonymity)</source>
         <translation>sent
-max privacy</translation>
+(maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-received-max">
         <source>received
-max privacy</source>
+(maximum anonymity)</source>
         <translation>received
-max privacy</translation>
+(maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
         <source>in progress
-offline</source>
+(offline)</source>
         <translation>in progress
-offline</translation>
+(offline)</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
         <source>sent
-offline</source>
+(offline)</source>
         <translation>sent
-offline</translation>
+(offline)</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
         <source>received
-offline</source>
+(offline)</source>
         <translation>received
-offline</translation>
+(offline)</translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
@@ -2028,33 +2028,33 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress
-public offline</source>
+(public offline)</source>
         <translation>in progress
-public offline</translation>
+(public offline)</translation>
     </message>
     <message id="wallet-txs-status-sent-public-offline">
         <source>sent
-public offline</source>
+(public offline)</source>
         <translation>sent
-public offline</translation>
+(public offline)</translation>
     </message>
     <message id="wallet-txs-status-received-public-offline">
         <source>received
-public offline</source>
+(public offline)</source>
         <translation>received
-public offline</translation>
+(public offline)</translation>
     </message>
     <message id="wallet-txs-status-canceled-public-offline">
         <source>canceled
-public offline</source>
+(public offline)</source>
         <translation>canceled
-public offline</translation>
+(public offline)</translation>
     </message>
     <message id="wallet-txs-status-failed-public-offline">
         <source>failed
-public offline</source>
+(public offline)</source>
         <translation>failed
-public offline</translation>
+(public offline)</translation>
     </message>
     <message id="settings-node-progress">
         <source>Swap in progress, cannot disconnect or switch connection type.</source>
@@ -2066,27 +2066,27 @@ public offline</translation>
     </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
-max privacy</source>
+(maximum anonymity)</source>
         <translation>canceled
-max privacy</translation>
+(maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
         <source>canceled
-offline</source>
+(offline)</source>
         <translation>canceled
-offline</translation>
+(offline)</translation>
     </message>
     <message id="wallet-txs-status-failed-max">
         <source>failed
-max privacy</source>
+(maximum anonymity)</source>
         <translation>failed
-max privacy</translation>
+(maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
         <source>failed
-offline</source>
+(offline)</source>
         <translation>failed
-offline</translation>
+(offline)</translation>
     </message>
     <message id="max-privacy-dialog-header">
         <source>Locked Max privacy coins</source>
@@ -3257,27 +3257,27 @@ cannot be canceled.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-to-own">
-        <source>sending max privacy
+        <source>sending (maximum anonymity)
 to own address</source>
-        <translation>sending max privacy
+        <translation>sending (maximum anonymity)
 to own address</translation>
     </message>
     <message id="wallet-txs-status-in-progress-offline-to-own">
-        <source>sending offline
+        <source>sending (offline)
 to own address</source>
-        <translation>sending offline
+        <translation>sending (offline)
 to own address</translation>
     </message>
     <message id="wallet-txs-status-sent-max-to-own">
-        <source>sent max privacy
+        <source>sent (maximum anonymity)
 to own address</source>
-        <translation>sent max privacy
+        <translation>sent (maximum anonymity)
 to own address</translation>
     </message>
     <message id="wallet-txs-status-sent-offline-to-own">
-        <source>sent offline
+        <source>sent (offline)
 to own address</source>
-        <translation>sent offline
+        <translation>sent (offline)
 to own address</translation>
     </message>
     <message id="apps-version-error">

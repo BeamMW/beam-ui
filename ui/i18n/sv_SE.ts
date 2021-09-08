@@ -1843,38 +1843,50 @@ Din version är: %2. Sök efter uppdateringar.</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max">
         <source>in progress
-max privacy</source>
-        <translation>pågår
+(maximum anonymity)</source>
+        <oldsource>in progress
+max privacy</oldsource>
+        <translation type="unfinished">pågår
 max sekretess</translation>
     </message>
     <message id="wallet-txs-status-sent-max">
         <source>sent
-max privacy</source>
-        <translation>skickade
+(maximum anonymity)</source>
+        <oldsource>sent
+max privacy</oldsource>
+        <translation type="unfinished">skickade
 max sekretess</translation>
     </message>
     <message id="wallet-txs-status-received-max">
         <source>received
-max privacy</source>
-        <translation>mottagen
+(maximum anonymity)</source>
+        <oldsource>received
+max privacy</oldsource>
+        <translation type="unfinished">mottagen
 max sekretess</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
         <source>in progress
-offline</source>
-        <translation>pågår
+(offline)</source>
+        <oldsource>in progress
+offline</oldsource>
+        <translation type="unfinished">pågår
 offline</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
         <source>sent
-offline</source>
-        <translation>skickades
+(offline)</source>
+        <oldsource>sent
+offline</oldsource>
+        <translation type="unfinished">skickades
 offline</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
         <source>received
-offline</source>
-        <translation>mottagen
+(offline)</source>
+        <oldsource>received
+offline</oldsource>
+        <translation type="unfinished">mottagen
 offline</translation>
     </message>
     <message id="tx-failure-out-of-slots">
@@ -2025,32 +2037,42 @@ Din version är: %2. Sök efter uppdateringar.</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress
-public offline</source>
-        <translation>pågår
+(public offline)</source>
+        <oldsource>in progress
+public offline</oldsource>
+        <translation type="unfinished">pågår
 publik offline</translation>
     </message>
     <message id="wallet-txs-status-sent-public-offline">
         <source>sent
-public offline</source>
-        <translation>skickade
+(public offline)</source>
+        <oldsource>sent
+public offline</oldsource>
+        <translation type="unfinished">skickade
 publik offline</translation>
     </message>
     <message id="wallet-txs-status-received-public-offline">
         <source>received
-public offline</source>
-        <translation>mottagen
+(public offline)</source>
+        <oldsource>received
+public offline</oldsource>
+        <translation type="unfinished">mottagen
 publik offline</translation>
     </message>
     <message id="wallet-txs-status-canceled-public-offline">
         <source>canceled
-public offline</source>
-        <translation>avbruten
+(public offline)</source>
+        <oldsource>canceled
+public offline</oldsource>
+        <translation type="unfinished">avbruten
 publik offline</translation>
     </message>
     <message id="wallet-txs-status-failed-public-offline">
         <source>failed
-public offline</source>
-        <translation>misslyckades
+(public offline)</source>
+        <oldsource>failed
+public offline</oldsource>
+        <translation type="unfinished">misslyckades
 publik offline</translation>
     </message>
     <message id="settings-node-progress">
@@ -2063,26 +2085,34 @@ publik offline</translation>
     </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
-max privacy</source>
-        <translation>avbruten
+(maximum anonymity)</source>
+        <oldsource>canceled
+max privacy</oldsource>
+        <translation type="unfinished">avbruten
 max sekretess</translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
         <source>canceled
-offline</source>
-        <translation>avbruten
+(offline)</source>
+        <oldsource>canceled
+offline</oldsource>
+        <translation type="unfinished">avbruten
 offline</translation>
     </message>
     <message id="wallet-txs-status-failed-max">
         <source>failed
-max privacy</source>
-        <translation>misslyckades
+(maximum anonymity)</source>
+        <oldsource>failed
+max privacy</oldsource>
+        <translation type="unfinished">misslyckades
 max sekretess</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
         <source>failed
-offline</source>
-        <translation>misslyckades
+(offline)</source>
+        <oldsource>failed
+offline</oldsource>
+        <translation type="unfinished">misslyckades
 offline</translation>
     </message>
     <message id="max-privacy-dialog-header">
@@ -3261,23 +3291,31 @@ cannot be canceled.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-to-own">
-        <source>sending max privacy
+        <source>sending (maximum anonymity)
 to own address</source>
+        <oldsource>sending max privacy
+to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-in-progress-offline-to-own">
-        <source>sending offline
+        <source>sending (offline)
 to own address</source>
+        <oldsource>sending offline
+to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-sent-max-to-own">
-        <source>sent max privacy
+        <source>sent (maximum anonymity)
 to own address</source>
+        <oldsource>sent max privacy
+to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-sent-offline-to-own">
-        <source>sent offline
+        <source>sent (offline)
 to own address</source>
+        <oldsource>sent offline
+to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-version-error">

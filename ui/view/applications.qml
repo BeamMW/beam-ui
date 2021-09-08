@@ -414,7 +414,6 @@ ColumnLayout {
                                     sourceSize: Qt.size(30, 30)
                                     anchors.verticalCenter: parent.verticalCenter
                                     anchors.horizontalCenter: parent.horizontalCenter
-                                    smooth: true
                                     visible: !!modelData.icon && progress == 1.0
                                 }
                             }
