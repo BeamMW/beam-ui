@@ -1869,26 +1869,23 @@ max privacy</oldsource>
 макс. приватность</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
-        <source>in progress
-(offline)</source>
+        <source>in progress (offline)</source>
         <oldsource>in progress
-offline</oldsource>
+(offline)</oldsource>
         <translation type="unfinished">в процессе
 оффлайн</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
-        <source>sent
-(offline)</source>
+        <source>sent (offline)</source>
         <oldsource>sent
-offline</oldsource>
+(offline)</oldsource>
         <translation type="unfinished">отправлено
 оффлайн</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
-        <source>received
-(offline)</source>
+        <source>received (offline)</source>
         <oldsource>received
-offline</oldsource>
+(offline)</oldsource>
         <translation type="unfinished">получено
 оффлайн</translation>
     </message>
@@ -2096,10 +2093,9 @@ max privacy</oldsource>
 </translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
-        <source>canceled
-(offline)</source>
+        <source>canceled (offline)</source>
         <oldsource>canceled
-offline</oldsource>
+(offline)</oldsource>
         <translation type="unfinished">отменено
 оффлайн</translation>
     </message>
@@ -2112,10 +2108,9 @@ max privacy</oldsource>
 макс. приватность</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
-        <source>failed
-(offline)</source>
+        <source>failed (offline)</source>
         <oldsource>failed
-offline</oldsource>
+(offline)</oldsource>
         <translation type="unfinished">ошибка
 оффлайн</translation>
     </message>
