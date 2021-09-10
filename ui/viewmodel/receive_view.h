@@ -80,6 +80,7 @@ private:
     bool            _maxp    = false;
 
     boost::optional<beam::wallet::WalletAddress> _receiverAddress;
+    QString                     _tmpTokenStr;
     WalletModel&                _walletModel;
     ExchangeRatesManager        _exchangeRatesManager;
     AssetsManager::Ptr          _amgr;
