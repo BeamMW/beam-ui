@@ -420,7 +420,9 @@ void AppModel::startWallet()
     };
 
 #ifdef BEAM_LELANTUS_SUPPORT
-    additionalTxCreators->emplace(TxType::PushTransaction, std::make_shared<lelantus::PushTransaction::Creator>(m_db));
+    additionalTxCreators->emplace(
+        TxType::PushTransaction,
+        std::make_shared<lelantus::PushTransaction::Creator>([this]() {return m_db;}));
 #endif
 
     //additionalTxCreators->emplace(TxType::DexSimpleSwap, std::make_shared<DexTransaction::Creator>(m_db));
