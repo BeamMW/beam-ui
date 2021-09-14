@@ -1870,26 +1870,23 @@ max privacy</oldsource>
 privacidad máxima</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
-        <source>in progress
-(offline)</source>
+        <source>in progress (offline)</source>
         <oldsource>in progress
-offline</oldsource>
+(offline)</oldsource>
         <translation type="unfinished">en curso
 fuera de línea</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
-        <source>sent
-(offline)</source>
+        <source>sent (offline)</source>
         <oldsource>sent
-offline</oldsource>
+(offline)</oldsource>
         <translation type="unfinished">enviado
 fuera de línea</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
-        <source>received
-(offline)</source>
+        <source>received (offline)</source>
         <oldsource>received
-offline</oldsource>
+(offline)</oldsource>
         <translation type="unfinished">recibido
 fuera de línea</translation>
     </message>
@@ -2096,10 +2093,9 @@ max privacy</oldsource>
 privacidad máxima</translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
-        <source>canceled
-(offline)</source>
+        <source>canceled (offline)</source>
         <oldsource>canceled
-offline</oldsource>
+(offline)</oldsource>
         <translation type="unfinished">cancelado 
 fuera de línea</translation>
     </message>
@@ -2112,10 +2108,9 @@ max privacy</oldsource>
 privacidad máxima</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
-        <source>failed
-(offline)</source>
+        <source>failed (offline)</source>
         <oldsource>failed
-offline</oldsource>
+(offline)</oldsource>
         <translation type="unfinished">fallido
 fuera de línea</translation>
     </message>
@@ -3295,30 +3290,30 @@ cannot be canceled.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-to-own">
-        <source>sending (maximum anonymity)
-to own address</source>
-        <oldsource>sending max privacy
+        <source>sending to own address
+(maximum anonymity)</source>
+        <oldsource>sending (maximum anonymity)
 to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-in-progress-offline-to-own">
-        <source>sending (offline)
-to own address</source>
-        <oldsource>sending offline
+        <source>sending to own address
+(offline)</source>
+        <oldsource>sending (offline)
 to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-sent-max-to-own">
-        <source>sent (maximum anonymity)
-to own address</source>
-        <oldsource>sent max privacy
+        <source>sent to own address
+(maximum anonymity)</source>
+        <oldsource>sent (maximum anonymity)
 to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-sent-offline-to-own">
-        <source>sent (offline)
-to own address</source>
-        <oldsource>sent offline
+        <source>sent to own address
+(offline)</source>
+        <oldsource>sent (offline)
 to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
@@ -3332,6 +3327,12 @@ to own address</oldsource>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message id="wallet-txs-status-waiting-receiver-offline">
+        <source>waiting for receiver
+(offline)</source>
+        <oldsource>waiting for receiver (offline)</oldsource>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

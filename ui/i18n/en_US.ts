@@ -1863,22 +1863,16 @@ Your version is: %2. Please, check for updates.</translation>
 (maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
-        <source>in progress
-(offline)</source>
-        <translation>in progress
-(offline)</translation>
+        <source>in progress (offline)</source>
+        <translation>in progress (offline)</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
-        <source>sent
-(offline)</source>
-        <translation>sent
-(offline)</translation>
+        <source>sent (offline)</source>
+        <translation>sent (offline)</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
-        <source>received
-(offline)</source>
-        <translation>received
-(offline)</translation>
+        <source>received (offline)</source>
+        <translation>received (offline)</translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
@@ -2071,10 +2065,8 @@ Your version is: %2. Please, check for updates.</translation>
 (maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
-        <source>canceled
-(offline)</source>
-        <translation>canceled
-(offline)</translation>
+        <source>canceled (offline)</source>
+        <translation>canceled (offline)</translation>
     </message>
     <message id="wallet-txs-status-failed-max">
         <source>failed
@@ -2083,10 +2075,8 @@ Your version is: %2. Please, check for updates.</translation>
 (maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
-        <source>failed
-(offline)</source>
-        <translation>failed
-(offline)</translation>
+        <source>failed (offline)</source>
+        <translation>failed (offline)</translation>
     </message>
     <message id="max-privacy-dialog-header">
         <source>Locked Max privacy coins</source>
@@ -3257,28 +3247,28 @@ cannot be canceled.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-to-own">
-        <source>sending (maximum anonymity)
-to own address</source>
-        <translation>sending (maximum anonymity)
-to own address</translation>
+        <source>sending to own address
+(maximum anonymity)</source>
+        <translation>sending to own address
+(maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-in-progress-offline-to-own">
-        <source>sending (offline)
-to own address</source>
-        <translation>sending (offline)
-to own address</translation>
+        <source>sending to own address
+(offline)</source>
+        <translation>sending to own address
+(offline)</translation>
     </message>
     <message id="wallet-txs-status-sent-max-to-own">
-        <source>sent (maximum anonymity)
-to own address</source>
-        <translation>sent (maximum anonymity)
-to own address</translation>
+        <source>sent to own address
+(maximum anonymity)</source>
+        <translation>sent to own address
+(maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-sent-offline-to-own">
-        <source>sent (offline)
-to own address</source>
-        <translation>sent (offline)
-to own address</translation>
+        <source>sent to own address
+(offline)</source>
+        <translation>sent to own address
+(offline)</translation>
     </message>
     <message id="apps-version-error">
         <source>This DApp requires version %1 of Beam Wallet or higher. Please update.</source>
@@ -3290,6 +3280,12 @@ to own address</translation>
             <numerusform>%n DApp is not available</numerusform>
             <numerusform>%n DApps are not available</numerusform>
         </translation>
+    </message>
+    <message id="wallet-txs-status-waiting-receiver-offline">
+        <source>waiting for receiver
+(offline)</source>
+        <translation>waiting for receiver
+(offline)</translation>
     </message>
 </context>
 </TS>

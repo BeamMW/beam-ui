@@ -498,7 +498,7 @@ Control {
                 //% "Amount"
                 title:     qsTrId("general-amount")
                 elideMode: Text.ElideRight
-                width:     130 * transactionsTable.columnResizeRatio
+                width:     115 * transactionsTable.columnResizeRatio
                 movable:   false
                 resizable: false
 
@@ -536,7 +536,7 @@ Control {
                             qsTrId("general-value")].join(' ')
 
                 elideMode: Text.ElideRight
-                width:     130 * transactionsTable.columnResizeRatio
+                width:     115 * transactionsTable.columnResizeRatio
                 movable:   false
                 resizable: false
                 visible:   !control.isContracts
@@ -570,7 +570,7 @@ Control {
                 //% "Source"
                 title:      qsTrId("wallet-txs-source")
                 elideMode:  Text.ElideRight
-                width:      140 * transactionsTable.columnResizeRatio
+                width:      130 * transactionsTable.columnResizeRatio
                 movable:    false
                 resizable:  false
                 visible:    sourceVisible
@@ -583,7 +583,7 @@ Control {
                 //% "Created on"
                 title:      qsTrId("wallet-txs-date-time")
                 elideMode:  Text.ElideRight
-                width:      110 * transactionsTable.columnResizeRatio
+                width:      105 * transactionsTable.columnResizeRatio
                 movable:    false
                 resizable:  false
             }
@@ -629,9 +629,9 @@ Control {
                                         }
                                         return model.isIncome
                                             ? !model.isShieldedTx ? "qrc:/assets/icon-receiving.svg" :
-                                                    model.isOfflineToken ? "qrc:/assets/icon-receiving-max-offline.svg" : "qrc:/assets/icon-receiving-max-online.svg"
+                                                    model.isOfflineToken || model.isPublicOffline ? "qrc:/assets/icon-receiving-offline.svg" : "qrc:/assets/icon-receiving-max-online.svg"
                                             : !model.isShieldedTx ? "qrc:/assets/icon-sending.svg" :
-                                                    model.isOfflineToken ? "qrc:/assets/icon-sending-max-offline.svg" : "qrc:/assets/icon-sending-max-online.svg";
+                                                    model.isOfflineToken || model.isPublicOffline ? "qrc:/assets/icon-sending-offline.svg" : "qrc:/assets/icon-sending-max-online.svg";
                                     }
                                     else if (model.isCompleted) {
                                         if (model.isSelfTransaction) {
@@ -643,9 +643,9 @@ Control {
                                         }
                                         return model.isIncome
                                             ? !model.isShieldedTx ? "qrc:/assets/icon-received.svg" :
-                                                    model.isOfflineToken ? "qrc:/assets/icon-received-max-offline.svg" : "qrc:/assets/icon-received-max-online.svg"
+                                                    model.isOfflineToken || model.isPublicOffline ? "qrc:/assets/icon-received-offline.svg" : "qrc:/assets/icon-received-max-online.svg"
                                             : !model.isShieldedTx ? "qrc:/assets/icon-sent.svg" :
-                                                    model.isOfflineToken ? "qrc:/assets/icon-sent-max-offline.svg" : "qrc:/assets/icon-sent-max-online.svg";
+                                                    model.isOfflineToken || model.isPublicOffline ? "qrc:/assets/icon-sent-offline.svg" : "qrc:/assets/icon-sent-max-online.svg";
                                     }
                                     else if (model.isExpired) {
                                         return "qrc:/assets/icon-expired.svg"
@@ -654,13 +654,13 @@ Control {
                                         return model.isIncome
                                             ? "qrc:/assets/icon-receive-failed.svg"
                                             : !model.isShieldedTx ? "qrc:/assets/icon-send-failed.svg" :
-                                                    model.isOfflineToken ? "qrc:/assets/icon-failed-max-offline.svg" : "qrc:/assets/icon-failed-max-online.svg";
+                                                    model.isOfflineToken ? "qrc:/assets/icon-send-failed-offline.svg" : "qrc:/assets/icon-failed-max-online.svg";
                                     }
                                     else {
                                         return model.isIncome
                                             ? "qrc:/assets/icon-receive-canceled.svg"
                                             : !model.isShieldedTx ? "qrc:/assets/icon-send-canceled.svg" :
-                                                    model.isOfflineToken ? "qrc:/assets/icon-canceled-max-offline.svg" : "qrc:/assets/icon-canceled-max-online.svg";
+                                                    model.isOfflineToken ? "qrc:/assets/icon-canceled-offline.svg" : "qrc:/assets/icon-canceled-max-online.svg";
                                     }
                                 }
                             }
