@@ -45,7 +45,6 @@ void ReceiveViewModel::updateToken()
                 if (!v.empty())
                 {
                     _receiverAddress->m_Address = GenerateMaxPrivacyToken(*_receiverAddress, _amount, _assetId, v[0], AppModel::getMyVersion());
-                    _tmpTokenStr.clear();
                     emit tokenChanged();
                 }
             });
@@ -57,16 +56,6 @@ void ReceiveViewModel::updateToken()
                 if (!guard) return;
                 if (!v.empty())
                 {
-                    _tmpTokenStr.clear();
-                    if(auto params = ParseParameters(_receiverAddress->m_Address); params)
-                    {
-                        if (auto vouchers = params->GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList);
-                            vouchers && !vouchers->empty())
-                        {
-                            emit tokenChanged();
-                            return;
-                        }
-                    }
                     _receiverAddress->m_Address = GenerateOfflineToken(*_receiverAddress, _amount, _assetId, v, AppModel::getMyVersion());
                     emit tokenChanged();
                 }
@@ -120,8 +109,10 @@ void ReceiveViewModel::setToken(const QString& token)
         return;
     }
 
-    _tmpTokenStr = token;
-     QPointer<ReceiveViewModel> guard = this;
+    _originalToken = token;
+    emit tokenChanged();
+
+    QPointer<ReceiveViewModel> guard = this;
     _walletModel.getAsync()->getAddressByToken(token.toStdString(),
         [guard, this, token](const boost::optional<beam::wallet::WalletAddress>& address, size_t offlineCount) {
             if (!guard) return;
@@ -160,7 +151,7 @@ void ReceiveViewModel::setToken(const QString& token)
 
 QString ReceiveViewModel::getToken() const
 {
-    return _receiverAddress ? QString::fromStdString(_receiverAddress->m_Address) : _tmpTokenStr;
+    return _receiverAddress ? QString::fromStdString(_receiverAddress->m_Address) : _originalToken;
 }
 
 QString ReceiveViewModel::getSbbsAddress() const

@@ -60,9 +60,7 @@ private:
 
     void setToken(const QString& value);
     [[nodiscard]] QString getToken() const;
-
     [[nodiscard]] QString getSbbsAddress() const;
-
     [[nodiscard]] bool getCommentValid() const;
 
     void setIsMaxPrivacy(bool value);
@@ -80,8 +78,8 @@ private:
     bool            _maxp    = false;
 
     boost::optional<beam::wallet::WalletAddress> _receiverAddress;
-    QString                     _tmpTokenStr;
-    WalletModel&                _walletModel;
-    ExchangeRatesManager        _exchangeRatesManager;
-    AssetsManager::Ptr          _amgr;
+    QString               _originalToken;
+    WalletModel&          _walletModel;
+    ExchangeRatesManager  _exchangeRatesManager;
+    AssetsManager::Ptr    _amgr;
 };
