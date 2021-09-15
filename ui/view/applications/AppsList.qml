@@ -6,11 +6,25 @@ import "../controls"
 
 ColumnLayout {
     id: control
-    property var appsList
-    spacing: 10
+    property var  appsList
+    property bool hasLocal
 
-    signal launch (var app)
-    signal install ()
+    onAppsListChanged: function() {
+        if (appsList) {
+            for (let idx = 0; idx < 2; ++idx) {
+                if (appsList[idx].local) {
+                    hasLocal = true
+                    return
+                }
+            }
+        }
+        hasLocal = false
+    }
+
+    spacing: 10
+    signal launch(var app)
+    signal install()
+    signal uninstall(var app)
 
     // Actuall apps list
     ScrollView {
@@ -42,6 +56,7 @@ ColumnLayout {
 
                     RowLayout {
                         anchors.fill: parent
+                        spacing: 0
 
                         Rectangle {
                             Layout.leftMargin: 30
@@ -106,9 +121,9 @@ ColumnLayout {
                         }
 
                         CustomButton {
-                            Layout.rightMargin: 20
+                            Layout.rightMargin: control.hasLocal ? 0 : 20
                             height: 40
-                            palette.button: Style.background_second
+                            palette.button: Style.background_button
                             palette.buttonText : Style.content_main
                             icon.source: "qrc:/assets/icon-run.svg"
                             icon.height: 16
@@ -125,12 +140,69 @@ ColumnLayout {
                                 onClicked:        control.launch(modelData)
                             }
                         }
+
+                        CustomToolButton {
+                            Layout.fillHeight: true
+                            Layout.rightMargin: 10
+                            width: 36
+
+                            opacity: modelData.local ? 0.5 : 0
+                            icon.source: "qrc:/assets/icon-actions.svg"
+                            visible: control.hasLocal && (modelData.supported || !!modelData.local)
+
+                            //% "Actions"
+                            ToolTip.text: qsTrId("general-actions")
+                            MouseArea {
+                                anchors.fill:     parent
+                                acceptedButtons:  Qt.LeftButton
+                                hoverEnabled:     true
+                                propagateComposedEvents: true
+                                preventStealing:  true
+                                onClicked: function () {
+                                    if (modelData.local) {
+                                        appMenu.popup()
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    ContextMenu {
+                        id:    appMenu
+                        modal: true
+                        dim:   false
+
+                        Action {
+                            //% "Uninstall"
+                            text: qsTrId("apps-uninstall")
+                            icon.source: "qrc:/assets/icon-delete.svg"
+                            onTriggered: function () {
+                                confirmUninstall.open()
+                            }
+                        }
+                    }
+
+                    ConfirmationDialog {
+                        id: confirmUninstall
+                        width: 460
+                        //% "Uninstall DApp"
+                        title: qsTrId("app-uninstall-title")
+                        //% "Are you sure you want to uninstall %1 DApp?"
+                        text: qsTrId("apps-uninstall-confirm").arg(modelData.name)
+                        //% "Uninstall"
+                        okButtonText: qsTrId("apps-uninstall")
+                        okButtonIconSource: "qrc:/assets/icon-delete.svg"
+                        okButtonColor: Style.accent_fail
+                        cancelButtonIconSource: "qrc:/assets/icon-cancel.svg"
+
+                        onAccepted: function () {
+                            control.uninstall(modelData)
+                        }
                     }
 
                     MouseArea {
                         id:               hoverArea
                         anchors.fill:     parent
-                        // acceptedButtons:  Qt.LeftButton
                         hoverEnabled:     true
                         propagateComposedEvents: true
                         preventStealing: true

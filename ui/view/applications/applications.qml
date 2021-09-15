@@ -402,6 +402,11 @@ ColumnLayout {
                 loadAppsList()
             }
         }
+
+        onUninstall: function (app) {
+            BeamGlobals.showMessage("id = " + modelData.id)
+            viewModel.uninstallLocalApp(app.id)
+        }
     }
 
     FoldablePanel {
