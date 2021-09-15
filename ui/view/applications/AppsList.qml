@@ -9,8 +9,8 @@ ColumnLayout {
     property var appsList
     spacing: 10
 
-    signal launchApp (var app)
-    signal installApp ()
+    signal launch (var app)
+    signal install ()
 
     // Actuall apps list
     ScrollView {
@@ -122,7 +122,7 @@ ColumnLayout {
                                 hoverEnabled:     true
                                 propagateComposedEvents: true
                                 preventStealing:  true
-                                onClicked:        control.launchApp(modelData)
+                                onClicked:        control.launch(modelData)
                             }
                         }
                     }
@@ -197,7 +197,7 @@ ColumnLayout {
                     acceptedButtons:  Qt.LeftButton
                     hoverEnabled:     true
                     cursorShape:      Qt.PointingHandCursor
-                    onClicked:        control.installApp()
+                    onClicked:        control.install()
                 }
             }
         }

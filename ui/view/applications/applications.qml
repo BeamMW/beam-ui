@@ -101,7 +101,6 @@ ColumnLayout {
 
         onApiCreated: function (api) {
             control.errorMessage = ""
-            webLayout.visible = false
 
             webView.profile.cachePath = viewModel.getAppCachePath(control.activeApp["appid"])
             webView.profile.persistentStoragePath = viewModel.getAppStoragePath(control.activeApp["appid"])
@@ -393,6 +392,16 @@ ColumnLayout {
         Layout.bottomMargin: 10
         visible: control.hasApps && !control.activeApp
         appsList: control.appsList
+
+        onLaunch: function (app) {
+            launchApp(app)
+        }
+
+        onInstall: function () {
+            if (viewModel.installFromFile()) {
+                loadAppsList()
+            }
+        }
     }
 
     FoldablePanel {
