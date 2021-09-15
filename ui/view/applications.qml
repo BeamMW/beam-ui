@@ -97,7 +97,7 @@ ColumnLayout {
     WebAPICreator {
         id: webapiCreator
 
-        onApiChanged: function () {
+        onApiCreated: function (api) {
             control.errorMessage = ""
             webLayout.visible = false
 
@@ -105,7 +105,7 @@ ColumnLayout {
             webView.profile.persistentStoragePath = viewModel.getAppStoragePath(control.activeApp["appid"])
             webView.url = control.activeApp.url
 
-            webapiCreator.api.callWalletApiResult.connect(function (result) {
+            api.callWalletApiResult.connect(function (result) {
                 webapiBEAM.api.callWalletApiResult(result)
                 try
                 {
@@ -119,10 +119,10 @@ ColumnLayout {
             })
 
             webapiBEAM.api.callWalletApiCall.connect(function (request){
-                webapiCreator.api.callWalletApi(request)
+                api.callWalletApi(request)
             })
 
-            webapiCreator.api.approveSend.connect(function(request, info, amounts) {
+            api.approveSend.connect(function(request, info, amounts) {
                 info = JSON.parse(info)
                 amounts = JSON.parse(amounts)
                 var dialog = Qt.createComponent("send_confirm.qml")
@@ -139,23 +139,23 @@ ColumnLayout {
                         appMode:        true,
                         appName:        activeApp.name,
                         showPrefix:     true,
-                        assetsProvider: webapiCreator.api,
+                        assetsProvider: api,
                         isEnough:       info.isEnough
                     })
 
                 instance.Component.onDestruction.connect(function () {
                      if (instance.result == Dialog.Accepted) {
-                        webapiCreator.api.sendApproved(request)
+                        api.sendApproved(request)
                         return
                     }
-                    webapiCreator.api.sendRejected(request)
+                    api.sendRejected(request)
                     return
                 })
 
                 instance.open()
             })
 
-            webapiCreator.api.approveContractInfo.connect(function(request, info, amounts) {
+            api.approveContractInfo.connect(function(request, info, amounts) {
                 info = JSON.parse(info)
                 amounts = JSON.parse(amounts)
                 const dialog = Qt.createComponent("send_confirm.qml")
@@ -171,16 +171,16 @@ ColumnLayout {
                         appName:        activeApp.name,
                         isOnline:       false,
                         showPrefix:     true,
-                        assetsProvider: webapiCreator.api,
+                        assetsProvider: api,
                         isEnough:       info.isEnough
                     })
 
                 instance.Component.onDestruction.connect(function () {
                      if (instance.result == Dialog.Accepted) {
-                        webapiCreator.api.contractInfoApproved(request)
+                        api.contractInfoApproved(request)
                         return
                     }
-                    webapiCreator.api.contractInfoRejected(request)
+                    api.contractInfoRejected(request)
                     return
                 })
 
@@ -202,16 +202,16 @@ ColumnLayout {
             viewModel.launchAppServer()
         }
 
-        try
-        {
-            var verWant = app.api_version || "current"
-            var verMin  = app.min_api_version || ""
-            webapiCreator.createApi(verWant, verMin, app.name, app.url)
-        }
-        catch (err)
-        {
-            control.errorMessage = err.toString()
-        }
+       try
+       {
+           var verWant = app.api_version || "current"
+           var verMin  = app.min_api_version || ""
+           webapiCreator.createApi(verWant, verMin, app.name, app.url)
+       }
+       catch (err)
+       {
+           control.errorMessage = err.toString()
+       }
     }
 
     Item {
@@ -306,6 +306,12 @@ ColumnLayout {
 
             settings {
                 javascriptCanOpenWindows: false
+            }
+
+            onNavigationRequested: function (ev) {
+                if (ev.navigationType == WebEngineNavigationRequest.ReloadNavigation) {
+
+                }
             }
 
             onLoadingChanged: {

@@ -71,7 +71,7 @@ namespace beamui::applications
                 if (guard)
                 {
                     _api = std::move(api);
-                    emit apiChanged();
+                    emit apiCreated(_api.get());
                     LOG_INFO() << "API created: " << version << ", " << appName.toStdString() << ", " << appid;
                 }
                 else
@@ -80,11 +80,6 @@ namespace beamui::applications
                 }
             }
         );
-    }
-
-    QObject* WebAPICreator::getApi()
-    {
-        return _api.get();
     }
 
     bool WebAPICreator::apiSupported(const QString& apiVersion) const
