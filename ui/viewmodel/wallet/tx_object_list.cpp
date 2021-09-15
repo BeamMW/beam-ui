@@ -85,13 +85,13 @@ QString getStatusTextTranslated(const QString& status, beam::wallet::TxAddressTy
         return qtTrId("wallet-txs-status-failed");
     }
     // in progress
-    else if (status == "in progress max privacy")
+    else if (status == "in progress maximum anonymity")
     {
         /*% "in progress
 (maximum anonymity)" */
         return qtTrId("wallet-txs-status-in-progress-max");
     }
-    else if (status == "sending max privacy to own address")
+    else if (status == "sending maximum anonymity to own address")
     {
         /*% "sending to own address
 (maximum anonymity)" */
@@ -115,7 +115,7 @@ QString getStatusTextTranslated(const QString& status, beam::wallet::TxAddressTy
         return qtTrId("wallet-txs-status-in-progress-offline-to-own");
     }
     // sent
-    else if (status == "sent max privacy")
+    else if (status == "sent maximum anonymity")
     {
         /*% "sent
 (maximum anonymity)"*/
@@ -132,7 +132,7 @@ QString getStatusTextTranslated(const QString& status, beam::wallet::TxAddressTy
 (public offline)" */
         return qtTrId("wallet-txs-status-sent-public-offline");
     }
-    else if (status == "sent max privacy to own address")
+    else if (status == "sent maximum anonymity to own address")
     {
         /*% "sent to own address
 (maximum anonymity)" */
@@ -145,7 +145,7 @@ QString getStatusTextTranslated(const QString& status, beam::wallet::TxAddressTy
         return qtTrId("wallet-txs-status-sent-offline-to-own");
     }
     // received
-    else if (status == "received max privacy")
+    else if (status == "received maximum anonymity")
     {
         /*% "received
 (maximum anonymity)" */
@@ -163,7 +163,7 @@ QString getStatusTextTranslated(const QString& status, beam::wallet::TxAddressTy
         return qtTrId("wallet-txs-status-received-public-offline");
     }
     // canceled
-    else if (status == "canceled max privacy")
+    else if (status == "canceled maximum anonymity")
     {
         /*% "canceled
 (maximum anonymity)" */
@@ -181,7 +181,7 @@ QString getStatusTextTranslated(const QString& status, beam::wallet::TxAddressTy
         return qtTrId("wallet-txs-status-canceled-public-offline");
     }
     // failed
-    else if (status == "failed max privacy")
+    else if (status == "failed maximum anonymity")
     {
         /*% "failed
 (maximum anonymity)" */
