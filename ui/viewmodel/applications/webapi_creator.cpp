@@ -82,6 +82,11 @@ namespace beamui::applications
         );
     }
 
+    void WebAPICreator::destroyApi()
+    {
+        _api.reset();
+    }
+
     bool WebAPICreator::apiSupported(const QString& apiVersion) const
     {
         return beam::wallet::IWalletApi::ValidateAPIVersion(apiVersion.toStdString());

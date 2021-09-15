@@ -96,6 +96,7 @@ ColumnLayout {
 
     WebAPICreator {
         id: webapiCreator
+        property var releaseApi
 
         onApiCreated: function (api) {
             control.errorMessage = ""
@@ -105,7 +106,11 @@ ColumnLayout {
             webView.profile.persistentStoragePath = viewModel.getAppStoragePath(control.activeApp["appid"])
             webView.url = control.activeApp.url
 
-            api.callWalletApiResult.connect(function (result) {
+            var onCallWalletApi = function (request) {
+                api.callWalletApi(request)
+            }
+
+            var onCallWalletApiResult = function (result) {
                 webapiBEAM.api.callWalletApiResult(result)
                 try
                 {
@@ -116,13 +121,9 @@ ColumnLayout {
                 catch (e) {
                     BeamGlobals.logInfo(["callWalletApiResult json parse fail:", e].join(": "))
                 }
-            })
+            }
 
-            webapiBEAM.api.callWalletApiCall.connect(function (request){
-                api.callWalletApi(request)
-            })
-
-            api.approveSend.connect(function(request, info, amounts) {
+            var onApproveSend = function(request, info, amounts) {
                 info = JSON.parse(info)
                 amounts = JSON.parse(amounts)
                 var dialog = Qt.createComponent("send_confirm.qml")
@@ -153,9 +154,9 @@ ColumnLayout {
                 })
 
                 instance.open()
-            })
+            }
 
-            api.approveContractInfo.connect(function(request, info, amounts) {
+            var onApproveContractInfo = function(request, info, amounts) {
                 info = JSON.parse(info)
                 amounts = JSON.parse(amounts)
                 const dialog = Qt.createComponent("send_confirm.qml")
@@ -185,13 +186,40 @@ ColumnLayout {
                 })
 
                 instance.open()
-            })
+            }
+
+            webapiBEAM.api.callWalletApiCall.connect(onCallWalletApi)
+            api.callWalletApiResult.connect(onCallWalletApiResult)
+            api.approveSend.connect(onApproveSend)
+            api.approveContractInfo.connect(onApproveContractInfo)
+
+            releaseApi = function () {
+                webapiBEAM.api.callWalletApiCall.disconnect(onCallWalletApi)
+                api.callWalletApiResult.disconnect(onCallWalletApiResult)
+                api.approveSend.disconnect(onApproveSend)
+                api.approveContractInfo.disconnect(onApproveContractInfo)
+                webapiCreator.destroyApi()
+                webapiCreator.releaseApi = undefined
+            }
         }
     }
 
     function appSupported(app) {
         return webapiCreator.apiSupported(app.api_version || "current") ||
                webapiCreator.apiSupported(app.min_api_version || "")
+    }
+
+    function createApi(app) {
+        try
+        {
+           var verWant = app.api_version || "current"
+           var verMin  = app.min_api_version || ""
+           webapiCreator.createApi(verWant, verMin, app.name, app.url)
+        }
+        catch (err)
+        {
+           control.errorMessage = err.toString()
+        }
     }
 
     function launchApp(app) {
@@ -202,16 +230,7 @@ ColumnLayout {
             viewModel.launchAppServer()
         }
 
-       try
-       {
-           var verWant = app.api_version || "current"
-           var verMin  = app.min_api_version || ""
-           webapiCreator.createApi(verWant, verMin, app.name, app.url)
-       }
-       catch (err)
-       {
-           control.errorMessage = err.toString()
-       }
+        createApi(app)
     }
 
     Item {
@@ -311,6 +330,13 @@ ColumnLayout {
             onNavigationRequested: function (ev) {
                 if (ev.navigationType == WebEngineNavigationRequest.ReloadNavigation) {
 
+                    if (webapiCreator.releaseApi) {
+                        webapiCreator.releaseApi()
+                    }
+
+                    if (control.activeApp) {
+                        createApi(control.activeApp)
+                    }
                 }
             }
 

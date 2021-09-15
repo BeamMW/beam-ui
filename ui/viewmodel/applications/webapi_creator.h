@@ -29,6 +29,7 @@ namespace beamui::applications
         ~WebAPICreator() override;
 
         Q_INVOKABLE void createApi(const QString& verWant, const QString& verMin, const QString& appName, const QString& appUrl);
+        Q_INVOKABLE void destroyApi();
         Q_INVOKABLE [[nodiscard]] bool apiSupported(const QString& apiVersion) const;
         Q_INVOKABLE [[nodiscard]] QString generateAppID(const QString& appName, const QString& appUrl);
 
