@@ -156,7 +156,7 @@ QString ReceiveViewModel::getToken() const
 
 QString ReceiveViewModel::getSbbsAddress() const
 {
-    return _receiverAddress ? beamui::toString(_receiverAddress->m_walletID) : QString();
+    return _receiverAddress ? beamui::toString(_receiverAddress->m_walletID) : _originalToken;
 }
 
 bool ReceiveViewModel::getCommentValid() const
