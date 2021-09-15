@@ -167,7 +167,7 @@ Rectangle {
     }
 
     function appsQml () {
-        return BeamGlobals.isFork3() ? "applications" : "applications_nofork"
+        return BeamGlobals.isFork3() ? "applications/applications" : "applications/applications_nofork"
     }
 
     function appArgs (name, appid, showBack) {

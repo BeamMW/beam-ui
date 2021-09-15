@@ -4,9 +4,10 @@ import QtQuick.Controls 2.4
 import QtWebEngine      1.4
 import QtWebChannel     1.0
 import Beam.Wallet      1.0
-import "controls"
-import "wallet"
-import "./utils.js" as Utils
+import "../controls"
+import "../wallet"
+import "../utils.js" as Utils
+import "."
 
 ColumnLayout {
     id: control
@@ -54,7 +55,7 @@ ColumnLayout {
         Layout.topMargin:    50
         Layout.bottomMargin: 20
 
-        visible:  !appsView.visible
+        visible:  !appsListView.visible
         showBack: control.showBack && !!text
         text:     ((control.activeApp || {}).name || "")
 
@@ -236,7 +237,7 @@ ColumnLayout {
     Item {
         Layout.fillHeight: true
         Layout.fillWidth:  true
-        visible: !appsView.visible && !webLayout.visible
+        visible: !appsListView.visible && !webLayout.visible
 
         ColumnLayout {
             anchors.horizontalCenter: parent.horizontalCenter
@@ -373,220 +374,25 @@ ColumnLayout {
         }
     }
 
-    ColumnLayout {
-        id: appsView
-        Layout.topMargin:  50 - (unsupportedCnt ? errCntMessage.height + spacing : 0)
+    SFText {
+        id: errCntMessage
+        Layout.alignment: Qt.AlignRight
+        Layout.topMargin: 5
+        color: Style.validator_error
+        visible: control.hasApps && !control.activeApp && unsupportedCnt > 0
+        font.italic: true
+        //% "%n DApp(s) is not available"
+        text: qsTrId("apps-err-cnt", unsupportedCnt)
+    }
+
+    AppsList {
+        id: appsListView
+        Layout.topMargin:  40 - (unsupportedCnt ? errCntMessage.height + 5 + parent.spacing : 0)
         Layout.fillHeight: true
         Layout.fillWidth:  true
         Layout.bottomMargin: 10
         visible: control.hasApps && !control.activeApp
-        spacing: 10
-
-        SFText {
-            id: errCntMessage
-            Layout.alignment: Qt.AlignRight
-            color: Style.validator_error
-            visible: unsupportedCnt > 0
-            font.italic: true
-            //% "%n DApp(s) is not available"
-            text: qsTrId("apps-err-cnt", unsupportedCnt)
-        }
-
-        // Actuall apps list
-        ScrollView {
-            Layout.fillHeight: true
-            Layout.fillWidth:  true
-
-            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-            ScrollBar.vertical.policy: ScrollBar.AsNeeded
-            clip: true
-
-            ColumnLayout
-            {
-                width: parent.width
-                spacing: 15
-
-                Repeater {
-                    model: control.appsList
-
-                    delegate: Item {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 100
-                        property var supported: appSupported(modelData)
-
-                        Rectangle {
-                            anchors.fill: parent
-                            radius:       10
-                            color:        Style.active
-                            opacity:      hoverArea.containsMouse ? 0.15 : 0.1
-                        }
-
-                        RowLayout {
-                            anchors.fill: parent
-
-                            Rectangle {
-                                Layout.leftMargin: 30
-                                width:  60
-                                height: 60
-                                radius: 30
-                                color:  Style.background_main
-
-                                SvgImage {
-                                    id: defaultIcon
-                                    source: hoverArea.containsMouse ? "qrc:/assets/icon-defapp-active.svg" : "qrc:/assets/icon-defapp.svg"
-                                    sourceSize: Qt.size(30, 30)
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    anchors.horizontalCenter: parent.horizontalCenter
-                                    visible: !customIcon.visible
-                                }
-
-                                SvgImage {
-                                    id: customIcon
-                                    source: modelData.icon ? modelData.icon : "qrc:/assets/icon-defapp.svg"
-                                    sourceSize: Qt.size(30, 30)
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    anchors.horizontalCenter: parent.horizontalCenter
-                                    visible: !!modelData.icon && progress == 1.0
-                                }
-                            }
-
-                            Column {
-                                Layout.leftMargin: 20
-                                spacing: 10
-
-                                SFText {
-                                    text: modelData.name
-                                    font {
-                                        styleName:  "DemiBold"
-                                        weight:     Font.DemiBold
-                                        pixelSize:  18
-                                    }
-                                    color: Style.content_main
-                                }
-
-                                SFText {
-                                    text: Utils.limitText(modelData.description, 80)
-                                    font.pixelSize:  14
-                                    elide: Text.ElideRight
-                                    color: Style.content_main
-                                    visible: supported
-                                }
-
-                                SFText {
-                                    elide: Text.ElideRight
-                                    color: Style.validator_error
-                                    visible: !supported
-                                    font.italic: true
-                                    //% "This DApp requires version %1 of Beam Wallet or higher. Please update."
-                                    text: qsTrId("apps-version-error").arg(modelData.min_api_version || modelData.api_version)
-                                }
-                            }
-
-                            Item {
-                                Layout.fillWidth: true
-                            }
-
-                            CustomButton {
-                                Layout.rightMargin: 20
-                                height: 40
-                                palette.button: Style.background_second
-                                palette.buttonText : Style.content_main
-                                icon.source: "qrc:/assets/icon-run.svg"
-                                icon.height: 16
-                                visible: supported
-                                //% "launch"
-                                text: qsTrId("apps-run")
-
-                                MouseArea {
-                                    anchors.fill:     parent
-                                    acceptedButtons:  Qt.LeftButton
-                                    hoverEnabled:     true
-                                    propagateComposedEvents: true
-                                    preventStealing:  true
-                                    onClicked:        launchApp(modelData)
-                                }
-                            }
-                        }
-
-                        MouseArea {
-                            id:               hoverArea
-                            anchors.fill:     parent
-                            // acceptedButtons:  Qt.LeftButton
-                            hoverEnabled:     true
-                            propagateComposedEvents: true
-                            preventStealing: true
-                        }
-                    }
-                }
-
-                Item {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 60
-                    opacity: 0.3
-
-                    Canvas {
-                        anchors.fill: parent
-                        antialiasing: true
-
-                        onPaint: function (rect) {
-                            var radius = 10
-                            var ctx = getContext("2d")
-                            ctx.save()
-                            ctx.setLineDash([5, 5])
-                            ctx.beginPath()
-                                ctx.moveTo(0,0)
-                                ctx.lineTo(rect.width, 0)
-                                ctx.lineTo(rect.width, rect.height)
-                                ctx.lineTo(0, rect.height)
-                                ctx.lineTo(0, 0)
-                                ctx.closePath()
-                            ctx.strokeStyle = "#1af6d6"
-                            ctx.stroke()
-                            ctx.restore()
-                         }
-                    }
-
-                    RowLayout {
-                        anchors.fill: parent
-                        spacing: 6
-
-                        SvgImage {
-                            Layout.alignment:   Qt.AlignVCenter
-                            Layout.leftMargin:  20
-                            source:             "qrc:/assets/icon-add-green.svg"
-                            sourceSize:         Qt.size(18, 18)
-                        }
-
-                        SFText {
-                            Layout.alignment:    Qt.AlignVCenter
-                            Layout.fillWidth:    true
-                            font {
-                                styleName: "Normal"
-                                weight:    Font.Normal
-                                pixelSize: 14
-                            }
-                            color: Style.active
-                            wrapMode: Text.WordWrap
-                            //% "Install DApp from file"
-                            text: qsTrId("apps-install-from-file")
-                        }
-                    }
-
-                    MouseArea {
-                        id:               clickArea
-                        anchors.fill:     parent
-                        acceptedButtons:  Qt.LeftButton
-                        hoverEnabled:     true
-                        cursorShape:      Qt.PointingHandCursor
-                        onClicked: function () {
-                            if (viewModel.installFromFile()) {
-                                loadAppsList()
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        appsList: control.appsList
     }
 
     FoldablePanel {
@@ -598,7 +404,7 @@ ColumnLayout {
         contentItemHeight:   control.height * 0.32
         bottomPadding:       folded ? 20 : 5
         foldsUp:             false
-        visible:             appsView.visible || webLayout.visible
+        visible:             appsListView.visible || webLayout.visible
         bkColor:             Style.background_appstx
 
         content: TxTable {
@@ -629,8 +435,7 @@ ColumnLayout {
                     if (xhr.status === 200)
                     {
                         var list = JSON.parse(xhr.responseText)
-                        control.appsList = appendLocalApps(list)
-                        updateErrCnt()
+                        control.appsList = checkSupport(appendLocalApps(list))
 
                         if (control.appToOpen) {
                             for (let app of control.appsList)
@@ -649,9 +454,7 @@ ColumnLayout {
                     }
                     else
                     {
-                        control.appsList = []
-                        updateErrCnt()
-
+                        control.appsList = checkSupport([])
                         var errMsg = errTemplate.arg(["code", xhr.status].join(" "))
                         control.errorMessage = errMsg
                     }
@@ -661,15 +464,16 @@ ColumnLayout {
             xhr.send('')
         }
 
-        control.appsList = appendLocalApps(undefined)
-        updateErrCnt()
+        control.appsList = checkSupport(appendLocalApps(undefined))
     }
 
-    function updateErrCnt () {
+    function checkSupport (apps) {
         unsupportedCnt = 0
-        for (let app of appsList) {
-            if (!appSupported(app)) ++unsupportedCnt
+        for (var app of apps) {
+            app.supported = appSupported(app)
+            if (!app.supported) ++unsupportedCnt
         }
+        return apps
     }
 
     SettingsViewModel {

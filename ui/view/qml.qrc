@@ -104,6 +104,9 @@
         <file>wallet/CoinsList.qml</file>
         <file>dex/MarketPanel.qml</file>
         <file>dex/MarketTable.qml</file>
+        <file>applications/applications.qml</file>
+        <file>applications/applications_nofork.qml</file>
+        <file>applications/AppsList.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
@@ -114,8 +117,6 @@
         <file>wallet.qml</file>
         <file>settings.qml</file>
         <file>addresses.qml</file>
-        <file>applications.qml</file>
-        <file>applications_nofork.qml</file>
         <file>atomic_swap.qml</file>
         <file>notifications.qml</file>
         <file>receive_regular.qml</file>
