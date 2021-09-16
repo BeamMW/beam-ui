@@ -3292,7 +3292,7 @@ to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-version-error">
-        <source>This DApp requires version %1 of Beam Wallet or higher. Please update.</source>
+        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-waiting-receiver-offline">

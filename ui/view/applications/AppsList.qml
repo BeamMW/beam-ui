@@ -111,7 +111,7 @@ ColumnLayout {
                                 color: Style.validator_error
                                 visible: !modelData.supported
                                 font.italic: true
-                                //% "This DApp requires version %1 of Beam Wallet or higher. Please update."
+                                //% "This DApp requires version %1 of Beam Wallet or higher. Please update your wallet."
                                 text: qsTrId("apps-version-error").arg(modelData.min_api_version || modelData.api_version)
                             }
                         }

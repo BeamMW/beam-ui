@@ -3247,8 +3247,8 @@ cannot be canceled.</translation>
 (offline)</translation>
     </message>
     <message id="apps-version-error">
-        <source>This DApp requires version %1 of Beam Wallet or higher. Please update.</source>
-        <translation>This DApp requires version %1 of Beam Wallet or higher. Please update.</translation>
+        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
+        <translation>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</translation>
     </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
         <source>waiting for receiver
