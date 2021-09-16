@@ -2237,18 +2237,6 @@ Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernst
         <source>DAPP Store</source>
         <translation>DAPP Store</translation>
     </message>
-    <message id="apps-nothing">
-        <source>There are no applications at the moment</source>
-        <translation>Er zijn momenteel geen applicaties</translation>
-    </message>
-    <message id="apps-loading-app">
-        <source>Please wait, %1 is loading</source>
-        <translation>Een ogenblik geduld, %1 wordt geladen</translation>
-    </message>
-    <message id="apps-loading">
-        <source>Loading...</source>
-        <translation>Bezig met laden...</translation>
-    </message>
     <message id="apps-run">
         <source>launch</source>
         <translation>starten</translation>
@@ -2256,10 +2244,6 @@ Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernst
     <message id="apps-devapp">
         <source>This is your dev application</source>
         <translation>Dit is uw ontwikkelaar applicatie</translation>
-    </message>
-    <message id="apps-load-error">
-        <source>Failed to load applications list, %1</source>
-        <translation>Laden van applicatielijst %1 mislukt</translation>
     </message>
     <message id="dex-all-tab">
         <source>All orders</source>
@@ -3091,10 +3075,6 @@ Wilt u doorgaan? U kunt uw keuze later altijd wijzigen in Instellingen.</transla
         <source>Insufficient funds to pay transaction fee.</source>
         <translation>Onvoldoende saldo om transactiekosten te voldoen.</translation>
     </message>
-    <message id="apps-inprogress-tip">
-        <source>(%1 active)</source>
-        <translation>(%1 actief)</translation>
-    </message>
     <message id="tx-details-general-info">
         <source>General info</source>
         <translation>Algemene informatie</translation>
@@ -3114,10 +3094,6 @@ Wilt u doorgaan? U kunt uw keuze later altijd wijzigen in Instellingen.</transla
     <message id="general-show-tx-details">
         <source>Show details</source>
         <translation>Toon details</translation>
-    </message>
-    <message id="apps-update-message">
-        <source>Update Wallet to launch %1 application</source>
-        <translation>Update Wallet om %1 applicatie te starten</translation>
     </message>
     <message id="general-advanced">
         <source>Advanced</source>
@@ -3317,13 +3293,6 @@ to own address</oldsource>
         <source>This DApp requires version %1 of Beam Wallet or higher. Please update.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="apps-err-cnt" numerus="yes">
-        <source>%n DApp(s) is not available</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
         <source>waiting for receiver
 (offline)</source>
@@ -3341,6 +3310,45 @@ to own address</oldsource>
     </message>
     <message id="app-uninstall-title">
         <source>Uninstall DApp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-loading-app">
+        <source>Please wait, %1 is loading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-loading">
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-nothing">
+        <source>There are no applications at the moment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-err-cnt" numerus="yes">
+        <source>%n DApp(s) is not available</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message id="apps-uninstall-success">
+        <source>%1 DApp is successfully uninstalled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-uninstall-fail">
+        <source>Failed to uninstall %1 DApp.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-inprogress-tip">
+        <source>(%1 active)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-load-error">
+        <source>Failed to load applications list, %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-update-message">
+        <source>Update Wallet to launch %1 application</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

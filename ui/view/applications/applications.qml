@@ -404,8 +404,16 @@ ColumnLayout {
         }
 
         onUninstall: function (app) {
-            BeamGlobals.showMessage("id = " + modelData.id)
-            viewModel.uninstallLocalApp(app.id)
+            if (viewModel.uninstallLocalApp(app.appid)) {
+                //% "%1 DApp is successfully uninstalled."
+                installOK.text = qsTrId("apps-uninstall-success").arg(app.name)
+                installOK.open()
+            } else {
+                //% "Failed to uninstall %1 DApp."
+                installFail.text = qsTrId("apps-uninstall-fail").arg(app.name)
+                installFail.open()
+            }
+            loadAppsList()
         }
     }
 
@@ -504,6 +512,25 @@ ColumnLayout {
             settings.dappsAllowed = true
             loadAppsList()
         }
+    }
+
+    ConfirmationDialog {
+        id: installOK
+        //% "Uninstall DApp"
+        title: qsTrId("app-uninstall-title")
+        //% "Ok"
+        okButtonText: qsTrId("general-ok")
+        cancelButtonVisible: false
+    }
+
+    ConfirmationDialog {
+        id: installFail
+        //% "Uninstall DApp"
+        title: qsTrId("app-uninstall-title")
+        //% "Ok"
+        okButtonText: qsTrId("general-ok")
+        okButton.palette.button: Style.accent_fail
+        cancelButtonVisible: false
     }
 
     Component.onCompleted: {

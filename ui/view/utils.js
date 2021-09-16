@@ -200,26 +200,6 @@ function isZeroed(s) {
     return true;
 }
 
-function getAddrTypeFromModel(model) {
-    if (model) {
-        if (model.isMaxPrivacy) {
-            //% "Max privacy"
-            return qsTrId("tx-address-max-privacy");
-        }
-        if (model.isOfflineToken) {
-            //% "Offline"
-            return qsTrId("tx-address-offline");
-        }
-        if (model.isPublicOffline) {
-            //% "Public offline"
-            return qsTrId("tx-address-public-offline");
-        }
-        //% "Regular"
-        return qsTrId("tx-address-regular");
-    }
-    return "";
-}
-
 function getHighlitedText(str, substr, color) {
     if (substr.length == 0)
         return str;

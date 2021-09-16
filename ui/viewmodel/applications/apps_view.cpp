@@ -25,6 +25,7 @@
 #include "quazip/quazipfile.h"
 #include "quazip/JlCompress.h"
 #include "viewmodel/qml_globals.h"
+#include "public.h"
 
 namespace beamui::applications
 {
@@ -115,14 +116,18 @@ namespace beamui::applications
         {
             throw std::runtime_error("Invalid app name in the manifest file");
         }
-        app.insert("name", QString::fromStdString(name.get<std::string>()));
+
+        const auto sname = name.get<std::string>();
+        app.insert("name", QString::fromStdString(sname));
 
         const auto& url = json["url"];
         if (!url.is_string() || url.empty())
         {
             throw std::runtime_error("Invalid url in the manifest file");
         }
-        app.insert("url", expandLocalUrl(appFolder, url.get<std::string>()));
+
+        const auto surl = url.get<std::string>();
+        app.insert("url", expandLocalUrl(appFolder, surl));
 
         const auto& icon = json["icon"];
         if (!icon.empty())
@@ -154,6 +159,10 @@ namespace beamui::applications
             throw std::runtime_error("Invalid min_api_version in the manifest file");
         }
 
+        app.insert("local", true);
+        const auto appid = GenerateAppID(sname, surl);
+        app.insert("appid", QString::fromStdString(appid));
+
         return app;
     }
 
@@ -167,12 +176,18 @@ namespace beamui::applications
         if (!AppSettings().getDevAppName().isEmpty())
         {
             QMap<QString, QVariant> devapp;
+
+            const auto name  = AppSettings().getDevAppName();
+            const auto url   = AppSettings().getDevAppUrl();
+            const auto appid = QString::fromStdString(GenerateAppID(name.toStdString(), url.toStdString()));
+
             //% "This is your dev application"
             devapp.insert("description",     qtTrId("apps-devapp"));
-            devapp.insert("name",            AppSettings().getDevAppName());
-            devapp.insert("url",             AppSettings().getDevAppUrl());
+            devapp.insert("name",            name);
+            devapp.insert("url",             url);
             devapp.insert("api_version",     AppSettings().getDevAppApiVer());
             devapp.insert("min_api_version", AppSettings().getDevAppMinApiVer());
+            devapp.insert("appid", appid);
             result.push_back(devapp);
         }
 
@@ -194,8 +209,9 @@ namespace beamui::applications
                 }
 
                 QTextStream in(&file);
+
                 auto app = validateAppManifest(in, justFolder);
-                app.insert("local", true);
+                app.insert("full_path", fullFolder);
                 result.push_back(app);
             }
             catch(std::runtime_error& err)
@@ -204,7 +220,46 @@ namespace beamui::applications
             }
         }
 
+        _lastLocalApps = result;
         return result;
+    }
+
+    bool AppsViewModel::uninstallLocalApp(const QString& appid)
+    {
+        const auto it = std::find_if(_lastLocalApps.begin(), _lastLocalApps.end(), [appid](const auto& props) -> bool {
+            const auto ait = props.find("appid");
+            if (ait == props.end())
+            {
+                assert(false);
+                return false;
+            }
+            return ait->toString() == appid;
+        });
+
+        if (it == _lastLocalApps.end())
+        {
+            assert(false);
+            return false;
+        }
+
+        const auto pathit = it->find("full_path");
+        if (pathit == it->end())
+        {
+            assert(false);
+            return false;
+        }
+
+        const auto path = pathit->toString();
+        if (path.isEmpty())
+        {
+            assert(false);
+            return false;
+        }
+
+        LOG_INFO() << "Deleting local app in folder " << path.toStdString();
+
+        QDir dir(path);
+        return dir.removeRecursively();
     }
 
     QString AppsViewModel::expandLocalUrl(const QString& folder, const std::string& url) const

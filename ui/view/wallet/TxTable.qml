@@ -140,6 +140,26 @@ Control {
         };
     }
 
+    function getAddrTypeFromModel(model) {
+        if (model) {
+            if (model.isMaxPrivacy) {
+                //% "Max privacy"
+                return qsTrId("tx-address-max-privacy");
+            }
+            if (model.isOfflineToken) {
+                //% "Offline"
+                return qsTrId("tx-address-offline");
+            }
+            if (model.isPublicOffline) {
+                //% "Public offline"
+                return qsTrId("tx-address-public-offline");
+            }
+            //% "Regular"
+            return qsTrId("tx-address-regular");
+        }
+        return "";
+    }
+
     contentItem: ColumnLayout {
         spacing: 0
 
@@ -275,7 +295,7 @@ Control {
                 }
 
                 txDetails.feeOnly        =  model.getRoleValue(row, "isFeeOnly")
-                txDetails.addressType    =  Utils.getAddrTypeFromModel(addrModel)
+                txDetails.addressType    =  getAddrTypeFromModel(addrModel)
                 txDetails.assetNames     =  model.getRoleValue(row, "assetNames") || []
                 txDetails.assetVerified  =  model.getRoleValue(row, "assetVerified") || []
                 txDetails.assetIcons     =  model.getRoleValue(row, "assetIcons") || []

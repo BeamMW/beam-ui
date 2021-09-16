@@ -38,6 +38,7 @@ namespace beamui::applications
         Q_INVOKABLE [[nodiscard]] QString getAppStoragePath(const QString& appid) const;
         Q_INVOKABLE [[nodiscard]] bool installFromFile();
         Q_INVOKABLE void launchAppServer();
+        Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
@@ -47,5 +48,6 @@ namespace beamui::applications
         QString _userAgent;
         QString _serverAddr;
         std::unique_ptr<AppsServer> _server;
+        QList<QMap<QString, QVariant>> _lastLocalApps;
     };
 }

@@ -2240,18 +2240,6 @@ mucho más en completar una transacción.</translation>
         <source>DAPP Store</source>
         <translation type="unfinished">DAPP Store</translation>
     </message>
-    <message id="apps-nothing">
-        <source>There are no applications at the moment</source>
-        <translation type="unfinished">There are no applications at the moment</translation>
-    </message>
-    <message id="apps-loading-app">
-        <source>Please wait, %1 is loading</source>
-        <translation type="unfinished">Please wait, %1 is loading</translation>
-    </message>
-    <message id="apps-loading">
-        <source>Loading...</source>
-        <translation type="unfinished">Loading...</translation>
-    </message>
     <message id="apps-run">
         <source>launch</source>
         <translation type="unfinished">launch</translation>
@@ -2259,10 +2247,6 @@ mucho más en completar una transacción.</translation>
     <message id="apps-devapp">
         <source>This is your dev application</source>
         <translation type="unfinished">This is your dev application</translation>
-    </message>
-    <message id="apps-load-error">
-        <source>Failed to load applications list, %1</source>
-        <translation type="unfinished">Failed to load applications list, %1</translation>
     </message>
     <message id="dex-all-tab">
         <source>All orders</source>
@@ -3094,10 +3078,6 @@ Allow to proceed ? You can always update your choice in Settings later.</transla
         <source>Insufficient funds to pay transaction fee.</source>
         <translation type="unfinished">Insufficient funds to pay transaction fee.</translation>
     </message>
-    <message id="apps-inprogress-tip">
-        <source>(%1 active)</source>
-        <translation type="unfinished">(%1 active)</translation>
-    </message>
     <message id="tx-details-general-info">
         <source>General info</source>
         <translation type="unfinished">General info</translation>
@@ -3117,10 +3097,6 @@ Allow to proceed ? You can always update your choice in Settings later.</transla
     <message id="general-show-tx-details">
         <source>Show details</source>
         <translation type="unfinished">Show details</translation>
-    </message>
-    <message id="apps-update-message">
-        <source>Update Wallet to launch %1 application</source>
-        <translation type="unfinished">Update Wallet to launch %1 application</translation>
     </message>
     <message id="general-advanced">
         <source>Advanced</source>
@@ -3321,13 +3297,6 @@ to own address</oldsource>
         <source>This DApp requires version %1 of Beam Wallet or higher. Please update.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="apps-err-cnt" numerus="yes">
-        <source>%n DApp(s) is not available</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
         <source>waiting for receiver
 (offline)</source>
@@ -3345,6 +3314,45 @@ to own address</oldsource>
     </message>
     <message id="app-uninstall-title">
         <source>Uninstall DApp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-loading-app">
+        <source>Please wait, %1 is loading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-loading">
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-nothing">
+        <source>There are no applications at the moment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-err-cnt" numerus="yes">
+        <source>%n DApp(s) is not available</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message id="apps-uninstall-success">
+        <source>%1 DApp is successfully uninstalled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-uninstall-fail">
+        <source>Failed to uninstall %1 DApp.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-inprogress-tip">
+        <source>(%1 active)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-load-error">
+        <source>Failed to load applications list, %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-update-message">
+        <source>Update Wallet to launch %1 application</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
