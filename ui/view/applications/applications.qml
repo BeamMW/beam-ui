@@ -126,7 +126,7 @@ ColumnLayout {
             var onApproveSend = function(request, info, amounts) {
                 info = JSON.parse(info)
                 amounts = JSON.parse(amounts)
-                var dialog = Qt.createComponent("send_confirm.qml")
+                var dialog = Qt.createComponent("qrc:/send_confirm.qml")
                 var instance = dialog.createObject(control,
                     {
                         amounts:        amounts,
@@ -159,7 +159,7 @@ ColumnLayout {
             var onApproveContractInfo = function(request, info, amounts) {
                 info = JSON.parse(info)
                 amounts = JSON.parse(amounts)
-                const dialog = Qt.createComponent("send_confirm.qml")
+                const dialog = Qt.createComponent("qrc:/send_confirm.qml")
                 const instance = dialog.createObject(control,
                     {
                         amounts:        amounts,
