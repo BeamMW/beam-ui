@@ -296,22 +296,28 @@ namespace beamui::applications
         }
     }
 
-    bool AppsViewModel::installFromFile()
+    bool AppsViewModel::installFromFile(const QString& fname)
     {
-        QFileDialog dialog(nullptr,
-                        //% "Select application to install"
-                        qtTrId("applications-install-title"),
-                        "",
-                        "BEAM DApp files (*.dapp)");
-        dialog.setWindowModality(Qt::WindowModality::ApplicationModal);
-        if (!dialog.exec())
+        QString archiveName = fname;
+
+        if (fname.isEmpty())
         {
-            return false;
+            QFileDialog dialog(nullptr,
+                    //% "Select application to install"
+                    qtTrId("applications-install-title"),
+                    "",
+                    "BEAM DApp files (*.dapp)");
+
+            dialog.setWindowModality(Qt::WindowModality::ApplicationModal);
+            if (!dialog.exec())
+            {
+                return false;
+            }
+            archiveName = dialog.selectedFiles().value(0);
         }
 
         try
         {
-            QString archiveName = dialog.selectedFiles().value(0);
             QuaZip zip(archiveName);
             if(!zip.open(QuaZip::Mode::mdUnzip))
             {
@@ -366,7 +372,7 @@ namespace beamui::applications
         }
         catch(std::exception& err)
         {
-            //% "Failed to install DApp: %1"
+            //% "Failed to install DApp:\n%1"
             const auto errMsg = qtTrId("appliactions-install-fail").arg(err.what());
             LOG_ERROR() << errMsg.toStdString();
             QMLGlobals::showMessage(errMsg);

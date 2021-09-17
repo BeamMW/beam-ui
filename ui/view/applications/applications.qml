@@ -397,8 +397,8 @@ ColumnLayout {
             launchApp(app)
         }
 
-        onInstall: function () {
-            if (viewModel.installFromFile()) {
+        onInstall: function (fname) {
+            if (viewModel.installFromFile(fname)) {
                 loadAppsList()
             }
         }

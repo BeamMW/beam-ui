@@ -36,7 +36,7 @@ namespace beamui::applications
         Q_INVOKABLE void onCompleted(QObject *webView);
         Q_INVOKABLE [[nodiscard]] QString getAppCachePath(const QString& appid) const;
         Q_INVOKABLE [[nodiscard]] QString getAppStoragePath(const QString& appid) const;
-        Q_INVOKABLE [[nodiscard]] bool installFromFile();
+        Q_INVOKABLE [[nodiscard]] bool installFromFile(const QString& fname);
         Q_INVOKABLE void launchAppServer();
         Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
 
