@@ -417,7 +417,7 @@ CustomDialog {
                 Layout.alignment:       Qt.AlignTop
                 font.pixelSize:         14
                 color:                  Style.content_secondary
-                //% "DAPP name"
+                //% "DApp name"
                 text:                   qsTrId("address-info-dapp") + ":"
                 visible:                dappNameText.visible
             }

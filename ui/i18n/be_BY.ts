@@ -2236,8 +2236,8 @@ much longer for a transaction to complete.</source>
         <translation>Infura project ID</translation>
     </message>
     <message id="apps-title">
-        <source>DAPP Store</source>
-        <translation>DAPP Store</translation>
+        <source>DApp Store</source>
+        <translation>DApp Store</translation>
     </message>
     <message id="apps-run">
         <source>launch</source>
@@ -2304,12 +2304,12 @@ Please try again later or create an offer yourself.</translation>
         <translation>Ніякага апісання ў кантракце не прадугледжана</translation>
     </message>
     <message id="notification-contract-completed">
-        <source>DAPP transaction completed</source>
-        <translation>Транзакцыя DAPP завершана</translation>
+        <source>DApp transaction completed</source>
+        <translation>Транзакцыя DApp завершана</translation>
     </message>
     <message id="notification-contract-expired">
-        <source>DAPP transaction expired</source>
-        <translation>Тэрмін дзеяння транзакцыі DAPP скончыўся</translation>
+        <source>DApp transaction expired</source>
+        <translation>Тэрмін дзеяння транзакцыі DApp скончыўся</translation>
     </message>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
@@ -2877,8 +2877,8 @@ Update your settings and try again.</source>
         <translation>Тэрмiн дзеяння гэтага адраса ужо скончыўся</translation>
     </message>
     <message id="notification-contract-failed">
-        <source>DAPP transaction failed</source>
-        <translation>Збой транзакцыі DAPP</translation>
+        <source>DApp transaction failed</source>
+        <translation>Збой транзакцыі DApp</translation>
     </message>
     <message id="contacts-empty">
         <source>Your contact list is empty</source>
@@ -3050,8 +3050,8 @@ Update your settings and try again.</source>
         <translation>Апісанне</translation>
     </message>
     <message id="address-info-dapp">
-        <source>DAPP name</source>
-        <translation>Імя DAPP</translation>
+        <source>DApp name</source>
+        <translation>Імя DApp</translation>
     </message>
     <message id="dapps-privacy-title">
         <source>DApps Privacy</source>
@@ -3218,12 +3218,12 @@ cannot be canceled.</translation>
         <translation type="unfinished">&apos;%1&apos; is successfully installed</translation>
     </message>
     <message id="appliactions-install-fail">
-        <source>Failed to install DAPP: %1</source>
-        <translation type="unfinished">Failed to install DAPP: %1</translation>
+        <source>Failed to install DApp: %1</source>
+        <translation type="unfinished">Failed to install DApp: %1</translation>
     </message>
     <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</source>
-        <translation type="unfinished">See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</translation>
+        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
+        <translation type="unfinished">See the wallet in action. Get a small amount of Beams from the Faucet DApp.</translation>
     </message>
     <message id="faucet-promo-get-coins">
         <source>get coins</source>

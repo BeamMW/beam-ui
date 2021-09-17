@@ -2234,8 +2234,8 @@ Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernst
         <translation>Infura project ID</translation>
     </message>
     <message id="apps-title">
-        <source>DAPP Store</source>
-        <translation>DAPP Store</translation>
+        <source>DApp Store</source>
+        <translation>DApp Store</translation>
     </message>
     <message id="apps-run">
         <source>launch</source>
@@ -2302,12 +2302,12 @@ Probeer het later opnieuw of maak zelf een aanbieding aan.</translation>
         <translation>Geen beschrijving in het contract</translation>
     </message>
     <message id="notification-contract-completed">
-        <source>DAPP transaction completed</source>
-        <translation>DAPP transactie voltooid</translation>
+        <source>DApp transaction completed</source>
+        <translation>DApp transactie voltooid</translation>
     </message>
     <message id="notification-contract-expired">
-        <source>DAPP transaction expired</source>
-        <translation>DAPP transactie verlopen</translation>
+        <source>DApp transaction expired</source>
+        <translation>DApp transactie verlopen</translation>
     </message>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
@@ -2875,8 +2875,8 @@ Update uw instellingen en probeer opnieuw.</translation>
         <translation>Dit adres is al vervallen</translation>
     </message>
     <message id="notification-contract-failed">
-        <source>DAPP transaction failed</source>
-        <translation>DAPP transactie mislukt</translation>
+        <source>DApp transaction failed</source>
+        <translation>DApp transactie mislukt</translation>
     </message>
     <message id="contacts-empty">
         <source>Your contact list is empty</source>
@@ -2896,7 +2896,7 @@ Update uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="apps-fork-warning">
         <source>DAPPs will be available in your wallet after the Hard Fork</source>
-        <translation>DAPP&apos;s zijn na de Hard Fork beschikbaar in uw wallet</translation>
+        <translation>DApp&apos;s zijn na de Hard Fork beschikbaar in uw wallet</translation>
     </message>
     <message id="address-info-cid">
         <source>Application shader ID</source>
@@ -3048,8 +3048,8 @@ Update uw instellingen en probeer opnieuw.</translation>
         <translation>Omschrijving</translation>
     </message>
     <message id="address-info-dapp">
-        <source>DAPP name</source>
-        <translation>DAPP naam</translation>
+        <source>DApp name</source>
+        <translation>DApp naam</translation>
     </message>
     <message id="dapps-privacy-title">
         <source>DApps Privacy</source>
@@ -3215,12 +3215,12 @@ cannot be canceled.</source>
         <translation>&apos;%1&apos; is succesvol geïnstalleerd</translation>
     </message>
     <message id="appliactions-install-fail">
-        <source>Failed to install DAPP: %1</source>
-        <translation>Installatie van DAPP %1 is mislukt</translation>
+        <source>Failed to install DApp: %1</source>
+        <translation>Installatie van DApp %1 is mislukt</translation>
     </message>
     <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</source>
-        <translation>Bekijk de wallet in gebruik. Ontvang een kleine hoeveelheid Beam van de Faucet DAPP.</translation>
+        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
+        <translation>Bekijk de wallet in gebruik. Ontvang een kleine hoeveelheid Beam van de Faucet DApp.</translation>
     </message>
     <message id="faucet-promo-get-coins">
         <source>get coins</source>

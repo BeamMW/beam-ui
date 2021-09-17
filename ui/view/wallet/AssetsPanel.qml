@@ -145,7 +145,7 @@ Control {
                         Layout.topMargin:    -12
                         font.pixelSize:      14
                         color:               Style.content_main
-                        //% "See the wallet in action. Get a small amount of Beams from the Faucet DAPP."
+                        //% "See the wallet in action. Get a small amount of Beams from the Faucet DApp."
                         text:                qsTrId("faucet-promo")
                     }
                     Item {

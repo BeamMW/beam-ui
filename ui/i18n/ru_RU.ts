@@ -2237,8 +2237,8 @@ much longer for a transaction to complete.</source>
         <translation>ID проекта Infura</translation>
     </message>
     <message id="apps-title">
-        <source>DAPP Store</source>
-        <translation>DAPP Store</translation>
+        <source>DApp Store</source>
+        <translation>DApp Store</translation>
     </message>
     <message id="apps-run">
         <source>launch</source>
@@ -2305,12 +2305,12 @@ Please try again later or create an offer yourself.</source>
         <translation>Описание не предоставлено контрактом</translation>
     </message>
     <message id="notification-contract-completed">
-        <source>DAPP transaction completed</source>
-        <translation>Транзакция DAPP завершена</translation>
+        <source>DApp transaction completed</source>
+        <translation>Транзакция DApp завершена</translation>
     </message>
     <message id="notification-contract-expired">
-        <source>DAPP transaction expired</source>
-        <translation>Срок действия транзакции DAPP истёк</translation>
+        <source>DApp transaction expired</source>
+        <translation>Срок действия транзакции DApp истёк</translation>
     </message>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
@@ -2878,8 +2878,8 @@ Update your settings and try again.</source>
         <translation>Этот адрес уже истёк</translation>
     </message>
     <message id="notification-contract-failed">
-        <source>DAPP transaction failed</source>
-        <translation>Ошибка транзакции DAPP</translation>
+        <source>DApp transaction failed</source>
+        <translation>Ошибка транзакции DApp</translation>
     </message>
     <message id="contacts-empty">
         <source>Your contact list is empty</source>
@@ -2899,7 +2899,7 @@ Update your settings and try again.</source>
     </message>
     <message id="apps-fork-warning">
         <source>DAPPs will be available in your wallet after the Hard Fork</source>
-        <translation>DAPP будут доступны в вашем кошельке после Hard Fork</translation>
+        <translation>DApp будут доступны в вашем кошельке после Hard Fork</translation>
     </message>
     <message id="address-info-cid">
         <source>Application shader ID</source>
@@ -3051,8 +3051,8 @@ Update your settings and try again.</source>
         <translation>Описание</translation>
     </message>
     <message id="address-info-dapp">
-        <source>DAPP name</source>
-        <translation>Имя DAPP</translation>
+        <source>DApp name</source>
+        <translation>Имя DApp</translation>
     </message>
     <message id="dapps-privacy-title">
         <source>DApps Privacy</source>
@@ -3207,7 +3207,7 @@ cannot be canceled.</source>
     </message>
     <message id="apps-install-from-file">
         <source>Install DApp from file</source>
-        <translation>Установить DAPP из файла</translation>
+        <translation>Установить DApp из файла</translation>
     </message>
     <message id="applications-install-title">
         <source>Select application to install</source>
@@ -3219,12 +3219,12 @@ cannot be canceled.</source>
         <translation>&apos;%1&apos; успешно установлено</translation>
     </message>
     <message id="appliactions-install-fail">
-        <source>Failed to install DAPP: %1</source>
-        <translation>Не удалось установить DAPP: %1</translation>
+        <source>Failed to install DApp: %1</source>
+        <translation>Не удалось установить DApp: %1</translation>
     </message>
     <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</source>
-        <translation>Посмотрите кошелек в действии. Получите небольшое количество Beam от Faucet DAPP.</translation>
+        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
+        <translation>Посмотрите кошелек в действии. Получите небольшое количество Beam от Faucet DApp.</translation>
     </message>
     <message id="faucet-promo-get-coins">
         <source>get coins</source>

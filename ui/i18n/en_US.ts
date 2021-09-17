@@ -2199,7 +2199,7 @@ much longer for a transaction to complete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-title">
-        <source>DAPP Store</source>
+        <source>DApp Store</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-run">
@@ -2266,11 +2266,11 @@ Please try again later or create an offer yourself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-completed">
-        <source>DAPP transaction completed</source>
+        <source>DApp transaction completed</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-expired">
-        <source>DAPP transaction expired</source>
+        <source>DApp transaction expired</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-contract-default-comment">
@@ -2837,7 +2837,7 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-failed">
-        <source>DAPP transaction failed</source>
+        <source>DApp transaction failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="contacts-empty">
@@ -3010,7 +3010,7 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="address-info-dapp">
-        <source>DAPP name</source>
+        <source>DApp name</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-privacy-title">
@@ -3176,12 +3176,12 @@ cannot be canceled.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="appliactions-install-fail">
-        <source>Failed to install DAPP: %1</source>
+        <source>Failed to install DApp: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</source>
-        <translation>See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</translation>
+        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
+        <translation>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</translation>
     </message>
     <message id="faucet-promo-get-coins">
         <source>get coins</source>

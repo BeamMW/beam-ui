@@ -336,7 +336,7 @@ namespace beamui::applications
 
             if (guid.isEmpty())
             {
-                throw std::runtime_error("Invalid DAPP file");
+                throw std::runtime_error("Invalid DApp file");
             }
 
             const auto appsPath = AppSettings().getLocalAppsPath();
@@ -354,7 +354,7 @@ namespace beamui::applications
             if(JlCompress::extractDir(archiveName, appFolder).isEmpty())
             {
                 //cleanupFolder(appFolder)
-                throw std::runtime_error("DAPP Installation failed");
+                throw std::runtime_error("DApp Installation failed");
             }
 
             //% "'%1' is successfully installed"
@@ -363,7 +363,7 @@ namespace beamui::applications
         }
         catch(std::exception& err)
         {
-            //% "Failed to install DAPP: %1"
+            //% "Failed to install DApp: %1"
             const auto errMsg = qtTrId("appliactions-install-fail").arg(err.what());
             LOG_ERROR() << errMsg.toStdString();
             QMLGlobals::showMessage(errMsg);

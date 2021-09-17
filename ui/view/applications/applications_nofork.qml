@@ -14,7 +14,7 @@ ColumnLayout {
     // Page Header (Title + Status Bar)
     //
     Title {
-        //% "DAPP Store"
+        //% "DApp Store"
         text: qsTrId("apps-title")
     }
 

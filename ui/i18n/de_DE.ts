@@ -2237,8 +2237,8 @@ much longer for a transaction to complete.</translation>
         <translation type="unfinished">Infura project ID</translation>
     </message>
     <message id="apps-title">
-        <source>DAPP Store</source>
-        <translation type="unfinished">DAPP Store</translation>
+        <source>DApp Store</source>
+        <translation type="unfinished">DApp Store</translation>
     </message>
     <message id="apps-run">
         <source>launch</source>
@@ -2305,12 +2305,12 @@ Please try again later or create an offer yourself.</translation>
         <translation type="unfinished">No description provided by the contract</translation>
     </message>
     <message id="notification-contract-completed">
-        <source>DAPP transaction completed</source>
-        <translation type="unfinished">DAPP transaction completed</translation>
+        <source>DApp transaction completed</source>
+        <translation type="unfinished">DApp transaction completed</translation>
     </message>
     <message id="notification-contract-expired">
-        <source>DAPP transaction expired</source>
-        <translation type="unfinished">DAPP transaction expired</translation>
+        <source>DApp transaction expired</source>
+        <translation type="unfinished">DApp transaction expired</translation>
     </message>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
@@ -2878,8 +2878,8 @@ Aktualisieren Sie Ihre Einstellungen und versuchen Sie es erneut.</translation>
         <translation type="unfinished">This address is already expired</translation>
     </message>
     <message id="notification-contract-failed">
-        <source>DAPP transaction failed</source>
-        <translation type="unfinished">DAPP transaction failed</translation>
+        <source>DApp transaction failed</source>
+        <translation type="unfinished">DApp transaction failed</translation>
     </message>
     <message id="contacts-empty">
         <source>Your contact list is empty</source>
@@ -3051,8 +3051,8 @@ Aktualisieren Sie Ihre Einstellungen und versuchen Sie es erneut.</translation>
         <translation type="unfinished">Description</translation>
     </message>
     <message id="address-info-dapp">
-        <source>DAPP name</source>
-        <translation type="unfinished">DAPP name</translation>
+        <source>DApp name</source>
+        <translation type="unfinished">DApp name</translation>
     </message>
     <message id="dapps-privacy-title">
         <source>DApps Privacy</source>
@@ -3219,12 +3219,12 @@ cannot be canceled.</translation>
         <translation type="unfinished">&apos;%1&apos; is successfully installed</translation>
     </message>
     <message id="appliactions-install-fail">
-        <source>Failed to install DAPP: %1</source>
-        <translation type="unfinished">Failed to install DAPP: %1</translation>
+        <source>Failed to install DApp: %1</source>
+        <translation type="unfinished">Failed to install DApp: %1</translation>
     </message>
     <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</source>
-        <translation type="unfinished">See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</translation>
+        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
+        <translation type="unfinished">See the wallet in action. Get a small amount of Beams from the Faucet DApp.</translation>
     </message>
     <message id="faucet-promo-get-coins">
         <source>get coins</source>
