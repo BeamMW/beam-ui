@@ -182,7 +182,7 @@ Rectangle {
         {name: "atomic_swap"},
         {name: "applications", qml: appsQml},
         {name: "daocore", qml: appsQml, args: () => appArgs("BeamX DAO", viewModel.daoCoreAppID, false)},
-        {name: "dex"},
+        // {name: "dex"},
         {name: "addresses"},
         {name: "notifications"},
         {name: "settings"}
