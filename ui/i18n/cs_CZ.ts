@@ -3217,7 +3217,9 @@ cannot be canceled.</translation>
         <translation type="unfinished">&apos;%1&apos; is successfully installed</translation>
     </message>
     <message id="appliactions-install-fail">
-        <source>Unable to install DApp: %1</source>
+        <source>Failed to install DApp:
+%1</source>
+        <oldsource>Unable to install DApp: %1</oldsource>
         <translation type="unfinished">Unable to install DApp: %1</translation>
     </message>
     <message id="faucet-promo">

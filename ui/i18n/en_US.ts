@@ -3176,7 +3176,9 @@ cannot be canceled.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="appliactions-install-fail">
-        <source>Unable to install DApp: %1</source>
+        <source>Failed to install DApp:
+%1</source>
+        <oldsource>Unable to install DApp: %1</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="faucet-promo">
@@ -3283,9 +3285,9 @@ cannot be canceled.</translation>
     </message>
     <message id="apps-err-cnt" numerus="yes">
         <source>%n DApp(s) is not available</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n DApp is not available</numerusform>
+            <numerusform>%n DApps are not available</numerusform>
         </translation>
     </message>
     <message id="apps-uninstall-success">
