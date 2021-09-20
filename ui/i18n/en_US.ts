@@ -3178,8 +3178,8 @@ cannot be canceled.</translation>
     <message id="appliactions-install-fail">
         <source>Failed to install DApp:
 %1</source>
-        <oldsource>Unable to install DApp: %1</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Failed to install DApp:
+%1</translation>
     </message>
     <message id="faucet-promo">
         <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
