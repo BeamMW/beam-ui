@@ -446,47 +446,48 @@ ColumnLayout {
     }
 
     function loadAppsList () {
-        if (viewModel.appsUrl.length) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function()
+        if (!viewModel.appsUrl.length) {
+            // only local apps
+            control.appsList = checkSupport(appendLocalApps(undefined))
+            retrun
+        }
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function()
+        {
+            //% "Failed to load applications list, %1"
+            var errTemplate = qsTrId("apps-load-error")
+            if(xhr.readyState === XMLHttpRequest.DONE)
             {
-                //% "Failed to load applications list, %1"
-                var errTemplate = qsTrId("apps-load-error")
-                if(xhr.readyState === XMLHttpRequest.DONE)
+                if (xhr.status === 200)
                 {
-                    if (xhr.status === 200)
-                    {
-                        var list = JSON.parse(xhr.responseText)
-                        control.appsList = checkSupport(appendLocalApps(list))
+                    var list = JSON.parse(xhr.responseText)
+                    control.appsList = checkSupport(appendLocalApps(list))
 
-                        if (control.appToOpen) {
-                            for (let app of control.appsList)
-                            {
-                                if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
-                                    if (appSupported(app)) {
-                                        launchApp(app)
-                                    } else {
-                                        //% "Update Wallet to launch %1 application"
-                                        BeamGlobals.showMessage(qsTrId("apps-update-message").arg(app.name))
-                                    }
+                    if (control.appToOpen) {
+                        for (let app of control.appsList)
+                        {
+                            if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
+                                if (appSupported(app)) {
+                                    launchApp(app)
+                                } else {
+                                    //% "Update Wallet to launch %1 application"
+                                    BeamGlobals.showMessage(qsTrId("apps-update-message").arg(app.name))
                                 }
                             }
-                            control.appToOpen = undefined
                         }
-                    }
-                    else
-                    {
-                        control.appsList = checkSupport([])
-                        var errMsg = errTemplate.arg(["code", xhr.status].join(" "))
-                        control.errorMessage = errMsg
+                        control.appToOpen = undefined
                     }
                 }
+                else
+                {
+                    control.appsList = checkSupport([])
+                    var errMsg = errTemplate.arg(["code", xhr.status].join(" "))
+                    control.errorMessage = errMsg
+                }
             }
-            xhr.open('GET', viewModel.appsUrl, true)
-            xhr.send('')
         }
-
-        control.appsList = checkSupport(appendLocalApps(undefined))
+        xhr.open('GET', viewModel.appsUrl, true)
+        xhr.send('')
     }
 
     function checkSupport (apps) {
