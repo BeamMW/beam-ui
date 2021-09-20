@@ -327,10 +327,10 @@ namespace beamui::applications
             QString guid, appName;
             for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
             {
-                const auto fname = zip.getCurrentFileName();
-                if (fname == "manifest.json")
+                const auto zipFname = zip.getCurrentFileName();
+                if (zipFname == "manifest.json")
                 {
-                    QuaZipFile mfile(zip.getZipName(), fname);
+                    QuaZipFile mfile(zip.getZipName(), zipFname);
                     if (!mfile.open(QIODevice::ReadOnly))
                     {
                         throw std::runtime_error("Failed to read the DApp file");
