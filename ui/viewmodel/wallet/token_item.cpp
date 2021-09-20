@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#include <QPointer>
 #include "token_item.h"
 #include "viewmodel/ui_helpers.h"
 #include "model/app_model.h"
@@ -181,8 +182,10 @@ void TokenInfoItem::setToken(const QString& token)
 
             if (!getIgnoreStoredVouchers() && walletID)
             {
-                AppModel::getInstance().getWalletModel()->getAsync()->getAddress(*walletID, [this](const auto& addr, auto count)
+                QPointer<TokenInfoItem> guard(this);
+                AppModel::getInstance().getWalletModel()->getAsync()->getAddress(*walletID, [guard, this](const auto& addr, auto count)
                 {
+                    if (!guard) return;
                     setOfflinePayments((int)count);
                 });
             }

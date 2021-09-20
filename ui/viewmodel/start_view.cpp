@@ -21,6 +21,7 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 #include <QJSEngine>
+#include <QPointer>
 #include "settings_view.h"
 #include "model/app_model.h"
 #include "model/keyboard.h"
@@ -933,8 +934,10 @@ void StartViewModel::loadRecoveryPhraseForValidation()
     auto walletModel = AppModel::getInstance().getWalletModel();
     if (walletModel)
     {
-        walletModel->getAsync()->readRawSeedPhrase([this] (const std::string& savedSeed)
+        QPointer<StartViewModel> guard(this);
+        walletModel->getAsync()->readRawSeedPhrase([guard, this] (const std::string& savedSeed)
         {
+            if (!guard) return;
             if (savedSeed.empty()) return;
 
             m_generatedPhrases.clear();

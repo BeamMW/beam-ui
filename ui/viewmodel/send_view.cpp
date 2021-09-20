@@ -396,21 +396,21 @@ void SendViewModel::saveReceiverAddress(const QString& comment)
     {
         if (_receiverWalletID.IsValid())
         {
-            _walletModel.getAsync()->getAddress(_receiverWalletID, [this, trimmed](const boost::optional<WalletAddress>& addr, size_t c)
+            _walletModel.getAsync()->getAddress(_receiverWalletID, [trimmed](const boost::optional<WalletAddress>& addr, size_t c)
             {
                 WalletAddress address = *addr;
                 address.m_label = trimmed.toStdString();
-                _walletModel.getAsync()->saveAddress(address);
+                AppModel::getInstance().getWalletModel()->getAsync()->saveAddress(address);
             });
         }
         else
         {
             // Max privacy & public offline tokens do not have valid PeerID (_receiverWalletID)
-            _walletModel.getAsync()->getAddressByToken(_token.toStdString(), [this, trimmed](const boost::optional<WalletAddress>& addr, size_t c)
+            _walletModel.getAsync()->getAddressByToken(_token.toStdString(), [trimmed](const boost::optional<WalletAddress>& addr, size_t c)
             {
                 WalletAddress address = *addr;
                 address.m_label = trimmed.toStdString();
-                _walletModel.getAsync()->saveAddress(address);
+                AppModel::getInstance().getWalletModel()->getAsync()->saveAddress(address);
             });
         }
     }
@@ -538,16 +538,20 @@ void SendViewModel::extractParameters()
 
     if (_receiverWalletID.IsValid())
     {
-        _walletModel.getAsync()->getAddress(_receiverWalletID, [this](const boost::optional<WalletAddress>& addr, size_t c)
+        QPointer<SendViewModel> guard(this);
+        _walletModel.getAsync()->getAddress(_receiverWalletID, [this, guard](const boost::optional<WalletAddress>& addr, size_t c)
         {
+            if (!guard) return;
             onGetAddressReturned(addr, c);
         });
     }
     else
     {
         // Max privacy & public offline tokens do not have valid PeerID (_receiverWalletID)
-        _walletModel.getAsync()->getAddressByToken(_token.toStdString(), [this](const boost::optional<WalletAddress>& addr, size_t c)
+        QPointer<SendViewModel> guard(this);
+        _walletModel.getAsync()->getAddressByToken(_token.toStdString(), [this, guard](const boost::optional<WalletAddress>& addr, size_t c)
         {
+            if (!guard) return;
             onGetAddressReturned(addr, c);
         });
     }
