@@ -21,7 +21,7 @@ CustomDialog {
     property alias cancelButtonVisible: cancelButton.visible
     property alias cancelButtonColor: cancelButton.palette.button
     property alias cancelButtonAllLowercase: cancelButton.allLowercase
-    property var   defaultFocusItem: cancelButton
+    property var   defaultFocusItem: undefined
     property var   beforeAccept: function(){return true}
 
     x: (parent.width - width) / 2

@@ -51,7 +51,7 @@ ConfirmationDialog {
         return false
     }
 
-    defaultFocusItem: BeamGlobals.needPasswordToSpend() ? requirePasswordInput : cancelButton
+    defaultFocusItem: BeamGlobals.needPasswordToSpend() ? requirePasswordInput : undefined
     title: {
         if (control.appMode) {
             if (isReceive && isSpend) {

@@ -566,10 +566,6 @@ ColumnLayout {
                             },
                         })
 
-                    instance.onAccepted.connect(function () {
-                        viewModel.sendMoney()
-                    })
-
                     instance.open()
                 }
             }
