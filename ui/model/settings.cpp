@@ -121,8 +121,12 @@ WalletSettings::WalletSettings(const QDir& appDataDir)
     : m_data{ appDataDir.filePath(SettingsFile), QSettings::IniFormat }
     , m_appDataDir{appDataDir}
 {
-    LOG_INFO () << "UI Settings file: " << m_data.fileName().toStdString()
-                << "\n\tApp Name: " << m_data.value(kDevAppName).toString().toStdString();
+    LOG_INFO () << "UI Settings file: " << m_data.fileName().toStdString();
+    const auto devapp = m_data.value(kDevAppName).toString().toStdString();
+    if (!devapp.empty())
+    {
+        LOG_INFO() << "DevApp Name: " << devapp;
+    }
 }
 
 #if defined(BEAM_HW_WALLET)
