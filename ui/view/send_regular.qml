@@ -561,10 +561,11 @@ ColumnLayout {
                             rateUnit:      control.rateUnit,
                             fee:           viewModel.fee,
                             feeRate:       viewModel.feeRate,
-                            onAccepted: function () {
-                                viewModel.sendMoney()
-                            },
                         })
+
+                    instance.onAccepted.connect(function () {
+                        viewModel.sendMoney()
+                    })
 
                     instance.open()
                 }
