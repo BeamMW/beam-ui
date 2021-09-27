@@ -71,7 +71,7 @@ QString getStatusTextTranslated(const QString& status, beam::wallet::TxAddressTy
     }
     else if (status == "cancelled")
     {
-        //% "cancelled"
+        //% "canceled"
         return qtTrId("wallet-txs-status-cancelled");
     }
     else if (status == "expired")
