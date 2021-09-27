@@ -367,5 +367,7 @@
         <file>assets/icon-verified-asset.svg</file>
         <file>assets/asset-beamx.svg</file>
         <file>assets/icon-refresh.svg</file>
+        <file>assets/icon-help.svg</file>
+        <file>assets/icon-help-active.svg</file>
     </qresource>
 </RCC>
