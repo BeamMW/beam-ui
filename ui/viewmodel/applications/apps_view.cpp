@@ -12,20 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include <QObject>
-#include <QMessageBox>
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QWebEngineProfile>
 #include <QFileDialog>
 #include "apps_view.h"
 #include "utility/logger.h"
-#include "model/settings.h"
 #include "model/app_model.h"
 #include "version.h"
 #include "quazip/quazip.h"
 #include "quazip/quazipfile.h"
 #include "quazip/JlCompress.h"
 #include "viewmodel/qml_globals.h"
-#include "public.h"
+#include "wallet/client/apps_api/apps_utils.h"
 
 namespace beamui::applications
 {
@@ -163,7 +161,7 @@ namespace beamui::applications
         }
 
         app.insert("local", true);
-        const auto appid = GenerateAppID(sname, surl);
+        const auto appid = beam::wallet::GenerateAppID(sname, surl);
         app.insert("appid", QString::fromStdString(appid));
 
         return app;
@@ -182,7 +180,7 @@ namespace beamui::applications
 
             const auto name  = AppSettings().getDevAppName();
             const auto url   = AppSettings().getDevAppUrl();
-            const auto appid = QString::fromStdString(GenerateAppID(name.toStdString(), url.toStdString()));
+            const auto appid = QString::fromStdString(beam::wallet::GenerateAppID(name.toStdString(), url.toStdString()));
 
             //% "This is your dev application"
             devapp.insert("description",     qtTrId("apps-devapp"));

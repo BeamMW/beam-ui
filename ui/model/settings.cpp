@@ -16,7 +16,6 @@
 #include <map>
 #include <QFileDialog>
 #include <QtQuick>
-
 #include "model/app_model.h"
 #include "wallet/core/default_peers.h"
 #include "version.h"
@@ -24,6 +23,7 @@
 #include "viewmodel/applications/public.h"
 #include "quazip/quazip.h"
 #include "quazip/quazipfile.h"
+#include "wallet/client/apps_api/apps_utils.h"
 
 using namespace std;
 
@@ -749,7 +749,7 @@ QString WalletSettings::getAppsCachePath(const QString& appid) const
 {
     Lock lock(m_mutex);
     const QString kCacheFolder = "appcache";
-    auto rawAppID = beamui::applications::StripAppIDPrefix(appid.toStdString());
+    auto rawAppID = beam::wallet::StripAppIDPrefix(appid.toStdString());
 
     QString cachePath = QDir::cleanPath(
             QStandardPaths::writableLocation(QStandardPaths::StandardLocation::CacheLocation) +
@@ -767,7 +767,7 @@ QString WalletSettings::getAppsStoragePath(const QString& appid) const
 {
     Lock lock(m_mutex);
     const char* kStorageFolder = "appstorage";
-    auto rawAppID = beamui::applications::StripAppIDPrefix(appid.toStdString());
+    auto rawAppID = beam::wallet::StripAppIDPrefix(appid.toStdString());
 
     QString storagePath = QDir::cleanPath(
             m_appDataDir.path() +
