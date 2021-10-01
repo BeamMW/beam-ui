@@ -400,6 +400,7 @@ ColumnLayout {
         onInstall: function (fname) {
             if (!fname.length) {
                 fname = viewModel.choseFile();
+                if (!fname.length) return;
             }
 
             var appName = viewModel.installFromFile(fname);
