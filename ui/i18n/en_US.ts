@@ -3170,17 +3170,6 @@ cannot be canceled.</translation>
         <source>Select application to install</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="appliactions-install-ok">
-        <source>&apos;%1&apos; is successfully installed</source>
-        <oldsource>%1 is successfully installed</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="appliactions-install-fail">
-        <source>Failed to install DApp:
-%1</source>
-        <translation>Failed to install DApp:
-%1</translation>
-    </message>
     <message id="faucet-promo">
         <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
         <translation>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</translation>
@@ -3291,12 +3280,12 @@ cannot be canceled.</translation>
         </translation>
     </message>
     <message id="apps-uninstall-success">
-        <source>%1 DApp is successfully uninstalled.</source>
-        <translation type="unfinished"></translation>
+        <source>&apos;%1&apos; DApp is successfully uninstalled.</source>
+        <translation>&apos;%1&apos; DApp is successfully uninstalled.</translation>
     </message>
     <message id="apps-uninstall-fail">
-        <source>Failed to uninstall %1 DApp.</source>
-        <translation type="unfinished"></translation>
+        <source>Failed to uninstall &apos;%1&apos; DApp.</source>
+        <translation>Failed to uninstall &apos;%1&apos; DApp.</translation>
     </message>
     <message id="apps-inprogress-tip">
         <source>(%1 active)</source>
@@ -3315,6 +3304,20 @@ cannot be canceled.</translation>
 In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
         <translation>To ensure a better privacy, new address is generated every time.
 In case you’d like to re-use an earlier created regular address please use the Address Book.</translation>
+    </message>
+    <message id="apps-install-success">
+        <source>&apos;%1&apos; is successfully installed.</source>
+        <translation>&apos;%1&apos; is successfully installed.</translation>
+    </message>
+    <message id="apps-install-fail">
+        <source>Failed to install DApp:
+%1</source>
+        <translation>Failed to install DApp:
+%1</translation>
+    </message>
+    <message id="app-install-title">
+        <source>Install DApp</source>
+        <translation>Install DApp</translation>
     </message>
 </context>
 </TS>

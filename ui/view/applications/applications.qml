@@ -398,20 +398,33 @@ ColumnLayout {
         }
 
         onInstall: function (fname) {
-            if (viewModel.installFromFile(fname)) {
-                loadAppsList()
+            if (!fname.length) {
+                fname = viewModel.choseFile();
+            }
+
+            var appName = viewModel.installFromFile(fname);
+            if (appName.length) {
+                loadAppsList();
+                //% "'%1' is successfully installed."
+                installOK.text = qsTrId("apps-install-success").arg(appName)
+                installOK.open()
+            } else {
+                //% "Failed to install DApp:\n%1"
+                installFail.text = qsTrId("apps-install-fail").arg(fname)
+                installFail.open()
             }
         }
 
         onUninstall: function (app) {
             if (viewModel.uninstallLocalApp(app.appid)) {
-                //% "%1 DApp is successfully uninstalled."
-                installOK.text = qsTrId("apps-uninstall-success").arg(app.name)
-                installOK.open()
+
+                //% "'%1' DApp is successfully uninstalled."
+                uninstallOK.text = qsTrId("apps-uninstall-success").arg(app.name)
+                uninstallOK.open()
             } else {
-                //% "Failed to uninstall %1 DApp."
-                installFail.text = qsTrId("apps-uninstall-fail").arg(app.name)
-                installFail.open()
+                //% "Failed to uninstall '%1' DApp."
+                uninstallFail.text = qsTrId("apps-uninstall-fail").arg(app.name)
+                uninstallFail.open()
             }
             loadAppsList()
         }
@@ -517,6 +530,25 @@ ColumnLayout {
 
     ConfirmationDialog {
         id: installOK
+        //% "Install DApp"
+        title: qsTrId("app-install-title")
+        //% "Ok"
+        okButtonText: qsTrId("general-ok")
+        cancelButtonVisible: false
+    }
+
+    ConfirmationDialog {
+        id: installFail
+        //% "Install DApp"
+        title: qsTrId("app-install-title")
+        //% "Ok"
+        okButtonText: qsTrId("general-ok")
+        okButton.palette.button: Style.accent_fail
+        cancelButtonVisible: false
+    }
+
+    ConfirmationDialog {
+        id: uninstallOK
         //% "Uninstall DApp"
         title: qsTrId("app-uninstall-title")
         //% "Ok"
@@ -525,7 +557,7 @@ ColumnLayout {
     }
 
     ConfirmationDialog {
-        id: installFail
+        id: uninstallFail
         //% "Uninstall DApp"
         title: qsTrId("app-uninstall-title")
         //% "Ok"
