@@ -361,7 +361,7 @@ In case you’d like to re-use an earlier created regular address please use the
             // Footers
             //
             SFText {
-                property string mpLockTimeLimit: viewModel.mpTimeLimit
+                property int mpLockTimeLimit: viewModel.mpTimeLimit
                 Layout.alignment:      Qt.AlignHCenter
                 Layout.preferredWidth: 428
                 Layout.topMargin:      15
@@ -371,11 +371,24 @@ In case you’d like to re-use an earlier created regular address please use the
                 wrapMode:              Text.WordWrap
                 horizontalAlignment:   Text.AlignHCenter
                 visible:               viewModel.isMaxPrivacy
-                text: (mpLockTimeLimit != "0" ?
-                    //% " Transaction can last at most %1 hours."
-                    qsTrId("wallet-receive-addr-message-mp").arg(mpLockTimeLimit) :
+                text: (mpLockTimeLimit ?
+                    //% "Transaction can last at most %n hour(s)."
+                    qsTrId("wallet-receive-addr-message-mp", mpLockTimeLimit) :
                     //% "Transaction can last indefinitely."
                     qsTrId("wallet-receive-addr-message-mp-no-limit")) + "\n"
+            }
+
+            SFText {
+                Layout.alignment:      Qt.AlignHCenter
+                Layout.preferredWidth: 428
+                font.pixelSize:        14
+                font.italic:           true
+                color:                 Style.content_disabled
+                wrapMode:              Text.WordWrap
+                horizontalAlignment:   Text.AlignHCenter
+                visible:               viewModel.isMaxPrivacy
+                //% "Min transaction fee is 0.01 BEAM"
+                text: qsTrId("wallet-receive-addr-message-min-fee")
             }
 
             SFText {

@@ -2581,10 +2581,12 @@ Update your settings and try again.</source>
         <source>(optional)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="wallet-receive-addr-message-mp">
-        <source> Transaction can last at most %1 hours.</source>
-        <oldsource>Max Privacy transaction can last at most %1 hours.</oldsource>
-        <translation type="unfinished"></translation>
+    <message id="wallet-receive-addr-message-mp" numerus="yes">
+        <source>Transaction can last at most %n hour(s).</source>
+        <translation>
+            <numerusform>Transaction can last at most %n hour</numerusform>
+            <numerusform>Transaction can last at most %n hours</numerusform>
+        </translation>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
@@ -3323,6 +3325,10 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="settings-privacy-mp-time-limit-val72-comment">
         <source> (recommended)</source>
         <translation> (recommended)</translation>
+    </message>
+    <message id="wallet-receive-addr-message-min-fee">
+        <source>Min transaction fee is 0.01 BEAM</source>
+        <translation>Min transaction fee is 0.01 BEAM</translation>
     </message>
 </context>
 </TS>
