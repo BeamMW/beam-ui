@@ -3319,5 +3319,13 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>Install DApp</source>
         <translation>Install DApp</translation>
     </message>
+    <message id="address-details">
+        <source>Address details</source>
+        <translation>Address details</translation>
+    </message>
+    <message id="swap-token-details">
+        <source>Token details</source>
+        <translation>Token details</translation>
+    </message>
 </context>
 </TS>

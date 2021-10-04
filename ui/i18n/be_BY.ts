@@ -3368,5 +3368,13 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>Install DApp</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="address-details">
+        <source>Address details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-token-details">
+        <source>Token details</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -292,8 +292,8 @@ ColumnLayout {
 
                                     LinkButton {
                                         Layout.alignment: Qt.AlignHCenter
-                                        //% "More details"
-                                        text:       qsTrId("more-details")
+                                        //% "Address details"
+                                        text:       qsTrId("address-details")
                                         linkColor:  Style.accent_incoming
                                         onClicked:  function () {
                                             tokenInfoDialog.open()
