@@ -2140,28 +2140,9 @@ max privacy</oldsource>
         <translation>Атрыманыя манеты можна адразу выдаткаваць.</translation>
     </message>
     <message id="settings-privacy-mp-time-limit">
-        <source>Max privacy longest transaction time</source>
+        <source>Longest transaction time for maximum anonymity</source>
+        <oldsource>Max privacy longest transaction time</oldsource>
         <translation type="unfinished">Max privacy longest transaction time</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-72">
-        <source>72h</source>
-        <translation>72 гадзiны</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-60">
-        <source>60h</source>
-        <translation>60 гадзiн</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-48">
-        <source>48h</source>
-        <translation>48 гадзiн</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-36">
-        <source>36h</source>
-        <translation>36 гадзiн</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-24">
-        <source>24h</source>
-        <translation>24 гадзiны</translation>
     </message>
     <message id="remote-node-lelantus-warning">
         <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
@@ -3374,6 +3355,23 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="swap-token-details">
         <source>Token details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-privacy-mp-time-no-limit-commented">
+        <source>No limit
+(transaction can last indefinitely)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-val" numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-val72-comment">
+        <source> (recommended)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
