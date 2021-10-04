@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include <QObject>
-#include <QMessageBox>
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QWebEngineProfile>
 #include <QFileDialog>
 #include "apps_view.h"
 #include "utility/logger.h"
-#include "model/settings.h"
 #include "model/app_model.h"
 #include "version.h"
 #include "quazip/quazip.h"
 #include "quazip/quazipfile.h"
 #include "quazip/JlCompress.h"
 #include "viewmodel/qml_globals.h"
+#include "wallet/client/apps_api/apps_utils.h"
 
 namespace beamui::applications
 {
@@ -115,14 +114,18 @@ namespace beamui::applications
         {
             throw std::runtime_error("Invalid app name in the manifest file");
         }
-        app.insert("name", QString::fromStdString(name.get<std::string>()));
+
+        const auto sname = name.get<std::string>();
+        app.insert("name", QString::fromStdString(sname));
 
         const auto& url = json["url"];
         if (!url.is_string() || url.empty())
         {
             throw std::runtime_error("Invalid url in the manifest file");
         }
-        app.insert("url", expandLocalUrl(appFolder, url.get<std::string>()));
+
+        const auto surl = url.get<std::string>();
+        app.insert("url", expandLocalUrl(appFolder, surl));
 
         const auto& icon = json["icon"];
         if (!icon.empty())
@@ -131,7 +134,10 @@ namespace beamui::applications
             {
                 throw std::runtime_error("Invalid icon in the manifest file");
             }
-            app.insert("icon", expandLocalFile(appFolder, icon.get<std::string>()));
+
+            const auto ipath = expandLocalFile(appFolder, icon.get<std::string>());
+            app.insert("icon", ipath);
+            LOG_INFO() << "App: " << sname << ", icon: " << ipath.toStdString();
         }
 
         const auto& av = json["api_version"];
@@ -154,6 +160,10 @@ namespace beamui::applications
             throw std::runtime_error("Invalid min_api_version in the manifest file");
         }
 
+        app.insert("local", true);
+        const auto appid = beam::wallet::GenerateAppID(sname, surl);
+        app.insert("appid", QString::fromStdString(appid));
+
         return app;
     }
 
@@ -167,12 +177,18 @@ namespace beamui::applications
         if (!AppSettings().getDevAppName().isEmpty())
         {
             QMap<QString, QVariant> devapp;
+
+            const auto name  = AppSettings().getDevAppName();
+            const auto url   = AppSettings().getDevAppUrl();
+            const auto appid = QString::fromStdString(beam::wallet::GenerateAppID(name.toStdString(), url.toStdString()));
+
             //% "This is your dev application"
             devapp.insert("description",     qtTrId("apps-devapp"));
-            devapp.insert("name",            AppSettings().getDevAppName());
-            devapp.insert("url",             AppSettings().getDevAppUrl());
+            devapp.insert("name",            name);
+            devapp.insert("url",             url);
             devapp.insert("api_version",     AppSettings().getDevAppApiVer());
             devapp.insert("min_api_version", AppSettings().getDevAppMinApiVer());
+            devapp.insert("appid", appid);
             result.push_back(devapp);
         }
 
@@ -194,8 +210,9 @@ namespace beamui::applications
                 }
 
                 QTextStream in(&file);
+
                 auto app = validateAppManifest(in, justFolder);
-                app.insert("local", true);
+                app.insert("full_path", fullFolder);
                 result.push_back(app);
             }
             catch(std::runtime_error& err)
@@ -204,7 +221,46 @@ namespace beamui::applications
             }
         }
 
+        _lastLocalApps = result;
         return result;
+    }
+
+    bool AppsViewModel::uninstallLocalApp(const QString& appid)
+    {
+        const auto it = std::find_if(_lastLocalApps.begin(), _lastLocalApps.end(), [appid](const auto& props) -> bool {
+            const auto ait = props.find("appid");
+            if (ait == props.end())
+            {
+                assert(false);
+                return false;
+            }
+            return ait->toString() == appid;
+        });
+
+        if (it == _lastLocalApps.end())
+        {
+            assert(false);
+            return false;
+        }
+
+        const auto pathit = it->find("full_path");
+        if (pathit == it->end())
+        {
+            assert(false);
+            return false;
+        }
+
+        const auto path = pathit->toString();
+        if (path.isEmpty())
+        {
+            assert(false);
+            return false;
+        }
+
+        LOG_INFO() << "Deleting local app in folder " << path.toStdString();
+
+        QDir dir(path);
+        return dir.removeRecursively();
     }
 
     QString AppsViewModel::expandLocalUrl(const QString& folder, const std::string& url) const
@@ -218,7 +274,7 @@ namespace beamui::applications
     {
         auto path = QDir(AppSettings().getLocalAppsPath()).filePath(folder);
         auto result = QString::fromStdString(url);
-        result.replace("localapp", QString("file://") + path);
+        result.replace("localapp", QString("file:///") + path);
         return result;
     }
 
@@ -238,23 +294,27 @@ namespace beamui::applications
         }
     }
 
-    bool AppsViewModel::installFromFile()
+    QString AppsViewModel::choseFile()
     {
         QFileDialog dialog(nullptr,
-                        //% "Select application to install"
-                        qtTrId("applications-install-title"),
-                        "",
-                        "BEAM DApp files (*.dapp)");
+                           //% "Select application to install"
+                           qtTrId("applications-install-title"),
+                           "",
+                           "BEAM DApp files (*.dapp)");
+
         dialog.setWindowModality(Qt::WindowModality::ApplicationModal);
         if (!dialog.exec())
         {
-            return false;
+            return "";
         }
+        return dialog.selectedFiles().value(0);
+    }
 
+    QString AppsViewModel::installFromFile(const QString& fname)
+    {
         try
         {
-            QString archiveName = dialog.selectedFiles().value(0);
-            QuaZip zip(archiveName);
+            QuaZip zip(fname);
             if(!zip.open(QuaZip::Mode::mdUnzip))
             {
                 throw std::runtime_error("Failed to open the DApp file");
@@ -263,10 +323,10 @@ namespace beamui::applications
             QString guid, appName;
             for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
             {
-                const auto fname = zip.getCurrentFileName();
-                if (fname == "manifest.json")
+                const auto zipFname = zip.getCurrentFileName();
+                if (zipFname == "manifest.json")
                 {
-                    QuaZipFile mfile(zip.getZipName(), fname);
+                    QuaZipFile mfile(zip.getZipName(), zipFname);
                     if (!mfile.open(QIODevice::ReadOnly))
                     {
                         throw std::runtime_error("Failed to read the DApp file");
@@ -281,7 +341,7 @@ namespace beamui::applications
 
             if (guid.isEmpty())
             {
-                throw std::runtime_error("Invalid DAPP file");
+                throw std::runtime_error("Invalid DApp file");
             }
 
             const auto appsPath = AppSettings().getLocalAppsPath();
@@ -296,23 +356,18 @@ namespace beamui::applications
             }
 
             QDir(appsPath).mkdir(guid);
-            if(JlCompress::extractDir(archiveName, appFolder).isEmpty())
+            if(JlCompress::extractDir(fname, appFolder).isEmpty())
             {
                 //cleanupFolder(appFolder)
-                throw std::runtime_error("DAPP Installation failed");
+                throw std::runtime_error("DApp Installation failed");
             }
 
-            //% "'%1' is successfully installed"
-            QMLGlobals::showMessage(qtTrId("appliactions-install-ok").arg(appName));
-            return true;
+            return appName;
         }
         catch(std::exception& err)
         {
-            //% "Failed to install DAPP: %1"
-            const auto errMsg = qtTrId("appliactions-install-fail").arg(err.what());
-            LOG_ERROR() << errMsg.toStdString();
-            QMLGlobals::showMessage(errMsg);
-            return false;
+            LOG_ERROR() << "Failed to install DApp: " << err.what();
+            return "";
         }
     }
 }

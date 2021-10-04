@@ -17,7 +17,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include "qml_globals.h"
-#include "applications/public.h"
+#include "wallet/client/apps_api/apps_utils.h"
 
 namespace
 {
@@ -127,7 +127,7 @@ QString MainViewModel::getDaoCoreAppID() const
     appURL = "http://3.19.141.112:80/app/plugin-dao-core/index.html";
     #endif
 
-    const auto appid = beamui::applications::GenerateAppID(appName, appURL);
+    const auto appid = beam::wallet::GenerateAppID(appName, appURL);
     return QString::fromStdString(appid);
 }
 
@@ -144,7 +144,7 @@ QString MainViewModel::getFaucetAppID() const
     appURL = "http://3.19.141.112:80/app/plugin-faucet/index.html";
     #endif
 
-    const auto appid = beamui::applications::GenerateAppID(appName, appURL);
+    const auto appid = beam::wallet::GenerateAppID(appName, appURL);
     return QString::fromStdString(appid);
 }
 

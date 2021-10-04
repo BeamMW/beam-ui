@@ -191,8 +191,9 @@
         <translation>отправлено</translation>
     </message>
     <message id="wallet-txs-status-cancelled">
-        <source>cancelled</source>
-        <translation>отменено</translation>
+        <source>canceled</source>
+        <oldsource>cancelled</oldsource>
+        <translation type="unfinished">отменено</translation>
     </message>
     <message id="wallet-txs-status-expired">
         <source>expired</source>
@@ -1869,26 +1870,23 @@ max privacy</oldsource>
 макс. приватность</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
-        <source>in progress
-(offline)</source>
+        <source>in progress (offline)</source>
         <oldsource>in progress
-offline</oldsource>
+(offline)</oldsource>
         <translation type="unfinished">в процессе
 оффлайн</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
-        <source>sent
-(offline)</source>
+        <source>sent (offline)</source>
         <oldsource>sent
-offline</oldsource>
+(offline)</oldsource>
         <translation type="unfinished">отправлено
 оффлайн</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
-        <source>received
-(offline)</source>
+        <source>received (offline)</source>
         <oldsource>received
-offline</oldsource>
+(offline)</oldsource>
         <translation type="unfinished">получено
 оффлайн</translation>
     </message>
@@ -2096,10 +2094,9 @@ max privacy</oldsource>
 </translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
-        <source>canceled
-(offline)</source>
+        <source>canceled (offline)</source>
         <oldsource>canceled
-offline</oldsource>
+(offline)</oldsource>
         <translation type="unfinished">отменено
 оффлайн</translation>
     </message>
@@ -2112,10 +2109,9 @@ max privacy</oldsource>
 макс. приватность</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
-        <source>failed
-(offline)</source>
+        <source>failed (offline)</source>
         <oldsource>failed
-offline</oldsource>
+(offline)</oldsource>
         <translation type="unfinished">ошибка
 оффлайн</translation>
     </message>
@@ -2242,20 +2238,8 @@ much longer for a transaction to complete.</source>
         <translation>ID проекта Infura</translation>
     </message>
     <message id="apps-title">
-        <source>DAPP Store</source>
-        <translation>DAPP Store</translation>
-    </message>
-    <message id="apps-nothing">
-        <source>There are no applications at the moment</source>
-        <translation>На данный момент нет приложений</translation>
-    </message>
-    <message id="apps-loading-app">
-        <source>Please wait, %1 is loading</source>
-        <translation>%1 загружается, пожалуйста, подождите</translation>
-    </message>
-    <message id="apps-loading">
-        <source>Loading...</source>
-        <translation>Загрузка...</translation>
+        <source>DApp Store</source>
+        <translation>DApp Store</translation>
     </message>
     <message id="apps-run">
         <source>launch</source>
@@ -2264,10 +2248,6 @@ much longer for a transaction to complete.</source>
     <message id="apps-devapp">
         <source>This is your dev application</source>
         <translation>Это ваше разрабатываемое приложение</translation>
-    </message>
-    <message id="apps-load-error">
-        <source>Failed to load applications list, %1</source>
-        <translation>Не удалось загрузить список приложений, %1</translation>
     </message>
     <message id="dex-all-tab">
         <source>All orders</source>
@@ -2326,12 +2306,12 @@ Please try again later or create an offer yourself.</source>
         <translation>Описание не предоставлено контрактом</translation>
     </message>
     <message id="notification-contract-completed">
-        <source>DAPP transaction completed</source>
-        <translation>Транзакция DAPP завершена</translation>
+        <source>DApp transaction completed</source>
+        <translation>Транзакция DApp завершена</translation>
     </message>
     <message id="notification-contract-expired">
-        <source>DAPP transaction expired</source>
-        <translation>Срок действия транзакции DAPP истёк</translation>
+        <source>DApp transaction expired</source>
+        <translation>Срок действия транзакции DApp истёк</translation>
     </message>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
@@ -2899,8 +2879,8 @@ Update your settings and try again.</source>
         <translation>Этот адрес уже истёк</translation>
     </message>
     <message id="notification-contract-failed">
-        <source>DAPP transaction failed</source>
-        <translation>Ошибка транзакции DAPP</translation>
+        <source>DApp transaction failed</source>
+        <translation>Ошибка транзакции DApp</translation>
     </message>
     <message id="contacts-empty">
         <source>Your contact list is empty</source>
@@ -2920,7 +2900,7 @@ Update your settings and try again.</source>
     </message>
     <message id="apps-fork-warning">
         <source>DAPPs will be available in your wallet after the Hard Fork</source>
-        <translation>DAPP будут доступны в вашем кошельке после Hard Fork</translation>
+        <translation>DApp будут доступны в вашем кошельке после Hard Fork</translation>
     </message>
     <message id="address-info-cid">
         <source>Application shader ID</source>
@@ -3072,8 +3052,8 @@ Update your settings and try again.</source>
         <translation>Описание</translation>
     </message>
     <message id="address-info-dapp">
-        <source>DAPP name</source>
-        <translation>Имя DAPP</translation>
+        <source>DApp name</source>
+        <translation>Имя DApp</translation>
     </message>
     <message id="dapps-privacy-title">
         <source>DApps Privacy</source>
@@ -3099,10 +3079,6 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <source>Insufficient funds to pay transaction fee.</source>
         <translation>Недостаточно средств для оплаты комиссии.</translation>
     </message>
-    <message id="apps-inprogress-tip">
-        <source>(%1 active)</source>
-        <translation>(%1 активно)</translation>
-    </message>
     <message id="tx-details-general-info">
         <source>General info</source>
         <translation>Общая информация</translation>
@@ -3122,10 +3098,6 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     <message id="general-show-tx-details">
         <source>Show details</source>
         <translation>Показать подробности</translation>
-    </message>
-    <message id="apps-update-message">
-        <source>Update Wallet to launch %1 application</source>
-        <translation>Обновите кошелек для запуска приложения %1</translation>
     </message>
     <message id="general-advanced">
         <source>Advanced</source>
@@ -3236,24 +3208,15 @@ cannot be canceled.</source>
     </message>
     <message id="apps-install-from-file">
         <source>Install DApp from file</source>
-        <translation>Установить DAPP из файла</translation>
+        <translation>Установить DApp из файла</translation>
     </message>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>Выберите приложение для установки</translation>
     </message>
-    <message id="appliactions-install-ok">
-        <source>&apos;%1&apos; is successfully installed</source>
-        <oldsource>%1 is successfully installed</oldsource>
-        <translation>&apos;%1&apos; успешно установлено</translation>
-    </message>
-    <message id="appliactions-install-fail">
-        <source>Failed to install DAPP: %1</source>
-        <translation>Не удалось установить DAPP: %1</translation>
-    </message>
     <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</source>
-        <translation>Посмотрите кошелек в действии. Получите небольшое количество Beam от Faucet DAPP.</translation>
+        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
+        <translation>Посмотрите кошелек в действии. Получите небольшое количество Beam от Faucet DApp.</translation>
     </message>
     <message id="faucet-promo-get-coins">
         <source>get coins</source>
@@ -3296,35 +3259,67 @@ cannot be canceled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-to-own">
-        <source>sending (maximum anonymity)
-to own address</source>
-        <oldsource>sending max privacy
+        <source>sending to own address
+(maximum anonymity)</source>
+        <oldsource>sending (maximum anonymity)
 to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-in-progress-offline-to-own">
-        <source>sending (offline)
-to own address</source>
-        <oldsource>sending offline
+        <source>sending to own address
+(offline)</source>
+        <oldsource>sending (offline)
 to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-sent-max-to-own">
-        <source>sent (maximum anonymity)
-to own address</source>
-        <oldsource>sent max privacy
+        <source>sent to own address
+(maximum anonymity)</source>
+        <oldsource>sent (maximum anonymity)
 to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-txs-status-sent-offline-to-own">
-        <source>sent (offline)
-to own address</source>
-        <oldsource>sent offline
+        <source>sent to own address
+(offline)</source>
+        <oldsource>sent (offline)
 to own address</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-version-error">
-        <source>This DApp requires version %1 of Beam Wallet or higher. Please update.</source>
+        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
+        <oldsource>This DApp requires version %1 of Beam Wallet or higher. Please update.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-waiting-receiver-offline">
+        <source>waiting for receiver
+(offline)</source>
+        <oldsource>waiting for receiver (offline)</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-uninstall">
+        <source>Uninstall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-uninstall-confirm">
+        <source>Are you sure you want to uninstall %1 DApp?</source>
+        <oldsource>Are you sure you want to cancel %1 DApp?</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-uninstall-title">
+        <source>Uninstall DApp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-loading-app">
+        <source>Please wait, %1 is loading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-loading">
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-nothing">
+        <source>There are no applications at the moment</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-err-cnt" numerus="yes">
@@ -3334,6 +3329,46 @@ to own address</oldsource>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message id="apps-uninstall-success">
+        <source>&apos;%1&apos; DApp is successfully uninstalled.</source>
+        <oldsource>%1 DApp is successfully uninstalled.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-uninstall-fail">
+        <source>Failed to uninstall &apos;%1&apos; DApp.</source>
+        <oldsource>Failed to uninstall %1 DApp.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-inprogress-tip">
+        <source>(%1 active)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-load-error">
+        <source>Failed to load applications list, %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-update-message">
+        <source>Update Wallet to launch %1 application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-regular-address-message">
+        <source>To ensure a better privacy, new address is generated every time.
+In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-install-success">
+        <source>&apos;%1&apos; is successfully installed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-install-fail">
+        <source>Failed to install DApp:
+%1</source>
+        <translation type="unfinished">Не удалось установить DApp: %1</translation>
+    </message>
+    <message id="app-install-title">
+        <source>Install DApp</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

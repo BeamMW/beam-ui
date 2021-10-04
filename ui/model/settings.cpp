@@ -16,7 +16,6 @@
 #include <map>
 #include <QFileDialog>
 #include <QtQuick>
-
 #include "model/app_model.h"
 #include "wallet/core/default_peers.h"
 #include "version.h"
@@ -24,6 +23,7 @@
 #include "viewmodel/applications/public.h"
 #include "quazip/quazip.h"
 #include "quazip/quazipfile.h"
+#include "wallet/client/apps_api/apps_utils.h"
 
 using namespace std;
 
@@ -121,8 +121,12 @@ WalletSettings::WalletSettings(const QDir& appDataDir)
     : m_data{ appDataDir.filePath(SettingsFile), QSettings::IniFormat }
     , m_appDataDir{appDataDir}
 {
-    LOG_INFO () << "UI Settings file: " << m_data.fileName().toStdString()
-                << "\n\tApp Name: " << m_data.value(kDevAppName).toString().toStdString();
+    LOG_INFO () << "UI Settings file: " << m_data.fileName().toStdString();
+    const auto devapp = m_data.value(kDevAppName).toString().toStdString();
+    if (!devapp.empty())
+    {
+        LOG_INFO() << "DevApp Name: " << devapp;
+    }
 }
 
 #if defined(BEAM_HW_WALLET)
@@ -745,7 +749,7 @@ QString WalletSettings::getAppsCachePath(const QString& appid) const
 {
     Lock lock(m_mutex);
     const QString kCacheFolder = "appcache";
-    auto rawAppID = beamui::applications::StripAppIDPrefix(appid.toStdString());
+    auto rawAppID = beam::wallet::StripAppIDPrefix(appid.toStdString());
 
     QString cachePath = QDir::cleanPath(
             QStandardPaths::writableLocation(QStandardPaths::StandardLocation::CacheLocation) +
@@ -763,7 +767,7 @@ QString WalletSettings::getAppsStoragePath(const QString& appid) const
 {
     Lock lock(m_mutex);
     const char* kStorageFolder = "appstorage";
-    auto rawAppID = beamui::applications::StripAppIDPrefix(appid.toStdString());
+    auto rawAppID = beam::wallet::StripAppIDPrefix(appid.toStdString());
 
     QString storagePath = QDir::cleanPath(
             m_appDataDir.path() +

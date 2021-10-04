@@ -200,11 +200,14 @@ int main (int argc, char* argv[])
             LOG_INFO() << "Beam Wallet UI " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
             LOG_INFO() << "Beam Core " << BEAM_VERSION << " (" << BEAM_BRANCH_NAME << ")";
             LOG_INFO() << "Rules signature: " << Rules::get().get_SignatureStr();
+            LOG_INFO() << "AppData folder: " << appDataDir.absolutePath().toStdString();
 
             // AppModel Model MUST BE created before the UI engine and destroyed after.
             // AppModel serves the UI and UI should be able to access AppModel at any time
             // even while being destroyed. Do not move engine above AppModel
             WalletSettings settings(appDataDir);
+            LOG_INFO() << "WalletDB: " << settings.getWalletStorage();
+
             AppModel appModel(settings);
             QQmlApplicationEngine engine;
             Translator translator(settings, engine);

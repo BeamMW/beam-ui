@@ -104,6 +104,9 @@
         <file>wallet/CoinsList.qml</file>
         <file>dex/MarketPanel.qml</file>
         <file>dex/MarketTable.qml</file>
+        <file>applications/applications.qml</file>
+        <file>applications/applications_nofork.qml</file>
+        <file>applications/AppsList.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
@@ -114,8 +117,6 @@
         <file>wallet.qml</file>
         <file>settings.qml</file>
         <file>addresses.qml</file>
-        <file>applications.qml</file>
-        <file>applications_nofork.qml</file>
         <file>atomic_swap.qml</file>
         <file>notifications.qml</file>
         <file>receive_regular.qml</file>
@@ -308,12 +309,6 @@
         <file>assets/icon-receiving-max-online.svg</file>
         <file>assets/icon-sending-max-online.svg</file>
         <file>assets/icon-sent-max-online.svg</file>
-        <file>assets/icon-received-max-offline.svg</file>
-        <file>assets/icon-receiving-max-offline.svg</file>
-        <file>assets/icon-failed-max-offline.svg</file>
-        <file>assets/icon-canceled-max-offline.svg</file>
-        <file>assets/icon-sent-max-offline.svg</file>
-        <file>assets/icon-sending-max-offline.svg</file>
         <file>assets/icon-inout-transactions.svg</file>
         <file>assets/icon-incoming-transaction.svg</file>
         <file>assets/icon-outgoing-transaction.svg</file>
@@ -355,6 +350,12 @@
         <file>assets/icon-notifications-received-privacy.svg</file>
         <file>assets/icon-notifications-sent-privacy.svg</file>        
         <file>assets/icon-send-receive-blue.svg</file>
+        <file>assets/icon-receive-failed-offline.svg</file>
+        <file>assets/icon-received-offline.svg</file>
+        <file>assets/icon-send-failed-offline.svg</file>
+        <file>assets/icon-canceled-offline.svg</file>
+        <file>assets/icon-sent-offline.svg</file>        
+        <file>assets/icon-sending-offline.svg</file>
         <file>assets/bg-pic.png</file>
         <file>assets/bg-pic@2x.png</file>
         <file>assets/bg-pic@3x.png</file>
@@ -366,5 +367,7 @@
         <file>assets/icon-verified-asset.svg</file>
         <file>assets/asset-beamx.svg</file>
         <file>assets/icon-refresh.svg</file>
+        <file>assets/icon-help.svg</file>
+        <file>assets/icon-help-active.svg</file>
     </qresource>
 </RCC>

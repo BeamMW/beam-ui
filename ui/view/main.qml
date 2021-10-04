@@ -167,7 +167,7 @@ Rectangle {
     }
 
     function appsQml () {
-        return BeamGlobals.isFork3() ? "applications" : "applications_nofork"
+        return BeamGlobals.isFork3() ? "applications/applications" : "applications/applications_nofork"
     }
 
     function appArgs (name, appid, showBack) {
@@ -182,9 +182,10 @@ Rectangle {
         {name: "atomic_swap"},
         {name: "applications", qml: appsQml},
         {name: "daocore", qml: appsQml, args: () => appArgs("BeamX DAO", viewModel.daoCoreAppID, false)},
-        //{name: "dex"},
+        // {name: "dex"},
         {name: "addresses"},
         {name: "notifications"},
+        {name: "help"},
         {name: "settings"}
     ]
 
@@ -353,12 +354,33 @@ Rectangle {
             viewModel.update(index)
         }
 
-        if (typeof(indexOrID) == "string") {
+        var indexByName = function(name) {
             for (var index = 0; index < contentItems.length; index++) {
-                if (contentItems[index].name == indexOrID) {
-                    indexOrID = index
+                if (contentItems[index].name == name) {
+                    return index;
                 }
             }
+
+            return -1;
+        }
+
+        if ((typeof(indexOrID) == "number" && contentItems[indexOrID].name == "help") ||
+            (typeof(indexOrID) == "string" && indexOrID == "help")) {
+            var previoslySelected = selectedItem;
+            selectedItem = typeof(indexOrID) == "string" ? indexByName(indexOrID) : indexOrID;
+            controls.itemAt(selectedItem).focus = true;
+            Utils.openExternalWithConfirmation(
+                "https://documentation.beam.mw/",
+                function () {
+                    selectedItem = previoslySelected;
+                    controls.itemAt(selectedItem).focus = true;
+                });
+
+            return;
+        }
+        
+        if (typeof(indexOrID) == "string") {
+            indexOrID = indexByName(indexOrID);
         }
 
         // here we always have a number

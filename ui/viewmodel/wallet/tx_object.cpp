@@ -319,34 +319,7 @@ bool TxObject::isActive() const
 
 QString TxObject::getStatus() const
 {
-    std::unique_ptr<beam::wallet::TxStatusInterpreter> statusInterpreter;
-    if (_tx.m_txType == wallet::TxType::Simple)
-    {
-        statusInterpreter = std::make_unique<beam::wallet::SimpleTxStatusInterpreter>(_tx);
-    }
-    else if (_tx.m_txType == wallet::TxType::PushTransaction)
-    {
-        statusInterpreter = std::make_unique<beam::wallet::MaxPrivacyTxStatusInterpreter>(_tx);
-    }
-    else if (_tx.m_txType >= wallet::TxType::AssetIssue && _tx.m_txType <= wallet::TxType::AssetInfo)
-    {
-        statusInterpreter = std::make_unique<beam::wallet::AssetTxStatusInterpreter>(_tx);
-    }
-    else if (_tx.m_txType == wallet::TxType::Contract)
-    {
-        statusInterpreter = std::make_unique<beam::wallet::ContractTxStatusInterpreter>(_tx);
-    }
-    else if (_tx.m_txType == wallet::TxType::DexSimpleSwap)
-    {
-        statusInterpreter = std::make_unique<beam::wallet::SimpleTxStatusInterpreter>(_tx);
-    }
-    else
-    {
-        BOOST_ASSERT_MSG(false, kErrorUnknownTxType);
-        return "unknown";
-    }
-
-    return statusInterpreter ? statusInterpreter->getStatus().c_str() : "unknown";
+    return beam::wallet::interpretStatus(_tx).c_str();
 }
 
 bool TxObject::isCancelAvailable() const

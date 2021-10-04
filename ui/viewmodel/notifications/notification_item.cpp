@@ -276,7 +276,7 @@ QString NotificationItem::title() const
                 //% "Atomic Swap offer completed"
                 return qtTrId("notification-swap-completed");
             case TxType::Contract:
-                //% "DAPP transaction completed"
+                //% "DApp transaction completed"
                 return qtTrId("notification-contract-completed");
             default:
                 return "error";
@@ -310,9 +310,9 @@ QString NotificationItem::title() const
                         qtTrId("notification-swap-failed");
             case TxType::Contract:
                 return isExpired(p) ?
-                    //% "DAPP transaction expired"
+                    //% "DApp transaction expired"
                     qtTrId("notification-contract-expired") :
-                    //% "DAPP transaction failed"
+                    //% "DApp transaction failed"
                     qtTrId("notification-contract-failed");
             default:
                 return "error";

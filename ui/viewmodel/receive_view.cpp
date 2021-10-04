@@ -109,7 +109,10 @@ void ReceiveViewModel::setToken(const QString& token)
         return;
     }
 
-     QPointer<ReceiveViewModel> guard = this;
+    _originalToken = token;
+    emit tokenChanged();
+
+    QPointer<ReceiveViewModel> guard = this;
     _walletModel.getAsync()->getAddressByToken(token.toStdString(),
         [guard, this, token](const boost::optional<beam::wallet::WalletAddress>& address, size_t offlineCount) {
             if (!guard) return;
@@ -148,12 +151,12 @@ void ReceiveViewModel::setToken(const QString& token)
 
 QString ReceiveViewModel::getToken() const
 {
-    return QString::fromStdString(_receiverAddress ? _receiverAddress->m_Address : std::string());
+    return _receiverAddress ? QString::fromStdString(_receiverAddress->m_Address) : _originalToken;
 }
 
 QString ReceiveViewModel::getSbbsAddress() const
 {
-    return _receiverAddress ? beamui::toString(_receiverAddress->m_walletID) : QString();
+    return _receiverAddress ? beamui::toString(_receiverAddress->m_walletID) : _originalToken;
 }
 
 bool ReceiveViewModel::getCommentValid() const
