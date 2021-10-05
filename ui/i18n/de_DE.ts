@@ -2034,7 +2034,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Normal</translation>
     </message>
     <message id="tx-address-max-privacy">
-        <source>Max privacy</source>
+        <source>Maximum anonymity</source>
+        <oldsource>Max privacy</oldsource>
         <translation type="unfinished">Max privacy</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">

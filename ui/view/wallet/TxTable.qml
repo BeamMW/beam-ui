@@ -143,7 +143,7 @@ Control {
     function getAddrTypeFromModel(model) {
         if (model) {
             if (model.isMaxPrivacy) {
-                //% "Max privacy"
+                //% "Maximum anonymity"
                 return qsTrId("tx-address-max-privacy");
             }
             if (model.isOfflineToken) {

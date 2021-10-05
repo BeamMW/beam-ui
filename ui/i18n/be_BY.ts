@@ -2033,8 +2033,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Звычайная</translation>
     </message>
     <message id="tx-address-max-privacy">
-        <source>Max privacy</source>
-        <translation>Макс. прыватнасць</translation>
+        <source>Maximum anonymity</source>
+        <oldsource>Max privacy</oldsource>
+        <translation type="unfinished">Макс. прыватнасць</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress

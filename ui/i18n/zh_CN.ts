@@ -2045,8 +2045,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>常规</translation>
     </message>
     <message id="tx-address-max-privacy">
-        <source>Max privacy</source>
-        <translation>最大化隐私</translation>
+        <source>Maximum anonymity</source>
+        <oldsource>Max privacy</oldsource>
+        <translation type="unfinished">最大化隐私</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress

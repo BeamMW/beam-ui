@@ -2032,8 +2032,9 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>Normaal</translation>
     </message>
     <message id="tx-address-max-privacy">
-        <source>Max privacy</source>
-        <translation>Maximale privacy</translation>
+        <source>Maximum anonymity</source>
+        <oldsource>Max privacy</oldsource>
+        <translation type="unfinished">Maximale privacy</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress

@@ -2017,8 +2017,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Regular</translation>
     </message>
     <message id="tx-address-max-privacy">
-        <source>Max privacy</source>
-        <translation>Max privacy</translation>
+        <source>Maximum anonymity</source>
+        <translation>Maximum anonymity</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress

@@ -2030,8 +2030,9 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <translation>Reguljär</translation>
     </message>
     <message id="tx-address-max-privacy">
-        <source>Max privacy</source>
-        <translation>Max sekretess</translation>
+        <source>Maximum anonymity</source>
+        <oldsource>Max privacy</oldsource>
+        <translation type="unfinished">Max sekretess</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress
