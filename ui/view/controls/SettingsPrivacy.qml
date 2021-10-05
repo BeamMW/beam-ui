@@ -168,10 +168,10 @@ SettingsFoldable {
             ColumnLayout {
                 SFText {
                     Layout.fillWidth: true
-                    //% "Max privacy longest transaction time"
+                    //% "Longest transaction time for maximum anonymity"
                     text: qsTrId("settings-privacy-mp-time-limit")
                     wrapMode:   Text.WordWrap
-                    color: Style.content_main
+                    color: Style.content_secondary
                     font.pixelSize: 14
                 }
             }
@@ -185,17 +185,25 @@ SettingsFoldable {
                     model: [
                         //% "No limit"
                         qsTrId("settings-privacy-mp-time-no-limit"),
-                        //% "72h"
-                        qsTrId("settings-privacy-mp-time-limit-72"),
-                        //% "60h"
-                        qsTrId("settings-privacy-mp-time-limit-60"),
-                        //% "48h"
-                        qsTrId("settings-privacy-mp-time-limit-48"),
-                        //% "36h"
-                        qsTrId("settings-privacy-mp-time-limit-36"),
-                        //% "24h"
-                        qsTrId("settings-privacy-mp-time-limit-24"),
+                        //% "%n hour(s)"
+                        qsTrId("settings-privacy-mp-time-limit-val", 72),
+                        qsTrId("settings-privacy-mp-time-limit-val", 60),
+                        qsTrId("settings-privacy-mp-time-limit-val", 48),
+                        qsTrId("settings-privacy-mp-time-limit-val", 36),
+                        qsTrId("settings-privacy-mp-time-limit-val", 24),
                     ]
+                    transformText: function(text) {
+                        if (mpLockTimeLimit.down && text == qsTrId("settings-privacy-mp-time-no-limit")) {
+                            /*% "No limit
+(transaction can last indefinitely)" */
+                            return qsTrId("settings-privacy-mp-time-no-limit-commented");
+                        } else if (mpLockTimeLimit.down && text == qsTrId("settings-privacy-mp-time-limit-val", 72)) {
+                            //% " (recommended)"
+                            return text + qsTrId("settings-privacy-mp-time-limit-val72-comment");
+                        } else {
+                            return text;
+                        }
+                    }
                     onActivated: {
                         viewModel.maxPrivacyLockTimeLimit = mpLockTimeLimit.currentIndex
                     }

@@ -23,13 +23,14 @@ ComboBox {
 
     property var modelWidth: control.width
     property var calculatedWidth: Math.max(control.width, modelWidth)
+    property var transformText: undefined
 
     TextMetrics {
         id: textMetrics
         font {
             family:        "SF Pro Display"
-		    styleName:     "Regular"
-		    weight:        Font.Normal
+            styleName:     "Regular"
+            weight:        Font.Normal
             pixelSize:     control.dropFontPixelSize
             letterSpacing: control.fontLetterSpacing
         }
@@ -77,7 +78,9 @@ ComboBox {
                     if (control.textRole) {
                         text = Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]
                     }
-                    return text
+                    return (transformText && typeof(transformText) == "function")
+                        ? transformText(text)
+                        : text;
                 }
                 color: highlighted ? Style.active : Style.content_main
                 elide: Text.ElideRight
@@ -95,7 +98,11 @@ ComboBox {
     function recalcSize() {
         if (model) {
             for(var i = 0; i < model.length; i++) {
-                textMetrics.text = Utils.limitText(control.textRole ? model[i][control.textRole] : model[i], control.textMaxLenDrop)
+                var modelText = control.textRole ? model[i][control.textRole] : model[i];
+                if (transformText && typeof(transformText) == "function")
+                    modelText = transformText(modelText);
+                textMetrics.text = Utils.limitText(modelText, control.textMaxLenDrop)
+
                 var iconW = model[i]["iconWidth"] || 0
                 modelWidth = Math.max(textMetrics.width +
                                       iconW + 10, // spacing between icon & text
@@ -106,6 +113,9 @@ ComboBox {
 
     onModelChanged: recalcSize()
     indicator: Item {}
+    onDownChanged: {
+        recalcSize();
+    }
 
     property var  iconW:    (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconWidth"] : 0) || 0
     property var  iconH:    (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconHeight"] : 0) || 0

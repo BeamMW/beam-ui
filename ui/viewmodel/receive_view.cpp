@@ -215,11 +215,10 @@ void ReceiveViewModel::setIsMaxPrivacy(bool value)
     }
 }
 
-QString ReceiveViewModel::getMPTimeLimit() const
+int ReceiveViewModel::getMPTimeLimit() const
 {
     const auto& settings = AppModel::getInstance().getSettings();
-    auto mpLockTimeLimit = settings.getMaxPrivacyLockTimeLimitHours();
-    return QString::number(mpLockTimeLimit);
+    return settings.getMaxPrivacyLockTimeLimitHours();
 }
 
 QList<QMap<QString, QVariant>> ReceiveViewModel::getAssetsList() const

@@ -2104,28 +2104,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Received coins can be spent immediately.</translation>
     </message>
     <message id="settings-privacy-mp-time-limit">
-        <source>Max privacy longest transaction time</source>
-        <translation>Max privacy longest transaction time</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-72">
-        <source>72h</source>
-        <translation>72h</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-60">
-        <source>60h</source>
-        <translation>60h</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-48">
-        <source>48h</source>
-        <translation>48h</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-36">
-        <source>36h</source>
-        <translation>36h</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-24">
-        <source>24h</source>
-        <translation>24h</translation>
+        <source>Longest transaction time for maximum anonymity</source>
+        <translation>Longest transaction time for maximum anonymity</translation>
     </message>
     <message id="remote-node-lelantus-warning">
         <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
@@ -2601,10 +2581,12 @@ Update your settings and try again.</source>
         <source>(optional)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="wallet-receive-addr-message-mp">
-        <source> Transaction can last at most %1 hours.</source>
-        <oldsource>Max Privacy transaction can last at most %1 hours.</oldsource>
-        <translation type="unfinished"></translation>
+    <message id="wallet-receive-addr-message-mp" numerus="yes">
+        <source>Transaction can last at most %n hour(s).</source>
+        <translation>
+            <numerusform>Transaction can last at most %n hour.</numerusform>
+            <numerusform>Transaction can last at most %n hours.</numerusform>
+        </translation>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
@@ -3318,6 +3300,35 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="app-install-title">
         <source>Install DApp</source>
         <translation>Install DApp</translation>
+    </message>
+    <message id="address-details">
+        <source>Address details</source>
+        <translation>Address details</translation>
+    </message>
+    <message id="swap-token-details">
+        <source>Token details</source>
+        <translation>Token details</translation>
+    </message>
+    <message id="settings-privacy-mp-time-no-limit-commented">
+        <source>No limit
+(transaction can last indefinitely)</source>
+        <translation>No limit
+(transaction can last indefinitely)</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-val" numerus="yes">
+        <source>%n hour(s)</source>
+        <translation>
+            <numerusform>%n hour</numerusform>
+            <numerusform>%n hours</numerusform>
+        </translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-val72-comment">
+        <source> (recommended)</source>
+        <translation> (recommended)</translation>
+    </message>
+    <message id="wallet-receive-addr-message-min-fee">
+        <source>Min transaction fee is 0.01 BEAM.</source>
+        <translation>Min transaction fee is 0.01 BEAM.</translation>
     </message>
 </context>
 </TS>
