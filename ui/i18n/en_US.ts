@@ -2584,8 +2584,8 @@ Update your settings and try again.</source>
     <message id="wallet-receive-addr-message-mp" numerus="yes">
         <source>Transaction can last at most %n hour(s).</source>
         <translation>
-            <numerusform>Transaction can last at most %n hour</numerusform>
-            <numerusform>Transaction can last at most %n hours</numerusform>
+            <numerusform>Transaction can last at most %n hour.</numerusform>
+            <numerusform>Transaction can last at most %n hours.</numerusform>
         </translation>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
@@ -3327,8 +3327,8 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation> (recommended)</translation>
     </message>
     <message id="wallet-receive-addr-message-min-fee">
-        <source>Min transaction fee is 0.01 BEAM</source>
-        <translation>Min transaction fee is 0.01 BEAM</translation>
+        <source>Min transaction fee is 0.01 BEAM.</source>
+        <translation>Min transaction fee is 0.01 BEAM.</translation>
     </message>
 </context>
 </TS>

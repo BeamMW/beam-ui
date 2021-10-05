@@ -3371,7 +3371,8 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-addr-message-min-fee">
-        <source>Min transaction fee is 0.01 BEAM</source>
+        <source>Min transaction fee is 0.01 BEAM.</source>
+        <oldsource>Min transaction fee is 0.01 BEAM</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>
