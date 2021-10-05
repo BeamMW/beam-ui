@@ -24,6 +24,7 @@
 ExchangeRatesManager::ExchangeRatesManager()
     : m_walletModel(*AppModel::getInstance().getWalletModel())
     , m_settings(AppModel::getInstance().getSettings())
+    , m_updateTime(0)
 {
 
     qRegisterMetaType<std::vector<beam::wallet::ExchangeRate>>("std::vector<beam::wallet::ExchangeRate>");
@@ -63,6 +64,14 @@ void ExchangeRatesManager::setRateUnit()
         }
     }
     m_rateUnit = newCurrency;
+    m_updateTime = 0;
+    emit updateTimeChanged();
+}
+
+bool ExchangeRatesManager::isUpToDate() const
+{
+    auto diff = QDateTime::currentSecsSinceEpoch() - m_updateTime;
+    return diff < 10 * 60; // 10 minutes
 }
 
 void ExchangeRatesManager::onExchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>& rates)
@@ -80,6 +89,11 @@ void ExchangeRatesManager::onExchangeRatesUpdate(const std::vector<beam::wallet:
 
         if (rate.m_to != m_rateUnit) continue;
         m_rates[rate.m_from] = rate.m_rate;
+        if (m_updateTime < rate.m_updateTime)
+        {
+            m_updateTime = rate.m_updateTime;
+            emit updateTimeChanged();
+        }
         isActiveRateChanged = true;
     }
 
@@ -97,6 +111,13 @@ void ExchangeRatesManager::onRateUnitChanged()
 beam::wallet::Currency ExchangeRatesManager::getRateCurrency() const
 {
     return m_rateUnit;
+}
+
+QDateTime ExchangeRatesManager::getUpdateTime() const
+{
+    QDateTime datetime;
+    datetime.setTime_t(m_updateTime);
+    return datetime;
 }
 
 /**

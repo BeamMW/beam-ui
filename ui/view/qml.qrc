@@ -54,7 +54,6 @@
         <file>controls/SwapTransactionDetails.qml</file>
         <file>controls/PaymentInfoDialog.qml</file>
         <file>controls/OpenExternalLinkConfirmation.qml</file>
-
         <file>controls/SeedInput.qml</file>
         <file>controls/CustomTripleSwitch.qml</file>
         <file>controls/CustomSecondCurrencySwitch.qml</file>
@@ -348,13 +347,13 @@
         <file>assets/icon-notifications-failed-sent-offline.svg</file>
         <file>assets/icon-notifications-failed-sent-privacy.svg</file>
         <file>assets/icon-notifications-received-privacy.svg</file>
-        <file>assets/icon-notifications-sent-privacy.svg</file>        
+        <file>assets/icon-notifications-sent-privacy.svg</file>
         <file>assets/icon-send-receive-blue.svg</file>
         <file>assets/icon-receive-failed-offline.svg</file>
         <file>assets/icon-received-offline.svg</file>
         <file>assets/icon-send-failed-offline.svg</file>
         <file>assets/icon-canceled-offline.svg</file>
-        <file>assets/icon-sent-offline.svg</file>        
+        <file>assets/icon-sent-offline.svg</file>
         <file>assets/icon-sending-offline.svg</file>
         <file>assets/bg-pic.png</file>
         <file>assets/bg-pic@2x.png</file>
@@ -369,5 +368,6 @@
         <file>assets/icon-refresh.svg</file>
         <file>assets/icon-help.svg</file>
         <file>assets/icon-help-active.svg</file>
+        <file>assets/icon-trusted-node-status-stale.svg</file>
     </qresource>
 </RCC>

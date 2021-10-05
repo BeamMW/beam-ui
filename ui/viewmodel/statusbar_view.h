@@ -15,6 +15,8 @@
 #pragma once
 
 #include <QObject>
+#include <QTimer>
+#include <QLocale>
 #include "model/wallet_model.h"
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
 #include "model/swap_eth_client_model.h"
@@ -25,6 +27,7 @@
 #include "wallet/transactions/swaps/bridges/ethereum/client.h"
 #include "wallet/transactions/swaps/common.h"
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
+#include "notifications/exchange_rates_manager.h"
 
 class StatusbarViewModel : public QObject
 {
@@ -33,6 +36,8 @@ class StatusbarViewModel : public QObject
     Q_PROPERTY(bool isFailedStatus          READ getIsFailedStatus      NOTIFY isFailedStatusChanged)
     Q_PROPERTY(bool isSyncInProgress        READ getIsSyncInProgress    NOTIFY isSyncInProgressChanged)
     Q_PROPERTY(bool isConnectionTrusted     READ getIsConnectionTrusted NOTIFY isConnectionTrustedChanged)
+    Q_PROPERTY(bool isExchangeRatesUpdated  READ getIsExchangeRatesUpdated NOTIFY exchangeRatesUpdateStatusChanged)
+    Q_PROPERTY(QString exchangeStatus       READ getExchangeStatus      NOTIFY exchangeRatesUpdateStatusChanged)
     Q_PROPERTY(int nodeSyncProgress         READ getNodeSyncProgress    NOTIFY nodeSyncProgressChanged)
     Q_PROPERTY(QString branchName           READ getBranchName          CONSTANT)
     Q_PROPERTY(QString walletStatusErrorMsg READ getWalletStatusErrorMsg NOTIFY statusErrorChanged)
@@ -49,9 +54,11 @@ public:
     bool getIsFailedStatus() const;
     bool getIsSyncInProgress() const;
     bool getIsConnectionTrusted() const;
+    bool getIsExchangeRatesUpdated() const;
     int getNodeSyncProgress() const;
     QString getBranchName() const;
     QString getWalletStatusErrorMsg() const;
+    QString getExchangeStatus() const;
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     bool getCoinClientFailed() const;
     QString getCoinClientErrorMsg() const;
@@ -73,7 +80,7 @@ public slots:
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     void onCoinClientStatusChanged();
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
-
+    void onExchangeRatesTimer();
 signals:
 
     void isOnlineChanged();
@@ -82,6 +89,7 @@ signals:
     void isConnectionTrustedChanged();
     void nodeSyncProgressChanged();
     void statusErrorChanged();
+    void exchangeRatesUpdateStatusChanged();
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     void isCoinClientFailedChanged();
     void coinClientErrorMsgChanged();
@@ -120,4 +128,7 @@ private:
     std::vector<SwapClientStatus> m_coinClientStatuses;
     std::pair<SwapEthClientModel::Ptr, beam::ethereum::Client::Status> m_ethCleintStatus;
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
+    ExchangeRatesManager m_exchangeRatesManager;
+    QTimer m_exchangeRatesTimer;
+    QLocale m_locale;
 };

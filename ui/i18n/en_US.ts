@@ -3330,5 +3330,9 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>Min transaction fee is 0.01 BEAM.</source>
         <translation>Min transaction fee is 0.01 BEAM.</translation>
     </message>
+    <message id="status-online-stale-rates">
+        <source> (exchange rate to %1 was not updated since %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

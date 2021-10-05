@@ -75,7 +75,7 @@ Item {
             width: 10
             height: 10
             sourceSize:     Qt.size(10, 10)
-            source:         "qrc:/assets/icon-trusted-node-status.svg"
+            source:         model.isExchangeRatesUpdated ? "qrc:/assets/icon-trusted-node-status.svg" : "qrc:/assets/icon-trusted-node-status-stale.svg"
             visible:        model.isConnectionTrusted && !model.isCoinClientFailed
         }
 
@@ -191,7 +191,10 @@ Item {
             name: "online"
             PropertyChanges {
                 target: status_text;
-                text: statusOnline + (model.isConnectionTrusted ? "" : ": " + statusOnlineRemote) + model.branchName
+                text: statusOnline + (model.isConnectionTrusted ? "" : ": " + statusOnlineRemote) + model.branchName + 
+                    (
+                        model.isExchangeRatesUpdated? "" : model.exchangeStatus
+                    )
             }
             StateChangeScript {
                 name: "onlineScript"
@@ -229,7 +232,7 @@ Item {
                 }
             }
         },
-         State {
+        State {
             name: "error_3rd"
             PropertyChanges {
                 target: status_text;

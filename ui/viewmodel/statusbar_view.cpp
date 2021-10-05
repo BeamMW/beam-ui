@@ -55,6 +55,10 @@ StatusbarViewModel::StatusbarViewModel()
     connect(&AppModel::getInstance().getNode(), SIGNAL(failedToSyncNode(beam::wallet::ErrorType)),
             SLOT(onGetWalletError(beam::wallet::ErrorType)));
 
+    connect(&m_exchangeRatesTimer, SIGNAL(timeout()), SLOT(onExchangeRatesTimer()));
+    connect(&m_exchangeRatesManager, SIGNAL(updateTimeChanged()), SLOT(onExchangeRatesTimer()));
+
+
     m_model.getAsync()->getNetworkStatus();
 }
 
@@ -78,6 +82,11 @@ bool StatusbarViewModel::getIsConnectionTrusted() const
     return m_isConnectionTrusted;
 }
 
+bool StatusbarViewModel::getIsExchangeRatesUpdated() const
+{
+    return m_exchangeRatesManager.isUpToDate();
+}
+
 int StatusbarViewModel::getNodeSyncProgress() const
 {
     return m_nodeSyncProgress;
@@ -98,6 +107,13 @@ QString StatusbarViewModel::getBranchName() const
 QString StatusbarViewModel::getWalletStatusErrorMsg() const
 {
     return m_errorMsg;
+}
+
+QString StatusbarViewModel::getExchangeStatus() const
+{
+    //% " (exchange rate to %1 was not updated since %2)"
+    return qtTrId("status-online-stale-rates").arg(beamui::getCurrencyUnitName(m_exchangeRatesManager.getRateCurrency()))
+                                              .arg(m_exchangeRatesManager.getUpdateTime().toString(m_locale.dateTimeFormat(QLocale::ShortFormat)));
 }
 
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
@@ -123,6 +139,15 @@ void StatusbarViewModel::setIsOnline(bool value)
     {
         m_isOnline = value;
         emit isOnlineChanged();
+        emit exchangeRatesUpdateStatusChanged();
+        if (value)
+        {
+            m_exchangeRatesTimer.start(60 * 1000);
+        }
+        else
+        {
+            m_exchangeRatesTimer.stop();
+        }
     }
 }
 
@@ -396,3 +421,8 @@ void StatusbarViewModel::connectEthClient()
 }
 
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
+
+void  StatusbarViewModel::onExchangeRatesTimer()
+{
+    emit exchangeRatesUpdateStatusChanged();
+}
