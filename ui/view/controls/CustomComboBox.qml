@@ -157,10 +157,17 @@ ComboBox {
         }
 
         SvgImage {
-            id: img
+            id: imgDown
             source: "qrc:/assets/icon-down.svg"
             Layout.alignment: Qt.AlignVCenter
-            visible: control.enabled
+            visible: control.enabled && !control.down
+            sourceSize: Qt.size(5, 3)
+        }
+        SvgImage {
+            id: imgUp
+            source: "qrc:/assets/icon-up.svg"
+            Layout.alignment: Qt.AlignVCenter
+            visible: control.enabled && control.down
             sourceSize: Qt.size(5, 3)
         }
     }
@@ -211,6 +218,7 @@ ComboBox {
         background: Rectangle {
             anchors.fill: parent
             color: Style.background_popup
+            radius: 5
         }
     }
 }
