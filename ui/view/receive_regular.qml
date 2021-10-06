@@ -292,6 +292,7 @@ ColumnLayout {
 
                                     LinkButton {
                                         Layout.alignment: Qt.AlignHCenter
+                                        Layout.topMargin: 10
                                         //% "Address details"
                                         text:       qsTrId("address-details")
                                         linkColor:  Style.accent_incoming
