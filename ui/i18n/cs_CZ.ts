@@ -1774,8 +1774,8 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <translation>On-line</translation>
     </message>
     <message id="tx-max-privacy">
-        <source>Max Anonymity Set</source>
-        <oldsource>Max Privacy</oldsource>
+        <source>Maximum anonymity</source>
+        <oldsource>Max Anonymity Set</oldsource>
         <translation type="unfinished">Max Anonymity Set</translation>
     </message>
     <message id="error-peer-exists">

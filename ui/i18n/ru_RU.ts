@@ -1774,9 +1774,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>В сети</translation>
     </message>
     <message id="tx-max-privacy">
-        <source>Max Anonymity Set</source>
-        <oldsource>Max Privacy</oldsource>
-        <translation>Максимальная анонимность</translation>
+        <source>Maximum anonymity</source>
+        <oldsource>Max Anonymity Set</oldsource>
+        <translation type="unfinished">Максимальная анонимность</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>

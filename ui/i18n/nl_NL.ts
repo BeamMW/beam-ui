@@ -1773,9 +1773,9 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>Online</translation>
     </message>
     <message id="tx-max-privacy">
-        <source>Max Anonymity Set</source>
-        <oldsource>Max Privacy</oldsource>
-        <translation>Maximale Anonimiteitsset</translation>
+        <source>Maximum anonymity</source>
+        <oldsource>Max Anonymity Set</oldsource>
+        <translation type="unfinished">Maximale Anonimiteitsset</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>

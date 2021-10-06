@@ -468,7 +468,7 @@ namespace beamui
 
         if (type == TxAddressType::MaxPrivacy)
         {
-            //% "Max Anonymity Set"
+            //% "Maximum anonymity"
             return qtTrId("tx-max-privacy");
         }
 

@@ -1775,8 +1775,8 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
         <translation>Conectado</translation>
     </message>
     <message id="tx-max-privacy">
-        <source>Max Anonymity Set</source>
-        <oldsource>Max Privacy</oldsource>
+        <source>Maximum anonymity</source>
+        <oldsource>Max Anonymity Set</oldsource>
         <translation type="unfinished">Max Anonymity Set</translation>
     </message>
     <message id="error-peer-exists">
