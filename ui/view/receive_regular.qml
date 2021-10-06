@@ -304,7 +304,7 @@ ColumnLayout {
 
                                 SvgImage {
                                     Layout.alignment: Qt.AlignVCenter
-                                    Layout.bottomMargin: 15
+                                    Layout.bottomMargin: 27
 
                                     source: "qrc:/assets/icon-copy.svg"
                                     sourceSize: Qt.size(16, 16)
