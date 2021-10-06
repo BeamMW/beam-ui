@@ -87,7 +87,6 @@ ColumnLayout {
                                 SvgImage {
                                     id: defaultIcon
                                     source: hoverArea.containsMouse ? "qrc:/assets/icon-defapp-active.svg" : "qrc:/assets/icon-defapp.svg"
-                                    sourceSize: Qt.size(30, 30)
                                     anchors.verticalCenter: parent.verticalCenter
                                     anchors.horizontalCenter: parent.horizontalCenter
                                     visible: !customIcon.visible
@@ -96,7 +95,6 @@ ColumnLayout {
                                 SvgImage {
                                     id: customIcon
                                     source: modelData.icon ? modelData.icon : "qrc:/assets/icon-defapp.svg"
-                                    sourceSize: Qt.size(30, 30)
                                     anchors.verticalCenter: parent.verticalCenter
                                     anchors.horizontalCenter: parent.horizontalCenter
                                     visible: !!modelData.icon && progress == 1.0
