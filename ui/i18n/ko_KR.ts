@@ -331,18 +331,6 @@
         <source>Change password</source>
         <translation>비밀번호 바꾸기</translation>
     </message>
-    <message id="loading-loading">
-        <source>Loading wallet...</source>
-        <translation>지갑 불러오는 중...</translation>
-    </message>
-    <message id="loading-restoring">
-        <source>Restoring wallet...</source>
-        <translation>지갑 복구하는중...</translation>
-    </message>
-    <message id="loading-creating">
-        <source>Creating wallet...</source>
-        <translation>지갑 생성중...</translation>
-    </message>
     <message id="start-open-pwd-invitation">
         <source>Enter your password to access the wallet</source>
         <translation>지갑에 접근하려면 비밀번호를 입력하세요</translation>
@@ -622,12 +610,9 @@
         <translation>지갑을 실행하지 못했습니다. 지갑 데이터 위치를 확인하십시오</translation>
     </message>
     <message id="loading-view-download-blocks">
-        <source>Syncing with blockchain</source>
-        <translation>블록체인 싱크중</translation>
-    </message>
-    <message id="loading-view-scaning-utxo">
-        <source>Loading wallet data %d/%d</source>
-        <translation>지갑 데이터 로딩중 %d/%d</translation>
+        <source>Syncing with blockchain: </source>
+        <oldsource>Syncing with blockchain:</oldsource>
+        <translation type="unfinished">블록체인 싱크중</translation>
     </message>
     <message id="loading-view-protocol-error">
         <source>Incompatible peer</source>
@@ -934,8 +919,9 @@
         <translation>초</translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>Estimated time: %s</source>
-        <translation>예상 소요시간: %s</translation>
+        <source>%s to completion</source>
+        <oldsource>Estimated time: %s</oldsource>
+        <translation type="unfinished">예상 소요시간: %s</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
@@ -1020,12 +1006,9 @@ please review your settings and try again</source>
         <translation>만료 시기</translation>
     </message>
     <message id="loading-view-estimate-calculating">
-        <source>calculating...</source>
-        <translation>계산 중...</translation>
-    </message>
-    <message id="loading-view-rebuild-utxos">
-        <source>Rebuilding wallet data</source>
-        <translation>지갑 데이터 재구축중</translation>
+        <source>calculating estimated time</source>
+        <oldsource>calculating...</oldsource>
+        <translation type="unfinished">계산 중...</translation>
     </message>
     <message id="loading-view-estimate-hours">
         <source>h</source>
@@ -3379,6 +3362,22 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="status-online-stale-rates">
         <source> (exchange rate to %1 was not updated since %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="loading-view-restoring">
+        <source>Restoring wallet from the blockchain: </source>
+        <translation type="unfinished">지갑 데이터 재구축중</translation>
+    </message>
+    <message id="loading-view-creating">
+        <source>Downloading blockchain data: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="loading-view-less-than-minute">
+        <source>less than a minute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="loading-view-rebuild-utxos">
+        <source>Rebuilding wallet data: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -390,8 +390,9 @@ namespace beamui
         }
         else
         {
-            value = estimate > 0 ? estimate : 1;
-            units = qtTrId("loading-view-estimate-seconds");
+            //% "less than a minute"
+            res = qtTrId("loading-view-less-than-minute");
+            return res;
         }
         writeTime(value, units);
         return res;

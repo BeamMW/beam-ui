@@ -331,18 +331,6 @@
         <source>Change password</source>
         <translation>Wachtwoord wijzigen</translation>
     </message>
-    <message id="loading-loading">
-        <source>Loading wallet...</source>
-        <translation>Wallet laden...</translation>
-    </message>
-    <message id="loading-restoring">
-        <source>Restoring wallet...</source>
-        <translation>Wallet herstellen...</translation>
-    </message>
-    <message id="loading-creating">
-        <source>Creating wallet...</source>
-        <translation>Wallet wordt aangemaakt...</translation>
-    </message>
     <message id="start-open-pwd-invitation">
         <source>Enter your password to access the wallet</source>
         <translation>Voer uw wachtwoord in om toegang te krijgen tot de wallet</translation>
@@ -622,12 +610,9 @@
         <translation>Starten van wallet is mislukt. Controleer uw wallet gegevenslocatie</translation>
     </message>
     <message id="loading-view-download-blocks">
-        <source>Syncing with blockchain</source>
-        <translation>Synchroniseren met blockchain</translation>
-    </message>
-    <message id="loading-view-scaning-utxo">
-        <source>Loading wallet data %d/%d</source>
-        <translation>Wallet data aan het laden %d/%d</translation>
+        <source>Syncing with blockchain: </source>
+        <oldsource>Syncing with blockchain:</oldsource>
+        <translation type="unfinished">Synchroniseren met blockchain</translation>
     </message>
     <message id="loading-view-protocol-error">
         <source>Incompatible peer</source>
@@ -934,8 +919,9 @@
         <translation>sec.</translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>Estimated time: %s</source>
-        <translation>Geschatte tijd: %s</translation>
+        <source>%s to completion</source>
+        <oldsource>Estimated time: %s</oldsource>
+        <translation type="unfinished">Geschatte tijd: %s</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
@@ -1020,12 +1006,9 @@ controleer uw instellingen en probeer opnieuw.</translation>
         <translation>Verloopt op</translation>
     </message>
     <message id="loading-view-estimate-calculating">
-        <source>calculating...</source>
-        <translation>berekenen...</translation>
-    </message>
-    <message id="loading-view-rebuild-utxos">
-        <source>Rebuilding wallet data</source>
-        <translation>Wallet data opnieuw opbouwen</translation>
+        <source>calculating estimated time</source>
+        <oldsource>calculating...</oldsource>
+        <translation type="unfinished">berekenen...</translation>
     </message>
     <message id="loading-view-estimate-hours">
         <source>h</source>
@@ -3380,6 +3363,22 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="status-online-stale-rates">
         <source> (exchange rate to %1 was not updated since %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="loading-view-restoring">
+        <source>Restoring wallet from the blockchain: </source>
+        <translation type="unfinished">Wallet data opnieuw opbouwen</translation>
+    </message>
+    <message id="loading-view-creating">
+        <source>Downloading blockchain data: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="loading-view-less-than-minute">
+        <source>less than a minute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="loading-view-rebuild-utxos">
+        <source>Rebuilding wallet data: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

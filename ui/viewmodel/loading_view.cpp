@@ -33,8 +33,8 @@ const double kMaxEstimate = 4 * kSecondsInHour;
 
 const double kRebuildUTXOProgressCoefficient = 0.05;
 const double kPercantagePlaceholderThreshold = 0.009;
-const char* kPercentagePlaceholderCentesimal = " %.2lf%%";
-const char* kPercentagePlaceholderNatural = " %.0lf%%";
+const char* kPercentagePlaceholderCentesimal = "%.2lf%%";
+const char* kPercentagePlaceholderNatural = "%.0lf%%";
 const int kMaxTimeDiffForUpdate = 20;
 const int kBpsRecessionCountThreshold = 60;
 
@@ -131,9 +131,9 @@ void LoadingViewModel::updateProgress()
 {
     double progress = 0.;
 	QString progressMessage = "";
-    //% "Estimated time: %s"
+    //% "%s to completion"
     QString estimateStr = qtTrId("loading-view-estimate-time");
-    //% "calculating..."
+    //% "calculating estimated time"
     QString calculating = qtTrId("loading-view-estimate-calculating");
 
     if (m_isDownloadStarted)
@@ -143,18 +143,20 @@ void LoadingViewModel::updateProgress()
             progress = std::min(1., m_done / static_cast<double>(m_total));
         }
 
-        if (m_hasLocalNode)
+        //% "Syncing with blockchain: "
+        progressMessage = qtTrId("loading-view-download-blocks");
+        if (m_isCreating)
         {
-            //% "Syncing with blockchain"
-            progressMessage = qtTrId("loading-view-download-blocks");
-        }
-        else
-        {
-            //% "Loading wallet data %d/%d"
-            progressMessage = QString::asprintf(
-                qtTrId("loading-view-scaning-utxo").toStdString().c_str(),
-                m_done,
-                m_total);
+            if (m_isRecoveryMode)
+            {
+                //% "Restoring wallet from the blockchain: "
+                progressMessage = qtTrId("loading-view-restoring");
+            }
+            else
+            {
+                //% "Downloading blockchain data: "
+                progressMessage = qtTrId("loading-view-creating");
+            }
         }
 
         progress = kRebuildUTXOProgressCoefficient +
@@ -165,9 +167,7 @@ void LoadingViewModel::updateProgress()
 
         if (fabs(bps) < std::numeric_limits<double>::epsilon())
         {
-            estimateStr = QString::asprintf(
-                    estimateStr.toStdString().c_str(),
-                    calculating.toStdString().c_str());
+            estimateStr = calculating;
         }
         else if (detectNetworkProblems())
         {
@@ -189,26 +189,28 @@ void LoadingViewModel::updateProgress()
     }
     else
     {
-       m_hasLocalNode = AppModel::getInstance().getSettings().getRunLocalNode();
+        m_hasLocalNode = AppModel::getInstance().getSettings().getRunLocalNode();
         if (m_hasLocalNode)
         {
-            //% "Rebuilding wallet data"
+            //% "Rebuilding wallet data: "
             progressMessage = qtTrId("loading-view-rebuild-utxos");
             progress = kRebuildUTXOProgressCoefficient * m_nodeInitProgress;
         }
-        estimateStr = QString::asprintf(
-                estimateStr.toStdString().c_str(),
-                calculating.toStdString().c_str());       
+        estimateStr = calculating;
     }
    
     if (progress < m_lastProgress)
         progress = m_lastProgress;
 
-    progressMessage.append(
-        QString::asprintf(getPercentagePlaceholder(progress), progress * 100));
-    if (m_isDownloadStarted)
+    progressMessage.append(estimateStr);
+    if (m_hasLocalNode)
     {
-        progressMessage.append(". " + estimateStr);
+        progressMessage.append(
+            " (" + QString::asprintf(kPercentagePlaceholderNatural, progress * 100) + ")");
+    }
+    else
+    {
+        progressMessage.append(QString::asprintf(" (%d/%d)", m_done, m_total));
     }
 
     setProgressMessage(progressMessage);
@@ -326,6 +328,19 @@ void LoadingViewModel::setIsCreating(bool value)
 bool LoadingViewModel::getIsCreating() const
 {
     return m_isCreating;
+}
+
+void LoadingViewModel::setIsRecoveryMode(bool value)
+{
+    if (m_isRecoveryMode != value)
+    {
+        m_isRecoveryMode = value;
+        emit isRecoveryModeChanged();
+    }
+}
+bool LoadingViewModel::getIsRecoveryMode() const
+{
+    return m_isRecoveryMode;
 }
 
 void LoadingViewModel::onNodeConnectionChanged(bool isNodeConnected)

@@ -331,18 +331,6 @@
         <source>Change password</source>
         <translation>Byt lösenord</translation>
     </message>
-    <message id="loading-loading">
-        <source>Loading wallet...</source>
-        <translation>Laddar plånbok...</translation>
-    </message>
-    <message id="loading-restoring">
-        <source>Restoring wallet...</source>
-        <translation>Återställer plånbok...</translation>
-    </message>
-    <message id="loading-creating">
-        <source>Creating wallet...</source>
-        <translation>Skapar plånbok...</translation>
-    </message>
     <message id="start-open-pwd-invitation">
         <source>Enter your password to access the wallet</source>
         <translation>Mata in ditt lösenord för att få tillgång till plånboken</translation>
@@ -622,12 +610,9 @@
         <translation>Det gick ej att starta plånboken. Vänligen kontrollera plånbokens data-katalog</translation>
     </message>
     <message id="loading-view-download-blocks">
-        <source>Syncing with blockchain</source>
-        <translation>Synkar med blockkedjan</translation>
-    </message>
-    <message id="loading-view-scaning-utxo">
-        <source>Loading wallet data %d/%d</source>
-        <translation>Laddar plånboksdata %d/%d</translation>
+        <source>Syncing with blockchain: </source>
+        <oldsource>Syncing with blockchain:</oldsource>
+        <translation type="unfinished">Synkar med blockkedjan</translation>
     </message>
     <message id="loading-view-protocol-error">
         <source>Incompatible peer</source>
@@ -933,8 +918,9 @@
         <translation>sekund</translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>Estimated time: %s</source>
-        <translation>Uppskattad tid %s</translation>
+        <source>%s to completion</source>
+        <oldsource>Estimated time: %s</oldsource>
+        <translation type="unfinished">Uppskattad tid %s</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
@@ -1019,12 +1005,9 @@ vänligen se över dina inställningar och testa igen</translation>
         <translation>Förfaller den</translation>
     </message>
     <message id="loading-view-estimate-calculating">
-        <source>calculating...</source>
-        <translation>beräknar...</translation>
-    </message>
-    <message id="loading-view-rebuild-utxos">
-        <source>Rebuilding wallet data</source>
-        <translation>Återbygger plånboksdata</translation>
+        <source>calculating estimated time</source>
+        <oldsource>calculating...</oldsource>
+        <translation type="unfinished">beräknar...</translation>
     </message>
     <message id="loading-view-estimate-hours">
         <source>h</source>
@@ -3380,6 +3363,22 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="status-online-stale-rates">
         <source> (exchange rate to %1 was not updated since %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="loading-view-restoring">
+        <source>Restoring wallet from the blockchain: </source>
+        <translation type="unfinished">Återbygger plånboksdata</translation>
+    </message>
+    <message id="loading-view-creating">
+        <source>Downloading blockchain data: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="loading-view-less-than-minute">
+        <source>less than a minute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="loading-view-rebuild-utxos">
+        <source>Rebuilding wallet data: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

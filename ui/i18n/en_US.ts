@@ -330,18 +330,6 @@
         <source>Change password</source>
         <translation>Change password</translation>
     </message>
-    <message id="loading-loading">
-        <source>Loading wallet...</source>
-        <translation>Loading wallet...</translation>
-    </message>
-    <message id="loading-restoring">
-        <source>Restoring wallet...</source>
-        <translation>Restoring wallet...</translation>
-    </message>
-    <message id="loading-creating">
-        <source>Creating wallet...</source>
-        <translation>Creating wallet...</translation>
-    </message>
     <message id="start-open-pwd-invitation">
         <source>Enter your password to access the wallet</source>
         <translation>Enter your password to access the wallet</translation>
@@ -621,12 +609,8 @@
         <translation>Failed to start wallet. Please check your wallet data location</translation>
     </message>
     <message id="loading-view-download-blocks">
-        <source>Syncing with blockchain</source>
-        <translation>Syncing with blockchain</translation>
-    </message>
-    <message id="loading-view-scaning-utxo">
-        <source>Loading wallet data %d/%d</source>
-        <translation>Loading wallet data %d/%d</translation>
+        <source>Syncing with blockchain: </source>
+        <translation>Syncing with blockchain: </translation>
     </message>
     <message id="loading-view-protocol-error">
         <source>Incompatible peer</source>
@@ -933,8 +917,8 @@
         <translation>sec</translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>Estimated time: %s</source>
-        <translation>Estimated time: %s</translation>
+        <source>%s to completion</source>
+        <translation>%s to completion</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
@@ -1019,12 +1003,8 @@ please review your settings and try again</translation>
         <translation>Expires on</translation>
     </message>
     <message id="loading-view-estimate-calculating">
-        <source>calculating...</source>
-        <translation>calculating...</translation>
-    </message>
-    <message id="loading-view-rebuild-utxos">
-        <source>Rebuilding wallet data</source>
-        <translation>Rebuilding wallet data</translation>
+        <source>calculating estimated time</source>
+        <translation>calculating estimated time</translation>
     </message>
     <message id="loading-view-estimate-hours">
         <source>h</source>
@@ -3332,6 +3312,22 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="status-online-stale-rates">
         <source> (exchange rate to %1 was not updated since %2)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="loading-view-restoring">
+        <source>Restoring wallet from the blockchain: </source>
+        <translation>Restoring wallet from the blockchain: </translation>
+    </message>
+    <message id="loading-view-creating">
+        <source>Downloading blockchain data: </source>
+        <translation>Downloading blockchain data: </translation>
+    </message>
+    <message id="loading-view-less-than-minute">
+        <source>less than a minute</source>
+        <translation>less than a minute</translation>
+    </message>
+    <message id="loading-view-rebuild-utxos">
+        <source>Rebuilding wallet data: </source>
+        <translation>Rebuilding wallet data: </translation>
     </message>
 </context>
 </TS>

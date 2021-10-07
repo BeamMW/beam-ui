@@ -30,6 +30,7 @@ class LoadingViewModel : public QObject
     Q_PROPERTY(double progress READ getProgress WRITE setProgress NOTIFY progressChanged)
     Q_PROPERTY(QString progressMessage READ getProgressMessage WRITE setProgressMessage NOTIFY progressMessageChanged)
     Q_PROPERTY(bool isCreating READ getIsCreating WRITE setIsCreating NOTIFY isCreatingChanged)
+    Q_PROPERTY(bool isRecoveryMode READ getIsRecoveryMode WRITE setIsRecoveryMode NOTIFY isRecoveryModeChanged)
 
 public:
 
@@ -42,6 +43,8 @@ public:
     void setProgressMessage(const QString& value);
     void setIsCreating(bool value);
     bool getIsCreating() const;
+    void setIsRecoveryMode(bool value);
+    bool getIsRecoveryMode() const;
 
     Q_INVOKABLE void resetWallet();
     Q_INVOKABLE void recalculateProgress();
@@ -60,6 +63,7 @@ signals:
     void walletError(const QString& title, const QString& message);
     void isCreatingChanged();
     void walletResetCompleted();
+    void isRecoveryModeChanged();
 
 private:
     void onSync(int done, int total);
@@ -79,6 +83,7 @@ private:
     bool m_hasLocalNode;
     QString m_progressMessage;
     bool m_isCreating;
+    bool m_isRecoveryMode = false;
     
     bool m_isDownloadStarted;
     double m_lastProgress;

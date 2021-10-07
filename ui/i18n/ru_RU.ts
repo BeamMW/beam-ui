@@ -331,18 +331,6 @@
         <source>Change password</source>
         <translation>Поменять пароль</translation>
     </message>
-    <message id="loading-loading">
-        <source>Loading wallet...</source>
-        <translation>Загрузка кошелька...</translation>
-    </message>
-    <message id="loading-restoring">
-        <source>Restoring wallet...</source>
-        <translation>Восстановление кошелька...</translation>
-    </message>
-    <message id="loading-creating">
-        <source>Creating wallet...</source>
-        <translation>Создание кошелька...</translation>
-    </message>
     <message id="start-open-pwd-invitation">
         <source>Enter your password to access the wallet</source>
         <translation>Чтобы получить доступ к кошельку, введите пароль</translation>
@@ -622,12 +610,9 @@
         <translation>Невозможно запустить приложение. Проверьте путь к данным кошелька.</translation>
     </message>
     <message id="loading-view-download-blocks">
-        <source>Syncing with blockchain</source>
-        <translation>Синхронизация с блокчейном</translation>
-    </message>
-    <message id="loading-view-scaning-utxo">
-        <source>Loading wallet data %d/%d</source>
-        <translation>Загрузка данных кошелька %d/%d</translation>
+        <source>Syncing with blockchain: </source>
+        <oldsource>Syncing with blockchain:</oldsource>
+        <translation type="unfinished">Синхронизация с блокчейном</translation>
     </message>
     <message id="loading-view-protocol-error">
         <source>Incompatible peer</source>
@@ -934,8 +919,9 @@
         <translation>сек.</translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>Estimated time: %s</source>
-        <translation>Оставшееся время: %s</translation>
+        <source>%s to completion</source>
+        <oldsource>Estimated time: %s</oldsource>
+        <translation type="unfinished">Оставшееся время: %s</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
@@ -1020,12 +1006,9 @@ please review your settings and try again</source>
         <translation>Истекает</translation>
     </message>
     <message id="loading-view-estimate-calculating">
-        <source>calculating...</source>
-        <translation>вычисляется...</translation>
-    </message>
-    <message id="loading-view-rebuild-utxos">
-        <source>Rebuilding wallet data</source>
-        <translation>Перестройка данных кошелька</translation>
+        <source>calculating estimated time</source>
+        <oldsource>calculating...</oldsource>
+        <translation type="unfinished">вычисляется...</translation>
     </message>
     <message id="loading-view-estimate-hours">
         <source>h</source>
@@ -3387,6 +3370,22 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="status-online-stale-rates">
         <source> (exchange rate to %1 was not updated since %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="loading-view-restoring">
+        <source>Restoring wallet from the blockchain: </source>
+        <translation type="unfinished">Перестройка данных кошелька</translation>
+    </message>
+    <message id="loading-view-creating">
+        <source>Downloading blockchain data: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="loading-view-less-than-minute">
+        <source>less than a minute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="loading-view-rebuild-utxos">
+        <source>Rebuilding wallet data: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
