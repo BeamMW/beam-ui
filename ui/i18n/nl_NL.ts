@@ -610,8 +610,8 @@
         <translation>Starten van wallet is mislukt. Controleer uw wallet gegevenslocatie</translation>
     </message>
     <message id="loading-view-download-blocks">
-        <source>Syncing with blockchain: </source>
-        <oldsource>Syncing with blockchain:</oldsource>
+        <source>Syncing with the blockchain: </source>
+        <oldsource>Syncing with blockchain: </oldsource>
         <translation type="unfinished">Synchroniseren met blockchain</translation>
     </message>
     <message id="loading-view-protocol-error">
@@ -910,13 +910,21 @@
         <source>Fee is too small</source>
         <translation>Fee is te laag</translation>
     </message>
-    <message id="loading-view-estimate-minutes">
-        <source>min</source>
-        <translation>min</translation>
+    <message id="loading-view-estimate-minutes" numerus="yes">
+        <source>%n minute(s)</source>
+        <oldsource>%n min(s)</oldsource>
+        <translation type="unfinished">
+            <numerusform>min</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
-    <message id="loading-view-estimate-seconds">
-        <source>sec</source>
-        <translation>sec.</translation>
+    <message id="loading-view-estimate-seconds" numerus="yes">
+        <source>%n second(s)</source>
+        <oldsource>second(s)</oldsource>
+        <translation type="unfinished">
+            <numerusform>sec.</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message id="loading-view-estimate-time">
         <source>%s to completion</source>
@@ -1010,9 +1018,13 @@ controleer uw instellingen en probeer opnieuw.</translation>
         <oldsource>calculating...</oldsource>
         <translation type="unfinished">berekenen...</translation>
     </message>
-    <message id="loading-view-estimate-hours">
-        <source>h</source>
-        <translation>h</translation>
+    <message id="loading-view-estimate-hours" numerus="yes">
+        <source>%n hour(s)</source>
+        <oldsource>h</oldsource>
+        <translation type="unfinished">
+            <numerusform>h</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message id="loading-view-net-problems">
         <source>It may take longer than usual. Please, check your network.</source>
@@ -3348,7 +3360,7 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>h</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>

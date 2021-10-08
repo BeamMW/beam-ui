@@ -16,6 +16,10 @@ Item
     property alias isCreating: viewModel.isCreating
     property var cancelCallback: undefined
 
+    onIsRecoveryModeChanged: {
+        viewModel.isRecoveryMode = rootLoading.isRecoveryMode;
+    }
+
     ConfirmationDialog {
         id: confirmationDialog
         okButtonColor: Style.active
@@ -103,21 +107,6 @@ Item
     StartLayout {
         id:             startLayout
         anchors.fill:   parent
-
-        // SFText {
-        //     Layout.alignment:       Qt.AlignHCenter | Qt.AlignTop
-        //     Layout.preferredHeight: 16
-        //     text: !isCreating ? 
-        //             //% "Loading wallet..."
-        //             qsTrId("loading-loading") :
-        //             ( isRecoveryMode ?
-        //                 //% "Restoring wallet..."
-        //                 qsTrId("loading-restoring") :
-        //                 //% "Creating wallet..."
-        //                 qsTrId("loading-creating"))
-        //     font.pixelSize: 14
-        //     color: Style.content_main
-        // }
 
         SFText {
             Layout.topMargin: 6

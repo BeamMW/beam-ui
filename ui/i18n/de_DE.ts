@@ -610,8 +610,8 @@
         <translation>Fehler beim Starten der Wallet. Bitte überprüfen Sie den Speicherort Ihrer Wallet-Daten</translation>
     </message>
     <message id="loading-view-download-blocks">
-        <source>Syncing with blockchain: </source>
-        <oldsource>Syncing with blockchain:</oldsource>
+        <source>Syncing with the blockchain: </source>
+        <oldsource>Syncing with blockchain: </oldsource>
         <translation type="unfinished">Syncing with blockchain</translation>
     </message>
     <message id="loading-view-protocol-error">
@@ -910,13 +910,21 @@
         <source>Fee is too small</source>
         <translation>Gebühr ist zu klein</translation>
     </message>
-    <message id="loading-view-estimate-minutes">
-        <source>min</source>
-        <translation type="unfinished">min</translation>
+    <message id="loading-view-estimate-minutes" numerus="yes">
+        <source>%n minute(s)</source>
+        <oldsource>%n min(s)</oldsource>
+        <translation type="unfinished">
+            <numerusform>min</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
-    <message id="loading-view-estimate-seconds">
-        <source>sec</source>
-        <translation>Sek</translation>
+    <message id="loading-view-estimate-seconds" numerus="yes">
+        <source>%n second(s)</source>
+        <oldsource>second(s)</oldsource>
+        <translation type="unfinished">
+            <numerusform>Sek</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message id="loading-view-estimate-time">
         <source>%s to completion</source>
@@ -1010,9 +1018,13 @@ bitte überprüfen Sie Ihre Einstellungen und versuchen Sie es erneut.</translat
         <oldsource>calculating...</oldsource>
         <translation type="unfinished">berechne...</translation>
     </message>
-    <message id="loading-view-estimate-hours">
-        <source>h</source>
-        <translation>Std.</translation>
+    <message id="loading-view-estimate-hours" numerus="yes">
+        <source>%n hour(s)</source>
+        <oldsource>h</oldsource>
+        <translation type="unfinished">
+            <numerusform>Std.</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message id="loading-view-net-problems">
         <source>It may take longer than usual. Please, check your network.</source>
@@ -3351,7 +3363,7 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>Std.</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>

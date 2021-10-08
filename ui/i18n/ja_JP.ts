@@ -610,8 +610,8 @@
         <translation>ウォレットの開始に失敗しました。ウォレット設定を確認してください</translation>
     </message>
     <message id="loading-view-download-blocks">
-        <source>Syncing with blockchain: </source>
-        <oldsource>Syncing with blockchain:</oldsource>
+        <source>Syncing with the blockchain: </source>
+        <oldsource>Syncing with blockchain: </oldsource>
         <translation type="unfinished">Syncing with blockchain</translation>
     </message>
     <message id="loading-view-protocol-error">
@@ -910,13 +910,19 @@
         <source>Fee is too small</source>
         <translation>手数料が小さすぎます</translation>
     </message>
-    <message id="loading-view-estimate-minutes">
-        <source>min</source>
-        <translation type="unfinished">min</translation>
+    <message id="loading-view-estimate-minutes" numerus="yes">
+        <source>%n minute(s)</source>
+        <oldsource>%n min(s)</oldsource>
+        <translation type="unfinished">
+            <numerusform>min</numerusform>
+        </translation>
     </message>
-    <message id="loading-view-estimate-seconds">
-        <source>sec</source>
-        <translation type="unfinished">sec</translation>
+    <message id="loading-view-estimate-seconds" numerus="yes">
+        <source>%n second(s)</source>
+        <oldsource>second(s)</oldsource>
+        <translation type="unfinished">
+            <numerusform>sec</numerusform>
+        </translation>
     </message>
     <message id="loading-view-estimate-time">
         <source>%s to completion</source>
@@ -1010,9 +1016,12 @@ please review your settings and try again</translation>
         <oldsource>calculating...</oldsource>
         <translation type="unfinished">calculating...</translation>
     </message>
-    <message id="loading-view-estimate-hours">
-        <source>h</source>
-        <translation>時間</translation>
+    <message id="loading-view-estimate-hours" numerus="yes">
+        <source>%n hour(s)</source>
+        <oldsource>h</oldsource>
+        <translation type="unfinished">
+            <numerusform>時間</numerusform>
+        </translation>
     </message>
     <message id="loading-view-net-problems">
         <source>It may take longer than usual. Please, check your network.</source>
@@ -3347,7 +3356,7 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>時間</numerusform>
         </translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val72-comment">

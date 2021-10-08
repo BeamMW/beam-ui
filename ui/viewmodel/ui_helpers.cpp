@@ -336,16 +336,12 @@ namespace beamui
         QString res;
         QTextStream ss(&res);
         QString units;
-        auto writeTime = [&ss](const auto& value, const auto& units)
-        { 
-            ss << value << " " << units;
-        };
+
         if (estimate >= kSecondsInHour)
         {
             value = estimate / kSecondsInHour;
-            //% "h"
-            units = qtTrId("loading-view-estimate-hours");
-            writeTime(value, units);
+            //% "%n hour(s)"
+            ss << qtTrId("loading-view-estimate-hours", value);
 
             estimate %= kSecondsInHour;
             value = estimate / kSecondsInMinute;
@@ -358,10 +354,8 @@ namespace beamui
 
             if (value >= 1)
             {
-                //% "min"
-                units = qtTrId("loading-view-estimate-minutes");
-                ss << " ";
-                writeTime(value, units);
+                //% "%n minute(s)"
+                ss << " " << qtTrId("loading-view-estimate-minutes", value);
             }
 
             return res;
@@ -374,18 +368,16 @@ namespace beamui
             {
                 ++value;
             }
-            units = qtTrId("loading-view-estimate-minutes");
+            ss << qtTrId("loading-view-estimate-minutes", value);
+            
         }
         else if (estimate > kSecondsInMinute)
         {
             value = estimate / kSecondsInMinute;
-            units = qtTrId("loading-view-estimate-minutes");
-            writeTime(value, units);
+            ss << qtTrId("loading-view-estimate-minutes", value);
             value = estimate - kSecondsInMinute;
-            //% "sec"
-            units = qtTrId("loading-view-estimate-seconds");
-            ss << " ";
-            writeTime(value, units);
+            //% "%n second(s)"
+            ss << " " << qtTrId("loading-view-estimate-seconds", value);
             return res;
         }
         else
@@ -394,7 +386,6 @@ namespace beamui
             res = qtTrId("loading-view-less-than-minute");
             return res;
         }
-        writeTime(value, units);
         return res;
     }
 

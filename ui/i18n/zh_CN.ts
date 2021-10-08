@@ -619,8 +619,8 @@
 请检查您的钱包数据文件位置</translation>
     </message>
     <message id="loading-view-download-blocks">
-        <source>Syncing with blockchain: </source>
-        <oldsource>Syncing with blockchain:</oldsource>
+        <source>Syncing with the blockchain: </source>
+        <oldsource>Syncing with blockchain: </oldsource>
         <translation type="unfinished">同步区块链</translation>
     </message>
     <message id="loading-view-protocol-error">
@@ -920,13 +920,19 @@
         <source>Fee is too small</source>
         <translation>手续费过低</translation>
     </message>
-    <message id="loading-view-estimate-minutes">
-        <source>min</source>
-        <translation>分钟</translation>
+    <message id="loading-view-estimate-minutes" numerus="yes">
+        <source>%n minute(s)</source>
+        <oldsource>%n min(s)</oldsource>
+        <translation type="unfinished">
+            <numerusform>分钟</numerusform>
+        </translation>
     </message>
-    <message id="loading-view-estimate-seconds">
-        <source>sec</source>
-        <translation>秒</translation>
+    <message id="loading-view-estimate-seconds" numerus="yes">
+        <source>%n second(s)</source>
+        <oldsource>second(s)</oldsource>
+        <translation type="unfinished">
+            <numerusform>秒</numerusform>
+        </translation>
     </message>
     <message id="loading-view-estimate-time">
         <source>%s to completion</source>
@@ -1020,9 +1026,12 @@ please review your settings and try again</source>
         <oldsource>calculating...</oldsource>
         <translation type="unfinished">正在计算...</translation>
     </message>
-    <message id="loading-view-estimate-hours">
-        <source>h</source>
-        <translation>小时</translation>
+    <message id="loading-view-estimate-hours" numerus="yes">
+        <source>%n hour(s)</source>
+        <oldsource>h</oldsource>
+        <translation type="unfinished">
+            <numerusform>小时</numerusform>
+        </translation>
     </message>
     <message id="loading-view-net-problems">
         <source>It may take longer than usual. Please, check your network.</source>
@@ -3360,7 +3369,7 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>小时</numerusform>
         </translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val72-comment">

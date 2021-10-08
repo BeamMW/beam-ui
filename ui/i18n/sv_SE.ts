@@ -610,8 +610,8 @@
         <translation>Det gick ej att starta plånboken. Vänligen kontrollera plånbokens data-katalog</translation>
     </message>
     <message id="loading-view-download-blocks">
-        <source>Syncing with blockchain: </source>
-        <oldsource>Syncing with blockchain:</oldsource>
+        <source>Syncing with the blockchain: </source>
+        <oldsource>Syncing with blockchain: </oldsource>
         <translation type="unfinished">Synkar med blockkedjan</translation>
     </message>
     <message id="loading-view-protocol-error">
@@ -909,13 +909,21 @@
         <source>Fee is too small</source>
         <translation>Avgift är för liten</translation>
     </message>
-    <message id="loading-view-estimate-minutes">
-        <source>min</source>
-        <translation>minut</translation>
+    <message id="loading-view-estimate-minutes" numerus="yes">
+        <source>%n minute(s)</source>
+        <oldsource>%n min(s)</oldsource>
+        <translation type="unfinished">
+            <numerusform>minut</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
-    <message id="loading-view-estimate-seconds">
-        <source>sec</source>
-        <translation>sekund</translation>
+    <message id="loading-view-estimate-seconds" numerus="yes">
+        <source>%n second(s)</source>
+        <oldsource>second(s)</oldsource>
+        <translation type="unfinished">
+            <numerusform>sekund</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message id="loading-view-estimate-time">
         <source>%s to completion</source>
@@ -1009,9 +1017,13 @@ vänligen se över dina inställningar och testa igen</translation>
         <oldsource>calculating...</oldsource>
         <translation type="unfinished">beräknar...</translation>
     </message>
-    <message id="loading-view-estimate-hours">
-        <source>h</source>
-        <translation>t</translation>
+    <message id="loading-view-estimate-hours" numerus="yes">
+        <source>%n hour(s)</source>
+        <oldsource>h</oldsource>
+        <translation type="unfinished">
+            <numerusform>t</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message id="loading-view-net-problems">
         <source>It may take longer than usual. Please, check your network.</source>
@@ -3348,7 +3360,7 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>t</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>

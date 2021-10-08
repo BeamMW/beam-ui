@@ -143,7 +143,7 @@ void LoadingViewModel::updateProgress()
             progress = std::min(1., m_done / static_cast<double>(m_total));
         }
 
-        //% "Syncing with blockchain: "
+        //% "Syncing with the blockchain: "
         progressMessage = qtTrId("loading-view-download-blocks");
         if (m_isCreating)
         {

@@ -610,8 +610,8 @@
         <translation>Невозможно запустить приложение. Проверьте путь к данным кошелька.</translation>
     </message>
     <message id="loading-view-download-blocks">
-        <source>Syncing with blockchain: </source>
-        <oldsource>Syncing with blockchain:</oldsource>
+        <source>Syncing with the blockchain: </source>
+        <oldsource>Syncing with blockchain: </oldsource>
         <translation type="unfinished">Синхронизация с блокчейном</translation>
     </message>
     <message id="loading-view-protocol-error">
@@ -910,13 +910,21 @@
         <source>Fee is too small</source>
         <translation>Размер комиссии слишком мал</translation>
     </message>
-    <message id="loading-view-estimate-minutes">
-        <source>min</source>
-        <translation>мин</translation>
+    <message id="loading-view-estimate-minutes" numerus="yes">
+        <source>%n minute(s)</source>
+        <translation>
+            <numerusform>минуна</numerusform>
+            <numerusform>минуты</numerusform>
+            <numerusform>минут</numerusform>
+        </translation>
     </message>
-    <message id="loading-view-estimate-seconds">
-        <source>sec</source>
-        <translation>сек.</translation>
+    <message id="loading-view-estimate-seconds" numerus="yes">
+        <source>%n second(s)</source>
+        <translation type="unfinished">
+            <numerusform>секунда</numerusform>
+            <numerusform>секунды</numerusform>
+            <numerusform>секунд</numerusform>
+        </translation>
     </message>
     <message id="loading-view-estimate-time">
         <source>%s to completion</source>
@@ -1010,9 +1018,13 @@ please review your settings and try again</source>
         <oldsource>calculating...</oldsource>
         <translation type="unfinished">вычисляется...</translation>
     </message>
-    <message id="loading-view-estimate-hours">
-        <source>h</source>
-        <translation>ч</translation>
+    <message id="loading-view-estimate-hours" numerus="yes">
+        <source>%n hour(s)</source>
+        <translation>
+            <numerusform>час</numerusform>
+            <numerusform>часа</numerusform>
+            <numerusform>часов</numerusform>
+        </translation>
     </message>
     <message id="loading-view-net-problems">
         <source>It may take longer than usual. Please, check your network.</source>
