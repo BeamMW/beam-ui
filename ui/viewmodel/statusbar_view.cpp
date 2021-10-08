@@ -111,7 +111,7 @@ QString StatusbarViewModel::getWalletStatusErrorMsg() const
 
 QString StatusbarViewModel::getExchangeStatus() const
 {
-    //% " (exchange rate to %1 was not updated since %2)"
+    //% "(exchange rate to %1 was not updated since %2)"
     return qtTrId("status-online-stale-rates").arg(beamui::getCurrencyUnitName(m_exchangeRatesManager.getRateCurrency()))
                                               .arg(m_exchangeRatesManager.getUpdateTime().toString(m_locale.dateTimeFormat(QLocale::ShortFormat)));
 }

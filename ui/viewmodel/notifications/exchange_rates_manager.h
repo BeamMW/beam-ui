@@ -46,6 +46,7 @@ signals:
 
 private:
     void setRateUnit();
+    void setUpdateTime(beam::Timestamp value);
 
     WalletModel& m_walletModel;
     WalletSettings& m_settings;

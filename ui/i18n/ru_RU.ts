@@ -3381,7 +3381,8 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="status-online-stale-rates">
-        <source> (exchange rate to %1 was not updated since %2)</source>
+        <source>(exchange rate to %1 was not updated since %2)</source>
+        <oldsource> (exchange rate to %1 was not updated since %2)</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="loading-view-restoring">
@@ -3399,6 +3400,10 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="loading-view-rebuild-utxos">
         <source>Rebuilding wallet data: </source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="status-change-settings">
+        <source>Change settings</source>
+        <translation type="unfinished">Изменить настройки</translation>
     </message>
 </context>
 </TS>
