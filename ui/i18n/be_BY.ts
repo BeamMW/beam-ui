@@ -913,17 +913,17 @@
     <message id="loading-view-estimate-minutes" numerus="yes">
         <source>%n minute(s)</source>
         <translation>
-            <numerusform>хвiлiна</numerusform>
-            <numerusform>хвiлiны</numerusform>
-            <numerusform>хвiлiн</numerusform>
+            <numerusform>%n хвiлiна</numerusform>
+            <numerusform>%n хвiлiны</numerusform>
+            <numerusform>%n хвiлiн</numerusform>
         </translation>
     </message>
     <message id="loading-view-estimate-seconds" numerus="yes">
         <source>%n second(s)</source>
         <translation>
-            <numerusform>секунда</numerusform>
-            <numerusform>секунды</numerusform>
-            <numerusform>секунд</numerusform>
+            <numerusform>%n секунда</numerusform>
+            <numerusform>%n секунды</numerusform>
+            <numerusform>%n секунд</numerusform>
         </translation>
     </message>
     <message id="loading-view-estimate-time">
@@ -1021,9 +1021,9 @@ please review your settings and try again.</translation>
     <message id="loading-view-estimate-hours" numerus="yes">
         <source>%n hour(s)</source>
         <translation>
-            <numerusform>гадзiна</numerusform>
-            <numerusform>гадзiны</numerusform>
-            <numerusform>гадзiн</numerusform>
+            <numerusform>%n гадзiна</numerusform>
+            <numerusform>%n гадзiны</numerusform>
+            <numerusform>%n гадзiн</numerusform>
         </translation>
     </message>
     <message id="loading-view-net-problems">

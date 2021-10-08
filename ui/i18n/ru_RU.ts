@@ -913,17 +913,17 @@
     <message id="loading-view-estimate-minutes" numerus="yes">
         <source>%n minute(s)</source>
         <translation>
-            <numerusform>минуна</numerusform>
-            <numerusform>минуты</numerusform>
-            <numerusform>минут</numerusform>
+            <numerusform>%n минуна</numerusform>
+            <numerusform>%n минуты</numerusform>
+            <numerusform>%n минут</numerusform>
         </translation>
     </message>
     <message id="loading-view-estimate-seconds" numerus="yes">
         <source>%n second(s)</source>
         <translation type="unfinished">
-            <numerusform>секунда</numerusform>
-            <numerusform>секунды</numerusform>
-            <numerusform>секунд</numerusform>
+            <numerusform>%n секунда</numerusform>
+            <numerusform>%n секунды</numerusform>
+            <numerusform>%n секунд</numerusform>
         </translation>
     </message>
     <message id="loading-view-estimate-time">
@@ -1021,9 +1021,9 @@ please review your settings and try again</source>
     <message id="loading-view-estimate-hours" numerus="yes">
         <source>%n hour(s)</source>
         <translation>
-            <numerusform>час</numerusform>
-            <numerusform>часа</numerusform>
-            <numerusform>часов</numerusform>
+            <numerusform>%n час</numerusform>
+            <numerusform>%n часа</numerusform>
+            <numerusform>%n часов</numerusform>
         </translation>
     </message>
     <message id="loading-view-net-problems">
