@@ -3364,9 +3364,9 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
-            <numerusform>гадзiна</numerusform>
-            <numerusform>гадзiны</numerusform>
-            <numerusform>гадзiн</numerusform>
+            <numerusform>%n гадзiна</numerusform>
+            <numerusform>%n гадзiны</numerusform>
+            <numerusform>%n гадзiн</numerusform>
         </translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val72-comment">
