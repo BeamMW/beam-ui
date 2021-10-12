@@ -42,7 +42,7 @@ Control {
         pixelSize:  14
         styleName:  "Light"
         weight:     Font.Light
-        family:     "SF Pro Display"
+        family:     "ProximaNova"
     }
 
     property var tipCtrl:   defaultTipCtrl

@@ -76,7 +76,7 @@ Window  {
                         text: qsTrId("settings-report-problem-save-log-button")
                         onClicked: viewModel.saveLogs()
                         font { 
-                            family: "SF Pro Display"
+                            family: "ProximaNova"
                             pixelSize: 14
                             weight: Font.Bold
                             capitalization: Font.AllLowercase

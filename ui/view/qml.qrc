@@ -127,24 +127,11 @@
         <file>swap_confirm.qml</file>
         <file>send_expired.qml</file>
         <file>dex.qml</file>
-        <file>assets/fonts/SF-Pro-Display-Black.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Light.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Semibold.otf</file>
-        <file>assets/fonts/SF-Pro-Display-BlackItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-LightItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-SemiboldItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Bold.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Medium.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Thin.otf</file>
-        <file>assets/fonts/SF-Pro-Display-BoldItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-MediumItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-ThinItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Heavy.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Regular.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Ultralight.otf</file>
-        <file>assets/fonts/SF-Pro-Display-HeavyItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-RegularItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-UltralightItalic.otf</file>
+        <file>assets/fonts/ProximaNova-Black.ttf</file>
+        <file>assets/fonts/ProximaNova-Bold.ttf</file>
+        <file>assets/fonts/ProximaNova-Light.ttf</file>
+        <file>assets/fonts/ProximaNova-Regular.ttf</file>
+        <file>assets/fonts/ProximaNova-RegularIt.ttf</file>
         <file>assets/bottom-logo-beamx.svg</file>
         <file>assets/beam-circle.svg</file>
         <file>assets/ltc-circle.svg</file>

@@ -135,7 +135,7 @@ TableView {
             font.pixelSize: headerTextFontSize
             color: tableView.sortIndicatorColumn == styleData.column ? Style.content_main : Style.content_secondary
             font.weight: tableView.sortIndicatorColumn == styleData.column ? Font.Bold : Font.Normal
-            font.family: "SF Pro Display"
+            font.family: "ProximaNova"
             font.styleName: "Regular"
 
             icon.source: styleData.value == "" ? "" : tableView.sortIndicatorColumn == styleData.column ? "qrc:/assets/icon-sort-active.svg" : "qrc:/assets/icon-sort.svg"

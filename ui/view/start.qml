@@ -429,7 +429,7 @@ Item
                                         }
                                     }
                                     function elidedText(str, isPreferred){
-                                        var textMetricsTemplate = 'import QtQuick 2.11; TextMetrics{font{family: "SF Pro Display";styleName: "Regular";weight: Font.Normal;pixelSize: 14;}elide: Text.ElideLeft;elideWidth: parent.width - tableView.textLeftMargin;text: "%1"}';
+                                        var textMetricsTemplate = 'import QtQuick 2.11; TextMetrics{font{family: "ProximaNova";styleName: "Regular";weight: Font.Normal;pixelSize: 14;}elide: Text.ElideLeft;elideWidth: parent.width - tableView.textLeftMargin;text: "%1"}';
                                         var fullTextStr = isPreferred ? str + " " + pathLabel.bestMatchStr: str;
                                         var textMetrics= Qt.createQmlObject(
                                                 textMetricsTemplate.arg(fullTextStr),

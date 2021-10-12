@@ -27,7 +27,7 @@ CheckBox {
             color: mainColor
             leftPadding: 5
             font {
-                family:     "SF Pro Display"
+                family:     "ProximaNova"
                 styleName:  "Regular"
                 weight:     Font.Normal
                 pixelSize:  14
