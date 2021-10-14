@@ -186,7 +186,7 @@ jobs:
         cp ui/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}} deploy/usr/bin/
         cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/apps/
         cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/mimetypes/application-x-beam-dapp.png
-        cp ui/x-beam-dapp.xml deploy/user/share/mime/application
+        cp ui/x-beam-dapp.xml deploy/usr/share/mime/application
         cp ui/beam.desktop deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop
         cp ui/beam-wallet.cfg deploy/usr/bin/
         echo "Creating AppImage"
