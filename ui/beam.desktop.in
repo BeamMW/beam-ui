@@ -1,5 +1,5 @@
 [Desktop Entry]
-Version=@PROJECT_VERSION@
+Version=1.0
 Name=Beam Wallet@BEAM_DISPLAY_SUFFIX@
 Comment=Scalable confidential cryptocurrency
 Exec=/usr/bin/BeamWallet@BEAM_SUFFIX_UPPER_CASE@ %U
