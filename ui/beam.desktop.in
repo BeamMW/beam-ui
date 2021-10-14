@@ -9,3 +9,4 @@ Type=Application
 Categories=Network;
 MimeType=application/x-beam-dapp;
 GenericName=Beam Wallet@BEAM_DISPLAY_SUFFIX@
+X-AppImage-Name=BeamWallet@BEAM_DISPLAY_SUFFIX@
