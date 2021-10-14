@@ -181,7 +181,7 @@ jobs:
         mkdir -p ./deploy/usr/share/applications
         mkdir -p ./deploy/usr/share/icons/hicolor/256x256/apps
         mkdir -p ./deploy/usr/share/icons/hicolor/256x256/mimetypes
-        mkdir -p ./deploy/user/share/mime/application
+        mkdir -p ./deploy/usr/share/mime/application
         echo "Copying files to AppImage deploy tree"
         cp ui/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}} deploy/usr/bin/
         cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/apps/
