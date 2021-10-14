@@ -398,14 +398,14 @@ ColumnLayout {
         }
 
         onInstall: function (fname) {
-            if (!fname.length) {
-                fname = viewModel.choseFile();
-                if (!fname.length) return;
+            if (!fname) {
+                fname = viewModel.chooseFile()
+                if (!fname) return
             }
 
-            var appName = viewModel.installFromFile(fname);
+            var appName = viewModel.installFromFile(fname)
             if (appName.length) {
-                loadAppsList();
+                loadAppsList()
                 //% "'%1' is successfully installed."
                 installOK.text = qsTrId("apps-install-success").arg(appName)
                 installOK.open()

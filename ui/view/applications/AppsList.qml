@@ -44,7 +44,8 @@ ColumnLayout {
         }
 
         onDropped: function (drag) {
-            control.install(drag.urls[0])
+            let fname = drag.urls[0]
+            control.install(fname)
         }
 
         // Actuall apps list

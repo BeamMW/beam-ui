@@ -294,7 +294,7 @@ namespace beamui::applications
         }
     }
 
-    QString AppsViewModel::choseFile()
+    QString AppsViewModel::chooseFile()
     {
         QFileDialog dialog(nullptr,
                            //% "Select application to install"
@@ -310,10 +310,29 @@ namespace beamui::applications
         return dialog.selectedFiles().value(0);
     }
 
-    QString AppsViewModel::installFromFile(const QString& fname)
+    QString AppsViewModel::installFromFile(const QString& rawFname)
     {
         try
         {
+            QString fname = rawFname;
+
+            // Some shells/systems provide incorrect count of '/' after file:
+            // For example in gnome on linux one '/' is missing. So this ugly code is necessary
+            if (fname.startsWith("file:"))
+            {
+                fname = fname.remove(0, 5);
+                while(fname.startsWith("/"))
+                {
+                    fname = fname.remove(0, 1);
+                }
+
+                #ifndef WIN32
+                fname = QString("/") + fname;
+                #endif
+            }
+
+            LOG_DEBUG() << "Installing DApp from file " << rawFname.toStdString() << " | " << fname.toStdString();
+
             QuaZip zip(fname);
             if(!zip.open(QuaZip::Mode::mdUnzip))
             {
