@@ -57,7 +57,7 @@ Item {
             sourceSize: Qt.size(13, 13)
             width: 13
             height: 13
-            visible: main.devMode
+            visible: main.devMode && control.text
 
             MouseArea {
                 anchors.fill:    parent

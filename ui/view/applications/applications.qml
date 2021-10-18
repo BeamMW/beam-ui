@@ -12,6 +12,7 @@ import "."
 ColumnLayout {
     id: control
     Layout.fillWidth: true
+    spacing: 0
 
     property string   errorMessage: ""
     property var      appsList: undefined
@@ -300,15 +301,15 @@ ColumnLayout {
 
         Layout.fillHeight:   true
         Layout.fillWidth:    true
-        Layout.bottomMargin: 10
+        Layout.bottomMargin: txPanel.folded ? 10 : 0
         visible: false
+        opacity: txPanel.folded ? 1.0 : 0.3
 
         WebEngineView {
             id: webView
 
             Layout.fillWidth:    true
             Layout.fillHeight:   true
-            Layout.bottomMargin: 10
 
             webChannel: apiChannel
             visible: true
@@ -389,8 +390,9 @@ ColumnLayout {
         Layout.topMargin:  40 - (unsupportedCnt ? errCntMessage.height + 5 + parent.spacing : 0)
         Layout.fillHeight: true
         Layout.fillWidth:  true
-        Layout.bottomMargin: 10
-        visible: control.hasApps && !control.activeApp
+        Layout.bottomMargin: txPanel.folded ? 10 : 0
+        opacity:  txPanel.folded ? 1.0 : 0.3
+        visible:  control.hasApps && !control.activeApp
         appsList: control.appsList
 
         onLaunch: function (app) {
@@ -432,6 +434,7 @@ ColumnLayout {
     }
 
     FoldablePanel {
+        id:                  txPanel
         title:               qsTrId("wallet-transactions-title")
         folded:              !control.openedTxID
         titleOpacity:        0.5
