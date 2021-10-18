@@ -296,7 +296,7 @@ ColumnLayout {
         }
     }
 
-    ColumnLayout {
+    Item {
         id: webLayout
 
         Layout.fillHeight:   true
@@ -304,13 +304,11 @@ ColumnLayout {
         Layout.bottomMargin: txPanel.folded ? 10 : 0
         visible: false
         opacity: txPanel.folded ? 1.0 : 0.3
+        clip:    true
 
         WebEngineView {
             id: webView
-
-            Layout.fillWidth:    true
-            Layout.fillHeight:   true
-
+            anchors.fill: parent
             webChannel: apiChannel
             visible: true
             backgroundColor: "transparent"
@@ -372,6 +370,21 @@ ColumnLayout {
                 req.accepted = true
             }
         }
+
+        MouseArea {
+            anchors.fill: parent
+            visible: !txPanel.folded
+            hoverEnabled: true
+
+            onClicked: function (ev) {
+                txPanel.folded = true
+                ev.accepted = true
+            }
+
+            onWheel: function (ev) {
+                ev.accepted = true
+            }
+        }
     }
 
     SFText {
@@ -431,6 +444,21 @@ ColumnLayout {
             }
             loadAppsList()
         }
+
+        MouseArea {
+            anchors.fill: parent
+            visible: !txPanel.folded
+            hoverEnabled: true
+
+            onClicked: function (ev) {
+                txPanel.folded = true
+                ev.accepted = true
+            }
+
+            onWheel: function (ev) {
+                ev.accepted = true
+            }
+        }
     }
 
     FoldablePanel {
@@ -440,7 +468,7 @@ ColumnLayout {
         titleOpacity:        0.5
         Layout.fillWidth:    true
         Layout.bottomMargin: 10
-        contentItemHeight:   control.height * 0.32
+        contentItemHeight:   control.height * 0.36
         bottomPadding:       folded ? 20 : 5
         foldsUp:             false
         visible:             appsListView.visible || webLayout.visible

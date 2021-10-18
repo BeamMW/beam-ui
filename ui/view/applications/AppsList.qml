@@ -5,7 +5,7 @@ import Beam.Wallet      1.0
 import "../utils.js" as Utils
 import "../controls"
 
-ColumnLayout {
+Item {
     id: control
     property var  appsList
     property bool hasLocal
@@ -22,15 +22,13 @@ ColumnLayout {
         hasLocal = false
     }
 
-    spacing: 10
     signal launch(var app)
     signal install(string fname)
     signal uninstall(var app)
 
     DropArea {
         id: dropArea
-        Layout.fillHeight: true
-        Layout.fillWidth:  true
+        anchors.fill: parent
 
         onEntered: function (drag) {
             if (drag.urls && drag.urls.length == 1) {
