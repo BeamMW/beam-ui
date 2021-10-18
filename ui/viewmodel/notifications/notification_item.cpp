@@ -180,7 +180,7 @@ namespace {
         //% "shielded pool"
         return qtTrId("from-shielded-pool");
     }
-}
+}  // namespace
 
 NotificationItem::NotificationItem(const beam::wallet::Notification& notification)
     : m_notification{notification}
@@ -200,6 +200,16 @@ QDateTime NotificationItem::timeCreated() const
 {
     QDateTime datetime;
     datetime.setTime_t(m_notification.m_createTime);
+    return datetime;
+}
+
+QDateTime NotificationItem::txTimeCreated() const
+{
+    auto p = getTxParameters(m_notification);
+    beam::wallet::TxDescription desc(p);
+
+    QDateTime datetime;
+    datetime.setTime_t(desc.m_createTime);
     return datetime;
 }
 
