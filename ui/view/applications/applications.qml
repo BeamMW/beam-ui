@@ -303,7 +303,7 @@ ColumnLayout {
         Layout.fillWidth:    true
         Layout.bottomMargin: txPanel.folded ? 10 : 0
         visible: false
-        opacity: txPanel.folded ? 1.0 : 0.3
+        opacity: txPanel.folded ? 1.0 : 0.25
         clip:    true
 
         WebEngineView {
@@ -404,7 +404,7 @@ ColumnLayout {
         Layout.fillHeight: true
         Layout.fillWidth:  true
         Layout.bottomMargin: txPanel.folded ? 10 : 0
-        opacity:  txPanel.folded ? 1.0 : 0.3
+        opacity:  txPanel.folded ? 1.0 : 0.25
         visible:  control.hasApps && !control.activeApp
         appsList: control.appsList
 
