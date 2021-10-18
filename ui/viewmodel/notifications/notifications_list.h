@@ -33,7 +33,9 @@ public:
         Type,
         State,
         RawID,
-        DateCreated
+        DateCreated,
+        TxTimeCreated,
+        TxDateCreated
     };
 
     NotificationsList();
