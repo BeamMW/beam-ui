@@ -43,6 +43,10 @@ Control {
         selectedId  = -1
     }
 
+    Component.onCompleted: function() {
+        control.updateView()
+    }
+
     SeedValidationHelper { id: seedValidationHelper }
 
     property real   hSpacing:       10
@@ -57,7 +61,7 @@ Control {
 
     readonly property real itemWidth: {
         if (assetsCount == 1 && !showFaucetPromo) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
-        return 280
+        return 220
     }
 
     readonly property real connectWidth: {

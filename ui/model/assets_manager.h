@@ -18,8 +18,8 @@
 #include <QMap>
 #include <QList>
 #include <QVariant>
-#include "model/wallet_model.h"
-#include "model/exchange_rates_manager.h"
+#include "wallet_model.h"
+#include "exchange_rates_manager.h"
 
 class AssetsManager: public QObject
 {

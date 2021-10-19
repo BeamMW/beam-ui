@@ -16,7 +16,7 @@
 
 #include "notification_item.h"
 #include "viewmodel/helpers/list_model.h"
-#include "viewmodel/wallet/assets_manager.h"
+#include "model/assets_manager.h"
 #include <QLocale>
 
 class NotificationsList : public ListModel<std::shared_ptr<NotificationItem>>

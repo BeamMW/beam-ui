@@ -16,6 +16,7 @@
 
 AssetsViewModel::AssetsViewModel()
     : _wallet(AppModel::getInstance().getWalletModel())
+    , _assets(AppModel::getInstance().getMyAssets())
     , _settings (AppModel::getInstance().getSettings())
 {
     connect(_wallet.get(), &WalletModel::normalCoinsChanged,  this, &AssetsViewModel::onNormalCoinsChanged);
@@ -26,7 +27,7 @@ AssetsViewModel::AssetsViewModel()
 
 QAbstractItemModel* AssetsViewModel::getAssets()
 {
-    return &_assets;
+    return _assets.get();
 }
 
 int AssetsViewModel::getSelectedAsset() const

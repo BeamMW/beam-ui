@@ -9,19 +9,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "assets_list.h"
-#include "model/app_model.h"
 #include "viewmodel/ui_helpers.h"
 
-AssetsList::AssetsList()
-    : _wallet(AppModel::getInstance().getWalletModel())
-    , _rates(AppModel::getInstance().getRates())
-    , _amgr(AppModel::getInstance().getAssets())
+AssetsList::AssetsList(WalletModel::Ptr wallet, AssetsManager::Ptr assets, ExchangeRatesManager::Ptr rates)
+    : _wallet(std::move(wallet))
+    , _amgr(std::move(assets))
+    , _rates(std::move(rates))
 {
-    connect(_rates.get(), &ExchangeRatesManager::rateUnitChanged, this,  &AssetsList::onNewRates);
-    connect(_rates.get(), &ExchangeRatesManager::activeRateChanged, this,  &AssetsList::onNewRates);
+    connect(_rates.get(),  &ExchangeRatesManager::rateUnitChanged, this,  &AssetsList::onNewRates);
+    connect(_rates.get(),  &ExchangeRatesManager::activeRateChanged, this,  &AssetsList::onNewRates);
     connect(_wallet.get(), &WalletModel::walletStatusChanged, this, &AssetsList::onWalletStatus);
-    connect(_wallet.get(), &WalletModel::transactionsChanged, this, &AssetsList::onTransactionsChanged);
-    connect(_amgr.get(), &AssetsManager::assetInfo, this,  &AssetsList::onAssetInfo);
+    connect(_amgr.get(),   &AssetsManager::assetInfo, this,  &AssetsList::onAssetInfo);
     _wallet->getAsync()->getWalletStatus();
     // Transactions table would be created later and get this for us
     // Need to refactor multiple requests in the future
@@ -38,8 +36,6 @@ QHash<int, QByteArray> AssetsList::roleNames() const
         {static_cast<int>(Roles::RAmount),          "amount"},
         {static_cast<int>(Roles::RAmountRegular),   "amountRegular"},
         {static_cast<int>(Roles::RAmountShielded),  "amountShielded"},
-        {static_cast<int>(Roles::RInTxCnt),         "inTxCnt"},
-        {static_cast<int>(Roles::ROutTxCnt),        "outTxCnt"},
         {static_cast<int>(Roles::RIcon),            "icon"},
         {static_cast<int>(Roles::RColor),           "color"},
         {static_cast<int>(Roles::RSelectionColor),  "selectionColor"},
@@ -119,10 +115,6 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
              locked += _wallet->getReceivingChange(assetId);
              return beamui::AmountBigToUIString(locked);
         }
-        case Roles::RInTxCnt:
-            return static_cast<qint32>(asset->inTxCnt());
-        case Roles::ROutTxCnt:
-            return static_cast<qint32>(asset->outTxCnt());
         case Roles::Search:
             return _amgr->getName(assetId) + _amgr->getUnitName(assetId, AssetsManager::NoShorten);
         case Roles::RIcon:
@@ -256,82 +248,4 @@ void AssetsList::onWalletStatus()
 void AssetsList::onAssetInfo(beam::Asset::ID assetId)
 {
     touch(assetId);
-}
-
-void AssetsList::onTransactionsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& items)
-{
-    using namespace beam::wallet;
-
-    TxList modified;
-
-    for (const auto& tx : items)
-    {
-        if(const auto txType = tx.GetParameter<TxType>(TxParameterID::TransactionType))
-        {
-            if (txType == TxType::Simple || txType == TxType::PushTransaction)
-            {
-                modified.push_back(tx);
-            }
-        }
-    }
-
-    switch(action)
-    {
-    case ChangeAction::Reset:
-        _txlist.swap(modified);
-        break;
-
-    case ChangeAction::Removed:
-        for(auto del: modified)
-        {
-            _txlist.erase(std::remove_if(_txlist.begin(), _txlist.end(), [&del](const TxDescription& t) {
-                return t.m_txId == del.m_txId;
-            }), _txlist.end());
-        }
-        break;
-
-    case ChangeAction::Added:
-        _txlist.insert(std::end(_txlist), std::begin(modified), std::end(modified));
-        break;
-
-    case ChangeAction::Updated:
-        for(auto repl: modified)
-        {
-            std::replace_if(_txlist.begin(), _txlist.end(), [&repl](const TxDescription& t) {
-                return t.m_txId == repl.m_txId;
-            }, repl);
-        }
-        break;
-
-    default:
-        assert(false && "Unexpected action");
-        break;
-    }
-
-    for(auto& obj: m_list) {
-        obj->resetTxCnt();
-    }
-
-    for(const auto& tx: _txlist) {
-        if (auto obj = getAsset(tx.m_assetId))
-        {
-            if(tx.m_status == beam::wallet::TxStatus::Pending ||
-               tx.m_status == beam::wallet::TxStatus::InProgress ||
-               tx.m_status == beam::wallet::TxStatus::Registering)
-            {
-                if (tx.m_sender)
-                {
-                    obj->addOutTx();
-                }
-                else
-                {
-                    obj->addIntTx();
-                }
-            }
-        }
-    }
-
-     for(auto& obj: m_list) {
-         touch(obj->id());
-     }
 }

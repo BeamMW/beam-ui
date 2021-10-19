@@ -15,7 +15,7 @@
 
 #include <QObject>
 #include <QAbstractItemModel>
-#include "assets_list.h"
+#include "model/assets_list.h"
 #include "model/wallet_model.h"
 
 class AssetsViewModel : public QObject {
@@ -56,8 +56,8 @@ signals:
 private:
     bool hasBeamAmount() const;
 
-    AssetsList _assets;
     WalletModel::Ptr _wallet;
-    WalletSettings& _settings;
+    AssetsList::Ptr  _assets;
+    WalletSettings&  _settings;
     boost::optional<beam::Asset::ID> _selectedAsset;
 };

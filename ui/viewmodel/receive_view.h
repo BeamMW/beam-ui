@@ -16,7 +16,7 @@
 #include <QObject>
 #include "model/wallet_model.h"
 #include "model/exchange_rates_manager.h"
-#include "wallet/assets_manager.h"
+#include "model/assets_manager.h"
 
 class ReceiveViewModel: public QObject
 {

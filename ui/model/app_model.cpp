@@ -343,6 +343,10 @@ void AppModel::onResetWallet()
 {
     m_walletConnections.disconnect();
 
+    assert(m_myAssets);
+    assert(m_myAssets.use_count() == 1);
+    m_myAssets.reset();
+
     assert(m_assets);
     assert(m_assets.use_count() == 1);
     m_assets.reset();
@@ -536,9 +540,10 @@ void AppModel::start()
 
     initSwapClients();
 
-    m_wallet = std::make_shared<WalletModel>(m_db, nodeAddrStr, m_walletReactor);
-    m_rates  = std::make_shared<ExchangeRatesManager>(m_wallet, m_settings);
-    m_assets = std::make_shared<AssetsManager>(m_wallet, m_rates);
+    m_wallet   = std::make_shared<WalletModel>(m_db, nodeAddrStr, m_walletReactor);
+    m_rates    = std::make_shared<ExchangeRatesManager>(m_wallet, m_settings);
+    m_assets   = std::make_shared<AssetsManager>(m_wallet, m_rates);
+    m_myAssets = std::make_shared<AssetsList>(m_wallet, m_assets, m_rates);
 
     if (m_settings.getRunLocalNode())
     {
@@ -584,6 +589,11 @@ WalletModel::Ptr AppModel::getWalletModel() const
 WalletModel::Ptr AppModel::getWalletModelUnsafe() const
 {
     return m_wallet;
+}
+
+AssetsList::Ptr AppModel::getMyAssets() const
+{
+    return m_myAssets;
 }
 
 WalletSettings& AppModel::getSettings() const

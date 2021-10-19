@@ -274,7 +274,6 @@ int main (int argc, char* argv[])
             qmlRegisterType<SwapTokenInfoItem>("Beam.Wallet", 1, 0, "SwapTokenInfoItem");
             qmlRegisterType<SwapTxObjectList>("Beam.Wallet", 1, 0, "SwapTxObjectList");
             qmlRegisterType<TxObjectList>("Beam.Wallet", 1, 0, "TxObjectList");
-            qmlRegisterType<AssetsList>("Beam.Wallet", 1, 0, "AssetsList");
             qmlRegisterType<TokenInfoItem>("Beam.Wallet", 1, 0, "TokenInfoItem");
             qmlRegisterType<SwapCoinClientWrapper>("Beam.Wallet", 1, 0, "SwapCoinClientWrapper");
             qmlRegisterType<TokenBootstrapManager>("Beam.Wallet", 1, 0, "TokenBootstrapManager");

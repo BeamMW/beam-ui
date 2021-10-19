@@ -18,7 +18,7 @@
 #include <QDateTime>
 #include "model/wallet_model.h"
 #include "viewmodel/ui_helpers.h"
-#include "viewmodel/wallet/assets_manager.h"
+#include "model/assets_manager.h"
 
 class NotificationItem : public QObject
 {

@@ -194,12 +194,12 @@ set(UI_SRC
     viewmodel/wallet/token_item.cpp
     viewmodel/wallet/assets_view.h
     viewmodel/wallet/assets_view.cpp
-    viewmodel/wallet/assets_list.h
-    viewmodel/wallet/assets_list.cpp
-    viewmodel/wallet/asset_object.h
-    viewmodel/wallet/asset_object.cpp
-    viewmodel/wallet/assets_manager.h
-    viewmodel/wallet/assets_manager.cpp
+        model/assets_list.h
+        model/assets_list.cpp
+        model/asset_object.h
+        model/asset_object.cpp
+        model/assets_manager.h
+        model/assets_manager.cpp
     viewmodel/applications/webapi_creator.cpp
     viewmodel/dex/dex_view.h
     viewmodel/dex/dex_view.cpp

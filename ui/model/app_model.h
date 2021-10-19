@@ -24,8 +24,9 @@
 #include "wallet/core/private_key_keeper.h"
 #include "wallet/transactions/swaps/bridges/bitcoin/bridge_holder.h"
 #include "wallet/transactions/swaps/swap_transaction.h"
-#include "viewmodel/wallet/assets_manager.h"
+#include "assets_manager.h"
 #include "exchange_rates_manager.h"
+#include "assets_list.h"
 #include <memory>
 
 #if defined(BEAM_HW_WALLET)
@@ -43,7 +44,7 @@ public:
     static std::string getMyName();
     static const std::string& getMyVersion();
 
-    AppModel(WalletSettings& settings);
+    explicit AppModel(WalletSettings& settings);
     ~AppModel() override;
 
     bool createWallet(const beam::SecString& seed, const beam::SecString& pass, const std::string& rawSeed = "");
@@ -68,11 +69,12 @@ public:
     bool isSeedValidationTriggeredFromSetting() const;
     void setSeedValidationTriggeredFromSetting(bool value);
 
+    [[nodiscard]] WalletSettings& getSettings() const;
     [[nodiscard]] WalletModel::Ptr getWalletModel() const;
     [[nodiscard]] WalletModel::Ptr getWalletModelUnsafe() const;
     [[nodiscard]] AssetsManager::Ptr getAssets() const;
-    [[nodiscard]] WalletSettings& getSettings() const;
     [[nodiscard]] ExchangeRatesManager::Ptr getRates() const;
+    [[nodiscard]] AssetsList::Ptr getMyAssets() const;
 
     MessageManager& getMessages();
 
@@ -120,6 +122,7 @@ private:
     WalletSettings& m_settings;
     ExchangeRatesManager::Ptr m_rates;
     AssetsManager::Ptr m_assets;
+    AssetsList::Ptr m_myAssets; // assets in the wallet + BEAM even if 0
     MessageManager m_messages;
     ECC::NoLeak<ECC::uintBig> m_passwordHash;
     beam::io::Reactor::Ptr m_walletReactor;

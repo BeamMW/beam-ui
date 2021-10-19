@@ -19,7 +19,7 @@
 #include "viewmodel/ui_helpers.h"
 #include "wallet/client/extensions/news_channels/interface.h"
 #include "bvm/ManagerStd.h"
-#include "assets_list.h"
+#include "model/assets_list.h"
 
 class TxObject: public QObject
 {
