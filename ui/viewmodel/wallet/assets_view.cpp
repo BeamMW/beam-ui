@@ -15,8 +15,8 @@
 #include "model/app_model.h"
 
 AssetsViewModel::AssetsViewModel()
-    : _settings (AppModel::getInstance().getSettings())
-    , _wallet(*AppModel::getInstance().getWalletModel())
+    : _wallet(*AppModel::getInstance().getWalletModel())
+    , _settings (AppModel::getInstance().getSettings())
 {
     connect(&_wallet, &WalletModel::normalCoinsChanged,  this, &AssetsViewModel::onNormalCoinsChanged);
     connect(&_wallet, &WalletModel::shieldedCoinChanged, this, &AssetsViewModel::onShieldedCoinChanged);
@@ -61,43 +61,43 @@ void AssetsViewModel::setShowFaucetPromo(bool value)
     emit showFaucetPromoChanged();
 }
 
-bool AssetsViewModel::getHideSeedValidationPromo() const
+bool AssetsViewModel::getShowValidationPromo() const
 {
-    return _settings.hideSeedValidationPromo() && getCanHideSeedValidationPromo();
+    const bool hide = getCanHideValidationPromo() && _settings.hideSeedValidationPromo();
+    return !hide;
 }
 
-void AssetsViewModel::setHideSeedValidationPromo(bool value)
+void AssetsViewModel::setShowValidationPromo(bool value)
 {
-    _settings.setHideSeedValidationPromo(value);
-    emit hideSeedValidationPromoChanged();
+    _settings.setHideSeedValidationPromo(!value);
+    emit showValidationPromoChanged();
 }
 
-bool AssetsViewModel::getCanHideSeedValidationPromo() const
+bool AssetsViewModel::getCanHideValidationPromo() const
 {
-    auto availableH = beam::AmountBig::get_Hi(_wallet.getAvailable(beam::Asset::s_BeamID));
     auto availableL = beam::AmountBig::get_Lo(_wallet.getAvailable(beam::Asset::s_BeamID));
-    return !availableH && availableL < 1000000000;
+    return availableL < 1000000000;
 }
 
 void AssetsViewModel::onNormalCoinsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
     emit showFaucetPromoChanged();
-    emit hideSeedValidationPromoChanged();
-    emit canHideSeedValidationPromoChanged();
+    emit showValidationPromoChanged();
+    emit canHideValidationPromoChanged();
 }
 
 void AssetsViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::ShieldedCoin>& items)
 {
     emit showFaucetPromoChanged();
-    emit hideSeedValidationPromoChanged();
-    emit canHideSeedValidationPromoChanged();
+    emit showValidationPromoChanged();
+    emit canHideValidationPromoChanged();
 }
 
 bool AssetsViewModel::hasBeamAmount() const
 {
-return _wallet.getAvailable(beam::Asset::s_BeamID) != beam::Zero
-    || _wallet.getAvailableRegular(beam::Asset::s_BeamID) != beam::Zero
-    || _wallet.getAvailableShielded(beam::Asset::s_BeamID) != beam::Zero
-    || _wallet.getMaturing(beam::Asset::s_BeamID) != beam::Zero
-    || _wallet.getMatutingMP(beam::Asset::s_BeamID) != beam::Zero;
+    return _wallet.getAvailable(beam::Asset::s_BeamID) != beam::Zero
+        || _wallet.getAvailableRegular(beam::Asset::s_BeamID) != beam::Zero
+        || _wallet.getAvailableShielded(beam::Asset::s_BeamID) != beam::Zero
+        || _wallet.getMaturing(beam::Asset::s_BeamID) != beam::Zero
+        || _wallet.getMatutingMP(beam::Asset::s_BeamID) != beam::Zero;
 }
