@@ -29,6 +29,7 @@ public:
     Q_ENUM(OldCurrency)
 };
 
+beam::wallet::Currency convertCurrencyToExchangeCurrency(OldWalletCurrency::OldCurrency currency);
 beam::wallet::AtomicSwapCoin convertCurrencyToSwapCoin(OldWalletCurrency::OldCurrency currency);
 OldWalletCurrency::OldCurrency convertSwapCoinToCurrency(beam::wallet::AtomicSwapCoin swapCoin);
 

@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "assets_manager.h"
+#include "viewmodel/ui_helpers.h"
 
 namespace
 {

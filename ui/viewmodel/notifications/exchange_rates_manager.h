@@ -15,11 +15,9 @@
 
 #include <QObject>
 #include <QDateTime>
-
 #include "model/wallet_model.h"
 #include "model/settings.h"
 #include "wallet/client/extensions/news_channels/interface.h"
-#include "viewmodel/currencies.h"   // WalletCurrency::Currency enum used in UI
 
 class ExchangeRatesManager : public QObject
 {
@@ -32,8 +30,6 @@ public:
     [[nodiscard]] beam::wallet::Currency getRateCurrency() const;
     [[nodiscard]] QDateTime getUpdateTime() const;
     [[nodiscard]] bool isUpToDate() const;
-
-    static beam::wallet::Currency convertCurrencyToExchangeCurrency(OldWalletCurrency::OldCurrency uiCurrency);
 
 public slots:
     void onExchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>& rates);

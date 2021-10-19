@@ -102,3 +102,32 @@ bool isEthereumBased(OldWalletCurrency::OldCurrency currency)
         return false;
     }
 }
+
+beam::wallet::Currency convertCurrencyToExchangeCurrency(OldWalletCurrency::OldCurrency currency)
+{
+    switch (currency)
+    {
+        case OldWalletCurrency::OldCurrency::CurrBeam:
+            return beam::wallet::Currency::BEAM();
+        case OldWalletCurrency::OldCurrency::CurrBitcoin:
+            return beam::wallet::Currency::BTC();
+        case OldWalletCurrency::OldCurrency::CurrLitecoin:
+            return beam::wallet::Currency::LTC();
+        case OldWalletCurrency::OldCurrency::CurrQtum:
+            return beam::wallet::Currency::QTUM();
+        case OldWalletCurrency::OldCurrency::CurrDash:
+            return beam::wallet::Currency::DASH();
+        case OldWalletCurrency::OldCurrency::CurrDogecoin:
+            return beam::wallet::Currency::DOGE();
+        case OldWalletCurrency::OldCurrency::CurrEthereum:
+            return beam::wallet::Currency::ETH();
+        case OldWalletCurrency::OldCurrency::CurrDai:
+            return beam::wallet::Currency::DAI();
+        case OldWalletCurrency::OldCurrency::CurrUsdt:
+            return beam::wallet::Currency::USDT();
+        case OldWalletCurrency::OldCurrency::CurrWrappedBTC:
+            return beam::wallet::Currency::WBTC();
+        default:
+            return beam::wallet::Currency::UNKNOWN();
+    }
+}

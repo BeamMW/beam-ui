@@ -10,6 +10,7 @@
 // limitations under the License.
 #include "assets_list.h"
 #include "model/app_model.h"
+#include "viewmodel/ui_helpers.h"
 
 AssetsList::AssetsList()
     : _amgr(AppModel::getInstance().getAssets())

@@ -491,14 +491,14 @@ QString SendSwapViewModel::getRate() const
 
 QString SendSwapViewModel::getSecondCurrencySendRateValue() const
 {
-    auto sendCurrency = ExchangeRatesManager::convertCurrencyToExchangeCurrency(getSendCurrency());
+    auto sendCurrency = convertCurrencyToExchangeCurrency(getSendCurrency());
     auto rate = _exchangeRatesManager.getRate(sendCurrency);
     return beamui::AmountToUIString(rate);
 }
 
 QString SendSwapViewModel::getSecondCurrencyReceiveRateValue() const
 {
-    auto receiveCurrency = ExchangeRatesManager::convertCurrencyToExchangeCurrency(getReceiveCurrency());
+    auto receiveCurrency = convertCurrencyToExchangeCurrency(getReceiveCurrency());
     auto rate = _exchangeRatesManager.getRate(receiveCurrency);
     return beamui::AmountToUIString(rate);
 }

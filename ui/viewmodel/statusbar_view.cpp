@@ -14,6 +14,7 @@
 
 #include "statusbar_view.h"
 #include "model/app_model.h"
+#include "viewmodel/ui_helpers.h"
 #include "version.h"
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
 #include "settings_helpers.h"
