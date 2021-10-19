@@ -510,8 +510,9 @@ Vous essayez de restaurer un portefeuille Beam existant. Veuillez noter que si v
         <translation>Mot de passe</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
-        <source>Confirm password</source>
-        <translation>Confirmer votre nouveau mot de passe</translation>
+        <source>Password confrimation</source>
+        <oldsource>Confirm password</oldsource>
+        <translation type="unfinished">Confirmer votre nouveau mot de passe</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
         <source>Passwords do not match</source>

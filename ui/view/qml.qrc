@@ -70,6 +70,7 @@
         <file>controls/SettingsTitle.qml</file>
         <file>controls/PublicOfflineAddressDialog.qml</file>
         <file>controls/PanelGradient.qml</file>
+        <file>controls/PasswordBoxInput.qml</file>
         <file>controls/AlphaTip.qml</file>
         <file>controls/AlphaTipPopup.qml</file>
         <file>controls/SubtitleRow.qml</file>
@@ -228,6 +229,8 @@
         <file>assets/icon-external-link.svg</file>
         <file>assets/icon-external-link-black.svg</file>
         <file>assets/icon-external-link-green.svg</file>
+        <file>assets/icon-eye.svg</file>
+        <file>assets/icon-eye-crossed.svg</file>
         <file>assets/icon-cancel.svg</file>
         <file>assets/icon-cancel-16.svg</file>
         <file>assets/icon-cancel-white.svg</file>
