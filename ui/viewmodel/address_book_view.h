@@ -163,7 +163,7 @@ private:
     std::function<bool(const ContactItem*, const ContactItem*)> generateContactComparer();
 
 private:
-    WalletModel& m_model;
+    WalletModel::Ptr m_model;
     QList<ContactItem*> m_contacts;
     QList<AddressItem*> m_activeAddresses;
     QList<AddressItem*> m_expiredAddresses;

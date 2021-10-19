@@ -31,15 +31,16 @@ SendSwapViewModel::SendSwapViewModel()
     , _receiveFeeGrothes(0)
     , _receiveCurrency(OldWalletCurrency::OldCurrency::CurrStart)
     , _changeGrothes(0)
-    , _walletModel(*AppModel::getInstance().getWalletModel())
+    , _walletModel(AppModel::getInstance().getWalletModel())
+    , _rates(AppModel::getInstance().getRates())
     , _isBeamSide(true)
     , _minimalBeamFeeGrothes(minimalFee(OldWalletCurrency::OldCurrency::CurrBeam, false))
 {
-    connect(&_walletModel, &WalletModel::changeCalculated,  this,  &SendSwapViewModel::onChangeCalculated);
-    connect(&_walletModel, &WalletModel::walletStatusChanged, this, &SendSwapViewModel::recalcAvailable);
-    connect(&_exchangeRatesManager, SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyUnitNameChanged()));
-    connect(&_exchangeRatesManager, SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
-    connect(&_walletModel, &WalletModel::coinsSelected, this, &SendSwapViewModel::onCoinsSelected);
+    connect(_walletModel.get(), &WalletModel::changeCalculated,  this,  &SendSwapViewModel::onChangeCalculated);
+    connect(_walletModel.get(), &WalletModel::walletStatusChanged, this, &SendSwapViewModel::recalcAvailable);
+    connect(_walletModel.get(), &WalletModel::coinsSelected, this, &SendSwapViewModel::onCoinsSelected);
+    connect(_rates.get(), SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyUnitNameChanged()));
+    connect(_rates.get(), SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
 }
 
 QString SendSwapViewModel::getToken() const
@@ -83,9 +84,9 @@ void SendSwapViewModel::fillParameters(const beam::wallet::TxParameters& paramet
         }
         setOfferedTime(QDateTime::fromSecsSinceEpoch(*offeredTime));
 
-        auto currentHeight = _walletModel.getCurrentHeight();
+        auto currentHeight = _walletModel->getCurrentHeight();
         assert(currentHeight);
-        beam::Timestamp currentHeightTime = _walletModel.getCurrentHeightTimestamp();
+        beam::Timestamp currentHeightTime = _walletModel->getCurrentHeightTimestamp();
         auto expiresHeight = *minHeight + *peerResponseTime;
         setExpiresTime(beamui::CalculateExpiresTime(currentHeightTime, currentHeight, expiresHeight));
 
@@ -170,9 +171,9 @@ void SendSwapViewModel::setSendAmount(QString value)
         emit isSendFeeOKChanged();
         recalcAvailable();
 
-        if (_sendCurrency == OldWalletCurrency::OldCurrency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID))
+        if (_sendCurrency == OldWalletCurrency::OldCurrency::CurrBeam && _walletModel->hasShielded(beam::Asset::s_BeamID))
         {
-            _walletModel.getAsync()->selectCoins(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
+            _walletModel->getAsync()->selectCoins(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
         }
     }
 }
@@ -191,10 +192,10 @@ void SendSwapViewModel::setSendFee(unsigned int value)
         emit isSendFeeOKChanged();
         recalcAvailable();
 
-        if (_sendCurrency == OldWalletCurrency::OldCurrency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID) && _sendAmountGrothes)
+        if (_sendCurrency == OldWalletCurrency::OldCurrency::CurrBeam && _walletModel->hasShielded(beam::Asset::s_BeamID) && _sendAmountGrothes)
         {
             _feeChangedByUI = true;
-            _walletModel.getAsync()->selectCoins(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
+            _walletModel->getAsync()->selectCoins(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
         }
     }
 }
@@ -345,7 +346,7 @@ bool SendSwapViewModel::isEnough() const
     auto total = _sendAmountGrothes + _sendFeeGrothes + _changeGrothes;
     if (OldWalletCurrency::OldCurrency::CurrBeam == _sendCurrency)
     {
-        auto available = beam::AmountBig::get_Lo(_walletModel.getAvailable(beam::Asset::s_BeamID));
+        auto available = beam::AmountBig::get_Lo(_walletModel->getAvailable(beam::Asset::s_BeamID));
         return available >= total;
     }
 
@@ -386,7 +387,7 @@ void SendSwapViewModel::recalcAvailable()
     {
     case OldWalletCurrency::OldCurrency::CurrBeam:
         _changeGrothes = 0;
-        _walletModel.getAsync()->calcChange(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
+        _walletModel->getAsync()->calcChange(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
         return;
     default:
         // TODO:SWAP implement for all currencies
@@ -453,7 +454,7 @@ void SendSwapViewModel::sendMoney()
                     << "minimalHeight: " << *minimalHeight;
     }
 
-    _walletModel.getAsync()->startTransaction(std::move(txParameters));
+    _walletModel->getAsync()->startTransaction(std::move(txParameters));
 }
 
 bool SendSwapViewModel::isSendFeeOK() const
@@ -492,20 +493,20 @@ QString SendSwapViewModel::getRate() const
 QString SendSwapViewModel::getSecondCurrencySendRateValue() const
 {
     auto sendCurrency = convertCurrencyToExchangeCurrency(getSendCurrency());
-    auto rate = _exchangeRatesManager.getRate(sendCurrency);
+    auto rate = _rates->getRate(sendCurrency);
     return beamui::AmountToUIString(rate);
 }
 
 QString SendSwapViewModel::getSecondCurrencyReceiveRateValue() const
 {
     auto receiveCurrency = convertCurrencyToExchangeCurrency(getReceiveCurrency());
-    auto rate = _exchangeRatesManager.getRate(receiveCurrency);
+    auto rate = _rates->getRate(receiveCurrency);
     return beamui::AmountToUIString(rate);
 }
 
 QString SendSwapViewModel::getSecondCurrencyUnitName() const
 {
-    return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateCurrency());
+    return beamui::getCurrencyUnitName(_rates->getRateCurrency());
 }
 
 bool SendSwapViewModel::isTokenGeneratedByNewVersion() const

@@ -19,15 +19,15 @@
 #include <iterator>
 
 TokenBootstrapManager::TokenBootstrapManager()
-    : _wallet_model(*AppModel::getInstance().getWalletModel())
+    : _wallet_model(AppModel::getInstance().getWalletModel())
 {
     connect(
-        &_wallet_model,
+        _wallet_model.get(),
         SIGNAL(transactionsChanged(beam::wallet::ChangeAction,
                         const std::vector<beam::wallet::TxDescription>&)),
         SLOT(onTransactionsChanged(beam::wallet::ChangeAction,
                         const std::vector<beam::wallet::TxDescription>&)));
-    _wallet_model.getAsync()->getTransactions();
+    _wallet_model->getAsync()->getTransactions();
 }
 
 TokenBootstrapManager::~TokenBootstrapManager() {}
@@ -76,7 +76,7 @@ void TokenBootstrapManager::checkTokenForDuplicate(const QString& token)
     auto parametrsValue = *parameters;
     auto peerID = parametrsValue.GetParameter<beam::wallet::WalletID>(
         beam::wallet::TxParameterID::PeerID);
-    if (peerID && _wallet_model.isOwnAddress(*peerID))
+    if (peerID && _wallet_model->isOwnAddress(*peerID))
     {
         emit tokenOwnGenerated(token);
         return;
@@ -92,7 +92,7 @@ void TokenBootstrapManager::checkTokenForDuplicate(const QString& token)
     _tokensInProgress[txIdValue] = token;
 
     _myTxIds.empty()
-        ? _wallet_model.getAsync()->getTransactions()
+        ? _wallet_model->getAsync()->getTransactions()
         : checkIsTxPreviousAccepted();
 }
 

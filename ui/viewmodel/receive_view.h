@@ -15,7 +15,7 @@
 
 #include <QObject>
 #include "model/wallet_model.h"
-#include "notifications/exchange_rates_manager.h"
+#include "model/exchange_rates_manager.h"
 #include "wallet/assets_manager.h"
 
 class ReceiveViewModel: public QObject
@@ -79,7 +79,7 @@ private:
 
     boost::optional<beam::wallet::WalletAddress> _receiverAddress;
     QString               _originalToken;
-    WalletModel&          _walletModel;
-    ExchangeRatesManager  _exchangeRatesManager;
+    WalletModel::Ptr      _walletModel;
+    ExchangeRatesManager::Ptr _rates;
     AssetsManager::Ptr    _amgr;
 };

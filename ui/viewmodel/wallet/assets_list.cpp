@@ -13,16 +13,16 @@
 #include "viewmodel/ui_helpers.h"
 
 AssetsList::AssetsList()
-    : _amgr(AppModel::getInstance().getAssets())
-    , _wallet(*AppModel::getInstance().getWalletModel())
+    : _wallet(AppModel::getInstance().getWalletModel())
+    , _rates(AppModel::getInstance().getRates())
+    , _amgr(AppModel::getInstance().getAssets())
 {
-    connect(&_ermgr,     &ExchangeRatesManager::rateUnitChanged,   this,  &AssetsList::onNewRates);
-    connect(&_ermgr,     &ExchangeRatesManager::activeRateChanged, this,  &AssetsList::onNewRates);
-    connect(&_wallet,    &WalletModel::walletStatusChanged,        this,  &AssetsList::onWalletStatus);
-    connect(&_wallet,    &WalletModel::transactionsChanged,        this,  &AssetsList::onTransactionsChanged);
-    connect(_amgr.get(), &AssetsManager::assetInfo,                this,  &AssetsList::onAssetInfo);
-
-    _wallet.getAsync()->getWalletStatus();
+    connect(_rates.get(), &ExchangeRatesManager::rateUnitChanged, this,  &AssetsList::onNewRates);
+    connect(_rates.get(), &ExchangeRatesManager::activeRateChanged, this,  &AssetsList::onNewRates);
+    connect(_wallet.get(), &WalletModel::walletStatusChanged, this, &AssetsList::onWalletStatus);
+    connect(_wallet.get(), &WalletModel::transactionsChanged, this, &AssetsList::onTransactionsChanged);
+    connect(_amgr.get(), &AssetsManager::assetInfo, this,  &AssetsList::onAssetInfo);
+    _wallet->getAsync()->getWalletStatus();
     // Transactions table would be created later and get this for us
     // Need to refactor multiple requests in the future
     //_wallet.getAsync()->getTransactions();
@@ -95,28 +95,28 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
         case Roles::RUnitName:
             return _amgr->getUnitName(assetId, AssetsManager::NoShorten);
         case Roles::RAmount:
-            return beamui::AmountBigToUIString(_wallet.getAvailable(assetId));
+            return beamui::AmountBigToUIString(_wallet->getAvailable(assetId));
         case Roles::RAmountRegular:
-            return beamui::AmountBigToUIString(_wallet.getAvailableRegular(assetId));
+            return beamui::AmountBigToUIString(_wallet->getAvailableRegular(assetId));
         case Roles::RAmountShielded:
-            return beamui::AmountBigToUIString(_wallet.getAvailableShielded(assetId));
+            return beamui::AmountBigToUIString(_wallet->getAvailableShielded(assetId));
         case Roles::RMaturingRegular:
-            return beamui::AmountBigToUIString(_wallet.getMaturing(assetId));
+            return beamui::AmountBigToUIString(_wallet->getMaturing(assetId));
         case Roles::RMaturingMP:
-            return beamui::AmountBigToUIString(_wallet.getMatutingMP(assetId));
+            return beamui::AmountBigToUIString(_wallet->getMatutingMP(assetId));
         case Roles::RMaturingTotal:
         {
-            auto total = _wallet.getMaturing(assetId);
-            total += _wallet.getMatutingMP(assetId);
+            auto total = _wallet->getMaturing(assetId);
+            total += _wallet->getMatutingMP(assetId);
             return beamui::AmountBigToUIString(total);
         }
         case Roles::RChange:
-            return beamui::AmountBigToUIString(_wallet.getReceivingChange(assetId));
+            return beamui::AmountBigToUIString(_wallet->getReceivingChange(assetId));
         case Roles::RLocked:
         {
-             auto locked = _wallet.getMaturing(assetId);
-             locked += _wallet.getMatutingMP(assetId);
-             locked += _wallet.getReceivingChange(assetId);
+             auto locked = _wallet->getMaturing(assetId);
+             locked += _wallet->getMatutingMP(assetId);
+             locked += _wallet->getReceivingChange(assetId);
              return beamui::AmountBigToUIString(locked);
         }
         case Roles::RInTxCnt:
@@ -132,7 +132,7 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
         case Roles::RSelectionColor:
             return _amgr->getSelectionColor(assetId);
         case Roles::RRateUnit:
-            return beamui::getCurrencyUnitName(_ermgr.getRateCurrency());
+            return beamui::getCurrencyUnitName(_rates->getRateCurrency());
         case Roles::RName:
             return _amgr->getName(assetId);
         case Roles::RSmallestUnitName:
@@ -149,7 +149,7 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
             return _amgr->isVerified(assetId);
         case Roles::RRate:
             {
-                auto rate = _ermgr.getRate(beam::wallet::Currency(assetId));
+                auto rate = _rates->getRate(beam::wallet::Currency(assetId));
                 return beamui::AmountToUIString(rate);
             }
         default:
@@ -179,7 +179,7 @@ std::shared_ptr<AssetObject> AssetsList::getAsset(beam::Asset::ID id)
              return obj;
          }
      }
-     return std::shared_ptr<AssetObject>();
+     return {};
 }
 
 bool AssetsList::touch(beam::Asset::ID id)
@@ -204,7 +204,7 @@ void AssetsList::onWalletStatus()
     //
     // Update/Add new assets
     //
-    auto anz = _wallet.getAssetsNZ();
+    auto anz = _wallet->getAssetsNZ();
     std::set<beam::Asset::ID> anew;
 
     for (auto aid: anz)

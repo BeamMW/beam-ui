@@ -43,7 +43,7 @@ const int kBpsRecessionCountThreshold = 60;
 Q_DECLARE_METATYPE(uint64_t);
 
 LoadingViewModel::LoadingViewModel()
-    : m_walletModel{ *AppModel::getInstance().getWalletModel() }
+    : m_walletModel(AppModel::getInstance().getWalletModel())
     , m_progress{0.0}
     , m_nodeInitProgress{0.}
     , m_total{0}
@@ -61,9 +61,9 @@ LoadingViewModel::LoadingViewModel()
     , m_estimate{0}
     , m_bpsRecessionCount{0}
 {
-    connect(&m_walletModel, SIGNAL(syncProgressUpdated(int, int)), SLOT(onSyncProgressUpdated(int, int)));
-    connect(&m_walletModel, SIGNAL(nodeConnectionChanged(bool)), SLOT(onNodeConnectionChanged(bool)));
-    connect(&m_walletModel, SIGNAL(walletError(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
+    connect(m_walletModel.get(), SIGNAL(syncProgressUpdated(int, int)), SLOT(onSyncProgressUpdated(int, int)));
+    connect(m_walletModel.get(), SIGNAL(nodeConnectionChanged(bool)), SLOT(onNodeConnectionChanged(bool)));
+    connect(m_walletModel.get(), SIGNAL(walletError(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
 
     if (AppModel::getInstance().getSettings().getRunLocalNode())
     {
@@ -99,9 +99,11 @@ void LoadingViewModel::onNodeSyncProgressUpdated(int done, int total)
 
 void LoadingViewModel::resetWallet()
 {
-    disconnect(&m_walletModel, SIGNAL(syncProgressUpdated(int, int)), this, SLOT(onSyncProgressUpdated(int, int)));
-    disconnect(&m_walletModel, SIGNAL(nodeConnectionChanged(bool)), this, SLOT(onNodeConnectionChanged(bool)));
-    disconnect(&m_walletModel, SIGNAL(walletError(beam::wallet::ErrorType)), this, SLOT(onGetWalletError(beam::wallet::ErrorType)));
+    disconnect(m_walletModel.get(), SIGNAL(syncProgressUpdated(int, int)), this, SLOT(onSyncProgressUpdated(int, int)));
+    disconnect(m_walletModel.get(), SIGNAL(nodeConnectionChanged(bool)), this, SLOT(onNodeConnectionChanged(bool)));
+    disconnect(m_walletModel.get(), SIGNAL(walletError(beam::wallet::ErrorType)), this, SLOT(onGetWalletError(beam::wallet::ErrorType)));
+    m_walletModel.reset();
+
     connect(&AppModel::getInstance(), SIGNAL(walletResetCompleted()), this, SIGNAL(walletResetCompleted()));
     AppModel::getInstance().resetWallet();
 }
@@ -357,7 +359,7 @@ void LoadingViewModel::onGetWalletError(beam::wallet::ErrorType error)
             case ErrorType::NodeProtocolIncompatible:
             {
                 //% "Incompatible peer"
-                emit walletError(qtTrId("loading-view-protocol-error"), m_walletModel.GetErrorString(error));
+                emit walletError(qtTrId("loading-view-protocol-error"), m_walletModel->GetErrorString(error));
                 return;
             }
             case ErrorType::ConnectionBase:
@@ -368,7 +370,7 @@ void LoadingViewModel::onGetWalletError(beam::wallet::ErrorType error)
             case ErrorType::HostResolvedError:
             {
                 //% "Connection error"
-                emit walletError(qtTrId("loading-view-connection-error"), m_walletModel.GetErrorString(error));
+                emit walletError(qtTrId("loading-view-connection-error"), m_walletModel->GetErrorString(error));
                 return;
             }
             default:
@@ -381,7 +383,7 @@ void LoadingViewModel::onGetWalletError(beam::wallet::ErrorType error)
     switch (error)
     {
         case ErrorType::ConnectionAddrInUse:
-            emit walletError(qtTrId("loading-view-connection-error"), m_walletModel.GetErrorString(error));
+            emit walletError(qtTrId("loading-view-connection-error"), m_walletModel->GetErrorString(error));
             return;
         default:
             break;

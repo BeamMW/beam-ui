@@ -83,6 +83,6 @@ public:
     beam::Height rawMaturity() const override;
     uint16_t rawMaturityTimeLeft() const override;
 private:
-    WalletModel& _walletModel;
+    WalletModel::Ptr _walletModel;
     beam::wallet::ShieldedCoin _coin;
 };

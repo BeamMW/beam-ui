@@ -19,12 +19,13 @@ namespace
     const unsigned char ACAlpha = 252;
 }
 
-AssetsManager::AssetsManager (WalletModel::Ptr wallet)
-    : _wallet(wallet)
+AssetsManager::AssetsManager(WalletModel::Ptr wallet, ExchangeRatesManager::Ptr rates)
+    : _wallet(std::move(wallet))
+    , _rates(std::move(rates))
 {
     connect(_wallet.get(), &WalletModel::assetInfoChanged, this, &AssetsManager::onAssetInfo);
-    connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,   this,  &AssetsManager::assetsListChanged);
-    connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged, this,  &AssetsManager::assetsListChanged);
+    connect(_rates.get(),  &ExchangeRatesManager::rateUnitChanged,   this,  &AssetsManager::assetsListChanged);
+    connect(_rates.get(),  &ExchangeRatesManager::activeRateChanged, this,  &AssetsManager::assetsListChanged);
     connect(_wallet.get(), &WalletModel::verificationInfoUpdate, this, &AssetsManager::onAssetVerification);
     _wallet->getAsync()->getVerificationInfo();
 
@@ -347,12 +348,12 @@ QColor AssetsManager::getSelectionColor(beam::Asset::ID id)
 beam::Amount AssetsManager::getRate(beam::Asset::ID assetId)
 {
     beam::wallet::Currency assetCurr(assetId);
-    return _exchangeRatesManager.getRate(assetCurr);
+    return _rates->getRate(assetCurr);
 }
 
 QString AssetsManager::getRateUnit()
 {
-    return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateCurrency());
+    return beamui::getCurrencyUnitName(_rates->getRateCurrency());
 }
 
 QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
@@ -364,7 +365,7 @@ QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
 
     asset.insert("isBEAM",     isBEAM);
     asset.insert("unitName",   getUnitName(assetId, AssetsManager::NoShorten));
-    asset.insert("rate",       beamui::AmountToUIString(_exchangeRatesManager.getRate(assetCurr)));
+    asset.insert("rate",       beamui::AmountToUIString(_rates->getRate(assetCurr)));
     asset.insert("rateUnit",   getRateUnit());
     asset.insert("assetId",    static_cast<int>(assetId));
     asset.insert("icon",       getIcon(assetId));

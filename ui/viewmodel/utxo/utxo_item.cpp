@@ -134,12 +134,12 @@ beam::Asset::ID UtxoItem::getAssetId() const
 
 // ShieldedCoinItem
 ShieldedCoinItem::ShieldedCoinItem()
-    : _walletModel{*AppModel::getInstance().getWalletModel()}
+    : _walletModel(AppModel::getInstance().getWalletModel())
 {
 }
 
 ShieldedCoinItem::ShieldedCoinItem(beam::wallet::ShieldedCoin coin)
-    : _walletModel{*AppModel::getInstance().getWalletModel()}
+    : _walletModel(AppModel::getInstance().getWalletModel())
     , _coin(std::move(coin))
 {
 }
@@ -170,7 +170,7 @@ QString ShieldedCoinItem::maturity() const
 
 QString ShieldedCoinItem::maturityPercentage() const
 {
-    return QString::number(_walletModel.getMarurityProgress(_coin));
+    return QString::number(_walletModel->getMarurityProgress(_coin));
 }
 
 QString ShieldedCoinItem::maturityTimeLeft() const
@@ -220,7 +220,7 @@ beam::Height ShieldedCoinItem::rawMaturity() const
 
 uint16_t ShieldedCoinItem::rawMaturityTimeLeft() const
 {
-    return _walletModel.getMaturityHoursLeft(_coin);
+    return _walletModel->getMaturityHoursLeft(_coin);
 }
 
 beam::Asset::ID ShieldedCoinItem::getAssetId() const

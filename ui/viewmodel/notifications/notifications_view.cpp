@@ -18,13 +18,12 @@
 #include "wallet/client/extensions/news_channels/interface.h"
 
 NotificationsViewModel::NotificationsViewModel()
-    : m_walletModel{*AppModel::getInstance().getWalletModel()}
+    : m_walletModel(AppModel::getInstance().getWalletModel())
 {
-    connect(&m_walletModel,
+    connect(m_walletModel.get(),
             SIGNAL(notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)),
             SLOT(onNotificationsDataModelChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)));
-
-    m_walletModel.getAsync()->getNotifications();
+    m_walletModel->getAsync()->getNotifications();
 }
 
 QAbstractItemModel* NotificationsViewModel::getNotifications()  
@@ -36,18 +35,18 @@ void NotificationsViewModel::clearAll()
 {
     for(auto& n : m_notificationsList)
     {
-        m_walletModel.getAsync()->deleteNotification(n->getID());
+        m_walletModel->getAsync()->deleteNotification(n->getID());
     }
 }
 
 void NotificationsViewModel::removeItem(const ECC::uintBig& id)
 {
-    m_walletModel.getAsync()->deleteNotification(id);
+    m_walletModel->getAsync()->deleteNotification(id);
 }
 
 void NotificationsViewModel::markItemAsRead(const ECC::uintBig& id)
 {
-    m_walletModel.getAsync()->markNotificationAsRead(id);
+    m_walletModel->getAsync()->markNotificationAsRead(id);
 }
 
 QString NotificationsViewModel::getItemTxID(const ECC::uintBig& id)
@@ -70,7 +69,7 @@ void NotificationsViewModel::activateAddress(const ECC::uintBig& id)
         if (n->getID() == id)
         {
             const auto walletAddress = n->getWalletAddress();
-            m_walletModel.getAsync()->activateAddress(walletAddress.m_walletID);
+            m_walletModel->getAsync()->activateAddress(walletAddress.m_walletID);
         }
     }
 }

@@ -154,7 +154,7 @@ set(UI_SRC
     viewmodel/notifications/notifications_view.cpp
     viewmodel/notifications/notifications_settings.cpp
     viewmodel/notifications/push_notification_manager.cpp
-    viewmodel/notifications/exchange_rates_manager.cpp
+        model/exchange_rates_manager.cpp
     viewmodel/main_view.h
     viewmodel/main_view.cpp
     viewmodel/help_view.h

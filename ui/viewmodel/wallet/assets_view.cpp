@@ -15,11 +15,11 @@
 #include "model/app_model.h"
 
 AssetsViewModel::AssetsViewModel()
-    : _wallet(*AppModel::getInstance().getWalletModel())
+    : _wallet(AppModel::getInstance().getWalletModel())
     , _settings (AppModel::getInstance().getSettings())
 {
-    connect(&_wallet, &WalletModel::normalCoinsChanged,  this, &AssetsViewModel::onNormalCoinsChanged);
-    connect(&_wallet, &WalletModel::shieldedCoinChanged, this, &AssetsViewModel::onShieldedCoinChanged);
+    connect(_wallet.get(), &WalletModel::normalCoinsChanged,  this, &AssetsViewModel::onNormalCoinsChanged);
+    connect(_wallet.get(), &WalletModel::shieldedCoinChanged, this, &AssetsViewModel::onShieldedCoinChanged);
     _selectedAsset = _settings.getLastAssetSelection();
     emit selectedAssetChanged();
 }
@@ -75,7 +75,7 @@ void AssetsViewModel::setShowValidationPromo(bool value)
 
 bool AssetsViewModel::getCanHideValidationPromo() const
 {
-    auto availableL = beam::AmountBig::get_Lo(_wallet.getAvailable(beam::Asset::s_BeamID));
+    auto availableL = beam::AmountBig::get_Lo(_wallet->getAvailable(beam::Asset::s_BeamID));
     return availableL < 1000000000;
 }
 
@@ -95,9 +95,9 @@ void AssetsViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, c
 
 bool AssetsViewModel::hasBeamAmount() const
 {
-    return _wallet.getAvailable(beam::Asset::s_BeamID) != beam::Zero
-        || _wallet.getAvailableRegular(beam::Asset::s_BeamID) != beam::Zero
-        || _wallet.getAvailableShielded(beam::Asset::s_BeamID) != beam::Zero
-        || _wallet.getMaturing(beam::Asset::s_BeamID) != beam::Zero
-        || _wallet.getMatutingMP(beam::Asset::s_BeamID) != beam::Zero;
+    return _wallet->getAvailable(beam::Asset::s_BeamID) != beam::Zero
+        || _wallet->getAvailableRegular(beam::Asset::s_BeamID) != beam::Zero
+        || _wallet->getAvailableShielded(beam::Asset::s_BeamID) != beam::Zero
+        || _wallet->getMaturing(beam::Asset::s_BeamID) != beam::Zero
+        || _wallet->getMatutingMP(beam::Asset::s_BeamID) != beam::Zero;
 }

@@ -57,7 +57,7 @@ private:
     bool hasBeamAmount() const;
 
     AssetsList _assets;
-    WalletModel& _wallet;
+    WalletModel::Ptr _wallet;
     WalletSettings& _settings;
     boost::optional<beam::Asset::ID> _selectedAsset;
 };

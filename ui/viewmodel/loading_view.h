@@ -74,7 +74,7 @@ private:
     double getWindowedBps() const;
     bool detectNetworkProblems();
 
-    WalletModel& m_walletModel;
+    WalletModel::Ptr m_walletModel;
     double m_progress;
     double m_nodeInitProgress;
     int m_total;

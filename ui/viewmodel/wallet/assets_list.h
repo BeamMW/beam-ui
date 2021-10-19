@@ -14,7 +14,7 @@
 #include "asset_object.h"
 #include "viewmodel/helpers/list_model.h"
 #include "assets_manager.h"
-#include "viewmodel/notifications/exchange_rates_manager.h"
+#include "model/exchange_rates_manager.h"
 
 class AssetsList : public ListModel<std::shared_ptr<AssetObject>>
 {
@@ -69,9 +69,9 @@ private:
     std::shared_ptr<AssetObject> getAsset(beam::Asset::ID id);
     bool hasAsset(beam::Asset::ID id);
 
+    WalletModel::Ptr _wallet;
+    ExchangeRatesManager::Ptr _rates;
     AssetsManager::Ptr _amgr;
-    mutable ExchangeRatesManager _ermgr;
-    WalletModel& _wallet;
 
     typedef std::vector<beam::wallet::TxDescription> TxList;
     TxList _txlist;

@@ -15,7 +15,7 @@
 
 #include <QObject>
 #include "model/wallet_model.h"
-#include "notifications/exchange_rates_manager.h"
+#include "model/exchange_rates_manager.h"
 #include "wallet/assets_manager.h"
 
 class SendViewModel: public QObject
@@ -125,10 +125,10 @@ private:
     beam::wallet::WalletID     _receiverWalletID;
     beam::PeerID               _receiverIdentity;
     QString                    _comment;
-    WalletModel&               _walletModel;
+    WalletModel::Ptr           _walletModel;
+    ExchangeRatesManager::Ptr  _rates;
     WalletSettings&            _settings;
     AssetsManager::Ptr         _amgr;
-    ExchangeRatesManager       _exchangeRatesManager;
     QString                    _token;
     QString                    _newTokenMsg;
     QString                    _publicOfflineAddr;

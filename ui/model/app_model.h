@@ -25,6 +25,7 @@
 #include "wallet/transactions/swaps/bridges/bitcoin/bridge_holder.h"
 #include "wallet/transactions/swaps/swap_transaction.h"
 #include "viewmodel/wallet/assets_manager.h"
+#include "exchange_rates_manager.h"
 #include <memory>
 
 #if defined(BEAM_HW_WALLET)
@@ -68,8 +69,10 @@ public:
     void setSeedValidationTriggeredFromSetting(bool value);
 
     [[nodiscard]] WalletModel::Ptr getWalletModel() const;
+    [[nodiscard]] WalletModel::Ptr getWalletModelUnsafe() const;
     [[nodiscard]] AssetsManager::Ptr getAssets() const;
     [[nodiscard]] WalletSettings& getSettings() const;
+    [[nodiscard]] ExchangeRatesManager::Ptr getRates() const;
 
     MessageManager& getMessages();
 
@@ -115,6 +118,7 @@ private:
     WalletModel::Ptr m_wallet;
     NodeModel m_nodeModel;
     WalletSettings& m_settings;
+    ExchangeRatesManager::Ptr m_rates;
     AssetsManager::Ptr m_assets;
     MessageManager m_messages;
     ECC::NoLeak<ECC::uintBig> m_passwordHash;

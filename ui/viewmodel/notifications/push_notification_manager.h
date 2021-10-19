@@ -42,7 +42,7 @@ public slots:
     void onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&);
 
 private:
-    WalletModel& m_walletModel;
+    WalletModel::Ptr m_walletModel;
     bool m_firstNotification = true;
     bool m_hasNewerVersion = false;
 };
