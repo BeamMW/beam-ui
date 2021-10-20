@@ -15,7 +15,7 @@ T.TextArea {
                              placeholder.implicitHeight + topPadding + bottomPadding)
 
     font { 
-        family: "ProximaNova"
+        family: "Proxima Nova"
         styleName: "Regular"
     }
 

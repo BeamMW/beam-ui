@@ -8,7 +8,7 @@ import "."
 T.TextField {
     id: control
 
-    font.family:           "ProximaNova"
+    font.family:           "Proxima Nova"
     font.styleName:        "Regular"
     padding:               6
     leftPadding:           0

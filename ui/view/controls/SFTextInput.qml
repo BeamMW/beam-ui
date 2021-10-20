@@ -21,7 +21,7 @@ T.TextField {
                              placeholder.implicitHeight + topPadding + bottomPadding)
 
     font { 
-        family: "ProximaNova"
+        family: "Proxima Nova"
         styleName: "Regular"
     }
 
@@ -48,6 +48,8 @@ T.TextField {
         height:              control.height - (control.topPadding + control.bottomPadding)
                              
         text:                control.placeholderText
+        font.family:         control.font.family
+        font.styleName:      control.font.styleName
         font.pixelSize:      control.font.pixelSize
         font.italic:         true
         opacity:             0.2

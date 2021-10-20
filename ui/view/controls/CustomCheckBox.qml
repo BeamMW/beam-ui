@@ -27,7 +27,7 @@ CheckBox {
             color: mainColor
             leftPadding: 5
             font {
-                family:     "ProximaNova"
+                family:     "Proxima Nova"
                 styleName:  "Regular"
                 weight:     Font.Normal
                 pixelSize:  14

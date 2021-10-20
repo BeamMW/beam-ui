@@ -21,7 +21,7 @@ Button {
 
 
     font { 
-        family: "ProximaNova"
+        family: "Proxima Nova"
         pixelSize: 14
         styleName: control.checkable ? "Regular" : "Bold"
         weight: control.checkable ? Font.Normal : Font.Bold

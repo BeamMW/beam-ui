@@ -28,7 +28,7 @@ ComboBox {
     TextMetrics {
         id: textMetrics
         font {
-            family:        "ProximaNova"
+            family:        "Proxima Nova"
             styleName:     "Regular"
             weight:        Font.Normal
             pixelSize:     control.dropFontPixelSize

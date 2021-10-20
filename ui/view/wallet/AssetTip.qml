@@ -41,7 +41,7 @@ AlphaTipPopup {
                 text: longText
 
                 font {
-                    family:        "ProximaNova"
+                    family:        "Proxima Nova"
                     styleName:     "Regular"
                     weight:        Font.Normal
                     pixelSize:     13
