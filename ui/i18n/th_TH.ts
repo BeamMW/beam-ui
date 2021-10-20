@@ -509,8 +509,9 @@
         <translation>รหัสผ่าน</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
-        <source>Confirm password</source>
-        <translation>ยืนยันรหัสผ่าน</translation>
+        <source>Password confrimation</source>
+        <oldsource>Confirm password</oldsource>
+        <translation type="unfinished">ยืนยันรหัสผ่าน</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
         <source>Passwords do not match</source>

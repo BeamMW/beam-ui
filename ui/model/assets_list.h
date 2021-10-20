@@ -11,16 +11,19 @@
 #pragma once
 
 #include <memory>
-#include "asset_object.h"
 #include "viewmodel/helpers/list_model.h"
+#include "asset_object.h"
 #include "assets_manager.h"
-#include "viewmodel/notifications/exchange_rates_manager.h"
+#include "wallet_model.h"
+#include "exchange_rates_manager.h"
 
-class AssetsList : public ListModel<std::shared_ptr<AssetObject>>
+class AssetsList: public ListModel<std::shared_ptr<AssetObject>>
 {
     Q_OBJECT
 public:
-    AssetsList();
+    typedef std::shared_ptr<AssetsList> Ptr;
+
+    AssetsList(WalletModel::Ptr wallet, AssetsManager::Ptr assets, ExchangeRatesManager::Ptr rates);
     ~AssetsList() override = default;
 
     enum class Roles
@@ -36,8 +39,6 @@ public:
         RMaturingRegular,
         RMaturingMP,
         RMaturingTotal,
-        RInTxCnt,
-        ROutTxCnt,
         RIcon,
         RColor,
         RSelectionColor,
@@ -54,7 +55,7 @@ public:
 
     Q_ENUM(Roles)
 
-    Q_INVOKABLE int getRoleId(QString name) const;
+    Q_INVOKABLE [[nodiscard]] int getRoleId(QString name) const;
     [[nodiscard]] QHash<int, QByteArray> roleNames() const override;
     [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
 
@@ -62,17 +63,13 @@ private slots:
     void onNewRates();
     void onWalletStatus();
     void onAssetInfo(beam::Asset::ID assetId);
-    void onTransactionsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& items);
 
 private:
     bool touch(beam::Asset::ID id);
     std::shared_ptr<AssetObject> getAsset(beam::Asset::ID id);
     bool hasAsset(beam::Asset::ID id);
 
+    WalletModel::Ptr _wallet;
     AssetsManager::Ptr _amgr;
-    mutable ExchangeRatesManager _ermgr;
-    WalletModel& _wallet;
-
-    typedef std::vector<beam::wallet::TxDescription> TxList;
-    TxList _txlist;
+    ExchangeRatesManager::Ptr _rates;
 };

@@ -15,7 +15,7 @@
 
 #include <QObject>
 #include "model/wallet_model.h"
-#include "viewmodel/notifications/exchange_rates_manager.h"
+#include "model/exchange_rates_manager.h"
 #include "currencies.h"
 
 class ReceiveSwapViewModel: public QObject
@@ -150,8 +150,8 @@ private:
     bool      _saveParamsAllowed;
 
     beam::wallet::WalletAddress _receiverAddress;
-    WalletModel& _walletModel;
-    ExchangeRatesManager _exchangeRatesManager;
+    WalletModel::Ptr _walletModel;
+    ExchangeRatesManager::Ptr _rates;
     beam::wallet::TxParameters _txParameters;
     bool _isBeamSide;
 

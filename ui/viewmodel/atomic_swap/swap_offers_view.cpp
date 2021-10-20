@@ -197,23 +197,23 @@ beam::Amount SwapCoinClientWrapper::getAvailable() const
 }
 
 SwapOffersViewModel::SwapOffersViewModel()
-    :   m_walletModel{*AppModel::getInstance().getWalletModel()}
+    :   m_walletModel(AppModel::getInstance().getWalletModel())
 {
     InitSwapClientWrappers();
 
-    connect(&m_walletModel, &WalletModel::walletStatusChanged, this, &SwapOffersViewModel::beamAvailableChanged);
-    connect(&m_walletModel,
+    connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &SwapOffersViewModel::beamAvailableChanged);
+    connect(m_walletModel.get(),
             SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)),
             SLOT(onTransactionsDataModelChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
 
-    connect(&m_walletModel,
+    connect(m_walletModel.get(),
             SIGNAL(swapOffersChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::SwapOffer>&)),
             SLOT(onSwapOffersDataModelChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::SwapOffer>&)));
 
     monitorAllOffersFitBalance();
 
-    m_walletModel.getAsync()->getSwapOffers();
-    m_walletModel.getAsync()->getTransactions();    
+    m_walletModel->getAsync()->getSwapOffers();
+    m_walletModel->getAsync()->getTransactions();
 }
 
 SwapOffersViewModel::~SwapOffersViewModel()
@@ -233,7 +233,7 @@ QAbstractItemModel* SwapOffersViewModel::getAllOffersFitBalance()
 
 QString SwapOffersViewModel::beamAvailable() const
 {
-    auto available = beam::AmountBig::get_Lo(m_walletModel.getAvailable(beam::Asset::s_BeamID));
+    auto available = beam::AmountBig::get_Lo(m_walletModel->getAvailable(beam::Asset::s_BeamID));
     return beamui::AmountToUIString(available);
 }
 
@@ -248,7 +248,7 @@ void SwapOffersViewModel::cancelOffer(const QVariant& variantTxID)
     {
         auto txId = variantTxID.value<beam::wallet::TxID>();
         LOG_INFO() << txId << " Cancel offer";
-        m_walletModel.getAsync()->cancelTx(txId);
+        m_walletModel->getAsync()->cancelTx(txId);
     }
 }
 
@@ -257,7 +257,7 @@ void SwapOffersViewModel::cancelTx(const QVariant& variantTxID)
     if (!variantTxID.isNull() && variantTxID.isValid())
     {
         auto txId = variantTxID.value<beam::wallet::TxID>();
-        m_walletModel.getAsync()->cancelTx(txId);
+        m_walletModel->getAsync()->cancelTx(txId);
     }
 }
 
@@ -266,7 +266,7 @@ void SwapOffersViewModel::deleteTx(const QVariant& variantTxID)
     if (!variantTxID.isNull() && variantTxID.isValid())
     {
         auto txId = variantTxID.value<beam::wallet::TxID>();
-        m_walletModel.getAsync()->deleteTx(txId);
+        m_walletModel->getAsync()->deleteTx(txId);
     }
 }
 
@@ -406,8 +406,8 @@ void SwapOffersViewModel::onSwapOffersDataModelChanged(beam::wallet::ChangeActio
         // Offers without publisherID don't pass validation
         auto peerResponseTime = offer.peerResponseHeight();
         auto minHeight = offer.minHeight();
-        auto currentHeight = m_walletModel.getCurrentHeight();
-        auto currentHeightTimestamp = m_walletModel.getCurrentHeightTimestamp();
+        auto currentHeight = m_walletModel->getCurrentHeight();
+        auto currentHeightTimestamp = m_walletModel->getCurrentHeightTimestamp();
 
         QDateTime timeExpiration;
         if (currentHeight && peerResponseTime && minHeight)
@@ -523,7 +523,7 @@ bool SwapOffersViewModel::isOfferFitBalance(const SwapOfferItem& offer)
     bool isSendBeam = offer.isSendBeam();
     beam::AmountBig::Type beamOfferAmount = isSendBeam ? offer.rawAmountSend() : offer.rawAmountReceive();
 
-    if (isSendBeam && beamOfferAmount > m_walletModel.getAvailable(beam::Asset::s_BeamID))
+    if (isSendBeam && beamOfferAmount > m_walletModel->getAvailable(beam::Asset::s_BeamID))
         return false;
     
     auto swapCoinOfferAmount = isSendBeam ? offer.rawAmountReceive() : offer.rawAmountSend();

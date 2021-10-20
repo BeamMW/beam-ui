@@ -509,8 +509,9 @@
         <translation>Wachtwoord</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
-        <source>Confirm password</source>
-        <translation>Bevestig wachtwoord</translation>
+        <source>Password confrimation</source>
+        <oldsource>Confirm password</oldsource>
+        <translation type="unfinished">Bevestig wachtwoord</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
         <source>Passwords do not match</source>

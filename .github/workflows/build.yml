@@ -180,9 +180,13 @@ jobs:
         mkdir -p ./deploy/usr/bin
         mkdir -p ./deploy/usr/share/applications
         mkdir -p ./deploy/usr/share/icons/hicolor/256x256/apps
+        mkdir -p ./deploy/usr/share/icons/hicolor/256x256/mimetypes
+        mkdir -p ./deploy/usr/share/mime/packages
         echo "Copying files to AppImage deploy tree"
         cp ui/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}} deploy/usr/bin/
         cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/apps/
+        cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/mimetypes/application-x-beam-dapp.png
+        cp ui/x-beam-dapp.xml deploy/usr/share/mime/packages
         cp ui/beam.desktop deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop
         cp ui/beam-wallet.cfg deploy/usr/bin/
         echo "Creating AppImage"
@@ -250,7 +254,7 @@ jobs:
         if-no-files-found: error
 
     - uses: actions/upload-artifact@v2
-      if: matrix.os == 'ubuntu-16.04'
+      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04'
       with:
         name: ${{env.PACKAGE_NAME}}-Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}
         path: Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.tar

@@ -28,13 +28,14 @@ namespace
 }
 
 TxTableViewModel::TxTableViewModel()
-    : _model(*AppModel::getInstance().getWalletModel())
+    : _model(AppModel::getInstance().getWalletModel())
+    , _rates(AppModel::getInstance().getRates())
 {
-    connect(&_model, SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SLOT(onTransactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
-    connect(&_model, SIGNAL(txHistoryExportedToCsv(const QString&)), this, SLOT(onTxHistoryExportedToCsv(const QString&)));
-    connect(&_exchangeRatesManager, &ExchangeRatesManager::rateUnitChanged, this, &TxTableViewModel::rateChanged);
-    connect(&_exchangeRatesManager, &ExchangeRatesManager::activeRateChanged, this, &TxTableViewModel::rateChanged);
-    _model.getAsync()->getTransactions();
+    connect(_model.get(), SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SLOT(onTransactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
+    connect(_model.get(), SIGNAL(txHistoryExportedToCsv(const QString&)), this, SLOT(onTxHistoryExportedToCsv(const QString&)));
+    connect(_rates.get(), &ExchangeRatesManager::rateUnitChanged, this, &TxTableViewModel::rateChanged);
+    connect(_rates.get(), &ExchangeRatesManager::activeRateChanged, this, &TxTableViewModel::rateChanged);
+    _model->getAsync()->getTransactions();
 }
 
 void TxTableViewModel::exportTxHistoryToCsv()
@@ -51,7 +52,7 @@ void TxTableViewModel::exportTxHistoryToCsv()
     if (!path.isEmpty())
     {
         _txHistoryToCsvPaths.enqueue(path);
-        _model.getAsync()->exportTxHistoryToCsv();
+        _model->getAsync()->exportTxHistoryToCsv();
     }
 }
 
@@ -82,7 +83,7 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
 
     std::vector<std::shared_ptr<TxObject>> modifiedTransactions;
     modifiedTransactions.reserve(transactions.size());
-    const auto secondCurrency = _exchangeRatesManager.getRateCurrency();
+    const auto secondCurrency = _rates->getRateCurrency();
 
     for (const auto& t : transactions)
     {
@@ -152,12 +153,12 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
 
 QString TxTableViewModel::getRateUnit() const
 {
-    return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateCurrency());
+    return beamui::getCurrencyUnitName(_rates->getRateCurrency());
 }
 
 QString TxTableViewModel::getRate() const
 {
-    auto rate = _exchangeRatesManager.getRate(beam::wallet::Currency::BEAM());
+    auto rate = _rates->getRate(beam::wallet::Currency::BEAM());
     return beamui::AmountToUIString(rate);
 }
 
@@ -166,7 +167,7 @@ void TxTableViewModel::cancelTx(const QVariant& variantTxID)
     if (!variantTxID.isNull() && variantTxID.isValid())
     {
         auto txId = variantTxID.value<beam::wallet::TxID>();
-        _model.getAsync()->cancelTx(txId);
+        _model->getAsync()->cancelTx(txId);
     }
 }
 
@@ -175,7 +176,7 @@ void TxTableViewModel::deleteTx(const QVariant& variantTxID)
     if (!variantTxID.isNull() && variantTxID.isValid())
     {
         auto txId = variantTxID.value<beam::wallet::TxID>();
-        _model.getAsync()->deleteTx(txId);
+        _model->getAsync()->deleteTx(txId);
     }
 }
 

@@ -18,7 +18,7 @@
 #include <QAbstractItemModel>
 #include "model/wallet_model.h"
 #include "tx_object_list.h"
-#include "viewmodel/notifications/exchange_rates_manager.h"
+#include "model/exchange_rates_manager.h"
 
 class TxTableViewModel: public QObject {
     Q_OBJECT
@@ -47,8 +47,8 @@ signals:
     void rateChanged();
 
 private:
-    WalletModel&         _model;
+    WalletModel::Ptr     _model;
     QQueue<QString>      _txHistoryToCsvPaths;
     TxObjectList         _transactionsList;
-    ExchangeRatesManager _exchangeRatesManager;
+    ExchangeRatesManager::Ptr _rates;
 };

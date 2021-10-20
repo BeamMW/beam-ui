@@ -162,7 +162,7 @@ Item {
         visible: model.isCoinClientFailed || model.isFailedStatus || (model.isOnline && !model.isConnectionTrusted)
         anchors.top: parent.top
         anchors.left: status_text.right
-        anchors.leftMargin: 20
+        anchors.leftMargin: 8
         anchors.topMargin: -1
         fontSize: 12
         onClicked: {

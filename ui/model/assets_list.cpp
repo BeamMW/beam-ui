@@ -9,19 +9,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "assets_list.h"
-#include "model/app_model.h"
+#include "viewmodel/ui_helpers.h"
 
-AssetsList::AssetsList()
-    : _amgr(AppModel::getInstance().getAssets())
-    , _wallet(*AppModel::getInstance().getWalletModel())
+AssetsList::AssetsList(WalletModel::Ptr wallet, AssetsManager::Ptr assets, ExchangeRatesManager::Ptr rates)
+    : _wallet(std::move(wallet))
+    , _amgr(std::move(assets))
+    , _rates(std::move(rates))
 {
-    connect(&_ermgr,     &ExchangeRatesManager::rateUnitChanged,   this,  &AssetsList::onNewRates);
-    connect(&_ermgr,     &ExchangeRatesManager::activeRateChanged, this,  &AssetsList::onNewRates);
-    connect(&_wallet,    &WalletModel::walletStatusChanged,        this,  &AssetsList::onWalletStatus);
-    connect(&_wallet,    &WalletModel::transactionsChanged,        this,  &AssetsList::onTransactionsChanged);
-    connect(_amgr.get(), &AssetsManager::assetInfo,                this,  &AssetsList::onAssetInfo);
-
-    _wallet.getAsync()->getWalletStatus();
+    connect(_rates.get(),  &ExchangeRatesManager::rateUnitChanged, this,  &AssetsList::onNewRates);
+    connect(_rates.get(),  &ExchangeRatesManager::activeRateChanged, this,  &AssetsList::onNewRates);
+    connect(_wallet.get(), &WalletModel::walletStatusChanged, this, &AssetsList::onWalletStatus);
+    connect(_amgr.get(),   &AssetsManager::assetInfo, this,  &AssetsList::onAssetInfo);
+    _wallet->getAsync()->getWalletStatus();
     // Transactions table would be created later and get this for us
     // Need to refactor multiple requests in the future
     //_wallet.getAsync()->getTransactions();
@@ -37,8 +36,6 @@ QHash<int, QByteArray> AssetsList::roleNames() const
         {static_cast<int>(Roles::RAmount),          "amount"},
         {static_cast<int>(Roles::RAmountRegular),   "amountRegular"},
         {static_cast<int>(Roles::RAmountShielded),  "amountShielded"},
-        {static_cast<int>(Roles::RInTxCnt),         "inTxCnt"},
-        {static_cast<int>(Roles::ROutTxCnt),        "outTxCnt"},
         {static_cast<int>(Roles::RIcon),            "icon"},
         {static_cast<int>(Roles::RColor),           "color"},
         {static_cast<int>(Roles::RSelectionColor),  "selectionColor"},
@@ -94,34 +91,30 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
         case Roles::RUnitName:
             return _amgr->getUnitName(assetId, AssetsManager::NoShorten);
         case Roles::RAmount:
-            return beamui::AmountBigToUIString(_wallet.getAvailable(assetId));
+            return beamui::AmountBigToUIString(_wallet->getAvailable(assetId));
         case Roles::RAmountRegular:
-            return beamui::AmountBigToUIString(_wallet.getAvailableRegular(assetId));
+            return beamui::AmountBigToUIString(_wallet->getAvailableRegular(assetId));
         case Roles::RAmountShielded:
-            return beamui::AmountBigToUIString(_wallet.getAvailableShielded(assetId));
+            return beamui::AmountBigToUIString(_wallet->getAvailableShielded(assetId));
         case Roles::RMaturingRegular:
-            return beamui::AmountBigToUIString(_wallet.getMaturing(assetId));
+            return beamui::AmountBigToUIString(_wallet->getMaturing(assetId));
         case Roles::RMaturingMP:
-            return beamui::AmountBigToUIString(_wallet.getMatutingMP(assetId));
+            return beamui::AmountBigToUIString(_wallet->getMatutingMP(assetId));
         case Roles::RMaturingTotal:
         {
-            auto total = _wallet.getMaturing(assetId);
-            total += _wallet.getMatutingMP(assetId);
+            auto total = _wallet->getMaturing(assetId);
+            total += _wallet->getMatutingMP(assetId);
             return beamui::AmountBigToUIString(total);
         }
         case Roles::RChange:
-            return beamui::AmountBigToUIString(_wallet.getReceivingChange(assetId));
+            return beamui::AmountBigToUIString(_wallet->getReceivingChange(assetId));
         case Roles::RLocked:
         {
-             auto locked = _wallet.getMaturing(assetId);
-             locked += _wallet.getMatutingMP(assetId);
-             locked += _wallet.getReceivingChange(assetId);
+             auto locked = _wallet->getMaturing(assetId);
+             locked += _wallet->getMatutingMP(assetId);
+             locked += _wallet->getReceivingChange(assetId);
              return beamui::AmountBigToUIString(locked);
         }
-        case Roles::RInTxCnt:
-            return static_cast<qint32>(asset->inTxCnt());
-        case Roles::ROutTxCnt:
-            return static_cast<qint32>(asset->outTxCnt());
         case Roles::Search:
             return _amgr->getName(assetId) + _amgr->getUnitName(assetId, AssetsManager::NoShorten);
         case Roles::RIcon:
@@ -131,7 +124,7 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
         case Roles::RSelectionColor:
             return _amgr->getSelectionColor(assetId);
         case Roles::RRateUnit:
-            return beamui::getCurrencyUnitName(_ermgr.getRateCurrency());
+            return beamui::getCurrencyUnitName(_rates->getRateCurrency());
         case Roles::RName:
             return _amgr->getName(assetId);
         case Roles::RSmallestUnitName:
@@ -148,7 +141,7 @@ QVariant AssetsList::data(const QModelIndex &index, int role) const
             return _amgr->isVerified(assetId);
         case Roles::RRate:
             {
-                auto rate = _ermgr.getRate(beam::wallet::Currency(assetId));
+                auto rate = _rates->getRate(beam::wallet::Currency(assetId));
                 return beamui::AmountToUIString(rate);
             }
         default:
@@ -178,7 +171,7 @@ std::shared_ptr<AssetObject> AssetsList::getAsset(beam::Asset::ID id)
              return obj;
          }
      }
-     return std::shared_ptr<AssetObject>();
+     return {};
 }
 
 bool AssetsList::touch(beam::Asset::ID id)
@@ -203,7 +196,7 @@ void AssetsList::onWalletStatus()
     //
     // Update/Add new assets
     //
-    auto anz = _wallet.getAssetsNZ();
+    auto anz = _wallet->getAssetsNZ();
     std::set<beam::Asset::ID> anew;
 
     for (auto aid: anz)
@@ -255,82 +248,4 @@ void AssetsList::onWalletStatus()
 void AssetsList::onAssetInfo(beam::Asset::ID assetId)
 {
     touch(assetId);
-}
-
-void AssetsList::onTransactionsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& items)
-{
-    using namespace beam::wallet;
-
-    TxList modified;
-
-    for (const auto& tx : items)
-    {
-        if(const auto txType = tx.GetParameter<TxType>(TxParameterID::TransactionType))
-        {
-            if (txType == TxType::Simple || txType == TxType::PushTransaction)
-            {
-                modified.push_back(tx);
-            }
-        }
-    }
-
-    switch(action)
-    {
-    case ChangeAction::Reset:
-        _txlist.swap(modified);
-        break;
-
-    case ChangeAction::Removed:
-        for(auto del: modified)
-        {
-            _txlist.erase(std::remove_if(_txlist.begin(), _txlist.end(), [&del](const TxDescription& t) {
-                return t.m_txId == del.m_txId;
-            }), _txlist.end());
-        }
-        break;
-
-    case ChangeAction::Added:
-        _txlist.insert(std::end(_txlist), std::begin(modified), std::end(modified));
-        break;
-
-    case ChangeAction::Updated:
-        for(auto repl: modified)
-        {
-            std::replace_if(_txlist.begin(), _txlist.end(), [&repl](const TxDescription& t) {
-                return t.m_txId == repl.m_txId;
-            }, repl);
-        }
-        break;
-
-    default:
-        assert(false && "Unexpected action");
-        break;
-    }
-
-    for(auto& obj: m_list) {
-        obj->resetTxCnt();
-    }
-
-    for(const auto& tx: _txlist) {
-        if (auto obj = getAsset(tx.m_assetId))
-        {
-            if(tx.m_status == beam::wallet::TxStatus::Pending ||
-               tx.m_status == beam::wallet::TxStatus::InProgress ||
-               tx.m_status == beam::wallet::TxStatus::Registering)
-            {
-                if (tx.m_sender)
-                {
-                    obj->addOutTx();
-                }
-                else
-                {
-                    obj->addIntTx();
-                }
-            }
-        }
-    }
-
-     for(auto& obj: m_list) {
-         touch(obj->id());
-     }
 }

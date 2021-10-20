@@ -2,10 +2,12 @@
 Version=1.0
 Name=Beam Wallet@BEAM_DISPLAY_SUFFIX@
 Comment=Scalable confidential cryptocurrency
-Exec=/usr/bin/BeamWallet@BEAM_SUFFIX_UPPER_CASE@ %U
+Exec=/usr/bin/BeamWallet@BEAM_SUFFIX_UPPER_CASE@ %f
 Icon=beam
 Terminal=false
 Type=Application
 Categories=Network;
-MimeType=application/x-beam-item;
+MimeType=application/x-beam-dapp;
 GenericName=Beam Wallet@BEAM_DISPLAY_SUFFIX@
+X-AppImage-Name=Beam Wallet@BEAM_DISPLAY_SUFFIX@
+X-AppImage-Version=@PROJECT_VERSION@

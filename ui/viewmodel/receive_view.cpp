@@ -18,13 +18,14 @@
 #include "qml_globals.h"
 
 ReceiveViewModel::ReceiveViewModel()
-    : _walletModel(*AppModel::getInstance().getWalletModel())
+    : _walletModel(AppModel::getInstance().getWalletModel())
+    , _rates(AppModel::getInstance().getRates())
     , _amgr(AppModel::getInstance().getAssets())
 {
     using namespace beam::wallet;
 
-    connect(&_walletModel,  &WalletModel::newAddressFailed,    this,  &ReceiveViewModel::newAddressFailed);
-    connect(_amgr.get(),    &AssetsManager::assetsListChanged, this,  &ReceiveViewModel::assetsListChanged);
+    connect(_walletModel.get(), &WalletModel::newAddressFailed, this, &ReceiveViewModel::newAddressFailed);
+    connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &ReceiveViewModel::assetsListChanged);
     updateToken();
 }
 
@@ -39,7 +40,7 @@ void ReceiveViewModel::updateToken()
 
         if (_maxp)
         {
-            _walletModel.getAsync()->generateVouchers(_receiverAddress->m_OwnID, 1, [guard, this](const ShieldedVoucherList& v)
+            _walletModel->getAsync()->generateVouchers(_receiverAddress->m_OwnID, 1, [guard, this](const ShieldedVoucherList& v)
             {
                 if (!guard) return;
                 if (!v.empty())
@@ -51,7 +52,7 @@ void ReceiveViewModel::updateToken()
         }
         else
         {
-            _walletModel.getAsync()->generateVouchers(_receiverAddress->m_OwnID, 1, [guard, this](const ShieldedVoucherList& v)
+            _walletModel->getAsync()->generateVouchers(_receiverAddress->m_OwnID, 1, [guard, this](const ShieldedVoucherList& v)
             {
                 if (!guard) return;
                 if (!v.empty())
@@ -65,7 +66,7 @@ void ReceiveViewModel::updateToken()
 
     if (!_receiverAddress)
     {
-        _walletModel.getAsync()->generateNewAddress([guard, generateToken, this](const auto& addr){
+        _walletModel->getAsync()->generateNewAddress([guard, generateToken, this](const auto& addr){
             if (!guard) return;
             _receiverAddress = addr;
             _receiverAddress->setExpirationStatus(WalletAddress::ExpirationStatus::Auto);
@@ -113,7 +114,7 @@ void ReceiveViewModel::setToken(const QString& token)
     emit tokenChanged();
 
     QPointer<ReceiveViewModel> guard = this;
-    _walletModel.getAsync()->getAddressByToken(token.toStdString(),
+    _walletModel->getAsync()->getAddressByToken(token.toStdString(),
         [guard, this, token](const boost::optional<beam::wallet::WalletAddress>& address, size_t offlineCount) {
             if (!guard) return;
 
@@ -163,8 +164,8 @@ bool ReceiveViewModel::getCommentValid() const
 {
     if (_receiverAddress)
     {
-        return _walletModel.isOwnAddress(_receiverAddress->m_walletID) ||
-               !_walletModel.isAddressWithCommentExist(_receiverAddress->m_label);
+        return _walletModel->isOwnAddress(_receiverAddress->m_walletID) ||
+               !_walletModel->isAddressWithCommentExist(_receiverAddress->m_label);
     }
     else
     {
@@ -195,7 +196,7 @@ void ReceiveViewModel::saveAddress()
     {
         if (getCommentValid())
         {
-            _walletModel.getAsync()->saveAddress(*_receiverAddress);
+            _walletModel->getAsync()->saveAddress(*_receiverAddress);
         }
     }
 }

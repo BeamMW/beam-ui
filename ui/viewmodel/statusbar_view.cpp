@@ -14,6 +14,7 @@
 
 #include "statusbar_view.h"
 #include "model/app_model.h"
+#include "viewmodel/ui_helpers.h"
 #include "version.h"
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
 #include "settings_helpers.h"
@@ -22,9 +23,10 @@
 using namespace beam::wallet;
 
 StatusbarViewModel::StatusbarViewModel()
-    : m_model(*AppModel::getInstance().getWalletModel())
+    : m_model(AppModel::getInstance().getWalletModel())
+    , m_exchangeRatesManager(AppModel::getInstance().getRates())
     , m_isOnline(false)
-    , m_isSyncInProgress(!m_model.isSynced())
+    , m_isSyncInProgress(!m_model->isSynced())
     , m_isFailedStatus(false)
     , m_isConnectionTrusted(false)
     , m_nodeSyncProgress(0)
@@ -33,20 +35,19 @@ StatusbarViewModel::StatusbarViewModel()
     , m_done(0)
     , m_total(0)
     , m_errorMsg{}
-
 {
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     connectCoinClients();
     connectEthClient();
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
-    connect(&m_model, SIGNAL(nodeConnectionChanged(bool)),
+    connect(m_model.get(), SIGNAL(nodeConnectionChanged(bool)),
         SLOT(onNodeConnectionChanged(bool)));
 
-    connect(&m_model, SIGNAL(walletError(beam::wallet::ErrorType)),
+    connect(m_model.get(), SIGNAL(walletError(beam::wallet::ErrorType)),
         SLOT(onGetWalletError(beam::wallet::ErrorType)));
 
-    connect(&m_model, SIGNAL(syncProgressUpdated(int, int)),
+    connect(m_model.get(), SIGNAL(syncProgressUpdated(int, int)),
         SLOT(onSyncProgressUpdated(int, int)));
 
     connect(&AppModel::getInstance().getNode(), SIGNAL(syncProgressUpdated(int, int)),
@@ -56,10 +57,9 @@ StatusbarViewModel::StatusbarViewModel()
             SLOT(onGetWalletError(beam::wallet::ErrorType)));
 
     connect(&m_exchangeRatesTimer, SIGNAL(timeout()), SLOT(onExchangeRatesTimer()));
-    connect(&m_exchangeRatesManager, SIGNAL(updateTimeChanged()), SLOT(onExchangeRatesTimer()));
+    connect(m_exchangeRatesManager.get(), SIGNAL(updateTimeChanged()), SLOT(onExchangeRatesTimer()));
 
-
-    m_model.getAsync()->getNetworkStatus();
+    m_model->getAsync()->getNetworkStatus();
 }
 
 bool StatusbarViewModel::getIsOnline() const
@@ -84,7 +84,7 @@ bool StatusbarViewModel::getIsConnectionTrusted() const
 
 bool StatusbarViewModel::getIsExchangeRatesUpdated() const
 {
-    return m_exchangeRatesManager.isUpToDate();
+    return m_exchangeRatesManager->isUpToDate();
 }
 
 int StatusbarViewModel::getNodeSyncProgress() const
@@ -112,8 +112,9 @@ QString StatusbarViewModel::getWalletStatusErrorMsg() const
 QString StatusbarViewModel::getExchangeStatus() const
 {
     //% "(exchange rate to %1 was not updated since %2)"
-    return qtTrId("status-online-stale-rates").arg(beamui::getCurrencyUnitName(m_exchangeRatesManager.getRateCurrency()))
-                                              .arg(m_exchangeRatesManager.getUpdateTime().toString(m_locale.dateTimeFormat(QLocale::ShortFormat)));
+    return qtTrId("status-online-stale-rates")
+            .arg(beamui::getCurrencyUnitName(m_exchangeRatesManager->getRateCurrency()))
+            .arg(m_exchangeRatesManager->getUpdateTime().toString(m_locale.dateTimeFormat(QLocale::ShortFormat)));
 }
 
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
@@ -201,7 +202,7 @@ void StatusbarViewModel::setWalletStatusErrorMsg(const QString& value)
 
 void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
 {
-    setIsConnectionTrusted(m_model.isConnectionTrusted());
+    setIsConnectionTrusted(m_model->isConnectionTrusted());
 
     if (isNodeConnected == getIsOnline())
     {
@@ -212,7 +213,7 @@ void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
     {
         setIsFailedStatus(false);
         setIsOnline(true);
-        setIsSyncInProgress(!m_model.isSynced());
+        setIsSyncInProgress(!m_model->isSynced());
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
         if (m_isCoinClientFailed)
         {
@@ -235,7 +236,7 @@ void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
 void StatusbarViewModel::onGetWalletError(beam::wallet::ErrorType error)
 {
     setIsOnline(false);
-    setWalletStatusErrorMsg(m_model.GetErrorString(error));
+    setWalletStatusErrorMsg(m_model->GetErrorString(error));
     setIsFailedStatus(true);
     setIsConnectionTrusted(false);
 

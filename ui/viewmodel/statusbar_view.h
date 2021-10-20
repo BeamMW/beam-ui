@@ -27,7 +27,7 @@
 #include "wallet/transactions/swaps/bridges/ethereum/client.h"
 #include "wallet/transactions/swaps/common.h"
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
-#include "notifications/exchange_rates_manager.h"
+#include "model/exchange_rates_manager.h"
 
 class StatusbarViewModel : public QObject
 {
@@ -101,7 +101,8 @@ private:
     void connectCoinClients();
     void connectEthClient();
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
-    WalletModel& m_model;
+    WalletModel::Ptr m_model;
+    ExchangeRatesManager::Ptr m_exchangeRatesManager;
 
     bool m_isOnline;
     bool m_isSyncInProgress;
@@ -128,7 +129,7 @@ private:
     std::vector<SwapClientStatus> m_coinClientStatuses;
     std::pair<SwapEthClientModel::Ptr, beam::ethereum::Client::Status> m_ethCleintStatus;
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
-    ExchangeRatesManager m_exchangeRatesManager;
+
     QTimer m_exchangeRatesTimer;
     QLocale m_locale;
 };

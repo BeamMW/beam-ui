@@ -69,18 +69,19 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     , _sentCurrency(OldWalletCurrency::OldCurrency::CurrBitcoin)
     , _offerExpires(OfferExpires12h)
     , _saveParamsAllowed(false)
-    , _walletModel(*AppModel::getInstance().getWalletModel())
+    , _walletModel(AppModel::getInstance().getWalletModel())
+    , _rates(AppModel::getInstance().getRates())
     , _txParameters(beam::wallet::CreateSwapTransactionParameters())
     , _isBeamSide(false)
     , _minimalBeamFeeGrothes(minimalFee(OldWalletCurrency::OldCurrency::CurrBeam, false))
 {
-    connect(&_walletModel, &WalletModel::generatedNewAddress, this, &ReceiveSwapViewModel::onGeneratedNewAddress);
-    connect(&_walletModel, &WalletModel::swapParamsLoaded, this, &ReceiveSwapViewModel::onSwapParamsLoaded);
-    connect(&_walletModel, SIGNAL(newAddressFailed()), this, SIGNAL(newAddressFailed()));
-    connect(&_walletModel, &WalletModel::walletStatusChanged, this, &ReceiveSwapViewModel::updateTransactionToken);
-    connect(&_exchangeRatesManager, &ExchangeRatesManager::rateUnitChanged, this, &ReceiveSwapViewModel::secondCurrencyUnitNameChanged);
-    connect(&_exchangeRatesManager, &ExchangeRatesManager::activeRateChanged, this, &ReceiveSwapViewModel::secondCurrencyRateChanged);
-    connect(&_walletModel, &WalletModel::coinsSelected, this, &ReceiveSwapViewModel::onCoinsSelected);
+    connect(_walletModel.get(),  &WalletModel::generatedNewAddress, this, &ReceiveSwapViewModel::onGeneratedNewAddress);
+    connect(_walletModel.get(),  &WalletModel::swapParamsLoaded, this, &ReceiveSwapViewModel::onSwapParamsLoaded);
+    connect(_walletModel.get(),  &WalletModel::newAddressFailed, this, &ReceiveSwapViewModel::newAddressFailed);
+    connect(_walletModel.get(),  &WalletModel::walletStatusChanged, this, &ReceiveSwapViewModel::updateTransactionToken);
+    connect(_walletModel.get(),  &WalletModel::coinsSelected, this, &ReceiveSwapViewModel::onCoinsSelected);
+    connect(_rates.get(), &ExchangeRatesManager::rateUnitChanged, this, &ReceiveSwapViewModel::secondCurrencyUnitNameChanged);
+    connect(_rates.get(), &ExchangeRatesManager::activeRateChanged, this, &ReceiveSwapViewModel::secondCurrencyRateChanged);
 
     generateNewAddress();
     updateTransactionToken();
@@ -96,7 +97,7 @@ void ReceiveSwapViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddre
 
 void ReceiveSwapViewModel::loadSwapParams()
 {
-    _walletModel.getAsync()->loadSwapParams();
+    _walletModel->getAsync()->loadSwapParams();
 }
 
 void ReceiveSwapViewModel::storeSwapParams()
@@ -112,7 +113,7 @@ void ReceiveSwapViewModel::storeSwapParams()
 
         beam::ByteBuffer buffer;
         ser.swap_buf(buffer);
-        _walletModel.getAsync()->storeSwapParams(buffer);
+        _walletModel->getAsync()->storeSwapParams(buffer);
     }
     catch(...)
     {
@@ -237,7 +238,7 @@ void ReceiveSwapViewModel::setAmountSent(QString value)
         if (isPreviouseSendWasZero && _amountToReceiveGrothes) emit rateChanged();
         emit amountSentChanged();
         updateTransactionToken();
-        if (_sentCurrency == OldWalletCurrency::OldCurrency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID))
+        if (_sentCurrency == OldWalletCurrency::OldCurrency::CurrBeam && _walletModel->hasShielded(beam::Asset::s_BeamID))
         {
             if (isPreviouseGreaterThanNow)
             {
@@ -248,7 +249,7 @@ void ReceiveSwapViewModel::setAmountSent(QString value)
             }
             if (_amountSentGrothes)
             {
-                _walletModel.getAsync()->selectCoins(_amountSentGrothes, _sentFeeGrothes, beam::Asset::s_BeamID);
+                _walletModel->getAsync()->selectCoins(_amountSentGrothes, _sentFeeGrothes, beam::Asset::s_BeamID);
             }
         }
     }
@@ -269,10 +270,10 @@ void ReceiveSwapViewModel::setSentFee(unsigned int value)
         emit secondCurrencyRateChanged();
         storeSwapParams();
 
-        if (_sentCurrency == OldWalletCurrency::OldCurrency::CurrBeam && _walletModel.hasShielded(beam::Asset::s_BeamID) && _amountSentGrothes)
+        if (_sentCurrency == OldWalletCurrency::OldCurrency::CurrBeam && _walletModel->hasShielded(beam::Asset::s_BeamID) && _amountSentGrothes)
         {
             _feeChangedByUI = true;
-            _walletModel.getAsync()->selectCoins(_amountSentGrothes, _sentFeeGrothes, beam::Asset::s_BeamID);
+            _walletModel->getAsync()->selectCoins(_amountSentGrothes, _sentFeeGrothes, beam::Asset::s_BeamID);
         }
     }
 }
@@ -362,7 +363,7 @@ void ReceiveSwapViewModel::generateNewAddress()
     emit receiverAddressChanged();
 
     setAddressComment("");
-    _walletModel.getAsync()->generateNewAddress();
+    _walletModel->getAsync()->generateNewAddress();
 }
 
 void ReceiveSwapViewModel::setTransactionToken(const QString& value)
@@ -397,7 +398,7 @@ void ReceiveSwapViewModel::setAddressComment(const QString& value)
 
 bool ReceiveSwapViewModel::getCommentValid() const
 {
-    return !_walletModel.isAddressWithCommentExist(_addressComment.toStdString());
+    return !_walletModel->isAddressWithCommentExist(_addressComment.toStdString());
 }
 
 bool ReceiveSwapViewModel::isEnough() const
@@ -410,7 +411,7 @@ bool ReceiveSwapViewModel::isEnough() const
 
     if (_sentCurrency == OldWalletCurrency::OldCurrency::CurrBeam)
     {
-        return _walletModel.getAvailable(beam::Asset::s_BeamID) >= total;
+        return _walletModel->getAvailable(beam::Asset::s_BeamID) >= total;
     }
 
     auto swapCoin = convertCurrencyToSwapCoin(_sentCurrency);
@@ -462,7 +463,7 @@ void ReceiveSwapViewModel::saveAddress()
     if (getCommentValid()) {
         _receiverAddress.m_label = _addressComment.toStdString();
         _receiverAddress.m_duration = WalletAddress::AddressExpirationAuto;
-        _walletModel.getAsync()->saveAddress(_receiverAddress);
+        _walletModel->getAsync()->saveAddress(_receiverAddress);
     }
 }
 
@@ -479,7 +480,7 @@ void ReceiveSwapViewModel::startListen()
             beam::ByteBuffer(localComment.begin(), localComment.end()));
     }
 
-    _walletModel.getAsync()->startTransaction(std::move(txParameters));
+    _walletModel->getAsync()->startTransaction(std::move(txParameters));
 }
 
 void ReceiveSwapViewModel::publishToken()
@@ -504,7 +505,7 @@ void ReceiveSwapViewModel::publishToken()
         offer.m_coin = *coin;
         offer.SetTxParameters(readyForTokenizeTxParams.Pack());
         
-        _walletModel.getAsync()->publishSwapOffer(offer);
+        _walletModel->getAsync()->publishSwapOffer(offer);
     }
 }
 
@@ -529,7 +530,7 @@ void ReceiveSwapViewModel::updateTransactionToken()
     FillSwapTxParams(
         &_txParameters,
         _receiverAddress.m_walletID,
-        _walletModel.getCurrentHeight(),
+        _walletModel->getCurrentHeight(),
         beamAmount,
         beamFee,
         swapCoin,
@@ -555,15 +556,15 @@ void ReceiveSwapViewModel::updateTransactionToken()
 
 QString ReceiveSwapViewModel::getSecondCurrencySendRateValue() const
 {
-    auto sendCurrency = ExchangeRatesManager::convertCurrencyToExchangeCurrency(getSentCurrency());
-    auto rate = _exchangeRatesManager.getRate(sendCurrency);
+    auto sendCurrency = convertCurrencyToExchangeCurrency(getSentCurrency());
+    auto rate = _rates->getRate(sendCurrency);
     return beamui::AmountToUIString(rate);
 }
 
 QString ReceiveSwapViewModel::getSecondCurrencyReceiveRateValue() const
 {
-    auto receiveCurrency = ExchangeRatesManager::convertCurrencyToExchangeCurrency(getReceiveCurrency());
-    auto rate = _exchangeRatesManager.getRate(receiveCurrency);
+    auto receiveCurrency = convertCurrencyToExchangeCurrency(getReceiveCurrency());
+    auto rate = _rates->getRate(receiveCurrency);
     return beamui::AmountToUIString(rate);
 }
 
@@ -574,7 +575,7 @@ unsigned int ReceiveSwapViewModel::getMinimalBeamFeeGrothes() const
 
 QString ReceiveSwapViewModel::getSecondCurrencyUnitName() const
 {
-    return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateCurrency());
+    return beamui::getCurrencyUnitName(_rates->getRateCurrency());
 }
 
 QString ReceiveSwapViewModel::getSentFeeTitle() const

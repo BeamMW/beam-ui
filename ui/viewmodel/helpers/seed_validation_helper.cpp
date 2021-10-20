@@ -17,7 +17,7 @@
 
 SeedValidationHelper::SeedValidationHelper()
 {
-    auto model = AppModel::getInstance().getWalletModel();
+    auto model = AppModel::getInstance().getWalletModelUnsafe();
     if (model)
     {
         QPointer<SeedValidationHelper> guard(this);

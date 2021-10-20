@@ -16,7 +16,7 @@
 #include <QObject>
 #include <QDateTime>
 #include "model/wallet_model.h"
-#include "notifications/exchange_rates_manager.h"
+#include "model/exchange_rates_manager.h"
 #include "currencies.h"
 
 class SendSwapViewModel: public QObject
@@ -160,8 +160,8 @@ private:
     QString      _comment;
     QString      _token;
 
-    WalletModel& _walletModel;
-    ExchangeRatesManager _exchangeRatesManager;
+    WalletModel::Ptr _walletModel;
+    ExchangeRatesManager::Ptr _rates;
     beam::wallet::TxParameters _txParameters;
     bool _isBeamSide;
 

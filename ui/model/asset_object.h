@@ -20,17 +20,7 @@ class AssetObject
 public:
     explicit AssetObject(uint64_t id);
     bool operator==(const AssetObject& other) const;
-
     [[nodiscard]] uint64_t id() const;
-    [[nodiscard]] uint32_t inTxCnt() const;
-    [[nodiscard]] uint32_t outTxCnt() const;
-
-    void resetTxCnt();
-    void addIntTx();
-    void addOutTx();
-
 protected:
     uint64_t  _id;
-    uint64_t  _inTxCnt;
-    uint64_t  _outTxCnt;
 };

@@ -508,8 +508,8 @@
         <translation>Password</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
-        <source>Confirm password</source>
-        <translation>Confirm password</translation>
+        <source>Password confrimation</source>
+        <translation>Password confrimation</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
         <source>Passwords do not match</source>

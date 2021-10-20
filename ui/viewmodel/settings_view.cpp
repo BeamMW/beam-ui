@@ -49,7 +49,7 @@ SettingsViewModel::SettingsViewModel()
     , m_isNeedToApplyChanges(false)
     , m_supportedLanguages(WalletSettings::getSupportedLanguages())
     , m_rateCurrency(beam::wallet::Currency::UNKNOWN())
-    , m_walletModel{*AppModel::getInstance().getWalletModel()}
+    , m_walletModel(AppModel::getInstance().getWalletModel())
 {
     undoChanges();
 
@@ -61,11 +61,11 @@ SettingsViewModel::SettingsViewModel()
 
     connect(&AppModel::getInstance().getNode(), SIGNAL(startedNode()), SLOT(onNodeStarted()));
     connect(&AppModel::getInstance().getNode(), SIGNAL(stoppedNode()), SLOT(onNodeStopped()));
-    connect(AppModel::getInstance().getWalletModel().get(), SIGNAL(addressChecked(const QString&, bool)), SLOT(onAddressChecked(const QString&, bool)));
-    connect(AppModel::getInstance().getWalletModel().get(), SIGNAL(publicAddressChanged(const QString&)), SLOT(onPublicAddressChanged(const QString&)));
+    connect(m_walletModel.get(), SIGNAL(addressChecked(const QString&, bool)), SLOT(onAddressChecked(const QString&, bool)));
+    connect(m_walletModel.get(), SIGNAL(publicAddressChanged(const QString&)), SLOT(onPublicAddressChanged(const QString&)));
     connect(&m_settings, SIGNAL(beamMWLinksChanged()), SIGNAL(beamMWLinksPermissionChanged()));
     connect(&m_settings, &WalletSettings::dappsAllowedChanged, this, &SettingsViewModel::dappsAllowedChanged);
-    connect(&m_walletModel, &WalletModel::walletStatusChanged, this, &SettingsViewModel::stateChanged);
+    connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &SettingsViewModel::stateChanged);
 
     m_timerId = startTimer(CHECK_INTERVAL);
 }
@@ -270,7 +270,7 @@ void SettingsViewModel::setDAppsAllowed (bool val)
 
 QString SettingsViewModel::getCurrentHeight() const
 {
-    return QString::fromStdString(to_string(m_walletModel.getCurrentStateID().m_Height));
+    return QString::fromStdString(to_string(m_walletModel->getCurrentStateID().m_Height));
 }
 
 QStringList SettingsViewModel::getSupportedLanguages() const

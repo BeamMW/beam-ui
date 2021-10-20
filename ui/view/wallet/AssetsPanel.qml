@@ -43,18 +43,21 @@ Control {
         selectedId  = -1
     }
 
+    Component.onCompleted: function() {
+        control.updateView()
+    }
+
     SeedValidationHelper { id: seedValidationHelper }
 
-    property real   hSpacing:        10
-    property real   vSpacing:        10
-    property int    maxVisibleRows:  3
-    property alias  selectedId:      viewModel.selectedAsset
-    property int    assetsCount:     1
-    property bool   showFaucetPromo: viewModel.showFaucetPromo
-    property bool   isSeedValidated: seedValidationHelper.isSeedValidated
-    property bool   hideSeedValidationPromo: viewModel.hideSeedValidationPromo
+    property real   hSpacing:       10
+    property real   vSpacing:       10
+    property int    maxVisibleRows: 3
+    property alias  selectedId:     viewModel.selectedAsset
+    property int    assetsCount:    1
+    property real   itemHeight:     75
 
-    readonly property real  itemHeight:  75
+    property bool  showFaucetPromo: viewModel.showFaucetPromo
+    property bool  showValidationPromo: viewModel.showValidationPromo && !seedValidationHelper.isSeedValidated
 
     readonly property real itemWidth: {
         if (assetsCount == 1 && !showFaucetPromo) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
@@ -95,7 +98,7 @@ Control {
     contentItem: ScrollView {
         id: scroll
 
-        implicitHeight: !isSeedValidated && !hideSeedValidationPromo && (showFaucetPromo || control.assetsCount > 1) ? control.scrollViewHeight + 95 : control.scrollViewHeight
+        implicitHeight: showValidationPromo && (showFaucetPromo || control.assetsCount > 1) ? control.scrollViewHeight + 95 : control.scrollViewHeight
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         ScrollBar.vertical.policy: control.hasScroll && hovered ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
 
@@ -136,33 +139,31 @@ Control {
             }
 
             Panel {
-                width:  683
-                height: 75
+                width:   scroll.width - control.hSpacing - control.itemWidth
+                height:  control.itemHeight
                 visible: showFaucetPromo && control.assetsCount == 1
 
                 content: RowLayout {
+                    spacing: 14
                     SFText {
-                        Layout.topMargin:    -12
-                        font.pixelSize:      14
-                        color:               Style.content_main
+                        Layout.topMargin: -12
+                        font.pixelSize:    14
+                        color:             Style.content_main
                         //% "See the wallet in action. Get a small amount of Beams from the Faucet DApp."
-                        text:                qsTrId("faucet-promo")
+                        text: qsTrId("faucet-promo")
                     }
                     Item {
-                        Layout.preferredWidth: openFaucet.width + 10 + openFaucetIcon.width
+                        Layout.preferredWidth: openFaucet.width + 6 + openFaucetIcon.width
                         height: 16
-                        Layout.topMargin:    -12
-                        Layout.rightMargin:  20
+                        Layout.topMargin:   -12
+                        Layout.rightMargin: 10
                         SvgImage {
                             id: openFaucetIcon
-                            anchors.left: parent.left
-                            anchors.top: parent.top
                             source: "qrc:/assets/icon-receive-skyblue.svg"
                         }
                         SFText {
                             id: openFaucet
-                            anchors.right: parent.right
-                            anchors.top: parent.top
+                            x:  openFaucetIcon.width + 6
                             font.pixelSize:      14
                             font.styleName:      "Bold"
                             font.weight:         Font.Bold
@@ -181,6 +182,9 @@ Control {
                         }
                     }
                     Item {
+                        Layout.fillWidth: true
+                    }
+                    Item {
                         width:  16
                         height: 16
                         Layout.topMargin: -50
@@ -194,7 +198,7 @@ Control {
                             anchors.fill: parent
                             acceptedButtons: Qt.LeftButton
                             cursorShape: Qt.PointingHandCursor
-                            onClicked: {
+                            onClicked: function () {
                                 viewModel.showFaucetPromo = false;
                             }
                             hoverEnabled: true
@@ -205,16 +209,16 @@ Control {
         }
 
         Row {
-            id: seedValidationRow
-            width: showFaucetPromo || control.assetsCount > 1 ? parent.width : parent.width / 2 - 5
-            topPadding: showFaucetPromo || control.assetsCount > 1 ? grid.height + 10 : 0
+            id:          seedValidationRow
+            width:       showFaucetPromo || control.assetsCount > 1 ? parent.width : parent.width / 2 - 5
+            topPadding:  showFaucetPromo || control.assetsCount > 1 ? grid.height + 10 : 0
             leftPadding: showFaucetPromo || control.assetsCount > 1 ? 0 : itemWidth + 10
-            visible: !isSeedValidated && !hideSeedValidationPromo
+            visible:     showValidationPromo
 
             Panel {
                 width: parent.width
-                height: 75
-                backgroundColor: viewModel.canHideSeedValidationPromo ?
+                height: control.itemHeight
+                backgroundColor: viewModel.canHideValidationPromo ?
                     Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.1) :
                     Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.2)
 
@@ -262,7 +266,7 @@ Control {
                         height: 16
                         Layout.topMargin:   -55
                         Layout.rightMargin: -9
-                        visible: viewModel.canHideSeedValidationPromo
+                        visible: viewModel.canHideValidationPromo
                         SvgImage {
                             anchors.left: parent.left
                             anchors.top: parent.top
@@ -272,8 +276,8 @@ Control {
                             anchors.fill: parent
                             acceptedButtons: Qt.LeftButton
                             cursorShape: Qt.PointingHandCursor
-                            onClicked: {
-                                viewModel.hideSeedValidationPromo = true;
+                            onClicked: function () {
+                                viewModel.showSeedValidationPromo = false
                             }
                             hoverEnabled: true
                         }

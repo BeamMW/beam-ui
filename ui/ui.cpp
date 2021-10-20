@@ -53,7 +53,7 @@
 #include "viewmodel/helpers/seed_validation_helper.h"
 #include "viewmodel/notifications/notifications_view.h"
 #include "viewmodel/notifications/push_notification_manager.h"
-#include "viewmodel/notifications/exchange_rates_manager.h"
+#include "model/exchange_rates_manager.h"
 #include "wallet/core/wallet_db.h"
 #include "utility/log_rotation.h"
 #include "core/ecc_native.h"
@@ -274,12 +274,10 @@ int main (int argc, char* argv[])
             qmlRegisterType<SwapTokenInfoItem>("Beam.Wallet", 1, 0, "SwapTokenInfoItem");
             qmlRegisterType<SwapTxObjectList>("Beam.Wallet", 1, 0, "SwapTxObjectList");
             qmlRegisterType<TxObjectList>("Beam.Wallet", 1, 0, "TxObjectList");
-            qmlRegisterType<AssetsList>("Beam.Wallet", 1, 0, "AssetsList");
             qmlRegisterType<TokenInfoItem>("Beam.Wallet", 1, 0, "TokenInfoItem");
             qmlRegisterType<SwapCoinClientWrapper>("Beam.Wallet", 1, 0, "SwapCoinClientWrapper");
             qmlRegisterType<TokenBootstrapManager>("Beam.Wallet", 1, 0, "TokenBootstrapManager");
             qmlRegisterType<PushNotificationManager>("Beam.Wallet", 1, 0, "PushNotificationManager");
-            qmlRegisterType<ExchangeRatesManager>("Beam.Wallet", 1, 0, "ExchangeRatesManager");
             qmlRegisterType<SortFilterProxyModel>("Beam.Wallet", 1, 0, "SortFilterProxyModel");
             qmlRegisterType<SeedValidationHelper>("Beam.Wallet", 1, 0, "SeedValidationHelper");
             qmlRegisterType<QR>("Beam.Wallet", 1, 0, "QR");

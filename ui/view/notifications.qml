@@ -201,7 +201,7 @@ ColumnLayout {
                     RowLayout {
                         SFText {
                             Layout.rightMargin: 5
-                            text: dateCreated
+                            text: txDateCreated
                             font.pixelSize: 12
                             color: Style.content_main
                             opacity: 0.5
@@ -216,7 +216,7 @@ ColumnLayout {
 
                         SFText {
                             Layout.leftMargin: 5
-                            text: timeCreated
+                            text: txTimeCreated
                             font.pixelSize: 12
                             color: Style.content_main
                             opacity: 0.5

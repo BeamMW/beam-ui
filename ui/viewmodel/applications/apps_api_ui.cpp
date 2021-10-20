@@ -17,6 +17,7 @@
 #include "apps_api_ui.h"
 #include "utility/logger.h"
 #include "model/app_model.h"
+#include "viewmodel/ui_helpers.h"
 
 namespace beamui::applications {
     using namespace beam::wallet;

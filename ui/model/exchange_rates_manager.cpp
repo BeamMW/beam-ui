@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "exchange_rates_manager.h"
+#include "model/exchange_rates_manager.h"
 
 #include "model/app_model.h"
 #include "viewmodel/ui_helpers.h"
@@ -21,40 +21,40 @@
 // test
 #include "utility/logger.h"
 
-ExchangeRatesManager::ExchangeRatesManager()
-    : m_walletModel(*AppModel::getInstance().getWalletModel())
-    , m_settings(AppModel::getInstance().getSettings())
+ExchangeRatesManager::ExchangeRatesManager(WalletModel::Ptr wallet, WalletSettings& settings)
+    : _wallet(std::move(wallet))
+    , _settings(settings)
     , m_updateTime(0)
 {
 
     qRegisterMetaType<std::vector<beam::wallet::ExchangeRate>>("std::vector<beam::wallet::ExchangeRate>");
 
-    connect(&m_walletModel,
+    connect(_wallet.get(),
             SIGNAL(exchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>&)),
             SLOT(onExchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>&)));
 
-    connect(&m_settings,
+    connect(&_settings,
             SIGNAL(secondCurrencyChanged()),
             SLOT(onRateUnitChanged()));
 
-    m_rateUnit = m_settings.getRateCurrency();
+    m_rateUnit = _settings.getRateCurrency();
     if (m_rateUnit != beam::wallet::Currency::UNKNOWN())
     {
-        m_walletModel.getAsync()->getExchangeRates();
+        _wallet->getAsync()->getExchangeRates();
     }
 }
 
 void ExchangeRatesManager::setRateUnit()
 {
-    auto newCurrency = m_settings.getRateCurrency();
+    auto newCurrency = _settings.getRateCurrency();
     if (m_rateUnit == newCurrency)
         return;
 
     auto turnedOn = newCurrency != beam::wallet::Currency::UNKNOWN();
-    m_walletModel.getAsync()->switchOnOffExchangeRates(turnedOn);
+    _wallet->getAsync()->switchOnOffExchangeRates(turnedOn);
     if (turnedOn)
     {
-        m_walletModel.getAsync()->getExchangeRates();
+        _wallet->getAsync()->getExchangeRates();
     }
     m_rateUnit = newCurrency;
     setUpdateTime(0);
@@ -125,33 +125,4 @@ beam::Amount ExchangeRatesManager::getRate(const beam::wallet::Currency& currenc
 {
     const auto it = m_rates.find(currency);
     return (it == std::cend(m_rates)) ? 0 : it->second;
-}
-
-beam::wallet::Currency ExchangeRatesManager::convertCurrencyToExchangeCurrency(OldWalletCurrency::OldCurrency uiCurrency)
-{
-    switch (uiCurrency)
-    {
-    case OldWalletCurrency::OldCurrency::CurrBeam:
-        return beam::wallet::Currency::BEAM();
-    case OldWalletCurrency::OldCurrency::CurrBitcoin:
-        return beam::wallet::Currency::BTC();
-    case OldWalletCurrency::OldCurrency::CurrLitecoin:
-        return beam::wallet::Currency::LTC();
-    case OldWalletCurrency::OldCurrency::CurrQtum:
-        return beam::wallet::Currency::QTUM();
-    case OldWalletCurrency::OldCurrency::CurrDash:
-        return beam::wallet::Currency::DASH();
-    case OldWalletCurrency::OldCurrency::CurrDogecoin:
-        return beam::wallet::Currency::DOGE();
-    case OldWalletCurrency::OldCurrency::CurrEthereum:
-        return beam::wallet::Currency::ETH();
-    case OldWalletCurrency::OldCurrency::CurrDai:
-        return beam::wallet::Currency::DAI();
-    case OldWalletCurrency::OldCurrency::CurrUsdt:
-        return beam::wallet::Currency::USDT();
-    case OldWalletCurrency::OldCurrency::CurrWrappedBTC:
-        return beam::wallet::Currency::WBTC();
-    default:
-        return beam::wallet::Currency::UNKNOWN();
-    }
 }

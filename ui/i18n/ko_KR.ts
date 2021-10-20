@@ -509,8 +509,9 @@
         <translation>비밀번호</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
-        <source>Confirm password</source>
-        <translation>비밀번호 확인하기</translation>
+        <source>Password confrimation</source>
+        <oldsource>Confirm password</oldsource>
+        <translation type="unfinished">비밀번호 확인하기</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
         <source>Passwords do not match</source>

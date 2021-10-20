@@ -15,25 +15,23 @@
 
 #include <QObject>
 #include <QDateTime>
-
-#include "model/wallet_model.h"
-#include "model/settings.h"
+#include "wallet_model.h"
+#include "settings.h"
 #include "wallet/client/extensions/news_channels/interface.h"
-#include "viewmodel/currencies.h"   // WalletCurrency::Currency enum used in UI
 
 class ExchangeRatesManager : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QDateTime updateTime READ getUpdateTime  NOTIFY updateTimeChanged)
+
 public:
-    ExchangeRatesManager();
+    typedef std::shared_ptr<ExchangeRatesManager> Ptr;
+    ExchangeRatesManager(WalletModel::Ptr, WalletSettings& settings);
 
     [[nodiscard]] beam::Amount getRate(const beam::wallet::Currency&) const;
     [[nodiscard]] beam::wallet::Currency getRateCurrency() const;
     [[nodiscard]] QDateTime getUpdateTime() const;
     [[nodiscard]] bool isUpToDate() const;
-
-    static beam::wallet::Currency convertCurrencyToExchangeCurrency(OldWalletCurrency::OldCurrency uiCurrency);
 
 public slots:
     void onExchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>& rates);
@@ -48,8 +46,8 @@ private:
     void setRateUnit();
     void setUpdateTime(beam::Timestamp value);
 
-    WalletModel& m_walletModel;
-    WalletSettings& m_settings;
+    WalletModel::Ptr _wallet;
+    WalletSettings& _settings;
 
     beam::wallet::Currency m_rateUnit = beam::wallet::Currency::UNKNOWN();
     std::map<beam::wallet::Currency, beam::Amount> m_rates;

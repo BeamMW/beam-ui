@@ -12,12 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "asset_object.h"
-#include "../ui_helpers.h"
+#include "viewmodel/ui_helpers.h"
 
 AssetObject::AssetObject(uint64_t id)
    : _id(id)
-   , _inTxCnt(0)
-   , _outTxCnt(0)
 {
 }
 
@@ -29,30 +27,4 @@ bool AssetObject::operator==(const AssetObject& other) const
 uint64_t AssetObject::id() const
 {
     return _id;
-}
-
-uint32_t AssetObject::inTxCnt() const
-{
-    return _inTxCnt;
-}
-
-uint32_t AssetObject::outTxCnt() const
-{
-    return _outTxCnt;
-}
-
-void AssetObject::resetTxCnt()
-{
-    _inTxCnt = 0;
-    _outTxCnt = 0;
-}
-
-void AssetObject::addIntTx()
-{
-    _inTxCnt++;
-}
-
-void AssetObject::addOutTx()
-{
-    _outTxCnt++;
 }

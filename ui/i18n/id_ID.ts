@@ -509,7 +509,8 @@
         <translation type="unfinished">Password</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
-        <source>Confirm password</source>
+        <source>Password confrimation</source>
+        <oldsource>Confirm password</oldsource>
         <translation type="unfinished">Confirm password</translation>
     </message>
     <message id="start-create-pwd-not-match-error">

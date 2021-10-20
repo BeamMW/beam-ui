@@ -509,8 +509,9 @@
         <translation>Mật khẩu</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
-        <source>Confirm password</source>
-        <translation>Xác nhận mật khẩu</translation>
+        <source>Password confrimation</source>
+        <oldsource>Confirm password</oldsource>
+        <translation type="unfinished">Xác nhận mật khẩu</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
         <source>Passwords do not match</source>

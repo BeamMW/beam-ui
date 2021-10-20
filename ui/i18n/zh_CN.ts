@@ -516,8 +516,9 @@
         <translation>密码</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
-        <source>Confirm password</source>
-        <translation>确认密码</translation>
+        <source>Password confrimation</source>
+        <oldsource>Confirm password</oldsource>
+        <translation type="unfinished">确认密码</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
         <source>Passwords do not match</source>

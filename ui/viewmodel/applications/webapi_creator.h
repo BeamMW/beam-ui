@@ -15,7 +15,7 @@
 
 #include <QObject>
 #include "apps_api_ui.h"
-#include "viewmodel/wallet/assets_list.h"
+#include "model/assets_list.h"
 
 namespace beamui::applications
 {

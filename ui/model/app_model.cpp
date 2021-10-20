@@ -343,9 +343,17 @@ void AppModel::onResetWallet()
 {
     m_walletConnections.disconnect();
 
+    assert(m_myAssets);
+    assert(m_myAssets.use_count() == 1);
+    m_myAssets.reset();
+
     assert(m_assets);
     assert(m_assets.use_count() == 1);
     m_assets.reset();
+
+    assert(m_rates);
+    assert(m_rates.use_count() == 1);
+    m_rates.reset();
 
     assert(m_wallet);
     assert(m_wallet.use_count() == 1);
@@ -532,8 +540,10 @@ void AppModel::start()
 
     initSwapClients();
 
-    m_wallet = std::make_shared<WalletModel>(m_db, nodeAddrStr, m_walletReactor);
-    m_assets = std::make_shared<AssetsManager>(m_wallet);
+    m_wallet   = std::make_shared<WalletModel>(m_db, nodeAddrStr, m_walletReactor);
+    m_rates    = std::make_shared<ExchangeRatesManager>(m_wallet, m_settings);
+    m_assets   = std::make_shared<AssetsManager>(m_wallet, m_rates);
+    m_myAssets = std::make_shared<AssetsList>(m_wallet, m_assets, m_rates);
 
     if (m_settings.getRunLocalNode())
     {
@@ -570,7 +580,20 @@ void AppModel::changeWalletPassword(const std::string& pass)
 
 WalletModel::Ptr AppModel::getWalletModel() const
 {
+    if (m_wallet) return m_wallet;
+
+    assert(false);
+    throw std::runtime_error("getWalletModel for empty model");
+}
+
+WalletModel::Ptr AppModel::getWalletModelUnsafe() const
+{
     return m_wallet;
+}
+
+AssetsList::Ptr AppModel::getMyAssets() const
+{
+    return m_myAssets;
 }
 
 WalletSettings& AppModel::getSettings() const
@@ -580,7 +603,18 @@ WalletSettings& AppModel::getSettings() const
 
 AssetsManager::Ptr AppModel::getAssets() const
 {
-    return m_assets;
+    if (m_assets) return m_assets;
+
+    assert(false);
+    throw std::runtime_error("getAssets for empty assets");
+}
+
+ExchangeRatesManager::Ptr AppModel::getRates() const
+{
+    if (m_rates) return m_rates;
+
+    assert(false);
+    throw std::runtime_error("getRates for empty rates");
 }
 
 MessageManager& AppModel::getMessages()

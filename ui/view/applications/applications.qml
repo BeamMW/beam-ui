@@ -12,6 +12,7 @@ import "."
 ColumnLayout {
     id: control
     Layout.fillWidth: true
+    spacing: 0
 
     property string   errorMessage: ""
     property var      appsList: undefined
@@ -295,21 +296,19 @@ ColumnLayout {
         }
     }
 
-    ColumnLayout {
+    Item {
         id: webLayout
 
         Layout.fillHeight:   true
         Layout.fillWidth:    true
-        Layout.bottomMargin: 10
+        Layout.bottomMargin: txPanel.folded ? 10 : 0
         visible: false
+        opacity: txPanel.folded ? 1.0 : 0.25
+        clip:    true
 
         WebEngineView {
             id: webView
-
-            Layout.fillWidth:    true
-            Layout.fillHeight:   true
-            Layout.bottomMargin: 10
-
+            anchors.fill: parent
             webChannel: apiChannel
             visible: true
             backgroundColor: "transparent"
@@ -371,6 +370,21 @@ ColumnLayout {
                 req.accepted = true
             }
         }
+
+        MouseArea {
+            anchors.fill: parent
+            visible: !txPanel.folded
+            hoverEnabled: true
+
+            onClicked: function (ev) {
+                txPanel.folded = true
+                ev.accepted = true
+            }
+
+            onWheel: function (ev) {
+                ev.accepted = true
+            }
+        }
     }
 
     SFText {
@@ -389,8 +403,9 @@ ColumnLayout {
         Layout.topMargin:  40 - (unsupportedCnt ? errCntMessage.height + 5 + parent.spacing : 0)
         Layout.fillHeight: true
         Layout.fillWidth:  true
-        Layout.bottomMargin: 10
-        visible: control.hasApps && !control.activeApp
+        Layout.bottomMargin: txPanel.folded ? 10 : 0
+        opacity:  txPanel.folded ? 1.0 : 0.25
+        visible:  control.hasApps && !control.activeApp
         appsList: control.appsList
 
         onLaunch: function (app) {
@@ -398,14 +413,14 @@ ColumnLayout {
         }
 
         onInstall: function (fname) {
-            if (!fname.length) {
-                fname = viewModel.choseFile();
-                if (!fname.length) return;
+            if (!fname) {
+                fname = viewModel.chooseFile()
+                if (!fname) return
             }
 
-            var appName = viewModel.installFromFile(fname);
+            var appName = viewModel.installFromFile(fname)
             if (appName.length) {
-                loadAppsList();
+                loadAppsList()
                 //% "'%1' is successfully installed."
                 installOK.text = qsTrId("apps-install-success").arg(appName)
                 installOK.open()
@@ -429,15 +444,31 @@ ColumnLayout {
             }
             loadAppsList()
         }
+
+        MouseArea {
+            anchors.fill: parent
+            visible: !txPanel.folded
+            hoverEnabled: true
+
+            onClicked: function (ev) {
+                txPanel.folded = true
+                ev.accepted = true
+            }
+
+            onWheel: function (ev) {
+                ev.accepted = true
+            }
+        }
     }
 
     FoldablePanel {
+        id:                  txPanel
         title:               qsTrId("wallet-transactions-title")
         folded:              !control.openedTxID
         titleOpacity:        0.5
         Layout.fillWidth:    true
         Layout.bottomMargin: 10
-        contentItemHeight:   control.height * 0.32
+        contentItemHeight:   control.height * 0.36
         bottomPadding:       folded ? 20 : 5
         foldsUp:             false
         visible:             appsListView.visible || webLayout.visible

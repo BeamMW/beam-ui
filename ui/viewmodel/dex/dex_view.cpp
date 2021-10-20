@@ -18,18 +18,18 @@
 namespace beamui::dex
 {
     DexView::DexView()
-        : _walletModel(*AppModel::getInstance().getWalletModel())
+        : _walletModel(AppModel::getInstance().getWalletModel())
     {
         beam::wallet::TxID id;
         LOG_INFO() << id;
 
-         connect(&_walletModel, &WalletModel::dexOrdersChanged, this, &DexView::onDexOrdersChanged);
-         connect(&_walletModel, &WalletModel::generatedNewAddress, this, &DexView::onNewAddress);
+         connect(_walletModel.get(), &WalletModel::dexOrdersChanged, this, &DexView::onDexOrdersChanged);
+         connect(_walletModel.get(), &WalletModel::generatedNewAddress, this, &DexView::onNewAddress);
 
-         _walletModel.getAsync()->getDexOrders();
+         _walletModel->getAsync()->getDexOrders();
 
          // TODO:DEX move address to the board?
-         _walletModel.getAsync()->generateNewAddress();
+         _walletModel->getAsync()->generateNewAddress();
 
          emit ordersChanged();
     }
@@ -43,7 +43,7 @@ namespace beamui::dex
         using namespace beam;
         using namespace beam::wallet;
 
-        _walletModel.getAsync()->saveAddress(_receiverAddr);
+        _walletModel->getAsync()->saveAddress(_receiverAddr);
 
         auto expires = beam::getTimestamp();
         expires += 60 * 60 * 24; // 24 hours for tests
@@ -59,7 +59,7 @@ namespace beamui::dex
             expires
          );
 
-        _walletModel.getAsync()->publishDexOrder(order);
+        _walletModel->getAsync()->publishDexOrder(order);
     }
 
     void DexView::buyBEAMX()
@@ -67,7 +67,7 @@ namespace beamui::dex
         using namespace beam;
         using namespace beam::wallet;
 
-        _walletModel.getAsync()->saveAddress(_receiverAddr);
+        _walletModel->getAsync()->saveAddress(_receiverAddr);
 
         auto expires = beam::getTimestamp();
         expires += 60 * 60 * 24; // 24 hours for tests
@@ -83,7 +83,7 @@ namespace beamui::dex
             expires
          );
 
-        _walletModel.getAsync()->publishDexOrder(order);
+        _walletModel->getAsync()->publishDexOrder(order);
     }
 
     void DexView::onNewAddress(const beam::wallet::WalletAddress& addr)
@@ -132,6 +132,6 @@ namespace beamui::dex
         {
             throw std::runtime_error("DexView::acceptOrder bad order id");
         }
-        _walletModel.getAsync()->acceptDexOrder(dexOrderId);
+        _walletModel->getAsync()->acceptDexOrder(dexOrderId);
     }
 }

@@ -16,7 +16,7 @@
 #include <QObject>
 #include "wallet/core/common.h"
 #include "wallet/core/wallet_db.h"
-#include "viewmodel/wallet/assets_manager.h"
+#include "model/assets_manager.h"
 
 class TokenInfoItem : public QObject
 {

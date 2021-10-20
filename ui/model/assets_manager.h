@@ -18,8 +18,8 @@
 #include <QMap>
 #include <QList>
 #include <QVariant>
-#include "model/wallet_model.h"
-#include "viewmodel/notifications/exchange_rates_manager.h"
+#include "wallet_model.h"
+#include "exchange_rates_manager.h"
 
 class AssetsManager: public QObject
 {
@@ -27,7 +27,7 @@ class AssetsManager: public QObject
 public:
     typedef std::shared_ptr<AssetsManager> Ptr;
 
-    explicit AssetsManager(WalletModel::Ptr wallet);
+    AssetsManager(WalletModel::Ptr wallet, ExchangeRatesManager::Ptr rates);
     ~AssetsManager() override = default;
 
     // SYNC
@@ -74,7 +74,7 @@ private:
     QMap<QString, QVariant> getAssetProps(beam::Asset::ID);
 
     WalletModel::Ptr _wallet;
-    ExchangeRatesManager _exchangeRatesManager;
+    ExchangeRatesManager::Ptr _rates;
     std::map<beam::Asset::ID, beam::wallet::VerificationInfo> m_vi;
     std::map<beam::Asset::ID, InfoPair> _info;
     std::set<beam::Asset::ID> _requested;

@@ -42,20 +42,21 @@ namespace
 }
 
 SendViewModel::SendViewModel()
-    : _walletModel(*AppModel::getInstance().getWalletModel())
+    : _walletModel(AppModel::getInstance().getWalletModel())
+    , _rates(AppModel::getInstance().getRates())
     , _settings(AppModel::getInstance().getSettings())
     , _amgr(AppModel::getInstance().getAssets())
 {
-    connect(&_walletModel,           &WalletModel::walletStatusChanged,        this,  &SendViewModel::balanceChanged);
-    connect(&_exchangeRatesManager,  &ExchangeRatesManager::rateUnitChanged,   this,  &SendViewModel::feeRateChanged);
-    connect(&_exchangeRatesManager,  &ExchangeRatesManager::activeRateChanged, this,  &SendViewModel::feeRateChanged);
-    connect(_amgr.get(),             &AssetsManager::assetsListChanged,        this,  &SendViewModel::assetsListChanged);
-    connect(&_walletModel,           &WalletModel::coinsSelected,       this,  &SendViewModel::onCoinsSelected);
-    connect(&_walletModel,           &WalletModel::sendMoneyVerified,          this,  &SendViewModel::sendMoneyVerified);
-    connect(&_walletModel,           &WalletModel::cantSendToExpired,          this,  &SendViewModel::cantSendToExpired);
-    connect(&_walletModel,           &WalletModel::publicAddressChanged,       this,  &SendViewModel::onPublicAddress);
+    connect(_walletModel.get(),  &WalletModel::walletStatusChanged,        this,  &SendViewModel::balanceChanged);
+    connect(_rates.get(),        &ExchangeRatesManager::rateUnitChanged,   this,  &SendViewModel::feeRateChanged);
+    connect(_rates.get(),        &ExchangeRatesManager::activeRateChanged, this,  &SendViewModel::feeRateChanged);
+    connect(_amgr.get(),         &AssetsManager::assetsListChanged,        this,  &SendViewModel::assetsListChanged);
+    connect(_walletModel.get(),  &WalletModel::coinsSelected,              this,  &SendViewModel::onCoinsSelected);
+    connect(_walletModel.get(),  &WalletModel::sendMoneyVerified,          this,  &SendViewModel::sendMoneyVerified);
+    connect(_walletModel.get(),  &WalletModel::cantSendToExpired,          this,  &SendViewModel::cantSendToExpired);
+    connect(_walletModel.get(),  &WalletModel::publicAddressChanged,       this,  &SendViewModel::onPublicAddress);
 
-    _walletModel.getAsync()->getPublicAddress();
+    _walletModel->getAsync()->getPublicAddress();
 }
 
 beam::Amount SendViewModel::getTotalSpend() const
@@ -87,14 +88,14 @@ void SendViewModel::setAssetId(int value)
 
 QString SendViewModel::getAssetAvailable() const
 {
-    beam::AmountBig::Type available = _walletModel.getAvailable(m_Csi.m_assetID);
+    beam::AmountBig::Type available = _walletModel->getAvailable(m_Csi.m_assetID);
     return beamui::AmountBigToUIString(available);
 }
 
 QString SendViewModel::getAssetRemaining() const
 {
     beam::AmountBig::Type amount = getTotalSpend();
-    beam::AmountBig::Type available = _walletModel.getAvailable(m_Csi.m_assetID);
+    beam::AmountBig::Type available = _walletModel->getAvailable(m_Csi.m_assetID);
 
     if (amount < available)
     {
@@ -117,7 +118,7 @@ QString SendViewModel::getBeamRemaining() const
     }
 
     const auto amount = m_Csi.m_explicitFee;
-    const auto available = beam::AmountBig::get_Lo(_walletModel.getAvailable(beam::Asset::s_BeamID));
+    const auto available = beam::AmountBig::get_Lo(_walletModel->getAvailable(beam::Asset::s_BeamID));
 
     if (amount < available)
     {
@@ -158,12 +159,12 @@ void SendViewModel::setComment(const QString& value)
 
 QString SendViewModel::getFeeRateUnit() const
 {
-    return beamui::getCurrencyUnitName(_exchangeRatesManager.getRateCurrency());
+    return beamui::getCurrencyUnitName(_rates->getRateCurrency());
 }
 
 QString SendViewModel::getFeeRate() const
 {
-    auto rate = _exchangeRatesManager.getRate(beam::wallet::Currency::BEAM());
+    auto rate = _rates->getRate(beam::wallet::Currency::BEAM());
     return beamui::AmountToUIString(rate);
 }
 
@@ -304,7 +305,7 @@ void SendViewModel::RefreshCsiAsync()
             break;
     }
 
-    _walletModel.getAsync()->selectCoins(
+    _walletModel->getAsync()->selectCoins(
             m_Csi.m_requestedSum,
             0,
             m_Csi.m_assetID,
@@ -336,7 +337,7 @@ void SendViewModel::setChoiceOffline(bool value)
 
 void SendViewModel::setMaxPossibleAmount()
 {
-    const auto amount = _walletModel.getAvailable(m_Csi.m_assetID);
+    const auto amount = _walletModel->getAvailable(m_Csi.m_assetID);
     const auto maxAmount = std::min(amount, getMaxInputAmount());
 
     _maxPossible = true;
@@ -381,7 +382,7 @@ void SendViewModel::saveReceiverAddress(const QString& comment)
     {
         // just skip, never save own public address
     }
-    else if (!_walletModel.isOwnAddress(_receiverWalletID))
+    else if (!_walletModel->isOwnAddress(_receiverWalletID))
     {
         WalletAddress address;
         address.m_walletID   = _receiverWalletID;
@@ -390,13 +391,13 @@ void SendViewModel::saveReceiverAddress(const QString& comment)
         address.m_label      = trimmed.toStdString();
         address.m_duration   = WalletAddress::AddressExpirationNever;
         address.m_Address    = _token.toStdString();
-        _walletModel.getAsync()->saveAddress(address);
+        _walletModel->getAsync()->saveAddress(address);
     }
     else
     {
         if (_receiverWalletID.IsValid())
         {
-            _walletModel.getAsync()->getAddress(_receiverWalletID, [trimmed](const boost::optional<WalletAddress>& addr, size_t c)
+            _walletModel->getAsync()->getAddress(_receiverWalletID, [trimmed](const boost::optional<WalletAddress>& addr, size_t c)
             {
                 WalletAddress address = *addr;
                 address.m_label = trimmed.toStdString();
@@ -406,7 +407,7 @@ void SendViewModel::saveReceiverAddress(const QString& comment)
         else
         {
             // Max privacy & public offline tokens do not have valid PeerID (_receiverWalletID)
-            _walletModel.getAsync()->getAddressByToken(_token.toStdString(), [trimmed](const boost::optional<WalletAddress>& addr, size_t c)
+            _walletModel->getAsync()->getAddressByToken(_token.toStdString(), [trimmed](const boost::optional<WalletAddress>& addr, size_t c)
             {
                 WalletAddress address = *addr;
                 address.m_label = trimmed.toStdString();
@@ -504,7 +505,7 @@ void SendViewModel::extractParameters()
             {
                 if (!vouchers->empty())
                 {
-                    _walletModel.getAsync()->saveVouchers(*vouchers, _receiverWalletID);
+                    _walletModel->getAsync()->saveVouchers(*vouchers, _receiverWalletID);
                     _vouchersLeft = vouchers->size();
                 }
             }
@@ -539,7 +540,7 @@ void SendViewModel::extractParameters()
     if (_receiverWalletID.IsValid())
     {
         QPointer<SendViewModel> guard(this);
-        _walletModel.getAsync()->getAddress(_receiverWalletID, [this, guard](const boost::optional<WalletAddress>& addr, size_t c)
+        _walletModel->getAsync()->getAddress(_receiverWalletID, [this, guard](const boost::optional<WalletAddress>& addr, size_t c)
         {
             if (!guard) return;
             onGetAddressReturned(addr, c);
@@ -549,7 +550,7 @@ void SendViewModel::extractParameters()
     {
         // Max privacy & public offline tokens do not have valid PeerID (_receiverWalletID)
         QPointer<SendViewModel> guard(this);
-        _walletModel.getAsync()->getAddressByToken(_token.toStdString(), [this, guard](const boost::optional<WalletAddress>& addr, size_t c)
+        _walletModel->getAsync()->getAddressByToken(_token.toStdString(), [this, guard](const boost::optional<WalletAddress>& addr, size_t c)
         {
             if (!guard) return;
             onGetAddressReturned(addr, c);
@@ -640,7 +641,7 @@ void SendViewModel::sendMoney()
     }
 
     params.SetParameter(TxParameterID::OriginalToken, _token.toStdString());
-    _walletModel.getAsync()->startTransaction(std::move(params));
+    _walletModel->getAsync()->startTransaction(std::move(params));
 }
 
 QString SendViewModel::getSendType() const

@@ -17,13 +17,13 @@
 #include "viewmodel/ui_helpers.h"
 
 PushNotificationManager::PushNotificationManager()
-    : m_walletModel(*AppModel::getInstance().getWalletModel())
+    : m_walletModel(AppModel::getInstance().getWalletModel())
 {
-    connect(&m_walletModel,
+    connect(m_walletModel.get(),
             SIGNAL(notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)),
             SLOT(onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)));
 
-    m_walletModel.getAsync()->getNotifications();
+    m_walletModel->getAsync()->getNotifications();
 }
 
 void PushNotificationManager::onNewSoftwareUpdateAvailable(
@@ -74,7 +74,7 @@ void PushNotificationManager::onNotificationsChanged(beam::wallet::ChangeAction 
 void PushNotificationManager::onCancelPopup(const QVariant& variantID)
 {
     auto id = variantID.value<ECC::uintBig>();
-    m_walletModel.getAsync()->markNotificationAsRead(id);
+    m_walletModel->getAsync()->markNotificationAsRead(id);
 }
 
 bool PushNotificationManager::hasNewerVersion() const
