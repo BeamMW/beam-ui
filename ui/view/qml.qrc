@@ -128,11 +128,20 @@
         <file>swap_confirm.qml</file>
         <file>send_expired.qml</file>
         <file>dex.qml</file>
-        <file>assets/fonts/ProximaNova-Black.ttf</file>
-        <file>assets/fonts/ProximaNova-Bold.ttf</file>
-        <file>assets/fonts/ProximaNova-Light.ttf</file>
-        <file>assets/fonts/ProximaNova-Regular.ttf</file>
-        <file>assets/fonts/ProximaNova-RegularIt.ttf</file>
+        <file>assets/fonts/Proxima Nova Black Italic.otf</file>
+        <file>assets/fonts/Proxima Nova Black.otf</file>
+        <file>assets/fonts/Proxima Nova Bold Italic.otf</file>
+        <file>assets/fonts/Proxima Nova Bold.otf</file>
+        <file>assets/fonts/Proxima Nova Extrabold Italic.otf</file>
+        <file>assets/fonts/Proxima Nova Extrabold.otf</file>
+        <file>assets/fonts/Proxima Nova Light Italic.otf</file>
+        <file>assets/fonts/Proxima Nova Light.otf</file>
+        <file>assets/fonts/Proxima Nova Regular Italic.otf</file>
+        <file>assets/fonts/Proxima Nova Regular.otf</file>
+        <file>assets/fonts/Proxima Nova Semibold Italic.otf</file>
+        <file>assets/fonts/Proxima Nova Semibold.otf</file>
+        <file>assets/fonts/Proxima Nova Thin Italic.otf</file>
+        <file>assets/fonts/Proxima Nova Thin.otf</file>
         <file>assets/bottom-logo-beamx.svg</file>
         <file>assets/beam-circle.svg</file>
         <file>assets/ltc-circle.svg</file>

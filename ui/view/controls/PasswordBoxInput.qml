@@ -21,7 +21,7 @@ T.TextField {
                              placeholder.implicitHeight + topPadding + bottomPadding)
 
     font { 
-        family: "SF Pro Display"
+        family: "ProximaNova"
         styleName: "Regular"
         letterSpacing : control.echoMode == TextInput.Normal ? 4 : 1
     }
