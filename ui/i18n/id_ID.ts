@@ -3394,5 +3394,9 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>Change settings</source>
         <translation type="unfinished">Change settings</translation>
     </message>
+    <message id="start-create-password">
+        <source>Create password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

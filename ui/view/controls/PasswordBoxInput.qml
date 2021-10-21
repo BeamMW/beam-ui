@@ -23,12 +23,12 @@ T.TextField {
     font { 
         family: "Proxima Nova"
         styleName: "Regular"
-        letterSpacing : control.echoMode == TextInput.Normal ? 4 : 1
+        letterSpacing : 4
     }
 
     padding: 10
     leftPadding: 16
-    rightPadding: 16
+    rightPadding: showEye ? 50 : 16
 
     selectionColor: control.palette.highlight
     selectedTextColor: control.palette.highlightedText
@@ -40,6 +40,7 @@ T.TextField {
     color: hasError ? Style.validator_error : inputColor
     property bool showEye: false
     echoMode: TextInput.Password
+    passwordCharacter: "•"
 
     selectByMouse: true
 

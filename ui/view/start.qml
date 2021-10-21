@@ -1116,8 +1116,8 @@ Item
                             text: viewModel.isRecoveryMode
                                 //% "Create new password"
                                 ? qsTrId("start-recovery-title")
-                                //% "Create new wallet"
-                                : qsTrId("general-create-wallet")
+                                //% "Create password"
+                                : qsTrId("start-create-password")
                             color: Style.content_main
                             font.pixelSize: 36
                         }
@@ -1187,6 +1187,7 @@ Item
                                 id: confirmPassword
                                 width: parent.width
                                 font.pixelSize: 16
+                                showEye: true
                                 onTextChanged: {
                                     if (confirmPassword.text.length == password.text.length) {
                                         passwordError.text = "";
@@ -1202,6 +1203,7 @@ Item
                                 id: passwordError
                                 color: Style.validator_error
                                 font.pixelSize: 14
+                                font.italic: true
                                 height: 16
                                 width: parent.width
                             }
@@ -1307,8 +1309,8 @@ Item
                             text: viewModel.isRecoveryMode
                                 //% "Open my wallet"
                                 ? qsTrId("general-open-wallet")
-                                //% "Start using your wallet"
-                                : qsTrId("general-start-using")
+                                //% "Next"
+                                : qsTrId("general-next")
                             icon.source : viewModel.isRecoveryMode
                                 ? "qrc:/assets/icon-wallet-small.svg"
                                 : "qrc:/assets/icon-next-blue.svg"
