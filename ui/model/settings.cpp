@@ -170,7 +170,7 @@ void WalletSettings::setNodeAddress(const QString& addr)
 {
     if (addr != getNodeAddress())
     {
-        auto walletModel = AppModel::getInstance().getWalletModel();
+        auto walletModel = AppModel::getInstance().getWalletModelUnsafe();
         if (walletModel)
         {
             walletModel->getAsync()->setNodeAddress(addr.toStdString());
