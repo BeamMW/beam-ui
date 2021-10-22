@@ -288,7 +288,7 @@ QString TxObject::getRate(beam::Asset::ID assetId) const
 {
     using namespace beam::wallet;
 
-    auto rate = getTxDescription().getExchangeRate(_secondCurrency);
+    auto rate = getTxDescription().getExchangeRate(_secondCurrency, assetId);
     return rate ? AmountToUIString(rate) : "0";
 }
 
