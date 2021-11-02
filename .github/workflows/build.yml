@@ -198,7 +198,7 @@ jobs:
     - name: CPack [windows]
       shell: bash
       if: matrix.os == 'windows-2019'
-      run: cpack --verbose -G NSIS -C $BUILD_CONFIG
+      run: cpack --verbose --debug --trace -G NSIS -C $BUILD_CONFIG
 
 ###############################################################################
 # Collect artifacts
