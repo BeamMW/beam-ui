@@ -198,7 +198,7 @@ jobs:
     - name: CPack [windows]
       shell: bash
       if: matrix.os == 'windows-2019'
-      run: "C:\Program Files\CMake\bin\cpack.exe" --verbose -G NSIS -C $BUILD_CONFIG
+      run: "C:\\Program Files\\CMake\\bin\\cpack.exe" --verbose -G NSIS -C $BUILD_CONFIG
 
 ###############################################################################
 # Collect artifacts
