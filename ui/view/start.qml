@@ -1176,7 +1176,7 @@ Item
                             spacing: 10
 
                             SFText {
-                                //% "Password confrimation"
+                                //% "Password confirmation"
                                 text: qsTrId("start-create-pwd-confirm-label")
                                 color: Style.content_main
                                 font.pixelSize: 14
