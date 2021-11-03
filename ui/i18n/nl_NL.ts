@@ -192,8 +192,7 @@
     </message>
     <message id="wallet-txs-status-cancelled">
         <source>canceled</source>
-        <oldsource>cancelled</oldsource>
-        <translation type="unfinished">geannuleerd</translation>
+        <translation>geannuleerd</translation>
     </message>
     <message id="wallet-txs-status-expired">
         <source>expired</source>
@@ -511,7 +510,7 @@
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
         <oldsource>Password confrimation</oldsource>
-        <translation type="unfinished">Bevestig wachtwoord</translation>
+        <translation>Wachtwoord bevestiging</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
         <source>Passwords do not match</source>
@@ -612,8 +611,7 @@
     </message>
     <message id="loading-view-download-blocks">
         <source>Syncing with the blockchain: </source>
-        <oldsource>Syncing with blockchain: </oldsource>
-        <translation type="unfinished">Synchroniseren met blockchain</translation>
+        <translation>Synchroniseren met de blockchain: </translation>
     </message>
     <message id="loading-view-protocol-error">
         <source>Incompatible peer</source>
@@ -913,24 +911,21 @@
     </message>
     <message id="loading-view-estimate-minutes" numerus="yes">
         <source>%n minute(s)</source>
-        <oldsource>%n min(s)</oldsource>
-        <translation type="unfinished">
-            <numerusform>min</numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n minu(u)t(en)</numerusform>
+            <numerusform>%n minuut</numerusform>
         </translation>
     </message>
     <message id="loading-view-estimate-seconds" numerus="yes">
         <source>%n second(s)</source>
-        <oldsource>second(s)</oldsource>
-        <translation type="unfinished">
-            <numerusform>sec.</numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n seconden</numerusform>
+            <numerusform>%n seconden</numerusform>
         </translation>
     </message>
     <message id="loading-view-estimate-time">
         <source>%s to completion</source>
-        <oldsource>Estimated time: %s</oldsource>
-        <translation type="unfinished">Geschatte tijd: %s</translation>
+        <translation>%s tot voltooiing</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
@@ -1016,15 +1011,13 @@ controleer uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="loading-view-estimate-calculating">
         <source>calculating estimated time</source>
-        <oldsource>calculating...</oldsource>
-        <translation type="unfinished">berekenen...</translation>
+        <translation>geschatte tijd berekenen</translation>
     </message>
     <message id="loading-view-estimate-hours" numerus="yes">
         <source>%n hour(s)</source>
-        <oldsource>h</oldsource>
-        <translation type="unfinished">
-            <numerusform>h</numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n uur</numerusform>
+            <numerusform>%n uur</numerusform>
         </translation>
     </message>
     <message id="loading-view-net-problems">
@@ -1770,8 +1763,7 @@ Uw versie is: %2. Controleer op updates.</translation>
     </message>
     <message id="tx-max-privacy">
         <source>Maximum anonymity</source>
-        <oldsource>Max Anonymity Set</oldsource>
-        <translation type="unfinished">Maximale Anonimiteitsset</translation>
+        <translation>Maximale anonimiteit</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
@@ -1843,47 +1835,32 @@ Uw versie is: %2. Controleer op updates.</translation>
     <message id="wallet-txs-status-in-progress-max">
         <source>in progress
 (maximum anonymity)</source>
-        <oldsource>in progress
-max privacy</oldsource>
-        <translation type="unfinished">bezig
-max privacy</translation>
+        <translation>bezig
+(maximale anonimiteit)</translation>
     </message>
     <message id="wallet-txs-status-sent-max">
         <source>sent
 (maximum anonymity)</source>
-        <oldsource>sent
-max privacy</oldsource>
-        <translation type="unfinished">verzonden
-max privacy</translation>
+        <translation>verzonden
+(maximale anonimiteit)</translation>
     </message>
     <message id="wallet-txs-status-received-max">
         <source>received
 (maximum anonymity)</source>
-        <oldsource>received
-max privacy</oldsource>
-        <translation type="unfinished">ontvangen
-max privacy</translation>
+        <translation>ontvangen
+(maximale anonimiteit)</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
         <source>in progress (offline)</source>
-        <oldsource>in progress
-(offline)</oldsource>
-        <translation type="unfinished">bezig
-offline</translation>
+        <translation>bezig (offline)</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
         <source>sent (offline)</source>
-        <oldsource>sent
-(offline)</oldsource>
-        <translation type="unfinished">verzonden
-offline</translation>
+        <translation>verzonden (offline)</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
         <source>received (offline)</source>
-        <oldsource>received
-(offline)</oldsource>
-        <translation type="unfinished">ontvangen
-offline</translation>
+        <translation>ontvangen (offline)</translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
@@ -2029,48 +2006,37 @@ Uw versie is: %2. Controleer op updates.</translation>
     </message>
     <message id="tx-address-max-privacy">
         <source>Maximum anonymity</source>
-        <oldsource>Max privacy</oldsource>
-        <translation type="unfinished">Maximale privacy</translation>
+        <translation>Maximale anonimiteit</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress
 (public offline)</source>
-        <oldsource>in progress
-public offline</oldsource>
-        <translation type="unfinished">bezig
-openbaar offline</translation>
+        <translation>bezig
+(offline openbaar)</translation>
     </message>
     <message id="wallet-txs-status-sent-public-offline">
         <source>sent
 (public offline)</source>
-        <oldsource>sent
-public offline</oldsource>
-        <translation type="unfinished">verzonden
-openbaar offline</translation>
+        <translation>verzonden
+(offline openbaar)</translation>
     </message>
     <message id="wallet-txs-status-received-public-offline">
         <source>received
 (public offline)</source>
-        <oldsource>received
-public offline</oldsource>
-        <translation type="unfinished">ontvangen
-openbaar offline</translation>
+        <translation>ontvangen
+(openbaar offline)</translation>
     </message>
     <message id="wallet-txs-status-canceled-public-offline">
         <source>canceled
 (public offline)</source>
-        <oldsource>canceled
-public offline</oldsource>
-        <translation type="unfinished">geannuleerd
-openbaar offline</translation>
+        <translation>geannuleerd
+(openbaar offline)</translation>
     </message>
     <message id="wallet-txs-status-failed-public-offline">
         <source>failed
 (public offline)</source>
-        <oldsource>failed
-public offline</oldsource>
-        <translation type="unfinished">mislukt
-openbaar offline</translation>
+        <translation>mislukt
+(openbaar offline)</translation>
     </message>
     <message id="settings-node-progress">
         <source>Swap in progress, cannot disconnect or switch connection type.</source>
@@ -2083,32 +2049,22 @@ openbaar offline</translation>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
 (maximum anonymity)</source>
-        <oldsource>canceled
-max privacy</oldsource>
-        <translation type="unfinished">geannuleerd
-max privacy</translation>
+        <translation>geannuleerd
+(maximale anonimiteit)</translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
         <source>canceled (offline)</source>
-        <oldsource>canceled
-(offline)</oldsource>
-        <translation type="unfinished">geannuleerd
-offline</translation>
+        <translation>geannuleerd (offline)</translation>
     </message>
     <message id="wallet-txs-status-failed-max">
         <source>failed
 (maximum anonymity)</source>
-        <oldsource>failed
-max privacy</oldsource>
-        <translation type="unfinished">mislukt
-max privacy</translation>
+        <translation>mislukt
+(maximale anonimiteit)</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
         <source>failed (offline)</source>
-        <oldsource>failed
-(offline)</oldsource>
-        <translation type="unfinished">mislukt
-offline</translation>
+        <translation>mislukt (offline)</translation>
     </message>
     <message id="max-privacy-dialog-header">
         <source>Locked Max privacy coins</source>
@@ -2137,8 +2093,7 @@ offline</translation>
     </message>
     <message id="settings-privacy-mp-time-limit">
         <source>Longest transaction time for maximum anonymity</source>
-        <oldsource>Max privacy longest transaction time</oldsource>
-        <translation type="unfinished">Max privacy langste transactietijd</translation>
+        <translation>Langste transactietijd voor maximale anonimiteit</translation>
     </message>
     <message id="remote-node-lelantus-warning">
         <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
@@ -2620,10 +2575,9 @@ Update uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="wallet-receive-addr-message-mp" numerus="yes">
         <source>Transaction can last at most %n hour(s).</source>
-        <oldsource> Transaction can last at most %n hour(s).</oldsource>
-        <translation type="unfinished">
-            <numerusform> Transactie kan maximaal %1 uur duren.</numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Transactie kan maximaal %n uur duren.</numerusform>
+            <numerusform>Transactie kan maximaal %n uur duren.</numerusform>
         </translation>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
@@ -2878,7 +2832,7 @@ Update uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="apps-fork-warning">
         <source>DAPPs will be available in your wallet after the Hard Fork</source>
-        <translation>DApp&apos;s zijn na de Hard Fork beschikbaar in uw wallet</translation>
+        <translation>DAPP&apos;s zijn na de Hard Fork beschikbaar in uw wallet</translation>
     </message>
     <message id="address-info-cid">
         <source>Application shader ID</source>
@@ -3193,7 +3147,7 @@ cannot be canceled.</source>
     </message>
     <message id="faucet-promo">
         <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Bekijk de wallet in gebruik. Ontvang een kleine hoeveelheid Beam van de Faucet DApp.</translation>
+        <translation>Bekijk de wallet in actie. Ontvang een kleine hoeveelheid Beams uit de Faucet DApp.</translation>
     </message>
     <message id="faucet-promo-get-coins">
         <source>get coins</source>
@@ -3232,176 +3186,170 @@ cannot be canceled.</source>
     </message>
     <message id="source-dex">
         <source>Assets Swap</source>
-        <translation type="unfinished"></translation>
+        <translation>Assets Swap</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-to-own">
         <source>sending to own address
 (maximum anonymity)</source>
-        <oldsource>sending (maximum anonymity)
-to own address</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>verzenden naar eigen adres
+(maximale anonimiteit)</translation>
     </message>
     <message id="wallet-txs-status-in-progress-offline-to-own">
         <source>sending to own address
 (offline)</source>
-        <oldsource>sending (offline)
-to own address</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>verzenden naar eigen adres
+(offline)</translation>
     </message>
     <message id="wallet-txs-status-sent-max-to-own">
         <source>sent to own address
 (maximum anonymity)</source>
-        <oldsource>sent (maximum anonymity)
-to own address</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>verzonden naar eigen adres
+(maximale anonimiteit)</translation>
     </message>
     <message id="wallet-txs-status-sent-offline-to-own">
         <source>sent to own address
 (offline)</source>
-        <oldsource>sent (offline)
-to own address</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>verzonden naar eigen adres
+(offline)</translation>
     </message>
     <message id="apps-version-error">
         <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
-        <oldsource>This DApp requires version %1 of Beam Wallet or higher. Please update.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Deze DApp vereist Beam Wallet versie %1 of hoger. Werk uw wallet bij.</translation>
     </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
         <source>waiting for receiver
 (offline)</source>
-        <oldsource>waiting for receiver (offline)</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>wachten op ontvanger
+(offline)</translation>
     </message>
     <message id="apps-uninstall">
         <source>Uninstall</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
     <message id="apps-uninstall-confirm">
         <source>Are you sure you want to uninstall %1 DApp?</source>
         <oldsource>Are you sure you want to cancel %1 DApp?</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Weet u zeker dat u %1 DApp wilt verwijderen?</translation>
     </message>
     <message id="app-uninstall-title">
         <source>Uninstall DApp</source>
-        <translation type="unfinished"></translation>
+        <translation>DApp verwijderen</translation>
     </message>
     <message id="apps-loading-app">
         <source>Please wait, %1 is loading</source>
-        <translation type="unfinished"></translation>
+        <translation>Een ogenblik geduld, %1 wordt geladen</translation>
     </message>
     <message id="apps-loading">
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezig met laden...</translation>
     </message>
     <message id="apps-nothing">
         <source>There are no applications at the moment</source>
-        <translation type="unfinished"></translation>
+        <translation>Er zijn momenteel geen applicaties</translation>
     </message>
     <message id="apps-err-cnt" numerus="yes">
         <source>%n DApp(s) is not available</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n DApp(s) is niet beschikbaar</numerusform>
+            <numerusform>%n DApp(s) zijn niet beschikbaar</numerusform>
         </translation>
     </message>
     <message id="apps-uninstall-success">
         <source>&apos;%1&apos; DApp is successfully uninstalled.</source>
-        <oldsource>%1 DApp is successfully uninstalled.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>%1 DApp is succesvol verwijderd.</translation>
     </message>
     <message id="apps-uninstall-fail">
         <source>Failed to uninstall &apos;%1&apos; DApp.</source>
-        <oldsource>Failed to uninstall %1 DApp.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Verwijderen van %1 DApp mislukt.</translation>
     </message>
     <message id="apps-inprogress-tip">
         <source>(%1 active)</source>
-        <translation type="unfinished"></translation>
+        <translation>(%1 actief)</translation>
     </message>
     <message id="apps-load-error">
         <source>Failed to load applications list, %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden van applicatielijst %1 mislukt</translation>
     </message>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
-        <translation type="unfinished"></translation>
+        <translation>Update Wallet om %1 applicatie te starten</translation>
     </message>
     <message id="wallet-receive-regular-address-message">
         <source>To ensure a better privacy, new address is generated every time.
 In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
-        <translation type="unfinished"></translation>
+        <translation>Om een betere privacy te garanderen wordt er elke keer een nieuw adres gegenereerd.
+Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan het adresboek.</translation>
     </message>
     <message id="apps-install-success">
         <source>&apos;%1&apos; is successfully installed.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 is succesvol geïnstalleerd.</translation>
     </message>
     <message id="apps-install-fail">
         <source>Failed to install DApp:
 %1</source>
-        <translation type="unfinished">Installatie van DApp %1 is mislukt</translation>
+        <translation>Installatie van DApp %1 mislukt</translation>
     </message>
     <message id="app-install-title">
         <source>Install DApp</source>
-        <translation type="unfinished"></translation>
+        <translation>DApp installeren</translation>
     </message>
     <message id="address-details">
         <source>Address details</source>
-        <translation type="unfinished"></translation>
+        <translation>Adresgegevens</translation>
     </message>
     <message id="swap-token-details">
         <source>Token details</source>
-        <translation type="unfinished"></translation>
+        <translation>Token details</translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit-commented">
         <source>No limit
 (transaction can last indefinitely)</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen limiet
+(transactie kan onbepaalde tijd in beslag nemen)</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
-        <translation type="unfinished">
-            <numerusform>h</numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n uur</numerusform>
+            <numerusform>%n uur</numerusform>
         </translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val72-comment">
         <source> (recommended)</source>
-        <translation type="unfinished"></translation>
+        <translation> (aanbevolen)</translation>
     </message>
     <message id="wallet-receive-addr-message-min-fee">
         <source>Min transaction fee is 0.01 BEAM.</source>
-        <oldsource>Min transaction fee is 0.01 BEAM</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Min. transactiekosten zijn 0.01 BEAM.</translation>
     </message>
     <message id="status-online-stale-rates">
         <source>(exchange rate to %1 was not updated since %2)</source>
         <oldsource> (exchange rate to %1 was not updated since %2)</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>(wisselkoers naar %1 is niet bijgewerkt sinds %2)</translation>
     </message>
     <message id="loading-view-restoring">
         <source>Restoring wallet from the blockchain: </source>
-        <translation type="unfinished">Wallet data opnieuw opbouwen</translation>
+        <translation>Wallet herstellen vanuit de blockchain: </translation>
     </message>
     <message id="loading-view-creating">
         <source>Downloading blockchain data: </source>
-        <translation type="unfinished"></translation>
+        <translation>Blockhain data aan het downloaden: </translation>
     </message>
     <message id="loading-view-less-than-minute">
         <source>less than a minute</source>
-        <translation type="unfinished"></translation>
+        <translation>minder dan een minuut</translation>
     </message>
     <message id="loading-view-rebuild-utxos">
         <source>Rebuilding wallet data: </source>
-        <translation type="unfinished"></translation>
+        <translation>Wallet data opnieuw opbouwen: </translation>
     </message>
     <message id="status-change-settings">
         <source>Change settings</source>
-        <translation type="unfinished">Instellingen wijzigen</translation>
+        <translation>Instellingen wijzigen</translation>
     </message>
     <message id="start-create-password">
         <source>Create password</source>
-        <translation type="unfinished"></translation>
+        <translation>Wachtwoord aanmaken</translation>
     </message>
 </context>
 </TS>

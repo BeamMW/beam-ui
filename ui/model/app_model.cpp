@@ -437,6 +437,7 @@ void AppModel::startWallet()
     additionalTxCreators->emplace(TxType::AssetInfo, std::make_shared<AssetInfoTransaction::Creator>());
 
     bool displayRate = m_settings.getRateCurrency() != beam::wallet::Currency::UNKNOWN();
+    m_wallet->getAsync()->enableBodyRequests(true);
     m_wallet->start(activeNotifications, displayRate, additionalTxCreators);
 }
 
