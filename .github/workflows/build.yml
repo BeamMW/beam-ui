@@ -196,7 +196,7 @@ jobs:
         ./ui/3rdparty/${{env.LINUX_QT_DEPLOY_TOOL}} ./deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop -appimage -no-translations -always-overwrite -qmldir="./ui/view" -no-copy-copyright-files -exclude-libs="libnss3.so,libnssutil3.so"
 
     - name: CPack [windows]
-      shell: cmd
+      shell: bash
       if: matrix.os == 'windows-2019'
       run: cpack.exe --verbose -G NSIS -C $BUILD_CONFIG
 
