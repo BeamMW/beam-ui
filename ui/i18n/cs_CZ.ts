@@ -2070,8 +2070,8 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <translation type="unfinished">failed (offline)</translation>
     </message>
     <message id="max-privacy-dialog-header">
-        <source>Locked Max privacy coins</source>
-        <oldsource>Max privacy</oldsource>
+        <source>Max anonymity</source>
+        <oldsource>Locked Max anonymity coins</oldsource>
         <translation type="unfinished">Locked Max privacy coins</translation>
     </message>
     <message id="max-privacy-dialog-locked">
@@ -2520,8 +2520,9 @@ Aktualizujte nastavení a zkuste to znovu.</translation>
         <translation>Utraceno</translation>
     </message>
     <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy %2% unlinked)</source>
-        <translation>Dochází%1(maximální soukromí %2% odpojeno)</translation>
+        <source>Maturing%1(max anonymity %2% unlinked)</source>
+        <oldsource>Maturing%1(max privacy %2% unlinked)</oldsource>
+        <translation type="unfinished">Dochází%1(maximální soukromí %2% odpojeno)</translation>
     </message>
     <message id="utxo-head-type">
         <source>Type</source>
@@ -2676,8 +2677,9 @@ Aktualizujte nastavení a zkuste to znovu.</translation>
         <translation>Změnit</translation>
     </message>
     <message id="balance-mp">
-        <source>Max privacy</source>
-        <translation>Max soukromí</translation>
+        <source>Max anonymity</source>
+        <oldsource>Max privacy</oldsource>
+        <translation type="unfinished">Max soukromí</translation>
     </message>
     <message id="info-asset-id">
         <source>Asset ID</source>

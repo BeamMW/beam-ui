@@ -2069,8 +2069,8 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
         <translation type="unfinished">failed (offline)</translation>
     </message>
     <message id="max-privacy-dialog-header">
-        <source>Locked Max privacy coins</source>
-        <oldsource>Max privacy</oldsource>
+        <source>Max anonymity</source>
+        <oldsource>Locked Max anonymity coins</oldsource>
         <translation type="unfinished">Locked Max privacy coins</translation>
     </message>
     <message id="max-privacy-dialog-locked">
@@ -2519,7 +2519,8 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
         <translation>Agotado</translation>
     </message>
     <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy %2% unlinked)</source>
+        <source>Maturing%1(max anonymity %2% unlinked)</source>
+        <oldsource>Maturing%1(max privacy %2% unlinked)</oldsource>
         <translation type="unfinished">Maturing%1(max privacy %2% unlinked)</translation>
     </message>
     <message id="utxo-head-type">
@@ -2674,8 +2675,9 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
         <translation>Cambiar</translation>
     </message>
     <message id="balance-mp">
-        <source>Max privacy</source>
-        <translation>Máxima privacidad</translation>
+        <source>Max anonymity</source>
+        <oldsource>Max privacy</oldsource>
+        <translation type="unfinished">Máxima privacidad</translation>
     </message>
     <message id="info-asset-id">
         <source>Asset ID</source>

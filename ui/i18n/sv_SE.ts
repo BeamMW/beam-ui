@@ -2065,8 +2065,8 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <translation type="unfinished">failed (offline)</translation>
     </message>
     <message id="max-privacy-dialog-header">
-        <source>Locked Max privacy coins</source>
-        <oldsource>Max privacy</oldsource>
+        <source>Max anonymity</source>
+        <oldsource>Locked Max anonymity coins</oldsource>
         <translation type="unfinished">Locked Max privacy coins</translation>
     </message>
     <message id="max-privacy-dialog-locked">
@@ -2515,8 +2515,9 @@ Uppdatera dina inställningar och försök igen.</translation>
         <translation>Spenderat</translation>
     </message>
     <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy %2% unlinked)</source>
-        <translation>Mognar%1(max integritet %2% olänkad)</translation>
+        <source>Maturing%1(max anonymity %2% unlinked)</source>
+        <oldsource>Maturing%1(max privacy %2% unlinked)</oldsource>
+        <translation type="unfinished">Mognar%1(max integritet %2% olänkad)</translation>
     </message>
     <message id="utxo-head-type">
         <source>Type</source>
@@ -2670,8 +2671,9 @@ Uppdatera dina inställningar och försök igen.</translation>
         <translation>Ändra</translation>
     </message>
     <message id="balance-mp">
-        <source>Max privacy</source>
-        <translation>Max sekretess</translation>
+        <source>Max anonymity</source>
+        <oldsource>Max privacy</oldsource>
+        <translation type="unfinished">Max sekretess</translation>
     </message>
     <message id="info-asset-id">
         <source>Asset ID</source>

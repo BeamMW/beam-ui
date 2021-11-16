@@ -2067,9 +2067,9 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>mislukt (offline)</translation>
     </message>
     <message id="max-privacy-dialog-header">
-        <source>Locked Max privacy coins</source>
-        <oldsource>Max privacy</oldsource>
-        <translation>Vergrendelde Max Privacy coins</translation>
+        <source>Max anonymity</source>
+        <oldsource>Locked Max anonymity coins</oldsource>
+        <translation type="unfinished">Vergrendelde Max Privacy coins</translation>
     </message>
     <message id="max-privacy-dialog-locked">
         <source>Locked</source>
@@ -2516,8 +2516,9 @@ Update uw instellingen en probeer opnieuw.</translation>
         <translation>Besteed</translation>
     </message>
     <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy %2% unlinked)</source>
-        <translation>Maturing%1(max privacy %2% niet-gekoppeld)</translation>
+        <source>Maturing%1(max anonymity %2% unlinked)</source>
+        <oldsource>Maturing%1(max privacy %2% unlinked)</oldsource>
+        <translation type="unfinished">Maturing%1(max privacy %2% niet-gekoppeld)</translation>
     </message>
     <message id="utxo-head-type">
         <source>Type</source>
@@ -2671,8 +2672,9 @@ Update uw instellingen en probeer opnieuw.</translation>
         <translation>Wijzig</translation>
     </message>
     <message id="balance-mp">
-        <source>Max privacy</source>
-        <translation>Maximale privacy</translation>
+        <source>Max anonymity</source>
+        <oldsource>Max privacy</oldsource>
+        <translation type="unfinished">Maximale privacy</translation>
     </message>
     <message id="info-asset-id">
         <source>Asset ID</source>
