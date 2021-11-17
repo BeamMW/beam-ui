@@ -3367,5 +3367,9 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>Create password</source>
         <translation>Создать пароль</translation>
     </message>
+    <message id="start-second-copy-error">
+        <source>The wallet is already sterted</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

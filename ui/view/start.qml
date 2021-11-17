@@ -264,11 +264,25 @@ Item
                         Layout.maximumHeight: 180
                         Layout.fillWidth: true
                         SFText {
-                            //Layout.alignment: Qt.AlignHCenter
                             anchors.horizontalCenter: parent.horizontalCenter
                             //% "Your wallet will be migrated to v "
                             text: qsTrId("start-migration-message") + viewModel.walletVersion()
                             color: Style.content_main
+                            font.pixelSize: 14
+                        }
+                    }
+
+                    Item {
+                        Layout.fillHeight: true
+                        Layout.minimumHeight: 40
+                        Layout.maximumHeight: 180
+                        Layout.fillWidth: true
+                        visible: !viewModel.isOnlyOneInstanceStarted
+                        SFText {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            //% "The wallet is already sterted"
+                            text: qsTrId("start-second-copy-error")
+                            color: Style.validator_error
                             font.pixelSize: 14
                         }
                     }
@@ -284,6 +298,7 @@ Item
                             //% "Start auto migration"
                             text: qsTrId("start-migration-button")
                             icon.source: "qrc:/assets/icon-repeat.svg"
+                            enabled: viewModel.isOnlyOneInstanceStarted
                             onClicked: 
                             {
                                 startWizzardView.push(selectWalletDBView);
@@ -1691,6 +1706,10 @@ Item
 
                         SFText {
                             id: openPasswordError
+                            text: viewModel.isOnlyOneInstanceStarted
+                                ? ""
+                                //% "The wallet is already sterted"
+                                : qsTrId("start-second-copy-error")
                             color: Style.validator_error
                             font.pixelSize: 14
                         }
@@ -1729,7 +1748,7 @@ Item
                         PrimaryButton {
                             anchors.verticalCenter: parent.verticalCenter
                             id: btnCurrentWallet
-                            enabled: !viewModel.useHWWallet || viewModel.isTrezorConnected
+                            enabled: viewModel.isOnlyOneInstanceStarted && (!viewModel.useHWWallet || viewModel.isTrezorConnected)
                             text: (viewModel.useHWWallet == false)
                                 ?
                                 //% "Show my wallet"

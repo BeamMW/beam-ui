@@ -23,6 +23,7 @@
 #include "utility/logger.h"
 #include "utility/fsutils.h"
 #include <QApplication>
+#include <QCryptographicHash>
 #include <QTranslator>
 #include <QFileDialog>
 #include <QStandardPaths>
@@ -88,11 +89,21 @@ AppModel::AppModel(WalletSettings& settings)
 {
     assert(s_instance == nullptr);
     s_instance = this;
-    m_nodeModel.start();
+
+    const auto dbFilePath = m_settings.getAppDataPath();
+    auto mutexName = QCryptographicHash::hash(dbFilePath.c_str(), QCryptographicHash::Md5).toHex();
+    m_dbGuard = std::make_unique<boost::interprocess::named_mutex>(boost::interprocess::open_or_create, mutexName);
+    if (m_dbGuard->try_lock())
+    {
+        m_isOnlyOneInstanceStarted = true;
+        m_nodeModel.start();
+    }
 }
 
 AppModel::~AppModel()
 {
+    if (m_isOnlyOneInstanceStarted)
+        m_dbGuard->unlock();
     s_instance = nullptr;
 }
 
@@ -318,6 +329,11 @@ bool AppModel::isSeedValidationTriggeredFromSetting() const
 void AppModel::setSeedValidationTriggeredFromSetting(bool value)
 {
     m_isSeedValidationTriggeredFromSettings = value;
+}
+
+bool AppModel::isOnlyOneInstanceStarted() const
+{
+    return m_isOnlyOneInstanceStarted;
 }
 
 void AppModel::resetWallet()

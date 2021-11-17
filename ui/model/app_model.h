@@ -28,6 +28,8 @@
 #include "exchange_rates_manager.h"
 #include "assets_list.h"
 #include <memory>
+// #include <QSystemSemaphore>
+#include <boost/interprocess/sync/named_mutex.hpp>
 
 #if defined(BEAM_HW_WALLET)
 namespace beam::wallet
@@ -68,6 +70,7 @@ public:
     void setSeedValidationMode(bool value);
     bool isSeedValidationTriggeredFromSetting() const;
     void setSeedValidationTriggeredFromSetting(bool value);
+    bool isOnlyOneInstanceStarted() const;
 
     [[nodiscard]] WalletSettings& getSettings() const;
     [[nodiscard]] WalletModel::Ptr getWalletModel() const;
@@ -134,6 +137,9 @@ private:
 
     bool m_isSeedValidationMode = false;
     bool m_isSeedValidationTriggeredFromSettings = false;
+
+    std::unique_ptr<boost::interprocess::named_mutex> m_dbGuard;
+    bool m_isOnlyOneInstanceStarted = false;
 
 #if defined(BEAM_HW_WALLET)
     mutable std::shared_ptr<beam::wallet::HWWallet> m_hwWallet;
