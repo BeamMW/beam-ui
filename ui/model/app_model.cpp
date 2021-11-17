@@ -93,11 +93,11 @@ AppModel::AppModel(WalletSettings& settings)
     const auto dbFilePath = m_settings.getAppDataPath();
     auto mutexName = QCryptographicHash::hash(dbFilePath.c_str(), QCryptographicHash::Md5).toHex();
     /*m_dbGuard = std::make_unique<boost::interprocess::named_mutex>(boost::interprocess::open_or_create, mutexName);
-    if (m_dbGuard->try_lock())
+    if (m_dbGuard->try_lock())*/
     {
         m_isOnlyOneInstanceStarted = true;
         m_nodeModel.start();
-    }*/
+    }
 }
 
 AppModel::~AppModel()
