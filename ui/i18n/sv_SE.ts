@@ -2909,11 +2909,13 @@ Uppdatera dina inställningar och försök igen.</translation>
         <translation>Tillgängligt</translation>
     </message>
     <message id="notification-maxp-transaction-sent">
-        <source>Max Privacy transaction sent</source>
+        <source>Maximum anonymity transaction sent</source>
+        <oldsource>Max Privacy transaction sent</oldsource>
         <translation type="unfinished">Max Privacy transaction sent</translation>
     </message>
     <message id="notification-maxp-transaction-received">
-        <source>Max Privacy transaction received</source>
+        <source>Maximum anonymity transaction received</source>
+        <oldsource>Max Privacy transaction received</oldsource>
         <translation type="unfinished">Max Privacy transaction received</translation>
     </message>
     <message id="notification-offline-transaction-sent">
@@ -2925,7 +2927,8 @@ Uppdatera dina inställningar och försök igen.</translation>
         <translation>Transaktion mottagen från offline</translation>
     </message>
     <message id="notification-maxp-transaction-failed">
-        <source>Max Privacy transaction failed</source>
+        <source>Maximum anonymity transaction failed</source>
+        <oldsource>Max Privacy transaction failed</oldsource>
         <translation type="unfinished">Max Privacy transaction failed</translation>
     </message>
     <message id="notification-offline-transaction-failed">

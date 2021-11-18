@@ -2904,12 +2904,12 @@ Update your settings and try again.</source>
         <translation>Available</translation>
     </message>
     <message id="notification-maxp-transaction-sent">
-        <source>Max Privacy transaction sent</source>
-        <translation type="unfinished"></translation>
+        <source>Maximum anonymity transaction sent</source>
+        <translation>Maximum anonymity transaction sent</translation>
     </message>
     <message id="notification-maxp-transaction-received">
-        <source>Max Privacy transaction received</source>
-        <translation type="unfinished"></translation>
+        <source>Maximum anonymity transaction received</source>
+        <translation>Maximum anonymity transaction received</translation>
     </message>
     <message id="notification-offline-transaction-sent">
         <source>Transaction sent to offline</source>
@@ -2920,8 +2920,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-maxp-transaction-failed">
-        <source>Max Privacy transaction failed</source>
-        <translation type="unfinished"></translation>
+        <source>Maximum anonymity transaction failed</source>
+        <translation>Maximum anonymity transaction failed</translation>
     </message>
     <message id="notification-offline-transaction-failed">
         <source>Offline transaction failed</source>

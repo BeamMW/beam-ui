@@ -268,10 +268,10 @@ QString NotificationItem::title() const
                 {
                     if (isSender(p))
                     {
-                        //% "Max Privacy transaction sent"
+                        //% "Maximum anonymity transaction sent"
                         return qtTrId("notification-maxp-transaction-sent");
                     }
-                    //% "Max Privacy transaction received"
+                    //% "Maximum anonymity transaction received"
                     return qtTrId("notification-maxp-transaction-received");
                 }
                 if (isSender(p))
@@ -305,7 +305,7 @@ QString NotificationItem::title() const
                 auto t = getAddressType(p);
                 if (t == TxAddressType::MaxPrivacy)
                 {
-                     //% "Max Privacy transaction failed"
+                     //% "Maximum anonymity transaction failed"
                     return qtTrId("notification-maxp-transaction-failed");
                 }
                 //% "Offline transaction failed"

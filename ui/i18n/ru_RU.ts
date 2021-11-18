@@ -2919,12 +2919,14 @@ Update your settings and try again.</source>
         <translation>Доступно</translation>
     </message>
     <message id="notification-maxp-transaction-sent">
-        <source>Max Privacy transaction sent</source>
-        <translation>Макс. приватная транзакция отправлена</translation>
+        <source>Maximum anonymity transaction sent</source>
+        <oldsource>Max Privacy transaction sent</oldsource>
+        <translation type="unfinished">Макс. приватная транзакция отправлена</translation>
     </message>
     <message id="notification-maxp-transaction-received">
-        <source>Max Privacy transaction received</source>
-        <translation>Получена макс. приватная транзакция</translation>
+        <source>Maximum anonymity transaction received</source>
+        <oldsource>Max Privacy transaction received</oldsource>
+        <translation type="unfinished">Получена макс. приватная транзакция</translation>
     </message>
     <message id="notification-offline-transaction-sent">
         <source>Transaction sent to offline</source>
@@ -2935,8 +2937,9 @@ Update your settings and try again.</source>
         <translation>Транзакция получена из оффлайн</translation>
     </message>
     <message id="notification-maxp-transaction-failed">
-        <source>Max Privacy transaction failed</source>
-        <translation>Макс. приватность транзакции не удалась</translation>
+        <source>Maximum anonymity transaction failed</source>
+        <oldsource>Max Privacy transaction failed</oldsource>
+        <translation type="unfinished">Макс. приватность транзакции не удалась</translation>
     </message>
     <message id="notification-offline-transaction-failed">
         <source>Offline transaction failed</source>

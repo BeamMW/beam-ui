@@ -2917,11 +2917,13 @@ Update your settings and try again.</source>
         <translation type="unfinished">Available</translation>
     </message>
     <message id="notification-maxp-transaction-sent">
-        <source>Max Privacy transaction sent</source>
+        <source>Maximum anonymity transaction sent</source>
+        <oldsource>Max Privacy transaction sent</oldsource>
         <translation type="unfinished">Max Privacy transaction sent</translation>
     </message>
     <message id="notification-maxp-transaction-received">
-        <source>Max Privacy transaction received</source>
+        <source>Maximum anonymity transaction received</source>
+        <oldsource>Max Privacy transaction received</oldsource>
         <translation type="unfinished">Max Privacy transaction received</translation>
     </message>
     <message id="notification-offline-transaction-sent">
@@ -2933,7 +2935,8 @@ Update your settings and try again.</source>
         <translation type="unfinished">Transaction received from offline</translation>
     </message>
     <message id="notification-maxp-transaction-failed">
-        <source>Max Privacy transaction failed</source>
+        <source>Maximum anonymity transaction failed</source>
+        <oldsource>Max Privacy transaction failed</oldsource>
         <translation type="unfinished">Max Privacy transaction failed</translation>
     </message>
     <message id="notification-offline-transaction-failed">

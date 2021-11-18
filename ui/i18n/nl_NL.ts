@@ -2910,12 +2910,14 @@ Update uw instellingen en probeer opnieuw.</translation>
         <translation>Beschikbaar</translation>
     </message>
     <message id="notification-maxp-transaction-sent">
-        <source>Max Privacy transaction sent</source>
-        <translation>Max Privacy transactie verzonden</translation>
+        <source>Maximum anonymity transaction sent</source>
+        <oldsource>Max Privacy transaction sent</oldsource>
+        <translation type="unfinished">Max Privacy transactie verzonden</translation>
     </message>
     <message id="notification-maxp-transaction-received">
-        <source>Max Privacy transaction received</source>
-        <translation>Max Privacy transactie ontvangen</translation>
+        <source>Maximum anonymity transaction received</source>
+        <oldsource>Max Privacy transaction received</oldsource>
+        <translation type="unfinished">Max Privacy transactie ontvangen</translation>
     </message>
     <message id="notification-offline-transaction-sent">
         <source>Transaction sent to offline</source>
@@ -2926,8 +2928,9 @@ Update uw instellingen en probeer opnieuw.</translation>
         <translation>Transactie ontvangen van offline</translation>
     </message>
     <message id="notification-maxp-transaction-failed">
-        <source>Max Privacy transaction failed</source>
-        <translation>Max Privacy transactie mislukt</translation>
+        <source>Maximum anonymity transaction failed</source>
+        <oldsource>Max Privacy transaction failed</oldsource>
+        <translation type="unfinished">Max Privacy transactie mislukt</translation>
     </message>
     <message id="notification-offline-transaction-failed">
         <source>Offline transaction failed</source>
