@@ -87,8 +87,8 @@ AppModel::AppModel(WalletSettings& settings)
     : m_settings{settings}
     , m_walletReactor(beam::io::Reactor::create())
     , m_key(QCryptographicHash::hash(settings.getAppDataPath().c_str(), QCryptographicHash::Sha1).toHex())
-    , m_memLock(m_key, 1, QSystemSemaphore::Create)
     , m_memKey(m_key + "_mem")
+    , m_memLock(m_key, 1, QSystemSemaphore::Create)
     , m_memAppGuard(m_memKey)
 {
     assert(s_instance == nullptr);
