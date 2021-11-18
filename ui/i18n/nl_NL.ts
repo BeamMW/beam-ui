@@ -3354,7 +3354,8 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <translation>Wachtwoord aanmaken</translation>
     </message>
     <message id="start-second-copy-error">
-        <source>The wallet is already sterted</source>
+        <source>The wallet is already started. Close all running wallets and start again.</source>
+        <oldsource>The wallet is already started</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>

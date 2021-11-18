@@ -3365,7 +3365,8 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished">Create password</translation>
     </message>
     <message id="start-second-copy-error">
-        <source>The wallet is already sterted</source>
+        <source>The wallet is already started. Close all running wallets and start again.</source>
+        <oldsource>The wallet is already started</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>

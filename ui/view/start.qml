@@ -280,7 +280,7 @@ Item
                         visible: !viewModel.isOnlyOneInstanceStarted
                         SFText {
                             anchors.horizontalCenter: parent.horizontalCenter
-                            //% "The wallet is already sterted"
+                            //% "The wallet is already started. Close all running wallets and start again."
                             text: qsTrId("start-second-copy-error")
                             color: Style.validator_error
                             font.pixelSize: 14
@@ -314,6 +314,7 @@ Item
                             //% "Select wallet database file manually"
                             text: qsTrId("start-migration-select-file-button")
                             icon.source: "qrc:/assets/icon-folder.svg"
+                            enabled: viewModel.isOnlyOneInstanceStarted
                             onClicked: {
                                 var path = viewModel.selectCustomWalletDB();
 
@@ -331,6 +332,7 @@ Item
                         text: qsTrId("general-restore-or-create-wallet")
                         color: Style.active
                         font.pixelSize: 14
+                        visible: viewModel.isOnlyOneInstanceStarted
                 
                         MouseArea {
                             anchors.fill: parent
@@ -1702,13 +1704,14 @@ Item
                             echoMode: TextInput.Password
                             onAccepted: btnCurrentWallet.clicked()
                             onTextChanged: if (openPassword.text.length > 0) openPasswordError.text = ""
+                            enabled: viewModel.isOnlyOneInstanceStarted
                         }
 
                         SFText {
                             id: openPasswordError
                             text: viewModel.isOnlyOneInstanceStarted
                                 ? ""
-                                //% "The wallet is already sterted"
+                                //% "The wallet is already started. Close all running wallets and start again."
                                 : qsTrId("start-second-copy-error")
                             color: Style.validator_error
                             font.pixelSize: 14

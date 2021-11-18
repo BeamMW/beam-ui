@@ -28,8 +28,8 @@
 #include "exchange_rates_manager.h"
 #include "assets_list.h"
 #include <memory>
-// #include <QSystemSemaphore>
-#include <boost/interprocess/sync/named_mutex.hpp>
+#include <QSharedMemory>
+#include <QSystemSemaphore>
 
 #if defined(BEAM_HW_WALLET)
 namespace beam::wallet
@@ -114,6 +114,9 @@ private:
     void registerSwapFactory(beam::wallet::AtomicSwapCoin swapCoin, beam::wallet::AtomicSwapTransaction::Creator& swapTxCreator);
 
 private:
+    bool isAnotherRunning();
+    bool tryLock();
+    void release();
     // SwapCoinClientModels must be destroyed after WalletModel
     std::map<beam::wallet::AtomicSwapCoin, SwapCoinClientModel::Ptr> m_swapClients;
     std::map<beam::wallet::AtomicSwapCoin, beam::bitcoin::IBridgeHolder::Ptr> m_swapBridgeHolders;
@@ -138,8 +141,11 @@ private:
     bool m_isSeedValidationMode = false;
     bool m_isSeedValidationTriggeredFromSettings = false;
 
-    std::unique_ptr<boost::interprocess::named_mutex> m_dbGuard;
     bool m_isOnlyOneInstanceStarted = false;
+    QString m_key;
+    QString m_memKey;
+    QSystemSemaphore m_memLock;
+    QSharedMemory m_memAppGuard;
 
 #if defined(BEAM_HW_WALLET)
     mutable std::shared_ptr<beam::wallet::HWWallet> m_hwWallet;

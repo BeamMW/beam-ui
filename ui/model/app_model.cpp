@@ -86,25 +86,75 @@ const std::string& AppModel::getMyVersion()
 AppModel::AppModel(WalletSettings& settings)
     : m_settings{settings}
     , m_walletReactor(beam::io::Reactor::create())
+    , m_key(QCryptographicHash::hash(settings.getAppDataPath().c_str(), QCryptographicHash::Sha1).toHex())
+    , m_memLock(m_key, 1, QSystemSemaphore::Create)
+    , m_memKey(m_key + "_mem")
+    , m_memAppGuard(m_memKey)
 {
     assert(s_instance == nullptr);
     s_instance = this;
 
-    const auto dbFilePath = m_settings.getAppDataPath();
-    auto mutexName = QCryptographicHash::hash(dbFilePath.c_str(), QCryptographicHash::Md5).toHex();
-    /*m_dbGuard = std::make_unique<boost::interprocess::named_mutex>(boost::interprocess::open_or_create, mutexName);
-    if (m_dbGuard->try_lock())*/
+    m_memLock.acquire();
+    {
+        QSharedMemory fix(m_memKey);
+        fix.attach();
+    }
+    m_memLock.release();
+
+    if (tryLock())
     {
         m_isOnlyOneInstanceStarted = true;
         m_nodeModel.start();
+    }
+    else
+    {
+        LOG_ERROR() << "Trying to start second instance of application";
     }
 }
 
 AppModel::~AppModel()
 {
-    /*if (m_isOnlyOneInstanceStarted)
-        m_dbGuard->unlock(); */
     s_instance = nullptr;
+    release();
+}
+
+bool AppModel::tryLock()
+{
+    if (isAnotherRunning())
+        return false;
+
+    m_memLock.acquire();
+    bool result = m_memAppGuard.create(sizeof(quint64));
+    m_memLock.release();
+    if (!result)
+    {
+        release();
+        return false;
+    }
+
+    return true;
+}
+
+bool AppModel::isAnotherRunning()
+{
+    if (m_memAppGuard.isAttached())
+        return false;
+
+    m_memLock.acquire();
+    bool isRunning = m_memAppGuard.attach();
+    if (isRunning)
+        m_memAppGuard.detach();
+    m_memLock.release();
+
+    return isRunning;
+}
+
+void AppModel::release()
+{
+    m_memLock.acquire();
+    if (m_memAppGuard.isAttached())
+        m_memAppGuard.detach();
+    m_memLock.release();
 }
 
 void AppModel::backupDB(const std::string& dbFilePath)
