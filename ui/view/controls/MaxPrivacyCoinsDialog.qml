@@ -36,7 +36,7 @@ CustomDialog {
         spacing: 15
 
         SFText {
-            //% "Max anonymity"
+            //% "Maximum anonymity"
             text: qsTrId("max-privacy-dialog-header")
             Layout.alignment:   Qt.AlignHCenter
             font.pixelSize: 18

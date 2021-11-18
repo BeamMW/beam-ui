@@ -252,7 +252,7 @@ CustomDialog {
                                 //% "Spent"
                                 return qsTrId("utxo-status-spent");
                             case UtxoStatus.MaturingMP:
-                                //% "Maturing%1(max anonymity %2% unlinked)"
+                                //% "Maturing%1(maximum anonymity %2% unlinked)"
                                 return qsTrId("utxo-status-maturing-mp").arg(lineSeparator).arg(model ? model.maturityPercentage : "?");
                             default:
                                 return "";

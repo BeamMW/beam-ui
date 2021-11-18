@@ -320,7 +320,7 @@ AlphaTipPopup {
                 }
 
                 SFText {
-                    //% "Max anonymity"
+                    //% "Maximum anonymity"
                     text:    qsTrId("balance-mp")
                     color:   assetTip.defTextColor
                     visible: maxPrivacyCtrl.visible

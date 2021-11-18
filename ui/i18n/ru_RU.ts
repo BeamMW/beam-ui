@@ -2074,8 +2074,8 @@ Your version is: %2. Please, check for updates.</source>
         <translation>не удалось (оффлайн)</translation>
     </message>
     <message id="max-privacy-dialog-header">
-        <source>Max anonymity</source>
-        <oldsource>Locked Max anonymity coins</oldsource>
+        <source>Maximum anonymity</source>
+        <oldsource>Max anonymity</oldsource>
         <translation type="unfinished">Заблокировано монет с Макс. приватностью</translation>
     </message>
     <message id="max-privacy-dialog-locked">
@@ -2524,8 +2524,8 @@ Update your settings and try again.</source>
         <translation>Потрачено</translation>
     </message>
     <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max anonymity %2% unlinked)</source>
-        <oldsource>Maturing%1(max privacy %2% unlinked)</oldsource>
+        <source>Maturing%1(maximum anonymity %2% unlinked)</source>
+        <oldsource>Maturing%1(max anonymity %2% unlinked)</oldsource>
         <translation type="unfinished">Созревание %1(макс. приватность, готово на %2%)</translation>
     </message>
     <message id="utxo-head-type">
@@ -2681,8 +2681,8 @@ Update your settings and try again.</source>
         <translation>Изменить</translation>
     </message>
     <message id="balance-mp">
-        <source>Max anonymity</source>
-        <oldsource>Max privacy</oldsource>
+        <source>Maximum anonymity</source>
+        <oldsource>Max anonymity</oldsource>
         <translation type="unfinished">Макс. приватность</translation>
     </message>
     <message id="info-asset-id">
