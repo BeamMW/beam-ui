@@ -602,7 +602,7 @@ Item
                         text: qsTrId("general-restore-or-create-wallet")
                         color: Style.active
                         font.pixelSize: 14
-                
+
                         MouseArea {
                             anchors.fill: parent
                             acceptedButtons: Qt.LeftButton
@@ -1799,6 +1799,7 @@ Item
                         text: qsTrId("general-restore-or-create-wallet")
                         color: Style.active
                         font.pixelSize: 14
+                        visible: viewModel.isOnlyOneInstanceStarted
                         MouseArea {
                             anchors.fill: parent
                             acceptedButtons: Qt.LeftButton
