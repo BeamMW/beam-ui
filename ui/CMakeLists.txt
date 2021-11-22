@@ -149,6 +149,7 @@ set(UI_SRC
     viewmodel/utxo/utxo_view.cpp
     viewmodel/utxo/utxo_view_status.h
     viewmodel/utxo/utxo_view_type.h
+    viewmodel/notifications/app_notification_helper.cpp
     viewmodel/notifications/notification_item.cpp
     viewmodel/notifications/notifications_list.cpp
     viewmodel/notifications/notifications_view.cpp

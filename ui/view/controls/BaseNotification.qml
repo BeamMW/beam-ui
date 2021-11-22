@@ -42,7 +42,9 @@ Popup {
 
     onOpened: {
         showAnimation.start();
-        closeTimer.start()
+        if (closeTimer.interval) {
+            closeTimer.start()
+        }
     }
 
     background: Rectangle {

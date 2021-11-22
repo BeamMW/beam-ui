@@ -51,6 +51,7 @@
 #include "viewmodel/helpers/sortfilterproxymodel.h"
 #include "viewmodel/helpers/token_bootstrap_manager.h"
 #include "viewmodel/helpers/seed_validation_helper.h"
+#include "viewmodel/notifications/app_notification_helper.h"
 #include "viewmodel/notifications/notifications_view.h"
 #include "viewmodel/notifications/push_notification_manager.h"
 #include "model/exchange_rates_manager.h"
@@ -282,6 +283,7 @@ int main (int argc, char* argv[])
             qmlRegisterType<SeedValidationHelper>("Beam.Wallet", 1, 0, "SeedValidationHelper");
             qmlRegisterType<QR>("Beam.Wallet", 1, 0, "QR");
             qmlRegisterType<beamui::dex::DexView>("Beam.Wallet", 1, 0, "DexViewModel");
+            qmlRegisterType<AppNotificationHelper>("Beam.Wallet", 1, 0, "AppNotificationHelper");
             beamui::applications::RegisterQMLTypes();
 
             engine.load(QUrl("qrc:/root.qml"));
