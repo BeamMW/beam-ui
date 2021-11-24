@@ -14,7 +14,7 @@ Rectangle {
 
     property var    openedNotifications: 0
     property var    notificationOffset: 0
-    property alias  hasNewerVersion : updateInfoProvider.hasNewerVersion
+    property alias  hasNewerVersion : notificationManager.hasNewerVersion
     readonly property bool devMode: viewModel.isDevMode
     anchors.fill:   parent
 
@@ -59,7 +59,7 @@ Rectangle {
             message: ["Your current version is v", currentVersion, ".Please update to get the most of your Beam wallet."].join(" "),
             acceptButtonText: "update now",
             onCancel: function () {
-                updateInfoProvider.onCancelPopup(id);
+                notificationManager.onCancelPopup(id);
                 popup.close();
             },
             onAccept: function () {
@@ -67,6 +67,10 @@ Rectangle {
             }
          });
          showPopup(popup)
+    }
+
+    function closeContractNotification(txId) {
+        notificationManager.closeContractNotification(txId);
     }
 
 	MainViewModel {
@@ -77,9 +81,13 @@ Rectangle {
     }
 
     PushNotificationManager {
-        id: updateInfoProvider
+        id: notificationManager
         onShowUpdateNotification: function (newVersion, currentVersion, id) {
             showUpdatePopup (newVersion, currentVersion, id)
+        }
+
+        onShowContractNotification: function(txId, appName, comment, appicon) {
+            showAppTxPopup(comment, appName, appicon, txId);
         }
     }
 

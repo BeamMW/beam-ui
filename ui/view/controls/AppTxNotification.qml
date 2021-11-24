@@ -146,6 +146,6 @@ BaseNotification {
     }
 
     onClosed: {
-        console.log('AppTxNotification onClosed');
+        main.closeContractNotification(txid);
     }
 }

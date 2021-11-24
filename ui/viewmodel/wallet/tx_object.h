@@ -80,6 +80,7 @@ public:
     virtual bool isCanceled() const;
     virtual bool isFailed() const;
     virtual bool isMultiAsset() const;
+    bool canShowContractNotification() const;
 
 protected:
     [[nodiscard]] const beam::wallet::TxDescription& getTxDescription() const;

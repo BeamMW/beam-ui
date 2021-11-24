@@ -14,13 +14,6 @@ Control {
 
     TxTableViewModel {
         id: tableViewModel
-
-        onTransactionsChanged: function () {
-            txNotify.forEach(function (json) {
-                var obj = JSON.parse(json)
-                control.showAppTxNotifcation(obj.txid, obj.appicon)
-            })
-        }
     }
 
     property int       selectedAsset: -1
@@ -30,31 +23,9 @@ Control {
     property var       dappFilter: undefined
     readonly property  bool sourceVisible: dappFilter ? dappFilter == "all" : true
     property var       owner
-    property var       txNotify: new Set()
 
     function showTxDetails (txid) {
         transactionsTable.showDetails (txid)
-    }
-
-    function showAppTxNotifcation (txid, appicon) {
-        var list  = tableViewModel.transactions
-        var index = list.index(0, 0)
-        var ilist = list.match(index, TxObjectList.Roles.TxID, txid)
-        if (ilist.length)
-        {
-            txNotify.delete(JSON.stringify({txid, appicon}))
-            main.showAppTxPopup(
-                list.data(ilist[0], TxObjectList.Roles.Comment),
-                list.data(ilist[0], TxObjectList.Roles.DAppName),
-                appicon, txid
-            )
-        }
-        else
-        {
-            // model not yet updated, transaction is still invisble for the list
-            // safe for the future
-            txNotify.add(JSON.stringify({txid, appicon}))
-        }
     }
 
     state: "all"

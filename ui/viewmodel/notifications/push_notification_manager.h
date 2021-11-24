@@ -30,19 +30,24 @@ public:
 
     /// Will mark notification as read to ignore it next time.
     Q_INVOKABLE void onCancelPopup(const QVariant& variantID);
+    Q_INVOKABLE void closeContractNotification(const QString& txIdStr);
 
     bool hasNewerVersion() const;
 
 signals:
     void showUpdateNotification(const QString&, const QString&, const QVariant&);
+    void showContractNotification(QString txId, QString appName, QString comment, QString icon);
 
 public slots:
     void onNewSoftwareUpdateAvailable(
         const beam::wallet::WalletImplVerInfo&, const ECC::uintBig& notificationID, bool showPopup);
     void onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&);
+    void onTransactionsChanged(
+        beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& items);
 
 private:
     WalletModel::Ptr m_walletModel;
     bool m_firstNotification = true;
     bool m_hasNewerVersion = false;
+    std::set<beam::wallet::TxID> m_contractNotifications;
 };

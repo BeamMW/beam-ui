@@ -113,15 +113,6 @@ ColumnLayout {
 
             var onCallWalletApiResult = function (result) {
                 webapiBEAM.api.callWalletApiResult(result)
-                try
-                {
-                    var json = JSON.parse(result)
-                    var txid = ((json || {}).result || {}).txid
-                    if (txid) txTable.showAppTxNotifcation(txid, control.activeApp.icon)
-                }
-                catch (e) {
-                    BeamGlobals.logInfo(["callWalletApiResult json parse fail:", e].join(": "))
-                }
             }
 
             var onApproveSend = function(request, info, amounts) {

@@ -615,6 +615,17 @@ bool TxObject::isMultiAsset() const
     return _assetsList.size() > 1;
 }
 
+bool TxObject::canShowContractNotification() const
+{
+    if (isContractTx() && isActive())
+    {
+        bool isMarkedAsRead = false;
+        _tx.GetParameter(beam::wallet::TxParameterID::IsContractNotificationMarkedAsRead, isMarkedAsRead);
+        return !isMarkedAsRead;
+    }
+    return false;
+}
+
 bool TxObject::hasPaymentProof() const
 {
     return !isIncome()
