@@ -19,6 +19,12 @@
 AppNotificationHelper::AppNotificationHelper()
 {
     auto walletPtr = AppModel::getInstance().getWalletModel().get();
+
+    const auto averageBlockTime = walletPtr->getAverageBlockTime();
+    const auto now = beam::getTimestamp();
+    auto timeFromLastBlock = now - walletPtr->getLastBlockTime();
+    m_estimateBlockTime = timeFromLastBlock > averageBlockTime ? 1 : averageBlockTime - timeFromLastBlock;
+
     connect(
         walletPtr,
         &WalletModel::transactionsChanged,
@@ -36,6 +42,11 @@ void AppNotificationHelper::setTxId(QString txID)
     auto txIdVec = beam::from_hex(txID.toStdString());
     std::copy_n(txIdVec.begin(), 16, m_txId.begin());
     emit txIdChanged();
+}
+
+qlonglong AppNotificationHelper::getEstimateBlockTime() const
+{
+    return static_cast<qlonglong>(m_estimateBlockTime);
 }
 
 void AppNotificationHelper::onTransactionsChanged(ChangeAction action, const std::vector<TxDescription>& items)

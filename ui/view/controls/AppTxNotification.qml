@@ -12,12 +12,15 @@ BaseNotification {
     property alias  appname: titleCtrl.text
     property string appicon
     property string txid
+    property int    secondsFromBirth: 1
+    property double progress: 0.0
 
     AppNotificationHelper {
         id: notificationHelper
         txId: control.txid
         onTxFinished: {
-            control.close()
+            control.progress = 1;
+            control.close();
         }
     }
 
@@ -109,6 +112,18 @@ BaseNotification {
             }
         }
 
+        Timer {
+            interval: 1000
+            repeat:   true
+            running:  true
+
+            onTriggered: {
+                progress = control.secondsFromBirth / notificationHelper.estimateBlockTime;
+                control.progress = progress > 0.97 ? 0.97 : progress;
+                control.secondsFromBirth++;
+            }
+        }
+
         Rectangle {
             id: rect
             Layout.alignment: Qt.AlignBottom | Qt.AlignVCenter
@@ -129,7 +144,7 @@ BaseNotification {
             Rectangle {
                 anchors.bottom: parent.bottom
                 height: 6
-                width: parent.width * 0.3
+                width: parent.width * control.progress
                 radius: 3
                 color: Style.active
                 z: 102

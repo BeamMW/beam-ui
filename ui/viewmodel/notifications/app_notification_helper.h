@@ -23,12 +23,14 @@ class AppNotificationHelper : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString txId READ getTxId WRITE setTxId NOTIFY txIdChanged)
+    Q_PROPERTY(qlonglong estimateBlockTime READ getEstimateBlockTime)
 
 public:
     AppNotificationHelper();
     ~AppNotificationHelper() override = default;
     QString getTxId() const;
     void setTxId(QString txId);
+    qlonglong getEstimateBlockTime() const;
 
 public slots:
     void onTransactionsChanged(ChangeAction action, const std::vector<TxDescription>& items);
@@ -39,5 +41,6 @@ signals:
 
 private:
     TxID m_txId;
+    beam::Timestamp m_estimateBlockTime;
 
 };
