@@ -22,7 +22,7 @@ Control {
     property alias     headerShaderVisible: transactionsTable.headerShaderVisible
     property var       dappFilter: undefined
     readonly property  bool sourceVisible: dappFilter ? dappFilter == "all" : true
-    readonly property  bool actionVisible: dappFilter && dappFilter != "all"
+    readonly property  bool actionVisible: dappFilter !== undefined && dappFilter != "all"
     property var       owner
 
     function showTxDetails (txid) {
@@ -345,7 +345,7 @@ Control {
 
             selectionMode: SelectionMode.NoSelection
             sortIndicatorVisible: true
-            sortIndicatorColumn: 4
+            sortIndicatorColumn: 5
             sortIndicatorOrder: Qt.DescendingOrder
 
             onSortIndicatorColumnChanged: {
