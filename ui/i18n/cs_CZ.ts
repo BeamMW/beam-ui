@@ -3371,5 +3371,9 @@ In case you’d like to re-use an earlier created regular address please use the
         <oldsource>The wallet is already started</oldsource>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-txs-action">
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

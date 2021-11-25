@@ -3351,5 +3351,9 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>The wallet is already started. Close all running wallets and start again.</source>
         <translation>The wallet is already started. Close all running wallets and start again.</translation>
     </message>
+    <message id="wallet-txs-action">
+        <source>Action</source>
+        <translation>Action</translation>
+    </message>
 </context>
 </TS>

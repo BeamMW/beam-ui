@@ -3361,5 +3361,9 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <oldsource>The wallet is already started</oldsource>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-txs-action">
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

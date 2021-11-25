@@ -22,6 +22,7 @@ Control {
     property alias     headerShaderVisible: transactionsTable.headerShaderVisible
     property var       dappFilter: undefined
     readonly property  bool sourceVisible: dappFilter ? dappFilter == "all" : true
+    readonly property  bool actionVisible: dappFilter && dappFilter != "all"
     property var       owner
 
     function showTxDetails (txid) {
@@ -340,7 +341,7 @@ Control {
 
             property real rowHeight: 56
             property real resizableWidth: transactionsTable.width - 140
-            property real columnResizeRatio: resizableWidth / (610 - (sourceVisible ? 0 : 140))
+            property real columnResizeRatio: resizableWidth / (610 - (sourceVisible || actionVisible ? 0 : 140))
 
             selectionMode: SelectionMode.NoSelection
             sortIndicatorVisible: true
@@ -565,6 +566,19 @@ Control {
                 movable:    false
                 resizable:  false
                 visible:    sourceVisible
+            }
+
+            TableViewColumn {
+                role: "action"
+                id: actionColumn
+
+                //% "Action"
+                title:      qsTrId("wallet-txs-action")
+                elideMode:  Text.ElideRight
+                width:      140 * transactionsTable.columnResizeRatio
+                movable:    false
+                resizable:  false
+                visible:    actionVisible
             }
 
             TableViewColumn {

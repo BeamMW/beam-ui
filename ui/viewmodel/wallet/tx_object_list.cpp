@@ -282,6 +282,8 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::CidsStr), "cidsStr"},
         { static_cast<int>(Roles::Source), "source"},
         { static_cast<int>(Roles::SourceSort), "sourceSort"},
+        { static_cast<int>(Roles::Action), "action"},
+        { static_cast<int>(Roles::ActionSort), "actionSort"},
         { static_cast<int>(Roles::MinConfirmations), "minConfirmations"},
         { static_cast<int>(Roles::ConfirmationsProgress), "confirmationsProgress"},
         { static_cast<int>(Roles::IsDappTx), "isDappTx"},
@@ -308,6 +310,9 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
         case Roles::Source:
         case Roles::SourceSort:
             return value->getSource();
+        case Roles::Action:
+        case Roles::ActionSort:
+            return value->isContractTx() ? value->getComment() : "";
         case Roles::TimeCreated:
         {
             QDateTime datetime;

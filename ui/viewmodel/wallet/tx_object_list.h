@@ -80,6 +80,8 @@ public:
         CidsStr,
         Source,
         SourceSort,
+        Action,
+        ActionSort,
         MinConfirmations,
         ConfirmationsProgress,
         IsDappTx,
