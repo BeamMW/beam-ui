@@ -80,6 +80,7 @@ Item {
             id: transactionsLayout
             Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.topMargin: -27
             spacing: 0
 
             function navigateSend(assetId) {
@@ -186,6 +187,7 @@ Item {
     StackView {
         id: walletStackView
         anchors.fill: parent
+        anchors.topMargin: -27
         initialItem: walletLayout
         pushEnter: Transition {
             enabled: false
