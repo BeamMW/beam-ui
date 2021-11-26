@@ -133,29 +133,18 @@ function formatHours(hours) {
         hh = hours - dd * 24;
     }
 
-    if (hh == 1) {
+    if (hh > 0) {
         //: time "hour" string
-        //% "hour"
-        hh = hh + " " + qsTrId("time-hour");
-    } else if (hh == 0){
-        hh = "";
+        //% "%n hour(s)"
+        hh = qsTrId("time-hour", hh);
     } else {
-        //: time "hours" string
-        //% "hours"
-        hh = hh + " " + qsTrId("time-hours");
+        hh = "";
     }
 
     if (dd) {
-        if (dd == 1) {
-            //: time "day" string
-            //% "day"
-            dd = dd + " " + qsTrId("time-day");
-        } else {
-            //: time "days" string
-            //% "days"
-            dd = dd + " " + qsTrId("time-days");
-        }
-
+        //: time "day" string
+        //% "%n day(s)"
+        dd = qsTrId("time-day", dd);
         return dd + " " + hh;
 
     } else {

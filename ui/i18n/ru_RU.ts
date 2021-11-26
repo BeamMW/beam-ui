@@ -2106,25 +2106,25 @@ Your version is: %2. Please, check for updates.</source>
         <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
         <translation>Чтобы поддерживать максимальную анонимность и оффлайн транзакции, пожалуйста, подключитесь к интегрированному узлу или к собственному узлу, настроенному с вашим ключом владельца.</translation>
     </message>
-    <message id="time-hour">
-        <source>hour</source>
+    <message id="time-hour" numerus="yes">
+        <source>%n hour(s)</source>
+        <oldsource>hour</oldsource>
         <extracomment>time &quot;hour&quot; string</extracomment>
-        <translation>час</translation>
+        <translation type="unfinished">
+            <numerusform>час</numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
-    <message id="time-hours">
-        <source>hours</source>
-        <extracomment>time &quot;hours&quot; string</extracomment>
-        <translation>часа</translation>
-    </message>
-    <message id="time-day">
-        <source>day</source>
+    <message id="time-day" numerus="yes">
+        <source>%n day(s)</source>
+        <oldsource>day</oldsource>
         <extracomment>time &quot;day&quot; string</extracomment>
-        <translation>день</translation>
-    </message>
-    <message id="time-days">
-        <source>days</source>
-        <extracomment>time &quot;days&quot; string</extracomment>
-        <translation>дней</translation>
+        <translation type="unfinished">
+            <numerusform>день</numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit">
         <source>No limit</source>
