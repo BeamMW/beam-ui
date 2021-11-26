@@ -12,6 +12,7 @@ import "."
 ColumnLayout {
     id: control
     Layout.fillWidth: true
+    Layout.topMargin: 27
     spacing: 0
 
     property string   errorMessage: ""

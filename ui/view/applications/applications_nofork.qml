@@ -9,6 +9,7 @@ import "../controls"
 ColumnLayout {
     id: control
     Layout.fillWidth: true
+    Layout.topMargin: 27
 
     //
     // Page Header (Title + Status Bar)
