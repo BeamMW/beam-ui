@@ -921,14 +921,14 @@
     </message>
     <message id="loading-view-estimate-minutes" numerus="yes">
         <source>%n minute(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n minute(s)</numerusform>
+        <translation>
+            <numerusform>%n分钟</numerusform>
         </translation>
     </message>
     <message id="loading-view-estimate-seconds" numerus="yes">
         <source>%n second(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n second(s)</numerusform>
+        <translation>
+            <numerusform>%n 秒</numerusform>
         </translation>
     </message>
     <message id="loading-view-estimate-time">
@@ -1023,8 +1023,8 @@ please review your settings and try again</source>
     </message>
     <message id="loading-view-estimate-hours" numerus="yes">
         <source>%n hour(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n hour(s)</numerusform>
+        <translation>
+            <numerusform>%n小时</numerusform>
         </translation>
     </message>
     <message id="loading-view-net-problems">
@@ -2079,8 +2079,7 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="max-privacy-dialog-header">
         <source>Maximum anonymity</source>
-        <oldsource>Max anonymity</oldsource>
-        <translation type="unfinished">Locked Max privacy coins</translation>
+        <translation type="unfinished">Maximum anonymity</translation>
     </message>
     <message id="max-privacy-dialog-locked">
         <source>Locked</source>
@@ -2112,18 +2111,16 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="time-hour" numerus="yes">
         <source>%n hour(s)</source>
-        <oldsource>hour</oldsource>
         <extracomment>time &quot;hour&quot; string</extracomment>
-        <translation type="unfinished">
-            <numerusform>hour</numerusform>
+        <translation>
+            <numerusform>%n小时</numerusform>
         </translation>
     </message>
     <message id="time-day" numerus="yes">
         <source>%n day(s)</source>
-        <oldsource>day</oldsource>
         <extracomment>time &quot;day&quot; string</extracomment>
-        <translation type="unfinished">
-            <numerusform>day</numerusform>
+        <translation>
+            <numerusform>%n 天</numerusform>
         </translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit">
@@ -2525,8 +2522,7 @@ Update your settings and try again.</source>
     </message>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(maximum anonymity %2% unlinked)</source>
-        <oldsource>Maturing%1(max anonymity %2% unlinked)</oldsource>
-        <translation type="unfinished">Maturing%1(max privacy %2% unlinked)</translation>
+        <translation type="unfinished">Maturing%1(maximum anonymity %2% unlinked)</translation>
     </message>
     <message id="utxo-head-type">
         <source>Type</source>
@@ -2681,8 +2677,7 @@ Update your settings and try again.</source>
     </message>
     <message id="balance-mp">
         <source>Maximum anonymity</source>
-        <oldsource>Max anonymity</oldsource>
-        <translation type="unfinished">最大化隐私</translation>
+        <translation type="unfinished">Maximum anonymity</translation>
     </message>
     <message id="info-asset-id">
         <source>Asset ID</source>
@@ -2919,13 +2914,11 @@ Update your settings and try again.</source>
     </message>
     <message id="notification-maxp-transaction-sent">
         <source>Maximum anonymity transaction sent</source>
-        <oldsource>Max Privacy transaction sent</oldsource>
-        <translation type="unfinished">Max Privacy transaction sent</translation>
+        <translation type="unfinished">Maximum anonymity transaction sent</translation>
     </message>
     <message id="notification-maxp-transaction-received">
         <source>Maximum anonymity transaction received</source>
-        <oldsource>Max Privacy transaction received</oldsource>
-        <translation type="unfinished">Max Privacy transaction received</translation>
+        <translation type="unfinished">Maximum anonymity transaction received</translation>
     </message>
     <message id="notification-offline-transaction-sent">
         <source>Transaction sent to offline</source>
@@ -2937,8 +2930,7 @@ Update your settings and try again.</source>
     </message>
     <message id="notification-maxp-transaction-failed">
         <source>Maximum anonymity transaction failed</source>
-        <oldsource>Max Privacy transaction failed</oldsource>
-        <translation type="unfinished">Max Privacy transaction failed</translation>
+        <translation type="unfinished">Maximum anonymity transaction failed</translation>
     </message>
     <message id="notification-offline-transaction-failed">
         <source>Offline transaction failed</source>
@@ -3322,8 +3314,8 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n hour(s)</numerusform>
+        <translation>
+            <numerusform>%n小时</numerusform>
         </translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val72-comment">
@@ -3365,12 +3357,11 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="start-second-copy-error">
         <source>The wallet is already started. Close all running wallets and start again.</source>
-        <oldsource>The wallet is already started</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">The wallet is already started. Close all running wallets and start again.</translation>
     </message>
     <message id="wallet-txs-action">
         <source>Action</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Action</translation>
     </message>
 </context>
 </TS>

@@ -911,7 +911,7 @@
     </message>
     <message id="loading-view-estimate-minutes" numerus="yes">
         <source>%n minute(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n минута</numerusform>
             <numerusform>%n минуты</numerusform>
             <numerusform>%n минут</numerusform>
@@ -919,9 +919,9 @@
     </message>
     <message id="loading-view-estimate-seconds" numerus="yes">
         <source>%n second(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n секунда</numerusform>
-            <numerusform>%n second(s)</numerusform>
+            <numerusform>%n секунды</numerusform>
             <numerusform>%n секунд</numerusform>
         </translation>
     </message>
@@ -2075,8 +2075,7 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="max-privacy-dialog-header">
         <source>Maximum anonymity</source>
-        <oldsource>Max anonymity</oldsource>
-        <translation type="unfinished">Заблокировано монет с Макс. приватностью</translation>
+        <translation>Максимальная анонимность</translation>
     </message>
     <message id="max-privacy-dialog-locked">
         <source>Locked</source>
@@ -2108,22 +2107,20 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="time-hour" numerus="yes">
         <source>%n hour(s)</source>
-        <oldsource>hour</oldsource>
         <extracomment>time &quot;hour&quot; string</extracomment>
-        <translation type="unfinished">
-            <numerusform>час</numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n час</numerusform>
+            <numerusform>%n часа</numerusform>
+            <numerusform>%n часов</numerusform>
         </translation>
     </message>
     <message id="time-day" numerus="yes">
         <source>%n day(s)</source>
-        <oldsource>day</oldsource>
         <extracomment>time &quot;day&quot; string</extracomment>
-        <translation type="unfinished">
-            <numerusform>день</numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n день</numerusform>
+            <numerusform>%n дня</numerusform>
+            <numerusform>%n дней</numerusform>
         </translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit">
@@ -2525,8 +2522,7 @@ Update your settings and try again.</source>
     </message>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(maximum anonymity %2% unlinked)</source>
-        <oldsource>Maturing%1(max anonymity %2% unlinked)</oldsource>
-        <translation type="unfinished">Созревание %1(макс. приватность, готово на %2%)</translation>
+        <translation>Созревание%1(максимальная анонимность, готово на %2%)</translation>
     </message>
     <message id="utxo-head-type">
         <source>Type</source>
@@ -2682,8 +2678,7 @@ Update your settings and try again.</source>
     </message>
     <message id="balance-mp">
         <source>Maximum anonymity</source>
-        <oldsource>Max anonymity</oldsource>
-        <translation type="unfinished">Макс. приватность</translation>
+        <translation>Максимальная анонимность</translation>
     </message>
     <message id="info-asset-id">
         <source>Asset ID</source>
@@ -2920,13 +2915,11 @@ Update your settings and try again.</source>
     </message>
     <message id="notification-maxp-transaction-sent">
         <source>Maximum anonymity transaction sent</source>
-        <oldsource>Max Privacy transaction sent</oldsource>
-        <translation type="unfinished">Макс. приватная транзакция отправлена</translation>
+        <translation>Отправлена транзакция с максимальной анонимностью</translation>
     </message>
     <message id="notification-maxp-transaction-received">
         <source>Maximum anonymity transaction received</source>
-        <oldsource>Max Privacy transaction received</oldsource>
-        <translation type="unfinished">Получена макс. приватная транзакция</translation>
+        <translation>Получена транзакция с максимальной анонимностью</translation>
     </message>
     <message id="notification-offline-transaction-sent">
         <source>Transaction sent to offline</source>
@@ -2938,8 +2931,7 @@ Update your settings and try again.</source>
     </message>
     <message id="notification-maxp-transaction-failed">
         <source>Maximum anonymity transaction failed</source>
-        <oldsource>Max Privacy transaction failed</oldsource>
-        <translation type="unfinished">Макс. приватность транзакции не удалась</translation>
+        <translation>Транзакция с максимальной анонимностью не удалась</translation>
     </message>
     <message id="notification-offline-transaction-failed">
         <source>Offline transaction failed</source>
@@ -3372,12 +3364,11 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="start-second-copy-error">
         <source>The wallet is already started. Close all running wallets and start again.</source>
-        <oldsource>The wallet is already started</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Кошелек уже запущен. Закройте все работающие кошельки и запустите снова.</translation>
     </message>
     <message id="wallet-txs-action">
         <source>Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Действие</translation>
     </message>
 </context>
 </TS>
