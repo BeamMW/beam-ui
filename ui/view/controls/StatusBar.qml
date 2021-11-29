@@ -152,6 +152,7 @@ Item {
             {
                 id: statusRow
                 Layout.topMargin: 3
+                Layout.leftMargin: 30
                 SFText {
                     id: status_text
                     color: Style.content_main
