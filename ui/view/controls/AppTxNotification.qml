@@ -38,6 +38,11 @@ BaseNotification {
             Layout.bottomMargin: -14
             spacing: 0
 
+            Item {
+                width: 15
+                height: 1
+            }
+
             Rectangle {
                 Layout.alignment: Qt.AlignVCenter
                 width:  60
