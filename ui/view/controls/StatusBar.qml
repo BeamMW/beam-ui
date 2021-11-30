@@ -157,7 +157,7 @@ Item {
                     id: status_text
                     color: Style.content_main
                     font.pixelSize: 16
-                    elideMode: Text.ElideRight
+                    elide: Text.ElideLeft
                 }
                 SFText {
                     id: progressText
