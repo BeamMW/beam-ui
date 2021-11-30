@@ -157,6 +157,7 @@ Item {
                     id: status_text
                     color: Style.content_main
                     font.pixelSize: 16
+                    elideMode: Text.ElideRight
                 }
                 SFText {
                     id: progressText
@@ -213,7 +214,7 @@ Item {
                 target: status_text;
                 text: statusOnline + (model.isConnectionTrusted ? "" : ": " + statusOnlineRemote) + model.branchName + 
                     (
-                        model.isExchangeRatesUpdated? "" : (!model.isConnectionTrusted ? "\n" : " ") + model.exchangeStatus
+                        model.isExchangeRatesUpdated ? "" : " " + model.exchangeStatus
                     )
             }
             PropertyChanges {
