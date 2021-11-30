@@ -503,8 +503,14 @@ void AppModel::startWallet()
     additionalTxCreators->emplace(TxType::AssetInfo, std::make_shared<AssetInfoTransaction::Creator>());
 
     bool displayRate = m_settings.getRateCurrency() != beam::wallet::Currency::UNKNOWN();
+    std::string ipfsPath;
+
+    #ifdef BEAM_IPFS_SUPPORT
+    ipfsPath = m_settings.getIPFSPath().toStdString();
+    #endif
+
     //m_wallet->getAsync()->enableBodyRequests(true);
-    m_wallet->start(activeNotifications, displayRate, additionalTxCreators);
+    m_wallet->start(activeNotifications, ipfsPath, displayRate, additionalTxCreators);
 }
 
 template<typename BridgeSide, typename Bridge, typename SettingsProvider>

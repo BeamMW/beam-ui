@@ -797,6 +797,24 @@ QString WalletSettings::getLocalAppsPath() const
     return localAppsPath;
 }
 
+#ifdef BEAM_IPFS_SUPPORT
+QString WalletSettings::getIPFSPath() const
+{
+    Lock lock(m_mutex);
+
+    const char* kIPFSFolder = "ipfs-repo";
+    QString ipfsPath = QDir::cleanPath(
+            m_appDataDir.path() +
+            QDir::separator() + kIPFSFolder
+    );
+
+    auto adir = m_appDataDir;
+    adir.mkpath(ipfsPath);
+
+    return ipfsPath;
+}
+#endif
+
 int WalletSettings::getAppsServerPort() const
 {
     Lock lock(m_mutex);

@@ -99,6 +99,10 @@ public:
     int getAppsServerPort() const;
     void setAppsServerPort(int port);
 
+    #ifdef BEAM_IPFS_SUPPORT
+    QString getIPFSPath() const;
+    #endif
+
     uint8_t getMaxPrivacyAnonymitySet() const;
     void setMaxPrivacyAnonymitySet(uint8_t anonymitySet);
 
