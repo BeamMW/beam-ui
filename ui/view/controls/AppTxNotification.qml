@@ -15,12 +15,22 @@ BaseNotification {
     property int    secondsFromBirth: 1
     property double progress: 0.0
 
+    Timer {
+        id: closeTimer
+        interval: 3000
+        repeat: false
+        running: false
+        onTriggered: {
+            control.close();
+        }
+    }
+
     AppNotificationHelper {
         id: notificationHelper
         txId: control.txid
         onTxFinished: {
-            control.progress = 1;
-            control.close();
+            control.progress = 1.0;
+            closeTimer.start();
         }
     }
 
@@ -37,6 +47,11 @@ BaseNotification {
             Layout.leftMargin: 5
             Layout.bottomMargin: -14
             spacing: 0
+
+            Item {
+                width: 15
+                height: 1
+            }
 
             Rectangle {
                 Layout.alignment: Qt.AlignVCenter
@@ -118,8 +133,9 @@ BaseNotification {
             running:  true
 
             onTriggered: {
-                progress = control.secondsFromBirth / notificationHelper.estimateBlockTime;
-                control.progress = progress > 0.97 ? 0.97 : progress;
+                var pr = control.secondsFromBirth / notificationHelper.estimateBlockTime;
+                if (control.progress < 1.0)
+                    control.progress = pr > 0.97 ? 0.97 : pr;
                 control.secondsFromBirth++;
             }
         }

@@ -152,10 +152,12 @@ Item {
             {
                 id: statusRow
                 Layout.topMargin: 3
+                Layout.leftMargin: 20
                 SFText {
                     id: status_text
                     color: Style.content_main
                     font.pixelSize: 16
+                    elide: Text.ElideLeft
                 }
                 SFText {
                     id: progressText
@@ -212,7 +214,7 @@ Item {
                 target: status_text;
                 text: statusOnline + (model.isConnectionTrusted ? "" : ": " + statusOnlineRemote) + model.branchName + 
                     (
-                        model.isExchangeRatesUpdated? "" : (!model.isConnectionTrusted ? "\n" : " ") + model.exchangeStatus
+                        model.isExchangeRatesUpdated ? "" : " " + model.exchangeStatus
                     )
             }
             PropertyChanges {
