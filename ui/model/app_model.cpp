@@ -611,6 +611,8 @@ void AppModel::start()
     std::string ipfsPath;
     #ifdef BEAM_IPFS_SUPPORT
     ipfsPath = m_settings.getIPFSPath().toStdString();
+    // TODO:IPFS add ipfs path to UI settings page
+    // TODO:IPFS add ipfs ports to settings & UI settings page
     #endif
 
     m_wallet   = std::make_shared<WalletModel>(m_db, ipfsPath, nodeAddrStr, m_walletReactor);
