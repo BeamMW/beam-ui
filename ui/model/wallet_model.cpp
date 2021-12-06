@@ -25,8 +25,8 @@ using namespace beam::io;
 using namespace std;
 
 
-WalletModel::WalletModel(beam::wallet::IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor)
-    : WalletClient(Rules::get(), walletDB, nodeAddr, reactor)
+WalletModel::WalletModel(beam::wallet::IWalletDB::Ptr walletDB, const std::string& ipfsStorage, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor)
+    : WalletClient(Rules::get(), walletDB, ipfsStorage, nodeAddr, reactor)
 {
     qRegisterMetaType<beam::ByteBuffer>("beam::ByteBuffer");
     qRegisterMetaType<beam::wallet::WalletStatus>("beam::wallet::WalletStatus");
