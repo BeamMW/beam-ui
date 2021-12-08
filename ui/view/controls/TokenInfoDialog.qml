@@ -9,7 +9,6 @@ CustomDialog {
     modal: true
         
     property alias token:                 viewModel.token
-    property alias ignoreStoredVouchers:  viewModel.ignoreStoredVouchers
     property bool  incoming:              true
     property bool  isShieldedSupported:   true
     
