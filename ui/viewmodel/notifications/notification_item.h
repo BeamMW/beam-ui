@@ -18,7 +18,7 @@
 #include <QDateTime>
 #include "model/wallet_model.h"
 #include "viewmodel/ui_helpers.h"
-#include "viewmodel/wallet/assets_manager.h"
+#include "model/assets_manager.h"
 
 class NotificationItem : public QObject
 {
@@ -30,6 +30,7 @@ public:
     bool operator==(const NotificationItem& other) const;
 
     QDateTime timeCreated() const;
+    QDateTime txTimeCreated() const;
     beam::Timestamp getTimestamp() const;
     beam::wallet::Notification::State getState() const;
     QString title() const;
@@ -42,7 +43,7 @@ public:
 
     QString getTxID() const;
     beam::wallet::WalletAddress getWalletAddress() const;
- 
+
 signals:
 
 private:

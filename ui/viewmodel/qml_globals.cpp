@@ -92,6 +92,16 @@ QMLGlobals::QMLGlobals(QQmlEngine& engine)
 {
 }
 
+QString QMLGlobals::getAppName()
+{
+#ifdef APP_NAME
+static const char* AppName = APP_NAME;
+#else
+static const char* AppName = "Beam Wallet Masternet";
+#endif
+    return AppName;
+}
+
 void QMLGlobals::showMessage(const QString& message)
 {
     QMessageBox::information(nullptr, "BeamWalletUI", message);
@@ -480,6 +490,12 @@ QString QMLGlobals::rawTxIdToStr(const QVariant& txId)
         return QString::fromStdString(std::to_string(rawTxId));
     }
     return "";
+}
+
+QString QMLGlobals::getExplorerUrl()
+{
+    const auto& settings = AppModel::getInstance().getSettings();
+    return settings.getExplorerUrl();
 }
 
 void QMLGlobals::fatal(const QString& message)

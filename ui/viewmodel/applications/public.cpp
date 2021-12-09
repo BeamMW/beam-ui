@@ -16,44 +16,14 @@
 
 #include "public.h"
 #include "apps_view.h"
-#include "webapi_beam.h"
+#include "apps_api_ui.h"
 #include "webapi_creator.h"
 
 namespace beamui::applications
 {
-    namespace
-    {
-        const std::string kAppIDPrefix = "appid:";
-    }
-
     void RegisterQMLTypes()
     {
         qmlRegisterType<AppsViewModel>("Beam.Wallet", 1, 0, "ApplicationsViewModel");
         qmlRegisterType<WebAPICreator>("Beam.Wallet", 1, 0, "WebAPICreator");
-    }
-
-    std::string GenerateAppID(const std::string& appName, const std::string& appUrl)
-    {
-        QUrl url(QString::fromStdString(appUrl));
-        const auto normalizedUrl = url.toString(QUrl::RemovePort).toStdString();
-
-        ECC::Hash::Value hv;
-        ECC::Hash::Processor() << appName << normalizedUrl >> hv;
-
-        auto appid = kAppIDPrefix + hv.str();
-        return appid;
-    }
-
-    std::string StripAppIDPrefix(const std::string& appId)
-    {
-        auto res = appId;
-
-        size_t pos = appId.find(kAppIDPrefix);
-        if (pos != std::string::npos)
-        {
-            res.erase(pos, kAppIDPrefix.length());
-        }
-
-        return res;
     }
 }

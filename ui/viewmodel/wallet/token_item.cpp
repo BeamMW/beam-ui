@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#include <QPointer>
 #include "token_item.h"
 #include "viewmodel/ui_helpers.h"
 #include "model/app_model.h"
@@ -142,11 +143,7 @@ void TokenInfoItem::setToken(const QString& token)
                     if (vouchers && !vouchers->empty())
                     {
                         m_isOffline = true;
-                        if (getIgnoreStoredVouchers())
-                        {
-                            setOfflinePayments((int)vouchers->size());
-                        }
-                        else if (walletID)
+                        if (walletID)
                         {
                             AppModel::getInstance().getWalletModel()->getAsync()->saveVouchers(*vouchers, *walletID);
                         }
@@ -179,10 +176,12 @@ void TokenInfoItem::setToken(const QString& token)
                 m_isPermanent = true;
             }
 
-            if (!getIgnoreStoredVouchers() && walletID)
+            if (walletID)
             {
-                AppModel::getInstance().getWalletModel()->getAsync()->getAddress(*walletID, [this](const auto& addr, auto count)
+                QPointer<TokenInfoItem> guard(this);
+                AppModel::getInstance().getWalletModel()->getAsync()->getAddress(*walletID, [guard, this](const auto& addr, auto count)
                 {
+                    if (!guard) return;
                     setOfflinePayments((int)count);
                 });
             }
@@ -203,20 +202,6 @@ void TokenInfoItem::setOfflinePayments(int value)
     {
         m_offlinePayments = value;
         emit offlinePaymentsChanged();
-    }
-}
-
-bool TokenInfoItem::getIgnoreStoredVouchers() const
-{
-    return m_ignoreStoredVouchers;
-}
-
-void TokenInfoItem::setIgnoreStoredVouchers(bool value)
-{
-    if (m_ignoreStoredVouchers != value)
-    {
-        m_ignoreStoredVouchers = value;
-        emit ignoreStoredVouchersChanged();
     }
 }
 

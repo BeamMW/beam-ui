@@ -264,11 +264,25 @@ Item
                         Layout.maximumHeight: 180
                         Layout.fillWidth: true
                         SFText {
-                            //Layout.alignment: Qt.AlignHCenter
                             anchors.horizontalCenter: parent.horizontalCenter
                             //% "Your wallet will be migrated to v "
                             text: qsTrId("start-migration-message") + viewModel.walletVersion()
                             color: Style.content_main
+                            font.pixelSize: 14
+                        }
+                    }
+
+                    Item {
+                        Layout.fillHeight: true
+                        Layout.minimumHeight: 40
+                        Layout.maximumHeight: 180
+                        Layout.fillWidth: true
+                        visible: !viewModel.isOnlyOneInstanceStarted
+                        SFText {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            //% "The wallet is already started. Close all running wallets and start again."
+                            text: qsTrId("start-second-copy-error")
+                            color: Style.validator_error
                             font.pixelSize: 14
                         }
                     }
@@ -284,6 +298,7 @@ Item
                             //% "Start auto migration"
                             text: qsTrId("start-migration-button")
                             icon.source: "qrc:/assets/icon-repeat.svg"
+                            enabled: viewModel.isOnlyOneInstanceStarted
                             onClicked: 
                             {
                                 startWizzardView.push(selectWalletDBView);
@@ -299,6 +314,7 @@ Item
                             //% "Select wallet database file manually"
                             text: qsTrId("start-migration-select-file-button")
                             icon.source: "qrc:/assets/icon-folder.svg"
+                            enabled: viewModel.isOnlyOneInstanceStarted
                             onClicked: {
                                 var path = viewModel.selectCustomWalletDB();
 
@@ -316,6 +332,7 @@ Item
                         text: qsTrId("general-restore-or-create-wallet")
                         color: Style.active
                         font.pixelSize: 14
+                        visible: viewModel.isOnlyOneInstanceStarted
                 
                         MouseArea {
                             anchors.fill: parent
@@ -429,7 +446,7 @@ Item
                                         }
                                     }
                                     function elidedText(str, isPreferred){
-                                        var textMetricsTemplate = 'import QtQuick 2.11; TextMetrics{font{family: "SF Pro Display";styleName: "Regular";weight: Font.Normal;pixelSize: 14;}elide: Text.ElideLeft;elideWidth: parent.width - tableView.textLeftMargin;text: "%1"}';
+                                        var textMetricsTemplate = 'import QtQuick 2.11; TextMetrics{font{family: "Proxima Nova";styleName: "Regular";weight: Font.Normal;pixelSize: 14;}elide: Text.ElideLeft;elideWidth: parent.width - tableView.textLeftMargin;text: "%1"}';
                                         var fullTextStr = isPreferred ? str + " " + pathLabel.bestMatchStr: str;
                                         var textMetrics= Qt.createQmlObject(
                                                 textMetricsTemplate.arg(fullTextStr),
@@ -585,7 +602,7 @@ Item
                         text: qsTrId("general-restore-or-create-wallet")
                         color: Style.active
                         font.pixelSize: 14
-                
+
                         MouseArea {
                             anchors.fill: parent
                             acceptedButtons: Qt.LeftButton
@@ -1081,7 +1098,7 @@ Item
                     {
                         //% "Passwords do not match"
                         passwordError.text = qsTrId("start-create-pwd-not-match-error");
-                        confirmPassword.color = Style.validator_error
+                        confirmPassword.hasError = true
                     }
                     else
                     {
@@ -1116,8 +1133,8 @@ Item
                             text: viewModel.isRecoveryMode
                                 //% "Create new password"
                                 ? qsTrId("start-recovery-title")
-                                //% "Create new wallet"
-                                : qsTrId("general-create-wallet")
+                                //% "Create password"
+                                : qsTrId("start-create-password")
                             color: Style.content_main
                             font.pixelSize: 36
                         }
@@ -1154,17 +1171,64 @@ Item
                                 font.styleName: "Bold"; font.weight: Font.Bold
                             }
 
-                            SFTextInput {
+                            PasswordBoxInput {
                                 id:password
                                 width: parent.width
-                                font.pixelSize: 14
-                                color: Style.content_main
-                                echoMode: TextInput.Password
-                                onTextChanged: if (password.text.length > 0) passwordError.text = ""
+                                font.pixelSize: 16
+                                showEye: true
+                                onTextChanged: {
+                                    if (confirmPassword.text.length == password.text.length) {
+                                        passwordError.text = "";
+                                        confirmPassword.hasError = false;
+                                    }
+                                }
                                 onAccepted: {
                                     confirmPassword.forceActiveFocus();
                                 }
                             }
+                        }
+
+                        Column {
+                            width: parent.width
+                            spacing: 10
+
+                            SFText {
+                                //% "Password confirmation"
+                                text: qsTrId("start-create-pwd-confirm-label")
+                                color: Style.content_main
+                                font.pixelSize: 14
+                                font.styleName: "Bold"; font.weight: Font.Bold
+                            }
+
+                            PasswordBoxInput {
+                                id: confirmPassword
+                                width: parent.width
+                                font.pixelSize: 16
+                                showEye: true
+                                onTextChanged: {
+                                    if (confirmPassword.text.length == password.text.length) {
+                                        passwordError.text = "";
+                                        this.hasError = false;
+                                    }
+                                }
+                                onAccepted: {
+                                    onEnterPassword();
+                                } 
+                            }
+
+                            SFText {
+                                id: passwordError
+                                color: Style.validator_error
+                                font.pixelSize: 14
+                                font.italic: true
+                                height: 16
+                                width: parent.width
+                            }
+                        }
+
+                        Column {
+                            width: parent.width
+                            spacing: 10
 
                             RowLayout{
                                 id: strengthChecker
@@ -1219,7 +1283,7 @@ Item
 
                             SFText {
                                 text: strengthChecker.strength > 0 ? strengthChecker.strengthTests[strengthChecker.strength-1].msg : ""
-                                color: Style.content_secondary
+                                color: Style.content_main
                                 font.pixelSize: 14
                                 height: 16
                                 width: parent.width
@@ -1234,47 +1298,8 @@ Item
 */
                                 text: qsTrId("start-create-pwd-strength-message")
                                 color: Style.content_secondary
-                                visible: strengthChecker.strength > 0 && strengthChecker.strength < 6
                                 font.pixelSize: 14
                                 height: 80
-                                width: parent.width
-                            }
-                        }
-
-                        Column {
-                            width: parent.width
-                            anchors.bottomMargin: 6
-                            spacing: 10
-
-                            SFText {
-                                //% "Confirm password"
-                                text: qsTrId("start-create-pwd-confirm-label")
-                                color: Style.content_main
-                                font.pixelSize: 14
-                                font.styleName: "Bold"; font.weight: Font.Bold
-                            }
-
-                            SFTextInput {
-                                id: confirmPassword
-                                width: parent.width
-
-                                font.pixelSize: 14
-                                color: Style.content_main
-                                echoMode: TextInput.Password
-                                onTextChanged: {
-                                    if (confirmPassword.text.length > 0) passwordError.text = ""
-                                    this.color = Style.content_main;
-                                }
-                                onAccepted: {
-                                    onEnterPassword();
-                                } 
-                            }
-
-                            SFText {
-                                id: passwordError
-                                color: Style.validator_error
-                                font.pixelSize: 14
-                                height: 16
                                 width: parent.width
                             }
                         }
@@ -1301,11 +1326,12 @@ Item
                             text: viewModel.isRecoveryMode
                                 //% "Open my wallet"
                                 ? qsTrId("general-open-wallet")
-                                //% "Start using your wallet"
-                                : qsTrId("general-start-using")
+                                //% "Next"
+                                : qsTrId("general-next")
                             icon.source : viewModel.isRecoveryMode
                                 ? "qrc:/assets/icon-wallet-small.svg"
                                 : "qrc:/assets/icon-next-blue.svg"
+                            enabled: password.text.length > 0 && confirmPassword.text.length == password.text.length && passwordError.text == ""
                             onClicked: {
                                 onEnterPassword();
                             }
@@ -1678,10 +1704,15 @@ Item
                             echoMode: TextInput.Password
                             onAccepted: btnCurrentWallet.clicked()
                             onTextChanged: if (openPassword.text.length > 0) openPasswordError.text = ""
+                            enabled: viewModel.isOnlyOneInstanceStarted
                         }
 
                         SFText {
                             id: openPasswordError
+                            text: viewModel.isOnlyOneInstanceStarted
+                                ? ""
+                                //% "The wallet is already started. Close all running wallets and start again."
+                                : qsTrId("start-second-copy-error")
                             color: Style.validator_error
                             font.pixelSize: 14
                         }
@@ -1720,7 +1751,7 @@ Item
                         PrimaryButton {
                             anchors.verticalCenter: parent.verticalCenter
                             id: btnCurrentWallet
-                            enabled: !viewModel.useHWWallet || viewModel.isTrezorConnected
+                            enabled: viewModel.isOnlyOneInstanceStarted && (!viewModel.useHWWallet || viewModel.isTrezorConnected)
                             text: (viewModel.useHWWallet == false)
                                 ?
                                 //% "Show my wallet"
@@ -1768,6 +1799,7 @@ Item
                         text: qsTrId("general-restore-or-create-wallet")
                         color: Style.active
                         font.pixelSize: 14
+                        visible: viewModel.isOnlyOneInstanceStarted
                         MouseArea {
                             anchors.fill: parent
                             acceptedButtons: Qt.LeftButton

@@ -23,6 +23,7 @@
 #include "utility/logger.h"
 #include "utility/fsutils.h"
 #include <QApplication>
+#include <QCryptographicHash>
 #include <QTranslator>
 #include <QFileDialog>
 #include <QStandardPaths>
@@ -85,15 +86,75 @@ const std::string& AppModel::getMyVersion()
 AppModel::AppModel(WalletSettings& settings)
     : m_settings{settings}
     , m_walletReactor(beam::io::Reactor::create())
+    , m_key(QCryptographicHash::hash(settings.getAppDataPath().c_str(), QCryptographicHash::Sha1).toHex())
+    , m_memKey(m_key + "_mem")
+    , m_memLock(m_key, 1, QSystemSemaphore::Create)
+    , m_memAppGuard(m_memKey)
 {
     assert(s_instance == nullptr);
     s_instance = this;
-    m_nodeModel.start();
+
+    m_memLock.acquire();
+    {
+        QSharedMemory fix(m_memKey);
+        fix.attach();
+    }
+    m_memLock.release();
+
+    if (tryLock())
+    {
+        m_isOnlyOneInstanceStarted = true;
+        m_nodeModel.start();
+    }
+    else
+    {
+        LOG_ERROR() << "Trying to start second instance of application";
+    }
 }
 
 AppModel::~AppModel()
 {
     s_instance = nullptr;
+    release();
+}
+
+bool AppModel::tryLock()
+{
+    if (isAnotherRunning())
+        return false;
+
+    m_memLock.acquire();
+    bool result = m_memAppGuard.create(sizeof(quint64));
+    m_memLock.release();
+    if (!result)
+    {
+        release();
+        return false;
+    }
+
+    return true;
+}
+
+bool AppModel::isAnotherRunning()
+{
+    if (m_memAppGuard.isAttached())
+        return false;
+
+    m_memLock.acquire();
+    bool isRunning = m_memAppGuard.attach();
+    if (isRunning)
+        m_memAppGuard.detach();
+    m_memLock.release();
+
+    return isRunning;
+}
+
+void AppModel::release()
+{
+    m_memLock.acquire();
+    if (m_memAppGuard.isAttached())
+        m_memAppGuard.detach();
+    m_memLock.release();
 }
 
 void AppModel::backupDB(const std::string& dbFilePath)
@@ -320,6 +381,11 @@ void AppModel::setSeedValidationTriggeredFromSetting(bool value)
     m_isSeedValidationTriggeredFromSettings = value;
 }
 
+bool AppModel::isOnlyOneInstanceStarted() const
+{
+    return m_isOnlyOneInstanceStarted;
+}
+
 void AppModel::resetWallet()
 {
     if (m_nodeModel.isNodeRunning())
@@ -343,9 +409,17 @@ void AppModel::onResetWallet()
 {
     m_walletConnections.disconnect();
 
+    assert(m_myAssets);
+    assert(m_myAssets.use_count() == 1);
+    m_myAssets.reset();
+
     assert(m_assets);
     assert(m_assets.use_count() == 1);
     m_assets.reset();
+
+    assert(m_rates);
+    assert(m_rates.use_count() == 1);
+    m_rates.reset();
 
     assert(m_wallet);
     assert(m_wallet.use_count() == 1);
@@ -420,13 +494,16 @@ void AppModel::startWallet()
     };
 
 #ifdef BEAM_LELANTUS_SUPPORT
-    additionalTxCreators->emplace(TxType::PushTransaction, std::make_shared<lelantus::PushTransaction::Creator>(m_db));
+    additionalTxCreators->emplace(
+        TxType::PushTransaction,
+        std::make_shared<lelantus::PushTransaction::Creator>([this]() {return m_db;}));
 #endif
 
-    additionalTxCreators->emplace(TxType::DexSimpleSwap, std::make_shared<DexTransaction::Creator>(m_db));
+    //additionalTxCreators->emplace(TxType::DexSimpleSwap, std::make_shared<DexTransaction::Creator>(m_db));
     additionalTxCreators->emplace(TxType::AssetInfo, std::make_shared<AssetInfoTransaction::Creator>());
 
     bool displayRate = m_settings.getRateCurrency() != beam::wallet::Currency::UNKNOWN();
+    //m_wallet->getAsync()->enableBodyRequests(true);
     m_wallet->start(activeNotifications, displayRate, additionalTxCreators);
 }
 
@@ -530,8 +607,10 @@ void AppModel::start()
 
     initSwapClients();
 
-    m_wallet = std::make_shared<WalletModel>(m_db, nodeAddrStr, m_walletReactor);
-    m_assets = std::make_shared<AssetsManager>(m_wallet);
+    m_wallet   = std::make_shared<WalletModel>(m_db, nodeAddrStr, m_walletReactor);
+    m_rates    = std::make_shared<ExchangeRatesManager>(m_wallet, m_settings);
+    m_assets   = std::make_shared<AssetsManager>(m_wallet, m_rates);
+    m_myAssets = std::make_shared<AssetsList>(m_wallet, m_assets, m_rates);
 
     if (m_settings.getRunLocalNode())
     {
@@ -568,7 +647,20 @@ void AppModel::changeWalletPassword(const std::string& pass)
 
 WalletModel::Ptr AppModel::getWalletModel() const
 {
+    if (m_wallet) return m_wallet;
+
+    assert(false);
+    throw std::runtime_error("getWalletModel for empty model");
+}
+
+WalletModel::Ptr AppModel::getWalletModelUnsafe() const
+{
     return m_wallet;
+}
+
+AssetsList::Ptr AppModel::getMyAssets() const
+{
+    return m_myAssets;
 }
 
 WalletSettings& AppModel::getSettings() const
@@ -578,7 +670,18 @@ WalletSettings& AppModel::getSettings() const
 
 AssetsManager::Ptr AppModel::getAssets() const
 {
-    return m_assets;
+    if (m_assets) return m_assets;
+
+    assert(false);
+    throw std::runtime_error("getAssets for empty assets");
+}
+
+ExchangeRatesManager::Ptr AppModel::getRates() const
+{
+    if (m_rates) return m_rates;
+
+    assert(false);
+    throw std::runtime_error("getRates for empty rates");
 }
 
 MessageManager& AppModel::getMessages()

@@ -16,7 +16,7 @@
 
 #include "tx_object.h"
 #include "viewmodel/helpers/list_model.h"
-#include "assets_manager.h"
+#include "model/assets_manager.h"
 #include <QLocale>
 
 class TxObjectList : public ListModel<std::shared_ptr<TxObject>>
@@ -80,12 +80,15 @@ public:
         CidsStr,
         Source,
         SourceSort,
+        Action,
+        ActionSort,
         MinConfirmations,
         ConfirmationsProgress,
         IsDappTx,
         DAppId,
         DAppName,
-        IsActive
+        IsActive,
+        IsFeeOnly
     };
     Q_ENUM(Roles)
 

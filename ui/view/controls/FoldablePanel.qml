@@ -163,7 +163,7 @@ Pane {
 
             cursorShape:  Qt.PointingHandCursor
             onClicked: {
-                control.folded = !control.folded;
+                control.folded = !control.folded
             }
         }
     }

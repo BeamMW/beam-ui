@@ -14,7 +14,8 @@ Rectangle {
 
     property var    openedNotifications: 0
     property var    notificationOffset: 0
-    property alias  hasNewerVersion : updateInfoProvider.hasNewerVersion
+    property alias  hasNewerVersion : notificationManager.hasNewerVersion
+    readonly property bool devMode: viewModel.isDevMode
     anchors.fill:   parent
 
     function increaseNotificationOffset(popup) {
@@ -58,7 +59,7 @@ Rectangle {
             message: ["Your current version is v", currentVersion, ".Please update to get the most of your Beam wallet."].join(" "),
             acceptButtonText: "update now",
             onCancel: function () {
-                updateInfoProvider.onCancelPopup(id);
+                notificationManager.onCancelPopup(id);
                 popup.close();
             },
             onAccept: function () {
@@ -66,6 +67,10 @@ Rectangle {
             }
          });
          showPopup(popup)
+    }
+
+    function closeContractNotification(txId) {
+        notificationManager.closeContractNotification(txId);
     }
 
 	MainViewModel {
@@ -76,9 +81,13 @@ Rectangle {
     }
 
     PushNotificationManager {
-        id: updateInfoProvider
+        id: notificationManager
         onShowUpdateNotification: function (newVersion, currentVersion, id) {
             showUpdatePopup (newVersion, currentVersion, id)
+        }
+
+        onShowContractNotification: function(txId, appName, comment, appicon) {
+            showAppTxPopup(comment, appName, appicon, txId);
         }
     }
 
@@ -166,7 +175,7 @@ Rectangle {
     }
 
     function appsQml () {
-        return BeamGlobals.isFork3() ? "applications" : "applications_nofork"
+        return BeamGlobals.isFork3() ? "applications/applications" : "applications/applications_nofork"
     }
 
     function appArgs (name, appid, showBack) {
@@ -179,11 +188,12 @@ Rectangle {
     property var contentItems : [
         {name: "wallet"},
         {name: "atomic_swap"},
+        {name: "applications", qml: appsQml},
+        {name: "daocore", qml: appsQml, args: () => appArgs("BeamX DAO", viewModel.daoCoreAppID, false)},
         // {name: "dex"},
         {name: "addresses"},
         {name: "notifications"},
-        {name: "applications", qml: appsQml},
-        {name: "daocore", qml: appsQml, args: () => appArgs("BeamX DAO", viewModel.daoCoreAppID, false)},
+        {name: "help"},
         {name: "settings"}
     ]
 
@@ -208,7 +218,6 @@ Rectangle {
             y:  50
             anchors.horizontalCenter: parent.horizontalCenter
             source: Style.navigation_logo
-            smooth: true
         }
 
         ColumnLayout {
@@ -225,11 +234,11 @@ Rectangle {
 
                 ColumnLayout {
                     Layout.fillWidth:  true
-                    Layout.fillHeight: modelData.name =='settings'
+                    Layout.fillHeight: modelData.name =='addresses'
 
                     Item {
                         Layout.fillHeight: true
-                        visible: modelData.name == 'settings'
+                        visible: modelData.name == 'addresses'
                     }
 
                     Item {
@@ -300,7 +309,7 @@ Rectangle {
                             width: parent.width - 20
                             height: 2
                             color: Style.background_button
-                            visible: modelData.name == 'applications'
+                            visible: modelData.name == 'dex'
                         }
 
                         Keys.onPressed: {
@@ -353,12 +362,33 @@ Rectangle {
             viewModel.update(index)
         }
 
-        if (typeof(indexOrID) == "string") {
+        var indexByName = function(name) {
             for (var index = 0; index < contentItems.length; index++) {
-                if (contentItems[index].name == indexOrID) {
-                    indexOrID = index
+                if (contentItems[index].name == name) {
+                    return index;
                 }
             }
+
+            return -1;
+        }
+
+        if ((typeof(indexOrID) == "number" && contentItems[indexOrID].name == "help") ||
+            (typeof(indexOrID) == "string" && indexOrID == "help")) {
+            var previoslySelected = selectedItem;
+            selectedItem = typeof(indexOrID) == "string" ? indexByName(indexOrID) : indexOrID;
+            controls.itemAt(selectedItem).focus = true;
+            Utils.openExternalWithConfirmation(
+                "https://documentation.beam.mw/",
+                function () {
+                    selectedItem = previoslySelected;
+                    controls.itemAt(selectedItem).focus = true;
+                });
+
+            return;
+        }
+        
+        if (typeof(indexOrID) == "string") {
+            indexOrID = indexByName(indexOrID);
         }
 
         // here we always have a number

@@ -8,8 +8,8 @@ import "."
 
 T.Menu {
 	id: control
-    topPadding: 20
-    bottomPadding: 20
+    topPadding: 16
+    bottomPadding: 16
     implicitWidth: Math.max(background ? background.implicitWidth : 0,
                             contentItem ? contentItem.implicitWidth + leftPadding + rightPadding : 0)
     implicitHeight: Math.max(background ? background.implicitHeight : 0,

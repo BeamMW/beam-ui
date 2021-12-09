@@ -15,8 +15,8 @@ jobs:
     strategy:
       matrix:
         #  os: [macos-10.15, ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2019]
-        os: [macos-10.15, ubuntu-16.04, windows-2019]
-
+        os: [macos-10.15, ubuntu-18.04, windows-2019]
+        # os: [ubuntu-16.04, windows-2019]
     steps:
     - uses: actions/checkout@v2
       with:
@@ -25,7 +25,7 @@ jobs:
     - name: Submodule update
       shell: bash
       run: |
-        git submodule update --init --recursive --remote --jobs 4
+        git submodule update --init --recursive --jobs 4
         cd beam
         git apply 3rdparty/protobuf-patch.diff
 
@@ -40,7 +40,7 @@ jobs:
     - name: OS name [ununtu all]
       shell: bash
       if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
-      run: echo "PACKAGE_NAME=linux" >> $GITHUB_ENV
+      run: echo "PACKAGE_NAME=Linux" >> $GITHUB_ENV
 
     - name: Create Build Environment [macos-10.15]
       if: matrix.os == 'macos-10.15'
@@ -138,6 +138,7 @@ jobs:
         echo "BEAM_DISPLAY_SUFFIX=Testnet" >> $GITHUB_ENV
         echo "BEAM_DISPLAY_SUFFIX2=-Testnet" >> $GITHUB_ENV
         echo "BEAM_DISPLAY_SUFFIX3= Testnet" >> $GITHUB_ENV
+        echo "BEAM_DISPLAY_SUFFIX4=_Testnet" >> $GITHUB_ENV
         rm beam_version.gen
 
 ###############################################################################
@@ -163,29 +164,41 @@ jobs:
     - name: CPack [macos-10.15 && ununtu all]
       if: matrix.os != 'windows-2019'
       run: cpack
-    
-    - name: AppImage [ubuntu-16.04]
+
+    - name: LinuxQtDeployTool [ubuntu-16.04]
       if: matrix.os == 'ubuntu-16.04'
+      run: echo "LINUX_QT_DEPLOY_TOOL=linuxdeployqt-7" >> $GITHUB_ENV
+
+    - name: LinuxQtDeployTool [ubuntu-18.04]
+      if: matrix.os == 'ubuntu-18.04'
+      run: echo "LINUX_QT_DEPLOY_TOOL=linuxdeployqt" >> $GITHUB_ENV
+
+    - name: AppImage [ubuntu-16.04 || ubuntu-18.04]
+      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04'
       run: |
         echo "Creating AppImage deploy tree"
         mkdir -p ./deploy/usr/bin
         mkdir -p ./deploy/usr/share/applications
         mkdir -p ./deploy/usr/share/icons/hicolor/256x256/apps
+        mkdir -p ./deploy/usr/share/icons/hicolor/256x256/mimetypes
+        mkdir -p ./deploy/usr/share/mime/packages
         echo "Copying files to AppImage deploy tree"
         cp ui/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}} deploy/usr/bin/
         cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/apps/
+        cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/mimetypes/application-x-beam-dapp.png
+        cp ui/x-beam-dapp.xml deploy/usr/share/mime/packages
         cp ui/beam.desktop deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop
         cp ui/beam-wallet.cfg deploy/usr/bin/
         echo "Creating AppImage"
-        chmod a+x ui/3rdparty/linuxdeployqt-7
+        chmod a+x ui/3rdparty/${{env.LINUX_QT_DEPLOY_TOOL}}
         export VERSION=${{env.BEAM_VERSION}}
         # Below -exclude-libs is a work around for https://github.com/probonopd/linuxdeployqt/issues/35
-        ./ui/3rdparty/linuxdeployqt-7 ./deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop -appimage -no-translations -always-overwrite -qmldir="./ui/view" -no-copy-copyright-files -exclude-libs="libnss3.so,libnssutil3.so"
+        ./ui/3rdparty/${{env.LINUX_QT_DEPLOY_TOOL}} ./deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop -appimage -no-translations -always-overwrite -qmldir="./ui/view" -no-copy-copyright-files -exclude-libs="libnss3.so,libnssutil3.so"
 
     - name: CPack [windows]
       shell: bash
       if: matrix.os == 'windows-2019'
-      run: cpack --verbose -G NSIS -C $BUILD_CONFIG
+      run: cpack.exe --verbose -G NSIS -C $BUILD_CONFIG
 
 ###############################################################################
 # Collect artifacts
@@ -216,10 +229,10 @@ jobs:
       run: |
         #cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Linux.deb Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb
         #sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb > checksum.txt
-        cp Beam_Wallet_Testnet-${{env.BEAM_VERSION}}-x86_64.AppImage Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.AppImage
-        sha256sum Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.AppImage > Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.AppImage-checksum.txt
-        chmod a+x Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.AppImage
-        tar -cvf Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.tar Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.AppImage
+        cp Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
+        sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage > Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage-checksum.txt
+        chmod a+x Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
+        tar -cvf Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.tar Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
 
     - name: Collect [windows]
       shell: bash
@@ -241,7 +254,7 @@ jobs:
         if-no-files-found: error
 
     - uses: actions/upload-artifact@v2
-      if: matrix.os == 'ubuntu-16.04'
+      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04'
       with:
         name: ${{env.PACKAGE_NAME}}-Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}
         path: Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.tar

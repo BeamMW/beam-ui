@@ -112,8 +112,8 @@ set(UI_SRC
     viewmodel/applications/apps_server.cpp
     viewmodel/applications/apps_view.h
     viewmodel/applications/apps_view.cpp
-    viewmodel/applications/webapi_beam.h
-    viewmodel/applications/webapi_beam.cpp
+    viewmodel/applications/apps_api_ui.h
+    viewmodel/applications/apps_api_ui.cpp
     viewmodel/applications/public.cpp
     viewmodel/applications/public.h
     viewmodel/helpers/list_model.h
@@ -149,12 +149,13 @@ set(UI_SRC
     viewmodel/utxo/utxo_view.cpp
     viewmodel/utxo/utxo_view_status.h
     viewmodel/utxo/utxo_view_type.h
+    viewmodel/notifications/app_notification_helper.cpp
     viewmodel/notifications/notification_item.cpp
     viewmodel/notifications/notifications_list.cpp
     viewmodel/notifications/notifications_view.cpp
     viewmodel/notifications/notifications_settings.cpp
     viewmodel/notifications/push_notification_manager.cpp
-    viewmodel/notifications/exchange_rates_manager.cpp
+        model/exchange_rates_manager.cpp
     viewmodel/main_view.h
     viewmodel/main_view.cpp
     viewmodel/help_view.h
@@ -194,14 +195,14 @@ set(UI_SRC
     viewmodel/wallet/token_item.cpp
     viewmodel/wallet/assets_view.h
     viewmodel/wallet/assets_view.cpp
-    viewmodel/wallet/assets_list.h
-    viewmodel/wallet/assets_list.cpp
-    viewmodel/wallet/asset_object.h
-    viewmodel/wallet/asset_object.cpp
-    viewmodel/wallet/assets_manager.h
-    viewmodel/wallet/assets_manager.cpp
+        model/assets_list.h
+        model/assets_list.cpp
+        model/asset_object.h
+        model/asset_object.cpp
+        model/assets_manager.h
+        model/assets_manager.cpp
     viewmodel/applications/webapi_creator.cpp
-        viewmodel/dex/dex_view.h
+    viewmodel/dex/dex_view.h
     viewmodel/dex/dex_view.cpp
     viewmodel/dex/dex_order_object.cpp
     viewmodel/dex/dex_orders_list.cpp

@@ -25,6 +25,7 @@ CustomDialog {
     property string token
     property bool hasToken: token.length > 0 
 
+    property bool   feeOnly
     property string fee
     property string feeUnit
     property string feeRate
@@ -298,12 +299,14 @@ CustomDialog {
                 color: Style.content_secondary
                 //% "Amount"
                 text: qsTrId("tx-details-amount-label") + ":"
+                visible: !dialog.feeOnly
             }
 
             ColumnLayout {
                 id: amountsList
                 Layout.fillWidth: true
                 spacing: 10
+                visible: !dialog.feeOnly
 
                 Repeater {
                     model: dialog.assetCount
@@ -414,7 +417,7 @@ CustomDialog {
                 Layout.alignment:       Qt.AlignTop
                 font.pixelSize:         14
                 color:                  Style.content_secondary
-                //% "DAPP name"
+                //% "DApp name"
                 text:                   qsTrId("address-info-dapp") + ":"
                 visible:                dappNameText.visible
             }
@@ -545,35 +548,10 @@ CustomDialog {
                 height: 16
                 visible: dialog.isCompleted && kernelID.parent.visible
             }
-            Item {
-                Layout.preferredWidth: openInExplorer.width + 10 + openInExplorerIcon.width
-                height: 16
+            OpenInBlockchainExplorer {
                 visible: dialog.isCompleted && kernelID.parent.visible
-
-                SFText {
-                    id: openInExplorer
-                    font.pixelSize: 14
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    anchors.rightMargin: 10
-                    color: Style.active
-                    //% "Open in Blockchain Explorer"
-                    text: qsTrId("open-in-explorer")
-                }
-                SvgImage {
-                    id: openInExplorerIcon
-                    anchors.top: parent.top
-                    anchors.right: parent.right
-                    source: "qrc:/assets/icon-external-link-green.svg"
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        openExternal(dialog.kernelID);
-                    }
-                    hoverEnabled: true
+                onTriggered: function(kernelID) {
+                    openExternal(dialog.kernelID);
                 }
             }
 

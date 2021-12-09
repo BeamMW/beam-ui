@@ -180,7 +180,7 @@ namespace {
         //% "shielded pool"
         return qtTrId("from-shielded-pool");
     }
-}
+}  // namespace
 
 NotificationItem::NotificationItem(const beam::wallet::Notification& notification)
     : m_notification{notification}
@@ -200,6 +200,16 @@ QDateTime NotificationItem::timeCreated() const
 {
     QDateTime datetime;
     datetime.setTime_t(m_notification.m_createTime);
+    return datetime;
+}
+
+QDateTime NotificationItem::txTimeCreated() const
+{
+    auto p = getTxParameters(m_notification);
+    beam::wallet::TxDescription desc(p);
+
+    QDateTime datetime;
+    datetime.setTime_t(desc.m_createTime);
     return datetime;
 }
 
@@ -258,10 +268,10 @@ QString NotificationItem::title() const
                 {
                     if (isSender(p))
                     {
-                        //% "Max Privacy transaction sent"
+                        //% "Maximum anonymity transaction sent"
                         return qtTrId("notification-maxp-transaction-sent");
                     }
-                    //% "Max Privacy transaction received"
+                    //% "Maximum anonymity transaction received"
                     return qtTrId("notification-maxp-transaction-received");
                 }
                 if (isSender(p))
@@ -276,7 +286,7 @@ QString NotificationItem::title() const
                 //% "Atomic Swap offer completed"
                 return qtTrId("notification-swap-completed");
             case TxType::Contract:
-                //% "DAPP transaction completed"
+                //% "DApp transaction completed"
                 return qtTrId("notification-contract-completed");
             default:
                 return "error";
@@ -295,7 +305,7 @@ QString NotificationItem::title() const
                 auto t = getAddressType(p);
                 if (t == TxAddressType::MaxPrivacy)
                 {
-                     //% "Max Privacy transaction failed"
+                     //% "Maximum anonymity transaction failed"
                     return qtTrId("notification-maxp-transaction-failed");
                 }
                 //% "Offline transaction failed"
@@ -310,9 +320,9 @@ QString NotificationItem::title() const
                         qtTrId("notification-swap-failed");
             case TxType::Contract:
                 return isExpired(p) ?
-                    //% "DAPP transaction expired"
+                    //% "DApp transaction expired"
                     qtTrId("notification-contract-expired") :
-                    //% "DAPP transaction failed"
+                    //% "DApp transaction failed"
                     qtTrId("notification-contract-failed");
             default:
                 return "error";

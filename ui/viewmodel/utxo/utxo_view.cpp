@@ -20,12 +20,12 @@ using namespace std;
 using namespace beamui;
 
 UtxoViewModel::UtxoViewModel()
-    : m_model{*AppModel::getInstance().getWalletModel()}
+    : m_model(AppModel::getInstance().getWalletModel())
 {
-    connect(&m_model, &WalletModel::normalCoinsChanged,  this, &UtxoViewModel::onNormalCoinsChanged);
-    connect(&m_model, &WalletModel::shieldedCoinChanged, this, &UtxoViewModel::onShieldedCoinChanged);
-    connect(&m_model, &WalletModel::walletStatusChanged, this, &UtxoViewModel::stateChanged);
-    m_model.getAsync()->getAllUtxosStatus();
+    connect(m_model.get(), &WalletModel::normalCoinsChanged,  this, &UtxoViewModel::onNormalCoinsChanged);
+    connect(m_model.get(), &WalletModel::shieldedCoinChanged, this, &UtxoViewModel::onShieldedCoinChanged);
+    connect(m_model.get(), &WalletModel::walletStatusChanged, this, &UtxoViewModel::stateChanged);
+    m_model->getAsync()->getAllUtxosStatus();
 }
 
 QAbstractItemModel* UtxoViewModel::getAllUtxos()
@@ -35,12 +35,12 @@ QAbstractItemModel* UtxoViewModel::getAllUtxos()
 
 QString UtxoViewModel::getCurrentHeight() const
 {
-    return QString::fromStdString(to_string(m_model.getCurrentStateID().m_Height));
+    return QString::fromStdString(to_string(m_model->getCurrentStateID().m_Height));
 }
 
 QString UtxoViewModel::getCurrentStateHash() const
 {
-    return QString(beam::to_hex(m_model.getCurrentStateID().m_Hash.m_pData, 10).c_str());
+    return {beam::to_hex(m_model->getCurrentStateID().m_Hash.m_pData, 10).c_str()};
 }
 
 bool UtxoViewModel::getMaturingMaxPrivacy() const
@@ -68,8 +68,7 @@ void UtxoViewModel::setAssetId(unsigned int id)
     {
         m_assetId = id;
         emit assetIdChanged();
-
-        m_model.getAsync()->getAllUtxosStatus();
+        m_model->getAsync()->getAllUtxosStatus();
     }
 }
 

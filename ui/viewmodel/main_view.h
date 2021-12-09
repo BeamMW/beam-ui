@@ -26,6 +26,7 @@ class MainViewModel : public QObject
     Q_PROPERTY(int unreadNotifications  READ getUnreadNotifications NOTIFY unreadNotificationsChanged)
     Q_PROPERTY(QString daoCoreAppID     READ getDaoCoreAppID        CONSTANT)
     Q_PROPERTY(QString faucetAppID      READ getFaucetAppID         CONSTANT)
+    Q_PROPERTY(bool isDevMode           READ getDevMode             CONSTANT)
 public:
     MainViewModel();
 
@@ -51,6 +52,7 @@ private:
     [[nodiscard]] int getUnreadNotifications() const;
     [[nodiscard]] QString getDaoCoreAppID() const;
     [[nodiscard]] QString getFaucetAppID() const;
+    [[nodiscard]] bool getDevMode() const;
 private:
     WalletSettings& m_settings;
     QTimer m_timer;

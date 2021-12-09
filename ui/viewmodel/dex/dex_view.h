@@ -44,7 +44,7 @@ namespace beamui::dex {
         void onNewAddress(const beam::wallet::WalletAddress& addr);
 
     private:
-        WalletModel& _walletModel;
+        WalletModel::Ptr _walletModel;
         DexOrdersList _orders;
         beam::wallet::WalletAddress _receiverAddr;
     };

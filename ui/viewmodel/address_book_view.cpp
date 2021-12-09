@@ -137,20 +137,20 @@ QString ContactItem::getToken() const
 }
 
 AddressBookViewModel::AddressBookViewModel()
-    : m_model{*AppModel::getInstance().getWalletModel()}
+    : m_model(AppModel::getInstance().getWalletModel())
 {
-    connect(&m_model,
+    connect(m_model.get(),
             SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
             SLOT(onAddresses(bool, const std::vector<beam::wallet::WalletAddress>&)));
-    connect(&m_model,
+    connect(m_model.get(),
             SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)),
             SLOT(onTransactions(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
-    connect(&m_model,
+    connect(m_model.get(),
             SIGNAL(addressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>&)),
             SLOT(onAddressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>&)));
 
     getAddressesFromModel();
-    m_model.getAsync()->getTransactions();
+    m_model->getAsync()->getTransactions();
     startTimer(3 * 1000);
 }
 
@@ -304,7 +304,7 @@ bool AddressBookViewModel::isWIDBusy(const QString& wid)
 
 void AddressBookViewModel::deleteAddress(const QString& token)
 {
-    m_model.getAsync()->deleteAddressByToken(token.toStdString());
+    m_model->getAsync()->deleteAddressByToken(token.toStdString());
 }
 
 void AddressBookViewModel::saveChanges(const QString& wid, const QString& name, const QDateTime& expiration)
@@ -312,7 +312,7 @@ void AddressBookViewModel::saveChanges(const QString& wid, const QString& name, 
     beam::Timestamp expirationStamp = expiration.toSecsSinceEpoch();
     beam::wallet::WalletID walletID;
     walletID.FromHex(wid.toStdString());
-    m_model.getAsync()->updateAddress(walletID, name.toStdString(), expirationStamp);
+    m_model->getAsync()->updateAddress(walletID, name.toStdString(), expirationStamp);
 }
 
 // static
@@ -326,7 +326,7 @@ QString AddressBookViewModel::generateQR(
 // static
 bool AddressBookViewModel::commentValid(const QString& comment) const
 {
-    return !m_model.isAddressWithCommentExist(comment.toStdString());
+    return !m_model->isAddressWithCommentExist(comment.toStdString());
 }
 
 void AddressBookViewModel::onAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addresses)
@@ -449,8 +449,8 @@ void AddressBookViewModel::timerEvent(QTimerEvent *event)
 
 void AddressBookViewModel::getAddressesFromModel()
 {
-    m_model.getAsync()->getAddresses(true);
-    m_model.getAsync()->getAddresses(false);
+    m_model->getAsync()->getAddresses(true);
+    m_model->getAsync()->getAddresses(false);
 }
 
 void AddressBookViewModel::sortActiveAddresses()

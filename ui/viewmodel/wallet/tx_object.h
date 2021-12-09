@@ -19,7 +19,7 @@
 #include "viewmodel/ui_helpers.h"
 #include "wallet/client/extensions/news_channels/interface.h"
 #include "bvm/ManagerStd.h"
-#include "assets_list.h"
+#include "model/assets_list.h"
 
 class TxObject: public QObject
 {
@@ -56,12 +56,12 @@ public:
     bool isActive() const;
     QString getAppId();
     bool isDappTx();
+    bool isFeeOnly() const;
 
     const std::vector<beam::Asset::ID>& getAssetsList() const;
     const std::vector<QString>& getAssetAmounts() const;
     const std::vector<bool>& getAssetAmountsIncome() const;
     const std::vector<QString>& getAssetRates() const;
-    const std::vector<QString>& getAssetIds() const;
 
     bool isIncome() const;
     bool isSelfTx() const;
@@ -80,6 +80,7 @@ public:
     virtual bool isCanceled() const;
     virtual bool isFailed() const;
     virtual bool isMultiAsset() const;
+    bool canShowContractNotification() const;
 
 protected:
     [[nodiscard]] const beam::wallet::TxDescription& getTxDescription() const;
@@ -104,5 +105,4 @@ protected:
     std::vector<QString>         _assetAmounts;
     std::vector<bool>            _assetAmountsIncome;
     std::vector<QString>         _assetRates;
-    std::vector<QString>         _assetIDs;
 };

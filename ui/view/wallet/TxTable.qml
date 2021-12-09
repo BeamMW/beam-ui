@@ -14,13 +14,6 @@ Control {
 
     TxTableViewModel {
         id: tableViewModel
-
-        onTransactionsChanged: function () {
-            txNotify.forEach(function (json) {
-                var obj = JSON.parse(json)
-                control.showAppTxNotifcation(obj.txid, obj.appicon)
-            })
-        }
     }
 
     property int       selectedAsset: -1
@@ -29,32 +22,11 @@ Control {
     property alias     headerShaderVisible: transactionsTable.headerShaderVisible
     property var       dappFilter: undefined
     readonly property  bool sourceVisible: dappFilter ? dappFilter == "all" : true
+    readonly property  bool actionVisible: dappFilter !== undefined && dappFilter != "all"
     property var       owner
-    property var       txNotify: new Set()
 
     function showTxDetails (txid) {
         transactionsTable.showDetails (txid)
-    }
-
-    function showAppTxNotifcation (txid, appicon) {
-        var list  = tableViewModel.transactions
-        var index = list.index(0, 0)
-        var ilist = list.match(index, TxObjectList.Roles.TxID, txid)
-        if (ilist.length)
-        {
-            txNotify.delete(JSON.stringify({txid, appicon}))
-            main.showAppTxPopup(
-                list.data(ilist[0], TxObjectList.Roles.Comment),
-                list.data(ilist[0], TxObjectList.Roles.DAppName),
-                appicon, txid
-            )
-        }
-        else
-        {
-            // model not yet updated, transaction is still invisble for the list
-            // safe for the future
-            txNotify.add(JSON.stringify({txid, appicon}))
-        }
     }
 
     state: "all"
@@ -135,9 +107,29 @@ Control {
             BeamGlobals.copyToClipboard(text);
         }
         onOpenExternal: function(kernelID) {
-            var url = tableViewModel.explorerUrl + "block?kernel_id=" + kernelID;
+            var url = BeamGlobals.getExplorerUrl() + "block?kernel_id=" + kernelID;
             Utils.openExternalWithConfirmation(url);
         };
+    }
+
+    function getAddrTypeFromModel(model) {
+        if (model) {
+            if (model.isMaxPrivacy) {
+                //% "Maximum anonymity"
+                return qsTrId("tx-address-max-privacy");
+            }
+            if (model.isOfflineToken) {
+                //% "Offline"
+                return qsTrId("tx-address-offline");
+            }
+            if (model.isPublicOffline) {
+                //% "Public offline"
+                return qsTrId("tx-address-public-offline");
+            }
+            //% "Regular"
+            return qsTrId("tx-address-regular");
+        }
+        return "";
     }
 
     contentItem: ColumnLayout {
@@ -274,7 +266,8 @@ Control {
                     isPublicOffline: model.getRoleValue(row, "isPublicOffline")
                 }
 
-                txDetails.addressType    =  Utils.getAddrTypeFromModel(addrModel)
+                txDetails.feeOnly        =  model.getRoleValue(row, "isFeeOnly")
+                txDetails.addressType    =  getAddrTypeFromModel(addrModel)
                 txDetails.assetNames     =  model.getRoleValue(row, "assetNames") || []
                 txDetails.assetVerified  =  model.getRoleValue(row, "assetVerified") || []
                 txDetails.assetIcons     =  model.getRoleValue(row, "assetIcons") || []
@@ -348,11 +341,11 @@ Control {
 
             property real rowHeight: 56
             property real resizableWidth: transactionsTable.width - 140
-            property real columnResizeRatio: resizableWidth / (610 - (sourceVisible ? 0 : 140))
+            property real columnResizeRatio: resizableWidth / (610 - (sourceVisible || actionVisible ? 0 : 140))
 
             selectionMode: SelectionMode.NoSelection
             sortIndicatorVisible: true
-            sortIndicatorColumn: 4
+            sortIndicatorColumn: 5
             sortIndicatorOrder: Qt.DescendingOrder
 
             onSortIndicatorColumnChanged: {
@@ -483,8 +476,8 @@ Control {
                 resizable: false
 
                 delegate: Item { CoinsList {
-                    width:  parent.width
-                    height: transactionsTable.rowHeight
+                    width:    parent.width
+                    height:   transactionsTable.rowHeight
                     icons:    model ? model.assetIcons : undefined
                     names:    model ? model.assetNames : undefined
                     verified: model ? model.assetVerified: undefined
@@ -497,7 +490,7 @@ Control {
                 //% "Amount"
                 title:     qsTrId("general-amount")
                 elideMode: Text.ElideRight
-                width:     130 * transactionsTable.columnResizeRatio
+                width:     115 * transactionsTable.columnResizeRatio
                 movable:   false
                 resizable: false
 
@@ -535,7 +528,7 @@ Control {
                             qsTrId("general-value")].join(' ')
 
                 elideMode: Text.ElideRight
-                width:     130 * transactionsTable.columnResizeRatio
+                width:     115 * transactionsTable.columnResizeRatio
                 movable:   false
                 resizable: false
                 visible:   !control.isContracts
@@ -569,10 +562,23 @@ Control {
                 //% "Source"
                 title:      qsTrId("wallet-txs-source")
                 elideMode:  Text.ElideRight
-                width:      140 * transactionsTable.columnResizeRatio
+                width:      130 * transactionsTable.columnResizeRatio
                 movable:    false
                 resizable:  false
                 visible:    sourceVisible
+            }
+
+            TableViewColumn {
+                role: "action"
+                id: actionColumn
+
+                //% "Action"
+                title:      qsTrId("wallet-txs-action")
+                elideMode:  Text.ElideRight
+                width:      140 * transactionsTable.columnResizeRatio
+                movable:    false
+                resizable:  false
+                visible:    actionVisible
             }
 
             TableViewColumn {
@@ -582,7 +588,7 @@ Control {
                 //% "Created on"
                 title:      qsTrId("wallet-txs-date-time")
                 elideMode:  Text.ElideRight
-                width:      110 * transactionsTable.columnResizeRatio
+                width:      105 * transactionsTable.columnResizeRatio
                 movable:    false
                 resizable:  false
             }
@@ -620,23 +626,31 @@ Control {
                                     }
                                     if (model.isInProgress) {
                                         if (model.isSelfTransaction) {
+                                            if (model.isOfflineToken || model.isPublicOffline)
+                                                return "qrc:/assets/icon-sending-own-offline.svg";
+                                            if (model.isShieldedTx)
+                                                return "qrc:/assets/icon-sending-max-privacy-own.svg";
                                             return "qrc:/assets/icon-sending-own.svg";
                                         }
                                         return model.isIncome
                                             ? !model.isShieldedTx ? "qrc:/assets/icon-receiving.svg" :
-                                                    model.isOfflineToken ? "qrc:/assets/icon-receiving-max-offline.svg" : "qrc:/assets/icon-receiving-max-online.svg"
+                                                    model.isOfflineToken || model.isPublicOffline ? "qrc:/assets/icon-receiving-offline.svg" : "qrc:/assets/icon-receiving-max-online.svg"
                                             : !model.isShieldedTx ? "qrc:/assets/icon-sending.svg" :
-                                                    model.isOfflineToken ? "qrc:/assets/icon-sending-max-offline.svg" : "qrc:/assets/icon-sending-max-online.svg";
+                                                    model.isOfflineToken || model.isPublicOffline ? "qrc:/assets/icon-sending-offline.svg" : "qrc:/assets/icon-sending-max-online.svg";
                                     }
                                     else if (model.isCompleted) {
                                         if (model.isSelfTransaction) {
+                                            if (model.isOfflineToken || model.isPublicOffline)
+                                                return "qrc:/assets/icon-sent-own-offline.svg";
+                                            if (model.isShieldedTx)
+                                                return "qrc:/assets/icon-sent-max-privacy-own.svg";
                                             return "qrc:/assets/icon-sent-own.svg";
                                         }
                                         return model.isIncome
                                             ? !model.isShieldedTx ? "qrc:/assets/icon-received.svg" :
-                                                    model.isOfflineToken ? "qrc:/assets/icon-received-max-offline.svg" : "qrc:/assets/icon-received-max-online.svg"
+                                                    model.isOfflineToken || model.isPublicOffline ? "qrc:/assets/icon-received-offline.svg" : "qrc:/assets/icon-received-max-online.svg"
                                             : !model.isShieldedTx ? "qrc:/assets/icon-sent.svg" :
-                                                    model.isOfflineToken ? "qrc:/assets/icon-sent-max-offline.svg" : "qrc:/assets/icon-sent-max-online.svg";
+                                                    model.isOfflineToken || model.isPublicOffline ? "qrc:/assets/icon-sent-offline.svg" : "qrc:/assets/icon-sent-max-online.svg";
                                     }
                                     else if (model.isExpired) {
                                         return "qrc:/assets/icon-expired.svg"
@@ -645,13 +659,13 @@ Control {
                                         return model.isIncome
                                             ? "qrc:/assets/icon-receive-failed.svg"
                                             : !model.isShieldedTx ? "qrc:/assets/icon-send-failed.svg" :
-                                                    model.isOfflineToken ? "qrc:/assets/icon-failed-max-offline.svg" : "qrc:/assets/icon-failed-max-online.svg";
+                                                    model.isOfflineToken ? "qrc:/assets/icon-send-failed-offline.svg" : "qrc:/assets/icon-failed-max-online.svg";
                                     }
                                     else {
                                         return model.isIncome
                                             ? "qrc:/assets/icon-receive-canceled.svg"
                                             : !model.isShieldedTx ? "qrc:/assets/icon-send-canceled.svg" :
-                                                    model.isOfflineToken ? "qrc:/assets/icon-canceled-max-offline.svg" : "qrc:/assets/icon-canceled-max-online.svg";
+                                                    model.isOfflineToken ? "qrc:/assets/icon-canceled-offline.svg" : "qrc:/assets/icon-canceled-max-online.svg";
                                     }
                                 }
                             }

@@ -24,7 +24,7 @@ class TokenBootstrapManager : public QObject
 
 public:
     TokenBootstrapManager();
-    ~TokenBootstrapManager();
+    ~TokenBootstrapManager() override;
 
     Q_INVOKABLE void checkTokenForDuplicate(const QString& token);
 
@@ -40,7 +40,7 @@ signals:
 private:
     void checkIsTxPreviousAccepted();
 
-    WalletModel& _wallet_model;
+    WalletModel::Ptr _wallet_model;
     std::map<beam::wallet::TxID, QString> _tokensInProgress;
     std::set<beam::wallet::TxID> _myTxIds;
 };

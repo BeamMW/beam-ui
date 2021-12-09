@@ -11,18 +11,19 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+#include <QPointer>
 #include "seed_validation_helper.h"
-
 #include "model/app_model.h"
 
 SeedValidationHelper::SeedValidationHelper()
 {
-    auto model = AppModel::getInstance().getWalletModel();
+    auto model = AppModel::getInstance().getWalletModelUnsafe();
     if (model)
     {
-        model->getAsync()->readRawSeedPhrase([this] (const std::string& seed)
+        QPointer<SeedValidationHelper> guard(this);
+        model->getAsync()->readRawSeedPhrase([guard, this] (const std::string& seed)
         {
+            if (!guard) return;
             m_seed = seed;
             emit isSeedValidatedChanged();
         });
@@ -52,9 +53,10 @@ void SeedValidationHelper::setIsTriggeredFromSettings(bool value)
 
 void SeedValidationHelper::validate()
 {
-    auto model = AppModel::getInstance().getWalletModel();
-    if (model)
+    if(auto model = AppModel::getInstance().getWalletModel())
+    {
         model->getAsync()->removeRawSeedPhrase();
+    }
 }
 
 bool SeedValidationHelper::getIsSeedValidated() const

@@ -16,7 +16,7 @@
 #include <QObject>
 #include "wallet/core/common.h"
 #include "wallet/core/wallet_db.h"
-#include "viewmodel/wallet/assets_manager.h"
+#include "model/assets_manager.h"
 
 class TokenInfoItem : public QObject
 {
@@ -25,7 +25,6 @@ class TokenInfoItem : public QObject
     Q_PROPERTY(bool    isMaxPrivacy          READ isMaxPrivacy               NOTIFY tokenChanged)
     Q_PROPERTY(bool    isOffline             READ isOffline                  NOTIFY tokenChanged)
     Q_PROPERTY(bool    isPublicOffline       READ isPublicOffline            NOTIFY tokenChanged)
-    Q_PROPERTY(bool    ignoreStoredVouchers  READ getIgnoreStoredVouchers    WRITE  setIgnoreStoredVouchers   NOTIFY ignoreStoredVouchersChanged)
     Q_PROPERTY(QString transactionType       READ getTransactionType         NOTIFY tokenChanged)
     Q_PROPERTY(QString amount                READ getAmount                  NOTIFY tokenChanged)
     Q_PROPERTY(QString amountValue           READ getAmountValue             NOTIFY tokenChanged)
@@ -52,14 +51,11 @@ public:
     int getOfflinePayments() const;
     void setOfflinePayments(int value);
     
-    bool getIgnoreStoredVouchers() const;
-    void setIgnoreStoredVouchers(bool value);
 private:
     void reset();
 signals:
     void tokenChanged();
     void offlinePaymentsChanged();
-    void ignoreStoredVouchersChanged();
 
 private:
     QString m_token;
@@ -73,7 +69,6 @@ private:
     beam::PeerID m_identity;
     QString m_UnitName;
     int m_offlinePayments = 0;
-    bool m_ignoreStoredVouchers = false;
     AssetsManager::Ptr _amgr;
 };
 

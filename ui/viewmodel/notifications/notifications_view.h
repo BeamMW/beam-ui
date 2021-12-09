@@ -42,8 +42,6 @@ signals:
     void allNotificationsChanged();
 
 private:
-
-    WalletModel& m_walletModel;
-
+    WalletModel::Ptr m_walletModel;
     NotificationsList m_notificationsList;
 };

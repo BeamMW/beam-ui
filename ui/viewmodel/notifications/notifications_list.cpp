@@ -33,6 +33,8 @@ QHash<int, QByteArray> NotificationsList::roleNames() const
         { static_cast<int>(Roles::State), "state" },
         { static_cast<int>(Roles::RawID), "rawID" },
         { static_cast<int>(Roles::DateCreated), "dateCreated" },
+        { static_cast<int>(Roles::TxTimeCreated), "txTimeCreated" },
+        { static_cast<int>(Roles::TxDateCreated), "txDateCreated" },
         
     };
     return roles;
@@ -52,6 +54,10 @@ QVariant NotificationsList::data(const QModelIndex &index, int role) const
             return value->timeCreated().time().toString(m_locale.timeFormat(QLocale::ShortFormat));
         case Roles::DateCreated:
             return value->timeCreated().date().toString(m_locale.dateFormat(QLocale::ShortFormat));
+            case Roles::TxTimeCreated:
+            return value->txTimeCreated().time().toString(m_locale.timeFormat(QLocale::ShortFormat));
+        case Roles::TxDateCreated:
+            return value->txTimeCreated().date().toString(m_locale.dateFormat(QLocale::ShortFormat));
         case Roles::TimeCreatedSort:
         {
             auto t = value->getTimestamp();

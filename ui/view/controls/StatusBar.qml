@@ -1,12 +1,14 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.3
 import QtGraphicalEffects 1.0
+import QtQuick.Layouts 1.12
 import Beam.Wallet 1.0
 import "."
 
 Item {
     id: rootControl
-    y: 55
+    x: -20
+    y: -45
 
     property var model
 
@@ -34,6 +36,8 @@ Item {
     property string statusOnline: qsTrId("status-online")
     //% "connected node supports online transactions only"
     property string statusOnlineRemote: qsTrId("status-online-remote")
+    property var indicatorX: -20
+    property var indicatorY: 50
 
     function setIndicator(indicator) {
         if (indicator !== rootControl.indicator) {
@@ -45,8 +49,8 @@ Item {
 
     Item {
         id: online_indicator
-        anchors.top: parent.top
-        anchors.left: parent.left
+        x: rootControl.indicatorX
+        y: rootControl.indicatorY
         width: childrenRect.width
 
         property color color: Style.online
@@ -75,7 +79,7 @@ Item {
             width: 10
             height: 10
             sourceSize:     Qt.size(10, 10)
-            source:         "qrc:/assets/icon-trusted-node-status.svg"
+            source:         model.isExchangeRatesUpdated ? "qrc:/assets/icon-trusted-node-status.svg" : "qrc:/assets/icon-trusted-node-status-stale.svg"
             visible:        model.isConnectionTrusted && !model.isCoinClientFailed
         }
 
@@ -90,8 +94,8 @@ Item {
 
     Item {
         id: update_indicator
-        anchors.top: parent.top
-        anchors.left: parent.left
+        x: rootControl.indicatorX
+        y: rootControl.indicatorY
         visible: false
 
         property color color: Style.online
@@ -122,55 +126,72 @@ Item {
             loops: Animation.Infinite
         }
     }
+    
+    Rectangle {
+        id: rowBackground
+        width: main.width - 70
+        height: 24
+        color: "transparent"
+        visible: !onlineTrusted.visible
+        property color gradientColor: online_indicator.color
 
-    SFText {
-        id: status_text
-        anchors.top: parent.top
-        anchors.left: parent.indicator.right
-        anchors.leftMargin: 5
-        anchors.topMargin: -1
-        color: Style.content_secondary
-        font.pixelSize: 12
-    }
-    SFText {
-        id: progressText
-        anchors.top: parent.top
-        anchors.left: status_text.right
-        anchors.leftMargin: 5
-        anchors.topMargin: -1
-        color: Style.content_secondary
-        font.pixelSize: 12
-        text: "(" + model.nodeSyncProgress + "%)"
-        visible: model.nodeSyncProgress > 0 && update_indicator.visible
-    }
+        LinearGradient {
+            anchors.fill: parent
+            start: Qt.point(0, 0)
+            end: Qt.point(rowBackground.width, 0)
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0.7) }
+                GradientStop { position: 0.1; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0.7) }
+                GradientStop { position: 1.0; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0) }
+            }
+        }
 
-    CustomProgressBar {
-        id: progress_bar
-        anchors.top: update_indicator.bottom
-        anchors.left: update_indicator.left
-        anchors.topMargin: 6
-        backgroundImplicitWidth: 200
-        contentItemImplicitWidth: 200
+        ColumnLayout {
+            spacing: 0
+            RowLayout
+            {
+                id: statusRow
+                Layout.topMargin: 3
+                Layout.leftMargin: 20
+                SFText {
+                    id: status_text
+                    color: Style.content_main
+                    font.pixelSize: 16
+                    elide: Text.ElideLeft
+                }
+                SFText {
+                    id: progressText
+                    color: Style.content_main
+                    font.pixelSize: 16
+                    text: "(" + model.nodeSyncProgress + "%)"
+                    visible: model.nodeSyncProgress > 0 && update_indicator.visible
+                }
 
-        visible: model.nodeSyncProgress > 0 && update_indicator.visible
-        value: model.nodeSyncProgress / 100
-    }
+                LinkButton {
+                    //% "Change settings"
+                    text: qsTrId("status-change-settings")
+                    visible: model.isCoinClientFailed || model.isFailedStatus || (model.isOnline && !model.isConnectionTrusted)
+                    fontSize: 16
+                    onClicked: {
+                        if (model.isCoinClientFailed || model.isFailedStatus)
+                            main.openSwapSettings(model.coinWithErrorLabel());
+                        else
+                            main.openSwapSettings("BEAM");
+                    }
+                }
+            }
 
-    LinkButton {
-        text: "Change settings"
-        visible: model.isCoinClientFailed || model.isFailedStatus || (model.isOnline && !model.isConnectionTrusted)
-        anchors.top: parent.top
-        anchors.left: status_text.right
-        anchors.leftMargin: 5
-        anchors.topMargin: -1
-        fontSize: 12
-        onClicked: {
-            if (model.isCoinClientFailed || model.isFailedStatus)
-                main.openSwapSettings(model.coinWithErrorLabel());
-            else
-                main.openSwapSettings("BEAM");
+            CustomProgressBar {
+                id: progress_bar
+                backgroundImplicitWidth: 200
+                contentItemImplicitWidth: 200
+
+                visible: model.nodeSyncProgress > 0 && update_indicator.visible
+                value: model.nodeSyncProgress / 100
+            }
         }
     }
+
 
     states: [
         State {
@@ -191,12 +212,18 @@ Item {
             name: "online"
             PropertyChanges {
                 target: status_text;
-                text: statusOnline + (model.isConnectionTrusted ? "" : ": " + statusOnlineRemote) + model.branchName
+                text: statusOnline + (model.isConnectionTrusted ? "" : ": " + statusOnlineRemote) + model.branchName + 
+                    (
+                        model.isExchangeRatesUpdated ? "" : " " + model.exchangeStatus
+                    )
+            }
+            PropertyChanges {
+                target: online_indicator;
+                color: model.isExchangeRatesUpdated ? Style.online : Style.validator_warning
             }
             StateChangeScript {
                 name: "onlineScript"
                 script: {
-                    online_indicator.color = Style.online;
                     rootControl.setIndicator(online_indicator);
                 }
             }
@@ -224,12 +251,12 @@ Item {
             StateChangeScript {
                 name: "errorScript"
                 script: {
-                    online_indicator.color = "#ff746b";
+                    online_indicator.color = Style.accent_fail;
                     rootControl.setIndicator(online_indicator);
                 }
             }
         },
-         State {
+        State {
             name: "error_3rd"
             PropertyChanges {
                 target: status_text;
@@ -238,7 +265,7 @@ Item {
             StateChangeScript {
                 name: "errorScript"
                 script: {
-                    online_indicator.color = "#ff746b";
+                    online_indicator.color = Style.accent_fail;
                     rootControl.setIndicator(online_indicator);
                 }
             }
