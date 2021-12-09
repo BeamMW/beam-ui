@@ -192,7 +192,7 @@
     </message>
     <message id="wallet-txs-status-cancelled">
         <source>canceled</source>
-        <translation type="unfinished">canceled</translation>
+        <translation>cancelado</translation>
     </message>
     <message id="wallet-txs-status-expired">
         <source>expired</source>
@@ -245,7 +245,7 @@
         <source>v</source>
         <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation type="unfinished">v</translation>
+        <translation>v</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -288,7 +288,7 @@
     </message>
     <message id="logo-description">
         <source>Confidential DeFi Platform and Cryptocurrency</source>
-        <translation type="unfinished">Confidential DeFi Platform and Cryptocurrency</translation>
+        <translation>Plataforma Confidencial de DeFi y Criptomoneda</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>
@@ -414,7 +414,7 @@
     </message>
     <message id="send-confirmation-pwd-require-message">
         <source>To approve the transaction please enter your password</source>
-        <translation type="unfinished">To approve the transaction please enter your password</translation>
+        <translation>Introduzca su contraseña para aprobar la transacción</translation>
     </message>
     <message id="wallet-title">
         <source>Wallet</source>
