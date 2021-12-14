@@ -331,6 +331,11 @@ ColumnLayout {
                 }
             }
 
+            onNewViewRequested: function (ev) {
+                var url = ev.requestedUrl.toString()
+                Utils.openExternalWithConfirmation(url)
+            }
+
             onLoadingChanged: {
                 // do not change this to declarative style, it flickers somewhy, probably because of delays
                 if (control.activeApp && !this.loading) {
