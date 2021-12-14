@@ -217,13 +217,10 @@ Item {
                         model.isExchangeRatesUpdated ? "" : " " + model.exchangeStatus
                     )
             }
-            PropertyChanges {
-                target: online_indicator;
-                color: model.isExchangeRatesUpdated ? Style.online : Style.validator_warning
-            }
             StateChangeScript {
                 name: "onlineScript"
                 script: {
+                    online_indicator.color = model.isCoinClientFailed ? Style.accent_fail : (model.isExchangeRatesUpdated ? Style.online : Style.validator_warning);
                     rootControl.setIndicator(online_indicator);
                 }
             }
