@@ -15,7 +15,7 @@
 
 #include <QObject>
 #include "wallet/core/wallet_db.h"
-#include "wallet/assets_manager.h"
+#include "model/assets_manager.h"
 
 class PaymentInfoItem : public QObject
 {

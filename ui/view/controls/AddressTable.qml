@@ -256,7 +256,10 @@ CustomTableView {
             icon.source: "qrc:/assets/icon-qr.svg"
             onTriggered: {
                 var popup = Qt.createComponent("AddressQRDialog.qml").createObject(main)
-                popup.address = contextMenu.addressItem.token;
+                popup.address = rootControl.isShieldedSupported
+                    ? contextMenu.addressItem.token
+                    : contextMenu.addressItem.walletID;
+
                  //: show qr dialog address label
                 //% "Your address"
                 popup.addressLabelText = qsTrId("show-qr-tx-token-label");

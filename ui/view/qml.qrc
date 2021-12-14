@@ -54,7 +54,6 @@
         <file>controls/SwapTransactionDetails.qml</file>
         <file>controls/PaymentInfoDialog.qml</file>
         <file>controls/OpenExternalLinkConfirmation.qml</file>
-
         <file>controls/SeedInput.qml</file>
         <file>controls/CustomTripleSwitch.qml</file>
         <file>controls/CustomSecondCurrencySwitch.qml</file>
@@ -71,6 +70,7 @@
         <file>controls/SettingsTitle.qml</file>
         <file>controls/PublicOfflineAddressDialog.qml</file>
         <file>controls/PanelGradient.qml</file>
+        <file>controls/PasswordBoxInput.qml</file>
         <file>controls/AlphaTip.qml</file>
         <file>controls/AlphaTipPopup.qml</file>
         <file>controls/SubtitleRow.qml</file>
@@ -94,6 +94,7 @@
         <file>controls/SimpleNotification.qml</file>
         <file>controls/AppTxNotification.qml</file>
         <file>controls/SettingsApps.qml</file>
+        <file>controls/OpenInBlockchainExplorer.qml</file>
         <file>wallet/TxTable.qml</file>
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>
@@ -103,6 +104,9 @@
         <file>wallet/CoinsList.qml</file>
         <file>dex/MarketPanel.qml</file>
         <file>dex/MarketTable.qml</file>
+        <file>applications/applications.qml</file>
+        <file>applications/applications_nofork.qml</file>
+        <file>applications/AppsList.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
@@ -113,8 +117,6 @@
         <file>wallet.qml</file>
         <file>settings.qml</file>
         <file>addresses.qml</file>
-        <file>applications.qml</file>
-        <file>applications_nofork.qml</file>
         <file>atomic_swap.qml</file>
         <file>notifications.qml</file>
         <file>receive_regular.qml</file>
@@ -126,24 +128,20 @@
         <file>swap_confirm.qml</file>
         <file>send_expired.qml</file>
         <file>dex.qml</file>
-        <file>assets/fonts/SF-Pro-Display-Black.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Light.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Semibold.otf</file>
-        <file>assets/fonts/SF-Pro-Display-BlackItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-LightItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-SemiboldItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Bold.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Medium.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Thin.otf</file>
-        <file>assets/fonts/SF-Pro-Display-BoldItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-MediumItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-ThinItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Heavy.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Regular.otf</file>
-        <file>assets/fonts/SF-Pro-Display-Ultralight.otf</file>
-        <file>assets/fonts/SF-Pro-Display-HeavyItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-RegularItalic.otf</file>
-        <file>assets/fonts/SF-Pro-Display-UltralightItalic.otf</file>
+        <file>assets/fonts/Proxima Nova Black Italic.otf</file>
+        <file>assets/fonts/Proxima Nova Black.otf</file>
+        <file>assets/fonts/Proxima Nova Bold Italic.otf</file>
+        <file>assets/fonts/Proxima Nova Bold.otf</file>
+        <file>assets/fonts/Proxima Nova Extrabold Italic.otf</file>
+        <file>assets/fonts/Proxima Nova Extrabold.otf</file>
+        <file>assets/fonts/Proxima Nova Light Italic.otf</file>
+        <file>assets/fonts/Proxima Nova Light.otf</file>
+        <file>assets/fonts/Proxima Nova Regular Italic.otf</file>
+        <file>assets/fonts/Proxima Nova Regular.otf</file>
+        <file>assets/fonts/Proxima Nova Semibold Italic.otf</file>
+        <file>assets/fonts/Proxima Nova Semibold.otf</file>
+        <file>assets/fonts/Proxima Nova Thin Italic.otf</file>
+        <file>assets/fonts/Proxima Nova Thin.otf</file>
         <file>assets/bottom-logo-beamx.svg</file>
         <file>assets/beam-circle.svg</file>
         <file>assets/ltc-circle.svg</file>
@@ -227,6 +225,8 @@
         <file>assets/icon-external-link.svg</file>
         <file>assets/icon-external-link-black.svg</file>
         <file>assets/icon-external-link-green.svg</file>
+        <file>assets/icon-eye.svg</file>
+        <file>assets/icon-eye-crossed.svg</file>
         <file>assets/icon-cancel.svg</file>
         <file>assets/icon-cancel-16.svg</file>
         <file>assets/icon-cancel-white.svg</file>
@@ -237,6 +237,7 @@
         <file>assets/icon-add-green.svg</file>
         <file>assets/icon-copy.svg</file>
         <file>assets/icon-down.svg</file>
+        <file>assets/icon-up.svg</file>
         <file>assets/icon-send.svg</file>
         <file>assets/icon-receive-blue.svg</file>
         <file>assets/icon-receive-skyblue.svg</file>
@@ -307,15 +308,13 @@
         <file>assets/icon-receiving-max-online.svg</file>
         <file>assets/icon-sending-max-online.svg</file>
         <file>assets/icon-sent-max-online.svg</file>
-        <file>assets/icon-received-max-offline.svg</file>
-        <file>assets/icon-receiving-max-offline.svg</file>
-        <file>assets/icon-failed-max-offline.svg</file>
-        <file>assets/icon-canceled-max-offline.svg</file>
-        <file>assets/icon-sent-max-offline.svg</file>
-        <file>assets/icon-sending-max-offline.svg</file>
         <file>assets/icon-inout-transactions.svg</file>
         <file>assets/icon-incoming-transaction.svg</file>
         <file>assets/icon-outgoing-transaction.svg</file>
+        <file>assets/icon-sending-max-privacy-own.svg</file>
+        <file>assets/icon-sent-max-privacy-own.svg</file>
+        <file>assets/icon-sending-own-offline.svg</file>
+        <file>assets/icon-sent-own-offline.svg</file>
         <file>assets/asset-0.svg</file>
         <file>assets/asset-1.svg</file>
         <file>assets/asset-2.svg</file>
@@ -348,8 +347,14 @@
         <file>assets/icon-notifications-failed-sent-offline.svg</file>
         <file>assets/icon-notifications-failed-sent-privacy.svg</file>
         <file>assets/icon-notifications-received-privacy.svg</file>
-        <file>assets/icon-notifications-sent-privacy.svg</file>        
+        <file>assets/icon-notifications-sent-privacy.svg</file>
         <file>assets/icon-send-receive-blue.svg</file>
+        <file>assets/icon-receive-failed-offline.svg</file>
+        <file>assets/icon-received-offline.svg</file>
+        <file>assets/icon-send-failed-offline.svg</file>
+        <file>assets/icon-canceled-offline.svg</file>
+        <file>assets/icon-sent-offline.svg</file>
+        <file>assets/icon-sending-offline.svg</file>
         <file>assets/bg-pic.png</file>
         <file>assets/bg-pic@2x.png</file>
         <file>assets/bg-pic@3x.png</file>
@@ -360,5 +365,9 @@
         <file>assets/dapp-loading.svg</file>
         <file>assets/icon-verified-asset.svg</file>
         <file>assets/asset-beamx.svg</file>
+        <file>assets/icon-refresh.svg</file>
+        <file>assets/icon-help.svg</file>
+        <file>assets/icon-help-active.svg</file>
+        <file>assets/icon-trusted-node-status-stale.svg</file>
     </qresource>
 </RCC>

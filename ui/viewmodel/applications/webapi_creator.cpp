@@ -15,11 +15,19 @@
 #include "webapi_creator.h"
 #include "wallet/api/i_wallet_api.h"
 #include "wallet/core/common.h"
+#include "wallet/client/apps_api/apps_utils.h"
 #include "bvm/invoke_data.h"
 #include "public.h"
 
 namespace beamui::applications
 {
+    namespace
+    {
+        WalletModel::Ptr getWalletModel() {
+            return AppModel::getInstance().getWalletModel();
+        }
+    }
+
     WebAPICreator::WebAPICreator(QObject *parent)
         : QObject(parent)
     {
@@ -57,14 +65,14 @@ namespace beamui::applications
         }
 
         QPointer<WebAPICreator> guard = this;
-        const auto appid = GenerateAppID(appName.toStdString(), appUrl.toStdString());
+        const auto appid = beam::wallet::GenerateAppID(appName.toStdString(), appUrl.toStdString());
 
-        WebAPI_Beam::Create(version, appid, appName.toStdString(),
-            [this, guard, version, appName, appid] (WebAPI_Beam::Ptr api) {
+        AppsApiUI::ClientThread_Create(getWalletModel().get(), version, appid, appName.toStdString(),
+            [this, guard, version, appName, appid] (AppsApiUI::Ptr api) {
                 if (guard)
                 {
                     _api = std::move(api);
-                    emit apiChanged();
+                    emit apiCreated(_api.get());
                     LOG_INFO() << "API created: " << version << ", " << appName.toStdString() << ", " << appid;
                 }
                 else
@@ -75,9 +83,9 @@ namespace beamui::applications
         );
     }
 
-    QObject* WebAPICreator::getApi()
+    void WebAPICreator::destroyApi()
     {
-        return _api.get();
+        _api.reset();
     }
 
     bool WebAPICreator::apiSupported(const QString& apiVersion) const
@@ -87,7 +95,7 @@ namespace beamui::applications
 
     QString WebAPICreator::generateAppID(const QString& appName, const QString& appUrl)
     {
-        const auto appid = GenerateAppID(appName.toStdString(), appUrl.toStdString());
+        const auto appid = beam::wallet::GenerateAppID(appName.toStdString(), appUrl.toStdString());
         return QString::fromStdString(appid);
     }
 }

@@ -3,7 +3,7 @@ import QtQuick.Window 2.2
 
 Text {
 	font { 
-		family:    "SF Pro Display"
+		family:    "Proxima Nova"
 		styleName: "Regular"
 		weight:    Font.Normal
 	}

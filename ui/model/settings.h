@@ -90,6 +90,7 @@ public:
     QString getDevAppApiVer() const;
     QString getDevAppMinApiVer() const;
 
+    bool getDevMode() const;
     bool getAppsAllowed() const;
     void setAppsAllowed(bool val);
     QString getLocalAppsPath() const;

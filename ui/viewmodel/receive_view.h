@@ -15,8 +15,8 @@
 
 #include <QObject>
 #include "model/wallet_model.h"
-#include "notifications/exchange_rates_manager.h"
-#include "wallet/assets_manager.h"
+#include "model/exchange_rates_manager.h"
+#include "model/assets_manager.h"
 
 class ReceiveViewModel: public QObject
 {
@@ -28,7 +28,7 @@ class ReceiveViewModel: public QObject
     Q_PROPERTY(QString    sbbsAddress        READ getSbbsAddress                                     NOTIFY  tokenChanged)
     Q_PROPERTY(bool       commentValid       READ getCommentValid                                    NOTIFY  commentValidChanged)
     Q_PROPERTY(bool       isMaxPrivacy       READ getIsMaxPrivacy       WRITE setIsMaxPrivacy        NOTIFY  isMaxPrivacyChanged)
-    Q_PROPERTY(QString    mpTimeLimit        READ getMPTimeLimit        CONSTANT)
+    Q_PROPERTY(int        mpTimeLimit        READ getMPTimeLimit        CONSTANT)
 
     Q_PROPERTY(QList<QMap<QString, QVariant>> assetsList  READ getAssetsList  NOTIFY  assetsListChanged)
 public:
@@ -60,15 +60,13 @@ private:
 
     void setToken(const QString& value);
     [[nodiscard]] QString getToken() const;
-
     [[nodiscard]] QString getSbbsAddress() const;
-
     [[nodiscard]] bool getCommentValid() const;
 
     void setIsMaxPrivacy(bool value);
     [[nodiscard]] bool getIsMaxPrivacy() const;
 
-    QString getMPTimeLimit() const;
+    int getMPTimeLimit() const;
     QList<QMap<QString, QVariant>> getAssetsList() const;
 
 private:
@@ -80,7 +78,8 @@ private:
     bool            _maxp    = false;
 
     boost::optional<beam::wallet::WalletAddress> _receiverAddress;
-    WalletModel&                _walletModel;
-    ExchangeRatesManager        _exchangeRatesManager;
-    AssetsManager::Ptr          _amgr;
+    QString               _originalToken;
+    WalletModel::Ptr      _walletModel;
+    ExchangeRatesManager::Ptr _rates;
+    AssetsManager::Ptr    _amgr;
 };

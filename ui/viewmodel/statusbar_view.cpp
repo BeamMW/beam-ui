@@ -14,6 +14,7 @@
 
 #include "statusbar_view.h"
 #include "model/app_model.h"
+#include "viewmodel/ui_helpers.h"
 #include "version.h"
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
 #include "settings_helpers.h"
@@ -22,9 +23,10 @@
 using namespace beam::wallet;
 
 StatusbarViewModel::StatusbarViewModel()
-    : m_model(*AppModel::getInstance().getWalletModel())
+    : m_model(AppModel::getInstance().getWalletModel())
+    , m_exchangeRatesManager(AppModel::getInstance().getRates())
     , m_isOnline(false)
-    , m_isSyncInProgress(!m_model.isSynced())
+    , m_isSyncInProgress(!m_model->isSynced())
     , m_isFailedStatus(false)
     , m_isConnectionTrusted(false)
     , m_nodeSyncProgress(0)
@@ -33,20 +35,19 @@ StatusbarViewModel::StatusbarViewModel()
     , m_done(0)
     , m_total(0)
     , m_errorMsg{}
-
 {
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     connectCoinClients();
     connectEthClient();
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
-    connect(&m_model, SIGNAL(nodeConnectionChanged(bool)),
+    connect(m_model.get(), SIGNAL(nodeConnectionChanged(bool)),
         SLOT(onNodeConnectionChanged(bool)));
 
-    connect(&m_model, SIGNAL(walletError(beam::wallet::ErrorType)),
+    connect(m_model.get(), SIGNAL(walletError(beam::wallet::ErrorType)),
         SLOT(onGetWalletError(beam::wallet::ErrorType)));
 
-    connect(&m_model, SIGNAL(syncProgressUpdated(int, int)),
+    connect(m_model.get(), SIGNAL(syncProgressUpdated(int, int)),
         SLOT(onSyncProgressUpdated(int, int)));
 
     connect(&AppModel::getInstance().getNode(), SIGNAL(syncProgressUpdated(int, int)),
@@ -55,7 +56,10 @@ StatusbarViewModel::StatusbarViewModel()
     connect(&AppModel::getInstance().getNode(), SIGNAL(failedToSyncNode(beam::wallet::ErrorType)),
             SLOT(onGetWalletError(beam::wallet::ErrorType)));
 
-    m_model.getAsync()->getNetworkStatus();
+    connect(&m_exchangeRatesTimer, SIGNAL(timeout()), SLOT(onExchangeRatesTimer()));
+    connect(m_exchangeRatesManager.get(), SIGNAL(updateTimeChanged()), SLOT(onExchangeRatesTimer()));
+
+    m_model->getAsync()->getNetworkStatus();
 }
 
 bool StatusbarViewModel::getIsOnline() const
@@ -78,6 +82,11 @@ bool StatusbarViewModel::getIsConnectionTrusted() const
     return m_isConnectionTrusted;
 }
 
+bool StatusbarViewModel::getIsExchangeRatesUpdated() const
+{
+    return m_exchangeRatesManager->isUpToDate();
+}
+
 int StatusbarViewModel::getNodeSyncProgress() const
 {
     return m_nodeSyncProgress;
@@ -98,6 +107,14 @@ QString StatusbarViewModel::getBranchName() const
 QString StatusbarViewModel::getWalletStatusErrorMsg() const
 {
     return m_errorMsg;
+}
+
+QString StatusbarViewModel::getExchangeStatus() const
+{
+    //% "(exchange rate to %1 was not updated since %2)"
+    return qtTrId("status-online-stale-rates")
+            .arg(beamui::getCurrencyUnitName(m_exchangeRatesManager->getRateCurrency()))
+            .arg(m_exchangeRatesManager->getUpdateTime().toString(m_locale.dateTimeFormat(QLocale::ShortFormat)));
 }
 
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
@@ -123,6 +140,15 @@ void StatusbarViewModel::setIsOnline(bool value)
     {
         m_isOnline = value;
         emit isOnlineChanged();
+        emit exchangeRatesUpdateStatusChanged();
+        if (value)
+        {
+            m_exchangeRatesTimer.start(60 * 1000);
+        }
+        else
+        {
+            m_exchangeRatesTimer.stop();
+        }
     }
 }
 
@@ -176,7 +202,7 @@ void StatusbarViewModel::setWalletStatusErrorMsg(const QString& value)
 
 void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
 {
-    setIsConnectionTrusted(m_model.isConnectionTrusted());
+    setIsConnectionTrusted(m_model->isConnectionTrusted());
 
     if (isNodeConnected == getIsOnline())
     {
@@ -187,7 +213,7 @@ void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
     {
         setIsFailedStatus(false);
         setIsOnline(true);
-        setIsSyncInProgress(!m_model.isSynced());
+        setIsSyncInProgress(!m_model->isSynced());
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
         if (m_isCoinClientFailed)
         {
@@ -210,7 +236,7 @@ void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
 void StatusbarViewModel::onGetWalletError(beam::wallet::ErrorType error)
 {
     setIsOnline(false);
-    setWalletStatusErrorMsg(m_model.GetErrorString(error));
+    setWalletStatusErrorMsg(m_model->GetErrorString(error));
     setIsFailedStatus(true);
     setIsConnectionTrusted(false);
 
@@ -330,7 +356,7 @@ std::string StatusbarViewModel::generateCoinClientErrorMsg()
         if (ethClientFailed) failedNodes += (std::to_string(AtomicSwapCoin::Ethereum) + ", ");
         failedNodes.erase(failedNodes.end() - 2, failedNodes.end());
 
-        std::size_t found = failedNodes.find(",");
+        std::size_t found = failedNodes.find(',');
         if (found != std::string::npos)
         {
             m_coinWithErrorLabel = QString::fromStdString(failedNodes.substr(0, found));
@@ -396,3 +422,8 @@ void StatusbarViewModel::connectEthClient()
 }
 
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
+
+void  StatusbarViewModel::onExchangeRatesTimer()
+{
+    emit exchangeRatesUpdateStatusChanged();
+}

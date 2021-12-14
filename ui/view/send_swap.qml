@@ -470,8 +470,8 @@ please review your settings and try again"
                                     }
                                 
                                     LinkButton {
-                                        //% "More details"
-                                        text: qsTrId("more-details")
+                                        //% "Token details"
+                                        text: qsTrId("swap-token-details")
                                         linkColor: Style.accent_outgoing
                                         onClicked: {
                                             tokenInfoDialog.open();

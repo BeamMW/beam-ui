@@ -9,6 +9,7 @@ Window  {
     id: appWindow
     property alias source: rootLoader.source
     flags: Qt.Window | Qt.WindowFullscreenButtonHint
+    title: BeamGlobals.getAppName()
 
     function cellResize() {
         if(appWindow.visibility != ApplicationWindow.Maximized) {
@@ -75,7 +76,7 @@ Window  {
                         text: qsTrId("settings-report-problem-save-log-button")
                         onClicked: viewModel.saveLogs()
                         font { 
-                            family: "SF Pro Display"
+                            family: "Proxima Nova"
                             pixelSize: 14
                             weight: Font.Bold
                             capitalization: Font.AllLowercase

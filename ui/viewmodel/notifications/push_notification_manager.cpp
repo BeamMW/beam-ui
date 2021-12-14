@@ -14,16 +14,21 @@
 
 #include "push_notification_manager.h"
 
+#include "viewmodel/wallet/tx_object.h"
 #include "viewmodel/ui_helpers.h"
 
 PushNotificationManager::PushNotificationManager()
-    : m_walletModel(*AppModel::getInstance().getWalletModel())
+    : m_walletModel(AppModel::getInstance().getWalletModel())
 {
-    connect(&m_walletModel,
+    connect(m_walletModel.get(),
             SIGNAL(notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)),
             SLOT(onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)));
 
-    m_walletModel.getAsync()->getNotifications();
+    connect(m_walletModel.get(),
+            SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)),
+            SLOT(onTransactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
+
+    m_walletModel->getAsync()->getNotifications();
 }
 
 void PushNotificationManager::onNewSoftwareUpdateAvailable(
@@ -71,10 +76,54 @@ void PushNotificationManager::onNotificationsChanged(beam::wallet::ChangeAction 
     }
 }
 
+void PushNotificationManager::onTransactionsChanged(
+    beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& transactions)
+{
+    using namespace beam::wallet;
+
+    for (const auto& modifiedTx : transactions)
+    {
+        if(const auto txType = modifiedTx.GetParameter<TxType>(TxParameterID::TransactionType); *txType != TxType::Contract)
+        {
+            continue;
+        }
+
+        auto modifiedTxObj = TxObject(modifiedTx);
+        if (modifiedTxObj.canShowContractNotification())
+        {
+            const auto txId = modifiedTxObj.getTxID();
+            if (m_contractNotifications.find(txId) == m_contractNotifications.end())
+            {
+                m_contractNotifications.insert(txId);
+                const auto txIdStr = std::to_string(txId);
+                // TODO add mechanism to get app icon
+                emit showContractNotification(
+                    txIdStr.c_str(), modifiedTxObj.getSource(), modifiedTxObj.getComment(), "");
+            }
+        }
+        else
+        {
+            if (m_contractNotifications.empty()) continue;
+            m_contractNotifications.erase(modifiedTxObj.getTxID());
+        }
+    }
+}
+
 void PushNotificationManager::onCancelPopup(const QVariant& variantID)
 {
     auto id = variantID.value<ECC::uintBig>();
-    m_walletModel.getAsync()->markNotificationAsRead(id);
+    m_walletModel->getAsync()->markNotificationAsRead(id);
+}
+
+void PushNotificationManager::closeContractNotification(const QString& txIdStr)
+{
+    if (m_contractNotifications.empty()) return;
+
+    beam::wallet::TxID txId;
+    auto txIdVec = beam::from_hex(txIdStr.toStdString());
+    std::copy_n(txIdVec.begin(), 16, txId.begin());
+    m_walletModel->getAsync()->markAppNotificationAsRead(txId);
+    m_contractNotifications.erase(txId);
 }
 
 bool PushNotificationManager::hasNewerVersion() const

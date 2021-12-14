@@ -191,8 +191,8 @@
         <translation>sent</translation>
     </message>
     <message id="wallet-txs-status-cancelled">
-        <source>cancelled</source>
-        <translation>cancelled</translation>
+        <source>canceled</source>
+        <translation>canceled</translation>
     </message>
     <message id="wallet-txs-status-expired">
         <source>expired</source>
@@ -329,18 +329,6 @@
     <message id="change-pwd-ok">
         <source>Change password</source>
         <translation>Change password</translation>
-    </message>
-    <message id="loading-loading">
-        <source>Loading wallet...</source>
-        <translation>Loading wallet...</translation>
-    </message>
-    <message id="loading-restoring">
-        <source>Restoring wallet...</source>
-        <translation>Restoring wallet...</translation>
-    </message>
-    <message id="loading-creating">
-        <source>Creating wallet...</source>
-        <translation>Creating wallet...</translation>
     </message>
     <message id="start-open-pwd-invitation">
         <source>Enter your password to access the wallet</source>
@@ -520,8 +508,9 @@
         <translation>Password</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
-        <source>Confirm password</source>
-        <translation>Confirm password</translation>
+        <source>Password confirmation</source>
+        <oldsource>Password confrimation</oldsource>
+        <translation type="unfinished">Password confrimation</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
         <source>Passwords do not match</source>
@@ -621,12 +610,8 @@
         <translation>Failed to start wallet. Please check your wallet data location</translation>
     </message>
     <message id="loading-view-download-blocks">
-        <source>Syncing with blockchain</source>
-        <translation>Syncing with blockchain</translation>
-    </message>
-    <message id="loading-view-scaning-utxo">
-        <source>Loading wallet data %d/%d</source>
-        <translation>Loading wallet data %d/%d</translation>
+        <source>Syncing with the blockchain: </source>
+        <translation>Syncing with the blockchain: </translation>
     </message>
     <message id="loading-view-protocol-error">
         <source>Incompatible peer</source>
@@ -924,17 +909,23 @@
         <source>Fee is too small</source>
         <translation>Fee is too small</translation>
     </message>
-    <message id="loading-view-estimate-minutes">
-        <source>min</source>
-        <translation>min</translation>
+    <message id="loading-view-estimate-minutes" numerus="yes">
+        <source>%n minute(s)</source>
+        <translation type="unfinished">
+            <numerusform>%n minute</numerusform>
+            <numerusform>%n minutes</numerusform>
+        </translation>
     </message>
-    <message id="loading-view-estimate-seconds">
-        <source>sec</source>
-        <translation>sec</translation>
+    <message id="loading-view-estimate-seconds" numerus="yes">
+        <source>%n second(s)</source>
+        <translation>
+            <numerusform>%n second</numerusform>
+            <numerusform>%n seconds</numerusform>
+        </translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>Estimated time: %s</source>
-        <translation>Estimated time: %s</translation>
+        <source>%s to completion</source>
+        <translation>%s to completion</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
@@ -1019,16 +1010,15 @@ please review your settings and try again</translation>
         <translation>Expires on</translation>
     </message>
     <message id="loading-view-estimate-calculating">
-        <source>calculating...</source>
-        <translation>calculating...</translation>
+        <source>calculating estimated time</source>
+        <translation>calculating estimated time</translation>
     </message>
-    <message id="loading-view-rebuild-utxos">
-        <source>Rebuilding wallet data</source>
-        <translation>Rebuilding wallet data</translation>
-    </message>
-    <message id="loading-view-estimate-hours">
-        <source>h</source>
-        <translation>h</translation>
+    <message id="loading-view-estimate-hours" numerus="yes">
+        <source>%n hour(s)</source>
+        <translation>
+            <numerusform>%n hour</numerusform>
+            <numerusform>%n hours</numerusform>
+        </translation>
     </message>
     <message id="loading-view-net-problems">
         <source>It may take longer than usual. Please, check your network.</source>
@@ -1773,9 +1763,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished">Regular</translation>
     </message>
     <message id="tx-max-privacy">
-        <source>Max Anonymity Set</source>
-        <oldsource>Max Privacy</oldsource>
-        <translation type="unfinished">Max privacy</translation>
+        <source>Maximum anonymity</source>
+        <translation>Maximum anonymity</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
@@ -1846,39 +1835,33 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max">
         <source>in progress
-max privacy</source>
+(maximum anonymity)</source>
         <translation>in progress
-max privacy</translation>
+(maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-sent-max">
         <source>sent
-max privacy</source>
+(maximum anonymity)</source>
         <translation>sent
-max privacy</translation>
+(maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-received-max">
         <source>received
-max privacy</source>
+(maximum anonymity)</source>
         <translation>received
-max privacy</translation>
+(maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
-        <source>in progress
-offline</source>
-        <translation>in progress
-offline</translation>
+        <source>in progress (offline)</source>
+        <translation>in progress (offline)</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
-        <source>sent
-offline</source>
-        <translation>sent
-offline</translation>
+        <source>sent (offline)</source>
+        <translation>sent (offline)</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
-        <source>received
-offline</source>
-        <translation>received
-offline</translation>
+        <source>received (offline)</source>
+        <translation>received (offline)</translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
@@ -2023,38 +2006,38 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Regular</translation>
     </message>
     <message id="tx-address-max-privacy">
-        <source>Max privacy</source>
-        <translation>Max privacy</translation>
+        <source>Maximum anonymity</source>
+        <translation>Maximum anonymity</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress
-public offline</source>
+(public offline)</source>
         <translation>in progress
-public offline</translation>
+(public offline)</translation>
     </message>
     <message id="wallet-txs-status-sent-public-offline">
         <source>sent
-public offline</source>
+(public offline)</source>
         <translation>sent
-public offline</translation>
+(public offline)</translation>
     </message>
     <message id="wallet-txs-status-received-public-offline">
         <source>received
-public offline</source>
+(public offline)</source>
         <translation>received
-public offline</translation>
+(public offline)</translation>
     </message>
     <message id="wallet-txs-status-canceled-public-offline">
         <source>canceled
-public offline</source>
+(public offline)</source>
         <translation>canceled
-public offline</translation>
+(public offline)</translation>
     </message>
     <message id="wallet-txs-status-failed-public-offline">
         <source>failed
-public offline</source>
+(public offline)</source>
         <translation>failed
-public offline</translation>
+(public offline)</translation>
     </message>
     <message id="settings-node-progress">
         <source>Swap in progress, cannot disconnect or switch connection type.</source>
@@ -2066,32 +2049,27 @@ public offline</translation>
     </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
-max privacy</source>
+(maximum anonymity)</source>
         <translation>canceled
-max privacy</translation>
+(maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
-        <source>canceled
-offline</source>
-        <translation>canceled
-offline</translation>
+        <source>canceled (offline)</source>
+        <translation>canceled (offline)</translation>
     </message>
     <message id="wallet-txs-status-failed-max">
         <source>failed
-max privacy</source>
+(maximum anonymity)</source>
         <translation>failed
-max privacy</translation>
+(maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
-        <source>failed
-offline</source>
-        <translation>failed
-offline</translation>
+        <source>failed (offline)</source>
+        <translation>failed (offline)</translation>
     </message>
     <message id="max-privacy-dialog-header">
-        <source>Locked Max privacy coins</source>
-        <oldsource>Max privacy</oldsource>
-        <translation type="unfinished">Max privacy</translation>
+        <source>Maximum anonymity</source>
+        <translation>Maximum anonymity</translation>
     </message>
     <message id="max-privacy-dialog-locked">
         <source>Locked</source>
@@ -2114,52 +2092,28 @@ offline</translation>
         <translation>Received coins can be spent immediately.</translation>
     </message>
     <message id="settings-privacy-mp-time-limit">
-        <source>Max privacy longest transaction time</source>
-        <translation>Max privacy longest transaction time</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-72">
-        <source>72h</source>
-        <translation>72h</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-60">
-        <source>60h</source>
-        <translation>60h</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-48">
-        <source>48h</source>
-        <translation>48h</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-36">
-        <source>36h</source>
-        <translation>36h</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-24">
-        <source>24h</source>
-        <translation>24h</translation>
+        <source>Longest transaction time for maximum anonymity</source>
+        <translation>Longest transaction time for maximum anonymity</translation>
     </message>
     <message id="remote-node-lelantus-warning">
         <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
         <translation>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</translation>
     </message>
-    <message id="time-hour">
-        <source>hour</source>
+    <message id="time-hour" numerus="yes">
+        <source>%n hour(s)</source>
         <extracomment>time &quot;hour&quot; string</extracomment>
-        <translation>hour</translation>
+        <translation type="unfinished">
+            <numerusform>%n hour</numerusform>
+            <numerusform>%n hours</numerusform>
+        </translation>
     </message>
-    <message id="time-hours">
-        <source>hours</source>
-        <extracomment>time &quot;hours&quot; string</extracomment>
-        <translation>hours</translation>
-    </message>
-    <message id="time-day">
-        <source>day</source>
+    <message id="time-day" numerus="yes">
+        <source>%n day(s)</source>
         <extracomment>time &quot;day&quot; string</extracomment>
-        <translation>day</translation>
-    </message>
-    <message id="time-days">
-        <source>days</source>
-        <extracomment>time &quot;days&quot; string</extracomment>
-        <translation>days</translation>
+        <translation type="unfinished">
+            <numerusform>%n day</numerusform>
+            <numerusform>%n days</numerusform>
+        </translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit">
         <source>No limit</source>
@@ -2209,19 +2163,7 @@ much longer for a transaction to complete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-title">
-        <source>DAPP Store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-nothing">
-        <source>There are no applications at the moment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-loading-app">
-        <source>Please wait, %1 is loading</source>
-        <translation>Please wait, %1 is loading</translation>
-    </message>
-    <message id="apps-loading">
-        <source>Loading...</source>
+        <source>DApp Store</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-run">
@@ -2230,10 +2172,6 @@ much longer for a transaction to complete.</source>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-load-error">
-        <source>Failed to load applications list, %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dex-all-tab">
@@ -2292,11 +2230,11 @@ Please try again later or create an offer yourself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-completed">
-        <source>DAPP transaction completed</source>
+        <source>DApp transaction completed</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-expired">
-        <source>DAPP transaction expired</source>
+        <source>DApp transaction expired</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-contract-default-comment">
@@ -2570,8 +2508,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy %2% unlinked)</source>
-        <translation type="unfinished"></translation>
+        <source>Maturing%1(maximum anonymity %2% unlinked)</source>
+        <translation>Maturing%1(maximum anonymity %2% unlinked)</translation>
     </message>
     <message id="utxo-head-type">
         <source>Type</source>
@@ -2627,10 +2565,12 @@ Update your settings and try again.</source>
         <source>(optional)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="wallet-receive-addr-message-mp">
-        <source> Transaction can last at most %1 hours.</source>
-        <oldsource>Max Privacy transaction can last at most %1 hours.</oldsource>
-        <translation type="unfinished"></translation>
+    <message id="wallet-receive-addr-message-mp" numerus="yes">
+        <source>Transaction can last at most %n hour(s).</source>
+        <translation>
+            <numerusform>Transaction can last at most %n hour.</numerusform>
+            <numerusform>Transaction can last at most %n hours.</numerusform>
+        </translation>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
@@ -2723,8 +2663,8 @@ Update your settings and try again.</source>
         <translation type="unfinished">Change</translation>
     </message>
     <message id="balance-mp">
-        <source>Max privacy</source>
-        <translation type="unfinished">Max privacy</translation>
+        <source>Maximum anonymity</source>
+        <translation>Maximum anonymity</translation>
     </message>
     <message id="info-asset-id">
         <source>Asset ID</source>
@@ -2863,7 +2803,7 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-failed">
-        <source>DAPP transaction failed</source>
+        <source>DApp transaction failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="contacts-empty">
@@ -2960,12 +2900,12 @@ Update your settings and try again.</source>
         <translation>Available</translation>
     </message>
     <message id="notification-maxp-transaction-sent">
-        <source>Max Privacy transaction sent</source>
-        <translation type="unfinished"></translation>
+        <source>Maximum anonymity transaction sent</source>
+        <translation>Maximum anonymity transaction sent</translation>
     </message>
     <message id="notification-maxp-transaction-received">
-        <source>Max Privacy transaction received</source>
-        <translation type="unfinished"></translation>
+        <source>Maximum anonymity transaction received</source>
+        <translation>Maximum anonymity transaction received</translation>
     </message>
     <message id="notification-offline-transaction-sent">
         <source>Transaction sent to offline</source>
@@ -2976,8 +2916,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-maxp-transaction-failed">
-        <source>Max Privacy transaction failed</source>
-        <translation type="unfinished"></translation>
+        <source>Maximum anonymity transaction failed</source>
+        <translation>Maximum anonymity transaction failed</translation>
     </message>
     <message id="notification-offline-transaction-failed">
         <source>Offline transaction failed</source>
@@ -3036,7 +2976,7 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="address-info-dapp">
-        <source>DAPP name</source>
+        <source>DApp name</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-privacy-title">
@@ -3053,10 +2993,6 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
         <source>Allow to launch DApps</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="apps-update-wallet">
-        <source>Update Beam Wallet to launch</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
         <translation>Transaction info</translation>
@@ -3064,10 +3000,6 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     <message id="send-no-funds-for-fee">
         <source>Insufficient funds to pay transaction fee.</source>
         <translation>Insufficient funds to pay transaction fee.</translation>
-    </message>
-    <message id="apps-inprogress-tip">
-        <source>(%1 active)</source>
-        <translation>(%1 active)</translation>
     </message>
     <message id="tx-details-general-info">
         <source>General info</source>
@@ -3088,10 +3020,6 @@ Allow to proceed ? You can always update your choice in Settings later.</source>
     <message id="general-show-tx-details">
         <source>Show details</source>
         <translation>Show details</translation>
-    </message>
-    <message id="apps-update-message">
-        <source>Update Wallet to launch %1 application</source>
-        <translation>Update Wallet to launch %1 application</translation>
     </message>
     <message id="general-advanced">
         <source>Advanced</source>
@@ -3208,18 +3136,9 @@ cannot be canceled.</translation>
         <source>Select application to install</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="appliactions-install-ok">
-        <source>&apos;%1&apos; is successfully installed</source>
-        <oldsource>%1 is successfully installed</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="appliactions-install-fail">
-        <source>Failed to install DAPP: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</source>
-        <translation>See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</translation>
+        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
+        <translation>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</translation>
     </message>
     <message id="faucet-promo-get-coins">
         <source>get coins</source>
@@ -3255,6 +3174,182 @@ cannot be canceled.</translation>
             <numerusform>Offline address: %n transaction left.</numerusform>
             <numerusform>Offline address: %n transactions left.</numerusform>
         </translation>
+    </message>
+    <message id="source-dex">
+        <source>Assets Swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-in-progress-max-to-own">
+        <source>sending to own address
+(maximum anonymity)</source>
+        <translation>sending to own address
+(maximum anonymity)</translation>
+    </message>
+    <message id="wallet-txs-status-in-progress-offline-to-own">
+        <source>sending to own address
+(offline)</source>
+        <translation>sending to own address
+(offline)</translation>
+    </message>
+    <message id="wallet-txs-status-sent-max-to-own">
+        <source>sent to own address
+(maximum anonymity)</source>
+        <translation>sent to own address
+(maximum anonymity)</translation>
+    </message>
+    <message id="wallet-txs-status-sent-offline-to-own">
+        <source>sent to own address
+(offline)</source>
+        <translation>sent to own address
+(offline)</translation>
+    </message>
+    <message id="apps-version-error">
+        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
+        <translation>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</translation>
+    </message>
+    <message id="wallet-txs-status-waiting-receiver-offline">
+        <source>waiting for receiver
+(offline)</source>
+        <translation>waiting for receiver
+(offline)</translation>
+    </message>
+    <message id="apps-uninstall">
+        <source>Uninstall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-uninstall-confirm">
+        <source>Are you sure you want to uninstall %1 DApp?</source>
+        <oldsource>Are you sure you want to cancel %1 DApp?</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-uninstall-title">
+        <source>Uninstall DApp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-loading-app">
+        <source>Please wait, %1 is loading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-loading">
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-nothing">
+        <source>There are no applications at the moment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-err-cnt" numerus="yes">
+        <source>%n DApp(s) is not available</source>
+        <translation>
+            <numerusform>%n DApp is not available</numerusform>
+            <numerusform>%n DApps are not available</numerusform>
+        </translation>
+    </message>
+    <message id="apps-uninstall-success">
+        <source>&apos;%1&apos; DApp is successfully uninstalled.</source>
+        <translation>&apos;%1&apos; DApp is successfully uninstalled.</translation>
+    </message>
+    <message id="apps-uninstall-fail">
+        <source>Failed to uninstall &apos;%1&apos; DApp.</source>
+        <translation>Failed to uninstall &apos;%1&apos; DApp.</translation>
+    </message>
+    <message id="apps-inprogress-tip">
+        <source>(%1 active)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-load-error">
+        <source>Failed to load applications list, %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-update-message">
+        <source>Update Wallet to launch %1 application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-regular-address-message">
+        <source>To ensure a better privacy, new address is generated every time.
+In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
+        <translation>To ensure a better privacy, new address is generated every time.
+In case you’d like to re-use an earlier created regular address please use the Address Book.</translation>
+    </message>
+    <message id="apps-install-success">
+        <source>&apos;%1&apos; is successfully installed.</source>
+        <translation>&apos;%1&apos; is successfully installed.</translation>
+    </message>
+    <message id="apps-install-fail">
+        <source>Failed to install DApp:
+%1</source>
+        <translation>Failed to install DApp:
+%1</translation>
+    </message>
+    <message id="app-install-title">
+        <source>Install DApp</source>
+        <translation>Install DApp</translation>
+    </message>
+    <message id="address-details">
+        <source>Address details</source>
+        <translation>Address details</translation>
+    </message>
+    <message id="swap-token-details">
+        <source>Token details</source>
+        <translation>Token details</translation>
+    </message>
+    <message id="settings-privacy-mp-time-no-limit-commented">
+        <source>No limit
+(transaction can last indefinitely)</source>
+        <translation>No limit
+(transaction can last indefinitely)</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-val" numerus="yes">
+        <source>%n hour(s)</source>
+        <translation>
+            <numerusform>%n hour</numerusform>
+            <numerusform>%n hours</numerusform>
+        </translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-val72-comment">
+        <source> (recommended)</source>
+        <translation> (recommended)</translation>
+    </message>
+    <message id="wallet-receive-addr-message-min-fee">
+        <source>Min transaction fee is 0.01 BEAM.</source>
+        <translation>Min transaction fee is 0.01 BEAM.</translation>
+    </message>
+    <message id="status-online-stale-rates">
+        <source>(exchange rate to %1 was not updated since %2)</source>
+        <oldsource> (exchange rate to %1 was not updated since %2)</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="loading-view-restoring">
+        <source>Restoring wallet from the blockchain: </source>
+        <translation>Restoring wallet from the blockchain: </translation>
+    </message>
+    <message id="loading-view-creating">
+        <source>Downloading blockchain data: </source>
+        <translation>Downloading blockchain data: </translation>
+    </message>
+    <message id="loading-view-less-than-minute">
+        <source>less than a minute</source>
+        <translation>less than a minute</translation>
+    </message>
+    <message id="loading-view-rebuild-utxos">
+        <source>Rebuilding wallet data: </source>
+        <translation>Rebuilding wallet data: </translation>
+    </message>
+    <message id="status-change-settings">
+        <source>Change settings</source>
+        <translation type="unfinished">Change settings</translation>
+    </message>
+    <message id="start-create-password">
+        <source>Create password</source>
+        <translation>Create password</translation>
+    </message>
+    <message id="start-second-copy-error">
+        <source>The wallet is already started. Close all running wallets and start again.</source>
+        <translation>The wallet is already started. Close all running wallets and start again.</translation>
+    </message>
+    <message id="wallet-txs-action">
+        <source>Action</source>
+        <translation>Action</translation>
     </message>
 </context>
 </TS>

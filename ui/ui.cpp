@@ -51,9 +51,10 @@
 #include "viewmodel/helpers/sortfilterproxymodel.h"
 #include "viewmodel/helpers/token_bootstrap_manager.h"
 #include "viewmodel/helpers/seed_validation_helper.h"
+#include "viewmodel/notifications/app_notification_helper.h"
 #include "viewmodel/notifications/notifications_view.h"
 #include "viewmodel/notifications/push_notification_manager.h"
-#include "viewmodel/notifications/exchange_rates_manager.h"
+#include "model/exchange_rates_manager.h"
 #include "wallet/core/wallet_db.h"
 #include "utility/log_rotation.h"
 #include "core/ecc_native.h"
@@ -100,12 +101,6 @@ using namespace beam;
 using namespace std;
 using namespace ECC;
 
-#ifdef APP_NAME
-static const char* AppName = APP_NAME;
-#else
-static const char* AppName = "Beam Wallet Masternet";
-#endif
-
 int main (int argc, char* argv[])
 {
     wallet::g_AssetsEnabled = true;
@@ -115,7 +110,7 @@ int main (int argc, char* argv[])
 
     block_sigpipe();
     QApplication app(argc, argv);
-    QApplication::setApplicationName(AppName);
+    QApplication::setApplicationName(QMLGlobals::getAppName());
     QApplication::setWindowIcon(QIcon(Theme::iconPath()));
     QDir appDataDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
 
@@ -189,7 +184,7 @@ int main (int argc, char* argv[])
         int logLevel = getLogLevel(cli::LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
         int fileLogLevel = getLogLevel(cli::FILE_LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
 
-        beam::Crash::InstallHandler(appDataDir.filePath(AppName).toStdString().c_str());
+        beam::Crash::InstallHandler(appDataDir.filePath(QMLGlobals::getAppName()).toStdString().c_str());
 
 #define LOG_FILES_PREFIX "beam_ui_"
 
@@ -206,11 +201,14 @@ int main (int argc, char* argv[])
             LOG_INFO() << "Beam Wallet UI " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
             LOG_INFO() << "Beam Core " << BEAM_VERSION << " (" << BEAM_BRANCH_NAME << ")";
             LOG_INFO() << "Rules signature: " << Rules::get().get_SignatureStr();
+            LOG_INFO() << "AppData folder: " << appDataDir.absolutePath().toStdString();
 
             // AppModel Model MUST BE created before the UI engine and destroyed after.
             // AppModel serves the UI and UI should be able to access AppModel at any time
             // even while being destroyed. Do not move engine above AppModel
             WalletSettings settings(appDataDir);
+            LOG_INFO() << "WalletDB: " << settings.getWalletStorage();
+
             AppModel appModel(settings);
             QQmlApplicationEngine engine;
             Translator translator(settings, engine);
@@ -277,16 +275,15 @@ int main (int argc, char* argv[])
             qmlRegisterType<SwapTokenInfoItem>("Beam.Wallet", 1, 0, "SwapTokenInfoItem");
             qmlRegisterType<SwapTxObjectList>("Beam.Wallet", 1, 0, "SwapTxObjectList");
             qmlRegisterType<TxObjectList>("Beam.Wallet", 1, 0, "TxObjectList");
-            qmlRegisterType<AssetsList>("Beam.Wallet", 1, 0, "AssetsList");
             qmlRegisterType<TokenInfoItem>("Beam.Wallet", 1, 0, "TokenInfoItem");
             qmlRegisterType<SwapCoinClientWrapper>("Beam.Wallet", 1, 0, "SwapCoinClientWrapper");
             qmlRegisterType<TokenBootstrapManager>("Beam.Wallet", 1, 0, "TokenBootstrapManager");
             qmlRegisterType<PushNotificationManager>("Beam.Wallet", 1, 0, "PushNotificationManager");
-            qmlRegisterType<ExchangeRatesManager>("Beam.Wallet", 1, 0, "ExchangeRatesManager");
             qmlRegisterType<SortFilterProxyModel>("Beam.Wallet", 1, 0, "SortFilterProxyModel");
             qmlRegisterType<SeedValidationHelper>("Beam.Wallet", 1, 0, "SeedValidationHelper");
             qmlRegisterType<QR>("Beam.Wallet", 1, 0, "QR");
             qmlRegisterType<beamui::dex::DexView>("Beam.Wallet", 1, 0, "DexViewModel");
+            qmlRegisterType<AppNotificationHelper>("Beam.Wallet", 1, 0, "AppNotificationHelper");
             beamui::applications::RegisterQMLTypes();
 
             engine.load(QUrl("qrc:/root.qml"));

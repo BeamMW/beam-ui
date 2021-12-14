@@ -23,6 +23,7 @@ class QMLGlobals : public QObject
 public:
     explicit QMLGlobals(QQmlEngine&);
 
+    Q_INVOKABLE static QString getAppName();
     Q_INVOKABLE static void showMessage(const QString& message);
     Q_INVOKABLE static void logInfo(const QString& message);
     Q_INVOKABLE static void copyToClipboard(const QString& text);
@@ -70,6 +71,8 @@ public:
     Q_INVOKABLE static QString multiplyWithPrecision(const QString& first, const QString& second, uint precision);
     Q_INVOKABLE static QString roundWithPrecision(const QString& number, uint precision);
     Q_INVOKABLE static QString rawTxIdToStr(const QVariant& txId);
+
+    Q_INVOKABLE static QString getExplorerUrl();
 
 private:
     QQmlEngine& _engine;

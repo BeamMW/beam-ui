@@ -14,8 +14,8 @@
 #pragma once
 
 #include <QObject>
-#include "webapi_beam.h"
-#include "viewmodel/wallet/assets_list.h"
+#include "apps_api_ui.h"
+#include "model/assets_list.h"
 
 namespace beamui::applications
 {
@@ -23,21 +23,20 @@ namespace beamui::applications
         : public QObject
     {
         Q_OBJECT
-        Q_PROPERTY(QObject* api READ getApi NOTIFY apiChanged)
 
     public:
         explicit WebAPICreator(QObject *parent = nullptr);
         ~WebAPICreator() override;
 
         Q_INVOKABLE void createApi(const QString& verWant, const QString& verMin, const QString& appName, const QString& appUrl);
+        Q_INVOKABLE void destroyApi();
         Q_INVOKABLE [[nodiscard]] bool apiSupported(const QString& apiVersion) const;
         Q_INVOKABLE [[nodiscard]] QString generateAppID(const QString& appName, const QString& appUrl);
-        [[nodiscard]] QObject* getApi();
 
     signals:
-        void apiChanged();
+        void apiCreated(QObject* api);
 
     private:
-        std::shared_ptr<WebAPI_Beam> _api;
+        std::shared_ptr<AppsApiUI> _api;
     };
 }

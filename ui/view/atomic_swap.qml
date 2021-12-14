@@ -1294,7 +1294,7 @@ Please try again later or create an offer yourself."
             case "in progress": return qsTrId("wallet-txs-status-in-progress");
             //% "completed"
             case "completed": return qsTrId("wallet-txs-status-completed");
-            //% "cancelled"
+            //% "canceled"
             case "canceled": return qsTrId("wallet-txs-status-cancelled");
             // "canceling"
             case "canceling": return "canceling";

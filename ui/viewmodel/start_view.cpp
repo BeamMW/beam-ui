@@ -21,6 +21,7 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 #include <QJSEngine>
+#include <QPointer>
 #include "settings_view.h"
 #include "model/app_model.h"
 #include "model/keyboard.h"
@@ -720,7 +721,10 @@ void StartViewModel::createWallet(const QJSValue& callback)
     SecString secretPass = m_password;
 
     std::string rawSeed = m_saveSeed ? getPhrases().toStdString() : "";
-    DoJSCallback(m_callback, AppModel::getInstance().createWallet(secretSeed, secretPass, rawSeed));
+    if (AppModel::getInstance().isOnlyOneInstanceStarted())
+    {
+        DoJSCallback(m_callback, AppModel::getInstance().createWallet(secretSeed, secretPass, rawSeed));
+    }
 }
 
 void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
@@ -743,10 +747,13 @@ void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
     }
 #endif
     // TODO make this secure
-    DoOpenWallet(m_callback, [pass] () {
-        SecString secret = pass.toStdString();
-        AppModel::getInstance().openWalletThrow(secret);
-    });
+    if (AppModel::getInstance().isOnlyOneInstanceStarted())
+    {
+        DoOpenWallet(m_callback, [pass] () {
+            SecString secret = pass.toStdString();
+            AppModel::getInstance().openWalletThrow(secret);
+        });
+    }
 }
 
 bool StartViewModel::checkWalletPassword(const QString& password) const
@@ -933,8 +940,10 @@ void StartViewModel::loadRecoveryPhraseForValidation()
     auto walletModel = AppModel::getInstance().getWalletModel();
     if (walletModel)
     {
-        walletModel->getAsync()->readRawSeedPhrase([this] (const std::string& savedSeed)
+        QPointer<StartViewModel> guard(this);
+        walletModel->getAsync()->readRawSeedPhrase([guard, this] (const std::string& savedSeed)
         {
+            if (!guard) return;
             if (savedSeed.empty()) return;
 
             m_generatedPhrases.clear();
@@ -971,6 +980,11 @@ void StartViewModel::setValidateDictionary(bool value)
         m_validateDictionary = value;
         emit validateDictionaryChanged();
     }
+}
+
+bool StartViewModel::isOnlyOneInstanceStarted() const
+{
+    return AppModel::getInstance().isOnlyOneInstanceStarted();
 }
 
 QString StartViewModel::getPhrases() const

@@ -139,7 +139,7 @@ private:
     void resetActiveTxCounters();
     void setIsOffersLoaded(bool isOffersLoaded);
 
-    WalletModel& m_walletModel;
+    WalletModel::Ptr m_walletModel;
 
     SwapTxObjectList m_transactionsList;
     SwapOffersList m_offersList;

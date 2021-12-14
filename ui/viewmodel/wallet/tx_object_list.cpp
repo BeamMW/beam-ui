@@ -32,8 +32,17 @@ QString getStatusTextTranslated(const QString& status, beam::wallet::TxAddressTy
     }
     else if (status == "waiting for receiver")
     {
-        //% "waiting for receiver"
-        return qtTrId("wallet-txs-status-waiting-receiver");
+        if (addressType != beam::wallet::TxAddressType::Offline)
+        {
+            //% "waiting for receiver"
+            return qtTrId("wallet-txs-status-waiting-receiver");
+        }
+        else
+        {
+            /*% "waiting for receiver
+(offline)"*/
+            return qtTrId("wallet-txs-status-waiting-receiver-offline");
+        }
     }
     else if (status == "in progress")
     {
@@ -62,7 +71,7 @@ QString getStatusTextTranslated(const QString& status, beam::wallet::TxAddressTy
     }
     else if (status == "cancelled")
     {
-        //% "cancelled"
+        //% "canceled"
         return qtTrId("wallet-txs-status-cancelled");
     }
     else if (status == "expired")
@@ -76,98 +85,117 @@ QString getStatusTextTranslated(const QString& status, beam::wallet::TxAddressTy
         return qtTrId("wallet-txs-status-failed");
     }
     // in progress
-    else if (status == "in progress max privacy")
+    else if (status == "in progress maximum anonymity")
     {
         /*% "in progress
-max privacy" */
+(maximum anonymity)" */
         return qtTrId("wallet-txs-status-in-progress-max");
+    }
+    else if (status == "sending maximum anonymity to own address")
+    {
+        /*% "sending to own address
+(maximum anonymity)" */
+        return qtTrId("wallet-txs-status-in-progress-max-to-own");
     }
     else if (status == "in progress offline")
     {
-        /*% "in progress
-offline" */
+        /*% "in progress (offline)" */
         return qtTrId("wallet-txs-status-in-progress-max-offline");
     }
     else if (status == "in progress public offline")
     {
         /*% "in progress
-public offline" */
+(public offline)" */
         return qtTrId("wallet-txs-status-in-progress-public-offline");
     }
+    else if (status == "sending offline to own address")
+    {
+        /*% "sending to own address
+(offline)" */
+        return qtTrId("wallet-txs-status-in-progress-offline-to-own");
+    }
     // sent
-    else if (status == "sent max privacy")
+    else if (status == "sent maximum anonymity")
     {
         /*% "sent
-max privacy"*/
+(maximum anonymity)"*/
         return qtTrId("wallet-txs-status-sent-max");
     }
     else if (status == "sent offline")
     {
-        /*% "sent
-offline" */
+        /*% "sent (offline)" */
         return qtTrId("wallet-txs-status-sent-max-offline");
     }
     else if (status == "sent public offline")
     {
         /*% "sent
-public offline" */
+(public offline)" */
         return qtTrId("wallet-txs-status-sent-public-offline");
     }
+    else if (status == "sent maximum anonymity to own address")
+    {
+        /*% "sent to own address
+(maximum anonymity)" */
+        return qtTrId("wallet-txs-status-sent-max-to-own");
+    }
+    else if (status == "sent offline to own address")
+    {
+        /*% "sent to own address
+(offline)" */
+        return qtTrId("wallet-txs-status-sent-offline-to-own");
+    }
     // received
-    else if (status == "received max privacy")
+    else if (status == "received maximum anonymity")
     {
         /*% "received
-max privacy" */
+(maximum anonymity)" */
         return qtTrId("wallet-txs-status-received-max");
     }
     else if (status == "received offline")
     {
-        /*% "received
-offline" */
+        /*% "received (offline)" */
         return qtTrId("wallet-txs-status-received-max-offline");
     }
     else if (status == "received public offline")
     {
         /*% "received
-public offline" */
+(public offline)" */
         return qtTrId("wallet-txs-status-received-public-offline");
     }
     // canceled
-    else if (status == "canceled max privacy")
+    else if (status == "canceled maximum anonymity")
     {
         /*% "canceled
-max privacy" */
+(maximum anonymity)" */
         return qtTrId("wallet-txs-status-canceled-max");
     }
     else if (status == "canceled offline")
     {
-        /*% "canceled
-offline" */
+        /*% "canceled (offline)" */
         return qtTrId("wallet-txs-status-canceled-max-offline");
     }
     else if (status == "canceled public offline")
     {
         /*% "canceled
-public offline" */
+(public offline)" */
         return qtTrId("wallet-txs-status-canceled-public-offline");
     }
     // failed
-    else if (status == "failed max privacy")
+    else if (status == "failed maximum anonymity")
     {
         /*% "failed
-max privacy" */
+(maximum anonymity)" */
         return qtTrId("wallet-txs-status-failed-max");
     }
     else if (status == "failed offline")
     {
-        /*% "failed
-offline" */
+        /*% "failed (offline)" */
         return qtTrId("wallet-txs-status-failed-max-offline");
     }
     else if (status == "failed public offline")
     {
         /*% "failed
-public offline" */
+(public offline)" */
         return qtTrId("wallet-txs-status-failed-public-offline");
     }
     else if (status == "completed")
@@ -254,12 +282,15 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::CidsStr), "cidsStr"},
         { static_cast<int>(Roles::Source), "source"},
         { static_cast<int>(Roles::SourceSort), "sourceSort"},
+        { static_cast<int>(Roles::Action), "action"},
+        { static_cast<int>(Roles::ActionSort), "actionSort"},
         { static_cast<int>(Roles::MinConfirmations), "minConfirmations"},
         { static_cast<int>(Roles::ConfirmationsProgress), "confirmationsProgress"},
         { static_cast<int>(Roles::IsDappTx), "isDappTx"},
         { static_cast<int>(Roles::DAppId), "dappId"},
         { static_cast<int>(Roles::DAppName), "dappName"},
-        { static_cast<int>(Roles::IsActive), "isActive"}
+        { static_cast<int>(Roles::IsActive), "isActive"},
+        { static_cast<int>(Roles::IsFeeOnly), "isFeeOnly"}
     };
     return roles;
 }
@@ -274,10 +305,14 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
     auto& value = m_list[index.row()];
     switch (static_cast<Roles>(role))
     {
+        case Roles::IsFeeOnly:
+            return value->isFeeOnly();
         case Roles::Source:
         case Roles::SourceSort:
             return value->getSource();
-
+        case Roles::Action:
+        case Roles::ActionSort:
+            return value->isContractTx() ? value->getComment() : "";
         case Roles::TimeCreated:
         {
             QDateTime datetime;
@@ -455,9 +490,9 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
         }
         case Roles::AssetIDs:
         {
-            const auto& rates = value->getAssetIds();
+            const auto& assets = value->getAssetsList();
             QVariant result;
-            result.setValue(rates);
+            result.setValue(assets);
             return result;
         }
         case Roles::AssetFilter:

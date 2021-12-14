@@ -197,8 +197,6 @@ private:
     QString m_publicAddress;
     mutable int m_mpAnonymitySetIndex = 0;
     mutable int m_mpLockTimeLimitIndex = 1;
-
-    WalletModel& m_walletModel;
-
+    WalletModel::Ptr m_walletModel;
     const int CHECK_INTERVAL = 1000;
 };

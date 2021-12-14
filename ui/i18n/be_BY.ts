@@ -191,7 +191,7 @@
         <translation>адпраўлена</translation>
     </message>
     <message id="wallet-txs-status-cancelled">
-        <source>cancelled</source>
+        <source>canceled</source>
         <translation>скасавана</translation>
     </message>
     <message id="wallet-txs-status-expired">
@@ -245,7 +245,7 @@
         <source>v</source>
         <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
-        <translation type="unfinished">v</translation>
+        <translation>версiя</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -329,18 +329,6 @@
     <message id="change-pwd-ok">
         <source>Change password</source>
         <translation type="unfinished">Change password</translation>
-    </message>
-    <message id="loading-loading">
-        <source>Loading wallet...</source>
-        <translation>Загрузка гаманца...</translation>
-    </message>
-    <message id="loading-restoring">
-        <source>Restoring wallet...</source>
-        <translation>Аднаўленне гаманца...</translation>
-    </message>
-    <message id="loading-creating">
-        <source>Creating wallet...</source>
-        <translation>Стварэнне гаманца...</translation>
     </message>
     <message id="start-open-pwd-invitation">
         <source>Enter your password to access the wallet</source>
@@ -520,8 +508,9 @@
         <translation>Пароль</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
-        <source>Confirm password</source>
-        <translation>Пацвердзіць пароль</translation>
+        <source>Password confirmation</source>
+        <oldsource>Password confrimation</oldsource>
+        <translation type="unfinished">Password confirmation</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
         <source>Passwords do not match</source>
@@ -621,12 +610,8 @@
         <translation>Немагчыма запусціць праграмму. Праверце пуць да дадзеных кашалька</translation>
     </message>
     <message id="loading-view-download-blocks">
-        <source>Syncing with blockchain</source>
-        <translation>Сінхранізацыя з блокчэйнам</translation>
-    </message>
-    <message id="loading-view-scaning-utxo">
-        <source>Loading wallet data %d/%d</source>
-        <translation>Загрузка дадзеных гаманца %d/%d</translation>
+        <source>Syncing with the blockchain: </source>
+        <translation>Сінхранізацыя з блокчэйнам: </translation>
     </message>
     <message id="loading-view-protocol-error">
         <source>Incompatible peer</source>
@@ -924,17 +909,25 @@
         <source>Fee is too small</source>
         <translation>Памер каміссіі вельмі малы</translation>
     </message>
-    <message id="loading-view-estimate-minutes">
-        <source>min</source>
-        <translation>хв</translation>
+    <message id="loading-view-estimate-minutes" numerus="yes">
+        <source>%n minute(s)</source>
+        <translation>
+            <numerusform>%n хвіліна</numerusform>
+            <numerusform>%n хвіліны</numerusform>
+            <numerusform>%n хвілін</numerusform>
+        </translation>
     </message>
-    <message id="loading-view-estimate-seconds">
-        <source>sec</source>
-        <translation>сек.</translation>
+    <message id="loading-view-estimate-seconds" numerus="yes">
+        <source>%n second(s)</source>
+        <translation>
+            <numerusform>%n секунда</numerusform>
+            <numerusform>%n секунды</numerusform>
+            <numerusform>%n секунд</numerusform>
+        </translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>Estimated time: %s</source>
-        <translation>Засталося: %s</translation>
+        <source>%s to completion</source>
+        <translation>%s да завяршэння</translation>
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
@@ -1019,16 +1012,16 @@ please review your settings and try again.</translation>
         <translation>Заканчваецца</translation>
     </message>
     <message id="loading-view-estimate-calculating">
-        <source>calculating...</source>
-        <translation>вылічаецца...</translation>
+        <source>calculating estimated time</source>
+        <translation>разлік меркаванага часу</translation>
     </message>
-    <message id="loading-view-rebuild-utxos">
-        <source>Rebuilding wallet data</source>
-        <translation>Перабудаванне дадзенных гаманца</translation>
-    </message>
-    <message id="loading-view-estimate-hours">
-        <source>h</source>
-        <translation>гадз</translation>
+    <message id="loading-view-estimate-hours" numerus="yes">
+        <source>%n hour(s)</source>
+        <translation>
+            <numerusform>%n гадзіна</numerusform>
+            <numerusform>%n гадзіны</numerusform>
+            <numerusform>%n гадзін</numerusform>
+        </translation>
     </message>
     <message id="loading-view-net-problems">
         <source>It may take longer than usual. Please, check your network.</source>
@@ -1136,11 +1129,11 @@ please review your settings and try again.</translation>
     </message>
     <message id="swap-details-lock-tx-id">
         <source>lock transaction ID</source>
-        <translation type="unfinished">lock transaction ID</translation>
+        <translation>ідэнтыфікатар транзакцыі блакіроўкі</translation>
     </message>
     <message id="swap-details-lock-tx-conf">
         <source>lock transaction confirmations</source>
-        <translation type="unfinished">lock transaction confirmations</translation>
+        <translation>пацверджанняў транзакцыi блакіроўкi</translation>
     </message>
     <message id="swap-details-beam-lock-kernel-id">
         <source>BEAM lock transaction kernel ID</source>
@@ -1773,9 +1766,8 @@ Your version is: %2. Please, check for updates.</source>
         <translation type="unfinished">Online</translation>
     </message>
     <message id="tx-max-privacy">
-        <source>Max Anonymity Set</source>
-        <oldsource>Max Privacy</oldsource>
-        <translation type="unfinished">Max Anonymity Set</translation>
+        <source>Maximum anonymity</source>
+        <translation>Максімальная ананімнасць</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
@@ -1846,39 +1838,33 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="wallet-txs-status-in-progress-max">
         <source>in progress
-max privacy</source>
+(maximum anonymity)</source>
         <translation>у працэсе
-макс. прыватнасць</translation>
+(максімальная ананімнасць)</translation>
     </message>
     <message id="wallet-txs-status-sent-max">
         <source>sent
-max privacy</source>
+(maximum anonymity)</source>
         <translation>адпраўлена
-макс. прыватнасць</translation>
+(максімальная ананімнасць)</translation>
     </message>
     <message id="wallet-txs-status-received-max">
         <source>received
-max privacy</source>
+(maximum anonymity)</source>
         <translation>атрымана
-макс. прыватнасць</translation>
+(максімальная ананімнасць)</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
-        <source>in progress
-offline</source>
-        <translation>у працэсе
-афлайн</translation>
+        <source>in progress (offline)</source>
+        <translation>у працэсе (афлайн)</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
-        <source>sent
-offline</source>
-        <translation>адпраўлена
-афлайн</translation>
+        <source>sent (offline)</source>
+        <translation>адпраўлена (афлайн)</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
-        <source>received
-offline</source>
-        <translation>атрымана
-афлайн</translation>
+        <source>received (offline)</source>
+        <translation>атрымана (афлайн)</translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
@@ -1898,7 +1884,7 @@ offline</source>
     </message>
     <message id="tx-failure-identity-required">
         <source>Peer wallet&apos;s signature required</source>
-        <translation type="unfinished">Peer wallet&apos;s signature required</translation>
+        <translation>Патрабуецца подпіс аднарангавага кашалька </translation>
     </message>
     <message id="tx-failure-cannot-get-vouchers">
         <source>The sender cannot get vouchers for max privacy transaction</source>
@@ -2023,38 +2009,38 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Звычайная</translation>
     </message>
     <message id="tx-address-max-privacy">
-        <source>Max privacy</source>
-        <translation>Макс. прыватнасць</translation>
+        <source>Maximum anonymity</source>
+        <translation>Максімальная ананімнасць</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress
-public offline</source>
-        <translation>у працэсе
-агульнадаступны афлайн</translation>
+(public offline)</source>
+        <translation type="unfinished">in progress
+(public offline)</translation>
     </message>
     <message id="wallet-txs-status-sent-public-offline">
         <source>sent
-public offline</source>
-        <translation>адпраўлена
-агульнадаступны афлайн</translation>
+(public offline)</source>
+        <translation type="unfinished">sent
+(public offline)</translation>
     </message>
     <message id="wallet-txs-status-received-public-offline">
         <source>received
-public offline</source>
-        <translation>атрымана
-агульнадаступны афлайн</translation>
+(public offline)</source>
+        <translation type="unfinished">received
+(public offline)</translation>
     </message>
     <message id="wallet-txs-status-canceled-public-offline">
         <source>canceled
-public offline</source>
-        <translation>адменена
-агульнадаступны афлайн</translation>
+(public offline)</source>
+        <translation type="unfinished">canceled
+(public offline)</translation>
     </message>
     <message id="wallet-txs-status-failed-public-offline">
         <source>failed
-public offline</source>
-        <translation>не атрымалася
-агульнадаступны афлайн</translation>
+(public offline)</source>
+        <translation type="unfinished">failed
+(public offline)</translation>
     </message>
     <message id="settings-node-progress">
         <source>Swap in progress, cannot disconnect or switch connection type.</source>
@@ -2066,32 +2052,27 @@ public offline</source>
     </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
-max privacy</source>
-        <translation>адменена
-макс. прыватнасць</translation>
+(maximum anonymity)</source>
+        <translation type="unfinished">canceled
+(maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
-        <source>canceled
-offline</source>
-        <translation>адменена
-афлайн</translation>
+        <source>canceled (offline)</source>
+        <translation type="unfinished">canceled (offline)</translation>
     </message>
     <message id="wallet-txs-status-failed-max">
         <source>failed
-max privacy</source>
-        <translation>не атрымалася
-макс. прыватнасць</translation>
+(maximum anonymity)</source>
+        <translation type="unfinished">failed
+(maximum anonymity)</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
-        <source>failed
-offline</source>
-        <translation>не атрымалася
-афлайн</translation>
+        <source>failed (offline)</source>
+        <translation type="unfinished">failed (offline)</translation>
     </message>
     <message id="max-privacy-dialog-header">
-        <source>Locked Max privacy coins</source>
-        <oldsource>Max privacy</oldsource>
-        <translation type="unfinished">Locked Max privacy coins</translation>
+        <source>Maximum anonymity</source>
+        <translation>Максімальная ананімнасць</translation>
     </message>
     <message id="max-privacy-dialog-locked">
         <source>Locked</source>
@@ -2114,56 +2095,34 @@ offline</source>
         <translation>Атрыманыя манеты можна адразу выдаткаваць.</translation>
     </message>
     <message id="settings-privacy-mp-time-limit">
-        <source>Max privacy longest transaction time</source>
-        <translation type="unfinished">Max privacy longest transaction time</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-72">
-        <source>72h</source>
-        <translation>72 гадзiны</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-60">
-        <source>60h</source>
-        <translation>60 гадзiн</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-48">
-        <source>48h</source>
-        <translation>48 гадзiн</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-36">
-        <source>36h</source>
-        <translation>36 гадзiн</translation>
-    </message>
-    <message id="settings-privacy-mp-time-limit-24">
-        <source>24h</source>
-        <translation>24 гадзiны</translation>
+        <source>Longest transaction time for maximum anonymity</source>
+        <translation type="unfinished">Longest transaction time for maximum anonymity</translation>
     </message>
     <message id="remote-node-lelantus-warning">
         <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
         <translation type="unfinished">To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</translation>
     </message>
-    <message id="time-hour">
-        <source>hour</source>
+    <message id="time-hour" numerus="yes">
+        <source>%n hour(s)</source>
         <extracomment>time &quot;hour&quot; string</extracomment>
-        <translation type="unfinished">hour</translation>
+        <translation>
+            <numerusform>%n гадзіна</numerusform>
+            <numerusform>%n гадзіны</numerusform>
+            <numerusform>%n гадзін</numerusform>
+        </translation>
     </message>
-    <message id="time-hours">
-        <source>hours</source>
-        <extracomment>time &quot;hours&quot; string</extracomment>
-        <translation type="unfinished">hours</translation>
-    </message>
-    <message id="time-day">
-        <source>day</source>
+    <message id="time-day" numerus="yes">
+        <source>%n day(s)</source>
         <extracomment>time &quot;day&quot; string</extracomment>
-        <translation type="unfinished">day</translation>
-    </message>
-    <message id="time-days">
-        <source>days</source>
-        <extracomment>time &quot;days&quot; string</extracomment>
-        <translation type="unfinished">days</translation>
+        <translation>
+            <numerusform>%n дзень</numerusform>
+            <numerusform>%n днi</numerusform>
+            <numerusform>%n дзён</numerusform>
+        </translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit">
         <source>No limit</source>
-        <translation type="unfinished">No limit</translation>
+        <translation>Без абмежаванняў</translation>
     </message>
     <message id="general-ethereum">
         <source>Ethereum</source>
@@ -2211,20 +2170,8 @@ much longer for a transaction to complete.</source>
         <translation>Infura project ID</translation>
     </message>
     <message id="apps-title">
-        <source>DAPP Store</source>
+        <source>DApp Store</source>
         <translation>DAPP Store</translation>
-    </message>
-    <message id="apps-nothing">
-        <source>There are no applications at the moment</source>
-        <translation>На дадзены момант прыкладанняў няма</translation>
-    </message>
-    <message id="apps-loading-app">
-        <source>Please wait, %1 is loading</source>
-        <translation>Пачакайце, %1 загружаецца</translation>
-    </message>
-    <message id="apps-loading">
-        <source>Loading...</source>
-        <translation>Загрузка...</translation>
     </message>
     <message id="apps-run">
         <source>launch</source>
@@ -2233,10 +2180,6 @@ much longer for a transaction to complete.</source>
     <message id="apps-devapp">
         <source>This is your dev application</source>
         <translation type="unfinished">This is your dev application</translation>
-    </message>
-    <message id="apps-load-error">
-        <source>Failed to load applications list, %1</source>
-        <translation type="unfinished">Failed to load applications list, %1</translation>
     </message>
     <message id="dex-all-tab">
         <source>All orders</source>
@@ -2295,12 +2238,12 @@ Please try again later or create an offer yourself.</translation>
         <translation>Ніякага апісання ў кантракце не прадугледжана</translation>
     </message>
     <message id="notification-contract-completed">
-        <source>DAPP transaction completed</source>
-        <translation>Транзакцыя DAPP завершана</translation>
+        <source>DApp transaction completed</source>
+        <translation>Транзакцыя DApp завершана</translation>
     </message>
     <message id="notification-contract-expired">
-        <source>DAPP transaction expired</source>
-        <translation>Тэрмін дзеяння транзакцыі DAPP скончыўся</translation>
+        <source>DApp transaction expired</source>
+        <translation>Тэрмін дзеяння транзакцыі DApp скончыўся</translation>
     </message>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
@@ -2504,7 +2447,7 @@ Update your settings and try again.</source>
     </message>
     <message id="overtop-beam-supply">
         <source>Amount overtop total Beam supply.</source>
-        <translation type="unfinished">Amount overtop total Beam supply.</translation>
+        <translation>Сума перавышае агульны запас Beam.</translation>
     </message>
     <message id="swap-invalid-rate">
         <source>Invalid rate</source>
@@ -2520,7 +2463,7 @@ Update your settings and try again.</source>
     </message>
     <message id="general-open-failed">
         <source>Failed to open wallet, please check logs</source>
-        <translation type="unfinished">Failed to open wallet, please check logs</translation>
+        <translation>Не атрымалася адкрыць кашалёк, праверце журналы</translation>
     </message>
     <message id="start-no-hwkeeper">
         <source>Hardware keykeeper is not initialized</source>
@@ -2575,8 +2518,8 @@ Update your settings and try again.</source>
         <translation>Зрасходавана</translation>
     </message>
     <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(max privacy %2% unlinked)</source>
-        <translation>Паспяванне%1 (макс. прыватнасць, завершана на %2%)</translation>
+        <source>Maturing%1(maximum anonymity %2% unlinked)</source>
+        <translation>Паспяванне%1 (максiмальная ананiмнасць, завершана на %2%)</translation>
     </message>
     <message id="utxo-head-type">
         <source>Type</source>
@@ -2606,7 +2549,7 @@ Update your settings and try again.</source>
         <source>Unsupported API version requested: %1</source>
         <oldsource>Unsupported API version requested: %1
 </oldsource>
-        <translation type="unfinished">Unsupported API version requested: %1</translation>
+        <translation>Запытаная версія API, якая не падтрымліваецца: %1</translation>
     </message>
     <message id="can-not-generate-new-address-message">
         <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
@@ -2622,7 +2565,7 @@ Update your settings and try again.</source>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
         <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation type="unfinished">Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</translation>
+        <translation>Падключыцеся да інтэграванага або ўласнага вузла, каб атрымаць магчымасць атрымліваць максiмальна ананiмныя і аўтаномныя транзакцыі.</translation>
     </message>
     <message id="receive-request">
         <source>Requested amount</source>
@@ -2632,19 +2575,22 @@ Update your settings and try again.</source>
         <source>(optional)</source>
         <translation>(неабавязкова)</translation>
     </message>
-    <message id="wallet-receive-addr-message-mp">
-        <source> Transaction can last at most %1 hours.</source>
-        <oldsource>Max Privacy transaction can last at most %1 hours.</oldsource>
-        <translation type="unfinished"> Transaction can last at most %1 hours.</translation>
+    <message id="wallet-receive-addr-message-mp" numerus="yes">
+        <source>Transaction can last at most %n hour(s).</source>
+        <translation>
+            <numerusform>Транзакцыя можа доўжыцца не больш за %n гадзіну.</numerusform>
+            <numerusform>Транзакцыя можа доўжыцца не больш за %n гадзіны.</numerusform>
+            <numerusform>Транзакцыя можа доўжыцца не больш за %n гадзін.</numerusform>
+        </translation>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <oldsource>Max Privacy transaction can last indefinitely.</oldsource>
-        <translation type="unfinished">Transaction can last indefinitely.</translation>
+        <translation>Транзакцыя можа доўжыцца бясконца.</translation>
     </message>
     <message id="wallet-receive-text-online-time">
         <source>Sender will be given a choice between online and offline payment.</source>
-        <translation type="unfinished">Sender will be given a choice between online and offline payment.</translation>
+        <translation>Адпраўніку будзе прадастаўлена магчымасць выбару паміж аплатай онлайн і афлайн.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2676,12 +2622,12 @@ Update your settings and try again.</source>
     </message>
     <message id="send-no-funds">
         <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
-        <translation type="unfinished">Insufficient funds to complete the transaction. Maximum amount is %1 %2.</translation>
+        <translation>Недастаткова сродкаў для завяршэння транзакцыі. Максімальная сума: %1 %2.</translation>
     </message>
     <message id="amount-input-add-max">
         <source>max</source>
         <oldsource>add max</oldsource>
-        <translation type="unfinished">max</translation>
+        <translation>макс.</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
@@ -2693,15 +2639,15 @@ Update your settings and try again.</source>
     </message>
     <message id="send-remaining-beam-label">
         <source>BEAM Remaining</source>
-        <translation type="unfinished">BEAM Remaining</translation>
+        <translation>BEAM засталося</translation>
     </message>
     <message id="general-balance">
         <source>Balance</source>
-        <translation type="unfinished">Balance</translation>
+        <translation>Баланс</translation>
     </message>
     <message id="general-asset-info">
         <source>Asset Info</source>
-        <translation type="unfinished">Asset Info</translation>
+        <translation>Інфармацыя пра актыў</translation>
     </message>
     <message id="balance-available">
         <source>Available</source>
@@ -2728,12 +2674,12 @@ Update your settings and try again.</source>
         <translation>Рэшта</translation>
     </message>
     <message id="balance-mp">
-        <source>Max privacy</source>
-        <translation>Макс. прыватнасць</translation>
+        <source>Maximum anonymity</source>
+        <translation>Максімальная ананімнасць</translation>
     </message>
     <message id="info-asset-id">
         <source>Asset ID</source>
-        <translation type="unfinished">Asset ID</translation>
+        <translation>Ідэнтыфікатар актыву</translation>
     </message>
     <message id="info-asset-name">
         <source>Asset name</source>
@@ -2868,8 +2814,8 @@ Update your settings and try again.</source>
         <translation>Тэрмiн дзеяння гэтага адраса ужо скончыўся</translation>
     </message>
     <message id="notification-contract-failed">
-        <source>DAPP transaction failed</source>
-        <translation>Збой транзакцыі DAPP</translation>
+        <source>DApp transaction failed</source>
+        <translation type="unfinished">DApp transaction failed</translation>
     </message>
     <message id="contacts-empty">
         <source>Your contact list is empty</source>
@@ -2897,11 +2843,11 @@ Update your settings and try again.</source>
     </message>
     <message id="general-value">
         <source>Value</source>
-        <translation type="unfinished">Value</translation>
+        <translation>Значэнне</translation>
     </message>
     <message id="wallet-txs-source">
         <source>Source</source>
-        <translation type="unfinished">Source</translation>
+        <translation>Крыніца</translation>
     </message>
     <message id="source-wallet">
         <source>Wallet</source>
@@ -2910,19 +2856,19 @@ Update your settings and try again.</source>
     <message id="settings-general-confirmations">
         <source>Minimum confirmations</source>
         <extracomment>settings tab, general section, minimum confirmations</extracomment>
-        <translation type="unfinished">Minimum confirmations</translation>
+        <translation>Мінімум пацверджанняў</translation>
     </message>
     <message id="tx-details-confirmation-status-label">
         <source>Confirmation status</source>
-        <translation type="unfinished">Confirmation status</translation>
+        <translation>Статус пацверджання</translation>
     </message>
     <message id="wallet-txs-status-confirming">
         <source>confirming</source>
-        <translation type="unfinished">confirming</translation>
+        <translation>пацвярджаецца</translation>
     </message>
     <message id="tx-details-confirmation-progress-label">
         <source>Confirmed (%1)</source>
-        <translation type="unfinished">Confirmed (%1)</translation>
+        <translation>Пацверджана (%1)</translation>
     </message>
     <message id="dex-order-expired">
         <source>Expired</source>
@@ -2965,12 +2911,12 @@ Update your settings and try again.</source>
         <translation>Даступна</translation>
     </message>
     <message id="notification-maxp-transaction-sent">
-        <source>Max Privacy transaction sent</source>
-        <translation type="unfinished">Max Privacy transaction sent</translation>
+        <source>Maximum anonymity transaction sent</source>
+        <translation type="unfinished">Maximum anonymity transaction sent</translation>
     </message>
     <message id="notification-maxp-transaction-received">
-        <source>Max Privacy transaction received</source>
-        <translation type="unfinished">Max Privacy transaction received</translation>
+        <source>Maximum anonymity transaction received</source>
+        <translation type="unfinished">Maximum anonymity transaction received</translation>
     </message>
     <message id="notification-offline-transaction-sent">
         <source>Transaction sent to offline</source>
@@ -2981,8 +2927,8 @@ Update your settings and try again.</source>
         <translation type="unfinished">Transaction received from offline</translation>
     </message>
     <message id="notification-maxp-transaction-failed">
-        <source>Max Privacy transaction failed</source>
-        <translation type="unfinished">Max Privacy transaction failed</translation>
+        <source>Maximum anonymity transaction failed</source>
+        <translation type="unfinished">Maximum anonymity transaction failed</translation>
     </message>
     <message id="notification-offline-transaction-failed">
         <source>Offline transaction failed</source>
@@ -3041,8 +2987,8 @@ Update your settings and try again.</source>
         <translation>Апісанне</translation>
     </message>
     <message id="address-info-dapp">
-        <source>DAPP name</source>
-        <translation>Імя DAPP</translation>
+        <source>DApp name</source>
+        <translation type="unfinished">DApp name</translation>
     </message>
     <message id="dapps-privacy-title">
         <source>DApps Privacy</source>
@@ -3060,10 +3006,6 @@ Allow to proceed ? You can always update your choice in Settings later.</transla
         <source>Allow to launch DApps</source>
         <translation type="unfinished">Allow to launch DApps</translation>
     </message>
-    <message id="apps-update-wallet">
-        <source>Update Beam Wallet to launch</source>
-        <translation>Абнавіце кашалёк Beam для запуску</translation>
-    </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
         <translation>Інфармацыя аб транзакцыi</translation>
@@ -3071,10 +3013,6 @@ Allow to proceed ? You can always update your choice in Settings later.</transla
     <message id="send-no-funds-for-fee">
         <source>Insufficient funds to pay transaction fee.</source>
         <translation type="unfinished">Insufficient funds to pay transaction fee.</translation>
-    </message>
-    <message id="apps-inprogress-tip">
-        <source>(%1 active)</source>
-        <translation type="unfinished">(%1 active)</translation>
     </message>
     <message id="tx-details-general-info">
         <source>General info</source>
@@ -3095,10 +3033,6 @@ Allow to proceed ? You can always update your choice in Settings later.</transla
     <message id="general-show-tx-details">
         <source>Show details</source>
         <translation>Паказаць падрабязнасьці</translation>
-    </message>
-    <message id="apps-update-message">
-        <source>Update Wallet to launch %1 application</source>
-        <translation>Абнавіце кашалёк, каб запусціць прикладанне %1</translation>
     </message>
     <message id="general-advanced">
         <source>Advanced</source>
@@ -3180,11 +3114,11 @@ cannot be canceled.</translation>
     </message>
     <message id="send-dapp-receive-warning">
         <source>%1 will send the funds to your wallet</source>
-        <translation type="unfinished">%1 will send the funds to your wallet</translation>
+        <translation>%1 адправіць сродкі на ваш гаманец</translation>
     </message>
     <message id="send-contract-only-fee">
         <source>The transaction fee would be deducted from your balance</source>
-        <translation type="unfinished">The transaction fee would be deducted from your balance</translation>
+        <translation>Плата за транзакцыю будзе вылічана з вашага балансу</translation>
     </message>
     <message id="status-online-remote">
         <source>connected node supports online transactions only</source>
@@ -3215,18 +3149,9 @@ cannot be canceled.</translation>
         <source>Select application to install</source>
         <translation type="unfinished">Select application to install</translation>
     </message>
-    <message id="appliactions-install-ok">
-        <source>&apos;%1&apos; is successfully installed</source>
-        <oldsource>%1 is successfully installed</oldsource>
-        <translation type="unfinished">&apos;%1&apos; is successfully installed</translation>
-    </message>
-    <message id="appliactions-install-fail">
-        <source>Failed to install DAPP: %1</source>
-        <translation type="unfinished">Failed to install DAPP: %1</translation>
-    </message>
     <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</source>
-        <translation type="unfinished">See the wallet in action. Get a small amount of Beams from the Faucet DAPP.</translation>
+        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
+        <translation type="unfinished">See the wallet in action. Get a small amount of Beams from the Faucet DApp.</translation>
     </message>
     <message id="faucet-promo-get-coins">
         <source>get coins</source>
@@ -3263,6 +3188,184 @@ cannot be canceled.</translation>
             <numerusform>Аўтаномны адрас: засталося %n транзакцыі.</numerusform>
             <numerusform>Аўтаномны адрас: засталося %n транзакцый.</numerusform>
         </translation>
+    </message>
+    <message id="source-dex">
+        <source>Assets Swap</source>
+        <translation type="unfinished">Assets Swap</translation>
+    </message>
+    <message id="wallet-txs-status-in-progress-max-to-own">
+        <source>sending to own address
+(maximum anonymity)</source>
+        <translation type="unfinished">sending to own address
+(maximum anonymity)</translation>
+    </message>
+    <message id="wallet-txs-status-in-progress-offline-to-own">
+        <source>sending to own address
+(offline)</source>
+        <translation type="unfinished">sending to own address
+(offline)</translation>
+    </message>
+    <message id="wallet-txs-status-sent-max-to-own">
+        <source>sent to own address
+(maximum anonymity)</source>
+        <translation type="unfinished">sent to own address
+(maximum anonymity)</translation>
+    </message>
+    <message id="wallet-txs-status-sent-offline-to-own">
+        <source>sent to own address
+(offline)</source>
+        <translation type="unfinished">sent to own address
+(offline)</translation>
+    </message>
+    <message id="apps-version-error">
+        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
+        <translation type="unfinished">This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</translation>
+    </message>
+    <message id="wallet-txs-status-waiting-receiver-offline">
+        <source>waiting for receiver
+(offline)</source>
+        <translation type="unfinished">waiting for receiver
+(offline)</translation>
+    </message>
+    <message id="apps-uninstall">
+        <source>Uninstall</source>
+        <translation type="unfinished">Uninstall</translation>
+    </message>
+    <message id="apps-uninstall-confirm">
+        <source>Are you sure you want to uninstall %1 DApp?</source>
+        <oldsource>Are you sure you want to cancel %1 DApp?</oldsource>
+        <translation type="unfinished">Are you sure you want to uninstall %1 DApp?</translation>
+    </message>
+    <message id="app-uninstall-title">
+        <source>Uninstall DApp</source>
+        <translation type="unfinished">Uninstall DApp</translation>
+    </message>
+    <message id="apps-loading-app">
+        <source>Please wait, %1 is loading</source>
+        <translation>Пачакайце, %1 загружаецца</translation>
+    </message>
+    <message id="apps-loading">
+        <source>Loading...</source>
+        <translation>Загрузка...</translation>
+    </message>
+    <message id="apps-nothing">
+        <source>There are no applications at the moment</source>
+        <translation>На дадзены момант прыкладанняў няма</translation>
+    </message>
+    <message id="apps-err-cnt" numerus="yes">
+        <source>%n DApp(s) is not available</source>
+        <translation type="unfinished">
+            <numerusform>%n DApp(s) is not available</numerusform>
+            <numerusform>%n DApp(s) is not available</numerusform>
+            <numerusform>%n DApp(s) is not available</numerusform>
+        </translation>
+    </message>
+    <message id="apps-uninstall-success">
+        <source>&apos;%1&apos; DApp is successfully uninstalled.</source>
+        <translation type="unfinished">&apos;%1&apos; DApp is successfully uninstalled.</translation>
+    </message>
+    <message id="apps-uninstall-fail">
+        <source>Failed to uninstall &apos;%1&apos; DApp.</source>
+        <translation type="unfinished">Failed to uninstall &apos;%1&apos; DApp.</translation>
+    </message>
+    <message id="apps-inprogress-tip">
+        <source>(%1 active)</source>
+        <translation type="unfinished">(%1 active)</translation>
+    </message>
+    <message id="apps-load-error">
+        <source>Failed to load applications list, %1</source>
+        <translation type="unfinished">Failed to load applications list, %1</translation>
+    </message>
+    <message id="apps-update-message">
+        <source>Update Wallet to launch %1 application</source>
+        <translation>Абнавіце кашалёк, каб запусціць прикладанне %1</translation>
+    </message>
+    <message id="wallet-receive-regular-address-message">
+        <source>To ensure a better privacy, new address is generated every time.
+In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
+        <translation type="unfinished">To ensure a better privacy, new address is generated every time.
+In case you’d like to re-use an earlier created regular address please use the Address Book.</translation>
+    </message>
+    <message id="apps-install-success">
+        <source>&apos;%1&apos; is successfully installed.</source>
+        <translation type="unfinished">&apos;%1&apos; is successfully installed.</translation>
+    </message>
+    <message id="apps-install-fail">
+        <source>Failed to install DApp:
+%1</source>
+        <translation type="unfinished">Failed to install DApp:
+%1</translation>
+    </message>
+    <message id="app-install-title">
+        <source>Install DApp</source>
+        <translation type="unfinished">Install DApp</translation>
+    </message>
+    <message id="address-details">
+        <source>Address details</source>
+        <translation type="unfinished">Address details</translation>
+    </message>
+    <message id="swap-token-details">
+        <source>Token details</source>
+        <translation type="unfinished">Token details</translation>
+    </message>
+    <message id="settings-privacy-mp-time-no-limit-commented">
+        <source>No limit
+(transaction can last indefinitely)</source>
+        <translation type="unfinished">No limit
+(transaction can last indefinitely)</translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-val" numerus="yes">
+        <source>%n hour(s)</source>
+        <translation>
+            <numerusform>%n гадзіна</numerusform>
+            <numerusform>%n гадзіны</numerusform>
+            <numerusform>%n гадзін</numerusform>
+        </translation>
+    </message>
+    <message id="settings-privacy-mp-time-limit-val72-comment">
+        <source> (recommended)</source>
+        <translation type="unfinished"> (recommended)</translation>
+    </message>
+    <message id="wallet-receive-addr-message-min-fee">
+        <source>Min transaction fee is 0.01 BEAM.</source>
+        <translation type="unfinished">Min transaction fee is 0.01 BEAM.</translation>
+    </message>
+    <message id="status-online-stale-rates">
+        <source>(exchange rate to %1 was not updated since %2)</source>
+        <oldsource> (exchange rate to %1 was not updated since %2)</oldsource>
+        <translation type="unfinished">(exchange rate to %1 was not updated since %2)</translation>
+    </message>
+    <message id="loading-view-restoring">
+        <source>Restoring wallet from the blockchain: </source>
+        <translation type="unfinished">Restoring wallet from the blockchain: </translation>
+    </message>
+    <message id="loading-view-creating">
+        <source>Downloading blockchain data: </source>
+        <translation type="unfinished">Downloading blockchain data: </translation>
+    </message>
+    <message id="loading-view-less-than-minute">
+        <source>less than a minute</source>
+        <translation>менш за хвіліну</translation>
+    </message>
+    <message id="loading-view-rebuild-utxos">
+        <source>Rebuilding wallet data: </source>
+        <translation type="unfinished">Rebuilding wallet data: </translation>
+    </message>
+    <message id="status-change-settings">
+        <source>Change settings</source>
+        <translation>Змяніць усталёўкі</translation>
+    </message>
+    <message id="start-create-password">
+        <source>Create password</source>
+        <translation type="unfinished">Create password</translation>
+    </message>
+    <message id="start-second-copy-error">
+        <source>The wallet is already started. Close all running wallets and start again.</source>
+        <translation>Гаманец ужо запушчаны. Зачыніце ўсе запушчаныя гаманцы і пачніце зноўку.</translation>
+    </message>
+    <message id="wallet-txs-action">
+        <source>Action</source>
+        <translation type="unfinished">Action</translation>
     </message>
 </context>
 </TS>

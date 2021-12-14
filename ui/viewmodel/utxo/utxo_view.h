@@ -51,7 +51,7 @@ signals:
 
 private:
     UtxoItemList     m_allUtxos;
-    WalletModel&     m_model;
+    WalletModel::Ptr m_model;
     bool             m_maturingMaxPrivacy = false;
     boost::optional<beam::Asset::ID> m_assetId;
 };
