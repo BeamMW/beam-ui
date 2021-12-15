@@ -353,8 +353,7 @@ beam::wallet::AtomicSwapCoin SwapTxObject::getSwapCoinType() const
 
 auto SwapTxObject::getStatus() const -> QString
 {
-    beam::wallet::SwapTxStatusInterpreter interpreter(getTxDescription());
-    return interpreter.getStatus().c_str();
+    return beam::wallet::GetSwapTxStatusStr(getTxDescription()).c_str();
 }
 
 namespace

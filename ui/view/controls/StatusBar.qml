@@ -132,7 +132,7 @@ Item {
         width: main.width - 70
         height: 24
         color: "transparent"
-        visible: !onlineTrusted.visible
+        visible: !onlineTrusted.visible || !model.isExchangeRatesUpdated
         property color gradientColor: online_indicator.color
 
         LinearGradient {
@@ -212,18 +212,15 @@ Item {
             name: "online"
             PropertyChanges {
                 target: status_text;
-                text: statusOnline + (model.isConnectionTrusted ? "" : ": " + statusOnlineRemote) + model.branchName + 
+                text: statusOnline + (model.isConnectionTrusted || !model.isExchangeRatesUpdated ? "" : ": " + statusOnlineRemote) + model.branchName + 
                     (
                         model.isExchangeRatesUpdated ? "" : " " + model.exchangeStatus
                     )
             }
-            PropertyChanges {
-                target: online_indicator;
-                color: model.isExchangeRatesUpdated ? Style.online : Style.validator_warning
-            }
             StateChangeScript {
                 name: "onlineScript"
                 script: {
+                    online_indicator.color = model.isCoinClientFailed ? Style.accent_fail : (model.isExchangeRatesUpdated ? Style.online : Style.validator_warning);
                     rootControl.setIndicator(online_indicator);
                 }
             }

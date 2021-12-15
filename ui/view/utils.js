@@ -128,7 +128,7 @@ function getSwapTotalFeeTitle(currencyUnit) {
 
 function formatHours(hours) {
     var dd = Math.floor(hours / 24);
-    var hh = hours;
+    var hh = typeof hours == "string" ? parseInt(hours) : hours;
     if (dd) {
         hh = hours - dd * 24;
     }
