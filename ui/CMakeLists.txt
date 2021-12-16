@@ -571,3 +571,12 @@ else()
     #    COMMAND ${SIGNTOOL_EXECUTABLE} sign ${SIGNTOOL_OPTIONS} ${CMAKE_CURRENT_BINARY_DIR}\\${BEAM_INSTALLER_NAME}
     #  )
 endif()
+
+if (BEAM_IPFS_SUPPORT AND WIN32)
+    # TODO: This if hacky AF and beacuse we place everything in different folders.
+    get_target_property(IPFS_DLL asio-ipfs IPFS_DLL)
+    add_custom_command(
+            TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy ${IPFS_DLL} ${CMAKE_CURRENT_BINARY_DIR}
+    )
+endif()
