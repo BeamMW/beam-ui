@@ -109,7 +109,20 @@ int main (int argc, char* argv[])
     QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 
     block_sigpipe();
+
+    // TODO:APPS Remove before we open apps for public
+    // Fixes this: https://bugreports.qt.io/browse/QTBUG-96214
+    #ifdef Q_OS_LINUX
+    const char* SECCOMP_FLAG = "--disable-seccomp-filter-sandbox";
+    std::vector<char*> newArgv(argv, argv + argc);
+    newArgv.push_back(const_cast<char*>(SECCOMP_FLAG));
+    newArgv.push_back(nullptr);
+    int newArgc = argc + 1;
+    QApplication app(newArgc, newArgv.data());
+    #else
     QApplication app(argc, argv);
+    #endif
+
     QApplication::setApplicationName(QMLGlobals::getAppName());
     QApplication::setWindowIcon(QIcon(Theme::iconPath()));
     QDir appDataDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
