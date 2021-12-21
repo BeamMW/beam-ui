@@ -6,16 +6,16 @@ function(BEAM_TRANSLATIONS_UPDATE_TS supported_langs out_ts_files)
     find_package(Qt5LinguistTools)
     if (Qt5LinguistTools_FOUND)
         if(LINUX)
-            execute_process(COMMAND awk -F= "/^NAME/{print $2}" /etc/os-release 
+            execute_process(COMMAND awk -F= "/^ID/{print $2}" /etc/os-release
                             OUTPUT_VARIABLE DISTR_NAME
                             OUTPUT_STRIP_TRAILING_WHITESPACE)
         endif()
-        
+
     foreach(SUPPORTED_LANG ${supported_langs})
         set(TS_FILE "${CMAKE_CURRENT_SOURCE_DIR}/i18n/${SUPPORTED_LANG}.ts")
         list(APPEND TS_FILES "${TS_FILE}")
         message("update: ${TS_FILE}")
-        if (${DISTR_NAME} MATCHES "Fedora")
+        if (${DISTR_NAME} MATCHES "fedora")
             execute_process(COMMAND lupdate-qt5 -recursive -locations none -no-obsolete ${CMAKE_CURRENT_SOURCE_DIR} -ts "${TS_FILE}")
         else()
             execute_process(COMMAND lupdate -recursive -locations none -no-obsolete ${CMAKE_CURRENT_SOURCE_DIR} -ts "${TS_FILE}")
@@ -31,7 +31,7 @@ function(BEAM_TRANSLATIONS_COMPILE_QM ts_files out_qm_files)
     find_package(Qt5LinguistTools)
     if (Qt5LinguistTools_FOUND)
         if(LINUX)
-            execute_process(COMMAND awk -F= "/^NAME/{print $2}" /etc/os-release
+            execute_process(COMMAND awk -F= "/^ID/{print $2}" /etc/os-release
                             OUTPUT_VARIABLE DISTR_NAME
                             OUTPUT_STRIP_TRAILING_WHITESPACE)
         endif()
@@ -40,7 +40,7 @@ function(BEAM_TRANSLATIONS_COMPILE_QM ts_files out_qm_files)
         get_filename_component(TS_FILE_WE ${TS_FILE} NAME_WE)
         set(QM_FILE_NAME "${TS_FILE_WE}.qm")
         list(APPEND QM_FILES "${QM_FILE_NAME}")
-        if (${DISTR_NAME} MATCHES "Fedora")
+        if (${DISTR_NAME} MATCHES "fedora")
             execute_process(COMMAND lrelease-qt5 -idbased "${TS_FILE}" -qm "${CMAKE_CURRENT_SOURCE_DIR}/${QM_FILE_NAME}")
         else()
             execute_process(COMMAND lrelease -idbased "${TS_FILE}" -qm "${CMAKE_CURRENT_SOURCE_DIR}/${QM_FILE_NAME}")
@@ -232,7 +232,7 @@ set(UI_SRC
 
 beam_translations_update_ts("${SUPPORTED_LANGS}" TS_FILES)
 beam_translations_compile_qm("${TS_FILES}" QM_FILES)
-   
+
 set(TRANSLATIONS_QRC_FILE_NAME "translations.qrc")
 set(TRANSLATIONS_QRC_FILE "${CMAKE_CURRENT_SOURCE_DIR}/${TRANSLATIONS_QRC_FILE_NAME}")
 
@@ -324,7 +324,7 @@ target_link_libraries(${TARGET_NAME} quazip_static)
 #if (BEAM_WALLET_WITH_NODE)
     add_definitions(-DBEAM_WALLET_WITH_NODE)
     target_link_libraries(${TARGET_NAME}
-            node 
+            node
             external_pow
     )
 #endif()
@@ -333,9 +333,9 @@ target_link_libraries(${TARGET_NAME}
         beam
         wallet_client
         wallet_api
-        mnemonic 
+        mnemonic
         Qt5::Qml
-        Qt5::Quick 
+        Qt5::Quick
         Qt5::Svg
         Qt5::WebEngine
         Qt5::WebEngineWidgets
@@ -469,7 +469,7 @@ if(BEAM_USE_STATIC_QT)
         if(EXISTS "/usr/lib/x86_64-linux-gnu/libjasper.a")
             target_link_libraries(${TARGET_NAME} -ljasper)
         endif()
-        #Ubuntu 18.04 && Ubuntu 20.04 
+        #Ubuntu 18.04 && Ubuntu 20.04
         if(EXISTS "/usr/lib/x86_64-linux-gnu/libxcb-xinput.a")
             target_link_libraries(${TARGET_NAME} /usr/lib/x86_64-linux-gnu/libxcb-xinput.a)
         endif()
@@ -493,7 +493,7 @@ elseif(APPLE)
     #set(MACOSX_BUNDLE_ICON_FILE "Beam Wallet${BEAM_DISPLAY_SUFFIX}.icns")
     set(MACOSX_BUNDLE_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
-    set_target_properties(${TARGET_NAME} PROPERTIES 
+    set_target_properties(${TARGET_NAME} PROPERTIES
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
 
     if (NOT BEAM_USE_STATIC_QT AND BEAM_SIGN_IDENTITY)
@@ -508,7 +508,7 @@ elseif(APPLE)
 
         if(BEAM_SIGN_MACOS_BINARY)
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND codesign 
+                COMMAND codesign
                 --force
                 --deep
                 --verify
@@ -522,7 +522,7 @@ elseif(APPLE)
                 COMMENT "Signing Beam Wallet${BEAM_DISPLAY_SUFFIX}.app..."
             )
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND codesign 
+                COMMAND codesign
                 --force
                 --verify
                 --verbose
@@ -546,7 +546,7 @@ else()
                 COMMENT "Deploying Qt..."
             )
             install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/windeployqt/ DESTINATION .)
-            
+
             set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE) # skip default behaviour
             include(InstallRequiredSystemLibraries) #dymanic CRT
             install(PROGRAMS ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} DESTINATION .)
@@ -555,7 +555,7 @@ else()
             install(FILES ${CMAKE_PREFIX_PATH}/bin/libEGL.dll DESTINATION .)
             install(FILES ${CMAKE_PREFIX_PATH}/bin/libGLESv2.dll DESTINATION .)
         endif()
-        
+
         install(FILES ${OPENSSL_ROOT_DIR}/bin/libcrypto-1_1-x64.dll DESTINATION .)
         install(FILES ${OPENSSL_ROOT_DIR}/bin/libssl-1_1-x64.dll DESTINATION .)
         install(FILES beam-wallet.cfg DESTINATION .)
