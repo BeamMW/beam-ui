@@ -496,7 +496,7 @@ elseif(APPLE)
     set_target_properties(${TARGET_NAME} PROPERTIES 
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
 
-    if (NOT BEAM_USE_STATIC_QT)
+    if (NOT BEAM_USE_STATIC_QT AND BEAM_SIGN_IDENTITY)
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
             COMMAND macdeployqt
             "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app"
