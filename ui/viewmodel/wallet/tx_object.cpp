@@ -165,9 +165,9 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
         appendAsset(_tx.m_assetId, _tx.m_amount, !_tx.m_sender);
     }
 
-    if (auto strdesc = _tx.GetParameter<std::string>(beam::wallet::TxParameterID::AppName); strdesc)
+    if (!_tx.m_appName.empty())
     {
-        _source = QString::fromStdString(*strdesc);
+        _source = QString::fromStdString(_tx.m_appName);
     }
     else if (_tx.m_txType == wallet::TxType::DexSimpleSwap)
     {
