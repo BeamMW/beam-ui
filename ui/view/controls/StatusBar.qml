@@ -30,7 +30,7 @@ Item {
 
     property int indicator_radius: 5
     property Item indicator: online_indicator
-    property string error_msg: model.walletStatusErrorMsg
+    property string walletError: model.walletError
     property string error_msg_3rd_client: model.coinClientErrorMsg
     //% "online"
     property string statusOnline: qsTrId("status-online")
@@ -138,31 +138,34 @@ Item {
         LinearGradient {
             anchors.fill: parent
             start: Qt.point(0, 0)
-            end: Qt.point(rowBackground.width, 0)
+            end:   Qt.point(rowBackground.width, 0)
+
             gradient: Gradient {
-                GradientStop { position: 0.0; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0.7) }
-                GradientStop { position: 0.1; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0.7) }
-                GradientStop { position: 1.0; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0) }
+                GradientStop { position: 0.0; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0)}
+                GradientStop { position: 0.5; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0.3)}
+                GradientStop { position: 1.0; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0)}
             }
         }
 
         ColumnLayout {
             spacing: 0
-            RowLayout
-            {
-                id: statusRow
-                Layout.topMargin: 3
-                Layout.leftMargin: 20
+            anchors.fill: parent
+
+            Row {
+                Layout.alignment: Qt.AlignHCenter
+                spacing: 7
+
                 SFText {
                     id: status_text
                     color: Style.content_main
-                    font.pixelSize: 16
+                    font.pixelSize: 15
                     elide: Text.ElideLeft
                 }
+
                 SFText {
                     id: progressText
                     color: Style.content_main
-                    font.pixelSize: 16
+                    font.pixelSize: 15
                     text: "(" + model.nodeSyncProgress + "%)"
                     visible: model.nodeSyncProgress > 0 && update_indicator.visible
                 }
@@ -171,7 +174,8 @@ Item {
                     //% "Change settings"
                     text: qsTrId("status-change-settings")
                     visible: model.isCoinClientFailed || model.isFailedStatus || (model.isOnline && !model.isConnectionTrusted)
-                    fontSize: 16
+
+                    fontSize: 15
                     onClicked: {
                         if (model.isCoinClientFailed || model.isFailedStatus)
                             main.openSwapSettings(model.coinWithErrorLabel());
@@ -183,15 +187,14 @@ Item {
 
             CustomProgressBar {
                 id: progress_bar
-                backgroundImplicitWidth: 200
-                contentItemImplicitWidth: 200
+                backgroundImplicitWidth: parent.width
+                contentItemImplicitWidth: parent.width
 
                 visible: model.nodeSyncProgress > 0 && update_indicator.visible
                 value: model.nodeSyncProgress / 100
             }
         }
     }
-
 
     states: [
         State {
@@ -243,7 +246,7 @@ Item {
             name: "error"
             PropertyChanges {
                 target: status_text;
-                text: rootControl.error_msg + model.branchName
+                text: rootControl.walletError + model.branchName
             }
             StateChangeScript {
                 name: "errorScript"

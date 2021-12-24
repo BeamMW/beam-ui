@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #pragma once
 
 #include <QObject>
@@ -20,6 +19,10 @@
 #include <QStringList>
 #include <mutex>
 #include "model/wallet_model.h"
+
+#ifdef BEAM_IPFS_SUPPORT
+#include <asio-ipfs/include/asio_ipfs/config.h>
+#endif
 
 class WalletSettings : public QObject
 {
@@ -100,7 +103,8 @@ public:
     void setAppsServerPort(int port);
 
     #ifdef BEAM_IPFS_SUPPORT
-    QString getIPFSPath() const;
+    asio_ipfs::config getIPFSConfig() const;
+    void setIPFSPort(uint32_t port);
     #endif
 
     uint8_t getMaxPrivacyAnonymitySet() const;
@@ -149,6 +153,7 @@ signals:
     void beamMWLinksChanged();
     void secondCurrencyChanged();
     void dappsAllowedChanged();
+    void ipfsPortChanged();
 
 private:
     QSettings m_data;

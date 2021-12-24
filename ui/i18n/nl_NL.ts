@@ -3354,5 +3354,13 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <source>Action</source>
         <translation>Actie</translation>
     </message>
+    <message id="settings-ipfsnode-title">
+        <source>IPFS Integrated Node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-ipfs-swarm-port">
+        <source>Swarm Port</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

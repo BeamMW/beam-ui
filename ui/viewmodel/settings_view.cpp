@@ -170,12 +170,12 @@ void SettingsViewModel::setLocalNodeRun(bool value)
     }
 }
 
-QString SettingsViewModel::getLocalNodePort() const
+unsigned int SettingsViewModel::getLocalNodePort() const
 {
     return m_localNodePort;
 }
 
-void SettingsViewModel::setLocalNodePort(const QString& value)
+void SettingsViewModel::setLocalNodePort(unsigned int value)
 {
     if (value != m_localNodePort)
     {
@@ -184,6 +184,32 @@ void SettingsViewModel::setLocalNodePort(const QString& value)
         emit nodeSettingsChanged();
     }
 }
+
+bool SettingsViewModel::getIPFSSupported() const
+{
+    #ifdef BEAM_IPFS_SUPPORT
+    return true;
+    #else
+    reutrn false;
+    #endif
+}
+
+#ifdef BEAM_IPFS_SUPPORT
+unsigned int SettingsViewModel::getIPFSSwarmPort() const
+{
+    return m_IPFSSwarmPort;
+}
+
+void SettingsViewModel::setIPFSSwarmPort(unsigned int value)
+{
+    if (value != m_IPFSSwarmPort)
+    {
+        m_IPFSSwarmPort = value;
+        emit IPFSSwarmPortChanged();
+        emit IPFSSettingsChanged();
+    }
+}
+#endif
 
 int SettingsViewModel::getAppsPort() const
 {
@@ -384,8 +410,8 @@ QString SettingsViewModel::getOwnerKey(const QString& password) const
 bool SettingsViewModel::isNodeChanged() const
 {
     return formatAddress(m_nodeAddress, m_remoteNodePort) != m_settings.getNodeAddress()
-        || m_localNodeRun != m_settings.getRunLocalNode()
-        || static_cast<uint>(m_localNodePort.toInt()) != m_settings.getLocalNodePort()
+        || m_localNodeRun   != m_settings.getRunLocalNode()
+        || m_localNodePort  != m_settings.getLocalNodePort()
         || m_localNodePeers != m_settings.getLocalNodePeers();
 }
 
@@ -399,7 +425,7 @@ void SettingsViewModel::applyChanges()
 
     m_settings.setNodeAddress(formatAddress(m_nodeAddress, m_remoteNodePort));
     m_settings.setRunLocalNode(m_localNodeRun);
-    m_settings.setLocalNodePort(m_localNodePort.toInt());
+    m_settings.setLocalNodePort(m_localNodePort);
     m_settings.setLocalNodePeers(m_localNodePeers);
     m_settings.applyChanges();
     emit nodeSettingsChanged();
@@ -432,8 +458,13 @@ void SettingsViewModel::undoChanges()
     }
 
     setLocalNodeRun(m_settings.getRunLocalNode());
-    setLocalNodePort(formatPort(m_settings.getLocalNodePort()));
+    setLocalNodePort(m_settings.getLocalNodePort());
     setLocalNodePeers(m_settings.getLocalNodePeers());
+
+    #ifdef BEAM_IPFS_SUPPORT
+    auto icfg = m_settings.getIPFSConfig();
+    setIPFSSwarmPort(icfg.node_swarm_port);
+    #endif
 }
 
 void SettingsViewModel::reportProblem()

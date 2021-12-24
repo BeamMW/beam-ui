@@ -34,12 +34,11 @@ StatusbarViewModel::StatusbarViewModel()
     , m_nodeTotal(0)
     , m_done(0)
     , m_total(0)
-    , m_errorMsg{}
 {
-#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     connectCoinClients();
     connectEthClient();
-#endif  // BEAM_ATOMIC_SWAP_SUPPORT
+    #endif
 
     connect(m_model.get(), SIGNAL(nodeConnectionChanged(bool)),
         SLOT(onNodeConnectionChanged(bool)));
@@ -94,19 +93,20 @@ int StatusbarViewModel::getNodeSyncProgress() const
 
 QString StatusbarViewModel::getBranchName() const
 {
-#ifdef BEAM_MAINNET
+    #ifdef BEAM_MAINNET
     return QString();
-#else
-    if (BRANCH_NAME.empty())
+    #else
+    if (BRANCH_NAME.empty()) {
         return QString();
+    }
 
     return QString::fromStdString(" (" + BRANCH_NAME + ")");
-#endif
+    #endif
 }
 
-QString StatusbarViewModel::getWalletStatusErrorMsg() const
+QString StatusbarViewModel::getWalletError() const
 {
-    return m_errorMsg;
+    return m_walletError;
 }
 
 QString StatusbarViewModel::getExchangeStatus() const
@@ -190,13 +190,14 @@ void StatusbarViewModel::setIsConnectionTrusted(bool value)
 
 void StatusbarViewModel::setWalletStatusErrorMsg(const QString& value)
 {
-    if (m_errorMsg != value)
+    if (m_walletError != value)
     {
-        m_errorMsg = value;
-#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+        #ifdef BEAM_ATOMIC_SWAP_SUPPORT
         m_coinWithErrorLabel = beamui::getCurrencyUnitName(beamui::Currencies::Beam);
-#endif  // BEAM_ATOMIC_SWAP_SUPPORT
-        emit statusErrorChanged();
+        #endif
+
+        m_walletError = value;
+        emit walletErrorChanged();
     }
 }
 

@@ -34,7 +34,7 @@ class WalletModel
     Q_OBJECT
 public:
     using Ptr = std::shared_ptr<WalletModel>;
-    WalletModel(beam::wallet::IWalletDB::Ptr walletDB, const std::string& ipfsStorage, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor);
+    WalletModel(beam::wallet::IWalletDB::Ptr walletDB, boost::optional<asio_ipfs::config> ipfsConfig, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor);
     ~WalletModel() override;
 
     QString GetErrorString(beam::wallet::ErrorType type);

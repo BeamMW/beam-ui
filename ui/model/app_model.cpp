@@ -608,14 +608,14 @@ void AppModel::start()
 
     initSwapClients();
 
-    std::string ipfsPath;
+    boost::optional<asio_ipfs::config> ipfsConfig;
     #ifdef BEAM_IPFS_SUPPORT
-    ipfsPath = m_settings.getIPFSPath().toStdString();
+    ipfsConfig = m_settings.getIPFSConfig();
     // TODO:IPFS add ipfs path to UI settings page
     // TODO:IPFS add ipfs ports to settings & UI settings page
     #endif
 
-    m_wallet   = std::make_shared<WalletModel>(m_db, ipfsPath, nodeAddrStr, m_walletReactor);
+    m_wallet   = std::make_shared<WalletModel>(m_db, ipfsConfig, nodeAddrStr, m_walletReactor);
     m_rates    = std::make_shared<ExchangeRatesManager>(m_wallet, m_settings);
     m_assets   = std::make_shared<AssetsManager>(m_wallet, m_rates);
     m_myAssets = std::make_shared<AssetsList>(m_wallet, m_assets, m_rates);

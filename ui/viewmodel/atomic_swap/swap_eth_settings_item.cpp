@@ -34,7 +34,7 @@ SwapEthSettingsItem::SwapEthSettingsItem()
 {
     auto coinClient = m_coinClient.lock();
     connect(coinClient.get(), SIGNAL(statusChanged()), this, SIGNAL(connectionStatusChanged()));
-    connect(coinClient.get(), SIGNAL(connectionErrorChanged()), this, SIGNAL(connectionErrorMsgChanged()));
+    connect(coinClient.get(), SIGNAL(connectionErrorChanged()), this, SIGNAL(connectionErrorChanged()));
     LoadSettings();
 }
 
@@ -324,7 +324,7 @@ QString SwapEthSettingsItem::getConnectionStatus() const
     }
 }
 
-QString SwapEthSettingsItem::getConnectionErrorMsg() const
+QString SwapEthSettingsItem::getConnectionError() const
 {
     using beam::ethereum::IBridge;
 

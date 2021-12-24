@@ -22,7 +22,7 @@ ColumnLayout {
     }
 
     StatusBar {
-        id: status_bar
+        id: statusBar
         model: statusbarModel
     }
     
