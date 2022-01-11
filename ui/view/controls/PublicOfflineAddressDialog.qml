@@ -38,15 +38,6 @@ CustomDialog {
                 //% "Public offline address"
                 text:                   qsTrId("public-address-title")
             }
-
-            CustomToolButton {
-                icon.source:            "qrc:/assets/icon-cancel-16.svg"
-                //% "Close"
-                ToolTip.text:           qsTrId("general-close")
-                onClicked: {
-                    dialog.close();
-                }
-            }
         }
 
         Image {
