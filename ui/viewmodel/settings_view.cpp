@@ -95,7 +95,7 @@ void SettingsViewModel::onAddressChecked(const QString& addr, bool isValid)
         if (m_isNeedToApplyChanges)
         {
             if (m_isValidNodeAddress)
-                applyChanges();
+                applyNodeChanges();
 
             m_isNeedToApplyChanges = false;
         }
@@ -208,6 +208,25 @@ void SettingsViewModel::setIPFSSwarmPort(unsigned int value)
         emit IPFSSwarmPortChanged();
         emit IPFSSettingsChanged();
     }
+}
+
+bool SettingsViewModel::getIPFSChanged() const
+{
+    auto icfg = m_settings.getIPFSConfig();
+    return m_IPFSSwarmPort != icfg.node_swarm_port;
+}
+
+void SettingsViewModel::applyIPFSChanges()
+{
+    if (!getIPFSChanged())
+    {
+        assert(false);
+        return;
+    }
+
+    m_settings.setIPFSPort(m_IPFSSwarmPort);
+    m_settings.applyIPFSChanges();
+    emit IPFSSettingsChanged();
 }
 #endif
 
@@ -415,7 +434,7 @@ bool SettingsViewModel::isNodeChanged() const
         || m_localNodePeers != m_settings.getLocalNodePeers();
 }
 
-void SettingsViewModel::applyChanges()
+void SettingsViewModel::applyNodeChanges()
 {
     if (!m_localNodeRun && m_isNeedToCheckAddress)
     {
@@ -427,7 +446,7 @@ void SettingsViewModel::applyChanges()
     m_settings.setRunLocalNode(m_localNodeRun);
     m_settings.setLocalNodePort(m_localNodePort);
     m_settings.setLocalNodePeers(m_localNodePeers);
-    m_settings.applyChanges();
+    m_settings.applyNodeChanges();
     emit nodeSettingsChanged();
 }
 

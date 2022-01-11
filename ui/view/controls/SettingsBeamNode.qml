@@ -370,7 +370,7 @@ SettingsFoldable {
                     if (!localNodeRun.checked) return viewModel.localNodePeers.length > 0 && localNodePort.acceptableInput
                     return viewModel.isValidNodeAddress && nodeAddress.acceptableInput && remoteNodePort.acceptableInput
                 }
-                onClicked: viewModel.applyChanges()
+                onClicked: viewModel.applyNodeChanges()
             }
         }
     }

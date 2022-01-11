@@ -80,8 +80,10 @@ SettingsFoldable {
                 //% "Cancel"
                 text: qsTrId("general-cancel")
                 icon.source: enabled ? "qrc:/assets/icon-cancel-white.svg" : "qrc:/assets/icon-cancel.svg"
-                enabled: viewModel.isNodeChanged
-                onClicked: viewModel.undoChanges()
+                enabled: viewModel.ipfsChanged
+                onClicked: function () {
+                    viewModel.undoChanges()
+                }
             }
 
             Item {
@@ -96,12 +98,11 @@ SettingsFoldable {
                 //% "Apply changes"
                 text: qsTrId("settings-apply")
                 icon.source: "qrc:/assets/icon-done.svg"
-                enabled: {
-                    if (!viewModel.isNodeChanged) return false;
-                    if (!localNodeRun.checked) return viewModel.localNodePeers.length > 0 && localNodePort.acceptableInput
-                    return viewModel.isValidNodeAddress && nodeAddress.acceptableInput && remoteNodePort.acceptableInput
+                enabled: viewModel.ipfsChanged
+
+                onClicked: function () {
+                    viewModel.applyIPFSChanges()
                 }
-                onClicked: viewModel.applyChanges()
             }
         }
     }

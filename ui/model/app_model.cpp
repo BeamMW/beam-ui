@@ -524,7 +524,15 @@ void AppModel::registerSwapFactory(beam::wallet::AtomicSwapCoin swapCoin, beam::
     }
 }
 
-void AppModel::applySettingsChanges()
+#ifdef BEAM_IPFS_SUPPORT
+void AppModel::applyIPFSChanges()
+{
+    auto config = m_settings.getIPFSConfig();
+    m_wallet->getAsync()->setIPFSConfig(std::move(config));
+}
+#endif
+
+void AppModel::applyNodeChanges()
 {
     if (m_nodeModel.isNodeRunning())
     {
@@ -549,7 +557,7 @@ void AppModel::applySettingsChanges()
 
 void AppModel::nodeSettingsChanged()
 {
-    applySettingsChanges();
+    applyNodeChanges();
     if (!m_settings.getRunLocalNode())
     {
         if (!m_wallet->isRunning())

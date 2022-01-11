@@ -56,6 +56,7 @@ class SettingsViewModel : public QObject
 
     #ifdef BEAM_IPFS_SUPPORT
     Q_PROPERTY(unsigned int ipfsSwarmPort READ getIPFSSwarmPort WRITE setIPFSSwarmPort  NOTIFY IPFSSwarmPortChanged)
+    Q_PROPERTY(bool ipfsChanged READ getIPFSChanged NOTIFY IPFSSettingsChanged)
     #endif
 
     Q_PROPERTY(QList<QObject*> swapCoinSettingsList READ getSwapCoinSettings    CONSTANT)
@@ -84,6 +85,7 @@ public:
     #ifdef BEAM_IPFS_SUPPORT
     [[nodiscard]] unsigned int getIPFSSwarmPort() const;
     void setIPFSSwarmPort(unsigned int value);
+    [[nodiscard]] bool getIPFSChanged() const;
     #endif
 
     QString getRemoteNodePort() const;
@@ -146,17 +148,20 @@ public:
     Q_INVOKABLE bool exportData() const;
     Q_INVOKABLE bool importData() const;
     Q_INVOKABLE bool hasPeer(const QString& peer) const;
+    Q_INVOKABLE void reportProblem();
+    Q_INVOKABLE void changeWalletPassword(const QString& pass);
 
 public slots:
-    void applyChanges();
-    void undoChanges();
-	void reportProblem();
+    void applyNodeChanges();
 
-    void changeWalletPassword(const QString& pass);
+    #ifdef BEAM_IPFS_SUPPORT
+    void applyIPFSChanges();
+    #endif
+
+    void undoChanges();
     void onNodeStarted();
     void onNodeStopped();
     void onAddressChecked(const QString& addr, bool isValid);
-private slots:
     void onPublicAddressChanged(const QString& publicAddr);
 
 signals:
@@ -212,7 +217,6 @@ private:
     bool m_isNeedToCheckAddress;
     bool m_isNeedToApplyChanges;
     QStringList m_supportedLanguages;
-    QStringList m_supportedAmountUnits;
     int m_currentLanguageIndex;
     beam::wallet::Currency m_rateCurrency;
     int m_timerId;

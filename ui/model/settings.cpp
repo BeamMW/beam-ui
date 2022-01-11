@@ -59,6 +59,7 @@ namespace
     const char* kDevAppApiVer    = "devapp/api_version";
     const char* kDevAppMinApiVer = "devapp/min_api_version";
     const char* kLocalAppsPort   = "apps/local_port";
+    const char* kIPFSPrefix      = "ipfsnode/";
 
     const char* kMpAnonymitySet = "max_privacy/anonymity_set";
     const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
@@ -660,9 +661,9 @@ void WalletSettings::reportProblem()
     }
 }
 
-void WalletSettings::applyChanges()
+void WalletSettings::applyNodeChanges()
 {
-    AppModel::getInstance().applySettingsChanges();
+    AppModel::getInstance().applyNodeChanges();
 }
 
 QString WalletSettings::getExplorerUrl() const
@@ -801,6 +802,11 @@ QString WalletSettings::getLocalAppsPath() const
 }
 
 #ifdef BEAM_IPFS_SUPPORT
+void WalletSettings::applyIPFSChanges()
+{
+    AppModel::getInstance().applyIPFSChanges();
+}
+
 // TODO:IPFS add disable option
 asio_ipfs::config WalletSettings::getIPFSConfig() const
 {
@@ -809,9 +815,10 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     Lock lock(m_mutex);
     asio_ipfs::config cfg;
 
-    if (m_data.contains(cli::IPFS_STORAGE))
+    const QString keyStorage = QString(kIPFSPrefix) + cli::IPFS_STORAGE;
+    if (m_data.contains(keyStorage))
     {
-        cfg.repo_root = m_data.value(cli::IPFS_STORAGE).toString().toStdString();
+        cfg.repo_root = m_data.value(keyStorage).toString().toStdString();
     }
     else
     {
@@ -821,14 +828,15 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
         ).dirName()).toStdString();
     }
 
-    cfg.low_water = m_data.value(cli::IPFS_LOW_WATER, cfg.low_water).toUInt();
-    cfg.high_water = m_data.value(cli::IPFS_HIGH_WATER, cfg.high_water).toUInt();
-    cfg.grace_period = m_data.value(cli::IPFS_GRACE, cfg.grace_period).toUInt();
-    cfg.node_swarm_port = m_data.value(cli::IPFS_SWARM_PORT, cfg.node_swarm_port).toUInt();
+    cfg.low_water = m_data.value(QString(kIPFSPrefix) + cli::IPFS_LOW_WATER, cfg.low_water).toUInt();
+    cfg.high_water = m_data.value(QString(kIPFSPrefix) + cli::IPFS_HIGH_WATER, cfg.high_water).toUInt();
+    cfg.grace_period = m_data.value(QString(kIPFSPrefix) + cli::IPFS_GRACE, cfg.grace_period).toUInt();
+    cfg.node_swarm_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT, cfg.node_swarm_port).toUInt();
 
-    if (m_data.contains(cli::IPFS_BOOTSTRAP))
+    const QString keyBootstrap = QString(kIPFSPrefix) + cli::IPFS_BOOTSTRAP;
+    if (m_data.contains(keyBootstrap))
     {
-        auto list = m_data.value(cli::IPFS_BOOTSTRAP).toStringList();
+        auto list = m_data.value(keyBootstrap).toStringList();
         decltype(cfg.bootstrap)().swap(cfg.bootstrap);
 
         std::vector<std::string> vlist;
@@ -838,19 +846,26 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
         }
     }
 
+    const QString keySwarmPort = QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT;
+    if (m_data.contains(keySwarmPort))
+    {
+        cfg.node_swarm_port = m_data.value(keySwarmPort).toUInt();
+    }
+
     return cfg;
 }
 
 void WalletSettings::setIPFSPort(uint32_t port)
 {
     namespace cli = beam::cli;
+    const QString keySwarmPort = QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT;
 
     Lock lock(m_mutex);
-    if (m_data.contains(cli::IPFS_SWARM_PORT) && m_data.value(cli::IPFS_SWARM_PORT).toUInt() == port) {
+    if (m_data.contains(keySwarmPort) && m_data.value(keySwarmPort).toUInt() == port) {
         return;
     }
 
-    m_data.setValue(kLocalAppsPort, port);
+    m_data.setValue(keySwarmPort, port);
     emit ipfsPortChanged();
 }
 #endif

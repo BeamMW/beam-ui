@@ -45,9 +45,10 @@ public:
     bool showSwapBetaWarning();
     void setShowSwapBetaWarning(bool value);
 
-#if defined(BEAM_HW_WALLET)
+    #if defined(BEAM_HW_WALLET)
     std::string getTrezorWalletStorage() const;
-#endif
+    #endif
+
     std::string getWalletStorage() const;
     std::string getWalletFolder() const;
     std::string getAppDataPath() const;
@@ -136,12 +137,17 @@ public:
     static const char* LogsFolder;
     static const char* SettingsFile;
     static const char* WalletDBFile;
-#if defined(BEAM_HW_WALLET)
-    static const char* TrezorWalletDBFile;
-#endif
-    static const char* NodeDBFile;
 
-    void applyChanges();
+    #if defined(BEAM_HW_WALLET)
+    static const char* TrezorWalletDBFile;
+    #endif
+
+    static const char* NodeDBFile;
+    void applyNodeChanges();
+
+    #ifdef BEAM_IPFS_SUPPORT
+    void applyIPFSChanges();
+    #endif
 
 signals:
     void nodeAddressChanged();
