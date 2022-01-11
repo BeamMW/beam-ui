@@ -365,13 +365,16 @@ CustomDialog {
                             onCopyText: textCopied(dialog.assetIDs[index])
                             visible: dialog.assetIDs[index] != "0"
                         }
-                        CustomToolButton {
-                            Layout.alignment: Qt.AlignRight | Qt.AlignTop
-                            icon.source: "qrc:/assets/icon-copy.svg"
-                            onClicked: textCopied(dialog.assetIDs[index])
+
+                        OpenInBlockchainExplorer {
+                            Layout.alignment: Qt.AlignTop
+                            Layout.rightMargin: 8
                             visible: dialog.assetIDs[index] != "0"
-                            padding: 0
-                            background.implicitHeight: 16
+                            showText: false
+                            onTriggered: function(kernelID) {
+                                var url = BeamGlobals.getExplorerUrl() + "assets/details/" + dialog.assetIDs[index];
+                                Utils.openExternalWithConfirmation(url);
+                            }
                         }
                     }
                 }
