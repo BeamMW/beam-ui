@@ -2983,7 +2983,8 @@ Uppdatera dina inställningar och försök igen.</translation>
         <translation type="unfinished">DApp name</translation>
     </message>
     <message id="dapps-privacy-title">
-        <source>DApps Privacy</source>
+        <source>DApps Privacy Warning</source>
+        <oldsource>DApps Privacy</oldsource>
         <translation type="unfinished">DApps Privacy</translation>
     </message>
     <message id="dapps-privacy-warning">

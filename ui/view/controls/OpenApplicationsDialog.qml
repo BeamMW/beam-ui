@@ -10,12 +10,12 @@ ConfirmationDialog {
     leftPadding: 50
     rightPadding: 50
 
-    okButtonText: qsTrId("open-external-open")
-    okButtonIconSource: "qrc:/assets/icon-external-link-black.svg"
+    okButtonText: qsTrId("general-proceed")
+    okButtonIconSource: "qrc:/assets/icon-done.svg"
     cancelButtonVisible: true
     cancelButtonIconSource: "qrc:/assets/icon-cancel-white.svg"
 
-    //% "DApps Privacy"
+    //% "DApps Privacy Warning"
     title: qsTrId("dapps-privacy-title")
     /*% "Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
 
