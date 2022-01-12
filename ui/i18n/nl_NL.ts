@@ -2971,8 +2971,9 @@ Update uw instellingen en probeer opnieuw.</translation>
         <translation>details</translation>
     </message>
     <message id="notifications-open-dapp">
-        <source>open the dapp</source>
-        <translation>open de dapp</translation>
+        <source>open the DApp</source>
+        <oldsource>open the dapp</oldsource>
+        <translation type="unfinished">open de dapp</translation>
     </message>
     <message id="general-description">
         <source>Description</source>
