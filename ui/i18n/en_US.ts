@@ -3350,5 +3350,17 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>Action</source>
         <translation>Action</translation>
     </message>
+    <message id="wallet-txs-status-in-progress-pub-offline-to-own">
+        <source>sending to own address
+(public offline)</source>
+        <translation>sending to own address
+(public offline)</translation>
+    </message>
+    <message id="wallet-txs-status-sent-pub-offline-to-own">
+        <source>sent to own address
+(public offline)</source>
+        <translation>sent to own address
+(public offline)</translation>
+    </message>
 </context>
 </TS>

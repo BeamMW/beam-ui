@@ -3354,5 +3354,15 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <source>Action</source>
         <translation>Actie</translation>
     </message>
+    <message id="wallet-txs-status-in-progress-pub-offline-to-own">
+        <source>sending to own address
+(public offline)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-sent-pub-offline-to-own">
+        <source>sent to own address
+(public offline)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
