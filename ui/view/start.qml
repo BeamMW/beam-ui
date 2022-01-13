@@ -295,13 +295,18 @@ Item
                             id: startMigration
 
                             //: migration screen, start auto migration button
-                            //% "Start auto migration"
+                            //% "start auto migration"
                             text: qsTrId("start-migration-button")
                             icon.source: "qrc:/assets/icon-repeat.svg"
-                            enabled: viewModel.isOnlyOneInstanceStarted
+                            enabled: viewModel.isOnlyOneInstanceStarted && viewModel.walletDBpaths[0].isPreferred
                             onClicked: 
                             {
-                                startWizzardView.push(selectWalletDBView);
+                                for (var path of viewModel.walletDBpaths) {
+                                    if (path.isPreferred) {
+                                        migrateWalletDB(path.fullPath);
+                                        break;
+                                    }
+                                }
                             }
                         }
 
@@ -311,16 +316,12 @@ Item
 
                         CustomButton {
                             //: migration screen, select db file button
-                            //% "Select wallet database file manually"
-                            text: qsTrId("start-migration-select-file-button")
+                            //% "start manual migration"
+                            text: qsTrId("start-migration-manual-button")
                             icon.source: "qrc:/assets/icon-folder.svg"
                             enabled: viewModel.isOnlyOneInstanceStarted
                             onClicked: {
-                                var path = viewModel.selectCustomWalletDB();
-
-                                if (path.length > 0) {
-                                    migrateWalletDB(path);
-                                }
+                                startWizzardView.push(selectWalletDBView);
                             }
                         }
                     }
@@ -347,8 +348,7 @@ Item
 
                     Item {
                         Layout.fillWidth:       true
-                        Layout.fillHeight:      true
-                        Layout.minimumHeight:   67
+                        Layout.preferredHeight:   67
                     }
                 }
             }
@@ -562,7 +562,34 @@ Item
 
                     Item {
                         Layout.fillHeight: true
-                        Layout.minimumHeight: 64
+                        Layout.minimumHeight: 16
+                    }
+
+                    SFText {
+                        Layout.alignment: Qt.AlignHCenter
+                        //% "Find the wallet database file manually"
+                        text: qsTrId("restore-find-db")
+                        color: Style.active
+                        font.pixelSize: 14
+
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                var path = viewModel.selectCustomWalletDB();
+
+                                if (path.length > 0) {
+                                    migrateWalletDB(path);
+                                }
+                            }
+                            hoverEnabled: true
+                        }
+                    }
+
+                    Item {
+                        Layout.fillHeight: true
+                        Layout.minimumHeight: 32
                     }
 
                     Row {
@@ -594,24 +621,6 @@ Item
                     Item {
                         Layout.minimumHeight: 30
                         Layout.preferredHeight: 100
-                    }
-
-                    SFText {
-                        Layout.alignment: Qt.AlignHCenter
-                        //% "Restore wallet or create a new one"
-                        text: qsTrId("general-restore-or-create-wallet")
-                        color: Style.active
-                        font.pixelSize: 14
-
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.LeftButton
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: {
-                                startWizzardView.push(start);
-                            }
-                            hoverEnabled: true
-                        }
                     }
 
                     Item {

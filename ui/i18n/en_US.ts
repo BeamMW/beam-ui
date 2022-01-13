@@ -434,9 +434,9 @@
         <translation type="unfinished">Your wallet will be migrated to v </translation>
     </message>
     <message id="start-migration-button">
-        <source>Start auto migration</source>
+        <source>start auto migration</source>
         <extracomment>migration screen, start auto migration button</extracomment>
-        <translation>Start auto migration</translation>
+        <translation>start auto migration</translation>
     </message>
     <message id="start-select-db-thead-name">
         <source>Name</source>
@@ -830,11 +830,6 @@
         <source>Very strong password</source>
         <extracomment>set passwort, difficulty message, very strong</extracomment>
         <translation>Very strong password</translation>
-    </message>
-    <message id="start-migration-select-file-button">
-        <source>Select wallet database file manually</source>
-        <extracomment>migration screen, select db file button</extracomment>
-        <translation>Select wallet database file manually</translation>
     </message>
     <message id="start-select-db-best-match-label">
         <source>(best match)</source>
@@ -3363,6 +3358,15 @@ In case you’d like to re-use an earlier created regular address please use the
 (public offline)</source>
         <translation>sent to own address
 (public offline)</translation>
+    </message>
+    <message id="start-migration-manual-button">
+        <source>start manual migration</source>
+        <extracomment>migration screen, select db file button</extracomment>
+        <translation>start manual migration</translation>
+    </message>
+    <message id="restore-find-db">
+        <source>Find the wallet database file manually</source>
+        <translation>Find the wallet database file manually</translation>
     </message>
 </context>
 </TS>

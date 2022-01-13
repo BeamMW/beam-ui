@@ -434,9 +434,10 @@
         <translation>Ваш кашалёк будзе абноўлены да версіі: </translation>
     </message>
     <message id="start-migration-button">
-        <source>Start auto migration</source>
+        <source>start auto migration</source>
+        <oldsource>Start auto migration</oldsource>
         <extracomment>migration screen, start auto migration button</extracomment>
-        <translation>Пачаць абнаўленне версіі</translation>
+        <translation type="unfinished">Пачаць абнаўленне версіі</translation>
     </message>
     <message id="start-select-db-thead-name">
         <source>Name</source>
@@ -831,11 +832,6 @@
         <source>Very strong password</source>
         <extracomment>set passwort, difficulty message, very strong</extracomment>
         <translation>Вельмі добры пароль</translation>
-    </message>
-    <message id="start-migration-select-file-button">
-        <source>Select wallet database file manually</source>
-        <extracomment>migration screen, select db file button</extracomment>
-        <translation>Выбраць файл базы дадзеных</translation>
     </message>
     <message id="start-select-db-best-match-label">
         <source>(best match)</source>
@@ -3380,6 +3376,15 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="wallet-txs-status-sent-pub-offline-to-own">
         <source>sent to own address
 (public offline)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-migration-manual-button">
+        <source>start manual migration</source>
+        <extracomment>migration screen, select db file button</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="restore-find-db">
+        <source>Find the wallet database file manually</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
