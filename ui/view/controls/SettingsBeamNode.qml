@@ -200,14 +200,17 @@ SettingsFoldable {
                     topPadding: 0
                     activeFocusOnTab: true
                     font.pixelSize: 14
-                    color: !localNodePort.acceptableInput ? Style.validator_error : Style.content_main
-                    text: viewModel.localNodePort
+
+                    color: localNodePort.acceptableInput ? Style.content_main : Style.validator_error
+                    text: (viewModel.localNodePort || "").toString()
+
                     validator: RegExpValidator {regExp: /^([1-9][0-9]{0,3}|[1-5][0-9]{2,4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/g}
-                    backgroundColor: !localNodePort.acceptableInput ? Style.validator_error : Style.content_main
+                    backgroundColor: localNodePort.acceptableInput ? Style.content_main : Style.validator_error
+
                     Binding {
                         target: viewModel
                         property: "localNodePort"
-                        value: localNodePort.text
+                        value: parseInt(localNodePort.text || "0")
                     }
                 }
                 Item {
@@ -367,7 +370,7 @@ SettingsFoldable {
                     if (!localNodeRun.checked) return viewModel.localNodePeers.length > 0 && localNodePort.acceptableInput
                     return viewModel.isValidNodeAddress && nodeAddress.acceptableInput && remoteNodePort.acceptableInput
                 }
-                onClicked: viewModel.applyChanges()
+                onClicked: viewModel.applyNodeChanges()
             }
         }
     }

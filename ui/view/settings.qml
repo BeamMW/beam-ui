@@ -58,11 +58,10 @@ ColumnLayout {
             visible: main.hasNewerVersion
             onClicked: Utils.navigateToDownloads()
         }
-
     }
 
     StatusBar {
-        id: status_bar
+        id: statusBar
         model: statusbarModel
     }
 
@@ -144,22 +143,28 @@ ColumnLayout {
                 SettingsBeamNode {
                     id: nodeBlock
                     viewModel: viewModel
-                    hasStatusIndicatior: true
+
+                    showStatus: true
                     connectionStatus: getStatus()
-                    connectionErrorMsg: status_bar.error_msg
+                    connectionError:  statusBar.walletError
                     folded: swapMode != "BEAM"
 
                     function getStatus() {
-                        var statusBarModel = status_bar.model;
-                        if (statusBarModel.isFailedStatus)
-                            return "error";
-                        else if (statusBarModel.isSyncInProgress)
-                            return "connected";
-                        else if (statusBarModel.isOnline)
-                            return "connected";
-                        else
-                            return "disconnected";
+                        var sbar = statusBar.model
+                        if (sbar.isFailedStatus) return "error"
+                        else if (sbar.isSyncInProgress || sbar.isOnline) return "connected"
+                        else return "disconnected";
                     }
+                }
+
+                SettingsIPFS {
+                    id: ipfsBlock
+                    viewModel: viewModel
+                    visible: viewModel.ipfsSupported
+
+                    showStatus: true
+                    connectionStatus: statusBar.model.ipfsStatus
+                    connectionError: statusBar.model.ipfsError
                 }
 
                 Repeater {
@@ -177,11 +182,11 @@ ColumnLayout {
                         isNodeConnection:         modelData.isNodeConnection
                         isElectrumConnection:     modelData.isElectrumConnection
                         connectionStatus:         modelData.connectionStatus
-                        connectionErrorMsg:       modelData.connectionErrorMsg
+                        connectionError:          modelData.connectionError
                         getAddressesElectrum:     modelData.getAddressesElectrum
                         folded:                   creating ? (swapMode == modelData.coinID ? false : (swapMode == "ALL" ? modelData.isConnected : true)) : modelData.folded
                         mainSettingsViewModel:    viewModel
-                        hasStatusIndicatior:      true
+                        showStatus:               true
 
                         //
                         // Node
@@ -208,16 +213,16 @@ ColumnLayout {
                                 settingsControl.canChangeConnection = modelData.canChangeConnection
                             }
                             function onConnectionTypeChanged () {
-                                settingsControl.isConnected          = modelData.isConnected;
-                                settingsControl.isNodeConnection     = modelData.isNodeConnection;
-                                settingsControl.isElectrumConnection = modelData.isElectrumConnection;
-                                settingsControl.title                = modelData.title;
+                                settingsControl.isConnected          = modelData.isConnected
+                                settingsControl.isNodeConnection     = modelData.isNodeConnection
+                                settingsControl.isElectrumConnection = modelData.isElectrumConnection
+                                settingsControl.title                = modelData.title
                             }
                             function  onConnectionStatusChanged () {
-                                settingsControl.connectionStatus = modelData.connectionStatus;
+                                settingsControl.connectionStatus = modelData.connectionStatus
                             }
-                            function onConnectionErrorMsgChanged () {
-                                settingsControl.connectionErrorMsg = modelData.connectionErrorMsg;
+                            function onConnectionErrorChanged () {
+                                settingsControl.connectionError = modelData.connectionError
                             }
 
                             //
@@ -334,14 +339,14 @@ ColumnLayout {
                     phrasesSeparator:         viewModel.ethSettings.phrasesSeparator
                     isCurrentSeedValid:       viewModel.ethSettings.isCurrentSeedValid
                     mainSettingsViewModel:    viewModel
-                    hasStatusIndicatior:      true
+                    showStatus:               true
                     getEthereumAddresses:     viewModel.ethSettings.getEthereumAddresses
                     folded:                   creating ? (swapMode == viewModel.ethSettings.coinID ? false : (swapMode == "ALL" ? viewModel.ethSettings.isConnected : true)) : viewModel.ethSettings.folded
                                              
                     canChangeConnection:      viewModel.ethSettings.canChangeConnection
                     isConnected:              viewModel.ethSettings.isConnected
                     connectionStatus:         viewModel.ethSettings.connectionStatus
-                    connectionErrorMsg:       viewModel.ethSettings.connectionErrorMsg
+                    connectionError:          viewModel.ethSettings.connectionError
                                              
                     infuraProjectID:          viewModel.ethSettings.infuraProjectID
                     accountIndex:             viewModel.ethSettings.accountIndex
@@ -354,16 +359,16 @@ ColumnLayout {
                         }
 
                         function onConnectionChanged () {
-                            swapEthSettings.isConnected = viewModel.ethSettings.isConnected;
-                            swapEthSettings.title = viewModel.ethSettings.title;
+                            swapEthSettings.isConnected = viewModel.ethSettings.isConnected
+                            swapEthSettings.title = viewModel.ethSettings.title
                         }
 
                         function onConnectionStatusChanged () {
-                            swapEthSettings.connectionStatus = viewModel.ethSettings.connectionStatus;
+                            swapEthSettings.connectionStatus = viewModel.ethSettings.connectionStatus
                         }
 
-                        function onConnectionErrorMsgChanged () {
-                            swapEthSettings.connectionErrorMsg = viewModel.ethSettings.connectionErrorMsg;
+                        function onConnectionErrorChanged () {
+                            swapEthSettings.connectionError = viewModel.ethSettings.connectionError
                         }
 
                         function onInfuraProjectIDChanged () {

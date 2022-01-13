@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #pragma once
 
 #include <QObject>
@@ -20,6 +19,10 @@
 #include <QStringList>
 #include <mutex>
 #include "model/wallet_model.h"
+
+#ifdef BEAM_IPFS_SUPPORT
+#include <asio-ipfs/include/asio_ipfs/config.h>
+#endif
 
 class WalletSettings : public QObject
 {
@@ -42,9 +45,10 @@ public:
     bool showSwapBetaWarning();
     void setShowSwapBetaWarning(bool value);
 
-#if defined(BEAM_HW_WALLET)
+    #if defined(BEAM_HW_WALLET)
     std::string getTrezorWalletStorage() const;
-#endif
+    #endif
+
     std::string getWalletStorage() const;
     std::string getWalletFolder() const;
     std::string getAppDataPath() const;
@@ -99,6 +103,11 @@ public:
     int getAppsServerPort() const;
     void setAppsServerPort(int port);
 
+    #ifdef BEAM_IPFS_SUPPORT
+    asio_ipfs::config getIPFSConfig() const;
+    void setIPFSPort(uint32_t port);
+    #endif
+
     uint8_t getMaxPrivacyAnonymitySet() const;
     void setMaxPrivacyAnonymitySet(uint8_t anonymitySet);
 
@@ -128,12 +137,17 @@ public:
     static const char* LogsFolder;
     static const char* SettingsFile;
     static const char* WalletDBFile;
-#if defined(BEAM_HW_WALLET)
-    static const char* TrezorWalletDBFile;
-#endif
-    static const char* NodeDBFile;
 
-    void applyChanges();
+    #if defined(BEAM_HW_WALLET)
+    static const char* TrezorWalletDBFile;
+    #endif
+
+    static const char* NodeDBFile;
+    void applyNodeChanges();
+
+    #ifdef BEAM_IPFS_SUPPORT
+    void applyIPFSChanges();
+    #endif
 
 signals:
     void nodeAddressChanged();
@@ -145,6 +159,7 @@ signals:
     void beamMWLinksChanged();
     void secondCurrencyChanged();
     void dappsAllowedChanged();
+    void ipfsPortChanged();
 
 private:
     QSettings m_data;

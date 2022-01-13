@@ -129,13 +129,12 @@ int main (int argc, char* argv[])
 
     try
     {
-        auto [options, visibleOptions] = createOptionsDescription(GENERAL_OPTIONS | UI_OPTIONS | WALLET_OPTIONS, WalletSettings::WalletCfg);
-        visibleOptions;// unused
+        auto options = createOptionsDescription(GENERAL_OPTIONS | UI_OPTIONS | WALLET_OPTIONS, WalletSettings::WalletCfg).first;
         po::variables_map vm;
 
         try
         {
-#ifdef Q_OS_MACOS // on Big Sur we have broken current dir, let's restore it
+            #ifdef Q_OS_MACOS // on Big Sur we have broken current dir, let's restore it
             QDir t = app.applicationDirPath();
             if (t.dirName() == "MacOS" && t.cdUp() && t.dirName() == "Contents" && t.cdUp())
             {
@@ -161,7 +160,7 @@ int main (int argc, char* argv[])
                 LOG_INFO() << "You are on apple M1 chipset running an Intel application, forcing NativeTextRendering";
                 QQuickWindow::setTextRenderType(QQuickWindow::TextRenderType::NativeTextRendering);
             }
-#endif
+            #endif
             vm = getOptions(argc, argv, options, true);
         }
         catch (const po::error& e)
@@ -199,22 +198,20 @@ int main (int argc, char* argv[])
 
         beam::Crash::InstallHandler(appDataDir.filePath(QMLGlobals::getAppName()).toStdString().c_str());
 
-#define LOG_FILES_PREFIX "beam_ui_"
-
+        #define LOG_FILES_PREFIX "beam_ui_"
         const auto logFilesPath = appDataDir.filePath(WalletSettings::LogsFolder).toStdString();
         auto logger = beam::Logger::create(logLevel, logLevel, fileLogLevel, LOG_FILES_PREFIX, logFilesPath);
 
         unsigned logCleanupPeriod = vm[cli::LOG_CLEANUP_DAYS].as<uint32_t>() * 24 * 3600;
-
         clean_old_logfiles(logFilesPath, LOG_FILES_PREFIX, logCleanupPeriod);
 
         try
         {
             Rules::get().UpdateChecksum();
-            LOG_INFO() << "Beam Wallet UI " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
-            LOG_INFO() << "Beam Core " << BEAM_VERSION << " (" << BEAM_BRANCH_NAME << ")";
+            LOG_INFO() << "Beam Wallet UI "   << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
+            LOG_INFO() << "Beam Core "        << BEAM_VERSION << " (" << BEAM_BRANCH_NAME << ")";
             LOG_INFO() << "Rules signature: " << Rules::get().get_SignatureStr();
-            LOG_INFO() << "AppData folder: " << appDataDir.absolutePath().toStdString();
+            LOG_INFO() << "AppData folder: "  << appDataDir.absolutePath().toStdString();
 
             // AppModel Model MUST BE created before the UI engine and destroyed after.
             // AppModel serves the UI and UI should be able to access AppModel at any time
@@ -236,12 +233,12 @@ int main (int argc, char* argv[])
             }
 
             qmlRegisterSingletonType<Theme>(
-                    "Beam.Wallet", 1, 0, "Theme",
-                    [](QQmlEngine* engine, QJSEngine* scriptEngine) -> QObject* {
-                        Q_UNUSED(engine)
-                        Q_UNUSED(scriptEngine)
-                        return new Theme;
-                    });
+                "Beam.Wallet", 1, 0, "Theme",
+                [](QQmlEngine* engine, QJSEngine* scriptEngine) -> QObject* {
+                    Q_UNUSED(engine)
+                    Q_UNUSED(scriptEngine)
+                    return new Theme;
+                });
 
             qmlRegisterUncreatableType<OldWalletCurrency>("Beam.Wallet", 1, 0, "OldWalletCurrency", "You cannot create an instance of the Enums.");
             qRegisterMetaType<OldWalletCurrency::OldCurrency>("OldWalletCurrency::OldCurrency");

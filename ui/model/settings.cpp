@@ -25,7 +25,9 @@
 #include "quazip/quazipfile.h"
 #include "wallet/client/apps_api/apps_utils.h"
 
-using namespace std;
+#ifdef BEAM_IPFS_SUPPORT
+#include "utility/cli/options.h"
+#endif
 
 namespace
 {
@@ -57,8 +59,10 @@ namespace
     const char* kDevAppApiVer    = "devapp/api_version";
     const char* kDevAppMinApiVer = "devapp/min_api_version";
     const char* kLocalAppsPort   = "apps/local_port";
+    const char* kIPFSPrefix      = "ipfsnode/";
 
     const char* kMpAnonymitySet = "max_privacy/anonymity_set";
+    const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
 
     const std::map<QString, QString> kSupportedLangs { 
         { "zh_CN", "Chinese Simplified"},
@@ -82,8 +86,8 @@ namespace
         { "ko_KR", "한국어"}
     };
 
-    const vector<string> kOutDatedPeers = beam::getOutdatedDefaultPeers();
-    bool isOutDatedPeer(const string& peer)
+    const std::vector<std::string> kOutDatedPeers = beam::getOutdatedDefaultPeers();
+    bool isOutDatedPeer(const std::string& peer)
     {
         return find(kOutDatedPeers.begin(), kOutDatedPeers.end(), peer) !=
                kOutDatedPeers.end();
@@ -104,21 +108,20 @@ namespace
         };
         return supportedUnits;
     }
-
-    const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
-}  // namespace
+}
 
 const char* WalletSettings::WalletCfg = "beam-wallet.cfg";
 const char* WalletSettings::LogsFolder = "logs";
 const char* WalletSettings::SettingsFile = "settings.ini";
 const char* WalletSettings::WalletDBFile = "wallet.db";
+const char* WalletSettings::NodeDBFile = "node.db";
+
 #if defined(BEAM_HW_WALLET)
 const char* WalletSettings::TrezorWalletDBFile = "trezor-wallet.db";
 #endif
-const char* WalletSettings::NodeDBFile = "node.db";
 
 WalletSettings::WalletSettings(const QDir& appDataDir)
-    : m_data{ appDataDir.filePath(SettingsFile), QSettings::IniFormat }
+    : m_data{appDataDir.filePath(SettingsFile), QSettings::IniFormat}
     , m_appDataDir{appDataDir}
 {
     LOG_INFO () << "UI Settings file: " << m_data.fileName().toStdString();
@@ -136,12 +139,12 @@ string WalletSettings::getTrezorWalletStorage() const
 }
 #endif
 
-string WalletSettings::getWalletStorage() const
+std::string WalletSettings::getWalletStorage() const
 {
     return getWalletFolder() + "/" + WalletDBFile;
 }
 
-string WalletSettings::getWalletFolder() const
+std::string WalletSettings::getWalletFolder() const
 {
     Lock lock(m_mutex);
 
@@ -154,7 +157,7 @@ string WalletSettings::getWalletFolder() const
     return m_appDataDir.filePath(version).toStdString();
 }
 
-string WalletSettings::getAppDataPath() const
+std::string WalletSettings::getAppDataPath() const
 {
     Lock lock(m_mutex);
     return m_appDataDir.path().toStdString();
@@ -307,13 +310,13 @@ void WalletSettings::setLocalNodePort(uint port)
     emit localNodePortChanged();
 }
 
-string WalletSettings::getLocalNodeStorage() const
+std::string WalletSettings::getLocalNodeStorage() const
 {
     Lock lock(m_mutex);
     return m_appDataDir.filePath(NodeDBFile).toStdString();
 }
 
-string WalletSettings::getTempDir() const
+std::string WalletSettings::getTempDir() const
 {
     Lock lock(m_mutex);
     return m_appDataDir.filePath("./temp").toStdString();
@@ -336,14 +339,16 @@ static void zipLocalFile(QuaZip& zip, const QString& path, const QString& folder
 QStringList WalletSettings::getLocalNodePeers()
 {
     Lock lock(m_mutex);
-    QStringList peers = m_data.value(kLocalNodePeers).value<QStringList>();
-    size_t outDatedCount = count_if(
+    auto peers = m_data.value(kLocalNodePeers).value<QStringList>();
+
+    size_t outDatedCount = std::count_if(
         peers.begin(),
         peers.end(),
         [] (const QString& peer)
         {
             return isOutDatedPeer(peer.toStdString());
         });
+
     if (outDatedCount >= static_cast<size_t>(peers.size()) || peers.empty())
     {
         auto defaultPeers = beam::getDefaultPeers();
@@ -355,6 +360,7 @@ QStringList WalletSettings::getLocalNodePeers()
         }
         m_data.setValue(kLocalNodePeers, QVariant::fromValue(peers));
     }
+
     return peers;
 }
 
@@ -568,7 +574,6 @@ void WalletSettings::setMaxPrivacyLockTimeLimitHours(uint8_t lockTimeLimit)
     }
 }
 
-// static
 QStringList WalletSettings::getSupportedLanguages()
 {
     QStringList languagesNames;
@@ -581,7 +586,6 @@ QStringList WalletSettings::getSupportedLanguages()
     return languagesNames;
 }
 
-// static
 void WalletSettings::openFolder(const QString& path)
 {
     QFileInfo fileInfo(path);
@@ -657,9 +661,9 @@ void WalletSettings::reportProblem()
     }
 }
 
-void WalletSettings::applyChanges()
+void WalletSettings::applyNodeChanges()
 {
-    AppModel::getInstance().applySettingsChanges();
+    AppModel::getInstance().applyNodeChanges();
 }
 
 QString WalletSettings::getExplorerUrl() const
@@ -797,6 +801,69 @@ QString WalletSettings::getLocalAppsPath() const
     return localAppsPath;
 }
 
+#ifdef BEAM_IPFS_SUPPORT
+void WalletSettings::applyIPFSChanges()
+{
+    AppModel::getInstance().applyIPFSChanges();
+}
+
+// TODO:IPFS add disable option
+asio_ipfs::config WalletSettings::getIPFSConfig() const
+{
+    namespace cli = beam::cli;
+
+    Lock lock(m_mutex);
+    asio_ipfs::config cfg;
+
+    const QString keyStorage = QString(kIPFSPrefix) + cli::IPFS_STORAGE;
+    if (m_data.contains(keyStorage))
+    {
+        cfg.repo_root = m_data.value(keyStorage).toString().toStdString();
+    }
+    else
+    {
+        cfg.repo_root = QDir::cleanPath(
+            m_appDataDir.path() + QDir::separator() +
+            QDir(cfg.repo_root.c_str()
+        ).dirName()).toStdString();
+    }
+
+    cfg.low_water = m_data.value(QString(kIPFSPrefix) + cli::IPFS_LOW_WATER, cfg.low_water).toUInt();
+    cfg.high_water = m_data.value(QString(kIPFSPrefix) + cli::IPFS_HIGH_WATER, cfg.high_water).toUInt();
+    cfg.grace_period = m_data.value(QString(kIPFSPrefix) + cli::IPFS_GRACE, cfg.grace_period).toUInt();
+    cfg.node_swarm_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT, cfg.node_swarm_port).toUInt();
+
+    const QString keyBootstrap = QString(kIPFSPrefix) + cli::IPFS_BOOTSTRAP;
+    if (m_data.contains(keyBootstrap))
+    {
+        auto list = m_data.value(keyBootstrap).toStringList();
+        decltype(cfg.bootstrap)().swap(cfg.bootstrap);
+
+        std::vector<std::string> vlist;
+        for (const auto& qsval : list)
+        {
+            cfg.bootstrap.push_back(qsval.toStdString());
+        }
+    }
+
+    return cfg;
+}
+
+void WalletSettings::setIPFSPort(uint32_t port)
+{
+    namespace cli = beam::cli;
+    const QString keySwarmPort = QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT;
+
+    Lock lock(m_mutex);
+    if (m_data.contains(keySwarmPort) && m_data.value(keySwarmPort).toUInt() == port) {
+        return;
+    }
+
+    m_data.setValue(keySwarmPort, port);
+    emit ipfsPortChanged();
+}
+#endif
+
 int WalletSettings::getAppsServerPort() const
 {
     Lock lock(m_mutex);
@@ -847,7 +914,6 @@ void WalletSettings::setMinConfirmations(uint32_t value)
 boost::optional<beam::Asset::ID> WalletSettings::getLastAssetSelection() const
 {
     Lock lock(m_mutex);
-
     if (m_data.contains(kLastAssetSelection))
     {
         return m_data.value(kLastAssetSelection).toInt();

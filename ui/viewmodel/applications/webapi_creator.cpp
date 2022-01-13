@@ -73,7 +73,6 @@ namespace beamui::applications
                 {
                     _api = std::move(api);
                     emit apiCreated(_api.get());
-                    LOG_INFO() << "API created: " << version << ", " << appName.toStdString() << ", " << appid;
                 }
                 else
                 {

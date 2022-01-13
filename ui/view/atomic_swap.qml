@@ -101,7 +101,7 @@ Item {
     }
 
     StatusBar {
-        id: status_bar
+        id: statusBar
         model: statusbarModel
         z: 33
     }

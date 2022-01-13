@@ -34,12 +34,11 @@ StatusbarViewModel::StatusbarViewModel()
     , m_nodeTotal(0)
     , m_done(0)
     , m_total(0)
-    , m_errorMsg{}
 {
-#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     connectCoinClients();
     connectEthClient();
-#endif  // BEAM_ATOMIC_SWAP_SUPPORT
+    #endif
 
     connect(m_model.get(), SIGNAL(nodeConnectionChanged(bool)),
         SLOT(onNodeConnectionChanged(bool)));
@@ -58,8 +57,12 @@ StatusbarViewModel::StatusbarViewModel()
 
     connect(&m_exchangeRatesTimer, SIGNAL(timeout()), SLOT(onExchangeRatesTimer()));
     connect(m_exchangeRatesManager.get(), SIGNAL(updateTimeChanged()), SLOT(onExchangeRatesTimer()));
-
     m_model->getAsync()->getNetworkStatus();
+
+    #ifdef BEAM_IPFS_SUPPORT
+    connect(m_model.get(), &WalletModel::IPFSStatusChanged, this, &StatusbarViewModel::onIPFSStatus);
+    m_model->getAsync()->getIPFSStatus();
+    #endif
 }
 
 bool StatusbarViewModel::getIsOnline() const
@@ -94,19 +97,20 @@ int StatusbarViewModel::getNodeSyncProgress() const
 
 QString StatusbarViewModel::getBranchName() const
 {
-#ifdef BEAM_MAINNET
+    #ifdef BEAM_MAINNET
     return QString();
-#else
-    if (BRANCH_NAME.empty())
+    #else
+    if (BRANCH_NAME.empty()) {
         return QString();
+    }
 
     return QString::fromStdString(" (" + BRANCH_NAME + ")");
-#endif
+    #endif
 }
 
-QString StatusbarViewModel::getWalletStatusErrorMsg() const
+QString StatusbarViewModel::getWalletError() const
 {
-    return m_errorMsg;
+    return m_walletError;
 }
 
 QString StatusbarViewModel::getExchangeStatus() const
@@ -190,13 +194,14 @@ void StatusbarViewModel::setIsConnectionTrusted(bool value)
 
 void StatusbarViewModel::setWalletStatusErrorMsg(const QString& value)
 {
-    if (m_errorMsg != value)
+    if (m_walletError != value)
     {
-        m_errorMsg = value;
-#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+        #ifdef BEAM_ATOMIC_SWAP_SUPPORT
         m_coinWithErrorLabel = beamui::getCurrencyUnitName(beamui::Currencies::Beam);
-#endif  // BEAM_ATOMIC_SWAP_SUPPORT
-        emit statusErrorChanged();
+        #endif
+
+        m_walletError = value;
+        emit walletErrorChanged();
     }
 }
 
@@ -420,10 +425,36 @@ void StatusbarViewModel::connectEthClient()
         }
     }
 }
-
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
-void  StatusbarViewModel::onExchangeRatesTimer()
+#ifdef BEAM_IPFS_SUPPORT
+QString StatusbarViewModel::getIPFSStatus() const
+{
+    if (m_ipfsConnected) {
+        return "connected";
+    }
+
+    if (!m_ipfsError.isEmpty()) {
+        return "error";
+    }
+
+    return "disconnected";
+}
+
+QString StatusbarViewModel::getIPFSError() const
+{
+    return m_ipfsError;
+}
+
+void StatusbarViewModel::onIPFSStatus(bool connected, const QString& error)
+{
+    m_ipfsConnected = connected;
+    m_ipfsError = error;
+    emit IPFSStatusChanged();
+}
+#endif
+
+void StatusbarViewModel::onExchangeRatesTimer()
 {
     emit exchangeRatesUpdateStatusChanged();
 }
