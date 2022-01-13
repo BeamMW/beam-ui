@@ -2989,10 +2989,13 @@ Update uw instellingen en probeer opnieuw.</translation>
         <translation type="unfinished">DApps Privacy</translation>
     </message>
     <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
+        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
 
-Allow to proceed ? You can always update your choice in Settings later.</source>
-        <translation>Beam Wallet vereist toestemming om gedistribueerde applicaties te starten. Deze actie kan uw informatie, inclusief maar niet beperkt tot het IP-adres, blootstellen aan webservers en/of contracten van derden.
+Allow to proceed? You can always update your choice in Settings later.</source>
+        <oldsource>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
+
+Allow to proceed ? You can always update your choice in Settings later.</oldsource>
+        <translation type="unfinished">Beam Wallet vereist toestemming om gedistribueerde applicaties te starten. Deze actie kan uw informatie, inclusief maar niet beperkt tot het IP-adres, blootstellen aan webservers en/of contracten van derden.
 
 Wilt u doorgaan? U kunt uw keuze later altijd wijzigen in Instellingen.</translation>
     </message>

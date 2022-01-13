@@ -3000,10 +3000,13 @@ Update your settings and try again.</source>
         <translation type="unfinished">Приватность DApps</translation>
     </message>
     <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
+        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
 
-Allow to proceed ? You can always update your choice in Settings later.</source>
-        <translation>Beam Wallet требует разрешения на запуск распределенных приложений. Это действие может раскрыть вашу информацию, включая, но не ограничиваясь IP-адресами веб-серверов и/или контрактами сторонних разработчиков.
+Allow to proceed? You can always update your choice in Settings later.</source>
+        <oldsource>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
+
+Allow to proceed ? You can always update your choice in Settings later.</oldsource>
+        <translation type="unfinished">Beam Wallet требует разрешения на запуск распределенных приложений. Это действие может раскрыть вашу информацию, включая, но не ограничиваясь IP-адресами веб-серверов и/или контрактами сторонних разработчиков.
 
 Разрешить продолжить ? Вы всегда можете обновить ваш выбор в настройках позже.</translation>
     </message>
