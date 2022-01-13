@@ -846,12 +846,6 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
         }
     }
 
-    const QString keySwarmPort = QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT;
-    if (m_data.contains(keySwarmPort))
-    {
-        cfg.node_swarm_port = m_data.value(keySwarmPort).toUInt();
-    }
-
     return cfg;
 }
 

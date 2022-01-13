@@ -57,8 +57,12 @@ StatusbarViewModel::StatusbarViewModel()
 
     connect(&m_exchangeRatesTimer, SIGNAL(timeout()), SLOT(onExchangeRatesTimer()));
     connect(m_exchangeRatesManager.get(), SIGNAL(updateTimeChanged()), SLOT(onExchangeRatesTimer()));
-
     m_model->getAsync()->getNetworkStatus();
+
+    #ifdef BEAM_IPFS_SUPPORT
+    connect(m_model.get(), &WalletModel::IPFSStatusChanged, this, &StatusbarViewModel::onIPFSStatus);
+    m_model->getAsync()->getIPFSStatus();
+    #endif
 }
 
 bool StatusbarViewModel::getIsOnline() const
@@ -421,10 +425,36 @@ void StatusbarViewModel::connectEthClient()
         }
     }
 }
-
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
-void  StatusbarViewModel::onExchangeRatesTimer()
+#ifdef BEAM_IPFS_SUPPORT
+QString StatusbarViewModel::getIPFSStatus() const
+{
+    if (m_ipfsConnected) {
+        return "connected";
+    }
+
+    if (!m_ipfsError.isEmpty()) {
+        return "error";
+    }
+
+    return "disconnected";
+}
+
+QString StatusbarViewModel::getIPFSError() const
+{
+    return m_ipfsError;
+}
+
+void StatusbarViewModel::onIPFSStatus(bool connected, const QString& error)
+{
+    m_ipfsConnected = connected;
+    m_ipfsError = error;
+    emit IPFSStatusChanged();
+}
+#endif
+
+void StatusbarViewModel::onExchangeRatesTimer()
 {
     emit exchangeRatesUpdateStatusChanged();
 }

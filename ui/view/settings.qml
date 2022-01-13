@@ -163,16 +163,8 @@ ColumnLayout {
                     visible: viewModel.ipfsSupported
 
                     showStatus: true
-                    connectionStatus: getStatus()
-                    // TODO:IPFS
-                    //connectionError:  statusBar.ipfsError
-
-                    function getStatus() {
-                        var sbar = statusBar.model
-                        if (sbar.ipfsFailed) return "error"
-                        else if (sbar.ipfsOnline) return "connected"
-                        else return "disconnected"
-                    }
+                    connectionStatus: statusBar.model.ipfsStatus
+                    connectionError: statusBar.model.ipfsError
                 }
 
                 Repeater {

@@ -41,9 +41,15 @@ class StatusbarViewModel : public QObject
     Q_PROPERTY(int nodeSyncProgress         READ getNodeSyncProgress    NOTIFY nodeSyncProgressChanged)
     Q_PROPERTY(QString branchName           READ getBranchName          CONSTANT)
     Q_PROPERTY(QString walletError          READ getWalletError         NOTIFY walletErrorChanged)
+
     #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     Q_PROPERTY(bool isCoinClientFailed      READ getCoinClientFailed    NOTIFY isCoinClientFailedChanged)
     Q_PROPERTY(QString coinClientErrorMsg   READ getCoinClientErrorMsg  NOTIFY coinClientErrorMsgChanged)
+    #endif
+
+    #ifdef BEAM_IPFS_SUPPORT
+    Q_PROPERTY(QString ipfsStatus READ getIPFSStatus  NOTIFY IPFSStatusChanged)
+    Q_PROPERTY(QString ipfsError  READ getIPFSError  NOTIFY IPFSStatusChanged)
     #endif
 
 public:
@@ -58,10 +64,16 @@ public:
     [[nodiscard]] QString getBranchName() const;
     [[nodiscard]] QString getWalletError() const;
     [[nodiscard]] QString getExchangeStatus() const;
+
     #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     [[nodiscard]] bool getCoinClientFailed() const;
     [[nodiscard]] QString getCoinClientErrorMsg() const;
     [[nodiscard]] Q_INVOKABLE QString coinWithErrorLabel() const;
+    #endif
+
+    #ifdef BEAM_IPFS_SUPPORT
+    [[nodiscard]] QString getIPFSStatus() const;
+    [[nodiscard]] QString getIPFSError() const;
     #endif
 
     void setIsOnline(bool value);
@@ -82,6 +94,10 @@ public slots:
     void onCoinClientStatusChanged();
     #endif
 
+    #ifdef BEAM_IPFS_SUPPORT
+    void onIPFSStatus(bool connected, const QString& error);
+    #endif
+
 signals:
     void isOnlineChanged();
     void isFailedStatusChanged();
@@ -94,6 +110,10 @@ signals:
     #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     void isCoinClientFailedChanged();
     void coinClientErrorMsgChanged();
+    #endif
+
+    #ifdef BEAM_IPFS_SUPPORT
+    void IPFSStatusChanged();
     #endif
 
 private:
@@ -135,4 +155,9 @@ private:
 
     QTimer m_exchangeRatesTimer;
     QLocale m_locale;
+
+    #ifdef BEAM_IPFS_SUPPORT
+    bool m_ipfsConnected = false;
+    QString m_ipfsError;
+    #endif
 };

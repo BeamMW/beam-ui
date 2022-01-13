@@ -87,6 +87,10 @@ signals:
     void showTrezorError(const QString& error);
     #endif
 
+    #ifdef BEAM_IPFS_SUPPORT
+    void IPFSStatusChanged(bool connected, const QString& error);
+    #endif
+
     void exchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>&);
     void notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&);
     void publicAddressChanged(const QString& publicAddr);
@@ -129,6 +133,10 @@ private:
     void onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&) override;
     void onPublicAddress(const std::string& publicAddr) override;
     void onAssetInfo(beam::Asset::ID, const beam::wallet::WalletAsset&) override;
+
+    #ifdef BEAM_IPFS_SUPPORT
+    void onIPFSStatus(bool connected, const std::string& error) override;
+    #endif
 
     #ifdef BEAM_HW_WALLET
     void ShowKeyKeeperMessage() override;
