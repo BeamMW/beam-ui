@@ -114,6 +114,12 @@ QString getStatusTextTranslated(const QString& status, beam::wallet::TxAddressTy
 (offline)" */
         return qtTrId("wallet-txs-status-in-progress-offline-to-own");
     }
+    else if (status == "sending public offline to own address")
+    {
+        /*% "sending to own address
+(public offline)" */
+        return qtTrId("wallet-txs-status-in-progress-pub-offline-to-own");
+    }
     // sent
     else if (status == "sent maximum anonymity")
     {
@@ -143,6 +149,12 @@ QString getStatusTextTranslated(const QString& status, beam::wallet::TxAddressTy
         /*% "sent to own address
 (offline)" */
         return qtTrId("wallet-txs-status-sent-offline-to-own");
+    }
+    else if (status == "sent public offline to own address")
+    {
+        /*% "sent to own address
+(public offline)" */
+        return qtTrId("wallet-txs-status-sent-pub-offline-to-own");
     }
     // received
     else if (status == "received maximum anonymity")

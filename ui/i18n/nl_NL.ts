@@ -434,9 +434,10 @@
         <translation>Uw wallet wordt gemigreerd naar v </translation>
     </message>
     <message id="start-migration-button">
-        <source>Start auto migration</source>
+        <source>start auto migration</source>
+        <oldsource>Start auto migration</oldsource>
         <extracomment>migration screen, start auto migration button</extracomment>
-        <translation>Start automatische migratie</translation>
+        <translation type="unfinished">Start automatische migratie</translation>
     </message>
     <message id="start-select-db-thead-name">
         <source>Name</source>
@@ -831,11 +832,6 @@
         <source>Very strong password</source>
         <extracomment>set passwort, difficulty message, very strong</extracomment>
         <translation>Zeer sterk wachtwoord</translation>
-    </message>
-    <message id="start-migration-select-file-button">
-        <source>Select wallet database file manually</source>
-        <extracomment>migration screen, select db file button</extracomment>
-        <translation>Wallet database bestand handmatig selecteren</translation>
     </message>
     <message id="start-select-db-best-match-label">
         <source>(best match)</source>
@@ -2971,8 +2967,9 @@ Update uw instellingen en probeer opnieuw.</translation>
         <translation>details</translation>
     </message>
     <message id="notifications-open-dapp">
-        <source>open the dapp</source>
-        <translation>open de dapp</translation>
+        <source>open the DApp</source>
+        <oldsource>open the dapp</oldsource>
+        <translation type="unfinished">open de dapp</translation>
     </message>
     <message id="general-description">
         <source>Description</source>
@@ -2983,14 +2980,18 @@ Update uw instellingen en probeer opnieuw.</translation>
         <translation>DApp naam</translation>
     </message>
     <message id="dapps-privacy-title">
-        <source>DApps Privacy</source>
-        <translation>DApps Privacy</translation>
+        <source>DApps Privacy Warning</source>
+        <oldsource>DApps Privacy</oldsource>
+        <translation type="unfinished">DApps Privacy</translation>
     </message>
     <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
+        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
 
-Allow to proceed ? You can always update your choice in Settings later.</source>
-        <translation>Beam Wallet vereist toestemming om gedistribueerde applicaties te starten. Deze actie kan uw informatie, inclusief maar niet beperkt tot het IP-adres, blootstellen aan webservers en/of contracten van derden.
+Allow to proceed? You can always update your choice in Settings later.</source>
+        <oldsource>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
+
+Allow to proceed ? You can always update your choice in Settings later.</oldsource>
+        <translation type="unfinished">Beam Wallet vereist toestemming om gedistribueerde applicaties te starten. Deze actie kan uw informatie, inclusief maar niet beperkt tot het IP-adres, blootstellen aan webservers en/of contracten van derden.
 
 Wilt u doorgaan? U kunt uw keuze later altijd wijzigen in Instellingen.</translation>
     </message>
@@ -3360,6 +3361,25 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
     </message>
     <message id="settings-ipfs-swarm-port">
         <source>Swarm Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-in-progress-pub-offline-to-own">
+        <source>sending to own address
+(public offline)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-sent-pub-offline-to-own">
+        <source>sent to own address
+(public offline)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-migration-manual-button">
+        <source>start manual migration</source>
+        <extracomment>migration screen, select db file button</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="restore-find-db">
+        <source>Find the wallet database file manually</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -434,9 +434,10 @@
         <translation>Ваш кошелек будет обновлен до версии </translation>
     </message>
     <message id="start-migration-button">
-        <source>Start auto migration</source>
+        <source>start auto migration</source>
+        <oldsource>Start auto migration</oldsource>
         <extracomment>migration screen, start auto migration button</extracomment>
-        <translation>Начать обновление версии</translation>
+        <translation type="unfinished">Начать обновление версии</translation>
     </message>
     <message id="start-select-db-thead-name">
         <source>Name</source>
@@ -831,11 +832,6 @@
         <source>Very strong password</source>
         <extracomment>set passwort, difficulty message, very strong</extracomment>
         <translation>Очень хороший пароль</translation>
-    </message>
-    <message id="start-migration-select-file-button">
-        <source>Select wallet database file manually</source>
-        <extracomment>migration screen, select db file button</extracomment>
-        <translation>Выбрать файл базы данных</translation>
     </message>
     <message id="start-select-db-best-match-label">
         <source>(best match)</source>
@@ -2982,8 +2978,9 @@ Update your settings and try again.</source>
         <translation>подробности</translation>
     </message>
     <message id="notifications-open-dapp">
-        <source>open the dapp</source>
-        <translation>открыть dapp</translation>
+        <source>open the DApp</source>
+        <oldsource>open the dapp</oldsource>
+        <translation type="unfinished">открыть dapp</translation>
     </message>
     <message id="general-description">
         <source>Description</source>
@@ -2994,14 +2991,18 @@ Update your settings and try again.</source>
         <translation>Имя DApp</translation>
     </message>
     <message id="dapps-privacy-title">
-        <source>DApps Privacy</source>
-        <translation>Приватность DApps</translation>
+        <source>DApps Privacy Warning</source>
+        <oldsource>DApps Privacy</oldsource>
+        <translation type="unfinished">Приватность DApps</translation>
     </message>
     <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
+        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
 
-Allow to proceed ? You can always update your choice in Settings later.</source>
-        <translation>Beam Wallet требует разрешения на запуск распределенных приложений. Это действие может раскрыть вашу информацию, включая, но не ограничиваясь IP-адресами веб-серверов и/или контрактами сторонних разработчиков.
+Allow to proceed? You can always update your choice in Settings later.</source>
+        <oldsource>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
+
+Allow to proceed ? You can always update your choice in Settings later.</oldsource>
+        <translation type="unfinished">Beam Wallet требует разрешения на запуск распределенных приложений. Это действие может раскрыть вашу информацию, включая, но не ограничиваясь IP-адресами веб-серверов и/или контрактами сторонних разработчиков.
 
 Разрешить продолжить ? Вы всегда можете обновить ваш выбор в настройках позже.</translation>
     </message>
@@ -3376,6 +3377,25 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="settings-ipfs-swarm-port">
         <source>Swarm Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-in-progress-pub-offline-to-own">
+        <source>sending to own address
+(public offline)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-sent-pub-offline-to-own">
+        <source>sent to own address
+(public offline)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-migration-manual-button">
+        <source>start manual migration</source>
+        <extracomment>migration screen, select db file button</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="restore-find-db">
+        <source>Find the wallet database file manually</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

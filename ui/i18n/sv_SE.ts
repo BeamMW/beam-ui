@@ -434,9 +434,10 @@
         <translation type="unfinished">Your wallet will be migrated to v </translation>
     </message>
     <message id="start-migration-button">
-        <source>Start auto migration</source>
+        <source>start auto migration</source>
+        <oldsource>Start auto migration</oldsource>
         <extracomment>migration screen, start auto migration button</extracomment>
-        <translation>Påbörja automatisk migrering</translation>
+        <translation type="unfinished">Påbörja automatisk migrering</translation>
     </message>
     <message id="start-select-db-thead-name">
         <source>Name</source>
@@ -830,11 +831,6 @@
         <source>Very strong password</source>
         <extracomment>set passwort, difficulty message, very strong</extracomment>
         <translation>Mycket starkt lösenord</translation>
-    </message>
-    <message id="start-migration-select-file-button">
-        <source>Select wallet database file manually</source>
-        <extracomment>migration screen, select db file button</extracomment>
-        <translation>Välj plånbokens databas-fil manuellt</translation>
     </message>
     <message id="start-select-db-best-match-label">
         <source>(best match)</source>
@@ -2970,7 +2966,8 @@ Uppdatera dina inställningar och försök igen.</translation>
         <translation>detaljer</translation>
     </message>
     <message id="notifications-open-dapp">
-        <source>open the dapp</source>
+        <source>open the DApp</source>
+        <oldsource>open the dapp</oldsource>
         <translation type="unfinished">open the dapp</translation>
     </message>
     <message id="general-description">
@@ -2982,13 +2979,17 @@ Uppdatera dina inställningar och försök igen.</translation>
         <translation type="unfinished">DApp name</translation>
     </message>
     <message id="dapps-privacy-title">
-        <source>DApps Privacy</source>
+        <source>DApps Privacy Warning</source>
+        <oldsource>DApps Privacy</oldsource>
         <translation type="unfinished">DApps Privacy</translation>
     </message>
     <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
+        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
 
-Allow to proceed ? You can always update your choice in Settings later.</source>
+Allow to proceed? You can always update your choice in Settings later.</source>
+        <oldsource>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
+
+Allow to proceed ? You can always update your choice in Settings later.</oldsource>
         <translation type="unfinished">Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
 
 Allow to proceed ? You can always update your choice in Settings later.</translation>
@@ -3361,6 +3362,25 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="settings-ipfs-swarm-port">
         <source>Swarm Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-in-progress-pub-offline-to-own">
+        <source>sending to own address
+(public offline)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-sent-pub-offline-to-own">
+        <source>sent to own address
+(public offline)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-migration-manual-button">
+        <source>start manual migration</source>
+        <extracomment>migration screen, select db file button</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="restore-find-db">
+        <source>Find the wallet database file manually</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
