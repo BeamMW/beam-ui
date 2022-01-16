@@ -166,6 +166,10 @@
         <source>Receive</source>
         <translation type="unfinished">Receive</translation>
     </message>
+	<message id="wallet-assets-title">
+        <source>Assets</source>
+        <translation>Средства</translation>
+    </message>
     <message id="wallet-transactions-title">
         <source>Transactions</source>
         <translation type="unfinished">Transactions</translation>

@@ -83,6 +83,8 @@ Item {
             Layout.topMargin: -27
             spacing: 0
 
+            property bool isAssetsFilterApplied:  false
+
             function navigateSend(assetId) {
                 var params = {
                     "onAccepted":    onAccepted,
@@ -140,6 +142,61 @@ Item {
                     //font.capitalization: Font.AllUppercase
                     onClicked: {
                         navigateReceive(assets.selectedId);
+                    }
+                }
+            }
+
+            RowLayout {
+                Layout.topMargin: 25
+
+                SFText {
+                    Layout.fillWidth: true
+
+                    font {
+                        pixelSize: 14
+                        letterSpacing: 4
+                        styleName: "DemiBold"; weight: Font.DemiBold
+                        capitalization: Font.AllUppercase
+                    }
+
+                    opacity: 0.5
+                    color: Style.content_main
+                    //% "Assets"
+                    text: qsTrId("wallet-assets-title")
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignRight
+
+                    SFText {
+                        //% "Selected"
+                        text: qsTrId("wallet-selected-assets-checkbox")
+                        color: transactionsLayout.isAssetsFilterApplied ? Style.active : Style.content_secondary
+                        font.pixelSize: 14
+                    }
+
+                    Item {width: 3}
+
+                    CustomSwitch {
+                        id: applyAssetFilterSwitch
+                        checked: !transactionsLayout.isAssetsFilterApplied
+                        alwaysGreen: true
+
+                        Binding {
+                            target: transactionsLayout
+                            property: "isAssetsFilterApplied"
+                            value: !applyAssetFilterSwitch.checked
+                        }
+                    }
+
+                    Item {width: 3}
+
+                    SFText {
+                        //% "All"
+                        text: qsTrId("wallet-all-assets-checkbox")
+                        color: transactionsLayout.isAssetsFilterApplied ? Style.content_secondary : Style.active
+                        font.pixelSize: 14
                     }
                 }
             }
