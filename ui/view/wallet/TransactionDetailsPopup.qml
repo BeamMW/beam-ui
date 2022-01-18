@@ -55,7 +55,7 @@ CustomDialog {
     property var getPaymentProof: function (rawTxId) { return null; }
 
     function getHighlitedText(text) {
-        return Utils.getHighlitedText(text, dialog.searchFilter, Style.active.toString());
+        return Utils.getHighlitedText(text, dialog.searchFilter, Style.accent_incoming.toString());
     }
 
     property PaymentInfoItem paymentInfo
