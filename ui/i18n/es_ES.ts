@@ -3168,14 +3168,6 @@ cannot be canceled.</translation>
         <source>Select application to install</source>
         <translation type="unfinished">Select application to install</translation>
     </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation type="unfinished">See the wallet in action. Get a small amount of Beams from the Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation type="unfinished">get coins</translation>
-    </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
         <translation>Frase semilla</translation>
@@ -3191,14 +3183,6 @@ cannot be canceled.</translation>
     <message id="general-complete-verification-button">
         <source>Complete verification</source>
         <translation>Verificación completa</translation>
-    </message>
-    <message id="seed-validation-promo">
-        <source>Write down and validate your seed phrase so you can always recover your funds.</source>
-        <translation>Escribe y valida tu frase semilla para que siempre puedas recuperar tus fondos.</translation>
-    </message>
-    <message id="seed-validation-link">
-        <source>Secure your phrase</source>
-        <translation>Asegura tu frase</translation>
     </message>
     <message id="send-offline-tip" numerus="yes">
         <source>Offline address: %n transaction(s) left.</source>
@@ -3425,6 +3409,26 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="wallet-all-assets-checkbox">
         <source>All</source>
         <translation type="unfinished">Todo</translation>
+    </message>
+    <message id="wallet-remove-filter-button">
+        <source>Remove filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="faucet-promo">
+        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="faucet-promo-get-coins">
+        <source>get coins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="seed-validation-promo">
+        <source>Write down and validate your seed phrase so you can always recover your funds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="seed-validation-link">
+        <source>Secure your phrase</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

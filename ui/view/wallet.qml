@@ -83,7 +83,7 @@ Item {
             Layout.topMargin: -27
             spacing: 0
 
-            property bool isAssetsFilterApplied:  false
+            property bool isShownOnlySelectedAssets:  false
 
             function navigateSend(assetId) {
                 var params = {
@@ -115,6 +115,22 @@ Item {
                 Layout.alignment: Qt.AlignTop | Qt.AlignRight
                 Layout.topMargin: 30
                 spacing: 20
+
+                CustomButton {
+                    id: removeFilterButton
+                    height: 32
+                    palette.button: Style.background_button
+                    palette.buttonText: Style.content_main
+                    icon.source: "qrc:/assets/icon-cancel-white.svg"
+                    //visible: isShownOnlySelectedAssets
+                    //% "Remove filter"
+                    text: qsTrId("wallet-remove-filter-button")
+                    font.pixelSize: 12
+                    //font.capitalization: Font.AllUppercase
+                    onClicked: {
+                        //navigateSend(assets.selectedId);
+                    }
+                }
 
                 CustomButton {
                     id: sendButton
@@ -172,7 +188,7 @@ Item {
                     SFText {
                         //% "Selected"
                         text: qsTrId("wallet-selected-assets-checkbox")
-                        color: transactionsLayout.isAssetsFilterApplied ? Style.active : Style.content_secondary
+                        color: transactionsLayout.isShownOnlySelectedAssets ? Style.active : Style.content_secondary
                         font.pixelSize: 14
                     }
 
@@ -180,12 +196,12 @@ Item {
 
                     CustomSwitch {
                         id: applyAssetFilterSwitch
-                        checked: !transactionsLayout.isAssetsFilterApplied
+                        checked: !transactionsLayout.isShownOnlySelectedAssets
                         alwaysGreen: true
 
                         Binding {
                             target: transactionsLayout
-                            property: "isAssetsFilterApplied"
+                            property: "isShownOnlySelectedAssets"
                             value: !applyAssetFilterSwitch.checked
                         }
                     }
@@ -195,7 +211,7 @@ Item {
                     SFText {
                         //% "All"
                         text: qsTrId("wallet-all-assets-checkbox")
-                        color: transactionsLayout.isAssetsFilterApplied ? Style.content_secondary : Style.active
+                        color: transactionsLayout.isShownOnlySelectedAssets ? Style.content_secondary : Style.active
                         font.pixelSize: 14
                     }
                 }

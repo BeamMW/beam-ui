@@ -3168,14 +3168,6 @@ cannot be canceled.</source>
         <source>Select application to install</source>
         <translation>Selecteer applicatie om te installeren</translation>
     </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Bekijk de wallet in actie. Ontvang een kleine hoeveelheid Beams uit de Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>ontvang coins</translation>
-    </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
         <translation>Herstelzin</translation>
@@ -3191,14 +3183,6 @@ cannot be canceled.</source>
     <message id="general-complete-verification-button">
         <source>Complete verification</source>
         <translation>Verificatie voltooien</translation>
-    </message>
-    <message id="seed-validation-promo">
-        <source>Write down and validate your seed phrase so you can always recover your funds.</source>
-        <translation>Schrijf uw herstelzin op en valideer deze zodat u uw saldo altijd kunt herstellen.</translation>
-    </message>
-    <message id="seed-validation-link">
-        <source>Secure your phrase</source>
-        <translation>Beveilig je herstelzin</translation>
     </message>
     <message id="send-offline-tip" numerus="yes">
         <source>Offline address: %n transaction(s) left.</source>
@@ -3420,6 +3404,26 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
     <message id="wallet-all-assets-checkbox">
         <source>All</source>
         <translation type="unfinished">Alle</translation>
+    </message>
+    <message id="wallet-remove-filter-button">
+        <source>Remove filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="faucet-promo">
+        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="faucet-promo-get-coins">
+        <source>get coins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="seed-validation-promo">
+        <source>Write down and validate your seed phrase so you can always recover your funds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="seed-validation-link">
+        <source>Secure your phrase</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
