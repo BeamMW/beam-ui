@@ -813,7 +813,7 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     namespace cli = beam::cli;
 
     Lock lock(m_mutex);
-    asio_ipfs::config cfg;
+    asio_ipfs::config cfg(asio_ipfs::config::Mode::Desktop);
 
     const QString keyStorage = QString(kIPFSPrefix) + cli::IPFS_STORAGE;
     if (m_data.contains(keyStorage))
@@ -832,6 +832,8 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     cfg.high_water = m_data.value(QString(kIPFSPrefix) + cli::IPFS_HIGH_WATER, cfg.high_water).toUInt();
     cfg.grace_period = m_data.value(QString(kIPFSPrefix) + cli::IPFS_GRACE, cfg.grace_period).toUInt();
     cfg.node_swarm_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT, cfg.node_swarm_port).toUInt();
+    cfg.auto_relay = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTO_RELAY, cfg.auto_relay).toUInt();
+    cfg.relay_hop = m_data.value(QString(kIPFSPrefix) + cli::IPFS_RELAY_HOP, cfg.relay_hop).toUInt();
 
     const QString keyBootstrap = QString(kIPFSPrefix) + cli::IPFS_BOOTSTRAP;
     if (m_data.contains(keyBootstrap))
