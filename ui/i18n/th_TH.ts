@@ -3377,5 +3377,9 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>Find the wallet database file manually</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settings-ipfs-location">
+        <source>IPFS repository location</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

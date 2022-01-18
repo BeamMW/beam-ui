@@ -57,6 +57,7 @@ class SettingsViewModel : public QObject
     #ifdef BEAM_IPFS_SUPPORT
     Q_PROPERTY(unsigned int ipfsSwarmPort READ getIPFSSwarmPort WRITE setIPFSSwarmPort  NOTIFY IPFSSwarmPortChanged)
     Q_PROPERTY(bool ipfsChanged READ getIPFSChanged NOTIFY IPFSSettingsChanged)
+    Q_PROPERTY(QString ipfsLocation READ getIPFSLocation CONSTANT)
     #endif
 
     Q_PROPERTY(QList<QObject*> swapCoinSettingsList READ getSwapCoinSettings    CONSTANT)
@@ -86,6 +87,7 @@ public:
     [[nodiscard]] unsigned int getIPFSSwarmPort() const;
     void setIPFSSwarmPort(unsigned int value);
     [[nodiscard]] bool getIPFSChanged() const;
+    [[nodiscard]] QString getIPFSLocation() const;
     #endif
 
     QString getRemoteNodePort() const;

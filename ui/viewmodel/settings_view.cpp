@@ -210,6 +210,12 @@ void SettingsViewModel::setIPFSSwarmPort(unsigned int value)
     }
 }
 
+QString SettingsViewModel::getIPFSLocation() const
+{
+    auto cfg = m_settings.getIPFSConfig();
+    return QString::fromStdString(cfg.repo_root);
+}
+
 bool SettingsViewModel::getIPFSChanged() const
 {
     auto icfg = m_settings.getIPFSConfig();

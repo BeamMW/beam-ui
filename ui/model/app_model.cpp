@@ -619,7 +619,6 @@ void AppModel::start()
     boost::optional<asio_ipfs::config> ipfsConfig;
     #ifdef BEAM_IPFS_SUPPORT
     ipfsConfig = m_settings.getIPFSConfig();
-    // TODO:IPFS add ipfs path to UI settings page
     // TODO:IPFS add ipfs ports to settings & UI settings page
     #endif
 
