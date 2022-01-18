@@ -21,7 +21,7 @@
 #include "model/wallet_model.h"
 
 #ifdef BEAM_IPFS_SUPPORT
-#include <asio-ipfs/include/asio_ipfs/config.h>
+#include <asio-ipfs/include/ipfs_config.h>
 #endif
 
 class WalletSettings : public QObject
