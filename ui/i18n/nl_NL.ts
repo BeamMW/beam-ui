@@ -3386,5 +3386,10 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <source>IPFS repository location</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settings-ipfs-start">
+        <source>Run node on</source>
+        <oldsource>Start IPFS node on:</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

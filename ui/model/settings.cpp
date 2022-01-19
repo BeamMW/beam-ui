@@ -60,6 +60,7 @@ namespace
     const char* kDevAppMinApiVer = "devapp/min_api_version";
     const char* kLocalAppsPort   = "apps/local_port";
     const char* kIPFSPrefix      = "ipfsnode/";
+    const char* kIPFSNodeStart   = "ipfs_node_start";
 
     const char* kMpAnonymitySet = "max_privacy/anonymity_set";
     const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
@@ -807,7 +808,6 @@ void WalletSettings::applyIPFSChanges()
     AppModel::getInstance().applyIPFSChanges();
 }
 
-// TODO:IPFS add disable option
 asio_ipfs::config WalletSettings::getIPFSConfig() const
 {
     namespace cli = beam::cli;
@@ -863,7 +863,51 @@ void WalletSettings::setIPFSPort(uint32_t port)
     }
 
     m_data.setValue(keySwarmPort, port);
-    emit ipfsPortChanged();
+}
+
+void WalletSettings::setIPFSNodeStart(const QString& start)
+{
+    const QString keyNodeStart = QString(kIPFSPrefix) + kIPFSNodeStart;
+
+    Lock lock(m_mutex);
+    if (m_data.contains(keyNodeStart) && m_data.value(keyNodeStart).toString() == start) {
+        return;
+    }
+
+    m_data.setValue(keyNodeStart, start);
+}
+
+QString WalletSettings::getIPFSNodeStart() const
+{
+    const QString keyNodeStart = QString(kIPFSPrefix) + kIPFSNodeStart;
+    Lock lock(m_mutex);
+
+    QString defStart("clientstart");
+    auto start = m_data.value(keyNodeStart, defStart).toString();
+
+    if (start != "clientstart" && start != "dapps" && start != "never") {
+        LOG_WARNING() << "Unknown IPFS start setting '" << start.toStdString()
+                      << "'. Defaulting to '" << defStart.toStdString() << "'";
+        m_data.setValue(keyNodeStart, defStart);
+        return defStart;
+    }
+
+    return start;
+}
+
+WalletSettings::IPFSLaunch WalletSettings::getIPFSNodeLaunch() const
+{
+    const auto start = getIPFSNodeStart();
+
+    if (start == "clientstart") {
+        return IPFSLaunch::AtStart;
+    }
+
+    if (start == "dapps") {
+        return IPFSLaunch::AtDApps;
+    }
+
+    return IPFSLaunch::Never;
 }
 #endif
 

@@ -106,6 +106,16 @@ public:
     #ifdef BEAM_IPFS_SUPPORT
     asio_ipfs::config getIPFSConfig() const;
     void setIPFSPort(uint32_t port);
+    void setIPFSNodeStart(const QString&);
+    QString getIPFSNodeStart() const;
+
+    enum class IPFSLaunch {
+        AtStart = 0,
+        AtDApps,
+        Never,
+    };
+
+    IPFSLaunch getIPFSNodeLaunch() const;
     #endif
 
     uint8_t getMaxPrivacyAnonymitySet() const;
@@ -159,10 +169,9 @@ signals:
     void beamMWLinksChanged();
     void secondCurrencyChanged();
     void dappsAllowedChanged();
-    void ipfsPortChanged();
 
 private:
-    QSettings m_data;
+    mutable QSettings m_data;
     QDir m_appDataDir;
     uint8_t m_mpLockTimeLimit = 0;
     uint32_t m_minConfirmations = 0;

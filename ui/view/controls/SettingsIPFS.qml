@@ -9,16 +9,43 @@ import "."
 
 SettingsFoldable {
     property var viewModel
+    property bool runNode: nodeStart.state != "never"
 
     //% "IPFS Integrated Node"
     title: qsTrId("settings-ipfsnode-title")
 
     content: ColumnLayout {
-        spacing:    0
+        spacing: 30
 
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 20
+        GridLayout{
+            columns: 2
+            columnSpacing: 25
+            rowSpacing: 30
+
+            SFText {
+                Layout.fillWidth: true
+                //% "Run node on"
+                text: qsTrId("settings-ipfs-start")
+                color: Style.content_secondary
+                font.pixelSize: 14
+                wrapMode: Text.NoWrap
+            }
+
+            TristateSwitch {
+                id: nodeStart
+                Layout.alignment: Qt.AlignHCenter
+                height:  22
+                width:   280
+                choices: ["clientstart", "dapps", "never"]
+                labels:  ["Start", "DApps", "Never"]
+                state:   viewModel.ipfsNodeStart
+
+                Binding {
+                    target: viewModel
+                    property: "ipfsNodeStart"
+                    value: nodeStart.state
+                }
+            }
 
             SFText {
                 //% "Swarm Port"

@@ -3402,5 +3402,10 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>IPFS repository location</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settings-ipfs-start">
+        <source>Run node on</source>
+        <oldsource>Start IPFS node on:</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
