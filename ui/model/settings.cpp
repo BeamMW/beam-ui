@@ -836,6 +836,9 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     cfg.relay_hop = m_data.value(QString(kIPFSPrefix) + cli::IPFS_RELAY_HOP, cfg.relay_hop).toUInt();
     cfg.storage_max = m_data.value(QString(kIPFSPrefix) + cli::IPFS_STORAGE_MAX, QString::fromStdString(cfg.storage_max)).toString().toStdString();
     cfg.node_api_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_NODE_API_PORT, cfg.node_api_port).toUInt();
+    cfg.autonat = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT, cfg.autonat).toBool();
+    cfg.autonat_limit = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_LIMIT, cfg.autonat_limit).toUInt();
+    cfg.autonat_peer_limit = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_PEER_LIMIT, cfg.autonat_peer_limit).toUInt();
 
     const QString keyBootstrap = QString(kIPFSPrefix) + cli::IPFS_BOOTSTRAP;
     if (m_data.contains(keyBootstrap))
