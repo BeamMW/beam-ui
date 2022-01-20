@@ -27,8 +27,9 @@ namespace beamui::applications
         bool getUseIPFSNode () {
             #ifdef BEAM_IPFS_SUPPORT
             return AppModel::getInstance().getSettings().getIPFSNodeLaunch() != WalletSettings::IPFSLaunch::Never;
-            #endif
+            #else
             return false;
+            #endif
         }
     }
 
