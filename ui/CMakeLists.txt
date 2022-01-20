@@ -481,13 +481,11 @@ endif()
 
 if(LINUX)
     install(TARGETS ${TARGET_NAME} DESTINATION bin)
-    install(FILES beam-wallet.cfg DESTINATION bin)
 
-    SET(BEAM_DESKTOP_DIR     "/usr/share/applications/")
-    SET(BEAM_PIXMAPS_DIR     "/usr/share/icons/")
+    SET(BEAM_DESKTOP_DIR     "${CMAKE_INSTALL_PREFIX}/share/applications/")
+    SET(BEAM_PIXMAPS_DIR     "${CMAKE_INSTALL_PREFIX}/share/icons/")
 
     install (FILES beam.desktop DESTINATION ${BEAM_DESKTOP_DIR})
-    install (FILES beam.xml DESTINATION ${BEAM_DESKTOP_DIR})
     install (FILES beam.png DESTINATION ${BEAM_PIXMAPS_DIR})
 elseif(APPLE)
     #set(MACOSX_BUNDLE_ICON_FILE "Beam Wallet${BEAM_DISPLAY_SUFFIX}.icns")
