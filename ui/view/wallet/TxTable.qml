@@ -138,7 +138,6 @@ Control {
         RowLayout {
             Layout.fillWidth:    true
             Layout.bottomMargin: 10
-            visible:             tableViewModel.transactions.rowCount() > 0
             TxFilter {
                 id: allTab
                 Layout.alignment: Qt.AlignVCenter
@@ -173,6 +172,45 @@ Control {
 
             Item {
                 Layout.fillWidth: true
+            }
+
+            RowLayout {
+                Layout.leftMargin: searchBox.searchInput.visible ? 0 : 280
+                Layout.rightMargin: searchBox.searchInput.visible ? -20 : -300
+                spacing: 20
+                SFLabel {
+                    //% "Show"
+                    text: qsTrId("tx-table-filter-label")
+                    color: Style.content_secondary
+                }
+                MultiSelectComboBox {
+                    Layout.fillWidth:    true
+                    fontPixelSize:       14
+                    // width: 150
+                    model: [
+                        //% "In progress"
+                        { text: qsTrId("tx-table-filter-in-progress"), checked: tableViewModel.showInProgress, id: "inProgress" },
+                        //% "Completed"
+                        { text: qsTrId("tx-table-filter-completed"), checked: tableViewModel.showCompleted, id: "completed" },
+                        //% "Canceled"
+                        { text: qsTrId("tx-table-filter-canceled"), checked: tableViewModel.showCanceled, id: "canceled" },
+                        //% "Failed"
+                        { text: qsTrId("tx-table-filter-failed"), checked: tableViewModel.showFailed, id: "failed" },
+                    ]
+                    onSelectChanged: function(id, state) {
+                        switch (id) {
+                            case "inProgress": tableViewModel.showInProgress = state; break;
+                            case "completed": tableViewModel.showCompleted = state; break;
+                            case "canceled": tableViewModel.showCanceled = state; break;
+                            case "failed": tableViewModel.showFailed = state; break;
+                            default: console.log("unknown filter id");
+                        }
+                    }
+                    showUnderline: false
+                }
+                Item {
+                    Layout.preferredWidth: 20
+                }
             }
 
             SearchBox {

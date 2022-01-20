@@ -154,14 +154,6 @@
         <source>Transactions</source>
         <translation>Транзакции</translation>
     </message>
-    <message id="wallet-verify-payment">
-        <source>Verify payment</source>
-        <translation>Проверить платеж</translation>
-    </message>
-    <message id="wallet-txs-date-time">
-        <source>Created on</source>
-        <translation>Дата | Время</translation>
-    </message>
     <message id="wallet-txs-delete-message">
         <source>The transaction will be deleted. This operation can not be undone</source>
         <translation>Транзакция будет удалена. Эта операция необратима.</translation>
@@ -1063,22 +1055,6 @@ please review your settings and try again</source>
         <source>There is no Trezor device connected. Please, connect and try again.</source>
         <translation>Устройство Trezor не подключено. Пожалуйста, подключитесь и повторите попытку.</translation>
     </message>
-    <message id="wallet-transactions-all-tab">
-        <source>All</source>
-        <translation>Все</translation>
-    </message>
-    <message id="wallet-transactions-in-progress-tab">
-        <source>In progress</source>
-        <translation>В процессе</translation>
-    </message>
-    <message id="wallet-transactions-sent-tab">
-        <source>Sent</source>
-        <translation>Отправлено</translation>
-    </message>
-    <message id="wallet-transactions-received-tab">
-        <source>Received</source>
-        <translation>Получено</translation>
-    </message>
     <message id="send-less-than-fee">
         <source>The swap amount must be greater than the transaction fee</source>
         <translation>Сумма обмена должна быть больше, чем комиссия транзакции</translation>
@@ -1094,10 +1070,6 @@ please review your settings and try again</source>
     <message id="wallet-txs-status-own-sending">
         <source>sending to own address</source>
         <translation>отправка на собственный адрес</translation>
-    </message>
-    <message id="wallet-search-transactions-placeholder">
-        <source>Enter search text...</source>
-        <translation>Введите текст для поиска...</translation>
     </message>
     <message id="settings-swap-node">
         <source>Node</source>
@@ -2009,7 +1981,7 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="tx-address-max-privacy">
         <source>Maximum anonymity</source>
-        <translation>Максимальная анонимность</translation>
+        <translation type="unfinished">Максимальная анонимность</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress
@@ -2476,10 +2448,6 @@ Update your settings and try again.</source>
         <source>Hardwate wallet is not connected</source>
         <translation>Аппаратный кошелёк не подключен</translation>
     </message>
-    <message id="general-multiple-assets">
-        <source>Multiple assets</source>
-        <translation>Несколько активов</translation>
-    </message>
     <message id="general-locked">
         <source>Locked</source>
         <translation>Заблокировано</translation>
@@ -2752,21 +2720,9 @@ Update your settings and try again.</source>
         <source>Your UTXO list is empty</source>
         <translation>Ваш список UTXO пуст</translation>
     </message>
-    <message id="tx-empty">
-        <source>Your transaction list is empty</source>
-        <translation>Ваш список транзакций пуст</translation>
-    </message>
     <message id="tx-in-progress-empty">
         <source>There are no in progress transactions yet.</source>
         <translation>Пока нет обрабатываемых транзакций.</translation>
-    </message>
-    <message id="tx-sent-empty">
-        <source>There are no sent transactions yet.</source>
-        <translation>Пока нет отправленных транзакций.</translation>
-    </message>
-    <message id="tx-received-empty">
-        <source>There are no received transactions yet.</source>
-        <translation>Нет принятых транзакций.</translation>
     </message>
     <message id="receive-addr">
         <source>Address</source>
@@ -2839,14 +2795,6 @@ Update your settings and try again.</source>
     <message id="address-info-cid">
         <source>Application shader ID</source>
         <translation>ID шейдера приложения</translation>
-    </message>
-    <message id="general-value">
-        <source>Value</source>
-        <translation>Значение</translation>
-    </message>
-    <message id="wallet-txs-source">
-        <source>Source</source>
-        <translation>Источник</translation>
     </message>
     <message id="source-wallet">
         <source>Wallet</source>
@@ -3367,10 +3315,6 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>The wallet is already started. Close all running wallets and start again.</source>
         <translation>Кошелек уже запущен. Закройте все работающие кошельки и запустите снова.</translation>
     </message>
-    <message id="wallet-txs-action">
-        <source>Action</source>
-        <translation>Действие</translation>
-    </message>
     <message id="settings-ipfsnode-title">
         <source>IPFS Integrated Node</source>
         <translation type="unfinished"></translation>
@@ -3406,6 +3350,90 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>Run node on</source>
         <oldsource>Start IPFS node on:</oldsource>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-empty">
+        <source>Your transaction list is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-sent-empty">
+        <source>There are no sent transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-received-empty">
+        <source>There are no received transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-transactions-all-tab">
+        <source>All</source>
+        <translation type="unfinished">Все</translation>
+    </message>
+    <message id="wallet-transactions-in-progress-tab">
+        <source>In progress</source>
+        <translation type="unfinished">В процессе</translation>
+    </message>
+    <message id="wallet-transactions-sent-tab">
+        <source>Sent</source>
+        <translation type="unfinished">Отправлено</translation>
+    </message>
+    <message id="wallet-transactions-received-tab">
+        <source>Received</source>
+        <translation type="unfinished">Получено</translation>
+    </message>
+    <message id="tx-table-filter-in-progress">
+        <source>In progress</source>
+        <translation type="unfinished">В процессе</translation>
+    </message>
+    <message id="tx-table-filter-completed">
+        <source>Completed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-table-filter-canceled">
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-table-filter-failed">
+        <source>Failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-search-transactions-placeholder">
+        <source>Enter search text...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-verify-payment">
+        <source>Verify payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-multiple-assets">
+        <source>Multiple assets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-value">
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-source">
+        <source>Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-action">
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-date-time">
+        <source>Created on</source>
+        <translation type="unfinished">Дата | Время</translation>
+    </message>
+    <message id="tx-table-filter-label">
+        <source>Show</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="multiselect-none">
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="multiselect-all">
+        <source>All</source>
+        <translation type="unfinished">Все</translation>
     </message>
 </context>
 </TS>

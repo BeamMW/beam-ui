@@ -154,14 +154,6 @@
         <source>Transactions</source>
         <translation>ธุรกรรม</translation>
     </message>
-    <message id="wallet-verify-payment">
-        <source>Verify payment</source>
-        <translation>ตรวจสอบการชำระเงิน</translation>
-    </message>
-    <message id="wallet-txs-date-time">
-        <source>Created on</source>
-        <translation>สร้างเมื่อ</translation>
-    </message>
     <message id="wallet-txs-delete-message">
         <source>The transaction will be deleted. This operation can not be undone</source>
         <translation>ธุรกรรม​จะ​ถูก​ลบออก คำสั่ง​นี้​ไม่​สามารถ​กู้​คืน​ได้</translation>
@@ -1057,22 +1049,6 @@ please review your settings and try again</source>
         <source>There is no Trezor device connected. Please, connect and try again.</source>
         <translation>ไม่พบ Trezor ที่กำลังเชื่อมต่อ กรุณาเชื่อมต่อและลองอีกครั้ง</translation>
     </message>
-    <message id="wallet-transactions-all-tab">
-        <source>All</source>
-        <translation>ทั้งหมด</translation>
-    </message>
-    <message id="wallet-transactions-in-progress-tab">
-        <source>In progress</source>
-        <translation>อยู่ระหว่างดำเนินการ</translation>
-    </message>
-    <message id="wallet-transactions-sent-tab">
-        <source>Sent</source>
-        <translation>ส่งแล้ว</translation>
-    </message>
-    <message id="wallet-transactions-received-tab">
-        <source>Received</source>
-        <translation>ได้​รับ​แล้ว</translation>
-    </message>
     <message id="send-less-than-fee">
         <source>The swap amount must be greater than the transaction fee</source>
         <translation>จำนวนการแลกเปลี่ยนจะต้องมากกว่าค่าธรรมเนียมการไถ่ถอน</translation>
@@ -1088,10 +1064,6 @@ please review your settings and try again</source>
     <message id="wallet-txs-status-own-sending">
         <source>sending to own address</source>
         <translation>กำลังส่งให้ที่อยู่ของตัวเอง</translation>
-    </message>
-    <message id="wallet-search-transactions-placeholder">
-        <source>Enter search text...</source>
-        <translation type="unfinished">Enter search text...</translation>
     </message>
     <message id="settings-swap-node">
         <source>Node</source>
@@ -2463,10 +2435,6 @@ Update your settings and try again.</source>
         <source>Hardwate wallet is not connected</source>
         <translation type="unfinished">Hardwate wallet is not connected</translation>
     </message>
-    <message id="general-multiple-assets">
-        <source>Multiple assets</source>
-        <translation type="unfinished">Multiple assets</translation>
-    </message>
     <message id="general-locked">
         <source>Locked</source>
         <translation>ล็อก</translation>
@@ -2737,21 +2705,9 @@ Update your settings and try again.</source>
         <source>Your UTXO list is empty</source>
         <translation>ไม่พบรายการ UTXO</translation>
     </message>
-    <message id="tx-empty">
-        <source>Your transaction list is empty</source>
-        <translation>ไม่พบรายการธุรกรรม</translation>
-    </message>
     <message id="tx-in-progress-empty">
         <source>There are no in progress transactions yet.</source>
         <translation type="unfinished">There are no in progress transactions yet.</translation>
-    </message>
-    <message id="tx-sent-empty">
-        <source>There are no sent transactions yet.</source>
-        <translation type="unfinished">There are no sent transactions yet.</translation>
-    </message>
-    <message id="tx-received-empty">
-        <source>There are no received transactions yet.</source>
-        <translation type="unfinished">There are no received transactions yet.</translation>
     </message>
     <message id="receive-addr">
         <source>Address</source>
@@ -2824,14 +2780,6 @@ Update your settings and try again.</source>
     <message id="address-info-cid">
         <source>Application shader ID</source>
         <translation type="unfinished">Application shader ID</translation>
-    </message>
-    <message id="general-value">
-        <source>Value</source>
-        <translation type="unfinished">Value</translation>
-    </message>
-    <message id="wallet-txs-source">
-        <source>Source</source>
-        <translation type="unfinished">Source</translation>
     </message>
     <message id="source-wallet">
         <source>Wallet</source>
@@ -3346,10 +3294,6 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>The wallet is already started. Close all running wallets and start again.</source>
         <translation type="unfinished">The wallet is already started. Close all running wallets and start again.</translation>
     </message>
-    <message id="wallet-txs-action">
-        <source>Action</source>
-        <translation type="unfinished">Action</translation>
-    </message>
     <message id="settings-ipfsnode-title">
         <source>IPFS Integrated Node</source>
         <translation type="unfinished"></translation>
@@ -3385,6 +3329,90 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>Run node on</source>
         <oldsource>Start IPFS node on:</oldsource>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-empty">
+        <source>Your transaction list is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-sent-empty">
+        <source>There are no sent transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-received-empty">
+        <source>There are no received transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-transactions-all-tab">
+        <source>All</source>
+        <translation type="unfinished">ทั้งหมด</translation>
+    </message>
+    <message id="wallet-transactions-in-progress-tab">
+        <source>In progress</source>
+        <translation type="unfinished">อยู่ระหว่างดำเนินการ</translation>
+    </message>
+    <message id="wallet-transactions-sent-tab">
+        <source>Sent</source>
+        <translation type="unfinished">ส่งแล้ว</translation>
+    </message>
+    <message id="wallet-transactions-received-tab">
+        <source>Received</source>
+        <translation type="unfinished">ได้​รับ​แล้ว</translation>
+    </message>
+    <message id="tx-table-filter-in-progress">
+        <source>In progress</source>
+        <translation type="unfinished">อยู่ระหว่างดำเนินการ</translation>
+    </message>
+    <message id="tx-table-filter-completed">
+        <source>Completed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-table-filter-canceled">
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-table-filter-failed">
+        <source>Failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-search-transactions-placeholder">
+        <source>Enter search text...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-verify-payment">
+        <source>Verify payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-multiple-assets">
+        <source>Multiple assets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-value">
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-source">
+        <source>Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-action">
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-date-time">
+        <source>Created on</source>
+        <translation type="unfinished">สร้างเมื่อ</translation>
+    </message>
+    <message id="tx-table-filter-label">
+        <source>Show</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="multiselect-none">
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="multiselect-all">
+        <source>All</source>
+        <translation type="unfinished">ทั้งหมด</translation>
     </message>
 </context>
 </TS>

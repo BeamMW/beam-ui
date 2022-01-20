@@ -42,6 +42,7 @@
         <file>controls/CustomSwitch.qml</file>
         <file>controls/CustomCheckBox.qml</file>
         <file>controls/CustomComboBox.qml</file>
+        <file>controls/MultiSelectComboBox.qml</file>
         <file>controls/BeamAmount.qml</file>
         <file>controls/SecurityNote.qml</file>
         <file>controls/CustomProgressBar.qml</file>

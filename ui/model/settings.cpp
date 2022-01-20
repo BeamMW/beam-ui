@@ -87,6 +87,11 @@ namespace
         { "ko_KR", "한국어"}
     };
 
+    const char* kTxFilterInProgress = "tx_filter/inProgress";
+    const char* kTxFilterCompleted = "tx_filter/completed";
+    const char* kTxFilterCanceled= "tx_filter/canceled";
+    const char* kTxFilterFailed = "tx_filter/failed";
+
     const std::vector<std::string> kOutDatedPeers = beam::getOutdatedDefaultPeers();
     bool isOutDatedPeer(const std::string& peer)
     {
@@ -983,4 +988,52 @@ void WalletSettings::setLastAssetSelection(boost::optional<beam::Asset::ID> sele
     {
         m_data.remove(kLastAssetSelection);
     }
+}
+
+bool WalletSettings::getShowInProgress() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kTxFilterInProgress, true).toBool();
+}
+
+void WalletSettings::setShowInProgress(bool value)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kTxFilterInProgress, value);
+}
+
+bool WalletSettings::getShowCompleted() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kTxFilterCompleted, true).toBool();
+}
+
+void WalletSettings::setShowCompleted(bool value)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kTxFilterCompleted, value);
+}
+
+bool WalletSettings::getShowCanceled() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kTxFilterCanceled, true).toBool();
+}
+
+void WalletSettings::setShowCanceled(bool value)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kTxFilterCanceled, value);
+}
+
+bool WalletSettings::getShowFailed() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kTxFilterFailed, true).toBool();
+}
+
+void WalletSettings::setShowFailed(bool value)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kTxFilterFailed, value);
 }

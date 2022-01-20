@@ -142,6 +142,16 @@ public:
     [[nodiscard]] boost::optional<beam::Asset::ID> getLastAssetSelection() const;
     void setLastAssetSelection(boost::optional<beam::Asset::ID> selection);
 
+    // tx table filters
+    bool getShowInProgress() const;
+    void setShowInProgress(bool value);
+    bool getShowCompleted() const;
+    void setShowCompleted(bool value);
+    bool getShowCanceled() const;
+    void setShowCanceled(bool value);
+    bool getShowFailed() const;
+    void setShowFailed(bool value);
+
 public:
     static const char* WalletCfg;
     static const char* LogsFolder;

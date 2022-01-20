@@ -9,6 +9,7 @@ FocusScope {
 
     property alias placeholderText:  input.placeholderText
     property alias text:             input.text
+    property alias searchInput:      input
     implicitHeight: 32
     implicitWidth: searcIconBtn.implicitWidth + (input.visible ? input.implicitWidth : 0)
 
