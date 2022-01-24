@@ -177,16 +177,15 @@ Control {
             RowLayout {
                 Layout.leftMargin: searchBox.searchInput.visible ? 0 : 280
                 Layout.rightMargin: searchBox.searchInput.visible ? -20 : -300
-                spacing: 20
                 SFLabel {
                     //% "Show"
                     text: qsTrId("tx-table-filter-label")
                     color: Style.content_secondary
+                    Layout.rightMargin: 20
                 }
                 MultiSelectComboBox {
-                    Layout.fillWidth:    true
+                    Layout.preferredWidth: 150
                     fontPixelSize:       14
-                    // width: 150
                     model: [
                         //% "In progress"
                         { text: qsTrId("tx-table-filter-in-progress"), checked: tableViewModel.showInProgress, id: "inProgress" },
