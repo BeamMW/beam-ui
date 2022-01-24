@@ -231,7 +231,7 @@ void SettingsViewModel::setIPFSNodeStart(const QString& val)
 bool SettingsViewModel::getIPFSChanged() const
 {
     auto icfg = m_settings.getIPFSConfig();
-    return m_IPFSSwarmPort != icfg.node_swarm_port ||
+    return m_IPFSSwarmPort != icfg.swarm_port ||
            m_IPFSNodeStart != m_settings.getIPFSNodeStart();
 }
 
@@ -503,7 +503,7 @@ void SettingsViewModel::undoChanges()
     #ifdef BEAM_IPFS_SUPPORT
     m_IPFSNodeStart = m_settings.getIPFSNodeStart();
     auto icfg = m_settings.getIPFSConfig();
-    setIPFSSwarmPort(icfg.node_swarm_port);
+    setIPFSSwarmPort(icfg.swarm_port);
     #endif
 }
 

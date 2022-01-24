@@ -836,14 +836,18 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     cfg.low_water = m_data.value(QString(kIPFSPrefix) + cli::IPFS_LOW_WATER, cfg.low_water).toUInt();
     cfg.high_water = m_data.value(QString(kIPFSPrefix) + cli::IPFS_HIGH_WATER, cfg.high_water).toUInt();
     cfg.grace_period = m_data.value(QString(kIPFSPrefix) + cli::IPFS_GRACE, cfg.grace_period).toUInt();
-    cfg.node_swarm_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT, cfg.node_swarm_port).toUInt();
+    cfg.swarm_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT, cfg.swarm_port).toUInt();
     cfg.auto_relay = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTO_RELAY, cfg.auto_relay).toUInt();
     cfg.relay_hop = m_data.value(QString(kIPFSPrefix) + cli::IPFS_RELAY_HOP, cfg.relay_hop).toUInt();
     cfg.storage_max = m_data.value(QString(kIPFSPrefix) + cli::IPFS_STORAGE_MAX, QString::fromStdString(cfg.storage_max)).toString().toStdString();
-    cfg.node_api_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_NODE_API_PORT, cfg.node_api_port).toUInt();
+    cfg.api_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_API_PORT, cfg.api_port).toUInt();
+    cfg.gateway_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_GATEWAY_PORT, cfg.gateway_port).toUInt();
     cfg.autonat = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT, cfg.autonat).toBool();
     cfg.autonat_limit = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_LIMIT, cfg.autonat_limit).toUInt();
     cfg.autonat_peer_limit = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_PEER_LIMIT, cfg.autonat_peer_limit).toUInt();
+    cfg.swarm_key = m_data.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_KEY, QString::fromStdString(cfg.swarm_key)).toString().toStdString();
+    cfg.routing_type = m_data.value(QString(kIPFSPrefix) + cli::IPFS_ROUTING_TYPE, QString::fromStdString(cfg.routing_type)).toString().toStdString();
+    cfg.run_gc = m_data.value(QString(kIPFSPrefix) + cli::IPFS_RUN_GC, cfg.run_gc).toBool();
 
     const QString keyBootstrap = QString(kIPFSPrefix) + cli::IPFS_BOOTSTRAP;
     if (m_data.contains(keyBootstrap))
