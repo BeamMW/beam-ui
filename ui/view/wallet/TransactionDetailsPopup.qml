@@ -70,7 +70,7 @@ CustomDialog {
     parent: Overlay.overlay
     padding: 0
 
-    closePolicy: Popup.NoAutoClose | Popup.CloseOnEscape
+    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
     header: ColumnLayout {
         SFText {
