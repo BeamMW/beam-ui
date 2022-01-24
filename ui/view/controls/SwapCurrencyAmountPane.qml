@@ -58,6 +58,8 @@ Rectangle {
             SvgImage {
                 anchors.verticalCenter: parent.verticalCenter
                 source: currencyIcon
+                width: 26
+                height: 26
                 visible: currencyIcon.length
             }
 
@@ -67,8 +69,10 @@ Rectangle {
                 
                 SvgImage {
                     anchors.verticalCenter: parent.verticalCenter
-                    x: parent.x + index * 15 - 20
+                    x: parent.x + index * 15 - 26
                     source: currencyIcons[index]
+                    width: 26
+                    height: 26
                 }
             }
         }

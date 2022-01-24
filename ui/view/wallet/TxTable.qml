@@ -508,7 +508,7 @@ Control {
 
                 //% "Coin"
                 title:     qsTrId("general-coin")
-                width:     100
+                width:     106
                 movable:   false
                 resizable: false
 

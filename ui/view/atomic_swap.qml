@@ -621,7 +621,7 @@ Please try again later or create an offer yourself."
                         TableViewColumn {
                             id: swapCoinsColumn
                             role: "swapCoin"
-                            width: 55
+                            width: 61
                             movable: false
                             resizable: false
                             elideMode: Text.ElideRight
@@ -635,19 +635,19 @@ Please try again later or create an offer yourself."
                                 anchors.fill: parent
                                 anchors.leftMargin: 20
                                 anchors.rightMargin: 20
-                                anchors.topMargin: 18
+                                anchors.topMargin: 12
 
                                 RowLayout {
                                     spacing: -4
                                     SvgImage {
                                         z: 1
-                                        sourceSize: Qt.size(20, 20)
+                                        sourceSize: Qt.size(26, 26)
                                         source: isSendBeam
                                             ? "qrc:/assets/icon-beam.svg"
                                             : getCoinIcon(swapCoin)
                                     }
                                     SvgImage {
-                                        sourceSize: Qt.size(20, 20)
+                                        sourceSize: Qt.size(26, 26)
                                         source: isSendBeam
                                             ? getCoinIcon(swapCoin)
                                             : "qrc:/assets/icon-beam.svg"
@@ -963,7 +963,7 @@ Please try again later or create an offer yourself."
                         TableViewColumn {
                             id: txSwapCoinsColumn
                             role: "swapCoin"
-                            width: 55
+                            width: 61
                             movable: false
                             resizable: false
                             elideMode: Text.ElideRight
@@ -977,17 +977,17 @@ Please try again later or create an offer yourself."
                                 anchors.fill: parent
                                 anchors.leftMargin: 20
                                 anchors.rightMargin: 20
-                                anchors.topMargin: 18
+                                anchors.topMargin: 12
 
                                 RowLayout {
                                     spacing: -4
                                     SvgImage {
                                         z: 1
-                                        sourceSize: Qt.size(20, 20)
+                                        sourceSize: Qt.size(26, 26)
                                         source: isSendBeam ? "qrc:/assets/icon-beam.svg" : getCoinIcon(swapCoin)
                                     }
                                     SvgImage {
-                                        sourceSize: Qt.size(20, 20)
+                                        sourceSize: Qt.size(26, 26)
                                         source: isSendBeam ? getCoinIcon(swapCoin) : "qrc:/assets/icon-beam.svg"
                                     }
                                 }
