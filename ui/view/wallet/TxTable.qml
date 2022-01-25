@@ -175,8 +175,8 @@ Control {
             }
 
             RowLayout {
-                Layout.leftMargin: searchBox.searchInput.visible ? 0 : 280
-                Layout.rightMargin: searchBox.searchInput.visible ? -20 : -300
+                Layout.leftMargin: searchBox.searchInput.visible ? 0 : 260
+                Layout.rightMargin: searchBox.searchInput.visible ? -20 : -280
                 SFLabel {
                     //% "Show"
                     text: qsTrId("tx-table-filter-label")
@@ -214,7 +214,7 @@ Control {
 
             SearchBox {
                id: searchBox
-               Layout.preferredWidth: 300
+               Layout.preferredWidth: 280
                Layout.alignment: Qt.AlignVCenter
                //% "Enter search text..."
                placeholderText: qsTrId("wallet-search-transactions-placeholder")

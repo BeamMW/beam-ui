@@ -40,7 +40,7 @@ Item  {
         id: led
 
         anchors.bottom: parent.bottom
-        width: text_label.width + 16*2
+        width: text_label.width + 12*2
         height: 2
         color: Style.active
         visible: false
