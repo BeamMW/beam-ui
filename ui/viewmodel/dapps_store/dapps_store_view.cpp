@@ -171,6 +171,12 @@ void DappsStoreViewModel::loadApps()
                 return;
             }
 
+            if (!err.empty())
+            {
+                LOG_WARNING() << "Failed to load dapps list" << ", " << err;
+                return;
+            }
+
             try
             {
                 auto json = nlohmann::json::parse(output);
@@ -256,6 +262,12 @@ QString DappsStoreViewModel::getPublisherKey()
                     return;
                 }
 
+                if (!err.empty())
+                {
+                    LOG_WARNING() << "Failed to get publisherKey" << ", " << err;
+                    return;
+                }
+
                 try
                 {
                     auto json = nlohmann::json::parse(output);
@@ -270,7 +282,7 @@ QString DappsStoreViewModel::getPublisherKey()
                 }
                 catch (std::runtime_error& err)
                 {
-                    LOG_WARNING() << "Failed to get publisherKey from contract" << ", " << err.what();
+                    LOG_WARNING() << "Failed to parse publisherKey from contract" << ", " << err.what();
                 }
             }
         );
