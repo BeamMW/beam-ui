@@ -35,26 +35,22 @@ std::vector<beam::Asset::ID> AssetsViewModel::getSelectedAssets()
     return _selectedAssets;
 }
 
-void AssetsViewModel::setSelectedAsset(std::vector<beam::Asset::ID> assetIds) // problem
+void AssetsViewModel::setSelectedAssets(int assetId)
 {
-    if (assetIds != _selectedAssets)
-    {
-        _selectedAssets = assetIds;
-        _settings.setLastAssetSelection(_selectedAssets);
-        emit selectedAssetChanged();
-    }
-}
+    if (assetId < 0)
+        return;
 
-//void AssetsViewModel::setSelectedAsset_(int assetId)
-//{
-//    if (assetId >= 0 && 
-//        std::find(_selectedAssets.cbegin(), _selectedAssets.cend(), static_cast<beam::Asset::ID>(assetId)) == _selectedAssets.end())
-//    {
-//        _selectedAssets.push_back(static_cast<beam::Asset::ID>(assetId));
-//        // _settings.setLastAssetSelection(_selectedAsset);
-//        emit selectedAssetChanged();
-//    }
-//}
+    auto it = std::find(_selectedAssets.cbegin(), _selectedAssets.cend(), static_cast<beam::Asset::ID>(assetId));
+    if(it == _selectedAssets.end())
+    {
+        _selectedAssets.push_back(static_cast<beam::Asset::ID>(assetId));
+    }
+    else
+    {
+        _selectedAssets.erase(it);
+    }
+    emit selectedAssetChanged();
+}
 
 bool AssetsViewModel::getShowFaucetPromo()
 {

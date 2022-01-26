@@ -23,7 +23,7 @@ class AssetsViewModel : public QObject {
     Q_PROPERTY(QAbstractItemModel* assets READ getAssets CONSTANT)
 
     Q_PROPERTY(std::vector<beam::Asset::ID> selectedAssets           
-                                            READ getSelectedAssets         WRITE setSelectedAsset        NOTIFY selectedAssetChanged)
+                                            READ getSelectedAssets         NOTIFY selectedAssetChanged)
     Q_PROPERTY(bool showFaucetPromo         READ getShowFaucetPromo        WRITE setShowFaucetPromo      NOTIFY showFaucetPromoChanged)
     Q_PROPERTY(bool showValidationPromo     READ getShowValidationPromo    WRITE setShowValidationPromo  NOTIFY showValidationPromoChanged)
     Q_PROPERTY(bool canHideValidationPromo  READ getCanHideValidationPromo NOTIFY canHideValidationPromoChanged )
@@ -35,7 +35,7 @@ public:
     QAbstractItemModel* getAssets();
 
     [[nodiscard]] std::vector<beam::Asset::ID> getSelectedAssets();
-    void setSelectedAsset(std::vector<beam::Asset::ID> assetIds);
+    Q_INVOKABLE void setSelectedAssets(int assetId);
 
     [[nodiscard]] bool getShowFaucetPromo();
     void setShowFaucetPromo(bool value);

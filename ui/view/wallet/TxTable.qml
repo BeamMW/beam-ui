@@ -368,7 +368,7 @@ Control {
                     source: SortFilterProxyModel {
                         id:           assetFilterProxy
                         filterRole:   "assetFilter"
-                        filterString: control.selectedAsset < 0 ? "" : ["\\b", control.selectedAsset, "\\b"].join("")
+                        filterString: control.selectedAssets.reduce(function(sum, current) { return sum + ["|", "\\b", current, "\\b"].join(""); }, "").slice(1)
                         filterSyntax: SortFilterProxyModel.RegExp
 
                         source: SortFilterProxyModel {

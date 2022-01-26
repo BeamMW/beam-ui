@@ -53,6 +53,7 @@ Control {
     property real   hSpacing:       10
     property real   vSpacing:       10
     property int    maxVisibleRows: 3
+    //property var  selectedIds:    []
     property alias  selectedIds:    viewModel.selectedAssets
     property int    assetsCount:    1
     property real   itemHeight:     75
@@ -128,13 +129,7 @@ Control {
                         layer.enabled:  model.verified
 
                         onClicked: function () {
-                            var id = control.selectedIds.indexOf(model.id)
-                            if(id == -1) {
-                                control.selectedIds.push(model.id)
-                            }
-                            else {
-                                control.selectedIds.splice(id, 1)
-                            }
+                            viewModel.setSelectedAssets(model.id)
                         }
                     }
 
