@@ -16,6 +16,7 @@ Control {
         id: tableViewModel
     }
 
+    property var       selectedAssets: []
     property int       selectedAsset: -1
     property int       emptyMessageMargin: 90
     property int       activeTxCnt: 0

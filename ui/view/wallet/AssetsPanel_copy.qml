@@ -23,25 +23,24 @@ Control {
     }
 
     function updateView () {
-        control.assetsCount = viewModel.assets.rowCount()
+           control.assetsCount = viewModel.assets.rowCount()
 
-        if (selectedIds.length != 0) {
-            var roleid = viewModel.assets.getRoleId("id")
-            for (var idx = 0; idx < control.assetsCount; ++idx) {
-                var modelIdx = viewModel.assets.index(idx, 0);
-                var data = viewModel.assets.data(modelIdx, 258)
+           if (selectedId >= 0) {
+               var roleid = viewModel.assets.getRoleId("id")
+               for (var idx = 0; idx < control.assetsCount; ++idx) {
+                   var modelIdx = viewModel.assets.index(idx, 0);
+                   var data = viewModel.assets.data(modelIdx, 258)
 
-               // if (selectedIds.length != 0 && selectedIds.indexOf(data) != -1) {
-               //     // currently selected asset is still present
-               //     return
-               // }
+                   if (selectedId >=0 && selectedId == data) {
+                       // currently selected asset is still present
+                       return
+                   }
+               }
+           }
 
-            }
-        }
-
-        // there is no previously selected asset
-        // reset selection to nothing
-       // selectedIds  = []
+           // there is no previously selected asset
+           // reset selection to nothing
+           selectedId  = -1
     }
 
     Component.onCompleted: function() {
@@ -53,7 +52,8 @@ Control {
     property real   hSpacing:       10
     property real   vSpacing:       10
     property int    maxVisibleRows: 3
-    property alias  selectedIds:    viewModel.selectedAssets
+    property var    selectedIds:    []
+    property alias  selectedId:     viewModel.selectedAsset
     property int    assetsCount:    1
     property real   itemHeight:     75
 
@@ -123,13 +123,14 @@ Control {
                         implicitHeight: control.itemHeight
                         implicitWidth:  control.itemWidth
                         assetInfo:      model
-                        selected:       control.selectedIds.indexOf(model.id) != -1
-                        opacity:        control.selectedIds.length != 0 ? (control.selectedIds.indexOf(model.id) != -1 ? 1 : 0.6) : 1
+                        selected:       control.selectedIds.indexOf(model.id) != -1 ? true : false
+                        opacity:        control.selectedIds.length <= 0 ? 1 : (control.selectedIds.indexOf(model.id) != -1 ? 1 : 0.6)
                         layer.enabled:  model.verified
 
                         onClicked: function () {
                             var id = control.selectedIds.indexOf(model.id)
                             if(id == -1) {
+                                control.selectedId = model.id
                                 control.selectedIds.push(model.id)
                             }
                             else {

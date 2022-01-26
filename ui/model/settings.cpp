@@ -911,28 +911,16 @@ void WalletSettings::setMinConfirmations(uint32_t value)
     }
 }
 
-boost::optional<beam::Asset::ID> WalletSettings::getLastAssetSelection() const
+std::vector<beam::Asset::ID> WalletSettings::getLastAssetSelection() const
 {
     Lock lock(m_mutex);
-    if (m_data.contains(kLastAssetSelection))
-    {
-        return m_data.value(kLastAssetSelection).toInt();
-    }
-    else
-    {
-        return boost::none;
-    }
+    
+    return m_data.value(kLastAssetSelection).value<std::vector<beam::Asset::ID>>();
 }
 
-void WalletSettings::setLastAssetSelection(boost::optional<beam::Asset::ID> selection)
+void WalletSettings::setLastAssetSelection(std::vector<beam::Asset::ID> selection)
 {
     Lock lock(m_mutex);
-    if (selection.is_initialized())
-    {
-        m_data.setValue(kLastAssetSelection, *selection);
-    }
-    else
-    {
-        m_data.remove(kLastAssetSelection);
-    }
+
+    m_data.setValue(kLastAssetSelection, QVariant::fromValue<std::vector<beam::Asset::ID>>(selection));
 }

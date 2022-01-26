@@ -22,7 +22,8 @@ class AssetsViewModel : public QObject {
     Q_OBJECT
     Q_PROPERTY(QAbstractItemModel* assets READ getAssets CONSTANT)
 
-    Q_PROPERTY(int  selectedAsset           READ getSelectedAsset          WRITE setSelectedAsset        NOTIFY selectedAssetChanged)
+    Q_PROPERTY(std::vector<beam::Asset::ID> selectedAssets           
+                                            READ getSelectedAssets         WRITE setSelectedAsset        NOTIFY selectedAssetChanged)
     Q_PROPERTY(bool showFaucetPromo         READ getShowFaucetPromo        WRITE setShowFaucetPromo      NOTIFY showFaucetPromoChanged)
     Q_PROPERTY(bool showValidationPromo     READ getShowValidationPromo    WRITE setShowValidationPromo  NOTIFY showValidationPromoChanged)
     Q_PROPERTY(bool canHideValidationPromo  READ getCanHideValidationPromo NOTIFY canHideValidationPromoChanged )
@@ -32,8 +33,9 @@ public:
     ~AssetsViewModel() override = default;
 
     QAbstractItemModel* getAssets();
-    [[nodiscard]] int getSelectedAsset() const;
-    void setSelectedAsset(int assetId);
+
+    [[nodiscard]] std::vector<beam::Asset::ID> getSelectedAssets();
+    void setSelectedAsset(std::vector<beam::Asset::ID> assetIds);
 
     [[nodiscard]] bool getShowFaucetPromo();
     void setShowFaucetPromo(bool value);
@@ -59,5 +61,5 @@ private:
     WalletModel::Ptr _wallet;
     AssetsList::Ptr  _assets;
     WalletSettings&  _settings;
-    boost::optional<beam::Asset::ID> _selectedAsset;
+    std::vector<beam::Asset::ID> _selectedAssets;
 };

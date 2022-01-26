@@ -21,7 +21,7 @@ AssetsViewModel::AssetsViewModel()
 {
     connect(_wallet.get(), &WalletModel::normalCoinsChanged,  this, &AssetsViewModel::onNormalCoinsChanged);
     connect(_wallet.get(), &WalletModel::shieldedCoinChanged, this, &AssetsViewModel::onShieldedCoinChanged);
-    _selectedAsset = _settings.getLastAssetSelection();
+    _selectedAssets = _settings.getLastAssetSelection();
     emit selectedAssetChanged();
 }
 
@@ -30,26 +30,31 @@ QAbstractItemModel* AssetsViewModel::getAssets()
     return _assets.get();
 }
 
-int AssetsViewModel::getSelectedAsset() const
+std::vector<beam::Asset::ID> AssetsViewModel::getSelectedAssets()
 {
-    return _selectedAsset.is_initialized() ? static_cast<int>(*_selectedAsset) : -1;
+    return _selectedAssets;
 }
 
-void AssetsViewModel::setSelectedAsset(int assetId)
+void AssetsViewModel::setSelectedAsset(std::vector<beam::Asset::ID> assetIds) // problem
 {
-    auto newSelection = decltype(_selectedAsset)(boost::none);
-    if (assetId >= 0)
+    if (assetIds != _selectedAssets)
     {
-        newSelection = static_cast<beam::Asset::ID>(assetId);
-    }
-
-    if (_selectedAsset != newSelection)
-    {
-        _selectedAsset = newSelection;
-        _settings.setLastAssetSelection(_selectedAsset);
+        _selectedAssets = assetIds;
+        _settings.setLastAssetSelection(_selectedAssets);
         emit selectedAssetChanged();
     }
 }
+
+//void AssetsViewModel::setSelectedAsset_(int assetId)
+//{
+//    if (assetId >= 0 && 
+//        std::find(_selectedAssets.cbegin(), _selectedAssets.cend(), static_cast<beam::Asset::ID>(assetId)) == _selectedAssets.end())
+//    {
+//        _selectedAssets.push_back(static_cast<beam::Asset::ID>(assetId));
+//        // _settings.setLastAssetSelection(_selectedAsset);
+//        emit selectedAssetChanged();
+//    }
+//}
 
 bool AssetsViewModel::getShowFaucetPromo()
 {

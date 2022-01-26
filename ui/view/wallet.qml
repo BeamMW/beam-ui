@@ -224,8 +224,8 @@ Item {
 
                 Binding {
                     target:    txTable
-                    property:  "selectedAsset"
-                    value:     assets.selectedId
+                    property:  "selectedAssets"
+                    value:     assets.selectedIds
                 }
             }
 
