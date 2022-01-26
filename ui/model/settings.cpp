@@ -14,6 +14,7 @@
 #include "settings.h"
 #include <algorithm>
 #include <map>
+#include <QDataStream>
 #include <QFileDialog>
 #include <QtQuick>
 #include "model/app_model.h"
@@ -911,16 +912,25 @@ void WalletSettings::setMinConfirmations(uint32_t value)
     }
 }
 
-std::vector<beam::Asset::ID> WalletSettings::getLastAssetSelection() const
+QVector<beam::Asset::ID> WalletSettings::getLastAssetSelection() const
 {
     Lock lock(m_mutex);
-    //десериализовать
-    return m_data.value(kLastAssetSelection).value<std::vector<beam::Asset::ID>>();
+
+    auto ser = m_data.value(kLastAssetSelection).value<QByteArray>();
+    QDataStream in(&ser, QIODevice::ReadOnly);
+    QVector<beam::Asset::ID> res;
+    in >> res;
+
+    return res;
 }
 
-void WalletSettings::setLastAssetSelection(std::vector<beam::Asset::ID> selection)
+void WalletSettings::setLastAssetSelection(QVector<beam::Asset::ID> selection)
 {
     Lock lock(m_mutex);
-    // сериализовать вектор в строку и сохранить ее
-    m_data.setValue(kLastAssetSelection, QVariant::fromValue<std::vector<beam::Asset::ID>>(selection));
+
+    QByteArray ser;
+    QDataStream out(&ser, QIODevice::WriteOnly);
+    out << selection;
+
+    m_data.setValue(kLastAssetSelection, QVariant::fromValue<QByteArray>(ser));
 }

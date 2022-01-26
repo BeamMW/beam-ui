@@ -30,15 +30,15 @@ QAbstractItemModel* AssetsViewModel::getAssets()
     return _assets.get();
 }
 
-std::vector<beam::Asset::ID> AssetsViewModel::getSelectedAssets()
+QVector<beam::Asset::ID> AssetsViewModel::getSelectedAssets()
 {
     return _selectedAssets;
 }
 
-void AssetsViewModel::setSelectedAssets(std::vector<beam::Asset::ID> assetIds)
+void AssetsViewModel::setSelectedAssets(QVector<beam::Asset::ID> assetIds)
 {
     _selectedAssets = assetIds;
- //   _settings.setLastAssetSelection(_selectedAssets);
+    _settings.setLastAssetSelection(_selectedAssets);
     emit selectedAssetChanged();
 }
 
@@ -47,16 +47,16 @@ void AssetsViewModel::setSelectedAsset(int assetId)
     if (assetId < 0)
         return;
 
-    auto it = std::find(_selectedAssets.cbegin(), _selectedAssets.cend(), static_cast<beam::Asset::ID>(assetId));
-    if(it == _selectedAssets.end())
+    auto id = _selectedAssets.indexOf(static_cast<beam::Asset::ID>(assetId));
+    if(id == -1)
     {
         _selectedAssets.push_back(static_cast<beam::Asset::ID>(assetId));
     }
     else
     {
-        _selectedAssets.erase(it);
+        _selectedAssets.remove(id);
     }
-    //_settings.setLastAssetSelection(_selectedAssets);
+    _settings.setLastAssetSelection(_selectedAssets);
     emit selectedAssetChanged();
 }
 

@@ -22,7 +22,7 @@ class AssetsViewModel : public QObject {
     Q_OBJECT
     Q_PROPERTY(QAbstractItemModel* assets READ getAssets CONSTANT)
 
-    Q_PROPERTY(std::vector<beam::Asset::ID> selectedAssets           
+    Q_PROPERTY(QVector<beam::Asset::ID> selectedAssets           
                                             READ getSelectedAssets         NOTIFY selectedAssetChanged)
     Q_PROPERTY(bool showFaucetPromo         READ getShowFaucetPromo        WRITE setShowFaucetPromo      NOTIFY showFaucetPromoChanged)
     Q_PROPERTY(bool showValidationPromo     READ getShowValidationPromo    WRITE setShowValidationPromo  NOTIFY showValidationPromoChanged)
@@ -34,8 +34,8 @@ public:
 
     QAbstractItemModel* getAssets();
 
-    [[nodiscard]] std::vector<beam::Asset::ID> getSelectedAssets();
-    Q_INVOKABLE void setSelectedAssets(std::vector<beam::Asset::ID> assetIds);
+    [[nodiscard]] QVector<beam::Asset::ID> getSelectedAssets();
+    Q_INVOKABLE void setSelectedAssets(QVector<beam::Asset::ID> assetIds);
     Q_INVOKABLE void setSelectedAsset(int assetId);
 
     [[nodiscard]] bool getShowFaucetPromo();
@@ -62,5 +62,5 @@ private:
     WalletModel::Ptr _wallet;
     AssetsList::Ptr  _assets;
     WalletSettings&  _settings;
-    std::vector<beam::Asset::ID> _selectedAssets;
+    QVector<beam::Asset::ID> _selectedAssets;
 };

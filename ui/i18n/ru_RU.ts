@@ -150,10 +150,6 @@
         <source>Receive</source>
         <translation>Получить</translation>
     </message>
-    <message id="wallet-assets-title">
-        <source>Assets</source>
-        <translation>Активы</translation>
-    </message>
     <message id="wallet-transactions-title">
         <source>Transactions</source>
         <translation>Транзакции</translation>
@@ -3180,6 +3176,14 @@ cannot be canceled.</source>
         <source>Select application to install</source>
         <translation>Выберите приложение для установки</translation>
     </message>
+    <message id="faucet-promo">
+        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
+        <translation>Посмотрите кошелек в действии. Получите небольшое количество Beam от Faucet DApp.</translation>
+    </message>
+    <message id="faucet-promo-get-coins">
+        <source>get coins</source>
+        <translation>получить монеты</translation>
+    </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
         <translation>Контрольная фраза</translation>
@@ -3195,6 +3199,14 @@ cannot be canceled.</source>
     <message id="general-complete-verification-button">
         <source>Complete verification</source>
         <translation>Завершить верификацию</translation>
+    </message>
+    <message id="seed-validation-promo">
+        <source>Write down and validate your seed phrase so you can always recover your funds.</source>
+        <translation>Запишите и подтвердите свою ключевую фразу, чтобы вы всегда могли восстановить свои средства.</translation>
+    </message>
+    <message id="seed-validation-link">
+        <source>Secure your phrase</source>
+        <translation>Защитите вашу фразу</translation>
     </message>
     <message id="send-offline-tip" numerus="yes">
         <source>Offline address: %n transaction(s) left.</source>
@@ -3413,6 +3425,14 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>Find the wallet database file manually</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-remove-filter-button">
+        <source>Remove filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-assets-title">
+        <source>Assets</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="wallet-selected-assets-checkbox">
         <source>Selected</source>
         <translation type="unfinished"></translation>
@@ -3420,26 +3440,6 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="wallet-all-assets-checkbox">
         <source>All</source>
         <translation type="unfinished">Все</translation>
-    </message>
-    <message id="wallet-remove-filter-button">
-        <source>Remove filter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="seed-validation-promo">
-        <source>Write down and validate your seed phrase so you can always recover your funds.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="seed-validation-link">
-        <source>Secure your phrase</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
