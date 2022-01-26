@@ -65,6 +65,18 @@ ColumnLayout {
                 showPublisherKeyDialog.open()
             }
         }
+
+        CustomButton {
+            //% "register as publisher"
+            text:                qsTrId("dapps-store-register-publisher")
+            palette.buttonText:  Style.content_main
+            palette.button:      Style.background_button
+            icon.source:         "qrc:/assets/icon-add.svg"
+            onClicked: {
+                // TODO: provide form to fill data
+                viewModel.registerPublisher()
+            }
+        }
     }
 
 

@@ -27,8 +27,12 @@
 
 namespace
 {
-    const char* kDappCID = "95df85ae1f0e769c9903387180cfcb49fb222819b33b34941c07ff913fa70105";
     const char* kDappStoreShaderPath = "d:/work/dapps-store/beam-dapps-store/shaders/dapps_store_app.wasm";
+
+    auto getDappStoreCID()
+    {
+        return "b6c9d0114b17155c442fd8d8e0ca4482f1f804b832782485d4ab321937b32faa";
+    }
 }
 
 DappsStoreViewModel::DappsStoreViewModel()
@@ -155,7 +159,7 @@ void DappsStoreViewModel::loadApps()
     // install app from IPFS
 
     std::string args = "role=manager,action=view_dapps,cid=";
-    args += kDappCID;
+    args += getDappStoreCID();
 
     QPointer<DappsStoreViewModel> guard(this);
 
@@ -171,7 +175,18 @@ void DappsStoreViewModel::loadApps()
             {
                 auto json = nlohmann::json::parse(output);
 
-                if (json.empty() || !json.is_object())
+                auto parseStringField = [](nlohmann::json& json, const char* fieldName) {
+                    const auto& field = json[fieldName];
+                    if (!field.is_string())
+                    {
+                        std::stringstream ss;
+                        ss << "Invalid " << fieldName << " of the dapp";
+                        throw std::runtime_error(ss.str());
+                    }
+                    return QString::fromStdString(field.get<std::string>());
+                };
+
+                if (json.empty() || !json.is_object() || json["dapps"].empty() || !json["dapps"].is_array())
                 {
                     throw std::runtime_error("Invalid response of the view_dapps method");
                 }
@@ -180,33 +195,28 @@ void DappsStoreViewModel::loadApps()
 
                 QList<QMap<QString, QVariant>> apps;
 
-                for (auto& item : json.items())
+                for (auto& item : json["dapps"].items())
                 {
                     // TODO: add publisherKey to error messages
                     if (!item.value().is_object())
                     {
                         throw std::runtime_error("Invalid body of the dapp " + item.key());
                     }
-                    const auto& name = item.value()["label"];
-                    if (!name.is_string())
-                    {
-                        throw std::runtime_error("Invalid name of the dapp " + item.key());
-                    }
-                    const auto& ipfsCID = item.value()["ipfs_id"];
-                    if (!ipfsCID.is_string())
-                    {
-                        throw std::runtime_error("Invalid ipfsCID of the dapp " + item.key());
-                    }
+                    auto guid = parseStringField(item.value(), "id");
+                    auto publisher = parseStringField(item.value(), "publisher");
+                    // auto ipfsCID = parseStringField(item.value(), "ipfs_id");
+
+                    LOG_DEBUG() << "Parsing DApp from contract, guid - " << guid.toStdString() << ", publisher - " << publisher.toStdString();
 
                     QMap<QString, QVariant> app;
-                    // TODO: change description
-                    app.insert("description", "stored on IPFS");
-                    app.insert("name", QString::fromStdString(name.get<std::string>()));
-                    app.insert("url", QString::fromStdString(ipfsCID.get<std::string>()));
-                    // TODO: read api_version from contract
-                    app.insert("api_version", AppSettings().getDevAppApiVer());
-                    app.insert("min_api_version", AppSettings().getDevAppMinApiVer());
-                    //app.insert("appid", appid);
+                    app.insert("description", parseStringField(item.value(), "description"));
+                    app.insert("name", parseStringField(item.value(), "name"));
+                    // TODO: check if empty url is allowed for not installed app
+                    app.insert("url", "");
+                    app.insert("api_version", parseStringField(item.value(), "api_ver"));
+                    app.insert("min_api_version", parseStringField(item.value(), "min_api_ver"));
+                    app.insert("guid", guid);
+                    app.insert("publisher", publisher);
 
                     // TODO: check
                     app.insert("supported", true);
@@ -235,7 +245,7 @@ QString DappsStoreViewModel::getPublisherKey()
     if (_publisherKey.isEmpty())
     {
         std::string args = "role=manager,action=get_pk,cid=";
-        args += kDappCID;
+        args += getDappStoreCID();
         QPointer<DappsStoreViewModel> guard(this);
 
         AppModel::getInstance().getWalletModel()->getAsync()->callShader(kDappStoreShaderPath, args,
@@ -393,7 +403,7 @@ void DappsStoreViewModel::uploadApp()
             throw std::runtime_error("Failed to open the DApp file");
         }
 
-        QString appName;
+        QMap<QString, QVariant> app;
         for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
         {
             const auto zipFname = zip.getCurrentFileName();
@@ -406,9 +416,13 @@ void DappsStoreViewModel::uploadApp()
                 }
 
                 QTextStream in(&mfile);
-                const auto app = parseAppManifest(in, "");
-                appName = app["name"].value<QString>();
+                app = parseAppManifest(in, "");
             }
+        }
+
+        if (app["guid"].value<QString>().isEmpty())
+        {
+            throw std::runtime_error("Invalid DApp file");
         }
 
         // add to IPFS
@@ -425,12 +439,12 @@ void DappsStoreViewModel::uploadApp()
         QPointer<DappsStoreViewModel> guard(this);
 
         ipfs->AnyThread_add(beam::ByteBuffer(buffer.cbegin(), buffer.cend()),
-            [this, guard, appName] (std::string&& ipfsCID) {
+            [this, guard, app=std::move(app)] (std::string&& ipfsCID) mutable {
 
                 LOG_INFO() << "IPFSCID: " << ipfsCID;
 
                 // save result to contract
-                addAppToStore(appName, ipfsCID);
+                addAppToStore(std::move(app), ipfsCID);
             },
             [this, guard] (std::string&& err) {
                 LOG_ERROR() << "Failed to add to ipfs: " << err;
@@ -443,11 +457,53 @@ void DappsStoreViewModel::uploadApp()
     }
 }
 
-void DappsStoreViewModel::addAppToStore(const QString& appName, const std::string& ipfsCID)
+void DappsStoreViewModel::addAppToStore(QMap<QString, QVariant>&& app, const std::string& ipfsCID)
 {
-    std::string args = "role=manager,action=add_dapp,cid=";
-    args += kDappCID;
-    args += ",ipfs_id=" + ipfsCID + ",label=" + appName.toStdString();
+    QString guid = app["guid"].value<QString>();
+    QString appName = app["name"].value<QString>();
+    QString description = app["description"].value<QString>();
+
+    QString args;
+    QTextStream textStream(&args);
+
+    textStream << "role=manager,action=add_dapp,cid=" << getDappStoreCID() << ",ipfs_id=" << QString::fromStdString(ipfsCID);
+    textStream << ",name=" << appName << ",id=" << guid << ",description=" << description;
+    textStream << ",api_ver=" << app["api_version"].value<QString>() << ",min_api_ver=" << app["min_api_version"].value<QString>();
+
+    QPointer<DappsStoreViewModel> guard(this);
+
+    AppModel::getInstance().getWalletModel()->getAsync()->callShader(kDappStoreShaderPath, args.toStdString(),
+        [this, guard] (const std::string& err, const std::string& output, const beam::wallet::TxID& id)
+        {
+            if (!guard)
+            {
+                return;
+            }
+
+            try
+            {
+                if (!err.empty())
+                {
+                    LOG_WARNING() << "Failed to publish app" << ", " << err;
+                }
+                // TODO: check TX status
+
+                LOG_INFO() << "App added!";
+            }
+            catch (std::runtime_error& err)
+            {
+                LOG_WARNING() << "Failed to publish app" << ", " << err.what();
+            }
+        }
+    );
+}
+
+void DappsStoreViewModel::registerPublisher()
+{
+    std::string args = "role=manager,action=add_publisher,cid=";
+    args += getDappStoreCID();
+    // TODO:
+    args += ",name=test publisher";
 
     QPointer<DappsStoreViewModel> guard(this);
 
@@ -458,16 +514,19 @@ void DappsStoreViewModel::addAppToStore(const QString& appName, const std::strin
             {
                 return;
             }
-
             try
             {
-                // TODO: check TX status
+                if (!err.empty())
+                {
+                    LOG_WARNING() << "Failed to add publisher" << ", " << err;
+                }
 
-                LOG_INFO() << "App added!";
+                // TODO: check TX status
+                LOG_INFO() << "publisher registered!";
             }
             catch (std::runtime_error& err)
             {
-                LOG_WARNING() << "Failed to get publisherKey from contract" << ", " << err.what();
+                LOG_WARNING() << "Failed to add publishert" << ", " << err.what();
             }
         }
     );

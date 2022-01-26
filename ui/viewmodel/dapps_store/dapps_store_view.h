@@ -33,6 +33,7 @@ public:
     Q_INVOKABLE [[nodiscard]] QString chooseFile();
     Q_INVOKABLE [[nodiscard]] QString installFromFile(const QString& fname);
     Q_INVOKABLE void uploadApp();
+    Q_INVOKABLE void registerPublisher();
 
 signals:
     void appsChanged();
@@ -42,7 +43,7 @@ private:
     [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
     [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
     QMap<QString, QVariant> parseAppManifest(QTextStream& io, const QString& appFolder);
-    void addAppToStore(const QString& appName, const std::string& ipfsCID);
+    void addAppToStore(QMap<QString, QVariant>&& app, const std::string& ipfsCID);
 
 
     QString _serverAddr;
