@@ -35,7 +35,8 @@ public:
     QAbstractItemModel* getAssets();
 
     [[nodiscard]] std::vector<beam::Asset::ID> getSelectedAssets();
-    Q_INVOKABLE void setSelectedAssets(int assetId);
+    Q_INVOKABLE void setSelectedAssets(std::vector<beam::Asset::ID> assetIds);
+    Q_INVOKABLE void setSelectedAsset(int assetId);
 
     [[nodiscard]] bool getShowFaucetPromo();
     void setShowFaucetPromo(bool value);

@@ -35,7 +35,14 @@ std::vector<beam::Asset::ID> AssetsViewModel::getSelectedAssets()
     return _selectedAssets;
 }
 
-void AssetsViewModel::setSelectedAssets(int assetId)
+void AssetsViewModel::setSelectedAssets(std::vector<beam::Asset::ID> assetIds)
+{
+    _selectedAssets = assetIds;
+ //   _settings.setLastAssetSelection(_selectedAssets);
+    emit selectedAssetChanged();
+}
+
+void AssetsViewModel::setSelectedAsset(int assetId)
 {
     if (assetId < 0)
         return;
@@ -49,6 +56,7 @@ void AssetsViewModel::setSelectedAssets(int assetId)
     {
         _selectedAssets.erase(it);
     }
+    //_settings.setLastAssetSelection(_selectedAssets);
     emit selectedAssetChanged();
 }
 

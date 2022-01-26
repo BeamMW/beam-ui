@@ -914,13 +914,13 @@ void WalletSettings::setMinConfirmations(uint32_t value)
 std::vector<beam::Asset::ID> WalletSettings::getLastAssetSelection() const
 {
     Lock lock(m_mutex);
-    
+    //десериализовать
     return m_data.value(kLastAssetSelection).value<std::vector<beam::Asset::ID>>();
 }
 
 void WalletSettings::setLastAssetSelection(std::vector<beam::Asset::ID> selection)
 {
     Lock lock(m_mutex);
-
+    // сериализовать вектор в строку и сохранить ее
     m_data.setValue(kLastAssetSelection, QVariant::fromValue<std::vector<beam::Asset::ID>>(selection));
 }

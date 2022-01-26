@@ -122,13 +122,14 @@ Item {
                     palette.button: Style.background_button
                     palette.buttonText: Style.content_main
                     icon.source: "qrc:/assets/icon-cancel-white.svg"
-                    //visible: isShownOnlySelectedAssets
+                    visible: assets.selectedIds.length
                     //% "Remove filter"
                     text: qsTrId("wallet-remove-filter-button")
                     font.pixelSize: 12
                     //font.capitalization: Font.AllUppercase
                     onClicked: {
-                        //navigateSend(assets.selectedId);
+                        assets.setSelectedAssets([])
+                        isShownOnlySelectedAssets = false
                     }
                 }
 
@@ -190,12 +191,14 @@ Item {
                         text: qsTrId("wallet-selected-assets-checkbox")
                         color: transactionsLayout.isShownOnlySelectedAssets ? Style.active : Style.content_secondary
                         font.pixelSize: 14
+                        opacity: assets.selectedIds.length == 0 ? 0.2 : 1
                     }
 
                     Item {width: 3}
 
                     CustomSwitch {
                         id: applyAssetFilterSwitch
+                        checkable: assets.selectedIds.length != 0
                         checked: !transactionsLayout.isShownOnlySelectedAssets
                         alwaysGreen: true
 
@@ -221,6 +224,7 @@ Item {
                 id: assets
                 Layout.topMargin: 25
                 Layout.fillWidth: true
+                isShownOnlySelectedAssets: transactionsLayout.isShownOnlySelectedAssets
 
                 Binding {
                     target:    txTable
