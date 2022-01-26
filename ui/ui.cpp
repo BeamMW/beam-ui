@@ -31,6 +31,7 @@
 #include "viewmodel/atomic_swap/swap_offers_view.h"
 #include "viewmodel/atomic_swap/swap_token_item.h"
 #include "viewmodel/address_book_view.h"
+#include "viewmodel/dapps_store/dapps_store_view.h"
 #include "viewmodel/wallet/wallet_view.h"
 #include "viewmodel/wallet/token_item.h"
 #include "viewmodel/wallet/assets_view.h"
@@ -294,6 +295,7 @@ int main (int argc, char* argv[])
             qmlRegisterType<QR>("Beam.Wallet", 1, 0, "QR");
             qmlRegisterType<beamui::dex::DexView>("Beam.Wallet", 1, 0, "DexViewModel");
             qmlRegisterType<AppNotificationHelper>("Beam.Wallet", 1, 0, "AppNotificationHelper");
+            qmlRegisterType<DappsStoreViewModel>("Beam.Wallet", 1, 0, "DappsStoreViewModel");
             beamui::applications::RegisterQMLTypes();
 
             engine.load(QUrl("qrc:/root.qml"));

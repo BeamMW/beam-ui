@@ -11,7 +11,7 @@ Item {
     property bool hasLocal
 
     onAppsListChanged: function() {
-        if (appsList) {
+        if (!!appsList && appsList.length > 0) {
             for (let idx = 0; idx < 2; ++idx) {
                 if (appsList[idx].local) {
                     hasLocal = true

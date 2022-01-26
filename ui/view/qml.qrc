@@ -109,6 +109,7 @@
         <file>applications/applications.qml</file>
         <file>applications/applications_nofork.qml</file>
         <file>applications/AppsList.qml</file>
+		<file>dapps_store/dapps_store.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
@@ -169,6 +170,8 @@
         <file>assets/icon-defapp-active.svg</file>
         <file>assets/icon-applications.svg</file>
         <file>assets/icon-applications-active.svg</file>
+		<file>assets/icon-dapps_store.svg</file>
+		<file>assets/icon-dapps_store-active.svg</file>
         <file>assets/icon-dex.svg</file>
         <file>assets/icon-dex-active.svg</file>
         <file>assets/icon-addresses.svg</file>
