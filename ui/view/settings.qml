@@ -163,7 +163,6 @@ ColumnLayout {
                     visible: viewModel.ipfsSupported
 
                     showStatus: true
-                    // TODO:IPFS implement real node status
                     connectionStatus: statusBar.model.ipfsStatus
                     connectionError: statusBar.model.ipfsError
                 }
