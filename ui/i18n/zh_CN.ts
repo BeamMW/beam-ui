@@ -3374,7 +3374,6 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>Selected</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="wallet-all-assets-checkbox">
     <message id="settings-ipfs-location">
         <source>IPFS repository location</source>
         <translation type="unfinished"></translation>
@@ -3465,6 +3464,10 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="multiselect-all">
+        <source>All</source>
+        <translation type="unfinished">所有</translation>
+    </message>
+    <message id="wallet-all-assets-checkbox">
         <source>All</source>
         <translation type="unfinished">所有</translation>
     </message>

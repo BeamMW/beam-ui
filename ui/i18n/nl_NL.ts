@@ -3365,7 +3365,6 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <source>Selected</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="wallet-all-assets-checkbox">
     <message id="settings-ipfs-location">
         <source>IPFS repository location</source>
         <translation type="unfinished"></translation>
@@ -3456,6 +3455,10 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <translation type="unfinished"></translation>
     </message>
     <message id="multiselect-all">
+        <source>All</source>
+        <translation type="unfinished">Alle</translation>
+    </message>
+    <message id="wallet-all-assets-checkbox">
         <source>All</source>
         <translation type="unfinished">Alle</translation>
     </message>
