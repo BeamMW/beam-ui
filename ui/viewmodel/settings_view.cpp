@@ -210,10 +210,29 @@ void SettingsViewModel::setIPFSSwarmPort(unsigned int value)
     }
 }
 
+QString SettingsViewModel::getIPFSLocation() const
+{
+    auto cfg = m_settings.getIPFSConfig();
+    return QString::fromStdString(cfg.repo_root);
+}
+
+QString SettingsViewModel::getIPFSNodeStart() const
+{
+    return m_IPFSNodeStart;
+}
+
+void SettingsViewModel::setIPFSNodeStart(const QString& val)
+{
+    m_IPFSNodeStart = val;
+    emit IPFSNodeStartChanged();
+    emit IPFSSettingsChanged();
+}
+
 bool SettingsViewModel::getIPFSChanged() const
 {
     auto icfg = m_settings.getIPFSConfig();
-    return m_IPFSSwarmPort != icfg.node_swarm_port;
+    return m_IPFSSwarmPort != icfg.swarm_port ||
+           m_IPFSNodeStart != m_settings.getIPFSNodeStart();
 }
 
 void SettingsViewModel::applyIPFSChanges()
@@ -225,6 +244,7 @@ void SettingsViewModel::applyIPFSChanges()
     }
 
     m_settings.setIPFSPort(m_IPFSSwarmPort);
+    m_settings.setIPFSNodeStart(m_IPFSNodeStart);
     m_settings.applyIPFSChanges();
     emit IPFSSettingsChanged();
 }
@@ -481,8 +501,9 @@ void SettingsViewModel::undoChanges()
     setLocalNodePeers(m_settings.getLocalNodePeers());
 
     #ifdef BEAM_IPFS_SUPPORT
+    m_IPFSNodeStart = m_settings.getIPFSNodeStart();
     auto icfg = m_settings.getIPFSConfig();
-    setIPFSSwarmPort(icfg.node_swarm_port);
+    setIPFSSwarmPort(icfg.swarm_port);
     #endif
 }
 

@@ -154,14 +154,6 @@
         <source>Transactions</source>
         <translation>Transazioni</translation>
     </message>
-    <message id="wallet-verify-payment">
-        <source>Verify payment</source>
-        <translation>Verifica pagamento</translation>
-    </message>
-    <message id="wallet-txs-date-time">
-        <source>Created on</source>
-        <translation>Creato il</translation>
-    </message>
     <message id="wallet-txs-delete-message">
         <source>The transaction will be deleted. This operation can not be undone</source>
         <translation>La transazione verrà eliminata. Questa operazione non può essere annullata</translation>
@@ -1069,22 +1061,6 @@ please review your settings and try again</translation>
         <source>There is no Trezor device connected. Please, connect and try again.</source>
         <translation>Non c&apos;è nessun dispositivo Trezor connesso. Si prega di connettersi e riprovare.</translation>
     </message>
-    <message id="wallet-transactions-all-tab">
-        <source>All</source>
-        <translation type="unfinished">All</translation>
-    </message>
-    <message id="wallet-transactions-in-progress-tab">
-        <source>In progress</source>
-        <translation>In corso</translation>
-    </message>
-    <message id="wallet-transactions-sent-tab">
-        <source>Sent</source>
-        <translation>Inviato</translation>
-    </message>
-    <message id="wallet-transactions-received-tab">
-        <source>Received</source>
-        <translation>Ricevuto</translation>
-    </message>
     <message id="send-less-than-fee">
         <source>The swap amount must be greater than the transaction fee</source>
         <translation type="unfinished">The swap amount must be greater than the transaction fee</translation>
@@ -1100,10 +1076,6 @@ please review your settings and try again</translation>
     <message id="wallet-txs-status-own-sending">
         <source>sending to own address</source>
         <translation type="unfinished">sending to own address</translation>
-    </message>
-    <message id="wallet-search-transactions-placeholder">
-        <source>Enter search text...</source>
-        <translation type="unfinished">Enter search text...</translation>
     </message>
     <message id="settings-swap-node">
         <source>Node</source>
@@ -2491,10 +2463,6 @@ Update your settings and try again.</translation>
         <source>Hardwate wallet is not connected</source>
         <translation type="unfinished">Hardwate wallet is not connected</translation>
     </message>
-    <message id="general-multiple-assets">
-        <source>Multiple assets</source>
-        <translation type="unfinished">Multiple assets</translation>
-    </message>
     <message id="general-locked">
         <source>Locked</source>
         <translation type="unfinished">Locked</translation>
@@ -2766,21 +2734,9 @@ Update your settings and try again.</translation>
         <source>Your UTXO list is empty</source>
         <translation type="unfinished">Your UTXO list is empty</translation>
     </message>
-    <message id="tx-empty">
-        <source>Your transaction list is empty</source>
-        <translation type="unfinished">Your transaction list is empty</translation>
-    </message>
     <message id="tx-in-progress-empty">
         <source>There are no in progress transactions yet.</source>
         <translation type="unfinished">There are no in progress transactions yet.</translation>
-    </message>
-    <message id="tx-sent-empty">
-        <source>There are no sent transactions yet.</source>
-        <translation type="unfinished">There are no sent transactions yet.</translation>
-    </message>
-    <message id="tx-received-empty">
-        <source>There are no received transactions yet.</source>
-        <translation type="unfinished">There are no received transactions yet.</translation>
     </message>
     <message id="receive-addr">
         <source>Address</source>
@@ -2853,14 +2809,6 @@ Update your settings and try again.</translation>
     <message id="address-info-cid">
         <source>Application shader ID</source>
         <translation type="unfinished">Application shader ID</translation>
-    </message>
-    <message id="general-value">
-        <source>Value</source>
-        <translation type="unfinished">Value</translation>
-    </message>
-    <message id="wallet-txs-source">
-        <source>Source</source>
-        <translation type="unfinished">Source</translation>
     </message>
     <message id="source-wallet">
         <source>Wallet</source>
@@ -3382,10 +3330,6 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>The wallet is already started. Close all running wallets and start again.</source>
         <translation type="unfinished">The wallet is already started. Close all running wallets and start again.</translation>
     </message>
-    <message id="wallet-txs-action">
-        <source>Action</source>
-        <translation type="unfinished">Action</translation>
-    </message>
     <message id="settings-ipfsnode-title">
         <source>IPFS Integrated Node</source>
         <translation type="unfinished"></translation>
@@ -3426,6 +3370,96 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-all-assets-checkbox">
+    <message id="settings-ipfs-location">
+        <source>IPFS repository location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-ipfs-start">
+        <source>Run node on</source>
+        <oldsource>Start IPFS node on:</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-empty">
+        <source>Your transaction list is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-sent-empty">
+        <source>There are no sent transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-received-empty">
+        <source>There are no received transactions yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-transactions-all-tab">
+        <source>All</source>
+        <translation type="unfinished">All</translation>
+    </message>
+    <message id="wallet-transactions-in-progress-tab">
+        <source>In progress</source>
+        <translation type="unfinished">In corso</translation>
+    </message>
+    <message id="wallet-transactions-sent-tab">
+        <source>Sent</source>
+        <translation type="unfinished">Inviato</translation>
+    </message>
+    <message id="wallet-transactions-received-tab">
+        <source>Received</source>
+        <translation type="unfinished">Ricevuto</translation>
+    </message>
+    <message id="tx-table-filter-in-progress">
+        <source>In progress</source>
+        <translation type="unfinished">In corso</translation>
+    </message>
+    <message id="tx-table-filter-completed">
+        <source>Completed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-table-filter-canceled">
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-table-filter-failed">
+        <source>Failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-search-transactions-placeholder">
+        <source>Enter search text...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-verify-payment">
+        <source>Verify payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-multiple-assets">
+        <source>Multiple assets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-value">
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-source">
+        <source>Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-action">
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-date-time">
+        <source>Created on</source>
+        <translation type="unfinished">Creato il</translation>
+    </message>
+    <message id="tx-table-filter-label">
+        <source>Show</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="multiselect-none">
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="multiselect-all">
         <source>All</source>
         <translation type="unfinished">All</translation>
     </message>

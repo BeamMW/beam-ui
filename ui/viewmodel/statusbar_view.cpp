@@ -40,21 +40,11 @@ StatusbarViewModel::StatusbarViewModel()
     connectEthClient();
     #endif
 
-    connect(m_model.get(), SIGNAL(nodeConnectionChanged(bool)),
-        SLOT(onNodeConnectionChanged(bool)));
-
-    connect(m_model.get(), SIGNAL(walletError(beam::wallet::ErrorType)),
-        SLOT(onGetWalletError(beam::wallet::ErrorType)));
-
-    connect(m_model.get(), SIGNAL(syncProgressUpdated(int, int)),
-        SLOT(onSyncProgressUpdated(int, int)));
-
-    connect(&AppModel::getInstance().getNode(), SIGNAL(syncProgressUpdated(int, int)),
-            SLOT(onNodeSyncProgressUpdated(int, int)));
-    
-    connect(&AppModel::getInstance().getNode(), SIGNAL(failedToSyncNode(beam::wallet::ErrorType)),
-            SLOT(onGetWalletError(beam::wallet::ErrorType)));
-
+    connect(m_model.get(), SIGNAL(nodeConnectionChanged(bool)), SLOT(onNodeConnectionChanged(bool)));
+    connect(m_model.get(), SIGNAL(walletError(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
+    connect(m_model.get(), SIGNAL(syncProgressUpdated(int,int)), SLOT(onSyncProgressUpdated(int,int)));
+    connect(&AppModel::getInstance().getNode(), SIGNAL(syncProgressUpdated(int,int)), SLOT(onNodeSyncProgressUpdated(int,int)));
+    connect(&AppModel::getInstance().getNode(), SIGNAL(failedToSyncNode(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
     connect(&m_exchangeRatesTimer, SIGNAL(timeout()), SLOT(onExchangeRatesTimer()));
     connect(m_exchangeRatesManager.get(), SIGNAL(updateTimeChanged()), SLOT(onExchangeRatesTimer()));
     m_model->getAsync()->getNetworkStatus();
@@ -258,7 +248,7 @@ void StatusbarViewModel::onSyncProgressUpdated(int done, int total)
 {
     m_done = done;
     m_total = total;
-    setIsSyncInProgress(!((m_done + m_nodeDone) == (m_total + m_nodeTotal)));
+    setIsSyncInProgress((m_done + m_nodeDone) != (m_total + m_nodeTotal));
 }
 
 void StatusbarViewModel::onNodeSyncProgressUpdated(int done, int total)
@@ -271,7 +261,7 @@ void StatusbarViewModel::onNodeSyncProgressUpdated(int done, int total)
         setNodeSyncProgress(static_cast<int>(done * 100) / total);
     }
 
-    setIsSyncInProgress(!((m_done + m_nodeDone) == (m_total + m_nodeTotal)));
+    setIsSyncInProgress((m_done + m_nodeDone) != (m_total + m_nodeTotal));
 }
 
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
@@ -430,12 +420,12 @@ void StatusbarViewModel::connectEthClient()
 #ifdef BEAM_IPFS_SUPPORT
 QString StatusbarViewModel::getIPFSStatus() const
 {
-    if (m_ipfsConnected) {
-        return "connected";
-    }
-
     if (!m_ipfsError.isEmpty()) {
         return "error";
+    }
+
+    if (m_ipfsRunning && m_ipfsPeerCnt) {
+        return "connected";
     }
 
     return "disconnected";
@@ -446,9 +436,10 @@ QString StatusbarViewModel::getIPFSError() const
     return m_ipfsError;
 }
 
-void StatusbarViewModel::onIPFSStatus(bool connected, const QString& error)
+void StatusbarViewModel::onIPFSStatus(bool running, const QString& error, uint32_t peercnt)
 {
-    m_ipfsConnected = connected;
+    m_ipfsRunning = running;
+    m_ipfsPeerCnt = peercnt;
     m_ipfsError = error;
     emit IPFSStatusChanged();
 }

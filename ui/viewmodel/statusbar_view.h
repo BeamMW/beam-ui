@@ -49,7 +49,7 @@ class StatusbarViewModel : public QObject
 
     #ifdef BEAM_IPFS_SUPPORT
     Q_PROPERTY(QString ipfsStatus READ getIPFSStatus  NOTIFY IPFSStatusChanged)
-    Q_PROPERTY(QString ipfsError  READ getIPFSError  NOTIFY IPFSStatusChanged)
+    Q_PROPERTY(QString ipfsError  READ getIPFSError   NOTIFY IPFSStatusChanged)
     #endif
 
 public:
@@ -95,7 +95,7 @@ public slots:
     #endif
 
     #ifdef BEAM_IPFS_SUPPORT
-    void onIPFSStatus(bool connected, const QString& error);
+    void onIPFSStatus(bool running, const QString& error, unsigned int peercnt);
     #endif
 
 signals:
@@ -157,7 +157,8 @@ private:
     QLocale m_locale;
 
     #ifdef BEAM_IPFS_SUPPORT
-    bool m_ipfsConnected = false;
+    bool m_ipfsRunning = false;
+    uint32_t m_ipfsPeerCnt = 0;
     QString m_ipfsError;
     #endif
 };

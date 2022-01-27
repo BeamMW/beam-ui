@@ -21,7 +21,7 @@
 #include "model/wallet_model.h"
 
 #ifdef BEAM_IPFS_SUPPORT
-#include <asio-ipfs/include/asio_ipfs/config.h>
+#include <asio-ipfs/include/ipfs_config.h>
 #endif
 
 class WalletSettings : public QObject
@@ -106,6 +106,16 @@ public:
     #ifdef BEAM_IPFS_SUPPORT
     asio_ipfs::config getIPFSConfig() const;
     void setIPFSPort(uint32_t port);
+    void setIPFSNodeStart(const QString&);
+    QString getIPFSNodeStart() const;
+
+    enum class IPFSLaunch {
+        AtStart = 0,
+        AtDApps,
+        Never,
+    };
+
+    IPFSLaunch getIPFSNodeLaunch() const;
     #endif
 
     uint8_t getMaxPrivacyAnonymitySet() const;
@@ -131,6 +141,16 @@ public:
 
     [[nodiscard]] QVector<beam::Asset::ID> getLastAssetSelection() const;
     void setLastAssetSelection(QVector<beam::Asset::ID> selection);
+
+    // tx table filters
+    bool getShowInProgress() const;
+    void setShowInProgress(bool value);
+    bool getShowCompleted() const;
+    void setShowCompleted(bool value);
+    bool getShowCanceled() const;
+    void setShowCanceled(bool value);
+    bool getShowFailed() const;
+    void setShowFailed(bool value);
 
 public:
     static const char* WalletCfg;
@@ -159,10 +179,9 @@ signals:
     void beamMWLinksChanged();
     void secondCurrencyChanged();
     void dappsAllowedChanged();
-    void ipfsPortChanged();
 
 private:
-    QSettings m_data;
+    mutable QSettings m_data;
     QDir m_appDataDir;
     uint8_t m_mpLockTimeLimit = 0;
     uint32_t m_minConfirmations = 0;

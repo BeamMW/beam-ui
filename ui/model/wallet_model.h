@@ -34,7 +34,7 @@ class WalletModel
     Q_OBJECT
 public:
     using Ptr = std::shared_ptr<WalletModel>;
-    WalletModel(beam::wallet::IWalletDB::Ptr walletDB, boost::optional<asio_ipfs::config> ipfsConfig, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor);
+    WalletModel(beam::wallet::IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor);
     ~WalletModel() override;
 
     QString GetErrorString(beam::wallet::ErrorType type);
@@ -88,7 +88,7 @@ signals:
     #endif
 
     #ifdef BEAM_IPFS_SUPPORT
-    void IPFSStatusChanged(bool connected, const QString& error);
+    void IPFSStatusChanged(bool running, const QString& error, unsigned int peercnt);
     #endif
 
     void exchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>&);
@@ -135,7 +135,7 @@ private:
     void onAssetInfo(beam::Asset::ID, const beam::wallet::WalletAsset&) override;
 
     #ifdef BEAM_IPFS_SUPPORT
-    void onIPFSStatus(bool connected, const std::string& error) override;
+    virtual void onIPFSStatus(bool running, const std::string& error, unsigned int peercnt) override;
     #endif
 
     #ifdef BEAM_HW_WALLET

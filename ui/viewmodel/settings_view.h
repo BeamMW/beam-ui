@@ -55,8 +55,10 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(bool ipfsSupported READ getIPFSSupported CONSTANT)
 
     #ifdef BEAM_IPFS_SUPPORT
-    Q_PROPERTY(unsigned int ipfsSwarmPort READ getIPFSSwarmPort WRITE setIPFSSwarmPort  NOTIFY IPFSSwarmPortChanged)
+    Q_PROPERTY(unsigned int ipfsSwarmPort READ getIPFSSwarmPort WRITE setIPFSSwarmPort  NOTIFY IPFSSettingsChanged)
+    Q_PROPERTY(QString ipfsNodeStart READ getIPFSNodeStart WRITE setIPFSNodeStart  NOTIFY IPFSNodeStartChanged)
     Q_PROPERTY(bool ipfsChanged READ getIPFSChanged NOTIFY IPFSSettingsChanged)
+    Q_PROPERTY(QString ipfsLocation READ getIPFSLocation CONSTANT)
     #endif
 
     Q_PROPERTY(QList<QObject*> swapCoinSettingsList READ getSwapCoinSettings    CONSTANT)
@@ -86,6 +88,9 @@ public:
     [[nodiscard]] unsigned int getIPFSSwarmPort() const;
     void setIPFSSwarmPort(unsigned int value);
     [[nodiscard]] bool getIPFSChanged() const;
+    [[nodiscard]] QString getIPFSLocation() const;
+    [[nodiscard]] QString getIPFSNodeStart() const;
+    void setIPFSNodeStart(const QString&);
     #endif
 
     QString getRemoteNodePort() const;
@@ -188,6 +193,7 @@ signals:
 
     #ifdef BEAM_IPFS_SUPPORT
     void IPFSSwarmPortChanged();
+    void IPFSNodeStartChanged();
     void IPFSSettingsChanged();
     #endif
 
@@ -207,6 +213,7 @@ private:
 
     #ifdef BEAM_IPFS_SUPPORT
     unsigned int m_IPFSSwarmPort = 0;
+    QString m_IPFSNodeStart;
     #endif
 
     QStringList m_localNodePeers;

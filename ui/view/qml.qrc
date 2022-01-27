@@ -42,6 +42,7 @@
         <file>controls/CustomSwitch.qml</file>
         <file>controls/CustomCheckBox.qml</file>
         <file>controls/CustomComboBox.qml</file>
+        <file>controls/MultiSelectComboBox.qml</file>
         <file>controls/BeamAmount.qml</file>
         <file>controls/SecurityNote.qml</file>
         <file>controls/CustomProgressBar.qml</file>
@@ -56,7 +57,7 @@
         <file>controls/OpenExternalLinkConfirmation.qml</file>
         <file>controls/SeedInput.qml</file>
         <file>controls/CustomTripleSwitch.qml</file>
-        <file>controls/CustomSecondCurrencySwitch.qml</file>
+        <file>controls/TristateSwitch.qml</file>
         <file>controls/ConfirmRefreshDialog.qml</file>
         <file>controls/OwnerKeyDialog.qml</file>
         <file>controls/SettingsFoldable.qml</file>

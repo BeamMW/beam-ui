@@ -61,6 +61,7 @@ namespace
     const char* kDevAppMinApiVer = "devapp/min_api_version";
     const char* kLocalAppsPort   = "apps/local_port";
     const char* kIPFSPrefix      = "ipfsnode/";
+    const char* kIPFSNodeStart   = "ipfs_node_start";
 
     const char* kMpAnonymitySet = "max_privacy/anonymity_set";
     const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
@@ -86,6 +87,11 @@ namespace
         { "vi_VI", "Tiếng việt"},
         { "ko_KR", "한국어"}
     };
+
+    const char* kTxFilterInProgress = "tx_filter/inProgress";
+    const char* kTxFilterCompleted = "tx_filter/completed";
+    const char* kTxFilterCanceled= "tx_filter/canceled";
+    const char* kTxFilterFailed = "tx_filter/failed";
 
     const std::vector<std::string> kOutDatedPeers = beam::getOutdatedDefaultPeers();
     bool isOutDatedPeer(const std::string& peer)
@@ -808,13 +814,12 @@ void WalletSettings::applyIPFSChanges()
     AppModel::getInstance().applyIPFSChanges();
 }
 
-// TODO:IPFS add disable option
 asio_ipfs::config WalletSettings::getIPFSConfig() const
 {
     namespace cli = beam::cli;
 
     Lock lock(m_mutex);
-    asio_ipfs::config cfg;
+    asio_ipfs::config cfg(asio_ipfs::config::Mode::Desktop);
 
     const QString keyStorage = QString(kIPFSPrefix) + cli::IPFS_STORAGE;
     if (m_data.contains(keyStorage))
@@ -832,7 +837,18 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     cfg.low_water = m_data.value(QString(kIPFSPrefix) + cli::IPFS_LOW_WATER, cfg.low_water).toUInt();
     cfg.high_water = m_data.value(QString(kIPFSPrefix) + cli::IPFS_HIGH_WATER, cfg.high_water).toUInt();
     cfg.grace_period = m_data.value(QString(kIPFSPrefix) + cli::IPFS_GRACE, cfg.grace_period).toUInt();
-    cfg.node_swarm_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT, cfg.node_swarm_port).toUInt();
+    cfg.swarm_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT, cfg.swarm_port).toUInt();
+    cfg.auto_relay = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTO_RELAY, cfg.auto_relay).toUInt();
+    cfg.relay_hop = m_data.value(QString(kIPFSPrefix) + cli::IPFS_RELAY_HOP, cfg.relay_hop).toUInt();
+    cfg.storage_max = m_data.value(QString(kIPFSPrefix) + cli::IPFS_STORAGE_MAX, QString::fromStdString(cfg.storage_max)).toString().toStdString();
+    cfg.api_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_API_PORT, cfg.api_port).toUInt();
+    cfg.gateway_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_GATEWAY_PORT, cfg.gateway_port).toUInt();
+    cfg.autonat = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT, cfg.autonat).toBool();
+    cfg.autonat_limit = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_LIMIT, cfg.autonat_limit).toUInt();
+    cfg.autonat_peer_limit = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_PEER_LIMIT, cfg.autonat_peer_limit).toUInt();
+    cfg.swarm_key = m_data.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_KEY, QString::fromStdString(cfg.swarm_key)).toString().toStdString();
+    cfg.routing_type = m_data.value(QString(kIPFSPrefix) + cli::IPFS_ROUTING_TYPE, QString::fromStdString(cfg.routing_type)).toString().toStdString();
+    cfg.run_gc = m_data.value(QString(kIPFSPrefix) + cli::IPFS_RUN_GC, cfg.run_gc).toBool();
 
     const QString keyBootstrap = QString(kIPFSPrefix) + cli::IPFS_BOOTSTRAP;
     if (m_data.contains(keyBootstrap))
@@ -861,7 +877,51 @@ void WalletSettings::setIPFSPort(uint32_t port)
     }
 
     m_data.setValue(keySwarmPort, port);
-    emit ipfsPortChanged();
+}
+
+void WalletSettings::setIPFSNodeStart(const QString& start)
+{
+    const QString keyNodeStart = QString(kIPFSPrefix) + kIPFSNodeStart;
+
+    Lock lock(m_mutex);
+    if (m_data.contains(keyNodeStart) && m_data.value(keyNodeStart).toString() == start) {
+        return;
+    }
+
+    m_data.setValue(keyNodeStart, start);
+}
+
+QString WalletSettings::getIPFSNodeStart() const
+{
+    const QString keyNodeStart = QString(kIPFSPrefix) + kIPFSNodeStart;
+    Lock lock(m_mutex);
+
+    QString defStart("clientstart");
+    auto start = m_data.value(keyNodeStart, defStart).toString();
+
+    if (start != "clientstart" && start != "dapps" && start != "never") {
+        LOG_WARNING() << "Unknown IPFS start setting '" << start.toStdString()
+                      << "'. Defaulting to '" << defStart.toStdString() << "'";
+        m_data.setValue(keyNodeStart, defStart);
+        return defStart;
+    }
+
+    return start;
+}
+
+WalletSettings::IPFSLaunch WalletSettings::getIPFSNodeLaunch() const
+{
+    const auto start = getIPFSNodeStart();
+
+    if (start == "clientstart") {
+        return IPFSLaunch::AtStart;
+    }
+
+    if (start == "dapps") {
+        return IPFSLaunch::AtDApps;
+    }
+
+    return IPFSLaunch::Never;
 }
 #endif
 
@@ -933,4 +993,52 @@ void WalletSettings::setLastAssetSelection(QVector<beam::Asset::ID> selection)
     out << selection;
 
     m_data.setValue(kLastAssetSelection, QVariant::fromValue<QByteArray>(ser));
+}
+
+bool WalletSettings::getShowInProgress() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kTxFilterInProgress, true).toBool();
+}
+
+void WalletSettings::setShowInProgress(bool value)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kTxFilterInProgress, value);
+}
+
+bool WalletSettings::getShowCompleted() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kTxFilterCompleted, true).toBool();
+}
+
+void WalletSettings::setShowCompleted(bool value)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kTxFilterCompleted, value);
+}
+
+bool WalletSettings::getShowCanceled() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kTxFilterCanceled, true).toBool();
+}
+
+void WalletSettings::setShowCanceled(bool value)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kTxFilterCanceled, value);
+}
+
+bool WalletSettings::getShowFailed() const
+{
+    Lock lock(m_mutex);
+    return m_data.value(kTxFilterFailed, true).toBool();
+}
+
+void WalletSettings::setShowFailed(bool value)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kTxFilterFailed, value);
 }

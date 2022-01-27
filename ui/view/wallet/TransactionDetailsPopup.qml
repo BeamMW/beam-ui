@@ -55,7 +55,7 @@ CustomDialog {
     property var getPaymentProof: function (rawTxId) { return null; }
 
     function getHighlitedText(text) {
-        return Utils.getHighlitedText(text, dialog.searchFilter, Style.active.toString());
+        return Utils.getHighlitedText(text, dialog.searchFilter, Style.accent_incoming.toString());
     }
 
     property PaymentInfoItem paymentInfo
@@ -70,7 +70,7 @@ CustomDialog {
     parent: Overlay.overlay
     padding: 0
 
-    closePolicy: Popup.NoAutoClose | Popup.CloseOnEscape
+    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
     header: ColumnLayout {
         SFText {

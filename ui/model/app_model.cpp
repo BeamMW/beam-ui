@@ -528,7 +528,12 @@ void AppModel::registerSwapFactory(beam::wallet::AtomicSwapCoin swapCoin, beam::
 void AppModel::applyIPFSChanges()
 {
     auto config = m_settings.getIPFSConfig();
+    m_wallet->getAsync()->stopIPFSNode();
     m_wallet->getAsync()->setIPFSConfig(std::move(config));
+
+    if (m_settings.getIPFSNodeLaunch() == WalletSettings::IPFSLaunch::AtStart) {
+        m_wallet->getAsync()->startIPFSNode();
+    }
 }
 #endif
 
@@ -616,14 +621,7 @@ void AppModel::start()
 
     initSwapClients();
 
-    boost::optional<asio_ipfs::config> ipfsConfig;
-    #ifdef BEAM_IPFS_SUPPORT
-    ipfsConfig = m_settings.getIPFSConfig();
-    // TODO:IPFS add ipfs path to UI settings page
-    // TODO:IPFS add ipfs ports to settings & UI settings page
-    #endif
-
-    m_wallet   = std::make_shared<WalletModel>(m_db, ipfsConfig, nodeAddrStr, m_walletReactor);
+    m_wallet   = std::make_shared<WalletModel>(m_db, nodeAddrStr, m_walletReactor);
     m_rates    = std::make_shared<ExchangeRatesManager>(m_wallet, m_settings);
     m_assets   = std::make_shared<AssetsManager>(m_wallet, m_rates);
     m_myAssets = std::make_shared<AssetsList>(m_wallet, m_assets, m_rates);
@@ -636,6 +634,15 @@ void AppModel::start()
     {
         startWallet();
     }
+
+    #ifdef BEAM_IPFS_SUPPORT
+    auto ipfsConfig = m_settings.getIPFSConfig();
+    m_wallet->getAsync()->setIPFSConfig(std::move(ipfsConfig));
+
+    if (m_settings.getIPFSNodeLaunch() == WalletSettings::IPFSLaunch::AtStart) {
+        m_wallet->getAsync()->startIPFSNode();
+    }
+    #endif
 }
 
 void AppModel::startNode()
