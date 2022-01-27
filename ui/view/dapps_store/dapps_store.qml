@@ -24,6 +24,18 @@ ColumnLayout {
 
     DappsStoreViewModel {
         id: viewModel
+
+        onAppInstallOK: function (appName) {
+            //% "'%1' is successfully installed."
+            installOK.text = qsTrId("apps-install-success").arg(appName)
+            installOK.open()
+        }
+
+        onAppInstallFail: function (appName) {
+            //% "Failed to install DApp:\n%1"
+            installFail.text = qsTrId("apps-install-fail").arg(appName)
+            installFail.open()
+        }
     }
 
     //
@@ -161,23 +173,8 @@ ColumnLayout {
             launchApp(app)
         }
 
-        onInstall: function (fname) {
-            if (!fname) {
-                fname = viewModel.chooseFile()
-                if (!fname) return
-            }
-
-            var appName = viewModel.installFromFile(fname)
-            if (appName.length) {
-                loadAppsList()
-                //% "'%1' is successfully installed."
-                installOK.text = qsTrId("apps-install-success").arg(appName)
-                installOK.open()
-            } else {
-                //% "Failed to install DApp:\n%1"
-                installFail.text = qsTrId("apps-install-fail").arg(fname)
-                installFail.open()
-            }
+        onInstall: function (app) {
+            viewModel.installApp(app.guid)
         }
     }
 
@@ -212,6 +209,7 @@ ColumnLayout {
         okButtonIconSource: "qrc:/assets/icon-copy.svg"
         cancelButtonVisible: false
         width: 470
+        // TODO: check & mb change to lazy getting
         text: viewModel.publisherKey
         onAccepted: {
             BeamGlobals.copyToClipboard(viewModel.publisherKey);

@@ -15,6 +15,7 @@
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QWebEngineProfile>
 #include <QFileDialog>
+#include <qbuffer.h>
 #include "dapps_store_view.h"
 #include "utility/logger.h"
 #include "model/app_model.h"
@@ -31,7 +32,7 @@ namespace
 
     auto getDappStoreCID()
     {
-        return "b6c9d0114b17155c442fd8d8e0ca4482f1f804b832782485d4ab321937b32faa";
+        return "c7bfd39e04ab9ff2f21615e52d973867f9c70b43ffb4f6f7f086b5ba1de08567";
     }
 }
 
@@ -210,13 +211,13 @@ void DappsStoreViewModel::loadApps()
                     }
                     auto guid = parseStringField(item.value(), "id");
                     auto publisher = parseStringField(item.value(), "publisher");
-                    // auto ipfsCID = parseStringField(item.value(), "ipfs_id");
 
                     LOG_DEBUG() << "Parsing DApp from contract, guid - " << guid.toStdString() << ", publisher - " << publisher.toStdString();
 
                     QMap<QString, QVariant> app;
                     app.insert("description", parseStringField(item.value(), "description"));
                     app.insert("name", parseStringField(item.value(), "name"));
+                    app.insert("ipfs_id", parseStringField(item.value(), "ipfs_id"));
                     // TODO: check if empty url is allowed for not installed app
                     app.insert("url", "");
                     app.insert("api_version", parseStringField(item.value(), "api_ver"));
@@ -226,6 +227,8 @@ void DappsStoreViewModel::loadApps()
 
                     // TODO: check
                     app.insert("supported", true);
+
+                    app.insert("notInstalled", true);
 
                     apps.push_back(app);
                 }
@@ -451,14 +454,19 @@ void DappsStoreViewModel::uploadApp()
         QPointer<DappsStoreViewModel> guard(this);
 
         ipfs->AnyThread_add(beam::ByteBuffer(buffer.cbegin(), buffer.cend()),
-            [this, guard, app=std::move(app)] (std::string&& ipfsCID) mutable {
+            [this, guard, app=std::move(app)] (std::string&& ipfsID) mutable
+            {
+                if (!guard)
+                {
+                    return;
+                }
 
-                LOG_INFO() << "IPFSCID: " << ipfsCID;
+                LOG_INFO() << "IPFS_ID: " << ipfsID;
 
                 // save result to contract
-                addAppToStore(std::move(app), ipfsCID);
+                addAppToStore(std::move(app), ipfsID);
             },
-            [this, guard] (std::string&& err) {
+            [] (std::string&& err) {
                 LOG_ERROR() << "Failed to add to ipfs: " << err;
             }
         );
@@ -469,7 +477,7 @@ void DappsStoreViewModel::uploadApp()
     }
 }
 
-void DappsStoreViewModel::addAppToStore(QMap<QString, QVariant>&& app, const std::string& ipfsCID)
+void DappsStoreViewModel::addAppToStore(QMap<QString, QVariant>&& app, const std::string& ipfsID)
 {
     QString guid = app["guid"].value<QString>();
     QString appName = app["name"].value<QString>();
@@ -478,7 +486,7 @@ void DappsStoreViewModel::addAppToStore(QMap<QString, QVariant>&& app, const std
     QString args;
     QTextStream textStream(&args);
 
-    textStream << "role=manager,action=add_dapp,cid=" << getDappStoreCID() << ",ipfs_id=" << QString::fromStdString(ipfsCID);
+    textStream << "role=manager,action=add_dapp,cid=" << getDappStoreCID() << ",ipfs_id=" << QString::fromStdString(ipfsID);
     textStream << ",name=" << appName << ",id=" << guid << ",description=" << description;
     textStream << ",api_ver=" << app["api_version"].value<QString>() << ",min_api_ver=" << app["min_api_version"].value<QString>();
 
@@ -542,4 +550,126 @@ void DappsStoreViewModel::registerPublisher()
             }
         }
     );
+}
+
+void DappsStoreViewModel::installApp(const QString& guid)
+{
+    // find app in _apps by guid
+    const auto it = std::find_if(_apps.cbegin(), _apps.cend(),
+        [guid] (const auto& app) -> bool {
+            const auto appIt = app.find("guid");
+            if (appIt == app.end())
+            {
+                assert(false);
+                return false;
+            }
+            return appIt->toString() == guid;
+    });
+
+    if (it == _apps.end())
+    {
+        assert(false);
+        return;
+    }
+
+    try
+    {
+        const auto ipfsID = (*it)["ipfs_id"].toString();
+        const auto appName = (*it)["name"].toString();
+
+        // get dapp binary data from ipfs
+        QPointer<DappsStoreViewModel> guard(this);
+        auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
+
+        // TODO: check timeout value
+        ipfs->AnyThread_get(ipfsID.toStdString(), 0,
+            [this, guard, appName](beam::ByteBuffer&& data) mutable
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                // unpack & verify & install
+                installFromBuffer(std::move(data), appName);
+            },
+            [this, guard, appName](std::string&& err)
+            {
+                LOG_ERROR() << "Failed to get app from ipfs: " << err;
+                emit appInstallFail(appName);
+            }
+        );
+    }
+    catch (const std::runtime_error& err)
+    {
+        assert(false);
+        LOG_WARNING() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
+        return;
+    }
+}
+
+void DappsStoreViewModel::installFromBuffer(std::vector<uint8_t>&& data, const QString& appName)
+{
+    try
+    {
+        LOG_DEBUG() << "Installing DApp " << appName.toStdString() << " from ipfs";
+
+        QByteArray qData;
+        std::copy(data.cbegin(), data.cend(), std::back_inserter(qData));
+
+        QBuffer buffer(&qData);
+        QuaZip zip(&buffer);
+        if (!zip.open(QuaZip::Mode::mdUnzip))
+        {
+            throw std::runtime_error("Failed to open the DApp archive");
+        }
+
+        QString guid;
+        for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
+        {
+            const auto zipFname = zip.getCurrentFileName();
+            if (zipFname == "manifest.json")
+            {
+                QuaZipFile mfile(&zip);
+                if (!mfile.open(QIODevice::ReadOnly))
+                {
+                    throw std::runtime_error("Failed to read the DApp archive");
+                }
+                
+                QTextStream in(&mfile);
+                const auto app = parseAppManifest(in, "");
+                guid = app["guid"].value<QString>();
+            }
+        }
+
+        if (guid.isEmpty())
+        {
+            throw std::runtime_error("Invalid DApp archive");
+        }
+
+        const auto appsPath = AppSettings().getLocalAppsPath();
+        const auto appFolder = QDir(appsPath).filePath(guid);
+
+        if (QDir(appFolder).exists())
+        {
+            if (!QDir(appFolder).removeRecursively())
+            {
+                throw std::runtime_error("Failed to prepare folder");
+            }
+        }
+
+        QDir(appsPath).mkdir(guid);
+        if (JlCompress::extractDir(&buffer, appFolder).isEmpty())
+        {
+            //cleanupFolder(appFolder)
+            throw std::runtime_error("DApp Installation failed");
+        }
+
+        emit appInstallOK(appName);
+    }
+    catch (std::exception& err)
+    {
+        LOG_ERROR() << "Failed to install DApp: " << err.what();
+        emit appInstallFail(appName);
+    }
 }

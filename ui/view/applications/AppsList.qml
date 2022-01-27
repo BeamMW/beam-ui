@@ -23,7 +23,7 @@ Item {
     }
 
     signal launch(var app)
-    signal install(string fname)
+    signal install(var fname)
     signal uninstall(var app)
 
     DropArea {
@@ -143,7 +143,27 @@ Item {
                                 palette.buttonText : Style.content_main
                                 icon.source: "qrc:/assets/icon-run.svg"
                                 icon.height: 16
-                                visible: modelData.supported
+                                visible: modelData.supported && (modelData.notInstalled !== undefined && modelData.notInstalled)
+                                //% "Install"
+                                text: qsTrId("dapps-store-install")
+
+                                MouseArea {
+                                    anchors.fill:     parent
+                                    acceptedButtons:  Qt.LeftButton
+                                    hoverEnabled:     true
+                                    propagateComposedEvents: true
+                                    onClicked:        control.install(modelData)
+                                }
+                            }
+
+                            CustomButton {
+                                Layout.rightMargin: control.hasLocal ? 0 : 20
+                                height: 40
+                                palette.button: Style.background_button
+                                palette.buttonText : Style.content_main
+                                icon.source: "qrc:/assets/icon-run.svg"
+                                icon.height: 16
+                                visible: modelData.supported && (modelData.notInstalled === undefined || !modelData.notInstalled)
                                 //% "launch"
                                 text: qsTrId("apps-run")
 

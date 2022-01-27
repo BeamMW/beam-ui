@@ -34,17 +34,20 @@ public:
     Q_INVOKABLE [[nodiscard]] QString installFromFile(const QString& fname);
     Q_INVOKABLE void uploadApp();
     Q_INVOKABLE void registerPublisher();
+    Q_INVOKABLE void installApp(const QString& guid);
 
 signals:
     void appsChanged();
     void publisherKeyChanged();
+    void appInstallOK(const QString& appName);
+    void appInstallFail(const QString& appName);
 
 private:
     [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
     [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
     QMap<QString, QVariant> parseAppManifest(QTextStream& io, const QString& appFolder);
     void addAppToStore(QMap<QString, QVariant>&& app, const std::string& ipfsCID);
-
+    void installFromBuffer(std::vector<uint8_t>&& data, const QString& appName);
 
     QString _serverAddr;
     QList<QMap<QString, QVariant>> _apps;
