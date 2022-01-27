@@ -17,7 +17,6 @@ Control {
     }
 
     property var       selectedAssets: []
-    property int       selectedAsset: -1
     property int       emptyMessageMargin: 90
     property int       activeTxCnt: 0
     property alias     headerShaderVisible: transactionsTable.headerShaderVisible

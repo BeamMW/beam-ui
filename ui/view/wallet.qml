@@ -83,7 +83,7 @@ Item {
             Layout.topMargin: -27
             spacing: 0
 
-            property bool isShownOnlySelectedAssets:  false
+            property bool showSelected:  false
 
             function navigateSend(assetId) {
                 var params = {
@@ -129,7 +129,7 @@ Item {
                     //font.capitalization: Font.AllUppercase
                     onClicked: {
                         assets.setSelectedAssets([])
-                        isShownOnlySelectedAssets = false
+                        showSelected = false
                     }
                 }
 
@@ -189,7 +189,7 @@ Item {
                     SFText {
                         //% "Selected"
                         text: qsTrId("wallet-selected-assets-checkbox")
-                        color: transactionsLayout.isShownOnlySelectedAssets ? Style.active : Style.content_secondary
+                        color: transactionsLayout.showSelected ? Style.active : Style.content_secondary
                         font.pixelSize: 14
                         opacity: assets.selectedIds.length == 0 ? 0.2 : 1
                     }
@@ -197,15 +197,15 @@ Item {
                     Item {width: 3}
 
                     CustomSwitch {
-                        id: applyAssetFilterSwitch
+                        id: assetsFilterSwitch
                         checkable: assets.selectedIds.length != 0
-                        checked: !transactionsLayout.isShownOnlySelectedAssets
+                        checked: !transactionsLayout.showSelected
                         alwaysGreen: true
 
                         Binding {
                             target: transactionsLayout
-                            property: "isShownOnlySelectedAssets"
-                            value: !applyAssetFilterSwitch.checked
+                            property: "showSelected"
+                            value: !assetsFilterSwitch.checked
                         }
                     }
 
@@ -214,7 +214,7 @@ Item {
                     SFText {
                         //% "All"
                         text: qsTrId("wallet-all-assets-checkbox")
-                        color: transactionsLayout.isShownOnlySelectedAssets ? Style.content_secondary : Style.active
+                        color: transactionsLayout.showSelected ? Style.content_secondary : Style.active
                         font.pixelSize: 14
                     }
                 }
@@ -224,7 +224,7 @@ Item {
                 id: assets
                 Layout.topMargin: 25
                 Layout.fillWidth: true
-                isShownOnlySelectedAssets: transactionsLayout.isShownOnlySelectedAssets
+                showSelected: transactionsLayout.showSelected
 
                 Binding {
                     target:    txTable

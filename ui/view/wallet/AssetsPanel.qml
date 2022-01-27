@@ -50,7 +50,7 @@ Control {
     property alias  selectedIds:    viewModel.selectedAssets
     property int    assetsCount:    1
     property real   itemHeight:     75
-    property bool   isShownOnlySelectedAssets
+    property bool   showSelected
 
     property bool  showFaucetPromo: viewModel.showFaucetPromo
     property bool  showValidationPromo: viewModel.showValidationPromo && !seedValidationHelper.isSeedValidated
@@ -118,7 +118,7 @@ Control {
                         implicitHeight: control.itemHeight
                         implicitWidth:  control.itemWidth
                         assetInfo:      model
-                        visible:        !isShownOnlySelectedAssets || control.selectedIds.indexOf(model.id) != -1
+                        visible:        !showSelected || control.selectedIds.indexOf(model.id) != -1
                         selected:       control.selectedIds.indexOf(model.id) != -1
                         opacity:        control.selectedIds.length != 0 ? (control.selectedIds.indexOf(model.id) != -1 ? 1 : 0.6) : 1
                         layer.enabled:  model.verified
@@ -126,7 +126,7 @@ Control {
                         onClicked: function () {
                             viewModel.setSelectedAsset(model.id)
                             if(control.selectedIds.length == 0)
-                                isShownOnlySelectedAssets = false
+                                showSelected = false
                         }
                     }
 
