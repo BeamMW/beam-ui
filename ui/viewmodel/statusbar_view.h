@@ -95,6 +95,7 @@ public slots:
     #endif
 
     #ifdef BEAM_IPFS_SUPPORT
+    void onIPFSSettingsChanged();
     void onIPFSStatus(bool running, const QString& error, unsigned int peercnt);
     #endif
 
@@ -124,6 +125,7 @@ private:
     #endif
 
     WalletModel::Ptr m_model;
+    WalletSettings& m_settings;
     ExchangeRatesManager::Ptr m_exchangeRatesManager;
 
     bool m_isOnline;

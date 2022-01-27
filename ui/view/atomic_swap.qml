@@ -335,7 +335,7 @@ Item {
                         id:                clickArea
                         anchors.fill:      parent
                         acceptedButtons:   Qt.LeftButton
-                        onClicked:         main.openSwapSettings()
+                        onClicked:         main.openSettings("ALL_COINS")
                         hoverEnabled:      true
                         onPositionChanged: clickArea.cursorShape = Qt.PointingHandCursor;
                     }

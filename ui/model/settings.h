@@ -179,6 +179,7 @@ signals:
     void beamMWLinksChanged();
     void secondCurrencyChanged();
     void dappsAllowedChanged();
+    void IPFSSettingsChanged();
 
 private:
     mutable QSettings m_data;

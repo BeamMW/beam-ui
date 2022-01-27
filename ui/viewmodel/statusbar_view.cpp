@@ -24,6 +24,7 @@ using namespace beam::wallet;
 
 StatusbarViewModel::StatusbarViewModel()
     : m_model(AppModel::getInstance().getWalletModel())
+    , m_settings(AppModel::getInstance().getSettings())
     , m_exchangeRatesManager(AppModel::getInstance().getRates())
     , m_isOnline(false)
     , m_isSyncInProgress(!m_model->isSynced())
@@ -48,6 +49,9 @@ StatusbarViewModel::StatusbarViewModel()
     connect(&m_exchangeRatesTimer, SIGNAL(timeout()), SLOT(onExchangeRatesTimer()));
     connect(m_exchangeRatesManager.get(), SIGNAL(updateTimeChanged()), SLOT(onExchangeRatesTimer()));
     m_model->getAsync()->getNetworkStatus();
+
+    auto& settings = AppModel::getInstance().getSettings();
+    connect(&settings, &WalletSettings::IPFSSettingsChanged, this, &StatusbarViewModel::onIPFSSettingsChanged);
 
     #ifdef BEAM_IPFS_SUPPORT
     connect(m_model.get(), &WalletModel::IPFSStatusChanged, this, &StatusbarViewModel::onIPFSStatus);
@@ -420,6 +424,10 @@ void StatusbarViewModel::connectEthClient()
 #ifdef BEAM_IPFS_SUPPORT
 QString StatusbarViewModel::getIPFSStatus() const
 {
+    if (m_settings.getIPFSNodeLaunch() == WalletSettings::IPFSLaunch::Never) {
+        return "uninitialized";
+    }
+
     if (!m_ipfsError.isEmpty()) {
         return "error";
     }
@@ -433,6 +441,9 @@ QString StatusbarViewModel::getIPFSStatus() const
 
 QString StatusbarViewModel::getIPFSError() const
 {
+    if (m_settings.getIPFSNodeLaunch() == WalletSettings::IPFSLaunch::Never) {
+        return "";
+    }
     return m_ipfsError;
 }
 
@@ -440,7 +451,12 @@ void StatusbarViewModel::onIPFSStatus(bool running, const QString& error, uint32
 {
     m_ipfsRunning = running;
     m_ipfsPeerCnt = peercnt;
-    m_ipfsError = error;
+    m_ipfsError   = error; // TODO:IPFS handle long errors that come from golang
+    emit IPFSStatusChanged();
+}
+
+void StatusbarViewModel::onIPFSSettingsChanged()
+{
     emit IPFSStatusChanged();
 }
 #endif

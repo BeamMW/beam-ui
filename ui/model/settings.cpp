@@ -876,6 +876,7 @@ void WalletSettings::setIPFSPort(uint32_t port)
     }
 
     m_data.setValue(keySwarmPort, port);
+    emit IPFSSettingsChanged();
 }
 
 void WalletSettings::setIPFSNodeStart(const QString& start)
@@ -888,6 +889,7 @@ void WalletSettings::setIPFSNodeStart(const QString& start)
     }
 
     m_data.setValue(keyNodeStart, start);
+    emit IPFSSettingsChanged();
 }
 
 QString WalletSettings::getIPFSNodeStart() const

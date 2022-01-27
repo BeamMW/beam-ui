@@ -415,8 +415,8 @@ Rectangle {
         updateItem("wallet", {"openReceive": true, "token" : token})
     }
 
-    function openSwapSettings(coinID) {
-        updateItem("settings", {swapMode: typeof(coinID) == "string" ? coinID : "ALL"})
+    function openSettings(section) {
+        updateItem("settings", {"unfoldSection": section})
     }
 
     function openSwapActiveTransactionsList() {

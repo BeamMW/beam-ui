@@ -12,9 +12,9 @@ ColumnLayout {
     Layout.fillWidth: true
     state: "general"
 
-    property string  linkStyle:  "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
-    property string  swapMode:   ""
-    property bool    creating:   true
+    property string  linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
+    property string  unfoldSection:   ""
+    property bool    creating: true
 
     property bool settingsPrivacyFolded: true
 
@@ -147,7 +147,7 @@ ColumnLayout {
                     showStatus: true
                     connectionStatus: getStatus()
                     connectionError:  statusBar.walletError
-                    folded: swapMode != "BEAM"
+                    folded: unfoldSection != "BEAM_NODE"
 
                     function getStatus() {
                         var sbar = statusBar.model
@@ -161,6 +161,7 @@ ColumnLayout {
                     id: ipfsBlock
                     viewModel: viewModel
                     visible: viewModel.ipfsSupported
+                    folded: unfoldSection != "IPFS_NODE"
 
                     showStatus: true
                     connectionStatus: statusBar.model.ipfsStatus
@@ -184,7 +185,10 @@ ColumnLayout {
                         connectionStatus:         modelData.connectionStatus
                         connectionError:          modelData.connectionError
                         getAddressesElectrum:     modelData.getAddressesElectrum
-                        folded:                   creating ? (swapMode == modelData.coinID ? false : (swapMode == "ALL" ? modelData.isConnected : true)) : modelData.folded
+                        folded:                   creating ? modelData.folded :
+                                                             (unfoldSection == modelData.coinID ? false : (unfoldSection == "ALL_COINS" ? modelData.isConnected : true))
+
+
                         mainSettingsViewModel:    viewModel
                         showStatus:               true
 
@@ -341,13 +345,11 @@ ColumnLayout {
                     mainSettingsViewModel:    viewModel
                     showStatus:               true
                     getEthereumAddresses:     viewModel.ethSettings.getEthereumAddresses
-                    folded:                   creating ? (swapMode == viewModel.ethSettings.coinID ? false : (swapMode == "ALL" ? viewModel.ethSettings.isConnected : true)) : viewModel.ethSettings.folded
-                                             
+                    folded:                   creating ? (unfoldSection == viewModel.ethSettings.coinID ? false : (unfoldSection == "ALL_COINS" ? viewModel.ethSettings.isConnected : true)) : viewModel.ethSettings.folded
                     canChangeConnection:      viewModel.ethSettings.canChangeConnection
                     isConnected:              viewModel.ethSettings.isConnected
                     connectionStatus:         viewModel.ethSettings.connectionStatus
                     connectionError:          viewModel.ethSettings.connectionError
-                                             
                     infuraProjectID:          viewModel.ethSettings.infuraProjectID
                     accountIndex:             viewModel.ethSettings.accountIndex
 
