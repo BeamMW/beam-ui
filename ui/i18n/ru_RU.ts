@@ -3435,5 +3435,21 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>All</source>
         <translation type="unfinished">Все</translation>
     </message>
+    <message id="wallet-remove-filter-button">
+        <source>Remove filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-assets-title">
+        <source>Assets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-selected-assets-checkbox">
+        <source>Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-all-assets-checkbox">
+        <source>All</source>
+        <translation type="unfinished">Все</translation>
+    </message>
 </context>
 </TS>
