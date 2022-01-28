@@ -125,8 +125,6 @@ Control {
 
                         onClicked: function () {
                             viewModel.addAssetToSelected(model.id)
-                            if(control.selectedIds.length == 0)
-                                showSelected = false
                         }
                     }
 

@@ -196,7 +196,7 @@ Item {
                     CustomSwitch {
                         id: assetsFilterSwitch
                         checkable: assets.selectedIds.length != 0
-                        checked: !transactionsLayout.showSelected
+                        checked: assets.selectedIds.length == 0 ? true : !transactionsLayout.showSelected
                         alwaysGreen: true
 
                         Binding {
