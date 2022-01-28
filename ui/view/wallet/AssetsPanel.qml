@@ -25,22 +25,17 @@ Control {
     function updateView () {
         control.assetsCount = viewModel.assets.rowCount()
 
-        if (selectedId >= 0) {
+        if (selectedIds.length != 0) {
             var roleid = viewModel.assets.getRoleId("id")
             for (var idx = 0; idx < control.assetsCount; ++idx) {
-                var modelIdx = viewModel.assets.index(idx, 0);
+                var modelIdx = viewModel.assets.index(idx, 0)
                 var data = viewModel.assets.data(modelIdx, 258)
-
-                if (selectedId >=0 && selectedId == data) {
-                    // currently selected asset is still present
-                    return
-                }
             }
         }
+    }
 
-        // there is no previously selected asset
-        // reset selection to nothing
-        selectedId  = -1
+    function clearSelectedAssets(assets) {
+        viewModel.clearSelectedAssets(assets)
     }
 
     Component.onCompleted: function() {
@@ -52,9 +47,10 @@ Control {
     property real   hSpacing:       10
     property real   vSpacing:       10
     property int    maxVisibleRows: 3
-    property alias  selectedId:     viewModel.selectedAsset
+    property alias  selectedIds:    viewModel.selectedAssets
     property int    assetsCount:    1
     property real   itemHeight:     75
+    property bool   showSelected:   false
 
     property bool  showFaucetPromo: viewModel.showFaucetPromo
     property bool  showValidationPromo: viewModel.showValidationPromo && !seedValidationHelper.isSeedValidated
@@ -122,12 +118,13 @@ Control {
                         implicitHeight: control.itemHeight
                         implicitWidth:  control.itemWidth
                         assetInfo:      model
-                        selected:       model.id == control.selectedId
-                        opacity:        control.selectedId < 0 ? 1 : (selected ? 1 : 0.6)
+                        visible:        !showSelected || control.selectedIds.indexOf(model.id) != -1
+                        selected:       control.selectedIds.indexOf(model.id) != -1
+                        opacity:        control.selectedIds.length != 0 ? (control.selectedIds.indexOf(model.id) != -1 ? 1 : 0.6) : 1
                         layer.enabled:  model.verified
 
                         onClicked: function () {
-                            control.selectedId = control.selectedId == model.id ? -1 : model.id
+                            viewModel.addAssetToSelected(model.id)
                         }
                     }
 
