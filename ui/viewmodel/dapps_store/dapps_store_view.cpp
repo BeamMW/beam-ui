@@ -146,7 +146,8 @@ QMap<QString, QVariant> DappsStoreViewModel::parseAppManifest(QTextStream& in, c
     }
 
     app.insert("local", true);
-    const auto appid = beam::wallet::GenerateAppID(sname, surl);
+    // TODO: check why we used surl instead of extended url - app["url"]
+    const auto appid = beam::wallet::GenerateAppID(sname, app["url"].toString().toStdString());
     app.insert("appid", QString::fromStdString(appid));
 
     return app;
@@ -228,7 +229,18 @@ void DappsStoreViewModel::loadApps()
                     // TODO: check
                     app.insert("supported", true);
 
-                    app.insert("notInstalled", true);
+                    auto localApp = loadLocalDapp(guid);
+
+                    if (localApp.isEmpty())
+                    {
+                        app.insert("notInstalled", true);
+                    }
+                    else
+                    {
+                        app.insert("appid", localApp["appid"]);
+                        // TODO:  add version comparison
+                        app.insert("hasUpdate", false);
+                    }
 
                     apps.push_back(app);
                 }
@@ -242,6 +254,35 @@ void DappsStoreViewModel::loadApps()
             }
         }
     );
+}
+
+QMap<QString, QVariant> DappsStoreViewModel::loadLocalDapp(const QString& guid)
+{
+    const auto appsPath = AppSettings().getLocalAppsPath();
+    const auto appFolder = QDir(appsPath).filePath(guid);
+    const auto manifestPath = QDir(appFolder).absoluteFilePath("manifest.json");
+
+    try
+    {
+        if (QDir(appFolder).exists())
+        {
+            QFile file(manifestPath);
+            if (!file.open(QFile::ReadOnly | QFile::Text))
+            {
+                throw std::runtime_error("Cannot open file");
+            }
+
+            QTextStream in(&file);
+            auto app = parseAppManifest(in, guid);
+            app.insert("full_path", appFolder);
+            return app;
+        }
+    }
+    catch (std::runtime_error& err)
+    {
+        LOG_WARNING() << "Error while reading local app from " << manifestPath.toStdString() << ", " << err.what();
+    }
+    return {};
 }
 
 QList<QMap<QString, QVariant>> DappsStoreViewModel::getApps()

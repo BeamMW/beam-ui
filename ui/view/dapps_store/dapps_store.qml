@@ -91,10 +91,10 @@ ColumnLayout {
         }
     }
 
-
     function launchApp(app) {
-        // TODO:
-        main.openApplications()
+        var appName = app.name;
+        var appid = app.appid;
+        main.updateItem("applications", {"appToOpen": { "name": appName, "appid": appid}, "showBack": false})
     }
 
     Item {

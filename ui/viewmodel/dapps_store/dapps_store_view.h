@@ -49,6 +49,8 @@ private:
     void addAppToStore(QMap<QString, QVariant>&& app, const std::string& ipfsCID);
     QString installFromBuffer(QIODevice* ioDevice);
 
+    QMap<QString, QVariant> loadLocalDapp(const QString& guid);
+
     QString _serverAddr;
     QList<QMap<QString, QVariant>> _apps;
     QString _publisherKey;
