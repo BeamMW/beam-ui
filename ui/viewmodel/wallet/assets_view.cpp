@@ -35,14 +35,7 @@ QVector<beam::Asset::ID> AssetsViewModel::getSelectedAssets()
     return _selectedAssets;
 }
 
-void AssetsViewModel::setSelectedAssets(QVector<beam::Asset::ID> assetIds)
-{
-    _selectedAssets = assetIds;
-    _settings.setLastAssetSelection(_selectedAssets);
-    emit selectedAssetChanged();
-}
-
-void AssetsViewModel::setSelectedAsset(int assetId)
+void AssetsViewModel::addAssetToSelected(int assetId)
 {
     if (assetId < 0)
         return;
@@ -56,6 +49,13 @@ void AssetsViewModel::setSelectedAsset(int assetId)
     {
         _selectedAssets.remove(id);
     }
+    _settings.setLastAssetSelection(_selectedAssets);
+    emit selectedAssetChanged();
+}
+
+void AssetsViewModel::clearSelectedAssets()
+{
+    _selectedAssets.clear();
     _settings.setLastAssetSelection(_selectedAssets);
     emit selectedAssetChanged();
 }

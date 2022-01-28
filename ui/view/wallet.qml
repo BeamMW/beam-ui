@@ -127,7 +127,7 @@ Item {
                     text: qsTrId("wallet-remove-filter-button")
                     font.pixelSize: 12
                     onClicked: {
-                        assets.setSelectedAssets([])
+                        assets.clearSelectedAssets()
                         showSelected = false
                     }
                 }

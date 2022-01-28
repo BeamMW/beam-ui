@@ -34,8 +34,8 @@ Control {
         }
     }
 
-    function setSelectedAssets(assets) {
-        viewModel.setSelectedAssets(assets)
+    function clearSelectedAssets(assets) {
+        viewModel.clearSelectedAssets(assets)
     }
 
     Component.onCompleted: function() {
@@ -124,7 +124,7 @@ Control {
                         layer.enabled:  model.verified
 
                         onClicked: function () {
-                            viewModel.setSelectedAsset(model.id)
+                            viewModel.addAssetToSelected(model.id)
                             if(control.selectedIds.length == 0)
                                 showSelected = false
                         }
