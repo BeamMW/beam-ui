@@ -590,8 +590,32 @@ void DappsStoreViewModel::installApp(const QString& guid)
                     return;
                 }
 
-                // unpack & verify & install
-                installFromBuffer(std::move(data), appName);
+                try
+                {
+                    // unpack & verify & install
+                    LOG_DEBUG() << "Installing DApp " << appName.toStdString() << " from ipfs";
+
+                    QByteArray qData;
+                    std::copy(data.cbegin(), data.cend(), std::back_inserter(qData));
+
+                    QBuffer buffer(&qData);
+                    const auto result = installFromBuffer(&buffer);
+
+                    // TODO: probably not the best place to check
+                    if (result != appName)
+                    {
+                        assert(false);
+                        LOG_WARNING() << "Mismatched DApp names, expected - "
+                            << appName.toStdString() << ", resulting - " << result.toStdString();
+                    }
+
+                    emit appInstallOK(appName);
+                }
+                catch (std::runtime_error& err)
+                {
+                    LOG_ERROR() << "Failed to install DApp: " << err.what();
+                    emit appInstallFail(appName);
+                }
             },
             [this, guard, appName](std::string&& err)
             {
@@ -608,68 +632,55 @@ void DappsStoreViewModel::installApp(const QString& guid)
     }
 }
 
-void DappsStoreViewModel::installFromBuffer(std::vector<uint8_t>&& data, const QString& appName)
+QString DappsStoreViewModel::installFromBuffer(QIODevice* ioDevice)
 {
-    try
+    QuaZip zip(ioDevice);
+    if (!zip.open(QuaZip::Mode::mdUnzip))
     {
-        LOG_DEBUG() << "Installing DApp " << appName.toStdString() << " from ipfs";
+        throw std::runtime_error("Failed to open the DApp archive");
+    }
 
-        QByteArray qData;
-        std::copy(data.cbegin(), data.cend(), std::back_inserter(qData));
-
-        QBuffer buffer(&qData);
-        QuaZip zip(&buffer);
-        if (!zip.open(QuaZip::Mode::mdUnzip))
+    QString guid, appName;
+    for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
+    {
+        const auto zipFname = zip.getCurrentFileName();
+        if (zipFname == "manifest.json")
         {
-            throw std::runtime_error("Failed to open the DApp archive");
-        }
-
-        QString guid;
-        for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
-        {
-            const auto zipFname = zip.getCurrentFileName();
-            if (zipFname == "manifest.json")
+            QuaZipFile mfile(&zip);
+            if (!mfile.open(QIODevice::ReadOnly))
             {
-                QuaZipFile mfile(&zip);
-                if (!mfile.open(QIODevice::ReadOnly))
-                {
-                    throw std::runtime_error("Failed to read the DApp archive");
-                }
+                throw std::runtime_error("Failed to read the DApp archive");
+            }
                 
-                QTextStream in(&mfile);
-                const auto app = parseAppManifest(in, "");
-                guid = app["guid"].value<QString>();
-            }
+            QTextStream in(&mfile);
+            const auto app = parseAppManifest(in, "");
+            guid = app["guid"].value<QString>();
+            appName = app["name"].value<QString>();
         }
-
-        if (guid.isEmpty())
-        {
-            throw std::runtime_error("Invalid DApp archive");
-        }
-
-        const auto appsPath = AppSettings().getLocalAppsPath();
-        const auto appFolder = QDir(appsPath).filePath(guid);
-
-        if (QDir(appFolder).exists())
-        {
-            if (!QDir(appFolder).removeRecursively())
-            {
-                throw std::runtime_error("Failed to prepare folder");
-            }
-        }
-
-        QDir(appsPath).mkdir(guid);
-        if (JlCompress::extractDir(&buffer, appFolder).isEmpty())
-        {
-            //cleanupFolder(appFolder)
-            throw std::runtime_error("DApp Installation failed");
-        }
-
-        emit appInstallOK(appName);
     }
-    catch (std::exception& err)
+
+    if (guid.isEmpty())
     {
-        LOG_ERROR() << "Failed to install DApp: " << err.what();
-        emit appInstallFail(appName);
+        throw std::runtime_error("Invalid DApp archive");
     }
+
+    const auto appsPath = AppSettings().getLocalAppsPath();
+    const auto appFolder = QDir(appsPath).filePath(guid);
+
+    if (QDir(appFolder).exists())
+    {
+        if (!QDir(appFolder).removeRecursively())
+        {
+            throw std::runtime_error("Failed to prepare folder");
+        }
+    }
+
+    QDir(appsPath).mkdir(guid);
+    if (JlCompress::extractDir(ioDevice, appFolder).isEmpty())
+    {
+        //cleanupFolder(appFolder)
+        throw std::runtime_error("DApp Installation failed");
+    }
+
+    return appName;
 }

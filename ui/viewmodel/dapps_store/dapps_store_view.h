@@ -47,7 +47,7 @@ private:
     [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
     QMap<QString, QVariant> parseAppManifest(QTextStream& io, const QString& appFolder);
     void addAppToStore(QMap<QString, QVariant>&& app, const std::string& ipfsCID);
-    void installFromBuffer(std::vector<uint8_t>&& data, const QString& appName);
+    QString installFromBuffer(QIODevice* ioDevice);
 
     QString _serverAddr;
     QList<QMap<QString, QVariant>> _apps;
