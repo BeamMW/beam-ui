@@ -14,6 +14,7 @@
 #include "settings.h"
 #include <algorithm>
 #include <map>
+#include <QDataStream>
 #include <QFileDialog>
 #include <QtQuick>
 #include "model/app_model.h"
@@ -973,30 +974,27 @@ void WalletSettings::setMinConfirmations(uint32_t value)
     }
 }
 
-boost::optional<beam::Asset::ID> WalletSettings::getLastAssetSelection() const
+QVector<beam::Asset::ID> WalletSettings::getLastAssetSelection() const
 {
     Lock lock(m_mutex);
-    if (m_data.contains(kLastAssetSelection))
-    {
-        return m_data.value(kLastAssetSelection).toInt();
-    }
-    else
-    {
-        return boost::none;
-    }
+
+    auto ser = m_data.value(kLastAssetSelection).value<QByteArray>();
+    QDataStream in(&ser, QIODevice::ReadOnly);
+    QVector<beam::Asset::ID> res;
+    in >> res;
+
+    return res;
 }
 
-void WalletSettings::setLastAssetSelection(boost::optional<beam::Asset::ID> selection)
+void WalletSettings::setLastAssetSelection(QVector<beam::Asset::ID> selection)
 {
     Lock lock(m_mutex);
-    if (selection.is_initialized())
-    {
-        m_data.setValue(kLastAssetSelection, *selection);
-    }
-    else
-    {
-        m_data.remove(kLastAssetSelection);
-    }
+
+    QByteArray ser;
+    QDataStream out(&ser, QIODevice::WriteOnly);
+    out << selection;
+
+    m_data.setValue(kLastAssetSelection, QVariant::fromValue<QByteArray>(ser));
 }
 
 bool WalletSettings::getShowInProgress() const

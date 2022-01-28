@@ -16,7 +16,7 @@ Control {
         id: tableViewModel
     }
 
-    property int       selectedAsset: -1
+    property var       selectedAssets: []
     property int       emptyMessageMargin: 90
     property int       activeTxCnt: 0
     property alias     headerShaderVisible: transactionsTable.headerShaderVisible
@@ -404,7 +404,7 @@ Control {
                     source: SortFilterProxyModel {
                         id:           assetFilterProxy
                         filterRole:   "assetFilter"
-                        filterString: control.selectedAsset < 0 ? "" : ["\\b", control.selectedAsset, "\\b"].join("")
+                        filterString: control.selectedAssets.reduce(function(sum, current) { return sum + ["|", "\\b", current, "\\b"].join(""); }, "").slice(1)
                         filterSyntax: SortFilterProxyModel.RegExp
 
                         source: SortFilterProxyModel {

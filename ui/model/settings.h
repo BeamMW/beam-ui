@@ -139,8 +139,8 @@ public:
     uint32_t getMinConfirmations() const;
     void setMinConfirmations(uint32_t value);
 
-    [[nodiscard]] boost::optional<beam::Asset::ID> getLastAssetSelection() const;
-    void setLastAssetSelection(boost::optional<beam::Asset::ID> selection);
+    [[nodiscard]] QVector<beam::Asset::ID> getLastAssetSelection() const;
+    void setLastAssetSelection(QVector<beam::Asset::ID> selection);
 
     // tx table filters
     bool getShowInProgress() const;
