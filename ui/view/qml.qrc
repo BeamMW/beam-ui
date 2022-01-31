@@ -57,6 +57,7 @@
         <file>controls/OpenExternalLinkConfirmation.qml</file>
         <file>controls/SeedInput.qml</file>
         <file>controls/CustomTripleSwitch.qml</file>
+        <file>controls/DnDdappInstallDialog.qml</file>
         <file>controls/TristateSwitch.qml</file>
         <file>controls/ConfirmRefreshDialog.qml</file>
         <file>controls/OwnerKeyDialog.qml</file>
@@ -372,5 +373,8 @@
         <file>assets/icon-help.svg</file>
         <file>assets/icon-help-active.svg</file>
         <file>assets/icon-trusted-node-status-stale.svg</file>
+        <file>assets/upload-a-file.svg</file>
+        <file>assets/upload-error.svg</file>
+        <file>assets/upload-success.svg</file>
     </qresource>
 </RCC>

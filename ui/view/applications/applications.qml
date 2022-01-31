@@ -29,6 +29,13 @@ ColumnLayout {
         txTable.showTxDetails(txid)
     }
 
+    DnDdappInstallDialog {
+        id: dndDialog
+        onGetFileName: function(fname) {
+            appsListView.install(fname);
+        }
+    }
+
     ApplicationsViewModel {
         id: viewModel
     }
@@ -405,6 +412,10 @@ ColumnLayout {
         visible:  control.hasApps && !control.activeApp
         appsList: control.appsList
 
+        onOpenDnd: function () {
+            dndDialog.open();
+        }
+
         onLaunch: function (app) {
             launchApp(app)
         }
@@ -418,13 +429,10 @@ ColumnLayout {
             var appName = viewModel.installFromFile(fname)
             if (appName.length) {
                 loadAppsList()
-                //% "'%1' is successfully installed."
-                installOK.text = qsTrId("apps-install-success").arg(appName)
-                installOK.open()
+                dndDialog.isOk = true;
+                dndDialog.appName = appName;
             } else {
-                //% "Failed to install DApp:\n%1"
-                installFail.text = qsTrId("apps-install-fail").arg(fname)
-                installFail.open()
+                dndDialog.isFail = true;
             }
         }
 

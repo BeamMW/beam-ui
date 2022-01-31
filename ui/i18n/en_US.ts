@@ -3215,16 +3215,6 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation>To ensure a better privacy, new address is generated every time.
 In case you’d like to re-use an earlier created regular address please use the Address Book.</translation>
     </message>
-    <message id="apps-install-success">
-        <source>&apos;%1&apos; is successfully installed.</source>
-        <translation>&apos;%1&apos; is successfully installed.</translation>
-    </message>
-    <message id="apps-install-fail">
-        <source>Failed to install DApp:
-%1</source>
-        <translation>Failed to install DApp:
-%1</translation>
-    </message>
     <message id="app-install-title">
         <source>Install DApp</source>
         <translation>Install DApp</translation>
@@ -3428,6 +3418,26 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="wallet-all-assets-checkbox">
         <source>All</source>
         <translation>All</translation>
+    </message>
+    <message id="dnd-app-install-title">
+        <source>Install DApp</source>
+        <translation>Install DApp</translation>
+    </message>
+    <message id="dnd-load-a-file">
+        <source>load a file</source>
+        <translation>load a file</translation>
+    </message>
+    <message id="dnd-jus-drop">
+        <source>or just drop it here</source>
+        <translation>or just drop it here</translation>
+    </message>
+    <message id="dnd-install-success">
+        <source>The &quot;%1&quot; DApp is installed successfully.</source>
+        <translation>The &quot;%1&quot; DApp is installed successfully.</translation>
+    </message>
+    <message id="dnd-install-fail">
+        <source>The DApp installation error.</source>
+        <translation>The DApp installation error.</translation>
     </message>
 </context>
 </TS>
