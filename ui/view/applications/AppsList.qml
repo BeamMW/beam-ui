@@ -9,6 +9,7 @@ Item {
     id: control
     property var  appsList
     property bool hasLocal
+    property alias showInstallFromFilePanel: installFromFilePanel.visible
 
     onAppsListChanged: function() {
         if (!!appsList && appsList.length > 0) {
@@ -24,6 +25,7 @@ Item {
 
     signal launch(var app)
     signal install(var fname)
+    signal update(var app)
     signal uninstall(var app)
 
     DropArea {
@@ -143,7 +145,7 @@ Item {
                                 palette.buttonText : Style.content_main
                                 icon.source: "qrc:/assets/icon-run.svg"
                                 icon.height: 16
-                                visible: modelData.supported && (modelData.notInstalled !== undefined && modelData.notInstalled)
+                                visible: modelData.supported && !!modelData.notInstalled
                                 //% "Install"
                                 text: qsTrId("dapps-store-install")
 
@@ -163,7 +165,27 @@ Item {
                                 palette.buttonText : Style.content_main
                                 icon.source: "qrc:/assets/icon-run.svg"
                                 icon.height: 16
-                                visible: modelData.supported && (modelData.notInstalled === undefined || !modelData.notInstalled)
+                                visible: modelData.supported && !modelData.notInstalled && !!modelData.hasUpdate
+                                //% "Update"
+                                text: qsTrId("dapps-store-update")
+
+                                MouseArea {
+                                    anchors.fill:     parent
+                                    acceptedButtons:  Qt.LeftButton
+                                    hoverEnabled:     true
+                                    propagateComposedEvents: true
+                                    onClicked:        control.update(modelData)
+                                }
+                            }
+
+                            CustomButton {
+                                Layout.rightMargin: control.hasLocal ? 0 : 20
+                                height: 40
+                                palette.button: Style.background_button
+                                palette.buttonText : Style.content_main
+                                icon.source: "qrc:/assets/icon-run.svg"
+                                icon.height: 16
+                                visible: modelData.supported && !modelData.notInstalled
                                 //% "launch"
                                 text: qsTrId("apps-run")
 
@@ -244,6 +266,7 @@ Item {
                 }
 
                 Item {
+                    id: installFromFilePanel
                     Layout.fillWidth: true
                     Layout.preferredHeight: 60
                     opacity: 0.3

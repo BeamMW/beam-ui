@@ -240,7 +240,7 @@ void DappsStoreViewModel::loadApps()
                     {
                         app.insert("appid", localApp["appid"]);
                         // TODO:  add version comparison
-                        app.insert("hasUpdate", false);
+                        app.insert("hasUpdate", true);
                     }
 
                     apps.push_back(app);
@@ -673,11 +673,11 @@ void DappsStoreViewModel::registerPublisher()
     );
 }
 
-void DappsStoreViewModel::installApp(const QString& guid)
+QMap<QString, QVariant> DappsStoreViewModel::getAppByGUID(const QString& guid)
 {
     // find app in _apps by guid
     const auto it = std::find_if(_apps.cbegin(), _apps.cend(),
-        [guid] (const auto& app) -> bool {
+        [guid](const auto& app) -> bool {
             const auto appIt = app.find("guid");
             if (appIt == app.end())
             {
@@ -685,18 +685,29 @@ void DappsStoreViewModel::installApp(const QString& guid)
                 return false;
             }
             return appIt->toString() == guid;
-    });
+        });
 
     if (it == _apps.end())
     {
         assert(false);
-        return;
+        return {};
     }
+    return *it;
+}
 
+void DappsStoreViewModel::installApp(const QString& guid)
+{
     try
     {
-        const auto ipfsID = (*it)["ipfs_id"].toString();
-        const auto appName = (*it)["name"].toString();
+        const auto app = getAppByGUID(guid);
+        if (app.isEmpty())
+        {
+            LOG_WARNING() << "Failed to find Dapp by guid " << guid.toStdString();
+            return;
+        }
+
+        const auto ipfsID = app["ipfs_id"].toString();
+        const auto appName = app["name"].toString();
 
         // get dapp binary data from ipfs
         QPointer<DappsStoreViewModel> guard(this);
@@ -804,4 +815,9 @@ QString DappsStoreViewModel::installFromBuffer(QIODevice* ioDevice)
     }
 
     return appName;
+}
+
+void DappsStoreViewModel::updateApp(const QString& guid)
+{
+    // TODO: implement
 }

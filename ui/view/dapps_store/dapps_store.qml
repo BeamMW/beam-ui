@@ -199,10 +199,18 @@ ColumnLayout {
         }
     }
 
+    function installApp(app) {
+        viewModel.installApp(app.guid)
+    }
+
     function launchApp(app) {
         var appName = app.name;
         var appid = app.appid;
         main.updateItem("applications", {"appToOpen": { "name": appName, "appid": appid}, "showBack": false})
+    }
+
+    function updateApp(app) {
+        viewModel.updateApp(app.guid)
     }
 
     Item {
@@ -276,13 +284,18 @@ ColumnLayout {
         opacity:  1.0
         visible:  control.hasApps && !control.activeApp
         appsList: control.appsList
+        showInstallFromFilePanel: false
 
         onLaunch: function (app) {
             launchApp(app)
         }
 
         onInstall: function (app) {
-            viewModel.installApp(app.guid)
+            installApp(app)
+        }
+
+        onUpdate: function (app) {
+            updateApp(app)
         }
     }
 

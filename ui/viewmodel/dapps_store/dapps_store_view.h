@@ -38,6 +38,7 @@ public:
     Q_INVOKABLE void uploadApp();
     Q_INVOKABLE void registerPublisher();
     Q_INVOKABLE void installApp(const QString& guid);
+    Q_INVOKABLE void updateApp(const QString& guid);
 
 signals:
     void appsChanged();
@@ -54,6 +55,8 @@ private:
     QString installFromBuffer(QIODevice* ioDevice);
 
     QMap<QString, QVariant> loadLocalDapp(const QString& guid);
+
+    QMap<QString, QVariant> getAppByGUID(const QString& guid);
 
     QString _serverAddr;
     QList<QMap<QString, QVariant>> _apps;
