@@ -557,7 +557,6 @@ CustomDialog {
                     elide: Text.ElideMiddle
                     onCopyText: textCopied(dialog.kernelID)
                 }
-
                 OpenInBlockchainExplorer {
                     Layout.rightMargin: 3
                     visible: dialog.isCompleted && kernelID.parent.visible

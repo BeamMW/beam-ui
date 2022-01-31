@@ -12,21 +12,10 @@ Item {
         console.log("triggered");
     }
 
-    SFText {
-        id: openInExplorer
-        font.pixelSize: 14
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.rightMargin: 10
-        color: Style.active
-        //% "Open in Blockchain Explorer"
-        //text: qsTrId("open-in-explorer")
-    }
     SvgImage {
         id: openInExplorerIcon
         anchors.top: parent.top
         anchors.right: parent.right
-        anchors.centerIn: parent
         source: "qrc:/assets/icon-external-link-green.svg"
     }
     MouseArea {
