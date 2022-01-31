@@ -8,6 +8,7 @@ import "../controls"
 CustomDialog {
     id: "dialog"
 
+    property var dateField: ""
     property var sendAddress: ""
     property var receiveAddress: ""
     property var senderIdentity: ""
@@ -141,6 +142,27 @@ CustomDialog {
             columnSpacing: 40
             rowSpacing: 14
             columns: 2
+            
+            SFText {
+                font.pixelSize: 14
+                color: Style.content_secondary
+                //% "Date"
+                text: qsTrId("tx-details-date-label") + ":"
+                visible: dateField.parent.visible
+            }
+            RowLayout {
+                visible: stm.state == "tx_info" && dialog.sendAddress.length && !(isIncome && isShieldedTx)
+                SFLabel {
+                    id: dateField
+                    Layout.fillWidth: true
+                    copyMenuEnabled: true
+                    font.pixelSize: 14
+                    color: Style.content_main
+                    elide: Text.ElideMiddle
+                    text: getHighlitedText(dialog.dateField)
+                    onCopyText: textCopied(dialog.dateField)
+                }
+            }
             
             SFText {
                 font.pixelSize: 14
@@ -535,24 +557,24 @@ CustomDialog {
                     elide: Text.ElideMiddle
                     onCopyText: textCopied(dialog.kernelID)
                 }
-                CustomToolButton {
-                    Layout.alignment: Qt.AlignRight
-                    icon.source: "qrc:/assets/icon-copy.svg"
-                    onClicked: textCopied(kernelID.text)
-                    padding: 0
-                    background.implicitHeight: 16
+//                CustomToolButton {
+//                    Layout.alignment: Qt.AlignRight
+//                    icon.source: "qrc:/assets/icon-copy.svg"
+//                    onClicked: textCopied(kernelID.text)
+//                    padding: 0
+//                    background.implicitHeight: 16
+//                }
+                OpenInBlockchainExplorer {
+                    visible: dialog.isCompleted && kernelID.parent.visible
+                    onTriggered: function(kernelID) {
+                        openExternal(dialog.kernelID);
+                    }
                 }
             }
 
             Item {
                 height: 16
                 visible: dialog.isCompleted && kernelID.parent.visible
-            }
-            OpenInBlockchainExplorer {
-                visible: dialog.isCompleted && kernelID.parent.visible
-                onTriggered: function(kernelID) {
-                    openExternal(dialog.kernelID);
-                }
             }
 
             RowLayout {

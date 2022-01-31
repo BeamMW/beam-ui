@@ -20,12 +20,13 @@ Item {
         anchors.rightMargin: 10
         color: Style.active
         //% "Open in Blockchain Explorer"
-        text: qsTrId("open-in-explorer")
+        //text: qsTrId("open-in-explorer")
     }
     SvgImage {
         id: openInExplorerIcon
         anchors.top: parent.top
         anchors.right: parent.right
+        anchors.centerIn: parent
         source: "qrc:/assets/icon-external-link-green.svg"
     }
     MouseArea {
