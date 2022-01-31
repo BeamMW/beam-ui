@@ -18,6 +18,7 @@ class DappsStoreViewModel : public QObject
     Q_OBJECT
     Q_PROPERTY(QList<QMap<QString, QVariant>> apps READ getApps NOTIFY appsChanged)
     Q_PROPERTY(QString publisherKey READ getPublisherKey NOTIFY publisherKeyChanged)
+    Q_PROPERTY(QList<QMap<QString, QVariant>> publishers READ getPublishers NOTIFY publishersChanged)
 
 public:
     DappsStoreViewModel();
@@ -25,8 +26,10 @@ public:
 
     [[nodiscard]] QList<QMap<QString, QVariant>> getApps();
     QString getPublisherKey();
+    [[nodiscard]] QList<QMap<QString, QVariant>> getPublishers();
 
     void loadApps();
+    void loadPublishers();
 
 public:
     Q_INVOKABLE void onCompleted(QObject *webView);
@@ -41,6 +44,7 @@ signals:
     void publisherKeyChanged();
     void appInstallOK(const QString& appName);
     void appInstallFail(const QString& appName);
+    void publishersChanged();
 
 private:
     [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
@@ -54,4 +58,5 @@ private:
     QString _serverAddr;
     QList<QMap<QString, QVariant>> _apps;
     QString _publisherKey;
+    QList<QMap<QString, QVariant>> _publishers;
 };

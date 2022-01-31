@@ -49,6 +49,7 @@ DappsStoreViewModel::DappsStoreViewModel()
     _serverAddr = QString("127.0.0.1:") + QString::number(AppSettings().getAppsServerPort());
 
     loadApps();
+    loadPublishers();
 }
 
 DappsStoreViewModel::~DappsStoreViewModel()
@@ -285,6 +286,80 @@ QMap<QString, QVariant> DappsStoreViewModel::loadLocalDapp(const QString& guid)
     return {};
 }
 
+void DappsStoreViewModel::loadPublishers()
+{
+    std::string args = "action=view_publishers,cid=";
+    args += getDappStoreCID();
+
+    QPointer<DappsStoreViewModel> guard(this);
+
+    AppModel::getInstance().getWalletModel()->getAsync()->callShader(kDappStoreShaderPath, args,
+        [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
+        {
+            if (!guard)
+            {
+                return;
+            }
+
+            if (!err.empty())
+            {
+                LOG_WARNING() << "Failed to load publishers list" << ", " << err;
+                return;
+            }
+
+            try
+            {
+                auto json = nlohmann::json::parse(output);
+
+                auto parseStringField = [](nlohmann::json& json, const char* fieldName) {
+                    const auto& field = json[fieldName];
+                    if (!field.is_string())
+                    {
+                        std::stringstream ss;
+                        ss << "Invalid " << fieldName << " of the dapp";
+                        throw std::runtime_error(ss.str());
+                    }
+                    return QString::fromStdString(field.get<std::string>());
+                };
+
+                if (json.empty() || !json.is_object() || json["publishers"].empty() || !json["publishers"].is_array())
+                {
+                    throw std::runtime_error("Invalid response of the view_publishers method");
+                }
+
+                LOG_INFO() << json.dump(4);
+
+                QList<QMap<QString, QVariant>> publishers;
+
+                for (auto& item : json["publishers"].items())
+                {
+                    if (!item.value().is_object())
+                    {
+                        throw std::runtime_error("Invalid body of the publisher " + item.key());
+                    }
+                    auto name = parseStringField(item.value(), "name");
+                    auto pubKey = parseStringField(item.value(), "pubkey");
+
+                    LOG_DEBUG() << "Parsing Publisher from contract, name - " << name.toStdString() << ", pubKey - " << pubKey.toStdString();
+
+                    QMap<QString, QVariant> publisher;
+                    publisher.insert("pubkey", pubKey);
+                    publisher.insert("name", name);
+
+                    publishers.push_back(publisher);
+                }
+
+                _publishers = publishers;
+                emit publishersChanged();
+            }
+            catch (std::runtime_error& err)
+            {
+                LOG_WARNING() << "Error while parsing publisher from contract" << ", " << err.what();
+            }
+        }
+    );
+}
+
 QList<QMap<QString, QVariant>> DappsStoreViewModel::getApps()
 {
     return _apps;
@@ -332,6 +407,11 @@ QString DappsStoreViewModel::getPublisherKey()
         );
     }
     return _publisherKey;
+}
+
+QList<QMap<QString, QVariant>> DappsStoreViewModel::getPublishers()
+{
+    return _publishers;
 }
 
 QString DappsStoreViewModel::expandLocalUrl(const QString& folder, const std::string& url) const

@@ -21,6 +21,7 @@ ColumnLayout {
     property var      appToOpen: undefined
     property bool     showBack: true
     readonly property bool hasApps: !!appsList && appsList.length > 0
+    property var      publishersList: viewModel.publishers
 
     DappsStoreViewModel {
         id: viewModel
@@ -35,6 +36,102 @@ ColumnLayout {
             //% "Failed to install DApp:\n%1"
             installFail.text = qsTrId("apps-install-fail").arg(appName)
             installFail.open()
+        }
+    }
+
+    CustomDialog {
+        id:      publisherDialog
+        width:   Math.round(2 * parent.width / 3)
+        height:  Math.round(2 * parent.height / 3)
+        parent:  Overlay.overlay
+        x:       Math.round((parent.width - width) / 2)
+        y:       Math.round((parent.height - height) / 2)
+        modal:   true
+
+        contentItem: ColumnLayout {
+            spacing: 0
+            anchors.fill:    parent
+            anchors.margins: 30
+
+            // title
+            SFText {
+                Layout.fillWidth:     true
+                color:                Style.white
+                horizontalAlignment:  Text.AlignHCenter
+                font.pixelSize:       18
+                font.weight:          Font.Bold
+                text: "Publishers"
+            }
+
+            ScrollView {
+                Layout.fillWidth:          true
+                Layout.fillHeight:         true
+                Layout.topMargin:          35
+                ScrollBar.vertical.policy: ScrollBar.AsNeeded
+                clip:                      true
+
+                ColumnLayout {
+                    Layout.fillWidth:  true
+                    Layout.fillHeight: true
+                    spacing:           30
+
+                    Repeater {
+                        model: control.publishersList
+                        RowLayout {
+                            Layout.fillWidth: true
+                            spacing: 0
+
+                            SFLabel {
+                                id: pubKeyId
+                                Layout.fillWidth:    true
+                                horizontalAlignment: Text.AlignLeft
+                                text:                modelData.pubkey
+                                font.pixelSize:      14
+                                color:               Style.content_main
+                                copyMenuEnabled:     true
+                                onCopyText:          BeamGlobals.copyToClipboard(text)
+                            }
+
+                            Item {
+                                Layout.fillWidth: true
+                                Layout.preferredWidth: 10
+                            }
+
+                            SFLabel {
+                                Layout.fillWidth:    true
+                                horizontalAlignment: Text.AlignLeft
+                                text:                modelData.name
+                                font.pixelSize:      14
+                                color:               Style.content_main
+                                copyMenuEnabled:     true
+                                onCopyText:          BeamGlobals.copyToClipboard(text)
+                            }
+
+                            Item {
+                                Layout.fillWidth: true
+                                Layout.preferredWidth: 10
+                            }
+
+                            CustomToolButton {
+                                Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+                                icon.source: "qrc:/assets/icon-copy.svg"
+                                //% "Copy address"
+                                ToolTip.text: qsTrId("settings-swap-copy-address")
+                                onClicked: BeamGlobals.copyToClipboard(pubKeyId.text)
+                            }
+                        }
+                    }
+                }
+            }
+
+            // buttons
+            CustomButton {
+                Layout.topMargin:     24
+                Layout.alignment:     Qt.AlignHCenter
+                text:             qsTrId("general-close")
+                icon.source:      "qrc:/assets/icon-cancel-white.svg"
+                onClicked:        publisherDialog.close()
+            }
         }
     }
 
@@ -87,6 +184,17 @@ ColumnLayout {
             onClicked: {
                 // TODO: provide form to fill data
                 viewModel.registerPublisher()
+            }
+        }
+
+        CustomButton {
+            //% "show all publishers"
+            text:                qsTrId("dapps-store-show-all-publishers")
+            palette.buttonText:  Style.content_main
+            palette.button:      Style.background_button
+            icon.source:         "qrc:/assets/icon-add.svg"
+            onClicked: {
+                publisherDialog.open()
             }
         }
     }

@@ -3424,5 +3424,29 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>All</source>
         <translation type="unfinished">Tous</translation>
     </message>
+    <message id="dapps-store-install">
+        <source>Install</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publish">
+        <source>publish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-show-publisher-key">
+        <source>show my publisherKey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-register-publisher">
+        <source>register as publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-show-all-publishers">
+        <source>show all publishers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publisher-key">
+        <source>Publisher key</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
