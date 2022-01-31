@@ -80,7 +80,6 @@ SettingsFoldable {
                     id: nodeAddress
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignLeft
-                    topPadding: 0
                     focus: true
                     activeFocusOnTab: true
                     font.pixelSize: 14
@@ -197,7 +196,6 @@ SettingsFoldable {
                 SFTextInput {
                     id: localNodePort
                     Layout.preferredWidth: 100
-                    topPadding: 0
                     activeFocusOnTab: true
                     font.pixelSize: 14
 
