@@ -2698,10 +2698,10 @@ Update your settings and try again.</source>
         <source>Whitepaper</source>
         <translation type="unfinished"></translation>
     </message>
-	<message id="tx-details-date-label">
-		<source>Date</source>
-		<translation type="unfinished"></translation>
-	</message>
+    <message id="tx-details-date-label">
+	<source>Date</source>
+	<translation type="unfinished"></translation>
+    </message>
     <message id="tx-details-sending-addr-label">
         <source>Sending address</source>
         <translation type="unfinished"></translation>
