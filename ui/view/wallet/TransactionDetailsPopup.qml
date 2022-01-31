@@ -557,14 +557,9 @@ CustomDialog {
                     elide: Text.ElideMiddle
                     onCopyText: textCopied(dialog.kernelID)
                 }
-//                CustomToolButton {
-//                    Layout.alignment: Qt.AlignRight
-//                    icon.source: "qrc:/assets/icon-copy.svg"
-//                    onClicked: textCopied(kernelID.text)
-//                    padding: 0
-//                    background.implicitHeight: 16
-//                }
+
                 OpenInBlockchainExplorer {
+                    Layout.rightMargin: 3
                     visible: dialog.isCompleted && kernelID.parent.visible
                     onTriggered: function(kernelID) {
                         openExternal(dialog.kernelID);

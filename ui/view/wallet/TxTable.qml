@@ -239,6 +239,7 @@ Control {
             id: transactionsTable
 
             property var initTxDetailsFromRow: function (model, row) {
+                txDetails.dateField        =  model.getRoleValue(row, "timeCreated") || ""
                 txDetails.sendAddress      =  model.getRoleValue(row, "addressFrom") || ""
                 txDetails.receiveAddress   =  model.getRoleValue(row, "addressTo") || ""
                 txDetails.senderIdentity   =  model.getRoleValue(row, "senderIdentity") || ""
