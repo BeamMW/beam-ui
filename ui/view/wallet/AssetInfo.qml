@@ -29,8 +29,8 @@ Control {
         id: back
         leftColor:        assetInfo.color
         rightColor:       Style.coinPaneRight
-        rightBorderColor: Style.coinPaneRight
-        leftBorderColor:  assetInfo.selectionColor
+        rightBorderColor: Style.active
+        leftBorderColor:  Style.active
         borderWidth:      control.selected ? 1 : 0
 
         implicitWidth:    control.width
