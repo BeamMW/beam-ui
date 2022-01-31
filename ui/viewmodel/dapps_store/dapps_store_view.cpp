@@ -26,16 +26,6 @@
 #include "viewmodel/qml_globals.h"
 #include "wallet/client/apps_api/apps_utils.h"
 
-namespace
-{
-    const char* kDappStoreShaderPath = "d:/work/dapps-store/beam-dapps-store/shaders/dapps_store_app.wasm";
-
-    auto getDappStoreCID()
-    {
-        return "c7bfd39e04ab9ff2f21615e52d973867f9c70b43ffb4f6f7f086b5ba1de08567";
-    }
-}
-
 DappsStoreViewModel::DappsStoreViewModel()
 {
     LOG_INFO() << "DappsStoreViewModel created";
@@ -161,12 +151,12 @@ void DappsStoreViewModel::loadApps()
     // add Apps to AppList
     // install app from IPFS
 
-    std::string args = "role=manager,action=view_dapps,cid=";
-    args += getDappStoreCID();
+    std::string args = "action=view_dapps,cid=";
+    args += AppSettings().getDappStoreCID();
 
     QPointer<DappsStoreViewModel> guard(this);
 
-    AppModel::getInstance().getWalletModel()->getAsync()->callShader(kDappStoreShaderPath, args,
+    AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args,
         [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
         {
             if (!guard)
@@ -289,11 +279,11 @@ QMap<QString, QVariant> DappsStoreViewModel::loadLocalDapp(const QString& guid)
 void DappsStoreViewModel::loadPublishers()
 {
     std::string args = "action=view_publishers,cid=";
-    args += getDappStoreCID();
+    args += AppSettings().getDappStoreCID();
 
     QPointer<DappsStoreViewModel> guard(this);
 
-    AppModel::getInstance().getWalletModel()->getAsync()->callShader(kDappStoreShaderPath, args,
+    AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args,
         [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
         {
             if (!guard)
@@ -370,10 +360,10 @@ QString DappsStoreViewModel::getPublisherKey()
     if (_publisherKey.isEmpty())
     {
         std::string args = "role=manager,action=get_pk,cid=";
-        args += getDappStoreCID();
+        args += AppSettings().getDappStoreCID();
         QPointer<DappsStoreViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShader(kDappStoreShaderPath, args,
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args,
             [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
             {
                 if (!guard)
@@ -607,13 +597,13 @@ void DappsStoreViewModel::addAppToStore(QMap<QString, QVariant>&& app, const std
     QString args;
     QTextStream textStream(&args);
 
-    textStream << "role=manager,action=add_dapp,cid=" << getDappStoreCID() << ",ipfs_id=" << QString::fromStdString(ipfsID);
+    textStream << "role=manager,action=add_dapp,cid=" << AppSettings().getDappStoreCID().c_str() << ",ipfs_id=" << QString::fromStdString(ipfsID);
     textStream << ",name=" << appName << ",id=" << guid << ",description=" << description;
     textStream << ",api_ver=" << app["api_version"].value<QString>() << ",min_api_ver=" << app["min_api_version"].value<QString>();
 
     QPointer<DappsStoreViewModel> guard(this);
 
-    AppModel::getInstance().getWalletModel()->getAsync()->callShader(kDappStoreShaderPath, args.toStdString(),
+    AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args.toStdString(),
         [this, guard] (const std::string& err, const std::string& output, const beam::wallet::TxID& id)
         {
             if (!guard)
@@ -642,13 +632,13 @@ void DappsStoreViewModel::addAppToStore(QMap<QString, QVariant>&& app, const std
 void DappsStoreViewModel::registerPublisher()
 {
     std::string args = "role=manager,action=add_publisher,cid=";
-    args += getDappStoreCID();
+    args += AppSettings().getDappStoreCID();
     // TODO:
     args += ",name=test publisher";
 
     QPointer<DappsStoreViewModel> guard(this);
 
-    AppModel::getInstance().getWalletModel()->getAsync()->callShader(kDappStoreShaderPath, args,
+    AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args,
         [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
         {
             if (!guard)

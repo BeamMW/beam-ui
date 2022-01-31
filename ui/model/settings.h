@@ -94,6 +94,10 @@ public:
     QString getDevAppApiVer() const;
     QString getDevAppMinApiVer() const;
 
+    // DappStore
+    std::string getDappStoreCID() const;
+    std::string getDappStorePath() const;
+
     bool getDevMode() const;
     bool getAppsAllowed() const;
     void setAppsAllowed(bool val);

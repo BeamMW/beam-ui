@@ -62,6 +62,9 @@ namespace
     const char* kIPFSPrefix      = "ipfsnode/";
     const char* kIPFSNodeStart   = "ipfs_node_start";
 
+    const char* kDappStoreCID = "dappstore/cid";
+    const char* kDappStorePath = "dappstore/path";
+
     const char* kMpAnonymitySet = "max_privacy/anonymity_set";
     const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
 
@@ -753,6 +756,18 @@ QString WalletSettings::getDevAppApiVer() const
 QString WalletSettings::getDevAppMinApiVer() const
 {
     return m_data.value(kDevAppMinApiVer).toString();
+}
+
+std::string WalletSettings::getDappStoreCID() const
+{
+    auto cid = m_data.value(kDappStoreCID).toString();
+    return cid.isEmpty() ? "c7bfd39e04ab9ff2f21615e52d973867f9c70b43ffb4f6f7f086b5ba1de08567" : cid.toStdString();
+}
+
+std::string WalletSettings::getDappStorePath() const
+{
+    auto path = m_data.value(kDappStorePath).toString();
+    return path.isEmpty() ? "d:/work/dapps-store/beam-dapps-store/shaders/dapps_store_app.wasm" : path.toStdString();
 }
 
 QString WalletSettings::getAppsCachePath(const QString& appid) const
