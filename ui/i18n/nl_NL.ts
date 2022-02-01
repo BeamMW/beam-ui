@@ -3439,7 +3439,8 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <translation type="unfinished"></translation>
     </message>
     <message id="dnd-install-success">
-        <source>The &quot;%1&quot; DApp is installed successfully.</source>
+        <source>The &quot;%1&quot; DApp is installed successfully</source>
+        <oldsource>The &quot;%1&quot; DApp is installed successfully.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dnd-install-fail">

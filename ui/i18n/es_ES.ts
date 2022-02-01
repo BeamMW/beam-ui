@@ -3443,7 +3443,8 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="dnd-install-success">
-        <source>The &quot;%1&quot; DApp is installed successfully.</source>
+        <source>The &quot;%1&quot; DApp is installed successfully</source>
+        <oldsource>The &quot;%1&quot; DApp is installed successfully.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dnd-install-fail">

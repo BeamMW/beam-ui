@@ -30,6 +30,16 @@ CustomDialog {
     y: (parent.height - height) / 2
     visible: false
 
+    Rectangle {
+        radius: 10
+        color: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.15)
+        anchors.fill: parent
+        z: 4
+        visible: dropArea.containsDrag
+        border.color: Style.active
+        border.width: 2
+    }
+
     header: SFText {
         text: control.title
         topPadding: 30
@@ -72,7 +82,7 @@ CustomDialog {
             PrimaryButton {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.topMargin: 50
-                icon.source: "qrc:/assets/icon-receive-blue.svg"
+                icon.source: "qrc:/assets/dnd-load-file.svg"
                 //% "load a file"
                 text: qsTrId("dnd-load-a-file")
                 onClicked: {
@@ -89,7 +99,7 @@ CustomDialog {
                     italic: true
                     pixelSize: 14
                 }
-                color: Style.content_secondary
+                color: Style.content_main
                 //% "or just drop it here"
                 text: qsTrId("dnd-jus-drop")
                 visible: !control.isOk && !control.isFail
@@ -104,8 +114,8 @@ CustomDialog {
                     italic: true
                     pixelSize: 14
                 }
-                color: Style.content_secondary
-                //% "The \"%1\" DApp is installed successfully."
+                color: Style.content_main
+                //% "The \"%1\" DApp is installed successfully"
                 text: qsTrId("dnd-install-success").arg(control.appName)
                 visible: control.isOk
             }
