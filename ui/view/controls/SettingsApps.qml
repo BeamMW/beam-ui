@@ -46,7 +46,6 @@ SettingsFoldable {
                 SFTextInput {
                     id: appsServerPort
                     Layout.preferredWidth: 100
-                    topPadding: 0
                     activeFocusOnTab: true
                     font.pixelSize: 14
                     color: !appsServerPort.acceptableInput ? Style.validator_error : Style.content_main

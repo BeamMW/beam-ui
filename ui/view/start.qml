@@ -1706,7 +1706,7 @@ Item
                             focus: true
                             activeFocusOnTab: true
                             font.pixelSize: 14
-                            color: Style.content_main
+                            color: openPasswordError.text.length ? Style.validator_error : Style.content_main
                             echoMode: TextInput.Password
                             onAccepted: btnCurrentWallet.clicked()
                             onTextChanged: if (openPassword.text.length > 0) openPasswordError.text = ""

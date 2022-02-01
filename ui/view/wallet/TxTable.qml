@@ -205,7 +205,7 @@ Control {
                             default: console.log("unknown filter id");
                         }
                     }
-                    showUnderline: false
+                    showBackground: false
                 }
                 Item {
                     Layout.preferredWidth: 20
