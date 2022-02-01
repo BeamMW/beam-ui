@@ -74,7 +74,7 @@ ColumnLayout {
     SwapNADialog {
         id: swapna
         onRejected: thisView.onClosed()
-        onAccepted: main.openSwapSettings()
+        onAccepted: main.openSettings("ALL_COINS")
 /*% "You do not have any 3rd-party currencies connected.
 Update your settings and try again."
 */

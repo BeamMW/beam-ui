@@ -22,7 +22,7 @@ ColumnLayout {
     }
 
     StatusBar {
-        id: status_bar
+        id: statusBar
         model: statusbarModel
     }
     
@@ -261,6 +261,7 @@ ColumnLayout {
                 icon.source: getActionButtonIcon(type).source
                 icon.height: getActionButtonIcon(type).height
                 text: getActionButtonLabel(type)
+                font.capitalization: Font.MixedCase
         
                 visible: getActionButtonLabel(type) != undefined
                 enabled: control.notifications[type].action != null
@@ -301,7 +302,7 @@ ColumnLayout {
         activatedLabel: qsTrId("notifications-activated"),
         //% "details"
         detailsLabel:   qsTrId("notifications-details"),
-        //% "open the dapp"
+        //% "open the DApp"
         openDappLabel:  qsTrId("notifications-open-dapp")
     })
 

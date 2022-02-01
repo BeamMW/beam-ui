@@ -56,7 +56,7 @@ CustomDialog {
     property var getPaymentProof: function (rawTxId) { return null; }
 
     function getHighlitedText(text) {
-        return Utils.getHighlitedText(text, dialog.searchFilter, Style.active.toString());
+        return Utils.getHighlitedText(text, dialog.searchFilter, Style.accent_incoming.toString());
     }
 
     property PaymentInfoItem paymentInfo
@@ -71,7 +71,7 @@ CustomDialog {
     parent: Overlay.overlay
     padding: 0
 
-    closePolicy: Popup.NoAutoClose | Popup.CloseOnEscape
+    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
     header: ColumnLayout {
         SFText {
@@ -387,13 +387,16 @@ CustomDialog {
                             onCopyText: textCopied(dialog.assetIDs[index])
                             visible: dialog.assetIDs[index] != "0"
                         }
-                        CustomToolButton {
-                            Layout.alignment: Qt.AlignRight | Qt.AlignTop
-                            icon.source: "qrc:/assets/icon-copy.svg"
-                            onClicked: textCopied(dialog.assetIDs[index])
+
+                        OpenInBlockchainExplorer {
+                            Layout.alignment: Qt.AlignTop
+                            Layout.rightMargin: 8
                             visible: dialog.assetIDs[index] != "0"
-                            padding: 0
-                            background.implicitHeight: 16
+                            showText: false
+                            onTriggered: function(kernelID) {
+                                var url = BeamGlobals.getExplorerUrl() + "assets/details/" + dialog.assetIDs[index];
+                                Utils.openExternalWithConfirmation(url);
+                            }
                         }
                     }
                 }

@@ -25,6 +25,11 @@ ComboBox {
     property var calculatedWidth: Math.max(control.width, modelWidth)
     property var transformText: undefined
 
+    property var controlFont: Font.Normal
+    property string controlFontStyle: "Regular"
+    property color controlColor: control.enabled || control.colorConst ? control.color : Style.content_secondary
+    property bool showUnderline: true
+
     TextMetrics {
         id: textMetrics
         font {
@@ -151,8 +156,10 @@ ComboBox {
 
             clip: true
             text: control.editable ? control.editText : control.displayText
-            color: control.enabled || control.colorConst ? control.color : Style.content_secondary 
+            color: control.controlColor
             font.pixelSize: fontPixelSize
+            font.weight: control.controlFont
+            font.styleName: control.controlFontStyle
             elide: Text.ElideRight
         }
 
@@ -176,6 +183,7 @@ ComboBox {
         Rectangle {
             width:  control.width
             height: 1
+            visible: control.showUnderline
             y: control.height - 1
             color: control.underlineColor
             opacity: (control.activeFocus || control.hovered)? 0.3 : 0.1

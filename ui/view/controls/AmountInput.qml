@@ -116,7 +116,6 @@ ColumnLayout {
 
         CustomComboBox {
             id:                  currCombo
-            Layout.topMargin:    22
             Layout.maximumWidth: 140
             dropSpacing:         18
             spacing:             0

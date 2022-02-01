@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #pragma once
 
 #include <QObject>
@@ -20,6 +19,10 @@
 #include <QStringList>
 #include <mutex>
 #include "model/wallet_model.h"
+
+#ifdef BEAM_IPFS_SUPPORT
+#include <asio-ipfs/include/ipfs_config.h>
+#endif
 
 class WalletSettings : public QObject
 {
@@ -42,9 +45,10 @@ public:
     bool showSwapBetaWarning();
     void setShowSwapBetaWarning(bool value);
 
-#if defined(BEAM_HW_WALLET)
+    #if defined(BEAM_HW_WALLET)
     std::string getTrezorWalletStorage() const;
-#endif
+    #endif
+
     std::string getWalletStorage() const;
     std::string getWalletFolder() const;
     std::string getAppDataPath() const;
@@ -99,6 +103,21 @@ public:
     int getAppsServerPort() const;
     void setAppsServerPort(int port);
 
+    #ifdef BEAM_IPFS_SUPPORT
+    asio_ipfs::config getIPFSConfig() const;
+    void setIPFSPort(uint32_t port);
+    void setIPFSNodeStart(const QString&);
+    QString getIPFSNodeStart() const;
+
+    enum class IPFSLaunch {
+        AtStart = 0,
+        AtDApps,
+        Never,
+    };
+
+    IPFSLaunch getIPFSNodeLaunch() const;
+    #endif
+
     uint8_t getMaxPrivacyAnonymitySet() const;
     void setMaxPrivacyAnonymitySet(uint8_t anonymitySet);
 
@@ -120,20 +139,35 @@ public:
     uint32_t getMinConfirmations() const;
     void setMinConfirmations(uint32_t value);
 
-    [[nodiscard]] boost::optional<beam::Asset::ID> getLastAssetSelection() const;
-    void setLastAssetSelection(boost::optional<beam::Asset::ID> selection);
+    [[nodiscard]] QVector<beam::Asset::ID> getLastAssetSelection() const;
+    void setLastAssetSelection(QVector<beam::Asset::ID> selection);
+
+    // tx table filters
+    bool getShowInProgress() const;
+    void setShowInProgress(bool value);
+    bool getShowCompleted() const;
+    void setShowCompleted(bool value);
+    bool getShowCanceled() const;
+    void setShowCanceled(bool value);
+    bool getShowFailed() const;
+    void setShowFailed(bool value);
 
 public:
     static const char* WalletCfg;
     static const char* LogsFolder;
     static const char* SettingsFile;
     static const char* WalletDBFile;
-#if defined(BEAM_HW_WALLET)
-    static const char* TrezorWalletDBFile;
-#endif
-    static const char* NodeDBFile;
 
-    void applyChanges();
+    #if defined(BEAM_HW_WALLET)
+    static const char* TrezorWalletDBFile;
+    #endif
+
+    static const char* NodeDBFile;
+    void applyNodeChanges();
+
+    #ifdef BEAM_IPFS_SUPPORT
+    void applyIPFSChanges();
+    #endif
 
 signals:
     void nodeAddressChanged();
@@ -145,9 +179,10 @@ signals:
     void beamMWLinksChanged();
     void secondCurrencyChanged();
     void dappsAllowedChanged();
+    void IPFSSettingsChanged();
 
 private:
-    QSettings m_data;
+    mutable QSettings m_data;
     QDir m_appDataDir;
     uint8_t m_mpLockTimeLimit = 0;
     uint32_t m_minConfirmations = 0;

@@ -5,12 +5,12 @@ import "../controls"
 
 Item {
     id: control
-    Layout.preferredWidth: openInExplorer.width + 10 + openInExplorerIcon.width
-    height: 16
-    // width: openInExplorer.width + 10 + openInExplorerIcon.width
+    property bool showText: true
     property var onTriggered: function() {
         console.log("triggered");
     }
+    Layout.preferredWidth: (control.showText ? openInExplorer.width + 10 : 10) + openInExplorerIcon.width
+    height: 16
 
     SvgImage {
         id: openInExplorerIcon

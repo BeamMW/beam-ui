@@ -16,7 +16,7 @@ SettingsFoldable {
         columns:       2
         rows:          2
         rowSpacing:    30
-        columnSpacing: 10
+        columnSpacing: 25
 
         /*SFText {
             Layout.preferredWidth: parent.width / 2 - parent.columnSpacing / 2
@@ -51,7 +51,6 @@ SettingsFoldable {
             }
         }*/
 
-
         SFText {
             //: settings tab, general section, wallet data folder location label
             //% "Wallet folder location"
@@ -59,24 +58,22 @@ SettingsFoldable {
             color: Style.content_secondary
             font.pixelSize: 14
             Layout.alignment: Qt.AlignTop
+            Layout.fillWidth: true
         }
 
         ColumnLayout {
             spacing: 10
-            Layout.preferredHeight: spacing + folderText.height + folderButton.height
 
             SFText {
                 id: folderText
-                Layout.fillWidth: true
                 font.pixelSize: 14
                 color: Style.content_main
                 text: viewModel.walletLocation
                 wrapMode: Text.Wrap
+                Layout.fillWidth: true
             }
 
             SFText {
-                id: folderButton
-                Layout.fillWidth: false
                 font.pixelSize: 14
                 color: Style.active
                 //% "Show in folder"
@@ -85,8 +82,45 @@ SettingsFoldable {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: {
+                    onClicked: function () {
                         viewModel.openFolder(viewModel.walletLocation);
+                    }
+                }
+            }
+        }
+
+        SFText {
+            //% "IPFS repository location"
+            text: qsTrId("settings-ipfs-location")
+            color: Style.content_secondary
+            font.pixelSize: 14
+            Layout.alignment: Qt.AlignTop
+            visible: viewModel.ipfsSupported
+        }
+
+        ColumnLayout {
+            spacing: 10
+            visible: viewModel.ipfsSupported
+
+            SFText {
+                font.pixelSize: 14
+                color: Style.content_main
+                text: viewModel.ipfsLocation
+                wrapMode: Text.Wrap
+                Layout.fillWidth: true
+            }
+
+            SFText {
+                font.pixelSize: 14
+                color: Style.active
+                //% "Show in folder"
+                text: qsTrId("general-show-in-folder")
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: function () {
+                        viewModel.openFolder(viewModel.ipfsLocation);
                     }
                 }
             }

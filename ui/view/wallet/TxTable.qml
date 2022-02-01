@@ -16,7 +16,7 @@ Control {
         id: tableViewModel
     }
 
-    property int       selectedAsset: -1
+    property var       selectedAssets: []
     property int       emptyMessageMargin: 90
     property int       activeTxCnt: 0
     property alias     headerShaderVisible: transactionsTable.headerShaderVisible
@@ -138,7 +138,6 @@ Control {
         RowLayout {
             Layout.fillWidth:    true
             Layout.bottomMargin: 10
-            visible:             tableViewModel.transactions.rowCount() > 0
             TxFilter {
                 id: allTab
                 Layout.alignment: Qt.AlignVCenter
@@ -175,9 +174,47 @@ Control {
                 Layout.fillWidth: true
             }
 
+            RowLayout {
+                Layout.leftMargin: searchBox.searchInput.visible ? 0 : 260
+                Layout.rightMargin: searchBox.searchInput.visible ? -20 : -280
+                SFLabel {
+                    //% "Show"
+                    text: qsTrId("tx-table-filter-label")
+                    color: Style.content_secondary
+                    Layout.rightMargin: 20
+                }
+                MultiSelectComboBox {
+                    Layout.preferredWidth: 150
+                    fontPixelSize:       14
+                    model: [
+                        //% "In progress"
+                        { text: qsTrId("tx-table-filter-in-progress"), checked: tableViewModel.showInProgress, id: "inProgress" },
+                        //% "Completed"
+                        { text: qsTrId("tx-table-filter-completed"), checked: tableViewModel.showCompleted, id: "completed" },
+                        //% "Canceled"
+                        { text: qsTrId("tx-table-filter-canceled"), checked: tableViewModel.showCanceled, id: "canceled" },
+                        //% "Failed"
+                        { text: qsTrId("tx-table-filter-failed"), checked: tableViewModel.showFailed, id: "failed" },
+                    ]
+                    onSelectChanged: function(id, state) {
+                        switch (id) {
+                            case "inProgress": tableViewModel.showInProgress = state; break;
+                            case "completed": tableViewModel.showCompleted = state; break;
+                            case "canceled": tableViewModel.showCanceled = state; break;
+                            case "failed": tableViewModel.showFailed = state; break;
+                            default: console.log("unknown filter id");
+                        }
+                    }
+                    showUnderline: false
+                }
+                Item {
+                    Layout.preferredWidth: 20
+                }
+            }
+
             SearchBox {
                id: searchBox
-               Layout.preferredWidth: 300
+               Layout.preferredWidth: 280
                Layout.alignment: Qt.AlignVCenter
                //% "Enter search text..."
                placeholderText: qsTrId("wallet-search-transactions-placeholder")
@@ -368,7 +405,7 @@ Control {
                     source: SortFilterProxyModel {
                         id:           assetFilterProxy
                         filterRole:   "assetFilter"
-                        filterString: control.selectedAsset < 0 ? "" : ["\\b", control.selectedAsset, "\\b"].join("")
+                        filterString: control.selectedAssets.reduce(function(sum, current) { return sum + ["|", "\\b", current, "\\b"].join(""); }, "").slice(1)
                         filterSyntax: SortFilterProxyModel.RegExp
 
                         source: SortFilterProxyModel {
@@ -472,7 +509,7 @@ Control {
 
                 //% "Coin"
                 title:     qsTrId("general-coin")
-                width:     100
+                width:     106
                 movable:   false
                 resizable: false
 

@@ -32,7 +32,7 @@ QString formatAddress(const QString& address, const QString& port)
     return QString("%1:%2").arg(address).arg(port);
 }
 
-QString formatPort(uint16_t port)
+QString formatPort(uint32_t port)
 {
     return port > 0 ? QString("%1").arg(port) : "";
 }

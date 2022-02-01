@@ -24,6 +24,7 @@ using namespace beam::wallet;
 
 StatusbarViewModel::StatusbarViewModel()
     : m_model(AppModel::getInstance().getWalletModel())
+    , m_settings(AppModel::getInstance().getSettings())
     , m_exchangeRatesManager(AppModel::getInstance().getRates())
     , m_isOnline(false)
     , m_isSyncInProgress(!m_model->isSynced())
@@ -34,32 +35,28 @@ StatusbarViewModel::StatusbarViewModel()
     , m_nodeTotal(0)
     , m_done(0)
     , m_total(0)
-    , m_errorMsg{}
 {
-#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     connectCoinClients();
     connectEthClient();
-#endif  // BEAM_ATOMIC_SWAP_SUPPORT
+    #endif
 
-    connect(m_model.get(), SIGNAL(nodeConnectionChanged(bool)),
-        SLOT(onNodeConnectionChanged(bool)));
-
-    connect(m_model.get(), SIGNAL(walletError(beam::wallet::ErrorType)),
-        SLOT(onGetWalletError(beam::wallet::ErrorType)));
-
-    connect(m_model.get(), SIGNAL(syncProgressUpdated(int, int)),
-        SLOT(onSyncProgressUpdated(int, int)));
-
-    connect(&AppModel::getInstance().getNode(), SIGNAL(syncProgressUpdated(int, int)),
-            SLOT(onNodeSyncProgressUpdated(int, int)));
-    
-    connect(&AppModel::getInstance().getNode(), SIGNAL(failedToSyncNode(beam::wallet::ErrorType)),
-            SLOT(onGetWalletError(beam::wallet::ErrorType)));
-
+    connect(m_model.get(), SIGNAL(nodeConnectionChanged(bool)), SLOT(onNodeConnectionChanged(bool)));
+    connect(m_model.get(), SIGNAL(walletError(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
+    connect(m_model.get(), SIGNAL(syncProgressUpdated(int,int)), SLOT(onSyncProgressUpdated(int,int)));
+    connect(&AppModel::getInstance().getNode(), SIGNAL(syncProgressUpdated(int,int)), SLOT(onNodeSyncProgressUpdated(int,int)));
+    connect(&AppModel::getInstance().getNode(), SIGNAL(failedToSyncNode(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
     connect(&m_exchangeRatesTimer, SIGNAL(timeout()), SLOT(onExchangeRatesTimer()));
     connect(m_exchangeRatesManager.get(), SIGNAL(updateTimeChanged()), SLOT(onExchangeRatesTimer()));
-
     m_model->getAsync()->getNetworkStatus();
+
+    auto& settings = AppModel::getInstance().getSettings();
+    connect(&settings, &WalletSettings::IPFSSettingsChanged, this, &StatusbarViewModel::onIPFSSettingsChanged);
+
+    #ifdef BEAM_IPFS_SUPPORT
+    connect(m_model.get(), &WalletModel::IPFSStatusChanged, this, &StatusbarViewModel::onIPFSStatus);
+    m_model->getAsync()->getIPFSStatus();
+    #endif
 }
 
 bool StatusbarViewModel::getIsOnline() const
@@ -94,19 +91,20 @@ int StatusbarViewModel::getNodeSyncProgress() const
 
 QString StatusbarViewModel::getBranchName() const
 {
-#ifdef BEAM_MAINNET
+    #ifdef BEAM_MAINNET
     return QString();
-#else
-    if (BRANCH_NAME.empty())
+    #else
+    if (BRANCH_NAME.empty()) {
         return QString();
+    }
 
     return QString::fromStdString(" (" + BRANCH_NAME + ")");
-#endif
+    #endif
 }
 
-QString StatusbarViewModel::getWalletStatusErrorMsg() const
+QString StatusbarViewModel::getWalletError() const
 {
-    return m_errorMsg;
+    return m_walletError;
 }
 
 QString StatusbarViewModel::getExchangeStatus() const
@@ -190,13 +188,14 @@ void StatusbarViewModel::setIsConnectionTrusted(bool value)
 
 void StatusbarViewModel::setWalletStatusErrorMsg(const QString& value)
 {
-    if (m_errorMsg != value)
+    if (m_walletError != value)
     {
-        m_errorMsg = value;
-#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+        #ifdef BEAM_ATOMIC_SWAP_SUPPORT
         m_coinWithErrorLabel = beamui::getCurrencyUnitName(beamui::Currencies::Beam);
-#endif  // BEAM_ATOMIC_SWAP_SUPPORT
-        emit statusErrorChanged();
+        #endif
+
+        m_walletError = value;
+        emit walletErrorChanged();
     }
 }
 
@@ -253,7 +252,7 @@ void StatusbarViewModel::onSyncProgressUpdated(int done, int total)
 {
     m_done = done;
     m_total = total;
-    setIsSyncInProgress(!((m_done + m_nodeDone) == (m_total + m_nodeTotal)));
+    setIsSyncInProgress((m_done + m_nodeDone) != (m_total + m_nodeTotal));
 }
 
 void StatusbarViewModel::onNodeSyncProgressUpdated(int done, int total)
@@ -266,7 +265,7 @@ void StatusbarViewModel::onNodeSyncProgressUpdated(int done, int total)
         setNodeSyncProgress(static_cast<int>(done * 100) / total);
     }
 
-    setIsSyncInProgress(!((m_done + m_nodeDone) == (m_total + m_nodeTotal)));
+    setIsSyncInProgress((m_done + m_nodeDone) != (m_total + m_nodeTotal));
 }
 
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
@@ -420,10 +419,49 @@ void StatusbarViewModel::connectEthClient()
         }
     }
 }
-
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 
-void  StatusbarViewModel::onExchangeRatesTimer()
+#ifdef BEAM_IPFS_SUPPORT
+QString StatusbarViewModel::getIPFSStatus() const
+{
+    if (m_settings.getIPFSNodeLaunch() == WalletSettings::IPFSLaunch::Never) {
+        return "uninitialized";
+    }
+
+    if (!m_ipfsError.isEmpty()) {
+        return "error";
+    }
+
+    if (m_ipfsRunning && m_ipfsPeerCnt) {
+        return "connected";
+    }
+
+    return "disconnected";
+}
+
+QString StatusbarViewModel::getIPFSError() const
+{
+    if (m_settings.getIPFSNodeLaunch() == WalletSettings::IPFSLaunch::Never) {
+        return "";
+    }
+    return m_ipfsError;
+}
+
+void StatusbarViewModel::onIPFSStatus(bool running, const QString& error, uint32_t peercnt)
+{
+    m_ipfsRunning = running;
+    m_ipfsPeerCnt = peercnt;
+    m_ipfsError   = error; // TODO:IPFS handle long errors that come from golang
+    emit IPFSStatusChanged();
+}
+
+void StatusbarViewModel::onIPFSSettingsChanged()
+{
+    emit IPFSStatusChanged();
+}
+#endif
+
+void StatusbarViewModel::onExchangeRatesTimer()
 {
     emit exchangeRatesUpdateStatusChanged();
 }

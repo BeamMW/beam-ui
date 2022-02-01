@@ -30,11 +30,18 @@ namespace
 TxTableViewModel::TxTableViewModel()
     : _model(AppModel::getInstance().getWalletModel())
     , _rates(AppModel::getInstance().getRates())
+    , _settings{AppModel::getInstance().getSettings()}
 {
     connect(_model.get(), SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SLOT(onTransactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
     connect(_model.get(), SIGNAL(txHistoryExportedToCsv(const QString&)), this, SLOT(onTxHistoryExportedToCsv(const QString&)));
     connect(_rates.get(), &ExchangeRatesManager::rateUnitChanged, this, &TxTableViewModel::rateChanged);
     connect(_rates.get(), &ExchangeRatesManager::activeRateChanged, this, &TxTableViewModel::rateChanged);
+
+    _showInProgress = _settings.getShowInProgress();
+    _showCompleted = _settings.getShowCompleted();
+    _showCanceled = _settings.getShowCanceled();
+    _showFailed = _settings.getShowFailed();
+
     _model->getAsync()->getTransactions();
 }
 
@@ -121,7 +128,25 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
     {
         case ChangeAction::Reset:
             {
-                _transactionsList.reset(modifiedTransactions);
+                std::vector<std::shared_ptr<TxObject>> modifiedTransactionsFiltered;
+                modifiedTransactionsFiltered.reserve(modifiedTransactions.size());
+                for (const auto& tx: modifiedTransactions)
+                {
+                    if (!_showInProgress && tx->isInProgress())
+                        continue;
+
+                    if (!_showCompleted && tx->isCompleted())
+                        continue;
+
+                    if (!_showCanceled && tx->isCanceled())
+                        continue;
+
+                    if (!_showFailed && tx->isFailed())
+                        continue;
+
+                    modifiedTransactionsFiltered.push_back(tx);
+                }
+                _transactionsList.reset(modifiedTransactionsFiltered);
                 break;
             }
 
@@ -160,6 +185,58 @@ QString TxTableViewModel::getRate() const
 {
     auto rate = _rates->getRate(beam::wallet::Currency::BEAM());
     return beamui::AmountToUIString(rate);
+}
+
+bool TxTableViewModel::getShowInProgress() const
+{
+    return _showInProgress;
+}
+
+void TxTableViewModel::setShowInProgress(bool value)
+{
+    _showInProgress = value;
+    _settings.setShowInProgress(value);
+    emit showInProgressChanged();
+    _model->getAsync()->getTransactions();
+}
+
+bool TxTableViewModel::getShowCompleted() const
+{
+    return _showCompleted;
+}
+
+void TxTableViewModel::setShowCompleted(bool value)
+{
+    _showCompleted = value;
+    _settings.setShowCompleted(value);
+    emit showCompletedChanged();
+    _model->getAsync()->getTransactions();
+}
+
+bool TxTableViewModel::getShowCanceled() const
+{
+    return _showCanceled;
+}
+
+void TxTableViewModel::setShowCanceled(bool value)
+{
+    _showCanceled = value;
+    _settings.setShowCanceled(value);
+    emit showCanceledChanged();
+    _model->getAsync()->getTransactions();
+}
+
+bool TxTableViewModel::getShowFailed() const
+{
+    return _showFailed;
+}
+
+void TxTableViewModel::setShowFailed(bool value)
+{
+    _showFailed = value;
+    _settings.setShowFailed(value);
+    emit showFailedCanged();
+    _model->getAsync()->getTransactions();
 }
 
 void TxTableViewModel::cancelTx(const QVariant& variantTxID)

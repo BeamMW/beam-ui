@@ -154,14 +154,6 @@
         <source>Transactions</source>
         <translation>Transactions</translation>
     </message>
-    <message id="wallet-verify-payment">
-        <source>Verify payment</source>
-        <translation>Verify payment</translation>
-    </message>
-    <message id="wallet-txs-date-time">
-        <source>Created on</source>
-        <translation>Created on</translation>
-    </message>
     <message id="wallet-txs-delete-message">
         <source>The transaction will be deleted. This operation can not be undone</source>
         <translation>The transaction will be deleted. This operation can not be undone</translation>
@@ -434,9 +426,9 @@
         <translation type="unfinished">Your wallet will be migrated to v </translation>
     </message>
     <message id="start-migration-button">
-        <source>Start auto migration</source>
+        <source>start auto migration</source>
         <extracomment>migration screen, start auto migration button</extracomment>
-        <translation>Start auto migration</translation>
+        <translation>start auto migration</translation>
     </message>
     <message id="start-select-db-thead-name">
         <source>Name</source>
@@ -509,8 +501,7 @@
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
-        <oldsource>Password confrimation</oldsource>
-        <translation type="unfinished">Password confrimation</translation>
+        <translation>Password confirmation</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
         <source>Passwords do not match</source>
@@ -832,11 +823,6 @@
         <extracomment>set passwort, difficulty message, very strong</extracomment>
         <translation>Very strong password</translation>
     </message>
-    <message id="start-migration-select-file-button">
-        <source>Select wallet database file manually</source>
-        <extracomment>migration screen, select db file button</extracomment>
-        <translation>Select wallet database file manually</translation>
-    </message>
     <message id="start-select-db-best-match-label">
         <source>(best match)</source>
         <extracomment>start screen, select db for migration, best match label</extracomment>
@@ -1064,22 +1050,6 @@ please review your settings and try again</translation>
         <source>There is no Trezor device connected. Please, connect and try again.</source>
         <translation>There is no Trezor device connected. Please, connect and try again.</translation>
     </message>
-    <message id="wallet-transactions-all-tab">
-        <source>All</source>
-        <translation>All</translation>
-    </message>
-    <message id="wallet-transactions-in-progress-tab">
-        <source>In progress</source>
-        <translation>In progress</translation>
-    </message>
-    <message id="wallet-transactions-sent-tab">
-        <source>Sent</source>
-        <translation>Sent</translation>
-    </message>
-    <message id="wallet-transactions-received-tab">
-        <source>Received</source>
-        <translation>Received</translation>
-    </message>
     <message id="send-less-than-fee">
         <source>The swap amount must be greater than the transaction fee</source>
         <translation>The swap amount must be greater than the transaction fee</translation>
@@ -1095,10 +1065,6 @@ please review your settings and try again</translation>
     <message id="wallet-txs-status-own-sending">
         <source>sending to own address</source>
         <translation>sending to own address</translation>
-    </message>
-    <message id="wallet-search-transactions-placeholder">
-        <source>Enter search text...</source>
-        <translation type="unfinished">Enter search text...</translation>
     </message>
     <message id="settings-swap-node">
         <source>Node</source>
@@ -2467,10 +2433,6 @@ Update your settings and try again.</source>
         <source>Hardwate wallet is not connected</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="general-multiple-assets">
-        <source>Multiple assets</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="general-locked">
         <source>Locked</source>
         <translation type="unfinished">Locked</translation>
@@ -2746,20 +2708,8 @@ Update your settings and try again.</source>
         <source>Your UTXO list is empty</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="tx-empty">
-        <source>Your transaction list is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="tx-in-progress-empty">
         <source>There are no in progress transactions yet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="tx-sent-empty">
-        <source>There are no sent transactions yet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="tx-received-empty">
-        <source>There are no received transactions yet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="receive-addr">
@@ -2833,14 +2783,6 @@ Update your settings and try again.</source>
     <message id="address-info-cid">
         <source>Application shader ID</source>
         <translation>Application shader ID</translation>
-    </message>
-    <message id="general-value">
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="wallet-txs-source">
-        <source>Source</source>
-        <translation type="unfinished"></translation>
     </message>
     <message id="source-wallet">
         <source>Wallet</source>
@@ -2972,8 +2914,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notifications-open-dapp">
-        <source>open the dapp</source>
-        <translation type="unfinished"></translation>
+        <source>open the DApp</source>
+        <translation>open the DApp</translation>
     </message>
     <message id="general-description">
         <source>Description</source>
@@ -2984,14 +2926,16 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-privacy-title">
-        <source>DApps Privacy</source>
-        <translation type="unfinished"></translation>
+        <source>DApps Privacy Warning</source>
+        <translation>DApps Privacy Warning</translation>
     </message>
     <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
+        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
 
-Allow to proceed ? You can always update your choice in Settings later.</source>
-        <translation type="unfinished"></translation>
+Allow to proceed? You can always update your choice in Settings later.</source>
+        <translation>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
+
+Allow to proceed? You can always update your choice in Settings later.</translation>
     </message>
     <message id="settings-dapps-allowed">
         <source>Allow to launch DApps</source>
@@ -3275,16 +3219,6 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation>To ensure a better privacy, new address is generated every time.
 In case you’d like to re-use an earlier created regular address please use the Address Book.</translation>
     </message>
-    <message id="apps-install-success">
-        <source>&apos;%1&apos; is successfully installed.</source>
-        <translation>&apos;%1&apos; is successfully installed.</translation>
-    </message>
-    <message id="apps-install-fail">
-        <source>Failed to install DApp:
-%1</source>
-        <translation>Failed to install DApp:
-%1</translation>
-    </message>
     <message id="app-install-title">
         <source>Install DApp</source>
         <translation>Install DApp</translation>
@@ -3351,9 +3285,163 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>The wallet is already started. Close all running wallets and start again.</source>
         <translation>The wallet is already started. Close all running wallets and start again.</translation>
     </message>
+    <message id="settings-ipfsnode-title">
+        <source>IPFS Integrated Node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-ipfs-swarm-port">
+        <source>Swarm Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-txs-status-in-progress-pub-offline-to-own">
+        <source>sending to own address
+(public offline)</source>
+        <translation>sending to own address
+(public offline)</translation>
+    </message>
+    <message id="wallet-txs-status-sent-pub-offline-to-own">
+        <source>sent to own address
+(public offline)</source>
+        <translation>sent to own address
+(public offline)</translation>
+    </message>
+    <message id="start-migration-manual-button">
+        <source>start manual migration</source>
+        <extracomment>migration screen, select db file button</extracomment>
+        <translation>start manual migration</translation>
+    </message>
+    <message id="restore-find-db">
+        <source>Find the wallet database file manually</source>
+        <translation>Find the wallet database file manually</translation>
+    </message>
+    <message id="settings-ipfs-location">
+        <source>IPFS repository location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-ipfs-start">
+        <source>Run node on</source>
+        <oldsource>Start IPFS node on:</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-empty">
+        <source>Your transaction list is empty</source>
+        <translation>Your transaction list is empty</translation>
+    </message>
+    <message id="tx-sent-empty">
+        <source>There are no sent transactions yet.</source>
+        <translation>There are no sent transactions yet.</translation>
+    </message>
+    <message id="tx-received-empty">
+        <source>There are no received transactions yet.</source>
+        <translation>There are no received transactions yet.</translation>
+    </message>
+    <message id="wallet-transactions-all-tab">
+        <source>All</source>
+        <translation>All</translation>
+    </message>
+    <message id="wallet-transactions-in-progress-tab">
+        <source>In progress</source>
+        <translation>In progress</translation>
+    </message>
+    <message id="wallet-transactions-sent-tab">
+        <source>Sent</source>
+        <translation>Sent</translation>
+    </message>
+    <message id="wallet-transactions-received-tab">
+        <source>Received</source>
+        <translation>Received</translation>
+    </message>
+    <message id="tx-table-filter-in-progress">
+        <source>In progress</source>
+        <translation>In progress</translation>
+    </message>
+    <message id="tx-table-filter-completed">
+        <source>Completed</source>
+        <translation>Completed</translation>
+    </message>
+    <message id="tx-table-filter-canceled">
+        <source>Canceled</source>
+        <translation>Canceled</translation>
+    </message>
+    <message id="tx-table-filter-failed">
+        <source>Failed</source>
+        <translation>Failed</translation>
+    </message>
+    <message id="wallet-search-transactions-placeholder">
+        <source>Enter search text...</source>
+        <translation>Enter search text...</translation>
+    </message>
+    <message id="wallet-verify-payment">
+        <source>Verify payment</source>
+        <translation>Verify payment</translation>
+    </message>
+    <message id="general-multiple-assets">
+        <source>Multiple assets</source>
+        <translation>Multiple assets</translation>
+    </message>
+    <message id="general-value">
+        <source>Value</source>
+        <translation>Value</translation>
+    </message>
+    <message id="wallet-txs-source">
+        <source>Source</source>
+        <translation>Source</translation>
+    </message>
     <message id="wallet-txs-action">
         <source>Action</source>
         <translation>Action</translation>
+    </message>
+    <message id="wallet-txs-date-time">
+        <source>Created on</source>
+        <translation>Created on</translation>
+    </message>
+    <message id="tx-table-filter-label">
+        <source>Show</source>
+        <translation>Show</translation>
+    </message>
+    <message id="multiselect-none">
+        <source>None</source>
+        <translation>None</translation>
+    </message>
+    <message id="multiselect-all">
+        <source>All</source>
+        <translation>All</translation>
+    </message>
+    <message id="wallet-remove-filter-button">
+        <source>Remove filter</source>
+        <translation>Remove filter</translation>
+    </message>
+    <message id="wallet-assets-title">
+        <source>Assets</source>
+        <translation>Assets</translation>
+    </message>
+    <message id="wallet-selected-assets-checkbox">
+        <source>Selected</source>
+        <translation>Selected</translation>
+    </message>
+    <message id="wallet-all-assets-checkbox">
+        <source>All</source>
+        <translation>All</translation>
+    </message>
+    <message id="dnd-app-install-title">
+        <source>Install DApp</source>
+        <translation>Install DApp</translation>
+    </message>
+    <message id="dnd-load-a-file">
+        <source>load a file</source>
+        <translation>load a file</translation>
+    </message>
+    <message id="dnd-jus-drop">
+        <source>or just drop it here</source>
+        <translation>or just drop it here</translation>
+    </message>
+    <message id="dnd-install-success">
+        <source>The &quot;%1&quot; DApp is installed successfully.</source>
+        <translation>The &quot;%1&quot; DApp is installed successfully.</translation>
+    </message>
+    <message id="dnd-install-fail">
+        <source>The DApp installation error.</source>
+        <translation>The DApp installation error.</translation>
     </message>
 </context>
 </TS>

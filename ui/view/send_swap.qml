@@ -57,7 +57,7 @@ please review your settings and try again"
     SwapNADialog {
         id:         swapna
         onRejected: sendSwapView.onClosed();
-        onAccepted: main.openSwapSettings();
+        onAccepted: main.openSettings("ALL_COINS");
     }
 
     Component.onCompleted: {

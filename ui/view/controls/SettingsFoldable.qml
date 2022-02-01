@@ -16,10 +16,9 @@ Control {
     spacing: 10
 
     // Status indicator
-    property bool   hasStatusIndicatior: false
+    property bool   showStatus: false
     property alias  connectionStatus: statusIndicator.status
-    property alias  connectionErrorMsg: statusErrorMsg.text
-    property bool   connectionError: connectionStatus == "error"
+    property alias  connectionError:  statusErrorMsg.text
 
     contentItem: ColumnLayout {
         spacing:    0
@@ -39,12 +38,12 @@ Control {
                 ExternalNodeStatus {
                     id:               statusIndicator
                     Layout.alignment: Qt.AlignVCenter
-                    visible:          hasStatusIndicatior
+                    visible:          showStatus
                 }
 
                 Item {
                     width: control.spacing
-                    visible: hasStatusIndicatior
+                    visible: showStatus
                 }
 
                 SFText {
@@ -83,7 +82,7 @@ Control {
 
         Item {
             Layout.fillWidth:  true
-            visible: connectionError
+            visible: connectionStatus == "error"
             implicitHeight:  errorRow.height
             Layout.leftMargin: 20
             Layout.topMargin: 3
@@ -115,7 +114,7 @@ Control {
         Control {
             id:                     contentControl
             Layout.fillWidth:       true
-            Layout.topMargin:       folded ? 0 : connectionError ? Math.max(5, 25 - errorRow.height) : 25
+            Layout.topMargin:       folded ? 0 : connectionStatus == "error" ? Math.max(5, 25 - errorRow.height) : 25
             Layout.leftMargin:      20
             Layout.alignment:       Qt.AlignTop
             contentItem:            content
@@ -159,5 +158,5 @@ Control {
     leftPadding:   0
     rightPadding:  22
     topPadding:    20
-    bottomPadding: connectionError && control.folded ? 16 : 20
+    bottomPadding: connectionStatus == "error" && control.folded ? 16 : 20
 }

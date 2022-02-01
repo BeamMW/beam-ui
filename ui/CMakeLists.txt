@@ -15,7 +15,7 @@ function(BEAM_TRANSLATIONS_UPDATE_TS supported_langs out_ts_files)
         set(TS_FILE "${CMAKE_CURRENT_SOURCE_DIR}/i18n/${SUPPORTED_LANG}.ts")
         list(APPEND TS_FILES "${TS_FILE}")
         message("update: ${TS_FILE}")
-        if (DISTR_NAME AND ("${DISTR_NAME}" STREQUAL "Fedora"))
+        if (${DISTR_NAME} MATCHES "Fedora")
             execute_process(COMMAND lupdate-qt5 -recursive -locations none -no-obsolete ${CMAKE_CURRENT_SOURCE_DIR} -ts "${TS_FILE}")
         else()
             execute_process(COMMAND lupdate -recursive -locations none -no-obsolete ${CMAKE_CURRENT_SOURCE_DIR} -ts "${TS_FILE}")
@@ -40,7 +40,7 @@ function(BEAM_TRANSLATIONS_COMPILE_QM ts_files out_qm_files)
         get_filename_component(TS_FILE_WE ${TS_FILE} NAME_WE)
         set(QM_FILE_NAME "${TS_FILE_WE}.qm")
         list(APPEND QM_FILES "${QM_FILE_NAME}")
-        if (DISTR_NAME AND ("${DISTR_NAME}" STREQUAL "Fedora"))
+        if (${DISTR_NAME} MATCHES "Fedora")
             execute_process(COMMAND lrelease-qt5 -idbased "${TS_FILE}" -qm "${CMAKE_CURRENT_SOURCE_DIR}/${QM_FILE_NAME}")
         else()
             execute_process(COMMAND lrelease -idbased "${TS_FILE}" -qm "${CMAKE_CURRENT_SOURCE_DIR}/${QM_FILE_NAME}")
@@ -496,7 +496,7 @@ elseif(APPLE)
     set_target_properties(${TARGET_NAME} PROPERTIES 
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
 
-    if (NOT BEAM_USE_STATIC_QT)
+    if (NOT BEAM_USE_STATIC_QT AND BEAM_SIGN_IDENTITY)
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
             COMMAND macdeployqt
             "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app"
@@ -570,4 +570,13 @@ else()
     #    TARGET signing-installer
     #    COMMAND ${SIGNTOOL_EXECUTABLE} sign ${SIGNTOOL_OPTIONS} ${CMAKE_CURRENT_BINARY_DIR}\\${BEAM_INSTALLER_NAME}
     #  )
+endif()
+
+if (BEAM_IPFS_SUPPORT AND WIN32)
+    # TODO: This if hacky AF and beacuse we place everything in different folders.
+    get_target_property(IPFS_DLL asio-ipfs IPFS_DLL)
+    add_custom_command(
+            TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy ${IPFS_DLL} ${CMAKE_CURRENT_BINARY_DIR}
+    )
 endif()

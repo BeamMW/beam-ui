@@ -13,7 +13,7 @@ Item {
     property var model
 
     function getStatus() {
-        if (model.isCoinClientFailed)
+        if (model.isCoinClientFailed || model.ipfsError)
             return "error_3rd";
         if (model.isFailedStatus)
             return "error";
@@ -30,8 +30,8 @@ Item {
 
     property int indicator_radius: 5
     property Item indicator: online_indicator
-    property string error_msg: model.walletStatusErrorMsg
-    property string error_msg_3rd_client: model.coinClientErrorMsg
+    property string walletError: model.walletError
+    property string error_msg_3rd_client: model.coinClientErrorMsg || model.ipfsError
     //% "online"
     property string statusOnline: qsTrId("status-online")
     //% "connected node supports online transactions only"
@@ -56,39 +56,40 @@ Item {
         property color color: Style.online
         property int radius: rootControl.indicator_radius
 
-        Rectangle {
-            id: online_rect
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            anchors.topMargin: 2
+        Column {
+            id: indicators
+            anchors {
+                top: parent.top
+                left: parent.left
+                leftMargin: 0
+                topMargin: 2
+            }
 
-            width:      rootControl.indicator_radius * 2
-            height:     rootControl.indicator_radius * 2
-            radius:     rootControl.indicator_radius
-            color:      parent.color
-            visible:    !model.isConnectionTrusted || model.isCoinClientFailed
-        }
+            SvgImage {
+                id:          onlineTrusted
+                width:       10
+                height:      10
+                sourceSize:  Qt.size(10, 10)
+                source:      model.isExchangeRatesUpdated && !model.ipfsError ? "qrc:/assets/icon-trusted-node-status.svg" : "qrc:/assets/icon-trusted-node-status-stale.svg"
+                visible:     model.isConnectionTrusted && !model.isCoinClientFailed && !model.ipfsError
+            }
 
-        SvgImage {
-            id:              onlineTrusted
-            anchors.top:     parent.top
-            anchors.left:    parent.left
-            anchors.leftMargin: 0
-            anchors.topMargin: 2
-            width: 10
-            height: 10
-            sourceSize:     Qt.size(10, 10)
-            source:         model.isExchangeRatesUpdated ? "qrc:/assets/icon-trusted-node-status.svg" : "qrc:/assets/icon-trusted-node-status-stale.svg"
-            visible:        model.isConnectionTrusted && !model.isCoinClientFailed
+            Rectangle {
+                id:       online_rect
+                width:    rootControl.indicator_radius * 2
+                height:   rootControl.indicator_radius * 2
+                radius:   rootControl.indicator_radius
+                color:    online_indicator.color
+                visible:  !onlineTrusted.visible
+            }
         }
 
         DropShadow {
-            anchors.fill: model.isConnectionTrusted && !model.isCoinClientFailed ? onlineTrusted : online_rect
             radius: 5
             samples: 9
-            source: model.isConnectionTrusted && !model.isCoinClientFailed ? onlineTrusted : online_rect
-            color: parent.color
+            anchors.fill: indicators
+            source: indicators
+            color: online_indicator.color
         }
     }
 
@@ -138,31 +139,34 @@ Item {
         LinearGradient {
             anchors.fill: parent
             start: Qt.point(0, 0)
-            end: Qt.point(rowBackground.width, 0)
+            end:   Qt.point(rowBackground.width, 0)
+
             gradient: Gradient {
-                GradientStop { position: 0.0; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0.7) }
-                GradientStop { position: 0.1; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0.7) }
-                GradientStop { position: 1.0; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0) }
+                GradientStop { position: 0.0; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0)}
+                GradientStop { position: 0.5; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0.3)}
+                GradientStop { position: 1.0; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0)}
             }
         }
 
         ColumnLayout {
             spacing: 0
-            RowLayout
-            {
-                id: statusRow
-                Layout.topMargin: 3
-                Layout.leftMargin: 20
+            anchors.fill: parent
+
+            Row {
+                Layout.alignment: Qt.AlignHCenter
+                spacing: 7
+
                 SFText {
                     id: status_text
                     color: Style.content_main
-                    font.pixelSize: 16
+                    font.pixelSize: 15
                     elide: Text.ElideLeft
                 }
+
                 SFText {
                     id: progressText
                     color: Style.content_main
-                    font.pixelSize: 16
+                    font.pixelSize: 15
                     text: "(" + model.nodeSyncProgress + "%)"
                     visible: model.nodeSyncProgress > 0 && update_indicator.visible
                 }
@@ -170,28 +174,36 @@ Item {
                 LinkButton {
                     //% "Change settings"
                     text: qsTrId("status-change-settings")
-                    visible: model.isCoinClientFailed || model.isFailedStatus || (model.isOnline && !model.isConnectionTrusted)
-                    fontSize: 16
-                    onClicked: {
-                        if (model.isCoinClientFailed || model.isFailedStatus)
-                            main.openSwapSettings(model.coinWithErrorLabel());
-                        else
-                            main.openSwapSettings("BEAM");
+                    visible: model.ipfsError || model.isCoinClientFailed || model.isFailedStatus || (model.isOnline && !model.isConnectionTrusted)
+                    fontSize: 15
+
+                    onClicked: function () {
+                        if (model.isCoinClientFailed || model.isFailedStatus) {
+                            main.openSettings(model.coinWithErrorLabel())
+                            return
+                        }
+
+                        if (model.ipfsError) {
+                            main.openSettings("IPFS_NODE")
+                            return
+                        }
+
+                        main.openSettings("BEAM_NODE")
+                        return
                     }
                 }
             }
 
             CustomProgressBar {
                 id: progress_bar
-                backgroundImplicitWidth: 200
-                contentItemImplicitWidth: 200
+                backgroundImplicitWidth: parent.width
+                contentItemImplicitWidth: parent.width
 
                 visible: model.nodeSyncProgress > 0 && update_indicator.visible
                 value: model.nodeSyncProgress / 100
             }
         }
     }
-
 
     states: [
         State {
@@ -220,7 +232,7 @@ Item {
             StateChangeScript {
                 name: "onlineScript"
                 script: {
-                    online_indicator.color = model.isCoinClientFailed ? Style.accent_fail : (model.isExchangeRatesUpdated ? Style.online : Style.validator_warning);
+                    online_indicator.color = model.isCoinClientFailed || model.ipfsError ? Style.accent_fail : (model.isExchangeRatesUpdated ? Style.online : Style.validator_warning);
                     rootControl.setIndicator(online_indicator);
                 }
             }
@@ -243,7 +255,7 @@ Item {
             name: "error"
             PropertyChanges {
                 target: status_text;
-                text: rootControl.error_msg + model.branchName
+                text: rootControl.walletError + model.branchName
             }
             StateChangeScript {
                 name: "errorScript"
