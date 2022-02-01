@@ -376,5 +376,6 @@
         <file>assets/upload-a-file.svg</file>
         <file>assets/upload-error.svg</file>
         <file>assets/upload-success.svg</file>
+        <file>assets/dnd-load-file.svg</file>
     </qresource>
 </RCC>

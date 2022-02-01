@@ -3436,8 +3436,8 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation>or just drop it here</translation>
     </message>
     <message id="dnd-install-success">
-        <source>The &quot;%1&quot; DApp is installed successfully.</source>
-        <translation>The &quot;%1&quot; DApp is installed successfully.</translation>
+        <source>The &quot;%1&quot; DApp is installed successfully</source>
+        <translation>The &quot;%1&quot; DApp is installed successfully</translation>
     </message>
     <message id="dnd-install-fail">
         <source>The DApp installation error.</source>
