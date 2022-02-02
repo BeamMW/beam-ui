@@ -131,9 +131,19 @@ QMap<QString, QVariant> DappsStoreViewModel::parseAppManifest(QTextStream& in, c
     {
         if (!mav.is_string())
         {
-            app.insert("min_api_version", QString::fromStdString(mav.get<std::string>()));
+            throw std::runtime_error("Invalid min_api_version in the manifest file");
+        }        
+        app.insert("min_api_version", QString::fromStdString(mav.get<std::string>()));
+    }
+
+    const auto& v = json["version"];
+    if (!v.empty())
+    {
+        if (!v.is_string())
+        {
+            throw std::runtime_error("Invalid version in the manifest file");
         }
-        throw std::runtime_error("Invalid min_api_version in the manifest file");
+        app.insert("version", QString::fromStdString(v.get<std::string>()));
     }
 
     app.insert("local", true);
@@ -185,7 +195,7 @@ void DappsStoreViewModel::loadApps()
                     return QString::fromStdString(field.get<std::string>());
                 };
 
-                if (json.empty() || !json.is_object() || json["dapps"].empty() || !json["dapps"].is_array())
+                if (json.empty() || !json.is_object() || !json["dapps"].is_array())
                 {
                     throw std::runtime_error("Invalid response of the view_dapps method");
                 }
@@ -312,7 +322,7 @@ void DappsStoreViewModel::loadPublishers()
                     return QString::fromStdString(field.get<std::string>());
                 };
 
-                if (json.empty() || !json.is_object() || json["publishers"].empty() || !json["publishers"].is_array())
+                if (json.empty() || !json.is_object() || !json["publishers"].is_array())
                 {
                     throw std::runtime_error("Invalid response of the view_publishers method");
                 }
@@ -359,7 +369,7 @@ QString DappsStoreViewModel::getPublisherKey()
 {
     if (_publisherKey.isEmpty())
     {
-        std::string args = "role=manager,action=get_pk,cid=";
+        std::string args = "action=get_pk,cid=";
         args += AppSettings().getDappStoreCID();
         QPointer<DappsStoreViewModel> guard(this);
 
@@ -381,12 +391,12 @@ QString DappsStoreViewModel::getPublisherKey()
                 {
                     auto json = nlohmann::json::parse(output);
 
-                    if (json.empty() || !json.is_object() || !json["pk"].is_string())
+                    if (json.empty() || !json.is_object() || !json["pubkey"].is_string())
                     {
                         throw std::runtime_error("Invalid response of the get_pk method");
                     }
 
-                    _publisherKey = QString::fromStdString(json["pk"].get<std::string>());
+                    _publisherKey = QString::fromStdString(json["pubkey"].get<std::string>());
                     emit publisherKeyChanged();
                 }
                 catch (std::runtime_error& err)
@@ -597,9 +607,19 @@ void DappsStoreViewModel::addAppToStore(QMap<QString, QVariant>&& app, const std
     QString args;
     QTextStream textStream(&args);
 
-    textStream << "role=manager,action=add_dapp,cid=" << AppSettings().getDappStoreCID().c_str() << ",ipfs_id=" << QString::fromStdString(ipfsID);
+    textStream << "action=add_dapp,cid=" << AppSettings().getDappStoreCID().c_str() << ",ipfs_id=" << QString::fromStdString(ipfsID);
     textStream << ",name=" << appName << ",id=" << guid << ",description=" << description;
     textStream << ",api_ver=" << app["api_version"].value<QString>() << ",min_api_ver=" << app["min_api_version"].value<QString>();
+
+    // parse version
+    QStringList version = app["version"].value<QString>().split(".");
+
+    for (; version.length() < 4;)
+    {
+        version.append("0");
+    }
+
+    textStream << ",major=" << version[0] << ",minor=" << version[1] << ",release=" << version[2] << ",build=" << version[3];
 
     QPointer<DappsStoreViewModel> guard(this);
 
@@ -631,7 +651,7 @@ void DappsStoreViewModel::addAppToStore(QMap<QString, QVariant>&& app, const std
 
 void DappsStoreViewModel::registerPublisher()
 {
-    std::string args = "role=manager,action=add_publisher,cid=";
+    std::string args = "action=add_publisher,cid=";
     args += AppSettings().getDappStoreCID();
     // TODO:
     args += ",name=test publisher";

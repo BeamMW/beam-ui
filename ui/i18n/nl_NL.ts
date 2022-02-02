@@ -3443,5 +3443,9 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <source>Publisher key</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="dapps-store-update">
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
