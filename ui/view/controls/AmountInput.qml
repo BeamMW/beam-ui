@@ -113,35 +113,47 @@ ColumnLayout {
             }
         }
 
+        Item {
+            x: ainput.width - currCombo.width
+            y: 10
+            CustomComboBox {
+                id:                  currCombo
+                Layout.maximumWidth: 140
+                dropSpacing:         18
+                spacing:             0
+                fontPixelSize:       20
+                dropFontPixelSize:   14
+                currentIndex:        control.currencyIdx
+                color:               error.length ? Style.validator_error : control.currColor
+                underlineColor:      "transparent"
+                enabled:             multi
+                colorConst:          true
+                model:               control.currencies
+                textRole:            "unitName"
+                textMaxLenDrop:      10
+                enableScroll:        true
+                showBackground:      false
 
-        CustomComboBox {
-            id:                  currCombo
-            Layout.maximumWidth: 140
-            dropSpacing:         18
-            spacing:             0
-            fontPixelSize:       20
-            dropFontPixelSize:   14
-            currentIndex:        control.currencyIdx
-            color:               error.length ? Style.validator_error : control.currColor
-            underlineColor:      "transparent"
-            enabled:             multi
-            colorConst:          true
-            model:               control.currencies
-            textRole:            "unitName"
-            textMaxLenDrop:      10
-            enableScroll:        true
-
-            onActivated: {
-                if (multi) {
-                    ainput.text = "0"
-                    control.amount = "0"
-                    control.currencyIdx = index
+                onActivated: {
+                    if (multi) {
+                        ainput.text = "0"
+                        control.amount = "0"
+                        control.currencyIdx = index
+                    }
                 }
-            }
 
-            onModelChanged: {
-                // changing model resets index selection, restore
-                if (multi) currentIndex = control.currencyIdx
+                onModelChanged: {
+                    // changing model resets index selection, restore
+                    if (multi) currentIndex = control.currencyIdx
+                }
+
+                onHoveredChanged: {
+                    if (!ainput.hovered && currCombo.hovered) {
+                        ainput.backgroundOpacity = 0.1;
+                    } else if (!ainput.hovered && !currCombo.hovered) {
+                        ainput.backgroundOpacity = 0.05;
+                    }
+                }
             }
         }
     }

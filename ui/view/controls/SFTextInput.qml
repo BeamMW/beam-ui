@@ -37,6 +37,7 @@ T.TextField {
     property alias backgroundColor : backgroundRect.color
     property alias underlineVisible : backgroundRect.visible
     backgroundColor: Style.content_main
+    property alias backgroundOpacity : backgroundRect.opacity
 
     selectByMouse: true
 
