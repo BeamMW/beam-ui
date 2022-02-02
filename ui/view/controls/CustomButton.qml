@@ -9,9 +9,9 @@ import "."
 Button {
     id: control
     
-    palette.button:      checkable ? (checked ? Style.active : "transparent") : Style.background_button
+    palette.button:      checkable ? (checked ? Style.active : Style.background_button) : Style.background_button
     palette.buttonText:  checkable ? (checked ? Style.content_opposite : Style.content_secondary) : Style.content_main
-    opacity:             enabled   ? 1.0 : 0.45
+    opacity:             enabled   ? 1.0 : 0.7
 
     property int   radius:         checkable ? 10 : 50
     property bool  allLowercase:   !text.startsWith("I ")
@@ -46,7 +46,7 @@ Button {
         icon:  control.icon
         text:  control.text
         font:  control.font
-        color: control.palette.buttonText
+        color: (!control.enabled && control.palette.buttonText == Style.content_main) ? Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.4) : control.palette.buttonText
 
         MouseArea {
             anchors.fill:  parent
@@ -55,9 +55,17 @@ Button {
             cursorShape:   control.showHandCursor ? Qt.PointingHandCursor : Qt.ArrowCursor
         }
     }
-    
+
     Keys.onPressed: {
         if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) control.clicked();
+    }
+
+    Rectangle {
+        anchors.fill: parent
+        radius:  control.radius
+        color:   Style.background_main
+        opacity: 0.7
+        visible: !control.enabled
     }
 
     background: Rectangle {
@@ -71,7 +79,7 @@ Button {
         anchors.fill: rect
         radius:  7
         samples: 9
-        color:   Style.content_main
+        color:   control.palette.button == Style.background_button ? Style.content_main : control.palette.button
         source:  rect
         visible: control.hasShadow && (control.visualFocus || control.hovered || control.checked)
     }

@@ -256,8 +256,6 @@ ColumnLayout {
                 anchors.rightMargin: 20
         
                 height: 38
-                palette.button: Style.background_second
-                palette.buttonText : Style.content_main
                 icon.source: getActionButtonIcon(type).source
                 icon.height: getActionButtonIcon(type).height
                 text: getActionButtonLabel(type)
