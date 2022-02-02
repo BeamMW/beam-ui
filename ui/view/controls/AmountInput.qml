@@ -148,11 +148,7 @@ ColumnLayout {
                 }
 
                 onHoveredChanged: {
-                    if (!ainput.hovered && currCombo.hovered) {
-                        ainput.backgroundOpacity = 0.1;
-                    } else if (!ainput.hovered && !currCombo.hovered) {
-                        ainput.backgroundOpacity = 0.05;
-                    }
+                    ainput.highlight = currCombo.hovered;
                 }
             }
         }

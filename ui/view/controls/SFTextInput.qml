@@ -37,7 +37,7 @@ T.TextField {
     property alias backgroundColor : backgroundRect.color
     property alias underlineVisible : backgroundRect.visible
     backgroundColor: Style.content_main
-    property alias backgroundOpacity : backgroundRect.opacity
+    property bool highlight: false
 
     selectByMouse: true
 
@@ -66,7 +66,7 @@ T.TextField {
         id: backgroundRect
         anchors.fill: parent
         radius: 10
-        opacity: (control.activeFocus || control.hovered)? 0.1 : 0.05
+        opacity: (control.activeFocus || control.hovered || control.highlight) ? 0.1 : 0.05
     }
 
     MouseArea {
