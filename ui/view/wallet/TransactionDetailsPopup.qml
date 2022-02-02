@@ -560,9 +560,12 @@ CustomDialog {
                     elide: Text.ElideMiddle
                     onCopyText: textCopied(dialog.kernelID)
                 }
+          
                 OpenInBlockchainExplorer {
-                    Layout.rightMargin: 3
+                    Layout.alignment: Qt.AlignTop
+                    Layout.rightMargin: 8                    
                     visible: dialog.isCompleted && kernelID.parent.visible
+                    showText: false
                     onTriggered: function(kernelID) {
                         openExternal(dialog.kernelID);
                     }
