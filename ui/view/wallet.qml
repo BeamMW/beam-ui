@@ -162,6 +162,7 @@ Item {
 
             RowLayout {
                 Layout.topMargin: 25
+                spacing: 0
 
                 SFText {
                     Layout.fillWidth: true
@@ -179,41 +180,37 @@ Item {
                     text: qsTrId("wallet-assets-title")
                 }
 
-                RowLayout {
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignRight
+                SFText {
+                    //% "Selected"
+                    text: qsTrId("wallet-selected-assets-checkbox")
+                    color: transactionsLayout.showSelected ? Style.active : Style.content_secondary
+                    font.pixelSize: 14
+                    opacity: assets.selectedIds.length == 0 ? 0.2 : 1
+                }
 
-                    SFText {
-                        //% "Selected"
-                        text: qsTrId("wallet-selected-assets-checkbox")
-                        color: transactionsLayout.showSelected ? Style.active : Style.content_secondary
-                        font.pixelSize: 14
-                        opacity: assets.selectedIds.length == 0 ? 0.2 : 1
+                CustomSwitch {
+                    id: assetsFilterSwitch
+                    Layout.leftMargin: 10
+                    Layout.rightMargin: 10
+                    checkable: assets.selectedIds.length != 0
+                    checked: assets.selectedIds.length == 0 ? true : !transactionsLayout.showSelected
+                    alwaysGreen: true
+                    leftPadding: 0
+                    rightPadding: 0
+                    spacing: 0
+
+                    Binding {
+                        target: transactionsLayout
+                        property: "showSelected"
+                        value: !assetsFilterSwitch.checked
                     }
+                }
 
-                    Item {width: 3}
-
-                    CustomSwitch {
-                        id: assetsFilterSwitch
-                        checkable: assets.selectedIds.length != 0
-                        checked: assets.selectedIds.length == 0 ? true : !transactionsLayout.showSelected
-                        alwaysGreen: true
-
-                        Binding {
-                            target: transactionsLayout
-                            property: "showSelected"
-                            value: !assetsFilterSwitch.checked
-                        }
-                    }
-
-                    Item {width: 3}
-
-                    SFText {
-                        //% "All"
-                        text: qsTrId("wallet-all-assets-checkbox")
-                        color: transactionsLayout.showSelected ? Style.content_secondary : Style.active
-                        font.pixelSize: 14
-                    }
+                SFText {
+                    //% "All"
+                    text: qsTrId("wallet-all-assets-checkbox")
+                    color: transactionsLayout.showSelected ? Style.content_secondary : Style.active
+                    font.pixelSize: 14
                 }
             }
 

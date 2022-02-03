@@ -11,7 +11,7 @@ Window  {
     flags: Qt.Window | Qt.WindowFullscreenButtonHint
     title: BeamGlobals.getAppName()
 
-    onScreenChanged: function () {
+    function setMinMax () {
         var wlimit = appWindow.screen.width
         var hlimit = appWindow.screen.height - 80
         var wmin = Math.min(1024, wlimit)
@@ -26,6 +26,14 @@ Window  {
             if (appWindow.height == 0) appWindow.height = hmin
             if (appWindow.height > hlimit) appWindow.height = hlimit
         }
+    }
+
+    onScreenChanged: function() {
+        appWindow.setMinMax()
+    }
+
+    Component.onCompleted: function() {
+        appWindow.setMinMax
     }
 
     SFFontLoader {}
