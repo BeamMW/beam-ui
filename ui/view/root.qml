@@ -33,7 +33,7 @@ Window  {
     }
 
     Component.onCompleted: function() {
-        appWindow.setMinMax
+        appWindow.setMinMax();
     }
 
     SFFontLoader {}
