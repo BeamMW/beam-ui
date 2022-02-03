@@ -64,6 +64,7 @@ ColumnLayout {
             selectByMouse:    true
             text:             formatDisplayedAmount()
             readOnly:         control.readOnlyA
+            rightPadding:     currCombo.width
 
             function stripAmountText() {
                 return text ? text.replace(/\.0*$|(\.\d*[1-9])0+$/,'$1') : "0"
@@ -118,7 +119,7 @@ ColumnLayout {
             y: 10
             CustomComboBox {
                 id:                  currCombo
-                Layout.maximumWidth: 140
+                width:               140
                 dropSpacing:         18
                 spacing:             0
                 fontPixelSize:       20
