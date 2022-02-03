@@ -37,6 +37,32 @@ ColumnLayout {
             installFail.text = qsTrId("apps-install-fail").arg(appName)
             installFail.open()
         }
+
+        onShaderTxData: function (txComment, fee, feeRate, rateUnit) {
+            const dialog = Qt.createComponent("qrc:/send_confirm.qml")
+            const instance = dialog.createObject(control,
+                {
+                    rateUnit:       rateUnit,
+                    fee:            fee,
+                    feeRate:        feeRate,
+                    comment:        txComment,
+                    appMode:        true,
+                    isOnline:       false,
+                    showPrefix:     true,
+                    hasAmounts:     false
+                })
+
+            instance.Component.onDestruction.connect(function () {
+                if (instance.result == Dialog.Accepted) {
+                    viewModel.contractInfoApproved()
+                    return
+                }
+                viewModel.contractInfoRejected()
+                return
+            })
+
+            instance.open()
+        }
     }
 
     CustomDialog {

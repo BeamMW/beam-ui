@@ -13,6 +13,9 @@
 // limitations under the License.
 #pragma once
 
+#include <boost/optional.hpp>
+#include "utility/common.h"
+
 class DappsStoreViewModel : public QObject
 {
     Q_OBJECT
@@ -39,6 +42,8 @@ public:
     Q_INVOKABLE void registerPublisher();
     Q_INVOKABLE void installApp(const QString& guid);
     Q_INVOKABLE void updateApp(const QString& guid);
+    Q_INVOKABLE void contractInfoApproved();
+    Q_INVOKABLE void contractInfoRejected();
 
 signals:
     void appsChanged();
@@ -46,6 +51,7 @@ signals:
     void appInstallOK(const QString& appName);
     void appInstallFail(const QString& appName);
     void publishersChanged();
+    void shaderTxData(const QString& comment, const QString& fee, const QString& feeRate, const QString& rateUnit);
 
 private:
     [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
@@ -58,8 +64,12 @@ private:
 
     QMap<QString, QVariant> getAppByGUID(const QString& guid);
 
+    void handleShaderTxData(const beam::ByteBuffer& data);
+
+
     QString _serverAddr;
     QList<QMap<QString, QVariant>> _apps;
     QString _publisherKey;
     QList<QMap<QString, QVariant>> _publishers;
+    boost::optional<beam::ByteBuffer> _shaderTxData;
 };
