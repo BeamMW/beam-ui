@@ -1044,3 +1044,21 @@ void WalletSettings::setShowFailed(bool value)
     Lock lock(m_mutex);
     m_data.setValue(kTxFilterFailed, value);
 }
+
+bool WalletSettings::isAppActive() const
+{
+    Lock lock(m_mutex);
+    auto curTime = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch()).count();
+    return curTime - m_activateTime > 300 && m_isActive;
+}
+
+void WalletSettings::setAppActive(bool value)
+{
+    Lock lock(m_mutex);
+    m_isActive = value;
+    m_activateTime = m_isActive
+        ? std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::system_clock::now().time_since_epoch()).count()
+        : 0;
+}

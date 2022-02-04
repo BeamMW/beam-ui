@@ -119,6 +119,8 @@ Window  {
     }
 
     onActiveChanged: {
+        BeamGlobals.setAppActive(this.active);
+
         if (this.active) {
             rootLoader.activated();
         }

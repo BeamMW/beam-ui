@@ -498,6 +498,18 @@ QString QMLGlobals::getExplorerUrl()
     return settings.getExplorerUrl();
 }
 
+bool QMLGlobals::isAppActive()
+{
+    const auto& settings = AppModel::getInstance().getSettings();
+    return settings.isAppActive();
+}
+
+void QMLGlobals::setAppActive(bool value)
+{
+    auto& settings = AppModel::getInstance().getSettings();
+    settings.setAppActive(value);
+}
+
 void QMLGlobals::fatal(const QString& message)
 {
     throw std::runtime_error(message.toStdString());

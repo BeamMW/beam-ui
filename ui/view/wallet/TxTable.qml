@@ -461,6 +461,8 @@ Control {
                 }
 
                 onLeftClick: function() {
+                    if (!BeamGlobals.isAppActive()) return;
+                    
                     transactionsTable.initTxDetailsFromRow(transactionsTable.model, rowNumber);
                     txDetails.open();
                     return false;

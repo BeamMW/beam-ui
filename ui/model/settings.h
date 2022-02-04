@@ -17,6 +17,7 @@
 #include <QSettings>
 #include <QDir>
 #include <QStringList>
+#include <chrono>
 #include <mutex>
 #include "model/wallet_model.h"
 
@@ -152,6 +153,9 @@ public:
     bool getShowFailed() const;
     void setShowFailed(bool value);
 
+    bool isAppActive() const;
+    void setAppActive(bool value);
+
 public:
     static const char* WalletCfg;
     static const char* LogsFolder;
@@ -188,4 +192,6 @@ private:
     uint32_t m_minConfirmations = 0;
     mutable std::recursive_mutex m_mutex;
     using Lock = std::unique_lock<decltype(m_mutex)>;
+    bool m_isActive = false;
+    uint64_t m_activateTime = 0;
 };
