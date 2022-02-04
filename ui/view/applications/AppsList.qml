@@ -198,7 +198,7 @@ Item {
                         okButtonText: qsTrId("apps-uninstall")
                         okButtonIconSource: "qrc:/assets/icon-delete.svg"
                         okButtonColor: Style.accent_fail
-                        cancelButtonIconSource: "qrc:/assets/icon-cancel.svg"
+                        cancelButtonIconSource: "qrc:/assets/icon-cancel-white.svg"
 
                         onAccepted: function () {
                             control.uninstall(modelData)

@@ -166,7 +166,7 @@ Item
                 enabled: true
                 //% "Cancel"
                 text: qsTrId("general-cancel")
-                icon.source: "qrc:/assets/icon-cancel.svg"
+                icon.source: "qrc:/assets/icon-cancel-white.svg"
                 onClicked: {
                     this.enabled = false;
                     cancelCreating();

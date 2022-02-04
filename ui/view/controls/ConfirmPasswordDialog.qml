@@ -1,10 +1,10 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.3
-import QtQuick.Layouts 1.12
-import Beam.Wallet 1.0
-import "."
+	import QtQuick 2.11
+	import QtQuick.Controls 2.3
+	import QtQuick.Layouts 1.12
+	import Beam.Wallet 1.0
+	import "."
 
-CustomDialog {
+	CustomDialog {
 	property var settingsViewModel: function() {
 		return {
 			checkWalletPassword: function() {
@@ -40,13 +40,13 @@ CustomDialog {
 
 	modal: true
 
-    x: (parent.width - width) / 2
+	x: (parent.width - width) / 2
 	y: (parent.height - height) / 2
 	visible:        false
 	parent:         Overlay.overlay
 	padding:        30
 
-    contentItem: ColumnLayout {
+	contentItem: ColumnLayout {
 		spacing: 30
 
 		SFText {
@@ -123,7 +123,7 @@ CustomDialog {
 				id: cancelButton
 				//% "Cancel"
 				text: qsTrId("general-cancel")
-				icon.source: "qrc:/assets/icon-cancel.svg"
+				icon.source: "qrc:/assets/icon-cancel-white.svg"
 				onClicked: reject()
 			}
 
@@ -139,7 +139,7 @@ CustomDialog {
 				}
 			}
 		}
-    }
+	}
 
 	onOpened: {
 		pwd.text = "";
@@ -157,4 +157,4 @@ CustomDialog {
 			onDialogRejected();
 		}
 	}	
-}
+	}

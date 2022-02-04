@@ -678,7 +678,7 @@ please review your settings and try again"
                                         text:                qsTrId("general-copy-and-close")
                                         palette.buttonText:  Style.content_main
                                         palette.button:      Style.background_button
-                                        icon.source:         "qrc:/assets/icon-copy.svg"
+                                        icon.source:         enabled ? "qrc:/assets/icon-copy.svg" : "qrc:/assets/icon-copy-gray.svg"
                                         enabled:             thisView.canSend()
                                         onClicked: {
                                             BeamGlobals.copyToClipboard(viewModel.transactionToken);

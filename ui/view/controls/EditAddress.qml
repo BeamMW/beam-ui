@@ -196,7 +196,7 @@ CustomDialog {
 
 				//% "Cancel"
 				text:        qsTrId("general-cancel")
-                icon.source: "qrc:/assets/icon-cancel.svg"
+                icon.source: "qrc:/assets/icon-cancel-white.svg"
                 icon.color:  Style.content_main
 
 				onClicked: {
