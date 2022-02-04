@@ -3447,5 +3447,9 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <source>The DApp installation error.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="tx-details-date-label">
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
