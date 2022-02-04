@@ -148,10 +148,10 @@ CustomDialog {
                 color: Style.content_secondary
                 //% "Date"
                 text: qsTrId("tx-details-date-label") + ":"
-                visible: dateField.parent.visible
+                visible: true
             }
             RowLayout {
-                visible: stm.state == "tx_info" && dialog.sendAddress.length && !(isIncome && isShieldedTx)
+                visible: true
                 SFLabel {
                     id: dateField
                     Layout.fillWidth: true

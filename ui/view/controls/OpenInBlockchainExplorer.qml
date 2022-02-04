@@ -12,6 +12,17 @@ Item {
     Layout.preferredWidth: (control.showText ? openInExplorer.width + 10 : 10) + openInExplorerIcon.width
     height: 16
 
+    SFText {
+        id: openInExplorer
+        font.pixelSize: 14
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.rightMargin: 10
+        color: Style.active
+        visible: control.showText
+        //% "Open in Blockchain Explorer"
+        text: qsTrId("open-in-explorer")
+    }
     SvgImage {
         id: openInExplorerIcon
         anchors.top: parent.top
