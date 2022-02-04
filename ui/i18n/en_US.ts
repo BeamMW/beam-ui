@@ -2661,8 +2661,8 @@ Update your settings and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-details-date-label">
-	<source>Date</source>
-	<translation type="unfinished"></translation>
+        <source>Date</source>
+        <translation>Date</translation>
     </message>
     <message id="tx-details-sending-addr-label">
         <source>Sending address</source>
