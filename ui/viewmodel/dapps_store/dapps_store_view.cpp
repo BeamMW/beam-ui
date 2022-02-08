@@ -28,6 +28,7 @@
 #include "wallet/client/apps_api/apps_utils.h"
 #include "wallet/core/common.h"
 
+
 DappsStoreViewModel::DappsStoreViewModel()
 {
     LOG_INFO() << "DappsStoreViewModel created";
@@ -52,6 +53,47 @@ DappsStoreViewModel::~DappsStoreViewModel()
 void DappsStoreViewModel::onCompleted(QObject *webView)
 {
     assert(webView != nullptr);
+}
+
+void DappsStoreViewModel::checkManifestFile(QIODevice* ioDevice, const QString& appName, const QString& guid)
+{
+    QuaZip zip(ioDevice);
+    if (!zip.open(QuaZip::Mode::mdUnzip))
+    {
+        throw std::runtime_error("Failed to open the DApp archive");
+    }
+
+    //QString guid, appName;
+    bool isFound = false;
+    for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
+    {
+        const auto zipFname = zip.getCurrentFileName();
+        if (zipFname == "manifest.json")
+        {
+            QuaZipFile mfile(&zip);
+            if (!mfile.open(QIODevice::ReadOnly))
+            {
+                throw std::runtime_error("Failed to read the DApp archive");
+            }
+
+            QTextStream in(&mfile);
+            const auto app = parseAppManifest(in, "");
+            if (guid != app["guid"].value<QString>())
+            {
+                throw std::runtime_error("Wrong guid.");
+            }
+            if (appName != app["name"].value<QString>())
+            {
+                throw std::runtime_error("Wrong name of app");
+            }
+            isFound = true;
+        }
+    }
+
+    if (!isFound)
+    {
+        throw std::runtime_error("Maybe dapp file is broken");
+    }
 }
 
 QMap<QString, QVariant> DappsStoreViewModel::parseAppManifest(QTextStream& in, const QString& appFolder)
@@ -714,7 +756,7 @@ void DappsStoreViewModel::installApp(const QString& guid)
 
         // TODO: check timeout value
         ipfs->AnyThread_get(ipfsID.toStdString(), 0,
-            [this, guard, appName](beam::ByteBuffer&& data) mutable
+            [this, guard, appName, guid](beam::ByteBuffer&& data) mutable
             {
                 if (!guard)
                 {
@@ -730,15 +772,8 @@ void DappsStoreViewModel::installApp(const QString& guid)
                     std::copy(data.cbegin(), data.cend(), std::back_inserter(qData));
 
                     QBuffer buffer(&qData);
-                    const auto result = installFromBuffer(&buffer);
-
-                    // TODO: probably not the best place to check
-                    if (result != appName)
-                    {
-                        assert(false);
-                        LOG_WARNING() << "Mismatched DApp names, expected - "
-                            << appName.toStdString() << ", resulting - " << result.toStdString();
-                    }
+                    checkManifestFile(&buffer, appName, guid);
+                    installFromBuffer(&buffer, guid);
 
                     emit appInstallOK(appName);
                 }
@@ -763,38 +798,8 @@ void DappsStoreViewModel::installApp(const QString& guid)
     }
 }
 
-QString DappsStoreViewModel::installFromBuffer(QIODevice* ioDevice)
+void DappsStoreViewModel::installFromBuffer(QIODevice* ioDevice, const QString& guid)
 {
-    QuaZip zip(ioDevice);
-    if (!zip.open(QuaZip::Mode::mdUnzip))
-    {
-        throw std::runtime_error("Failed to open the DApp archive");
-    }
-
-    QString guid, appName;
-    for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
-    {
-        const auto zipFname = zip.getCurrentFileName();
-        if (zipFname == "manifest.json")
-        {
-            QuaZipFile mfile(&zip);
-            if (!mfile.open(QIODevice::ReadOnly))
-            {
-                throw std::runtime_error("Failed to read the DApp archive");
-            }
-                
-            QTextStream in(&mfile);
-            const auto app = parseAppManifest(in, "");
-            guid = app["guid"].value<QString>();
-            appName = app["name"].value<QString>();
-        }
-    }
-
-    if (guid.isEmpty())
-    {
-        throw std::runtime_error("Invalid DApp archive");
-    }
-
     const auto appsPath = AppSettings().getLocalAppsPath();
     const auto appFolder = QDir(appsPath).filePath(guid);
 
@@ -812,13 +817,96 @@ QString DappsStoreViewModel::installFromBuffer(QIODevice* ioDevice)
         //cleanupFolder(appFolder)
         throw std::runtime_error("DApp Installation failed");
     }
-
-    return appName;
 }
 
 void DappsStoreViewModel::updateApp(const QString& guid)
 {
     // TODO: implement
+    try
+    {
+        const auto app = getAppByGUID(guid);
+        if (app.isEmpty())
+        {
+            LOG_WARNING() << "Failed to find Dapp by guid " << guid.toStdString();
+            return;
+        }
+
+        const auto ipfsID = app["ipfs_id"].toString();
+        const auto appName = app["name"].toString();
+
+        // get dapp binary data from ipfs
+        QPointer<DappsStoreViewModel> guard(this);
+        auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
+
+        ipfs->AnyThread_get(ipfsID.toStdString(), 0,
+            [this, guard, guid, appName](beam::ByteBuffer&& data) mutable
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                try
+                {
+                    // unpack & verify & install
+                    LOG_DEBUG() << "Updating DApp " << appName.toStdString() << " from ipfs";
+
+                    QByteArray qData;
+                    std::copy(data.cbegin(), data.cend(), std::back_inserter(qData));
+
+                    QBuffer buffer(&qData);
+
+                    checkManifestFile(&buffer, appName, guid);
+
+                    const auto appsPath = AppSettings().getLocalAppsPath();
+                    auto appsDir = QDir(appsPath);
+                    const auto appFolder = QDir(appsPath).filePath(guid);
+                    const auto backupName = guid + "-backup";
+
+                    if (appsDir.exists(guid))
+                    {
+                        if (!appsDir.rename(guid, backupName))
+                        {
+                            throw std::runtime_error("Failed to backup folder");
+                        }
+                    }
+
+                    appsDir.mkdir(guid);
+                    if (JlCompress::extractDir(&buffer, appFolder).isEmpty())
+                    {
+                        if (!QDir(appFolder).removeRecursively())
+                        {
+                            throw std::runtime_error("Failed to restore folder");
+                        }
+
+                        if (!appsDir.rename(backupName, guid))
+                        {
+                            throw std::runtime_error("Failed to restore folder");
+                        }
+
+                        throw std::runtime_error("DApp Installation failed");
+                    }
+
+                    emit appInstallOK(appName);
+                }
+                catch (std::runtime_error& err)
+                {
+                    LOG_ERROR() << "Failed to update DApp: " << err.what();
+                    emit appInstallFail(appName);
+                }
+            },
+            [this, guard, appName](std::string&& err)
+            {
+                LOG_ERROR() << "Failed to get app from ipfs: " << err;
+                emit appInstallFail(appName);
+            }
+        );
+    }
+    catch (const std::runtime_error& err)
+    {
+        LOG_WARNING() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
+        return;
+    }
 }
 
 void DappsStoreViewModel::handleShaderTxData(const beam::ByteBuffer& data)

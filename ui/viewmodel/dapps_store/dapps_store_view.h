@@ -56,9 +56,10 @@ signals:
 private:
     [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
     [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
+    void checkManifestFile(QIODevice* ioDevice, const QString& appName, const QString& guid);
     QMap<QString, QVariant> parseAppManifest(QTextStream& io, const QString& appFolder);
     void addAppToStore(QMap<QString, QVariant>&& app, const std::string& ipfsCID);
-    QString installFromBuffer(QIODevice* ioDevice);
+    void installFromBuffer(QIODevice* ioDevice, const QString& guid);
 
     QMap<QString, QVariant> loadLocalDapp(const QString& guid);
 
