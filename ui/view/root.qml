@@ -1,7 +1,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.12
-import QtQuick.Window 2.2
+import QtQuick.Window 2.9
 import "controls"
 import Beam.Wallet 1.0
 
@@ -11,18 +11,30 @@ Window  {
     flags: Qt.Window | Qt.WindowFullscreenButtonHint
     title: BeamGlobals.getAppName()
 
-    function cellResize() {
+    function setMinMax () {
+        var wlimit = appWindow.screen.width
+        var hlimit = appWindow.screen.height - 80
+        var wmin = Math.min(1024, wlimit)
+        var hmin = Math.min(867, hlimit)
+
+        appWindow.minimumWidth = wmin
+        appWindow.minimumHeight = hmin
+
         if(appWindow.visibility != ApplicationWindow.Maximized) {
-            var minWidth = Math.min(1024, appWindow.screen.width - 10);
-            var minHeight = Math.min(867, appWindow.screen.height - 80);
-            appWindow.minimumWidth = minWidth;
-            appWindow.minimumHeight = minHeight;
-            appWindow.width = minWidth;
-            appWindow.height = minHeight;
+            if (appWindow.width == 0) appWindow.width = wmin
+            if (appWindow.width > wlimit) appWindow.width = wlimit
+            if (appWindow.height == 0) appWindow.height = hmin
+            if (appWindow.height > hlimit) appWindow.height = hlimit
         }
     }
- 
-    onVisibilityChanged: cellResize()
+
+    onScreenChanged: function() {
+        appWindow.setMinMax()
+    }
+
+    Component.onCompleted: function() {
+        appWindow.setMinMax();
+    }
 
     SFFontLoader {}
     
@@ -107,6 +119,8 @@ Window  {
     }
 
     onActiveChanged: {
+        BeamGlobals.setAppActive(this.active);
+
         if (this.active) {
             rootLoader.activated();
         }

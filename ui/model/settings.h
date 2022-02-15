@@ -17,6 +17,7 @@
 #include <QSettings>
 #include <QDir>
 #include <QStringList>
+#include <chrono>
 #include <mutex>
 #include "model/wallet_model.h"
 
@@ -143,8 +144,8 @@ public:
     uint32_t getMinConfirmations() const;
     void setMinConfirmations(uint32_t value);
 
-    [[nodiscard]] boost::optional<beam::Asset::ID> getLastAssetSelection() const;
-    void setLastAssetSelection(boost::optional<beam::Asset::ID> selection);
+    [[nodiscard]] QVector<beam::Asset::ID> getLastAssetSelection() const;
+    void setLastAssetSelection(QVector<beam::Asset::ID> selection);
 
     // tx table filters
     bool getShowInProgress() const;
@@ -155,6 +156,9 @@ public:
     void setShowCanceled(bool value);
     bool getShowFailed() const;
     void setShowFailed(bool value);
+
+    bool isAppActive() const;
+    void setAppActive(bool value);
 
 public:
     static const char* WalletCfg;
@@ -183,6 +187,7 @@ signals:
     void beamMWLinksChanged();
     void secondCurrencyChanged();
     void dappsAllowedChanged();
+    void IPFSSettingsChanged();
 
 private:
     mutable QSettings m_data;
@@ -191,4 +196,6 @@ private:
     uint32_t m_minConfirmations = 0;
     mutable std::recursive_mutex m_mutex;
     using Lock = std::unique_lock<decltype(m_mutex)>;
+    bool m_isActive = false;
+    uint64_t m_activateTime = 0;
 };

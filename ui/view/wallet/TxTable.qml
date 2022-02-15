@@ -16,7 +16,7 @@ Control {
         id: tableViewModel
     }
 
-    property int       selectedAsset: -1
+    property var       selectedAssets: []
     property int       emptyMessageMargin: 90
     property int       activeTxCnt: 0
     property alias     headerShaderVisible: transactionsTable.headerShaderVisible
@@ -205,7 +205,7 @@ Control {
                             default: console.log("unknown filter id");
                         }
                     }
-                    showUnderline: false
+                    showBackground: false
                 }
                 Item {
                     Layout.preferredWidth: 20
@@ -276,6 +276,7 @@ Control {
             id: transactionsTable
 
             property var initTxDetailsFromRow: function (model, row) {
+                txDetails.dateField        =  model.getRoleValue(row, "timeCreated") || ""
                 txDetails.sendAddress      =  model.getRoleValue(row, "addressFrom") || ""
                 txDetails.receiveAddress   =  model.getRoleValue(row, "addressTo") || ""
                 txDetails.senderIdentity   =  model.getRoleValue(row, "senderIdentity") || ""
@@ -404,7 +405,7 @@ Control {
                     source: SortFilterProxyModel {
                         id:           assetFilterProxy
                         filterRole:   "assetFilter"
-                        filterString: control.selectedAsset < 0 ? "" : ["\\b", control.selectedAsset, "\\b"].join("")
+                        filterString: control.selectedAssets.reduce(function(sum, current) { return sum + ["|", "\\b", current, "\\b"].join(""); }, "").slice(1)
                         filterSyntax: SortFilterProxyModel.RegExp
 
                         source: SortFilterProxyModel {
@@ -461,6 +462,8 @@ Control {
                 }
 
                 onLeftClick: function() {
+                    if (!BeamGlobals.isAppActive()) return;
+                    
                     transactionsTable.initTxDetailsFromRow(transactionsTable.model, rowNumber);
                     txDetails.open();
                     return false;

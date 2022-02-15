@@ -12,7 +12,7 @@ import "utils.js" as Utils
 Rectangle {
     id: main
 
-    property var    openedNotifications: 0
+    property var    openedNotifications: []
     property var    notificationOffset: 0
     property alias  hasNewerVersion : notificationManager.hasNewerVersion
     readonly property bool devMode: viewModel.isDevMode
@@ -29,11 +29,28 @@ Rectangle {
         if (main.notificationOffset < 0) main.notificationOffset = 0
     }
 
+    function closeNotification(popup) {
+        var closedNotificationIndex = openedNotifications.indexOf(popup)
+        openedNotifications.splice(closedNotificationIndex, 1)
+        
+        for (var i = closedNotificationIndex; i < openedNotifications.length; ++i) {
+            var oldVerticalOffset = openedNotifications[i].verticalOffset
+            
+            openedNotifications[i].verticalOffset  -= openedNotifications[i].nextVerticalOffset - openedNotifications[i].verticalOffset
+            if (openedNotifications[i].verticalOffset < 0)  openedNotifications[i].verticalOffset = 0
+                    
+            openedNotifications[i].nextVerticalOffset = oldVerticalOffset
+        }
+    }
+
     function showPopup(popup) {
         increaseNotificationOffset(popup)
+        openedNotifications.push(popup)
+
         popup.closed.connect(function () {
             if (main) {
                 main.decreaseNotificationOffset(popup)
+                main.closeNotification(popup)
             }
         })
         popup.open();
@@ -416,8 +433,8 @@ Rectangle {
         updateItem("wallet", {"openReceive": true, "token" : token})
     }
 
-    function openSwapSettings(coinID) {
-        updateItem("settings", {swapMode: typeof(coinID) == "string" ? coinID : "ALL"})
+    function openSettings(section) {
+        updateItem("settings", {"unfoldSection": section})
     }
 
     function openSwapActiveTransactionsList() {

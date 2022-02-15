@@ -20,15 +20,15 @@ T.TextArea {
     }
 
     padding: 6
-    leftPadding: 0
+    leftPadding: 8
 
     color: control.palette.text
     selectionColor: control.palette.highlight
     selectedTextColor: control.palette.highlightedText
     verticalAlignment: TextInput.AlignVCenter
 
-    //property alias backgroundColor : backgroundRect.color
-    //backgroundColor: Style.white
+    property alias backgroundColor : backgroundRect.color
+    backgroundColor: Style.content_main
 
 	selectByMouse: true
 	
@@ -48,13 +48,12 @@ T.TextArea {
         elide: Text.ElideRight
     }
 
-// background: Rectangle {
-//    id: backgroundRect
-//     y: control.parent.parent.implicitHeight  - 20//height - control.bottomPadding + 4
-//     implicitWidth: 120
-//     height: control.activeFocus || control.hovered ? 2 : 1
-//	opacity: (control.activeFocus || control.hovered)? 0.3 : 0.1
-// }
+    background: Rectangle {
+        id: backgroundRect
+        anchors.fill: parent
+        radius: 10
+        opacity: (control.activeFocus || control.hovered)? 0.1 : 0.05
+    }
 
     MouseArea {
         anchors.fill: parent

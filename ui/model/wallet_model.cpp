@@ -266,9 +266,9 @@ void WalletModel::onNodeConnectionChanged(bool isNodeConnected)
 }
 
 #ifdef BEAM_IPFS_SUPPORT
-void WalletModel::onIPFSStatus(bool connected, const std::string& error)
+void WalletModel::onIPFSStatus(bool running, const std::string& error, unsigned int peercnt)
 {
-    emit IPFSStatusChanged(connected, QString::fromStdString(error));
+    emit IPFSStatusChanged(running, QString::fromStdString(error), peercnt);
 }
 #endif
 

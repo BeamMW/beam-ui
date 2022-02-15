@@ -62,7 +62,6 @@ SettingsFoldable {
                 SFTextInput {
                     id: swarmPort
                     Layout.preferredWidth: 100
-                    topPadding: 0
                     activeFocusOnTab: true
                     font.pixelSize: 14
                     color: swarmPort.acceptableInput ? Style.content_main : Style.validator_error

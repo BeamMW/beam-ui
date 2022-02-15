@@ -26,7 +26,7 @@ AbstractTheme {
     property color background_row_details_even: "#07ffffff"
     property color background_row_details_odd:  "#0cffffff"
 
-    property color background_button:     Qt.rgba(255, 255, 255, 0.1)
+    property color background_button:     Qt.rgba(255, 255, 255, 0.2)
     property color background_popup:      "#342e41"
     property color background_appstx:     "#261f38"
     property color row_selected:          "#534e5e"

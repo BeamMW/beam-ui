@@ -64,6 +64,7 @@ ColumnLayout {
             selectByMouse:    true
             text:             formatDisplayedAmount()
             readOnly:         control.readOnlyA
+            rightPadding:     currCombo.width
 
             function stripAmountText() {
                 return text ? text.replace(/\.0*$|(\.\d*[1-9])0+$/,'$1') : "0"
@@ -113,36 +114,43 @@ ColumnLayout {
             }
         }
 
+        Item {
+            x: ainput.width - currCombo.width
+            y: 10
+            CustomComboBox {
+                id:                  currCombo
+                width:               140
+                dropSpacing:         18
+                spacing:             0
+                fontPixelSize:       20
+                dropFontPixelSize:   14
+                currentIndex:        control.currencyIdx
+                color:               error.length ? Style.validator_error : control.currColor
+                underlineColor:      "transparent"
+                enabled:             multi
+                colorConst:          true
+                model:               control.currencies
+                textRole:            "unitName"
+                textMaxLenDrop:      10
+                enableScroll:        true
+                showBackground:      false
 
-        CustomComboBox {
-            id:                  currCombo
-            Layout.topMargin:    22
-            Layout.maximumWidth: 140
-            dropSpacing:         18
-            spacing:             0
-            fontPixelSize:       20
-            dropFontPixelSize:   14
-            currentIndex:        control.currencyIdx
-            color:               error.length ? Style.validator_error : control.currColor
-            underlineColor:      "transparent"
-            enabled:             multi
-            colorConst:          true
-            model:               control.currencies
-            textRole:            "unitName"
-            textMaxLenDrop:      10
-            enableScroll:        true
-
-            onActivated: {
-                if (multi) {
-                    ainput.text = "0"
-                    control.amount = "0"
-                    control.currencyIdx = index
+                onActivated: {
+                    if (multi) {
+                        ainput.text = "0"
+                        control.amount = "0"
+                        control.currencyIdx = index
+                    }
                 }
-            }
 
-            onModelChanged: {
-                // changing model resets index selection, restore
-                if (multi) currentIndex = control.currencyIdx
+                onModelChanged: {
+                    // changing model resets index selection, restore
+                    if (multi) currentIndex = control.currencyIdx
+                }
+
+                onHoveredChanged: {
+                    ainput.highlight = currCombo.hovered;
+                }
             }
         }
     }

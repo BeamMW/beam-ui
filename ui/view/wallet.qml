@@ -83,6 +83,8 @@ Item {
             Layout.topMargin: -27
             spacing: 0
 
+            property bool showSelected:  false
+
             function navigateSend(assetId) {
                 var params = {
                     "onAccepted":    onAccepted,
@@ -115,6 +117,22 @@ Item {
                 spacing: 20
 
                 CustomButton {
+                    id: removeFilterButton
+                    height: 32
+                    palette.button: Style.background_button
+                    palette.buttonText: Style.content_main
+                    icon.source: "qrc:/assets/icon-cancel-white.svg"
+                    visible: assets.selectedIds.length
+                    //% "Remove filter"
+                    text: qsTrId("wallet-remove-filter-button")
+                    font.pixelSize: 12
+                    onClicked: {
+                        assets.clearSelectedAssets()
+                        showSelected = false
+                    }
+                }
+
+                CustomButton {
                     id: sendButton
                     height: 32
                     palette.button: Style.accent_outgoing
@@ -123,7 +141,6 @@ Item {
                     //% "Send"
                     text: qsTrId("general-send")
                     font.pixelSize: 12
-                    //font.capitalization: Font.AllUppercase
                     onClicked: {
                         navigateSend(assets.selectedId);
                     }
@@ -137,10 +154,63 @@ Item {
                     //% "Receive"
                     text: qsTrId("wallet-receive-button")
                     font.pixelSize: 12
-                    //font.capitalization: Font.AllUppercase
                     onClicked: {
                         navigateReceive(assets.selectedId);
                     }
+                }
+            }
+
+            RowLayout {
+                Layout.topMargin: 25
+                spacing: 0
+
+                SFText {
+                    Layout.fillWidth: true
+
+                    font {
+                        pixelSize: 14
+                        letterSpacing: 4
+                        styleName: "DemiBold"; weight: Font.DemiBold
+                        capitalization: Font.AllUppercase
+                    }
+
+                    opacity: 0.5
+                    color: Style.content_main
+                    //% "Assets"
+                    text: qsTrId("wallet-assets-title")
+                }
+
+                SFText {
+                    //% "Selected"
+                    text: qsTrId("wallet-selected-assets-checkbox")
+                    color: transactionsLayout.showSelected ? Style.active : Style.content_secondary
+                    font.pixelSize: 14
+                    opacity: assets.selectedIds.length == 0 ? 0.2 : 1
+                }
+
+                CustomSwitch {
+                    id: assetsFilterSwitch
+                    Layout.leftMargin: 10
+                    Layout.rightMargin: 10
+                    checkable: assets.selectedIds.length != 0
+                    checked: assets.selectedIds.length == 0 ? true : !transactionsLayout.showSelected
+                    alwaysGreen: true
+                    leftPadding: 0
+                    rightPadding: 0
+                    spacing: 0
+
+                    Binding {
+                        target: transactionsLayout
+                        property: "showSelected"
+                        value: !assetsFilterSwitch.checked
+                    }
+                }
+
+                SFText {
+                    //% "All"
+                    text: qsTrId("wallet-all-assets-checkbox")
+                    color: transactionsLayout.showSelected ? Style.content_secondary : Style.active
+                    font.pixelSize: 14
                 }
             }
 
@@ -148,11 +218,12 @@ Item {
                 id: assets
                 Layout.topMargin: 25
                 Layout.fillWidth: true
+                showSelected: transactionsLayout.showSelected
 
                 Binding {
                     target:    txTable
-                    property:  "selectedAsset"
-                    value:     assets.selectedId
+                    property:  "selectedAssets"
+                    value:     assets.selectedIds
                 }
             }
 

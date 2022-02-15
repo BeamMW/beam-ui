@@ -127,11 +127,13 @@ CustomDialog {
 				//% "Cancel"
 				text: qsTrId("general-cancel")
 				onClicked: control.close()
+				icon.source: "qrc:/assets/icon-cancel-white.svg"
 			}
 
 			PrimaryButton {
 				//% "Change password"
 				text: qsTrId("change-pwd-ok")
+				icon.source: "qrc:/assets/icon-done.svg"
 				onClicked: {
 					if(oldPass.text.length == 0)
 					{

@@ -106,6 +106,7 @@ CustomDialog {
                             font.pixelSize: 14
                             wrapMode: TextInput.Wrap
                             color: verifyLayout.isInvalidPaymentProof() ? Style.validator_error : Style.content_main
+                            backgroundColor: verifyLayout.isInvalidPaymentProof() ? Style.validator_error : Style.content_main
                             text: model ? model.paymentProof : ""
                             Binding {
                                 target: model
@@ -113,13 +114,6 @@ CustomDialog {
                                 value: paymentProofInput.text.trim()
                             }
                         }
-                    }
-                    Rectangle {
-                        Layout.fillWidth: true
-                        Layout.topMargin: -16
-                        color: paymentProofInput.color
-                        Layout.preferredHeight: (paymentProofInput.activeFocus || paymentProofInput.hovered) ? 2 : 1
-                        opacity: (paymentProofInput.activeFocus || paymentProofInput.hovered) ? 0.3 : 0.1
                     }
 
                     SFText {

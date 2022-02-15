@@ -14,6 +14,7 @@
 #include "settings.h"
 #include <algorithm>
 #include <map>
+#include <QDataStream>
 #include <QFileDialog>
 #include <QtQuick>
 #include "model/app_model.h"
@@ -891,6 +892,7 @@ void WalletSettings::setIPFSPort(uint32_t port)
     }
 
     m_data.setValue(keySwarmPort, port);
+    emit IPFSSettingsChanged();
 }
 
 void WalletSettings::setIPFSNodeStart(const QString& start)
@@ -903,6 +905,7 @@ void WalletSettings::setIPFSNodeStart(const QString& start)
     }
 
     m_data.setValue(keyNodeStart, start);
+    emit IPFSSettingsChanged();
 }
 
 QString WalletSettings::getIPFSNodeStart() const
@@ -986,30 +989,27 @@ void WalletSettings::setMinConfirmations(uint32_t value)
     }
 }
 
-boost::optional<beam::Asset::ID> WalletSettings::getLastAssetSelection() const
+QVector<beam::Asset::ID> WalletSettings::getLastAssetSelection() const
 {
     Lock lock(m_mutex);
-    if (m_data.contains(kLastAssetSelection))
-    {
-        return m_data.value(kLastAssetSelection).toInt();
-    }
-    else
-    {
-        return boost::none;
-    }
+
+    auto ser = m_data.value(kLastAssetSelection).value<QByteArray>();
+    QDataStream in(&ser, QIODevice::ReadOnly);
+    QVector<beam::Asset::ID> res;
+    in >> res;
+
+    return res;
 }
 
-void WalletSettings::setLastAssetSelection(boost::optional<beam::Asset::ID> selection)
+void WalletSettings::setLastAssetSelection(QVector<beam::Asset::ID> selection)
 {
     Lock lock(m_mutex);
-    if (selection.is_initialized())
-    {
-        m_data.setValue(kLastAssetSelection, *selection);
-    }
-    else
-    {
-        m_data.remove(kLastAssetSelection);
-    }
+
+    QByteArray ser;
+    QDataStream out(&ser, QIODevice::WriteOnly);
+    out << selection;
+
+    m_data.setValue(kLastAssetSelection, QVariant::fromValue<QByteArray>(ser));
 }
 
 bool WalletSettings::getShowInProgress() const
@@ -1058,4 +1058,22 @@ void WalletSettings::setShowFailed(bool value)
 {
     Lock lock(m_mutex);
     m_data.setValue(kTxFilterFailed, value);
+}
+
+bool WalletSettings::isAppActive() const
+{
+    Lock lock(m_mutex);
+    auto curTime = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch()).count();
+    return curTime - m_activateTime > 300 && m_isActive;
+}
+
+void WalletSettings::setAppActive(bool value)
+{
+    Lock lock(m_mutex);
+    m_isActive = value;
+    m_activateTime = m_isActive
+        ? std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::system_clock::now().time_since_epoch()).count()
+        : 0;
 }

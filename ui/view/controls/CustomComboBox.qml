@@ -11,6 +11,8 @@ ComboBox {
     id: control
     
     spacing: 8
+    padding: 6
+    leftPadding: 8
     property int dropSpacing: 20
     property int fontPixelSize: 12
     property int dropFontPixelSize: 13
@@ -28,7 +30,10 @@ ComboBox {
     property var controlFont: Font.Normal
     property string controlFontStyle: "Regular"
     property color controlColor: control.enabled || control.colorConst ? control.color : Style.content_secondary
-    property bool showUnderline: true
+    property bool showBackground: true
+
+    property alias backgroundColor : backgroundRect.color
+    backgroundColor: Style.content_main
 
     TextMetrics {
         id: textMetrics
@@ -181,12 +186,12 @@ ComboBox {
 
     background: Item {
         Rectangle {
-            width:  control.width
-            height: 1
-            visible: control.showUnderline
-            y: control.height - 1
+            id: backgroundRect
+            visible: control.showBackground
             color: control.underlineColor
             opacity: (control.activeFocus || control.hovered)? 0.3 : 0.1
+            anchors.fill: parent
+            radius: 10
         }
     }
 

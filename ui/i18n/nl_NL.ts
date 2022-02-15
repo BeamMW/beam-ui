@@ -748,12 +748,17 @@
         <translation>Nieuw wachtwoord aanmaken om toegang te krijgen tot uw wallet</translation>
     </message>
     <message id="start-create-pwd-strength-message">
-        <source>Strong password needs to meet the following requirements:
+        <source>Strong password needs to meet the following requirements:<byte value="xd"/>
+•  the length must be at least 10 characters<byte value="xd"/>
+•  must contain at least one lowercase letter<byte value="xd"/>
+•  must contain at least one uppercase letter<byte value="xd"/>
+•  must contain at least one number</source>
+        <oldsource>Strong password needs to meet the following requirements:
 •  the length must be at least 10 characters
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
-•  must contain at least one number</source>
-        <translation>Een sterk wachtwoord moet voldoen aan de volgende vereisten:
+•  must contain at least one number</oldsource>
+        <translation type="unfinished">Een sterk wachtwoord moet voldoen aan de volgende vereisten:
 •  Wachtwoord moet uit ten minste 10 tekens bestaan
 •  moet ten minste één kleine letter bevatten
 •  moet ten minste één hoofdletter bevatten
@@ -774,10 +779,12 @@
         <translation>Uw adres</translation>
     </message>
     <message id="settings-general-allow-beammw-label">
-        <source>Allow access to %1 and %2
+        <source>Allow access to %1 and %2<byte value="xd"/>
 (to fetch exchanges and transaction data)</source>
+        <oldsource>Allow access to %1 and %2
+(to fetch exchanges and transaction data)</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
-        <translation>Verleen toegang tot %1 en %2
+        <translation type="unfinished">Verleen toegang tot %1 en %2
 (om exchanges- en transactiegegevens op te halen)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
@@ -980,9 +987,11 @@
         <translation>Electrum</translation>
     </message>
     <message id="swap-currency-na-message">
-        <source>%1 is not connected, 
+        <source>%1 is not connected, <byte value="xd"/>
 please review your settings and try again</source>
-        <translation>%1 is niet verbonden,
+        <oldsource>%1 is not connected, 
+please review your settings and try again</oldsource>
+        <translation type="unfinished">%1 is niet verbonden,
 controleer uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="send-not-enough">
@@ -1170,9 +1179,11 @@ Controleer de swaptoken en probeer het opnieuw.</translation>
         <translation>Qtum electrum</translation>
     </message>
     <message id="swap-offer-duplicate-message">
-        <source>The offer with this transaction token is already accepted.
+        <source>The offer with this transaction token is already accepted.<byte value="xd"/>
 Please check the swap token and try again.</source>
-        <translation>Het aanbod met deze transactietoken is al geaccepteerd.
+        <oldsource>The offer with this transaction token is already accepted.
+Please check the swap token and try again.</oldsource>
+        <translation type="unfinished">Het aanbod met deze transactietoken is al geaccepteerd.
 Controleer de swaptoken en probeer het opnieuw.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
@@ -1385,11 +1396,14 @@ Controleer de swaptoken en probeer het opnieuw.</translation>
         <translation>Eigenaarssleutel</translation>
     </message>
     <message id="settings-show-owner-key-message">
-        <source>Please notice, that knowing your owner key allows to
-know all your funds (UTXO). Make sure that you
+        <source>Please notice, that knowing your owner key allows to<byte value="xd"/>
+know all your funds (UTXO). Make sure that you<byte value="xd"/>
 deploy the key at the node you trust completely.</source>
+        <oldsource>Please notice, that knowing your owner key allows to
+know all your funds (UTXO). Make sure that you
+deploy the key at the node you trust completely.</oldsource>
         <extracomment>settings tab, show owner key message</extracomment>
-        <translation>Let op dat het kennen van uw eigenaarssleutel inzicht in al uw tegoeden (UTXO) geeft. Zorg ervoor dat u de sleutel op een node invoert die u volledig vertrouwt.</translation>
+        <translation type="unfinished">Let op dat het kennen van uw eigenaarssleutel inzicht in al uw tegoeden (UTXO) geeft. Zorg ervoor dat u de sleutel op een node invoert die u volledig vertrouwt.</translation>
     </message>
     <message id="settings-general-require-pwd-to-show-owner-key">
         <source>Show owner key</source>
@@ -1855,9 +1869,11 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>De verzender kan geen vouchers voor max privacy transactie krijgen</translation>
     </message>
     <message id="settings-random-node-text">
-        <source>Random node address and port will be displayed 
+        <source>Random node address and port will be displayed <byte value="xd"/>
 when connection is established</source>
-        <translation>Willekeurig node adres en poort worden weergegeven 
+        <oldsource>Random node address and port will be displayed 
+when connection is established</oldsource>
+        <translation type="unfinished">Willekeurig node adres en poort worden weergegeven 
 wanneer verbinding is gemaakt</translation>
     </message>
     <message id="swap-token-newer-lib">
@@ -2116,10 +2132,13 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>De maximale vergoeding is %1 %2</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. 
-Check on the %1 blockchain by yourself. Low fees might take 
+        <source>Connection error: can&apos;t calculate the recommended fee rate. <byte value="xd"/>
+Check on the %1 blockchain by yourself. Low fees might take <byte value="xd"/>
 much longer for a transaction to complete.</source>
-        <translation>Verbindingsfout: kan de aanbevolen fee niet berekenen.
+        <oldsource>Connection error: can&apos;t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete.</oldsource>
+        <translation type="unfinished">Verbindingsfout: kan de aanbevolen fee niet berekenen.
 Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernstig vertragen.</translation>
     </message>
     <message id="ethereum-show-addresses-title">
@@ -2303,9 +2322,11 @@ Probeer het later opnieuw of maak zelf een aanbieding aan.</translation>
         <translation>Een ogenblik geduld, aanbiedingen worden geladen.</translation>
     </message>
     <message id="atomic-no-offers">
-        <source>There are no active offers at the moment.
+        <source>There are no active offers at the moment.<byte value="xd"/>
 Please try again later or create an offer yourself.</source>
-        <translation>Er zijn momenteel geen actieve aanbiedingen.
+        <oldsource>There are no active offers at the moment.
+Please try again later or create an offer yourself.</oldsource>
+        <translation type="unfinished">Er zijn momenteel geen actieve aanbiedingen.
 Probeer het later opnieuw of maak zelf een aanbieding.</translation>
     </message>
     <message id="atomic-swap-time-created">
@@ -2373,9 +2394,11 @@ Probeer het later opnieuw of maak zelf een aanbieding.</translation>
         <translation>mislukken</translation>
     </message>
     <message id="swap-na-message">
-        <source>You do not have any 3rd-party currencies connected.
+        <source>You do not have any 3rd-party currencies connected.<byte value="xd"/>
 Update your settings and try again.</source>
-        <translation>U heeft geen 3rd-party valuta gekoppeld.
+        <oldsource>You do not have any 3rd-party currencies connected.
+Update your settings and try again.</oldsource>
+        <translation type="unfinished">U heeft geen 3rd-party valuta gekoppeld.
 Update uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="wallet-receive-swap-title">
@@ -2933,12 +2956,12 @@ Update uw instellingen en probeer opnieuw.</translation>
         <translation type="unfinished">DApps Privacy</translation>
     </message>
     <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
-
+        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.<byte value="xd"/>
+<byte value="xd"/>
 Allow to proceed? You can always update your choice in Settings later.</source>
-        <oldsource>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
+        <oldsource>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
 
-Allow to proceed ? You can always update your choice in Settings later.</oldsource>
+Allow to proceed? You can always update your choice in Settings later.</oldsource>
         <translation type="unfinished">Beam Wallet vereist toestemming om gedistribueerde applicaties te starten. Deze actie kan uw informatie, inclusief maar niet beperkt tot het IP-adres, blootstellen aan webservers en/of contracten van derden.
 
 Wilt u doorgaan? U kunt uw keuze later altijd wijzigen in Instellingen.</translation>
@@ -3219,19 +3242,12 @@ cannot be canceled.</source>
         <translation>Update Wallet om %1 applicatie te starten</translation>
     </message>
     <message id="wallet-receive-regular-address-message">
-        <source>To ensure a better privacy, new address is generated every time.
+        <source>To ensure a better privacy, new address is generated every time.<byte value="xd"/>
 In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
-        <translation>Om een betere privacy te garanderen wordt er elke keer een nieuw adres gegenereerd.
+        <oldsource>To ensure a better privacy, new address is generated every time.
+In case you’d like to re-use an earlier created regular address please use the Address Book.</oldsource>
+        <translation type="unfinished">Om een betere privacy te garanderen wordt er elke keer een nieuw adres gegenereerd.
 Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan het adresboek.</translation>
-    </message>
-    <message id="apps-install-success">
-        <source>&apos;%1&apos; is successfully installed.</source>
-        <translation>%1 is succesvol geïnstalleerd.</translation>
-    </message>
-    <message id="apps-install-fail">
-        <source>Failed to install DApp:
-%1</source>
-        <translation>Installatie van DApp %1 mislukt</translation>
     </message>
     <message id="app-install-title">
         <source>Install DApp</source>
@@ -3246,9 +3262,11 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <translation>Token details</translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit-commented">
-        <source>No limit
+        <source>No limit<byte value="xd"/>
 (transaction can last indefinitely)</source>
-        <translation>Geen limiet
+        <oldsource>No limit
+(transaction can last indefinitely)</oldsource>
+        <translation type="unfinished">Geen limiet
 (transactie kan onbepaalde tijd in beslag nemen)</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
@@ -3419,8 +3437,54 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <source>All</source>
         <translation type="unfinished">Alle</translation>
     </message>
-    <message id="dapps-store-install">
-        <source>Install</source>
+    <message id="wallet-remove-filter-button">
+        <source>Remove filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-assets-title">
+        <source>Assets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-selected-assets-checkbox">
+        <source>Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-all-assets-checkbox">
+        <source>All</source>
+        <translation type="unfinished">Alle</translation>
+    </message>
+    <message id="dnd-app-install-title">
+        <source>Install DApp</source>
+        <translation type="unfinished">DApp installeren</translation>
+    </message>
+    <message id="dnd-load-a-file">
+        <source>load a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dnd-jus-drop">
+        <source>or just drop it here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dnd-install-success">
+        <source>The &quot;%1&quot; DApp is installed successfully</source>
+        <oldsource>The &quot;%1&quot; DApp is installed successfully.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dnd-install-fail">
+        <source>The DApp installation error.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-details-date-label">
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-install-success">
+        <source>&apos;%1&apos; is successfully installed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-install-fail">
+        <source>Failed to install DApp:
+%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-publish">
@@ -3441,6 +3505,10 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
     </message>
     <message id="dapps-store-publisher-key">
         <source>Publisher key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-install">
+        <source>Install</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-update">

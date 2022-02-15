@@ -13,7 +13,7 @@ Item {
     property var model
 
     function getStatus() {
-        if (model.isCoinClientFailed)
+        if (model.isCoinClientFailed || model.ipfsError)
             return "error_3rd";
         if (model.isFailedStatus)
             return "error";
@@ -31,7 +31,7 @@ Item {
     property int indicator_radius: 5
     property Item indicator: online_indicator
     property string walletError: model.walletError
-    property string error_msg_3rd_client: model.coinClientErrorMsg
+    property string error_msg_3rd_client: model.coinClientErrorMsg || model.ipfsError
     //% "online"
     property string statusOnline: qsTrId("status-online")
     //% "connected node supports online transactions only"
@@ -56,39 +56,40 @@ Item {
         property color color: Style.online
         property int radius: rootControl.indicator_radius
 
-        Rectangle {
-            id: online_rect
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            anchors.topMargin: 2
+        Column {
+            id: indicators
+            anchors {
+                top: parent.top
+                left: parent.left
+                leftMargin: 0
+                topMargin: 2
+            }
 
-            width:      rootControl.indicator_radius * 2
-            height:     rootControl.indicator_radius * 2
-            radius:     rootControl.indicator_radius
-            color:      parent.color
-            visible:    !model.isConnectionTrusted || model.isCoinClientFailed
-        }
+            SvgImage {
+                id:          onlineTrusted
+                width:       10
+                height:      10
+                sourceSize:  Qt.size(10, 10)
+                source:      model.isExchangeRatesUpdated && !model.ipfsError ? "qrc:/assets/icon-trusted-node-status.svg" : "qrc:/assets/icon-trusted-node-status-stale.svg"
+                visible:     model.isConnectionTrusted && !model.isCoinClientFailed && !model.ipfsError
+            }
 
-        SvgImage {
-            id:              onlineTrusted
-            anchors.top:     parent.top
-            anchors.left:    parent.left
-            anchors.leftMargin: 0
-            anchors.topMargin: 2
-            width: 10
-            height: 10
-            sourceSize:     Qt.size(10, 10)
-            source:         model.isExchangeRatesUpdated ? "qrc:/assets/icon-trusted-node-status.svg" : "qrc:/assets/icon-trusted-node-status-stale.svg"
-            visible:        model.isConnectionTrusted && !model.isCoinClientFailed
+            Rectangle {
+                id:       online_rect
+                width:    rootControl.indicator_radius * 2
+                height:   rootControl.indicator_radius * 2
+                radius:   rootControl.indicator_radius
+                color:    online_indicator.color
+                visible:  !onlineTrusted.visible
+            }
         }
 
         DropShadow {
-            anchors.fill: model.isConnectionTrusted && !model.isCoinClientFailed ? onlineTrusted : online_rect
             radius: 5
             samples: 9
-            source: model.isConnectionTrusted && !model.isCoinClientFailed ? onlineTrusted : online_rect
-            color: parent.color
+            anchors.fill: indicators
+            source: indicators
+            color: online_indicator.color
         }
     }
 
@@ -173,14 +174,22 @@ Item {
                 LinkButton {
                     //% "Change settings"
                     text: qsTrId("status-change-settings")
-                    visible: model.isCoinClientFailed || model.isFailedStatus || (model.isOnline && !model.isConnectionTrusted)
-
+                    visible: model.ipfsError || model.isCoinClientFailed || model.isFailedStatus || (model.isOnline && !model.isConnectionTrusted)
                     fontSize: 15
-                    onClicked: {
-                        if (model.isCoinClientFailed || model.isFailedStatus)
-                            main.openSwapSettings(model.coinWithErrorLabel());
-                        else
-                            main.openSwapSettings("BEAM");
+
+                    onClicked: function () {
+                        if (model.isCoinClientFailed || model.isFailedStatus) {
+                            main.openSettings(model.coinWithErrorLabel())
+                            return
+                        }
+
+                        if (model.ipfsError) {
+                            main.openSettings("IPFS_NODE")
+                            return
+                        }
+
+                        main.openSettings("BEAM_NODE")
+                        return
                     }
                 }
             }
@@ -223,7 +232,7 @@ Item {
             StateChangeScript {
                 name: "onlineScript"
                 script: {
-                    online_indicator.color = model.isCoinClientFailed ? Style.accent_fail : (model.isExchangeRatesUpdated ? Style.online : Style.validator_warning);
+                    online_indicator.color = model.isCoinClientFailed || model.ipfsError ? Style.accent_fail : (model.isExchangeRatesUpdated ? Style.online : Style.validator_warning);
                     rootControl.setIndicator(online_indicator);
                 }
             }

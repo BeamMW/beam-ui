@@ -24,7 +24,7 @@ ComboBox {
     property var modelWidth: control.width
     property var calculatedWidth: Math.max(control.width, modelWidth)
 
-    property bool showUnderline: true
+    property bool showBackground: true
     property var onSelectChanged: function(id, state) {
         console.log(id);
         console.log(state);
@@ -139,7 +139,7 @@ ComboBox {
         Rectangle {
             width:  control.width
             height: 1
-            visible: control.showUnderline
+            visible: control.showBackground
             y: control.height - 1
             color: control.underlineColor
             opacity: (control.activeFocus || control.hovered)? 0.3 : 0.1
