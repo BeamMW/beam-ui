@@ -378,5 +378,7 @@
         <file>assets/upload-error.svg</file>
         <file>assets/upload-success.svg</file>
         <file>assets/dnd-load-file.svg</file>
+        <file>assets/icon-voting.svg</file>
+        <file>assets/icon-voting-active.svg</file>
     </qresource>
 </RCC>

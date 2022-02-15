@@ -25,6 +25,7 @@ class MainViewModel : public QObject
     Q_PROPERTY(int unsafeTxCount        READ getUnsafeTxCount       NOTIFY unsafeTxCountChanged)
     Q_PROPERTY(int unreadNotifications  READ getUnreadNotifications NOTIFY unreadNotificationsChanged)
     Q_PROPERTY(QString daoCoreAppID     READ getDaoCoreAppID        CONSTANT)
+    Q_PROPERTY(QString votingAppID      READ getVotingAppID         CONSTANT)
     Q_PROPERTY(QString faucetAppID      READ getFaucetAppID         CONSTANT)
     Q_PROPERTY(bool isDevMode           READ getDevMode             CONSTANT)
 public:
@@ -51,6 +52,7 @@ private:
     [[nodiscard]] int getUnsafeTxCount() const;
     [[nodiscard]] int getUnreadNotifications() const;
     [[nodiscard]] QString getDaoCoreAppID() const;
+    [[nodiscard]] QString getVotingAppID() const;
     [[nodiscard]] QString getFaucetAppID() const;
     [[nodiscard]] bool getDevMode() const;
 private:

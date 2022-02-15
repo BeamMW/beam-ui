@@ -131,6 +131,23 @@ QString MainViewModel::getDaoCoreAppID() const
     return QString::fromStdString(appid);
 }
 
+QString MainViewModel::getVotingAppID() const
+{
+    const std::string appName = "BeamX DAO Voting";
+    std::string appURL  = "";
+
+#if defined(BEAM_TESTNET)
+    appURL = "https://apps-testnet.beam.mw/app/dao-voting-app/index.html";
+#elif defined(BEAM_MAINNET)
+    appURL = "https://apps.beam.mw/app/dao-voting-app/index.html";
+#else
+    appURL = "http://3.19.141.112:80/app-same-origin/dao-voting-app/index.html";
+#endif
+
+    const auto appid = beam::wallet::GenerateAppID(appName, appURL);
+    return QString::fromStdString(appid);
+}
+
 QString MainViewModel::getFaucetAppID() const
 {
     const std::string appName = "BEAM Faucet";
