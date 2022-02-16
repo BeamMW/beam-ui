@@ -98,6 +98,8 @@
         <file>controls/SettingsApps.qml</file>
         <file>controls/SettingsIPFS.qml</file>
         <file>controls/OpenInBlockchainExplorer.qml</file>
+        <file>controls/CheckRecoveryPhrase.qml</file>
+        <file>controls/GenerateRecoveryPhrase.qml</file>
         <file>wallet/TxTable.qml</file>
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>
@@ -113,8 +115,6 @@
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
-        <file>CheckRecoveryPhrase.qml</file>
-        <file>GenerateRecoveryPhrase.qml</file>
         <file>loading.qml</file>
         <file>main.qml</file>
         <file>wallet.qml</file>

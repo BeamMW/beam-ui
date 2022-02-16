@@ -3,9 +3,9 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
-import "controls"
 import Beam.Wallet 1.0
 import QtQuick.Layouts 1.12
+import "."
 
 Component {
     id: checkRecoveryPhrase
