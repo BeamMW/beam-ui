@@ -43,11 +43,12 @@ signals:
     void clipboardChanged(const QString& message);
 
 public slots:
-	void update(int page);
     void lockWallet();
     void onLockTimeoutChanged();
+
 private slots:
     void onClipboardDataChanged();
+
 private:
     [[nodiscard]] int getUnsafeTxCount() const;
     [[nodiscard]] int getUnreadNotifications() const;
@@ -55,6 +56,7 @@ private:
     [[nodiscard]] QString getVotingAppID() const;
     [[nodiscard]] QString getFaucetAppID() const;
     [[nodiscard]] bool getDevMode() const;
+
 private:
     WalletSettings& m_settings;
     QTimer m_timer;

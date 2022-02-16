@@ -60,11 +60,6 @@ MainViewModel::MainViewModel()
     m_settings.minConfirmationsInit();
 }
 
-void MainViewModel::update(int page)
-{
-	// TODO: update page model or smth...
-}
-
 void MainViewModel::lockWallet()
 {
     emit gotoStartScreen();

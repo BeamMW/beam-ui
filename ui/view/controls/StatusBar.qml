@@ -8,7 +8,7 @@ import "."
 Item {
     id: rootControl
     x: -20
-    y: -45
+    y: -30
 
     property var model
 

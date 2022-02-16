@@ -44,37 +44,25 @@ ColumnLayout {
     // Page Header (Title + Status Bar)
     //
     Title {
-        //% "DApp Store"
-        text: qsTrId("apps-title")
+        text: control.activeApp ? control.activeApp.name :
+              //% "DApp Store"
+              qsTrId("apps-title")
+
+        MouseArea {
+            visible: !!control.activeApp
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton
+            cursorShape: Qt.PointingHandCursor
+
+            onClicked: function () {
+                webView.reload()
+            }
+        }
     }
 
     StatusBar {
         id: statusBar
         model: statusbarModel
-    }
-
-    // Subtitle row is invisible only when we display appslit
-    // In all other cases we display it
-    //   - if app, with back button & app title
-    //   - if no app (loading) without back button & title.
-    //     This is to avoid 'Loading (appname)...' message jumping vertically
-    SubtitleRow {
-        id: backRow
-        Layout.fillWidth:    true
-        Layout.topMargin:    50
-        Layout.bottomMargin: 20
-
-        visible:  !appsListView.visible
-        showBack: control.showBack && !!text
-        text:     ((control.activeApp || {}).name || "")
-
-        onBack: function () {
-            main.openApplications()
-        }
-
-        onRefresh: function () {
-            webView.reload()
-        }
     }
 
     //
@@ -301,6 +289,7 @@ ColumnLayout {
         Layout.fillHeight:   true
         Layout.fillWidth:    true
         Layout.bottomMargin: txPanel.folded ? 10 : 0
+        Layout.topMargin:    20
         visible: false
         opacity: txPanel.folded ? 1.0 : 0.25
         clip:    true
@@ -395,6 +384,7 @@ ColumnLayout {
         id: errCntMessage
         Layout.alignment: Qt.AlignRight
         Layout.topMargin: 5
+        Layout.bottomMargin: 10
         color: Style.validator_error
         visible: control.hasApps && !control.activeApp && unsupportedCnt > 0
         font.italic: true
@@ -404,7 +394,7 @@ ColumnLayout {
 
     AppsList {
         id: appsListView
-        Layout.topMargin:  40 - (unsupportedCnt ? errCntMessage.height + 5 + parent.spacing : 0)
+        Layout.topMargin: unsupportedCnt ? 0 : 20
         Layout.fillHeight: true
         Layout.fillWidth:  true
         Layout.bottomMargin: txPanel.folded ? 10 : 0
