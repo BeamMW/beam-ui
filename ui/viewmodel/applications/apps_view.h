@@ -23,6 +23,7 @@ namespace beamui::applications
         Q_PROPERTY(QString appsUrl     READ getAppsUrl    CONSTANT)
         Q_PROPERTY(QString userAgent   READ getUserAgent  CONSTANT)
         Q_PROPERTY(QList<QMap<QString, QVariant>> localApps READ getLocalApps CONSTANT)
+        Q_PROPERTY(QList<QMap<QString, QVariant>> apps READ getApps NOTIFY appsChanged)
 
     public:
         AppsViewModel();
@@ -30,6 +31,7 @@ namespace beamui::applications
 
         [[nodiscard]] QString getAppsUrl() const;
         [[nodiscard]] QString getUserAgent() const;
+        [[nodiscard]] QList<QMap<QString, QVariant>> getApps();
         [[nodiscard]] QList<QMap<QString, QVariant>> getLocalApps();
 
     public:
@@ -41,14 +43,19 @@ namespace beamui::applications
         Q_INVOKABLE void launchAppServer();
         Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
 
+    signals:
+        void appsChanged();
+
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
         [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
         QMap<QString, QVariant> validateAppManifest(QTextStream& io, const QString& appFolder);
+        void loadApps();
 
         QString _userAgent;
         QString _serverAddr;
         std::unique_ptr<AppsServer> _server;
         QList<QMap<QString, QVariant>> _lastLocalApps;
+        QList<QMap<QString, QVariant>> _apps;
     };
 }
