@@ -47,6 +47,6 @@ AbstractTheme {
     property color swapStateIndicator:  "#ff746b"
     property color swapDisconnectNode:          "#f9605b"
 
-    property int appsGradientOffset: -174
-    property int appsGradientTop: 56
+    property int appsGradientOffset: -95
+    property int appsGradientTop: 135
 }
