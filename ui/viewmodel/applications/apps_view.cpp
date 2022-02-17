@@ -208,8 +208,6 @@ namespace beamui::applications
                     }
 
                     auto json = nlohmann::json::parse(response);
-                
-                    LOG_INFO() << "Response: " << json.dump(4);
 
                     // parse & verify
                     if (json.empty() || !json.is_array())

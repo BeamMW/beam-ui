@@ -39,10 +39,11 @@ Item {
         ScrollBar.vertical.policy: ScrollBar.AsNeeded
         clip: true
 
-        ColumnLayout
-        {
+        GridLayout {
             width: parent.width
-            spacing: 15
+            columnSpacing: 20
+            rowSpacing: 15
+            columns: 2
 
             Repeater {
                 model: control.appsList
@@ -252,7 +253,7 @@ Item {
             Item {
                 id: installFromFilePanel
                 Layout.fillWidth: true
-                Layout.preferredHeight: 60
+                Layout.preferredHeight: 100
                 opacity: 0.3
 
                 Canvas {

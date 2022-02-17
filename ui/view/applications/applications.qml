@@ -79,6 +79,39 @@ ColumnLayout {
         }
     }
 
+    RowLayout {
+        visible: appsListView.visible
+        Layout.topMargin: 10
+        Layout.fillWidth: true
+        spacing: 20
+
+        Item {
+            Layout.fillWidth: true
+        }
+
+        CustomButton {
+            id: showPublishers
+            width: 38
+            palette.button: Qt.rgba(255, 255, 255, 0.1)
+            radius: 10
+            icon.source: "qrc:/assets/icon-dapps_store-publishers.svg"
+            onClicked: {
+                // TODO: implement
+            }
+        }
+
+        PrimaryButton {
+            id: publisherDetails
+            // TODO: add check isPublisher and show "default text" or "publisher name"
+            //% "become a publisher"
+            text: qsTrId("apps-become-a-publisher")
+            icon.source: "qrc:/assets/icon-dapps_store-become-a-publisher.svg"
+            onClicked: {
+                // TODO: implement
+            }
+        }
+    }
+
     //
     // This object is visible to web. We create such proxy
     // to ensure that nothing (methods, events, props &c)
