@@ -17,6 +17,14 @@
 namespace
 {
     const unsigned char ACAlpha = 252;
+
+    #ifdef BEAM_MAINNET
+    const beam::Asset::ID BeamXID = 7;
+    #elif defined(BEAM_TESTNET)
+    const beam::Asset::ID BeamXID = 12;
+    #else
+    const beam::Asset::ID BeamXID = 31;
+    #endif
 }
 
 AssetsManager::AssetsManager(WalletModel::Ptr wallet, ExchangeRatesManager::Ptr rates)
@@ -252,6 +260,12 @@ QString AssetsManager::getShortDesc(beam::Asset::ID id)
     {
         desc = meta->GetShortDesc().c_str();
     }
+
+    if (desc.isEmpty() && id == BeamXID)
+    {
+        desc = "BeamX DAO governance token";
+    }
+
     return desc;
 }
 
@@ -267,6 +281,12 @@ QString AssetsManager::getLongDesc(beam::Asset::ID id)
     {
         desc = meta->GetLongDesc().c_str();
     }
+
+    if (desc.isEmpty() && id == BeamXID)
+    {
+        desc = "BEAMX token is a Confidential Asset issued on top of the Beam blockchain with a fixed emission of 100,000,000 units (except for the lender of a \"last resort\" scenario). BEAMX is the governance token for the BeamX DAO, managed by the BeamX DAO Core contract Holders can earn BeamX tokens by participating in the DAO activities: providing liquidity to the DeFi applications governed by the DAO or participating in the governance process.";
+    }
+
     return desc;
 }
 
@@ -282,6 +302,12 @@ QString AssetsManager::getSiteUrl(beam::Asset::ID id)
     {
         desc = meta->GetSiteUrl().c_str();
     }
+
+    if (desc.isEmpty() && id == BeamXID)
+    {
+        desc = "https://www.beamxdao.org/";
+    }
+
     return desc;
 }
 
@@ -296,6 +322,11 @@ QString AssetsManager::getPaperUrl(beam::Asset::ID id)
     if (auto meta = getAsset(id))
     {
         desc = meta->GetPaperUrl().c_str();
+    }
+
+    if (desc.isEmpty() && id == BeamXID)
+    {
+        desc = "https://documentation.beam.mw/overview/beamx-tokenomics";
     }
 
     return desc;
