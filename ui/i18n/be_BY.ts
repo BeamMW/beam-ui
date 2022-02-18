@@ -748,15 +748,15 @@
         <translation>Стварыць новы пароль для доступу да вашага кашальку</translation>
     </message>
     <message id="start-create-pwd-strength-message">
-        <source>Strong password needs to meet the following requirements:<byte value="xd"/>
-•  the length must be at least 10 characters<byte value="xd"/>
-•  must contain at least one lowercase letter<byte value="xd"/>
-•  must contain at least one uppercase letter<byte value="xd"/>
-•  must contain at least one number</source>
-        <oldsource>Strong password needs to meet the following requirements:
+        <source>Strong password needs to meet the following requirements:
 •  the length must be at least 10 characters
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
+•  must contain at least one number</source>
+        <oldsource>Strong password needs to meet the following requirements:<byte value="xd"/>
+•  the length must be at least 10 characters<byte value="xd"/>
+•  must contain at least one lowercase letter<byte value="xd"/>
+•  must contain at least one uppercase letter<byte value="xd"/>
 •  must contain at least one number</oldsource>
         <translation type="unfinished">Добры пароль павінен адпавядаць наступным патрабаванням:
 •  даўжыня мінімум 10 сімвалаў
@@ -779,9 +779,9 @@
         <translation>Ваш адрас</translation>
     </message>
     <message id="settings-general-allow-beammw-label">
-        <source>Allow access to %1 and %2<byte value="xd"/>
+        <source>Allow access to %1 and %2
 (to fetch exchanges and transaction data)</source>
-        <oldsource>Allow access to %1 and %2
+        <oldsource>Allow access to %1 and %2<byte value="xd"/>
 (to fetch exchanges and transaction data)</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
         <translation type="unfinished">Дазволіць доступ да %1 і %2
@@ -989,9 +989,9 @@
         <translation>Электрум</translation>
     </message>
     <message id="swap-currency-na-message">
-        <source>%1 is not connected, <byte value="xd"/>
+        <source>%1 is not connected, 
 please review your settings and try again</source>
-        <oldsource>%1 is not connected, 
+        <oldsource>%1 is not connected, <byte value="xd"/>
 please review your settings and try again</oldsource>
         <translation type="unfinished">%1 is not connected, 
 please review your settings and try again.</translation>
@@ -1181,9 +1181,9 @@ please review your settings and try again.</translation>
         <translation>Qtum electrum</translation>
     </message>
     <message id="swap-offer-duplicate-message">
-        <source>The offer with this transaction token is already accepted.<byte value="xd"/>
+        <source>The offer with this transaction token is already accepted.
 Please check the swap token and try again.</source>
-        <oldsource>The offer with this transaction token is already accepted.
+        <oldsource>The offer with this transaction token is already accepted.<byte value="xd"/>
 Please check the swap token and try again.</oldsource>
         <translation type="unfinished">Прапанова з гэтым токенам транзакцыі ўжо прынята.
 Калі ласка, праверце токен для свопу і паўтарыце спробу.</translation>
@@ -1398,11 +1398,11 @@ Please check the swap token and try again.</oldsource>
         <translation>Ключ уладальніка</translation>
     </message>
     <message id="settings-show-owner-key-message">
-        <source>Please notice, that knowing your owner key allows to<byte value="xd"/>
-know all your funds (UTXO). Make sure that you<byte value="xd"/>
-deploy the key at the node you trust completely.</source>
-        <oldsource>Please notice, that knowing your owner key allows to
+        <source>Please notice, that knowing your owner key allows to
 know all your funds (UTXO). Make sure that you
+deploy the key at the node you trust completely.</source>
+        <oldsource>Please notice, that knowing your owner key allows to<byte value="xd"/>
+know all your funds (UTXO). Make sure that you<byte value="xd"/>
 deploy the key at the node you trust completely.</oldsource>
         <extracomment>settings tab, show owner key message</extracomment>
         <translation type="unfinished">Звярніце ўвагу, што веданне вашага ключа ўладальніка дазваляе
@@ -1873,9 +1873,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Адпраўнік не можа атрымаць ваўчары для макс. прыватнай транзакцыi</translation>
     </message>
     <message id="settings-random-node-text">
-        <source>Random node address and port will be displayed <byte value="xd"/>
+        <source>Random node address and port will be displayed 
 when connection is established</source>
-        <oldsource>Random node address and port will be displayed 
+        <oldsource>Random node address and port will be displayed <byte value="xd"/>
 when connection is established</oldsource>
         <translation type="unfinished">Random node address and port will be displayed 
 when connection is established</translation>
@@ -2138,11 +2138,11 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Максімальная камісія %1 %2</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. <byte value="xd"/>
-Check on the %1 blockchain by yourself. Low fees might take <byte value="xd"/>
-much longer for a transaction to complete.</source>
-        <oldsource>Connection error: can&apos;t calculate the recommended fee rate. 
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete.</source>
+        <oldsource>Connection error: can&apos;t calculate the recommended fee rate. <byte value="xd"/>
+Check on the %1 blockchain by yourself. Low fees might take <byte value="xd"/>
 much longer for a transaction to complete.</oldsource>
         <translation type="unfinished">Памылка падлучэння: не ўдаецца вылічыць рэкамендаваны збор за транзакцыю.
 Праверце блокчейн% 1 самастойна. Нізкія зборы могуць прывесцi да таго,
@@ -2329,9 +2329,9 @@ Please try again later or create an offer yourself.</translation>
         <translation type="unfinished">Please wait, offers are loading.</translation>
     </message>
     <message id="atomic-no-offers">
-        <source>There are no active offers at the moment.<byte value="xd"/>
+        <source>There are no active offers at the moment.
 Please try again later or create an offer yourself.</source>
-        <oldsource>There are no active offers at the moment.
+        <oldsource>There are no active offers at the moment.<byte value="xd"/>
 Please try again later or create an offer yourself.</oldsource>
         <translation type="unfinished">На дадзены момант няма актыўных прапаноў.
 Паўтарыце спробу пазней альбо стварыце прапанову самастойна.</translation>
@@ -2401,9 +2401,9 @@ Please try again later or create an offer yourself.</oldsource>
         <translation>няўдала</translation>
     </message>
     <message id="swap-na-message">
-        <source>You do not have any 3rd-party currencies connected.<byte value="xd"/>
+        <source>You do not have any 3rd-party currencies connected.
 Update your settings and try again.</source>
-        <oldsource>You do not have any 3rd-party currencies connected.
+        <oldsource>You do not have any 3rd-party currencies connected.<byte value="xd"/>
 Update your settings and try again.</oldsource>
         <translation type="unfinished">У вас няма звязаных валют.
 Абнавіце налады і паўтарыце спробу.</translation>
@@ -2964,11 +2964,11 @@ Update your settings and try again.</oldsource>
         <translation type="unfinished">DApps Privacy</translation>
     </message>
     <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.<byte value="xd"/>
-<byte value="xd"/>
-Allow to proceed? You can always update your choice in Settings later.</source>
-        <oldsource>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
+        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
 
+Allow to proceed? You can always update your choice in Settings later.</source>
+        <oldsource>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.<byte value="xd"/>
+<byte value="xd"/>
 Allow to proceed? You can always update your choice in Settings later.</oldsource>
         <translation type="unfinished">Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
 
@@ -3244,18 +3244,14 @@ cannot be canceled.</translation>
         <source>(%1 active)</source>
         <translation type="unfinished">(%1 active)</translation>
     </message>
-    <message id="apps-load-error">
-        <source>Failed to load applications list, %1</source>
-        <translation type="unfinished">Failed to load applications list, %1</translation>
-    </message>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
         <translation>Абнавіце кашалёк, каб запусціць прикладанне %1</translation>
     </message>
     <message id="wallet-receive-regular-address-message">
-        <source>To ensure a better privacy, new address is generated every time.<byte value="xd"/>
+        <source>To ensure a better privacy, new address is generated every time.
 In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
-        <oldsource>To ensure a better privacy, new address is generated every time.
+        <oldsource>To ensure a better privacy, new address is generated every time.<byte value="xd"/>
 In case you’d like to re-use an earlier created regular address please use the Address Book.</oldsource>
         <translation type="unfinished">To ensure a better privacy, new address is generated every time.
 In case you’d like to re-use an earlier created regular address please use the Address Book.</translation>
@@ -3273,9 +3269,9 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished">Token details</translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit-commented">
-        <source>No limit<byte value="xd"/>
+        <source>No limit
 (transaction can last indefinitely)</source>
-        <oldsource>No limit
+        <oldsource>No limit<byte value="xd"/>
 (transaction can last indefinitely)</oldsource>
         <translation type="unfinished">No limit
 (transaction can last indefinitely)</translation>
@@ -3525,6 +3521,68 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="dapps-store-update">
         <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-become-a-publisher">
+        <source>become a publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-become-publisher">
+        <source>Become a publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-become-publisher-text">
+        <source>To become a publisher you need to set up a username. ID number and personal Publisher Key will
+ be given to you automatically. Registration will allow you to publish, update and delete DApps.</source>
+        <oldsource>To become a publisher you need to set up a username. ID number and personal Publisher Key will be given to you automatically. Registration will allow you to publish, update and delete DApps.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-create-account">
+        <source>create account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-nickname">
+        <source>Nickname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-short-title">
+        <source>Short title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-50-character-max">
+        <source>50 characters max</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-150-character-max">
+        <source>150 characters max</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-social-networks">
+        <source>Social networks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-website">
+        <source>Website</source>
+        <translation type="unfinished">Сайт</translation>
+    </message>
+    <message id="dapps-store-twitter">
+        <source>Twitter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-linkedin">
+        <source>LinkedIn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-instagram">
+        <source>Instagramm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-telegram">
+        <source>Telegram</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-discord">
+        <source>Discord</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -62,6 +62,10 @@ ColumnLayout {
                 }
             }
 
+            BecomePublisher {
+                id: becomePublisherDialog 
+            }
+
             function navigatePublishersList() {
                 var params = {}
 
@@ -70,7 +74,8 @@ ColumnLayout {
             }
 
             function navigatePublisherDetails() {
-                var params = {}
+                becomePublisherDialog.open();
+                //var params = {}
 
                 // TODO: implement
                 // stackView.push(Qt.createComponent("publisherDetails.qml"), params)
