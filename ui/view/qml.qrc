@@ -109,6 +109,7 @@
         <file>dex/MarketTable.qml</file>
         <file>applications/applications.qml</file>
         <file>applications/applications_nofork.qml</file>
+        <file>applications/AppPanel.qml</file>
         <file>applications/AppsList.qml</file>
         <file>applications/BecomePublisher.qml</file>
         <file>dapps_store/dapps_store.qml</file>

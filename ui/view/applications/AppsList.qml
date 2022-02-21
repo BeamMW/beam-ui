@@ -34,13 +34,14 @@ Item {
 
     // Actuall apps list
     ScrollView {
+        id: scrollView
         anchors.fill: parent
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         ScrollBar.vertical.policy: ScrollBar.AsNeeded
         clip: true
 
         GridLayout {
-            width: parent.width
+            width: scrollView.availableWidth
             columnSpacing: 20
             rowSpacing: 15
             columns: 2
@@ -48,212 +49,23 @@ Item {
             Repeater {
                 model: control.appsList
 
-                delegate: Item {
+                delegate: AppPanel {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 100
+                    Layout.minimumWidth: 440
+                    Layout.preferredHeight: 144
+                    app: modelData
 
-                    Rectangle {
-                        anchors.fill: parent
-                        radius:       10
-                        color:        Style.active
-                        opacity:      hoverArea.containsMouse ? 0.15 : 0.1
-                    }
-
-                    RowLayout {
-                        anchors.fill: parent
-                        spacing: 0
-
-                        Rectangle {
-                            Layout.leftMargin: 30
-                            width:  60
-                            height: 60
-                            radius: 30
-                            color:  Style.background_main
-
-                            SvgImage {
-                                id: defaultIcon
-                                source: hoverArea.containsMouse ? "qrc:/assets/icon-defapp-active.svg" : "qrc:/assets/icon-defapp.svg"
-                                anchors.verticalCenter: parent.verticalCenter
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                visible: !customIcon.visible
-                            }
-
-                            SvgImage {
-                                id: customIcon
-                                source: modelData.icon ? modelData.icon : "qrc:/assets/icon-defapp.svg"
-                                anchors.verticalCenter: parent.verticalCenter
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                visible: !!modelData.icon && progress == 1.0
-                            }
-                        }
-
-                        Column {
-                            Layout.leftMargin: 20
-                            spacing: 10
-
-                            SFText {
-                                text: modelData.name
-                                font {
-                                    styleName:  "DemiBold"
-                                    weight:     Font.DemiBold
-                                    pixelSize:  18
-                                }
-                                color: Style.content_main
-                            }
-
-                            SFText {
-                                text: Utils.limitText(modelData.description, 80)
-                                font.pixelSize:  14
-                                elide: Text.ElideRight
-                                color: Style.content_main
-                                visible: modelData.supported
-                            }
-
-                            SFText {
-                                elide: Text.ElideRight
-                                color: Style.validator_error
-                                visible: !modelData.supported
-                                font.italic: true
-                                //% "This DApp requires version %1 of Beam Wallet or higher. Please update your wallet."
-                                text: qsTrId("apps-version-error").arg(modelData.min_api_version || modelData.api_version)
-                            }
-                        }
-
-                        Item {
-                            Layout.fillWidth: true
-                        }
-
-                        CustomButton {
-                            Layout.rightMargin: control.hasLocal ? 0 : 20
-                            height: 40
-                            palette.button: Style.background_button
-                            palette.buttonText : Style.content_main
-                            icon.source: "qrc:/assets/icon-run.svg"
-                            icon.height: 16
-                            visible: modelData.supported && !!modelData.notInstalled
-                            //% "Install"
-                            text: qsTrId("dapps-store-install")
-
-                            MouseArea {
-                                anchors.fill:     parent
-                                acceptedButtons:  Qt.LeftButton
-                                hoverEnabled:     true
-                                propagateComposedEvents: true
-                                onClicked:        control.install(modelData)
-                            }
-                        }
-
-                        CustomButton {
-                            Layout.rightMargin: control.hasLocal ? 0 : 20
-                            height: 40
-                            palette.button: Style.background_button
-                            palette.buttonText : Style.content_main
-                            icon.source: "qrc:/assets/icon-run.svg"
-                            icon.height: 16
-                            visible: modelData.supported && !modelData.notInstalled && !!modelData.hasUpdate
-                            //% "Update"
-                            text: qsTrId("dapps-store-update")
-
-                            MouseArea {
-                                anchors.fill:     parent
-                                acceptedButtons:  Qt.LeftButton
-                                hoverEnabled:     true
-                                propagateComposedEvents: true
-                                onClicked:        control.update(modelData)
-                            }
-                        }
-
-                        CustomButton {
-                            Layout.rightMargin: control.hasLocal ? 0 : 20
-                            height: 40
-                            palette.button: Style.background_button
-                            palette.buttonText : Style.content_main
-                            icon.source: "qrc:/assets/icon-run.svg"
-                            icon.height: 16
-                            visible: modelData.supported && !modelData.notInstalled
-                            //% "launch"
-                            text: qsTrId("apps-run")
-
-                            MouseArea {
-                                anchors.fill:     parent
-                                acceptedButtons:  Qt.LeftButton
-                                hoverEnabled:     true
-                                propagateComposedEvents: true
-                                onClicked:        control.launch(modelData)
-                            }
-                        }
-
-                        CustomToolButton {
-                            Layout.fillHeight: true
-                            Layout.rightMargin: 10
-                            width: 36
-
-                            opacity: modelData.local ? 0.5 : 0
-                            icon.source: "qrc:/assets/icon-actions.svg"
-                            visible: control.hasLocal && (modelData.supported || !!modelData.local)
-
-                            //% "Actions"
-                            ToolTip.text: qsTrId("general-actions")
-                            MouseArea {
-                                anchors.fill:     parent
-                                acceptedButtons:  Qt.LeftButton
-                                hoverEnabled:     true
-                                propagateComposedEvents: true
-                                onClicked: function () {
-                                    if (modelData.local) {
-                                        appMenu.popup()
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    MouseArea {
-                        id:            hoverArea
-                        anchors.fill:  parent
-                        hoverEnabled:  true
-                        propagateComposedEvents: true
-                    }
-
-                    ContextMenu {
-                        id:    appMenu
-                        modal: true
-                        dim:   false
-
-                        Action {
-                            //% "Uninstall"
-                            text: qsTrId("apps-uninstall")
-                            icon.source: "qrc:/assets/icon-delete.svg"
-                            onTriggered: function () {
-                                confirmUninstall.open()
-                            }
-                        }
-                    }
-
-                    ConfirmationDialog {
-                        id: confirmUninstall
-                        width: 460
-                        //% "Uninstall DApp"
-                        title: qsTrId("app-uninstall-title")
-                        //% "Are you sure you want to uninstall %1 DApp?"
-                        text: qsTrId("apps-uninstall-confirm").arg(modelData.name)
-                        //% "Uninstall"
-                        okButtonText: qsTrId("apps-uninstall")
-                        okButtonIconSource: "qrc:/assets/icon-delete.svg"
-                        okButtonColor: Style.accent_fail
-                        cancelButtonIconSource: "qrc:/assets/icon-cancel-white.svg"
-
-                        onAccepted: function () {
-                            control.uninstall(modelData)
-                        }
-                    }
+                    onLaunch: control.launch(app)
+                    onInstall: control.install(fname)
+                    onUpdate: control.update(app)
+                    onUninstall: control.uninstall(app)
                 }
             }
 
             Item {
                 id: installFromFilePanel
                 Layout.fillWidth: true
-                Layout.preferredHeight: 100
+                Layout.preferredHeight: 144
                 opacity: 0.3
 
                 Canvas {
