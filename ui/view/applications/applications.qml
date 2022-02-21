@@ -74,7 +74,7 @@ ColumnLayout {
             }
 
             function navigatePublisherDetails() {
-                if (viewModel.isPublisher()) {
+                if (viewModel.isPublisher) {
                     var params = {
                         "onBack": stackView.pop
                     }
