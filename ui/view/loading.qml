@@ -101,7 +101,7 @@ Item
     }
 
     function changeNodeSettings () {
-        rootLoading.parent.push("qrc:/start.qml", {"isBadPortMode": true});
+        rootLoading.parent.restoreProcessBadPortMode();
     }
 
     StartLayout {

@@ -1595,8 +1595,8 @@ Item
 
                                 if (isBadPortMode) {
                                     viewModel.onNodeSettingsChanged();
-                                    root.parent.setSource("qrc:/loading.qml");
-                                } else {
+                                    startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : viewModel.isRecoveryMode, "isCreating" : true, "cancelCallback": startWizzardView.pop});
+                               } else {
                                     viewModel.createWallet(function (created) {
                                         if (created) { 
                                             startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : viewModel.isRecoveryMode, "isCreating" : true, "cancelCallback": startWizzardView.pop});
@@ -1865,6 +1865,13 @@ Item
                     }
                 }
             }
+        }
+
+        function restoreProcessBadPortMode() {
+            startWizzardView.pop();
+            startWizzardView.push(nodeSetup);
+            root.isBadPortMode = true;
+            viewModel.isRecoveryMode = true;
         }
 
         Component.onCompleted: {
