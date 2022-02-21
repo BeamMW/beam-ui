@@ -1679,7 +1679,7 @@ Item
                     SFText {
                         Layout.alignment:       Qt.AlignHCenter
                         Layout.preferredHeight: 16
-                        Layout.bottomMargin:    startLayout.isSqueezedHeight  ? 18 : 48
+                        Layout.bottomMargin:    startLayout.isSqueezedHeight  ? 18 : 30
                         //% "Enter your password to access the wallet"
                         text: qsTrId("start-open-pwd-invitation")
                         color: Style.content_main
@@ -1727,9 +1727,9 @@ Item
 
                     Row {
                         Layout.alignment: Qt.AlignHCenter
-                        Layout.topMargin: startLayout.isSqueezedHeight  ? 8 : 18
+                        Layout.topMargin: startLayout.isSqueezedHeight  ? 8 : 13
                         Layout.preferredHeight: 38
-                        spacing:          20
+                        spacing:          15
                                 
                         function tryOpenWallet() {
                             if(openPassword.text.length == 0)
@@ -1776,7 +1776,7 @@ Item
                     Item {
                         Layout.alignment: Qt.AlignHCenter
                         Layout.preferredHeight: 36
-                        Layout.topMargin: startLayout.isSqueezedHeight  ? 9 : 20
+                        Layout.topMargin: startLayout.isSqueezedHeight  ? 9 : 15
                         Layout.bottomMargin: 9
                         Rectangle {
                             id: capsWarning

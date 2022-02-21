@@ -54,7 +54,7 @@ ColumnLayout
         visible: !isMainNet()
         Layout.alignment: Qt.AlignHCenter
         Layout.preferredHeight: 20
-        Layout.topMargin: isSqueezedHeight ? 10 : 40
+        Layout.topMargin: isSqueezedHeight ? 10 : 30
         color: Style.content_secondary
         text: themeName()
 

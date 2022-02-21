@@ -51,6 +51,7 @@ Rectangle
         }
 
         VersionFooter {
+            Layout.bottomMargin:   50
         }
     }
 }
