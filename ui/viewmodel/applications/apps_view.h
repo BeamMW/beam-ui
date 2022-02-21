@@ -24,6 +24,7 @@ namespace beamui::applications
         Q_PROPERTY(QString userAgent   READ getUserAgent  CONSTANT)
         Q_PROPERTY(QList<QMap<QString, QVariant>> localApps READ getLocalApps CONSTANT)
         Q_PROPERTY(QList<QMap<QString, QVariant>> apps READ getApps NOTIFY appsChanged)
+        Q_PROPERTY(bool isPublisher READ isPublisher NOTIFY isPublisherChanged)
 
     public:
         AppsViewModel();
@@ -33,6 +34,7 @@ namespace beamui::applications
         [[nodiscard]] QString getUserAgent() const;
         [[nodiscard]] QList<QMap<QString, QVariant>> getApps();
         [[nodiscard]] QList<QMap<QString, QVariant>> getLocalApps();
+        bool isPublisher() const;
 
     public:
         Q_INVOKABLE void onCompleted(QObject *webView);
@@ -45,6 +47,7 @@ namespace beamui::applications
 
     signals:
         void appsChanged();
+        void isPublisherChanged();
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
@@ -57,5 +60,6 @@ namespace beamui::applications
         std::unique_ptr<AppsServer> _server;
         QList<QMap<QString, QVariant>> _lastLocalApps;
         QList<QMap<QString, QVariant>> _apps;
+        bool _isPublisher = false;
     };
 }

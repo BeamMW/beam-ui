@@ -112,6 +112,7 @@
         <file>applications/AppPanel.qml</file>
         <file>applications/AppsList.qml</file>
         <file>applications/BecomePublisher.qml</file>
+        <file>applications/PublisherDetails.qml</file>
         <file>dapps_store/dapps_store.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
@@ -176,6 +177,9 @@
         <file>assets/icon-dapps_store.svg</file>
         <file>assets/icon-dapps_store-active.svg</file>
         <file>assets/icon-dapps_store-become-a-publisher.svg</file>
+        <file>assets/icon-dapps_store-publisher-edit.svg</file>
+        <file>assets/icon-dapps_store-publisher-show-key.svg</file>
+        <file>assets/icon-dapps_store-publisher-upload-dapp.svg</file>
         <file>assets/icon-dapps_store-publishers.svg</file>
         <file>assets/icon-dapps-store-create-account.svg</file>
         <file>assets/icon-dex.svg</file>

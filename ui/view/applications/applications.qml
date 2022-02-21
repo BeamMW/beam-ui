@@ -74,11 +74,15 @@ ColumnLayout {
             }
 
             function navigatePublisherDetails() {
-                becomePublisherDialog.open();
-                //var params = {}
-
-                // TODO: implement
-                // stackView.push(Qt.createComponent("publisherDetails.qml"), params)
+                if (viewModel.isPublisher()) {
+                    var params = {
+                        "onBack": stackView.pop
+                    }
+                    stackView.push(Qt.createComponent("PublisherDetails.qml"), params)
+                }
+                else {
+                    becomePublisherDialog.open();
+                }
             }
 
             // Subtitle row is invisible only when we display appslit

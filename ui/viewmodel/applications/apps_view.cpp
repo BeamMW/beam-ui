@@ -308,6 +308,12 @@ namespace beamui::applications
         return result;
     }
 
+    bool AppsViewModel::isPublisher() const
+    {
+        // TODO: check after implementation "becomePublisher"
+        return _isPublisher;
+    }
+
     bool AppsViewModel::uninstallLocalApp(const QString& appid)
     {
         const auto it = std::find_if(_lastLocalApps.begin(), _lastLocalApps.end(), [appid](const auto& props) -> bool {
