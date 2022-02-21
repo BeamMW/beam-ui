@@ -118,8 +118,11 @@ ColumnLayout {
                 CustomButton {
                     id: showPublishers
                     width: 38
-                    palette.button: Qt.rgba(255, 255, 255, 0.1)
                     radius: 10
+                    display: AbstractButton.IconOnly
+                    leftPadding: 11
+                    rightPadding: 11
+                    palette.button: Qt.rgba(255, 255, 255, 0.1)
                     icon.source: "qrc:/assets/icon-dapps_store-publishers.svg"
                     onClicked: navigatePublishersList()
                 }
