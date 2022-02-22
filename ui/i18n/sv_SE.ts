@@ -3206,10 +3206,6 @@ cannot be canceled.</translation>
         <source>Failed to uninstall &apos;%1&apos; DApp.</source>
         <translation type="unfinished">Failed to uninstall &apos;%1&apos; DApp.</translation>
     </message>
-    <message id="apps-inprogress-tip">
-        <source>(%1 active)</source>
-        <translation type="unfinished">(%1 active)</translation>
-    </message>
     <message id="apps-load-error">
         <source>Failed to load applications list, %1</source>
         <translation type="unfinished">Failed to load applications list, %1</translation>
@@ -3449,6 +3445,14 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="tx-details-date-label">
         <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-inprogress-tip">
+        <source>(%1 active)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-balance-title">
+        <source>Wallet Balance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

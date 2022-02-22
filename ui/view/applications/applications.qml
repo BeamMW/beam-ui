@@ -26,7 +26,7 @@ ColumnLayout {
 
     function openAppTx (txid) {
         openedTxID = txid
-        txTable.showTxDetails(txid)
+        txPanel.showTxDetails(txid)
     }
 
     DnDdappInstallDialog {
@@ -456,11 +456,10 @@ ColumnLayout {
         }
     }
 
-    FoldablePanel {
+    AppInfoPanel {
         id:                  txPanel
-        title:               qsTrId("wallet-transactions-title")
         folded:              !control.openedTxID
-        titleOpacity:        0.5
+        state:               control.openedTxID ? "transactions" : "balance"
         Layout.fillWidth:    true
         Layout.bottomMargin: 10
         contentItemHeight:   control.height * 0.36
@@ -468,17 +467,9 @@ ColumnLayout {
         foldsUp:             false
         visible:             appsListView.visible || webLayout.visible
         bkColor:             Style.background_appstx
-
-        content: TxTable {
-            id:    txTable
-            owner: control
-            emptyMessageMargin: 60
-            headerShaderVisible: false
-            dappFilter: (control.activeApp || {}).appid || "all"
-        }
-
-        //% "(%1 active)"
-        titleTip: txTable.activeTxCnt ? qsTrId("apps-inprogress-tip").arg(txTable.activeTxCnt) : ""
+        dappName:            (control.activeApp || {}).name || ""
+        dappFilter:          (control.activeApp || {}).appid || "all"
+        tableOwner:          control
     }
 
     function appendLocalApps (arr) {

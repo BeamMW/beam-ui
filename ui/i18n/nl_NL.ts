@@ -3206,10 +3206,6 @@ cannot be canceled.</source>
         <source>Failed to uninstall &apos;%1&apos; DApp.</source>
         <translation>Verwijderen van %1 DApp mislukt.</translation>
     </message>
-    <message id="apps-inprogress-tip">
-        <source>(%1 active)</source>
-        <translation>(%1 actief)</translation>
-    </message>
     <message id="apps-load-error">
         <source>Failed to load applications list, %1</source>
         <translation>Laden van applicatielijst %1 mislukt</translation>
@@ -3449,6 +3445,14 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
     </message>
     <message id="tx-details-date-label">
         <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-inprogress-tip">
+        <source>(%1 active)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-balance-title">
+        <source>Wallet Balance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

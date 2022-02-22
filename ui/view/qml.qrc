@@ -112,6 +112,7 @@
         <file>applications/applications.qml</file>
         <file>applications/applications_nofork.qml</file>
         <file>applications/AppsList.qml</file>
+        <file>applications/AppInfoPanel.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>

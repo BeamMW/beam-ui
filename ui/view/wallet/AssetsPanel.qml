@@ -51,6 +51,7 @@ Control {
     property int    assetsCount:    1
     property real   itemHeight:     75
     property bool   showSelected:   false
+    property bool   selectable:     true
 
     property bool  showFaucetPromo: viewModel.showFaucetPromo
     property bool  showValidationPromo: viewModel.showValidationPromo && !seedValidationHelper.isSeedValidated
@@ -88,7 +89,7 @@ Control {
     }
 
     readonly property real scrollViewHeight: {
-        return control.hasScroll ? control.itemHeight * 3 + control.vSpacing * 2 : grid.implicitHeight
+        return control.hasScroll ? control.itemHeight * control.maxVisibleRows + control.vSpacing * (control.maxVisibleRows - 1) : grid.implicitHeight
     }
 
     contentItem: ScrollView {
@@ -119,8 +120,8 @@ Control {
                         implicitWidth:  control.itemWidth
                         assetInfo:      model
                         visible:        !showSelected || control.selectedIds.indexOf(model.id) != -1
-                        selected:       control.selectedIds.indexOf(model.id) != -1
-                        opacity:        control.selectedIds.length != 0 ? (control.selectedIds.indexOf(model.id) != -1 ? 1 : 0.6) : 1
+                        selected:       control.selectable && control.selectedIds.indexOf(model.id) != -1
+                        opacity:        control.selectable && control.selectedIds.length != 0 ? (control.selectedIds.indexOf(model.id) != -1 ? 1 : 0.6) : 1
                         layer.enabled:  model.verified
 
                         onClicked: function () {

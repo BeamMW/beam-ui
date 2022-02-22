@@ -7,12 +7,12 @@ import "."
 Item  {
     id: root
     
-    property string label
+    property alias  label: text_label.text
     property var    capitalization: Font.AllUppercase
     property alias  font : text_label.font
     property bool   showLed: true
 
-    width: showLed ? led.width : text_label.width
+    implicitWidth: showLed ? led.width : text_label.implicitWidth
     height: 20
     state: "normal"
     signal clicked()
@@ -27,7 +27,6 @@ Item  {
         font.pixelSize: 12
         font.styleName: "DemiBold"; font.weight: Font.DemiBold
         font.capitalization: capitalization
-        text: label
 
         MouseArea {
             anchors.fill: parent
@@ -40,7 +39,7 @@ Item  {
         id: led
 
         anchors.bottom: parent.bottom
-        width: text_label.width + 12*2
+        width: text_label.implicitWidth + 12 * 2
         height: 2
         color: Style.active
         visible: false

@@ -3201,10 +3201,6 @@ cannot be canceled.</translation>
         <source>Failed to uninstall &apos;%1&apos; DApp.</source>
         <translation>Failed to uninstall &apos;%1&apos; DApp.</translation>
     </message>
-    <message id="apps-inprogress-tip">
-        <source>(%1 active)</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="apps-load-error">
         <source>Failed to load applications list, %1</source>
         <translation type="unfinished"></translation>
@@ -3442,6 +3438,14 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="dnd-install-fail">
         <source>The DApp installation error.</source>
         <translation>The DApp installation error.</translation>
+    </message>
+    <message id="apps-inprogress-tip">
+        <source>(%1 active)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-balance-title">
+        <source>Wallet Balance</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
