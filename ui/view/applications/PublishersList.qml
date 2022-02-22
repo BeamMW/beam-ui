@@ -89,6 +89,10 @@ ColumnLayout {
             forceActiveFocus()
         }
 
+        onClosed: {
+            publicKeyInput.text = ""
+        }
+
         contentItem: ColumnLayout {
             spacing: 0
 
@@ -173,7 +177,9 @@ ColumnLayout {
             
                 PrimaryButton {
                     enabled:     !publicKeyError.visible && publicKeyInput.acceptableInput
-                    icon.source: "qrc:/assets/icon-copy-blue.svg"
+                    icon.source: "qrc:/assets/icon-dapps_store-add-publisher-submit.svg"
+                    icon.height: 10
+                    icon.width:  12
                     //% "Submit"
                     text:        qsTrId("dapps-store-submit")
                     onClicked: {
