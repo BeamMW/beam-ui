@@ -113,6 +113,7 @@
         <file>applications/AppsList.qml</file>
         <file>applications/BecomePublisher.qml</file>
         <file>applications/PublisherDetails.qml</file>
+        <file>applications/PublishersList.qml</file>
         <file>dapps_store/dapps_store.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
