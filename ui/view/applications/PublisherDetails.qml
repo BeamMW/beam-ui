@@ -11,6 +11,8 @@ ColumnLayout {
     Layout.fillWidth: true
     Layout.topMargin: 27
 
+    // TODO: publisher details
+    property var publisher
     property var appsList: undefined
     readonly property bool hasApps: !!appsList && appsList.length > 0
     property var onBack
@@ -25,7 +27,7 @@ ColumnLayout {
     }
 
     function showPublicKey() {
-        // TODO: implement
+        publisherKeyDialog.open()
     }
 
     //
@@ -178,5 +180,107 @@ ColumnLayout {
         Layout.fillWidth:  true
         visible:  control.hasApps && !control.activeApp
         // TODO: implement
+    }
+
+    CustomDialog {
+        id:      publisherKeyDialog
+        modal:   true
+        x:       (parent.width - width) / 2
+        y:       (parent.height - height) / 2
+        parent:  Overlay.overlay
+
+        readonly property string publicKey: control.publisher.publicKey
+
+        onOpened: {
+            forceActiveFocus()
+        }
+
+        contentItem: ColumnLayout {
+            spacing:             30
+
+            // Title
+            SFText {
+                Layout.fillWidth:    true
+                Layout.topMargin:    40
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize:      18
+                color:               Style.content_main
+                //% "Publisher Key"
+                text:                qsTrId("dapps-store-publisher-key")
+            }
+
+            // Note
+            SFText {
+                Layout.leftMargin:     100
+                Layout.rightMargin:    100
+                Layout.preferredWidth: 580
+                wrapMode:              Text.WordWrap
+                // horizontalAlignment:   Text.AlignHCenter
+                font.pixelSize:        14
+                color:                 Style.content_main
+                //% "Here's your personal Publisher Key. Any user can use it to add you to their personal list and follow your apps. You can add it on your personal page or website."
+                text:                  qsTrId("dapps-store-publisher-key-dialog-note")
+            }
+
+            // Body
+            RowLayout {
+                Layout.leftMargin:  100
+                Layout.rightMargin: 100
+                spacing:            10
+                Layout.alignment:   Qt.AlignVCenter
+
+                SFText {
+                    text:             publisherKeyDialog.publicKey
+                    width:            parent.width
+                    color:            Style.active
+                    font.pixelSize:   14
+                }
+
+                SvgImage {
+                    Layout.alignment: Qt.AlignVCenter
+                    source:           "qrc:/assets/icon-copy-green.svg"
+                    sourceSize:       Qt.size(16, 16)
+
+                    MouseArea {
+                        anchors.fill:    parent
+                        acceptedButtons: Qt.LeftButton
+                        cursorShape:     Qt.PointingHandCursor
+                        onClicked: function () {
+                                BeamGlobals.copyToClipboard(publisherKeyDialog.publicKey)
+                        }
+                    }
+                }
+            }
+
+            Row {
+                id:                  buttonsLayout
+                Layout.fillHeight:   true
+                Layout.bottomMargin: 30
+                Layout.alignment:    Qt.AlignHCenter
+                spacing:             30
+        
+                CustomButton {
+                    icon.source: "qrc:/assets/icon-cancel-16.svg"
+                    //% "Close"
+                    text:        qsTrId("general-close")
+                    onClicked: {
+                        publisherKeyDialog.close()
+                    }
+                }
+
+                PrimaryButton {
+                    icon.source:        "qrc:/assets/icon-copy.svg"
+                    palette.buttonText: Style.content_opposite
+                    icon.color:         Style.content_opposite
+                    palette.button:     Style.active
+                    //% "copy and close"
+                    text:               qsTrId("general-copy-and-close")
+                    onClicked: {
+                        BeamGlobals.copyToClipboard(publisherKeyDialog.publicKey)
+                        publisherKeyDialog.close();
+                    }
+                }
+            }
+        }
     }
 }
