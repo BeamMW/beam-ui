@@ -294,12 +294,21 @@ ColumnLayout {
         opacity: txPanel.folded ? 1.0 : 0.25
         clip:    true
 
+        WebEngineScript {
+            id: userScript
+            sourceUrl: "qrc:/web_view_watcher.js"
+        }
+
         WebEngineView {
             id: webView
             anchors.fill: parent
             webChannel: apiChannel
             visible: true
             backgroundColor: "transparent"
+            userScripts: [userScript]
+            onJavaScriptConsoleMessage: function (level, message, line, sourceId){
+                if (message == "no_sleep") main.resetLockTimer();
+            }
 
             profile: WebEngineProfile {
                 httpCacheType:           WebEngineProfile.DiskHttpCache
