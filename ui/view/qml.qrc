@@ -177,7 +177,9 @@
         <file>assets/icon-applications-active.svg</file>
         <file>assets/icon-dapps_store.svg</file>
         <file>assets/icon-dapps_store-active.svg</file>
+        <file>assets/icon-dapps_store-add-publisher.svg</file>
         <file>assets/icon-dapps_store-become-a-publisher.svg</file>
+        <file>assets/icon-dapps_store-empty-dapps-list.svg</file>
         <file>assets/icon-dapps_store-publisher-edit.svg</file>
         <file>assets/icon-dapps_store-publisher-show-key.svg</file>
         <file>assets/icon-dapps_store-publisher-upload-dapp.svg</file>

@@ -142,8 +142,7 @@ ColumnLayout {
             width:   60
             height:  60
             opacity: 0.5
-            // TODO: change icon
-            source: "qrc:/assets/icon-applications.svg"
+            source: "qrc:/assets/icon-dapps_store-empty-dapps-list.svg"
         }
 
         SFText {

@@ -61,8 +61,7 @@ ColumnLayout {
             palette.button:   Qt.rgba(255, 255, 255, 0.1)
             //% "add publisher"
             text: qsTrId("dapps-store-add-publisher")
-            // TODO: change icon
-            icon.source:      "qrc:/assets/icon-dapps_store-publishers.svg"
+            icon.source:      "qrc:/assets/icon-dapps_store-add-publisher.svg"
             icon.color:       Style.white
             onClicked:        showAddPublisherDialog()
         }
