@@ -3500,7 +3500,8 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-publisher-key">
-        <source>Publisher key</source>
+        <source>Publisher Key</source>
+        <oldsource>Publisher key</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-install">
@@ -3517,6 +3518,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="dapps-store-become-publisher">
         <source>Become a publisher</source>
+        <oldsource>Become a publisherBecome a publisher</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-become-publisher-text">
@@ -3571,6 +3573,66 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="dapps-store-discord">
         <source>Discord</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publisher-page">
+        <source>Publisher&apos;s page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-my-dapps">
+        <source>My DAPPs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publisher-have-not-dapps">
+        <source>You have no published DApps yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publisher-upload-first-dapp">
+        <source>upload your fist dapp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publisher-key-dialog-note">
+        <source>Here&apos;s your personal Publisher Key. Any user can use it to add you to their personal list and follow your apps. You can add it on your personal page or website.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publishers-page-title">
+        <source>Publishers that i follow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-add-publisher">
+        <source>add publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-add-publisher-title">
+        <source>Add publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-add-publisher-note">
+        <source>To add a publisher you need to paste his Publisher Key in the field below</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-add-publisher-error">
+        <source>Publisher with that Key is not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-submit">
+        <source>Submit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-add-publisher-notification">
+        <source>%1 added to the list of publishers that you follow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-edit-publisher-info">
+        <source>Edit publisher info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-save-changes">
+        <source>save changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-about-me">
+        <source>About me</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

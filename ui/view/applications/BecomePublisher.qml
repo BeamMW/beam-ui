@@ -13,6 +13,8 @@ CustomDialog {
     parent:  Overlay.overlay
     modal:   true
 
+    property bool newPublisher: true
+
     contentItem: ColumnLayout {
         spacing: 0
         anchors.fill:    parent
@@ -25,8 +27,12 @@ CustomDialog {
             horizontalAlignment:  Text.AlignHCenter
             font.pixelSize:       18
             font.weight:          Font.Bold
-            //% "Become a publisher"
-            text: qsTrId("dapps-store-become-publisher")
+            text: control.newPublisher ?
+                //% "Become a publisher"
+                qsTrId("dapps-store-become-publisher")
+                :
+                //% "Edit publisher info"
+                qsTrId("dapps-store-edit-publisher-info")
         }
 
         SFText {
@@ -49,15 +55,25 @@ CustomDialog {
                 spacing: 10
                 Layout.alignment: Qt.AlignTop
 
-                SFText {
-                    //% "Nickname"
-                    text: qsTrId("dapps-store-nickname")
-                    color: Style.content_main
-                    font.pixelSize: 14
-                    font.weight: Font.Normal
+                Row {
+                    SFText {
+                        //% "Nickname"
+                        text: qsTrId("dapps-store-nickname")
+                        color: Style.content_main
+                        font.pixelSize: 14
+                        font.weight: Font.Normal
+                    }
+                    SFText {
+                        text: "*"
+                        color: Style.content_main
+                        font.pixelSize: 14
+                        font.weight: Font.Normal
+                        verticalAlignment: TextInput.AlignTop
+                    }
                 }
 
                 SFTextInput {
+                    id: nameInput
                     width: 335
                     height: 45
                     color: Style.content_main
@@ -76,6 +92,7 @@ CustomDialog {
                 }
 
                 SFTextInput {
+                    id: shortTitleInput
                     width: 335
                     height: 45
                     color: Style.content_main
@@ -95,14 +112,15 @@ CustomDialog {
                 Layout.columnSpan: 2
 
                 SFText {
-                    //% "Short title"
-                    text: qsTrId("dapps-store-short-title")
+                    //% "About me"
+                    text: qsTrId("dapps-store-about-me")
                     color: Style.content_main
                     font.pixelSize: 14
                     font.weight: Font.Normal
                 }
 
                 SFTextInput {
+                    id: aboutMeInput
                     width: 701
                     height: 45
                     color: Style.content_main
@@ -138,9 +156,11 @@ CustomDialog {
                 }
 
                 SFTextInput {
+                    id: websiteInput
                     width: 335
                     height: 45
                     color: Style.content_main
+                    placeholderText: "https://website.name/"
                 }
             }
 
@@ -156,9 +176,11 @@ CustomDialog {
                 }
 
                 SFTextInput {
+                    id: twitterInput
                     width: 335
                     height: 45
                     color: Style.content_main
+                    placeholderText: "@nickname"
                 }
             }
 
@@ -174,9 +196,11 @@ CustomDialog {
                 }
 
                 SFTextInput {
+                    id: linkedinInput
                     width: 335
                     height: 45
                     color: Style.content_main
+                    placeholderText: "@nickname"
                 }
             }
 
@@ -192,9 +216,11 @@ CustomDialog {
                 }
 
                 SFTextInput {
+                    id: instagrammInput
                     width: 335
                     height: 45
                     color: Style.content_main
+                    placeholderText: "@nickname"
                 }
             }
 
@@ -210,9 +236,11 @@ CustomDialog {
                 }
 
                 SFTextInput {
+                    id: telegramInput
                     width: 335
                     height: 45
                     color: Style.content_main
+                    placeholderText: "@nickname"
                 }
             }
 
@@ -228,9 +256,11 @@ CustomDialog {
                 }
 
                 SFTextInput {
+                    id: discordInput
                     width: 335
                     height: 45
                     color: Style.content_main
+                    placeholderText: "login#0000"
                 }
             }
         }
@@ -246,15 +276,24 @@ CustomDialog {
             CustomButton {
                 icon.source: "qrc:/assets/icon-cancel-white.svg"
                 text: qsTrId("general-cancel")
+                onClicked: {
+                    control.close();
+                }
             }
 
             CustomButton {
                 palette.button: Style.active
                 icon.source: "qrc:/assets/icon-dapps-store-create-account.svg"
 
-                //% "create account"
-                text: qsTrId("dapps-store-create-account")
+                
+                text: control.newPublisher ?
+                    //% "create account"
+                    qsTrId("dapps-store-create-account")
+                    :
+                    //% "save changes"
+                    qsTrId("dapps-store-save-changes")
                 palette.buttonText: Style.content_opposite
+                enabled: control.newPublisher ? nameInput.text : false
             }
 
             Item {
