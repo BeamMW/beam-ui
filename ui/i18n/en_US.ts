@@ -3559,7 +3559,8 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-instagram">
-        <source>Instagramm</source>
+        <source>Instagram</source>
+        <oldsource>Instagramm</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-telegram">

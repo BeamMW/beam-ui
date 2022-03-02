@@ -314,6 +314,132 @@ namespace beamui::applications
         return _isPublisher;
     }
 
+    QString AppsViewModel::nickname() const
+    {
+        return _nickname;
+    }
+
+    void AppsViewModel::nickname(const QString& name)
+    {
+        if (name != _nickname)
+        {
+            _nickname = name;
+            emit nicknameChanged();
+        }
+    }
+
+    QString AppsViewModel::shortTitle() const
+    {
+        return _shortTitle;
+    }
+
+    void AppsViewModel::shortTitle(const QString& value)
+    {
+        if (value != _shortTitle)
+        {
+            _shortTitle = value;
+            emit shortTitleChanged();
+        }
+    }
+
+    QString AppsViewModel::aboutMe() const
+    {
+        return _aboutMe;
+    }
+
+    void AppsViewModel::aboutMe(const QString& value)
+    {
+        if (value != _aboutMe)
+        {
+            _aboutMe = value;
+            emit aboutMeChanged();
+        }
+    }
+
+    QString AppsViewModel::website() const
+    {
+        return _website;
+    }
+
+    void AppsViewModel::website(const QString& value)
+    {
+        if (value != _website)
+        {
+            _website = value;
+            emit websiteChanged();
+        }
+    }
+
+    QString AppsViewModel::twitter() const
+    {
+        return _twitter;
+    }
+
+    void AppsViewModel::twitter(const QString& value)
+    {
+        if (value != _twitter)
+        {
+            _twitter = value;
+            emit twitterChanged();
+        }
+    }
+
+    QString AppsViewModel::linkedin() const
+    {
+        return _linkedin;
+    }
+
+    void AppsViewModel::linkedin(const QString& value)
+    {
+        if (value != _linkedin)
+        {
+            _linkedin = value;
+            emit linkedinChanged();
+        }
+    }
+
+    QString AppsViewModel::instagram() const
+    {
+        return _instagram;
+    }
+
+    void AppsViewModel::instagram(const QString& value)
+    {
+        if (value != _instagram)
+        {
+            _instagram = value;
+            emit instagramChanged();
+        }
+    }
+
+    QString AppsViewModel::telegram() const
+    {
+        return _telegram;
+    }
+
+    void AppsViewModel::telegram(const QString& value)
+    {
+        if (value != _telegram)
+        {
+            _telegram = value;
+            emit telegramChanged();
+        }
+    }
+
+    QString AppsViewModel::discord() const
+    {
+        return _discord;
+    }
+
+    void AppsViewModel::discord(const QString& value)
+    {
+        if (value != _discord)
+        {
+            _discord = value;
+            emit discordChanged();
+        }
+    }
+
     QString AppsViewModel::addPublisherByKey(const QString& publicKey)
     {
         // TODO: implement

@@ -15,6 +15,16 @@ CustomDialog {
 
     property bool newPublisher: true
 
+    property alias nickname: nameInput.text
+    property alias shortTitle: shortTitleInput.text
+    property alias aboutMe: aboutMeInput.text
+    property alias website: websiteInput.text
+    property alias twitter: twitterInput.text
+    property alias linkedin: linkedinInput.text
+    property alias instagram: instagramInput.text
+    property alias telegram: telegramInput.text
+    property alias discord: discordInput.text
+
     contentItem: ColumnLayout {
         spacing: 0
         anchors.fill:    parent
@@ -208,7 +218,7 @@ CustomDialog {
                 spacing: 10
 
                 SFText {
-                    //% "Instagramm"
+                    //% "Instagram"
                     text: qsTrId("dapps-store-instagram")
                     color: Style.content_main
                     font.pixelSize: 14
@@ -216,7 +226,7 @@ CustomDialog {
                 }
 
                 SFTextInput {
-                    id: instagrammInput
+                    id: instagramInput
                     width: 335
                     height: 45
                     color: Style.content_main

@@ -64,6 +64,110 @@ ColumnLayout {
 
             BecomePublisher {
                 id: becomePublisherDialog 
+
+                nickname: viewModel.nickname
+                shortTitle: viewModel.shortTitle
+                aboutMe: viewModel.aboutMe
+                website: viewModel.website
+                twitter: viewModel.twitter
+                linkedin: viewModel.linkedin
+                instagram: viewModel.instagram
+                telegram: viewModel.telegram
+                discord: viewModel.discord
+
+                Connections {
+                    target: viewModel
+
+                    function onNicknameChanged() {
+                        becomePublisherDialog.nickname = viewModel.nickname;
+                    }
+
+                    function onShortTitleChanged() {
+                        becomePublisherDialog.shortTitle = viewModel.shortTitle;
+                    }
+
+                    function onAboutMeChanged() {
+                        becomePublisherDialog.aboutMe = viewModel.aboutMe;
+                    }
+
+                    function onWebsiteChanged() {
+                        becomePublisherDialog.website = viewModel.website;
+                    }
+
+                    function onTwitterChanged() {
+                        becomePublisherDialog.twitter = viewModel.twitter;
+                    }
+
+                    function onLinkedinChanged() {
+                        becomePublisherDialog.linkedin = viewModel.linkedin;
+                    }
+
+                    function onInstagramChanged() {
+                        becomePublisherDialog.instagram = viewModel.instagram;
+                    }
+
+                    function onTelegramChanged() {
+                        becomePublisherDialog.telegram = viewModel.telegram;
+                    }
+
+                    function onDiscordChanged() {
+                        becomePublisherDialog.discord = viewModel.discord;
+                    }
+                }
+
+                Binding {
+                    target: viewModel
+                    property: "nickname"
+                    value: becomePublisherDialog.nickname
+                }
+
+                Binding {
+                    target: viewModel
+                    property: "shortTitle"
+                    value: becomePublisherDialog.shortTitle
+                }
+
+                Binding {
+                    target: viewModel
+                    property: "aboutMe"
+                    value: becomePublisherDialog.aboutMe
+                }
+
+                Binding {
+                    target: viewModel
+                    property: "website"
+                    value: becomePublisherDialog.website
+                }
+
+                Binding {
+                    target: viewModel
+                    property: "twitter"
+                    value: becomePublisherDialog.twitter
+                }
+
+                Binding {
+                    target: viewModel
+                    property: "linkedin"
+                    value: becomePublisherDialog.linkedin
+                }
+
+                Binding {
+                    target: viewModel
+                    property: "instagram"
+                    value: becomePublisherDialog.instagram
+                }
+
+                Binding {
+                    target: viewModel
+                    property: "telegram"
+                    value: becomePublisherDialog.telegram
+                }
+
+                Binding {
+                    target: viewModel
+                    property: "discord"
+                    value: becomePublisherDialog.discord
+                }
             }
 
             function navigatePublishersList() {

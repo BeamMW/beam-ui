@@ -25,6 +25,15 @@ namespace beamui::applications
         Q_PROPERTY(QList<QMap<QString, QVariant>> localApps READ getLocalApps CONSTANT)
         Q_PROPERTY(QList<QMap<QString, QVariant>> apps READ getApps NOTIFY appsChanged)
         Q_PROPERTY(bool isPublisher READ isPublisher NOTIFY isPublisherChanged)
+        Q_PROPERTY(QString nickname READ nickname WRITE nickname NOTIFY nicknameChanged)
+        Q_PROPERTY(QString shortTitle READ shortTitle WRITE shortTitle NOTIFY shortTitleChanged)
+        Q_PROPERTY(QString aboutMe READ aboutMe WRITE aboutMe NOTIFY aboutMeChanged)
+        Q_PROPERTY(QString website READ website WRITE website NOTIFY websiteChanged)
+        Q_PROPERTY(QString twitter READ twitter WRITE twitter NOTIFY twitterChanged)
+        Q_PROPERTY(QString linkedin READ linkedin WRITE linkedin NOTIFY linkedinChanged)
+        Q_PROPERTY(QString instagram READ instagram WRITE instagram NOTIFY instagramChanged)
+        Q_PROPERTY(QString telegram READ telegram WRITE telegram NOTIFY telegramChanged)
+        Q_PROPERTY(QString discord READ discord WRITE discord NOTIFY discordChanged)
 
     public:
         AppsViewModel();
@@ -35,6 +44,25 @@ namespace beamui::applications
         [[nodiscard]] QList<QMap<QString, QVariant>> getApps();
         [[nodiscard]] QList<QMap<QString, QVariant>> getLocalApps();
         bool isPublisher() const;
+
+        QString nickname() const;
+        void nickname(const QString& name);
+        QString shortTitle() const;
+        void shortTitle(const QString& value);
+        QString aboutMe() const;
+        void aboutMe(const QString& value);
+        QString website() const;
+        void website(const QString& value);
+        QString twitter() const;
+        void twitter(const QString& value);
+        QString linkedin() const;
+        void linkedin(const QString& value);
+        QString instagram() const;
+        void instagram(const QString& value);
+        QString telegram() const;
+        void telegram(const QString& value);
+        QString discord() const;
+        void discord(const QString& value);
 
     public:
         Q_INVOKABLE void onCompleted(QObject *webView);
@@ -49,6 +77,15 @@ namespace beamui::applications
     signals:
         void appsChanged();
         void isPublisherChanged();
+        void nicknameChanged();
+        void shortTitleChanged();
+        void aboutMeChanged();
+        void websiteChanged();
+        void twitterChanged();
+        void linkedinChanged();
+        void instagramChanged();
+        void telegramChanged();
+        void discordChanged();
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
@@ -62,5 +99,14 @@ namespace beamui::applications
         QList<QMap<QString, QVariant>> _lastLocalApps;
         QList<QMap<QString, QVariant>> _apps;
         bool _isPublisher = false;
+        QString _nickname;
+        QString _shortTitle;
+        QString _aboutMe;
+        QString _website;
+        QString _twitter;
+        QString _linkedin;
+        QString _instagram;
+        QString _telegram;
+        QString _discord;
     };
 }

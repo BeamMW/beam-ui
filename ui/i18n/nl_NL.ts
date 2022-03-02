@@ -3564,7 +3564,8 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-instagram">
-        <source>Instagramm</source>
+        <source>Instagram</source>
+        <oldsource>Instagramm</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-telegram">
