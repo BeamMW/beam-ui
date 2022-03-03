@@ -25,6 +25,7 @@ namespace beamui::applications
         Q_PROPERTY(QList<QMap<QString, QVariant>> localApps READ getLocalApps CONSTANT)
         Q_PROPERTY(QList<QMap<QString, QVariant>> apps READ getApps NOTIFY appsChanged)
         Q_PROPERTY(bool isPublisher READ isPublisher NOTIFY isPublisherChanged)
+        Q_PROPERTY(QString publisherKey READ publisherKey NOTIFY publisherKeyChanged)
         Q_PROPERTY(QString nickname READ nickname WRITE nickname NOTIFY nicknameChanged)
         Q_PROPERTY(QString shortTitle READ shortTitle WRITE shortTitle NOTIFY shortTitleChanged)
         Q_PROPERTY(QString aboutMe READ aboutMe WRITE aboutMe NOTIFY aboutMeChanged)
@@ -44,6 +45,8 @@ namespace beamui::applications
         [[nodiscard]] QList<QMap<QString, QVariant>> getApps();
         [[nodiscard]] QList<QMap<QString, QVariant>> getLocalApps();
         bool isPublisher() const;
+        QString publisherKey() const;
+        void publisherKey(const QString& value);
 
         QString nickname() const;
         void nickname(const QString& name);
@@ -73,10 +76,13 @@ namespace beamui::applications
         Q_INVOKABLE void launchAppServer();
         Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
         Q_INVOKABLE [[nodiscard]] QString addPublisherByKey(const QString& publicKey);
+        Q_INVOKABLE void createPublisher();
+        Q_INVOKABLE void changePublisherInfo();
 
     signals:
         void appsChanged();
         void isPublisherChanged();
+        void publisherKeyChanged();
         void nicknameChanged();
         void shortTitleChanged();
         void aboutMeChanged();
@@ -92,6 +98,7 @@ namespace beamui::applications
         [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
         QMap<QString, QVariant> validateAppManifest(QTextStream& io, const QString& appFolder);
         void loadApps();
+        void loadMyPublisherInfo();
 
         QString _userAgent;
         QString _serverAddr;
@@ -99,6 +106,7 @@ namespace beamui::applications
         QList<QMap<QString, QVariant>> _lastLocalApps;
         QList<QMap<QString, QVariant>> _apps;
         bool _isPublisher = false;
+        QString _publisherKey;
         QString _nickname;
         QString _shortTitle;
         QString _aboutMe;

@@ -38,6 +38,12 @@ namespace
         }
         return QString::fromStdString(field.get<std::string>());
     }
+
+    std::string toHex(const QString& value)
+    {
+        std::string tmp = value.toStdString();
+        return beam::to_hex(tmp.data(), tmp.size());
+    }
 }
 
 namespace beamui::applications
@@ -56,6 +62,7 @@ namespace beamui::applications
         _serverAddr = QString("127.0.0.1:") + QString::number(AppSettings().getAppsServerPort());
 
         loadApps();
+        loadMyPublisherInfo();
     }
 
     AppsViewModel::~AppsViewModel()
@@ -245,6 +252,64 @@ namespace beamui::applications
             });
     }
 
+    void AppsViewModel::loadMyPublisherInfo()
+    {
+        std::string args = "action=my_publisher_info,cid=";
+        args += AppSettings().getDappStoreCID();
+
+        QPointer<AppsViewModel> guard(this);
+
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
+            [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                if (!err.empty())
+                {
+                    LOG_WARNING() << "Failed to my publisher info" << ", " << err;
+                    return;
+                }
+
+                try
+                {
+                    auto json = nlohmann::json::parse(output);
+
+                    LOG_INFO() << json.dump(4);
+
+                    if (json.empty() || !json.is_object() || !json["my_publisher_info"].is_object())
+                    {
+                        throw std::runtime_error("Invalid response of the view_publishers method");
+                    }
+
+                    if (!json["my_publisher_info"].empty())
+                    {
+                        auto& info = json["my_publisher_info"];
+                        publisherKey(QString::fromStdString(info["pubkey"].get<std::string>()));
+                        nickname(QString::fromStdString(info["name"].get<std::string>()));
+                        shortTitle(QString::fromStdString(info["short_title"].get<std::string>()));
+                        aboutMe(QString::fromStdString(info["about_me"].get<std::string>()));
+                        website(QString::fromStdString(info["website"].get<std::string>()));
+                        twitter(QString::fromStdString(info["twitter"].get<std::string>()));
+                        linkedin(QString::fromStdString(info["linkedin"].get<std::string>()));
+                        instagram(QString::fromStdString(info["instagram"].get<std::string>()));
+                        telegram(QString::fromStdString(info["telegram"].get<std::string>()));
+                        discord(QString::fromStdString(info["discord"].get<std::string>()));
+
+                        _isPublisher = true;
+                        emit isPublisherChanged();
+                    }
+                }
+                catch (std::runtime_error& err)
+                {
+                    LOG_WARNING() << "Error while parsing publisher from contract" << ", " << err.what();
+                }
+            }
+        );
+    }
+
     QList<QMap<QString, QVariant>> AppsViewModel::getApps()
     {
         return _apps;
@@ -312,6 +377,20 @@ namespace beamui::applications
     {
         // TODO: check after implementation "becomePublisher"
         return _isPublisher;
+    }
+
+    QString AppsViewModel::publisherKey() const
+    {
+        return _publisherKey;
+    }
+
+    void AppsViewModel::publisherKey(const QString& value)
+    {
+        if (value != _publisherKey)
+        {
+            _publisherKey = value;
+            emit publisherKeyChanged();
+        }
     }
 
     QString AppsViewModel::nickname() const
@@ -444,6 +523,59 @@ namespace beamui::applications
     {
         // TODO: implement
         return {};
+    }
+
+    void AppsViewModel::createPublisher()
+    {
+        std::string args = "action=add_publisher,cid=";
+        args += AppSettings().getDappStoreCID();
+        args += ",name=" + toHex(nickname());
+        args += ",short_title=" + toHex(shortTitle());
+        args += ",about_me=" + toHex(aboutMe());
+        args += ",website=" + toHex(website());
+        args += ",twitter=" + toHex(twitter());
+        args += ",linkedin=" + toHex(linkedin());
+        args += ",instagram=" + toHex(instagram());
+        args += ",telegram=" + toHex(telegram());
+        args += ",discord=" + toHex(discord());
+
+        QPointer<AppsViewModel> guard(this);
+
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
+            [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                if (!err.empty())
+                {
+                    LOG_WARNING() << "Failed to create a publisher" << ", " << err;
+                    return;
+                }
+
+                try
+                {
+                    auto json = nlohmann::json::parse(output);
+
+                    LOG_INFO() << json.dump(4);
+                    // TODO roman.strilets should be processed this case
+
+                    _isPublisher = true;
+                    emit isPublisherChanged();
+                }
+                catch (std::runtime_error& err)
+                {
+                    LOG_WARNING() << "Error while parsing publisher from contract" << ", " << err.what();
+                }
+            }
+        );
+    }
+
+    void AppsViewModel::changePublisherInfo()
+    {
+
     }
 
     bool AppsViewModel::uninstallLocalApp(const QString& appid)

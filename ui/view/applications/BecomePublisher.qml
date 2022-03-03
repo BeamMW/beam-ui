@@ -25,6 +25,9 @@ CustomDialog {
     property alias telegram: telegramInput.text
     property alias discord: discordInput.text
 
+    signal createPublisher()
+    signal changePublisherInfo()
+
     contentItem: ColumnLayout {
         spacing: 0
         anchors.fill:    parent
@@ -304,6 +307,13 @@ CustomDialog {
                     qsTrId("dapps-store-save-changes")
                 palette.buttonText: Style.content_opposite
                 enabled: control.newPublisher ? nameInput.text : false
+                onClicked: {
+                    if (control.newPublisher) {
+                        control.createPublisher();
+                    } else {
+                        control.changePublisherInfo();
+                    }
+                }
             }
 
             Item {

@@ -75,6 +75,14 @@ ColumnLayout {
                 telegram: viewModel.telegram
                 discord: viewModel.discord
 
+                onCreatePublisher: function() {
+                    viewModel.createPublisher();
+                }
+
+                onChangePublisherInfo: function() {
+                    viewModel.changePublisherInfo();
+                }
+
                 Connections {
                     target: viewModel
 
