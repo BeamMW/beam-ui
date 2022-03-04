@@ -18,8 +18,7 @@ ColumnLayout {
     property var onBack
 
     function uploadApp() {
-        // TODO: implement
-        // uploadDAppDialog.open()
+        uploadDAppDialog.open()
     }
 
     function editDetails() {
@@ -281,5 +280,9 @@ ColumnLayout {
                 }
             }
         }
+    }
+
+    UploadDApp {
+        id: uploadDAppDialog 
     }
 }

@@ -114,6 +114,7 @@
         <file>applications/BecomePublisher.qml</file>
         <file>applications/PublisherDetails.qml</file>
         <file>applications/PublishersList.qml</file>
+        <file>applications/UploadDApp.qml</file>
         <file>dapps_store/dapps_store.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
@@ -178,6 +179,7 @@
         <file>assets/icon-dapps_store.svg</file>
         <file>assets/icon-dapps_store-active.svg</file>
         <file>assets/icon-dapps_store-add-publisher.svg</file>
+        <file>assets/icon-dapps_store-dapp-file.svg</file>
         <file>assets/icon-dapps_store-become-a-publisher.svg</file>
         <file>assets/icon-dapps_store-empty-dapps-list.svg</file>
         <file>assets/icon-dapps_store-publisher-edit.svg</file>
