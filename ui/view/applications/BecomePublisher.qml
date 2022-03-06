@@ -19,6 +19,18 @@ CustomDialog {
     signal createPublisher(var info)
     signal changePublisherInfo(var info)
 
+    function isChanged() {
+        return publisherInfo.nickname !== nameInput.text ||
+            publisherInfo.shortTitle !== shortTitleInput.text ||
+            publisherInfo.aboutMe !== aboutMeInput.text ||
+            publisherInfo.website !== websiteInput.text ||
+            publisherInfo.twitter !== twitterInput.text ||
+            publisherInfo.linkedin !== linkedinInput.text ||
+            publisherInfo.instagram !== instagramInput.text ||
+            publisherInfo.telegram !== telegramInput.text ||
+            publisherInfo.discord !== discordInput.text;
+    }
+
     contentItem: ColumnLayout {
         spacing: 0
         anchors.fill:    parent
@@ -290,7 +302,16 @@ CustomDialog {
                 icon.source: "qrc:/assets/icon-cancel-white.svg"
                 text: qsTrId("general-cancel")
                 onClicked: {
-                    console.log('isPublisher ', control.newPublisher);
+                    nameInput.text = control.publisherInfo.nickname;
+                    shortTitleInput.text = control.publisherInfo.shortTitle;
+                    aboutMeInput.text = control.publisherInfo.aboutMe;
+                    websiteInput.text = control.publisherInfo.website;
+                    twitterInput.text = control.publisherInfo.twitter;
+                    linkedinInput.text = control.publisherInfo.linkedin;
+                    instagramInput.text = control.publisherInfo.instagram;
+                    telegramInput.text = control.publisherInfo.telegram;
+                    discordInput.text = control.publisherInfo.discord;
+
                     control.close();
                 }
             }
@@ -307,11 +328,11 @@ CustomDialog {
                     //% "save changes"
                     qsTrId("dapps-store-save-changes")
                 palette.buttonText: Style.content_opposite
-                enabled: control.newPublisher ? nameInput.text : false
+                enabled: nameInput.text && shortTitleInput.text && isChanged()
                 onClicked: {
                     var info = {
                         nickname: nameInput.text,
-                        shortTitle: shortTitle.text,
+                        shortTitle: shortTitleInput.text,
                         aboutMe: aboutMeInput.text,
                         website: websiteInput.text,
                         twitter: twitterInput.text,
