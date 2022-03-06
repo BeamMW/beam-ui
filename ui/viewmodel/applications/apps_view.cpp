@@ -44,6 +44,13 @@ namespace
         std::string tmp = value.toStdString();
         return beam::to_hex(tmp.data(), tmp.size());
     }
+
+    QString fromHex(const std::string& value)
+    {
+        auto tmp = beam::from_hex(value);
+
+        return QString::fromUtf8(reinterpret_cast<char*>(tmp.data()), static_cast<int>(tmp.size()));
+    }
 }
 
 namespace beamui::applications
@@ -287,16 +294,20 @@ namespace beamui::applications
                     if (!json["my_publisher_info"].empty())
                     {
                         auto& info = json["my_publisher_info"];
-                        publisherKey(QString::fromStdString(info["pubkey"].get<std::string>()));
-                        nickname(QString::fromStdString(info["name"].get<std::string>()));
-                        shortTitle(QString::fromStdString(info["short_title"].get<std::string>()));
-                        aboutMe(QString::fromStdString(info["about_me"].get<std::string>()));
-                        website(QString::fromStdString(info["website"].get<std::string>()));
-                        twitter(QString::fromStdString(info["twitter"].get<std::string>()));
-                        linkedin(QString::fromStdString(info["linkedin"].get<std::string>()));
-                        instagram(QString::fromStdString(info["instagram"].get<std::string>()));
-                        telegram(QString::fromStdString(info["telegram"].get<std::string>()));
-                        discord(QString::fromStdString(info["discord"].get<std::string>()));
+                        QVariantMap tmp;
+
+                        tmp["publisherKey"] = fromHex(info["pubkey"].get<std::string>());
+                        tmp["nickname"] = fromHex(info["name"].get<std::string>());
+                        tmp["shortTitle"] = fromHex(info["short_title"].get<std::string>());
+                        tmp["aboutMe"] = fromHex(info["about_me"].get<std::string>());
+                        tmp["website"] = fromHex(info["website"].get<std::string>());
+                        tmp["twitter"] = fromHex(info["twitter"].get<std::string>());
+                        tmp["linkedin"] = fromHex(info["linkedin"].get<std::string>());
+                        tmp["instagram"] = fromHex(info["instagram"].get<std::string>());
+                        tmp["telegram"] = fromHex(info["telegram"].get<std::string>());
+                        tmp["discord"] = fromHex(info["discord"].get<std::string>());
+
+                        setPublisherInfo(tmp);
 
                         _isPublisher = true;
                         emit isPublisherChanged();
@@ -379,143 +390,17 @@ namespace beamui::applications
         return _isPublisher;
     }
 
-    QString AppsViewModel::publisherKey() const
+    QVariantMap AppsViewModel::getPublisherInfo() const
     {
-        return _publisherKey;
+        return _publisherInfo;
     }
 
-    void AppsViewModel::publisherKey(const QString& value)
+    void AppsViewModel::setPublisherInfo(const QVariantMap& value)
     {
-        if (value != _publisherKey)
+        if (value != _publisherInfo)
         {
-            _publisherKey = value;
-            emit publisherKeyChanged();
-        }
-    }
-
-    QString AppsViewModel::nickname() const
-    {
-        return _nickname;
-    }
-
-    void AppsViewModel::nickname(const QString& name)
-    {
-        if (name != _nickname)
-        {
-            _nickname = name;
-            emit nicknameChanged();
-        }
-    }
-
-    QString AppsViewModel::shortTitle() const
-    {
-        return _shortTitle;
-    }
-
-    void AppsViewModel::shortTitle(const QString& value)
-    {
-        if (value != _shortTitle)
-        {
-            _shortTitle = value;
-            emit shortTitleChanged();
-        }
-    }
-
-    QString AppsViewModel::aboutMe() const
-    {
-        return _aboutMe;
-    }
-
-    void AppsViewModel::aboutMe(const QString& value)
-    {
-        if (value != _aboutMe)
-        {
-            _aboutMe = value;
-            emit aboutMeChanged();
-        }
-    }
-
-    QString AppsViewModel::website() const
-    {
-        return _website;
-    }
-
-    void AppsViewModel::website(const QString& value)
-    {
-        if (value != _website)
-        {
-            _website = value;
-            emit websiteChanged();
-        }
-    }
-
-    QString AppsViewModel::twitter() const
-    {
-        return _twitter;
-    }
-
-    void AppsViewModel::twitter(const QString& value)
-    {
-        if (value != _twitter)
-        {
-            _twitter = value;
-            emit twitterChanged();
-        }
-    }
-
-    QString AppsViewModel::linkedin() const
-    {
-        return _linkedin;
-    }
-
-    void AppsViewModel::linkedin(const QString& value)
-    {
-        if (value != _linkedin)
-        {
-            _linkedin = value;
-            emit linkedinChanged();
-        }
-    }
-
-    QString AppsViewModel::instagram() const
-    {
-        return _instagram;
-    }
-
-    void AppsViewModel::instagram(const QString& value)
-    {
-        if (value != _instagram)
-        {
-            _instagram = value;
-            emit instagramChanged();
-        }
-    }
-
-    QString AppsViewModel::telegram() const
-    {
-        return _telegram;
-    }
-
-    void AppsViewModel::telegram(const QString& value)
-    {
-        if (value != _telegram)
-        {
-            _telegram = value;
-            emit telegramChanged();
-        }
-    }
-
-    QString AppsViewModel::discord() const
-    {
-        return _discord;
-    }
-
-    void AppsViewModel::discord(const QString& value)
-    {
-        if (value != _discord)
-        {
-            _discord = value;
-            emit discordChanged();
+            _publisherInfo = value;
+            emit publisherInfoChanged();
         }
     }
 
@@ -525,19 +410,19 @@ namespace beamui::applications
         return {};
     }
 
-    void AppsViewModel::createPublisher()
+    void AppsViewModel::createPublisher(const QVariantMap& publisherInfo)
     {
         std::string args = "action=add_publisher,cid=";
         args += AppSettings().getDappStoreCID();
-        args += ",name=" + toHex(nickname());
-        args += ",short_title=" + toHex(shortTitle());
-        args += ",about_me=" + toHex(aboutMe());
-        args += ",website=" + toHex(website());
-        args += ",twitter=" + toHex(twitter());
-        args += ",linkedin=" + toHex(linkedin());
-        args += ",instagram=" + toHex(instagram());
-        args += ",telegram=" + toHex(telegram());
-        args += ",discord=" + toHex(discord());
+        args += ",name=" + toHex(publisherInfo["nickname"].toString());
+        args += ",short_title=" + toHex(publisherInfo["shortTitle"].toString());
+        args += ",about_me=" + toHex(publisherInfo["aboutMe"].toString());
+        args += ",website=" + toHex(publisherInfo["website"].toString());
+        args += ",twitter=" + toHex(publisherInfo["twitter"].toString());
+        args += ",linkedin=" + toHex(publisherInfo["linkedin"].toString());
+        args += ",instagram=" + toHex(publisherInfo["instagram"].toString());
+        args += ",telegram=" + toHex(publisherInfo["telegram"].toString());
+        args += ",discord=" + toHex(publisherInfo["discord"].toString());
 
         QPointer<AppsViewModel> guard(this);
 
@@ -573,7 +458,7 @@ namespace beamui::applications
         );
     }
 
-    void AppsViewModel::changePublisherInfo()
+    void AppsViewModel::changePublisherInfo(const QVariantMap& publisherInfo)
     {
 
     }

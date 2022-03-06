@@ -14,19 +14,10 @@ CustomDialog {
     modal:   true
 
     property bool newPublisher: true
+    property var publisherInfo
 
-    property alias nickname: nameInput.text
-    property alias shortTitle: shortTitleInput.text
-    property alias aboutMe: aboutMeInput.text
-    property alias website: websiteInput.text
-    property alias twitter: twitterInput.text
-    property alias linkedin: linkedinInput.text
-    property alias instagram: instagramInput.text
-    property alias telegram: telegramInput.text
-    property alias discord: discordInput.text
-
-    signal createPublisher()
-    signal changePublisherInfo()
+    signal createPublisher(var info)
+    signal changePublisherInfo(var info)
 
     contentItem: ColumnLayout {
         spacing: 0
@@ -90,6 +81,7 @@ CustomDialog {
                     width: 335
                     height: 45
                     color: Style.content_main
+                    text: control.publisherInfo.nickname
                 }
             }
 
@@ -109,6 +101,7 @@ CustomDialog {
                     width: 335
                     height: 45
                     color: Style.content_main
+                    text: control.publisherInfo.shortTitle
                 }
 
                 SFText {
@@ -137,6 +130,7 @@ CustomDialog {
                     width: 701
                     height: 45
                     color: Style.content_main
+                    text: control.publisherInfo.aboutMe
                 }
 
                 SFText {
@@ -174,6 +168,7 @@ CustomDialog {
                     height: 45
                     color: Style.content_main
                     placeholderText: "https://website.name/"
+                    text: control.publisherInfo.website
                 }
             }
 
@@ -194,6 +189,7 @@ CustomDialog {
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
+                    text: control.publisherInfo.twitter
                 }
             }
 
@@ -214,6 +210,7 @@ CustomDialog {
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
+                    text: control.publisherInfo.linkedin
                 }
             }
 
@@ -234,6 +231,7 @@ CustomDialog {
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
+                    text: control.publisherInfo.instagram
                 }
             }
 
@@ -254,6 +252,7 @@ CustomDialog {
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
+                    text: control.publisherInfo.telegram
                 }
             }
 
@@ -274,6 +273,7 @@ CustomDialog {
                     height: 45
                     color: Style.content_main
                     placeholderText: "login#0000"
+                    text: control.publisherInfo.discord
                 }
             }
         }
@@ -290,6 +290,7 @@ CustomDialog {
                 icon.source: "qrc:/assets/icon-cancel-white.svg"
                 text: qsTrId("general-cancel")
                 onClicked: {
+                    console.log('isPublisher ', control.newPublisher);
                     control.close();
                 }
             }
@@ -308,8 +309,19 @@ CustomDialog {
                 palette.buttonText: Style.content_opposite
                 enabled: control.newPublisher ? nameInput.text : false
                 onClicked: {
+                    var info = {
+                        nickname: nameInput.text,
+                        shortTitle: shortTitle.text,
+                        aboutMe: aboutMeInput.text,
+                        website: websiteInput.text,
+                        twitter: twitterInput.text,
+                        linkedin: linkedinInput.text,
+                        instagram: instagramInput.text,
+                        telegram: telegramInput.text,
+                        discord: discordInput.text
+                    };
                     if (control.newPublisher) {
-                        control.createPublisher();
+                        control.createPublisher(info);
                     } else {
                         control.changePublisherInfo();
                     }
