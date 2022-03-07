@@ -2152,7 +2152,8 @@ much longer for a transaction to complete.</translation>
         <translation type="unfinished">Infura project ID</translation>
     </message>
     <message id="apps-title">
-        <source>DApp Store</source>
+        <source>My DApp Store</source>
+        <oldsource>DApp Store</oldsource>
         <translation type="unfinished">DApp Store</translation>
     </message>
     <message id="apps-run">
@@ -3637,6 +3638,68 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="dapps-store-about-me">
         <source>About me</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-upload-choose-file-title">
+        <source>Select application to upload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-update-dapp-title">
+        <source>Update DApp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-upload-new-dapp-title">
+        <source>Upload new DApp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-update-dapp-text">
+        <source>To update %1, please add the new version of the file below</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-upload-new-dapp-text">
+        <source>To upload your own DApp in the DApp Store, please use files in the .dapp format only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-upload-common-error">
+        <source>Something went wrong, please check your file and to try upload it again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapp-store-load-file">
+        <source>load .dapp file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-drop-text">
+        <source>or jusr drop it here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-continue">
+        <source>continue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-upload-check-details-text">
+        <source>Check the information below and select &quot;publish&quot;.
+If something is wrong, please cancel the uploading,
+change the information in your file and upload your file again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-dapp-release-date">
+        <source>Release date:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-dapp-version">
+        <source>Version:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-dapp-api-version">
+        <source>Api version:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-dapp-min-api-version">
+        <source>Minimal api version:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-dapp-guid">
+        <source>Guid:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

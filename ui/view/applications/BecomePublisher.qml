@@ -344,8 +344,9 @@ CustomDialog {
                     if (control.newPublisher) {
                         control.createPublisher(info);
                     } else {
-                        control.changePublisherInfo();
+                        control.changePublisherInfo(info);
                     }
+                    control.close();
                 }
             }
 

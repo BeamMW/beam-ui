@@ -78,16 +78,6 @@ namespace beamui::applications
         QList<QVariantMap> _apps;
         QList<QVariantMap> _publishers;
         bool _isPublisher = false;
-        QString _publisherKey;
-        QString _nickname;
-        QString _shortTitle;
-        QString _aboutMe;
-        QString _website;
-        QString _twitter;
-        QString _linkedin;
-        QString _instagram;
-        QString _telegram;
-        QString _discord;
         QVariantMap _publisherInfo;
     };
 }

@@ -15,6 +15,10 @@ ColumnLayout {
     property var appsList: undefined
     readonly property bool hasApps: !!appsList && appsList.length > 0
 
+    property var changePublisherInfo: function(info) {
+        console.log("PublisherDetails::onChangePublisherInfo is not initialized")
+    }
+
     property var onBack: function () {
         console.log("PublisherDetails::onBack is not initialized")
     }
@@ -34,6 +38,7 @@ ColumnLayout {
 
     function editDetails() {
         // TODO: implement
+        changePublisherInfoDialog.open();
     }
 
     function showPublicKey() {
@@ -189,6 +194,17 @@ ColumnLayout {
         Layout.fillWidth:  true
         visible:  control.hasApps && !control.activeApp
         // TODO: implement
+    }
+
+    BecomePublisher {
+        id: changePublisherInfoDialog
+
+        newPublisher: false
+        publisherInfo: control.publisher
+
+        onChangePublisherInfo: function(info) {
+            control.changePublisherInfo(info);
+        }
     }
 
     CustomDialog {

@@ -102,6 +102,7 @@ ColumnLayout {
                         "chooseFile":            viewModel.chooseFile,
                         "getDAppFileProperties": viewModel.getDAppFileProperties,
                         "parseDAppFile":         viewModel.parseDAppFile,
+                        "changePublisherInfo":   viewModel.changePublisherInfo,
                     }
                     stackView.push(Qt.createComponent("PublisherDetails.qml"), params)
                 }

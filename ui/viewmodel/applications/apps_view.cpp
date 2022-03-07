@@ -567,7 +567,48 @@ namespace beamui::applications
 
     void AppsViewModel::changePublisherInfo(const QVariantMap& publisherInfo)
     {
+        std::string args = "action=update_publisher,cid=";
+        args += AppSettings().getDappStoreCID();
+        args += ",name=" + toHex(publisherInfo["nickname"].toString());
+        args += ",short_title=" + toHex(publisherInfo["shortTitle"].toString());
+        args += ",about_me=" + toHex(publisherInfo["aboutMe"].toString());
+        args += ",website=" + toHex(publisherInfo["website"].toString());
+        args += ",twitter=" + toHex(publisherInfo["twitter"].toString());
+        args += ",linkedin=" + toHex(publisherInfo["linkedin"].toString());
+        args += ",instagram=" + toHex(publisherInfo["instagram"].toString());
+        args += ",telegram=" + toHex(publisherInfo["telegram"].toString());
+        args += ",discord=" + toHex(publisherInfo["discord"].toString());
 
+        QPointer<AppsViewModel> guard(this);
+
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
+            [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                if (!err.empty())
+                {
+                    LOG_WARNING() << "Failed to create a publisher" << ", " << err;
+                    return;
+                }
+
+                try
+                {
+                    auto json = nlohmann::json::parse(output);
+
+                    LOG_INFO() << json.dump(4);
+                    // TODO roman.strilets should be processed this case
+                    //loadMyPublisherInfo();
+                }
+                catch (std::runtime_error& err)
+                {
+                    LOG_WARNING() << "Error while parsing publisher from contract" << ", " << err.what();
+                }
+            }
+        );
     }
 
     bool AppsViewModel::uninstallLocalApp(const QString& appid)
