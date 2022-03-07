@@ -51,6 +51,24 @@ namespace
 
         return QString::fromUtf8(reinterpret_cast<char*>(tmp.data()), static_cast<int>(tmp.size()));
     }
+
+    QVariantMap parsePublisherInfo(nlohmann::json& info)
+    {
+        QVariantMap tmp;
+
+        tmp["publisherKey"] = QString::fromStdString(info["pubkey"].get<std::string>());
+        tmp["nickname"] = fromHex(info["name"].get<std::string>());
+        tmp["shortTitle"] = fromHex(info["short_title"].get<std::string>());
+        tmp["aboutMe"] = fromHex(info["about_me"].get<std::string>());
+        tmp["website"] = fromHex(info["website"].get<std::string>());
+        tmp["twitter"] = fromHex(info["twitter"].get<std::string>());
+        tmp["linkedin"] = fromHex(info["linkedin"].get<std::string>());
+        tmp["instagram"] = fromHex(info["instagram"].get<std::string>());
+        tmp["telegram"] = fromHex(info["telegram"].get<std::string>());
+        tmp["discord"] = fromHex(info["discord"].get<std::string>());
+
+        return tmp;
+    }
 }
 
 namespace beamui::applications
@@ -69,6 +87,7 @@ namespace beamui::applications
         _serverAddr = QString("127.0.0.1:") + QString::number(AppSettings().getAppsServerPort());
 
         loadApps();
+        loadPublishers();
         loadMyPublisherInfo();
     }
 
@@ -107,9 +126,9 @@ namespace beamui::applications
         return _userAgent;
     }
 
-    QMap<QString, QVariant> AppsViewModel::parseAppManifest(QTextStream& in, const QString& appFolder)
+    QVariantMap AppsViewModel::parseAppManifest(QTextStream& in, const QString& appFolder)
     {
-        QMap<QString, QVariant> app;
+        QVariantMap app;
 
         const auto content = in.readAll();
         if (content.isEmpty())
@@ -242,7 +261,7 @@ namespace beamui::applications
 
                     for (auto& item : json.items())
                     {
-                        QMap<QString, QVariant> app;
+                        QVariantMap app;
                         auto name = parseStringField(item.value(), "name");
                         auto url = parseStringField(item.value(), "url");
                         const auto appid = beam::wallet::GenerateAppID(name.toStdString(), url.toStdString());
@@ -268,6 +287,60 @@ namespace beamui::applications
                 }
                 emit appsChanged();
             });
+    }
+
+    void AppsViewModel::loadPublishers()
+    {
+        std::string args = "action=view_publishers,cid=";
+        args += AppSettings().getDappStoreCID();
+
+        QPointer<AppsViewModel> guard(this);
+
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
+            [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                if (!err.empty())
+                {
+                    LOG_WARNING() << "Failed to my publisher info" << ", " << err;
+                    return;
+                }
+
+                try
+                {
+                    auto json = nlohmann::json::parse(output);
+
+                    LOG_INFO() << json.dump(4);
+
+                    if (json.empty() || !json.is_object() || !json["publishers"].is_array())
+                    {
+                        throw std::runtime_error("Invalid response of the view_publishers method");
+                    }
+
+                    QList<QVariantMap> publishers;
+
+                    for (auto& item : json["publishers"].items())
+                    {
+                        if (!item.value().is_object())
+                        {
+                            throw std::runtime_error("Invalid body of the publishers list " + item.key());
+                        }
+
+                        publishers.push_back(parsePublisherInfo(item.value()));
+                    }
+
+                    setPublishers(publishers);
+                }
+                catch (std::runtime_error& err)
+                {
+                    LOG_WARNING() << "Error while parsing publisher from contract" << ", " << err.what();
+                }
+            }
+        );
     }
 
     void AppsViewModel::loadMyPublisherInfo()
@@ -305,18 +378,7 @@ namespace beamui::applications
                     if (!json["my_publisher_info"].empty())
                     {
                         auto& info = json["my_publisher_info"];
-                        QVariantMap tmp;
-
-                        tmp["publisherKey"] = QString::fromStdString(info["pubkey"].get<std::string>());
-                        tmp["nickname"] = fromHex(info["name"].get<std::string>());
-                        tmp["shortTitle"] = fromHex(info["short_title"].get<std::string>());
-                        tmp["aboutMe"] = fromHex(info["about_me"].get<std::string>());
-                        tmp["website"] = fromHex(info["website"].get<std::string>());
-                        tmp["twitter"] = fromHex(info["twitter"].get<std::string>());
-                        tmp["linkedin"] = fromHex(info["linkedin"].get<std::string>());
-                        tmp["instagram"] = fromHex(info["instagram"].get<std::string>());
-                        tmp["telegram"] = fromHex(info["telegram"].get<std::string>());
-                        tmp["discord"] = fromHex(info["discord"].get<std::string>());
+                        QVariantMap tmp = parsePublisherInfo(info);
 
                         setPublisherInfo(tmp);
 
@@ -332,21 +394,35 @@ namespace beamui::applications
         );
     }
 
-    QList<QMap<QString, QVariant>> AppsViewModel::getApps()
+    void AppsViewModel::setPublishers(const QList<QVariantMap>& value)
+    {
+        if (value != _publishers)
+        {
+            _publishers = value;
+            emit publishersChanged();
+        }
+    }
+
+    QList<QVariantMap> AppsViewModel::getPublishers()
+    {
+        return _publishers;
+    }
+
+    QList<QVariantMap> AppsViewModel::getApps()
     {
         return _apps;
     }
 
-    QList<QMap<QString, QVariant>> AppsViewModel::getLocalApps()
+    QList<QVariantMap> AppsViewModel::getLocalApps()
     {
-        QList<QMap<QString, QVariant>> result;
+        QList<QVariantMap> result;
 
         //
         // Dev App
         //
         if (!AppSettings().getDevAppName().isEmpty())
         {
-            QMap<QString, QVariant> devapp;
+            QVariantMap devapp;
 
             const auto name  = AppSettings().getDevAppName();
             const auto url   = AppSettings().getDevAppUrl();
@@ -415,10 +491,30 @@ namespace beamui::applications
         }
     }
 
-    QString AppsViewModel::addPublisherByKey(const QString& publicKey)
+    QString AppsViewModel::addPublisherByKey(const QString& publisherKey)
     {
-        // TODO: implement
-        return {};
+        // find publisher in _publishers by publicKey
+        const auto it = std::find_if(_publishers.cbegin(), _publishers.cend(),
+            [publisherKey] (const auto& publisher) -> bool {
+                const auto publisherIt = publisher.find("publisherKey");
+                if (publisherIt == publisher.end())
+                {
+                    assert(false);
+                    return false;
+                }
+                return publisherIt->toString() == publisherKey;
+            }
+        );
+
+        if (it == _publishers.end())
+        {
+            assert(false);
+            return {};
+        }
+
+        // TODO: add publisher to _myPublishers
+
+        return (*it)["nickname"].toString();
     }
 
     void AppsViewModel::createPublisher(const QVariantMap& publisherInfo)
@@ -558,18 +654,18 @@ namespace beamui::applications
         return dialog.selectedFiles().value(0);
     }
 
-    QMap<QString, QVariant> AppsViewModel::getDAppFileProperties(const QString& fname)
+    QVariantMap AppsViewModel::getDAppFileProperties(const QString& fname)
     {
         QFileInfo fileInfo(fname);
 
-        QMap<QString, QVariant> properties;
+        QVariantMap properties;
         properties.insert("name", fileInfo.fileName());
         properties.insert("size", fileInfo.size());
 
         return properties;
     }
 
-    QMap<QString, QVariant> AppsViewModel::parseDAppFile(const QString& fname)
+    QVariantMap AppsViewModel::parseDAppFile(const QString& fname)
     {
         try
         {
@@ -579,7 +675,7 @@ namespace beamui::applications
                 throw std::runtime_error("Failed to open the DApp file");
             }
 
-            QMap<QString, QVariant> app;
+            QVariantMap app;
             for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
             {
                 const auto zipFname = zip.getCurrentFileName();

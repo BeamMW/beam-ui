@@ -22,10 +22,11 @@ namespace beamui::applications
         Q_OBJECT
         Q_PROPERTY(QString appsUrl     READ getAppsUrl    CONSTANT)
         Q_PROPERTY(QString userAgent   READ getUserAgent  CONSTANT)
-        Q_PROPERTY(QList<QMap<QString, QVariant>> localApps READ getLocalApps CONSTANT)
-        Q_PROPERTY(QList<QMap<QString, QVariant>> apps READ getApps NOTIFY appsChanged)
+        Q_PROPERTY(QList<QVariantMap> localApps READ getLocalApps CONSTANT)
+        Q_PROPERTY(QList<QVariantMap> apps READ getApps NOTIFY appsChanged)
         Q_PROPERTY(bool isPublisher READ isPublisher NOTIFY isPublisherChanged)
         Q_PROPERTY(QVariantMap publisherInfo READ getPublisherInfo NOTIFY publisherInfoChanged)
+        Q_PROPERTY(QList<QVariantMap> publishers READ getPublishers NOTIFY publishersChanged)
 
     public:
         AppsViewModel();
@@ -33,8 +34,9 @@ namespace beamui::applications
 
         [[nodiscard]] QString getAppsUrl() const;
         [[nodiscard]] QString getUserAgent() const;
-        [[nodiscard]] QList<QMap<QString, QVariant>> getApps();
-        [[nodiscard]] QList<QMap<QString, QVariant>> getLocalApps();
+        [[nodiscard]] QList<QVariantMap> getApps();
+        [[nodiscard]] QList<QVariantMap> getLocalApps();
+        [[nodiscard]] QList<QVariantMap> getPublishers();
         bool isPublisher() const;
 
         QVariantMap getPublisherInfo() const;
@@ -45,12 +47,12 @@ namespace beamui::applications
         Q_INVOKABLE [[nodiscard]] QString getAppCachePath(const QString& appid) const;
         Q_INVOKABLE [[nodiscard]] QString getAppStoragePath(const QString& appid) const;
         Q_INVOKABLE [[nodiscard]] QString chooseFile(const QString& title);
-        Q_INVOKABLE [[nodiscard]] QMap<QString, QVariant> getDAppFileProperties(const QString& fname);
-        Q_INVOKABLE [[nodiscard]] QMap<QString, QVariant> parseDAppFile(const QString& fname);
+        Q_INVOKABLE [[nodiscard]] QVariantMap getDAppFileProperties(const QString& fname);
+        Q_INVOKABLE [[nodiscard]] QVariantMap parseDAppFile(const QString& fname);
         Q_INVOKABLE [[nodiscard]] QString installFromFile(const QString& fname);
         Q_INVOKABLE void launchAppServer();
         Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
-        Q_INVOKABLE [[nodiscard]] QString addPublisherByKey(const QString& publicKey);
+        Q_INVOKABLE [[nodiscard]] QString addPublisherByKey(const QString& publisherKey);
         Q_INVOKABLE void createPublisher(const QVariantMap& publisherInfo);
         Q_INVOKABLE void changePublisherInfo(const QVariantMap& publisherInfo);
 
@@ -58,19 +60,23 @@ namespace beamui::applications
         void appsChanged();
         void isPublisherChanged();
         void publisherInfoChanged();
+        void publishersChanged();
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
         [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
-        QMap<QString, QVariant> parseAppManifest(QTextStream& io, const QString& appFolder);
+        QVariantMap parseAppManifest(QTextStream& io, const QString& appFolder);
         void loadApps();
+        void loadPublishers();
         void loadMyPublisherInfo();
+        void setPublishers(const QList<QVariantMap>& value);
 
         QString _userAgent;
         QString _serverAddr;
         std::unique_ptr<AppsServer> _server;
-        QList<QMap<QString, QVariant>> _lastLocalApps;
-        QList<QMap<QString, QVariant>> _apps;
+        QList<QVariantMap> _lastLocalApps;
+        QList<QVariantMap> _apps;
+        QList<QVariantMap> _publishers;
         bool _isPublisher = false;
         QString _publisherKey;
         QString _nickname;
