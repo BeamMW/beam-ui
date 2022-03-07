@@ -148,9 +148,8 @@ ColumnLayout {
 
                 PrimaryButton {
                     id: publisherDetails
-                    // TODO: add check isPublisher and show "default text" or "publisher name"
                     //% "become a publisher"
-                    text: qsTrId("apps-become-a-publisher")
+                    text: viewModel.isPublisher ? viewModel.publisherInfo.nickname : qsTrId("apps-become-a-publisher")
                     icon.source: "qrc:/assets/icon-dapps_store-become-a-publisher.svg"
                     onClicked: navigatePublisherDetails()
                 }
