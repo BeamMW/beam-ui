@@ -11,7 +11,6 @@ ColumnLayout {
     Layout.fillWidth: true
     Layout.topMargin: 27
 
-    // TODO: publisher details
     property var publisher
     property var appsList: undefined
     readonly property bool hasApps: !!appsList && appsList.length > 0
@@ -199,7 +198,7 @@ ColumnLayout {
         y:       (parent.height - height) / 2
         parent:  Overlay.overlay
 
-        readonly property string publicKey: control.publisher.publicKey
+        readonly property string publicKey: !!control.publisher ? control.publisher.publisherKey : ""
 
         onOpened: {
             forceActiveFocus()

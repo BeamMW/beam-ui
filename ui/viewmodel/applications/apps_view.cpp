@@ -307,7 +307,7 @@ namespace beamui::applications
                         auto& info = json["my_publisher_info"];
                         QVariantMap tmp;
 
-                        tmp["publisherKey"] = fromHex(info["pubkey"].get<std::string>());
+                        tmp["publisherKey"] = QString::fromStdString(info["pubkey"].get<std::string>());
                         tmp["nickname"] = fromHex(info["name"].get<std::string>());
                         tmp["shortTitle"] = fromHex(info["short_title"].get<std::string>());
                         tmp["aboutMe"] = fromHex(info["about_me"].get<std::string>());
