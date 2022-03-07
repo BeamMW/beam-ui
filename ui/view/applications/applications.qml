@@ -37,8 +37,17 @@ ColumnLayout {
     // Page Header (Title + Status Bar)
     //
     Title {
-        //% "DApp Store"
+        //% "My DApp Store"
         text: qsTrId("apps-title")
+
+        MouseArea {
+            enabled:         stackView.depth > 1
+            anchors.fill:    parent
+            acceptedButtons: Qt.LeftButton
+            hoverEnabled:    true
+            cursorShape:     enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+            onClicked:       stackView.pop()
+        }
     }
 
     StatusBar {
