@@ -107,7 +107,7 @@ namespace beamui::applications
         return _userAgent;
     }
 
-    QMap<QString, QVariant> AppsViewModel::validateAppManifest(QTextStream& in, const QString& appFolder)
+    QMap<QString, QVariant> AppsViewModel::parseAppManifest(QTextStream& in, const QString& appFolder)
     {
         QMap<QString, QVariant> app;
 
@@ -186,13 +186,24 @@ namespace beamui::applications
         {
             if (!mav.is_string())
             {
-                app.insert("min_api_version", QString::fromStdString(mav.get<std::string>()));
+                throw std::runtime_error("Invalid min_api_version in the manifest file");
             }
-            throw std::runtime_error("Invalid min_api_version in the manifest file");
+            app.insert("min_api_version", QString::fromStdString(mav.get<std::string>()));
+        }
+
+        const auto& v = json["version"];
+        if (!v.empty())
+        {
+            if (!v.is_string())
+            {
+                throw std::runtime_error("Invalid version in the manifest file");
+            }
+            app.insert("version", QString::fromStdString(v.get<std::string>()));
         }
 
         app.insert("local", true);
-        const auto appid = beam::wallet::GenerateAppID(sname, surl);
+        // TODO: check why we used surl instead of extended url - app["url"]
+        const auto appid = beam::wallet::GenerateAppID(sname, app["url"].toString().toStdString());
         app.insert("appid", QString::fromStdString(appid));
 
         return app;
@@ -370,7 +381,7 @@ namespace beamui::applications
 
                 QTextStream in(&file);
 
-                auto app = validateAppManifest(in, justFolder);
+                auto app = parseAppManifest(in, justFolder);
                 app.insert("full_path", fullFolder);
                 result.push_back(app);
             }
@@ -532,11 +543,10 @@ namespace beamui::applications
         }
     }
 
-    QString AppsViewModel::chooseFile()
+    QString AppsViewModel::chooseFile(const QString& title)
     {
         QFileDialog dialog(nullptr,
-                           //% "Select application to install"
-                           qtTrId("applications-install-title"),
+                           title,
                            "",
                            "BEAM DApp files (*.dapp)");
 
@@ -546,6 +556,58 @@ namespace beamui::applications
             return "";
         }
         return dialog.selectedFiles().value(0);
+    }
+
+    QMap<QString, QVariant> AppsViewModel::getDAppFileProperties(const QString& fname)
+    {
+        QFileInfo fileInfo(fname);
+
+        QMap<QString, QVariant> properties;
+        properties.insert("name", fileInfo.fileName());
+        properties.insert("size", fileInfo.size());
+
+        return properties;
+    }
+
+    QMap<QString, QVariant> AppsViewModel::parseDAppFile(const QString& fname)
+    {
+        try
+        {
+            QuaZip zip(fname);
+            if (!zip.open(QuaZip::Mode::mdUnzip))
+            {
+                throw std::runtime_error("Failed to open the DApp file");
+            }
+
+            QMap<QString, QVariant> app;
+            for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
+            {
+                const auto zipFname = zip.getCurrentFileName();
+                if (zipFname == "manifest.json")
+                {
+                    QuaZipFile mfile(zip.getZipName(), zipFname);
+                    if (!mfile.open(QIODevice::ReadOnly))
+                    {
+                        throw std::runtime_error("Failed to read the DApp file");
+                    }
+
+                    QTextStream in(&mfile);
+                    app = parseAppManifest(in, "");
+                }
+            }
+
+            if (app["guid"].value<QString>().isEmpty())
+            {
+                throw std::runtime_error("Invalid DApp file");
+            }
+
+            return app;
+        }
+        catch (std::runtime_error& err)
+        {
+            LOG_ERROR() << "Failed to parse DApp: " << err.what();
+        }
+        return {};
     }
 
     QString AppsViewModel::installFromFile(const QString& rawFname)
@@ -590,7 +652,7 @@ namespace beamui::applications
                     }
 
                     QTextStream in(&mfile);
-                    const auto app = validateAppManifest(in, "");
+                    const auto app = parseAppManifest(in, "");
                     guid = app["guid"].value<QString>();
                     appName = app["name"].value<QString>();
                 }

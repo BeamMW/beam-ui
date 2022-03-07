@@ -44,7 +44,9 @@ namespace beamui::applications
         Q_INVOKABLE void onCompleted(QObject *webView);
         Q_INVOKABLE [[nodiscard]] QString getAppCachePath(const QString& appid) const;
         Q_INVOKABLE [[nodiscard]] QString getAppStoragePath(const QString& appid) const;
-        Q_INVOKABLE [[nodiscard]] QString chooseFile();
+        Q_INVOKABLE [[nodiscard]] QString chooseFile(const QString& title);
+        Q_INVOKABLE [[nodiscard]] QMap<QString, QVariant> getDAppFileProperties(const QString& fname);
+        Q_INVOKABLE [[nodiscard]] QMap<QString, QVariant> parseDAppFile(const QString& fname);
         Q_INVOKABLE [[nodiscard]] QString installFromFile(const QString& fname);
         Q_INVOKABLE void launchAppServer();
         Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
@@ -60,7 +62,7 @@ namespace beamui::applications
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
         [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
-        QMap<QString, QVariant> validateAppManifest(QTextStream& io, const QString& appFolder);
+        QMap<QString, QVariant> parseAppManifest(QTextStream& io, const QString& appFolder);
         void loadApps();
         void loadMyPublisherInfo();
 

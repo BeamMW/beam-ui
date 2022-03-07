@@ -15,7 +15,19 @@ ColumnLayout {
     property var publisher
     property var appsList: undefined
     readonly property bool hasApps: !!appsList && appsList.length > 0
-    property var onBack
+
+    property var onBack: function () {
+        console.log("PublisherDetails::onBack is not initialized")
+    }
+    property var chooseFile: function (title) {
+        console.log("PublisherDetails::chooseFile is not initialized")
+    }
+    property var getDAppFileProperties: function (file) {
+        console.log("PublisherDetails::getDAppFileProperties is not initialized")
+    }
+    property var parseDAppFile: function (file) {
+        console.log("PublisherDetails::parseDAppFile is not initialized")
+    }
 
     function uploadApp() {
         uploadDAppDialog.open()
@@ -283,6 +295,9 @@ ColumnLayout {
     }
 
     UploadDApp {
-        id: uploadDAppDialog 
+        id:                    uploadDAppDialog
+        chooseFile:            control.chooseFile
+        getDAppFileProperties: control.getDAppFileProperties
+        parseDAppFile:         control.parseDAppFile
     }
 }

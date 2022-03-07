@@ -87,11 +87,13 @@ ColumnLayout {
 
             function navigatePublisherDetails() {
                 if (viewModel.isPublisher) {
-                    /*var params = {
-                        "onBack": stackView.pop
+                    var params = {
+                        "onBack": stackView.pop,
+                        "chooseFile": viewModel.chooseFile,
+                        "getDAppFileProperties": viewModel.getDAppFileProperties,
+                        "parseDAppFile": viewModel.parseDAppFile
                     }
-                    stackView.push(Qt.createComponent("PublisherDetails.qml"), params)*/
-                    becomePublisherDialog.open();
+                    stackView.push(Qt.createComponent("PublisherDetails.qml"), params)
                 }
                 else {
                     becomePublisherDialog.open();
@@ -499,7 +501,8 @@ ColumnLayout {
 
                 onInstall: function (fname) {
                     if (!fname) {
-                        fname = viewModel.chooseFile()
+                        //% "Select application to install"
+                        fname = viewModel.chooseFile(qsTrId("applications-install-title"))
                         if (!fname) return
                     }
 

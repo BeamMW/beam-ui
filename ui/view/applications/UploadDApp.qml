@@ -17,25 +17,52 @@ CustomDialog {
     property string dappName:          ""
     readonly property bool isUpdating: !!dappName
     property var appFileProperties:    undefined
+    property var app:                  undefined
+    property string dappFile:          ""
     property bool isOk:                true
 
-    // TODO: provide real data
-    property var app: {"name": "Test", "description": "description", "supported": true, "release_date": "12-02-2022", "version": "1.1.1.1", "api_version": "6.3", "min_api_version": "6.1", "guid": "2e77e992e2844b58b84034bbb51770f9"}
+    property var chooseFile: function (title) {
+        console.log("UploadDApp::chooseFile not initialized")
+    }
+    property var getDAppFileProperties: function (file) {
+        console.log("UploadDApp::getDAppFileProperties not initialized")
+    }
+    property var parseDAppFile: function (file) {
+        console.log("UploadDApp::parseDAppFile not initialized")
+    }
 
     onClosed: {
         // reset
         isOk = true
-        stackView.replace(startViewId)
+        dappFile = ""
+        app = undefined
         appFileProperties = undefined
         dappName = ""
+
+        stackView.replace(startViewId)
     }
 
-    function loadDappFile(filename) {
-        if (!filename)
-        {
-            // TODO: chooseFile
+    function loadDappFile(file) {
+        if (!file) {
+            //% "Select application to upload"
+            file = chooseFile(qsTrId("dapps-store-upload-choose-file-title"))
+            if (!file) {
+                return;
+            }
         }
-        appFileProperties = {"name": "testapp.dapp", "size": "10 Mb"}
+
+        // get file properties
+        var tempAppFileProperties = getDAppFileProperties(file)
+        // parse manifest
+        var tempApp = parseDAppFile(file)
+
+        if (!!tempApp && !!tempAppFileProperties) {
+            control.appFileProperties = tempAppFileProperties
+            control.app = tempApp
+            isOk = true
+        } else {
+            isOk = false
+        }
     }
 
     contentItem: StackView {
@@ -167,7 +194,8 @@ CustomDialog {
                             horizontalAlignment:  Text.AlignHCenter
                             font.pixelSize:       14
                             font.italic:          true
-                            text:                 parent.visible ? appFileProperties.size : ""
+                                                  //% "kb"
+                            text:                 parent.visible ? Math.round(appFileProperties.size / 1024) + " " + qsTrId("kb-unit") : ""
                         }
 
                         Item {
