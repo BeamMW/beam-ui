@@ -14,6 +14,8 @@
 #pragma once
 
 #include "apps_server.h"
+#include <boost/optional.hpp>
+#include "utility/common.h"
 
 namespace beamui::applications
 {
@@ -55,12 +57,16 @@ namespace beamui::applications
         Q_INVOKABLE [[nodiscard]] QString addPublisherByKey(const QString& publisherKey);
         Q_INVOKABLE void createPublisher(const QVariantMap& publisherInfo);
         Q_INVOKABLE void changePublisherInfo(const QVariantMap& publisherInfo);
+        // TODO roman.strilets maybe need to use this from AppsApiUI???
+        Q_INVOKABLE void contractInfoApproved();
+        Q_INVOKABLE void contractInfoRejected();
 
     signals:
         void appsChanged();
         void isPublisherChanged();
         void publisherInfoChanged();
         void publishersChanged();
+        void shaderTxData(const QString& comment, const QString& fee, const QString& feeRate, const QString& rateUnit);
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
@@ -70,6 +76,7 @@ namespace beamui::applications
         void loadPublishers();
         void loadMyPublisherInfo();
         void setPublishers(const QList<QVariantMap>& value);
+        void handleShaderTxData(const beam::ByteBuffer& data);
 
         QString _userAgent;
         QString _serverAddr;
@@ -79,5 +86,6 @@ namespace beamui::applications
         QList<QVariantMap> _publishers;
         bool _isPublisher = false;
         QVariantMap _publisherInfo;
+        boost::optional<beam::ByteBuffer> _shaderTxData;
     };
 }

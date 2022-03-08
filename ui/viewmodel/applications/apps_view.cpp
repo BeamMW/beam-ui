@@ -533,8 +533,8 @@ namespace beamui::applications
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
-            [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args,
+            [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
             {
                 if (!guard)
                 {
@@ -547,20 +547,22 @@ namespace beamui::applications
                     return;
                 }
 
-                try
-                {
-                    auto json = nlohmann::json::parse(output);
+                handleShaderTxData(data);
 
-                    LOG_INFO() << json.dump(4);
-                    // TODO roman.strilets should be processed this case
+                //try
+                //{
+                //    auto json = nlohmann::json::parse(output);
 
-                    _isPublisher = true;
-                    emit isPublisherChanged();
-                }
-                catch (std::runtime_error& err)
-                {
-                    LOG_WARNING() << "Error while parsing publisher from contract" << ", " << err.what();
-                }
+                //    LOG_INFO() << json.dump(4);
+                //    // TODO roman.strilets should be processed this case
+
+                //    _isPublisher = true;
+                //    emit isPublisherChanged();
+                //}
+                //catch (std::runtime_error& err)
+                //{
+                //    LOG_WARNING() << "Error while parsing publisher from contract" << ", " << err.what();
+                //}
             }
         );
     }
@@ -581,8 +583,8 @@ namespace beamui::applications
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
-            [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args,
+            [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
             {
                 if (!guard)
                 {
@@ -591,22 +593,11 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_WARNING() << "Failed to create a publisher" << ", " << err;
+                    LOG_WARNING() << "Failed to change a publisher info" << ", " << err;
                     return;
                 }
 
-                try
-                {
-                    auto json = nlohmann::json::parse(output);
-
-                    LOG_INFO() << json.dump(4);
-                    // TODO roman.strilets should be processed this case
-                    //loadMyPublisherInfo();
-                }
-                catch (std::runtime_error& err)
-                {
-                    LOG_WARNING() << "Error while parsing publisher from contract" << ", " << err.what();
-                }
+                handleShaderTxData(data);
             }
         );
     }
@@ -825,5 +816,72 @@ namespace beamui::applications
             LOG_ERROR() << "Failed to install DApp: " << err.what();
             return "";
         }
+    }
+
+    void AppsViewModel::handleShaderTxData(const beam::ByteBuffer& data)
+    {
+        try
+        {
+            beam::bvm2::ContractInvokeData contractInvokeData;
+
+            if (!beam::wallet::fromByteBuffer(data, contractInvokeData))
+            {
+                throw std::runtime_error("Failed to parse invoke data");
+            }
+
+            const auto comment = beam::bvm2::getFullComment(contractInvokeData);
+            const auto fee = beam::bvm2::getFullFee(contractInvokeData, AppModel::getInstance().getWalletModel()->getCurrentHeight());
+            const auto fullSpend = beam::bvm2::getFullSpend(contractInvokeData);
+
+            if (!fullSpend.empty())
+            {
+                throw std::runtime_error("Unexpected fullSpend amounts");
+            }
+
+            if (_shaderTxData)
+            {
+                throw std::runtime_error("Unprocessed data - shaderTxData isn't empty.");
+            }
+
+            _shaderTxData = data;
+
+            const auto assetsManager = AppModel::getInstance().getAssets();
+            const auto feeRate = beamui::AmountToUIString(assetsManager->getRate(beam::Asset::s_BeamID));
+            const auto rateUnit = assetsManager->getRateUnit();
+
+            emit shaderTxData(QString::fromStdString(comment), beamui::AmountToUIString(fee), feeRate, rateUnit);
+        }
+        catch (const std::runtime_error& err)
+        {
+            LOG_WARNING() << "Failed to handle shader TX data: " << err.what();
+        }
+    }
+
+    void AppsViewModel::contractInfoApproved()
+    {
+        QPointer<AppsViewModel> guard(this);
+
+        AppModel::getInstance().getWalletModel()->getAsync()->processShaderTxData(*_shaderTxData,
+            [this, guard](const std::string& err, const beam::wallet::TxID& id)
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                if (!err.empty())
+                {
+                    LOG_WARNING() << "Failed to process shader TX: " << ", " << err;
+                }
+
+                _shaderTxData.reset();
+                // TODO: check TX status
+            }
+        );
+    }
+
+    void AppsViewModel::contractInfoRejected()
+    {
+        _shaderTxData.reset();
     }
 }
