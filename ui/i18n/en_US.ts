@@ -198,7 +198,7 @@
         <source>unknown</source>
         <translation>unknown</translation>
     </message>
-    <message id="addresses-tittle">
+    <message id="addresses-title">
         <source>Address Book</source>
         <translation>Address Book</translation>
     </message>

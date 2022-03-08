@@ -198,7 +198,7 @@
         <source>unknown</source>
         <translation>не определено</translation>
     </message>
-    <message id="addresses-tittle">
+    <message id="addresses-title">
         <source>Address Book</source>
         <translation>Адресная книга</translation>
     </message>

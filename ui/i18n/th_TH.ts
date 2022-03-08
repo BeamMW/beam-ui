@@ -198,7 +198,7 @@
         <source>unknown</source>
         <translation>ไม่ทราบ</translation>
     </message>
-    <message id="addresses-tittle">
+    <message id="addresses-title">
         <source>Address Book</source>
         <translation>รายชื่อที่อยู่</translation>
     </message>

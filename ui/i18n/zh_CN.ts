@@ -199,7 +199,7 @@
         <source>unknown</source>
         <translation>未知</translation>
     </message>
-    <message id="addresses-tittle">
+    <message id="addresses-title">
         <source>Address Book</source>
         <translation>地址簿</translation>
     </message>

@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.15
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
 import Beam.Wallet 1.0
@@ -56,8 +56,9 @@ Control {
         return amountX + control.width - control.tipCtrl.width
     }
 
-    function formatRate () {
-        var formatted = Utils.formatAmountToSecondCurrency(control.amount, control.rate, control.rateUnit);
+    function formatRate (amount) {
+        amount = amount ?? control.amount;
+        var formatted = Utils.formatAmountToSecondCurrency(amount, control.rate, control.rateUnit);
         return (formatted == "" ?  "" : control.prefix + formatted) + (control.ratePostfix ? " " + control.ratePostfix : "");
     }
 
@@ -298,7 +299,13 @@ Control {
                 color:           control.error ? Style.validator_error : Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
                 text:            formatRate()
                 onCopyText:      BeamGlobals.copyToClipboard(secondCurrencyAmountText.text)
-                copyMenuEnabled: true
+                copyMenuEnabled: true,
+
+                hoverEnabled: true
+                ToolTip.delay: 1000
+                ToolTip.timeout: 10000
+                ToolTip.visible: hovered
+                ToolTip.text: formatRate(1)
             }
 
             Row {

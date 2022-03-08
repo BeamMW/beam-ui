@@ -16,7 +16,7 @@ ColumnLayout {
 
 	Title {
         //% "Address Book"
-        text: qsTrId("addresses-tittle")
+        text: qsTrId("addresses-title")
     }
 
     StatusBar {

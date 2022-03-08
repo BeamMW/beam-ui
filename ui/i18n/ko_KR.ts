@@ -198,7 +198,7 @@
         <source>unknown</source>
         <translation>알려지지 않음</translation>
     </message>
-    <message id="addresses-tittle">
+    <message id="addresses-title">
         <source>Address Book</source>
         <translation>주소록</translation>
     </message>

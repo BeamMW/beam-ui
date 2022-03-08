@@ -1,6 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 1.4
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.12
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
@@ -202,17 +202,19 @@ Rectangle {
         }
     }
 
+    property var documentationLink: "https://documentation.beam.mw/"
+
     property var contentItems : [
-        {name: "wallet"},
-        {name: "atomic_swap"},
-        {name: "applications", qml: appsQml, reloadable: true},
-        {name: "daocore", qml: appsQml, args: () => appArgs("BeamX DAO", viewModel.daoCoreAppID, false)},
-        {name: "voting", qml: appsQml, args: () => appArgs("BeamX DAO Voting", viewModel.votingAppID, false)},
+        {name: "wallet", tooltip: qsTrId("wallet-title")},
+        {name: "atomic_swap", tooltip: qsTrId("atomic-swap-title")},
+        {name: "applications", tooltip: qsTrId("apps-title"), qml: appsQml, reloadable: true},
+        {name: "daocore", tooltip: "BeamX DAO", qml: appsQml, args: () => appArgs("BeamX DAO", viewModel.daoCoreAppID, false)},
+        {name: "voting", tooltip: "BeamX DAO Voting", qml: appsQml, args: () => appArgs("BeamX DAO Voting", viewModel.votingAppID, false)},
         // {name: "dex"},
-        {name: "addresses"},
-        {name: "notifications"},
-        {name: "help"},
-        {name: "settings"}
+        {name: "addresses", tooltip: qsTrId("addresses-title")},
+        {name: "notifications", tooltip: qsTrId("notifications-title")},
+        {name: "help", tooltip: documentationLink},
+        {name: "settings", tooltip: qsTrId("settings-title")}
     ]
 
     property int selectedItem: -1
@@ -265,6 +267,12 @@ Rectangle {
                         Layout.preferredHeight: 66
                         Layout.alignment: Qt.AlignBottom
                         activeFocusOnTab: true
+                        
+                        hoverEnabled: true
+                        ToolTip.delay: 1000
+                        ToolTip.timeout: 10000
+                        ToolTip.visible: hovered
+                        ToolTip.text: modelData.tooltip
 
                         SvgImage {
                             id: icon
@@ -393,7 +401,7 @@ Rectangle {
             selectedItem = typeof(indexOrID) == "string" ? indexByName(indexOrID) : indexOrID;
             controls.itemAt(selectedItem).focus = true;
             Utils.openExternalWithConfirmation(
-                "https://documentation.beam.mw/",
+                documentationLink,
                 function () {
                     selectedItem = previoslySelected;
                     controls.itemAt(selectedItem).focus = true;

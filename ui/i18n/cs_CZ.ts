@@ -198,7 +198,7 @@
         <source>unknown</source>
         <translation>neznámý</translation>
     </message>
-    <message id="addresses-tittle">
+    <message id="addresses-title">
         <source>Address Book</source>
         <translation>Adresář</translation>
     </message>

@@ -222,7 +222,7 @@
         <source>unknown</source>
         <translation>непознато</translation>
     </message>
-    <message id="addresses-tittle">
+    <message id="addresses-title">
         <source>Address Book</source>
         <oldsource>Addresses</oldsource>
         <translation type="unfinished">Addresses</translation>
