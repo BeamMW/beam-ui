@@ -316,7 +316,7 @@ ColumnLayout {
                 offTheRecord:            false
                 spellCheckEnabled:       false
                 httpUserAgent:           viewModel.userAgent
-                httpCacheMaximumSize:    0
+                httpCacheMaximumSize:    536870912 // 5GB
             }
 
             settings {
