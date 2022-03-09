@@ -107,6 +107,7 @@
         <file>wallet/TransactionDetailsPopup.qml</file>
         <file>wallet/TransactionsSearchHighlighter.qml</file>
         <file>wallet/CoinsList.qml</file>
+        <file>wallet/SeedValidationPanel.qml</file>
         <file>dex/MarketPanel.qml</file>
         <file>dex/MarketTable.qml</file>
         <file>applications/applications.qml</file>
