@@ -348,7 +348,7 @@ ColumnLayout {
 
                     if(loadRequest.status === WebEngineLoadRequest.LoadFailedStatus) {
                         // code in this 'if' will cause next 'if' to be called
-                        control.errorMessage = ["Failed to load:", JSON.stringify(loadRequest, null, 4)].join('\n')
+                        control.errorMessage = ["Failed to load", JSON.stringify(loadRequest, null, 4)].join('\n')
                         // no return
                     }
 
@@ -500,22 +500,26 @@ ColumnLayout {
             {
                 if (xhr.status === 200)
                 {
-                    var list = JSON.parse(xhr.responseText)
-                    control.appsList = checkSupport(appendLocalApps(list))
+                    try {
+                        var list = JSON.parse(xhr.responseText)
+                        control.appsList = checkSupport(appendLocalApps(list))
 
-                    if (control.appToOpen) {
-                        for (let app of control.appsList)
-                        {
-                            if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
-                                if (appSupported(app)) {
-                                    launchApp(app)
-                                } else {
-                                    //% "Update Wallet to launch %1 application"
-                                    BeamGlobals.showMessage(qsTrId("apps-update-message").arg(app.name))
+                        if (control.appToOpen) {
+                            for (let app of control.appsList)
+                            {
+                                if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
+                                    if (appSupported(app)) {
+                                        launchApp(app)
+                                    } else {
+                                        //% "Update Wallet to launch %1 application"
+                                        BeamGlobals.showMessage(qsTrId("apps-update-message").arg(app.name))
+                                    }
                                 }
                             }
+                            control.appToOpen = undefined
                         }
-                        control.appToOpen = undefined
+                    } catch (err) {
+                        control.errorMessage = ["Failed to parse appslist", err].join('\n')
                     }
                 }
                 else
