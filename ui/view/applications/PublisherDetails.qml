@@ -11,7 +11,8 @@ ColumnLayout {
     Layout.fillWidth: true
     Layout.topMargin: 27
 
-    property var viewModel
+    property var sentTxData
+    property var finishedTx
     property var publisher
     property var appsList: undefined
     readonly property bool hasApps: !!appsList && appsList.length > 0
@@ -47,9 +48,12 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
-        viewModel.sentTxData.connect(function(){
+        sentTxData.connect(function(){
             transactionSentDialog.open();
-        })
+        });
+        finishedTx.connect(function(){
+            transactionSentDialog.close();
+        });
     }
 
     //
@@ -222,6 +226,7 @@ ColumnLayout {
         parent:  Overlay.overlay
         width: 761
         height: 299
+        closePolicy: Popup.NoAutoClose
 
         contentItem: ColumnLayout {
             spacing: 0

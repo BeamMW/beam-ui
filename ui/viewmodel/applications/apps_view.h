@@ -16,6 +16,7 @@
 #include "apps_server.h"
 #include <boost/optional.hpp>
 #include "utility/common.h"
+#include "model/wallet_model.h"
 
 namespace beamui::applications
 {
@@ -61,6 +62,11 @@ namespace beamui::applications
         Q_INVOKABLE void contractInfoApproved();
         Q_INVOKABLE void contractInfoRejected();
 
+    public slots:
+        void onTransactionsChanged(
+            beam::wallet::ChangeAction action,
+            const std::vector<beam::wallet::TxDescription>& transactions);
+
     signals:
         void appsChanged();
         void isPublisherChanged();
@@ -68,6 +74,7 @@ namespace beamui::applications
         void publishersChanged();
         void shaderTxData(const QString& comment, const QString& fee, const QString& feeRate, const QString& rateUnit);
         void sentTxData();
+        void finishedTx();
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
@@ -79,6 +86,8 @@ namespace beamui::applications
         void setPublishers(const QList<QVariantMap>& value);
         void handleShaderTxData(const beam::ByteBuffer& data);
 
+        WalletModel::Ptr m_walletModel;
+
         QString _userAgent;
         QString _serverAddr;
         std::unique_ptr<AppsServer> _server;
@@ -88,5 +97,6 @@ namespace beamui::applications
         bool _isPublisher = false;
         QVariantMap _publisherInfo;
         boost::optional<beam::ByteBuffer> _shaderTxData;
+        boost::optional<beam::wallet::TxID> _txId;
     };
 }

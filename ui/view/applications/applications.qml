@@ -49,7 +49,6 @@ ColumnLayout {
             instance.Component.onDestruction.connect(function () {
                 if (instance.result == Dialog.Accepted) {
                     viewModel.contractInfoApproved()
-                    viewModel.showTransactionIsSent();
                     return
                 }
                 viewModel.contractInfoRejected()
@@ -130,7 +129,8 @@ ColumnLayout {
                         "getDAppFileProperties": viewModel.getDAppFileProperties,
                         "parseDAppFile":         viewModel.parseDAppFile,
                         "changePublisherInfo":   viewModel.changePublisherInfo,
-                        "viewModel":             viewModel,
+                        "sentTxData":            viewModel.sentTxData,
+                        "finishedTx":            viewModel.finishedTx,
                     }
                     stackView.push(Qt.createComponent("PublisherDetails.qml"), params)
                 }

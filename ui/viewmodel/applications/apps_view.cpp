@@ -74,8 +74,11 @@ namespace
 namespace beamui::applications
 {
     AppsViewModel::AppsViewModel()
+        : m_walletModel(AppModel::getInstance().getWalletModel())
     {
         LOG_INFO() << "AppsViewModel created";
+
+        connect(m_walletModel.get(), &WalletModel::transactionsChanged, this, &AppsViewModel::onTransactionsChanged);
 
         auto defaultProfile = QWebEngineProfile::defaultProfile();
         defaultProfile->setHttpCacheType(QWebEngineProfile::HttpCacheType::DiskHttpCache);
@@ -876,6 +879,8 @@ namespace beamui::applications
 
                 _shaderTxData.reset();
 
+                _txId = id;
+
                 emit sentTxData();
                 // TODO: check TX status
             }
@@ -885,5 +890,28 @@ namespace beamui::applications
     void AppsViewModel::contractInfoRejected()
     {
         _shaderTxData.reset();
+    }
+
+    void AppsViewModel::onTransactionsChanged(
+        beam::wallet::ChangeAction action,
+        const std::vector<beam::wallet::TxDescription>& transactions)
+    {
+        if (_txId && action == beam::wallet::ChangeAction::Updated)
+        {
+            for (auto& tx : transactions)
+            {
+                if (tx.GetTxID() == *_txId)
+                {
+                    if (tx.m_status == beam::wallet::TxStatus::Completed || tx.m_status == beam::wallet::TxStatus::Failed)
+                    {
+                        _txId.reset();
+                        emit finishedTx();
+
+                        loadMyPublisherInfo();
+                        return;
+                    }
+                }
+            }
+        }
     }
 }
