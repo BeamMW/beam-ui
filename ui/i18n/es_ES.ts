@@ -3459,5 +3459,9 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>Wallet Balance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="tx-no-transaction-filter">
+        <source>No transactions to show</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

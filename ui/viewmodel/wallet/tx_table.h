@@ -29,6 +29,7 @@ class TxTableViewModel: public QObject {
     Q_PROPERTY(bool showCompleted   READ getShowCompleted  WRITE setShowCompleted  NOTIFY showCompletedChanged)
     Q_PROPERTY(bool showCanceled    READ getShowCanceled   WRITE setShowCanceled   NOTIFY showCanceledChanged)
     Q_PROPERTY(bool showFailed      READ getShowFailed     WRITE setShowFailed     NOTIFY showFailedCanged)
+    Q_PROPERTY(bool showAll         READ getShowAll                                NOTIFY showAllChanged)
 
 public:
     TxTableViewModel();
@@ -46,6 +47,7 @@ public:
     void setShowCanceled(bool value);
     bool getShowFailed() const;
     void setShowFailed(bool value);
+    bool getShowAll() const;
 
     Q_INVOKABLE void exportTxHistoryToCsv();
     Q_INVOKABLE void cancelTx(const QVariant& variantTxID);
@@ -63,6 +65,7 @@ signals:
     void showCompletedChanged();
     void showCanceledChanged();
     void showFailedCanged();
+    void showAllChanged();
 
 private:
     WalletModel::Ptr     _model;

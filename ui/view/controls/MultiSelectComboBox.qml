@@ -16,9 +16,7 @@ ComboBox {
     property int dropFontPixelSize: 13
     property double fontLetterSpacing: 0
     property string color: Style.content_main
-    property bool colorConst: false
     property string underlineColor: color
-    property bool enableScroll: false
     property int textMaxLenDrop: 0
 
     property var modelWidth: control.width
@@ -76,6 +74,21 @@ ComboBox {
     }
 
     indicator: Item {}
+
+    function recalcSize() {
+        if (model) {
+            for(var i = 0; i < model.length; i++) {
+                textMetrics.text = Utils.limitText(model[i].text, control.textMaxLenDrop)
+                modelWidth = Math.max(textMetrics.width + 26,
+                                      modelWidth)
+            }
+        }
+    }
+
+    onModelChanged: recalcSize()
+    onDownChanged: {
+        recalcSize();
+    }
 
     contentItem: RowLayout {
         spacing: 0

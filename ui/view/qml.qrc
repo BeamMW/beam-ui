@@ -107,6 +107,7 @@
         <file>wallet/TransactionDetailsPopup.qml</file>
         <file>wallet/TransactionsSearchHighlighter.qml</file>
         <file>wallet/CoinsList.qml</file>
+        <file>wallet/SeedValidationPanel.qml</file>
         <file>dex/MarketPanel.qml</file>
         <file>dex/MarketTable.qml</file>
         <file>applications/applications.qml</file>
@@ -382,5 +383,6 @@
         <file>assets/dnd-load-file.svg</file>
         <file>assets/icon-voting.svg</file>
         <file>assets/icon-voting-active.svg</file>
+        <file>assets/icon-no-transaction-filter.svg</file>
     </qresource>
 </RCC>
