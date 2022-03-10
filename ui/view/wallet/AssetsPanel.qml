@@ -54,7 +54,7 @@ Control {
     property bool   selectable:     true
 
     property bool  showFaucetPromo: viewModel.showFaucetPromo
-    property bool  showValidationPromo: true
+    property bool  showValidationPromo: viewModel.showValidationPromo && !seedValidationHelper.isSeedValidated
 
     readonly property real itemWidth: {
         if (assetsCount == 1 && !showFaucetPromo) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
