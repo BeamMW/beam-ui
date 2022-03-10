@@ -383,5 +383,6 @@
         <file>assets/dnd-load-file.svg</file>
         <file>assets/icon-voting.svg</file>
         <file>assets/icon-voting-active.svg</file>
+        <file>assets/icon-no-transaction-filter.svg</file>
     </qresource>
 </RCC>
