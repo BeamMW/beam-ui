@@ -3699,5 +3699,14 @@ change the information in your file and upload your file again.</source>
         <source>Guid:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="dapps-store-transacton-is-sent">
+        <source>The transaction is sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-changes-takes-time">
+        <source>Changes take time. You can continue as soon as transaction is completed.</source>
+        <oldsource>Changes take time. You �an continue as soon as transaction is completed.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -59,6 +59,7 @@ CustomDialog {
             font.weight:          Font.Normal
             //% "To become a publisher you need to set up a username. ID number and personal Publisher Key will\n be given to you automatically. Registration will allow you to publish, update and delete DApps."
             text: qsTrId("dapps-store-become-publisher-text")
+            visible: control.newPublisher
         }
 
         GridLayout {

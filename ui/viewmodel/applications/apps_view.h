@@ -67,6 +67,7 @@ namespace beamui::applications
         void publisherInfoChanged();
         void publishersChanged();
         void shaderTxData(const QString& comment, const QString& fee, const QString& feeRate, const QString& rateUnit);
+        void sentTxData();
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;

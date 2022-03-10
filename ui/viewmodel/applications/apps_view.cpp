@@ -875,6 +875,8 @@ namespace beamui::applications
                 }
 
                 _shaderTxData.reset();
+
+                emit sentTxData();
                 // TODO: check TX status
             }
         );
