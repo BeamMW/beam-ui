@@ -123,14 +123,8 @@ ColumnLayout {
             function navigatePublisherDetails() {
                 if (viewModel.isPublisher) {
                     var params = {
-                        "publisher":             viewModel.publisherInfo,
+                        "viewModel":             viewModel,
                         "onBack":                stackView.pop,
-                        "chooseFile":            viewModel.chooseFile,
-                        "getDAppFileProperties": viewModel.getDAppFileProperties,
-                        "parseDAppFile":         viewModel.parseDAppFile,
-                        "changePublisherInfo":   viewModel.changePublisherInfo,
-                        "sentTxData":            viewModel.sentTxData,
-                        "finishedTx":            viewModel.finishedTx,
                     }
                     stackView.push(Qt.createComponent("PublisherDetails.qml"), params)
                 }

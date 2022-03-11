@@ -11,15 +11,9 @@ ColumnLayout {
     Layout.fillWidth: true
     Layout.topMargin: 27
 
-    property var sentTxData
-    property var finishedTx
-    property var publisher
+    property var viewModel
     property var appsList: undefined
     readonly property bool hasApps: !!appsList && appsList.length > 0
-
-    property var changePublisherInfo: function(info) {
-        console.log("PublisherDetails::onChangePublisherInfo is not initialized")
-    }
 
     property var onBack: function () {
         console.log("PublisherDetails::onBack is not initialized")
@@ -48,10 +42,10 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
-        sentTxData.connect(function(){
+        control.viewModel.sentTxData.connect(function(){
             transactionSentDialog.open();
         });
-        finishedTx.connect(function(){
+        control.viewModel.finishedTx.connect(function(){
             transactionSentDialog.close();
         });
     }
@@ -211,10 +205,10 @@ ColumnLayout {
         id: changePublisherInfoDialog
 
         newPublisher: false
-        publisherInfo: control.publisher
+        publisherInfo: control.viewModel.publisherInfo
 
         onChangePublisherInfo: function(info) {
-            control.changePublisherInfo(info);
+            control.viewModel.changePublisherInfo(info);
         }
     }
 
@@ -267,7 +261,7 @@ ColumnLayout {
         y:       (parent.height - height) / 2
         parent:  Overlay.overlay
 
-        readonly property string publicKey: !!control.publisher ? control.publisher.publisherKey : ""
+        readonly property string publicKey: !!control.viewModel.publisherInfo ? control.viewModel.publisherInfo.publisherKey : ""
 
         onOpened: {
             forceActiveFocus()
@@ -364,8 +358,8 @@ ColumnLayout {
 
     UploadDApp {
         id:                    uploadDAppDialog
-        chooseFile:            control.chooseFile
-        getDAppFileProperties: control.getDAppFileProperties
-        parseDAppFile:         control.parseDAppFile
+        chooseFile:            control.viewModel.chooseFile
+        getDAppFileProperties: control.viewModel.getDAppFileProperties
+        parseDAppFile:         control.viewModel.parseDAppFile
     }
 }
