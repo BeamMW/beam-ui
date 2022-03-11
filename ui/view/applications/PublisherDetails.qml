@@ -18,15 +18,6 @@ ColumnLayout {
     property var onBack: function () {
         console.log("PublisherDetails::onBack is not initialized")
     }
-    property var chooseFile: function (title) {
-        console.log("PublisherDetails::chooseFile is not initialized")
-    }
-    property var getDAppFileProperties: function (file) {
-        console.log("PublisherDetails::getDAppFileProperties is not initialized")
-    }
-    property var parseDAppFile: function (file) {
-        console.log("PublisherDetails::parseDAppFile is not initialized")
-    }
 
     function uploadApp() {
         uploadDAppDialog.open()
@@ -315,5 +306,6 @@ ColumnLayout {
         chooseFile:            control.viewModel.chooseFile
         getDAppFileProperties: control.viewModel.getDAppFileProperties
         parseDAppFile:         control.viewModel.parseDAppFile
+        publishDApp:           control.viewModel.publishDApp
     }
 }

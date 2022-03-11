@@ -69,6 +69,25 @@ namespace
 
         return tmp;
     }
+
+    QString removeFilePrefix(QString fname)
+    {
+        // Some shells/systems provide incorrect count of '/' after file:
+        // For example in gnome on linux one '/' is missing. So this ugly code is necessary
+        if (fname.startsWith("file:"))
+        {
+            fname = fname.remove(0, 5);
+            while (fname.startsWith("/"))
+            {
+                fname = fname.remove(0, 1);
+            }
+
+#ifndef WIN32
+            fname = QString("/") + fname;
+#endif
+        }
+        return fname;
+    }
 }
 
 namespace beamui::applications
@@ -221,6 +240,16 @@ namespace beamui::applications
                 throw std::runtime_error("Invalid version in the manifest file");
             }
             app.insert("version", QString::fromStdString(v.get<std::string>()));
+        }
+
+        const auto& categoryObj = json["category"];
+        if (!categoryObj.empty())
+        {
+            if (!categoryObj.is_number_unsigned())
+            {
+                throw std::runtime_error("Invalid category in the manifest file");
+            }
+            app.insert("category", categoryObj.get<uint32_t>());
         }
 
         app.insert("local", true);
@@ -701,7 +730,7 @@ namespace beamui::applications
     {
         try
         {
-            QuaZip zip(fname);
+            QuaZip zip(removeFilePrefix(fname));
             if (!zip.open(QuaZip::Mode::mdUnzip))
             {
                 throw std::runtime_error("Failed to open the DApp file");
@@ -728,6 +757,21 @@ namespace beamui::applications
             {
                 throw std::runtime_error("Invalid DApp file");
             }
+            
+            // add estimated release_date
+            app.insert("release_date", QDate::currentDate().toString("dd MMM yyyy"));
+
+            // preload DApp file
+            QFile dappFile(fname);
+
+            if (!dappFile.open(QFile::ReadOnly))
+            {
+                throw std::runtime_error("Failed to read the DApp file");
+            }
+
+            auto buffer = dappFile.readAll();
+            _loadedDAppBuffer = beam::ByteBuffer(buffer.cbegin(), buffer.cend());
+            _loadedDApp = app;
 
             return app;
         }
@@ -738,26 +782,99 @@ namespace beamui::applications
         return {};
     }
 
+    void AppsViewModel::publishDApp()
+    {
+        auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
+        QPointer<AppsViewModel> guard(this);
+
+        if (!_loadedDApp.has_value() || !_loadedDAppBuffer.has_value())
+        {
+            assert(false);
+            LOG_ERROR() << "Failed to publish DApp, empty buffers.";
+            return;
+        }
+
+        ipfs->AnyThread_add(std::move(*_loadedDAppBuffer),
+            [this, guard, app = std::move(*_loadedDApp)](std::string&& ipfsID) mutable
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                LOG_INFO() << "IPFS_ID: " << ipfsID;
+
+                // save result to contract
+                uploadAppToStore(std::move(app), ipfsID);
+            },
+            [](std::string&& err) {
+                LOG_ERROR() << "Failed to add to ipfs: " << err;
+            }
+        );
+    }
+
+    void AppsViewModel::uploadAppToStore(QVariantMap&& app, const std::string& ipfsID)
+    {
+        QString guid = app["guid"].value<QString>();
+        QString appName = app["name"].value<QString>();
+        QString description = app["description"].value<QString>();
+
+        std::stringstream argsStream;
+        argsStream << "action=add_dapp,cid=" << AppSettings().getDappStoreCID().c_str();
+        argsStream << ",ipfs_id=" << ipfsID;
+        argsStream << ",name=" << toHex(appName);
+        argsStream << ",id=" << guid.toStdString();
+        argsStream << ",description=" << toHex(description);
+        argsStream << ",api_ver=" << toHex(app["api_version"].value<QString>());
+        argsStream << ",min_api_ver=" << toHex(app["min_api_version"].value<QString>());
+        argsStream << ",category=" << app["category"].value<uint32_t>();
+
+        // parse version
+        QStringList version = app["version"].value<QString>().split(".");
+
+        for (; version.length() < 4;)
+        {
+            version.append("0");
+        }
+
+        argsStream << ",major=" << version[0].toStdString();
+        argsStream << ",minor=" << version[1].toStdString();
+        argsStream << ",release=" << version[2].toStdString();
+        argsStream << ",build=" << version[3].toStdString();
+
+        QPointer<AppsViewModel> guard(this);
+
+        LOG_INFO() << "args: " << argsStream.str();
+
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), argsStream.str(),
+            [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                if (!err.empty())
+                {
+                    LOG_WARNING() << "Failed to publish app" << ", " << err;
+                    return;
+                }
+                
+                if (data.empty())
+                {
+                    LOG_WARNING() << "Failed to publish app" << ", " << output;
+                    return;
+                }
+                handleShaderTxData(data);
+            }
+        );
+    }
+
     QString AppsViewModel::installFromFile(const QString& rawFname)
     {
         try
         {
-            QString fname = rawFname;
-
-            // Some shells/systems provide incorrect count of '/' after file:
-            // For example in gnome on linux one '/' is missing. So this ugly code is necessary
-            if (fname.startsWith("file:"))
-            {
-                fname = fname.remove(0, 5);
-                while(fname.startsWith("/"))
-                {
-                    fname = fname.remove(0, 1);
-                }
-
-                #ifndef WIN32
-                fname = QString("/") + fname;
-                #endif
-            }
+            QString fname = removeFilePrefix(rawFname);
 
             LOG_DEBUG() << "Installing DApp from file " << rawFname.toStdString() << " | " << fname.toStdString();
 

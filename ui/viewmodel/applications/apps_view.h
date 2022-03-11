@@ -59,6 +59,7 @@ namespace beamui::applications
         Q_INVOKABLE [[nodiscard]] QString chooseFile(const QString& title);
         Q_INVOKABLE [[nodiscard]] QVariantMap getDAppFileProperties(const QString& fname);
         Q_INVOKABLE [[nodiscard]] QVariantMap parseDAppFile(const QString& fname);
+        Q_INVOKABLE void publishDApp();
         Q_INVOKABLE [[nodiscard]] QString installFromFile(const QString& fname);
         Q_INVOKABLE void launchAppServer();
         Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
@@ -93,6 +94,7 @@ namespace beamui::applications
         void loadMyPublisherInfo(bool hideTxIsSent = false, bool showYouArePublsher = false);
         void setPublishers(const QList<QVariantMap>& value);
         void handleShaderTxData(Action action, const beam::ByteBuffer& data);
+        void uploadAppToStore(QVariantMap&& app, const std::string& ipfsID);
 
         WalletModel::Ptr m_walletModel;
 
@@ -105,6 +107,8 @@ namespace beamui::applications
         bool _isPublisher = false;
         QVariantMap _publisherInfo;
         boost::optional<beam::wallet::TxID> _txId;
-        Action _action;
+
+		Action _action;        boost::optional<beam::ByteBuffer> _loadedDAppBuffer;
+        boost::optional<QVariantMap> _loadedDApp;
     };
 }

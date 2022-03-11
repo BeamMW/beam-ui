@@ -22,13 +22,16 @@ CustomDialog {
     property bool isOk:                true
 
     property var chooseFile: function (title) {
-        console.log("UploadDApp::chooseFile not initialized")
+        console.log("UploadDApp::chooseFile is not initialized")
     }
     property var getDAppFileProperties: function (file) {
-        console.log("UploadDApp::getDAppFileProperties not initialized")
+        console.log("UploadDApp::getDAppFileProperties is not initialized")
     }
     property var parseDAppFile: function (file) {
-        console.log("UploadDApp::parseDAppFile not initialized")
+        console.log("UploadDApp::parseDAppFile is not initialized")
+    }
+    property var publishDApp: function () {
+        console.log("UploadDApp::publishDApp is not initialized")
     }
 
     onClosed: {
@@ -407,6 +410,10 @@ change the information in your file and upload your file again." */
                                             //% "publish"
                         text:               qsTrId("dapps-store-publish")
                         palette.buttonText: Style.content_opposite
+                        onClicked:          {
+                            control.publishDApp()
+                            control.close()
+                        }
                     }
 
                     Item {
