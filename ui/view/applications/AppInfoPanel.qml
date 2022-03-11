@@ -16,6 +16,7 @@ Pane {
     property alias bkColor:           background.color
     property int   contentItemHeight: 0
     property alias tableOwner:        txTable.owner
+    horizontalPadding: 2
 
     property var content: Item {
         TxTable {
@@ -68,6 +69,8 @@ Pane {
                 Layout.alignment: Qt.AlignTop
                 Layout.fillWidth: true
                 spacing: 0
+                Layout.leftMargin: 25
+                Layout.rightMargin: 25
 
                 TxFilter {
                     id: balanceTab
