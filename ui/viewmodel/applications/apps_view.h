@@ -32,6 +32,13 @@ namespace beamui::applications
         Q_PROPERTY(QList<QVariantMap> publishers READ getPublishers NOTIFY publishersChanged)
 
     public:
+
+        enum class Action
+        {
+            CreatePublisher,
+            UpdatePublisher
+        };
+
         AppsViewModel();
         ~AppsViewModel() override;
 
@@ -59,7 +66,7 @@ namespace beamui::applications
         Q_INVOKABLE void createPublisher(const QVariantMap& publisherInfo);
         Q_INVOKABLE void changePublisherInfo(const QVariantMap& publisherInfo);
         // TODO roman.strilets maybe need to use this from AppsApiUI???
-        Q_INVOKABLE void contractInfoApproved();
+        Q_INVOKABLE void contractInfoApproved(int action, const QString& data);
         Q_INVOKABLE void contractInfoRejected();
 
     public slots:
@@ -72,9 +79,9 @@ namespace beamui::applications
         void isPublisherChanged();
         void publisherInfoChanged();
         void publishersChanged();
-        void shaderTxData(const QString& comment, const QString& fee, const QString& feeRate, const QString& rateUnit);
-        void sentTxData();
-        void finishedTx();
+        void shaderTxData(int action, const QString& data, const QString& comment, const QString& fee, const QString& feeRate, const QString& rateUnit);
+        void showTxIsSent();
+        void hideTxIsSent();
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
@@ -84,7 +91,7 @@ namespace beamui::applications
         void loadPublishers();
         void loadMyPublisherInfo();
         void setPublishers(const QList<QVariantMap>& value);
-        void handleShaderTxData(const beam::ByteBuffer& data);
+        void handleShaderTxData(Action action, const beam::ByteBuffer& data);
 
         WalletModel::Ptr m_walletModel;
 
@@ -96,7 +103,6 @@ namespace beamui::applications
         QList<QVariantMap> _publishers;
         bool _isPublisher = false;
         QVariantMap _publisherInfo;
-        boost::optional<beam::ByteBuffer> _shaderTxData;
         boost::optional<beam::wallet::TxID> _txId;
     };
 }

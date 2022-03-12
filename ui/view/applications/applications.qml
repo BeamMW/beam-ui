@@ -32,7 +32,7 @@ ColumnLayout {
     ApplicationsViewModel {
         id: viewModel
 
-        onShaderTxData: function (txComment, fee, feeRate, rateUnit) {
+        onShaderTxData: function (action, data, txComment, fee, feeRate, rateUnit) {
             const dialog = Qt.createComponent("qrc:/send_confirm.qml")
             const instance = dialog.createObject(control,
                 {
@@ -48,7 +48,7 @@ ColumnLayout {
 
             instance.Component.onDestruction.connect(function () {
                 if (instance.result == Dialog.Accepted) {
-                    viewModel.contractInfoApproved()
+                    viewModel.contractInfoApproved(action, data)
                     return
                 }
                 viewModel.contractInfoRejected()

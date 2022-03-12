@@ -550,22 +550,7 @@ namespace beamui::applications
                     return;
                 }
 
-                handleShaderTxData(data);
-
-                //try
-                //{
-                //    auto json = nlohmann::json::parse(output);
-
-                //    LOG_INFO() << json.dump(4);
-                //    // TODO roman.strilets should be processed this case
-
-                //    _isPublisher = true;
-                //    emit isPublisherChanged();
-                //}
-                //catch (std::runtime_error& err)
-                //{
-                //    LOG_WARNING() << "Error while parsing publisher from contract" << ", " << err.what();
-                //}
+                handleShaderTxData(Action::CreatePublisher, data);
             }
         );
     }
@@ -600,7 +585,7 @@ namespace beamui::applications
                     return;
                 }
 
-                handleShaderTxData(data);
+                handleShaderTxData(Action::UpdatePublisher, data);
             }
         );
     }
@@ -821,7 +806,7 @@ namespace beamui::applications
         }
     }
 
-    void AppsViewModel::handleShaderTxData(const beam::ByteBuffer& data)
+    void AppsViewModel::handleShaderTxData(Action action, const beam::ByteBuffer& data)
     {
         try
         {
@@ -841,18 +826,12 @@ namespace beamui::applications
                 throw std::runtime_error("Unexpected fullSpend amounts");
             }
 
-            if (_shaderTxData)
-            {
-                throw std::runtime_error("Unprocessed data - shaderTxData isn't empty.");
-            }
-
-            _shaderTxData = data;
-
             const auto assetsManager = AppModel::getInstance().getAssets();
             const auto feeRate = beamui::AmountToUIString(assetsManager->getRate(beam::Asset::s_BeamID));
             const auto rateUnit = assetsManager->getRateUnit();
+            const auto tmp = QString::fromStdString(beam::to_hex(data.data(), data.size()));
 
-            emit shaderTxData(QString::fromStdString(comment), beamui::AmountToUIString(fee), feeRate, rateUnit);
+            emit shaderTxData(static_cast<int>(action), tmp, QString::fromStdString(comment), beamui::AmountToUIString(fee), feeRate, rateUnit);
         }
         catch (const std::runtime_error& err)
         {
@@ -860,12 +839,13 @@ namespace beamui::applications
         }
     }
 
-    void AppsViewModel::contractInfoApproved()
+    void AppsViewModel::contractInfoApproved(int action, const QString& data)
     {
         QPointer<AppsViewModel> guard(this);
+        beam::ByteBuffer buffer = beam::from_hex(data.toStdString());
 
-        AppModel::getInstance().getWalletModel()->getAsync()->processShaderTxData(*_shaderTxData,
-            [this, guard](const std::string& err, const beam::wallet::TxID& id)
+        AppModel::getInstance().getWalletModel()->getAsync()->processShaderTxData(buffer,
+            [this, guard, action](const std::string& err, const beam::wallet::TxID& id)
             {
                 if (!guard)
                 {
@@ -877,11 +857,17 @@ namespace beamui::applications
                     LOG_WARNING() << "Failed to process shader TX: " << ", " << err;
                 }
 
-                _shaderTxData.reset();
+                if (Action::CreatePublisher == static_cast<Action>(action) || Action::UpdatePublisher == static_cast<Action>(action))
+                {
+                    if (_txId)
+                    {
+                        throw std::runtime_error("Unprocessed data - txID isn't empty.");
+                    }
+                    // TODO roman.strilets maybe should use mutex
+                    _txId = id;
 
-                _txId = id;
-
-                emit sentTxData();
+                    emit showTxIsSent();
+                }
                 // TODO: check TX status
             }
         );
@@ -889,7 +875,6 @@ namespace beamui::applications
 
     void AppsViewModel::contractInfoRejected()
     {
-        _shaderTxData.reset();
     }
 
     void AppsViewModel::onTransactionsChanged(
@@ -905,7 +890,7 @@ namespace beamui::applications
                     if (tx.m_status == beam::wallet::TxStatus::Completed || tx.m_status == beam::wallet::TxStatus::Failed)
                     {
                         _txId.reset();
-                        emit finishedTx();
+                        emit hideTxIsSent();
 
                         loadMyPublisherInfo();
                         return;

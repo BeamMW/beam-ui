@@ -42,10 +42,10 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
-        control.viewModel.sentTxData.connect(function(){
+        control.viewModel.showTxIsSent.connect(function(){
             transactionSentDialog.open();
         });
-        control.viewModel.finishedTx.connect(function(){
+        control.viewModel.hideTxIsSent.connect(function(){
             transactionSentDialog.close();
         });
     }
