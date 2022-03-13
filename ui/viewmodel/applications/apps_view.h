@@ -60,6 +60,7 @@ namespace beamui::applications
         Q_INVOKABLE [[nodiscard]] QVariantMap getDAppFileProperties(const QString& fname);
         Q_INVOKABLE [[nodiscard]] QVariantMap parseDAppFile(const QString& fname);
         Q_INVOKABLE void publishDApp();
+        Q_INVOKABLE void installApp(const QString& guid);
         Q_INVOKABLE [[nodiscard]] QString installFromFile(const QString& fname);
         Q_INVOKABLE void launchAppServer();
         Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
@@ -69,6 +70,8 @@ namespace beamui::applications
         // TODO roman.strilets maybe need to use this from AppsApiUI???
         Q_INVOKABLE void contractInfoApproved(int action, const QString& data);
         Q_INVOKABLE void contractInfoRejected();
+
+        Q_INVOKABLE [[nodiscard]] QList<QVariantMap> getPublisherDApps(const QString& publisherKey);
 
     public slots:
         void onTransactionsChanged(
@@ -84,17 +87,22 @@ namespace beamui::applications
         void showTxIsSent();
         void hideTxIsSent();
         void showYouArePublisher();
+        void appInstallOK(const QString& appName);
+        void appInstallFail(const QString& appName);
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
         [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
         QVariantMap parseAppManifest(QTextStream& io, const QString& appFolder);
         void loadApps();
+        void loadAppsFromStore();
         void loadPublishers();
         void loadMyPublisherInfo(bool hideTxIsSent = false, bool showYouArePublsher = false);
         void setPublishers(const QList<QVariantMap>& value);
         void handleShaderTxData(Action action, const beam::ByteBuffer& data);
         void uploadAppToStore(QVariantMap&& app, const std::string& ipfsID);
+        void installFromBuffer(QIODevice* ioDevice, const QString& guid);
+        QVariantMap getAppByGUID(const QString& guid);
 
         WalletModel::Ptr m_walletModel;
 
@@ -108,7 +116,8 @@ namespace beamui::applications
         QVariantMap _publisherInfo;
         boost::optional<beam::wallet::TxID> _txId;
 
-		Action _action;        boost::optional<beam::ByteBuffer> _loadedDAppBuffer;
+		Action _action;
+        boost::optional<beam::ByteBuffer> _loadedDAppBuffer;
         boost::optional<QVariantMap> _loadedDApp;
     };
 }

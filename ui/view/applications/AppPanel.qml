@@ -15,7 +15,7 @@ Item {
     property bool showButtons: true
 
     signal launch(var app)
-    signal install(var fname)
+    signal install(var appGUID)
     signal update(var app)
     signal uninstall(var app)
 
@@ -158,7 +158,7 @@ Item {
                         acceptedButtons:         Qt.LeftButton
                         hoverEnabled:            true
                         propagateComposedEvents: true
-                        onClicked:               control.install(modelData)
+                        onClicked:               control.install(modelData.guid)
                     }
                 }
 

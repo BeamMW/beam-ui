@@ -15,6 +15,7 @@
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QWebEngineProfile>
 #include <QFileDialog>
+#include <qbuffer.h>
 #include "apps_view.h"
 #include "utility/logger.h"
 #include "model/app_model.h"
@@ -27,7 +28,16 @@
 
 namespace
 {
-    QString parseStringField(nlohmann::json& json, const char* fieldName)
+    const uint8_t kCountDAppVersionParts = 4;
+
+    QString fromHex(const std::string& value)
+    {
+        auto tmp = beam::from_hex(value);
+
+        return QString::fromUtf8(reinterpret_cast<char*>(tmp.data()), static_cast<int>(tmp.size()));
+    }
+
+    std::string extractStringField(nlohmann::json& json, const char* fieldName)
     {
         const auto& field = json[fieldName];
         if (!field.is_string())
@@ -36,20 +46,23 @@ namespace
             ss << "Invalid " << fieldName << " of the dapp";
             throw std::runtime_error(ss.str());
         }
-        return QString::fromStdString(field.get<std::string>());
+        return field.get<std::string>();
+    }
+
+    QString parseStringField(nlohmann::json& json, const char* fieldName)
+    {
+        return QString::fromStdString(extractStringField(json, fieldName));
+    }
+
+    QString decodeStringField(nlohmann::json& json, const char* fieldName)
+    {
+        return fromHex(extractStringField(json, fieldName));
     }
 
     std::string toHex(const QString& value)
     {
         std::string tmp = value.toStdString();
         return beam::to_hex(tmp.data(), tmp.size());
-    }
-
-    QString fromHex(const std::string& value)
-    {
-        auto tmp = beam::from_hex(value);
-
-        return QString::fromUtf8(reinterpret_cast<char*>(tmp.data()), static_cast<int>(tmp.size()));
     }
 
     QVariantMap parsePublisherInfo(nlohmann::json& info)
@@ -87,6 +100,32 @@ namespace
 #endif
         }
         return fname;
+    }
+
+    int16_t compareDAppVersion(const QString& first, const QString& second)
+    {
+        auto fillDAppVersion = [] (QStringList& versionList) {
+            while (versionList.length() < kCountDAppVersionParts)
+            {
+                versionList.append("0");
+            }
+        };
+
+        auto firstStringList = first.split(".");
+        auto secondStringList = second.split(".");
+        fillDAppVersion(firstStringList);
+        fillDAppVersion(secondStringList);
+
+        for (uint8_t i = 0; i < firstStringList.length(); ++i)
+        {
+            if (firstStringList[i] == secondStringList[i])
+            {
+                continue;
+            }
+            
+            return firstStringList[i].toInt() > secondStringList[i].toInt() ? 1 : -1;
+        }
+        return 0;
     }
 }
 
@@ -252,6 +291,27 @@ namespace beamui::applications
             app.insert("category", categoryObj.get<uint32_t>());
         }
 
+        const auto& publisherObj = json["publisher"];
+        if (!publisherObj.empty())
+        {
+            if (!publisherObj.is_string())
+            {
+                throw std::runtime_error("Invalid publisher in the manifest file");
+            }
+            app.insert("publisher", QString::fromStdString(publisherObj.get<std::string>()));
+        }
+
+        // TODO: Make guid is required field after fixing all DApps
+        const auto& guidObj = json["guid"];
+        if (!guidObj.empty())
+        {
+            if (!guidObj.is_string())
+            {
+                throw std::runtime_error("Invalid 'guid' in the manifest file");
+            }
+            app.insert("guid", QString::fromStdString(guidObj.get<std::string>()));
+        }
+
         app.insert("local", true);
         // TODO: check why we used surl instead of extended url - app["url"]
         const auto appid = beam::wallet::GenerateAppID(sname, app["url"].toString().toStdString());
@@ -303,7 +363,8 @@ namespace beamui::applications
                         app.insert("name", name);
                         app.insert("url", url);
                         app.insert("icon", parseStringField(item.value(), "icon"));
-
+                    
+                        // TODO: add verification
                         bool isSupported = true;
 
                         app.insert("supported", isSupported);
@@ -317,8 +378,127 @@ namespace beamui::applications
                     // TODO: mb need to transfer the error to QML(errorMessage)
                     LOG_WARNING() << "Failed to load remote applications list, " << err.what();
                 }
-                emit appsChanged();
+                loadAppsFromStore();
             });
+    }
+
+    void AppsViewModel::loadAppsFromStore()
+    {
+        std::string args = "action=view_dapps,cid=";
+        args += AppSettings().getDappStoreCID();
+
+        QPointer<AppsViewModel> guard(this);
+
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
+            [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                if (!err.empty())
+                {
+                    LOG_ERROR() << "Failed to load dapps list from DApp Store" << ", " << err;
+                    return;
+                }
+
+                try
+                {
+                    auto json = nlohmann::json::parse(output);
+
+                    if (json.empty() || !json.is_object() || !json["dapps"].is_array())
+                    {
+                        throw std::runtime_error("Invalid response of the view_dapps method");
+                    }
+
+                    for (auto& item : json["dapps"].items())
+                    {
+                        if (!item.value().is_object())
+                        {
+                            throw std::runtime_error("Invalid body of the dapp " + item.key());
+                        }
+                        auto guid = parseStringField(item.value(), "id");
+                        auto publisher = parseStringField(item.value(), "publisher");
+
+                        LOG_DEBUG() << "Parsing DApp from contract, guid - " << guid.toStdString() << ", publisher - " << publisher.toStdString();
+
+                        // parse version
+                        auto versionObj = item.value()["version"];
+
+                        if (versionObj.empty() || !versionObj.is_object())
+                        {
+                            throw std::runtime_error("Invalid 'version' of the dapp");
+                        }
+
+                        auto majorObj = versionObj["major"];
+                        auto minorObj = versionObj["minor"];
+                        auto releaseObj = versionObj["release"];
+                        auto buildObj = versionObj["build"];
+                        if (majorObj.empty() || !majorObj.is_number_unsigned() ||
+                            minorObj.empty() || !minorObj.is_number_unsigned() ||
+                            releaseObj.empty() || !releaseObj.is_number_unsigned() ||
+                            buildObj.empty() || !buildObj.is_number_unsigned())
+                        {
+                            throw std::runtime_error("Invalid 'version' of the dapp");
+                        }
+
+                        QString version;
+                        QTextStream textStream(&version);
+                        textStream << majorObj.get<uint32_t>() << '.' << minorObj.get<uint32_t>() << '.'
+                            << releaseObj.get<uint32_t>() << '.' << buildObj.get<uint32_t>();
+
+                        // try to find in _apps
+                        // if found -> installed -> compare version -> set "hasUpdate"
+                        // find app in _apps by guid
+                        const auto it = std::find_if(_apps.begin(), _apps.end(),
+                            [guid](const auto& app) -> bool {
+                                const auto appIt = app.find("guid");
+                                if (appIt == app.end())
+                                {
+                                    return false;
+                                }
+                                return appIt->toString() == guid;
+                            }
+                        );
+
+                        if (it != _apps.end())
+                        {
+                            auto& app = *it;
+                            if (compareDAppVersion(version, app["version"].toString()) > 0)
+                            {
+                                app.insert("hasUpdate", true);
+                            }
+                        }
+                        else
+                        {
+                            QMap<QString, QVariant> app;
+                            app.insert("description", decodeStringField(item.value(), "description"));
+                            app.insert("name", decodeStringField(item.value(), "name"));
+                            app.insert("ipfs_id", parseStringField(item.value(), "ipfs_id"));
+                            // TODO: check if empty url is allowed for not installed app
+                            app.insert("url", "");
+                            app.insert("api_version", decodeStringField(item.value(), "api_ver"));
+                            app.insert("min_api_version", decodeStringField(item.value(), "min_api_ver"));
+                            app.insert("guid", guid);
+                            app.insert("publisher", publisher);
+
+                            // TODO: add verification
+                            app.insert("supported", true);
+
+                            app.insert("notInstalled", true);
+
+                            _apps.push_back(app);
+                        }
+                    }
+                    emit appsChanged();
+                }
+                catch (std::runtime_error& err)
+                {
+                    LOG_ERROR() << "Error while parsing app from contract" << ", " << err.what();
+                }
+            }
+        );
     }
 
     void AppsViewModel::loadPublishers()
@@ -666,7 +846,13 @@ namespace beamui::applications
         LOG_INFO() << "Deleting local app in folder " << path.toStdString();
 
         QDir dir(path);
-        return dir.removeRecursively();
+        bool result = dir.removeRecursively();
+        if (result)
+        {
+            // refresh
+            loadApps();
+        }
+        return result;
     }
 
     QString AppsViewModel::expandLocalUrl(const QString& folder, const std::string& url) const
@@ -832,7 +1018,7 @@ namespace beamui::applications
         // parse version
         QStringList version = app["version"].value<QString>().split(".");
 
-        for (; version.length() < 4;)
+        for (; version.length() < kCountDAppVersionParts;)
         {
             version.append("0");
         }
@@ -868,6 +1054,91 @@ namespace beamui::applications
                 handleShaderTxData(data);
             }
         );
+    }
+
+    void AppsViewModel::installApp(const QString& guid)
+    {
+        try
+        {
+            const auto app = getAppByGUID(guid);
+            if (app.isEmpty())
+            {
+                LOG_WARNING() << "Failed to find Dapp by guid " << guid.toStdString();
+                return;
+            }
+
+            const auto ipfsID = app["ipfs_id"].toString();
+            const auto appName = app["name"].toString();
+
+            // get dapp binary data from ipfs
+            QPointer<AppsViewModel> guard(this);
+            auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
+
+            // TODO: check timeout value
+            ipfs->AnyThread_get(ipfsID.toStdString(), 0,
+                [this, guard, appName, guid](beam::ByteBuffer&& data) mutable
+                {
+                    if (!guard)
+                    {
+                        return;
+                    }
+
+                    try
+                    {
+                        // unpack & verify & install
+                        LOG_DEBUG() << "Installing DApp " << appName.toStdString() << " from ipfs";
+
+                        QByteArray qData;
+                        std::copy(data.cbegin(), data.cend(), std::back_inserter(qData));
+
+                        QBuffer buffer(&qData);
+                        
+                        // TODO: does we need add additional verification of the DApp file?
+
+                        installFromBuffer(&buffer, guid);
+
+                        emit appInstallOK(appName);
+                        loadApps();
+                    }
+                    catch (std::runtime_error& err)
+                    {
+                        LOG_ERROR() << "Failed to install DApp: " << err.what();
+                        emit appInstallFail(appName);
+                    }
+                },
+                [this, guard, appName](std::string&& err)
+                {
+                    LOG_ERROR() << "Failed to get app from ipfs: " << err;
+                    emit appInstallFail(appName);
+                }
+                );
+        }
+        catch (const std::runtime_error& err)
+        {
+            assert(false);
+            LOG_WARNING() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
+            return;
+        }
+    }
+
+    void AppsViewModel::installFromBuffer(QIODevice* ioDevice, const QString& guid)
+    {
+        const auto appsPath = AppSettings().getLocalAppsPath();
+        const auto appFolder = QDir(appsPath).filePath(guid);
+
+        if (QDir(appFolder).exists())
+        {
+            if (!QDir(appFolder).removeRecursively())
+            {
+                throw std::runtime_error("Failed to prepare folder");
+            }
+        }
+
+        QDir(appsPath).mkdir(guid);
+        if (JlCompress::extractDir(ioDevice, appFolder).isEmpty())
+        {
+            throw std::runtime_error("DApp Installation failed");
+        }
     }
 
     QString AppsViewModel::installFromFile(const QString& rawFname)
@@ -1026,5 +1297,48 @@ namespace beamui::applications
                 }
             }
         }
+    }
+
+    QList<QVariantMap> AppsViewModel::getPublisherDApps(const QString& publisherKey)
+    {
+        QList<QVariantMap> publisherApps;
+
+        std::copy_if(_apps.cbegin(), _apps.cend(), std::back_inserter(publisherApps),
+            [publisherKey] (const auto& app) -> bool {
+                const auto appIt = app.find("publisher");
+                if (appIt == app.end())
+                {
+                    return false;
+                }
+                return appIt->toString() == publisherKey;
+            }
+        );
+
+        return publisherApps;
+    }
+
+    QVariantMap AppsViewModel::getAppByGUID(const QString& guid)
+    {
+        LOG_INFO() << "guid: " << guid.toStdString();
+        // find app in _apps by guid
+        const auto it = std::find_if(_apps.cbegin(), _apps.cend(),
+            [guid](const auto& app) -> bool {
+                const auto appIt = app.find("guid");
+                if (appIt == app.end())
+                {
+                    // TODO: uncomment when all DApps will have new full list of required fields 
+                    // assert(false);
+                    return false;
+                }
+                LOG_INFO() << "app guid: " << appIt->toString().toStdString();
+                return appIt->toString() == guid;
+            });
+
+        if (it == _apps.end())
+        {
+            assert(false);
+            return {};
+        }
+        return *it;
     }
 }

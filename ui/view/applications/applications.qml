@@ -57,6 +57,18 @@ ColumnLayout {
 
             instance.open()
         }
+
+        onAppInstallOK: function (appName) {
+            //% "'%1' is successfully installed."
+            installOK.text = qsTrId("apps-install-success").arg(appName)
+            installOK.open()
+        }
+
+        onAppInstallFail: function (appName) {
+            //% "Failed to install DApp:\n%1"
+            installFail.text = qsTrId("apps-install-fail").arg(appName)
+            installFail.open()
+        }
     }
 
     //
@@ -93,7 +105,7 @@ ColumnLayout {
             DnDdappInstallDialog {
                 id: dndDialog
                 onGetFileName: function(fname) {
-                    appsListView.install(fname);
+                    appsListView.installFromFile(fname);
                 }
             }
 
@@ -549,7 +561,11 @@ ColumnLayout {
                     launchApp(app)
                 }
 
-                onInstall: function (fname) {
+                onInstall: function (appGUID) {
+                    viewModel.installApp(appGUID)
+                }
+
+                onInstallFromFile: function (fname) {
                     if (!fname) {
                         //% "Select application to install"
                         fname = viewModel.chooseFile(qsTrId("applications-install-title"))

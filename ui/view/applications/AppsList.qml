@@ -27,7 +27,8 @@ Item {
     }
 
     signal launch(var app)
-    signal install(var fname)
+    signal install(var appGUID)
+    signal installFromFile(string fname)
     signal update(var app)
     signal uninstall(var app)
 
@@ -55,10 +56,18 @@ Item {
                     Layout.preferredHeight: 144
                     app: modelData
 
-                    onLaunch: control.launch(app)
-                    onInstall: control.install(fname)
-                    onUpdate: control.update(app)
-                    onUninstall: control.uninstall(app)
+                    onLaunch: function (app) { 
+                        control.launch(app)
+                    }
+                    onInstall: function (appGUID) {
+                        control.install(appGUID)
+                    }
+                    onUpdate: function (app) {
+                        control.update(app)
+                    }
+                    onUninstall: function (app) {
+                        control.uninstall(app)
+                    }
                 }
             }
 
