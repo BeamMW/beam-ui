@@ -3721,5 +3721,39 @@ change the information in your file and upload your file again.</source>
         <oldsource>Changes take time. You �an continue as soon as transaction is completed.</oldsource>
         <translation type="unfinished"></translation>
     </message>
+    <message id="dapps-store-creation-of-account">
+        <source>Creation of the personal publisher account takes time.
+ You can continue as soon as transaction is completed.</source>
+        <oldsource>Creation of the personal publisher account takes time.
+ You �an continue as soon as transaction is completed.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-you-now-are-publisher">
+        <source>You now are a publisher!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-congratulations">
+        <source>Congratulations %1!
+
+We are glad to see you at our DApp Store as a Publisher.
+Below you will see your personal Publisher Key. Any user can use it to add you to their personal
+list and follow your apps. You can add it on your personal page or website.
+All the time you have access to it in yout personal publisher account.
+
+Let&apos;s start!</source>
+        <oldsource>Congratulations %1!
+
+We are glad to see you at our DApp Store as a Publisher.
+Below you will see your personal Publisher Key. Any user can use it to add you to their personal
+ list and follow your apps. You can add it on your personal page or website.
+All the time you have access to it in yout personal publisher account.
+
+Let�s start!</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-to-to-my-account">
+        <source>go to my account</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

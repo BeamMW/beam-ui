@@ -41,15 +41,6 @@ ColumnLayout {
         publisherKeyDialog.open()
     }
 
-    Component.onCompleted: {
-        control.viewModel.showTxIsSent.connect(function(){
-            transactionSentDialog.open();
-        });
-        control.viewModel.hideTxIsSent.connect(function(){
-            transactionSentDialog.close();
-        });
-    }
-
     //
     // Page Header (Back button + title + publisher's buttons)
     //
@@ -212,46 +203,9 @@ ColumnLayout {
         }
     }
 
-    CustomDialog {
+    TransactionIsSent {
         id: transactionSentDialog
-        modal: true
-        x:       (parent.width - width) / 2
-        y:       (parent.height - height) / 2
-        parent:  Overlay.overlay
-        width: 761
-        height: 299
-        closePolicy: Popup.NoAutoClose
-
-        contentItem: ColumnLayout {
-            spacing: 0
-
-            // Title
-            SFText {
-                Layout.topMargin:    40
-                Layout.alignment: Qt.AlignHCenter
-                font.pixelSize:      18
-                color:               Style.content_main
-                //% "The transaction is sent"
-                text:                qsTrId("dapps-store-transacton-is-sent")
-            }
-
-            // Note
-            SFText {
-                Layout.topMargin:    30
-                Layout.alignment: Qt.AlignHCenter
-                font.pixelSize:        14
-                color:                 Style.content_main
-                //% "Changes take time. You can continue as soon as transaction is completed."
-                text:                  qsTrId("dapps-store-changes-takes-time")
-            }
-
-            SvgImage {
-                Layout.topMargin:    38
-                Layout.alignment: Qt.AlignHCenter
-                source:           "qrc:/assets/icon-dapps-store-transaction-is-sent.svg"
-                sourceSize:       Qt.size(82, 113)
-            }
-        }
+        newPublisher: false
     }
 
     CustomDialog {

@@ -346,7 +346,7 @@ namespace beamui::applications
         );
     }
 
-    void AppsViewModel::loadMyPublisherInfo()
+    void AppsViewModel::loadMyPublisherInfo(bool hideTxIsSentDialog, bool showYouArePublsherDialog)
     {
         std::string args = "action=my_publisher_info,cid=";
         args += AppSettings().getDappStoreCID();
@@ -354,7 +354,7 @@ namespace beamui::applications
         QPointer<AppsViewModel> guard(this);
 
         AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
-            [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
+            [this, guard, hideTxIsSentDialog, showYouArePublsherDialog](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
             {
                 if (!guard)
                 {
@@ -366,32 +366,44 @@ namespace beamui::applications
                     LOG_WARNING() << "Failed to my publisher info" << ", " << err;
                     return;
                 }
-
-                try
+                else
                 {
-                    auto json = nlohmann::json::parse(output);
-
-                    LOG_INFO() << json.dump(4);
-
-                    if (json.empty() || !json.is_object() || !json["my_publisher_info"].is_object())
+                    try
                     {
-                        throw std::runtime_error("Invalid response of the view_publishers method");
+                        auto json = nlohmann::json::parse(output);
+
+                        LOG_INFO() << json.dump(4);
+
+                        if (json.empty() || !json.is_object() || !json["my_publisher_info"].is_object())
+                        {
+                            throw std::runtime_error("Invalid response of the view_publishers method");
+                        }
+
+                        if (!json["my_publisher_info"].empty())
+                        {
+                            auto& info = json["my_publisher_info"];
+                            QVariantMap tmp = parsePublisherInfo(info);
+
+                            setPublisherInfo(tmp);
+
+                            _isPublisher = true;
+                            emit isPublisherChanged();
+                        }
                     }
-
-                    if (!json["my_publisher_info"].empty())
+                    catch (std::runtime_error& err)
                     {
-                        auto& info = json["my_publisher_info"];
-                        QVariantMap tmp = parsePublisherInfo(info);
-
-                        setPublisherInfo(tmp);
-
-                        _isPublisher = true;
-                        emit isPublisherChanged();
+                        LOG_WARNING() << "Error while parsing publisher from contract" << ", " << err.what();
                     }
                 }
-                catch (std::runtime_error& err)
+
+                if (hideTxIsSentDialog)
                 {
-                    LOG_WARNING() << "Error while parsing publisher from contract" << ", " << err.what();
+                    emit hideTxIsSent();
+                }
+
+                if (showYouArePublsherDialog)
+                {
+                    emit showYouArePublisher();
                 }
             }
         );
@@ -865,6 +877,7 @@ namespace beamui::applications
                     }
                     // TODO roman.strilets maybe should use mutex
                     _txId = id;
+                    _action = static_cast<Action>(action);
 
                     emit showTxIsSent();
                 }
@@ -890,9 +903,7 @@ namespace beamui::applications
                     if (tx.m_status == beam::wallet::TxStatus::Completed || tx.m_status == beam::wallet::TxStatus::Failed)
                     {
                         _txId.reset();
-                        emit hideTxIsSent();
-
-                        loadMyPublisherInfo();
+                        loadMyPublisherInfo(true, _action == Action::CreatePublisher);
                         return;
                     }
                 }

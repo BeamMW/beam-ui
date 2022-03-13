@@ -112,6 +112,24 @@ ColumnLayout {
                 }
             }
 
+            TransactionIsSent {
+                id: transactionIsSent
+
+                newPublisher: !viewModel.isPublisher
+            }
+
+            YouArePublisher {
+                id: youArePublisher
+
+                nickname: viewModel.publisherInfo.nickname
+                publisherKey: viewModel.publisherInfo.publisherKey
+
+                onGoToMyAccount: {
+                    youArePublisher.close();
+                    navigatePublisherDetails();
+                }
+            }
+
             function navigatePublishersList() {
                 var params = {
                     "onBack":            stackView.pop,
@@ -641,6 +659,15 @@ ColumnLayout {
 
             Component.onCompleted: {
                 viewModel.onAppsChanged.connect(loadAppsList)
+                viewModel.showTxIsSent.connect(function(){
+                    transactionIsSent.open();
+                });
+                viewModel.hideTxIsSent.connect(function(){
+                    transactionIsSent.close();
+                });
+                viewModel.showYouArePublisher.connect(function(){
+                    youArePublisher.open();
+                });
 
                 if (settings.dappsAllowed)
                 {

@@ -82,6 +82,7 @@ namespace beamui::applications
         void shaderTxData(int action, const QString& data, const QString& comment, const QString& fee, const QString& feeRate, const QString& rateUnit);
         void showTxIsSent();
         void hideTxIsSent();
+        void showYouArePublisher();
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
@@ -89,7 +90,7 @@ namespace beamui::applications
         QVariantMap parseAppManifest(QTextStream& io, const QString& appFolder);
         void loadApps();
         void loadPublishers();
-        void loadMyPublisherInfo();
+        void loadMyPublisherInfo(bool hideTxIsSent = false, bool showYouArePublsher = false);
         void setPublishers(const QList<QVariantMap>& value);
         void handleShaderTxData(Action action, const beam::ByteBuffer& data);
 
@@ -104,5 +105,6 @@ namespace beamui::applications
         bool _isPublisher = false;
         QVariantMap _publisherInfo;
         boost::optional<beam::wallet::TxID> _txId;
+        Action _action;
     };
 }

@@ -114,6 +114,8 @@
         <file>applications/BecomePublisher.qml</file>
         <file>applications/PublisherDetails.qml</file>
         <file>applications/PublishersList.qml</file>
+        <file>applications/TransactionIsSent.qml</file>
+        <file>applications/YouArePublisher.qml</file>
         <file>applications/UploadDApp.qml</file>
         <file>dapps_store/dapps_store.qml</file>
         <file>popup_message.qml</file>
@@ -189,6 +191,7 @@
         <file>assets/icon-dapps-store-create-account.svg</file>
         <file>assets/icon-dapps_store-add-publisher-submit.svg</file>
         <file>assets/icon-dapps-store-transaction-is-sent.svg</file>
+        <file>assets/icon-dapps-store-user.svg</file>
         <file>assets/icon-dex.svg</file>
         <file>assets/icon-dex-active.svg</file>
         <file>assets/icon-addresses.svg</file>
