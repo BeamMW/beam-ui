@@ -3736,5 +3736,9 @@ Let�s start!</oldsource>
         <source>go to my account</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="dapps-store-update-dapp">
+        <source>update dapp</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -1278,7 +1278,7 @@ namespace beamui::applications
                     {
                         throw std::runtime_error("Unprocessed data - txID isn't empty.");
                     }
-                    // TODO roman.strilets maybe should use mutex
+                    
                     _txId = id;
                     _action = static_cast<Action>(action);
 

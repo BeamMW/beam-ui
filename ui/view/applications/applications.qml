@@ -83,6 +83,18 @@ ColumnLayout {
             installFail.text = qsTrId("apps-install-fail").arg(appName)
             installFail.open()
         }
+
+        onShowTxIsSent: function() {
+            transactionIsSent.open();
+        }
+
+        onHideTxIsSent: function() {
+            transactionIsSent.close();
+        }
+
+        onShowYouArePublisher: function() {
+            youArePublisher.open();
+        }
     }
 
     //
@@ -135,24 +147,6 @@ ColumnLayout {
 
                 onChangePublisherInfo: function(info) {
                     viewModel.changePublisherInfo(info);
-                }
-            }
-
-            TransactionIsSent {
-                id: transactionIsSent
-
-                newPublisher: !viewModel.isPublisher
-            }
-
-            YouArePublisher {
-                id: youArePublisher
-
-                nickname: viewModel.publisherInfo.nickname
-                publisherKey: viewModel.publisherInfo.publisherKey
-
-                onGoToMyAccount: {
-                    youArePublisher.close();
-                    navigatePublisherDetails();
                 }
             }
 
@@ -680,15 +674,6 @@ ColumnLayout {
 
             Component.onCompleted: {
                 viewModel.onAppsChanged.connect(loadAppsList)
-                viewModel.showTxIsSent.connect(function(){
-                    transactionIsSent.open();
-                });
-                viewModel.hideTxIsSent.connect(function(){
-                    transactionIsSent.close();
-                });
-                viewModel.showYouArePublisher.connect(function(){
-                    youArePublisher.open();
-                });
 
                 if (settings.dappsAllowed)
                 {
@@ -699,6 +684,30 @@ ColumnLayout {
                     appsDialog.open();
                 }
             }
+        }
+    }
+
+    TransactionIsSent {
+        id: transactionIsSent
+
+        newPublisher: !viewModel.isPublisher
+    }
+
+    YouArePublisher {
+        id: youArePublisher
+
+        nickname: viewModel.publisherInfo.nickname
+        publisherKey: viewModel.publisherInfo.publisherKey
+
+        onGoToMyAccount: {
+            youArePublisher.close();
+
+            var params = {
+                "viewModel": viewModel,
+                "onBack":    stackView.pop,
+                "uninstall": control.uninstallApp,
+            }
+            stackView.push(Qt.createComponent("PublisherDetails.qml"), params)
         }
     }
 

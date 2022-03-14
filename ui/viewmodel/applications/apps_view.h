@@ -69,7 +69,6 @@ namespace beamui::applications
         Q_INVOKABLE [[nodiscard]] QString addPublisherByKey(const QString& publisherKey);
         Q_INVOKABLE void createPublisher(const QVariantMap& publisherInfo);
         Q_INVOKABLE void changePublisherInfo(const QVariantMap& publisherInfo);
-        // TODO roman.strilets maybe need to use this from AppsApiUI???
         Q_INVOKABLE void contractInfoApproved(int action, const QString& data);
         Q_INVOKABLE void contractInfoRejected();
 
