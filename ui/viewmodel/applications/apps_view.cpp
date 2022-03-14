@@ -389,7 +389,7 @@ namespace beamui::applications
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args),
             [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
             {
                 if (!guard)
@@ -509,7 +509,7 @@ namespace beamui::applications
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args),
             [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
             {
                 if (!guard)
@@ -563,7 +563,7 @@ namespace beamui::applications
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args),
             [this, guard, hideTxIsSentDialog, showYouArePublsherDialog](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
             {
                 if (!guard)
@@ -762,7 +762,7 @@ namespace beamui::applications
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args,
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), std::move(args),
             [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
             {
                 if (!guard)
@@ -797,7 +797,7 @@ namespace beamui::applications
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args,
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), std::move(args),
             [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
             {
                 if (!guard)
@@ -986,7 +986,7 @@ namespace beamui::applications
             return;
         }
 
-        ipfs->AnyThread_add(std::move(*_loadedDAppBuffer),
+        ipfs->AnyThread_add(std::move(*_loadedDAppBuffer), true, 0,
             [this, guard, app = std::move(*_loadedDApp), isUpdating](std::string&& ipfsID) mutable
             {
                 if (!guard)
@@ -1260,7 +1260,7 @@ namespace beamui::applications
         QPointer<AppsViewModel> guard(this);
         beam::ByteBuffer buffer = beam::from_hex(data.toStdString());
 
-        AppModel::getInstance().getWalletModel()->getAsync()->processShaderTxData(buffer,
+        AppModel::getInstance().getWalletModel()->getAsync()->processShaderTxData(std::move(buffer),
             [this, guard, action](const std::string& err, const beam::wallet::TxID& id)
             {
                 if (!guard)
@@ -1386,7 +1386,7 @@ namespace beamui::applications
                     LOG_INFO() << "Successfully unpin app" << appName.toStdString() << "(" << ipfsID.toStdString() << ") from ipfs : ";
                     deleteAppFromStore(guid);
                 },
-                [this, guard, appName, ipfsID, guid](std::string&& err)
+                [appName, ipfsID](std::string&& err)
                 {
                     LOG_ERROR() << "Failed to unpin app" << appName.toStdString() << "(" << ipfsID.toStdString() << ") from ipfs : " << err;
                     // TODO: emit appRemoveFail(appName);
