@@ -266,6 +266,16 @@ Item {
         }
     }
 
+    Action {
+        id:          removeAction
+                     //% "remove dapp"
+        text:        qsTrId("dapps-store-remove-dapp")
+        icon.source: "qrc:/assets/icon-delete.svg"
+        onTriggered: function () {
+            control.remove(modelData)
+        }
+    }
+
     ConfirmationDialog {
         id:                     confirmUninstall
         width:                  460
@@ -287,6 +297,7 @@ Item {
     Component.onCompleted: {
         if (isSupportedUploadNewVersion) {
             appMenu.addAction(uploadNewVersionAction)
+            appMenu.addAction(removeAction)
         }
         appMenu.addAction(uninstallAction)
     }

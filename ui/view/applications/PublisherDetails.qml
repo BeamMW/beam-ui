@@ -56,6 +56,10 @@ ColumnLayout {
         uploadDAppDialog.open()
     }
 
+    function remove(app) {
+        viewModel.removeDApp(app.guid)
+    }
+
     Component.onCompleted: {
         control.viewModel.appsChanged.connect(function() {
             loadPublisherDApps()
@@ -232,6 +236,7 @@ ColumnLayout {
         }
 
         onRemove: function (app) {
+            control.remove(app)
         }
 
         onUploadNewVersion: function (app) {

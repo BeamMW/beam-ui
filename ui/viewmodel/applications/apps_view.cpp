@@ -469,6 +469,7 @@ namespace beamui::applications
                             {
                                 app.insert("hasUpdate", true);
                             }
+                            app.insert("ipfs_id", parseStringField(item.value(), "ipfs_id"));
                         }
                         else
                         {
@@ -1325,7 +1326,8 @@ namespace beamui::applications
                 {
                     return false;
                 }
-                return appFieldsIt->toString() == publisherKey;
+                // skip local installed own apps by publisher, that didn't be uploaded
+                return appFieldsIt->toString() == publisherKey && app.contains("ipfs_id");
             }
         );
 
@@ -1353,5 +1355,81 @@ namespace beamui::applications
             return {};
         }
         return *it;
+    }
+
+    void AppsViewModel::removeDApp(const QString& guid)
+    {
+        // TODO: change the order of operations to: first remove from contract -> unpin from IPFS
+        try
+        {
+            const auto app = getAppByGUID(guid);
+            if (app.isEmpty())
+            {
+                LOG_WARNING() << "Failed to find Dapp by guid " << guid.toStdString();
+                return;
+            }
+
+            const auto ipfsID = app["ipfs_id"].toString();
+            const auto appName = app["name"].toString();
+
+            // unpin dapp binary data from ipfs
+            QPointer<AppsViewModel> guard(this);
+            auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
+
+            ipfs->AnyThread_unpin(ipfsID.toStdString(),
+                [this, guard, appName, guid, ipfsID]() mutable
+                {
+                    if (!guard)
+                    {
+                        return;
+                    }
+                    LOG_INFO() << "Successfully unpin app" << appName.toStdString() << "(" << ipfsID.toStdString() << ") from ipfs : ";
+                    deleteAppFromStore(guid);
+                },
+                [this, guard, appName, ipfsID, guid](std::string&& err)
+                {
+                    LOG_ERROR() << "Failed to unpin app" << appName.toStdString() << "(" << ipfsID.toStdString() << ") from ipfs : " << err;
+                    // TODO: emit appRemoveFail(appName);
+                }
+            );
+        }
+        catch (const std::runtime_error& err)
+        {
+            assert(false);
+            LOG_WARNING() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
+            return;
+        }
+    }
+
+    void AppsViewModel::deleteAppFromStore(const QString& guid)
+    {
+        std::stringstream argsStream;
+        argsStream << "action=delete_dapp,";
+        argsStream << "cid=" << AppSettings().getDappStoreCID().c_str();
+        argsStream << ",id=" << guid.toStdString();
+
+        QPointer<AppsViewModel> guard(this);
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), argsStream.str(),
+            [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                if (!err.empty())
+                {
+                    LOG_WARNING() << "Failed to delete app" << ", " << err;
+                    return;
+                }
+
+                if (data.empty())
+                {
+                    LOG_WARNING() << "Failed to delete app" << ", " << output;
+                    return;
+                }
+                handleShaderTxData(Action::DeleteDApp, data);
+            }
+        );
     }
 }
