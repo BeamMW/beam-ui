@@ -95,6 +95,7 @@ CustomDialog {
                     height: 45
                     color: Style.content_main
                     text: control.publisherInfo.nickname
+                    maximumLength: 30
                 }
             }
 
@@ -115,6 +116,7 @@ CustomDialog {
                     height: 45
                     color: Style.content_main
                     text: control.publisherInfo.shortTitle
+                    maximumLength: 50
                 }
 
                 SFText {
@@ -144,6 +146,7 @@ CustomDialog {
                     height: 45
                     color: Style.content_main
                     text: control.publisherInfo.aboutMe
+                    maximumLength: 150
                 }
 
                 SFText {
@@ -183,6 +186,7 @@ CustomDialog {
                     placeholderText: "https://website.name/"
                     text: control.publisherInfo.website
                     icon: "qrc:/assets/icon-dapps-store-website.svg"
+                    maximumLength: 100
                 }
             }
 
@@ -205,6 +209,7 @@ CustomDialog {
                     placeholderText: "@nickname"
                     text: control.publisherInfo.twitter
                     icon: "qrc:/assets/icon-dapps-store-twitter.svg"
+                    maximumLength: 50
                 }
             }
 
@@ -227,6 +232,7 @@ CustomDialog {
                     placeholderText: "@nickname"
                     text: control.publisherInfo.linkedin
                     icon: "qrc:/assets/icon-dapps-store-linkedin.svg"
+                    maximumLength: 50
                 }
             }
 
@@ -249,6 +255,7 @@ CustomDialog {
                     placeholderText: "@nickname"
                     text: control.publisherInfo.instagram
                     icon: "qrc:/assets/icon-dapps-store-instagram.svg"
+                    maximumLength: 50
                 }
             }
 
@@ -271,6 +278,7 @@ CustomDialog {
                     placeholderText: "@nickname"
                     text: control.publisherInfo.telegram
                     icon: "qrc:/assets/icon-dapps-store-telegram.svg"
+                    maximumLength: 50
                 }
             }
 
@@ -293,6 +301,7 @@ CustomDialog {
                     placeholderText: "login#0000"
                     text: control.publisherInfo.discord
                     icon: "qrc:/assets/icon-dapps-store-discord.svg"
+                    maximumLength: 50
                 }
             }
         }
