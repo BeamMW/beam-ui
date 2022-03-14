@@ -19,6 +19,10 @@ ColumnLayout {
         console.log("PublisherDetails::onBack is not initialized")
     }
 
+    property var uninstall: function () {
+        console.log("PublisherDetails::uninstall is not initialized")
+    }
+
     function uploadApp() {
         uploadDAppDialog.open()
     }
@@ -30,6 +34,40 @@ ColumnLayout {
 
     function showPublicKey() {
         publisherKeyDialog.open()
+    }
+
+    function loadPublisherDApps() {
+        appsList = viewModel.getPublisherDApps(viewModel.publisherInfo.publisherKey)
+    }
+
+    function launchApp(app) {
+        // TODO: mb implement with using more local logic
+        var appName = app.name;
+        var appid = app.appid;
+        main.updateItem("applications", {"appToOpen": { "name": appName, "appid": appid}, "showBack": false})
+    }
+
+    function unninstall(app) {
+        control.uninstall(app)
+    }
+
+    function uploadNewVersion(app) {
+        uploadDAppDialog.currentApp = app
+        uploadDAppDialog.open()
+    }
+
+    Component.onCompleted: {
+        control.viewModel.sentTxData.connect(function(){
+            transactionSentDialog.open();
+        });
+        control.viewModel.finishedTx.connect(function(){
+            transactionSentDialog.close();
+        });
+        control.viewModel.appsChanged.connect(function() {
+            loadPublisherDApps()
+        })
+
+        loadPublisherDApps()
     }
 
     //
@@ -176,11 +214,35 @@ ColumnLayout {
     }
 
     AppsList {
-        id: appsListView
-        Layout.fillHeight: true
-        Layout.fillWidth:  true
-        visible:  control.hasApps && !control.activeApp
-        // TODO: implement
+        id:                          appsListView
+        Layout.fillHeight:           true
+        Layout.fillWidth:            true
+        visible:                     control.hasApps
+        appsList:                    control.appsList
+        showInstallFromFilePanel:    false
+        isSupportedUploadNewVersion: true
+
+        onLaunch: function (app) {
+            control.launchApp(app)
+        }
+
+        onInstall: function (appGUID) {
+            viewModel.installApp(appGUID)
+        }
+
+        onUninstall: function (app) {
+            control.uninstall(app)
+        }
+
+        onUpdate: function (app) {            
+        }
+
+        onRemove: function (app) {
+        }
+
+        onUploadNewVersion: function (app) {
+            control.uploadNewVersion(app)
+        }
     }
 
     BecomePublisher {
@@ -307,5 +369,6 @@ ColumnLayout {
         getDAppFileProperties: control.viewModel.getDAppFileProperties
         parseDAppFile:         control.viewModel.parseDAppFile
         publishDApp:           control.viewModel.publishDApp
+        checkDAppNewVersion:   control.viewModel.checkDAppNewVersion
     }
 }

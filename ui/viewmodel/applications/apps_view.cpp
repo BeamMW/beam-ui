@@ -683,6 +683,10 @@ namespace beamui::applications
 
                 auto app = parseAppManifest(in, justFolder);
                 app.insert("full_path", fullFolder);
+
+                // TODO: add verification
+                app.insert("supported", true);
+
                 result.push_back(app);
             }
             catch(std::runtime_error& err)
@@ -916,7 +920,8 @@ namespace beamui::applications
     {
         try
         {
-            QuaZip zip(removeFilePrefix(fname));
+            auto dappFilePath = removeFilePrefix(fname);
+            QuaZip zip(dappFilePath);
             if (!zip.open(QuaZip::Mode::mdUnzip))
             {
                 throw std::runtime_error("Failed to open the DApp file");
@@ -948,7 +953,7 @@ namespace beamui::applications
             app.insert("release_date", QDate::currentDate().toString("dd MMM yyyy"));
 
             // preload DApp file
-            QFile dappFile(fname);
+            QFile dappFile(dappFilePath);
 
             if (!dappFile.open(QFile::ReadOnly))
             {
@@ -968,7 +973,7 @@ namespace beamui::applications
         return {};
     }
 
-    void AppsViewModel::publishDApp()
+    void AppsViewModel::publishDApp(bool isUpdating)
     {
         auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
         QPointer<AppsViewModel> guard(this);
@@ -981,7 +986,7 @@ namespace beamui::applications
         }
 
         ipfs->AnyThread_add(std::move(*_loadedDAppBuffer),
-            [this, guard, app = std::move(*_loadedDApp)](std::string&& ipfsID) mutable
+            [this, guard, app = std::move(*_loadedDApp), isUpdating](std::string&& ipfsID) mutable
             {
                 if (!guard)
                 {
@@ -991,7 +996,7 @@ namespace beamui::applications
                 LOG_INFO() << "IPFS_ID: " << ipfsID;
 
                 // save result to contract
-                uploadAppToStore(std::move(app), ipfsID);
+                uploadAppToStore(std::move(app), ipfsID, isUpdating);
             },
             [](std::string&& err) {
                 LOG_ERROR() << "Failed to add to ipfs: " << err;
@@ -999,14 +1004,24 @@ namespace beamui::applications
         );
     }
 
-    void AppsViewModel::uploadAppToStore(QVariantMap&& app, const std::string& ipfsID)
+    bool AppsViewModel::checkDAppNewVersion(const QVariantMap& currentDApp, const QVariantMap& newDApp)
+    {
+        if (currentDApp["guid"].value<QString>() == currentDApp["guid"].value<QString>())
+        {
+            return compareDAppVersion(newDApp["version"].value<QString>(), currentDApp["version"].value<QString>()) > 0;
+        }
+        return false;
+    }
+
+    void AppsViewModel::uploadAppToStore(QVariantMap&& app, const std::string& ipfsID, bool isUpdating)
     {
         QString guid = app["guid"].value<QString>();
         QString appName = app["name"].value<QString>();
         QString description = app["description"].value<QString>();
 
         std::stringstream argsStream;
-        argsStream << "action=add_dapp,cid=" << AppSettings().getDappStoreCID().c_str();
+        argsStream << (isUpdating ? "action=update_dapp," : "action=add_dapp,");
+        argsStream << "cid=" << AppSettings().getDappStoreCID().c_str();
         argsStream << ",ipfs_id=" << ipfsID;
         argsStream << ",name=" << toHex(appName);
         argsStream << ",id=" << guid.toStdString();
@@ -1305,12 +1320,12 @@ namespace beamui::applications
 
         std::copy_if(_apps.cbegin(), _apps.cend(), std::back_inserter(publisherApps),
             [publisherKey] (const auto& app) -> bool {
-                const auto appIt = app.find("publisher");
-                if (appIt == app.end())
+                const auto appFieldsIt = app.find("publisher");
+                if (appFieldsIt == app.end())
                 {
                     return false;
                 }
-                return appIt->toString() == publisherKey;
+                return appFieldsIt->toString() == publisherKey;
             }
         );
 
@@ -1319,19 +1334,17 @@ namespace beamui::applications
 
     QVariantMap AppsViewModel::getAppByGUID(const QString& guid)
     {
-        LOG_INFO() << "guid: " << guid.toStdString();
         // find app in _apps by guid
         const auto it = std::find_if(_apps.cbegin(), _apps.cend(),
             [guid](const auto& app) -> bool {
-                const auto appIt = app.find("guid");
-                if (appIt == app.end())
+                const auto appFieldsIt = app.find("guid");
+                if (appFieldsIt == app.end())
                 {
                     // TODO: uncomment when all DApps will have new full list of required fields 
                     // assert(false);
                     return false;
                 }
-                LOG_INFO() << "app guid: " << appIt->toString().toStdString();
-                return appIt->toString() == guid;
+                return appFieldsIt->toString() == guid;
             });
 
         if (it == _apps.end())

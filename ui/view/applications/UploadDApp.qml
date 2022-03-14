@@ -14,8 +14,8 @@ CustomDialog {
     modal:   true
     padding: 0
 
-    property string dappName:          ""
-    readonly property bool isUpdating: !!dappName
+    property var currentApp:           undefined
+    readonly property bool isUpdating: !!currentApp
     property var appFileProperties:    undefined
     property var app:                  undefined
     property string dappFile:          ""
@@ -30,7 +30,10 @@ CustomDialog {
     property var parseDAppFile: function (file) {
         console.log("UploadDApp::parseDAppFile is not initialized")
     }
-    property var publishDApp: function () {
+    property var checkDAppNewVersion: function (currentApp, newApp) {
+        console.log("UploadDApp::checkDAppNewVersion is not initialized")
+    }
+    property var publishDApp: function (isUpdating) {
         console.log("UploadDApp::publishDApp is not initialized")
     }
 
@@ -40,7 +43,7 @@ CustomDialog {
         dappFile = ""
         app = undefined
         appFileProperties = undefined
-        dappName = ""
+        currentApp = undefined
 
         stackView.replace(startViewId)
     }
@@ -60,6 +63,12 @@ CustomDialog {
         var tempApp = parseDAppFile(file)
 
         if (!!tempApp && !!tempAppFileProperties) {
+            if (isUpdating && !checkDAppNewVersion(currentApp, tempApp)) {
+                // TODO: add relevant error msg
+                isOk = false
+                return
+            }
+
             control.appFileProperties = tempAppFileProperties
             control.app = tempApp
             isOk = true
@@ -123,7 +132,7 @@ CustomDialog {
                     font.weight:          Font.Normal
                     text:                 control.isUpdating ?
                                           //% "To update %1, please add the new version of the file below"
-                                          qsTrId("dapps-store-update-dapp-text").arg(dappName):
+                                          qsTrId("dapps-store-update-dapp-text").arg(currentApp.name):
                                           //% "To upload your own DApp in the DApp Store, please use files in the .dapp format only"
                                           qsTrId("dapps-store-upload-new-dapp-text")
                 }
@@ -411,7 +420,7 @@ change the information in your file and upload your file again." */
                         text:               qsTrId("dapps-store-publish")
                         palette.buttonText: Style.content_opposite
                         onClicked:          {
-                            control.publishDApp()
+                            control.publishDApp(control.isUpdating)
                             control.close()
                         }
                     }

@@ -29,6 +29,20 @@ ColumnLayout {
         txTable.showTxDetails(txid)
     }
 
+    function uninstallApp (app) {
+        if (viewModel.uninstallLocalApp(app.appid)) {
+
+            //% "'%1' DApp is successfully uninstalled."
+            uninstallOK.text = qsTrId("apps-uninstall-success").arg(app.name)
+            uninstallOK.open()
+        } else {
+            //% "Failed to uninstall '%1' DApp."
+            uninstallFail.text = qsTrId("apps-uninstall-fail").arg(app.name)
+            uninstallFail.open()
+        }
+        loadAppsList()
+    }
+
     ApplicationsViewModel {
         id: viewModel
 
@@ -153,8 +167,9 @@ ColumnLayout {
             function navigatePublisherDetails() {
                 if (viewModel.isPublisher) {
                     var params = {
-                        "viewModel":             viewModel,
-                        "onBack":                stackView.pop,
+                        "viewModel": viewModel,
+                        "onBack":    stackView.pop,
+                        "uninstall": control.uninstallApp,
                     }
                     stackView.push(Qt.createComponent("PublisherDetails.qml"), params)
                 }
@@ -583,17 +598,7 @@ ColumnLayout {
                 }
 
                 onUninstall: function (app) {
-                    if (viewModel.uninstallLocalApp(app.appid)) {
-
-                        //% "'%1' DApp is successfully uninstalled."
-                        uninstallOK.text = qsTrId("apps-uninstall-success").arg(app.name)
-                        uninstallOK.open()
-                    } else {
-                        //% "Failed to uninstall '%1' DApp."
-                        uninstallFail.text = qsTrId("apps-uninstall-fail").arg(app.name)
-                        uninstallFail.open()
-                    }
-                    loadAppsList()
+                    control.uninstallApp(app)
                 }
 
                 MouseArea {

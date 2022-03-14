@@ -59,7 +59,8 @@ namespace beamui::applications
         Q_INVOKABLE [[nodiscard]] QString chooseFile(const QString& title);
         Q_INVOKABLE [[nodiscard]] QVariantMap getDAppFileProperties(const QString& fname);
         Q_INVOKABLE [[nodiscard]] QVariantMap parseDAppFile(const QString& fname);
-        Q_INVOKABLE void publishDApp();
+        Q_INVOKABLE void publishDApp(bool isUpdating = false);
+        Q_INVOKABLE bool checkDAppNewVersion(const QVariantMap& currentDApp, const QVariantMap& newDApp);
         Q_INVOKABLE void installApp(const QString& guid);
         Q_INVOKABLE [[nodiscard]] QString installFromFile(const QString& fname);
         Q_INVOKABLE void launchAppServer();
@@ -100,7 +101,7 @@ namespace beamui::applications
         void loadMyPublisherInfo(bool hideTxIsSent = false, bool showYouArePublsher = false);
         void setPublishers(const QList<QVariantMap>& value);
         void handleShaderTxData(Action action, const beam::ByteBuffer& data);
-        void uploadAppToStore(QVariantMap&& app, const std::string& ipfsID);
+        void uploadAppToStore(QVariantMap&& app, const std::string& ipfsID, bool isUpdating = false);
         void installFromBuffer(QIODevice* ioDevice, const QString& guid);
         QVariantMap getAppByGUID(const QString& guid);
 

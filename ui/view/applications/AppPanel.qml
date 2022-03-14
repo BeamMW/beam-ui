@@ -12,12 +12,15 @@ Item {
     implicitWidth:  440
 
     property var app
-    property bool showButtons: true
+    property bool showButtons:                 true
+    property bool isSupportedUploadNewVersion: false
 
     signal launch(var app)
     signal install(var appGUID)
     signal update(var app)
     signal uninstall(var app)
+    signal remove(var app)
+    signal uploadNewVersion(var app)
 
     // background
     Rectangle {
@@ -242,14 +245,24 @@ Item {
         id:    appMenu
         modal: true
         dim:   false
+    }
 
-        Action {
-                         //% "Uninstall"
-            text:        qsTrId("apps-uninstall")
-            icon.source: "qrc:/assets/icon-delete.svg"
-            onTriggered: function () {
-                confirmUninstall.open()
-            }
+    Action {
+        id:          uploadNewVersionAction
+                     //% "update dapp"
+        text:        qsTrId("dapps-store-update-dapp")
+        icon.source: "qrc:/assets/icon-dapps_store-update.svg"
+        onTriggered: function () {
+            control.uploadNewVersion(modelData)
+        }
+    }
+    Action {
+        id:          uninstallAction
+                     //% "Uninstall"
+        text:        qsTrId("apps-uninstall")
+        icon.source: "qrc:/assets/icon-delete.svg"
+        onTriggered: function () {
+            confirmUninstall.open()
         }
     }
 
@@ -269,5 +282,12 @@ Item {
         onAccepted: function () {
             control.uninstall(modelData)
         }
+    }
+
+    Component.onCompleted: {
+        if (isSupportedUploadNewVersion) {
+            appMenu.addAction(uploadNewVersionAction)
+        }
+        appMenu.addAction(uninstallAction)
     }
 }
