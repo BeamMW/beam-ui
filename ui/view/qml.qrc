@@ -12,6 +12,7 @@
         <file>controls/SFLabel.qml</file>
         <file>controls/SFText.qml</file>
         <file>controls/SFTextInput.qml</file>
+        <file>controls/SFTextInputEx.qml</file>
         <file>controls/Led.qml</file>
         <file>controls/TxFilter.qml</file>
         <file>controls/TableItem.qml</file>
@@ -193,6 +194,12 @@
         <file>assets/icon-dapps_store-update.svg</file>
         <file>assets/icon-dapps-store-transaction-is-sent.svg</file>
         <file>assets/icon-dapps-store-user.svg</file>
+        <file>assets/icon-dapps-store-website.svg</file>
+        <file>assets/icon-dapps-store-twitter.svg</file>
+        <file>assets/icon-dapps-store-linkedin.svg</file>
+        <file>assets/icon-dapps-store-instagram.svg</file>
+        <file>assets/icon-dapps-store-telegram.svg</file>
+        <file>assets/icon-dapps-store-discord.svg</file>
         <file>assets/icon-dex.svg</file>
         <file>assets/icon-dex-active.svg</file>
         <file>assets/icon-addresses.svg</file>

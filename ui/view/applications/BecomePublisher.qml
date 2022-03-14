@@ -175,13 +175,14 @@ CustomDialog {
                     font.weight: Font.Normal
                 }
 
-                SFTextInput {
+                SFTextInputEx {
                     id: websiteInput
                     width: 335
                     height: 45
                     color: Style.content_main
                     placeholderText: "https://website.name/"
                     text: control.publisherInfo.website
+                    icon: "qrc:/assets/icon-dapps-store-website.svg"
                 }
             }
 
@@ -196,13 +197,14 @@ CustomDialog {
                     font.weight: Font.Normal
                 }
 
-                SFTextInput {
+                SFTextInputEx {
                     id: twitterInput
                     width: 335
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
                     text: control.publisherInfo.twitter
+                    icon: "qrc:/assets/icon-dapps-store-twitter.svg"
                 }
             }
 
@@ -217,13 +219,14 @@ CustomDialog {
                     font.weight: Font.Normal
                 }
 
-                SFTextInput {
+                SFTextInputEx {
                     id: linkedinInput
                     width: 335
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
                     text: control.publisherInfo.linkedin
+                    icon: "qrc:/assets/icon-dapps-store-linkedin.svg"
                 }
             }
 
@@ -238,13 +241,14 @@ CustomDialog {
                     font.weight: Font.Normal
                 }
 
-                SFTextInput {
+                SFTextInputEx {
                     id: instagramInput
                     width: 335
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
                     text: control.publisherInfo.instagram
+                    icon: "qrc:/assets/icon-dapps-store-instagram.svg"
                 }
             }
 
@@ -259,13 +263,14 @@ CustomDialog {
                     font.weight: Font.Normal
                 }
 
-                SFTextInput {
+                SFTextInputEx {
                     id: telegramInput
                     width: 335
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
                     text: control.publisherInfo.telegram
+                    icon: "qrc:/assets/icon-dapps-store-telegram.svg"
                 }
             }
 
@@ -280,13 +285,14 @@ CustomDialog {
                     font.weight: Font.Normal
                 }
 
-                SFTextInput {
+                SFTextInputEx {
                     id: discordInput
                     width: 335
                     height: 45
                     color: Style.content_main
                     placeholderText: "login#0000"
                     text: control.publisherInfo.discord
+                    icon: "qrc:/assets/icon-dapps-store-discord.svg"
                 }
             }
         }
