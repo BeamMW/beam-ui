@@ -1066,7 +1066,7 @@ namespace beamui::applications
                     LOG_WARNING() << "Failed to publish app" << ", " << output;
                     return;
                 }
-                handleShaderTxData(data);
+                handleShaderTxData(Action::UploadDApp, data);
             }
         );
     }

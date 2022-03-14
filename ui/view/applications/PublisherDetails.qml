@@ -57,12 +57,6 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
-        control.viewModel.sentTxData.connect(function(){
-            transactionSentDialog.open();
-        });
-        control.viewModel.finishedTx.connect(function(){
-            transactionSentDialog.close();
-        });
         control.viewModel.appsChanged.connect(function() {
             loadPublisherDApps()
         })

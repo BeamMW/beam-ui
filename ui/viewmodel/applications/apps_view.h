@@ -36,7 +36,8 @@ namespace beamui::applications
         enum class Action
         {
             CreatePublisher,
-            UpdatePublisher
+            UpdatePublisher,
+            UploadDApp
         };
 
         AppsViewModel();
