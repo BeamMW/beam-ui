@@ -79,13 +79,11 @@ ComboBox {
         if (model) {
             for(var i = 0; i < model.length; i++) {
                 textMetrics.text = Utils.limitText(model[i].text, control.textMaxLenDrop)
-                modelWidth = Math.max(textMetrics.width + 26,
-                                      modelWidth)
+                modelWidth = Math.max(textMetrics.width + 26, modelWidth)
             }
         }
     }
 
-    onModelChanged: recalcSize()
     onDownChanged: {
         recalcSize();
     }
@@ -162,8 +160,9 @@ ComboBox {
    popup: Popup {
         id: comboPopup
 
+        x: -(width - control.width)
         y: control.height + 7
-        width: calculatedWidth + leftPadding + rightPadding
+        width: modelWidth + leftPadding + rightPadding
 
         topPadding:    20
         bottomPadding: 20
