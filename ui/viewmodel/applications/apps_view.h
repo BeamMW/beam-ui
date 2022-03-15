@@ -14,7 +14,9 @@
 #pragma once
 
 #include "apps_server.h"
-#include <memory>
+#include <boost/optional.hpp>
+#include "utility/common.h"
+#include "model/wallet_model.h"
 
 namespace beamui::applications
 {
@@ -23,21 +25,22 @@ namespace beamui::applications
         Q_OBJECT
         Q_PROPERTY(QString appsUrl     READ getAppsUrl    CONSTANT)
         Q_PROPERTY(QString userAgent   READ getUserAgent  CONSTANT)
-        Q_PROPERTY(QList<QMap<QString, QVariant>> localApps READ getLocalApps CONSTANT)
-        Q_PROPERTY(QList<QMap<QString, QVariant>> apps READ getApps NOTIFY appsChanged)
+        Q_PROPERTY(QList<QVariantMap> localApps READ getLocalApps CONSTANT)
+        Q_PROPERTY(QList<QVariantMap> apps READ getApps NOTIFY appsChanged)
         Q_PROPERTY(bool isPublisher READ isPublisher NOTIFY isPublisherChanged)
-        Q_PROPERTY(QString publisherKey READ publisherKey NOTIFY publisherKeyChanged)
-        Q_PROPERTY(QString nickname READ nickname WRITE nickname NOTIFY nicknameChanged)
-        Q_PROPERTY(QString shortTitle READ shortTitle WRITE shortTitle NOTIFY shortTitleChanged)
-        Q_PROPERTY(QString aboutMe READ aboutMe WRITE aboutMe NOTIFY aboutMeChanged)
-        Q_PROPERTY(QString website READ website WRITE website NOTIFY websiteChanged)
-        Q_PROPERTY(QString twitter READ twitter WRITE twitter NOTIFY twitterChanged)
-        Q_PROPERTY(QString linkedin READ linkedin WRITE linkedin NOTIFY linkedinChanged)
-        Q_PROPERTY(QString instagram READ instagram WRITE instagram NOTIFY instagramChanged)
-        Q_PROPERTY(QString telegram READ telegram WRITE telegram NOTIFY telegramChanged)
-        Q_PROPERTY(QString discord READ discord WRITE discord NOTIFY discordChanged)
+        Q_PROPERTY(QVariantMap publisherInfo READ getPublisherInfo NOTIFY publisherInfoChanged)
+        Q_PROPERTY(QList<QVariantMap> publishers READ getPublishers NOTIFY publishersChanged)
 
     public:
+
+        enum class Action
+        {
+            CreatePublisher,
+            UpdatePublisher,
+            UploadDApp,
+            DeleteDApp
+        };
+
         AppsViewModel();
         ~AppsViewModel() override;
 
@@ -45,79 +48,82 @@ namespace beamui::applications
 
         [[nodiscard]] QString getAppsUrl() const;
         [[nodiscard]] QString getUserAgent() const;
-        [[nodiscard]] QList<QMap<QString, QVariant>> getApps();
-        [[nodiscard]] QList<QMap<QString, QVariant>> getLocalApps();
+        [[nodiscard]] QList<QVariantMap> getApps();
+        [[nodiscard]] QList<QVariantMap> getLocalApps();
+        [[nodiscard]] QList<QVariantMap> getPublishers();
         bool isPublisher() const;
-        QString publisherKey() const;
-        void publisherKey(const QString& value);
 
-        QString nickname() const;
-        void nickname(const QString& name);
-        QString shortTitle() const;
-        void shortTitle(const QString& value);
-        QString aboutMe() const;
-        void aboutMe(const QString& value);
-        QString website() const;
-        void website(const QString& value);
-        QString twitter() const;
-        void twitter(const QString& value);
-        QString linkedin() const;
-        void linkedin(const QString& value);
-        QString instagram() const;
-        void instagram(const QString& value);
-        QString telegram() const;
-        void telegram(const QString& value);
-        QString discord() const;
-        void discord(const QString& value);
+        QVariantMap getPublisherInfo() const;
+        void setPublisherInfo(const QVariantMap& value);
 
     public:
         Q_INVOKABLE void onCompleted(QObject *webView);
         Q_INVOKABLE [[nodiscard]] QString getAppCachePath(const QString& appid) const;
         Q_INVOKABLE [[nodiscard]] QString getAppStoragePath(const QString& appid) const;
-        Q_INVOKABLE [[nodiscard]] QString chooseFile();
+        Q_INVOKABLE [[nodiscard]] QString chooseFile(const QString& title);
+        Q_INVOKABLE [[nodiscard]] QVariantMap getDAppFileProperties(const QString& fname);
+        Q_INVOKABLE [[nodiscard]] QVariantMap parseDAppFile(const QString& fname);
+        Q_INVOKABLE void publishDApp(bool isUpdating = false);
+        Q_INVOKABLE void removeDApp(const QString& guid);
+        Q_INVOKABLE bool checkDAppNewVersion(const QVariantMap& currentDApp, const QVariantMap& newDApp);
+        Q_INVOKABLE void installApp(const QString& guid);
         Q_INVOKABLE [[nodiscard]] QString installFromFile(const QString& fname);
         Q_INVOKABLE void launchAppServer();
         Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
-        Q_INVOKABLE [[nodiscard]] QString addPublisherByKey(const QString& publicKey);
-        Q_INVOKABLE void createPublisher();
-        Q_INVOKABLE void changePublisherInfo();
+        Q_INVOKABLE [[nodiscard]] QString addPublisherByKey(const QString& publisherKey);
+        Q_INVOKABLE void createPublisher(const QVariantMap& publisherInfo);
+        Q_INVOKABLE void changePublisherInfo(const QVariantMap& publisherInfo);
+        Q_INVOKABLE void contractInfoApproved(int action, const QString& data);
+        Q_INVOKABLE void contractInfoRejected();
+
+        Q_INVOKABLE [[nodiscard]] QList<QVariantMap> getPublisherDApps(const QString& publisherKey);
+
+    public slots:
+        void onTransactionsChanged(
+            beam::wallet::ChangeAction action,
+            const std::vector<beam::wallet::TxDescription>& transactions);
 
     signals:
         void appsChanged();
         void isPublisherChanged();
-        void publisherKeyChanged();
-        void nicknameChanged();
-        void shortTitleChanged();
-        void aboutMeChanged();
-        void websiteChanged();
-        void twitterChanged();
-        void linkedinChanged();
-        void instagramChanged();
-        void telegramChanged();
-        void discordChanged();
+        void publisherInfoChanged();
+        void publishersChanged();
+        void shaderTxData(int action, const QString& data, const QString& comment, const QString& fee, const QString& feeRate, const QString& rateUnit);
+        void showTxIsSent();
+        void hideTxIsSent();
+        void showYouArePublisher();
+        void appInstallOK(const QString& appName);
+        void appInstallFail(const QString& appName);
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
         [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
-        QMap<QString, QVariant> validateAppManifest(QTextStream& io, const QString& appFolder);
+        QVariantMap parseAppManifest(QTextStream& io, const QString& appFolder);
         void loadApps();
-        void loadMyPublisherInfo();
+        void loadAppsFromStore();
+        void loadPublishers();
+        void loadMyPublisherInfo(bool hideTxIsSent = false, bool showYouArePublsher = false);
+        void setPublishers(const QList<QVariantMap>& value);
+        void handleShaderTxData(Action action, const beam::ByteBuffer& data);
+        void uploadAppToStore(QVariantMap&& app, const std::string& ipfsID, bool isUpdating = false);
+        void deleteAppFromStore(const QString& guid);
+        void installFromBuffer(QIODevice* ioDevice, const QString& guid);
+        QVariantMap getAppByGUID(const QString& guid);
+
+        WalletModel::Ptr m_walletModel;
 
         QString _userAgent;
         QString _serverAddr;
         std::unique_ptr<AppsServer> _server;
-        QList<QMap<QString, QVariant>> _lastLocalApps;
-        QList<QMap<QString, QVariant>> _apps;
+        QList<QVariantMap> _lastLocalApps;
+        QList<QVariantMap> _apps;
+        QList<QVariantMap> _publishers;
         bool _isPublisher = false;
-        QString _publisherKey;
-        QString _nickname;
-        QString _shortTitle;
-        QString _aboutMe;
-        QString _website;
-        QString _twitter;
-        QString _linkedin;
-        QString _instagram;
-        QString _telegram;
-        QString _discord;
+        QVariantMap _publisherInfo;
+        boost::optional<beam::wallet::TxID> _txId;
+
+		Action _action;
+        boost::optional<beam::ByteBuffer> _loadedDAppBuffer;
+        boost::optional<QVariantMap> _loadedDApp;
     };
 }

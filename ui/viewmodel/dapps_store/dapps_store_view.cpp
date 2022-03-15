@@ -210,7 +210,7 @@ void DappsStoreViewModel::loadApps()
 
     QPointer<DappsStoreViewModel> guard(this);
 
-    AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
+    AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args),
         [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
         {
             if (!guard)
@@ -337,7 +337,7 @@ void DappsStoreViewModel::loadPublishers()
 
     QPointer<DappsStoreViewModel> guard(this);
 
-    AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
+    AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args),
         [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
         {
             if (!guard)
@@ -417,7 +417,7 @@ QString DappsStoreViewModel::getPublisherKey()
         args += AppSettings().getDappStoreCID();
         QPointer<DappsStoreViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args),
             [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
             {
                 if (!guard)
@@ -618,7 +618,7 @@ void DappsStoreViewModel::uploadApp()
         auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
         QPointer<DappsStoreViewModel> guard(this);
 
-        ipfs->AnyThread_add(beam::ByteBuffer(buffer.cbegin(), buffer.cend()),
+        ipfs->AnyThread_add(beam::ByteBuffer(buffer.cbegin(), buffer.cend()), true, 0,
             [this, guard, app=std::move(app)] (std::string&& ipfsID) mutable
             {
                 if (!guard)
@@ -695,7 +695,7 @@ void DappsStoreViewModel::registerPublisher()
 
     QPointer<DappsStoreViewModel> guard(this);
 
-    AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args,
+    AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), std::move(args),
         [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
         {
             if (!guard)
@@ -951,8 +951,9 @@ void DappsStoreViewModel::handleShaderTxData(const beam::ByteBuffer& data)
 void DappsStoreViewModel::contractInfoApproved()
 {
     QPointer<DappsStoreViewModel> guard(this);
-
-    AppModel::getInstance().getWalletModel()->getAsync()->processShaderTxData(*_shaderTxData,
+    beam::ByteBuffer tempShaderData;
+    _shaderTxData.get().swap(tempShaderData);
+    AppModel::getInstance().getWalletModel()->getAsync()->processShaderTxData(std::move(tempShaderData),
         [this, guard] (const std::string& err, const beam::wallet::TxID& id)
         {
             if (!guard)

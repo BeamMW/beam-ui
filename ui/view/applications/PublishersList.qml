@@ -62,8 +62,7 @@ ColumnLayout {
             palette.button:   Qt.rgba(255, 255, 255, 0.1)
             //% "add publisher"
             text: qsTrId("dapps-store-add-publisher")
-            // TODO: change icon
-            icon.source:      "qrc:/assets/icon-dapps_store-publishers.svg"
+            icon.source:      "qrc:/assets/icon-dapps_store-add-publisher.svg"
             icon.color:       Style.white
             onClicked:        showAddPublisherDialog()
         }
@@ -81,7 +80,7 @@ ColumnLayout {
         }
 
         onClosed: {
-            publicKeyInput.text = ""
+            publisherKeyInput.text = ""
         }
 
         contentItem: ColumnLayout {
@@ -113,33 +112,33 @@ ColumnLayout {
 
             // input
             SFTextInput {
-                id:                    publicKeyInput
-                Layout.bottomMargin:   publicKeyError.visible ? 6 : 30
+                id:                    publisherKeyInput
+                Layout.bottomMargin:   publisherKeyError.visible ? 6 : 30
                 Layout.leftMargin:     100
                 Layout.rightMargin:    100
                 Layout.fillWidth:      true
                 Layout.preferredWidth: 560
                 font.pixelSize:        14
-                color:                 publicKeyError.visible ? Style.validator_error : Style.content_main
-                backgroundColor:       publicKeyError.visible ? Style.validator_error : Style.content_main
+                color:                 publisherKeyError.visible ? Style.validator_error : Style.content_main
+                backgroundColor:       publisherKeyError.visible ? Style.validator_error : Style.content_main
                 leftPadding:           15
                 rightPadding:          15
                 validator:             RegExpValidator { regExp: /[0-9a-fA-F]{66}/ }
 
                 background: Rectangle {
-                    color:   publicKeyError.visible ? Style.validator_error : Style.white
+                    color:   publisherKeyError.visible ? Style.validator_error : Style.white
                     opacity: 0.1
                     radius:  10
                 }
                 onTextChanged: resetError()
 
                 function resetError() {
-                    publicKeyError.visible = false
+                    publisherKeyError.visible = false
                 }
             }
 
             SFText {
-                id:                  publicKeyError
+                id:                  publisherKeyError
                 visible:             false
                 Layout.bottomMargin: 20
                 Layout.leftMargin:   100
@@ -167,23 +166,24 @@ ColumnLayout {
                 }
 
                 PrimaryButton {
-                    enabled:     !publicKeyError.visible && publicKeyInput.acceptableInput
+                    enabled:     !publisherKeyError.visible && publisherKeyInput.acceptableInput
                     icon.source: "qrc:/assets/icon-dapps_store-add-publisher-submit.svg"
                     icon.height: 10
                     icon.width:  12
                     //% "Submit"
                     text:        qsTrId("dapps-store-submit")
                     onClicked: {
-                        var publisherName = addPublisherByKey(publicKeyInput.text)
+                        var publisherName = addPublisherByKey(publisherKeyInput.text)
                         if (publisherName) {
                             // TODO: Do we need to create a specific notification popup?
 
                             //% "%1 added to the list of publishers that you follow"
                             main.showSimplePopup(qsTrId("dapps-store-add-publisher-notification").arg(publisherName))
                             addPublisherDialog.close()
+                            return
                         }
-
-                        publicKeyError.visible = true
+                        
+                        publisherKeyError.visible = true
                     }
                 }
             }

@@ -14,19 +14,22 @@ CustomDialog {
     modal:   true
 
     property bool newPublisher: true
+    property var publisherInfo
 
-    property alias nickname: nameInput.text
-    property alias shortTitle: shortTitleInput.text
-    property alias aboutMe: aboutMeInput.text
-    property alias website: websiteInput.text
-    property alias twitter: twitterInput.text
-    property alias linkedin: linkedinInput.text
-    property alias instagram: instagramInput.text
-    property alias telegram: telegramInput.text
-    property alias discord: discordInput.text
+    signal createPublisher(var info)
+    signal changePublisherInfo(var info)
 
-    signal createPublisher()
-    signal changePublisherInfo()
+    function isChanged() {
+        return publisherInfo.nickname !== nameInput.text ||
+            publisherInfo.shortTitle !== shortTitleInput.text ||
+            publisherInfo.aboutMe !== aboutMeInput.text ||
+            publisherInfo.website !== websiteInput.text ||
+            publisherInfo.twitter !== twitterInput.text ||
+            publisherInfo.linkedin !== linkedinInput.text ||
+            publisherInfo.instagram !== instagramInput.text ||
+            publisherInfo.telegram !== telegramInput.text ||
+            publisherInfo.discord !== discordInput.text;
+    }
 
     contentItem: ColumnLayout {
         spacing: 0
@@ -56,6 +59,7 @@ CustomDialog {
             font.weight:          Font.Normal
             //% "To become a publisher you need to set up a username. ID number and personal Publisher Key will\n be given to you automatically. Registration will allow you to publish, update and delete DApps."
             text: qsTrId("dapps-store-become-publisher-text")
+            visible: control.newPublisher
         }
 
         GridLayout {
@@ -90,6 +94,8 @@ CustomDialog {
                     width: 335
                     height: 45
                     color: Style.content_main
+                    text: control.publisherInfo.nickname
+                    maximumLength: 30
                 }
             }
 
@@ -109,6 +115,8 @@ CustomDialog {
                     width: 335
                     height: 45
                     color: Style.content_main
+                    text: control.publisherInfo.shortTitle
+                    maximumLength: 50
                 }
 
                 SFText {
@@ -137,6 +145,8 @@ CustomDialog {
                     width: 701
                     height: 45
                     color: Style.content_main
+                    text: control.publisherInfo.aboutMe
+                    maximumLength: 150
                 }
 
                 SFText {
@@ -168,12 +178,15 @@ CustomDialog {
                     font.weight: Font.Normal
                 }
 
-                SFTextInput {
+                SFTextInputEx {
                     id: websiteInput
                     width: 335
                     height: 45
                     color: Style.content_main
                     placeholderText: "https://website.name/"
+                    text: control.publisherInfo.website
+                    icon: "qrc:/assets/icon-dapps-store-website.svg"
+                    maximumLength: 100
                 }
             }
 
@@ -188,12 +201,15 @@ CustomDialog {
                     font.weight: Font.Normal
                 }
 
-                SFTextInput {
+                SFTextInputEx {
                     id: twitterInput
                     width: 335
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
+                    text: control.publisherInfo.twitter
+                    icon: "qrc:/assets/icon-dapps-store-twitter.svg"
+                    maximumLength: 50
                 }
             }
 
@@ -208,12 +224,15 @@ CustomDialog {
                     font.weight: Font.Normal
                 }
 
-                SFTextInput {
+                SFTextInputEx {
                     id: linkedinInput
                     width: 335
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
+                    text: control.publisherInfo.linkedin
+                    icon: "qrc:/assets/icon-dapps-store-linkedin.svg"
+                    maximumLength: 50
                 }
             }
 
@@ -228,12 +247,15 @@ CustomDialog {
                     font.weight: Font.Normal
                 }
 
-                SFTextInput {
+                SFTextInputEx {
                     id: instagramInput
                     width: 335
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
+                    text: control.publisherInfo.instagram
+                    icon: "qrc:/assets/icon-dapps-store-instagram.svg"
+                    maximumLength: 50
                 }
             }
 
@@ -248,12 +270,15 @@ CustomDialog {
                     font.weight: Font.Normal
                 }
 
-                SFTextInput {
+                SFTextInputEx {
                     id: telegramInput
                     width: 335
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
+                    text: control.publisherInfo.telegram
+                    icon: "qrc:/assets/icon-dapps-store-telegram.svg"
+                    maximumLength: 50
                 }
             }
 
@@ -268,12 +293,15 @@ CustomDialog {
                     font.weight: Font.Normal
                 }
 
-                SFTextInput {
+                SFTextInputEx {
                     id: discordInput
                     width: 335
                     height: 45
                     color: Style.content_main
                     placeholderText: "login#0000"
+                    text: control.publisherInfo.discord
+                    icon: "qrc:/assets/icon-dapps-store-discord.svg"
+                    maximumLength: 50
                 }
             }
         }
@@ -290,6 +318,16 @@ CustomDialog {
                 icon.source: "qrc:/assets/icon-cancel-white.svg"
                 text: qsTrId("general-cancel")
                 onClicked: {
+                    nameInput.text = control.publisherInfo.nickname;
+                    shortTitleInput.text = control.publisherInfo.shortTitle;
+                    aboutMeInput.text = control.publisherInfo.aboutMe;
+                    websiteInput.text = control.publisherInfo.website;
+                    twitterInput.text = control.publisherInfo.twitter;
+                    linkedinInput.text = control.publisherInfo.linkedin;
+                    instagramInput.text = control.publisherInfo.instagram;
+                    telegramInput.text = control.publisherInfo.telegram;
+                    discordInput.text = control.publisherInfo.discord;
+
                     control.close();
                 }
             }
@@ -306,13 +344,25 @@ CustomDialog {
                     //% "save changes"
                     qsTrId("dapps-store-save-changes")
                 palette.buttonText: Style.content_opposite
-                enabled: control.newPublisher ? nameInput.text : false
+                enabled: nameInput.text && shortTitleInput.text && isChanged()
                 onClicked: {
+                    var info = {
+                        nickname: nameInput.text,
+                        shortTitle: shortTitleInput.text,
+                        aboutMe: aboutMeInput.text,
+                        website: websiteInput.text,
+                        twitter: twitterInput.text,
+                        linkedin: linkedinInput.text,
+                        instagram: instagramInput.text,
+                        telegram: telegramInput.text,
+                        discord: discordInput.text
+                    };
                     if (control.newPublisher) {
-                        control.createPublisher();
+                        control.createPublisher(info);
                     } else {
-                        control.changePublisherInfo();
+                        control.changePublisherInfo(info);
                     }
+                    control.close();
                 }
             }
 

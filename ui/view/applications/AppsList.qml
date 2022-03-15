@@ -9,7 +9,8 @@ Item {
     id: control
     property var  appsList
     property bool hasLocal
-    property alias showInstallFromFilePanel: installFromFilePanel.visible
+    property alias showInstallFromFilePanel:   installFromFilePanel.visible
+    property bool isSupportedUploadNewVersion: false
     property var onOpenDnd: function(){
         console.log('open DnD dialog');
     }
@@ -27,46 +28,63 @@ Item {
     }
 
     signal launch(var app)
-    signal install(var fname)
+    signal install(var appGUID)
+    signal installFromFile(string fname)
     signal update(var app)
     signal uninstall(var app)
-
+    signal remove(var app)
+    signal uploadNewVersion(var app)
 
     // Actuall apps list
     ScrollView {
-        id: scrollView
-        anchors.fill: parent
+        id:                          scrollView
+        anchors.fill:                parent
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical.policy: ScrollBar.AsNeeded
-        clip: true
+        ScrollBar.vertical.policy:   ScrollBar.AsNeeded
+        clip:                        true
 
         GridLayout {
-            width: scrollView.availableWidth
+            width:         scrollView.availableWidth
             columnSpacing: 20
-            rowSpacing: 15
-            columns: 2
+            rowSpacing:    15
+            columns:       2
 
             Repeater {
                 model: control.appsList
 
                 delegate: AppPanel {
-                    Layout.fillWidth: true
-                    Layout.minimumWidth: 440
-                    Layout.preferredHeight: 144
-                    app: modelData
+                    Layout.fillWidth:            true
+                    Layout.minimumWidth:         440
+                    Layout.preferredHeight:      144
+                    app:                         modelData
+                    isSupportedUploadNewVersion: control.isSupportedUploadNewVersion
 
-                    onLaunch: control.launch(app)
-                    onInstall: control.install(fname)
-                    onUpdate: control.update(app)
-                    onUninstall: control.uninstall(app)
+                    onLaunch: function (app) { 
+                        control.launch(app)
+                    }
+                    onInstall: function (appGUID) {
+                        control.install(appGUID)
+                    }
+                    onUpdate: function (app) {
+                        control.update(app)
+                    }
+                    onUninstall: function (app) {
+                        control.uninstall(app)
+                    }
+                    onRemove: function (app) {
+                        control.remove(app)
+                    }
+                    onUploadNewVersion: function (app) {
+                        control.uploadNewVersion(app)
+                    }
                 }
             }
 
             Item {
-                id: installFromFilePanel
-                Layout.fillWidth: true
+                id:                     installFromFilePanel
+                Layout.fillWidth:       true
                 Layout.preferredHeight: 144
-                opacity: 0.3
+                opacity:                0.3
 
                 Canvas {
                     anchors.fill: parent
@@ -92,27 +110,27 @@ Item {
 
                 RowLayout {
                     anchors.fill: parent
-                    spacing: 6
+                    spacing:      6
 
                     SvgImage {
-                        Layout.alignment:   Qt.AlignVCenter
-                        Layout.leftMargin:  20
-                        source:             "qrc:/assets/icon-add-green.svg"
-                        sourceSize:         Qt.size(18, 18)
+                        Layout.alignment:  Qt.AlignVCenter
+                        Layout.leftMargin: 20
+                        source:            "qrc:/assets/icon-add-green.svg"
+                        sourceSize:        Qt.size(18, 18)
                     }
 
                     SFText {
-                        Layout.alignment:    Qt.AlignVCenter
-                        Layout.fillWidth:    true
+                        Layout.alignment: Qt.AlignVCenter
+                        Layout.fillWidth: true
                         font {
                             styleName: "Normal"
                             weight:    Font.Normal
                             pixelSize: 14
                         }
-                        color: Style.active
+                        color:    Style.active
                         wrapMode: Text.WordWrap
-                        //% "Install DApp from file"
-                        text: qsTrId("apps-install-from-file")
+                                  //% "Install DApp from file"
+                        text:     qsTrId("apps-install-from-file")
                     }
                 }
 

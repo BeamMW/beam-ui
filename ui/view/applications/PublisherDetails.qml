@@ -11,23 +11,61 @@ ColumnLayout {
     Layout.fillWidth: true
     Layout.topMargin: 27
 
-    // TODO: publisher details
-    property var publisher
+    property var viewModel
     property var appsList: undefined
     readonly property bool hasApps: !!appsList && appsList.length > 0
-    property var onBack
+
+    property var onBack: function () {
+        console.log("PublisherDetails::onBack is not initialized")
+    }
+
+    property var uninstall: function () {
+        console.log("PublisherDetails::uninstall is not initialized")
+    }
 
     function uploadApp() {
-        // TODO: implement
-        // uploadDAppDialog.open()
+        uploadDAppDialog.open()
     }
 
     function editDetails() {
         // TODO: implement
+        changePublisherInfoDialog.open();
     }
 
     function showPublicKey() {
         publisherKeyDialog.open()
+    }
+
+    function loadPublisherDApps() {
+        appsList = viewModel.getPublisherDApps(viewModel.publisherInfo.publisherKey)
+    }
+
+    function launchApp(app) {
+        // TODO: mb implement with using more local logic
+        var appName = app.name;
+        var appid = app.appid;
+        main.updateItem("applications", {"appToOpen": { "name": appName, "appid": appid}, "showBack": false})
+    }
+
+    function unninstall(app) {
+        control.uninstall(app)
+    }
+
+    function uploadNewVersion(app) {
+        uploadDAppDialog.currentApp = app
+        uploadDAppDialog.open()
+    }
+
+    function remove(app) {
+        viewModel.removeDApp(app.guid)
+    }
+
+    Component.onCompleted: {
+        control.viewModel.appsChanged.connect(function() {
+            loadPublisherDApps()
+        })
+
+        loadPublisherDApps()
     }
 
     //
@@ -142,8 +180,7 @@ ColumnLayout {
             width:   60
             height:  60
             opacity: 0.5
-            // TODO: change icon
-            source: "qrc:/assets/icon-applications.svg"
+            source: "qrc:/assets/icon-dapps_store-empty-dapps-list.svg"
         }
 
         SFText {
@@ -175,11 +212,52 @@ ColumnLayout {
     }
 
     AppsList {
-        id: appsListView
-        Layout.fillHeight: true
-        Layout.fillWidth:  true
-        visible:  control.hasApps && !control.activeApp
-        // TODO: implement
+        id:                          appsListView
+        Layout.fillHeight:           true
+        Layout.fillWidth:            true
+        visible:                     control.hasApps
+        appsList:                    control.appsList
+        showInstallFromFilePanel:    false
+        isSupportedUploadNewVersion: true
+
+        onLaunch: function (app) {
+            control.launchApp(app)
+        }
+
+        onInstall: function (appGUID) {
+            viewModel.installApp(appGUID)
+        }
+
+        onUninstall: function (app) {
+            control.uninstall(app)
+        }
+
+        onUpdate: function (app) {            
+        }
+
+        onRemove: function (app) {
+            control.remove(app)
+        }
+
+        onUploadNewVersion: function (app) {
+            control.uploadNewVersion(app)
+        }
+    }
+
+    BecomePublisher {
+        id: changePublisherInfoDialog
+
+        newPublisher: false
+        publisherInfo: control.viewModel.publisherInfo
+
+        onChangePublisherInfo: function(info) {
+            control.viewModel.changePublisherInfo(info);
+        }
+    }
+
+    TransactionIsSent {
+        id: transactionSentDialog
+        newPublisher: false
     }
 
     CustomDialog {
@@ -189,7 +267,7 @@ ColumnLayout {
         y:       (parent.height - height) / 2
         parent:  Overlay.overlay
 
-        readonly property string publicKey: control.publisher.publicKey
+        readonly property string publicKey: !!control.viewModel.publisherInfo ? control.viewModel.publisherInfo.publisherKey : ""
 
         onOpened: {
             forceActiveFocus()
@@ -282,5 +360,14 @@ ColumnLayout {
                 }
             }
         }
+    }
+
+    UploadDApp {
+        id:                    uploadDAppDialog
+        chooseFile:            control.viewModel.chooseFile
+        getDAppFileProperties: control.viewModel.getDAppFileProperties
+        parseDAppFile:         control.viewModel.parseDAppFile
+        publishDApp:           control.viewModel.publishDApp
+        checkDAppNewVersion:   control.viewModel.checkDAppNewVersion
     }
 }

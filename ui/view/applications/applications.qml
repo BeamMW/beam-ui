@@ -29,16 +29,89 @@ ColumnLayout {
         txTable.showTxDetails(txid)
     }
 
+    function uninstallApp (app) {
+        if (viewModel.uninstallLocalApp(app.appid)) {
+
+            //% "'%1' DApp is successfully uninstalled."
+            uninstallOK.text = qsTrId("apps-uninstall-success").arg(app.name)
+            uninstallOK.open()
+        } else {
+            //% "Failed to uninstall '%1' DApp."
+            uninstallFail.text = qsTrId("apps-uninstall-fail").arg(app.name)
+            uninstallFail.open()
+        }
+        loadAppsList()
+    }
+
     ApplicationsViewModel {
         id: viewModel
+
+        onShaderTxData: function (action, data, txComment, fee, feeRate, rateUnit) {
+            const dialog = Qt.createComponent("qrc:/send_confirm.qml")
+            const instance = dialog.createObject(control,
+                {
+                    rateUnit:       rateUnit,
+                    fee:            fee,
+                    feeRate:        feeRate,
+                    comment:        txComment,
+                    appMode:        true,
+                    isOnline:       false,
+                    showPrefix:     true,
+                    hasAmounts:     false
+                })
+
+            instance.Component.onDestruction.connect(function () {
+                if (instance.result == Dialog.Accepted) {
+                    viewModel.contractInfoApproved(action, data)
+                    return
+                }
+                viewModel.contractInfoRejected()
+                return
+            })
+
+            instance.open()
+        }
+
+        onAppInstallOK: function (appName) {
+            //% "'%1' is successfully installed."
+            installOK.text = qsTrId("apps-install-success").arg(appName)
+            installOK.open()
+        }
+
+        onAppInstallFail: function (appName) {
+            //% "Failed to install DApp:\n%1"
+            installFail.text = qsTrId("apps-install-fail").arg(appName)
+            installFail.open()
+        }
+
+        onShowTxIsSent: function() {
+            transactionIsSent.open();
+        }
+
+        onHideTxIsSent: function() {
+            transactionIsSent.close();
+        }
+
+        onShowYouArePublisher: function() {
+            youArePublisher.open();
+        }
     }
 
     //
     // Page Header (Title + Status Bar)
     //
     Title {
-        //% "DApp Store"
+        //% "My DApp Store"
         text: qsTrId("apps-title")
+
+        MouseArea {
+            enabled:         stackView.depth > 1
+            anchors.fill:    parent
+            acceptedButtons: Qt.LeftButton
+            hoverEnabled:    true
+            cursorShape:     enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+            onClicked:       stackView.pop()
+        }
     }
 
     StatusBar {
@@ -58,123 +131,22 @@ ColumnLayout {
             DnDdappInstallDialog {
                 id: dndDialog
                 onGetFileName: function(fname) {
-                    appsListView.install(fname);
+                    appsListView.installFromFile(fname);
                 }
             }
 
             BecomePublisher {
-                id: becomePublisherDialog 
+                id: becomePublisherDialog
 
-                nickname: viewModel.nickname
-                shortTitle: viewModel.shortTitle
-                aboutMe: viewModel.aboutMe
-                website: viewModel.website
-                twitter: viewModel.twitter
-                linkedin: viewModel.linkedin
-                instagram: viewModel.instagram
-                telegram: viewModel.telegram
-                discord: viewModel.discord
+                newPublisher: !viewModel.isPublisher
+                publisherInfo: viewModel.publisherInfo
 
-                onCreatePublisher: function() {
-                    viewModel.createPublisher();
+                onCreatePublisher: function(info) {
+                    viewModel.createPublisher(info);
                 }
 
-                onChangePublisherInfo: function() {
-                    viewModel.changePublisherInfo();
-                }
-
-                Connections {
-                    target: viewModel
-
-                    function onNicknameChanged() {
-                        becomePublisherDialog.nickname = viewModel.nickname;
-                    }
-
-                    function onShortTitleChanged() {
-                        becomePublisherDialog.shortTitle = viewModel.shortTitle;
-                    }
-
-                    function onAboutMeChanged() {
-                        becomePublisherDialog.aboutMe = viewModel.aboutMe;
-                    }
-
-                    function onWebsiteChanged() {
-                        becomePublisherDialog.website = viewModel.website;
-                    }
-
-                    function onTwitterChanged() {
-                        becomePublisherDialog.twitter = viewModel.twitter;
-                    }
-
-                    function onLinkedinChanged() {
-                        becomePublisherDialog.linkedin = viewModel.linkedin;
-                    }
-
-                    function onInstagramChanged() {
-                        becomePublisherDialog.instagram = viewModel.instagram;
-                    }
-
-                    function onTelegramChanged() {
-                        becomePublisherDialog.telegram = viewModel.telegram;
-                    }
-
-                    function onDiscordChanged() {
-                        becomePublisherDialog.discord = viewModel.discord;
-                    }
-                }
-
-                Binding {
-                    target: viewModel
-                    property: "nickname"
-                    value: becomePublisherDialog.nickname
-                }
-
-                Binding {
-                    target: viewModel
-                    property: "shortTitle"
-                    value: becomePublisherDialog.shortTitle
-                }
-
-                Binding {
-                    target: viewModel
-                    property: "aboutMe"
-                    value: becomePublisherDialog.aboutMe
-                }
-
-                Binding {
-                    target: viewModel
-                    property: "website"
-                    value: becomePublisherDialog.website
-                }
-
-                Binding {
-                    target: viewModel
-                    property: "twitter"
-                    value: becomePublisherDialog.twitter
-                }
-
-                Binding {
-                    target: viewModel
-                    property: "linkedin"
-                    value: becomePublisherDialog.linkedin
-                }
-
-                Binding {
-                    target: viewModel
-                    property: "instagram"
-                    value: becomePublisherDialog.instagram
-                }
-
-                Binding {
-                    target: viewModel
-                    property: "telegram"
-                    value: becomePublisherDialog.telegram
-                }
-
-                Binding {
-                    target: viewModel
-                    property: "discord"
-                    value: becomePublisherDialog.discord
+                onChangePublisherInfo: function(info) {
+                    viewModel.changePublisherInfo(info);
                 }
             }
 
@@ -189,7 +161,9 @@ ColumnLayout {
             function navigatePublisherDetails() {
                 if (viewModel.isPublisher) {
                     var params = {
-                        "onBack": stackView.pop
+                        "viewModel": viewModel,
+                        "onBack":    stackView.pop,
+                        "uninstall": control.uninstallApp,
                     }
                     stackView.push(Qt.createComponent("PublisherDetails.qml"), params)
                 }
@@ -246,9 +220,8 @@ ColumnLayout {
 
                 PrimaryButton {
                     id: publisherDetails
-                    // TODO: add check isPublisher and show "default text" or "publisher name"
                     //% "become a publisher"
-                    text: qsTrId("apps-become-a-publisher")
+                    text: viewModel.isPublisher ? viewModel.publisherInfo.nickname : qsTrId("apps-become-a-publisher")
                     icon.source: "qrc:/assets/icon-dapps_store-become-a-publisher.svg"
                     onClicked: navigatePublisherDetails()
                 }
@@ -597,9 +570,14 @@ ColumnLayout {
                     launchApp(app)
                 }
 
-                onInstall: function (fname) {
+                onInstall: function (appGUID) {
+                    viewModel.installApp(appGUID)
+                }
+
+                onInstallFromFile: function (fname) {
                     if (!fname) {
-                        fname = viewModel.chooseFile()
+                        //% "Select application to install"
+                        fname = viewModel.chooseFile(qsTrId("applications-install-title"))
                         if (!fname) return
                     }
 
@@ -614,17 +592,7 @@ ColumnLayout {
                 }
 
                 onUninstall: function (app) {
-                    if (viewModel.uninstallLocalApp(app.appid)) {
-
-                        //% "'%1' DApp is successfully uninstalled."
-                        uninstallOK.text = qsTrId("apps-uninstall-success").arg(app.name)
-                        uninstallOK.open()
-                    } else {
-                        //% "Failed to uninstall '%1' DApp."
-                        uninstallFail.text = qsTrId("apps-uninstall-fail").arg(app.name)
-                        uninstallFail.open()
-                    }
-                    loadAppsList()
+                    control.uninstallApp(app)
                 }
 
                 MouseArea {
@@ -716,6 +684,30 @@ ColumnLayout {
                     appsDialog.open();
                 }
             }
+        }
+    }
+
+    TransactionIsSent {
+        id: transactionIsSent
+
+        newPublisher: !viewModel.isPublisher
+    }
+
+    YouArePublisher {
+        id: youArePublisher
+
+        nickname: viewModel.publisherInfo.nickname
+        publisherKey: viewModel.publisherInfo.publisherKey
+
+        onGoToMyAccount: {
+            youArePublisher.close();
+
+            var params = {
+                "viewModel": viewModel,
+                "onBack":    stackView.pop,
+                "uninstall": control.uninstallApp,
+            }
+            stackView.push(Qt.createComponent("PublisherDetails.qml"), params)
         }
     }
 

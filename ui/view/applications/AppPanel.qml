@@ -7,14 +7,20 @@ import Beam.Wallet      1.0
 import "../controls"
 
 Item {
-    id: control
+    id:             control
+    implicitHeight: 144
+    implicitWidth:  440
 
     property var app
+    property bool showButtons:                 true
+    property bool isSupportedUploadNewVersion: false
 
     signal launch(var app)
-    signal install(var fname)
+    signal install(var appGUID)
     signal update(var app)
     signal uninstall(var app)
+    signal remove(var app)
+    signal uploadNewVersion(var app)
 
     // background
     Rectangle {
@@ -25,16 +31,16 @@ Item {
     }
 
     RowLayout {
-        anchors.fill: parent
-        anchors.topMargin: 20
-        anchors.leftMargin: 20
-        anchors.rightMargin: 20
+        anchors.fill:         parent
+        anchors.topMargin:    20
+        anchors.leftMargin:   20
+        anchors.rightMargin:  20
         anchors.bottomMargin: 16
-        spacing: 20
+        spacing:              20
 
         // icon
         RowLayout {
-            Layout.alignment: Qt.AlignTop
+            Layout.alignment:      Qt.AlignTop
             Layout.preferredWidth: 50
             Rectangle {
                 width:  50
@@ -43,33 +49,33 @@ Item {
                 color:  Style.background_main
 
                 SvgImage {
-                    id: defaultIcon
-                    source: hoverArea.containsMouse ? "qrc:/assets/icon-defapp-active.svg" : "qrc:/assets/icon-defapp.svg"
-                    anchors.verticalCenter: parent.verticalCenter
+                    id:                       defaultIcon
+                    source:                   hoverArea.containsMouse ? "qrc:/assets/icon-defapp-active.svg" : "qrc:/assets/icon-defapp.svg"
+                    anchors.verticalCenter:   parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    visible: !customIcon.visible
+                    visible:                  !customIcon.visible
                 }
 
                 SvgImage {
-                    id: customIcon
-                    source: app.icon ? app.icon : "qrc:/assets/icon-defapp.svg"
-                    anchors.verticalCenter: parent.verticalCenter
+                    id:                       customIcon
+                    source:                   app.icon ? app.icon : "qrc:/assets/icon-defapp.svg"
+                    anchors.verticalCenter:   parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    visible: !!app.icon && progress == 1.0
+                    visible:                  !!app.icon && progress == 1.0
                 }
             }
         }
                     
         ColumnLayout {
             Layout.fillWidth: true
-            spacing: 13
+            spacing:          13
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 0
+                spacing:          0
 
                 ColumnLayout {
                     Layout.fillWidth: true
-                    spacing: 4
+                    spacing:          4
 
                     SFText {
                         text: app.name
@@ -82,24 +88,24 @@ Item {
                     }
 
                     SFText {
-                        Layout.maximumWidth:  284
-                        text: app.description
-                        font.pixelSize:  14
-                        elide: Text.ElideRight
-                        color: Style.content_main
-                        visible: app.supported
-                        maximumLineCount: 2
-                        wrapMode: Text.Wrap
+                        Layout.maximumWidth: 284
+                        text:                app.description
+                        font.pixelSize:      14
+                        elide:               Text.ElideRight
+                        color:               Style.content_main
+                        visible:             app.supported
+                        maximumLineCount:    2
+                        wrapMode:            Text.Wrap
                     }
 
                     // TODO: find place in new design
                     SFText {
-                        elide: Text.ElideRight
-                        color: Style.validator_error
-                        visible: !app.supported
+                        elide:       Text.ElideRight
+                        color:       Style.validator_error
+                        visible:     !app.supported
                         font.italic: true
-                        //% "This DApp requires version %1 of Beam Wallet or higher. Please update your wallet."
-                        text: qsTrId("apps-version-error").arg(app.min_api_version || app.api_version)
+                                     //% "This DApp requires version %1 of Beam Wallet or higher. Please update your wallet."
+                        text:        qsTrId("apps-version-error").arg(app.min_api_version || app.api_version)
                     }
                 }
 
@@ -109,14 +115,13 @@ Item {
 
                 SFText {
                     Layout.alignment: Qt.AlignRight | Qt.AlignTop
-                    text: "category" // app.category
-                    font.pixelSize:  14
-                    elide: Text.ElideRight
+                    text:             "category" // app.category
+                    font.pixelSize:   14
+                    elide:            Text.ElideRight
                     // TODO: get color for the category
-                    color: "#FF57BF"
-                    // visible: !!app.category
+                    color:            "#FF57BF"
+                    // visible:       !!app.category
                 }
-
             }
 
             Item {
@@ -126,15 +131,15 @@ Item {
             RowLayout {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignBottom
-                spacing: 0
+                spacing:          0
 
                 // TODO: implement "Publisher name" + publisher pubKey
                 SFText {
                     Layout.alignment: Qt.AlignTop
-                    text: "Publisher name" // app.publisherName ?
-                    font.pixelSize:  12
-                    elide: Text.ElideRight
-                    color: Style.content_secondary
+                    text:             "Publisher name" // app.publisherName ?
+                    font.pixelSize:   12
+                    elide:            Text.ElideRight
+                    color:            Style.content_secondary
                 }
 
                 Item {
@@ -142,81 +147,81 @@ Item {
                 }
 
                 CustomButton {
-                    Layout.alignment: Qt.AlignTop | Qt.ALignRight
-                    palette.button: Style.background_button
-                    palette.buttonText : Style.content_main
-                    icon.source: "qrc:/assets/icon-run.svg"
-                    icon.height: 16
-                    visible: app.supported && !!app.notInstalled
-                    //% "Install"
-                    text: qsTrId("dapps-store-install")
+                    Layout.alignment:   Qt.AlignTop | Qt.ALignRight
+                    palette.button:     Style.background_button
+                    palette.buttonText: Style.content_main
+                    icon.source:        "qrc:/assets/icon-run.svg"
+                    icon.height:        16
+                    visible:            showButtons && app.supported && !!app.notInstalled
+                                        //% "Install"
+                    text:               qsTrId("dapps-store-install")
 
                     MouseArea {
-                        anchors.fill:     parent
-                        acceptedButtons:  Qt.LeftButton
-                        hoverEnabled:     true
+                        anchors.fill:            parent
+                        acceptedButtons:         Qt.LeftButton
+                        hoverEnabled:            true
                         propagateComposedEvents: true
-                        onClicked:        control.install(modelData)
+                        onClicked:               control.install(modelData.guid)
                     }
                 }
 
-                // TODO: change buttons to new design
+                // TODO: change buttons to new design/ refactor
 
                 CustomButton {
-                    Layout.alignment: Qt.AlignTop
-                    palette.button: Style.background_button
-                    palette.buttonText : Style.content_main
-                    icon.source: "qrc:/assets/icon-run.svg"
-                    icon.height: 16
-                    visible: app.supported && !app.notInstalled && !!app.hasUpdate
-                    //% "Update"
-                    text: qsTrId("dapps-store-update")
+                    Layout.alignment:   Qt.AlignTop
+                    palette.button:     Style.background_button
+                    palette.buttonText: Style.content_main
+                    icon.source:        "qrc:/assets/icon-run.svg"
+                    icon.height:        16
+                    visible:            showButtons && app.supported && !app.notInstalled && !!app.hasUpdate
+                                        //% "Update"
+                    text:               qsTrId("dapps-store-update")
 
                     MouseArea {
-                        anchors.fill:     parent
-                        acceptedButtons:  Qt.LeftButton
-                        hoverEnabled:     true
+                        anchors.fill:            parent
+                        acceptedButtons:         Qt.LeftButton
+                        hoverEnabled:            true
                         propagateComposedEvents: true
-                        onClicked:        control.update(modelData)
+                        onClicked:               control.update(modelData)
                     }
                 }
 
                 CustomButton {
-                    Layout.alignment: Qt.AlignTop | Qt.ALignRight
-                    palette.button: Style.background_button
-                    palette.buttonText : Style.content_main
-                    icon.source: "qrc:/assets/icon-run.svg"
-                    icon.height: 16
-                    visible: app.supported && !app.notInstalled
-                    //% "launch"
-                    text: qsTrId("apps-run")
+                    Layout.alignment:   Qt.AlignTop | Qt.ALignRight
+                    palette.button:     Style.background_button
+                    palette.buttonText: Style.content_main
+                    icon.source:        "qrc:/assets/icon-run.svg"
+                    icon.height:        16
+                    visible:            showButtons && app.supported && !app.notInstalled
+                                        //% "launch"
+                    text:               qsTrId("apps-run")
 
                     MouseArea {
-                        anchors.fill:     parent
-                        acceptedButtons:  Qt.LeftButton
-                        hoverEnabled:     true
+                        anchors.fill:            parent
+                        acceptedButtons:         Qt.LeftButton
+                        hoverEnabled:            true
                         propagateComposedEvents: true
-                        onClicked:        control.launch(modelData)
+                        onClicked:               control.launch(modelData)
                     }
                 }
 
                 CustomToolButton {
-                    Layout.alignment: Qt.AlignTop
-                    Layout.fillHeight: true
-                    Layout.leftMargin: 20
+                    Layout.alignment:   Qt.AlignTop
+                    Layout.fillHeight:  true
+                    Layout.leftMargin:  20
                     Layout.rightMargin: 10
-                    width: 36
+                    width:              36
 
-                    opacity: app.local ? 0.5 : 0
-                    icon.source: "qrc:/assets/icon-actions.svg"
-                    visible: app.supported && !!app.local
+                    opacity:           app.local ? 0.5 : 0
+                    icon.source:       "qrc:/assets/icon-actions.svg"
+                    visible:           showButtons && app.supported && !!app.local
 
                     //% "Actions"
-                    ToolTip.text: qsTrId("general-actions")
+                    ToolTip.text:      qsTrId("general-actions")
                     MouseArea {
-                        anchors.fill:     parent
-                        acceptedButtons:  Qt.LeftButton
-                        hoverEnabled:     true
+                        anchors.fill:            parent
+                        acceptedButtons:         Qt.LeftButton
+                        hoverEnabled:            true
                         propagateComposedEvents: true
                         onClicked: function () {
                             if (app.local) {
@@ -230,9 +235,9 @@ Item {
     }
 
     MouseArea {
-        id:            hoverArea
-        anchors.fill:  parent
-        hoverEnabled:  true
+        id:                      hoverArea
+        anchors.fill:            parent
+        hoverEnabled:            true
         propagateComposedEvents: true
     }
 
@@ -240,32 +245,60 @@ Item {
         id:    appMenu
         modal: true
         dim:   false
+    }
 
-        Action {
-            //% "Uninstall"
-            text: qsTrId("apps-uninstall")
-            icon.source: "qrc:/assets/icon-delete.svg"
-            onTriggered: function () {
-                confirmUninstall.open()
-            }
+    Action {
+        id:          uploadNewVersionAction
+                     //% "update dapp"
+        text:        qsTrId("dapps-store-update-dapp")
+        icon.source: "qrc:/assets/icon-dapps_store-update.svg"
+        onTriggered: function () {
+            control.uploadNewVersion(modelData)
+        }
+    }
+    Action {
+        id:          uninstallAction
+                     //% "Uninstall"
+        text:        qsTrId("apps-uninstall")
+        icon.source: "qrc:/assets/icon-delete.svg"
+        onTriggered: function () {
+            confirmUninstall.open()
+        }
+    }
+
+    Action {
+        id:          removeAction
+                     //% "remove dapp"
+        text:        qsTrId("dapps-store-remove-dapp")
+        icon.source: "qrc:/assets/icon-delete.svg"
+        onTriggered: function () {
+            control.remove(modelData)
         }
     }
 
     ConfirmationDialog {
-        id: confirmUninstall
-        width: 460
-        //% "Uninstall DApp"
-        title: qsTrId("app-uninstall-title")
-        //% "Are you sure you want to uninstall %1 DApp?"
-        text: qsTrId("apps-uninstall-confirm").arg(app.name)
-        //% "Uninstall"
-        okButtonText: qsTrId("apps-uninstall")
-        okButtonIconSource: "qrc:/assets/icon-delete.svg"
-        okButtonColor: Style.accent_fail
+        id:                     confirmUninstall
+        width:                  460
+                                //% "Uninstall DApp"
+        title:                  qsTrId("app-uninstall-title")
+                                //% "Are you sure you want to uninstall %1 DApp?"
+        text:                   qsTrId("apps-uninstall-confirm").arg(app.name)
+                                //% "Uninstall"
+        okButtonText:           qsTrId("apps-uninstall")
+        okButtonIconSource:     "qrc:/assets/icon-delete.svg"
+        okButtonColor:          Style.accent_fail
         cancelButtonIconSource: "qrc:/assets/icon-cancel-white.svg"
 
         onAccepted: function () {
             control.uninstall(modelData)
         }
+    }
+
+    Component.onCompleted: {
+        if (isSupportedUploadNewVersion) {
+            appMenu.addAction(uploadNewVersionAction)
+            appMenu.addAction(removeAction)
+        }
+        appMenu.addAction(uninstallAction)
     }
 }

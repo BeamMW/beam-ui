@@ -15,6 +15,7 @@
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QWebEngineProfile>
 #include <QFileDialog>
+#include <qbuffer.h>
 #include "apps_view.h"
 #include "utility/logger.h"
 #include "model/app_model.h"
@@ -27,7 +28,16 @@
 
 namespace
 {
-    QString parseStringField(nlohmann::json& json, const char* fieldName)
+    const uint8_t kCountDAppVersionParts = 4;
+
+    QString fromHex(const std::string& value)
+    {
+        auto tmp = beam::from_hex(value);
+
+        return QString::fromUtf8(reinterpret_cast<char*>(tmp.data()), static_cast<int>(tmp.size()));
+    }
+
+    std::string extractStringField(nlohmann::json& json, const char* fieldName)
     {
         const auto& field = json[fieldName];
         if (!field.is_string())
@@ -36,7 +46,17 @@ namespace
             ss << "Invalid " << fieldName << " of the dapp";
             throw std::runtime_error(ss.str());
         }
-        return QString::fromStdString(field.get<std::string>());
+        return field.get<std::string>();
+    }
+
+    QString parseStringField(nlohmann::json& json, const char* fieldName)
+    {
+        return QString::fromStdString(extractStringField(json, fieldName));
+    }
+
+    QString decodeStringField(nlohmann::json& json, const char* fieldName)
+    {
+        return fromHex(extractStringField(json, fieldName));
     }
 
     std::string toHex(const QString& value)
@@ -44,13 +64,79 @@ namespace
         std::string tmp = value.toStdString();
         return beam::to_hex(tmp.data(), tmp.size());
     }
+
+    QVariantMap parsePublisherInfo(nlohmann::json& info)
+    {
+        QVariantMap tmp;
+
+        tmp["publisherKey"] = QString::fromStdString(info["pubkey"].get<std::string>());
+        tmp["nickname"] = fromHex(info["name"].get<std::string>());
+        tmp["shortTitle"] = fromHex(info["short_title"].get<std::string>());
+        tmp["aboutMe"] = fromHex(info["about_me"].get<std::string>());
+        tmp["website"] = fromHex(info["website"].get<std::string>());
+        tmp["twitter"] = fromHex(info["twitter"].get<std::string>());
+        tmp["linkedin"] = fromHex(info["linkedin"].get<std::string>());
+        tmp["instagram"] = fromHex(info["instagram"].get<std::string>());
+        tmp["telegram"] = fromHex(info["telegram"].get<std::string>());
+        tmp["discord"] = fromHex(info["discord"].get<std::string>());
+
+        return tmp;
+    }
+
+    QString removeFilePrefix(QString fname)
+    {
+        // Some shells/systems provide incorrect count of '/' after file:
+        // For example in gnome on linux one '/' is missing. So this ugly code is necessary
+        if (fname.startsWith("file:"))
+        {
+            fname = fname.remove(0, 5);
+            while (fname.startsWith("/"))
+            {
+                fname = fname.remove(0, 1);
+            }
+
+#ifndef WIN32
+            fname = QString("/") + fname;
+#endif
+        }
+        return fname;
+    }
+
+    int16_t compareDAppVersion(const QString& first, const QString& second)
+    {
+        auto fillDAppVersion = [] (QStringList& versionList) {
+            while (versionList.length() < kCountDAppVersionParts)
+            {
+                versionList.append("0");
+            }
+        };
+
+        auto firstStringList = first.split(".");
+        auto secondStringList = second.split(".");
+        fillDAppVersion(firstStringList);
+        fillDAppVersion(secondStringList);
+
+        for (uint8_t i = 0; i < firstStringList.length(); ++i)
+        {
+            if (firstStringList[i] == secondStringList[i])
+            {
+                continue;
+            }
+            
+            return firstStringList[i].toInt() > secondStringList[i].toInt() ? 1 : -1;
+        }
+        return 0;
+    }
 }
 
 namespace beamui::applications
 {
     AppsViewModel::AppsViewModel()
+        : m_walletModel(AppModel::getInstance().getWalletModel())
     {
         LOG_INFO() << "AppsViewModel created";
+
+        connect(m_walletModel.get(), &WalletModel::transactionsChanged, this, &AppsViewModel::onTransactionsChanged);
 
         auto defaultProfile = QWebEngineProfile::defaultProfile();
         defaultProfile->setHttpCacheType(QWebEngineProfile::HttpCacheType::DiskHttpCache);
@@ -62,6 +148,7 @@ namespace beamui::applications
         _serverAddr = QString("127.0.0.1:") + QString::number(AppSettings().getAppsServerPort());
 
         loadApps();
+        loadPublishers();
         loadMyPublisherInfo();
     }
 
@@ -100,9 +187,9 @@ namespace beamui::applications
         return _userAgent;
     }
 
-    QMap<QString, QVariant> AppsViewModel::validateAppManifest(QTextStream& in, const QString& appFolder)
+    QVariantMap AppsViewModel::parseAppManifest(QTextStream& in, const QString& appFolder)
     {
-        QMap<QString, QVariant> app;
+        QVariantMap app;
 
         const auto content = in.readAll();
         if (content.isEmpty())
@@ -179,13 +266,55 @@ namespace beamui::applications
         {
             if (!mav.is_string())
             {
-                app.insert("min_api_version", QString::fromStdString(mav.get<std::string>()));
+                throw std::runtime_error("Invalid min_api_version in the manifest file");
             }
-            throw std::runtime_error("Invalid min_api_version in the manifest file");
+            app.insert("min_api_version", QString::fromStdString(mav.get<std::string>()));
+        }
+
+        const auto& v = json["version"];
+        if (!v.empty())
+        {
+            if (!v.is_string())
+            {
+                throw std::runtime_error("Invalid version in the manifest file");
+            }
+            app.insert("version", QString::fromStdString(v.get<std::string>()));
+        }
+
+        const auto& categoryObj = json["category"];
+        if (!categoryObj.empty())
+        {
+            if (!categoryObj.is_number_unsigned())
+            {
+                throw std::runtime_error("Invalid category in the manifest file");
+            }
+            app.insert("category", categoryObj.get<uint32_t>());
+        }
+
+        const auto& publisherObj = json["publisher"];
+        if (!publisherObj.empty())
+        {
+            if (!publisherObj.is_string())
+            {
+                throw std::runtime_error("Invalid publisher in the manifest file");
+            }
+            app.insert("publisher", QString::fromStdString(publisherObj.get<std::string>()));
+        }
+
+        // TODO: Make guid is required field after fixing all DApps
+        const auto& guidObj = json["guid"];
+        if (!guidObj.empty())
+        {
+            if (!guidObj.is_string())
+            {
+                throw std::runtime_error("Invalid 'guid' in the manifest file");
+            }
+            app.insert("guid", QString::fromStdString(guidObj.get<std::string>()));
         }
 
         app.insert("local", true);
-        const auto appid = beam::wallet::GenerateAppID(sname, surl);
+        // TODO: check why we used surl instead of extended url - app["url"]
+        const auto appid = beam::wallet::GenerateAppID(sname, app["url"].toString().toStdString());
         app.insert("appid", QString::fromStdString(appid));
 
         return app;
@@ -224,7 +353,7 @@ namespace beamui::applications
 
                     for (auto& item : json.items())
                     {
-                        QMap<QString, QVariant> app;
+                        QVariantMap app;
                         auto name = parseStringField(item.value(), "name");
                         auto url = parseStringField(item.value(), "url");
                         const auto appid = beam::wallet::GenerateAppID(name.toStdString(), url.toStdString());
@@ -234,7 +363,8 @@ namespace beamui::applications
                         app.insert("name", name);
                         app.insert("url", url);
                         app.insert("icon", parseStringField(item.value(), "icon"));
-
+                    
+                        // TODO: add verification
                         bool isSupported = true;
 
                         app.insert("supported", isSupported);
@@ -248,18 +378,138 @@ namespace beamui::applications
                     // TODO: mb need to transfer the error to QML(errorMessage)
                     LOG_WARNING() << "Failed to load remote applications list, " << err.what();
                 }
-                emit appsChanged();
+                loadAppsFromStore();
             });
     }
 
-    void AppsViewModel::loadMyPublisherInfo()
+    void AppsViewModel::loadAppsFromStore()
     {
-        std::string args = "action=my_publisher_info,cid=";
+        std::string args = "action=view_dapps,cid=";
         args += AppSettings().getDappStoreCID();
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args),
+            [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                if (!err.empty())
+                {
+                    LOG_ERROR() << "Failed to load dapps list from DApp Store" << ", " << err;
+                    return;
+                }
+
+                try
+                {
+                    auto json = nlohmann::json::parse(output);
+
+                    if (json.empty() || !json.is_object() || !json["dapps"].is_array())
+                    {
+                        throw std::runtime_error("Invalid response of the view_dapps method");
+                    }
+
+                    for (auto& item : json["dapps"].items())
+                    {
+                        if (!item.value().is_object())
+                        {
+                            throw std::runtime_error("Invalid body of the dapp " + item.key());
+                        }
+                        auto guid = parseStringField(item.value(), "id");
+                        auto publisher = parseStringField(item.value(), "publisher");
+
+                        LOG_DEBUG() << "Parsing DApp from contract, guid - " << guid.toStdString() << ", publisher - " << publisher.toStdString();
+
+                        // parse version
+                        auto versionObj = item.value()["version"];
+
+                        if (versionObj.empty() || !versionObj.is_object())
+                        {
+                            throw std::runtime_error("Invalid 'version' of the dapp");
+                        }
+
+                        auto majorObj = versionObj["major"];
+                        auto minorObj = versionObj["minor"];
+                        auto releaseObj = versionObj["release"];
+                        auto buildObj = versionObj["build"];
+                        if (majorObj.empty() || !majorObj.is_number_unsigned() ||
+                            minorObj.empty() || !minorObj.is_number_unsigned() ||
+                            releaseObj.empty() || !releaseObj.is_number_unsigned() ||
+                            buildObj.empty() || !buildObj.is_number_unsigned())
+                        {
+                            throw std::runtime_error("Invalid 'version' of the dapp");
+                        }
+
+                        QString version;
+                        QTextStream textStream(&version);
+                        textStream << majorObj.get<uint32_t>() << '.' << minorObj.get<uint32_t>() << '.'
+                            << releaseObj.get<uint32_t>() << '.' << buildObj.get<uint32_t>();
+
+                        // try to find in _apps
+                        // if found -> installed -> compare version -> set "hasUpdate"
+                        // find app in _apps by guid
+                        const auto it = std::find_if(_apps.begin(), _apps.end(),
+                            [guid](const auto& app) -> bool {
+                                const auto appIt = app.find("guid");
+                                if (appIt == app.end())
+                                {
+                                    return false;
+                                }
+                                return appIt->toString() == guid;
+                            }
+                        );
+
+                        if (it != _apps.end())
+                        {
+                            auto& app = *it;
+                            if (compareDAppVersion(version, app["version"].toString()) > 0)
+                            {
+                                app.insert("hasUpdate", true);
+                            }
+                            app.insert("ipfs_id", parseStringField(item.value(), "ipfs_id"));
+                        }
+                        else
+                        {
+                            QMap<QString, QVariant> app;
+                            app.insert("description", decodeStringField(item.value(), "description"));
+                            app.insert("name", decodeStringField(item.value(), "name"));
+                            app.insert("ipfs_id", parseStringField(item.value(), "ipfs_id"));
+                            // TODO: check if empty url is allowed for not installed app
+                            app.insert("url", "");
+                            app.insert("api_version", decodeStringField(item.value(), "api_ver"));
+                            app.insert("min_api_version", decodeStringField(item.value(), "min_api_ver"));
+                            app.insert("guid", guid);
+                            app.insert("publisher", publisher);
+
+                            // TODO: add verification
+                            app.insert("supported", true);
+
+                            app.insert("notInstalled", true);
+
+                            _apps.push_back(app);
+                        }
+                    }
+                    emit appsChanged();
+                }
+                catch (std::runtime_error& err)
+                {
+                    LOG_ERROR() << "Error while parsing app from contract" << ", " << err.what();
+                }
+            }
+        );
+    }
+
+    void AppsViewModel::loadPublishers()
+    {
+        std::string args = "action=view_publishers,cid=";
+        args += AppSettings().getDappStoreCID();
+
+        QPointer<AppsViewModel> guard(this);
+
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args),
             [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
             {
                 if (!guard)
@@ -279,28 +529,24 @@ namespace beamui::applications
 
                     LOG_INFO() << json.dump(4);
 
-                    if (json.empty() || !json.is_object() || !json["my_publisher_info"].is_object())
+                    if (json.empty() || !json.is_object() || !json["publishers"].is_array())
                     {
                         throw std::runtime_error("Invalid response of the view_publishers method");
                     }
 
-                    if (!json["my_publisher_info"].empty())
-                    {
-                        auto& info = json["my_publisher_info"];
-                        publisherKey(QString::fromStdString(info["pubkey"].get<std::string>()));
-                        nickname(QString::fromStdString(info["name"].get<std::string>()));
-                        shortTitle(QString::fromStdString(info["short_title"].get<std::string>()));
-                        aboutMe(QString::fromStdString(info["about_me"].get<std::string>()));
-                        website(QString::fromStdString(info["website"].get<std::string>()));
-                        twitter(QString::fromStdString(info["twitter"].get<std::string>()));
-                        linkedin(QString::fromStdString(info["linkedin"].get<std::string>()));
-                        instagram(QString::fromStdString(info["instagram"].get<std::string>()));
-                        telegram(QString::fromStdString(info["telegram"].get<std::string>()));
-                        discord(QString::fromStdString(info["discord"].get<std::string>()));
+                    QList<QVariantMap> publishers;
 
-                        _isPublisher = true;
-                        emit isPublisherChanged();
+                    for (auto& item : json["publishers"].items())
+                    {
+                        if (!item.value().is_object())
+                        {
+                            throw std::runtime_error("Invalid body of the publishers list " + item.key());
+                        }
+
+                        publishers.push_back(parsePublisherInfo(item.value()));
                     }
+
+                    setPublishers(publishers);
                 }
                 catch (std::runtime_error& err)
                 {
@@ -310,21 +556,98 @@ namespace beamui::applications
         );
     }
 
-    QList<QMap<QString, QVariant>> AppsViewModel::getApps()
+    void AppsViewModel::loadMyPublisherInfo(bool hideTxIsSentDialog, bool showYouArePublsherDialog)
+    {
+        std::string args = "action=my_publisher_info,cid=";
+        args += AppSettings().getDappStoreCID();
+
+        QPointer<AppsViewModel> guard(this);
+
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args),
+            [this, guard, hideTxIsSentDialog, showYouArePublsherDialog](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                if (!err.empty())
+                {
+                    LOG_WARNING() << "Failed to my publisher info" << ", " << err;
+                    return;
+                }
+                else
+                {
+                    try
+                    {
+                        auto json = nlohmann::json::parse(output);
+
+                        LOG_INFO() << json.dump(4);
+
+                        if (json.empty() || !json.is_object() || !json["my_publisher_info"].is_object())
+                        {
+                            throw std::runtime_error("Invalid response of the view_publishers method");
+                        }
+
+                        if (!json["my_publisher_info"].empty())
+                        {
+                            auto& info = json["my_publisher_info"];
+                            QVariantMap tmp = parsePublisherInfo(info);
+
+                            setPublisherInfo(tmp);
+
+                            _isPublisher = true;
+                            emit isPublisherChanged();
+                        }
+                    }
+                    catch (std::runtime_error& err)
+                    {
+                        LOG_WARNING() << "Error while parsing publisher from contract" << ", " << err.what();
+                    }
+                }
+
+                if (hideTxIsSentDialog)
+                {
+                    emit hideTxIsSent();
+                }
+
+                if (showYouArePublsherDialog)
+                {
+                    emit showYouArePublisher();
+                }
+            }
+        );
+    }
+
+    void AppsViewModel::setPublishers(const QList<QVariantMap>& value)
+    {
+        if (value != _publishers)
+        {
+            _publishers = value;
+            emit publishersChanged();
+        }
+    }
+
+    QList<QVariantMap> AppsViewModel::getPublishers()
+    {
+        return _publishers;
+    }
+
+    QList<QVariantMap> AppsViewModel::getApps()
     {
         return _apps;
     }
 
-    QList<QMap<QString, QVariant>> AppsViewModel::getLocalApps()
+    QList<QVariantMap> AppsViewModel::getLocalApps()
     {
-        QList<QMap<QString, QVariant>> result;
+        QList<QVariantMap> result;
 
         //
         // Dev App
         //
         if (!AppSettings().getDevAppName().isEmpty())
         {
-            QMap<QString, QVariant> devapp;
+            QVariantMap devapp;
 
             const auto name  = AppSettings().getDevAppName();
             const auto url   = AppSettings().getDevAppUrl();
@@ -359,8 +682,12 @@ namespace beamui::applications
 
                 QTextStream in(&file);
 
-                auto app = validateAppManifest(in, justFolder);
+                auto app = parseAppManifest(in, justFolder);
                 app.insert("full_path", fullFolder);
+
+                // TODO: add verification
+                app.insert("supported", true);
+
                 result.push_back(app);
             }
             catch(std::runtime_error& err)
@@ -379,170 +706,64 @@ namespace beamui::applications
         return _isPublisher;
     }
 
-    QString AppsViewModel::publisherKey() const
+    QVariantMap AppsViewModel::getPublisherInfo() const
     {
-        return _publisherKey;
+        return _publisherInfo;
     }
 
-    void AppsViewModel::publisherKey(const QString& value)
+    void AppsViewModel::setPublisherInfo(const QVariantMap& value)
     {
-        if (value != _publisherKey)
+        if (value != _publisherInfo)
         {
-            _publisherKey = value;
-            emit publisherKeyChanged();
+            _publisherInfo = value;
+            emit publisherInfoChanged();
         }
     }
 
-    QString AppsViewModel::nickname() const
+    QString AppsViewModel::addPublisherByKey(const QString& publisherKey)
     {
-        return _nickname;
-    }
+        // find publisher in _publishers by publicKey
+        const auto it = std::find_if(_publishers.cbegin(), _publishers.cend(),
+            [publisherKey] (const auto& publisher) -> bool {
+                const auto publisherIt = publisher.find("publisherKey");
+                if (publisherIt == publisher.end())
+                {
+                    assert(false);
+                    return false;
+                }
+                return publisherIt->toString() == publisherKey;
+            }
+        );
 
-    void AppsViewModel::nickname(const QString& name)
-    {
-        if (name != _nickname)
+        if (it == _publishers.end())
         {
-            _nickname = name;
-            emit nicknameChanged();
+            assert(false);
+            return {};
         }
+
+        // TODO: add publisher to _myPublishers
+
+        return (*it)["nickname"].toString();
     }
 
-    QString AppsViewModel::shortTitle() const
-    {
-        return _shortTitle;
-    }
-
-    void AppsViewModel::shortTitle(const QString& value)
-    {
-        if (value != _shortTitle)
-        {
-            _shortTitle = value;
-            emit shortTitleChanged();
-        }
-    }
-
-    QString AppsViewModel::aboutMe() const
-    {
-        return _aboutMe;
-    }
-
-    void AppsViewModel::aboutMe(const QString& value)
-    {
-        if (value != _aboutMe)
-        {
-            _aboutMe = value;
-            emit aboutMeChanged();
-        }
-    }
-
-    QString AppsViewModel::website() const
-    {
-        return _website;
-    }
-
-    void AppsViewModel::website(const QString& value)
-    {
-        if (value != _website)
-        {
-            _website = value;
-            emit websiteChanged();
-        }
-    }
-
-    QString AppsViewModel::twitter() const
-    {
-        return _twitter;
-    }
-
-    void AppsViewModel::twitter(const QString& value)
-    {
-        if (value != _twitter)
-        {
-            _twitter = value;
-            emit twitterChanged();
-        }
-    }
-
-    QString AppsViewModel::linkedin() const
-    {
-        return _linkedin;
-    }
-
-    void AppsViewModel::linkedin(const QString& value)
-    {
-        if (value != _linkedin)
-        {
-            _linkedin = value;
-            emit linkedinChanged();
-        }
-    }
-
-    QString AppsViewModel::instagram() const
-    {
-        return _instagram;
-    }
-
-    void AppsViewModel::instagram(const QString& value)
-    {
-        if (value != _instagram)
-        {
-            _instagram = value;
-            emit instagramChanged();
-        }
-    }
-
-    QString AppsViewModel::telegram() const
-    {
-        return _telegram;
-    }
-
-    void AppsViewModel::telegram(const QString& value)
-    {
-        if (value != _telegram)
-        {
-            _telegram = value;
-            emit telegramChanged();
-        }
-    }
-
-    QString AppsViewModel::discord() const
-    {
-        return _discord;
-    }
-
-    void AppsViewModel::discord(const QString& value)
-    {
-        if (value != _discord)
-        {
-            _discord = value;
-            emit discordChanged();
-        }
-    }
-
-    QString AppsViewModel::addPublisherByKey(const QString& publicKey)
-    {
-        // TODO: implement
-        return {};
-    }
-
-    void AppsViewModel::createPublisher()
+    void AppsViewModel::createPublisher(const QVariantMap& publisherInfo)
     {
         std::string args = "action=add_publisher,cid=";
         args += AppSettings().getDappStoreCID();
-        args += ",name=" + toHex(nickname());
-        args += ",short_title=" + toHex(shortTitle());
-        args += ",about_me=" + toHex(aboutMe());
-        args += ",website=" + toHex(website());
-        args += ",twitter=" + toHex(twitter());
-        args += ",linkedin=" + toHex(linkedin());
-        args += ",instagram=" + toHex(instagram());
-        args += ",telegram=" + toHex(telegram());
-        args += ",discord=" + toHex(discord());
+        args += ",name=" + toHex(publisherInfo["nickname"].toString());
+        args += ",short_title=" + toHex(publisherInfo["shortTitle"].toString());
+        args += ",about_me=" + toHex(publisherInfo["aboutMe"].toString());
+        args += ",website=" + toHex(publisherInfo["website"].toString());
+        args += ",twitter=" + toHex(publisherInfo["twitter"].toString());
+        args += ",linkedin=" + toHex(publisherInfo["linkedin"].toString());
+        args += ",instagram=" + toHex(publisherInfo["instagram"].toString());
+        args += ",telegram=" + toHex(publisherInfo["telegram"].toString());
+        args += ",discord=" + toHex(publisherInfo["discord"].toString());
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args,
-            [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), std::move(args),
+            [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
             {
                 if (!guard)
                 {
@@ -555,27 +776,44 @@ namespace beamui::applications
                     return;
                 }
 
-                try
-                {
-                    auto json = nlohmann::json::parse(output);
-
-                    LOG_INFO() << json.dump(4);
-                    // TODO roman.strilets should be processed this case
-
-                    _isPublisher = true;
-                    emit isPublisherChanged();
-                }
-                catch (std::runtime_error& err)
-                {
-                    LOG_WARNING() << "Error while parsing publisher from contract" << ", " << err.what();
-                }
+                handleShaderTxData(Action::CreatePublisher, data);
             }
         );
     }
 
-    void AppsViewModel::changePublisherInfo()
+    void AppsViewModel::changePublisherInfo(const QVariantMap& publisherInfo)
     {
+        std::string args = "action=update_publisher,cid=";
+        args += AppSettings().getDappStoreCID();
+        args += ",name=" + toHex(publisherInfo["nickname"].toString());
+        args += ",short_title=" + toHex(publisherInfo["shortTitle"].toString());
+        args += ",about_me=" + toHex(publisherInfo["aboutMe"].toString());
+        args += ",website=" + toHex(publisherInfo["website"].toString());
+        args += ",twitter=" + toHex(publisherInfo["twitter"].toString());
+        args += ",linkedin=" + toHex(publisherInfo["linkedin"].toString());
+        args += ",instagram=" + toHex(publisherInfo["instagram"].toString());
+        args += ",telegram=" + toHex(publisherInfo["telegram"].toString());
+        args += ",discord=" + toHex(publisherInfo["discord"].toString());
 
+        QPointer<AppsViewModel> guard(this);
+
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), std::move(args),
+            [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                if (!err.empty())
+                {
+                    LOG_WARNING() << "Failed to change a publisher info" << ", " << err;
+                    return;
+                }
+
+                handleShaderTxData(Action::UpdatePublisher, data);
+            }
+        );
     }
 
     bool AppsViewModel::uninstallLocalApp(const QString& appid)
@@ -613,7 +851,13 @@ namespace beamui::applications
         LOG_INFO() << "Deleting local app in folder " << path.toStdString();
 
         QDir dir(path);
-        return dir.removeRecursively();
+        bool result = dir.removeRecursively();
+        if (result)
+        {
+            // refresh
+            loadApps();
+        }
+        return result;
     }
 
     QString AppsViewModel::expandLocalUrl(const QString& folder, const std::string& url) const
@@ -647,11 +891,10 @@ namespace beamui::applications
         }
     }
 
-    QString AppsViewModel::chooseFile()
+    QString AppsViewModel::chooseFile(const QString& title)
     {
         QFileDialog dialog(nullptr,
-                           //% "Select application to install"
-                           qtTrId("applications-install-title"),
+                           title,
                            "",
                            "BEAM DApp files (*.dapp)");
 
@@ -663,26 +906,262 @@ namespace beamui::applications
         return dialog.selectedFiles().value(0);
     }
 
+    QVariantMap AppsViewModel::getDAppFileProperties(const QString& fname)
+    {
+        QFileInfo fileInfo(fname);
+
+        QVariantMap properties;
+        properties.insert("name", fileInfo.fileName());
+        properties.insert("size", fileInfo.size());
+
+        return properties;
+    }
+
+    QVariantMap AppsViewModel::parseDAppFile(const QString& fname)
+    {
+        try
+        {
+            auto dappFilePath = removeFilePrefix(fname);
+            QuaZip zip(dappFilePath);
+            if (!zip.open(QuaZip::Mode::mdUnzip))
+            {
+                throw std::runtime_error("Failed to open the DApp file");
+            }
+
+            QVariantMap app;
+            for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
+            {
+                const auto zipFname = zip.getCurrentFileName();
+                if (zipFname == "manifest.json")
+                {
+                    QuaZipFile mfile(zip.getZipName(), zipFname);
+                    if (!mfile.open(QIODevice::ReadOnly))
+                    {
+                        throw std::runtime_error("Failed to read the DApp file");
+                    }
+
+                    QTextStream in(&mfile);
+                    app = parseAppManifest(in, "");
+                }
+            }
+
+            if (app["guid"].value<QString>().isEmpty())
+            {
+                throw std::runtime_error("Invalid DApp file");
+            }
+            
+            // add estimated release_date
+            app.insert("release_date", QDate::currentDate().toString("dd MMM yyyy"));
+
+            // preload DApp file
+            QFile dappFile(dappFilePath);
+
+            if (!dappFile.open(QFile::ReadOnly))
+            {
+                throw std::runtime_error("Failed to read the DApp file");
+            }
+
+            auto buffer = dappFile.readAll();
+            _loadedDAppBuffer = beam::ByteBuffer(buffer.cbegin(), buffer.cend());
+            _loadedDApp = app;
+
+            return app;
+        }
+        catch (std::runtime_error& err)
+        {
+            LOG_ERROR() << "Failed to parse DApp: " << err.what();
+        }
+        return {};
+    }
+
+    void AppsViewModel::publishDApp(bool isUpdating)
+    {
+        auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
+        QPointer<AppsViewModel> guard(this);
+
+        if (!_loadedDApp.has_value() || !_loadedDAppBuffer.has_value())
+        {
+            assert(false);
+            LOG_ERROR() << "Failed to publish DApp, empty buffers.";
+            return;
+        }
+
+        ipfs->AnyThread_add(std::move(*_loadedDAppBuffer), true, 0,
+            [this, guard, app = std::move(*_loadedDApp), isUpdating](std::string&& ipfsID) mutable
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                LOG_INFO() << "IPFS_ID: " << ipfsID;
+
+                // save result to contract
+                uploadAppToStore(std::move(app), ipfsID, isUpdating);
+            },
+            [](std::string&& err) {
+                LOG_ERROR() << "Failed to add to ipfs: " << err;
+            }
+        );
+    }
+
+    bool AppsViewModel::checkDAppNewVersion(const QVariantMap& currentDApp, const QVariantMap& newDApp)
+    {
+        if (currentDApp["guid"].value<QString>() == currentDApp["guid"].value<QString>())
+        {
+            return compareDAppVersion(newDApp["version"].value<QString>(), currentDApp["version"].value<QString>()) > 0;
+        }
+        return false;
+    }
+
+    void AppsViewModel::uploadAppToStore(QVariantMap&& app, const std::string& ipfsID, bool isUpdating)
+    {
+        QString guid = app["guid"].value<QString>();
+        QString appName = app["name"].value<QString>();
+        QString description = app["description"].value<QString>();
+
+        std::stringstream argsStream;
+        argsStream << (isUpdating ? "action=update_dapp," : "action=add_dapp,");
+        argsStream << "cid=" << AppSettings().getDappStoreCID().c_str();
+        argsStream << ",ipfs_id=" << ipfsID;
+        argsStream << ",name=" << toHex(appName);
+        argsStream << ",id=" << guid.toStdString();
+        argsStream << ",description=" << toHex(description);
+        argsStream << ",api_ver=" << toHex(app["api_version"].value<QString>());
+        argsStream << ",min_api_ver=" << toHex(app["min_api_version"].value<QString>());
+        argsStream << ",category=" << app["category"].value<uint32_t>();
+
+        // parse version
+        QStringList version = app["version"].value<QString>().split(".");
+
+        for (; version.length() < kCountDAppVersionParts;)
+        {
+            version.append("0");
+        }
+
+        argsStream << ",major=" << version[0].toStdString();
+        argsStream << ",minor=" << version[1].toStdString();
+        argsStream << ",release=" << version[2].toStdString();
+        argsStream << ",build=" << version[3].toStdString();
+
+        QPointer<AppsViewModel> guard(this);
+
+        LOG_INFO() << "args: " << argsStream.str();
+
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), argsStream.str(),
+            [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                if (!err.empty())
+                {
+                    LOG_WARNING() << "Failed to publish app" << ", " << err;
+                    return;
+                }
+                
+                if (data.empty())
+                {
+                    LOG_WARNING() << "Failed to publish app" << ", " << output;
+                    return;
+                }
+                handleShaderTxData(Action::UploadDApp, data);
+            }
+        );
+    }
+
+    void AppsViewModel::installApp(const QString& guid)
+    {
+        try
+        {
+            const auto app = getAppByGUID(guid);
+            if (app.isEmpty())
+            {
+                LOG_WARNING() << "Failed to find Dapp by guid " << guid.toStdString();
+                return;
+            }
+
+            const auto ipfsID = app["ipfs_id"].toString();
+            const auto appName = app["name"].toString();
+
+            // get dapp binary data from ipfs
+            QPointer<AppsViewModel> guard(this);
+            auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
+
+            // TODO: check timeout value
+            ipfs->AnyThread_get(ipfsID.toStdString(), 0,
+                [this, guard, appName, guid](beam::ByteBuffer&& data) mutable
+                {
+                    if (!guard)
+                    {
+                        return;
+                    }
+
+                    try
+                    {
+                        // unpack & verify & install
+                        LOG_DEBUG() << "Installing DApp " << appName.toStdString() << " from ipfs";
+
+                        QByteArray qData;
+                        std::copy(data.cbegin(), data.cend(), std::back_inserter(qData));
+
+                        QBuffer buffer(&qData);
+                        
+                        // TODO: does we need add additional verification of the DApp file?
+
+                        installFromBuffer(&buffer, guid);
+
+                        emit appInstallOK(appName);
+                        loadApps();
+                    }
+                    catch (std::runtime_error& err)
+                    {
+                        LOG_ERROR() << "Failed to install DApp: " << err.what();
+                        emit appInstallFail(appName);
+                    }
+                },
+                [this, guard, appName](std::string&& err)
+                {
+                    LOG_ERROR() << "Failed to get app from ipfs: " << err;
+                    emit appInstallFail(appName);
+                }
+                );
+        }
+        catch (const std::runtime_error& err)
+        {
+            assert(false);
+            LOG_WARNING() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
+            return;
+        }
+    }
+
+    void AppsViewModel::installFromBuffer(QIODevice* ioDevice, const QString& guid)
+    {
+        const auto appsPath = AppSettings().getLocalAppsPath();
+        const auto appFolder = QDir(appsPath).filePath(guid);
+
+        if (QDir(appFolder).exists())
+        {
+            if (!QDir(appFolder).removeRecursively())
+            {
+                throw std::runtime_error("Failed to prepare folder");
+            }
+        }
+
+        QDir(appsPath).mkdir(guid);
+        if (JlCompress::extractDir(ioDevice, appFolder).isEmpty())
+        {
+            throw std::runtime_error("DApp Installation failed");
+        }
+    }
+
     QString AppsViewModel::installFromFile(const QString& rawFname)
     {
         try
         {
-            QString fname = rawFname;
-
-            // Some shells/systems provide incorrect count of '/' after file:
-            // For example in gnome on linux one '/' is missing. So this ugly code is necessary
-            if (fname.startsWith("file:"))
-            {
-                fname = fname.remove(0, 5);
-                while(fname.startsWith("/"))
-                {
-                    fname = fname.remove(0, 1);
-                }
-
-                #ifndef WIN32
-                fname = QString("/") + fname;
-                #endif
-            }
+            QString fname = removeFilePrefix(rawFname);
 
             LOG_DEBUG() << "Installing DApp from file " << rawFname.toStdString() << " | " << fname.toStdString();
 
@@ -705,7 +1184,7 @@ namespace beamui::applications
                     }
 
                     QTextStream in(&mfile);
-                    const auto app = validateAppManifest(in, "");
+                    const auto app = parseAppManifest(in, "");
                     guid = app["guid"].value<QString>();
                     appName = app["name"].value<QString>();
                 }
@@ -741,5 +1220,216 @@ namespace beamui::applications
             LOG_ERROR() << "Failed to install DApp: " << err.what();
             return "";
         }
+    }
+
+    void AppsViewModel::handleShaderTxData(Action action, const beam::ByteBuffer& data)
+    {
+        try
+        {
+            beam::bvm2::ContractInvokeData contractInvokeData;
+
+            if (!beam::wallet::fromByteBuffer(data, contractInvokeData))
+            {
+                throw std::runtime_error("Failed to parse invoke data");
+            }
+
+            const auto comment = beam::bvm2::getFullComment(contractInvokeData);
+            const auto fee = beam::bvm2::getFullFee(contractInvokeData, AppModel::getInstance().getWalletModel()->getCurrentHeight());
+            const auto fullSpend = beam::bvm2::getFullSpend(contractInvokeData);
+
+            if (!fullSpend.empty())
+            {
+                throw std::runtime_error("Unexpected fullSpend amounts");
+            }
+
+            const auto assetsManager = AppModel::getInstance().getAssets();
+            const auto feeRate = beamui::AmountToUIString(assetsManager->getRate(beam::Asset::s_BeamID));
+            const auto rateUnit = assetsManager->getRateUnit();
+            const auto tmp = QString::fromStdString(beam::to_hex(data.data(), data.size()));
+
+            emit shaderTxData(static_cast<int>(action), tmp, QString::fromStdString(comment), beamui::AmountToUIString(fee), feeRate, rateUnit);
+        }
+        catch (const std::runtime_error& err)
+        {
+            LOG_WARNING() << "Failed to handle shader TX data: " << err.what();
+        }
+    }
+
+    void AppsViewModel::contractInfoApproved(int action, const QString& data)
+    {
+        QPointer<AppsViewModel> guard(this);
+        beam::ByteBuffer buffer = beam::from_hex(data.toStdString());
+
+        AppModel::getInstance().getWalletModel()->getAsync()->processShaderTxData(std::move(buffer),
+            [this, guard, action](const std::string& err, const beam::wallet::TxID& id)
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                if (!err.empty())
+                {
+                    LOG_WARNING() << "Failed to process shader TX: " << ", " << err;
+                }
+
+                if (Action::CreatePublisher == static_cast<Action>(action) || Action::UpdatePublisher == static_cast<Action>(action))
+                {
+                    if (_txId)
+                    {
+                        throw std::runtime_error("Unprocessed data - txID isn't empty.");
+                    }
+                    
+                    _txId = id;
+                    _action = static_cast<Action>(action);
+
+                    emit showTxIsSent();
+                }
+                // TODO: check TX status
+            }
+        );
+    }
+
+    void AppsViewModel::contractInfoRejected()
+    {
+    }
+
+    void AppsViewModel::onTransactionsChanged(
+        beam::wallet::ChangeAction action,
+        const std::vector<beam::wallet::TxDescription>& transactions)
+    {
+        if (_txId && action == beam::wallet::ChangeAction::Updated)
+        {
+            for (auto& tx : transactions)
+            {
+                if (tx.GetTxID() == *_txId)
+                {
+                    if (tx.m_status == beam::wallet::TxStatus::Completed || tx.m_status == beam::wallet::TxStatus::Failed)
+                    {
+                        _txId.reset();
+                        loadMyPublisherInfo(true, _action == Action::CreatePublisher);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    QList<QVariantMap> AppsViewModel::getPublisherDApps(const QString& publisherKey)
+    {
+        QList<QVariantMap> publisherApps;
+
+        std::copy_if(_apps.cbegin(), _apps.cend(), std::back_inserter(publisherApps),
+            [publisherKey] (const auto& app) -> bool {
+                const auto appFieldsIt = app.find("publisher");
+                if (appFieldsIt == app.end())
+                {
+                    return false;
+                }
+                // skip local installed own apps by publisher, that didn't be uploaded
+                return appFieldsIt->toString() == publisherKey && app.contains("ipfs_id");
+            }
+        );
+
+        return publisherApps;
+    }
+
+    QVariantMap AppsViewModel::getAppByGUID(const QString& guid)
+    {
+        // find app in _apps by guid
+        const auto it = std::find_if(_apps.cbegin(), _apps.cend(),
+            [guid](const auto& app) -> bool {
+                const auto appFieldsIt = app.find("guid");
+                if (appFieldsIt == app.end())
+                {
+                    // TODO: uncomment when all DApps will have new full list of required fields 
+                    // assert(false);
+                    return false;
+                }
+                return appFieldsIt->toString() == guid;
+            });
+
+        if (it == _apps.end())
+        {
+            assert(false);
+            return {};
+        }
+        return *it;
+    }
+
+    void AppsViewModel::removeDApp(const QString& guid)
+    {
+        // TODO: change the order of operations to: first remove from contract -> unpin from IPFS
+        try
+        {
+            const auto app = getAppByGUID(guid);
+            if (app.isEmpty())
+            {
+                LOG_WARNING() << "Failed to find Dapp by guid " << guid.toStdString();
+                return;
+            }
+
+            const auto ipfsID = app["ipfs_id"].toString();
+            const auto appName = app["name"].toString();
+
+            // unpin dapp binary data from ipfs
+            QPointer<AppsViewModel> guard(this);
+            auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
+
+            ipfs->AnyThread_unpin(ipfsID.toStdString(),
+                [this, guard, appName, guid, ipfsID]() mutable
+                {
+                    if (!guard)
+                    {
+                        return;
+                    }
+                    LOG_INFO() << "Successfully unpin app" << appName.toStdString() << "(" << ipfsID.toStdString() << ") from ipfs : ";
+                    deleteAppFromStore(guid);
+                },
+                [appName, ipfsID](std::string&& err)
+                {
+                    LOG_ERROR() << "Failed to unpin app" << appName.toStdString() << "(" << ipfsID.toStdString() << ") from ipfs : " << err;
+                    // TODO: emit appRemoveFail(appName);
+                }
+            );
+        }
+        catch (const std::runtime_error& err)
+        {
+            assert(false);
+            LOG_WARNING() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
+            return;
+        }
+    }
+
+    void AppsViewModel::deleteAppFromStore(const QString& guid)
+    {
+        std::stringstream argsStream;
+        argsStream << "action=delete_dapp,";
+        argsStream << "cid=" << AppSettings().getDappStoreCID().c_str();
+        argsStream << ",id=" << guid.toStdString();
+
+        QPointer<AppsViewModel> guard(this);
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), argsStream.str(),
+            [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                if (!err.empty())
+                {
+                    LOG_WARNING() << "Failed to delete app" << ", " << err;
+                    return;
+                }
+
+                if (data.empty())
+                {
+                    LOG_WARNING() << "Failed to delete app" << ", " << output;
+                    return;
+                }
+                handleShaderTxData(Action::DeleteDApp, data);
+            }
+        );
     }
 }
