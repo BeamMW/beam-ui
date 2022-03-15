@@ -3749,5 +3749,9 @@ Let�s start!</oldsource>
         <source>update dapp</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="dapps-store-remove-dapp">
+        <source>remove dapp</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
