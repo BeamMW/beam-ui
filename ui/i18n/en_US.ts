@@ -3681,7 +3681,7 @@ Let&apos;s start!</source>
     </message>
     <message id="dapps-store-remove-dapp">
         <source>remove dapp</source>
-        <translation>remove dapp<</translation>
+        <translation>remove dapp</translation>
     </message>
 </context>
 </TS>
