@@ -1,5 +1,6 @@
 import QtQuick          2.11
 import QtQuick.Layouts  1.12
+import QtQuick.Controls 1.4
 import QtQuick.Controls 2.4
 import QtWebEngine      1.4
 import QtWebChannel     1.0
@@ -66,16 +67,6 @@ ColumnLayout {
             icon.color:       Style.white
             onClicked:        showAddPublisherDialog()
         }
-    }
-
-    //
-    // Body: publishers list
-    //
-    CustomTableView {
-        id: tableView
-        Layout.fillHeight: true
-        Layout.fillWidth:  true
-        // TODO: implement
     }
 
     CustomDialog {
@@ -165,7 +156,7 @@ ColumnLayout {
                 Layout.bottomMargin: 30
                 Layout.alignment:    Qt.AlignHCenter
                 spacing:             30
-        
+
                 CustomButton {
                     icon.source: "qrc:/assets/icon-cancel-16.svg"
                     //% "Close"
@@ -174,7 +165,7 @@ ColumnLayout {
                         addPublisherDialog.close()
                     }
                 }
-            
+
                 PrimaryButton {
                     enabled:     !publicKeyError.visible && publicKeyInput.acceptableInput
                     icon.source: "qrc:/assets/icon-dapps_store-add-publisher-submit.svg"
@@ -191,11 +182,226 @@ ColumnLayout {
                             main.showSimplePopup(qsTrId("dapps-store-add-publisher-notification").arg(publisherName))
                             addPublisherDialog.close()
                         }
-                        
+
                         publicKeyError.visible = true
                     }
                 }
             }
         }
+    }
+
+
+
+    Item {
+        Layout.preferredWidth: 20
+    }
+    //
+    // Body: publishers list
+    //
+    CustomTableView {
+        id: tableView
+        Layout.alignment:  Qt.AlignTop
+        Layout.fillHeight: true
+        Layout.fillWidth:  true
+
+        selectionMode: SelectionMode.NoSelection
+        sortIndicatorVisible: true
+        sortIndicatorColumn: 5
+        sortIndicatorOrder: Qt.DescendingOrder
+
+        property int rowHeight: 86
+        property int resizableWidth: parent.width - publisherLink.width
+        property double columnResizeRatio: resizableWidth / 914
+
+        model: PublishersViewModel {
+            id: viewModel
+        }
+
+        TableViewColumn { 
+            id: nickname
+            role: viewModel.nicknameRole
+            //% "nickname"
+            title: "Nickname"
+            width: 150
+            movable:    false
+            resizable:  false
+            delegate: nicknameComponent
+        }
+        TableViewColumn {
+            id: about
+            role: viewModel.aboutRole
+            //% "about"
+            title: "About"
+            width: tableView.getAdjustedColumnWidth(about)
+            movable:    false
+            resizable:  false
+        }
+        TableViewColumn {
+            id: socialNetworks
+            //role: viewModel.socialNetworksRole
+            //% "social-networks"
+            title: "Social networks"
+            width: 162 * tableView.columnResizeRatio
+            movable:    false
+            resizable:  false
+            delegate: socialNetworksComponent
+        }
+        TableViewColumn {
+            id: publisherLink
+            //% "publisher-link"
+            title: "Publisher link"
+            width: 138
+            movable:    false
+            resizable:  false
+            delegate: publisherLinkComponent
+        }
+
+        Component {
+            id: nicknameComponent
+            Item {
+                width: parent.width
+                height: tableView.rowHeight
+
+                GridLayout {
+                    Layout.fillWidth:   true
+                    Layout.alignment:   Qt.AlignCenter
+                    columns:            1
+                    SFLabel {
+                        Layout.leftMargin: 15
+                        Layout.alignment: Qt.AlignTop
+                        font.pixelSize: 14
+                        elide: Text.ElideNone
+                        fontSizeMode: Text.Fit
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                        color: Style.content_main
+                        text: tableView.model.getRoleValue(styleData.row, viewModel.nicknameRole)
+                    }
+
+                    SFLabel {
+                        Layout.leftMargin: 15
+                        font.pixelSize: 14
+                        elide: Text.ElideNone
+                        fontSizeMode: Text.Fit
+                        wrapMode: Text.WrapAtWord
+                        color: Style.content_secondary
+                        text: tableView.model.getRoleValue(styleData.row, viewModel.shortTitleRole)
+                    }
+                }
+            }
+        }
+
+        Component {
+            id: socialNetworksComponent
+            Item {
+                width: parent.width
+                height: tableView.rowHeight
+                RowLayout {
+                   spacing: 0
+                  // Layout.alignment: Qt.AlignCenter
+                   CustomToolButton {
+                       Layout.leftMargin: 15
+                  //     Layout.alignment: Qt.AlignCenter
+                       icon.source: "qrc:/assets/icon-cancel-16.svg"
+                       //% "Clear search"
+                       ToolTip.text: qsTrId("wallet-clear-search")
+                   }
+
+                   CustomToolButton {
+                       Layout.alignment: Qt.AlignCenter
+                       icon.source: "qrc:/assets/icon-search.svg"
+                       //% "Search"
+                       ToolTip.text: qsTrId("wallet-search")
+                   }
+                   CustomToolButton {
+                       Layout.alignment: Qt.AlignTop
+                       icon.source: "qrc:/assets/icon-cancel-16.svg"
+                       //% "Clear search"
+                       ToolTip.text: qsTrId("wallet-clear-search")
+                   }
+
+                   CustomToolButton {
+                       Layout.alignment: Qt.AlignCenter
+                       icon.source: "qrc:/assets/icon-search.svg"
+                       //% "Search"
+                       ToolTip.text: qsTrId("wallet-search")
+                   }
+                   CustomToolButton {
+                       Layout.alignment: Qt.AlignCenter
+                       icon.source: "qrc:/assets/icon-cancel-16.svg"
+                       //% "Clear search"
+                       ToolTip.text: qsTrId("wallet-clear-search")
+                   }
+
+                   CustomToolButton {
+                       Layout.alignment: Qt.AlignCenter
+                       icon.source: "qrc:/assets/icon-search.svg"
+                       //% "Search"
+                       ToolTip.text: qsTrId("wallet-search")
+                   }
+               }
+            }
+        }
+
+
+        // publisher link
+
+        Component {
+            id: publisherLinkComponent
+            Item {
+                Item {
+                    width: parent.width
+                    height: tableView.rowHeight
+                    CustomToolButton {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.right: parent.right
+                        anchors.rightMargin: 12
+                        icon.source: "qrc:/assets/icon-actions.svg"
+                        onClicked: {
+                            publisherInfoContextMenu.publisherKey = tableView.model.getRoleValue(styleData.row, viewModel.publisherLinkRole);
+                            publisherInfoContextMenu.popup();
+                        }
+                    }
+                }
+            }
+        }
+        ContextMenu {
+            id: publisherInfoContextMenu
+            modal: true
+            dim: false
+            property var publisherKey
+
+            Action {
+                //% "Copy publisher key"
+                text: qsTrId("copy-publisher-key")
+                icon.source: "qrc:/assets/icon-copy.svg"
+                onTriggered: {
+                    BeamGlobals.copyToClipboard(publisherInfoContextMenu.publisherKey);
+                }
+            }
+
+            Action {
+                //% "Remove from my list"
+                text: qsTrId("remove-from-list")
+                icon.source: "qrc:/assets/icon-delete.svg"
+                onTriggered: {
+                    // delete
+                }
+            }
+        }
+
+        rowDelegate: Rectangle {
+            color:          styleData.alternate ? Style.background_row_even : Style.background_row_odd
+            height:         tableView.rowHeight
+            anchors.left:   parent.left
+            anchors.right:  parent.right
+        }
+        itemDelegate: TableItem {
+            elide: Text.ElideNone
+            fontSizeMode: Text.Fit
+            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+            text: styleData.value
+        }
+
+        Component.onCompleted: tableView.resizeColumnsToContents()
     }
 }

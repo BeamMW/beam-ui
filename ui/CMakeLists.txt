@@ -116,6 +116,8 @@ set(UI_SRC
     viewmodel/applications/apps_api_ui.cpp
     viewmodel/applications/public.cpp
     viewmodel/applications/public.h
+    viewmodel/applications/publishers_view.h
+    viewmodel/applications/publishers_view.cpp
     viewmodel/dapps_store/dapps_store_view.h
     viewmodel/dapps_store/dapps_store_view.cpp
     viewmodel/helpers/list_model.h

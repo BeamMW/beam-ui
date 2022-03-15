@@ -66,6 +66,8 @@
 #include "viewmodel/applications/public.h"
 #include "model/qr.h"
 #include "viewmodel/dex/dex_view.h"
+#include "viewmodel/applications/publishers_view.h"
+#include "viewmodel/applications/apps_view.h"
 
 #if defined(BEAM_USE_STATIC_QT)
 
@@ -279,6 +281,8 @@ int main (int argc, char* argv[])
             qmlRegisterType<ELSeedValidator>("Beam.Wallet", 1, 0, "ELSeedValidator");
             qmlRegisterType<AddressItem>("Beam.Wallet", 1, 0, "AddressItem");
             qmlRegisterType<ContactItem>("Beam.Wallet", 1, 0, "ContactItem");
+            qmlRegisterType<beamui::applications::AppsViewModel>("Beam.Wallet", 1, 0, "AppsViewModel");
+            qmlRegisterType<beamui::applications::PublishersViewModel>("Beam.Wallet", 1, 0, "PublishersViewModel");
             qmlRegisterType<UtxoItem>("Beam.Wallet", 1, 0, "UtxoItem");
             qmlRegisterType<PaymentInfoItem>("Beam.Wallet", 1, 0, "PaymentInfoItem");
             qmlRegisterType<WalletDBPathItem>("Beam.Wallet", 1, 0, "WalletDBPathItem");

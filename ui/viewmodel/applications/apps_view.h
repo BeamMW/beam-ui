@@ -14,6 +14,7 @@
 #pragma once
 
 #include "apps_server.h"
+#include <memory>
 
 namespace beamui::applications
 {
@@ -39,6 +40,8 @@ namespace beamui::applications
     public:
         AppsViewModel();
         ~AppsViewModel() override;
+
+        using Ptr = std::shared_ptr<AppsViewModel>;
 
         [[nodiscard]] QString getAppsUrl() const;
         [[nodiscard]] QString getUserAgent() const;
