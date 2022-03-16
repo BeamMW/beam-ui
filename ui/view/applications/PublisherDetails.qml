@@ -10,6 +10,7 @@ ColumnLayout {
     id: control
     Layout.fillWidth: true
     Layout.topMargin: 27
+    spacing:          0
 
     property var viewModel
     property var appsList: undefined
@@ -38,17 +39,6 @@ ColumnLayout {
 
     function loadPublisherDApps() {
         appsList = viewModel.getPublisherDApps(viewModel.publisherInfo.publisherKey)
-    }
-
-    function launchApp(app) {
-        // TODO: mb implement with using more local logic
-        var appName = app.name;
-        var appid = app.appid;
-        main.updateItem("applications", {"appToOpen": { "name": appName, "appid": appid}, "showBack": false})
-    }
-
-    function unninstall(app) {
-        control.uninstall(app)
     }
 
     function uploadNewVersion(app) {
@@ -151,11 +141,14 @@ ColumnLayout {
     // Title
     //
     SFText {
+        Layout.topMargin:     20
+        Layout.bottomMargin:  20
         color:                Style.content_main
         font.pixelSize:       14
         font.weight:          Font.Bold
+        font.capitalization:  Font.AllUppercase
         opacity:              0.5
-        //% "My DAPPs"
+        //% "My DAPPs - admin panel"
         text: qsTrId("dapps-store-my-dapps")
     }
 
@@ -212,35 +205,20 @@ ColumnLayout {
     }
 
     AppsList {
-        id:                          appsListView
-        Layout.fillHeight:           true
-        Layout.fillWidth:            true
-        visible:                     control.hasApps
-        appsList:                    control.appsList
-        showInstallFromFilePanel:    false
-        isSupportedUploadNewVersion: true
+        id:                       appsListView
+        Layout.fillHeight:        true
+        Layout.fillWidth:         true
+        visible:                  control.hasApps
+        appsList:                 control.appsList
+        showInstallFromFilePanel: false
+        isPublisherAdminMode:     true
 
-        onLaunch: function (app) {
-            control.launchApp(app)
-        }
-
-        onInstall: function (appGUID) {
-            viewModel.installApp(appGUID)
-        }
-
-        onUninstall: function (app) {
-            control.uninstall(app)
-        }
-
-        onUpdate: function (app) {            
+        onUpdate: function (app) {
+            control.uploadNewVersion(app)
         }
 
         onRemove: function (app) {
             control.remove(app)
-        }
-
-        onUploadNewVersion: function (app) {
-            control.uploadNewVersion(app)
         }
     }
 

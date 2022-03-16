@@ -9,8 +9,8 @@ Item {
     id: control
     property var  appsList
     property bool hasLocal
-    property alias showInstallFromFilePanel:   installFromFilePanel.visible
-    property bool isSupportedUploadNewVersion: false
+    property alias showInstallFromFilePanel: installFromFilePanel.visible
+    property bool isPublisherAdminMode:      false
     property var onOpenDnd: function(){
         console.log('open DnD dialog');
     }
@@ -33,7 +33,6 @@ Item {
     signal update(var app)
     signal uninstall(var app)
     signal remove(var app)
-    signal uploadNewVersion(var app)
 
     // Actuall apps list
     ScrollView {
@@ -53,11 +52,11 @@ Item {
                 model: control.appsList
 
                 delegate: AppPanel {
-                    Layout.fillWidth:            true
-                    Layout.minimumWidth:         440
-                    Layout.preferredHeight:      144
-                    app:                         modelData
-                    isSupportedUploadNewVersion: control.isSupportedUploadNewVersion
+                    Layout.fillWidth:       true
+                    Layout.minimumWidth:    440
+                    Layout.preferredHeight: 144
+                    app:                    modelData
+                    isPublisherAdminMode:   control.isPublisherAdminMode
 
                     onLaunch: function (app) { 
                         control.launch(app)
@@ -73,9 +72,6 @@ Item {
                     }
                     onRemove: function (app) {
                         control.remove(app)
-                    }
-                    onUploadNewVersion: function (app) {
-                        control.uploadNewVersion(app)
                     }
                 }
             }
