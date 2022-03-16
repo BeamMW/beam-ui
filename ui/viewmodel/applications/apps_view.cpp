@@ -137,6 +137,7 @@ namespace beamui::applications
         LOG_INFO() << "AppsViewModel created";
 
         connect(m_walletModel.get(), &WalletModel::transactionsChanged, this, &AppsViewModel::onTransactionsChanged);
+        connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadApps);
 
         auto defaultProfile = QWebEngineProfile::defaultProfile();
         defaultProfile->setHttpCacheType(QWebEngineProfile::HttpCacheType::DiskHttpCache);
@@ -470,6 +471,10 @@ namespace beamui::applications
                                 app.insert("hasUpdate", true);
                             }
                             app.insert("ipfs_id", parseStringField(item.value(), "ipfs_id"));
+                            if (!app.contains("publisher"))
+                            {
+                                app.insert("publisher", publisher);
+                            }
                         }
                         else
                         {
@@ -1431,5 +1436,95 @@ namespace beamui::applications
                 handleShaderTxData(Action::DeleteDApp, data);
             }
         );
+    }
+
+    void AppsViewModel::updateDApp(const QString& guid)
+    {
+        try
+        {
+            const auto app = getAppByGUID(guid);
+            if (app.isEmpty())
+            {
+                LOG_WARNING() << "Failed to find Dapp by guid " << guid.toStdString();
+                return;
+            }
+
+            const auto ipfsID = app["ipfs_id"].toString();
+            const auto appName = app["name"].toString();
+
+            // get dapp binary data from ipfs
+            QPointer<AppsViewModel> guard(this);
+            auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
+
+            ipfs->AnyThread_get(ipfsID.toStdString(), 0,
+                [this, guard, guid, appName](beam::ByteBuffer&& data) mutable
+                {
+                    if (!guard)
+                    {
+                        return;
+                    }
+
+                    try
+                    {
+                        // unpack & verify & install
+                        LOG_DEBUG() << "Updating DApp " << appName.toStdString() << " from ipfs";
+
+                        QByteArray qData;
+                        std::copy(data.cbegin(), data.cend(), std::back_inserter(qData));
+
+                        QBuffer buffer(&qData);
+
+                        // TODO: does we need add additional verification of the DApp file?
+
+                        const auto appsPath = AppSettings().getLocalAppsPath();
+                        auto appsDir = QDir(appsPath);
+                        const auto appFolder = appsDir.filePath(guid);
+                        const auto backupName = guid + "-backup";
+
+                        if (appsDir.exists(guid))
+                        {
+                            if (!appsDir.rename(guid, backupName))
+                            {
+                                throw std::runtime_error("Failed to backup folder");
+                            }
+                        }
+
+                        appsDir.mkdir(guid);
+                        if (JlCompress::extractDir(&buffer, appFolder).isEmpty())
+                        {
+                            if (!QDir(appFolder).removeRecursively() || !appsDir.rename(backupName, guid))
+                            {
+                                throw std::runtime_error("Failed to restore folder");
+                            }
+
+                            throw std::runtime_error("DApp Installation failed");
+                        }
+
+                        if (!QDir(appsDir.filePath(backupName)).removeRecursively())
+                        {
+                            LOG_WARNING() << "Failed to remove backup folder - " << backupName.toStdString();
+                        }
+
+                        emit appInstallOK(appName);
+                        loadApps();
+                    }
+                    catch (std::runtime_error& err)
+                    {
+                        LOG_ERROR() << "Failed to update DApp: " << err.what();
+                        emit appInstallFail(appName);
+                    }
+                },
+                [this, guard, appName](std::string&& err)
+                {
+                    LOG_ERROR() << "Failed to get app from ipfs: " << err;
+                    emit appInstallFail(appName);
+                }
+            );
+        }
+        catch (const std::runtime_error& err)
+        {
+            LOG_WARNING() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
+            return;
+        }
     }
 }

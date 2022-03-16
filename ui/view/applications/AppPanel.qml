@@ -12,15 +12,14 @@ Item {
     implicitWidth:  440
 
     property var app
-    property bool showButtons:                 true
-    property bool isSupportedUploadNewVersion: false
+    property bool showButtons:          true
+    property bool isPublisherAdminMode: false
 
     signal launch(var app)
     signal install(var appGUID)
     signal update(var app)
     signal uninstall(var app)
     signal remove(var app)
-    signal uploadNewVersion(var app)
 
     // background
     Rectangle {
@@ -173,7 +172,7 @@ Item {
                     palette.buttonText: Style.content_main
                     icon.source:        "qrc:/assets/icon-run.svg"
                     icon.height:        16
-                    visible:            showButtons && app.supported && !app.notInstalled && !!app.hasUpdate
+                    visible:            showButtons && ((app.supported && !app.notInstalled && !!app.hasUpdate) || isPublisherAdminMode)
                                         //% "Update"
                     text:               qsTrId("dapps-store-update")
 
@@ -192,7 +191,7 @@ Item {
                     palette.buttonText: Style.content_main
                     icon.source:        "qrc:/assets/icon-run.svg"
                     icon.height:        16
-                    visible:            showButtons && app.supported && !app.notInstalled
+                    visible:            showButtons && app.supported && !app.notInstalled && !isPublisherAdminMode
                                         //% "launch"
                     text:               qsTrId("apps-run")
 
@@ -248,15 +247,6 @@ Item {
     }
 
     Action {
-        id:          uploadNewVersionAction
-                     //% "update dapp"
-        text:        qsTrId("dapps-store-update-dapp")
-        icon.source: "qrc:/assets/icon-dapps_store-update.svg"
-        onTriggered: function () {
-            control.uploadNewVersion(modelData)
-        }
-    }
-    Action {
         id:          uninstallAction
                      //% "Uninstall"
         text:        qsTrId("apps-uninstall")
@@ -295,10 +285,10 @@ Item {
     }
 
     Component.onCompleted: {
-        if (isSupportedUploadNewVersion) {
-            appMenu.addAction(uploadNewVersionAction)
+        if (isPublisherAdminMode) {
             appMenu.addAction(removeAction)
+        } else {
+            appMenu.addAction(uninstallAction)
         }
-        appMenu.addAction(uninstallAction)
     }
 }

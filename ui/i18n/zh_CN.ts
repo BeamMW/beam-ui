@@ -3590,7 +3590,8 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-my-dapps">
-        <source>My DAPPs</source>
+        <source>My DAPPs - admin panel</source>
+        <oldsource>My DAPPs</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-publisher-have-not-dapps">
@@ -3750,8 +3751,8 @@ Let�s start!</oldsource>
         <source>go to my account</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="dapps-store-update-dapp">
-        <source>update dapp</source>
+    <message id="dapps-store-remove-dapp">
+        <source>remove dapp</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-remove-dapp">

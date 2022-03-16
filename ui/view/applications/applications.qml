@@ -574,6 +574,10 @@ ColumnLayout {
                     viewModel.installApp(appGUID)
                 }
 
+                onUpdate: function (app) {
+                    viewModel.updateDApp(app.guid)
+                }
+
                 onInstallFromFile: function (fname) {
                     if (!fname) {
                         //% "Select application to install"

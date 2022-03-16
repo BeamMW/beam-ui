@@ -68,6 +68,7 @@ namespace beamui::applications
         Q_INVOKABLE bool checkDAppNewVersion(const QVariantMap& currentDApp, const QVariantMap& newDApp);
         Q_INVOKABLE void installApp(const QString& guid);
         Q_INVOKABLE [[nodiscard]] QString installFromFile(const QString& fname);
+        Q_INVOKABLE void updateDApp(const QString& guid);
         Q_INVOKABLE void launchAppServer();
         Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
         Q_INVOKABLE [[nodiscard]] QString addPublisherByKey(const QString& publisherKey);

@@ -11,7 +11,6 @@ CustomDialog {
     y:           (parent.height - height) / 2
     parent:      Overlay.overlay
     width:       761
-    height:      299
     closePolicy: Popup.NoAutoClose
 
     property bool newPublisher: true
@@ -45,6 +44,7 @@ CustomDialog {
 
         SvgImage {
             Layout.topMargin: 38
+            Layout.bottomMargin: 30
             Layout.alignment: Qt.AlignHCenter
             source:           "qrc:/assets/icon-dapps-store-transaction-is-sent.svg"
             sourceSize:       Qt.size(82, 113)
