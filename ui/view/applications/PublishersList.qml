@@ -6,6 +6,7 @@ import QtWebEngine      1.4
 import QtWebChannel     1.0
 import Beam.Wallet      1.0
 import "../controls"
+import "../utils.js" as Utils
 
 ColumnLayout {
     id: control
@@ -19,6 +20,10 @@ ColumnLayout {
 
     function showAddPublisherDialog() {
         addPublisherDialog.open()
+    }
+
+    function checkVisibilityOfSocialNetwork(row, socialNetwork) {
+        return tableView.model.getRoleValue(row, socialNetwork) !== ""
     }
 
     //
@@ -258,6 +263,7 @@ ColumnLayout {
 
         Component {
             id: nicknameComponent
+            //check
             Item {
                 width: parent.width
                 height: tableView.rowHeight
@@ -282,7 +288,7 @@ ColumnLayout {
                         font.pixelSize: 14
                         elide: Text.ElideNone
                         fontSizeMode: Text.Fit
-                        wrapMode: Text.WrapAtWord
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         color: Style.content_secondary
                         text: tableView.model.getRoleValue(styleData.row, viewModel.shortTitleRole)
                     }
@@ -300,43 +306,65 @@ ColumnLayout {
                   // Layout.alignment: Qt.AlignCenter
                    CustomToolButton {
                        Layout.leftMargin: 15
+                       visible: checkVisibilityOfSocialNetwork(styleData.row,viewModel.websiteRole)
+                       //Layout.alignment: Qt.AlignTop
+                       icon.source: "qrc:/assets/icon-dapps-store-website.svg"
+                       onClicked: {
+                           Utils.openExternalWithConfirmation(
+                                tableView.model.getRoleValue(styleData.row, viewModel.websiteRole)
+                            );
+                       }
+                   }
+                   CustomToolButton {
                   //     Layout.alignment: Qt.AlignCenter
-                       icon.source: "qrc:/assets/icon-cancel-16.svg"
-                       //% "Clear search"
-                       ToolTip.text: qsTrId("wallet-clear-search")
+                       visible: checkVisibilityOfSocialNetwork(styleData.row,viewModel.discordRole)
+                       icon.source: "qrc:/assets/icon-dapps-store-discord.svg"
+                       onClicked: {
+                           Utils.openExternalWithConfirmation(
+                                tableView.model.getRoleValue(styleData.row, viewModel.discordRole)
+                            );
+                       }
+                   }
+                   CustomToolButton {
+                       //Layout.alignment: Qt.AlignCenter
+                       visible: checkVisibilityOfSocialNetwork(styleData.row,viewModel.twitterRole)
+                       icon.source: "qrc:/assets/icon-dapps-store-twitter.svg"
+                       onClicked: {
+                           Utils.openExternalWithConfirmation(
+                                tableView.model.getRoleValue(styleData.row, viewModel.twitterRole)
+                            );
+                       }
+                   }
+                   CustomToolButton {
+                       //Layout.alignment: Qt.AlignCenter
+                       visible: checkVisibilityOfSocialNetwork(styleData.row,viewModel.instagramRole)
+                       icon.source: "qrc:/assets/icon-dapps-store-instagram.svg"
+                       onClicked: {
+                           Utils.openExternalWithConfirmation(
+                                tableView.model.getRoleValue(styleData.row, viewModel.instagramRole)
+                            );
+                       }
+                   }
+                   CustomToolButton {
+                       //Layout.alignment: Qt.AlignCenter
+                       visible: checkVisibilityOfSocialNetwork(styleData.row,viewModel.linkedinRole)
+                       icon.source: "qrc:/assets/icon-dapps-store-linkedin.svg"
+                       onClicked: {
+                           Utils.openExternalWithConfirmation(
+                                tableView.model.getRoleValue(styleData.row, viewModel.linkedinRole)
+                            );
+                       }
                    }
 
                    CustomToolButton {
-                       Layout.alignment: Qt.AlignCenter
-                       icon.source: "qrc:/assets/icon-search.svg"
-                       //% "Search"
-                       ToolTip.text: qsTrId("wallet-search")
-                   }
-                   CustomToolButton {
-                       Layout.alignment: Qt.AlignTop
-                       icon.source: "qrc:/assets/icon-cancel-16.svg"
-                       //% "Clear search"
-                       ToolTip.text: qsTrId("wallet-clear-search")
-                   }
-
-                   CustomToolButton {
-                       Layout.alignment: Qt.AlignCenter
-                       icon.source: "qrc:/assets/icon-search.svg"
-                       //% "Search"
-                       ToolTip.text: qsTrId("wallet-search")
-                   }
-                   CustomToolButton {
-                       Layout.alignment: Qt.AlignCenter
-                       icon.source: "qrc:/assets/icon-cancel-16.svg"
-                       //% "Clear search"
-                       ToolTip.text: qsTrId("wallet-clear-search")
-                   }
-
-                   CustomToolButton {
-                       Layout.alignment: Qt.AlignCenter
-                       icon.source: "qrc:/assets/icon-search.svg"
-                       //% "Search"
-                       ToolTip.text: qsTrId("wallet-search")
+                       //Layout.alignment: Qt.AlignCenter
+                       visible: checkVisibilityOfSocialNetwork(styleData.row,viewModel.telegramRole)
+                       icon.source: "qrc:/assets/icon-dapps-store-telegram.svg"
+                       onClicked: {
+                           Utils.openExternalWithConfirmation(
+                                tableView.model.getRoleValue(styleData.row, viewModel.telegramRole)
+                            );
+                       }
                    }
                }
             }
@@ -396,7 +424,8 @@ ColumnLayout {
             anchors.right:  parent.right
         }
         itemDelegate: TableItem {
-            elide: Text.ElideNone
+         //   elide: Text.ElideNone
+            elide: Text.ElideRight
             fontSizeMode: Text.Fit
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             text: styleData.value

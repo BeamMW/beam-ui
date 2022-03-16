@@ -21,8 +21,75 @@
 #include <QObject>
 #include <QString>
 
+#include <memory>
+
 namespace beamui::applications
 {
+    class PublisherItem : public QObject
+    {
+        Q_OBJECT
+        Q_PROPERTY(QString publisherKey READ publisherKey NOTIFY publisherKeyChanged)
+        Q_PROPERTY(QString nickname READ nickname WRITE nickname NOTIFY nicknameChanged)
+        Q_PROPERTY(QString shortTitle READ shortTitle WRITE shortTitle NOTIFY shortTitleChanged)
+        Q_PROPERTY(QString aboutMe READ aboutMe WRITE aboutMe NOTIFY aboutMeChanged)
+        Q_PROPERTY(QString website READ website WRITE website NOTIFY websiteChanged)
+        Q_PROPERTY(QString twitter READ twitter WRITE twitter NOTIFY twitterChanged)
+        Q_PROPERTY(QString linkedin READ linkedin WRITE linkedin NOTIFY linkedinChanged)
+        Q_PROPERTY(QString instagram READ instagram WRITE instagram NOTIFY instagramChanged)
+        Q_PROPERTY(QString telegram READ telegram WRITE telegram NOTIFY telegramChanged)
+        Q_PROPERTY(QString discord READ discord WRITE discord NOTIFY discordChanged)
+
+    public:
+        using Ptr = std::shared_ptr<PublisherItem>;
+
+        [[nodiscard]] QString publisherKey() const;
+        void publisherKey(const QString& value);
+        [[nodiscard]] QString nickname() const;
+        void nickname(const QString& name);
+        [[nodiscard]] QString shortTitle() const;
+        void shortTitle(const QString& value);
+        [[nodiscard]] QString aboutMe() const;
+        void aboutMe(const QString& value);
+        [[nodiscard]] QString website() const;
+        void website(const QString& value);
+        [[nodiscard]] QString twitter() const;
+        void twitter(const QString& value);
+        [[nodiscard]] QString linkedin() const;
+        void linkedin(const QString& value);
+        [[nodiscard]] QString instagram() const;
+        void instagram(const QString& value);
+        [[nodiscard]] QString telegram() const;
+        void telegram(const QString& value);
+        [[nodiscard]] QString discord() const;
+        void discord(const QString& value);
+
+    signals:
+        void appsChanged();
+        void isPublisherChanged();
+        void publisherKeyChanged();
+        void nicknameChanged();
+        void shortTitleChanged();
+        void aboutMeChanged();
+        void websiteChanged();
+        void twitterChanged();
+        void linkedinChanged();
+        void instagramChanged();
+        void telegramChanged();
+        void discordChanged();
+
+    private:
+        QString _publisherKey;
+        QString _nickname;
+        QString _shortTitle;
+        QString _aboutMe;
+        QString _website;
+        QString _twitter;
+        QString _linkedin;
+        QString _instagram;
+        QString _telegram;
+        QString _discord;
+    };
+
     class PublishersViewModel: public QAbstractTableModel
     {
         Q_OBJECT
@@ -84,6 +151,6 @@ namespace beamui::applications
         }
 
     private:
-        QList<AppsViewModel::Ptr> publishersInfo;
+        QList<PublisherItem::Ptr> publishersInfo;
     };
 }
