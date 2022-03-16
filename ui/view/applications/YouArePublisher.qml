@@ -11,7 +11,6 @@ CustomDialog {
     y:           (parent.height - height) / 2
     parent:      Overlay.overlay
     width:       761
-    height:      382
     closePolicy: Popup.NoAutoClose
 
     property bool newPublisher: true
@@ -73,6 +72,7 @@ CustomDialog {
 
         PrimaryButton {
             icon.source:        "qrc:/assets/icon-dapps-store-user.svg"
+            Layout.bottomMargin: 40
             palette.buttonText: Style.content_opposite
             icon.color:         Style.content_opposite
             palette.button:     Style.active
