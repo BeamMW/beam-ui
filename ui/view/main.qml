@@ -206,7 +206,6 @@ Rectangle {
         {name: "wallet"},
         {name: "atomic_swap"},
         {name: "applications", qml: appsQml},
-        {name: "dapps_store", qml: function () { return "dapps_store/dapps_store"} },
         {name: "daocore", qml: appsQml, args: () => appArgs("BeamX DAO", viewModel.daoCoreAppID, false)},
         // {name: "dex"},
         {name: "addresses"},

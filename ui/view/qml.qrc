@@ -118,7 +118,6 @@
         <file>applications/TransactionIsSent.qml</file>
         <file>applications/YouArePublisher.qml</file>
         <file>applications/UploadDApp.qml</file>
-        <file>dapps_store/dapps_store.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>

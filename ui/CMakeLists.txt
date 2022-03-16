@@ -118,8 +118,6 @@ set(UI_SRC
     viewmodel/applications/public.h
     viewmodel/applications/publishers_view.h
     viewmodel/applications/publishers_view.cpp
-    viewmodel/dapps_store/dapps_store_view.h
-    viewmodel/dapps_store/dapps_store_view.cpp
     viewmodel/helpers/list_model.h
     viewmodel/helpers/sortfilterproxymodel.h
     viewmodel/helpers/sortfilterproxymodel.cpp
