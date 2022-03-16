@@ -26,16 +26,17 @@ namespace beamui::applications
     class PublishersViewModel: public QAbstractTableModel
     {
         Q_OBJECT
-        Q_PROPERTY(QString nicknameRole         READ getNicknameRole        CONSTANT)
-        Q_PROPERTY(QString shortTitleRole       READ getShortTitleRole      CONSTANT)
-        Q_PROPERTY(QString aboutRole            READ getAboutRole           CONSTANT)
-        Q_PROPERTY(QString websiteRole          READ getWebsiteRole         CONSTANT)
-        Q_PROPERTY(QString twitterRole          READ getTwitterRole         CONSTANT)
-        Q_PROPERTY(QString linkedinRole         READ getLinkedinRole        CONSTANT)
-        Q_PROPERTY(QString instagramRole        READ getInstagramRole       CONSTANT)
-        Q_PROPERTY(QString telegramRole         READ getTelegramRole        CONSTANT)
-        Q_PROPERTY(QString discordRole          READ getDiscordRole         CONSTANT)
-        Q_PROPERTY(QString publisherLinkRole    READ getPublisherLinkRole   CONSTANT)
+        Q_PROPERTY(QList<QVariantMap> publishers READ getPublishersInfo      WRITE setPublishersInfo)
+        Q_PROPERTY(QString nicknameRole          READ getNicknameRole        CONSTANT)
+        Q_PROPERTY(QString shortTitleRole        READ getShortTitleRole      CONSTANT)
+        Q_PROPERTY(QString aboutRole             READ getAboutRole           CONSTANT)
+        Q_PROPERTY(QString websiteRole           READ getWebsiteRole         CONSTANT)
+        Q_PROPERTY(QString twitterRole           READ getTwitterRole         CONSTANT)
+        Q_PROPERTY(QString linkedinRole          READ getLinkedinRole        CONSTANT)
+        Q_PROPERTY(QString instagramRole         READ getInstagramRole       CONSTANT)
+        Q_PROPERTY(QString telegramRole          READ getTelegramRole        CONSTANT)
+        Q_PROPERTY(QString discordRole           READ getDiscordRole         CONSTANT)
+        Q_PROPERTY(QString publisherLinkRole     READ getPublisherLinkRole   CONSTANT)
         
     public:
         explicit PublishersViewModel(QObject *parent = nullptr);

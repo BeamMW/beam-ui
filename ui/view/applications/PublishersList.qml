@@ -23,7 +23,7 @@ ColumnLayout {
     }
 
     function checkVisibilityOfSocialNetwork(row, socialNetwork) {
-        return tableView.model.getRoleValue(row, socialNetwork) !== ""
+        return typeof(tableView.model.getRoleValue(row, socialNetwork)) !== "undefined"
     }
 
     //
