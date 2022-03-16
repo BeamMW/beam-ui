@@ -137,6 +137,7 @@ namespace beamui::applications
         LOG_INFO() << "AppsViewModel created";
 
         connect(m_walletModel.get(), &WalletModel::transactionsChanged, this, &AppsViewModel::onTransactionsChanged);
+        connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadApps);
 
         auto defaultProfile = QWebEngineProfile::defaultProfile();
         defaultProfile->setHttpCacheType(QWebEngineProfile::HttpCacheType::DiskHttpCache);
