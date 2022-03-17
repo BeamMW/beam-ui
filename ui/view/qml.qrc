@@ -113,6 +113,7 @@
         <file>dex/MarketTable.qml</file>
         <file>applications/applications.qml</file>
         <file>applications/applications_nofork.qml</file>
+        <file>applications/AppButton.qml</file>
         <file>applications/AppPanel.qml</file>
         <file>applications/AppsList.qml</file>
         <file>applications/AppInfoPanel.qml</file>
@@ -201,6 +202,9 @@
         <file>assets/icon-dapps-store-instagram.svg</file>
         <file>assets/icon-dapps-store-telegram.svg</file>
         <file>assets/icon-dapps-store-discord.svg</file>
+        <file>assets/icon-dapps-store-install.svg</file>
+        <file>assets/icon-dapps-store-launch.svg</file>
+        <file>assets/icon-dapps-store-update.svg</file>
         <file>assets/icon-dex.svg</file>
         <file>assets/icon-dex-active.svg</file>
         <file>assets/icon-addresses.svg</file>
@@ -223,6 +227,7 @@
         <file>assets/icon-notifications-sent.svg</file>
         <file>assets/icon-notifications-update.svg</file>
         <file>assets/icon-notifications-videos.svg</file>
+        <file>assets/icon-chevron-down.svg</file>
         <file>assets/icon-contract-completed.svg</file>
         <file>assets/icon-contract-expired.svg</file>
         <file>assets/icon-contract-failed.svg</file>
