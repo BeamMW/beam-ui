@@ -38,7 +38,8 @@ ColumnLayout {
     }
 
     function loadPublisherDApps() {
-        appsList = viewModel.getPublisherDApps(viewModel.publisherInfo.publisherKey)
+        var publisherKey = viewModel.publisherInfo.publisherKey
+        appsList = viewModel.getPublisherDApps(publisherKey)
     }
 
     function uploadNewVersion(app) {
@@ -51,11 +52,12 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
-        control.viewModel.appsChanged.connect(function() {
-            loadPublisherDApps()
-        })
-
+        viewModel.appsChanged.connect(loadPublisherDApps)
         loadPublisherDApps()
+    }
+
+    Component.onDestruction: {
+        viewModel.appsChanged.disconnect(loadPublisherDApps)
     }
 
     //

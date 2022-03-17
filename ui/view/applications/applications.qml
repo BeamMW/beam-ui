@@ -655,8 +655,8 @@ ColumnLayout {
             }
 
             Component.onCompleted: {
-                viewModel.onAppsChanged.connect(loadAppsList)
-                control.onReloadWebEngineView.connect(webView.reload)
+                viewModel.appsChanged.connect(loadAppsList)
+                control.reloadWebEngineView.connect(webView.reload)
 
                 if (settings.dappsAllowed)
                 {
@@ -666,6 +666,11 @@ ColumnLayout {
                 {
                     appsDialog.open();
                 }
+            }
+
+            Component.onDestruction: {
+                viewModel.appsChanged.disconnect(loadAppsList)
+                control.reloadWebEngineView.disconnect(webView.reload)
             }
         }
     }
