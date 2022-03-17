@@ -235,6 +235,7 @@
     </message>
     <message id="settings-version">
         <source>v</source>
+        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
         <translation type="unfinished">v</translation>
     </message>
@@ -421,6 +422,7 @@
     </message>
     <message id="start-migration-message">
         <source>Your wallet will be migrated to v </source>
+        <oldsource>Your wallet will be migrated to v.</oldsource>
         <translation type="unfinished">Your wallet will be migrated to v </translation>
     </message>
     <message id="start-migration-button">
@@ -551,6 +553,7 @@
     </message>
     <message id="appmodel-failed-start-node">
         <source>Failed to start node. Please save wallet logs and contact support.</source>
+        <oldsource>Failed to start node. Please check your node configuration</oldsource>
         <translation>Failed to start node. Please save wallet logs and contact support.</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
@@ -743,11 +746,16 @@
         <translation>Create new password to access your wallet</translation>
     </message>
     <message id="start-create-pwd-strength-message">
-        <source>Strong password needs to meet the following requirements:
+        <source>Strong password needs to meet the following requirements:<byte value="xd"/>
+•  the length must be at least 10 characters<byte value="xd"/>
+•  must contain at least one lowercase letter<byte value="xd"/>
+•  must contain at least one uppercase letter<byte value="xd"/>
+•  must contain at least one number</source>
+        <oldsource>Strong password needs to meet the following requirements:
 •  the length must be at least 10 characters
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
-•  must contain at least one number</source>
+•  must contain at least one number</oldsource>
         <translation type="unfinished">Strong password needs to meet the following requirements:
 •  the length must be at least 10 characters
 •  must contain at least one lowercase letter
@@ -769,8 +777,10 @@
         <translation>Your address</translation>
     </message>
     <message id="settings-general-allow-beammw-label">
-        <source>Allow access to %1 and %2
+        <source>Allow access to %1 and %2<byte value="xd"/>
 (to fetch exchanges and transaction data)</source>
+        <oldsource>Allow access to %1 and %2
+(to fetch exchanges and transaction data)</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
         <translation type="unfinished">Allow access to %1 and %2
 (to fetch exchanges and transaction data)</translation>
@@ -975,8 +985,10 @@
         <translation>Electrum</translation>
     </message>
     <message id="swap-currency-na-message">
-        <source>%1 is not connected, 
+        <source>%1 is not connected, <byte value="xd"/>
 please review your settings and try again</source>
+        <oldsource>%1 is not connected, 
+please review your settings and try again</oldsource>
         <translation type="unfinished">%1 is not connected, 
 please review your settings and try again</translation>
     </message>
@@ -1164,8 +1176,10 @@ please review your settings and try again</translation>
         <translation>Qtum electrum</translation>
     </message>
     <message id="swap-offer-duplicate-message">
-        <source>The offer with this transaction token is already accepted.
+        <source>The offer with this transaction token is already accepted.<byte value="xd"/>
 Please check the swap token and try again.</source>
+        <oldsource>The offer with this transaction token is already accepted.
+Please check the swap token and try again.</oldsource>
         <translation type="unfinished">The offer with this transaction token is already accepted.
 Please check the swap token and try again.</translation>
     </message>
@@ -1301,6 +1315,7 @@ Please check the swap token and try again.</translation>
     </message>
     <message id="send-swap-token-hint">
         <source>Paste token or address here</source>
+        <oldsource>Paste token here</oldsource>
         <translation>Paste token or address here</translation>
     </message>
     <message id="swap-tx-state-initial">
@@ -1378,9 +1393,12 @@ Please check the swap token and try again.</translation>
         <translation>Owner key</translation>
     </message>
     <message id="settings-show-owner-key-message">
-        <source>Please notice, that knowing your owner key allows to
-know all your funds (UTXO). Make sure that you
+        <source>Please notice, that knowing your owner key allows to<byte value="xd"/>
+know all your funds (UTXO). Make sure that you<byte value="xd"/>
 deploy the key at the node you trust completely.</source>
+        <oldsource>Please notice, that knowing your owner key allows to
+know all your funds (UTXO). Make sure that you
+deploy the key at the node you trust completely.</oldsource>
         <extracomment>settings tab, show owner key message</extracomment>
         <translation type="unfinished">Please notice, that knowing your owner key allows to
 know all your funds (UTXO). Make sure that you
@@ -1479,6 +1497,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="settings-notifications-version">
         <source>Wallet updates</source>
+        <oldsource>Wallet update</oldsource>
         <translation type="unfinished">Wallet updates</translation>
     </message>
     <message id="settings-notifications-tx-status">
@@ -1720,7 +1739,8 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="tx-regular">
         <source>Online</source>
-        <translation>Online</translation>
+        <oldsource>Regular</oldsource>
+        <translation type="unfinished">Regular</translation>
     </message>
     <message id="tx-max-privacy">
         <source>Maximum anonymity</source>
@@ -1848,10 +1868,12 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>The sender cannot get vouchers for max privacy transaction</translation>
     </message>
     <message id="settings-random-node-text">
-        <source>Random node address and port will be displayed 
+        <source>Random node address and port will be displayed <byte value="xd"/>
 when connection is established</source>
-        <translation>Random node address and port will be displayed 
-when connection is established</translation>
+        <oldsource>Random node address and port will be displayed 
+when connection is established</oldsource>
+        <translation type="unfinished">Random node address and port will be displayed 
+        when connection is established</translation>
     </message>
     <message id="swap-token-newer-lib">
         <source>This address generated by newer Beam library version(%1)
@@ -2081,6 +2103,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="general-ethereum">
         <source>Ethereum</source>
+        <oldsource>ETHEREUM</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-swap-ethereum-node">
@@ -2108,9 +2131,12 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. 
-Check on the %1 blockchain by yourself. Low fees might take 
+        <source>Connection error: can&apos;t calculate the recommended fee rate. <byte value="xd"/>
+Check on the %1 blockchain by yourself. Low fees might take <byte value="xd"/>
 much longer for a transaction to complete.</source>
+        <oldsource>Connection error: can&apos;t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="ethereum-show-addresses-title">
@@ -2123,6 +2149,7 @@ much longer for a transaction to complete.</source>
     </message>
     <message id="apps-title">
         <source>My DApp Store</source>
+        <oldsource>DApp Store</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-run">
@@ -2135,6 +2162,7 @@ much longer for a transaction to complete.</source>
     </message>
     <message id="dex-all-tab">
         <source>All orders</source>
+        <oldsource>All offers</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dex-my-tab">
@@ -2184,6 +2212,7 @@ Please try again later or create an offer yourself.</source>
     </message>
     <message id="notification-contract-no-message">
         <source>No description provided by the contract</source>
+        <oldsource>Contract: no description provided</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-contract-completed">
@@ -2291,8 +2320,10 @@ Please try again later or create an offer yourself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="atomic-no-offers">
-        <source>There are no active offers at the moment.
+        <source>There are no active offers at the moment.<byte value="xd"/>
 Please try again later or create an offer yourself.</source>
+        <oldsource>There are no active offers at the moment.
+Please try again later or create an offer yourself.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="atomic-swap-time-created">
@@ -2360,8 +2391,10 @@ Please try again later or create an offer yourself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="swap-na-message">
-        <source>You do not have any 3rd-party currencies connected.
+        <source>You do not have any 3rd-party currencies connected.<byte value="xd"/>
 Update your settings and try again.</source>
+        <oldsource>You do not have any 3rd-party currencies connected.
+Update your settings and try again.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-swap-title">
@@ -2490,6 +2523,8 @@ Update your settings and try again.</source>
     </message>
     <message id="apps-bad-api-version">
         <source>Unsupported API version requested: %1</source>
+        <oldsource>Unsupported API version requested: %1
+</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="can-not-generate-new-address-message">
@@ -2525,6 +2560,7 @@ Update your settings and try again.</source>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
+        <oldsource>Max Privacy transaction can last indefinitely.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-text-online-time">
@@ -2565,6 +2601,7 @@ Update your settings and try again.</source>
     </message>
     <message id="amount-input-add-max">
         <source>max</source>
+        <oldsource>add max</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="send-amount-label">
@@ -2917,9 +2954,12 @@ Update your settings and try again.</source>
         <translation>DApps Privacy Warning</translation>
     </message>
     <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
-
+        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.<byte value="xd"/>
+<byte value="xd"/>
 Allow to proceed? You can always update your choice in Settings later.</source>
+        <oldsource>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
+
+Allow to proceed? You can always update your choice in Settings later.</oldsource>
         <translation type="unfinished">Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
 
 Allow to proceed? You can always update your choice in Settings later.</translation>
@@ -3154,6 +3194,7 @@ cannot be canceled.</translation>
     </message>
     <message id="apps-uninstall-confirm">
         <source>Are you sure you want to uninstall %1 DApp?</source>
+        <oldsource>Are you sure you want to cancel %1 DApp?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="app-uninstall-title">
@@ -3187,17 +3228,15 @@ cannot be canceled.</translation>
         <source>Failed to uninstall &apos;%1&apos; DApp.</source>
         <translation>Failed to uninstall &apos;%1&apos; DApp.</translation>
     </message>
-    <message id="apps-inprogress-tip">
-        <source>(%1 active)</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-receive-regular-address-message">
-        <source>To ensure a better privacy, new address is generated every time.
+        <source>To ensure a better privacy, new address is generated every time.<byte value="xd"/>
 In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
+        <oldsource>To ensure a better privacy, new address is generated every time.
+In case you’d like to re-use an earlier created regular address please use the Address Book.</oldsource>
         <translation type="unfinished">To ensure a better privacy, new address is generated every time.
 In case you’d like to re-use an earlier created regular address please use the Address Book.</translation>
     </message>
@@ -3214,8 +3253,10 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation>Token details</translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit-commented">
-        <source>No limit
+        <source>No limit<byte value="xd"/>
 (transaction can last indefinitely)</source>
+        <oldsource>No limit
+(transaction can last indefinitely)</oldsource>
         <translation type="unfinished">No limit
 (transaction can last indefinitely)</translation>
     </message>
@@ -3236,6 +3277,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="status-online-stale-rates">
         <source>(exchange rate to %1 was not updated since %2)</source>
+        <oldsource> (exchange rate to %1 was not updated since %2)</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="loading-view-restoring">
@@ -3301,6 +3343,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="settings-ipfs-start">
         <source>Run node on</source>
+        <oldsource>Start IPFS node on:</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="tx-empty">
@@ -3423,6 +3466,18 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>The DApp installation error.</source>
         <translation>The DApp installation error.</translation>
     </message>
+    <message id="apps-inprogress-tip">
+        <source>(%1 active)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-balance-title">
+        <source>Wallet Balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-no-transaction-filter">
+        <source>No transactions to show</source>
+        <translation>No transactions to show</translation>
+    </message>
     <message id="apps-install-success">
         <source>&apos;%1&apos; is successfully installed.</source>
         <translation type="unfinished"></translation>
@@ -3432,24 +3487,8 @@ In case you’d like to re-use an earlier created regular address please use the
 %1</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="dapps-store-publish">
-        <source>publish</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-show-publisher-key">
-        <source>show my publisherKey</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-register-publisher">
-        <source>register as publisher</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-show-all-publishers">
-        <source>show all publishers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-publisher-key">
-        <source>Publisher Key</source>
+    <message id="apps-become-a-publisher">
+        <source>become a publisher</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-install">
@@ -3460,21 +3499,21 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="apps-become-a-publisher">
-        <source>become a publisher</source>
+    <message id="dapps-store-remove-dapp">
+        <source>remove dapp</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-become-publisher">
         <source>Become a publisher</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="dapps-store-edit-publisher-info">
+        <source>Edit publisher info</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="dapps-store-become-publisher-text">
         <source>To become a publisher you need to set up a username. ID number and personal Publisher Key will
  be given to you automatically. Registration will allow you to publish, update and delete DApps.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-create-account">
-        <source>create account</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-nickname">
@@ -3487,6 +3526,10 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="dapps-store-50-character-max">
         <source>50 characters max</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-about-me">
+        <source>About me</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-150-character-max">
@@ -3521,13 +3564,20 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>Discord</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="dapps-store-create-account">
+        <source>create account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-save-changes">
+        <source>save changes</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="dapps-store-publisher-page">
         <source>Publisher&apos;s page</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-my-dapps">
         <source>My DAPPs - admin panel</source>
-        <oldsource>My DAPPs</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-publisher-have-not-dapps">
@@ -3536,6 +3586,10 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="dapps-store-publisher-upload-first-dapp">
         <source>upload your fist dapp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publisher-key">
+        <source>Publisher Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-publisher-key-dialog-note">
@@ -3570,16 +3624,25 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>%1 added to the list of publishers that you follow</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="dapps-store-edit-publisher-info">
-        <source>Edit publisher info</source>
+    <message id="copy-publisher-key">
+        <source>Copy publisher key</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="dapps-store-save-changes">
-        <source>save changes</source>
+    <message id="remove-from-list">
+        <source>Remove from my list</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="dapps-store-about-me">
-        <source>About me</source>
+    <message id="dapps-store-transacton-is-sent">
+        <source>The transaction is sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-creation-of-account">
+        <source>Creation of the personal publisher account takes time.
+ You can continue as soon as transaction is completed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-changes-takes-time">
+        <source>Changes take time. You can continue as soon as transaction is completed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-upload-choose-file-title">
@@ -3619,8 +3682,8 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-upload-check-details-text">
-        <source>Check the information below and select &quot;publish&quot;.
-If something is wrong, please cancel the uploading,
+        <source>Check the information below and select &quot;publish&quot;.<byte value="xd"/>
+If something is wrong, please cancel the uploading,<byte value="xd"/>
 change the information in your file and upload your file again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3644,17 +3707,8 @@ change the information in your file and upload your file again.</source>
         <source>Guid:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="dapps-store-transacton-is-sent">
-        <source>The transaction is sent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-changes-takes-time">
-        <source>Changes take time. You can continue as soon as transaction is completed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-creation-of-account">
-        <source>Creation of the personal publisher account takes time.
- You can continue as soon as transaction is completed.</source>
+    <message id="dapps-store-publish">
+        <source>publish</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-you-now-are-publisher">
@@ -3674,22 +3728,6 @@ Let&apos;s start!</source>
     </message>
     <message id="dapps-store-to-to-my-account">
         <source>go to my account</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-remove-dapp">
-        <source>remove dapp</source>
-        <translation>remove dapp</translation>
-    </message>
-    <message id="dapps-store-remove-dapp">
-        <source>remove dapp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="copy-publisher-key">
-        <source>Copy publisher key</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="remove-from-list">
-        <source>Remove from my list</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

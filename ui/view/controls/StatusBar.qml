@@ -8,7 +8,7 @@ import "."
 Item {
     id: rootControl
     x: -20
-    y: -45
+    y: -30
 
     property var model
 
@@ -152,15 +152,23 @@ Item {
             spacing: 0
             anchors.fill: parent
 
-            Row {
-                Layout.alignment: Qt.AlignHCenter
+            RowLayout {
+                width: rowBackground.width
                 spacing: 7
 
+                Item {
+                    Layout.fillWidth: true
+                }
+
                 SFText {
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.maximumWidth: parent.width - parent.spacing * 2 - 14
+                                         - (progressText.visible ? progressText.width + parent.spacing : 0)
+                                         - (settingsBtn.visible ? settingsBtn.width + parent.spacing : 0)
                     id: status_text
                     color: Style.content_main
                     font.pixelSize: 15
-                    elide: Text.ElideLeft
+                    elide: Text.ElideRight
                 }
 
                 SFText {
@@ -172,6 +180,7 @@ Item {
                 }
 
                 LinkButton {
+                    id: settingsBtn
                     //% "Change settings"
                     text: qsTrId("status-change-settings")
                     visible: model.ipfsError || model.isCoinClientFailed || model.isFailedStatus || (model.isOnline && !model.isConnectionTrusted)
@@ -191,6 +200,10 @@ Item {
                         main.openSettings("BEAM_NODE")
                         return
                     }
+                }
+
+                Item {
+                    Layout.fillWidth: true
                 }
             }
 

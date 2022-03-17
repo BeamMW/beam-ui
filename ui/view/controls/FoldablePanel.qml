@@ -37,6 +37,7 @@ Pane {
                 RowLayout {
                     Layout.fillHeight: true
                     spacing: 0
+                    visible: !!title
 
                     SFText {
                         id:    headerTitle
@@ -88,15 +89,15 @@ Pane {
                     }
                 }
 
-                Item {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    visible: !headerContent
+                Control {
+                    id:  headerPlaceholder
+                    visible: !!headerContent
+                    contentItem: headerContent
                 }
 
                 Item {
-                    width: 5
                     Layout.fillHeight: true
+                    Layout.fillWidth:  true
                 }
 
                 SvgImage {
@@ -110,18 +111,6 @@ Pane {
                         origin.x: arrow.width/2
                         origin.y: arrow.height/2
                     }
-                }
-
-                Item {
-                    Layout.fillHeight: true
-                    Layout.fillWidth:  true
-                    visible: !!headerContent
-                }
-
-                Control {
-                    id:  headerPlaceholder
-                    visible: headerContent && !folded
-                    contentItem: headerContent
                 }
             }
 

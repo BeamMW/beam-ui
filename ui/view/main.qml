@@ -205,8 +205,9 @@ Rectangle {
     property var contentItems : [
         {name: "wallet"},
         {name: "atomic_swap"},
-        {name: "applications", qml: appsQml},
+        {name: "applications", qml: appsQml, reloadable: true},
         {name: "daocore", qml: appsQml, args: () => appArgs("BeamX DAO", viewModel.daoCoreAppID, false)},
+        {name: "voting", qml: appsQml, args: () => appArgs("BeamX DAO Voting", viewModel.votingAppID, false)},
         // {name: "dex"},
         {name: "addresses"},
         {name: "notifications"},
@@ -331,7 +332,7 @@ Rectangle {
 
                         Keys.onPressed: {
                             if ((event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space))
-                            if (selectedItem != index) {
+                            if (modelData.reloadable || selectedItem != index) {
                                 updateItem(index);
                             }
                         }
@@ -341,7 +342,7 @@ Rectangle {
                             anchors.fill: parent
                             onClicked: {
                                 control.focus = true
-                                if (selectedItem != index) {
+                                if (modelData.reloadable || selectedItem != index) {
                                     updateItem(index);
                                 }
                             }
@@ -355,7 +356,7 @@ Rectangle {
 
     Loader {
         id: content
-        anchors.topMargin: 45
+        anchors.topMargin: 30
         anchors.bottomMargin: 0
         anchors.rightMargin: 20
         anchors.leftMargin: 90
@@ -366,27 +367,24 @@ Rectangle {
     function updateItem(indexOrID, props)
     {
         var update = function(index) {
-            var sameTab = selectedItem == index;
-
             selectedItem = index
-            controls.itemAt(index).focus = true;
+            controls.itemAt(index).focus = true
 
             var item   = contentItems[index]
             var source = ["qrc:/", item.qml ? item.qml() : item.name, ".qml"].join('')
             var args   = item.args ? item.args() : {}
 
+            //content.setSource("")
             content.setSource(source, Object.assign(args, props))
-            viewModel.update(index)
         }
 
         var indexByName = function(name) {
             for (var index = 0; index < contentItems.length; index++) {
                 if (contentItems[index].name == name) {
-                    return index;
+                    return index
                 }
             }
-
-            return -1;
+            return -1
         }
 
         if ((typeof(indexOrID) == "number" && contentItems[indexOrID].name == "help") ||
@@ -405,7 +403,7 @@ Rectangle {
         }
         
         if (typeof(indexOrID) == "string") {
-            indexOrID = indexByName(indexOrID);
+            indexOrID = indexByName(indexOrID)
         }
 
         // here we always have a number

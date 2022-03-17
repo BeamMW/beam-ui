@@ -60,11 +60,6 @@ MainViewModel::MainViewModel()
     m_settings.minConfirmationsInit();
 }
 
-void MainViewModel::update(int page)
-{
-	// TODO: update page model or smth...
-}
-
 void MainViewModel::lockWallet()
 {
     emit gotoStartScreen();
@@ -126,6 +121,23 @@ QString MainViewModel::getDaoCoreAppID() const
     #else
     appURL = "http://3.19.141.112:80/app/plugin-dao-core/index.html";
     #endif
+
+    const auto appid = beam::wallet::GenerateAppID(appName, appURL);
+    return QString::fromStdString(appid);
+}
+
+QString MainViewModel::getVotingAppID() const
+{
+    const std::string appName = "BeamX DAO Voting";
+    std::string appURL  = "";
+
+#if defined(BEAM_TESTNET)
+    appURL = "https://apps-testnet.beam.mw/app/dao-voting-app/index.html";
+#elif defined(BEAM_MAINNET)
+    appURL = "https://apps.beam.mw/app/dao-voting-app/index.html";
+#else
+    appURL = "http://3.19.141.112:80/app-same-origin/dao-voting-app/index.html";
+#endif
 
     const auto appid = beam::wallet::GenerateAppID(appName, appURL);
     return QString::fromStdString(appid);

@@ -85,7 +85,7 @@ Item
             confirmationDialog.okButtonVisible  = false;
             confirmationDialog.okButtonEnable   = false;
             confirmationDialog.closePolicy      = Popup.NoAutoClose;
-            confirmationDialog.rejectedCallback = isCreating ? cancelCreating : changeNodeSettings;
+            confirmationDialog.rejectedCallback = isRecoveryMode ? changeNodeSettings : cancelCreating;
             confirmationDialog.open();
         }
 
@@ -101,7 +101,7 @@ Item
     }
 
     function changeNodeSettings () {
-        rootLoading.parent.setSource("qrc:/start.qml", {"isBadPortMode": true});
+        rootLoading.parent.restoreProcessBadPortMode();
     }
 
     StartLayout {

@@ -328,7 +328,7 @@ Item
 
                     SFText {
                         Layout.alignment: Qt.AlignHCenter
-                        Layout.topMargin: 65
+                        Layout.topMargin: 64
                         //% "Restore wallet or create a new one"
                         text: qsTrId("general-restore-or-create-wallet")
                         color: Style.active
@@ -348,7 +348,7 @@ Item
 
                     Item {
                         Layout.fillWidth:       true
-                        Layout.preferredHeight:   67
+                        Layout.preferredHeight:   68
                     }
                 }
             }
@@ -1595,8 +1595,8 @@ Item
 
                                 if (isBadPortMode) {
                                     viewModel.onNodeSettingsChanged();
-                                    root.parent.setSource("qrc:/loading.qml");
-                                } else {
+                                    startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : viewModel.isRecoveryMode, "isCreating" : true, "cancelCallback": startWizzardView.pop});
+                               } else {
                                     viewModel.createWallet(function (created) {
                                         if (created) { 
                                             startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : viewModel.isRecoveryMode, "isCreating" : true, "cancelCallback": startWizzardView.pop});
@@ -1679,7 +1679,7 @@ Item
                     SFText {
                         Layout.alignment:       Qt.AlignHCenter
                         Layout.preferredHeight: 16
-                        Layout.bottomMargin:    startLayout.isSqueezedHeight  ? 18 : 48
+                        Layout.bottomMargin:    startLayout.isSqueezedHeight  ? 10 : 20
                         //% "Enter your password to access the wallet"
                         text: qsTrId("start-open-pwd-invitation")
                         color: Style.content_main
@@ -1727,9 +1727,9 @@ Item
 
                     Row {
                         Layout.alignment: Qt.AlignHCenter
-                        Layout.topMargin: startLayout.isSqueezedHeight  ? 8 : 18
+                        Layout.topMargin: startLayout.isSqueezedHeight  ? 8 : 14
                         Layout.preferredHeight: 38
-                        spacing:          20
+                        spacing:          15
                                 
                         function tryOpenWallet() {
                             if(openPassword.text.length == 0)
@@ -1776,7 +1776,7 @@ Item
                     Item {
                         Layout.alignment: Qt.AlignHCenter
                         Layout.preferredHeight: 36
-                        Layout.topMargin: startLayout.isSqueezedHeight  ? 9 : 20
+                        Layout.topMargin: startLayout.isSqueezedHeight  ? 9 : 15
                         Layout.bottomMargin: 9
                         Rectangle {
                             id: capsWarning
@@ -1865,6 +1865,13 @@ Item
                     }
                 }
             }
+        }
+
+        function restoreProcessBadPortMode() {
+            startWizzardView.pop();
+            startWizzardView.push(nodeSetup);
+            root.isBadPortMode = true;
+            viewModel.isRecoveryMode = true;
         }
 
         Component.onCompleted: {

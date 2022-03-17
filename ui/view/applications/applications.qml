@@ -26,7 +26,7 @@ ColumnLayout {
 
     function openAppTx (txid) {
         openedTxID = txid
-        txTable.showTxDetails(txid)
+        txPanel.showTxDetails(txid)
     }
 
     function uninstallApp (app) {
@@ -101,8 +101,19 @@ ColumnLayout {
     // Page Header (Title + Status Bar)
     //
     Title {
-        //% "My DApp Store"
-        text: qsTrId("apps-title")
+                                                           //% "My DApp Store"
+        text: control.activeApp ? control.activeApp.name : qsTrId("apps-title")
+
+        MouseArea {
+            visible: !!control.activeApp
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton
+            cursorShape: Qt.PointingHandCursor
+
+            onClicked: function () {
+                webView.reload()
+            }
+        }
 
         MouseArea {
             enabled:         stackView.depth > 1
@@ -169,30 +180,6 @@ ColumnLayout {
                 }
                 else {
                     becomePublisherDialog.open();
-                }
-            }
-
-            // Subtitle row is invisible only when we display appslit
-            // In all other cases we display it
-            //   - if app, with back button & app title
-            //   - if no app (loading) without back button & title.
-            //     This is to avoid 'Loading (appname)...' message jumping vertically
-            SubtitleRow {
-                id: backRow
-                Layout.fillWidth:    true
-                Layout.topMargin:    50
-                Layout.bottomMargin: 20
-
-                visible:  !appsListView.visible
-                showBack: control.showBack && !!text
-                text:     ((control.activeApp || {}).name || "")
-
-                onBack: function () {
-                    main.openApplications()
-                }
-
-                onRefresh: function () {
-                    webView.reload()
                 }
             }
 
@@ -451,9 +438,15 @@ ColumnLayout {
                 Layout.fillHeight:   true
                 Layout.fillWidth:    true
                 Layout.bottomMargin: txPanel.folded ? 10 : 0
+                Layout.topMargin:    20
                 visible: false
                 opacity: txPanel.folded ? 1.0 : 0.25
                 clip:    true
+
+                WebEngineScript {
+                    id: userScript
+                    sourceUrl: "qrc:/web_view_watcher.js"
+                }
 
                 WebEngineView {
                     id: webView
@@ -461,6 +454,10 @@ ColumnLayout {
                     webChannel: apiChannel
                     visible: true
                     backgroundColor: "transparent"
+                    userScripts: [userScript]
+                    onJavaScriptConsoleMessage: function (level, message, line, sourceId){
+                        if (message == "no_sleep") main.resetLockTimer();
+                    }
 
                     profile: WebEngineProfile {
                         httpCacheType:           WebEngineProfile.DiskHttpCache
@@ -468,7 +465,7 @@ ColumnLayout {
                         offTheRecord:            false
                         spellCheckEnabled:       false
                         httpUserAgent:           viewModel.userAgent
-                        httpCacheMaximumSize:    0
+                        httpCacheMaximumSize:    536870912 // 5GB
                     }
 
                     settings {
@@ -500,7 +497,7 @@ ColumnLayout {
 
                             if(loadRequest.status === WebEngineLoadRequest.LoadFailedStatus) {
                                 // code in this 'if' will cause next 'if' to be called
-                                control.errorMessage = ["Failed to load:", JSON.stringify(loadRequest, null, 4)].join('\n')
+                                control.errorMessage = ["Failed to load", JSON.stringify(loadRequest, null, 4)].join('\n')
                                 // no return
                             }
 
@@ -545,6 +542,7 @@ ColumnLayout {
                 id: errCntMessage
                 Layout.alignment: Qt.AlignRight
                 Layout.topMargin: 5
+                Layout.bottomMargin: 10
                 color: Style.validator_error
                 visible: control.hasApps && !control.activeApp && unsupportedCnt > 0
                 font.italic: true
@@ -554,7 +552,7 @@ ColumnLayout {
 
             AppsList {
                 id: appsListView
-                Layout.topMargin:  40 - (unsupportedCnt ? errCntMessage.height + 5 + parent.spacing : 0)
+                Layout.topMargin: unsupportedCnt ? 0 : 20
                 Layout.fillHeight: true
                 Layout.fillWidth:  true
                 Layout.bottomMargin: txPanel.folded ? 10 : 0
@@ -615,11 +613,10 @@ ColumnLayout {
                 }
             }
 
-            FoldablePanel {
+            AppInfoPanel {
                 id:                  txPanel
-                title:               qsTrId("wallet-transactions-title")
                 folded:              !control.openedTxID
-                titleOpacity:        0.5
+                state:               control.openedTxID ? "transactions" : "balance"
                 Layout.fillWidth:    true
                 Layout.bottomMargin: 10
                 contentItemHeight:   control.height * 0.36
@@ -627,17 +624,9 @@ ColumnLayout {
                 foldsUp:             false
                 visible:             appsListView.visible || webLayout.visible
                 bkColor:             Style.background_appstx
-
-                content: TxTable {
-                    id:    txTable
-                    owner: control
-                    emptyMessageMargin: 60
-                    headerShaderVisible: false
-                    dappFilter: (control.activeApp || {}).appid || "all"
-                }
-
-                //% "(%1 active)"
-                titleTip: txTable.activeTxCnt ? qsTrId("apps-inprogress-tip").arg(txTable.activeTxCnt) : ""
+                dappName:            (control.activeApp || {}).name || ""
+                dappFilter:          (control.activeApp || {}).appid || "all"
+                tableOwner:          control
             }
 
             function appendLocalApps (arr) {

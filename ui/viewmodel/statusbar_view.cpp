@@ -451,7 +451,7 @@ void StatusbarViewModel::onIPFSStatus(bool running, const QString& error, uint32
 {
     m_ipfsRunning = running;
     m_ipfsPeerCnt = peercnt;
-    m_ipfsError   = error; // TODO:IPFS handle long errors that come from golang
+    m_ipfsError   = error;
     emit IPFSStatusChanged();
 }
 

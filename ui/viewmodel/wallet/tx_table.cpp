@@ -197,6 +197,7 @@ void TxTableViewModel::setShowInProgress(bool value)
     _showInProgress = value;
     _settings.setShowInProgress(value);
     emit showInProgressChanged();
+    emit showAllChanged();
     _model->getAsync()->getTransactions();
 }
 
@@ -210,6 +211,7 @@ void TxTableViewModel::setShowCompleted(bool value)
     _showCompleted = value;
     _settings.setShowCompleted(value);
     emit showCompletedChanged();
+    emit showAllChanged();
     _model->getAsync()->getTransactions();
 }
 
@@ -223,6 +225,7 @@ void TxTableViewModel::setShowCanceled(bool value)
     _showCanceled = value;
     _settings.setShowCanceled(value);
     emit showCanceledChanged();
+    emit showAllChanged();
     _model->getAsync()->getTransactions();
 }
 
@@ -236,7 +239,13 @@ void TxTableViewModel::setShowFailed(bool value)
     _showFailed = value;
     _settings.setShowFailed(value);
     emit showFailedCanged();
+    emit showAllChanged();
     _model->getAsync()->getTransactions();
+}
+
+bool TxTableViewModel::getShowAll() const
+{
+    return _showInProgress && _showCompleted &&_showCanceled &&_showFailed;
 }
 
 void TxTableViewModel::cancelTx(const QVariant& variantTxID)
