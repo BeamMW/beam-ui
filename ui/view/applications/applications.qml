@@ -43,6 +43,8 @@ ColumnLayout {
         loadAppsList()
     }
 
+    signal reloadWebEngineView()
+
     ApplicationsViewModel {
         id: viewModel
 
@@ -105,17 +107,18 @@ ColumnLayout {
         text: control.activeApp ? control.activeApp.name : qsTrId("apps-title")
 
         MouseArea {
-            visible: !!control.activeApp
-            anchors.fill: parent
+            visible:         !!control.activeApp
+            anchors.fill:    parent
             acceptedButtons: Qt.LeftButton
-            cursorShape: Qt.PointingHandCursor
+            cursorShape:     Qt.PointingHandCursor
 
             onClicked: function () {
-                webView.reload()
+                reloadWebEngineView()
             }
         }
 
         MouseArea {
+            visible:         !control.activeApp
             enabled:         stackView.depth > 1
             anchors.fill:    parent
             acceptedButtons: Qt.LeftButton
@@ -667,6 +670,7 @@ ColumnLayout {
 
             Component.onCompleted: {
                 viewModel.onAppsChanged.connect(loadAppsList)
+                control.onReloadWebEngineView.connect(webView.reload)
 
                 if (settings.dappsAllowed)
                 {
