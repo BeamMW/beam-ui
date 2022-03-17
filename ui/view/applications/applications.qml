@@ -13,16 +13,16 @@ ColumnLayout {
     id: control
     Layout.fillWidth: true
     Layout.topMargin: 27
-    spacing: 0
+    spacing:          0
 
-    property string   errorMessage: ""
-    property var      appsList: undefined
+    property string   errorMessage:   ""
+    property var      appsList:       undefined
     property var      unsupportedCnt: 0
-    property var      activeApp: undefined
-    property var      appToOpen: undefined
-    property string   openedTxID: ""
-    property bool     showBack: true
-    readonly property bool hasApps: !!appsList && appsList.length > 0
+    property var      activeApp:      undefined
+    property var      appToOpen:      undefined
+    property string   openedTxID:     ""
+    property bool     showBack:       true
+    readonly property bool hasApps:   !!appsList && appsList.length > 0
 
     function openAppTx (txid) {
         openedTxID = txid
@@ -137,10 +137,10 @@ ColumnLayout {
         id: dappsMainLayout
 
         ColumnLayout {
-            id: dappsLayout
-            Layout.fillWidth: true
+            id:                dappsLayout
+            Layout.fillWidth:  true
             Layout.fillHeight: true
-            spacing: 0
+            spacing:           0
 
             DnDdappInstallDialog {
                 id: dndDialog
@@ -150,9 +150,9 @@ ColumnLayout {
             }
 
             BecomePublisher {
-                id: becomePublisherDialog
+                id:            becomePublisherDialog
 
-                newPublisher: !viewModel.isPublisher
+                newPublisher:  !viewModel.isPublisher
                 publisherInfo: viewModel.publisherInfo
 
                 onCreatePublisher: function(info) {
@@ -187,33 +187,33 @@ ColumnLayout {
             }
 
             RowLayout {
-                visible: appsListView.visible
+                visible:          appsListView.visible
                 Layout.topMargin: 10
                 Layout.fillWidth: true
-                spacing: 20
+                spacing:          20
 
                 Item {
                     Layout.fillWidth: true
                 }
 
                 CustomButton {
-                    id: showPublishers
-                    width: 38
-                    radius: 10
-                    display: AbstractButton.IconOnly
-                    leftPadding: 11
-                    rightPadding: 11
+                    id:             showPublishers
+                    width:          38
+                    radius:         10
+                    display:        AbstractButton.IconOnly
+                    leftPadding:    11
+                    rightPadding:   11
                     palette.button: Qt.rgba(255, 255, 255, 0.1)
-                    icon.source: "qrc:/assets/icon-dapps_store-publishers.svg"
-                    onClicked: navigatePublishersList()
+                    icon.source:    "qrc:/assets/icon-dapps_store-publishers.svg"
+                    onClicked:      navigatePublishersList()
                 }
 
                 PrimaryButton {
-                    id: publisherDetails
-                    //% "become a publisher"
-                    text: viewModel.isPublisher ? viewModel.publisherInfo.nickname : qsTrId("apps-become-a-publisher")
+                    id:          publisherDetails
+                                 //% "become a publisher"
+                    text:        viewModel.isPublisher ? viewModel.publisherInfo.nickname : qsTrId("apps-become-a-publisher")
                     icon.source: "qrc:/assets/icon-dapps_store-become-a-publisher.svg"
-                    onClicked: navigatePublisherDetails()
+                    onClicked:   navigatePublisherDetails()
                 }
             }
 
@@ -223,7 +223,7 @@ ColumnLayout {
             // is leaked to the web from real API
             //
             QtObject {
-                id: webapiBEAM
+                id:            webapiBEAM
                 WebChannel.id: "BEAM"
 
                 property var style: Style
@@ -240,7 +240,7 @@ ColumnLayout {
             }
 
             WebChannel {
-                id: apiChannel
+                id:                apiChannel
                 registeredObjects: [webapiBEAM]
             }
 
@@ -376,17 +376,17 @@ ColumnLayout {
             Item {
                 Layout.fillHeight: true
                 Layout.fillWidth:  true
-                visible: !appsListView.visible && !webLayout.visible
+                visible:           !appsListView.visible && !webLayout.visible
 
                 ColumnLayout {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    y: parent.height / 2 - this.height / 2 - 40
-                    spacing: 40
+                    y:                        parent.height / 2 - this.height / 2 - 40
+                    spacing:                  40
 
                     SFText {
                         Layout.alignment: Qt.AlignHCenter
-                        color: control.errorMessage.length ? Style.validator_error : Style.content_main
-                        opacity: 0.5
+                        color:            control.errorMessage.length ? Style.validator_error : Style.content_main
+                        opacity:          0.5
 
                         font {
                             italic:    true
@@ -417,8 +417,8 @@ ColumnLayout {
 
                     SvgImage {
                         Layout.alignment: Qt.AlignHCenter
-                        source: "qrc:/assets/dapp-loading.svg"
-                        sourceSize: Qt.size(245, 140)
+                        source:           "qrc:/assets/dapp-loading.svg"
+                        sourceSize:       Qt.size(245, 140)
 
                         visible: {
                             if (control.errorMessage.length) {
@@ -436,29 +436,30 @@ ColumnLayout {
             }
 
             Item {
-                id: webLayout
+                id:                  webLayout
 
                 Layout.fillHeight:   true
                 Layout.fillWidth:    true
                 Layout.bottomMargin: txPanel.folded ? 10 : 0
                 Layout.topMargin:    20
-                visible: false
-                opacity: txPanel.folded ? 1.0 : 0.25
-                clip:    true
+                visible:             false
+                opacity:             txPanel.folded ? 1.0 : 0.25
+                clip:                true
 
                 WebEngineScript {
-                    id: userScript
+                    id:        userScript
                     sourceUrl: "qrc:/web_view_watcher.js"
                 }
 
                 WebEngineView {
-                    id: webView
-                    anchors.fill: parent
-                    webChannel: apiChannel
-                    visible: true
+                    id:              webView
+                    anchors.fill:    parent
+                    webChannel:      apiChannel
+                    visible:         true
                     backgroundColor: "transparent"
-                    userScripts: [userScript]
-                    onJavaScriptConsoleMessage: function (level, message, line, sourceId){
+                    userScripts:     [userScript]
+
+                    onJavaScriptConsoleMessage: function (level, message, line, sourceId) {
                         if (message == "no_sleep") main.resetLockTimer();
                     }
 
@@ -527,7 +528,7 @@ ColumnLayout {
 
                 MouseArea {
                     anchors.fill: parent
-                    visible: !txPanel.folded
+                    visible:      !txPanel.folded
                     hoverEnabled: true
 
                     onClicked: function (ev) {
@@ -542,26 +543,26 @@ ColumnLayout {
             }
 
             SFText {
-                id: errCntMessage
-                Layout.alignment: Qt.AlignRight
-                Layout.topMargin: 5
+                id:                  errCntMessage
+                Layout.alignment:    Qt.AlignRight
+                Layout.topMargin:    5
                 Layout.bottomMargin: 10
-                color: Style.validator_error
-                visible: control.hasApps && !control.activeApp && unsupportedCnt > 0
-                font.italic: true
-                //% "%n DApp(s) is not available"
-                text: qsTrId("apps-err-cnt", unsupportedCnt)
+                color:               Style.validator_error
+                visible:             control.hasApps && !control.activeApp && unsupportedCnt > 0
+                font.italic:         true
+                                     //% "%n DApp(s) is not available"
+                text:                qsTrId("apps-err-cnt", unsupportedCnt)
             }
 
             AppsList {
-                id: appsListView
-                Layout.topMargin: unsupportedCnt ? 0 : 20
-                Layout.fillHeight: true
-                Layout.fillWidth:  true
+                id:                  appsListView
+                Layout.topMargin:    unsupportedCnt ? 0 : 20
+                Layout.fillHeight:   true
+                Layout.fillWidth:    true
                 Layout.bottomMargin: txPanel.folded ? 10 : 0
-                opacity:  txPanel.folded ? 1.0 : 0.25
-                visible:  control.hasApps && !control.activeApp
-                appsList: control.appsList
+                opacity:             txPanel.folded ? 1.0 : 0.25
+                visible:             control.hasApps && !control.activeApp
+                appsList:            control.appsList
 
                 onOpenDnd: function () {
                     dndDialog.open();
@@ -602,7 +603,7 @@ ColumnLayout {
 
                 MouseArea {
                     anchors.fill: parent
-                    visible: !txPanel.folded
+                    visible:      !txPanel.folded
                     hoverEnabled: true
 
                     onClicked: function (ev) {
@@ -685,15 +686,13 @@ ColumnLayout {
     }
 
     TransactionIsSent {
-        id: transactionIsSent
-
+        id:           transactionIsSent
         newPublisher: !viewModel.isPublisher
     }
 
     YouArePublisher {
-        id: youArePublisher
-
-        nickname: viewModel.publisherInfo.nickname
+        id:           youArePublisher
+        nickname:     viewModel.publisherInfo.nickname
         publisherKey: viewModel.publisherInfo.publisherKey
 
         onGoToMyAccount: {
@@ -710,6 +709,7 @@ ColumnLayout {
 
     OpenApplicationsDialog {
         id: appsDialog
+
         onRejected: function () {
             settings.dappsAllowed = false
             main.openWallet()
@@ -722,47 +722,48 @@ ColumnLayout {
 
     ConfirmationDialog {
         id: installOK
-        //% "Install DApp"
-        title: qsTrId("app-install-title")
-        //% "Ok"
-        okButtonText: qsTrId("general-ok")
+                             //% "Install DApp"
+        title:               qsTrId("app-install-title")
+                             //% "Ok"
+        okButtonText:        qsTrId("general-ok")
         cancelButtonVisible: false
     }
 
     ConfirmationDialog {
-        id: installFail
-        //% "Install DApp"
-        title: qsTrId("app-install-title")
-        //% "Ok"
-        okButtonText: qsTrId("general-ok")
+        id:                      installFail
+                                 //% "Install DApp"
+        title:                   qsTrId("app-install-title")
+                                 //% "Ok"
+        okButtonText:            qsTrId("general-ok")
         okButton.palette.button: Style.accent_fail
+        cancelButtonVisible:     false
+    }
+
+    ConfirmationDialog {
+        id:                  uninstallOK
+                             //% "Uninstall DApp"
+        title:               qsTrId("app-uninstall-title")
+                             //% "Ok"
+        okButtonText:        qsTrId("general-ok")
         cancelButtonVisible: false
     }
 
     ConfirmationDialog {
-        id: uninstallOK
-        //% "Uninstall DApp"
-        title: qsTrId("app-uninstall-title")
-        //% "Ok"
-        okButtonText: qsTrId("general-ok")
-        cancelButtonVisible: false
-    }
-
-    ConfirmationDialog {
-        id: uninstallFail
-        //% "Uninstall DApp"
-        title: qsTrId("app-uninstall-title")
-        //% "Ok"
-        okButtonText: qsTrId("general-ok")
+        id:                      uninstallFail
+                                 //% "Uninstall DApp"
+        title:                   qsTrId("app-uninstall-title")
+                                 //% "Ok"
+        okButtonText:            qsTrId("general-ok")
         okButton.palette.button: Style.accent_fail
-        cancelButtonVisible: false
+        cancelButtonVisible:     false
     }
 
     StackView {
-        id: stackView
-        Layout.fillWidth: true
+        id:                stackView
+        Layout.fillWidth:  true
         Layout.fillHeight: true
-        initialItem: dappsMainLayout
+        initialItem:       dappsMainLayout
+
         pushEnter: Transition {
             enabled: false
         }
