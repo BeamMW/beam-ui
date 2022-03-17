@@ -43,6 +43,28 @@ ColumnLayout {
         loadAppsList()
     }
 
+    function navigatePublishersList() {
+        var params = {
+            "onBack":            stackView.pop,
+            "addPublisherByKey": viewModel.addPublisherByKey
+        }
+        stackView.push(Qt.createComponent("PublishersList.qml"), params)
+    }
+
+    function navigatePublisherDetails() {
+        if (viewModel.isPublisher) {
+            var params = {
+                "viewModel": viewModel,
+                "onBack":    stackView.pop,
+                "uninstall": uninstallApp,
+            }
+            stackView.push(Qt.createComponent("PublisherDetails.qml"), params)
+        }
+        else {
+            becomePublisherDialog.open();
+        }
+    }
+
     signal reloadWebEngineView()
 
     ApplicationsViewModel {
@@ -146,43 +168,6 @@ ColumnLayout {
                 id: dndDialog
                 onGetFileName: function(fname) {
                     appsListView.installFromFile(fname);
-                }
-            }
-
-            BecomePublisher {
-                id:            becomePublisherDialog
-
-                newPublisher:  !viewModel.isPublisher
-                publisherInfo: viewModel.publisherInfo
-
-                onCreatePublisher: function(info) {
-                    viewModel.createPublisher(info);
-                }
-
-                onChangePublisherInfo: function(info) {
-                    viewModel.changePublisherInfo(info);
-                }
-            }
-
-            function navigatePublishersList() {
-                var params = {
-                    "onBack":            stackView.pop,
-                    "addPublisherByKey": viewModel.addPublisherByKey
-                }
-                stackView.push(Qt.createComponent("PublishersList.qml"), params)
-            }
-
-            function navigatePublisherDetails() {
-                if (viewModel.isPublisher) {
-                    var params = {
-                        "viewModel": viewModel,
-                        "onBack":    stackView.pop,
-                        "uninstall": control.uninstallApp,
-                    }
-                    stackView.push(Qt.createComponent("PublisherDetails.qml"), params)
-                }
-                else {
-                    becomePublisherDialog.open();
                 }
             }
 
@@ -696,14 +681,8 @@ ColumnLayout {
         publisherKey: viewModel.publisherInfo.publisherKey
 
         onGoToMyAccount: {
-            youArePublisher.close();
-
-            var params = {
-                "viewModel": viewModel,
-                "onBack":    stackView.pop,
-                "uninstall": control.uninstallApp,
-            }
-            stackView.push(Qt.createComponent("PublisherDetails.qml"), params)
+            youArePublisher.close()
+            control.navigatePublisherDetails()
         }
     }
 
@@ -756,6 +735,21 @@ ColumnLayout {
         okButtonText:            qsTrId("general-ok")
         okButton.palette.button: Style.accent_fail
         cancelButtonVisible:     false
+    }
+
+    BecomePublisher {
+        id:            becomePublisherDialog
+
+        newPublisher:  !viewModel.isPublisher
+        publisherInfo: viewModel.publisherInfo
+
+        onCreatePublisher: function(info) {
+            viewModel.createPublisher(info);
+        }
+
+        onChangePublisherInfo: function(info) {
+            viewModel.changePublisherInfo(info);
+        }
     }
 
     StackView {
