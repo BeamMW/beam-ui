@@ -321,13 +321,28 @@ namespace beamui::applications
         return app;
     }
 
+    bool AppsViewModel::isAppsListReady() const
+    {
+        return _isAppsListReady;
+    }
+
+    void AppsViewModel::setIsAppsListReady(bool value)
+    {
+        if (value != _isAppsListReady)
+        {
+            _isAppsListReady = value;
+            emit isAppsListReadyChanged();
+        }
+    }
+
     void AppsViewModel::loadApps()
     {
-        // TODO: separate dev/local/"from store DApps"
-        // load local apps
-        _apps = getLocalApps();
+        setIsAppsListReady(false);
 
-        // load server apps
+        // TODO: It mb worth loading in parallel and then putting it together
+        _apps = loadLocalApps();
+
+        // load apps from server
         QPointer<AppsViewModel> guard(this);
         AppModel::getInstance().getWalletModel()->getAsync()->getAppsList(
             [this, guard](bool isOk, const std::string& response)
@@ -449,10 +464,9 @@ namespace beamui::applications
                         textStream << majorObj.get<uint32_t>() << '.' << minorObj.get<uint32_t>() << '.'
                             << releaseObj.get<uint32_t>() << '.' << buildObj.get<uint32_t>();
 
-                        // try to find in _apps
+                        // try to find in _localApps (among already installed)
                         // if found -> installed -> compare version -> set "hasUpdate"
-                        // find app in _apps by guid
-                        const auto it = std::find_if(_apps.begin(), _apps.end(),
+                        const auto it = std::find_if(_localApps.begin(), _localApps.end(),
                             [guid](const auto& app) -> bool {
                                 const auto appIt = app.find("guid");
                                 if (appIt == app.end())
@@ -463,7 +477,7 @@ namespace beamui::applications
                             }
                         );
 
-                        if (it != _apps.end())
+                        if (it != _localApps.end())
                         {
                             auto& app = *it;
                             if (compareDAppVersion(version, app["version"].toString()) > 0)
@@ -497,12 +511,13 @@ namespace beamui::applications
                             _apps.push_back(app);
                         }
                     }
-                    emit appsChanged();
                 }
                 catch (std::runtime_error& err)
                 {
                     LOG_ERROR() << "Error while parsing app from contract" << ", " << err.what();
                 }
+                setIsAppsListReady(true);
+                emit appsChanged();
             }
         );
     }
@@ -643,7 +658,7 @@ namespace beamui::applications
         return _apps;
     }
 
-    QList<QVariantMap> AppsViewModel::getLocalApps()
+    QList<QVariantMap> AppsViewModel::loadLocalApps()
     {
         QList<QVariantMap> result;
 
@@ -701,7 +716,7 @@ namespace beamui::applications
             }
         }
 
-        _lastLocalApps = result;
+        _localApps = result;
         return result;
     }
 
@@ -823,7 +838,7 @@ namespace beamui::applications
 
     bool AppsViewModel::uninstallLocalApp(const QString& appid)
     {
-        const auto it = std::find_if(_lastLocalApps.begin(), _lastLocalApps.end(), [appid](const auto& props) -> bool {
+        const auto it = std::find_if(_localApps.begin(), _localApps.end(), [appid](const auto& props) -> bool {
             const auto ait = props.find("appid");
             if (ait == props.end())
             {
@@ -833,7 +848,7 @@ namespace beamui::applications
             return ait->toString() == appid;
         });
 
-        if (it == _lastLocalApps.end())
+        if (it == _localApps.end())
         {
             assert(false);
             return false;

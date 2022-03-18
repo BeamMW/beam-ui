@@ -25,11 +25,11 @@ namespace beamui::applications
         Q_OBJECT
         Q_PROPERTY(QString appsUrl     READ getAppsUrl    CONSTANT)
         Q_PROPERTY(QString userAgent   READ getUserAgent  CONSTANT)
-        Q_PROPERTY(QList<QVariantMap> localApps READ getLocalApps CONSTANT)
         Q_PROPERTY(QList<QVariantMap> apps READ getApps NOTIFY appsChanged)
         Q_PROPERTY(bool isPublisher READ isPublisher NOTIFY isPublisherChanged)
         Q_PROPERTY(QVariantMap publisherInfo READ getPublisherInfo NOTIFY publisherInfoChanged)
         Q_PROPERTY(QList<QVariantMap> publishers READ getPublishers NOTIFY publishersChanged)
+        Q_PROPERTY(bool isAppsListReady READ isAppsListReady NOTIFY isAppsListReadyChanged)
 
     public:
 
@@ -49,12 +49,12 @@ namespace beamui::applications
         [[nodiscard]] QString getAppsUrl() const;
         [[nodiscard]] QString getUserAgent() const;
         [[nodiscard]] QList<QVariantMap> getApps();
-        [[nodiscard]] QList<QVariantMap> getLocalApps();
         [[nodiscard]] QList<QVariantMap> getPublishers();
         bool isPublisher() const;
 
         QVariantMap getPublisherInfo() const;
         void setPublisherInfo(const QVariantMap& value);
+        bool isAppsListReady() const;
 
     public:
         Q_INVOKABLE void onCompleted(QObject *webView);
@@ -95,12 +95,14 @@ namespace beamui::applications
         void showYouArePublisher();
         void appInstallOK(const QString& appName);
         void appInstallFail(const QString& appName);
+        void isAppsListReadyChanged();
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
         [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
         QVariantMap parseAppManifest(QTextStream& io, const QString& appFolder);
         void loadApps();
+        QList<QVariantMap> loadLocalApps();
         void loadAppsFromStore();
         void loadPublishers();
         void loadMyPublisherInfo(bool hideTxIsSent = false, bool showYouArePublsher = false);
@@ -110,13 +112,15 @@ namespace beamui::applications
         void deleteAppFromStore(const QString& guid);
         void installFromBuffer(QIODevice* ioDevice, const QString& guid);
         QVariantMap getAppByGUID(const QString& guid);
+        void setIsAppsListReady(bool status);
 
         WalletModel::Ptr m_walletModel;
 
         QString _userAgent;
         QString _serverAddr;
         std::unique_ptr<AppsServer> _server;
-        QList<QVariantMap> _lastLocalApps;
+        bool _isAppsListReady = false;
+        QList<QVariantMap> _localApps;
         QList<QVariantMap> _apps;
         QList<QVariantMap> _publishers;
         bool _isPublisher = false;

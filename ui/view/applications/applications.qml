@@ -618,11 +618,11 @@ ColumnLayout {
                 tableOwner:          control
             }
 
-            function appendLocalApps (arr) {
-                return viewModel.localApps.concat(arr || [])
-            }
-
             function loadAppsList () {
+                if (!viewModel.isAppsListReady) {
+                    // DApps have not yet been loaded
+                    return;
+                }
                 control.appsList = checkSupport(viewModel.apps)
 
                 if (control.appToOpen) {
