@@ -259,34 +259,25 @@ ColumnLayout {
         Component {
             id: nicknameComponent
             //check
-            Item {
-                width: parent.width
-                height: tableView.rowHeight
 
-                GridLayout {
-                    Layout.fillWidth:   true
-                    Layout.alignment:   Qt.AlignCenter
-                    columns:            1
-                    SFLabel {
-                        Layout.leftMargin: 15
-                        Layout.alignment: Qt.AlignTop
-                        font.pixelSize: 14
-                        elide: Text.ElideNone
-                        fontSizeMode: Text.Fit
-                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                        color: Style.content_main
-                        text: tableView.model.getRoleValue(styleData.row, viewModel.nicknameRole)
-                    }
+            Column {
+                padding: {20, 12, 12, 12}
+                SFLabel {
+                    font.pixelSize: 14
+                    elide: Text.ElideNone
+                    fontSizeMode: Text.Fit
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    color: Style.content_main
+                    text: tableView.model.getRoleValue(styleData.row, viewModel.nicknameRole)
+                }
 
-                    SFLabel {
-                        Layout.leftMargin: 15
-                        font.pixelSize: 14
-                        elide: Text.ElideNone
-                        fontSizeMode: Text.Fit
-                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                        color: Style.content_secondary
-                        text: tableView.model.getRoleValue(styleData.row, viewModel.shortTitleRole)
-                    }
+                SFLabel {
+                    font.pixelSize: 14
+                    elide: Text.ElideRight
+                    fontSizeMode: Text.Fit
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    color: Style.content_secondary
+                    text: tableView.model.getRoleValue(styleData.row, viewModel.shortTitleRole)
                 }
             }
         }
