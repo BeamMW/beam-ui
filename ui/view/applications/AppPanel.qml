@@ -145,88 +145,27 @@ Item {
                     Layout.fillWidth: true
                 }
 
-                CustomButton {
+                AppButton {
+                    id: button
                     Layout.alignment:   Qt.AlignTop | Qt.ALignRight
-                    palette.button:     Style.background_button
-                    palette.buttonText: Style.content_main
-                    icon.source:        "qrc:/assets/icon-run.svg"
                     icon.height:        16
-                    visible:            showButtons && app.supported && !!app.notInstalled
-                                        //% "Install"
-                    text:               qsTrId("dapps-store-install")
-
-                    MouseArea {
-                        anchors.fill:            parent
-                        acceptedButtons:         Qt.LeftButton
-                        hoverEnabled:            true
-                        propagateComposedEvents: true
-                        onClicked:               control.install(modelData.guid)
-                    }
-                }
-
-                // TODO: change buttons to new design/ refactor
-
-                CustomButton {
-                    Layout.alignment:   Qt.AlignTop
-                    palette.button:     Style.background_button
-                    palette.buttonText: Style.content_main
-                    icon.source:        "qrc:/assets/icon-run.svg"
-                    icon.height:        16
-                    visible:            showButtons && ((app.supported && !app.notInstalled && !!app.hasUpdate) || isPublisherAdminMode)
-                                        //% "Update"
-                    text:               qsTrId("dapps-store-update")
-
-                    MouseArea {
-                        anchors.fill:            parent
-                        acceptedButtons:         Qt.LeftButton
-                        hoverEnabled:            true
-                        propagateComposedEvents: true
-                        onClicked:               control.update(modelData)
-                    }
-                }
-
-                CustomButton {
-                    Layout.alignment:   Qt.AlignTop | Qt.ALignRight
-                    palette.button:     Style.background_button
-                    palette.buttonText: Style.content_main
-                    icon.source:        "qrc:/assets/icon-run.svg"
-                    icon.height:        16
-                    visible:            showButtons && app.supported && !app.notInstalled && !isPublisherAdminMode
-                                        //% "launch"
-                    text:               qsTrId("apps-run")
-
-                    MouseArea {
-                        anchors.fill:            parent
-                        acceptedButtons:         Qt.LeftButton
-                        hoverEnabled:            true
-                        propagateComposedEvents: true
-                        onClicked:               control.launch(modelData)
-                    }
-                }
-
-                CustomToolButton {
-                    Layout.alignment:   Qt.AlignTop
-                    Layout.fillHeight:  true
-                    Layout.leftMargin:  20
-                    Layout.rightMargin: 10
-                    width:              36
-
-                    opacity:           app.local ? 0.5 : 0
-                    icon.source:       "qrc:/assets/icon-actions.svg"
-                    visible:           showButtons && app.supported && !!app.local
-
-                    //% "Actions"
-                    ToolTip.text:      qsTrId("general-actions")
-                    MouseArea {
-                        anchors.fill:            parent
-                        acceptedButtons:         Qt.LeftButton
-                        hoverEnabled:            true
-                        propagateComposedEvents: true
-                        onClicked: function () {
-                            if (app.local) {
-                                appMenu.popup()
-                            }
+                    visible: showButtons
+                    
+                    onClicked1: {
+                        if (isPublisherAdminMode) {
+                            control.update(modelData)
+                        } else {
+                            if (!!app.notInstalled) 
+                                control.install(modelData)
+                            else if (!app.notInstalled && !!app.hasUpdate)
+                                control.update(modelData)
+                            else if (!app.notInstalled)
+                                control.launch(modelData)
                         }
+                    }
+                    
+                    onClicked2: {
+                        appMenu.popup()
                     }
                 }
             }
@@ -284,11 +223,50 @@ Item {
         }
     }
 
+    function getButtonText() {
+        if (app.supported) {
+            if (isPublisherAdminMode) {
+                //% "update"
+                return qsTrId("dapps-store-update")
+            } else {
+                if (!!app.notInstalled)
+                    //% "install"
+                    return qsTrId("dapps-store-install")
+                if (!app.notInstalled && !!app.hasUpdate)
+                    //% "update"
+                    return qsTrId("dapps-store-update")
+                if (!app.notInstalled)
+                    //% "launch"
+                    return qsTrId("dapps-store-launch")
+            }
+        }
+        return "test"
+    }
+
+    function getButtonSource() {
+        "qrc:/assets/icon-dapps-store-install.svg"
+        if (isPublisherAdminMode) {
+            return "qrc:/assets/icon-dapps-store-update.svg"
+        } else {
+            if (!!app.notInstalled)
+                return "qrc:/assets/icon-dapps-store-install.svg"
+            if (!app.notInstalled && !!app.hasUpdate)
+                return "qrc:/assets/icon-dapps-store-update.svg"
+            if (!app.notInstalled)
+                return "qrc:/assets/icon-dapps-store-launch.svg"
+        }
+        return "";
+    }
+
     Component.onCompleted: {
+        button.text = getButtonText();
+        button.icon.source = getButtonSource();
         if (isPublisherAdminMode) {
             appMenu.addAction(removeAction)
-        } else {
+        } else if (!app.notInstalled) {
             appMenu.addAction(uninstallAction)
+        } else {
+            button.showAdditional = false;
         }
     }
 }

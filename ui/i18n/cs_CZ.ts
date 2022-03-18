@@ -2160,10 +2160,6 @@ Zkontrolujte na %1 blockchainu sami. Nízké poplatky mohou způsobit
         <oldsource>DApp Store</oldsource>
         <translation type="unfinished">DApp Store</translation>
     </message>
-    <message id="apps-run">
-        <source>launch</source>
-        <translation type="unfinished">launch</translation>
-    </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
         <translation type="unfinished">This is your dev application</translation>
@@ -3508,11 +3504,13 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-install">
-        <source>Install</source>
+        <source>install</source>
+        <oldsource>Install</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-update">
-        <source>Update</source>
+        <source>update</source>
+        <oldsource>Update</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-remove-dapp">
@@ -3768,6 +3766,10 @@ Let&apos;s start!</source>
     <message id="publishers-list-publisher-link">
         <source>Publisher link</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-launch">
+        <source>launch</source>
+        <translation type="unfinished">launch</translation>
     </message>
 </context>
 </TS>

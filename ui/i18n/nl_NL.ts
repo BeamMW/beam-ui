@@ -2154,10 +2154,6 @@ Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernst
         <oldsource>DApp Store</oldsource>
         <translation type="unfinished">DApp Store</translation>
     </message>
-    <message id="apps-run">
-        <source>launch</source>
-        <translation>starten</translation>
-    </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
         <translation>Dit is uw ontwikkelaar applicatie</translation>
@@ -3497,11 +3493,13 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-install">
-        <source>Install</source>
+        <source>install</source>
+        <oldsource>Install</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-update">
-        <source>Update</source>
+        <source>update</source>
+        <oldsource>Update</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-remove-dapp">
@@ -3757,6 +3755,10 @@ Let&apos;s start!</source>
     <message id="publishers-list-publisher-link">
         <source>Publisher link</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-launch">
+        <source>launch</source>
+        <translation type="unfinished">starten</translation>
     </message>
 </context>
 </TS>

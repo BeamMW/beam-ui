@@ -2151,10 +2151,6 @@ much longer for a transaction to complete.</oldsource>
         <source>My DApp Store</source>
         <translation>My DApp Store</translation>
     </message>
-    <message id="apps-run">
-        <source>launch</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
         <translation type="unfinished"></translation>
@@ -3491,11 +3487,13 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-install">
-        <source>Install</source>
+        <source>install</source>
+        <oldsource>Install</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-update">
-        <source>Update</source>
+        <source>update</source>
+        <oldsource>Update</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-remove-dapp">
@@ -3751,6 +3749,10 @@ Let&apos;s start!</source>
     <message id="publishers-list-publisher-link">
         <source>Publisher link</source>
         <translation>Publisher link</translation>
+    </message>
+    <message id="dapps-store-launch">
+        <source>launch</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
