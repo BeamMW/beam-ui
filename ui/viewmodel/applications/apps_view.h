@@ -23,13 +23,13 @@ namespace beamui::applications
     class AppsViewModel : public QObject
     {
         Q_OBJECT
-        Q_PROPERTY(QString appsUrl     READ getAppsUrl    CONSTANT)
-        Q_PROPERTY(QString userAgent   READ getUserAgent  CONSTANT)
-        Q_PROPERTY(QList<QVariantMap> apps READ getApps NOTIFY appsChanged)
-        Q_PROPERTY(bool isPublisher READ isPublisher NOTIFY isPublisherChanged)
-        Q_PROPERTY(QVariantMap publisherInfo READ getPublisherInfo NOTIFY publisherInfoChanged)
-        Q_PROPERTY(QList<QVariantMap> publishers READ getPublishers NOTIFY publishersChanged)
-        Q_PROPERTY(bool isAppsListReady READ isAppsListReady NOTIFY isAppsListReadyChanged)
+        Q_PROPERTY(QString            appsUrl         READ getAppsUrl        CONSTANT)
+        Q_PROPERTY(QString            userAgent       READ getUserAgent      CONSTANT)
+        Q_PROPERTY(QList<QVariantMap> apps            READ getApps           NOTIFY appsChanged)
+        Q_PROPERTY(bool               isPublisher     READ isPublisher       NOTIFY isPublisherChanged)
+        Q_PROPERTY(QVariantMap        publisherInfo   READ getPublisherInfo  NOTIFY publisherInfoChanged)
+        Q_PROPERTY(QList<QVariantMap> userPublishers  READ getUserPublishers NOTIFY userPublishersChanged)
+        Q_PROPERTY(bool               isAppsListReady READ isAppsListReady   NOTIFY isAppsListReadyChanged)
 
     public:
 
@@ -49,7 +49,7 @@ namespace beamui::applications
         [[nodiscard]] QString getAppsUrl() const;
         [[nodiscard]] QString getUserAgent() const;
         [[nodiscard]] QList<QVariantMap> getApps();
-        [[nodiscard]] QList<QVariantMap> getPublishers();
+        [[nodiscard]] QList<QVariantMap> getUserPublishers();
         bool isPublisher() const;
 
         QVariantMap getPublisherInfo() const;
@@ -72,6 +72,7 @@ namespace beamui::applications
         Q_INVOKABLE void launchAppServer();
         Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
         Q_INVOKABLE [[nodiscard]] QString addPublisherByKey(const QString& publisherKey);
+        Q_INVOKABLE void removePublisherByKey(const QString& publisherKey);
         Q_INVOKABLE void createPublisher(const QVariantMap& publisherInfo);
         Q_INVOKABLE void changePublisherInfo(const QVariantMap& publisherInfo);
         Q_INVOKABLE void contractInfoApproved(int action, const QString& data);
@@ -88,7 +89,7 @@ namespace beamui::applications
         void appsChanged();
         void isPublisherChanged();
         void publisherInfoChanged();
-        void publishersChanged();
+        void userPublishersChanged();
         void shaderTxData(int action, const QString& data, const QString& comment, const QString& fee, const QString& feeRate, const QString& rateUnit);
         void showTxIsSent();
         void hideTxIsSent();
@@ -105,6 +106,7 @@ namespace beamui::applications
         QList<QVariantMap> loadLocalApps();
         void loadAppsFromStore();
         void loadPublishers();
+        void loadUserPublishers();
         void loadMyPublisherInfo(bool hideTxIsSent = false, bool showYouArePublsher = false);
         void setPublishers(const QList<QVariantMap>& value);
         void handleShaderTxData(Action action, const beam::ByteBuffer& data);
@@ -123,11 +125,12 @@ namespace beamui::applications
         QList<QVariantMap> _localApps;
         QList<QVariantMap> _apps;
         QList<QVariantMap> _publishers;
+        QStringList _userPublishersKeys;
         bool _isPublisher = false;
         QVariantMap _publisherInfo;
         boost::optional<beam::wallet::TxID> _txId;
 
-		Action _action;
+        Action _action;
         boost::optional<beam::ByteBuffer> _loadedDAppBuffer;
         boost::optional<QVariantMap> _loadedDApp;
     };

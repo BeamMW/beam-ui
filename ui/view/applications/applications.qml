@@ -45,8 +45,8 @@ ColumnLayout {
 
     function navigatePublishersList() {
         var params = {
+            "appsViewModel":     viewModel,
             "onBack":            stackView.pop,
-            "addPublisherByKey": viewModel.addPublisherByKey
         }
         stackView.push(Qt.createComponent("PublishersList.qml"), params)
     }

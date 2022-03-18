@@ -65,6 +65,7 @@ namespace
 
     const char* kDappStoreCID = "dappstore/cid";
     const char* kDappStorePath = "dappstore/path";
+    const char* kDappStoreUserPublishers = "dappstore/publishers";
 
     const char* kMpAnonymitySet = "max_privacy/anonymity_set";
     const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
@@ -769,6 +770,19 @@ std::string WalletSettings::getDappStorePath() const
 {
     auto path = m_data.value(kDappStorePath).toString();
     return path.isEmpty() ? "d:/work/dapps-store/beam-dapps-store/shaders/dapps_store_app.wasm" : path.toStdString();
+}
+
+QStringList WalletSettings::getDappStoreUserPublishers() const
+{
+    Lock lock(m_mutex);
+    auto publishersList = m_data.value(kDappStoreUserPublishers).value<QStringList>();
+    return publishersList;
+}
+
+void WalletSettings::setDappStoreUserPublishers(const QStringList& publishersList)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kDappStoreUserPublishers, QVariant::fromValue(publishersList));
 }
 
 QString WalletSettings::getAppsCachePath(const QString& appid) const

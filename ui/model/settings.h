@@ -98,6 +98,8 @@ public:
     // DappStore
     std::string getDappStoreCID() const;
     std::string getDappStorePath() const;
+    QStringList getDappStoreUserPublishers() const;
+    void setDappStoreUserPublishers(const QStringList& publishersList);
 
     bool getDevMode() const;
     bool getAppsAllowed() const;

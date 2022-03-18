@@ -11,9 +11,16 @@ ColumnLayout {
     Layout.fillWidth: true
     Layout.topMargin: 27
 
-    property var appsList: undefined
+    property var appsViewModel
     property var onBack
-    property var addPublisherByKey
+
+    function addPublisherByKey(publisherKey) {
+        return appsViewModel.addPublisherByKey(publisherKey)
+    }
+
+    function removePublisherByKey(publisherKey) {
+        appsViewModel.removePublisherByKey(publisherKey)
+    }
 
     function showAddPublisherDialog() {
         addPublisherDialog.open()
@@ -214,7 +221,8 @@ ColumnLayout {
         property double columnResizeRatio: resizableWidth / 914
 
         model: PublishersViewModel {
-            id: viewModel
+            id:         viewModel
+            publishers: control.appsViewModel.userPublishers
         }
 
         TableViewColumn { 
@@ -398,7 +406,7 @@ ColumnLayout {
                 text: qsTrId("remove-from-list")
                 icon.source: "qrc:/assets/icon-delete.svg"
                 onTriggered: {
-                    // delete
+                    control.removePublisherByKey(publisherInfoContextMenu.publisherKey)
                 }
             }
         }

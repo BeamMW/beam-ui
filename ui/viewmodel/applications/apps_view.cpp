@@ -138,6 +138,8 @@ namespace beamui::applications
 
         connect(m_walletModel.get(), &WalletModel::transactionsChanged, this, &AppsViewModel::onTransactionsChanged);
         connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadApps);
+        // reload the application list because the list of tracked publishers has changed
+        connect(this, &AppsViewModel::userPublishersChanged, this, &AppsViewModel::loadApps);
 
         auto defaultProfile = QWebEngineProfile::defaultProfile();
         defaultProfile->setHttpCacheType(QWebEngineProfile::HttpCacheType::DiskHttpCache);
@@ -147,6 +149,9 @@ namespace beamui::applications
 
         _userAgent  = defaultProfile->httpUserAgent() + " BEAM/" + QString::fromStdString(PROJECT_VERSION);
         _serverAddr = QString("127.0.0.1:") + QString::number(AppSettings().getAppsServerPort());
+
+        // TODO: execution queue?
+        loadUserPublishers();
 
         loadApps();
         loadPublishers();
@@ -437,6 +442,12 @@ namespace beamui::applications
                         auto guid = parseStringField(item.value(), "id");
                         auto publisher = parseStringField(item.value(), "publisher");
 
+                        // parse DApps only of the user publishers
+                        if (!_userPublishersKeys.contains(publisher, Qt::CaseInsensitive))
+                        {
+                            continue;
+                        }
+
                         LOG_DEBUG() << "Parsing DApp from contract, guid - " << guid.toStdString() << ", publisher - " << publisher.toStdString();
 
                         // parse version
@@ -576,6 +587,11 @@ namespace beamui::applications
         );
     }
 
+    void AppsViewModel::loadUserPublishers()
+    {
+        _userPublishersKeys = AppSettings().getDappStoreUserPublishers();
+    }
+
     void AppsViewModel::loadMyPublisherInfo(bool hideTxIsSentDialog, bool showYouArePublsherDialog)
     {
         std::string args = "action=my_publisher_info,cid=";
@@ -644,13 +660,22 @@ namespace beamui::applications
         if (value != _publishers)
         {
             _publishers = value;
-            emit publishersChanged();
+
+            emit userPublishersChanged();
         }
     }
 
-    QList<QVariantMap> AppsViewModel::getPublishers()
+    QList<QVariantMap> AppsViewModel::getUserPublishers()
     {
-        return _publishers;
+        QList<QVariantMap> userPublishers;
+
+        std::copy_if(_publishers.cbegin(), _publishers.cend(), std::back_inserter(userPublishers),
+            [this](const auto& publisher) -> bool {
+                return _userPublishersKeys.contains(publisher["publisherKey"].toString(), Qt::CaseInsensitive);
+            }
+        );
+
+        return userPublishers;
     }
 
     QList<QVariantMap> AppsViewModel::getApps()
@@ -761,9 +786,25 @@ namespace beamui::applications
             return {};
         }
 
-        // TODO: add publisher to _myPublishers
+        if (!_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive))
+        {
+            _userPublishersKeys.append(publisherKey);
+            AppSettings().setDappStoreUserPublishers(_userPublishersKeys);
+
+            emit userPublishersChanged();
+        }
 
         return (*it)["nickname"].toString();
+    }
+
+    void AppsViewModel::removePublisherByKey(const QString& publisherKey)
+    {
+        if (_userPublishersKeys.removeOne(publisherKey))
+        {
+            AppSettings().setDappStoreUserPublishers(_userPublishersKeys);
+            
+            emit userPublishersChanged();
+        }
     }
 
     void AppsViewModel::createPublisher(const QVariantMap& publisherInfo)
