@@ -2,8 +2,6 @@ import QtQuick          2.11
 import QtQuick.Layouts  1.12
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.4
-import QtWebEngine      1.4
-import QtWebChannel     1.0
 import Beam.Wallet      1.0
 import "../controls"
 import "../utils.js" as Utils
@@ -14,7 +12,6 @@ ColumnLayout {
     Layout.topMargin: 27
 
     property var appsList: undefined
-    readonly property bool hasApps: !!appsList && appsList.length > 0
     property var onBack
     property var addPublisherByKey
 
@@ -197,9 +194,6 @@ ColumnLayout {
 
 
 
-    Item {
-        Layout.preferredWidth: 20
-    }
     //
     // Body: publishers list
     //
@@ -208,10 +202,11 @@ ColumnLayout {
         Layout.alignment:  Qt.AlignTop
         Layout.fillHeight: true
         Layout.fillWidth:  true
+        Layout.topMargin: 20
 
         selectionMode: SelectionMode.NoSelection
         sortIndicatorVisible: true
-        sortIndicatorColumn: 5
+        sortIndicatorColumn: 0
         sortIndicatorOrder: Qt.DescendingOrder
 
         property int rowHeight: 86
