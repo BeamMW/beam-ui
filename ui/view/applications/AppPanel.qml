@@ -15,6 +15,8 @@ Item {
     property bool showButtons:          true
     property bool isPublisherAdminMode: false
 
+    readonly property int textWidth: 200
+
     signal launch(var app)
     signal install(var appGUID)
     signal update(var app)
@@ -133,12 +135,27 @@ Item {
                 spacing:          0
 
                 // TODO: implement "Publisher name" + publisher pubKey
-                SFText {
-                    Layout.alignment: Qt.AlignTop
-                    text:             "Publisher name" // app.publisherName ?
-                    font.pixelSize:   12
-                    elide:            Text.ElideRight
-                    color:            Style.content_secondary
+                ColumnLayout {
+                    SFText {
+                        text:             !!app.publisherName ? app.publisherName : ""
+                        font.pixelSize:   12
+                        elide:            Text.ElideRight
+                        Layout.preferredWidth: control.textWidth
+                        color:            Style.content_secondary
+                    }
+
+                    SFText {
+                        text:             !!app.publisher ? app.publisher : ""
+                        font.pixelSize:   12
+                        elide:            Text.ElideMiddle
+                        color:            Style.content_secondary
+                        Layout.preferredWidth: control.textWidth
+                        visible: !!app.publisher
+                    }
+
+                    Item {
+                        Layout.fillHeight: true
+                    }
                 }
 
                 Item {

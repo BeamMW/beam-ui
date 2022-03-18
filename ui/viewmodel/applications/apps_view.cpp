@@ -29,6 +29,8 @@
 namespace
 {
     const uint8_t kCountDAppVersionParts = 4;
+    const QString kBeamPublisherName = "Beam Development Limited";
+    const QString kBeamPublisherKey = "";
 
     QString fromHex(const std::string& value)
     {
@@ -153,8 +155,9 @@ namespace beamui::applications
         // TODO: execution queue?
         loadUserPublishers();
 
-        loadApps();
+        // TODO roman.strilets loadPublishers should be executed before loadApps
         loadPublishers();
+        loadApps();
         loadMyPublisherInfo();
     }
 
@@ -384,6 +387,8 @@ namespace beamui::applications
                         app.insert("name", name);
                         app.insert("url", url);
                         app.insert("icon", parseStringField(item.value(), "icon"));
+                        app.insert("publisherName", kBeamPublisherName);
+                        app.insert("publisherKey", kBeamPublisherKey);
                     
                         // TODO: add verification
                         bool isSupported = true;
@@ -441,15 +446,28 @@ namespace beamui::applications
                             throw std::runtime_error("Invalid body of the dapp " + item.key());
                         }
                         auto guid = parseStringField(item.value(), "id");
-                        auto publisher = parseStringField(item.value(), "publisher");
+                        auto publisherKey = parseStringField(item.value(), "publisher");
 
                         // parse DApps only of the user publishers
-                        if (!_userPublishersKeys.contains(publisher, Qt::CaseInsensitive))
+                        if (!_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive))
                         {
                             continue;
                         }
 
-                        LOG_DEBUG() << "Parsing DApp from contract, guid - " << guid.toStdString() << ", publisher - " << publisher.toStdString();
+                        const auto idx = std::find_if(_publishers.cbegin(), _publishers.cend(),
+                            [this, publisherKey](const auto& publisher) -> bool {
+                                return !publisher["publisherKey"].toString().compare(publisherKey, Qt::CaseInsensitive);
+                            }
+                        );
+
+                        QString publisherName = "";
+
+                        if (idx != _publishers.end())
+                        {
+                            publisherName = (*idx)["nickname"].toString();
+                        }
+
+                        LOG_DEBUG() << "Parsing DApp from contract, guid - " << guid.toStdString() << ", publisher - " << publisherKey.toStdString();
 
                         // parse version
                         auto versionObj = item.value()["version"];
@@ -499,7 +517,11 @@ namespace beamui::applications
                             app.insert("ipfs_id", parseStringField(item.value(), "ipfs_id"));
                             if (!app.contains("publisher"))
                             {
-                                app.insert("publisher", publisher);
+                                app.insert("publisher", publisherKey);
+                            }
+                            if (!app.contains("publisherName"))
+                            {
+                                app.insert("publisherName", publisherName);
                             }
                         }
                         else
@@ -513,7 +535,8 @@ namespace beamui::applications
                             app.insert("api_version", decodeStringField(item.value(), "api_ver"));
                             app.insert("min_api_version", decodeStringField(item.value(), "min_api_ver"));
                             app.insert("guid", guid);
-                            app.insert("publisher", publisher);
+                            app.insert("publisher", publisherKey);
+                            app.insert("publisherName", publisherName);
 
                             // TODO: add verification
                             app.insert("supported", true);
