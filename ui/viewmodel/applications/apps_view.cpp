@@ -389,6 +389,7 @@ namespace beamui::applications
                         bool isSupported = true;
 
                         app.insert("supported", isSupported);
+                        app.insert("isFromServer", true);
 
                         // TODO: check order of the DApps
                         _apps.push_back(app);

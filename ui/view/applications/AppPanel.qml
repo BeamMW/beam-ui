@@ -151,7 +151,7 @@ Item {
                     icon.height:        16
                     visible: showButtons
                     
-                    onClicked1: {
+                    onClicked: {
                         if (isPublisherAdminMode) {
                             control.update(modelData)
                         } else {
@@ -164,7 +164,7 @@ Item {
                         }
                     }
                     
-                    onClicked2: {
+                    onClickedByAdditional: {
                         appMenu.popup()
                     }
                 }
@@ -240,7 +240,7 @@ Item {
                     return qsTrId("dapps-store-launch")
             }
         }
-        return "test"
+        return ""
     }
 
     function getButtonSource() {
@@ -263,7 +263,7 @@ Item {
         button.icon.source = getButtonSource();
         if (isPublisherAdminMode) {
             appMenu.addAction(removeAction)
-        } else if (!app.notInstalled) {
+        } else if (!app.notInstalled && !app.isFromServer) {
             appMenu.addAction(uninstallAction)
         } else {
             button.showAdditional = false;

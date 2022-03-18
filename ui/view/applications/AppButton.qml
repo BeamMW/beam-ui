@@ -15,8 +15,7 @@ Button {
     property int   radius:         19
     property bool showAdditional: true
 
-    signal clicked1()
-    signal clicked2()
+    signal clickedByAdditional()
 
     font { 
         family: "Proxima Nova"
@@ -74,12 +73,12 @@ Button {
             console.log("button ", rowLayout.x, " ",  separator.x, " ", event.x);
             if (control.showAdditional) {
                 if (event.x < rowLayout.x + separator.x) {
-                    clicked1();
+                    control.clicked();
                 } else {
-                    clicked2();
+                    control.clickedByAdditional();
                 }
             } else {
-                clicked1();
+                control.clicked();
             }
         }
     }
