@@ -220,8 +220,8 @@ ColumnLayout {
         TableViewColumn { 
             id: nickname
             role: viewModel.nicknameRole
-            //% "nickname"
-            title: "Nickname"
+            //% "Nickname"
+            title: qsTrId("publishers-list-nickname")
             width: 150
             movable:    false
             resizable:  false
@@ -230,8 +230,8 @@ ColumnLayout {
         TableViewColumn {
             id: about
             role: viewModel.aboutRole
-            //% "about"
-            title: "About"
+            //% "About"
+            title: qsTrId("publishers-list-about")
             width: tableView.getAdjustedColumnWidth(about)
             movable:    false
             resizable:  false
@@ -239,8 +239,8 @@ ColumnLayout {
         TableViewColumn {
             id: socialNetworks
             //role: viewModel.socialNetworksRole
-            //% "social-networks"
-            title: "Social networks"
+            //% "Social networks"
+            title: qsTrId("publishers-list-social-net")
             width: 162 * tableView.columnResizeRatio
             movable:    false
             resizable:  false
@@ -248,8 +248,8 @@ ColumnLayout {
         }
         TableViewColumn {
             id: publisherLink
-            //% "publisher-link"
-            title: "Publisher link"
+            //% "Publisher link"
+            title: qsTrId("publishers-list-publisher-link")
             width: 138
             movable:    false
             resizable:  false

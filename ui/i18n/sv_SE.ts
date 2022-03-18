@@ -3738,5 +3738,25 @@ Let&apos;s start!</source>
         <source>go to my account</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="apps-title-no-fork">
+        <source>DApp Store</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="publishers-list-nickname">
+        <source>Nickname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="publishers-list-about">
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="publishers-list-social-net">
+        <source>Social networks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="publishers-list-publisher-link">
+        <source>Publisher link</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

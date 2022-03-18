@@ -16,7 +16,7 @@ ColumnLayout {
     //
     Title {
         //% "DApp Store"
-        text: qsTrId("apps-title")
+        text: qsTrId("apps-title-no-fork")
     }
 
     StatusBar {

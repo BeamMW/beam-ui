@@ -2149,8 +2149,7 @@ much longer for a transaction to complete.</oldsource>
     </message>
     <message id="apps-title">
         <source>My DApp Store</source>
-        <oldsource>DApp Store</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>My DApp Store</translation>
     </message>
     <message id="apps-run">
         <source>launch</source>
@@ -3518,7 +3517,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="dapps-store-nickname">
         <source>Nickname</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nickname</translation>
     </message>
     <message id="dapps-store-short-title">
         <source>Short title</source>
@@ -3538,7 +3537,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="dapps-store-social-networks">
         <source>Social networks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Social networks</translation>
     </message>
     <message id="dapps-store-website">
         <source>Website</source>
@@ -3732,6 +3731,26 @@ Let&apos;s start!</source>
     <message id="dapps-store-to-to-my-account">
         <source>go to my account</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-title-no-fork">
+        <source>DApp Store</source>
+        <translation>DApp Store</translation>
+    </message>
+    <message id="publishers-list-nickname">
+        <source>Nickname</source>
+        <translation>Nickname</translation>
+    </message>
+    <message id="publishers-list-about">
+        <source>About</source>
+        <translation>About</translation>
+    </message>
+    <message id="publishers-list-social-net">
+        <source>Social networks</source>
+        <translation>Social networks</translation>
+    </message>
+    <message id="publishers-list-publisher-link">
+        <source>Publisher link</source>
+        <translation>Publisher link</translation>
     </message>
 </context>
 </TS>
