@@ -455,7 +455,7 @@ namespace beamui::applications
                         }
 
                         const auto idx = std::find_if(_publishers.cbegin(), _publishers.cend(),
-                            [this, publisherKey](const auto& publisher) -> bool {
+                            [publisherKey](const auto& publisher) -> bool {
                                 return !publisher["publisherKey"].toString().compare(publisherKey, Qt::CaseInsensitive);
                             }
                         );
