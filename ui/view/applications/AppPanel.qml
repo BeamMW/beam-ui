@@ -116,12 +116,12 @@ Item {
 
                 SFText {
                     Layout.alignment: Qt.AlignRight | Qt.AlignTop
-                    text:             "category" // app.category
+                    text:             !!app.category ? app.category : "" 
                     font.pixelSize:   14
                     elide:            Text.ElideRight
                     // TODO: get color for the category
                     color:            "#FF57BF"
-                    // visible:       !!app.category
+                     visible:       !!app.category
                 }
             }
 

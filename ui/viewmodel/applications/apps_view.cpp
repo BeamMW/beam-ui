@@ -129,6 +129,25 @@ namespace
         }
         return 0;
     }
+
+    QString ConverToString(beamui::applications::AppsViewModel::Category category)
+    {
+        switch (category)
+        {
+        case beamui::applications::AppsViewModel::Category::Other:
+            return "Other";
+        case beamui::applications::AppsViewModel::Category::Finance:
+            return "Finance";
+        case beamui::applications::AppsViewModel::Category::Games:
+            return "Games";
+        case beamui::applications::AppsViewModel::Category::Technology:
+            return "Technology";
+        case beamui::applications::AppsViewModel::Category::Governance:
+            return "Governance";
+        default:
+            return "";
+        }
+    }
 }
 
 namespace beamui::applications
@@ -537,6 +556,7 @@ namespace beamui::applications
                             app.insert("guid", guid);
                             app.insert("publisher", publisherKey);
                             app.insert("publisherName", publisherName);
+                            app.insert("category", ConverToString(static_cast<Category>(item.value()["category"].get<int>())));
 
                             // TODO: add verification
                             app.insert("supported", true);

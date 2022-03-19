@@ -41,6 +41,16 @@ namespace beamui::applications
             DeleteDApp
         };
 
+        enum class Category
+        {
+            Undefined = 0,
+            Other,
+            Finance,
+            Games,
+            Technology,
+            Governance
+        };
+
         AppsViewModel();
         ~AppsViewModel() override;
 
