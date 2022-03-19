@@ -32,6 +32,22 @@ namespace
     const QString kBeamPublisherName = "Beam Development Limited";
     const QString kBeamPublisherKey = "";
 
+    namespace DApp
+    {
+        const char kName[] = "name";
+        const char kDescription[] = "description";
+        const char kIpfsId[] = "ipfs_id";
+        const char kUrl[] = "url";
+        const char kApiVersion[] = "api_version";
+        const char kMinApiVersion[] = "min_api_version";
+        const char kGuid[] = "guid";
+        const char kPublisherKey[] = "publisher";
+        const char kPublisherName[] = "publisherName";
+        const char kCategory[] = "category";
+        const char kSupported[] = "supported";
+        const char kNotInstalled[] = "notInstalled";
+    } // namespace DApp
+
     QString fromHex(const std::string& value)
     {
         auto tmp = beam::from_hex(value);
@@ -234,37 +250,37 @@ namespace beamui::applications
             throw std::runtime_error("Invalid manifest file");
         }
 
-        const auto& guid = json["guid"];
+        const auto& guid = json[DApp::kGuid];
         if (!guid.is_string() || guid.empty())
         {
             throw std::runtime_error("Invalid GUID in the manifest file");
         }
-        app.insert("guid", QString::fromStdString(guid.get<std::string>()));
+        app.insert(DApp::kGuid, QString::fromStdString(guid.get<std::string>()));
 
-        const auto& desc = json["description"];
+        const auto& desc = json[DApp::kDescription];
         if (!desc.is_string() || desc.empty())
         {
             throw std::runtime_error("Invalid description in the manifest file");
         }
-        app.insert("description", QString::fromStdString(desc.get<std::string>()));
+        app.insert(DApp::kDescription, QString::fromStdString(desc.get<std::string>()));
 
-        const auto& name = json["name"];
+        const auto& name = json[DApp::kName];
         if (!name.is_string() || name.empty())
         {
             throw std::runtime_error("Invalid app name in the manifest file");
         }
 
         const auto sname = name.get<std::string>();
-        app.insert("name", QString::fromStdString(sname));
+        app.insert(DApp::kName, QString::fromStdString(sname));
 
-        const auto& url = json["url"];
+        const auto& url = json[DApp::kUrl];
         if (!url.is_string() || url.empty())
         {
             throw std::runtime_error("Invalid url in the manifest file");
         }
 
         const auto surl = url.get<std::string>();
-        app.insert("url", expandLocalUrl(appFolder, surl));
+        app.insert(DApp::kUrl, expandLocalUrl(appFolder, surl));
 
         const auto& icon = json["icon"];
         if (!icon.empty())
@@ -279,24 +295,24 @@ namespace beamui::applications
             LOG_INFO() << "App: " << sname << ", icon: " << ipath.toStdString();
         }
 
-        const auto& av = json["api_version"];
+        const auto& av = json[DApp::kApiVersion];
         if (!av.empty())
         {
             if (!av.is_string())
             {
                 throw std::runtime_error("Invalid api_version in the manifest file");
             }
-            app.insert("api_version", QString::fromStdString(av.get<std::string>()));
+            app.insert(DApp::kApiVersion, QString::fromStdString(av.get<std::string>()));
         }
 
-        const auto& mav = json["min_api_version"];
+        const auto& mav = json[DApp::kMinApiVersion];
         if (!mav.empty())
         {
             if (!mav.is_string())
             {
                 throw std::runtime_error("Invalid min_api_version in the manifest file");
             }
-            app.insert("min_api_version", QString::fromStdString(mav.get<std::string>()));
+            app.insert(DApp::kMinApiVersion, QString::fromStdString(mav.get<std::string>()));
         }
 
         const auto& v = json["version"];
@@ -309,40 +325,40 @@ namespace beamui::applications
             app.insert("version", QString::fromStdString(v.get<std::string>()));
         }
 
-        const auto& categoryObj = json["category"];
+        const auto& categoryObj = json[DApp::kCategory];
         if (!categoryObj.empty())
         {
             if (!categoryObj.is_number_unsigned())
             {
                 throw std::runtime_error("Invalid category in the manifest file");
             }
-            app.insert("category", categoryObj.get<uint32_t>());
+            app.insert(DApp::kCategory, categoryObj.get<uint32_t>());
         }
 
-        const auto& publisherObj = json["publisher"];
+        const auto& publisherObj = json[DApp::kPublisherKey];
         if (!publisherObj.empty())
         {
             if (!publisherObj.is_string())
             {
                 throw std::runtime_error("Invalid publisher in the manifest file");
             }
-            app.insert("publisher", QString::fromStdString(publisherObj.get<std::string>()));
+            app.insert(DApp::kPublisherKey, QString::fromStdString(publisherObj.get<std::string>()));
         }
 
         // TODO: Make guid is required field after fixing all DApps
-        const auto& guidObj = json["guid"];
+        const auto& guidObj = json[DApp::kGuid];
         if (!guidObj.empty())
         {
             if (!guidObj.is_string())
             {
                 throw std::runtime_error("Invalid 'guid' in the manifest file");
             }
-            app.insert("guid", QString::fromStdString(guidObj.get<std::string>()));
+            app.insert(DApp::kGuid, QString::fromStdString(guidObj.get<std::string>()));
         }
 
         app.insert("local", true);
         // TODO: check why we used surl instead of extended url - app["url"]
-        const auto appid = beam::wallet::GenerateAppID(sname, app["url"].toString().toStdString());
+        const auto appid = beam::wallet::GenerateAppID(sname, app[DApp::kUrl].toString().toStdString());
         app.insert("appid", QString::fromStdString(appid));
 
         return app;
@@ -402,17 +418,17 @@ namespace beamui::applications
                         const auto appid = beam::wallet::GenerateAppID(name.toStdString(), url.toStdString());
                         
                         app.insert("appid", QString::fromStdString(appid));
-                        app.insert("description", parseStringField(item.value(), "description"));
-                        app.insert("name", name);
-                        app.insert("url", url);
+                        app.insert(DApp::kDescription, parseStringField(item.value(), "description"));
+                        app.insert(DApp::kName, name);
+                        app.insert(DApp::kUrl, url);
                         app.insert("icon", parseStringField(item.value(), "icon"));
-                        app.insert("publisherName", kBeamPublisherName);
+                        app.insert(DApp::kPublisherName, kBeamPublisherName);
                         app.insert("publisherKey", kBeamPublisherKey);
                     
                         // TODO: add verification
                         bool isSupported = true;
 
-                        app.insert("supported", isSupported);
+                        app.insert(DApp::kSupported, isSupported);
                         app.insert("isFromServer", true);
 
                         // TODO: check order of the DApps
@@ -517,7 +533,7 @@ namespace beamui::applications
                         // if found -> installed -> compare version -> set "hasUpdate"
                         const auto it = std::find_if(_localApps.begin(), _localApps.end(),
                             [guid](const auto& app) -> bool {
-                                const auto appIt = app.find("guid");
+                                const auto appIt = app.find(DApp::kGuid);
                                 if (appIt == app.end())
                                 {
                                     return false;
@@ -533,35 +549,35 @@ namespace beamui::applications
                             {
                                 app.insert("hasUpdate", true);
                             }
-                            app.insert("ipfs_id", parseStringField(item.value(), "ipfs_id"));
-                            if (!app.contains("publisher"))
+                            app.insert(DApp::kIpfsId, parseStringField(item.value(), "ipfs_id"));
+                            if (!app.contains(DApp::kPublisherKey))
                             {
-                                app.insert("publisher", publisherKey);
+                                app.insert(DApp::kPublisherKey, publisherKey);
                             }
-                            if (!app.contains("publisherName"))
+                            if (!app.contains(DApp::kPublisherName))
                             {
-                                app.insert("publisherName", publisherName);
+                                app.insert(DApp::kPublisherName, publisherName);
                             }
                         }
                         else
                         {
                             QMap<QString, QVariant> app;
-                            app.insert("description", decodeStringField(item.value(), "description"));
-                            app.insert("name", decodeStringField(item.value(), "name"));
-                            app.insert("ipfs_id", parseStringField(item.value(), "ipfs_id"));
+                            app.insert(DApp::kDescription, decodeStringField(item.value(), "description"));
+                            app.insert(DApp::kName, decodeStringField(item.value(), "name"));
+                            app.insert(DApp::kIpfsId, parseStringField(item.value(), "ipfs_id"));
                             // TODO: check if empty url is allowed for not installed app
-                            app.insert("url", "");
-                            app.insert("api_version", decodeStringField(item.value(), "api_ver"));
-                            app.insert("min_api_version", decodeStringField(item.value(), "min_api_ver"));
-                            app.insert("guid", guid);
-                            app.insert("publisher", publisherKey);
-                            app.insert("publisherName", publisherName);
-                            app.insert("category", ConverToString(static_cast<Category>(item.value()["category"].get<int>())));
+                            app.insert(DApp::kUrl, "");
+                            app.insert(DApp::kApiVersion, decodeStringField(item.value(), "api_ver"));
+                            app.insert(DApp::kMinApiVersion, decodeStringField(item.value(), "min_api_ver"));
+                            app.insert(DApp::kGuid, guid);
+                            app.insert(DApp::kPublisherKey, publisherKey);
+                            app.insert(DApp::kPublisherName, publisherName);
+                            app.insert(DApp::kCategory, ConverToString(static_cast<Category>(item.value()["category"].get<int>())));
 
                             // TODO: add verification
-                            app.insert("supported", true);
+                            app.insert(DApp::kSupported, true);
 
-                            app.insert("notInstalled", true);
+                            app.insert(DApp::kNotInstalled, true);
 
                             _apps.push_back(app);
                         }
@@ -743,11 +759,11 @@ namespace beamui::applications
             const auto appid = QString::fromStdString(beam::wallet::GenerateAppID(name.toStdString(), url.toStdString()));
 
             //% "This is your dev application"
-            devapp.insert("description",     qtTrId("apps-devapp"));
-            devapp.insert("name",            name);
-            devapp.insert("url",             url);
-            devapp.insert("api_version",     AppSettings().getDevAppApiVer());
-            devapp.insert("min_api_version", AppSettings().getDevAppMinApiVer());
+            devapp.insert(DApp::kDescription,   qtTrId("apps-devapp"));
+            devapp.insert(DApp::kName,          name);
+            devapp.insert(DApp::kUrl,           url);
+            devapp.insert(DApp::kApiVersion,    AppSettings().getDevAppApiVer());
+            devapp.insert(DApp::kMinApiVersion, AppSettings().getDevAppMinApiVer());
             devapp.insert("appid", appid);
             result.push_back(devapp);
         }
@@ -775,7 +791,7 @@ namespace beamui::applications
                 app.insert("full_path", fullFolder);
 
                 // TODO: add verification
-                app.insert("supported", true);
+                app.insert(DApp::kSupported, true);
 
                 result.push_back(app);
             }
@@ -1016,7 +1032,7 @@ namespace beamui::applications
         QFileInfo fileInfo(fname);
 
         QVariantMap properties;
-        properties.insert("name", fileInfo.fileName());
+        properties.insert(DApp::kName, fileInfo.fileName());
         properties.insert("size", fileInfo.size());
 
         return properties;
@@ -1050,7 +1066,7 @@ namespace beamui::applications
                 }
             }
 
-            if (app["guid"].value<QString>().isEmpty())
+            if (app[DApp::kGuid].value<QString>().isEmpty())
             {
                 throw std::runtime_error("Invalid DApp file");
             }
@@ -1112,7 +1128,7 @@ namespace beamui::applications
 
     bool AppsViewModel::checkDAppNewVersion(const QVariantMap& currentDApp, const QVariantMap& newDApp)
     {
-        if (currentDApp["guid"].value<QString>() == currentDApp["guid"].value<QString>())
+        if (currentDApp[DApp::kGuid].value<QString>() == currentDApp[DApp::kGuid].value<QString>())
         {
             return compareDAppVersion(newDApp["version"].value<QString>(), currentDApp["version"].value<QString>()) > 0;
         }
@@ -1121,9 +1137,9 @@ namespace beamui::applications
 
     void AppsViewModel::uploadAppToStore(QVariantMap&& app, const std::string& ipfsID, bool isUpdating)
     {
-        QString guid = app["guid"].value<QString>();
-        QString appName = app["name"].value<QString>();
-        QString description = app["description"].value<QString>();
+        QString guid = app[DApp::kGuid].value<QString>();
+        QString appName = app[DApp::kName].value<QString>();
+        QString description = app[DApp::kDescription].value<QString>();
 
         std::stringstream argsStream;
         argsStream << (isUpdating ? "action=update_dapp," : "action=add_dapp,");
@@ -1132,9 +1148,9 @@ namespace beamui::applications
         argsStream << ",name=" << toHex(appName);
         argsStream << ",id=" << guid.toStdString();
         argsStream << ",description=" << toHex(description);
-        argsStream << ",api_ver=" << toHex(app["api_version"].value<QString>());
-        argsStream << ",min_api_ver=" << toHex(app["min_api_version"].value<QString>());
-        argsStream << ",category=" << app["category"].value<uint32_t>();
+        argsStream << ",api_ver=" << toHex(app[DApp::kApiVersion].value<QString>());
+        argsStream << ",min_api_ver=" << toHex(app[DApp::kMinApiVersion].value<QString>());
+        argsStream << ",category=" << app[DApp::kCategory].value<uint32_t>();
 
         // parse version
         QStringList version = app["version"].value<QString>().split(".");
@@ -1188,8 +1204,8 @@ namespace beamui::applications
                 return;
             }
 
-            const auto ipfsID = app["ipfs_id"].toString();
-            const auto appName = app["name"].toString();
+            const auto ipfsID = app[DApp::kIpfsId].toString();
+            const auto appName = app[DApp::kName].toString();
 
             // get dapp binary data from ipfs
             QPointer<AppsViewModel> guard(this);
@@ -1290,8 +1306,8 @@ namespace beamui::applications
 
                     QTextStream in(&mfile);
                     const auto app = parseAppManifest(in, "");
-                    guid = app["guid"].value<QString>();
-                    appName = app["name"].value<QString>();
+                    guid = app[DApp::kGuid].value<QString>();
+                    appName = app[DApp::kName].value<QString>();
                 }
             }
 
@@ -1426,13 +1442,13 @@ namespace beamui::applications
 
         std::copy_if(_apps.cbegin(), _apps.cend(), std::back_inserter(publisherApps),
             [publisherKey] (const auto& app) -> bool {
-                const auto appFieldsIt = app.find("publisher");
+                const auto appFieldsIt = app.find(DApp::kPublisherKey);
                 if (appFieldsIt == app.end())
                 {
                     return false;
                 }
                 // skip local installed own apps by publisher, that didn't be uploaded
-                return appFieldsIt->toString() == publisherKey && app.contains("ipfs_id");
+                return appFieldsIt->toString() == publisherKey && app.contains(DApp::kIpfsId);
             }
         );
 
@@ -1444,7 +1460,7 @@ namespace beamui::applications
         // find app in _apps by guid
         const auto it = std::find_if(_apps.cbegin(), _apps.cend(),
             [guid](const auto& app) -> bool {
-                const auto appFieldsIt = app.find("guid");
+                const auto appFieldsIt = app.find(DApp::kGuid);
                 if (appFieldsIt == app.end())
                 {
                     // TODO: uncomment when all DApps will have new full list of required fields 
@@ -1474,8 +1490,8 @@ namespace beamui::applications
                 return;
             }
 
-            const auto ipfsID = app["ipfs_id"].toString();
-            const auto appName = app["name"].toString();
+            const auto ipfsID = app[DApp::kIpfsId].toString();
+            const auto appName = app[DApp::kName].toString();
 
             // unpin dapp binary data from ipfs
             QPointer<AppsViewModel> guard(this);
@@ -1549,8 +1565,8 @@ namespace beamui::applications
                 return;
             }
 
-            const auto ipfsID = app["ipfs_id"].toString();
-            const auto appName = app["name"].toString();
+            const auto ipfsID = app[DApp::kIpfsId].toString();
+            const auto appName = app[DApp::kName].toString();
 
             // get dapp binary data from ipfs
             QPointer<AppsViewModel> guard(this);
