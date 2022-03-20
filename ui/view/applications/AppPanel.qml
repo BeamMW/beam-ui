@@ -120,8 +120,8 @@ Item {
                     font.pixelSize:   14
                     elide:            Text.ElideRight
                     // TODO: get color for the category
-                    color:            "#FF57BF"
-                     visible:       !!app.category
+                    color:            !!app.categoryColor ? app.categoryColor : "#FF57BF"
+                    visible:          !!app.category
                 }
             }
 

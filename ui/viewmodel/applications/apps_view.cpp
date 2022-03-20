@@ -44,6 +44,7 @@ namespace
         const char kPublisherKey[] = "publisher";
         const char kPublisherName[] = "publisherName";
         const char kCategory[] = "category";
+        const char kCategoryColor[] = "categoryColor";
         const char kSupported[] = "supported";
         const char kNotInstalled[] = "notInstalled";
     } // namespace DApp
@@ -146,7 +147,7 @@ namespace
         return 0;
     }
 
-    QString ConverToString(beamui::applications::AppsViewModel::Category category)
+    QString converToString(beamui::applications::AppsViewModel::Category category)
     {
         switch (category)
         {
@@ -162,6 +163,25 @@ namespace
             return "Governance";
         default:
             return "";
+        }
+    }
+
+    QString getCategoryColor(beamui::applications::AppsViewModel::Category category)
+    {
+        switch (category)
+        {
+        case beamui::applications::AppsViewModel::Category::Other:
+            return "#FFB13D";
+        case beamui::applications::AppsViewModel::Category::Finance:
+            return "#0BCCF7";
+        case beamui::applications::AppsViewModel::Category::Games:
+            return "#B29FFF";
+        case beamui::applications::AppsViewModel::Category::Technology:
+            return "#FF57BF";
+        case beamui::applications::AppsViewModel::Category::Governance:
+            return "#C5FF7A";
+        default:
+            return "#FF57BF";
         }
     }
 }
@@ -572,7 +592,9 @@ namespace beamui::applications
                             app.insert(DApp::kGuid, guid);
                             app.insert(DApp::kPublisherKey, publisherKey);
                             app.insert(DApp::kPublisherName, publisherName);
-                            app.insert(DApp::kCategory, ConverToString(static_cast<Category>(item.value()["category"].get<int>())));
+                            Category category = static_cast<Category>(item.value()["category"].get<int>());
+                            app.insert(DApp::kCategory, converToString(category));
+                            app.insert(DApp::kCategoryColor, getCategoryColor(category));
 
                             // TODO: add verification
                             app.insert(DApp::kSupported, true);
