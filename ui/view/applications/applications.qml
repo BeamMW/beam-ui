@@ -26,7 +26,7 @@ ColumnLayout {
 
     function openAppTx (txid) {
         openedTxID = txid
-        txPanel.showTxDetails(txid)
+        showTxDetails(txid)
     }
 
     function uninstallApp (app) {
@@ -66,6 +66,7 @@ ColumnLayout {
     }
 
     signal reloadWebEngineView()
+    signal showTxDetails(string txid)
 
     ApplicationsViewModel {
         id: viewModel
@@ -657,6 +658,7 @@ ColumnLayout {
             Component.onCompleted: {
                 viewModel.appsChanged.connect(loadAppsList)
                 control.reloadWebEngineView.connect(webView.reload)
+                control.showTxDetails.connect(txPanel.showTxDetails)
 
                 if (settings.dappsAllowed)
                 {
@@ -671,6 +673,7 @@ ColumnLayout {
             Component.onDestruction: {
                 viewModel.appsChanged.disconnect(loadAppsList)
                 control.reloadWebEngineView.disconnect(webView.reload)
+                control.showTxDetails.disconnect(txPanel.showTxDetails)
             }
         }
     }
