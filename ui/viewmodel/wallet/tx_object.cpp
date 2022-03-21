@@ -617,7 +617,10 @@ bool TxObject::isMultiAsset() const
 
 bool TxObject::canShowContractNotification() const
 {
-    if (isContractTx() && isActive())
+    auto dappStoreCID = AppModel::getInstance().getSettings().getDappStoreCID();
+    bool isDAppStoreTx = getCidsStr().compare(QString::fromStdString(dappStoreCID), Qt::CaseInsensitive) == 0;
+
+    if (isContractTx() && isActive() && !isDAppStoreTx)
     {
         bool isMarkedAsRead = false;
         _tx.GetParameter(beam::wallet::TxParameterID::IsContractNotificationMarkedAsRead, isMarkedAsRead);
