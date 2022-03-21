@@ -572,8 +572,6 @@ else()
     #  )
 endif()
 
-install(FILES beam-dapps-store/shaders/dapps_store_app.wasm DESTINATION .)
-
 if (BEAM_IPFS_SUPPORT AND WIN32)
     # TODO: This if hacky AF and beacuse we place everything in different folders.
     get_target_property(IPFS_DLL asio-ipfs IPFS_DLL)

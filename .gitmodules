@@ -8,6 +8,3 @@
 [submodule "3rdparty/qhttpengine"]
 	path = 3rdparty/qhttpengine
 	url = https://github.com/BeamMW/qhttpengine.git
-[submodule "beam-dapps-store"]
-	path = beam-dapps-store
-	url = https://github.com/BeamMW/beam-dapps-store.git
