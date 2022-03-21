@@ -769,7 +769,8 @@ std::string WalletSettings::getDappStoreCID() const
 std::string WalletSettings::getDappStorePath() const
 {
     auto path = m_data.value(kDappStorePath).toString();
-    return path.isEmpty() ? "d:/work/dapps-store/beam-dapps-store/shaders/dapps_store_app.wasm" : path.toStdString();
+
+    return path.isEmpty() ? "./dapps_store_app.wasm" : path.toStdString();
 }
 
 QStringList WalletSettings::getDappStoreUserPublishers() const
