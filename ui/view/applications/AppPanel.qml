@@ -182,7 +182,7 @@ Item {
                     }
                     
                     onClickedByAdditional: {
-                        appMenu.popup()
+                        appMenu.popup(button, button.width - appMenu.width, button.height);
                     }
                 }
             }
