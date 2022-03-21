@@ -52,7 +52,7 @@ Button {
             id: separator
             height: 17
             width: 1
-            border.width: 1
+            color: Style.active
             visible: control.showAdditional
         }
 
