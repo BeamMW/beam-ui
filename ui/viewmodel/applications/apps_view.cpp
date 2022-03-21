@@ -212,7 +212,7 @@ namespace beamui::applications
 
         // TODO roman.strilets loadPublishers should be executed before loadApps
         loadPublishers();
-        loadApps();
+        //loadApps();
         loadMyPublisherInfo();
     }
 
@@ -400,6 +400,11 @@ namespace beamui::applications
 
     void AppsViewModel::loadApps()
     {
+        if (_isInProcessToRequestDApp)
+        {
+            return;
+        }
+        _isInProcessToRequestDApp = true;
         setIsAppsListReady(false);
 
         // TODO: It mb worth loading in parallel and then putting it together
@@ -592,13 +597,13 @@ namespace beamui::applications
                             app.insert(DApp::kGuid, guid);
                             app.insert(DApp::kPublisherKey, publisherKey);
                             app.insert(DApp::kPublisherName, publisherName);
+
                             Category category = static_cast<Category>(item.value()["category"].get<int>());
                             app.insert(DApp::kCategory, converToString(category));
                             app.insert(DApp::kCategoryColor, getCategoryColor(category));
 
                             // TODO: add verification
                             app.insert(DApp::kSupported, true);
-
                             app.insert(DApp::kNotInstalled, true);
 
                             _apps.push_back(app);
@@ -609,7 +614,9 @@ namespace beamui::applications
                 {
                     LOG_ERROR() << "Error while parsing app from contract" << ", " << err.what();
                 }
+
                 setIsAppsListReady(true);
+                _isInProcessToRequestDApp = false;
                 emit appsChanged();
             }
         );

@@ -132,6 +132,7 @@ namespace beamui::applications
         QString _serverAddr;
         std::unique_ptr<AppsServer> _server;
         bool _isAppsListReady = false;
+        bool _isInProcessToRequestDApp = false;
         QList<QVariantMap> _localApps;
         QList<QVariantMap> _apps;
         QList<QVariantMap> _publishers;
