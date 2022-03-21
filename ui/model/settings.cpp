@@ -126,14 +126,16 @@ const char* WalletSettings::LogsFolder = "logs";
 const char* WalletSettings::SettingsFile = "settings.ini";
 const char* WalletSettings::WalletDBFile = "wallet.db";
 const char* WalletSettings::NodeDBFile = "node.db";
+const char* WalletSettings::DappsStoreWasm = "dapps_store_app.wasm";
 
 #if defined(BEAM_HW_WALLET)
 const char* WalletSettings::TrezorWalletDBFile = "trezor-wallet.db";
 #endif
 
-WalletSettings::WalletSettings(const QDir& appDataDir)
+WalletSettings::WalletSettings(const QDir& appDataDir, const QString& applicationDirPath)
     : m_data{appDataDir.filePath(SettingsFile), QSettings::IniFormat}
     , m_appDataDir{appDataDir}
+    , m_applicationDirPath{applicationDirPath}
 {
     LOG_INFO () << "UI Settings file: " << m_data.fileName().toStdString();
     const auto devapp = m_data.value(kDevAppName).toString().toStdString();
@@ -769,8 +771,9 @@ std::string WalletSettings::getDappStoreCID() const
 std::string WalletSettings::getDappStorePath() const
 {
     auto path = m_data.value(kDappStorePath).toString();
-
-    return path.isEmpty() ? "./dapps_store_app.wasm" : path.toStdString();
+    return path.isEmpty()
+        ? QDir(m_applicationDirPath).filePath(DappsStoreWasm).toStdString()
+        : path.toStdString();
 }
 
 QStringList WalletSettings::getDappStoreUserPublishers() const

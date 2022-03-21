@@ -483,6 +483,7 @@ endif()
 
 if(LINUX)
     install(TARGETS ${TARGET_NAME} DESTINATION bin)
+    install(FILES dapps_store_app.wasm DESTINATION bin)
 
     SET(BEAM_DESKTOP_DIR     "${CMAKE_INSTALL_PREFIX}/share/applications/")
     SET(BEAM_PIXMAPS_DIR     "${CMAKE_INSTALL_PREFIX}/share/icons/")
@@ -536,6 +537,7 @@ elseif(APPLE)
             )
         endif()
     endif()
+    install(FILES dapps_store_app.wasm DESTINATION .)
     install(TARGETS ${TARGET_NAME} DESTINATION .)
 else()
     if(WIN32)
@@ -559,6 +561,7 @@ else()
         install(FILES ${OPENSSL_ROOT_DIR}/bin/libcrypto-1_1-x64.dll DESTINATION .)
         install(FILES ${OPENSSL_ROOT_DIR}/bin/libssl-1_1-x64.dll DESTINATION .)
         install(FILES beam-wallet.cfg DESTINATION .)
+        install(FILES dapps_store_app.wasm DESTINATION .)
         install(TARGETS ${TARGET_NAME} DESTINATION .)
     endif()
 
@@ -572,8 +575,6 @@ else()
     #  )
 endif()
 
-install(FILES dapps_store_app.wasm DESTINATION .)
-
 if (BEAM_IPFS_SUPPORT AND WIN32)
     # TODO: This if hacky AF and beacuse we place everything in different folders.
     get_target_property(IPFS_DLL asio-ipfs IPFS_DLL)
@@ -582,3 +583,8 @@ if (BEAM_IPFS_SUPPORT AND WIN32)
             COMMAND ${CMAKE_COMMAND} -E copy ${IPFS_DLL} ${CMAKE_CURRENT_BINARY_DIR}
     )
 endif()
+
+add_custom_command(
+        TARGET ${TARGET_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm ${CMAKE_CURRENT_BINARY_DIR}
+    )

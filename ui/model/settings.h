@@ -29,7 +29,7 @@ class WalletSettings : public QObject
 {
     Q_OBJECT
 public:
-    explicit WalletSettings(const QDir& appDataDir);
+    explicit WalletSettings(const QDir& appDataDir, const QString& applicationDirPath);
 
     QString getNodeAddress() const;
     void setNodeAddress(const QString& value);
@@ -167,6 +167,7 @@ public:
     static const char* LogsFolder;
     static const char* SettingsFile;
     static const char* WalletDBFile;
+    static const char* DappsStoreWasm;
 
     #if defined(BEAM_HW_WALLET)
     static const char* TrezorWalletDBFile;
@@ -194,6 +195,7 @@ signals:
 private:
     mutable QSettings m_data;
     QDir m_appDataDir;
+    QString m_applicationDirPath;
     uint8_t m_mpLockTimeLimit = 0;
     uint32_t m_minConfirmations = 0;
     mutable std::recursive_mutex m_mutex;

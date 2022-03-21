@@ -20,8 +20,6 @@
 #include "model/app_model.h"
 #include "viewmodel/fee_helpers.h"
 
-#include <qdebug.h>
-
 using namespace beam;
 
 namespace
