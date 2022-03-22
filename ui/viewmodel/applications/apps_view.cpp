@@ -47,6 +47,7 @@ namespace
         const char kCategoryColor[] = "categoryColor";
         const char kSupported[] = "supported";
         const char kNotInstalled[] = "notInstalled";
+        const char kIcon[] = "icon";
     } // namespace DApp
 
     QString fromHex(const std::string& value)
@@ -251,7 +252,7 @@ namespace beamui::applications
         return _userAgent;
     }
 
-    QVariantMap AppsViewModel::parseAppManifest(QTextStream& in, const QString& appFolder)
+    QVariantMap AppsViewModel::parseAppManifest(QTextStream& in, const QString& appFolder, bool needExpandIcon)
     {
         QVariantMap app;
 
@@ -309,9 +310,19 @@ namespace beamui::applications
             {
                 throw std::runtime_error("Invalid icon in the manifest file");
             }
+            QString ipath = "";
 
-            const auto ipath = expandLocalFile(appFolder, icon.get<std::string>());
-            app.insert("icon", ipath);
+            if (needExpandIcon)
+            {
+                ipath = expandLocalFile(appFolder, icon.get<std::string>());
+            }
+            else
+            {
+                ipath = QString::fromStdString(json["icon"].get<std::string>()).replace("localapp/", "");
+            }
+
+            app.insert(DApp::kIcon, ipath);
+
             LOG_INFO() << "App: " << sname << ", icon: " << ipath.toStdString();
         }
 
@@ -601,6 +612,7 @@ namespace beamui::applications
                             Category category = static_cast<Category>(item.value()["category"].get<int>());
                             app.insert(DApp::kCategory, converToString(category));
                             app.insert(DApp::kCategoryColor, getCategoryColor(category));
+                            app.insert(DApp::kIcon, decodeStringField(item.value(), "icon"));
 
                             // TODO: add verification
                             app.insert(DApp::kSupported, true);
@@ -1091,7 +1103,24 @@ namespace beamui::applications
                     }
 
                     QTextStream in(&mfile);
-                    app = parseAppManifest(in, "");
+                    app = parseAppManifest(in, "", false);
+                }
+            }
+
+            // TODO roman.strilets it's temporary solution
+            for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
+            {
+                const auto zipFname = zip.getCurrentFileName();
+                if (zipFname == app[DApp::kIcon].value<QString>())
+                {
+                    QuaZipFile mfile(zip.getZipName(), zipFname);
+                    if (!mfile.open(QIODevice::ReadOnly))
+                    {
+                        throw std::runtime_error("Failed to read the DApp file");
+                    }
+                    QTextStream in(&mfile);
+                    const auto content = in.readAll();
+                    app[DApp::kIcon] = "data:image/svg+xml;utf8," + content;
                 }
             }
 
@@ -1180,6 +1209,7 @@ namespace beamui::applications
         argsStream << ",api_ver=" << toHex(app[DApp::kApiVersion].value<QString>());
         argsStream << ",min_api_ver=" << toHex(app[DApp::kMinApiVersion].value<QString>());
         argsStream << ",category=" << app[DApp::kCategory].value<uint32_t>();
+        argsStream << ",icon=" << toHex(app[DApp::kIcon].value<QString>());
 
         // parse version
         QStringList version = app["version"].value<QString>().split(".");
