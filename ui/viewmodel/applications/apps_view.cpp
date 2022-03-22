@@ -208,13 +208,12 @@ namespace beamui::applications
         _userAgent  = defaultProfile->httpUserAgent() + " BEAM/" + QString::fromStdString(PROJECT_VERSION);
         _serverAddr = QString("127.0.0.1:") + QString::number(AppSettings().getAppsServerPort());
 
-        // TODO: execution queue?
+        loadMyPublisherInfo();
         loadUserPublishers();
 
         // TODO roman.strilets loadPublishers should be executed before loadApps
         loadPublishers();
         //loadApps();
-        loadMyPublisherInfo();
     }
 
     AppsViewModel::~AppsViewModel()
@@ -519,8 +518,9 @@ namespace beamui::applications
                         auto guid = parseStringField(item.value(), "id");
                         auto publisherKey = parseStringField(item.value(), "publisher");
 
-                        // parse DApps only of the user publishers
-                        if (!_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive))
+                        // parse DApps only of the user publishers + own
+                        if (!_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive) &&
+                            !(isPublisher() && publisherKey.compare(_publisherInfo["publisherKey"].toString(), Qt::CaseInsensitive) == 0))
                         {
                             continue;
                         }
@@ -732,9 +732,6 @@ namespace beamui::applications
                             QVariantMap tmp = parsePublisherInfo(info);
 
                             setPublisherInfo(tmp);
-
-                            _isPublisher = true;
-                            emit isPublisherChanged();
                         }
                     }
                     catch (std::runtime_error& err)
@@ -848,8 +845,7 @@ namespace beamui::applications
 
     bool AppsViewModel::isPublisher() const
     {
-        // TODO: check after implementation "becomePublisher"
-        return _isPublisher;
+        return !_publisherInfo.empty();
     }
 
     QVariantMap AppsViewModel::getPublisherInfo() const
@@ -863,6 +859,7 @@ namespace beamui::applications
         {
             _publisherInfo = value;
             emit publisherInfoChanged();
+            emit isPublisherChanged();
         }
     }
 

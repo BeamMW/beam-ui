@@ -137,7 +137,6 @@ namespace beamui::applications
         QList<QVariantMap> _apps;
         QList<QVariantMap> _publishers;
         QStringList _userPublishersKeys;
-        bool _isPublisher = false;
         QVariantMap _publisherInfo;
         boost::optional<beam::wallet::TxID> _txId;
 
