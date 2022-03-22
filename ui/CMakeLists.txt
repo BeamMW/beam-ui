@@ -536,18 +536,18 @@ elseif(APPLE)
                 "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/Frameworks/QtWebEngineCore.framework/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess"
                 COMMENT "Signing QtWebEngineProcess..."
             )
-            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND codesign 
-                --force
-                --verify
-                --verbose
-                --display
-                -s "${BEAM_SIGN_IDENTITY}"
-                -o runtime
-                --timestamp
-                "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/MacOS/dapps_store_app.wasm"
-                COMMENT "Signing dapps_store_app.wasm..."
-            )
+            # add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            #     COMMAND codesign 
+            #     --force
+            #     --verify
+            #     --verbose
+            #     --display
+            #     -s "${BEAM_SIGN_IDENTITY}"
+            #     -o runtime
+            #     --timestamp
+            #     "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/MacOS/dapps_store_app.wasm"
+            #     COMMENT "Signing dapps_store_app.wasm..."
+            # )
         endif()
     endif()
     install(TARGETS ${TARGET_NAME} DESTINATION .)
