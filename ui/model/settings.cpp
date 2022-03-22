@@ -16,6 +16,7 @@
 #include <map>
 #include <QDataStream>
 #include <QFileDialog>
+#include <QtGlobal>
 #include <QtQuick>
 #include "model/app_model.h"
 #include "wallet/core/default_peers.h"
@@ -126,7 +127,11 @@ const char* WalletSettings::LogsFolder = "logs";
 const char* WalletSettings::SettingsFile = "settings.ini";
 const char* WalletSettings::WalletDBFile = "wallet.db";
 const char* WalletSettings::NodeDBFile = "node.db";
+#if defined(Q_OS_MACOS)
+const char* WalletSettings::DappsStoreWasm = "../Resources/dapps_store_app.wasm";
+#else
 const char* WalletSettings::DappsStoreWasm = "dapps_store_app.wasm";
+#endif
 
 #if defined(BEAM_HW_WALLET)
 const char* WalletSettings::TrezorWalletDBFile = "trezor-wallet.db";

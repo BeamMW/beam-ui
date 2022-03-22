@@ -290,7 +290,11 @@ if(BEAM_USE_STATIC AND LINUX)
     set(CMAKE_C_FLAGS "-no-pie ${CMAKE_C_FLAGS}")
     set(CMAKE_CXX_FLAGS "-no-pie ${CMAKE_CXX_FLAGS}")
 endif()
-add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns")
+if (APPLE)
+    add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" "${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm")
+else()
+    add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns")
+endif()
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${OUTPUT_NAME})
 
 if(BEAM_HW_WALLET)
@@ -494,15 +498,9 @@ elseif(APPLE)
     #set(MACOSX_BUNDLE_ICON_FILE "Beam Wallet${BEAM_DISPLAY_SUFFIX}.icns")
     set(MACOSX_BUNDLE_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
     set_target_properties(${TARGET_NAME} PROPERTIES 
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
-
-    add_custom_command(
-        TARGET ${TARGET_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/MacOS"
-        COMMENT "Copying dapps_store_app.wasm..."
-    )
-    # install(FILES dapps_store_app.wasm DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/MacOS")
 
     if (NOT BEAM_USE_STATIC_QT AND BEAM_SIGN_IDENTITY)
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
@@ -542,18 +540,6 @@ elseif(APPLE)
                 "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/Frameworks/QtWebEngineCore.framework/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess"
                 COMMENT "Signing QtWebEngineProcess..."
             )
-            # add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-            #     COMMAND codesign 
-            #     --force
-            #     --verify
-            #     --verbose
-            #     --display
-            #     -s "${BEAM_SIGN_IDENTITY}"
-            #     -o runtime
-            #     --timestamp
-            #     "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/MacOS/dapps_store_app.wasm"
-            #     COMMENT "Signing dapps_store_app.wasm..."
-            # )
         endif()
     endif()
     install(TARGETS ${TARGET_NAME} DESTINATION .)
