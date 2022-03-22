@@ -18,7 +18,7 @@ Item {
     readonly property int textWidth: 200
 
     signal launch(var app)
-    signal install(var appGUID)
+    signal install(var app)
     signal update(var app)
     signal uninstall(var app)
     signal remove(var app)

@@ -558,8 +558,8 @@ ColumnLayout {
                     launchApp(app)
                 }
 
-                onInstall: function (appGUID) {
-                    viewModel.installApp(appGUID)
+                onInstall: function (app) {
+                    viewModel.installApp(app.guid)
                 }
 
                 onUpdate: function (app) {

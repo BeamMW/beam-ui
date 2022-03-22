@@ -61,8 +61,8 @@ Item {
                     onLaunch: function (app) { 
                         control.launch(app)
                     }
-                    onInstall: function (appGUID) {
-                        control.install(appGUID)
+                    onInstall: function (app) {
+                        control.install(app)
                     }
                     onUpdate: function (app) {
                         control.update(app)
