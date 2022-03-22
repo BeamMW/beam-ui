@@ -44,6 +44,7 @@ namespace
         const char kPublisherKey[] = "publisher";
         const char kPublisherName[] = "publisherName";
         const char kCategory[] = "category";
+        const char kCategoryName[] = "categoryName";
         const char kCategoryColor[] = "categoryColor";
         const char kSupported[] = "supported";
         const char kNotInstalled[] = "notInstalled";
@@ -363,6 +364,10 @@ namespace beamui::applications
                 throw std::runtime_error("Invalid category in the manifest file");
             }
             app.insert(DApp::kCategory, categoryObj.get<uint32_t>());
+
+            Category category = static_cast<Category>(categoryObj.get<uint32_t>());
+            app.insert(DApp::kCategoryName, converToString(category));
+            app.insert(DApp::kCategoryColor, getCategoryColor(category));
         }
 
         const auto& publisherObj = json[DApp::kPublisherKey];
@@ -610,7 +615,8 @@ namespace beamui::applications
                             app.insert(DApp::kPublisherName, publisherName);
 
                             Category category = static_cast<Category>(item.value()["category"].get<int>());
-                            app.insert(DApp::kCategory, converToString(category));
+                            app.insert(DApp::kCategory, item.value()["category"].get<int>());
+                            app.insert(DApp::kCategoryName, converToString(category));
                             app.insert(DApp::kCategoryColor, getCategoryColor(category));
                             app.insert(DApp::kIcon, decodeStringField(item.value(), "icon"));
 
@@ -1128,6 +1134,8 @@ namespace beamui::applications
             
             // add estimated release_date
             app.insert("release_date", QDate::currentDate().toString("dd MMM yyyy"));
+
+            app.insert(DApp::kSupported, true);
 
             // preload DApp file
             QFile dappFile(dappFilePath);
