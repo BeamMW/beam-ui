@@ -5,16 +5,19 @@ namespace beamui::applications
     PublishersViewModel::PublishersViewModel(QObject *parent)
         : QAbstractTableModel(parent)
     {
+
         for(size_t i = 0; i < 6; ++i)
         {
             QVariantMap info;
-            info["nickname"] =QString::number(i) + " Fluffy the Mouse";
-            info["shortTitle"] = "Beam biggest fan________________________";
-            info["aboutMe"] = "Bilbo was very rich and very peculiar, and had been the wonder of the Shire for sixty years, ever since his remarkable disappearance and unexpected return. The riches he had brought back from his travels had now become a local legend, and it was popularly believed, whatever the old folk might say.";
+            info["nickname"] = QString::number(i) + " Fluffy the Mouse";
+            info["shortTitle"] = "Beam biggest fan";
+            info["aboutMe"] = "Bilbo was very rich and very peculiar, and had been the wonder of the Shire for sixty years, ever since his remarkable disappearance and unexpected r";
             info["website"] = "https://website.org";
             info["publisherKey"] = "128dhwue8yfhy7f9fy9e3hfouf";
             publishersInfo.append(info);
         }
+
+        publishersInfo[1]["nickname"] = ("https://website.org");
 
             publishersInfo[1]["discord"] = ("https://website.org");
             publishersInfo[2]["discord"] = ("https://website.org");
