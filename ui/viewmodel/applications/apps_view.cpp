@@ -215,7 +215,7 @@ namespace beamui::applications
 
         // TODO roman.strilets loadPublishers should be executed before loadApps
         loadPublishers();
-        //loadApps();
+        loadApps();
     }
 
     AppsViewModel::~AppsViewModel()
