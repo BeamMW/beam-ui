@@ -31,6 +31,7 @@ namespace
     const uint8_t kCountDAppVersionParts = 4;
     const QString kBeamPublisherName = "Beam Development Limited";
     const QString kBeamPublisherKey = "";
+    const QString kLocalapp = "localapp";
 
     namespace DApp
     {
@@ -318,7 +319,13 @@ namespace beamui::applications
             }
             else
             {
-                ipath = QString::fromStdString(json["icon"].get<std::string>()).replace("localapp/", "");
+                ipath = QString::fromStdString(json["icon"].get<std::string>());
+
+                if (ipath.startsWith(kLocalapp))
+                {
+                    // remove "localapp/" substring
+                    ipath = ipath.remove(0, kLocalapp.size() + 1);
+                }
             }
 
             app.insert(DApp::kIcon, ipath);
@@ -1028,7 +1035,7 @@ namespace beamui::applications
     QString AppsViewModel::expandLocalUrl(const QString& folder, const std::string& url) const
     {
         QString result = QString::fromStdString(url);
-        result.replace("localapp", QString("http://") + _serverAddr + "/" + folder);
+        result.replace(kLocalapp, QString("http://") + _serverAddr + "/" + folder);
         return result;
     }
 
@@ -1036,7 +1043,7 @@ namespace beamui::applications
     {
         auto path = QDir(AppSettings().getLocalAppsPath()).filePath(folder);
         auto result = QString::fromStdString(url);
-        result.replace("localapp", QString("file:///") + path);
+        result.replace(kLocalapp, QString("file:///") + path);
         return result;
     }
 
