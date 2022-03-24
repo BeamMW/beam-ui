@@ -9,26 +9,27 @@ import "../controls"
 Button {
     id: control
     
-    palette.button:      Qt.rgba(0, 246, 210, 0.1)
-    palette.buttonText:  Style.active
+    palette.button:     Qt.rgba(0, 246, 210, 0.1)
+    palette.buttonText: Style.active
+    opacity:            enabled ? 1.0 : 0.7
 
-    property int   radius:         19
+    property int   radius:        19
     property bool showAdditional: true
 
     signal clickedByAdditional()
 
     font { 
-        family: "Proxima Nova"
+        family:    "Proxima Nova"
         pixelSize: 14
         styleName: control.checkable ? "Regular" : "Bold"
-        weight: control.checkable ? Font.Normal : Font.Bold
+        weight:    control.checkable ? Font.Normal : Font.Bold
     }
 
-    height: 38
+    height:                 38
     Layout.preferredHeight: 38
-    leftPadding: 16
-    rightPadding: 16
-    activeFocusOnTab: true
+    leftPadding:            16
+    rightPadding:           16
+    activeFocusOnTab:       true
 
     spacing:     8
     icon.width:  16
@@ -37,9 +38,9 @@ Button {
     contentItem: RowLayout {
         id: rowLayout
         IconLabel {
-            spacing:  control.spacing
-            mirrored: control.mirrored
-            display:  control.display
+            spacing:      control.spacing
+            mirrored:     control.mirrored
+            display:      control.display
             rightPadding: 8
 
             icon:  control.icon
@@ -49,28 +50,27 @@ Button {
         }
 
         Rectangle {
-            id: separator
-            height: 17
-            width: 1
-            color: Style.active
+            id:      separator
+            height:  17
+            width:   1
+            color:   Style.active
             visible: control.showAdditional
         }
 
         IconLabel {
-            spacing:  control.spacing
-            mirrored: control.mirrored
-            display:  control.display
+            spacing:     control.spacing
+            mirrored:    control.mirrored
+            display:     control.display
             leftPadding: 12
-            visible: control.showAdditional
+            visible:     control.showAdditional
 
             icon.source: "qrc:/assets/icon-chevron-down.svg"
         }
     }
 
     MouseArea {
-        anchors.fill:  parent
+        anchors.fill: parent
         onClicked: function (event) {
-            console.log("button ", rowLayout.x, " ",  separator.x, " ", event.x);
             if (control.showAdditional) {
                 if (event.x < rowLayout.x + separator.x) {
                     control.clicked();
@@ -89,15 +89,16 @@ Button {
 
     Rectangle {
         anchors.fill: parent
-        radius:  control.radius
-        color:   Style.background_main
-        visible: !control.enabled
+        radius:       control.radius
+        color:        Style.background_main
+        visible:      !control.enabled
+        opacity:      0.7
     }
 
     background: Rectangle {
-        id:      rect
-        radius:  control.radius
-        color:   control.palette.button
+        id:           rect
+        radius:       control.radius
+        color:        control.palette.button
         border.color: Style.active
     }
 }
