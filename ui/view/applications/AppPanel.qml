@@ -94,19 +94,8 @@ Item {
                         font.pixelSize:      14
                         elide:               Text.ElideRight
                         color:               Style.content_main
-                        visible:             app.supported
                         maximumLineCount:    2
                         wrapMode:            Text.Wrap
-                    }
-
-                    // TODO: find place in new design
-                    SFText {
-                        elide:       Text.ElideRight
-                        color:       Style.validator_error
-                        visible:     !app.supported
-                        font.italic: true
-                                     //% "This DApp requires version %1 of Beam Wallet or higher. Please update your wallet."
-                        text:        qsTrId("apps-version-error").arg(app.min_api_version || app.api_version)
                     }
                 }
 
@@ -119,7 +108,6 @@ Item {
                     text:             !!app.categoryName ? app.categoryName : "" 
                     font.pixelSize:   14
                     elide:            Text.ElideRight
-                    // TODO: get color for the category
                     color:            !!app.categoryColor ? app.categoryColor : "#FF57BF"
                     visible:          !!app.category
                 }
@@ -134,23 +122,22 @@ Item {
                 Layout.alignment: Qt.AlignBottom
                 spacing:          0
 
-                // TODO: implement "Publisher name" + publisher pubKey
                 ColumnLayout {
                     SFText {
-                        text:             !!app.publisherName ? app.publisherName : ""
-                        font.pixelSize:   12
-                        elide:            Text.ElideRight
+                        text:                  !!app.publisherName ? app.publisherName : ""
+                        font.pixelSize:        12
+                        elide:                 Text.ElideRight
                         Layout.preferredWidth: control.textWidth
-                        color:            Style.content_secondary
+                        color:                 Style.content_secondary
                     }
 
                     SFText {
-                        text:             !!app.publisher ? app.publisher : ""
-                        font.pixelSize:   12
-                        elide:            Text.ElideMiddle
-                        color:            Style.content_secondary
+                        text:                  !!app.publisher ? app.publisher : ""
+                        font.pixelSize:        12
+                        elide:                 Text.ElideMiddle
+                        color:                 Style.content_secondary
                         Layout.preferredWidth: control.textWidth
-                        visible: !!app.publisher
+                        visible:               !!app.publisher
                     }
 
                     Item {
@@ -164,9 +151,9 @@ Item {
 
                 AppButton {
                     id: button
-                    Layout.alignment:   Qt.AlignTop | Qt.ALignRight
-                    icon.height:        16
-                    visible: showButtons
+                    Layout.alignment: Qt.AlignTop | Qt.ALignRight
+                    icon.height:      16
+                    visible:          showButtons
                     
                     onClicked: {
                         if (isPublisherAdminMode) {
@@ -184,6 +171,47 @@ Item {
                     onClickedByAdditional: {
                         appMenu.popup(button, button.width - appMenu.width, button.height);
                     }
+
+                    onXChanged: {
+                        // kludge: tracking mouse on the 'button' area.
+                        // Haven't found any other solution for tracking mouse hover when there are overlapping MouseArea:
+                        // Nested MouseArea with a manual button position binding.
+
+                        let startPoint = hoverArea.mapFromItem(button, 0, 0)
+                        buttonHoverArea.x = startPoint.x
+                        buttonHoverArea.y = startPoint.y
+                    }
+
+                    ToolTip {
+                        id:           toolTip
+                        delay:        500
+                        timeout:      2000
+                        visible:      false
+                                      //% "This DApp requires version %1 of Beam Wallet or higher. Please update your wallet."
+                        text:         qsTrId("apps-version-error").arg(app.min_api_version || app.api_version)
+                        width:        300
+                        modal:        false
+                        parent:       button
+                        x:            parent.width - width - 20
+                        y:            parent.height + 4
+                        z:            100
+                        padding:      20
+                        closePolicy:  Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+                        contentItem: SFText {
+                            color:            Style.validator_error
+                            font.pixelSize:   12
+                            text:             toolTip.text
+                            maximumLineCount: 2
+                            wrapMode:         Text.WordWrap
+                        }
+
+                        background: Rectangle {
+                            radius:       10
+                            color:        Style.background_popup
+                            anchors.fill: parent
+                        }
+                    }
                 }
             }
         }
@@ -194,6 +222,21 @@ Item {
         anchors.fill:            parent
         hoverEnabled:            true
         propagateComposedEvents: true
+
+        MouseArea {
+            id:                      buttonHoverArea
+            width:                   button.width
+            height:                  button.height
+            hoverEnabled:            true
+            propagateComposedEvents: true
+            enabled:                 button.visible && !button.enabled
+
+            onContainsMouseChanged: {
+                if (button.visible) {
+                    toolTip.visible = containsMouse && !button.enabled
+                }
+            }
+        }
     }
 
     ContextMenu {
@@ -276,14 +319,16 @@ Item {
     }
 
     Component.onCompleted: {
-        button.text = getButtonText();
-        button.icon.source = getButtonSource();
+        button.text = getButtonText()
+        button.icon.source = getButtonSource()
+        button.enabled = app.supported
+
         if (isPublisherAdminMode) {
             appMenu.addAction(removeAction)
         } else if (!app.notInstalled && !app.isFromServer) {
             appMenu.addAction(uninstallAction)
         } else {
-            button.showAdditional = false;
+            button.showAdditional = false
         }
     }
 }
