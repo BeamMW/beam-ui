@@ -21,63 +21,102 @@
 #include <QObject>
 #include <QString>
 
-namespace beamui::applications
+
+class PublisherItem : public QObject
 {
-    class PublishersViewModel: public QAbstractTableModel
-    {
-        Q_OBJECT
-        Q_PROPERTY(QList<QVariantMap> publishers READ getPublishersInfo      WRITE setPublishersInfo)
-        Q_PROPERTY(QString nicknameRole          READ getNicknameRole        CONSTANT)
-        Q_PROPERTY(QString shortTitleRole        READ getShortTitleRole      CONSTANT)
-        Q_PROPERTY(QString aboutRole             READ getAboutRole           CONSTANT)
-        Q_PROPERTY(QString websiteRole           READ getWebsiteRole         CONSTANT)
-        Q_PROPERTY(QString twitterRole           READ getTwitterRole         CONSTANT)
-        Q_PROPERTY(QString linkedinRole          READ getLinkedinRole        CONSTANT)
-        Q_PROPERTY(QString instagramRole         READ getInstagramRole       CONSTANT)
-        Q_PROPERTY(QString telegramRole          READ getTelegramRole        CONSTANT)
-        Q_PROPERTY(QString discordRole           READ getDiscordRole         CONSTANT)
-        Q_PROPERTY(QString publisherLinkRole     READ getPublisherLinkRole   CONSTANT)
+    Q_OBJECT
+        Q_PROPERTY(QString publisherKey READ publisherKey CONSTANT)
+        Q_PROPERTY(QString nickname     READ nickname     CONSTANT)
+        Q_PROPERTY(QString shortTitle   READ shortTitle   CONSTANT)
+        Q_PROPERTY(QString aboutMe      READ aboutMe      CONSTANT)
+        Q_PROPERTY(QString website      READ website      CONSTANT)
+        Q_PROPERTY(QString twitter      READ twitter      CONSTANT)
+        Q_PROPERTY(QString linkedin     READ linkedin     CONSTANT)
+        Q_PROPERTY(QString instagram    READ instagram    CONSTANT)
+        Q_PROPERTY(QString telegram     READ telegram     CONSTANT)
+        Q_PROPERTY(QString discord      READ discord      CONSTANT)
+
+public:
+    PublisherItem() = default;
+    PublisherItem(const QVariantMap& publisherInfo);
+
+    [[nodiscard]] QString publisherKey() const;
+    [[nodiscard]] QString nickname() const;
+    [[nodiscard]] QString shortTitle() const;
+    [[nodiscard]] QString aboutMe() const;
+    [[nodiscard]] QString website() const;
+    [[nodiscard]] QString twitter() const;
+    [[nodiscard]] QString linkedin() const;
+    [[nodiscard]] QString instagram() const;
+    [[nodiscard]] QString telegram() const;
+    [[nodiscard]] QString discord() const;
+
+private:
+    QString _publisherKey;
+    QString _nickname;
+    QString _shortTitle;
+    QString _aboutMe;
+    QString _website;
+    QString _twitter;
+    QString _linkedin;
+    QString _instagram;
+    QString _telegram;
+    QString _discord;
+};
+
+class PublishersViewModel: public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(QList<QVariantMap> publishersInfo          READ getPublishersInfo      WRITE setPublishersInfo)
+
+    Q_PROPERTY(QQmlListProperty<PublisherItem> publishers READ getPublishers          NOTIFY publishersChanged)
+    Q_PROPERTY(QString nicknameRole                       READ getNicknameRole        CONSTANT)
+    Q_PROPERTY(QString shortTitleRole                     READ getShortTitleRole      CONSTANT)
+    Q_PROPERTY(QString aboutRole                          READ getAboutRole           CONSTANT)
+    Q_PROPERTY(QString websiteRole                        READ getWebsiteRole         CONSTANT)
+    Q_PROPERTY(QString twitterRole                        READ getTwitterRole         CONSTANT)
+    Q_PROPERTY(QString linkedinRole                       READ getLinkedinRole        CONSTANT)
+    Q_PROPERTY(QString instagramRole                      READ getInstagramRole       CONSTANT)
+    Q_PROPERTY(QString telegramRole                       READ getTelegramRole        CONSTANT)
+    Q_PROPERTY(QString discordRole                        READ getDiscordRole         CONSTANT)
+    Q_PROPERTY(QString publisherLinkRole                  READ getPublisherLinkRole   CONSTANT)
+
+    Q_PROPERTY(Qt::SortOrder sortOrder READ sortOrder  WRITE setSortOrder)
         
-    public:
-        explicit PublishersViewModel(QObject *parent = nullptr);
+public:
+    PublishersViewModel();
+    virtual ~PublishersViewModel();
 
-        // Basic functionality:
-        int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-        int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-        QHash<int, QByteArray> roleNames() const override;
+    QQmlListProperty<PublisherItem> getPublishers();
 
-        void setPublishersInfo(QList<QVariantMap> info);
-        [[nodiscard]] QList<QVariantMap> getPublishersInfo() const;
+    void setPublishersInfo(QList<QVariantMap> info);
+    [[nodiscard]] QList<QVariantMap> getPublishersInfo() const;
 
-        enum Roles {
-            NicknameRole = Qt::UserRole,
-            ShortTitleRole,
-            AboutRole,
-            WebsiteRole,
-            TwitterRole,
-            LinkedinRole,
-            InstagramRole,
-            TelegramRole,
-            DiscordRole,
-            PublisherLinkRole
-        };
-        Q_ENUM(Roles)
+    [[nodiscard]] QString getNicknameRole() const;
+    [[nodiscard]] QString getShortTitleRole() const;
+    [[nodiscard]] QString getAboutRole() const;
+    [[nodiscard]] QString getWebsiteRole() const;
+    [[nodiscard]] QString getTwitterRole() const;
+    [[nodiscard]] QString getLinkedinRole() const;
+    [[nodiscard]] QString getInstagramRole() const;
+    [[nodiscard]] QString getTelegramRole() const;
+    [[nodiscard]] QString getDiscordRole() const;
+    [[nodiscard]] QString getPublisherLinkRole() const;
 
-        [[nodiscard]] QString getNicknameRole() const;
-        [[nodiscard]] QString getShortTitleRole() const;
-        [[nodiscard]] QString getAboutRole() const;
-        [[nodiscard]] QString getWebsiteRole() const;
-        [[nodiscard]] QString getTwitterRole() const;
-        [[nodiscard]] QString getLinkedinRole() const;
-        [[nodiscard]] QString getInstagramRole() const;
-        [[nodiscard]] QString getTelegramRole() const;
-        [[nodiscard]] QString getDiscordRole() const;
-        [[nodiscard]] QString getPublisherLinkRole() const;
+    [[nodiscard]] Qt::SortOrder sortOrder() const;
+    void setSortOrder(Qt::SortOrder);
 
-        Q_INVOKABLE QVariant getRoleValue(const int row, QByteArray roleName);
+    Q_INVOKABLE QString getRoleValue(const int row, QByteArray roleName);
 
-    private:
-        QList<QVariantMap> publishersInfo;
-    };
-}
+signals:
+    void publishersChanged();
+
+private:
+    void updatePublishers();
+    void sortPublishers();
+
+private:
+    QList<QVariantMap> m_publishersInfo;
+    QList<PublisherItem*> m_publishers;
+    Qt::SortOrder m_sortOrder = Qt::AscendingOrder;
+};

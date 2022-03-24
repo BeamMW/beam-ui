@@ -27,7 +27,7 @@ ColumnLayout {
     }
 
     function checkVisibilityOfSocialNetwork(row, socialNetwork) {
-        return typeof(publishersTable.model.getRoleValue(row, socialNetwork)) !== "undefined"
+        return !!viewModel.getRoleValue(row, socialNetwork)
     }
 
     //
@@ -204,150 +204,193 @@ ColumnLayout {
     //
     // Body: publishers list
     //
+     PublishersViewModel {
+        id:             viewModel
+        publishersInfo: control.appsViewModel.userPublishers
+    }
+
     CustomTableView {
-        id: publishersTable
+        id:                publishersTable
         Layout.alignment:  Qt.AlignTop
         Layout.fillHeight: true
         Layout.fillWidth:  true
-        Layout.topMargin: 20
+        Layout.topMargin:  20
 
-        selectionMode: SelectionMode.NoSelection
+        selectionMode:        SelectionMode.NoSelection
         sortIndicatorVisible: true
-        sortIndicatorColumn: 0
-        sortIndicatorOrder: Qt.DescendingOrder
+        sortIndicatorColumn:  0
+        sortIndicatorOrder:   Qt.DescendingOrder
 
-        property int rowHeight: 56
-        property int resizableWidth: parent.width - publisherLink.width
-        property double columnResizeRatio: resizableWidth / 914
+        property int rowHeight:            109
+        property int resizableWidth:       parent.width - publisherLink.width
+        property double columnResizeRatio: resizableWidth / 828
 
-        model: PublishersViewModel {
-            id:         viewModel
-            publishers: control.appsViewModel.userPublishers
+        model:  viewModel.publishers
+
+        Binding{
+            target:   viewModel
+            property: "sortOrder"
+            value:    publishersTable.sortIndicatorOrder
         }
 
         TableViewColumn { 
-            id: nickname
-            role: viewModel.nicknameRole
-            //% "Nickname"
-            title: qsTrId("publishers-list-nickname")
-            width: 150
-            movable:    false
-            resizable:  false
-            delegate: nicknameComponent
+            id:        nickname
+            role:      viewModel.nicknameRole
+                       //% "Nickname"
+            title:     qsTrId("publishers-list-nickname")
+            width:     220 * publishersTable.columnResizeRatio
+            movable:   false
+            resizable: false
+            delegate:  nicknameComponent
         }
         TableViewColumn {
-            id: about
-            role: viewModel.aboutRole
-            //% "About"
-            title: qsTrId("publishers-list-about")
-            width: publishersTable.getAdjustedColumnWidth(about)
-            movable:    false
-            resizable:  false
+            id:        about
+            role:      viewModel.aboutRole
+                       //% "About"
+            title:     qsTrId("publishers-list-about")
+            width:     400 * publishersTable.columnResizeRatio
+            movable:   false
+            resizable: false
+            delegate:  aboutComponent
         }
         TableViewColumn {
-            id: socialNetworks
-            //% "Social networks"
-            title: qsTrId("publishers-list-social-net")
-            width: 240 * publishersTable.columnResizeRatio
-            movable:    false
-            resizable:  false
-            delegate: socialNetworksComponent
+            id:        socialNetworks
+                       //% "Social networks"
+            title:     qsTrId("publishers-list-social-net")
+            width:     210 * publishersTable.columnResizeRatio
+            movable:   false
+            resizable: false
+            delegate:  socialNetworksComponent
         }
         TableViewColumn {
-            id: publisherLink
-            //% "Publisher link"
-            title: qsTrId("publishers-list-publisher-link")
-            width: 138
-            movable:    false
-            resizable:  false
-            delegate: publisherLinkComponent
+            id:        publisherLink
+                       //% "Publisher link"
+            title:     qsTrId("publishers-list-publisher-link")
+            width:     144
+            movable:   false
+            resizable: false
+            delegate:  publisherLinkComponent
         }
 
         Component {
             id: nicknameComponent
 
-            Column {
-                padding: {20, 12, 12, 12}
-                SFLabel {
-                    font.pixelSize: 14
-                    elide: Text.ElideNone
-                    fontSizeMode: Text.Fit
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    color: Style.content_main
-                    text: publishersTable.model.getRoleValue(styleData.row, viewModel.nicknameRole)
-                }
+            RowLayout {
+                width:   parent.width
 
-                SFLabel {
-                    font.pixelSize: 14
-                    elide: Text.ElideRight
-                    fontSizeMode: Text.Fit
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    color: Style.content_secondary
-                    text: publishersTable.model.getRoleValue(styleData.row, viewModel.shortTitleRole)
+                ColumnLayout {
+                    width:             parent.width - 12
+                    Layout.alignment:  Qt.AlignTop
+                    Layout.topMargin:  12
+                    Layout.leftMargin: 20
+                    spacing:           0
+
+                    SFLabel {
+                        Layout.maximumWidth: parent.width
+                        font.pixelSize:      14
+                        elide:               Text.ElideRight
+                        wrapMode:            Text.WrapAtWordBoundaryOrAnywhere
+                        color:               Style.content_main
+                        text:                viewModel.getRoleValue(styleData.row, viewModel.nicknameRole)
+                    }
+
+                    SFLabel {
+                        Layout.maximumWidth: parent.width
+                        maximumLineCount:    3
+                        font.pixelSize:      14
+                        elide:               Text.ElideRight
+                        wrapMode:            Text.WrapAtWordBoundaryOrAnywhere
+                        color:               Style.content_secondary
+                        text:                viewModel.getRoleValue(styleData.row, viewModel.shortTitleRole)
+                    }
                 }
             }
         }
 
         Component {
+            id: aboutComponent
+
+            RowLayout {
+                width:  parent.width
+                height: publishersTable.rowHeight
+
+                SFLabel {
+                    Layout.leftMargin:    20
+                    Layout.alignment:     Qt.AlignTop
+                    Layout.topMargin:     12
+                    Layout.maximumWidth:  parent.width - 20
+                    Layout.maximumHeight: parent.height - 12
+                    font.pixelSize:       14
+                    elide:                Text.ElideRight
+                    wrapMode:             Text.WrapAtWordBoundaryOrAnywhere
+                    color:                Style.content_main
+                    text:                 viewModel.getRoleValue(styleData.row, viewModel.aboutRole)
+                }                         
+            }
+        }
+
+        Component {
             id: socialNetworksComponent
-            Item {
-               RowLayout {
-                   height: publishersTable.rowHeight
+            RowLayout {
+                width:  parent.width
+                height: publishersTable.rowHeight
+                RowLayout {
+                    spacing:           0
+                    Layout.leftMargin: 12
+                    Layout.alignment:  Qt.AlignTop
+                    Layout.topMargin:  12
 
                    CustomToolButton {
-                       Layout.leftMargin: 15
-                       anchors.verticalCenter: parent.verticalCenter
-                       visible: checkVisibilityOfSocialNetwork(styleData.row,viewModel.websiteRole)
+                       visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.websiteRole)
                        icon.source: "qrc:/assets/icon-dapps-store-website.svg"
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                publishersTable.model.getRoleValue(styleData.row, viewModel.websiteRole)
+                                viewModel.getRoleValue(styleData.row, viewModel.websiteRole)
                             );
                        }
                    }
                    CustomToolButton {
-                       visible: checkVisibilityOfSocialNetwork(styleData.row,viewModel.discordRole)
+                       visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.discordRole)
                        icon.source: "qrc:/assets/icon-dapps-store-discord.svg"
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                publishersTable.model.getRoleValue(styleData.row, viewModel.discordRole)
+                                viewModel.getRoleValue(styleData.row, viewModel.discordRole)
                             );
                        }
                    }
                    CustomToolButton {
-                       visible: checkVisibilityOfSocialNetwork(styleData.row,viewModel.twitterRole)
+                       visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.twitterRole)
                        icon.source: "qrc:/assets/icon-dapps-store-twitter.svg"
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                publishersTable.model.getRoleValue(styleData.row, viewModel.twitterRole)
+                                viewModel.getRoleValue(styleData.row, viewModel.twitterRole)
                             );
                        }
                    }
                    CustomToolButton {
-                       visible: checkVisibilityOfSocialNetwork(styleData.row,viewModel.instagramRole)
+                       visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.instagramRole)
                        icon.source: "qrc:/assets/icon-dapps-store-instagram.svg"
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                publishersTable.model.getRoleValue(styleData.row, viewModel.instagramRole)
+                                viewModel.getRoleValue(styleData.row, viewModel.instagramRole)
                             );
                        }
                    }
                    CustomToolButton {
-                       visible: checkVisibilityOfSocialNetwork(styleData.row,viewModel.linkedinRole)
+                       visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.linkedinRole)
                        icon.source: "qrc:/assets/icon-dapps-store-linkedin.svg"
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                publishersTable.model.getRoleValue(styleData.row, viewModel.linkedinRole)
+                                viewModel.getRoleValue(styleData.row, viewModel.linkedinRole)
                             );
                        }
                    }
-
                    CustomToolButton {
-                       visible: checkVisibilityOfSocialNetwork(styleData.row,viewModel.telegramRole)
+                       visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.telegramRole)
                        icon.source: "qrc:/assets/icon-dapps-store-telegram.svg"
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                publishersTable.model.getRoleValue(styleData.row, viewModel.telegramRole)
+                                viewModel.getRoleValue(styleData.row, viewModel.telegramRole)
                             );
                        }
                    }
@@ -359,29 +402,30 @@ ColumnLayout {
         Component {
             id: publisherLinkComponent
             Item {
-                width: parent.width
+                width:  parent.width
                 height: publishersTable.rowHeight
                 CustomToolButton {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: parent.right
+                    anchors.top:         parent.top
+                    anchors.topMargin:   12
+                    anchors.right:       parent.right
                     anchors.rightMargin: 12
-                    icon.source: "qrc:/assets/icon-actions.svg"
-                    onClicked: {
-                        publisherInfoContextMenu.publisherKey = publishersTable.model.getRoleValue(styleData.row, viewModel.publisherLinkRole);
+                    icon.source:         "qrc:/assets/icon-actions.svg"
+                    onClicked: {            
+                        publisherInfoContextMenu.publisherKey = viewModel.getRoleValue(styleData.row, viewModel.publisherLinkRole);
                         publisherInfoContextMenu.popup();
                     }
                 }
             }
         }
         ContextMenu {
-            id: publisherInfoContextMenu
+            id:    publisherInfoContextMenu
             modal: true
-            dim: false
+            dim:   false
             property var publisherKey
 
             Action {
-                //% "Copy publisher key"
-                text: qsTrId("copy-publisher-key")
+                             //% "Copy publisher key"
+                text:        qsTrId("copy-publisher-key")
                 icon.source: "qrc:/assets/icon-copy.svg"
                 onTriggered: {
                     BeamGlobals.copyToClipboard(publisherInfoContextMenu.publisherKey);
@@ -389,8 +433,8 @@ ColumnLayout {
             }
 
             Action {
-                //% "Remove from my list"
-                text: qsTrId("remove-from-list")
+                             //% "Remove from my list"
+                text:        qsTrId("remove-from-list")
                 icon.source: "qrc:/assets/icon-delete.svg"
                 onTriggered: {
                     control.removePublisherByKey(publisherInfoContextMenu.publisherKey)
@@ -399,16 +443,12 @@ ColumnLayout {
         }
 
         rowDelegate: Rectangle {
-            color:          styleData.alternate ? Style.background_row_even : Style.background_row_odd
-            height:         publishersTable.rowHeight
+            color:  styleData.alternate ? Style.background_row_even : Style.background_row_odd
+            height: publishersTable.rowHeight
         }
         itemDelegate: TableItem {
-            elide: Text.ElideRight
-            fontSizeMode: Text.Fit
+            elide:    Text.ElideRight
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            text: styleData.value
         }
-
-        Component.onCompleted: publishersTable.resizeColumnsToContents()
     }
 }
