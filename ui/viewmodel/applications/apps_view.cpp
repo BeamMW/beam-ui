@@ -230,7 +230,6 @@ namespace beamui::applications
         loadMyPublisherInfo();
         loadUserPublishers();
 
-        // TODO roman.strilets loadPublishers should be executed before loadApps
         loadPublishers();
         loadApps();
     }
@@ -416,14 +415,8 @@ namespace beamui::applications
 
     void AppsViewModel::loadApps()
     {
-        if (_isInProcessToRequestDApp)
-        {
-            return;
-        }
-        _isInProcessToRequestDApp = true;
-
         // TODO: It mb worth loading in parallel and then putting it together
-        _apps = loadLocalApps();
+        loadLocalApps();
 
         // load apps from server
         QPointer<AppsViewModel> guard(this);
@@ -434,6 +427,8 @@ namespace beamui::applications
                 {
                     return;
                 }
+
+                _remoteApps.clear();
 
                 try
                 {
@@ -472,7 +467,7 @@ namespace beamui::applications
                         app.insert("isFromServer", true);
 
                         // TODO: check order of the DApps
-                        _apps.push_back(app);
+                        _remoteApps.push_back(app);
                     }
                 }
                 catch (const std::runtime_error& err)
@@ -480,6 +475,9 @@ namespace beamui::applications
                     // TODO: mb need to transfer the error to QML(errorMessage)
                     LOG_WARNING() << "Failed to load remote applications list, " << err.what();
                 }
+
+                emit appsChanged();
+
                 loadAppsFromStore();
             });
     }
@@ -504,6 +502,8 @@ namespace beamui::applications
                     LOG_ERROR() << "Failed to load dapps list from DApp Store" << ", " << err;
                     return;
                 }
+
+                _shaderApps.clear();
 
                 try
                 {
@@ -624,7 +624,7 @@ namespace beamui::applications
                             app.insert(DApp::kSupported, true);
                             app.insert(DApp::kNotInstalled, true);
 
-                            _apps.push_back(app);
+                            _shaderApps.push_back(app);
                         }
                     }
                 }
@@ -633,7 +633,6 @@ namespace beamui::applications
                     LOG_ERROR() << "Error while parsing app from contract" << ", " << err.what();
                 }
 
-                _isInProcessToRequestDApp = false;
                 emit appsChanged();
             }
         );
@@ -684,6 +683,8 @@ namespace beamui::applications
                     }
 
                     setPublishers(publishers);
+
+                    updatePublisherInDApps();
                 }
                 catch (std::runtime_error& err)
                 {
@@ -783,10 +784,11 @@ namespace beamui::applications
 
     QList<QVariantMap> AppsViewModel::getApps()
     {
-        return _apps;
+        QList<QVariantMap> result = _localApps + _remoteApps + _shaderApps;
+        return result;
     }
 
-    QList<QVariantMap> AppsViewModel::loadLocalApps()
+    void AppsViewModel::loadLocalApps()
     {
         QList<QVariantMap> result;
 
@@ -845,7 +847,6 @@ namespace beamui::applications
         }
 
         _localApps = result;
-        return result;
     }
 
     bool AppsViewModel::isPublisher() const
@@ -1505,8 +1506,9 @@ namespace beamui::applications
     QList<QVariantMap> AppsViewModel::getPublisherDApps(const QString& publisherKey)
     {
         QList<QVariantMap> publisherApps;
+        QList<QVariantMap> apps = getApps();
 
-        std::copy_if(_apps.cbegin(), _apps.cend(), std::back_inserter(publisherApps),
+        std::copy_if(apps.cbegin(), apps.cend(), std::back_inserter(publisherApps),
             [publisherKey] (const auto& app) -> bool {
                 const auto appFieldsIt = app.find(DApp::kPublisherKey);
                 if (appFieldsIt == app.end())
@@ -1523,8 +1525,9 @@ namespace beamui::applications
 
     QVariantMap AppsViewModel::getAppByGUID(const QString& guid)
     {
+        QList<QVariantMap> apps = getApps();
         // find app in _apps by guid
-        const auto it = std::find_if(_apps.cbegin(), _apps.cend(),
+        const auto it = std::find_if(apps.cbegin(), apps.cend(),
             [guid](const auto& app) -> bool {
                 const auto appFieldsIt = app.find(DApp::kGuid);
                 if (appFieldsIt == app.end())
@@ -1536,7 +1539,7 @@ namespace beamui::applications
                 return appFieldsIt->toString() == guid;
             });
 
-        if (it == _apps.end())
+        if (it == apps.end())
         {
             assert(false);
             return {};
@@ -1708,5 +1711,36 @@ namespace beamui::applications
             LOG_WARNING() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
             return;
         }
+    }
+
+    void AppsViewModel::updatePublisherInDApps()
+    {
+        auto updater = [this](QList<QVariantMap>& apps)
+        {
+            for (auto& app : apps)
+            {
+                if (app.contains(DApp::kPublisherKey))
+                {
+                    auto publisherKey = app[DApp::kPublisherKey].value<QString>();
+                    const auto idx = std::find_if(_publishers.cbegin(), _publishers.cend(),
+                        [publisherKey](const auto& publisher) -> bool {
+                        return !publisher["publisherKey"].toString().compare(publisherKey, Qt::CaseInsensitive);
+                    }
+                    );
+
+                    QString publisherName = "";
+
+                    if (idx != _publishers.end())
+                    {
+                        app[DApp::kPublisherName] = (*idx)["nickname"].toString();
+                    }
+                }
+            }
+        };
+        
+        updater(_localApps);
+        updater(_shaderApps);
+
+        emit appsChanged();
     }
 }

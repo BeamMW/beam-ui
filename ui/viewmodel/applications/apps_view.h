@@ -111,7 +111,7 @@ namespace beamui::applications
         [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
         QVariantMap parseAppManifest(QTextStream& io, const QString& appFolder, bool needExpandIcon = true);
         void loadApps();
-        QList<QVariantMap> loadLocalApps();
+        void loadLocalApps();
         void loadAppsFromStore();
         void loadPublishers();
         void loadUserPublishers();
@@ -122,6 +122,7 @@ namespace beamui::applications
         void deleteAppFromStore(const QString& guid);
         void installFromBuffer(QIODevice* ioDevice, const QString& guid);
         QVariantMap getAppByGUID(const QString& guid);
+        void updatePublisherInDApps();
 
         WalletModel::Ptr m_walletModel;
 
@@ -131,7 +132,8 @@ namespace beamui::applications
         bool _isAppsListReady = false;
         bool _isInProcessToRequestDApp = false;
         QList<QVariantMap> _localApps;
-        QList<QVariantMap> _apps;
+        QList<QVariantMap> _remoteApps;
+        QList<QVariantMap> _shaderApps;
         QList<QVariantMap> _publishers;
         QStringList _userPublishersKeys;
         QVariantMap _publisherInfo;
