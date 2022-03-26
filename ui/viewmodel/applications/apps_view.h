@@ -93,6 +93,7 @@ namespace beamui::applications
         void onTransactionsChanged(
             beam::wallet::ChangeAction action,
             const std::vector<beam::wallet::TxDescription>& transactions);
+        void onUserPublishersChanged();
 
     signals:
         void appsChanged();
@@ -122,7 +123,6 @@ namespace beamui::applications
         void deleteAppFromStore(const QString& guid);
         void installFromBuffer(QIODevice* ioDevice, const QString& guid);
         QVariantMap getAppByGUID(const QString& guid);
-        void updatePublisherInDApps();
 
         WalletModel::Ptr m_walletModel;
 

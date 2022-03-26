@@ -215,8 +215,8 @@ namespace beamui::applications
     {
         connect(m_walletModel.get(), &WalletModel::transactionsChanged, this, &AppsViewModel::onTransactionsChanged);
         connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadApps);
-        // reload the application list because the list of tracked publishers has changed
-        connect(this, &AppsViewModel::userPublishersChanged, this, &AppsViewModel::loadApps);
+        // update the application info because the list of tracked publishers has changed
+        connect(this, &AppsViewModel::userPublishersChanged, this, &AppsViewModel::onUserPublishersChanged);
 
         auto defaultProfile = QWebEngineProfile::defaultProfile();
         defaultProfile->setHttpCacheType(QWebEngineProfile::HttpCacheType::DiskHttpCache);
@@ -683,8 +683,6 @@ namespace beamui::applications
                     }
 
                     setPublishers(publishers);
-
-                    updatePublisherInDApps();
                 }
                 catch (std::runtime_error& err)
                 {
@@ -1503,6 +1501,37 @@ namespace beamui::applications
         }
     }
 
+    void AppsViewModel::onUserPublishersChanged()
+    {
+        auto updater = [this](QList<QVariantMap>& apps)
+        {
+            for (auto& app : apps)
+            {
+                if (app.contains(DApp::kPublisherKey))
+                {
+                    auto publisherKey = app[DApp::kPublisherKey].value<QString>();
+                    const auto idx = std::find_if(_publishers.cbegin(), _publishers.cend(),
+                        [publisherKey](const auto& publisher) -> bool {
+                            return !publisher["publisherKey"].toString().compare(publisherKey, Qt::CaseInsensitive);
+                        }
+                    );
+
+                    QString publisherName = "";
+
+                    if (idx != _publishers.end())
+                    {
+                        app[DApp::kPublisherName] = (*idx)["nickname"].toString();
+                    }
+                }
+            }
+        };
+
+        updater(_localApps);
+        updater(_shaderApps);
+
+        emit appsChanged();
+    }
+
     QList<QVariantMap> AppsViewModel::getPublisherDApps(const QString& publisherKey)
     {
         QList<QVariantMap> publisherApps;
@@ -1711,36 +1740,5 @@ namespace beamui::applications
             LOG_WARNING() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
             return;
         }
-    }
-
-    void AppsViewModel::updatePublisherInDApps()
-    {
-        auto updater = [this](QList<QVariantMap>& apps)
-        {
-            for (auto& app : apps)
-            {
-                if (app.contains(DApp::kPublisherKey))
-                {
-                    auto publisherKey = app[DApp::kPublisherKey].value<QString>();
-                    const auto idx = std::find_if(_publishers.cbegin(), _publishers.cend(),
-                        [publisherKey](const auto& publisher) -> bool {
-                        return !publisher["publisherKey"].toString().compare(publisherKey, Qt::CaseInsensitive);
-                    }
-                    );
-
-                    QString publisherName = "";
-
-                    if (idx != _publishers.end())
-                    {
-                        app[DApp::kPublisherName] = (*idx)["nickname"].toString();
-                    }
-                }
-            }
-        };
-        
-        updater(_localApps);
-        updater(_shaderApps);
-
-        emit appsChanged();
     }
 }
