@@ -31,7 +31,6 @@ ColumnLayout {
 
     function uninstallApp (app) {
         if (viewModel.uninstallLocalApp(app.appid)) {
-
             //% "'%1' DApp is successfully uninstalled."
             uninstallOK.text = qsTrId("apps-uninstall-success").arg(app.name)
             uninstallOK.open()
@@ -40,7 +39,6 @@ ColumnLayout {
             uninstallFail.text = qsTrId("apps-uninstall-fail").arg(app.name)
             uninstallFail.open()
         }
-        loadAppsList()
     }
 
     function navigatePublishersList() {
@@ -154,6 +152,10 @@ ColumnLayout {
     StatusBar {
         id: statusBar
         model: statusbarModel
+    }
+
+    SettingsViewModel {
+        id: settings
     }
 
     Component {
@@ -575,7 +577,6 @@ ColumnLayout {
 
                     var appName = viewModel.installFromFile(fname)
                     if (appName.length) {
-                        loadAppsList()
                         dndDialog.isOk = true;
                         dndDialog.appName = appName;
                     } else {
@@ -620,10 +621,6 @@ ColumnLayout {
             }
 
             function loadAppsList () {
-                if (!viewModel.isAppsListReady) {
-                    // DApps have not yet been loaded
-                    return;
-                }
                 control.appsList = checkSupport(viewModel.apps)
 
                 if (control.appToOpen) {
@@ -651,21 +648,12 @@ ColumnLayout {
                 return apps
             }
 
-            SettingsViewModel {
-                id: settings
-            }
-
             Component.onCompleted: {
                 viewModel.appsChanged.connect(loadAppsList)
                 control.reloadWebEngineView.connect(webView.reload)
                 control.showTxDetails.connect(txPanel.showTxDetails)
 
-                if (settings.dappsAllowed)
-                {
-                    loadAppsList();
-                }
-                else
-                {
+                if (!settings.dappsAllowed) {
                     appsDialog.open();
                 }
             }
@@ -703,7 +691,7 @@ ColumnLayout {
         }
         onAccepted: function () {
             settings.dappsAllowed = true
-            loadAppsList()
+            viewModel.init();
         }
     }
 

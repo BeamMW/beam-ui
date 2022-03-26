@@ -196,6 +196,23 @@ namespace beamui::applications
     {
         LOG_INFO() << "AppsViewModel created";
 
+        if (AppSettings().getAppsAllowed())
+        {
+            init();
+        }
+    }
+
+    AppsViewModel::~AppsViewModel()
+    {
+        if (_server)
+        {
+            _server.reset();
+        }
+        LOG_INFO() << "AppsViewModel destroyed";
+    }
+
+    void AppsViewModel::init()
+    {
         connect(m_walletModel.get(), &WalletModel::transactionsChanged, this, &AppsViewModel::onTransactionsChanged);
         connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadApps);
         // reload the application list because the list of tracked publishers has changed
@@ -207,7 +224,7 @@ namespace beamui::applications
         defaultProfile->setCachePath(AppSettings().getAppsCachePath());
         defaultProfile->setPersistentStoragePath(AppSettings().getAppsStoragePath());
 
-        _userAgent  = defaultProfile->httpUserAgent() + " BEAM/" + QString::fromStdString(PROJECT_VERSION);
+        _userAgent = defaultProfile->httpUserAgent() + " BEAM/" + QString::fromStdString(PROJECT_VERSION);
         _serverAddr = QString("127.0.0.1:") + QString::number(AppSettings().getAppsServerPort());
 
         loadMyPublisherInfo();
@@ -216,15 +233,6 @@ namespace beamui::applications
         // TODO roman.strilets loadPublishers should be executed before loadApps
         loadPublishers();
         loadApps();
-    }
-
-    AppsViewModel::~AppsViewModel()
-    {
-        if (_server)
-        {
-            _server.reset();
-        }
-        LOG_INFO() << "AppsViewModel destroyed";
     }
 
     void AppsViewModel::onCompleted(QObject *webView)
@@ -406,20 +414,6 @@ namespace beamui::applications
         return app;
     }
 
-    bool AppsViewModel::isAppsListReady() const
-    {
-        return _isAppsListReady;
-    }
-
-    void AppsViewModel::setIsAppsListReady(bool value)
-    {
-        if (value != _isAppsListReady)
-        {
-            _isAppsListReady = value;
-            emit isAppsListReadyChanged();
-        }
-    }
-
     void AppsViewModel::loadApps()
     {
         if (_isInProcessToRequestDApp)
@@ -427,7 +421,6 @@ namespace beamui::applications
             return;
         }
         _isInProcessToRequestDApp = true;
-        setIsAppsListReady(false);
 
         // TODO: It mb worth loading in parallel and then putting it together
         _apps = loadLocalApps();
@@ -640,7 +633,6 @@ namespace beamui::applications
                     LOG_ERROR() << "Error while parsing app from contract" << ", " << err.what();
                 }
 
-                setIsAppsListReady(true);
                 _isInProcessToRequestDApp = false;
                 emit appsChanged();
             }
@@ -1404,6 +1396,9 @@ namespace beamui::applications
                 //cleanupFolder(appFolder)
                 throw std::runtime_error("DApp Installation failed");
             }
+
+            // refresh
+            loadApps();
 
             return appName;
         }

@@ -29,7 +29,6 @@ namespace beamui::applications
         Q_PROPERTY(bool               isPublisher     READ isPublisher       NOTIFY isPublisherChanged)
         Q_PROPERTY(QVariantMap        publisherInfo   READ getPublisherInfo  NOTIFY publisherInfoChanged)
         Q_PROPERTY(QList<QVariantMap> userPublishers  READ getUserPublishers NOTIFY userPublishersChanged)
-        Q_PROPERTY(bool               isAppsListReady READ isAppsListReady   NOTIFY isAppsListReadyChanged)
 
     public:
 
@@ -64,9 +63,9 @@ namespace beamui::applications
 
         QVariantMap getPublisherInfo() const;
         void setPublisherInfo(const QVariantMap& value);
-        bool isAppsListReady() const;
 
     public:
+        Q_INVOKABLE void init();
         Q_INVOKABLE void onCompleted(QObject *webView);
         Q_INVOKABLE [[nodiscard]] QString getAppCachePath(const QString& appid) const;
         Q_INVOKABLE [[nodiscard]] QString getAppStoragePath(const QString& appid) const;
@@ -106,7 +105,6 @@ namespace beamui::applications
         void showYouArePublisher();
         void appInstallOK(const QString& appName);
         void appInstallFail(const QString& appName);
-        void isAppsListReadyChanged();
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
@@ -124,7 +122,6 @@ namespace beamui::applications
         void deleteAppFromStore(const QString& guid);
         void installFromBuffer(QIODevice* ioDevice, const QString& guid);
         QVariantMap getAppByGUID(const QString& guid);
-        void setIsAppsListReady(bool status);
 
         WalletModel::Ptr m_walletModel;
 
