@@ -59,7 +59,7 @@ Item {
 
                 SvgImage {
                     id:                       customIcon
-                    source:                   app.icon ? app.icon : "qrc:/assets/icon-defapp.svg"
+                    source:                   !!app.icon ? app.icon : "qrc:/assets/icon-defapp.svg"
                     anchors.verticalCenter:   parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     visible:                  !!app.icon && progress == 1.0
@@ -284,21 +284,19 @@ Item {
     }
 
     function getButtonText() {
-        if (app.supported) {
-            if (isPublisherAdminMode) {
+        if (isPublisherAdminMode) {
+            //% "update"
+            return qsTrId("dapps-store-update")
+        } else {
+            if (!!app.notInstalled)
+                //% "install"
+                return qsTrId("dapps-store-install")
+            if (!app.notInstalled && !!app.hasUpdate)
                 //% "update"
                 return qsTrId("dapps-store-update")
-            } else {
-                if (!!app.notInstalled)
-                    //% "install"
-                    return qsTrId("dapps-store-install")
-                if (!app.notInstalled && !!app.hasUpdate)
-                    //% "update"
-                    return qsTrId("dapps-store-update")
-                if (!app.notInstalled)
-                    //% "launch"
-                    return qsTrId("dapps-store-launch")
-            }
+            if (!app.notInstalled)
+                //% "launch"
+                return qsTrId("dapps-store-launch")
         }
         return ""
     }
@@ -321,7 +319,7 @@ Item {
     Component.onCompleted: {
         button.text = getButtonText()
         button.icon.source = getButtonSource()
-        button.enabled = app.supported
+        button.enabled = isPublisherAdminMode ? true : app.supported
 
         if (isPublisherAdminMode) {
             appMenu.addAction(removeAction)

@@ -24,6 +24,7 @@
 #include "quazip/quazipfile.h"
 #include "quazip/JlCompress.h"
 #include "viewmodel/qml_globals.h"
+#include "wallet/api/i_wallet_api.h"
 #include "wallet/client/apps_api/apps_utils.h"
 
 namespace
@@ -186,6 +187,17 @@ namespace
         default:
             return "#FF57BF";
         }
+    }
+
+    bool apiSupported(const QString& apiVersion)
+    {
+        return beam::wallet::IWalletApi::ValidateAPIVersion(apiVersion.toStdString());
+    }
+
+    bool isAppSupported(const QVariantMap& app)
+    {
+        return apiSupported(app.contains("api_version") ? app["api_version"].toString() : "current") ||
+            apiSupported(app.contains("min_api_version") ? app["min_api_version"].toString() : "");
     }
 }
 
@@ -456,14 +468,10 @@ namespace beamui::applications
                         app.insert(DApp::kDescription, parseStringField(item.value(), "description"));
                         app.insert(DApp::kName, name);
                         app.insert(DApp::kUrl, url);
-                        app.insert("icon", parseStringField(item.value(), "icon"));
+                        app.insert(DApp::kIcon, parseStringField(item.value(), "icon"));
                         app.insert(DApp::kPublisherName, kBeamPublisherName);
                         app.insert("publisherKey", kBeamPublisherKey);
-                    
-                        // TODO: add verification
-                        bool isSupported = true;
-
-                        app.insert(DApp::kSupported, isSupported);
+                        app.insert(DApp::kSupported, isAppSupported(app));
                         app.insert("isFromServer", true);
 
                         // TODO: check order of the DApps
@@ -619,9 +627,7 @@ namespace beamui::applications
                             app.insert(DApp::kCategoryName, converToString(category));
                             app.insert(DApp::kCategoryColor, getCategoryColor(category));
                             app.insert(DApp::kIcon, decodeStringField(item.value(), "icon"));
-
-                            // TODO: add verification
-                            app.insert(DApp::kSupported, true);
+                            app.insert(DApp::kSupported, isAppSupported(app));
                             app.insert(DApp::kNotInstalled, true);
 
                             _shaderApps.push_back(app);
@@ -808,6 +814,7 @@ namespace beamui::applications
             devapp.insert(DApp::kApiVersion,    AppSettings().getDevAppApiVer());
             devapp.insert(DApp::kMinApiVersion, AppSettings().getDevAppMinApiVer());
             devapp.insert("appid", appid);
+            devapp.insert(DApp::kSupported, true);
             result.push_back(devapp);
         }
 
@@ -832,9 +839,7 @@ namespace beamui::applications
 
                 auto app = parseAppManifest(in, justFolder);
                 app.insert("full_path", fullFolder);
-
-                // TODO: add verification
-                app.insert(DApp::kSupported, true);
+                app.insert(DApp::kSupported, isAppSupported(app));
 
                 result.push_back(app);
             }
@@ -1133,7 +1138,7 @@ namespace beamui::applications
             // add estimated release_date
             app.insert("release_date", QDate::currentDate().toString("dd MMM yyyy"));
 
-            app.insert(DApp::kSupported, true);
+            app.insert(DApp::kSupported, isAppSupported(app));
 
             // preload DApp file
             QFile dappFile(dappFilePath);
