@@ -482,7 +482,7 @@ namespace beamui::applications
                 catch (const std::runtime_error& err)
                 {
                     // TODO: mb need to transfer the error to QML(errorMessage)
-                    LOG_WARNING() << "Failed to load remote applications list, " << err.what();
+                    LOG_ERROR() << "Failed to load remote applications list, " << err.what();
                 }
 
                 emit appsChanged();
@@ -662,15 +662,13 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_WARNING() << "Failed to my publisher info" << ", " << err;
+                    LOG_ERROR() << "Failed to load publishers list" << ", " << err;
                     return;
                 }
 
                 try
                 {
                     auto json = nlohmann::json::parse(output);
-
-                    LOG_INFO() << json.dump(4);
 
                     if (json.empty() || !json.is_object() || !json["publishers"].is_array())
                     {
@@ -693,7 +691,7 @@ namespace beamui::applications
                 }
                 catch (std::runtime_error& err)
                 {
-                    LOG_WARNING() << "Error while parsing publisher from contract" << ", " << err.what();
+                    LOG_ERROR() << "Error while parsing publisher from contract" << ", " << err.what();
                 }
             }
         );
@@ -721,7 +719,7 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_WARNING() << "Failed to my publisher info" << ", " << err;
+                    LOG_ERROR() << "Failed to load my publisher info" << ", " << err;
                     return;
                 }
                 else
@@ -729,8 +727,6 @@ namespace beamui::applications
                     try
                     {
                         auto json = nlohmann::json::parse(output);
-
-                        LOG_INFO() << json.dump(4);
 
                         if (json.empty() || !json.is_object() || !json["my_publisher_info"].is_object())
                         {
@@ -747,7 +743,7 @@ namespace beamui::applications
                     }
                     catch (std::runtime_error& err)
                     {
-                        LOG_WARNING() << "Error while parsing publisher from contract" << ", " << err.what();
+                        LOG_ERROR() << "Error while parsing publisher from contract" << ", " << err.what();
                     }
                 }
 
@@ -846,7 +842,7 @@ namespace beamui::applications
             }
             catch(std::runtime_error& err)
             {
-                LOG_WARNING() << "Error while reading local app from " << mpath.toStdString() << ", " << err.what();
+                LOG_ERROR() << "Error while reading local app from " << mpath.toStdString() << ", " << err.what();
             }
         }
 
@@ -941,7 +937,7 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_WARNING() << "Failed to create a publisher" << ", " << err;
+                    LOG_ERROR() << "Failed to create a publisher" << ", " << err;
                     return;
                 }
 
@@ -976,7 +972,7 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_WARNING() << "Failed to change a publisher info" << ", " << err;
+                    LOG_ERROR() << "Failed to change a publisher info" << ", " << err;
                     return;
                 }
 
@@ -1055,7 +1051,7 @@ namespace beamui::applications
             }
             catch(std::runtime_error& err)
             {
-                LOG_WARNING() << "Failed to launch local apps server: " << err.what();
+                LOG_ERROR() << "Failed to launch local apps server: " << err.what();
             }
         }
     }
@@ -1247,13 +1243,13 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_WARNING() << "Failed to publish app" << ", " << err;
+                    LOG_ERROR() << "Failed to publish app" << ", " << err;
                     return;
                 }
                 
                 if (data.empty())
                 {
-                    LOG_WARNING() << "Failed to publish app" << ", " << output;
+                    LOG_ERROR() << "Failed to publish app" << ", " << output;
                     return;
                 }
                 handleShaderTxData(Action::UploadDApp, data);
@@ -1268,7 +1264,7 @@ namespace beamui::applications
             const auto app = getAppByGUID(guid);
             if (app.isEmpty())
             {
-                LOG_WARNING() << "Failed to find Dapp by guid " << guid.toStdString();
+                LOG_ERROR() << "Failed to find Dapp by guid " << guid.toStdString();
                 return;
             }
 
@@ -1321,7 +1317,7 @@ namespace beamui::applications
         catch (const std::runtime_error& err)
         {
             assert(false);
-            LOG_WARNING() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
+            LOG_ERROR() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
             return;
         }
     }
@@ -1453,7 +1449,7 @@ namespace beamui::applications
         }
         catch (const std::runtime_error& err)
         {
-            LOG_WARNING() << "Failed to handle shader TX data: " << err.what();
+            LOG_ERROR() << "Failed to handle shader TX data: " << err.what();
         }
     }
 
@@ -1472,7 +1468,7 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_WARNING() << "Failed to process shader TX: " << ", " << err;
+                    LOG_ERROR() << "Failed to process shader TX: " << ", " << err;
                 }
 
                 if (Action::CreatePublisher == static_cast<Action>(action) || Action::UpdatePublisher == static_cast<Action>(action))
@@ -1602,7 +1598,7 @@ namespace beamui::applications
             const auto app = getAppByGUID(guid);
             if (app.isEmpty())
             {
-                LOG_WARNING() << "Failed to find Dapp by guid " << guid.toStdString();
+                LOG_ERROR() << "Failed to find Dapp by guid " << guid.toStdString();
                 return;
             }
 
@@ -1633,7 +1629,7 @@ namespace beamui::applications
         catch (const std::runtime_error& err)
         {
             assert(false);
-            LOG_WARNING() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
+            LOG_ERROR() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
             return;
         }
     }
@@ -1656,13 +1652,13 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_WARNING() << "Failed to delete app" << ", " << err;
+                    LOG_ERROR() << "Failed to delete app" << ", " << err;
                     return;
                 }
 
                 if (data.empty())
                 {
-                    LOG_WARNING() << "Failed to delete app" << ", " << output;
+                    LOG_ERROR() << "Failed to delete app" << ", " << output;
                     return;
                 }
                 handleShaderTxData(Action::DeleteDApp, data);
@@ -1677,7 +1673,7 @@ namespace beamui::applications
             const auto app = getAppByGUID(guid);
             if (app.isEmpty())
             {
-                LOG_WARNING() << "Failed to find Dapp by guid " << guid.toStdString();
+                LOG_ERROR() << "Failed to find Dapp by guid " << guid.toStdString();
                 return;
             }
 
@@ -1734,7 +1730,7 @@ namespace beamui::applications
 
                         if (!QDir(appsDir.filePath(backupName)).removeRecursively())
                         {
-                            LOG_WARNING() << "Failed to remove backup folder - " << backupName.toStdString();
+                            LOG_ERROR() << "Failed to remove backup folder - " << backupName.toStdString();
                         }
 
                         emit appInstallOK(appName);
@@ -1755,7 +1751,7 @@ namespace beamui::applications
         }
         catch (const std::runtime_error& err)
         {
-            LOG_WARNING() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
+            LOG_ERROR() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
             return;
         }
     }
