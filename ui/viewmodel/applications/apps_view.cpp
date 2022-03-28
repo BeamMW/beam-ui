@@ -1375,12 +1375,22 @@ namespace beamui::applications
                     const auto app = parseAppManifest(in, "");
                     guid = app[DApp::kGuid].value<QString>();
                     appName = app[DApp::kName].value<QString>();
+
+                    if (!isAppSupported(app))
+                    {
+                        throw std::runtime_error("DApp is unsupported.");
+                    }
                 }
             }
 
             if (guid.isEmpty())
             {
                 throw std::runtime_error("Invalid DApp file");
+            }
+
+            if (const auto app = getAppByGUID(guid); !app.isEmpty())
+            {
+                throw std::runtime_error("DApp with same guid already installed!");
             }
 
             const auto appsPath = AppSettings().getLocalAppsPath();
@@ -1578,7 +1588,6 @@ namespace beamui::applications
 
         if (it == apps.end())
         {
-            assert(false);
             return {};
         }
         return *it;
