@@ -72,7 +72,7 @@ ColumnLayout {
             //% "add publisher"
             text: qsTrId("dapps-store-add-publisher")
             icon.source:      "qrc:/assets/icon-dapps_store-add-publisher.svg"
-            icon.color:       Style.white
+            icon.color:       Style.content_main
             onClicked:        showAddPublisherDialog()
         }
     }
@@ -351,7 +351,8 @@ ColumnLayout {
 
                    CustomToolButton {
                        visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.websiteRole)
-                       icon.source: "qrc:/assets/icon-dapps-store-website.svg"
+                       icon.source: "qrc:/assets/icon-dapps-store-website-green.svg"
+                       icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
                                 viewModel.getRoleValue(styleData.row, viewModel.websiteRole)
@@ -360,7 +361,8 @@ ColumnLayout {
                    }
                    CustomToolButton {
                        visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.discordRole)
-                       icon.source: "qrc:/assets/icon-dapps-store-discord.svg"
+                       icon.source: "qrc:/assets/icon-dapps-store-discord-green.svg"
+                       icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
                                 viewModel.getRoleValue(styleData.row, viewModel.discordRole)
@@ -369,7 +371,8 @@ ColumnLayout {
                    }
                    CustomToolButton {
                        visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.twitterRole)
-                       icon.source: "qrc:/assets/icon-dapps-store-twitter.svg"
+                       icon.source: "qrc:/assets/icon-dapps-store-twitter-green.svg"
+                       icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
                                 viewModel.getRoleValue(styleData.row, viewModel.twitterRole)
@@ -378,7 +381,8 @@ ColumnLayout {
                    }
                    CustomToolButton {
                        visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.instagramRole)
-                       icon.source: "qrc:/assets/icon-dapps-store-instagram.svg"
+                       icon.source: "qrc:/assets/icon-dapps-store-instagram-green.svg"
+                       icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
                                 viewModel.getRoleValue(styleData.row, viewModel.instagramRole)
@@ -387,7 +391,8 @@ ColumnLayout {
                    }
                    CustomToolButton {
                        visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.linkedinRole)
-                       icon.source: "qrc:/assets/icon-dapps-store-linkedin.svg"
+                       icon.source: "qrc:/assets/icon-dapps-store-linkedin-green.svg"
+                       icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
                                 viewModel.getRoleValue(styleData.row, viewModel.linkedinRole)
@@ -396,7 +401,8 @@ ColumnLayout {
                    }
                    CustomToolButton {
                        visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.telegramRole)
-                       icon.source: "qrc:/assets/icon-dapps-store-telegram.svg"
+                       icon.source: "qrc:/assets/icon-dapps-store-telegram-green.svg"
+                       icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
                                 viewModel.getRoleValue(styleData.row, viewModel.telegramRole)

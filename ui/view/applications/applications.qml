@@ -193,6 +193,8 @@ ColumnLayout {
                     rightPadding:   11
                     palette.button: Qt.rgba(255, 255, 255, 0.1)
                     icon.source:    "qrc:/assets/icon-dapps_store-publishers.svg"
+                    icon.width:     24
+                    icon.height:    24
                     onClicked:      navigatePublishersList()
                 }
 
