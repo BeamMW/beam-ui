@@ -1503,6 +1503,9 @@ namespace beamui::applications
 
     void AppsViewModel::onUserPublishersChanged()
     {
+        if (_shaderApps.empty())
+            return;
+
         auto updater = [this](QList<QVariantMap>& apps)
         {
             for (auto& app : apps)
