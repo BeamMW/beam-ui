@@ -197,11 +197,12 @@ ColumnLayout {
                 }
 
                 PrimaryButton {
-                    id:          publisherDetails
-                                 //% "become a publisher"
-                    text:        viewModel.isPublisher ? viewModel.publisherInfo.nickname : qsTrId("apps-become-a-publisher")
-                    icon.source: "qrc:/assets/icon-dapps_store-become-a-publisher.svg"
-                    onClicked:   navigatePublisherDetails()
+                    id:           publisherDetails
+                                  //% "become a publisher"
+                    text:         viewModel.isPublisher ? viewModel.publisherInfo.nickname : qsTrId("apps-become-a-publisher")
+                    icon.source:  "qrc:/assets/icon-dapps_store-become-a-publisher.svg"
+                    allLowercase: false
+                    onClicked:    navigatePublisherDetails()
                 }
             }
 
