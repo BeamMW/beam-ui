@@ -174,37 +174,55 @@ ColumnLayout {
                 }
             }
 
-            RowLayout {
+            Item {
                 visible:          appsListView.visible
-                Layout.topMargin: 10
                 Layout.fillWidth: true
-                spacing:          20
+                opacity:          txPanel.folded ? 1.0 : 0.25
+                height:           47
 
-                Item {
-                    Layout.fillWidth: true
+                RowLayout {
+                    spacing:           20
+                    anchors.right:     parent.right
+                    anchors.topMargin: 10
+
+                    CustomButton {
+                        id:             showPublishers
+                        width:          38
+                        radius:         10
+                        display:        AbstractButton.IconOnly
+                        leftPadding:    11
+                        rightPadding:   11
+                        palette.button: Qt.rgba(255, 255, 255, 0.1)
+                        icon.source:    "qrc:/assets/icon-dapps_store-publishers.svg"
+                        icon.width:     24
+                        icon.height:    24
+                        onClicked:      navigatePublishersList()
+                    }
+
+                    PrimaryButton {
+                        id:           publisherDetails
+                                      //% "become a publisher"
+                        text:         viewModel.isPublisher ? viewModel.publisherInfo.nickname : qsTrId("apps-become-a-publisher")
+                        icon.source:  "qrc:/assets/icon-dapps_store-become-a-publisher.svg"
+                        allLowercase: false
+                        onClicked:    navigatePublisherDetails()
+                    }
                 }
 
-                CustomButton {
-                    id:             showPublishers
-                    width:          38
-                    radius:         10
-                    display:        AbstractButton.IconOnly
-                    leftPadding:    11
-                    rightPadding:   11
-                    palette.button: Qt.rgba(255, 255, 255, 0.1)
-                    icon.source:    "qrc:/assets/icon-dapps_store-publishers.svg"
-                    icon.width:     24
-                    icon.height:    24
-                    onClicked:      navigatePublishersList()
-                }
+                MouseArea {
+                    anchors.fill:    parent
 
-                PrimaryButton {
-                    id:           publisherDetails
-                                  //% "become a publisher"
-                    text:         viewModel.isPublisher ? viewModel.publisherInfo.nickname : qsTrId("apps-become-a-publisher")
-                    icon.source:  "qrc:/assets/icon-dapps_store-become-a-publisher.svg"
-                    allLowercase: false
-                    onClicked:    navigatePublisherDetails()
+                    visible:      !txPanel.folded
+                    hoverEnabled: true
+
+                    onClicked: function (ev) {
+                        txPanel.folded = true
+                        ev.accepted = true
+                    }
+
+                    onWheel: function (ev) {
+                        ev.accepted = true
+                    }
                 }
             }
 
