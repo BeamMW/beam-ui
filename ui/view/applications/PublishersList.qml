@@ -220,6 +220,9 @@ ColumnLayout {
         sortIndicatorVisible: true
         sortIndicatorColumn:  0
         sortIndicatorOrder:   Qt.DescendingOrder
+        isSortIndicatorHidenForColumn: function(styleData) {
+            return styleData.column != 0;
+        }
 
         property int rowHeight:            109
         property int resizableWidth:       parent.width - publisherLink.width
@@ -227,10 +230,16 @@ ColumnLayout {
 
         model:  viewModel.publishers
 
-        Binding{
-            target:   viewModel
-            property: "sortOrder"
-            value:    publishersTable.sortIndicatorOrder
+        function changeSortingOrder() {
+            if (publishersTable.sortIndicatorColumn == 0) {
+                viewModel.sortOrder = viewModel.sortOrder == Qt.DescendingOrder ? Qt.AscendingOrder : Qt.DescendingOrder;
+            }
+        }
+        onSortIndicatorColumnChanged: {
+            changeSortingOrder();
+        }
+        onSortIndicatorOrderChanged: {
+            changeSortingOrder();
         }
 
         TableViewColumn { 
