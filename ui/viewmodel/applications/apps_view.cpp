@@ -52,10 +52,10 @@ namespace
         const char kNotInstalled[] = "notInstalled";
         const char kIcon[] = "icon";
 
-        const uint32_t kNameMaxSize = 30;
-        const uint32_t kDescriptionMaxSize = 1024;
-        const uint32_t kApiVersionMaxSize = 10;
-        const uint32_t kIconMaxSize = 10240; // 10kb
+        const int32_t kNameMaxSize = 30;
+        const int32_t kDescriptionMaxSize = 1024;
+        const int32_t kApiVersionMaxSize = 10;
+        const int32_t kIconMaxSize = 10240; // 10kb
     } // namespace DApp
 
     QString fromHex(const std::string& value)
