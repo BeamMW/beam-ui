@@ -94,7 +94,7 @@ CustomDialog {
                     width: 335
                     height: 45
                     color: Style.content_main
-                    text: control.publisherInfo.nickname
+                    text: !!control.publisherInfo.nickname ? control.publisherInfo.nickname : ""
                     maximumLength: 30
                 }
             }
@@ -115,7 +115,7 @@ CustomDialog {
                     width: 335
                     height: 45
                     color: Style.content_main
-                    text: control.publisherInfo.shortTitle
+                    text: !!control.publisherInfo.shortTitle ? control.publisherInfo.shortTitle : ""
                     maximumLength: 50
                 }
 
@@ -145,7 +145,7 @@ CustomDialog {
                     width: 701
                     height: 45
                     color: Style.content_main
-                    text: control.publisherInfo.aboutMe
+                    text: !!control.publisherInfo.aboutMe ? control.publisherInfo.aboutMe : ""
                     maximumLength: 150
                 }
 
@@ -184,7 +184,7 @@ CustomDialog {
                     height: 45
                     color: Style.content_main
                     placeholderText: "https://website.name/"
-                    text: control.publisherInfo.website
+                    text: !!control.publisherInfo.website ? control.publisherInfo.website : ""
                     icon: "qrc:/assets/icon-dapps-store-website.svg"
                     maximumLength: 100
                 }
@@ -207,7 +207,7 @@ CustomDialog {
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
-                    text: control.publisherInfo.twitter
+                    text: !!control.publisherInfo.twitter ? control.publisherInfo.twitter : ""
                     icon: "qrc:/assets/icon-dapps-store-twitter.svg"
                     maximumLength: 50
                 }
@@ -230,7 +230,7 @@ CustomDialog {
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
-                    text: control.publisherInfo.linkedin
+                    text: !!control.publisherInfo.linkedin ? control.publisherInfo.linkedin : ""
                     icon: "qrc:/assets/icon-dapps-store-linkedin.svg"
                     maximumLength: 50
                 }
@@ -253,7 +253,7 @@ CustomDialog {
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
-                    text: control.publisherInfo.instagram
+                    text: !!control.publisherInfo.instagram ? control.publisherInfo.instagram : ""
                     icon: "qrc:/assets/icon-dapps-store-instagram.svg"
                     maximumLength: 50
                 }
@@ -276,7 +276,7 @@ CustomDialog {
                     height: 45
                     color: Style.content_main
                     placeholderText: "@nickname"
-                    text: control.publisherInfo.telegram
+                    text: !!control.publisherInfo.telegram ? control.publisherInfo.telegram : ""
                     icon: "qrc:/assets/icon-dapps-store-telegram.svg"
                     maximumLength: 50
                 }
@@ -299,7 +299,7 @@ CustomDialog {
                     height: 45
                     color: Style.content_main
                     placeholderText: "login#0000"
-                    text: control.publisherInfo.discord
+                    text: !!control.publisherInfo.discord ? control.publisherInfo.discord : ""
                     icon: "qrc:/assets/icon-dapps-store-discord.svg"
                     maximumLength: 50
                 }
@@ -318,15 +318,15 @@ CustomDialog {
                 icon.source: "qrc:/assets/icon-cancel-white.svg"
                 text: qsTrId("general-cancel")
                 onClicked: {
-                    nameInput.text = control.publisherInfo.nickname;
-                    shortTitleInput.text = control.publisherInfo.shortTitle;
-                    aboutMeInput.text = control.publisherInfo.aboutMe;
-                    websiteInput.text = control.publisherInfo.website;
-                    twitterInput.text = control.publisherInfo.twitter;
-                    linkedinInput.text = control.publisherInfo.linkedin;
-                    instagramInput.text = control.publisherInfo.instagram;
-                    telegramInput.text = control.publisherInfo.telegram;
-                    discordInput.text = control.publisherInfo.discord;
+                    nameInput.text = !!control.publisherInfo.nickname ? control.publisherInfo.nickname : "";
+                    shortTitleInput.text = !!control.publisherInfo.shortTitle ? control.publisherInfo.shortTitle : "";
+                    aboutMeInput.text = !!control.publisherInfo.aboutMe ? control.publisherInfo.aboutMe : "";
+                    websiteInput.text = !!control.publisherInfo.website ? control.publisherInfo.website : "";
+                    twitterInput.text = !!control.publisherInfo.twitter ? control.publisherInfo.twitter : "";
+                    linkedinInput.text = control.publisherInfo.linkedin ? control.publisherInfo.linkedin : "";
+                    instagramInput.text = !!control.publisherInfo.instagram ? control.publisherInfo.instagram : "";
+                    telegramInput.text = !!control.publisherInfo.telegram ? control.publisherInfo.telegram : "";
+                    discordInput.text = !!control.publisherInfo.discord ? control.publisherInfo.discord : "";
 
                     control.close();
                 }
