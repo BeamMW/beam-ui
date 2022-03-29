@@ -51,6 +51,11 @@ namespace
         const char kSupported[] = "supported";
         const char kNotInstalled[] = "notInstalled";
         const char kIcon[] = "icon";
+
+        const uint32_t kNameMaxSize = 30;
+        const uint32_t kDescriptionMaxSize = 1024;
+        const uint32_t kApiVersionMaxSize = 10;
+        const uint32_t kIconMaxSize = 10240; // 10kb
     } // namespace DApp
 
     QString fromHex(const std::string& value)
@@ -198,6 +203,44 @@ namespace
     {
         return apiSupported(app.contains("api_version") ? app["api_version"].toString() : "current") ||
             apiSupported(app.contains("min_api_version") ? app["min_api_version"].toString() : "");
+    }
+
+    void checkDAppFieldSize(const QVariantMap& app)
+    {
+        if (app.contains(DApp::kName) && app[DApp::kName].toString().size() > DApp::kNameMaxSize)
+        {
+            std::stringstream stream;
+            stream << "'"<< DApp::kName << "' must be less than " << DApp::kNameMaxSize << " characters";
+            throw std::runtime_error(stream.str());
+        }
+
+        if (app.contains(DApp::kDescription) && app[DApp::kDescription].toString().size() > DApp::kDescriptionMaxSize)
+        {
+            std::stringstream stream;
+            stream << "'" << DApp::kDescription << "' must be less than " << DApp::kDescriptionMaxSize << " characters";
+            throw std::runtime_error(stream.str());
+        }
+
+        if (app.contains(DApp::kApiVersion) && app[DApp::kApiVersion].toString().size() > DApp::kApiVersionMaxSize)
+        {
+            std::stringstream stream;
+            stream << "'" << DApp::kApiVersion << "' must be less than " << DApp::kApiVersionMaxSize << " characters";
+            throw std::runtime_error(stream.str());
+        }
+
+        if (app.contains(DApp::kMinApiVersion) && app[DApp::kMinApiVersion].toString().size() > DApp::kApiVersionMaxSize)
+        {
+            std::stringstream stream;
+            stream << "'" << DApp::kMinApiVersion << "' must be less than " << DApp::kApiVersionMaxSize << " characters";
+            throw std::runtime_error(stream.str());
+        }
+
+        if (app.contains(DApp::kIcon) && app[DApp::kIcon].toString().size() > DApp::kIconMaxSize)
+        {
+            std::stringstream stream;
+            stream << "'" << DApp::kIcon << "' must be less than " << DApp::kIconMaxSize << " bytes";
+            throw std::runtime_error(stream.str());
+        }
     }
 }
 
@@ -1126,6 +1169,8 @@ namespace beamui::applications
                     app[DApp::kIcon] = "data:image/svg+xml;utf8," + content;
                 }
             }
+
+            checkDAppFieldSize(app);
 
             if (app[DApp::kGuid].value<QString>().isEmpty())
             {
