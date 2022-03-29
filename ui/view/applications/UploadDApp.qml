@@ -48,6 +48,13 @@ CustomDialog {
         stackView.replace(startViewId)
     }
 
+    function isEmpty(obj) {
+        for (var item in obj) {
+            return false;
+        }
+        return true;
+    }
+
     function loadDappFile(file) {
         if (!file) {
             //% "Select application to upload"
@@ -62,7 +69,7 @@ CustomDialog {
         // parse manifest
         var tempApp = parseDAppFile(file)
 
-        if (!!tempApp && !!tempAppFileProperties) {
+        if (!isEmpty(tempApp) && !isEmpty(tempAppFileProperties)) {
             if (isUpdating && !checkDAppNewVersion(currentApp, tempApp)) {
                 // TODO: add relevant error msg
                 isOk = false
