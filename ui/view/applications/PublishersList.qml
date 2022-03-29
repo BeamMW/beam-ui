@@ -230,16 +230,15 @@ ColumnLayout {
 
         model:  viewModel.publishers
 
-        function changeSortingOrder() {
+        onSortIndicatorColumnChanged: {
+            if (publishersTable.sortIndicatorColumn != 0) {
+                publishersTable.sortIndicatorColumn = 0;
+            }
+        }
+        onSortIndicatorOrderChanged: {
             if (publishersTable.sortIndicatorColumn == 0) {
                 viewModel.sortOrder = viewModel.sortOrder == Qt.DescendingOrder ? Qt.AscendingOrder : Qt.DescendingOrder;
             }
-        }
-        onSortIndicatorColumnChanged: {
-            changeSortingOrder();
-        }
-        onSortIndicatorOrderChanged: {
-            changeSortingOrder();
         }
 
         TableViewColumn { 
