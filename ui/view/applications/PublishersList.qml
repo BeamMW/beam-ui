@@ -365,7 +365,7 @@ ColumnLayout {
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                viewModel.getRoleValue(styleData.row, "https://discord.gg/" + viewModel.discordRole)
+                                "https://discord.gg/" + viewModel.getRoleValue(styleData.row, viewModel.discordRole)
                             );
                        }
                    }
@@ -375,7 +375,7 @@ ColumnLayout {
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                viewModel.getRoleValue(styleData.row, "https://twitter.com/" + viewModel.twitterRole)
+                                "https://twitter.com/" + viewModel.getRoleValue(styleData.row, viewModel.twitterRole)
                             );
                        }
                    }
@@ -385,7 +385,7 @@ ColumnLayout {
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                viewModel.getRoleValue(styleData.row, "https://instagram.com/" + viewModel.instagramRole)
+                                "https://instagram.com/" + viewModel.getRoleValue(styleData.row, viewModel.instagramRole)
                             );
                        }
                    }
@@ -395,7 +395,7 @@ ColumnLayout {
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                viewModel.getRoleValue(styleData.row, "https://linkedin.com/" + viewModel.linkedinRole)
+                               "https://linkedin.com/" + viewModel.getRoleValue(styleData.row, viewModel.linkedinRole)
                             );
                        }
                    }
@@ -405,7 +405,7 @@ ColumnLayout {
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                viewModel.getRoleValue(styleData.row, "https://t.me/" + viewModel.telegramRole)
+                               "https://t.me/" + viewModel.getRoleValue(styleData.row, viewModel.telegramRole)
                             );
                        }
                    }
