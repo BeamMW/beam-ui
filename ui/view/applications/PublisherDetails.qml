@@ -64,7 +64,8 @@ ColumnLayout {
     // Page Header (Back button + title + publisher's buttons)
     //
     RowLayout {
-        id: header
+        id:      header
+        spacing: 0
 
         CustomButton {
             id:             backButton
@@ -97,45 +98,57 @@ ColumnLayout {
         }
 
         CustomButton {
-            Layout.alignment: Qt.AlignRight
-            width:            38
-            radius:           10
-            display:          AbstractButton.IconOnly
-            leftPadding:      11
-            rightPadding:     11
-            palette.button:   Style.active
-            icon.source:      "qrc:/assets/icon-dapps_store-publisher-upload-dapp.svg"
-            icon.color:       Style.background_main
-            onClicked:        uploadApp()
+            Layout.alignment:       Qt.AlignRight
+            height:                 36
+            Layout.preferredHeight: 36
+            width:                  36
+            radius:                 10
+            display:                AbstractButton.IconOnly
+            leftPadding:            6
+            rightPadding:           6
+            palette.button:         Style.active
+            icon.source:            "qrc:/assets/icon-dapps_store-publisher-upload-dapp.svg"
+            icon.width:             24
+            icon.height:            24
+            icon.color:             Style.background_main
+            onClicked:              uploadApp()
         }
 
         CustomButton {
-            Layout.leftMargin:  20
-            Layout.rightMargin: 20
-            Layout.alignment:   Qt.AlignRight
-            width:              38
-            radius:             10
-            display:            AbstractButton.IconOnly
-            leftPadding:        11
-            rightPadding:       11
-            palette.button:     Qt.rgba(255, 255, 255, 0.1)
-            icon.source:        "qrc:/assets/icon-dapps_store-publisher-edit.svg"
-            icon.color:         Style.active
-            onClicked:          editDetails()
+            Layout.leftMargin:      20
+            Layout.rightMargin:     20
+            Layout.alignment:       Qt.AlignRight
+            height:                 36
+            Layout.preferredHeight: 36
+            width:                  36
+            radius:                 10
+            display:                AbstractButton.IconOnly
+            leftPadding:            6
+            rightPadding:           6
+            palette.button:         Qt.rgba(255, 255, 255, 0.1)
+            icon.source:            "qrc:/assets/icon-dapps_store-publisher-edit.svg"
+            icon.width:             24
+            icon.height:            24
+            icon.color:             Style.active
+            onClicked:              editDetails()
         }
 
         CustomButton {
-            Layout.rightMargin: 30
-            Layout.alignment:   Qt.AlignRight
-            width:              38
-            radius:             10
-            display:            AbstractButton.IconOnly
-            leftPadding:        11
-            rightPadding:       11
-            palette.button:     Qt.rgba(255, 255, 255, 0.1)
-            icon.source:        "qrc:/assets/icon-dapps_store-publisher-show-key.svg"
-            icon.color:         Style.active
-            onClicked:          showPublicKey()
+            Layout.rightMargin:     10
+            Layout.alignment:       Qt.AlignRight
+            height:                 36
+            Layout.preferredHeight: 36
+            width:                  36
+            radius:                 10
+            display:                AbstractButton.IconOnly
+            leftPadding:            6
+            rightPadding:           6
+            palette.button:         Qt.rgba(255, 255, 255, 0.1)
+            icon.source:            "qrc:/assets/icon-dapps_store-publisher-show-key.svg"
+            icon.width:             24
+            icon.height:            24
+            icon.color:             Style.active
+            onClicked:              showPublicKey()
         }
     }
 
@@ -191,13 +204,12 @@ ColumnLayout {
         PrimaryButton {
             Layout.topMargin: 40
             Layout.alignment: Qt.AlignHCenter
-            //% "upload your fist dapp"
-            text: qsTrId("dapps-store-publisher-upload-first-dapp")
-            icon.source: "qrc:/assets/icon-dapps_store-publisher-upload-dapp.svg"
-            // TODO: remove size changing
-            icon.width:  9
-            icon.height: 11
-            onClicked:   uploadApp()
+                              //% "upload your fist dapp"
+            text:             qsTrId("dapps-store-publisher-upload-first-dapp")
+            icon.source:      "qrc:/assets/icon-dapps_store-publisher-upload-dapp.svg"
+            icon.width:       16
+            icon.height:      16
+            onClicked:        uploadApp()
         }
 
         Item {
