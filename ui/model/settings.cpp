@@ -770,7 +770,9 @@ QString WalletSettings::getDevAppMinApiVer() const
 std::string WalletSettings::getDappStoreCID() const
 {
     auto cid = m_data.value(kDappStoreCID).toString();
-    return cid.isEmpty() ? "c7bfd39e04ab9ff2f21615e52d973867f9c70b43ffb4f6f7f086b5ba1de08567" : cid.toStdString();
+    // TODO roman.strilets default cid value should be set for mainnet and testnet
+    // for masternet
+    return cid.isEmpty() ? "b76ca089082e38b23d5e68feeb8b6f459ae74f5012eb520c87169f88ced307e3" : cid.toStdString();
 }
 
 std::string WalletSettings::getDappStorePath() const
