@@ -365,7 +365,7 @@ ColumnLayout {
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                viewModel.getRoleValue(styleData.row, viewModel.discordRole)
+                                viewModel.getRoleValue(styleData.row, "https://discord.gg/" + viewModel.discordRole)
                             );
                        }
                    }
@@ -375,7 +375,7 @@ ColumnLayout {
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                viewModel.getRoleValue(styleData.row, viewModel.twitterRole)
+                                viewModel.getRoleValue(styleData.row, "https://twitter.com/" + viewModel.twitterRole)
                             );
                        }
                    }
@@ -385,7 +385,7 @@ ColumnLayout {
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                viewModel.getRoleValue(styleData.row, viewModel.instagramRole)
+                                viewModel.getRoleValue(styleData.row, "https://instagram.com/" + viewModel.instagramRole)
                             );
                        }
                    }
@@ -395,7 +395,7 @@ ColumnLayout {
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                viewModel.getRoleValue(styleData.row, viewModel.linkedinRole)
+                                viewModel.getRoleValue(styleData.row, "https://linkedin.com/" + viewModel.linkedinRole)
                             );
                        }
                    }
@@ -405,7 +405,7 @@ ColumnLayout {
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                viewModel.getRoleValue(styleData.row, viewModel.telegramRole)
+                                viewModel.getRoleValue(styleData.row, "https://t.me/" + viewModel.telegramRole)
                             );
                        }
                    }
