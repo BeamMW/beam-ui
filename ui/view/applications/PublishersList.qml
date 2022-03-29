@@ -225,8 +225,8 @@ ColumnLayout {
         }
 
         property int rowHeight:            109
-        property int resizableWidth:       parent.width - publisherLink.width
-        property double columnResizeRatio: resizableWidth / 828
+        property real resizableWidth:      parent.width - 144
+        property real columnResizeRatio:   resizableWidth / 828
 
         model:  viewModel.publishers
 
@@ -275,7 +275,7 @@ ColumnLayout {
             id:        publisherLink
                        //% "Publisher link"
             title:     qsTrId("publishers-list-publisher-link")
-            width:     144
+            width:     publishersTable.getAdjustedColumnWidth(publisherLink)//144
             movable:   false
             resizable: false
             delegate:  publisherLinkComponent
