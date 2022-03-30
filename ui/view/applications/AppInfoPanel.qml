@@ -20,6 +20,8 @@ Pane {
 
     property var content: Item {
         TxTable {
+            anchors.leftMargin: control.state == "transactions" ? 25 : 0
+            anchors.rightMargin: control.state == "transactions" ? 25 : 0
             id: txTable
             owner: control
             emptyMessageMargin: 60
