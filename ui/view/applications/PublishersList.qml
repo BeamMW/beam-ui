@@ -102,6 +102,7 @@ ColumnLayout {
                 Layout.bottomMargin: 30
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize:      18
+                font.weight:         Font.Bold
                 color:               Style.content_main
                 //% "Add publisher"
                 text:                qsTrId("dapps-store-add-publisher-title")
@@ -110,7 +111,7 @@ ColumnLayout {
             // Note
             SFText {
                 id:                  addressField
-                Layout.bottomMargin: 30
+                Layout.bottomMargin: 20
                 Layout.fillWidth:    true
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize:      14
@@ -121,18 +122,20 @@ ColumnLayout {
 
             // input
             SFTextInput {
-                id:                    publisherKeyInput
-                Layout.bottomMargin:   publisherKeyError.visible ? 6 : 30
-                Layout.leftMargin:     100
-                Layout.rightMargin:    100
-                Layout.fillWidth:      true
-                Layout.preferredWidth: 560
-                font.pixelSize:        14
-                color:                 publisherKeyError.visible ? Style.validator_error : Style.content_main
-                backgroundColor:       publisherKeyError.visible ? Style.validator_error : Style.content_main
-                leftPadding:           15
-                rightPadding:          15
-                validator:             RegExpValidator { regExp: /[0-9a-fA-F]{66}/ }
+                id:                     publisherKeyInput
+                Layout.bottomMargin:    publisherKeyError.visible ? 6 : 30
+                Layout.leftMargin:      100
+                Layout.rightMargin:     100
+                Layout.fillWidth:       true
+                Layout.preferredWidth:  560
+                Layout.preferredHeight: 45
+                height:                 45
+                font.pixelSize:         14
+                color:                  publisherKeyError.visible ? Style.validator_error : Style.content_main
+                backgroundColor:        publisherKeyError.visible ? Style.validator_error : Style.content_main
+                leftPadding:            15
+                rightPadding:           15
+                validator:              RegExpValidator { regExp: /[0-9a-fA-F]{66}/ }
 
                 background: Rectangle {
                     color:   publisherKeyError.visible ? Style.validator_error : Style.white
@@ -149,7 +152,7 @@ ColumnLayout {
             SFText {
                 id:                  publisherKeyError
                 visible:             false
-                Layout.bottomMargin: 20
+                Layout.bottomMargin: 10
                 Layout.leftMargin:   100
                 color:               Style.validator_error
                 font.pixelSize:      12
@@ -186,7 +189,7 @@ ColumnLayout {
                         if (publisherName) {
                             // TODO: Do we need to create a specific notification popup?
 
-                            //% "%1 added to the list of publishers that you follow"
+                            //% "<b>%1</b> added to the list of publishers that you follow"
                             main.showSimplePopup(qsTrId("dapps-store-add-publisher-notification").arg(publisherName))
                             addPublisherDialog.close()
                             return

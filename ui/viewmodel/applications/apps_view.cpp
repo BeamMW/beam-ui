@@ -929,7 +929,6 @@ namespace beamui::applications
 
         if (it == _publishers.end())
         {
-            assert(false);
             return {};
         }
 
