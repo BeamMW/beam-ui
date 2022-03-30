@@ -119,6 +119,14 @@ ColumnLayout {
         onShowYouArePublisher: function() {
             youArePublisher.open();
         }
+
+        onCreatePublisherFail: function() {
+            createPublisherFail.open();
+        }
+
+        onEditPublisherFail: function() {
+            editPublisherFail.open();
+        }
     }
 
     //
@@ -755,6 +763,30 @@ ColumnLayout {
         okButtonText:            qsTrId("general-ok")
         okButton.palette.button: Style.accent_fail
         cancelButtonVisible:     false
+    }
+
+    ConfirmationDialog {
+        id:                      createPublisherFail
+                                 //% "Create Publisher"
+        title:                   qsTrId("app-create-publisher-title")
+                                 //% "Ok"
+        okButtonText:            qsTrId("general-ok")
+        okButton.palette.button: Style.accent_fail
+        cancelButtonVisible:     false
+                                 //% "Failed to create publisher"
+        text:                    qsTrId("app-create-publisher")
+    }
+
+    ConfirmationDialog {
+        id:                      editPublisherFail
+                                 //% "Edit Publisher"
+        title:                   qsTrId("app-edit-publisher-title")
+                                 //% "Ok"
+        okButtonText:            qsTrId("general-ok")
+        okButton.palette.button: Style.accent_fail
+        cancelButtonVisible:     false
+                                 //% "Failed to edit publisher"
+        text:                    qsTrId("app-edit-publisher")
     }
 
     BecomePublisher {

@@ -1512,9 +1512,21 @@ namespace beamui::applications
                     return;
                 }
 
+                Action action = static_cast<Action>(rawAction);
+
                 if (!err.empty())
                 {
                     LOG_ERROR() << "Failed to process shader TX: " << ", " << err;
+
+                    if (action == Action::CreatePublisher)
+                    {
+                        emit createPublisherFail();
+                    }
+                    if (action == Action::UpdatePublisher)
+                    {
+                        emit editPublisherFail();
+                    }
+
                     return;
                 }
 
@@ -1523,8 +1535,6 @@ namespace beamui::applications
                     // TODO roman.strilets ????
                     return;
                 }
-
-                Action action = static_cast<Action>(rawAction);
 
                 _activeTx[id] = action;
 
@@ -1545,26 +1555,38 @@ namespace beamui::applications
         beam::wallet::ChangeAction changeAction,
         const std::vector<beam::wallet::TxDescription>& transactions)
     {
-        if (changeAction == beam::wallet::ChangeAction::Updated)
+        for (auto& tx : transactions)
         {
-            for (auto& tx : transactions)
+            if (tx.GetTxID())
             {
-                if (tx.m_status == beam::wallet::TxStatus::Completed || tx.m_status == beam::wallet::TxStatus::Failed)
+                auto txId = *tx.GetTxID();
+                if (_activeTx.find(txId) != _activeTx.end())
                 {
-                    if (tx.GetTxID())
-                    {
-                        auto txId = *tx.GetTxID();
-                        if (_activeTx.find(txId) != _activeTx.end())
-                        {
-                            Action action = _activeTx[txId];
+                    LOG_INFO() << "onTransactionsChanged: changeAction = " << static_cast<int>(changeAction) << ", status = " << static_cast<int>(tx.m_status);
 
-                            if (action == Action::CreatePublisher || action == Action::UpdatePublisher)
+                    Action action = _activeTx[txId];
+
+                    if (action == Action::CreatePublisher || action == Action::UpdatePublisher)
+                    {
+                        if (changeAction == beam::wallet::ChangeAction::Updated && tx.m_status == beam::wallet::TxStatus::Completed)
+                        {
+                            loadMyPublisherInfo(true, action == Action::CreatePublisher);
+                            _activeTx.erase(txId);
+                        }
+                        else if ((changeAction == beam::wallet::ChangeAction::Updated || changeAction == beam::wallet::ChangeAction::Added)
+                            && tx.m_status == beam::wallet::TxStatus::Failed)
+                        {
+                            emit hideTxIsSent();
+                            _activeTx.erase(txId);
+                            if (action == Action::CreatePublisher)
                             {
-                                loadMyPublisherInfo(true, action == Action::CreatePublisher);
+                                emit createPublisherFail();
+                            }
+                            else
+                            {
+                                emit editPublisherFail();
                             }
                         }
-
-                        _activeTx.erase(txId);
                     }
                 }
             }

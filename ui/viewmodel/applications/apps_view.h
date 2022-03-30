@@ -104,6 +104,8 @@ namespace beamui::applications
         void showTxIsSent();
         void hideTxIsSent();
         void showYouArePublisher();
+        void createPublisherFail();
+        void editPublisherFail();
         void appInstallOK(const QString& appName);
         void appInstallFail(const QString& appName);
 

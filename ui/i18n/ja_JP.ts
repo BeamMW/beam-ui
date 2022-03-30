@@ -3756,5 +3756,22 @@ Let&apos;s start!</source>
         <source>launch</source>
         <translation type="unfinished">launch</translation>
     </message>
+    <message id="app-create-publisher-title">
+        <source>Create Publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-edit-publisher-title">
+        <source>Edit Publisher</source>
+        <oldsource>edit Publisher</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-create-publisher">
+        <source>Failed to create publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-edit-publisher">
+        <source>Failed to edit publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
