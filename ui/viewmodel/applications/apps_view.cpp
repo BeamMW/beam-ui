@@ -1178,7 +1178,7 @@ namespace beamui::applications
             }
             
             // add estimated release_date
-            app.insert("release_date", QDate::currentDate().toString("dd MMM yyyy"));
+            app.insert("release_date", QLocale(QLocale::English).toString(QDate::currentDate(), "dd MMM yyyy"));
 
             app.insert(DApp::kSupported, isAppSupported(app));
 
