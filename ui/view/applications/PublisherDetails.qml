@@ -29,7 +29,6 @@ ColumnLayout {
     }
 
     function editDetails() {
-        // TODO: implement
         changePublisherInfoDialog.open();
     }
 
@@ -274,6 +273,7 @@ ColumnLayout {
                 Layout.topMargin:    40
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize:      18
+                font.weight:         Font.Bold
                 color:               Style.content_main
                 //% "Publisher Key"
                 text:                qsTrId("dapps-store-publisher-key")
