@@ -137,10 +137,11 @@ CustomDialog {
                     horizontalAlignment:  Text.AlignHCenter
                     font.pixelSize:       14
                     font.weight:          Font.Normal
+                    textFormat:           Text.RichText
                     text:                 control.isUpdating ?
                                           //% "To update %1, please add the new version of the file below"
                                           qsTrId("dapps-store-update-dapp-text").arg(currentApp.name):
-                                          //% "To upload your own DApp in the DApp Store, please use files in the .dapp format only"
+                                          //% "To upload your own DApp in the DApp Store, please use files in the <b><i>.dapp format only</i></b>"
                                           qsTrId("dapps-store-upload-new-dapp-text")
                 }
 
