@@ -3668,7 +3668,8 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-upload-new-dapp-text">
-        <source>To upload your own DApp in the DApp Store, please use files in the .dapp format only</source>
+        <source>To upload your own DApp in the DApp Store, please use files in the &lt;b&gt;&lt;i&gt;.dapp format only&lt;/i&gt;&lt;/b&gt;</source>
+        <oldsource>To upload your own DApp in the DApp Store, please use files in the .dapp format only</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-upload-common-error">
