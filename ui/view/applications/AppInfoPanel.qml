@@ -20,15 +20,16 @@ Pane {
 
     property var content: Item {
         TxTable {
-            anchors.leftMargin: control.state == "transactions" ? 25 : 0
-            anchors.rightMargin: control.state == "transactions" ? 25 : 0
+            property bool isTransactionsView: control.state == "transactions"
+            anchors.leftMargin: isTransactionsView ? 25 : 0
+            anchors.rightMargin: isTransactionsView ? 25 : 0
             id: txTable
             owner: control
             emptyMessageMargin: 60
             headerShaderVisible: false
             dappFilter: control.dappFilter
             anchors.fill: parent
-            visible: control.state == "transactions"
+            visible: isTransactionsView
         }
         AssetsPanel {
             id: assetsList
