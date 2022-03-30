@@ -92,6 +92,7 @@ ColumnLayout {
             font.pixelSize:       14
             font.weight:          Font.Bold
             font.capitalization:  Font.AllUppercase
+            font.letterSpacing:   3.11
             //% "Publisher's page"
             text: qsTrId("dapps-store-publisher-page")
         }
@@ -161,6 +162,7 @@ ColumnLayout {
         font.pixelSize:       14
         font.weight:          Font.Bold
         font.capitalization:  Font.AllUppercase
+        font.letterSpacing:   3.11
         opacity:              0.5
         //% "My DAPPs - admin panel"
         text: qsTrId("dapps-store-my-dapps")
