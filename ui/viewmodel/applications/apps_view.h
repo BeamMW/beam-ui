@@ -100,7 +100,7 @@ namespace beamui::applications
         void isPublisherChanged();
         void publisherInfoChanged();
         void userPublishersChanged();
-        void shaderTxData(int action, const QString& data, const QString& comment, const QString& fee, const QString& feeRate, const QString& rateUnit);
+        void shaderTxData(int action, const QString& data, const QString& comment, const QString& fee, const QString& feeRate, const QString& rateUnit, bool isEnough);
         void showTxIsSent();
         void hideTxIsSent();
         void showYouArePublisher();

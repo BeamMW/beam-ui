@@ -69,7 +69,7 @@ ColumnLayout {
     ApplicationsViewModel {
         id: viewModel
 
-        onShaderTxData: function (action, data, txComment, fee, feeRate, rateUnit) {
+        onShaderTxData: function (action, data, txComment, fee, feeRate, rateUnit, isEnough) {
             const dialog = Qt.createComponent("qrc:/send_confirm.qml")
             const instance = dialog.createObject(control,
                 {
@@ -80,7 +80,8 @@ ColumnLayout {
                     appMode:        true,
                     isOnline:       false,
                     showPrefix:     true,
-                    hasAmounts:     false
+                    hasAmounts:     false,
+                    isEnough:       isEnough
                 })
 
             instance.Component.onDestruction.connect(function () {
