@@ -31,6 +31,15 @@ CustomDialog {
             publisherInfo.discord !== discordInput.text;
     }
 
+    function allFieldsIsValid() {
+        return websiteInput.isValid &&
+               twitterInput.isValid &&
+               linkedinInput.isValid &&
+               instagramInput.isValid &&
+               telegramInput.isValid &&
+               discordInput.isValid;
+    }
+
     contentItem: ColumnLayout {
         spacing: 0
         anchors.fill:    parent
@@ -179,14 +188,17 @@ CustomDialog {
                 }
 
                 SFTextInputEx {
+                    property bool isValid: acceptableInput || text.length == 0
                     id: websiteInput
                     width: 335
                     height: 45
-                    color: Style.content_main
                     placeholderText: "https://website.name/"
                     text: !!control.publisherInfo.website ? control.publisherInfo.website : ""
                     icon: "qrc:/assets/icon-dapps-store-website.svg"
                     maximumLength: 100
+                    color: isValid ? Style.content_main : Style.validator_error
+                    backgroundColor: isValid ? Style.content_main : Style.validator_error
+                    validator: RegExpValidator { regExp: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/ }
                 }
             }
 
@@ -202,14 +214,17 @@ CustomDialog {
                 }
 
                 SFTextInputEx {
+                    property bool isValid: acceptableInput || text.length == 0
                     id: twitterInput
                     width: 335
                     height: 45
-                    color: Style.content_main
-                    placeholderText: "@nickname"
+                    placeholderText: "nickname"
                     text: !!control.publisherInfo.twitter ? control.publisherInfo.twitter : ""
                     icon: "qrc:/assets/icon-dapps-store-twitter.svg"
                     maximumLength: 50
+                    color: isValid ? Style.content_main : Style.validator_error
+                    backgroundColor: isValid ? Style.content_main : Style.validator_error
+                    validator: RegExpValidator { regExp: /^[A-Za-z0-9_]+$/ }
                 }
             }
 
@@ -225,14 +240,17 @@ CustomDialog {
                 }
 
                 SFTextInputEx {
+                    property bool isValid: acceptableInput || text.length == 0
                     id: linkedinInput
                     width: 335
                     height: 45
-                    color: Style.content_main
-                    placeholderText: "@nickname"
+                    placeholderText: "in/nickname or company/name"
                     text: !!control.publisherInfo.linkedin ? control.publisherInfo.linkedin : ""
                     icon: "qrc:/assets/icon-dapps-store-linkedin.svg"
                     maximumLength: 50
+                    color: isValid ? Style.content_main : Style.validator_error
+                    backgroundColor: isValid ? Style.content_main : Style.validator_error
+                    validator: RegExpValidator { regExp: /^in\/[A-Za-z0-9_]+|company\/[A-Za-z0-9_]+$/ }
                 }
             }
 
@@ -248,14 +266,17 @@ CustomDialog {
                 }
 
                 SFTextInputEx {
+                    property bool isValid: acceptableInput || text.length == 0
                     id: instagramInput
                     width: 335
                     height: 45
-                    color: Style.content_main
-                    placeholderText: "@nickname"
+                    placeholderText: "nickname"
                     text: !!control.publisherInfo.instagram ? control.publisherInfo.instagram : ""
                     icon: "qrc:/assets/icon-dapps-store-instagram.svg"
                     maximumLength: 50
+                    color: isValid ? Style.content_main : Style.validator_error
+                    backgroundColor: isValid ? Style.content_main : Style.validator_error
+                    validator: RegExpValidator { regExp: /^[A-Za-z0-9_]+$/ }
                 }
             }
 
@@ -271,14 +292,17 @@ CustomDialog {
                 }
 
                 SFTextInputEx {
+                    property bool isValid: acceptableInput || text.length == 0
                     id: telegramInput
                     width: 335
                     height: 45
-                    color: Style.content_main
-                    placeholderText: "@nickname"
+                    placeholderText: "nickname"
                     text: !!control.publisherInfo.telegram ? control.publisherInfo.telegram : ""
                     icon: "qrc:/assets/icon-dapps-store-telegram.svg"
                     maximumLength: 50
+                    color: isValid ? Style.content_main : Style.validator_error
+                    backgroundColor: isValid ? Style.content_main : Style.validator_error
+                    validator: RegExpValidator { regExp: /^[A-Za-z0-9_]+$/ }
                 }
             }
 
@@ -294,14 +318,17 @@ CustomDialog {
                 }
 
                 SFTextInputEx {
+                    property bool isValid: acceptableInput || text.length == 0
                     id: discordInput
                     width: 335
                     height: 45
-                    color: Style.content_main
-                    placeholderText: "login#0000"
+                    placeholderText: "login"
                     text: !!control.publisherInfo.discord ? control.publisherInfo.discord : ""
                     icon: "qrc:/assets/icon-dapps-store-discord.svg"
                     maximumLength: 50
+                    color: isValid ? Style.content_main : Style.validator_error
+                    backgroundColor: isValid ? Style.content_main : Style.validator_error
+                    validator: RegExpValidator { regExp: /^[A-Za-z0-9_]+$/ }
                 }
             }
         }
@@ -344,7 +371,7 @@ CustomDialog {
                     //% "save changes"
                     qsTrId("dapps-store-save-changes")
                 palette.buttonText: Style.content_opposite
-                enabled: nameInput.text && shortTitleInput.text && isChanged()
+                enabled: nameInput.text && shortTitleInput.text && isChanged() && allFieldsIsValid()
                 onClicked: {
                     var info = {
                         nickname: nameInput.text,
