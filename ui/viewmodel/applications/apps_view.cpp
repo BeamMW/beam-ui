@@ -1498,13 +1498,13 @@ namespace beamui::applications
         }
     }
 
-    void AppsViewModel::contractInfoApproved(int action, const QString& data)
+    void AppsViewModel::contractInfoApproved(int rawAction, const QString& data)
     {
         QPointer<AppsViewModel> guard(this);
         beam::ByteBuffer buffer = beam::from_hex(data.toStdString());
 
         AppModel::getInstance().getWalletModel()->getAsync()->processShaderTxData(std::move(buffer),
-            [this, guard, action](const std::string& err, const beam::wallet::TxID& id)
+            [this, guard, rawAction](const std::string& err, const beam::wallet::TxID& id)
             {
                 if (!guard)
                 {
@@ -1514,18 +1514,21 @@ namespace beamui::applications
                 if (!err.empty())
                 {
                     LOG_ERROR() << "Failed to process shader TX: " << ", " << err;
+                    return;
                 }
 
-                if (Action::CreatePublisher == static_cast<Action>(action) || Action::UpdatePublisher == static_cast<Action>(action))
+                if (_activeTx.find(id) != _activeTx.end())
                 {
-                    if (_txId)
-                    {
-                        throw std::runtime_error("Unprocessed data - txID isn't empty.");
-                    }
-                    
-                    _txId = id;
-                    _action = static_cast<Action>(action);
+                    // TODO roman.strilets ????
+                    return;
+                }
 
+                Action action = static_cast<Action>(rawAction);
+
+                _activeTx[id] = action;
+
+                if (Action::CreatePublisher == action || Action::UpdatePublisher == action)
+                {
                     emit showTxIsSent();
                 }
                 // TODO: check TX status
@@ -1538,20 +1541,29 @@ namespace beamui::applications
     }
 
     void AppsViewModel::onTransactionsChanged(
-        beam::wallet::ChangeAction action,
+        beam::wallet::ChangeAction changeAction,
         const std::vector<beam::wallet::TxDescription>& transactions)
     {
-        if (_txId && action == beam::wallet::ChangeAction::Updated)
+        if (changeAction == beam::wallet::ChangeAction::Updated)
         {
             for (auto& tx : transactions)
             {
-                if (tx.GetTxID() == *_txId)
+                if (tx.m_status == beam::wallet::TxStatus::Completed || tx.m_status == beam::wallet::TxStatus::Failed)
                 {
-                    if (tx.m_status == beam::wallet::TxStatus::Completed || tx.m_status == beam::wallet::TxStatus::Failed)
+                    if (tx.GetTxID())
                     {
-                        _txId.reset();
-                        loadMyPublisherInfo(true, _action == Action::CreatePublisher);
-                        return;
+                        auto txId = *tx.GetTxID();
+                        if (_activeTx.find(txId) != _activeTx.end())
+                        {
+                            Action action = _activeTx[txId];
+
+                            if (action == Action::CreatePublisher || action == Action::UpdatePublisher)
+                            {
+                                loadMyPublisherInfo(true, action == Action::CreatePublisher);
+                            }
+                        }
+
+                        _activeTx.erase(txId);
                     }
                 }
             }

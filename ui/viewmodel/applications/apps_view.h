@@ -91,7 +91,7 @@ namespace beamui::applications
 
     public slots:
         void onTransactionsChanged(
-            beam::wallet::ChangeAction action,
+            beam::wallet::ChangeAction changeAction,
             const std::vector<beam::wallet::TxDescription>& transactions);
         void onUserPublishersChanged();
 
@@ -137,9 +137,8 @@ namespace beamui::applications
         QList<QVariantMap> _publishers;
         QStringList _userPublishersKeys;
         QVariantMap _publisherInfo;
-        boost::optional<beam::wallet::TxID> _txId;
 
-        Action _action;
+        std::map<beam::wallet::TxID, Action> _activeTx;
         boost::optional<beam::ByteBuffer> _loadedDAppBuffer;
         boost::optional<QVariantMap> _loadedDApp;
     };
