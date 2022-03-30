@@ -174,22 +174,46 @@ ColumnLayout {
 
     // dummy page
     ColumnLayout {
-        visible: !appsListView.visible
+        visible:           !appsListView.visible
         Layout.fillHeight: true
         Layout.fillWidth:  true
+        spacing:           0
 
         Item {
             Layout.fillHeight: true
             Layout.fillWidth:  true
         }
-
-        SvgImage {
-            Layout.topMargin: -80
+        
+        Item {
+            width:            60
+            height:           60
+            Layout.topMargin: -60
             Layout.alignment: Qt.AlignHCenter
-            width:   60
-            height:  60
-            opacity: 0.5
-            source: "qrc:/assets/icon-dapps_store-empty-dapps-list.svg"
+
+            Canvas {
+                anchors.fill: parent
+                antialiasing: true
+
+                onPaint: function (rect) {
+                    var ctx = getContext("2d")
+                    ctx.save()
+                    ctx.setLineDash([6, 6])
+                    ctx.rect(0, 0, rect.width, rect.height)
+                    ctx.strokeStyle = "#7D929E"
+                    ctx.stroke()
+                    ctx.restore()
+                }
+            }           
+            
+            Item {
+                anchors.margins: 2
+                anchors.fill:    parent
+                SvgImage {
+                    anchors.fill: parent
+                    sourceSize:   Qt.size(56, 56)
+                    source:       "qrc:/assets/icon-dapps_store-empty-dapps-list.svg"
+                }
+            }
         }
 
         SFText {
