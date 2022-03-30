@@ -3628,7 +3628,8 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-add-publisher-notification">
-        <source>%1 added to the list of publishers that you follow</source>
+        <source>&lt;b&gt;%1&lt;/b&gt; added to the list of publishers that you follow</source>
+        <oldsource>%1 added to the list of publishers that you follow</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="copy-publisher-key">
