@@ -303,9 +303,7 @@ CustomDialog {
                     CustomButton {
                         enabled:             !!control.appFileProperties
                         palette.button:      Style.active
-                        icon.source:         "qrc:/assets/icon-dapps_store-add-publisher-submit.svg"
-                        icon.height:         10
-                        icon.width:          12
+                        icon.source:         "qrc:/assets/icon-next-blue.svg"
                                              //% "continue"
                         text:                qsTrId("general-continue")
                         palette.buttonText:  Style.content_opposite

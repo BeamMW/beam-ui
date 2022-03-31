@@ -361,7 +361,7 @@ CustomDialog {
 
             CustomButton {
                 palette.button: Style.active
-                icon.source: "qrc:/assets/icon-dapps-store-create-account.svg"
+                icon.source: "qrc:/assets/icon-next-blue.svg"
 
                 
                 text: control.newPublisher ?
