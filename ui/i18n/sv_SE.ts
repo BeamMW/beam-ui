@@ -3771,12 +3771,28 @@ Let&apos;s start!</source>
         <oldsource>edit Publisher</oldsource>
         <translation type="unfinished"></translation>
     </message>
-    <message id="app-create-publisher">
+    <message id="app-failed-create-publisher">
         <source>Failed to create publisher</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="app-edit-publisher">
+    <message id="app-failed-edit-publisher">
         <source>Failed to edit publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-publish-dapp-title">
+        <source>Publish DApp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-failed-publish-dapp">
+        <source>Failed to publish DApp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-remove-dapp-title">
+        <source>Remove DApp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-failed-remove-dapp">
+        <source>Failed to remove DApp</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

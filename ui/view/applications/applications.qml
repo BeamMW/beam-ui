@@ -120,12 +120,20 @@ ColumnLayout {
             youArePublisher.open();
         }
 
-        onCreatePublisherFail: function() {
-            createPublisherFail.open();
+        onPublisherCreateFail: function() {
+            publisherCreateFail.open();
         }
 
-        onEditPublisherFail: function() {
-            editPublisherFail.open();
+        onPublisherEditFail: function() {
+            publisherEditFail.open();
+        }
+
+        onDAppPublishFail: function() {
+            dappPublishFail.open();
+        }
+
+        onAppRemoveFail: function() {
+            appRemoveFail.open();
         }
     }
 
@@ -766,7 +774,7 @@ ColumnLayout {
     }
 
     ConfirmationDialog {
-        id:                      createPublisherFail
+        id:                      publisherCreateFail
                                  //% "Create Publisher"
         title:                   qsTrId("app-create-publisher-title")
                                  //% "Ok"
@@ -774,11 +782,11 @@ ColumnLayout {
         okButton.palette.button: Style.accent_fail
         cancelButtonVisible:     false
                                  //% "Failed to create publisher"
-        text:                    qsTrId("app-create-publisher")
+        text:                    qsTrId("app-failed-create-publisher")
     }
 
     ConfirmationDialog {
-        id:                      editPublisherFail
+        id:                      publisherEditFail
                                  //% "Edit Publisher"
         title:                   qsTrId("app-edit-publisher-title")
                                  //% "Ok"
@@ -786,7 +794,31 @@ ColumnLayout {
         okButton.palette.button: Style.accent_fail
         cancelButtonVisible:     false
                                  //% "Failed to edit publisher"
-        text:                    qsTrId("app-edit-publisher")
+        text:                    qsTrId("app-failed-edit-publisher")
+    }
+
+    ConfirmationDialog {
+        id:                      dappPublishFail
+                                 //% "Publish DApp"
+        title:                   qsTrId("app-publish-dapp-title")
+                                 //% "Ok"
+        okButtonText:            qsTrId("general-ok")
+        okButton.palette.button: Style.accent_fail
+        cancelButtonVisible:     false
+                                 //% "Failed to publish DApp"
+        text:                    qsTrId("app-failed-publish-dapp")
+    }
+
+    ConfirmationDialog {
+        id:                      appRemoveFail
+                                 //% "Remove DApp"
+        title:                   qsTrId("app-remove-dapp-title")
+                                 //% "Ok"
+        okButtonText:            qsTrId("general-ok")
+        okButton.palette.button: Style.accent_fail
+        cancelButtonVisible:     false
+                                 //% "Failed to remove DApp"
+        text:                    qsTrId("app-failed-remove-dapp")
     }
 
     BecomePublisher {

@@ -1211,6 +1211,8 @@ namespace beamui::applications
         {
             assert(false);
             LOG_ERROR() << "Failed to publish DApp, empty buffers.";
+
+            emit dappPublishFail();
             return;
         }
 
@@ -1227,8 +1229,9 @@ namespace beamui::applications
                 // save result to contract
                 uploadAppToStore(std::move(app), ipfsID, isUpdating);
             },
-            [](std::string&& err) {
+            [this](std::string&& err) {
                 LOG_ERROR() << "Failed to add to ipfs: " << err;
+                emit dappPublishFail();
             }
         );
     }
@@ -1288,12 +1291,16 @@ namespace beamui::applications
                 if (!err.empty())
                 {
                     LOG_ERROR() << "Failed to publish app" << ", " << err;
+
+                    emit dappPublishFail();
                     return;
                 }
                 
                 if (data.empty())
                 {
                     LOG_ERROR() << "Failed to publish app" << ", " << output;
+
+                    emit dappPublishFail();
                     return;
                 }
                 handleShaderTxData(Action::UploadDApp, data);
@@ -1362,6 +1369,8 @@ namespace beamui::applications
         {
             assert(false);
             LOG_ERROR() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
+
+            emit appInstallFail("");
             return;
         }
     }
@@ -1496,6 +1505,24 @@ namespace beamui::applications
         catch (const std::runtime_error& err)
         {
             LOG_ERROR() << "Failed to handle shader TX data: " << err.what();
+
+            // TODO roman.strilets maybe need to process error
+            if (action == Action::CreatePublisher)
+            {
+                emit publisherCreateFail();
+            }
+            if (action == Action::UpdatePublisher)
+            {
+                emit publisherEditFail();
+            }
+            if (action == Action::UploadDApp)
+            {
+                emit dappPublishFail();
+            }
+            if (action == Action::DeleteDApp)
+            {
+                emit appRemoveFail();
+            }
         }
     }
 
@@ -1520,11 +1547,19 @@ namespace beamui::applications
 
                     if (action == Action::CreatePublisher)
                     {
-                        emit createPublisherFail();
+                        emit publisherCreateFail();
                     }
                     if (action == Action::UpdatePublisher)
                     {
-                        emit editPublisherFail();
+                        emit publisherEditFail();
+                    }
+                    if (action == Action::UploadDApp)
+                    {
+                        emit dappPublishFail();
+                    }
+                    if (action == Action::DeleteDApp)
+                    {
+                        emit appRemoveFail();
                     }
 
                     return;
@@ -1580,12 +1615,38 @@ namespace beamui::applications
                             _activeTx.erase(txId);
                             if (action == Action::CreatePublisher)
                             {
-                                emit createPublisherFail();
+                                emit publisherCreateFail();
                             }
                             else
                             {
-                                emit editPublisherFail();
+                                emit publisherEditFail();
                             }
+                        }
+                    }
+                    if (action == Action::UploadDApp)
+                    {
+                        if (changeAction == beam::wallet::ChangeAction::Updated && tx.m_status == beam::wallet::TxStatus::Completed)
+                        {
+                            _activeTx.erase(txId);
+                        }
+                        else if ((changeAction == beam::wallet::ChangeAction::Updated || changeAction == beam::wallet::ChangeAction::Added)
+                            && tx.m_status == beam::wallet::TxStatus::Failed)
+                        {
+                            emit dappPublishFail();
+                            _activeTx.erase(txId);
+                        }
+                    }
+                    if (action == Action::DeleteDApp)
+                    {
+                        if (changeAction == beam::wallet::ChangeAction::Updated && tx.m_status == beam::wallet::TxStatus::Completed)
+                        {
+                            _activeTx.erase(txId);
+                        }
+                        else if ((changeAction == beam::wallet::ChangeAction::Updated || changeAction == beam::wallet::ChangeAction::Added)
+                            && tx.m_status == beam::wallet::TxStatus::Failed)
+                        {
+                            emit appRemoveFail();
+                            _activeTx.erase(txId);
                         }
                     }
                 }
@@ -1699,10 +1760,10 @@ namespace beamui::applications
                     LOG_INFO() << "Successfully unpin app" << appName.toStdString() << "(" << ipfsID.toStdString() << ") from ipfs : ";
                     deleteAppFromStore(guid);
                 },
-                [appName, ipfsID](std::string&& err)
+                [this, appName, ipfsID](std::string&& err)
                 {
                     LOG_ERROR() << "Failed to unpin app" << appName.toStdString() << "(" << ipfsID.toStdString() << ") from ipfs : " << err;
-                    // TODO: emit appRemoveFail(appName);
+                    emit appRemoveFail();
                 }
             );
         }
@@ -1710,6 +1771,7 @@ namespace beamui::applications
         {
             assert(false);
             LOG_ERROR() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
+            emit appRemoveFail();
             return;
         }
     }
@@ -1733,12 +1795,14 @@ namespace beamui::applications
                 if (!err.empty())
                 {
                     LOG_ERROR() << "Failed to delete app" << ", " << err;
+                    emit appRemoveFail();
                     return;
                 }
 
                 if (data.empty())
                 {
                     LOG_ERROR() << "Failed to delete app" << ", " << output;
+                    emit appRemoveFail();
                     return;
                 }
                 handleShaderTxData(Action::DeleteDApp, data);

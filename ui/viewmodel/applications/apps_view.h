@@ -104,10 +104,12 @@ namespace beamui::applications
         void showTxIsSent();
         void hideTxIsSent();
         void showYouArePublisher();
-        void createPublisherFail();
-        void editPublisherFail();
+        void publisherCreateFail();
+        void publisherEditFail();
         void appInstallOK(const QString& appName);
         void appInstallFail(const QString& appName);
+        void dappPublishFail();
+        void appRemoveFail();
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
