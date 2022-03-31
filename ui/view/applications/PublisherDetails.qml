@@ -189,30 +189,10 @@ ColumnLayout {
             height:           60
             Layout.topMargin: -60
             Layout.alignment: Qt.AlignHCenter
-
-            Canvas {
+            SvgImage {
                 anchors.fill: parent
-                antialiasing: true
-
-                onPaint: function (rect) {
-                    var ctx = getContext("2d")
-                    ctx.save()
-                    ctx.setLineDash([6, 6])
-                    ctx.rect(0, 0, rect.width, rect.height)
-                    ctx.strokeStyle = "#7D929E"
-                    ctx.stroke()
-                    ctx.restore()
-                }
-            }           
-            
-            Item {
-                anchors.margins: 2
-                anchors.fill:    parent
-                SvgImage {
-                    anchors.fill: parent
-                    sourceSize:   Qt.size(56, 56)
-                    source:       "qrc:/assets/icon-dapps_store-empty-dapps-list.svg"
-                }
+                sourceSize:   Qt.size(60, 60)
+                source:       "qrc:/assets/icon-dapps_store-empty-dapps-list.svg"
             }
         }
 
