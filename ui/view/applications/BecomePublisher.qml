@@ -371,7 +371,7 @@ CustomDialog {
                     //% "save changes"
                     qsTrId("dapps-store-save-changes")
                 palette.buttonText: Style.content_opposite
-                enabled: nameInput.text && shortTitleInput.text && isChanged() && allFieldsIsValid()
+                enabled: nameInput.text && isChanged() && allFieldsIsValid()
                 onClicked: {
                     var info = {
                         nickname: nameInput.text,
