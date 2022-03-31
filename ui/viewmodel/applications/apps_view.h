@@ -108,7 +108,7 @@ namespace beamui::applications
         void publisherEditFail();
         void appInstallOK(const QString& appName);
         void appInstallFail(const QString& appName);
-        void dappPublishFail();
+        void appPublishFail();
         void appRemoveFail();
 
     private:

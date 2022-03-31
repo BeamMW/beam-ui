@@ -1212,7 +1212,7 @@ namespace beamui::applications
             assert(false);
             LOG_ERROR() << "Failed to publish DApp, empty buffers.";
 
-            emit dappPublishFail();
+            emit appPublishFail();
             return;
         }
 
@@ -1231,7 +1231,7 @@ namespace beamui::applications
             },
             [this](std::string&& err) {
                 LOG_ERROR() << "Failed to add to ipfs: " << err;
-                emit dappPublishFail();
+                emit appPublishFail();
             }
         );
     }
@@ -1292,7 +1292,7 @@ namespace beamui::applications
                 {
                     LOG_ERROR() << "Failed to publish app" << ", " << err;
 
-                    emit dappPublishFail();
+                    emit appPublishFail();
                     return;
                 }
                 
@@ -1300,7 +1300,7 @@ namespace beamui::applications
                 {
                     LOG_ERROR() << "Failed to publish app" << ", " << output;
 
-                    emit dappPublishFail();
+                    emit appPublishFail();
                     return;
                 }
                 handleShaderTxData(Action::UploadDApp, data);
@@ -1517,7 +1517,7 @@ namespace beamui::applications
             }
             if (action == Action::UploadDApp)
             {
-                emit dappPublishFail();
+                emit appPublishFail();
             }
             if (action == Action::DeleteDApp)
             {
@@ -1555,7 +1555,7 @@ namespace beamui::applications
                     }
                     if (action == Action::UploadDApp)
                     {
-                        emit dappPublishFail();
+                        emit appPublishFail();
                     }
                     if (action == Action::DeleteDApp)
                     {
@@ -1632,7 +1632,7 @@ namespace beamui::applications
                         else if ((changeAction == beam::wallet::ChangeAction::Updated || changeAction == beam::wallet::ChangeAction::Added)
                             && tx.m_status == beam::wallet::TxStatus::Failed)
                         {
-                            emit dappPublishFail();
+                            emit appPublishFail();
                             _activeTx.erase(txId);
                         }
                     }

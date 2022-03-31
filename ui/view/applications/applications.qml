@@ -128,8 +128,8 @@ ColumnLayout {
             publisherEditFail.open();
         }
 
-        onDAppPublishFail: function() {
-            dappPublishFail.open();
+        onAppPublishFail: function() {
+            appPublishFail.open();
         }
 
         onAppRemoveFail: function() {
@@ -798,7 +798,7 @@ ColumnLayout {
     }
 
     ConfirmationDialog {
-        id:                      dappPublishFail
+        id:                      appPublishFail
                                  //% "Publish DApp"
         title:                   qsTrId("app-publish-dapp-title")
                                  //% "Ok"
