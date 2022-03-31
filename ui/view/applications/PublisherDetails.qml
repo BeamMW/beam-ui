@@ -209,7 +209,7 @@ ColumnLayout {
         PrimaryButton {
             Layout.topMargin: 40
             Layout.alignment: Qt.AlignHCenter
-                              //% "upload your fist dapp"
+                              //% "upload your first dapp"
             text:             qsTrId("dapps-store-publisher-upload-first-dapp")
             icon.source:      "qrc:/assets/icon-dapps_store-publisher-upload-dapp.svg"
             icon.width:       16

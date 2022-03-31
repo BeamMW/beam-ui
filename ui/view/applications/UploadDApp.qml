@@ -120,7 +120,7 @@ CustomDialog {
                     color:                Style.content_main
                     horizontalAlignment:  Text.AlignHCenter
                     font.pixelSize:       18
-                    font.weight:          Font.Normal
+                    font.weight:          Font.Bold
                     text:                 control.isUpdating ?
                                           //% "Update DApp"
                                           qsTrId("dapps-store-update-dapp-title") :
