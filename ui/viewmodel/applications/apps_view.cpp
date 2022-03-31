@@ -250,11 +250,6 @@ namespace beamui::applications
         : m_walletModel(AppModel::getInstance().getWalletModel())
     {
         LOG_INFO() << "AppsViewModel created";
-
-        if (AppSettings().getAppsAllowed())
-        {
-            init();
-        }
     }
 
     AppsViewModel::~AppsViewModel()
@@ -266,14 +261,8 @@ namespace beamui::applications
         LOG_INFO() << "AppsViewModel destroyed";
     }
 
-    void AppsViewModel::init()
+    void AppsViewModel::init(bool runApp)
     {
-        connect(m_walletModel.get(), &WalletModel::transactionsChanged, this, &AppsViewModel::onTransactionsChanged);
-        connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadPublishers);
-        connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadApps);
-        // update the application info because the list of tracked publishers has changed
-        connect(this, &AppsViewModel::userPublishersChanged, this, &AppsViewModel::onUserPublishersChanged);
-
         auto defaultProfile = QWebEngineProfile::defaultProfile();
         defaultProfile->setHttpCacheType(QWebEngineProfile::HttpCacheType::DiskHttpCache);
         defaultProfile->setPersistentCookiesPolicy(QWebEngineProfile::PersistentCookiesPolicy::AllowPersistentCookies);
@@ -283,11 +272,27 @@ namespace beamui::applications
         _userAgent = defaultProfile->httpUserAgent() + " BEAM/" + QString::fromStdString(PROJECT_VERSION);
         _serverAddr = QString("127.0.0.1:") + QString::number(AppSettings().getAppsServerPort());
 
-        loadMyPublisherInfo();
-        loadUserPublishers();
+        if (runApp)
+        {
+            _runApp = true;
+            loadLocalApps();
+            loadAppsFromServer();
+        }
+        else
+        {
+            _runApp = false;
+            connect(m_walletModel.get(), &WalletModel::transactionsChanged, this, &AppsViewModel::onTransactionsChanged);
+            connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadPublishers);
+            connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadApps);
+            // update the application info because the list of tracked publishers has changed
+            connect(this, &AppsViewModel::userPublishersChanged, this, &AppsViewModel::onUserPublishersChanged);
 
-        loadPublishers();
-        loadApps();
+            loadMyPublisherInfo();
+            loadUserPublishers();
+
+            loadPublishers();
+            loadApps();
+        }
     }
 
     void AppsViewModel::onCompleted(QObject *webView)
@@ -473,7 +478,12 @@ namespace beamui::applications
     {
         // TODO: It mb worth loading in parallel and then putting it together
         loadLocalApps();
+        loadAppsFromServer();
+        loadAppsFromStore();
+    }
 
+    void AppsViewModel::loadAppsFromServer()
+    {
         // load apps from server
         QPointer<AppsViewModel> guard(this);
         AppModel::getInstance().getWalletModel()->getAsync()->getAppsList(
@@ -507,7 +517,7 @@ namespace beamui::applications
                         auto name = parseStringField(item.value(), "name");
                         auto url = parseStringField(item.value(), "url");
                         const auto appid = beam::wallet::GenerateAppID(name.toStdString(), url.toStdString());
-                        
+
                         app.insert("appid", QString::fromStdString(appid));
                         app.insert(DApp::kDescription, parseStringField(item.value(), "description"));
                         app.insert(DApp::kName, name);
@@ -529,8 +539,6 @@ namespace beamui::applications
                 }
 
                 emit appsChanged();
-
-                loadAppsFromStore();
             });
     }
 
@@ -890,6 +898,9 @@ namespace beamui::applications
         }
 
         _localApps = result;
+
+        if (!_runApp)
+            emit appsChanged();
     }
 
     bool AppsViewModel::isPublisher() const

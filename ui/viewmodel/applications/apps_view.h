@@ -65,7 +65,7 @@ namespace beamui::applications
         void setPublisherInfo(const QVariantMap& value);
 
     public:
-        Q_INVOKABLE void init();
+        Q_INVOKABLE void init(bool runApp);
         Q_INVOKABLE void onCompleted(QObject *webView);
         Q_INVOKABLE [[nodiscard]] QString getAppCachePath(const QString& appid) const;
         Q_INVOKABLE [[nodiscard]] QString getAppStoragePath(const QString& appid) const;
@@ -117,6 +117,7 @@ namespace beamui::applications
         QVariantMap parseAppManifest(QTextStream& io, const QString& appFolder, bool needExpandIcon = true);
         void loadApps();
         void loadLocalApps();
+        void loadAppsFromServer();
         void loadAppsFromStore();
         void loadPublishers();
         void loadUserPublishers();
@@ -145,5 +146,6 @@ namespace beamui::applications
         std::map<beam::wallet::TxID, Action> _activeTx;
         boost::optional<beam::ByteBuffer> _loadedDAppBuffer;
         boost::optional<QVariantMap> _loadedDApp;
+        bool _runApp = false;
     };
 }

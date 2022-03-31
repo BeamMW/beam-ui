@@ -695,6 +695,8 @@ ColumnLayout {
 
                 if (!settings.dappsAllowed) {
                     appsDialog.open();
+                } else {
+                    viewModel.init(!!appToOpen);
                 }
             }
 
@@ -731,7 +733,7 @@ ColumnLayout {
         }
         onAccepted: function () {
             settings.dappsAllowed = true
-            viewModel.init();
+            viewModel.init(!!appToOpen);
         }
     }
 
