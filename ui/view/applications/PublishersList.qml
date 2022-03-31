@@ -179,9 +179,7 @@ ColumnLayout {
 
                 PrimaryButton {
                     enabled:     !publisherKeyError.visible && publisherKeyInput.acceptableInput
-                    icon.source: "qrc:/assets/icon-dapps_store-add-publisher-submit.svg"
-                    icon.height: 10
-                    icon.width:  12
+                    icon.source: "qrc:/assets/icon-next-blue.svg"
                     //% "Submit"
                     text:        qsTrId("dapps-store-submit")
                     onClicked: {
@@ -298,6 +296,7 @@ ColumnLayout {
 
                     SFLabel {
                         Layout.maximumWidth: parent.width
+                        maximumLineCount:    2
                         font.pixelSize:      14
                         elide:               Text.ElideRight
                         wrapMode:            Text.WrapAtWordBoundaryOrAnywhere

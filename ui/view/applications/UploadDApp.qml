@@ -419,9 +419,7 @@ change the information in your file and upload your file again." */
 
                     CustomButton {
                         palette.button:     Style.active
-                        icon.source:        "qrc:/assets/icon-dapps_store-add-publisher-submit.svg"
-                        icon.height:        10
-                        icon.width:         12
+                        icon.source:        "qrc:/assets/icon-next-blue.svg"
                                             //% "publish"
                         text:               qsTrId("dapps-store-publish")
                         palette.buttonText: Style.content_opposite
