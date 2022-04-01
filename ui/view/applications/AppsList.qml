@@ -43,6 +43,7 @@ Item {
         clip:                        true
 
         GridLayout {
+            id:            gridLayoutId
             width:         scrollView.availableWidth
             columnSpacing: 20
             rowSpacing:    15
@@ -55,6 +56,7 @@ Item {
                     Layout.fillWidth:       true
                     Layout.minimumWidth:    440
                     Layout.preferredHeight: 144
+                    Layout.maximumWidth:    gridLayoutId.width / 2
                     app:                    modelData
                     isPublisherAdminMode:   control.isPublisherAdminMode
 
