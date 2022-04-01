@@ -59,6 +59,8 @@ Item {
 
                 SvgImage {
                     id:                       customIcon
+                    width:                    30
+                    height:                   30
                     source:                   !!app.icon ? app.icon : "qrc:/assets/icon-defapp.svg"
                     anchors.verticalCenter:   parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -66,37 +68,24 @@ Item {
                 }
             }
         }
-                    
+
         ColumnLayout {
             Layout.fillWidth: true
-            spacing:          13
+            spacing:          0
+
             RowLayout {
                 Layout.fillWidth: true
-                spacing:          0
+                spacing:          4
 
-                ColumnLayout {
-                    Layout.fillWidth: true
-                    spacing:          4
-
-                    SFText {
-                        text: app.name
-                        font {
-                            styleName:  "DemiBold"
-                            weight:     Font.DemiBold
-                            pixelSize:  16
-                        }
-                        color: Style.content_main
+                SFText {
+                    text: app.name
+                    font {
+                        styleName:  "DemiBold"
+                        weight:     Font.DemiBold
+                        pixelSize:  16
                     }
-
-                    SFText {
-                        Layout.maximumWidth: 284
-                        text:                app.description
-                        font.pixelSize:      14
-                        elide:               Text.ElideRight
-                        color:               Style.content_main
-                        maximumLineCount:    2
-                        wrapMode:            Text.Wrap
-                    }
+                    color: Style.content_main
+                    wrapMode:            Text.Wrap
                 }
 
                 Item {
@@ -113,6 +102,18 @@ Item {
                 }
             }
 
+            SFText {
+                Layout.topMargin:    4
+                Layout.fillWidth:    true
+                Layout.rightMargin:  30
+                text:                app.description
+                font.pixelSize:      14
+                elide:               Text.ElideRight
+                color:               Style.content_main
+                maximumLineCount:    2
+                wrapMode:            Text.Wrap
+            }
+
             Item {
                 Layout.fillHeight: true
             }
@@ -123,6 +124,9 @@ Item {
                 spacing:          0
 
                 ColumnLayout {
+                    Layout.alignment: Qt.AlignTop
+                    spacing:          4
+
                     SFText {
                         text:                  !!app.publisherName ? app.publisherName : ""
                         font.pixelSize:        12
@@ -139,10 +143,6 @@ Item {
                         Layout.preferredWidth: control.textWidth
                         visible:               !!app.publisher
                     }
-
-                    Item {
-                        Layout.fillHeight: true
-                    }
                 }
 
                 Item {
@@ -151,7 +151,7 @@ Item {
 
                 AppButton {
                     id: button
-                    Layout.alignment: Qt.AlignTop | Qt.ALignRight
+                    Layout.alignment: Qt.AlignBottom | Qt.ALignRight
                     icon.height:      16
                     visible:          showButtons
                     
