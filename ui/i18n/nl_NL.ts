@@ -3588,7 +3588,8 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-publisher-upload-first-dapp">
-        <source>upload your fist dapp</source>
+        <source>upload your first dapp</source>
+        <oldsource>upload your fist dapp</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-publisher-key">
