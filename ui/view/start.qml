@@ -1633,7 +1633,7 @@ Item
                     viewModel.openWallet(pass, callback);
                 }
                 property var loadWallet: function () {
-                    root.parent.setSource("qrc:/loading.qml", {"isRecoveryMode" : false, "isCreating" : false});
+                    startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : false, "isCreating" : false, "cancelCallback": startWizzardView.pop});
                 }
                 
                 property var checkCapsLockOnActivation: function () {
@@ -1867,11 +1867,11 @@ Item
             }
         }
 
-        function restoreProcessBadPortMode() {
+        function restoreProcessBadPortMode(isRecoveryMode) {
             startWizzardView.pop();
             startWizzardView.push(nodeSetup);
             root.isBadPortMode = true;
-            viewModel.isRecoveryMode = true;
+            viewModel.isRecoveryMode = isRecoveryMode;
         }
 
         Component.onCompleted: {
