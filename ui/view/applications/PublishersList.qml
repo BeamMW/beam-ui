@@ -285,14 +285,14 @@ ColumnLayout {
             id: nicknameComponent
 
             RowLayout {
-                width:   parent.width
+                width: parent.width
 
                 ColumnLayout {
-                    width:             parent.width - 12
-                    Layout.alignment:  Qt.AlignTop
-                    Layout.topMargin:  12
-                    Layout.leftMargin: 20
-                    spacing:           0
+                    Layout.preferredWidth: parent.width - 12
+                    Layout.alignment:      Qt.AlignTop
+                    Layout.topMargin:      12
+                    Layout.leftMargin:     20
+                    spacing:               0
 
                     SFLabel {
                         Layout.maximumWidth: parent.width
