@@ -51,6 +51,7 @@ namespace
         const char kSupported[] = "supported";
         const char kNotInstalled[] = "notInstalled";
         const char kIcon[] = "icon";
+        const char kVersion[] = "version";
 
         const int kNameMaxSize = 30;
         const int kDescriptionMaxSize = 1024;
@@ -478,6 +479,7 @@ namespace beamui::applications
     {
         // TODO: It mb worth loading in parallel and then putting it together
         loadLocalApps();
+        loadDevApps();
         loadAppsFromServer();
         loadAppsFromStore();
     }
@@ -494,7 +496,7 @@ namespace beamui::applications
                     return;
                 }
 
-                _remoteApps.clear();
+                QList<QVariantMap> result;
 
                 try
                 {
@@ -529,7 +531,7 @@ namespace beamui::applications
                         app.insert("isFromServer", true);
 
                         // TODO: check order of the DApps
-                        _remoteApps.push_back(app);
+                        result.push_back(app);
                     }
                 }
                 catch (const std::runtime_error& err)
@@ -538,7 +540,11 @@ namespace beamui::applications
                     LOG_ERROR() << "Failed to load remote applications list, " << err.what();
                 }
 
-                emit appsChanged();
+                if (_runApp || result != _remoteApps)
+                {
+                    _remoteApps = result;
+                    emit appsChanged();
+                }
             });
     }
 
@@ -563,8 +569,6 @@ namespace beamui::applications
                     return;
                 }
 
-                _shaderApps.clear();
-
                 try
                 {
                     auto json = nlohmann::json::parse(output);
@@ -574,94 +578,65 @@ namespace beamui::applications
                         throw std::runtime_error("Invalid response of the view_dapps method");
                     }
 
+                    QList<QVariantMap> result;
                     for (auto& item : json["dapps"].items())
                     {
-                        if (!item.value().is_object())
+                        try
                         {
-                            throw std::runtime_error("Invalid body of the dapp " + item.key());
-                        }
-                        auto guid = parseStringField(item.value(), "id");
-                        auto publisherKey = parseStringField(item.value(), "publisher");
-
-                        // parse DApps only of the user publishers + own
-                        if (!_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive) &&
-                            !(isPublisher() && publisherKey.compare(_publisherInfo["publisherKey"].toString(), Qt::CaseInsensitive) == 0))
-                        {
-                            continue;
-                        }
-
-                        const auto idx = std::find_if(_publishers.cbegin(), _publishers.cend(),
-                            [publisherKey](const auto& publisher) -> bool {
-                                return !publisher["publisherKey"].toString().compare(publisherKey, Qt::CaseInsensitive);
+                            if (!item.value().is_object())
+                            {
+                                throw std::runtime_error("Invalid body of the dapp " + item.key());
                             }
-                        );
+                            auto guid = parseStringField(item.value(), "id");
+                            auto publisherKey = parseStringField(item.value(), "publisher");
 
-                        QString publisherName = "";
+                            // parse DApps only of the user publishers + own
+                            if (!_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive) &&
+                                !(isPublisher() && publisherKey.compare(_publisherInfo["publisherKey"].toString(), Qt::CaseInsensitive) == 0))
+                            {
+                                continue;
+                            }
 
-                        if (idx != _publishers.end())
-                        {
-                            publisherName = (*idx)["nickname"].toString();
-                        }
-
-                        LOG_DEBUG() << "Parsing DApp from contract, guid - " << guid.toStdString() << ", publisher - " << publisherKey.toStdString();
-
-                        // parse version
-                        auto versionObj = item.value()["version"];
-
-                        if (versionObj.empty() || !versionObj.is_object())
-                        {
-                            throw std::runtime_error("Invalid 'version' of the dapp");
-                        }
-
-                        auto majorObj = versionObj["major"];
-                        auto minorObj = versionObj["minor"];
-                        auto releaseObj = versionObj["release"];
-                        auto buildObj = versionObj["build"];
-                        if (majorObj.empty() || !majorObj.is_number_unsigned() ||
-                            minorObj.empty() || !minorObj.is_number_unsigned() ||
-                            releaseObj.empty() || !releaseObj.is_number_unsigned() ||
-                            buildObj.empty() || !buildObj.is_number_unsigned())
-                        {
-                            throw std::runtime_error("Invalid 'version' of the dapp");
-                        }
-
-                        QString version;
-                        QTextStream textStream(&version);
-                        textStream << majorObj.get<uint32_t>() << '.' << minorObj.get<uint32_t>() << '.'
-                            << releaseObj.get<uint32_t>() << '.' << buildObj.get<uint32_t>();
-
-                        // try to find in _localApps (among already installed)
-                        // if found -> installed -> compare version -> set "hasUpdate"
-                        const auto it = std::find_if(_localApps.begin(), _localApps.end(),
-                            [guid](const auto& app) -> bool {
-                                const auto appIt = app.find(DApp::kGuid);
-                                if (appIt == app.end())
-                                {
-                                    return false;
+                            const auto idx = std::find_if(_publishers.cbegin(), _publishers.cend(),
+                                [publisherKey](const auto& publisher) -> bool {
+                                    return !publisher["publisherKey"].toString().compare(publisherKey, Qt::CaseInsensitive);
                                 }
-                                return appIt->toString() == guid;
-                            }
-                        );
+                            );
 
-                        if (it != _localApps.end())
-                        {
-                            auto& app = *it;
-                            if (compareDAppVersion(version, app["version"].toString()) > 0)
+                            QString publisherName = "";
+
+                            if (idx != _publishers.end())
                             {
-                                app.insert("hasUpdate", true);
+                                publisherName = (*idx)["nickname"].toString();
                             }
-                            app.insert(DApp::kIpfsId, parseStringField(item.value(), "ipfs_id"));
-                            if (!app.contains(DApp::kPublisherKey))
+
+                            LOG_DEBUG() << "Parsing DApp from contract, guid - " << guid.toStdString() << ", publisher - " << publisherKey.toStdString();
+
+                            // parse version
+                            auto versionObj = item.value()["version"];
+
+                            if (versionObj.empty() || !versionObj.is_object())
                             {
-                                app.insert(DApp::kPublisherKey, publisherKey);
+                                throw std::runtime_error("Invalid 'version' of the dapp");
                             }
-                            if (!app.contains(DApp::kPublisherName))
+
+                            auto majorObj = versionObj["major"];
+                            auto minorObj = versionObj["minor"];
+                            auto releaseObj = versionObj["release"];
+                            auto buildObj = versionObj["build"];
+                            if (majorObj.empty() || !majorObj.is_number_unsigned() ||
+                                minorObj.empty() || !minorObj.is_number_unsigned() ||
+                                releaseObj.empty() || !releaseObj.is_number_unsigned() ||
+                                buildObj.empty() || !buildObj.is_number_unsigned())
                             {
-                                app.insert(DApp::kPublisherName, publisherName);
+                                throw std::runtime_error("Invalid 'version' of the dapp");
                             }
-                        }
-                        else
-                        {
+
+                            QString version;
+                            QTextStream textStream(&version);
+                            textStream << majorObj.get<uint32_t>() << '.' << minorObj.get<uint32_t>() << '.'
+                                << releaseObj.get<uint32_t>() << '.' << buildObj.get<uint32_t>();
+
                             QMap<QString, QVariant> app;
                             app.insert(DApp::kDescription, decodeStringField(item.value(), "description"));
                             app.insert(DApp::kName, decodeStringField(item.value(), "name"));
@@ -673,6 +648,7 @@ namespace beamui::applications
                             app.insert(DApp::kGuid, guid);
                             app.insert(DApp::kPublisherKey, publisherKey);
                             app.insert(DApp::kPublisherName, publisherName);
+                            app.insert(DApp::kVersion, version);
 
                             Category category = static_cast<Category>(item.value()["category"].get<int>());
                             app.insert(DApp::kCategory, item.value()["category"].get<int>());
@@ -682,16 +658,24 @@ namespace beamui::applications
                             app.insert(DApp::kSupported, isAppSupported(app));
                             app.insert(DApp::kNotInstalled, true);
 
-                            _shaderApps.push_back(app);
+                            result.push_back(app);
                         }
+                        catch (std::runtime_error& err)
+                        {
+                            LOG_ERROR() << "Error while parsing app from contract" << ", " << err.what();
+                        }
+                    }
+
+                    if (result != _shaderApps)
+                    {
+                        _shaderApps = result;
+                        emit appsChanged();
                     }
                 }
                 catch (std::runtime_error& err)
                 {
                     LOG_ERROR() << "Error while parsing app from contract" << ", " << err.what();
                 }
-
-                emit appsChanged();
             }
         );
     }
@@ -836,36 +820,140 @@ namespace beamui::applications
 
     QList<QVariantMap> AppsViewModel::getApps()
     {
-        QList<QVariantMap> result = _localApps + _remoteApps + _shaderApps;
+        QList<QVariantMap> result = _remoteApps + _devApps;
+        QList<QVariantMap> notInstalled, installed, installedFromFile;
+
+        for (const auto& app : _shaderApps)
+        {
+            const auto it = std::find_if(_localApps.begin(), _localApps.end(),
+                [guid = app[DApp::kGuid]](const auto& tmp) -> bool {
+                    const auto appIt = tmp.find(DApp::kGuid);
+                    if (appIt == tmp.end())
+                    {
+                        return false;
+                    }
+                    return appIt->toString() == guid;
+                }
+            );
+
+            if (it != _localApps.end())
+            {
+                auto tmp = *it;
+                if (compareDAppVersion(app[DApp::kVersion].toString(), tmp[DApp::kVersion].toString()) > 0)
+                {
+                    tmp.insert("hasUpdate", true);
+                }
+                tmp.insert(DApp::kIpfsId, app[DApp::kIpfsId]);
+                if (!tmp.contains(DApp::kPublisherKey))
+                {
+                    tmp.insert(DApp::kPublisherKey, app[DApp::kPublisherKey]);
+                }
+                if (!tmp.contains(DApp::kPublisherName))
+                {
+                    tmp.insert(DApp::kPublisherName, app[DApp::kPublisherName]);
+                }
+                installed.push_back(tmp);
+            }
+            else
+            {
+                notInstalled.push_back(app);
+            }
+        }
+
+        for (const auto& app : _localApps)
+        {
+            const auto it = std::find_if(installed.begin(), installed.end(),
+                [guid = app[DApp::kGuid]](const auto& tmp) -> bool {
+                    const auto appIt = tmp.find(DApp::kGuid);
+                    if (appIt == tmp.end())
+                    {
+                        return false;
+                    }
+                    return appIt->toString() == guid;
+                }
+            );
+
+            if (it == installed.end())
+            {
+                installedFromFile.push_back(app);
+            }
+        }
+
+        result += installedFromFile;
+
+        if (_publisherInfo.empty())
+        {
+            result += installed + notInstalled;
+        }
+        else
+        {
+            for (const auto& app : installed)
+            {
+                if (app[DApp::kPublisherKey] == _publisherInfo["publisherKey"])
+                {
+                    result.push_back(app);
+                }
+            }
+            for (const auto& app : notInstalled)
+            {
+                if (app[DApp::kPublisherKey] == _publisherInfo["publisherKey"])
+                {
+                    result.push_back(app);
+                }
+            }
+
+            for (const auto& app : installed)
+            {
+                if (app[DApp::kPublisherKey] != _publisherInfo["publisherKey"])
+                {
+                    result.push_back(app);
+                }
+            }
+            for (const auto& app : notInstalled)
+            {
+                if (app[DApp::kPublisherKey] != _publisherInfo["publisherKey"])
+                {
+                    result.push_back(app);
+                }
+            }
+        }
+
         return result;
     }
 
-    void AppsViewModel::loadLocalApps()
+    void AppsViewModel::loadDevApps()
     {
         QList<QVariantMap> result;
 
-        //
-        // Dev App
-        //
         if (!AppSettings().getDevAppName().isEmpty())
         {
             QVariantMap devapp;
 
-            const auto name  = AppSettings().getDevAppName();
-            const auto url   = AppSettings().getDevAppUrl();
+            const auto name = AppSettings().getDevAppName();
+            const auto url = AppSettings().getDevAppUrl();
             const auto appid = QString::fromStdString(beam::wallet::GenerateAppID(name.toStdString(), url.toStdString()));
 
             //% "This is your dev application"
-            devapp.insert(DApp::kDescription,   qtTrId("apps-devapp"));
-            devapp.insert(DApp::kName,          name);
-            devapp.insert(DApp::kUrl,           url);
-            devapp.insert(DApp::kApiVersion,    AppSettings().getDevAppApiVer());
+            devapp.insert(DApp::kDescription, qtTrId("apps-devapp"));
+            devapp.insert(DApp::kName, name);
+            devapp.insert(DApp::kUrl, url);
+            devapp.insert(DApp::kApiVersion, AppSettings().getDevAppApiVer());
             devapp.insert(DApp::kMinApiVersion, AppSettings().getDevAppMinApiVer());
             devapp.insert("appid", appid);
             devapp.insert(DApp::kSupported, true);
             result.push_back(devapp);
         }
 
+        if (_devApps != result)
+        {
+            _devApps = result;
+            emit appsChanged();
+        }
+    }
+
+    void AppsViewModel::loadLocalApps()
+    {
+        QList<QVariantMap> result;
         QDir appsdir(AppSettings().getLocalAppsPath());
         auto list = appsdir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
 

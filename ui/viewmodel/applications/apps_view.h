@@ -116,6 +116,7 @@ namespace beamui::applications
         [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
         QVariantMap parseAppManifest(QTextStream& io, const QString& appFolder, bool needExpandIcon = true);
         void loadApps();
+        void loadDevApps();
         void loadLocalApps();
         void loadAppsFromServer();
         void loadAppsFromStore();
@@ -137,6 +138,7 @@ namespace beamui::applications
         bool _isAppsListReady = false;
         bool _isInProcessToRequestDApp = false;
         QList<QVariantMap> _localApps;
+        QList<QVariantMap> _devApps;
         QList<QVariantMap> _remoteApps;
         QList<QVariantMap> _shaderApps;
         QList<QVariantMap> _publishers;
