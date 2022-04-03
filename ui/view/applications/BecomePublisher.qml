@@ -20,9 +20,9 @@ CustomDialog {
     signal changePublisherInfo(var info)
 
     function isChanged() {
-        return publisherInfo.nickname !== nameInput.text ||
-            publisherInfo.shortTitle !== shortTitleInput.text ||
-            publisherInfo.aboutMe !== aboutMeInput.text ||
+        return publisherInfo.name !== nameInput.text ||
+            publisherInfo.short_title !== shortTitleInput.text ||
+            publisherInfo.about_me !== aboutMeInput.text ||
             publisherInfo.website !== websiteInput.text ||
             publisherInfo.twitter !== twitterInput.text ||
             publisherInfo.linkedin !== linkedinInput.text ||
@@ -103,7 +103,7 @@ CustomDialog {
                     width: 335
                     height: 45
                     color: Style.content_main
-                    text: !!control.publisherInfo.nickname ? control.publisherInfo.nickname : ""
+                    text: !!control.publisherInfo.name ? control.publisherInfo.name : ""
                     maximumLength: 30
                 }
             }
@@ -124,7 +124,7 @@ CustomDialog {
                     width: 335
                     height: 45
                     color: Style.content_main
-                    text: !!control.publisherInfo.shortTitle ? control.publisherInfo.shortTitle : ""
+                    text: !!control.publisherInfo.short_title ? control.publisherInfo.short_title : ""
                     maximumLength: 50
                 }
 
@@ -154,7 +154,7 @@ CustomDialog {
                     width: 701
                     height: 45
                     color: Style.content_main
-                    text: !!control.publisherInfo.aboutMe ? control.publisherInfo.aboutMe : ""
+                    text: !!control.publisherInfo.about_me ? control.publisherInfo.about_me : ""
                     maximumLength: 150
                 }
 
@@ -345,9 +345,9 @@ CustomDialog {
                 icon.source: "qrc:/assets/icon-cancel-white.svg"
                 text: qsTrId("general-cancel")
                 onClicked: {
-                    nameInput.text = !!control.publisherInfo.nickname ? control.publisherInfo.nickname : "";
-                    shortTitleInput.text = !!control.publisherInfo.shortTitle ? control.publisherInfo.shortTitle : "";
-                    aboutMeInput.text = !!control.publisherInfo.aboutMe ? control.publisherInfo.aboutMe : "";
+                    nameInput.text = !!control.publisherInfo.name ? control.publisherInfo.name : "";
+                    shortTitleInput.text = !!control.publisherInfo.short_title ? control.publisherInfo.short_title : "";
+                    aboutMeInput.text = !!control.publisherInfo.about_me ? control.publisherInfo.about_me : "";
                     websiteInput.text = !!control.publisherInfo.website ? control.publisherInfo.website : "";
                     twitterInput.text = !!control.publisherInfo.twitter ? control.publisherInfo.twitter : "";
                     linkedinInput.text = control.publisherInfo.linkedin ? control.publisherInfo.linkedin : "";
@@ -374,9 +374,9 @@ CustomDialog {
                 enabled: nameInput.text && isChanged() && allFieldsIsValid()
                 onClicked: {
                     var info = {
-                        nickname: nameInput.text,
-                        shortTitle: shortTitleInput.text,
-                        aboutMe: aboutMeInput.text,
+                        name: nameInput.text,
+                        short_title: shortTitleInput.text,
+                        about_me: aboutMeInput.text,
                         website: websiteInput.text,
                         twitter: twitterInput.text,
                         linkedin: linkedinInput.text,

@@ -4,10 +4,10 @@
 
 PublisherItem::PublisherItem(const QVariantMap& publisherInfo)
 {
-    _publisherKey = publisherInfo["publisherKey"].toString();
-    _nickname = publisherInfo["nickname"].toString();
-    _shortTitle = publisherInfo["shortTitle"].toString();
-    _aboutMe = publisherInfo["aboutMe"].toString();
+    _publisherKey = publisherInfo["pubkey"].toString();
+    _nickname = publisherInfo["name"].toString();
+    _shortTitle = publisherInfo["short_title"].toString();
+    _aboutMe = publisherInfo["about_me"].toString();
     _website = publisherInfo["website"].toString();
     _twitter = publisherInfo["twitter"].toString();
     _linkedin = publisherInfo["linkedin"].toString();
@@ -73,15 +73,15 @@ PublishersViewModel::PublishersViewModel()
     for (size_t i = 0; i < 6; ++i)
     {
         QVariantMap info;
-        info["nickname"] = QString::number(i) + " Fluffy the Mouse";
-        info["shortTitle"] = "Beam biggest fan biggest fan biggest fan biggest fan biggest fan";
-        info["aboutMe"] = "Bilbo was very rich and very peculiar, and had been the wonder of the Shire for sixty years, ever since his remarkable disappearance and unexpected return. The riches he had brought back from his travels had now become a local legend, and it was popularly believed, whatever the old folk might say.";
+        info["name"] = QString::number(i) + " Fluffy the Mouse";
+        info["short_title"] = "Beam biggest fan biggest fan biggest fan biggest fan biggest fan";
+        info["about_me"] = "Bilbo was very rich and very peculiar, and had been the wonder of the Shire for sixty years, ever since his remarkable disappearance and unexpected return. The riches he had brought back from his travels had now become a local legend, and it was popularly believed, whatever the old folk might say.";
         info["website"] = "https://website.org";
-        info["publisherKey"] = "128dhwue8yfhy7f9fy9e3hfouf";
+        info["pubkey"] = "128dhwue8yfhy7f9fy9e3hfouf";
         m_publishersInfo.append(info);
     }
 
-    m_publishersInfo[1]["nickname"] = ("https://website.org");
+    m_publishersInfo[1]["name"] = ("https://website.org");
 
     m_publishersInfo[1]["discord"] = ("https://website.org");
     m_publishersInfo[2]["discord"] = ("https://website.org");

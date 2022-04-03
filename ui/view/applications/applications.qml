@@ -221,7 +221,7 @@ ColumnLayout {
                     PrimaryButton {
                         id:           publisherDetails
                                       //% "become a publisher"
-                        text:         viewModel.isPublisher ? viewModel.publisherInfo.nickname : qsTrId("apps-become-a-publisher")
+                        text:         viewModel.isPublisher ? viewModel.publisherInfo.name : qsTrId("apps-become-a-publisher")
                         icon.source:  "qrc:/assets/icon-dapps_store-become-a-publisher.svg"
                         allLowercase: false
                         onClicked:    navigatePublisherDetails()
@@ -715,8 +715,8 @@ ColumnLayout {
 
     YouArePublisher {
         id:           youArePublisher
-        nickname:     viewModel.publisherInfo.nickname
-        publisherKey: viewModel.publisherInfo.publisherKey
+        nickname:     viewModel.publisherInfo.name
+        publisherKey: viewModel.publisherInfo.pubkey
 
         onGoToMyAccount: {
             youArePublisher.close()

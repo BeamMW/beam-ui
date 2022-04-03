@@ -52,12 +52,34 @@ namespace
         const char kNotInstalled[] = "notInstalled";
         const char kIcon[] = "icon";
         const char kVersion[] = "version";
+        const char kFullPath[] = "fullPath";
+        const char kAppid[] = "appid";
+        const char kMajor[] = "major";
+        const char kMinor[] = "minor";
+        const char kRelease[] = "release";
+        const char kBuild[] = "build";
+        const char kFromServer[] = "isFromServer";
+        const char kHasUpdate[] = "hasUpdate";
 
         const int kNameMaxSize = 30;
         const int kDescriptionMaxSize = 1024;
         const int kApiVersionMaxSize = 10;
         const int kIconMaxSize = 10240; // 10kb
     } // namespace DApp
+
+    namespace Publisher
+    {
+        const char kPubkey[] = "pubkey";
+        const char kName[] = "name";
+        const char kShortTitle[] = "short_title";
+        const char kAboutMe[] = "about_me";
+        const char kWebsite[] = "website";
+        const char kTwitter[] = "twitter";
+        const char kLinkedin[] = "linkedin";
+        const char kInstagramp[] = "instagram";
+        const char kTelegram[] = "telegram";
+        const char kDiscord[] = "discord";
+    }
 
     QString fromHex(const std::string& value)
     {
@@ -98,16 +120,16 @@ namespace
     {
         QVariantMap tmp;
 
-        tmp["publisherKey"] = QString::fromStdString(info["pubkey"].get<std::string>());
-        tmp["nickname"] = fromHex(info["name"].get<std::string>());
-        tmp["shortTitle"] = fromHex(info["short_title"].get<std::string>());
-        tmp["aboutMe"] = fromHex(info["about_me"].get<std::string>());
-        tmp["website"] = fromHex(info["website"].get<std::string>());
-        tmp["twitter"] = fromHex(info["twitter"].get<std::string>());
-        tmp["linkedin"] = fromHex(info["linkedin"].get<std::string>());
-        tmp["instagram"] = fromHex(info["instagram"].get<std::string>());
-        tmp["telegram"] = fromHex(info["telegram"].get<std::string>());
-        tmp["discord"] = fromHex(info["discord"].get<std::string>());
+        tmp[Publisher::kPubkey] = QString::fromStdString(info[Publisher::kPubkey].get<std::string>());
+        tmp[Publisher::kName] = fromHex(info[Publisher::kName].get<std::string>());
+        tmp[Publisher::kShortTitle] = fromHex(info[Publisher::kShortTitle].get<std::string>());
+        tmp[Publisher::kAboutMe] = fromHex(info[Publisher::kAboutMe].get<std::string>());
+        tmp[Publisher::kWebsite] = fromHex(info[Publisher::kWebsite].get<std::string>());
+        tmp[Publisher::kTwitter] = fromHex(info[Publisher::kTwitter].get<std::string>());
+        tmp[Publisher::kLinkedin] = fromHex(info[Publisher::kLinkedin].get<std::string>());
+        tmp[Publisher::kInstagramp] = fromHex(info[Publisher::kInstagramp].get<std::string>());
+        tmp[Publisher::kTelegram] = fromHex(info[Publisher::kTelegram].get<std::string>());
+        tmp[Publisher::kDiscord] = fromHex(info[Publisher::kDiscord].get<std::string>());
 
         return tmp;
     }
@@ -202,8 +224,8 @@ namespace
 
     bool isAppSupported(const QVariantMap& app)
     {
-        return apiSupported(app.contains("api_version") ? app["api_version"].toString() : "current") ||
-            apiSupported(app.contains("min_api_version") ? app["min_api_version"].toString() : "");
+        return apiSupported(app.contains(DApp::kApiVersion) ? app[DApp::kApiVersion].toString() : "current") ||
+            apiSupported(app.contains(DApp::kMinApiVersion) ? app[DApp::kMinApiVersion].toString() : "");
     }
 
     void checkDAppFieldSize(const QVariantMap& app)
@@ -373,7 +395,7 @@ namespace beamui::applications
         const auto surl = url.get<std::string>();
         app.insert(DApp::kUrl, expandLocalUrl(appFolder, surl));
 
-        const auto& icon = json["icon"];
+        const auto& icon = json[DApp::kIcon];
         if (!icon.empty())
         {
             if (!icon.is_string())
@@ -388,7 +410,7 @@ namespace beamui::applications
             }
             else
             {
-                ipath = QString::fromStdString(json["icon"].get<std::string>());
+                ipath = QString::fromStdString(json[DApp::kIcon].get<std::string>());
 
                 if (ipath.startsWith(kLocalapp))
                 {
@@ -422,14 +444,14 @@ namespace beamui::applications
             app.insert(DApp::kMinApiVersion, QString::fromStdString(mav.get<std::string>()));
         }
 
-        const auto& v = json["version"];
+        const auto& v = json[DApp::kVersion];
         if (!v.empty())
         {
             if (!v.is_string())
             {
                 throw std::runtime_error("Invalid version in the manifest file");
             }
-            app.insert("version", QString::fromStdString(v.get<std::string>()));
+            app.insert(DApp::kVersion, QString::fromStdString(v.get<std::string>()));
         }
 
         const auto& categoryObj = json[DApp::kCategory];
@@ -470,7 +492,7 @@ namespace beamui::applications
         app.insert("local", true);
         // TODO: check why we used surl instead of extended url - app["url"]
         const auto appid = beam::wallet::GenerateAppID(sname, app[DApp::kUrl].toString().toStdString());
-        app.insert("appid", QString::fromStdString(appid));
+        app.insert(DApp::kAppid, QString::fromStdString(appid));
 
         return app;
     }
@@ -516,19 +538,19 @@ namespace beamui::applications
                     for (auto& item : json.items())
                     {
                         QVariantMap app;
-                        auto name = parseStringField(item.value(), "name");
-                        auto url = parseStringField(item.value(), "url");
+                        auto name = parseStringField(item.value(), DApp::kName);
+                        auto url = parseStringField(item.value(), DApp::kUrl);
                         const auto appid = beam::wallet::GenerateAppID(name.toStdString(), url.toStdString());
 
-                        app.insert("appid", QString::fromStdString(appid));
-                        app.insert(DApp::kDescription, parseStringField(item.value(), "description"));
+                        app.insert(DApp::kAppid, QString::fromStdString(appid));
+                        app.insert(DApp::kDescription, parseStringField(item.value(), DApp::kDescription));
                         app.insert(DApp::kName, name);
                         app.insert(DApp::kUrl, url);
-                        app.insert(DApp::kIcon, parseStringField(item.value(), "icon"));
+                        app.insert(DApp::kIcon, parseStringField(item.value(), DApp::kIcon));
                         app.insert(DApp::kPublisherName, kBeamPublisherName);
-                        app.insert("publisherKey", kBeamPublisherKey);
+                        app.insert(DApp::kPublisherKey, kBeamPublisherKey);
                         app.insert(DApp::kSupported, isAppSupported(app));
-                        app.insert("isFromServer", true);
+                        app.insert(DApp::kFromServer, true);
 
                         // TODO: check order of the DApps
                         result.push_back(app);
@@ -588,18 +610,18 @@ namespace beamui::applications
                                 throw std::runtime_error("Invalid body of the dapp " + item.key());
                             }
                             auto guid = parseStringField(item.value(), "id");
-                            auto publisherKey = parseStringField(item.value(), "publisher");
+                            auto publisherKey = parseStringField(item.value(), DApp::kPublisherKey);
 
                             // parse DApps only of the user publishers + own
                             if (!_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive) &&
-                                !(isPublisher() && publisherKey.compare(_publisherInfo["publisherKey"].toString(), Qt::CaseInsensitive) == 0))
+                                !(isPublisher() && publisherKey.compare(_publisherInfo[Publisher::kPubkey].toString(), Qt::CaseInsensitive) == 0))
                             {
                                 continue;
                             }
 
                             const auto idx = std::find_if(_publishers.cbegin(), _publishers.cend(),
                                 [publisherKey](const auto& publisher) -> bool {
-                                    return !publisher["publisherKey"].toString().compare(publisherKey, Qt::CaseInsensitive);
+                                    return !publisher[Publisher::kPubkey].toString().compare(publisherKey, Qt::CaseInsensitive);
                                 }
                             );
 
@@ -607,7 +629,7 @@ namespace beamui::applications
 
                             if (idx != _publishers.end())
                             {
-                                publisherName = (*idx)["nickname"].toString();
+                                publisherName = (*idx)[Publisher::kName].toString();
                             }
 
                             LOG_DEBUG() << "Parsing DApp from contract, guid - " << guid.toStdString() << ", publisher - " << publisherKey.toStdString();
@@ -620,10 +642,10 @@ namespace beamui::applications
                                 throw std::runtime_error("Invalid 'version' of the dapp");
                             }
 
-                            auto majorObj = versionObj["major"];
-                            auto minorObj = versionObj["minor"];
-                            auto releaseObj = versionObj["release"];
-                            auto buildObj = versionObj["build"];
+                            auto majorObj = versionObj[DApp::kMajor];
+                            auto minorObj = versionObj[DApp::kMinor];
+                            auto releaseObj = versionObj[DApp::kRelease];
+                            auto buildObj = versionObj[DApp::kBuild];
                             if (majorObj.empty() || !majorObj.is_number_unsigned() ||
                                 minorObj.empty() || !minorObj.is_number_unsigned() ||
                                 releaseObj.empty() || !releaseObj.is_number_unsigned() ||
@@ -638,23 +660,23 @@ namespace beamui::applications
                                 << releaseObj.get<uint32_t>() << '.' << buildObj.get<uint32_t>();
 
                             QMap<QString, QVariant> app;
-                            app.insert(DApp::kDescription, decodeStringField(item.value(), "description"));
-                            app.insert(DApp::kName, decodeStringField(item.value(), "name"));
-                            app.insert(DApp::kIpfsId, parseStringField(item.value(), "ipfs_id"));
+                            app.insert(DApp::kDescription, decodeStringField(item.value(), DApp::kDescription));
+                            app.insert(DApp::kName, decodeStringField(item.value(), DApp::kName));
+                            app.insert(DApp::kIpfsId, parseStringField(item.value(), DApp::kIpfsId));
                             // TODO: check if empty url is allowed for not installed app
                             app.insert(DApp::kUrl, "");
-                            app.insert(DApp::kApiVersion, decodeStringField(item.value(), "api_ver"));
-                            app.insert(DApp::kMinApiVersion, decodeStringField(item.value(), "min_api_ver"));
+                            app.insert(DApp::kApiVersion, decodeStringField(item.value(), DApp::kApiVersion));
+                            app.insert(DApp::kMinApiVersion, decodeStringField(item.value(), DApp::kMinApiVersion));
                             app.insert(DApp::kGuid, guid);
                             app.insert(DApp::kPublisherKey, publisherKey);
                             app.insert(DApp::kPublisherName, publisherName);
                             app.insert(DApp::kVersion, version);
 
-                            Category category = static_cast<Category>(item.value()["category"].get<int>());
-                            app.insert(DApp::kCategory, item.value()["category"].get<int>());
+                            Category category = static_cast<Category>(item.value()[DApp::kCategory].get<int>());
+                            app.insert(DApp::kCategory, item.value()[DApp::kCategory].get<int>());
                             app.insert(DApp::kCategoryName, converToString(category));
                             app.insert(DApp::kCategoryColor, getCategoryColor(category));
-                            app.insert(DApp::kIcon, decodeStringField(item.value(), "icon"));
+                            app.insert(DApp::kIcon, decodeStringField(item.value(), DApp::kIcon));
                             app.insert(DApp::kSupported, isAppSupported(app));
                             app.insert(DApp::kNotInstalled, true);
 
@@ -811,7 +833,7 @@ namespace beamui::applications
 
         std::copy_if(_publishers.cbegin(), _publishers.cend(), std::back_inserter(userPublishers),
             [this](const auto& publisher) -> bool {
-                return _userPublishersKeys.contains(publisher["publisherKey"].toString(), Qt::CaseInsensitive);
+                return _userPublishersKeys.contains(publisher[Publisher::kPubkey].toString(), Qt::CaseInsensitive);
             }
         );
 
@@ -841,7 +863,7 @@ namespace beamui::applications
                 auto tmp = *it;
                 if (compareDAppVersion(app[DApp::kVersion].toString(), tmp[DApp::kVersion].toString()) > 0)
                 {
-                    tmp.insert("hasUpdate", true);
+                    tmp.insert(DApp::kHasUpdate, true);
                 }
                 tmp.insert(DApp::kIpfsId, app[DApp::kIpfsId]);
                 if (!tmp.contains(DApp::kPublisherKey))
@@ -889,14 +911,14 @@ namespace beamui::applications
         {
             for (const auto& app : installed)
             {
-                if (app[DApp::kPublisherKey] == _publisherInfo["publisherKey"])
+                if (app[DApp::kPublisherKey] == _publisherInfo[Publisher::kPubkey])
                 {
                     result.push_back(app);
                 }
             }
             for (const auto& app : notInstalled)
             {
-                if (app[DApp::kPublisherKey] == _publisherInfo["publisherKey"])
+                if (app[DApp::kPublisherKey] == _publisherInfo[Publisher::kPubkey])
                 {
                     result.push_back(app);
                 }
@@ -904,14 +926,14 @@ namespace beamui::applications
 
             for (const auto& app : installed)
             {
-                if (app[DApp::kPublisherKey] != _publisherInfo["publisherKey"])
+                if (app[DApp::kPublisherKey] != _publisherInfo[Publisher::kPubkey])
                 {
                     result.push_back(app);
                 }
             }
             for (const auto& app : notInstalled)
             {
-                if (app[DApp::kPublisherKey] != _publisherInfo["publisherKey"])
+                if (app[DApp::kPublisherKey] != _publisherInfo[Publisher::kPubkey])
                 {
                     result.push_back(app);
                 }
@@ -939,7 +961,7 @@ namespace beamui::applications
             devapp.insert(DApp::kUrl, url);
             devapp.insert(DApp::kApiVersion, AppSettings().getDevAppApiVer());
             devapp.insert(DApp::kMinApiVersion, AppSettings().getDevAppMinApiVer());
-            devapp.insert("appid", appid);
+            devapp.insert(DApp::kAppid, appid);
             devapp.insert(DApp::kSupported, true);
             result.push_back(devapp);
         }
@@ -974,7 +996,7 @@ namespace beamui::applications
                 QTextStream in(&file);
 
                 auto app = parseAppManifest(in, justFolder);
-                app.insert("full_path", fullFolder);
+                app.insert(DApp::kFullPath, fullFolder);
                 app.insert(DApp::kSupported, isAppSupported(app));
 
                 result.push_back(app);
@@ -1016,7 +1038,7 @@ namespace beamui::applications
         // find publisher in _publishers by publicKey
         const auto it = std::find_if(_publishers.cbegin(), _publishers.cend(),
             [publisherKey] (const auto& publisher) -> bool {
-                const auto publisherIt = publisher.find("publisherKey");
+                const auto publisherIt = publisher.find(Publisher::kPubkey);
                 if (publisherIt == publisher.end())
                 {
                     assert(false);
@@ -1039,7 +1061,7 @@ namespace beamui::applications
             emit userPublishersChanged();
         }
 
-        return (*it)["nickname"].toString();
+        return (*it)[Publisher::kName].toString();
     }
 
     void AppsViewModel::removePublisherByKey(const QString& publisherKey)
@@ -1056,15 +1078,15 @@ namespace beamui::applications
     {
         std::string args = "action=add_publisher,cid=";
         args += AppSettings().getDappStoreCID();
-        args += ",name=" + toHex(publisherInfo["nickname"].toString());
-        args += ",short_title=" + toHex(publisherInfo["shortTitle"].toString());
-        args += ",about_me=" + toHex(publisherInfo["aboutMe"].toString());
-        args += ",website=" + toHex(publisherInfo["website"].toString());
-        args += ",twitter=" + toHex(publisherInfo["twitter"].toString());
-        args += ",linkedin=" + toHex(publisherInfo["linkedin"].toString());
-        args += ",instagram=" + toHex(publisherInfo["instagram"].toString());
-        args += ",telegram=" + toHex(publisherInfo["telegram"].toString());
-        args += ",discord=" + toHex(publisherInfo["discord"].toString());
+        args += ",name=" + toHex(publisherInfo[Publisher::kName].toString());
+        args += ",short_title=" + toHex(publisherInfo[Publisher::kShortTitle].toString());
+        args += ",about_me=" + toHex(publisherInfo[Publisher::kAboutMe].toString());
+        args += ",website=" + toHex(publisherInfo[Publisher::kWebsite].toString());
+        args += ",twitter=" + toHex(publisherInfo[Publisher::kTwitter].toString());
+        args += ",linkedin=" + toHex(publisherInfo[Publisher::kLinkedin].toString());
+        args += ",instagram=" + toHex(publisherInfo[Publisher::kInstagramp].toString());
+        args += ",telegram=" + toHex(publisherInfo[Publisher::kTelegram].toString());
+        args += ",discord=" + toHex(publisherInfo[Publisher::kDiscord].toString());
 
         QPointer<AppsViewModel> guard(this);
 
@@ -1091,15 +1113,15 @@ namespace beamui::applications
     {
         std::string args = "action=update_publisher,cid=";
         args += AppSettings().getDappStoreCID();
-        args += ",name=" + toHex(publisherInfo["nickname"].toString());
-        args += ",short_title=" + toHex(publisherInfo["shortTitle"].toString());
-        args += ",about_me=" + toHex(publisherInfo["aboutMe"].toString());
-        args += ",website=" + toHex(publisherInfo["website"].toString());
-        args += ",twitter=" + toHex(publisherInfo["twitter"].toString());
-        args += ",linkedin=" + toHex(publisherInfo["linkedin"].toString());
-        args += ",instagram=" + toHex(publisherInfo["instagram"].toString());
-        args += ",telegram=" + toHex(publisherInfo["telegram"].toString());
-        args += ",discord=" + toHex(publisherInfo["discord"].toString());
+        args += ",name=" + toHex(publisherInfo[Publisher::kName].toString());
+        args += ",short_title=" + toHex(publisherInfo[Publisher::kShortTitle].toString());
+        args += ",about_me=" + toHex(publisherInfo[Publisher::kAboutMe].toString());
+        args += ",website=" + toHex(publisherInfo[Publisher::kWebsite].toString());
+        args += ",twitter=" + toHex(publisherInfo[Publisher::kTwitter].toString());
+        args += ",linkedin=" + toHex(publisherInfo[Publisher::kLinkedin].toString());
+        args += ",instagram=" + toHex(publisherInfo[Publisher::kInstagramp].toString());
+        args += ",telegram=" + toHex(publisherInfo[Publisher::kTelegram].toString());
+        args += ",discord=" + toHex(publisherInfo[Publisher::kDiscord].toString());
 
         QPointer<AppsViewModel> guard(this);
 
@@ -1125,7 +1147,7 @@ namespace beamui::applications
     bool AppsViewModel::uninstallLocalApp(const QString& appid)
     {
         const auto it = std::find_if(_localApps.begin(), _localApps.end(), [appid](const auto& props) -> bool {
-            const auto ait = props.find("appid");
+            const auto ait = props.find(DApp::kAppid);
             if (ait == props.end())
             {
                 assert(false);
@@ -1140,7 +1162,7 @@ namespace beamui::applications
             return false;
         }
 
-        const auto pathit = it->find("full_path");
+        const auto pathit = it->find(DApp::kFullPath);
         if (pathit == it->end())
         {
             assert(false);
@@ -1339,7 +1361,7 @@ namespace beamui::applications
     {
         if (currentDApp[DApp::kGuid].value<QString>() == currentDApp[DApp::kGuid].value<QString>())
         {
-            return compareDAppVersion(newDApp["version"].value<QString>(), currentDApp["version"].value<QString>()) > 0;
+            return compareDAppVersion(newDApp[DApp::kVersion].value<QString>(), currentDApp[DApp::kVersion].value<QString>()) > 0;
         }
         return false;
     }
@@ -1357,19 +1379,20 @@ namespace beamui::applications
         argsStream << ",name=" << toHex(appName);
         argsStream << ",id=" << guid.toStdString();
         argsStream << ",description=" << toHex(description);
-        argsStream << ",api_ver=" << toHex(app[DApp::kApiVersion].value<QString>());
-        argsStream << ",min_api_ver=" << toHex(app[DApp::kMinApiVersion].value<QString>());
+        argsStream << ",api_version=" << toHex(app[DApp::kApiVersion].value<QString>());
+        argsStream << ",min_api_version=" << toHex(app[DApp::kMinApiVersion].value<QString>());
         argsStream << ",category=" << app[DApp::kCategory].value<uint32_t>();
         argsStream << ",icon=" << toHex(app[DApp::kIcon].value<QString>());
 
         // parse version
-        QStringList version = app["version"].value<QString>().split(".");
+        QStringList version = app[DApp::kVersion].value<QString>().split(".");
 
         for (; version.length() < kCountDAppVersionParts;)
         {
             version.append("0");
         }
 
+        // TODO roman.strilets must be numbers
         argsStream << ",major=" << version[0].toStdString();
         argsStream << ",minor=" << version[1].toStdString();
         argsStream << ",release=" << version[2].toStdString();
@@ -1767,7 +1790,7 @@ namespace beamui::applications
                     auto publisherKey = app[DApp::kPublisherKey].value<QString>();
                     const auto idx = std::find_if(_publishers.cbegin(), _publishers.cend(),
                         [publisherKey](const auto& publisher) -> bool {
-                            return !publisher["publisherKey"].toString().compare(publisherKey, Qt::CaseInsensitive);
+                            return !publisher[Publisher::kPubkey].toString().compare(publisherKey, Qt::CaseInsensitive);
                         }
                     );
 
@@ -1775,7 +1798,7 @@ namespace beamui::applications
 
                     if (idx != _publishers.end())
                     {
-                        app[DApp::kPublisherName] = (*idx)["nickname"].toString();
+                        app[DApp::kPublisherName] = (*idx)[Publisher::kName].toString();
                     }
                 }
             }

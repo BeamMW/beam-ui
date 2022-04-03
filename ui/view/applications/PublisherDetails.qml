@@ -37,7 +37,7 @@ ColumnLayout {
     }
 
     function loadPublisherDApps() {
-        var publisherKey = viewModel.publisherInfo.publisherKey
+        var publisherKey = viewModel.publisherInfo.pubkey
         appsList = viewModel.getPublisherDApps(publisherKey)
     }
 
@@ -264,7 +264,7 @@ ColumnLayout {
         y:       (parent.height - height) / 2
         parent:  Overlay.overlay
 
-        readonly property string publicKey: !!control.viewModel.publisherInfo ? control.viewModel.publisherInfo.publisherKey : ""
+        readonly property string publicKey: !!control.viewModel.publisherInfo ? control.viewModel.publisherInfo.pubkey : ""
 
         onOpened: {
             forceActiveFocus()
