@@ -606,7 +606,7 @@ namespace beamui::applications
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args.args()),
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args.args(),
             [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
             {
                 if (!guard)
@@ -737,7 +737,7 @@ namespace beamui::applications
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args.args()),
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args.args(),
             [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
             {
                 if (!guard)
@@ -792,7 +792,7 @@ namespace beamui::applications
         ContractArgs args("my_publisher_info");
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args.args()),
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args.args(),
             [this, guard, hideTxIsSentDialog, showYouArePublsherDialog](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
             {
                 if (!guard)
@@ -1115,7 +1115,7 @@ namespace beamui::applications
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), std::move(args.args()),
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args.args(),
             [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
             {
                 if (!guard)
@@ -1149,7 +1149,7 @@ namespace beamui::applications
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), std::move(args.args()),
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args.args(),
             [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
             {
                 if (!guard)
