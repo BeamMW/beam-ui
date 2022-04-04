@@ -1719,7 +1719,7 @@ namespace beamui::applications
 
                 if (_activeTx.find(id) != _activeTx.end())
                 {
-                    // TODO roman.strilets ????
+                    LOG_ERROR() << "There is already such a transaction id = " << id;
                     return;
                 }
 
@@ -1729,7 +1729,6 @@ namespace beamui::applications
                 {
                     emit showTxIsSent();
                 }
-                // TODO: check TX status
             }
         );
     }
@@ -1817,8 +1816,6 @@ namespace beamui::applications
                             return !publisher[Publisher::kPubkey].toString().compare(publisherKey, Qt::CaseInsensitive);
                         }
                     );
-
-                    QString publisherName = "";
 
                     if (idx != _publishers.end())
                     {
