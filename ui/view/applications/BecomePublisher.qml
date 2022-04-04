@@ -134,6 +134,7 @@ CustomDialog {
                     color: Style.content_main
                     font.pixelSize: 12
                     font.weight: Font.Normal
+                    font.italic: true
                 }
             }
 
@@ -164,6 +165,7 @@ CustomDialog {
                     color: Style.content_main
                     font.pixelSize: 12
                     font.weight: Font.Normal
+                    font.italic: true
                 }
             }
 
@@ -361,7 +363,7 @@ CustomDialog {
 
             CustomButton {
                 palette.button: Style.active
-                icon.source: "qrc:/assets/icon-next-blue.svg"
+                icon.source: control.newPublisher ? "qrc:/assets/icon-next-blue.svg" : "qrc:/assets/icon-done.svg"
 
                 
                 text: control.newPublisher ?

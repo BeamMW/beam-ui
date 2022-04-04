@@ -23,6 +23,7 @@ CustomDialog {
             Layout.topMargin: 40
             Layout.alignment: Qt.AlignHCenter
             font.pixelSize:   18
+            font.weight:      Font.Bold
             color:            Style.content_main
             //% "The transaction is sent"
             text:             qsTrId("dapps-store-transacton-is-sent")
