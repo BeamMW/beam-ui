@@ -81,6 +81,36 @@ namespace
         const char kDiscord[] = "discord";
     }
 
+    class ContractArgs
+    {
+    public:
+        ContractArgs(const std::string& action)
+        {
+            _stream << "action=" << action;
+            _stream << ",cid=" << AppSettings().getDappStoreCID();
+        }
+
+        void append(const std::string& arg, const std::string& value)
+        {
+            _stream << "," << arg << "=" << value;
+        }
+
+        void append(const std::string& arg, uint32_t value)
+        {
+            _stream << "," << arg << "=" << value;
+        }
+
+        std::string args() const
+        {
+            return _stream.str();
+        }
+    private:
+        ContractArgs()
+        {}
+
+        std::stringstream _stream;
+    };
+
     QString fromHex(const std::string& value)
     {
         auto tmp = beam::from_hex(value);
@@ -572,12 +602,11 @@ namespace beamui::applications
 
     void AppsViewModel::loadAppsFromStore()
     {
-        std::string args = "action=view_dapps,cid=";
-        args += AppSettings().getDappStoreCID();
+        ContractArgs args("view_dapps");
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args),
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args.args()),
             [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
             {
                 if (!guard)
@@ -635,7 +664,7 @@ namespace beamui::applications
                             LOG_DEBUG() << "Parsing DApp from contract, guid - " << guid.toStdString() << ", publisher - " << publisherKey.toStdString();
 
                             // parse version
-                            auto versionObj = item.value()["version"];
+                            auto versionObj = item.value()[DApp::kVersion];
 
                             if (versionObj.empty() || !versionObj.is_object())
                             {
@@ -704,12 +733,11 @@ namespace beamui::applications
 
     void AppsViewModel::loadPublishers()
     {
-        std::string args = "action=view_publishers,cid=";
-        args += AppSettings().getDappStoreCID();
+        ContractArgs args("view_publishers");
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args),
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args.args()),
             [this, guard](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
             {
                 if (!guard)
@@ -761,12 +789,10 @@ namespace beamui::applications
 
     void AppsViewModel::loadMyPublisherInfo(bool hideTxIsSentDialog, bool showYouArePublsherDialog)
     {
-        std::string args = "action=my_publisher_info,cid=";
-        args += AppSettings().getDappStoreCID();
-
+        ContractArgs args("my_publisher_info");
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args),
+        AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), std::move(args.args()),
             [this, guard, hideTxIsSentDialog, showYouArePublsherDialog](const std::string& err, const std::string& output, const beam::wallet::TxID& id)
             {
                 if (!guard)
@@ -1076,21 +1102,20 @@ namespace beamui::applications
 
     void AppsViewModel::createPublisher(const QVariantMap& publisherInfo)
     {
-        std::string args = "action=add_publisher,cid=";
-        args += AppSettings().getDappStoreCID();
-        args += ",name=" + toHex(publisherInfo[Publisher::kName].toString());
-        args += ",short_title=" + toHex(publisherInfo[Publisher::kShortTitle].toString());
-        args += ",about_me=" + toHex(publisherInfo[Publisher::kAboutMe].toString());
-        args += ",website=" + toHex(publisherInfo[Publisher::kWebsite].toString());
-        args += ",twitter=" + toHex(publisherInfo[Publisher::kTwitter].toString());
-        args += ",linkedin=" + toHex(publisherInfo[Publisher::kLinkedin].toString());
-        args += ",instagram=" + toHex(publisherInfo[Publisher::kInstagramp].toString());
-        args += ",telegram=" + toHex(publisherInfo[Publisher::kTelegram].toString());
-        args += ",discord=" + toHex(publisherInfo[Publisher::kDiscord].toString());
+        ContractArgs args("add_publisher");
+        args.append(Publisher::kName, toHex(publisherInfo[Publisher::kName].toString()));
+        args.append(Publisher::kShortTitle, toHex(publisherInfo[Publisher::kShortTitle].toString()));
+        args.append(Publisher::kAboutMe, toHex(publisherInfo[Publisher::kAboutMe].toString()));
+        args.append(Publisher::kWebsite, toHex(publisherInfo[Publisher::kWebsite].toString()));
+        args.append(Publisher::kTwitter, toHex(publisherInfo[Publisher::kTwitter].toString()));
+        args.append(Publisher::kLinkedin, toHex(publisherInfo[Publisher::kLinkedin].toString()));
+        args.append(Publisher::kInstagramp, toHex(publisherInfo[Publisher::kInstagramp].toString()));
+        args.append(Publisher::kTelegram, toHex(publisherInfo[Publisher::kTelegram].toString()));
+        args.append(Publisher::kDiscord, toHex(publisherInfo[Publisher::kDiscord].toString()));
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), std::move(args),
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), std::move(args.args()),
             [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
             {
                 if (!guard)
@@ -1111,21 +1136,20 @@ namespace beamui::applications
 
     void AppsViewModel::changePublisherInfo(const QVariantMap& publisherInfo)
     {
-        std::string args = "action=update_publisher,cid=";
-        args += AppSettings().getDappStoreCID();
-        args += ",name=" + toHex(publisherInfo[Publisher::kName].toString());
-        args += ",short_title=" + toHex(publisherInfo[Publisher::kShortTitle].toString());
-        args += ",about_me=" + toHex(publisherInfo[Publisher::kAboutMe].toString());
-        args += ",website=" + toHex(publisherInfo[Publisher::kWebsite].toString());
-        args += ",twitter=" + toHex(publisherInfo[Publisher::kTwitter].toString());
-        args += ",linkedin=" + toHex(publisherInfo[Publisher::kLinkedin].toString());
-        args += ",instagram=" + toHex(publisherInfo[Publisher::kInstagramp].toString());
-        args += ",telegram=" + toHex(publisherInfo[Publisher::kTelegram].toString());
-        args += ",discord=" + toHex(publisherInfo[Publisher::kDiscord].toString());
+        ContractArgs args("update_publisher");
+        args.append(Publisher::kName, toHex(publisherInfo[Publisher::kName].toString()));
+        args.append(Publisher::kShortTitle, toHex(publisherInfo[Publisher::kShortTitle].toString()));
+        args.append(Publisher::kAboutMe, toHex(publisherInfo[Publisher::kAboutMe].toString()));
+        args.append(Publisher::kWebsite, toHex(publisherInfo[Publisher::kWebsite].toString()));
+        args.append(Publisher::kTwitter, toHex(publisherInfo[Publisher::kTwitter].toString()));
+        args.append(Publisher::kLinkedin, toHex(publisherInfo[Publisher::kLinkedin].toString()));
+        args.append(Publisher::kInstagramp, toHex(publisherInfo[Publisher::kInstagramp].toString()));
+        args.append(Publisher::kTelegram, toHex(publisherInfo[Publisher::kTelegram].toString()));
+        args.append(Publisher::kDiscord, toHex(publisherInfo[Publisher::kDiscord].toString()));
 
         QPointer<AppsViewModel> guard(this);
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), std::move(args),
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), std::move(args.args()),
             [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
             {
                 if (!guard)
@@ -1372,17 +1396,15 @@ namespace beamui::applications
         QString appName = app[DApp::kName].value<QString>();
         QString description = app[DApp::kDescription].value<QString>();
 
-        std::stringstream argsStream;
-        argsStream << (isUpdating ? "action=update_dapp," : "action=add_dapp,");
-        argsStream << "cid=" << AppSettings().getDappStoreCID().c_str();
-        argsStream << ",ipfs_id=" << ipfsID;
-        argsStream << ",name=" << toHex(appName);
-        argsStream << ",id=" << guid.toStdString();
-        argsStream << ",description=" << toHex(description);
-        argsStream << ",api_version=" << toHex(app[DApp::kApiVersion].value<QString>());
-        argsStream << ",min_api_version=" << toHex(app[DApp::kMinApiVersion].value<QString>());
-        argsStream << ",category=" << app[DApp::kCategory].value<uint32_t>();
-        argsStream << ",icon=" << toHex(app[DApp::kIcon].value<QString>());
+        ContractArgs args(isUpdating ? "update_dapp" : "add_dapp");
+        args.append(DApp::kIpfsId, ipfsID);
+        args.append(DApp::kName, toHex(appName));
+        args.append("id", guid.toStdString());
+        args.append(DApp::kDescription, toHex(description));
+        args.append(DApp::kApiVersion, toHex(app[DApp::kApiVersion].value<QString>()));
+        args.append(DApp::kMinApiVersion, toHex(app[DApp::kMinApiVersion].value<QString>()));
+        args.append(DApp::kCategory, app[DApp::kCategory].value<uint32_t>());
+        args.append(DApp::kIcon, toHex(app[DApp::kIcon].value<QString>()));
 
         // parse version
         QStringList version = app[DApp::kVersion].value<QString>().split(".");
@@ -1393,16 +1415,16 @@ namespace beamui::applications
         }
 
         // TODO roman.strilets must be numbers
-        argsStream << ",major=" << version[0].toStdString();
-        argsStream << ",minor=" << version[1].toStdString();
-        argsStream << ",release=" << version[2].toStdString();
-        argsStream << ",build=" << version[3].toStdString();
+        args.append(DApp::kMajor, version[0].toStdString());
+        args.append(DApp::kMinor, version[1].toStdString());
+        args.append(DApp::kRelease, version[2].toStdString());
+        args.append(DApp::kBuild, version[3].toStdString());
 
         QPointer<AppsViewModel> guard(this);
 
-        LOG_INFO() << "args: " << argsStream.str();
+        LOG_INFO() << "args: " << args.args();
 
-        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), argsStream.str(),
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args.args(),
             [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
             {
                 if (!guard)
@@ -1894,13 +1916,11 @@ namespace beamui::applications
 
     void AppsViewModel::deleteAppFromStore(const QString& guid)
     {
-        std::stringstream argsStream;
-        argsStream << "action=delete_dapp,";
-        argsStream << "cid=" << AppSettings().getDappStoreCID().c_str();
-        argsStream << ",id=" << guid.toStdString();
+        ContractArgs args("delete_dapp");
+        args.append("id", guid.toStdString());
 
         QPointer<AppsViewModel> guard(this);
-        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), argsStream.str(),
+        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args.args(),
             [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
             {
                 if (!guard)
