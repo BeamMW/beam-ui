@@ -1719,7 +1719,7 @@ namespace beamui::applications
                 auto txId = *tx.GetTxID();
                 if (_activeTx.find(txId) != _activeTx.end())
                 {
-                    LOG_INFO() << "onTransactionsChanged: changeAction = " << static_cast<int>(changeAction) << ", status = " << static_cast<int>(tx.m_status);
+                    LOG_DEBUG() << "onTransactionsChanged: changeAction = " << static_cast<int>(changeAction) << ", status = " << static_cast<int>(tx.m_status);
 
                     Action action = _activeTx[txId];
 
@@ -1745,8 +1745,15 @@ namespace beamui::applications
                             }
                         }
                     }
-                    if (action == Action::UploadDApp)
+                    if (action == Action::UploadDApp || action == Action::DeleteDApp)
                     {
+                        if (changeAction == beam::wallet::ChangeAction::Added && tx.m_status != beam::wallet::TxStatus::Failed) {
+                            std::string str{ tx.m_message.begin(), tx.m_message.end() };
+                            auto comment = QString(str.c_str()).trimmed();
+
+                            emit showDAppStoreTxPopup(comment, QString::fromStdString(std::to_string(txId)));
+                        }
+
                         if (changeAction == beam::wallet::ChangeAction::Updated && tx.m_status == beam::wallet::TxStatus::Completed)
                         {
                             _activeTx.erase(txId);
@@ -1754,20 +1761,7 @@ namespace beamui::applications
                         else if ((changeAction == beam::wallet::ChangeAction::Updated || changeAction == beam::wallet::ChangeAction::Added)
                             && tx.m_status == beam::wallet::TxStatus::Failed)
                         {
-                            emit appPublishFail();
-                            _activeTx.erase(txId);
-                        }
-                    }
-                    if (action == Action::DeleteDApp)
-                    {
-                        if (changeAction == beam::wallet::ChangeAction::Updated && tx.m_status == beam::wallet::TxStatus::Completed)
-                        {
-                            _activeTx.erase(txId);
-                        }
-                        else if ((changeAction == beam::wallet::ChangeAction::Updated || changeAction == beam::wallet::ChangeAction::Added)
-                            && tx.m_status == beam::wallet::TxStatus::Failed)
-                        {
-                            emit appRemoveFail();
+                            (action == Action::UploadDApp) ? emit appPublishFail() : emit appRemoveFail();
                             _activeTx.erase(txId);
                         }
                     }

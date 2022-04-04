@@ -63,9 +63,9 @@ Rectangle {
         showPopup(popup)
     }
 
-    function showAppTxPopup (comment, appname, appicon, txid) {
+    function showAppTxPopup (comment, appname, appicon, txid, isLinkToWalletMainTxTable=false) {
         var popup = Qt.createComponent("controls/AppTxNotification.qml").createObject(main, {
-            comment, appname, appicon, txid
+            comment, appname, appicon, txid, isLinkToWalletMainTxTable
         })
         showPopup(popup)
     }

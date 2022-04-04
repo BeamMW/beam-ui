@@ -50,13 +50,21 @@ ColumnLayout {
         viewModel.removeDApp(app.guid)
     }
 
+    function showDAppStoreTxPopup(comment, txId) {
+        const appName = "DApps Store"
+        const appicon = "qrc:/assets/icon-dapps_store.svg"
+        main.showAppTxPopup(comment, appName, appicon, txId, true);        
+    }
+
     Component.onCompleted: {
         viewModel.appsChanged.connect(loadPublisherDApps)
+        viewModel.showDAppStoreTxPopup.connect(showDAppStoreTxPopup)
         loadPublisherDApps()
     }
 
     Component.onDestruction: {
         viewModel.appsChanged.disconnect(loadPublisherDApps)
+        viewModel.showDAppStoreTxPopup.disconnect(showDAppStoreTxPopup)
     }
 
     //

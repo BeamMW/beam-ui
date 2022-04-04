@@ -110,6 +110,7 @@ namespace beamui::applications
         void appInstallFail(const QString& appName);
         void appPublishFail();
         void appRemoveFail();
+        void showDAppStoreTxPopup(const QString& comment, const QString& txid);
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
