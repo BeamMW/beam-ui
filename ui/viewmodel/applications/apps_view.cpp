@@ -43,6 +43,7 @@ namespace
         const char kApiVersion[] = "api_version";
         const char kMinApiVersion[] = "min_api_version";
         const char kGuid[] = "guid";
+        const char kId[] = "id";
         const char kPublisherKey[] = "publisher";
         const char kPublisherName[] = "publisherName";
         const char kCategory[] = "category";
@@ -79,6 +80,18 @@ namespace
         const char kInstagramp[] = "instagram";
         const char kTelegram[] = "telegram";
         const char kDiscord[] = "discord";
+    }
+
+    namespace Actions
+    {
+        const char kViewDapps[] = "view_dapps";
+        const char kViewPublishers[] = "view_publishers";
+        const char kMyPublisherInfo[] = "my_publisher_info";
+        const char kAddPublisher[] = "add_publisher";
+        const char kUpdatePublisher[] = "update_publisher";
+        const char kUpdateDapp[] = "update_dapp";
+        const char kAddDapp[] = "add_dapp";
+        const char kDeleteDapp[] = "delete_dapp";
     }
 
     class ContractArgs
@@ -602,7 +615,7 @@ namespace beamui::applications
 
     void AppsViewModel::loadAppsFromStore()
     {
-        ContractArgs args("view_dapps");
+        ContractArgs args(Actions::kViewDapps);
 
         QPointer<AppsViewModel> guard(this);
 
@@ -638,7 +651,7 @@ namespace beamui::applications
                             {
                                 throw std::runtime_error("Invalid body of the dapp " + item.key());
                             }
-                            auto guid = parseStringField(item.value(), "id");
+                            auto guid = parseStringField(item.value(), DApp::kId);
                             auto publisherKey = parseStringField(item.value(), DApp::kPublisherKey);
 
                             // parse DApps only of the user publishers + own
@@ -733,7 +746,7 @@ namespace beamui::applications
 
     void AppsViewModel::loadPublishers()
     {
-        ContractArgs args("view_publishers");
+        ContractArgs args(Actions::kViewPublishers);
 
         QPointer<AppsViewModel> guard(this);
 
@@ -789,7 +802,7 @@ namespace beamui::applications
 
     void AppsViewModel::loadMyPublisherInfo(bool hideTxIsSentDialog, bool showYouArePublsherDialog)
     {
-        ContractArgs args("my_publisher_info");
+        ContractArgs args(Actions::kMyPublisherInfo);
         QPointer<AppsViewModel> guard(this);
 
         AppModel::getInstance().getWalletModel()->getAsync()->callShaderAndStartTx(AppSettings().getDappStorePath(), args.args(),
@@ -1097,7 +1110,7 @@ namespace beamui::applications
 
     void AppsViewModel::createPublisher(const QVariantMap& publisherInfo)
     {
-        ContractArgs args("add_publisher");
+        ContractArgs args(Actions::kAddPublisher);
         args.append(Publisher::kName, toHex(publisherInfo[Publisher::kName].toString()));
         args.append(Publisher::kShortTitle, toHex(publisherInfo[Publisher::kShortTitle].toString()));
         args.append(Publisher::kAboutMe, toHex(publisherInfo[Publisher::kAboutMe].toString()));
@@ -1131,7 +1144,7 @@ namespace beamui::applications
 
     void AppsViewModel::changePublisherInfo(const QVariantMap& publisherInfo)
     {
-        ContractArgs args("update_publisher");
+        ContractArgs args(Actions::kUpdatePublisher);
         args.append(Publisher::kName, toHex(publisherInfo[Publisher::kName].toString()));
         args.append(Publisher::kShortTitle, toHex(publisherInfo[Publisher::kShortTitle].toString()));
         args.append(Publisher::kAboutMe, toHex(publisherInfo[Publisher::kAboutMe].toString()));
@@ -1391,10 +1404,10 @@ namespace beamui::applications
         QString appName = app[DApp::kName].value<QString>();
         QString description = app[DApp::kDescription].value<QString>();
 
-        ContractArgs args(isUpdating ? "update_dapp" : "add_dapp");
+        ContractArgs args(isUpdating ? Actions::kUpdateDapp : Actions::kAddDapp);
         args.append(DApp::kIpfsId, ipfsID);
         args.append(DApp::kName, toHex(appName));
-        args.append("id", guid.toStdString());
+        args.append(DApp::kId, guid.toStdString());
         args.append(DApp::kDescription, toHex(description));
         args.append(DApp::kApiVersion, toHex(app[DApp::kApiVersion].value<QString>()));
         args.append(DApp::kMinApiVersion, toHex(app[DApp::kMinApiVersion].value<QString>()));
@@ -1911,8 +1924,8 @@ namespace beamui::applications
 
     void AppsViewModel::deleteAppFromStore(const QString& guid)
     {
-        ContractArgs args("delete_dapp");
-        args.append("id", guid.toStdString());
+        ContractArgs args(Actions::kDeleteDapp);
+        args.append(DApp::kId, guid.toStdString());
 
         QPointer<AppsViewModel> guard(this);
         AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args.args(),
