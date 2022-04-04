@@ -868,8 +868,9 @@ namespace beamui::applications
 
     QList<QVariantMap> AppsViewModel::getApps()
     {
+        // Beam apps and dev app
         QList<QVariantMap> result = _remoteApps + _devApps;
-        QList<QVariantMap> notInstalled, installed, installedFromFile;
+        QList<QVariantMap> notInstalled, installed;
 
         for (const auto& app : _shaderApps)
         {
@@ -892,14 +893,8 @@ namespace beamui::applications
                     tmp.insert(DApp::kHasUpdate, true);
                 }
                 tmp.insert(DApp::kIpfsId, app[DApp::kIpfsId]);
-                if (!tmp.contains(DApp::kPublisherKey))
-                {
-                    tmp.insert(DApp::kPublisherKey, app[DApp::kPublisherKey]);
-                }
-                if (!tmp.contains(DApp::kPublisherName))
-                {
-                    tmp.insert(DApp::kPublisherName, app[DApp::kPublisherName]);
-                }
+                tmp.insert(DApp::kPublisherKey, app[DApp::kPublisherKey]);
+                tmp.insert(DApp::kPublisherName, app[DApp::kPublisherName]);
                 installed.push_back(tmp);
             }
             else
@@ -908,6 +903,7 @@ namespace beamui::applications
             }
         }
 
+        // installed from dapp file
         for (const auto& app : _localApps)
         {
             const auto it = std::find_if(installed.begin(), installed.end(),
@@ -923,12 +919,11 @@ namespace beamui::applications
 
             if (it == installed.end())
             {
-                installedFromFile.push_back(app);
+                result.push_back(app);
             }
         }
 
-        result += installedFromFile;
-
+        // installed and not installed from dapp store 
         if (_publisherInfo.empty())
         {
             result += installed + notInstalled;
