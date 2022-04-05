@@ -323,7 +323,7 @@ Item {
 
         if (isPublisherAdminMode) {
             appMenu.addAction(removeAction)
-        } else if (!app.notInstalled && !app.isFromServer) {
+        } else if (!app.notInstalled && !app.isFromServer && !app.devApp) {
             appMenu.addAction(uninstallAction)
         } else {
             button.showAdditional = false

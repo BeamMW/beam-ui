@@ -60,6 +60,7 @@ namespace
         const char kRelease[] = "release";
         const char kBuild[] = "build";
         const char kFromServer[] = "isFromServer";
+        const char kDevApp[] = "devApp";
         const char kHasUpdate[] = "hasUpdate";
 
         const int kNameMaxSize = 30;
@@ -997,6 +998,7 @@ namespace beamui::applications
             devapp.insert(DApp::kMinApiVersion, AppSettings().getDevAppMinApiVer());
             devapp.insert(DApp::kAppid, appid);
             devapp.insert(DApp::kSupported, true);
+            devapp.insert(DApp::kDevApp, true);
             result.push_back(devapp);
         }
 
