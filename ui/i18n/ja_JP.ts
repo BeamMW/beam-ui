@@ -3790,5 +3790,9 @@ Let&apos;s start!</source>
         <source>Failed to remove DApp</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="dapps-store-ipfs-unavailable">
+        <source>IPFS Service is not running or is not connected to the peers. Please check the settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
