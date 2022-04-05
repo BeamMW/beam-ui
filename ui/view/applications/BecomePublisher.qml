@@ -15,6 +15,7 @@ CustomDialog {
 
     property bool newPublisher: true
     property var publisherInfo
+    property string discordLinkBase: "https://discord.gg/"
 
     signal createPublisher(var info)
     signal changePublisherInfo(var info)
@@ -324,8 +325,8 @@ CustomDialog {
                     id: discordInput
                     width: 335
                     height: 45
-                    placeholderText: "https://discord.gg/Mhmabufq"
-                    text: !!control.publisherInfo.discord ? control.publisherInfo.discord : ""
+                    placeholderText: discordLinkBase + "Mhmabufq"
+                    text: !!control.publisherInfo.discord ? discordLinkBase + control.publisherInfo.discord : ""
                     icon: "qrc:/assets/icon-dapps-store-discord.svg"
                     maximumLength: 50
                     color: isValid ? Style.content_main : Style.validator_error
@@ -355,7 +356,7 @@ CustomDialog {
                     linkedinInput.text = control.publisherInfo.linkedin ? control.publisherInfo.linkedin : "";
                     instagramInput.text = !!control.publisherInfo.instagram ? control.publisherInfo.instagram : "";
                     telegramInput.text = !!control.publisherInfo.telegram ? control.publisherInfo.telegram : "";
-                    discordInput.text = !!control.publisherInfo.discord ? control.publisherInfo.discord : "";
+                    discordInput.text = !!control.publisherInfo.discord ? discordLinkBase + control.publisherInfo.discord : "";
 
                     control.close();
                 }
@@ -375,7 +376,6 @@ CustomDialog {
                 palette.buttonText: Style.content_opposite
                 enabled: nameInput.text && isChanged() && allFieldsIsValid()
                 onClicked: {
-                    var discordLinkBase = "https://discord.gg/";
                     var info = {
                         name: nameInput.text,
                         short_title: shortTitleInput.text,
