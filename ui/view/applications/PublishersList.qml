@@ -348,7 +348,7 @@ ColumnLayout {
                     spacing:           0
                     Layout.leftMargin: 12
                     Layout.alignment:  Qt.AlignTop
-                    Layout.topMargin:  12
+                    Layout.topMargin:  4
 
                    CustomToolButton {
                        visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.websiteRole)
@@ -422,7 +422,7 @@ ColumnLayout {
                 height: publishersTable.rowHeight
                 CustomToolButton {
                     anchors.top:         parent.top
-                    anchors.topMargin:   12
+                    anchors.topMargin:   4
                     anchors.right:       parent.right
                     anchors.rightMargin: 12
                     icon.source:         "qrc:/assets/icon-actions.svg"
