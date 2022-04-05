@@ -85,7 +85,14 @@ Control {
 
                 amountCtrl.tipCtrl = assetTip
                 assetTip.x = amountCtrl.tipX
-                assetTip.y = amountCtrl.tipY
+                var isUnderMouseLocated = true;
+                if (amountCtrl.tipY < 600) {
+                    assetTip.y = amountCtrl.tipY
+                } else {
+                    assetTip.maxScrollHeight = 800
+                    assetTip.y = amountCtrl.tipY - assetTip.height - 20;
+                    isUnderMouseLocated = false
+                }
 
                 assetTip.onVisibleChanged.connect(function () {
                     if (!assetTip.visible) {
@@ -108,8 +115,21 @@ Control {
 
                 assetTip.onWidthChanged.connect(function () {
                     assetTip.x = amountCtrl.tipX
-                    assetTip.y = amountCtrl.tipY
+                    if (amountCtrl.tipY < 600) {
+                        assetTip.y = amountCtrl.tipY
+                    } 
+                    else {
+                        assetTip.y = amountCtrl.tipY - assetTip.height - 20;
+                    }
                 })
+
+                if (!isUnderMouseLocated) {
+                    assetTip.onHeightChanged.connect(function() {
+                        if (assetTip.height < assetTip.maxScrollHeight) {
+                            assetTip.y = amountCtrl.tipY - assetTip.height - 20
+                        } 
+                    })
+                }
 
                 assetTip.onLink = function (link) {
                     assetTip.visible = false
