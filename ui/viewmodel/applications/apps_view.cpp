@@ -354,6 +354,11 @@ namespace beamui::applications
             // update the application info because the list of tracked publishers has changed
             connect(this, &AppsViewModel::userPublishersChanged, this, &AppsViewModel::onUserPublishersChanged);
 
+#ifdef BEAM_IPFS_SUPPORT
+            connect(m_walletModel.get(), &WalletModel::IPFSStatusChanged, this, &AppsViewModel::onIPFSStatus);
+            m_walletModel->getAsync()->getIPFSStatus();
+#endif
+
             loadMyPublisherInfo();
             loadUserPublishers();
 
@@ -1359,6 +1364,7 @@ namespace beamui::applications
 
     void AppsViewModel::publishDApp(bool isUpdating)
     {
+#ifdef BEAM_IPFS_SUPPORT
         auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
         QPointer<AppsViewModel> guard(this);
 
@@ -1389,6 +1395,7 @@ namespace beamui::applications
                 emit appPublishFail();
             }
         );
+#endif // BEAM_IPFS_SUPPORT
     }
 
     bool AppsViewModel::checkDAppNewVersion(const QVariantMap& currentDApp, const QVariantMap& newDApp)
@@ -1464,6 +1471,7 @@ namespace beamui::applications
 
     void AppsViewModel::installApp(const QString& guid)
     {
+#ifdef BEAM_IPFS_SUPPORT
         try
         {
             const auto app = getAppByGUID(guid);
@@ -1527,6 +1535,7 @@ namespace beamui::applications
             emit appInstallFail("");
             return;
         }
+#endif // BEAM_IPFS_SUPPORT
     }
 
     void AppsViewModel::installFromBuffer(QIODevice* ioDevice, const QString& guid)
@@ -1878,6 +1887,7 @@ namespace beamui::applications
 
     void AppsViewModel::removeDApp(const QString& guid)
     {
+#ifdef BEAM_IPFS_SUPPORT
         // TODO: change the order of operations to: first remove from contract -> unpin from IPFS
         try
         {
@@ -1919,6 +1929,7 @@ namespace beamui::applications
             emit appRemoveFail();
             return;
         }
+#endif // BEAM_IPFS_SUPPORT
     }
 
     void AppsViewModel::deleteAppFromStore(const QString& guid)
@@ -1955,6 +1966,7 @@ namespace beamui::applications
 
     void AppsViewModel::updateDApp(const QString& guid)
     {
+#ifdef BEAM_IPFS_SUPPORT
         try
         {
             const auto app = getAppByGUID(guid);
@@ -2041,5 +2053,22 @@ namespace beamui::applications
             LOG_ERROR() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
             return;
         }
+#endif // BEAM_IPFS_SUPPORT
+    }
+
+    void AppsViewModel::onIPFSStatus(bool running, const QString& error, uint32_t peercnt)
+    {
+        bool isIPFSAvailable = running && peercnt;
+
+        if (_isIPFSAvailable != isIPFSAvailable)
+        {
+            _isIPFSAvailable = isIPFSAvailable;
+            emit isIPFSAvailableChanged();
+        }
+    }
+
+    bool AppsViewModel::isIPFSAvailable() const
+    {
+        return _isIPFSAvailable;
     }
 }

@@ -591,6 +591,7 @@ ColumnLayout {
                 opacity:             txPanel.folded ? 1.0 : 0.25
                 visible:             control.hasApps && !control.activeApp
                 appsList:            control.appsList
+                isIPFSAvailable:     viewModel.isIPFSAvailable
 
                 onOpenDnd: function () {
                     dndDialog.open();

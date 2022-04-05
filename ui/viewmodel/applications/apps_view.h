@@ -29,6 +29,7 @@ namespace beamui::applications
         Q_PROPERTY(bool               isPublisher     READ isPublisher       NOTIFY isPublisherChanged)
         Q_PROPERTY(QVariantMap        publisherInfo   READ getPublisherInfo  NOTIFY publisherInfoChanged)
         Q_PROPERTY(QList<QVariantMap> userPublishers  READ getUserPublishers NOTIFY userPublishersChanged)
+        Q_PROPERTY(bool               isIPFSAvailable READ isIPFSAvailable   NOTIFY isIPFSAvailableChanged)
 
     public:
 
@@ -60,6 +61,7 @@ namespace beamui::applications
         [[nodiscard]] QList<QVariantMap> getApps();
         [[nodiscard]] QList<QVariantMap> getUserPublishers();
         bool isPublisher() const;
+        bool isIPFSAvailable() const;
 
         QVariantMap getPublisherInfo() const;
         void setPublisherInfo(const QVariantMap& value);
@@ -111,6 +113,7 @@ namespace beamui::applications
         void appPublishFail();
         void appRemoveFail();
         void showDAppStoreTxPopup(const QString& comment, const QString& txid);
+        void isIPFSAvailableChanged();
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
@@ -130,6 +133,7 @@ namespace beamui::applications
         void deleteAppFromStore(const QString& guid);
         void installFromBuffer(QIODevice* ioDevice, const QString& guid);
         QVariantMap getAppByGUID(const QString& guid);
+        void onIPFSStatus(bool running, const QString& error, uint32_t peercnt);
 
         WalletModel::Ptr m_walletModel;
 
@@ -150,5 +154,6 @@ namespace beamui::applications
         boost::optional<beam::ByteBuffer> _loadedDAppBuffer;
         boost::optional<QVariantMap> _loadedDApp;
         bool _runApp = false;
+        bool _isIPFSAvailable = false;
     };
 }

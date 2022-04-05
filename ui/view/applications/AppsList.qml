@@ -11,6 +11,7 @@ Item {
     property bool hasLocal
     property alias showInstallFromFilePanel: installFromFilePanel.visible
     property bool isPublisherAdminMode:      false
+    property bool isIPFSAvailable:           false
     property var onOpenDnd: function(){
         console.log('open DnD dialog');
     }
@@ -59,8 +60,9 @@ Item {
                     Layout.maximumWidth:    gridLayoutId.width / 2
                     app:                    modelData
                     isPublisherAdminMode:   control.isPublisherAdminMode
+                    isIPFSAvailable:        control.isIPFSAvailable
 
-                    onLaunch: function (app) { 
+                    onLaunch: function (app) {
                         control.launch(app)
                     }
                     onInstall: function (app) {

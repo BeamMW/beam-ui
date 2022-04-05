@@ -14,6 +14,7 @@ Item {
     property var app
     property bool showButtons:          true
     property bool isPublisherAdminMode: false
+    property bool isIPFSAvailable:      false
 
     readonly property int textWidth: 200
 
@@ -22,6 +23,22 @@ Item {
     signal update(var app)
     signal uninstall(var app)
     signal remove(var app)
+
+    onIsIPFSAvailableChanged: {
+        updateButtonStatus()
+    }
+
+    function updateButtonStatus() {
+        if (isPublisherAdminMode) {
+            button.enabled = isIPFSAvailable
+        } else {
+            if (!app.supported) {
+                button.enabled = false
+            } else if (!!app.notInstalled || (!app.notInstalled && !!app.hasUpdate)) {
+                button.enabled = isIPFSAvailable
+            }
+        }
+    }
 
     // background
     Rectangle {
@@ -187,8 +204,11 @@ Item {
                         delay:        500
                         timeout:      2000
                         visible:      false
+                        text:         !app.supported && !control.isPublisherAdminMode ? 
                                       //% "This DApp requires version %1 of Beam Wallet or higher. Please update your wallet."
-                        text:         qsTrId("apps-version-error").arg(app.min_api_version || app.api_version)
+                                      qsTrId("apps-version-error").arg(app.min_api_version || app.api_version)
+                                        //% "IPFS Service is not running or is not connected to the peers. Please check the settings."
+                                      : qsTrId("dapps-store-ipfs-unavailable")
                         width:        300
                         modal:        false
                         parent:       button
@@ -319,7 +339,8 @@ Item {
     Component.onCompleted: {
         button.text = getButtonText()
         button.icon.source = getButtonSource()
-        button.enabled = isPublisherAdminMode ? true : app.supported
+
+        updateButtonStatus()
 
         if (isPublisherAdminMode) {
             appMenu.addAction(removeAction)

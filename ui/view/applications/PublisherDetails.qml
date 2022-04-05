@@ -105,21 +105,65 @@ ColumnLayout {
             text: qsTrId("dapps-store-publisher-page")
         }
 
-        CustomButton {
+        Item {
             Layout.alignment:       Qt.AlignRight
-            height:                 36
-            Layout.preferredHeight: 36
-            width:                  36
-            radius:                 10
-            display:                AbstractButton.IconOnly
-            leftPadding:            6
-            rightPadding:           6
-            palette.button:         Style.active
-            icon.source:            "qrc:/assets/icon-dapps_store-publisher-upload-dapp.svg"
-            icon.width:             24
-            icon.height:            24
-            icon.color:             Style.background_main
-            onClicked:              uploadApp()
+            width:                  uploadDappButton.width
+            height:                 uploadDappButton.height
+
+            CustomButton {
+                id:                     uploadDappButton
+                enabled:                viewModel.isIPFSAvailable
+                anchors.fill:           parent
+                height:                 36
+                Layout.preferredHeight: 36
+                width:                  36
+                radius:                 10
+                display:                AbstractButton.IconOnly
+                leftPadding:            6
+                rightPadding:           6
+                palette.button:         Style.active
+                icon.source:            "qrc:/assets/icon-dapps_store-publisher-upload-dapp.svg"
+                icon.width:             24
+                icon.height:            24
+                icon.color:             Style.background_main
+                onClicked:              uploadApp()
+
+                ToolTip {
+                    id:           tooltip
+                    delay:        500
+                    timeout:      2000
+                    visible:      uploadDappButtonHoverArea.containsMouse
+                    width:        300
+                    modal:        false
+                    x:            uploadDappButton.width - width - 20
+                    y:            uploadDappButton.height + 4
+                    z:            100
+                    padding:      20
+                    closePolicy:  Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+                    contentItem: SFText {
+                        color:            Style.validator_error
+                        font.pixelSize:   12
+                                          //% "IPFS Service is not running or is not connected to the peers. Please check the settings."
+                        text:             qsTrId("dapps-store-ipfs-unavailable")
+                        maximumLineCount: 2
+                        wrapMode:         Text.WordWrap
+                    }
+
+                    background: Rectangle {
+                        radius:       10
+                        color:        Style.background_popup
+                        anchors.fill: parent
+                    }
+                }
+            }
+            MouseArea {
+                id:                      uploadDappButtonHoverArea
+                anchors.fill:            uploadDappButton
+                hoverEnabled:            true
+                propagateComposedEvents: true
+                enabled:                 !uploadDappButton.enabled
+            }
         }
 
         CustomButton {
@@ -214,15 +258,57 @@ ColumnLayout {
             text: qsTrId("dapps-store-publisher-have-not-dapps")
         }
 
-        PrimaryButton {
+        Item {
             Layout.topMargin: 40
             Layout.alignment: Qt.AlignHCenter
-                              //% "upload your first dapp"
-            text:             qsTrId("dapps-store-publisher-upload-first-dapp")
-            icon.source:      "qrc:/assets/icon-dapps_store-publisher-upload-dapp.svg"
-            icon.width:       16
-            icon.height:      16
-            onClicked:        uploadApp()
+            width:            uploadFirstDAppButton.width
+            height:           uploadFirstDAppButton.height
+
+            PrimaryButton {
+                id:               uploadFirstDAppButton
+                enabled:          viewModel.isIPFSAvailable
+                                  //% "upload your first dapp"
+                text:             qsTrId("dapps-store-publisher-upload-first-dapp")
+                icon.source:      "qrc:/assets/icon-dapps_store-publisher-upload-dapp.svg"
+                icon.width:       16
+                icon.height:      16
+                onClicked:        uploadApp()
+
+                ToolTip {
+                    delay:        500
+                    timeout:      2000
+                    visible:      uploadFirstDAppButtonHoverArea.containsMouse
+                    width:        300
+                    modal:        false
+                    x:            parent.width - width - 20
+                    y:            parent.height + 4
+                    z:            100
+                    padding:      20
+                    closePolicy:  Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+                    contentItem: SFText {
+                        color:            Style.validator_error
+                        font.pixelSize:   12
+                                          //% "IPFS Service is not running or is not connected to the peers. Please check the settings."
+                        text:             qsTrId("dapps-store-ipfs-unavailable")
+                        maximumLineCount: 2
+                        wrapMode:         Text.WordWrap
+                    }
+
+                    background: Rectangle {
+                        radius:       10
+                        color:        Style.background_popup
+                        anchors.fill: parent
+                    }
+                }
+            }
+            MouseArea {
+                id:                      uploadFirstDAppButtonHoverArea
+                anchors.fill:            uploadFirstDAppButton
+                hoverEnabled:            true
+                propagateComposedEvents: true
+                enabled:                 !uploadFirstDAppButton.enabled
+            }
         }
 
         Item {
@@ -239,6 +325,7 @@ ColumnLayout {
         appsList:                 control.appsList
         showInstallFromFilePanel: false
         isPublisherAdminMode:     true
+        isIPFSAvailable:          control.viewModel.isIPFSAvailable
 
         onUpdate: function (app) {
             control.uploadNewVersion(app)
