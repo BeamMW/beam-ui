@@ -324,13 +324,13 @@ CustomDialog {
                     id: discordInput
                     width: 335
                     height: 45
-                    placeholderText: "login"
+                    placeholderText: "https://discord.gg/Mhmabufq"
                     text: !!control.publisherInfo.discord ? control.publisherInfo.discord : ""
                     icon: "qrc:/assets/icon-dapps-store-discord.svg"
                     maximumLength: 50
                     color: isValid ? Style.content_main : Style.validator_error
                     backgroundColor: isValid ? Style.content_main : Style.validator_error
-                    validator: RegExpValidator { regExp: /^[A-Za-z0-9_]+$/ }
+                    validator: RegExpValidator { regExp: /^https:\/\/discord.gg\/[A-Za-z0-9]+$/ }
                 }
             }
         }
@@ -375,6 +375,7 @@ CustomDialog {
                 palette.buttonText: Style.content_opposite
                 enabled: nameInput.text && isChanged() && allFieldsIsValid()
                 onClicked: {
+                    var discordLinkBase = "https://discord.gg/";
                     var info = {
                         name: nameInput.text,
                         short_title: shortTitleInput.text,
@@ -384,7 +385,7 @@ CustomDialog {
                         linkedin: linkedinInput.text,
                         instagram: instagramInput.text,
                         telegram: telegramInput.text,
-                        discord: discordInput.text
+                        discord: discordInput.text.substring(discordLinkBase.length)
                     };
                     if (control.newPublisher) {
                         control.createPublisher(info);
