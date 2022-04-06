@@ -1400,10 +1400,16 @@ namespace beamui::applications
 
     bool AppsViewModel::checkDAppNewVersion(const QVariantMap& currentDApp, const QVariantMap& newDApp)
     {
-        if (currentDApp[DApp::kGuid].value<QString>() == currentDApp[DApp::kGuid].value<QString>())
+        if (currentDApp[DApp::kGuid].value<QString>() == newDApp[DApp::kGuid].value<QString>())
         {
-            return compareDAppVersion(newDApp[DApp::kVersion].value<QString>(), currentDApp[DApp::kVersion].value<QString>()) > 0;
+            auto result = compareDAppVersion(newDApp[DApp::kVersion].value<QString>(), currentDApp[DApp::kVersion].value<QString>()) > 0;
+            if (!result)
+            {
+                LOG_ERROR() << "checkDAppNewVersion: New DApp has the wrong version. The version of the new DApp must be larger than the current version.";
+            }
+            return result;
         }
+        LOG_ERROR() << "checkDAppNewVersion: Guid doesn't match, it's different DApps.";
         return false;
     }
 
