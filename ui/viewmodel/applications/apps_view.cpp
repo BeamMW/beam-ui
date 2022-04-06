@@ -2085,7 +2085,7 @@ namespace beamui::applications
                     auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
 
                     ipfs->AnyThread_unpin(ipfsId.toStdString(),
-                        [this, guard, ipfsId]() mutable
+                        [guard, ipfsId]() mutable
                         {
                             if (!guard)
                             {
@@ -2093,7 +2093,7 @@ namespace beamui::applications
                             }
                             LOG_INFO() << "Successfully unpin app " << ipfsId.toStdString() << " from ipfs";
                         },
-                        [this, ipfsId](std::string&& err)
+                        [ipfsId](std::string&& err)
                         {
                             LOG_ERROR() << "Failed to unpin app " << ipfsId.toStdString() << " from ipfs : " << err;
                         });
