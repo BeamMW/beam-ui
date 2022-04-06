@@ -299,7 +299,7 @@ CustomDialog {
                     id: telegramInput
                     width: 335
                     height: 45
-                    placeholderText: "nickname"
+                    placeholderText: "nickname or chanel"
                     text: !!control.publisherInfo.telegram ? control.publisherInfo.telegram : ""
                     icon: "qrc:/assets/icon-dapps-store-telegram.svg"
                     maximumLength: 50
