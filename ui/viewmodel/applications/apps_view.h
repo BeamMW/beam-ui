@@ -134,6 +134,7 @@ namespace beamui::applications
         void installFromBuffer(QIODevice* ioDevice, const QString& guid);
         QVariantMap getAppByGUID(const QString& guid);
         void onIPFSStatus(bool running, const QString& error, uint32_t peercnt);
+        void unpinDeletedDApps();
 
         WalletModel::Ptr m_walletModel;
 
@@ -155,5 +156,6 @@ namespace beamui::applications
         boost::optional<QVariantMap> _loadedDApp;
         bool _runApp = false;
         bool _isIPFSAvailable = false;
+        QList<QString> _ipfsIdsToUnpin;
     };
 }

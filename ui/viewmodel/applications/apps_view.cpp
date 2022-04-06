@@ -739,6 +739,8 @@ namespace beamui::applications
                     if (result != _shaderApps)
                     {
                         _shaderApps = result;
+                        unpinDeletedDApps();
+
                         emit appsChanged();
                     }
                 }
@@ -1905,28 +1907,15 @@ namespace beamui::applications
             }
 
             const auto ipfsID = app[DApp::kIpfsId].toString();
-            const auto appName = app[DApp::kName].toString();
 
-            // unpin dapp binary data from ipfs
-            QPointer<AppsViewModel> guard(this);
-            auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
+            if (_ipfsIdsToUnpin.contains(ipfsID))
+            {
+                return;
+            }
 
-            ipfs->AnyThread_unpin(ipfsID.toStdString(),
-                [this, guard, appName, guid, ipfsID]() mutable
-                {
-                    if (!guard)
-                    {
-                        return;
-                    }
-                    LOG_INFO() << "Successfully unpin app" << appName.toStdString() << "(" << ipfsID.toStdString() << ") from ipfs : ";
-                    deleteAppFromStore(guid);
-                },
-                [this, appName, ipfsID](std::string&& err)
-                {
-                    LOG_ERROR() << "Failed to unpin app" << appName.toStdString() << "(" << ipfsID.toStdString() << ") from ipfs : " << err;
-                    emit appRemoveFail();
-                }
-            );
+            _ipfsIdsToUnpin.push_back(ipfsID);
+
+            deleteAppFromStore(guid);
         }
         catch (const std::runtime_error& err)
         {
@@ -2076,5 +2065,43 @@ namespace beamui::applications
     bool AppsViewModel::isIPFSAvailable() const
     {
         return _isIPFSAvailable;
+    }
+
+    void AppsViewModel::unpinDeletedDApps()
+    {
+        auto start = std::remove_if(_ipfsIdsToUnpin.begin(), _ipfsIdsToUnpin.end(),
+            [this](const QString& ipfsId)
+            {
+                const auto idx = std::find_if(_shaderApps.cbegin(), _shaderApps.cend(),
+                    [ipfsId](const auto& app)
+                    {
+                        return app[DApp::kIpfsId] == ipfsId;
+                    });
+
+                if (idx == _shaderApps.cend())
+                {
+                    // unpin dapp binary data from ipfs
+                    QPointer<AppsViewModel> guard(this);
+                    auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
+
+                    ipfs->AnyThread_unpin(ipfsId.toStdString(),
+                        [this, guard, ipfsId]() mutable
+                        {
+                            if (!guard)
+                            {
+                                return;
+                            }
+                            LOG_INFO() << "Successfully unpin app " << ipfsId.toStdString() << " from ipfs";
+                        },
+                        [this, ipfsId](std::string&& err)
+                        {
+                            LOG_ERROR() << "Failed to unpin app " << ipfsId.toStdString() << " from ipfs : " << err;
+                        });
+                    return true;
+                }
+                return false;
+            });
+
+        _ipfsIdsToUnpin.erase(start, _ipfsIdsToUnpin.end());
     }
 }
