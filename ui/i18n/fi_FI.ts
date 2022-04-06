@@ -3767,41 +3767,32 @@ Let&apos;s start!</source>
         <source>launch</source>
         <translation type="unfinished">launch</translation>
     </message>
-    <message id="app-create-publisher-title">
-        <source>Create Publisher</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="app-edit-publisher-title">
-        <source>Edit Publisher</source>
-        <oldsource>edit Publisher</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="app-failed-create-publisher">
-        <source>Failed to create publisher</source>
+        <source>Oops... Failed to create Publisher. Please check the log and try again.</source>
+        <oldsource>Failed to create publisher</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="app-failed-edit-publisher">
-        <source>Failed to edit publisher</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="app-publish-dapp-title">
-        <source>Publish DApp</source>
+        <source>Oops... Failed to edit Publisher. Please check the log and try again.</source>
+        <oldsource>Failed to edit publisher</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="app-failed-publish-dapp">
-        <source>Failed to publish DApp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="app-remove-dapp-title">
-        <source>Remove DApp</source>
+        <source>Oops... Failed to publish DApp. Please check the log and try again.</source>
+        <oldsource>Oops... Failed to publish DApp. Please check the logs. Fix it and retry later.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="app-failed-remove-dapp">
-        <source>Failed to remove DApp</source>
+        <source>Oops... Failed to remove DApp. Please check the log and try again.</source>
+        <oldsource>Failed to remove DApp</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-ipfs-unavailable">
         <source>IPFS Service is not running or is not connected to the peers. Please check the settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapp-store-fail-title">
+        <source>Dapp Store</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

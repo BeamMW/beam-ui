@@ -121,19 +121,27 @@ ColumnLayout {
         }
 
         onPublisherCreateFail: function() {
-            publisherCreateFail.open();
+            //% "Oops... Failed to create Publisher. Please check the log and try again."
+            dappStoreFail.text = qsTrId("app-failed-create-publisher");
+            dappStoreFail.open();
         }
 
         onPublisherEditFail: function() {
-            publisherEditFail.open();
+            //% "Oops... Failed to edit Publisher. Please check the log and try again."
+            dappStoreFail.text = qsTrId("app-failed-edit-publisher");
+            dappStoreFail.open();
         }
 
         onAppPublishFail: function() {
-            appPublishFail.open();
+            //% "Oops... Failed to publish DApp. Please check the log and try again."
+            dappStoreFail.text = qsTrId("app-failed-publish-dapp");
+            dappStoreFail.open();
         }
 
         onAppRemoveFail: function() {
-            appRemoveFail.open();
+            //% "Oops... Failed to remove DApp. Please check the log and try again."
+            dappStoreFail.text = qsTrId("app-failed-remove-dapp");
+            dappStoreFail.open();
         }
     }
 
@@ -777,51 +785,15 @@ ColumnLayout {
     }
 
     ConfirmationDialog {
-        id:                      publisherCreateFail
-                                 //% "Create Publisher"
-        title:                   qsTrId("app-create-publisher-title")
+        id:                      dappStoreFail
+                                 //% "Dapp Store"
+        title:                   qsTrId("dapp-store-fail-title")
                                  //% "Ok"
         okButtonText:            qsTrId("general-ok")
         okButton.palette.button: Style.accent_fail
         cancelButtonVisible:     false
                                  //% "Failed to create publisher"
-        text:                    qsTrId("app-failed-create-publisher")
-    }
-
-    ConfirmationDialog {
-        id:                      publisherEditFail
-                                 //% "Edit Publisher"
-        title:                   qsTrId("app-edit-publisher-title")
-                                 //% "Ok"
-        okButtonText:            qsTrId("general-ok")
-        okButton.palette.button: Style.accent_fail
-        cancelButtonVisible:     false
-                                 //% "Failed to edit publisher"
-        text:                    qsTrId("app-failed-edit-publisher")
-    }
-
-    ConfirmationDialog {
-        id:                      appPublishFail
-                                 //% "Publish DApp"
-        title:                   qsTrId("app-publish-dapp-title")
-                                 //% "Ok"
-        okButtonText:            qsTrId("general-ok")
-        okButton.palette.button: Style.accent_fail
-        cancelButtonVisible:     false
-                                 //% "Failed to publish DApp"
-        text:                    qsTrId("app-failed-publish-dapp")
-    }
-
-    ConfirmationDialog {
-        id:                      appRemoveFail
-                                 //% "Remove DApp"
-        title:                   qsTrId("app-remove-dapp-title")
-                                 //% "Ok"
-        okButtonText:            qsTrId("general-ok")
-        okButton.palette.button: Style.accent_fail
-        cancelButtonVisible:     false
-                                 //% "Failed to remove DApp"
-        text:                    qsTrId("app-failed-remove-dapp")
+        //text:                    qsTrId("app-failed-create-publisher")
     }
 
     BecomePublisher {
