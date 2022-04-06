@@ -253,7 +253,7 @@ CustomDialog {
                     maximumLength: 50
                     color: isValid ? Style.content_main : Style.validator_error
                     backgroundColor: isValid ? Style.content_main : Style.validator_error
-                    validator: RegExpValidator { regExp: /^in\/[A-Za-z0-9_]+|company\/[A-Za-z0-9_]+$/ }
+                    validator: RegExpValidator { regExp: /^in\/[A-Za-z0-9_\-]+|company\/[A-Za-z0-9_\-]+$/ }
                 }
             }
 
