@@ -14,6 +14,7 @@ Control {
     property alias  color:         back.leftColor
     property alias  borderColor:   back.leftBorderColor
     property bool   selected:      false
+    property int    popupUpperGap: 28
 
     readonly property bool hasBalanceTip: amountCtrl.hasTip || assetInfo.locked != "0" || assetInfo.amountShielded != "0"
 
@@ -90,7 +91,7 @@ Control {
                     assetTip.y = amountCtrl.tipY
                 } else {
                     assetTip.maxScrollHeight = 800
-                    assetTip.y = amountCtrl.tipY - assetTip.height - 20;
+                    assetTip.y = amountCtrl.tipY - assetTip.height - popupUpperGap;
                     isUnderMouseLocated = false
                 }
 
@@ -119,14 +120,14 @@ Control {
                         assetTip.y = amountCtrl.tipY
                     } 
                     else {
-                        assetTip.y = amountCtrl.tipY - assetTip.height - 20;
+                        assetTip.y = amountCtrl.tipY - assetTip.height - popupUpperGap
                     }
                 })
 
                 if (!isUnderMouseLocated) {
                     assetTip.onHeightChanged.connect(function() {
                         if (assetTip.height < assetTip.maxScrollHeight) {
-                            assetTip.y = amountCtrl.tipY - assetTip.height - 20
+                            assetTip.y = amountCtrl.tipY - assetTip.height - popupUpperGap
                         } 
                     })
                 }
