@@ -31,13 +31,13 @@ ColumnLayout {
 
     function uninstallApp (app) {
         if (viewModel.uninstallLocalApp(app.appid)) {
-            //% "'%1' DApp is successfully uninstalled."
-            uninstallOK.text = qsTrId("apps-uninstall-success").arg(app.name)
-            uninstallOK.open()
+            //% "Everything worked out.\n'%1' DApp is uninstalled."
+            dappStoreOk.text = qsTrId("app-uninstall-success").arg(app.name)
+            dappStoreOk.open()
         } else {
-            //% "Failed to uninstall '%1' DApp."
-            uninstallFail.text = qsTrId("apps-uninstall-fail").arg(app.name)
-            uninstallFail.open()
+            //% "Something went wrong.\nUninstall failed. Please try again later."
+            dappStoreFail.text = qsTrId("app-uninstall-fail")
+            dappStoreFail.open()
         }
     }
 
@@ -97,15 +97,15 @@ ColumnLayout {
         }
 
         onAppInstallOK: function (appName) {
-            //% "'%1' is successfully installed."
-            installOK.text = qsTrId("apps-install-success").arg(appName)
-            installOK.open()
+            //% "Congratulations!\n'%1' DApp is successfully installed."
+            dappStoreOk.text = qsTrId("app-install-success").arg(appName)
+            dappStoreOk.open()
         }
 
         onAppInstallFail: function (appName) {
-            //% "Failed to install DApp:\n%1"
-            installFail.text = qsTrId("apps-install-fail").arg(appName)
-            installFail.open()
+            //% "Sorry, the installation failed.\nPlease, check the file and try again."
+            dappStoreFail.text = qsTrId("app-install-fail")
+            dappStoreFail.open()
         }
 
         onShowTxIsSent: function() {
@@ -747,53 +747,21 @@ ColumnLayout {
     }
 
     ConfirmationDialog {
-        id: installOK
-                             //% "Install DApp"
-        title:               qsTrId("app-install-title")
+        id:                  dappStoreOk
+        title:               qsTrId("dapp-store-dialog-title")
                              //% "Ok"
         okButtonText:        qsTrId("general-ok")
         cancelButtonVisible: false
-    }
-
-    ConfirmationDialog {
-        id:                      installFail
-                                 //% "Install DApp"
-        title:                   qsTrId("app-install-title")
-                                 //% "Ok"
-        okButtonText:            qsTrId("general-ok")
-        okButton.palette.button: Style.accent_fail
-        cancelButtonVisible:     false
-    }
-
-    ConfirmationDialog {
-        id:                  uninstallOK
-                             //% "Uninstall DApp"
-        title:               qsTrId("app-uninstall-title")
-                             //% "Ok"
-        okButtonText:        qsTrId("general-ok")
-        cancelButtonVisible: false
-    }
-
-    ConfirmationDialog {
-        id:                      uninstallFail
-                                 //% "Uninstall DApp"
-        title:                   qsTrId("app-uninstall-title")
-                                 //% "Ok"
-        okButtonText:            qsTrId("general-ok")
-        okButton.palette.button: Style.accent_fail
-        cancelButtonVisible:     false
     }
 
     ConfirmationDialog {
         id:                      dappStoreFail
                                  //% "Dapp Store"
-        title:                   qsTrId("dapp-store-fail-title")
+        title:                   qsTrId("dapp-store-dialog-title")
                                  //% "Ok"
         okButtonText:            qsTrId("general-ok")
         okButton.palette.button: Style.accent_fail
         cancelButtonVisible:     false
-                                 //% "Failed to create publisher"
-        //text:                    qsTrId("app-failed-create-publisher")
     }
 
     BecomePublisher {

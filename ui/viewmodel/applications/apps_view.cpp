@@ -1896,7 +1896,6 @@ namespace beamui::applications
     void AppsViewModel::removeDApp(const QString& guid)
     {
 #ifdef BEAM_IPFS_SUPPORT
-        // TODO: change the order of operations to: first remove from contract -> unpin from IPFS
         try
         {
             const auto app = getAppByGUID(guid);
@@ -2085,7 +2084,7 @@ namespace beamui::applications
                     auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
 
                     ipfs->AnyThread_unpin(ipfsId.toStdString(),
-                        [guard, ipfsId]() mutable
+                        [guard, ipfsId]()
                         {
                             if (!guard)
                             {

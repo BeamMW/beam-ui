@@ -3230,14 +3230,6 @@ cannot be canceled.</translation>
             <numerusform>%n DApp(s) is not available</numerusform>
         </translation>
     </message>
-    <message id="apps-uninstall-success">
-        <source>&apos;%1&apos; DApp is successfully uninstalled.</source>
-        <translation type="unfinished">&apos;%1&apos; DApp is successfully uninstalled.</translation>
-    </message>
-    <message id="apps-uninstall-fail">
-        <source>Failed to uninstall &apos;%1&apos; DApp.</source>
-        <translation type="unfinished">Failed to uninstall &apos;%1&apos; DApp.</translation>
-    </message>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
         <translation type="unfinished">Update Wallet to launch %1 application</translation>
@@ -3249,10 +3241,6 @@ In case you’d like to re-use an earlier created regular address please use the
 In case you’d like to re-use an earlier created regular address please use the Address Book.</oldsource>
         <translation type="unfinished">To ensure a better privacy, new address is generated every time.
 In case you’d like to re-use an earlier created regular address please use the Address Book.</translation>
-    </message>
-    <message id="app-install-title">
-        <source>Install DApp</source>
-        <translation type="unfinished">Install DApp</translation>
     </message>
     <message id="address-details">
         <source>Address details</source>
@@ -3490,15 +3478,6 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="tx-no-transaction-filter">
         <source>No transactions to show</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-install-success">
-        <source>&apos;%1&apos; is successfully installed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-install-fail">
-        <source>Failed to install DApp:
-%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="apps-become-a-publisher">
@@ -3800,7 +3779,29 @@ Let&apos;s start!</source>
         <source>IPFS Service is not running or is not connected to the peers. Please check the settings.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="dapp-store-fail-title">
+    <message id="app-uninstall-success">
+        <source>Everything worked out.
+&apos;%1&apos; DApp is uninstalled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-uninstall-fail">
+        <source>Something went wrong.
+Uninstall failed. Please try again later.</source>
+        <oldsource>Something went wrong.
+Uninstall failed. Please try again late.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-install-success">
+        <source>Congratulations!
+&apos;%1&apos; DApp is successfully installed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-install-fail">
+        <source>Sorry, the installation failed.
+Please, check the file and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapp-store-dialog-title">
         <source>Dapp Store</source>
         <translation type="unfinished"></translation>
     </message>
