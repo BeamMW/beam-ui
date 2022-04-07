@@ -121,25 +121,25 @@ ColumnLayout {
         }
 
         onPublisherCreateFail: function() {
-            //% "Oops... Failed to create Publisher. Please check the log and try again."
+            //% "Oops... Failed to create Publisher.\nPlease check the log and try again."
             dappStoreFail.text = qsTrId("app-failed-create-publisher");
             dappStoreFail.open();
         }
 
         onPublisherEditFail: function() {
-            //% "Oops... Failed to edit Publisher. Please check the log and try again."
+            //% "Oops... Failed to edit Publisher.\nPlease check the log and try again."
             dappStoreFail.text = qsTrId("app-failed-edit-publisher");
             dappStoreFail.open();
         }
 
         onAppPublishFail: function() {
-            //% "Oops... Failed to publish DApp. Please check the log and try again."
+            //% "Oops... Failed to publish DApp.\nPlease check the log and try again."
             dappStoreFail.text = qsTrId("app-failed-publish-dapp");
             dappStoreFail.open();
         }
 
         onAppRemoveFail: function() {
-            //% "Oops... Failed to remove DApp. Please check the log and try again."
+            //% "Oops... Failed to remove DApp.\nPlease check the log and try again."
             dappStoreFail.text = qsTrId("app-failed-remove-dapp");
             dappStoreFail.open();
         }

@@ -3755,23 +3755,27 @@ Let&apos;s start!</source>
         <translation type="unfinished">запусціць</translation>
     </message>
     <message id="app-failed-create-publisher">
-        <source>Oops... Failed to create Publisher. Please check the log and try again.</source>
-        <oldsource>Failed to create publisher</oldsource>
+        <source>Oops... Failed to create Publisher.
+Please check the log and try again.</source>
+        <oldsource>Oops... Failed to create Publisher. Please check the log and try again.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="app-failed-edit-publisher">
-        <source>Oops... Failed to edit Publisher. Please check the log and try again.</source>
-        <oldsource>Failed to edit publisher</oldsource>
+        <source>Oops... Failed to edit Publisher.
+Please check the log and try again.</source>
+        <oldsource>Oops... Failed to edit Publisher. Please check the log and try again.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="app-failed-publish-dapp">
-        <source>Oops... Failed to publish DApp. Please check the log and try again.</source>
-        <oldsource>Oops... Failed to publish DApp. Please check the logs. Fix it and retry later.</oldsource>
+        <source>Oops... Failed to publish DApp.
+Please check the log and try again.</source>
+        <oldsource>Oops... Failed to publish DApp. Please check the log and try again.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="app-failed-remove-dapp">
-        <source>Oops... Failed to remove DApp. Please check the log and try again.</source>
-        <oldsource>Failed to remove DApp</oldsource>
+        <source>Oops... Failed to remove DApp.
+Please check the log and try again.</source>
+        <oldsource>Oops... Failed to remove DApp. Please check the log and try again.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-ipfs-unavailable">
