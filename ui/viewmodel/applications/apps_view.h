@@ -84,8 +84,7 @@ namespace beamui::applications
         Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
         Q_INVOKABLE [[nodiscard]] QString addPublisherByKey(const QString& publisherKey);
         Q_INVOKABLE void removePublisherByKey(const QString& publisherKey);
-        Q_INVOKABLE void createPublisher(const QVariantMap& publisherInfo);
-        Q_INVOKABLE void changePublisherInfo(const QVariantMap& publisherInfo);
+        Q_INVOKABLE void changePublisherInfo(const QVariantMap& publisherInfo, bool isCreating);
         Q_INVOKABLE void contractInfoApproved(int action, const QString& data);
         Q_INVOKABLE void contractInfoRejected();
 
@@ -120,8 +119,8 @@ namespace beamui::applications
         [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
         QVariantMap parseAppManifest(QTextStream& io, const QString& appFolder, bool needExpandIcon = true);
         void loadApps();
-        void loadDevApps();
         void loadLocalApps();
+        void loadDevApps();
         void loadAppsFromServer();
         void loadAppsFromStore();
         void loadPublishers();
@@ -135,6 +134,7 @@ namespace beamui::applications
         QVariantMap getAppByGUID(const QString& guid);
         void onIPFSStatus(bool running, const QString& error, uint32_t peercnt);
         void unpinDeletedDApps();
+        void showErrorDialog(Action action);
 
         WalletModel::Ptr m_walletModel;
 

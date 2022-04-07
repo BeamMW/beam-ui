@@ -548,11 +548,81 @@ namespace beamui::applications
 
     void AppsViewModel::loadApps()
     {
-        // TODO: It mb worth loading in parallel and then putting it together
         loadLocalApps();
         loadDevApps();
         loadAppsFromServer();
         loadAppsFromStore();
+    }
+
+    void AppsViewModel::loadLocalApps()
+    {
+        QList<QVariantMap> result;
+        QDir appsdir(AppSettings().getLocalAppsPath());
+        auto list = appsdir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
+
+        for (const auto& finfo : list)
+        {
+            const auto fullFolder = finfo.absoluteFilePath();
+            const auto justFolder = finfo.fileName();
+            auto mpath = QDir(fullFolder).absoluteFilePath("manifest.json");
+
+            try
+            {
+                QFile file(mpath);
+                if (!file.open(QFile::ReadOnly | QFile::Text))
+                {
+                    throw std::runtime_error("Cannot open file");
+                }
+
+                QTextStream in(&file);
+
+                auto app = parseAppManifest(in, justFolder);
+                app.insert(DApp::kFullPath, fullFolder);
+                app.insert(DApp::kSupported, isAppSupported(app));
+
+                result.push_back(app);
+            }
+            catch (std::runtime_error& err)
+            {
+                LOG_ERROR() << "Error while reading local app from " << mpath.toStdString() << ", " << err.what();
+            }
+        }
+
+        _localApps = result;
+
+        if (!_runApp)
+            emit appsChanged();
+    }
+
+    void AppsViewModel::loadDevApps()
+    {
+        QList<QVariantMap> result;
+
+        if (!AppSettings().getDevAppName().isEmpty())
+        {
+            QVariantMap devapp;
+
+            const auto name = AppSettings().getDevAppName();
+            const auto url = AppSettings().getDevAppUrl();
+            const auto appid = QString::fromStdString(beam::wallet::GenerateAppID(name.toStdString(), url.toStdString()));
+
+            //% "This is your dev application"
+            devapp.insert(DApp::kDescription, qtTrId("apps-devapp"));
+            devapp.insert(DApp::kName, name);
+            devapp.insert(DApp::kUrl, url);
+            devapp.insert(DApp::kApiVersion, AppSettings().getDevAppApiVer());
+            devapp.insert(DApp::kMinApiVersion, AppSettings().getDevAppMinApiVer());
+            devapp.insert(DApp::kAppid, appid);
+            devapp.insert(DApp::kSupported, true);
+            devapp.insert(DApp::kDevApp, true);
+            result.push_back(devapp);
+        }
+
+        if (_devApps != result)
+        {
+            _devApps = result;
+            emit appsChanged();
+        }
     }
 
     void AppsViewModel::loadAppsFromServer()
@@ -985,77 +1055,6 @@ namespace beamui::applications
         return result;
     }
 
-    void AppsViewModel::loadDevApps()
-    {
-        QList<QVariantMap> result;
-
-        if (!AppSettings().getDevAppName().isEmpty())
-        {
-            QVariantMap devapp;
-
-            const auto name = AppSettings().getDevAppName();
-            const auto url = AppSettings().getDevAppUrl();
-            const auto appid = QString::fromStdString(beam::wallet::GenerateAppID(name.toStdString(), url.toStdString()));
-
-            //% "This is your dev application"
-            devapp.insert(DApp::kDescription, qtTrId("apps-devapp"));
-            devapp.insert(DApp::kName, name);
-            devapp.insert(DApp::kUrl, url);
-            devapp.insert(DApp::kApiVersion, AppSettings().getDevAppApiVer());
-            devapp.insert(DApp::kMinApiVersion, AppSettings().getDevAppMinApiVer());
-            devapp.insert(DApp::kAppid, appid);
-            devapp.insert(DApp::kSupported, true);
-            devapp.insert(DApp::kDevApp, true);
-            result.push_back(devapp);
-        }
-
-        if (_devApps != result)
-        {
-            _devApps = result;
-            emit appsChanged();
-        }
-    }
-
-    void AppsViewModel::loadLocalApps()
-    {
-        QList<QVariantMap> result;
-        QDir appsdir(AppSettings().getLocalAppsPath());
-        auto list = appsdir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
-
-        for (const auto& finfo: list)
-        {
-            const auto fullFolder = finfo.absoluteFilePath();
-            const auto justFolder = finfo.fileName();
-            auto mpath = QDir(fullFolder).absoluteFilePath("manifest.json");
-
-            try
-            {
-                QFile file(mpath);
-                if (!file.open(QFile::ReadOnly | QFile::Text))
-                {
-                    throw std::runtime_error("Cannot open file");
-                }
-
-                QTextStream in(&file);
-
-                auto app = parseAppManifest(in, justFolder);
-                app.insert(DApp::kFullPath, fullFolder);
-                app.insert(DApp::kSupported, isAppSupported(app));
-
-                result.push_back(app);
-            }
-            catch(std::runtime_error& err)
-            {
-                LOG_ERROR() << "Error while reading local app from " << mpath.toStdString() << ", " << err.what();
-            }
-        }
-
-        _localApps = result;
-
-        if (!_runApp)
-            emit appsChanged();
-    }
-
     bool AppsViewModel::isPublisher() const
     {
         return !_publisherInfo.empty();
@@ -1117,9 +1116,9 @@ namespace beamui::applications
         }
     }
 
-    void AppsViewModel::createPublisher(const QVariantMap& publisherInfo)
+    void AppsViewModel::changePublisherInfo(const QVariantMap& publisherInfo, bool isCreating)
     {
-        ContractArgs args(Actions::kAddPublisher);
+        ContractArgs args(isCreating ? Actions::kAddPublisher : Actions::kUpdatePublisher);
         args.append(Publisher::kName, toHex(publisherInfo[Publisher::kName].toString()));
         args.append(Publisher::kShortTitle, toHex(publisherInfo[Publisher::kShortTitle].toString()));
         args.append(Publisher::kAboutMe, toHex(publisherInfo[Publisher::kAboutMe].toString()));
@@ -1133,7 +1132,7 @@ namespace beamui::applications
         QPointer<AppsViewModel> guard(this);
 
         AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args.args(),
-            [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
+            [this, guard, isCreating](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
             {
                 if (!guard)
                 {
@@ -1142,45 +1141,12 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_ERROR() << "Failed to create a publisher" << ", " << err;
+                    LOG_ERROR() << (isCreating ? "Failed to create a publisher" : "Failed to change a publisher info") 
+                        << ", " << err;
                     return;
                 }
 
-                handleShaderTxData(Action::CreatePublisher, data);
-            }
-        );
-    }
-
-    void AppsViewModel::changePublisherInfo(const QVariantMap& publisherInfo)
-    {
-        ContractArgs args(Actions::kUpdatePublisher);
-        args.append(Publisher::kName, toHex(publisherInfo[Publisher::kName].toString()));
-        args.append(Publisher::kShortTitle, toHex(publisherInfo[Publisher::kShortTitle].toString()));
-        args.append(Publisher::kAboutMe, toHex(publisherInfo[Publisher::kAboutMe].toString()));
-        args.append(Publisher::kWebsite, toHex(publisherInfo[Publisher::kWebsite].toString()));
-        args.append(Publisher::kTwitter, toHex(publisherInfo[Publisher::kTwitter].toString()));
-        args.append(Publisher::kLinkedin, toHex(publisherInfo[Publisher::kLinkedin].toString()));
-        args.append(Publisher::kInstagramp, toHex(publisherInfo[Publisher::kInstagramp].toString()));
-        args.append(Publisher::kTelegram, toHex(publisherInfo[Publisher::kTelegram].toString()));
-        args.append(Publisher::kDiscord, toHex(publisherInfo[Publisher::kDiscord].toString()));
-
-        QPointer<AppsViewModel> guard(this);
-
-        AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args.args(),
-            [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
-            {
-                if (!guard)
-                {
-                    return;
-                }
-
-                if (!err.empty())
-                {
-                    LOG_ERROR() << "Failed to change a publisher info" << ", " << err;
-                    return;
-                }
-
-                handleShaderTxData(Action::UpdatePublisher, data);
+                handleShaderTxData(isCreating ? Action::CreatePublisher : Action::UpdatePublisher, data);
             }
         );
     }
@@ -1677,23 +1643,7 @@ namespace beamui::applications
         {
             LOG_ERROR() << "Failed to handle shader TX data: " << err.what();
 
-            // TODO roman.strilets maybe need to process error
-            if (action == Action::CreatePublisher)
-            {
-                emit publisherCreateFail();
-            }
-            if (action == Action::UpdatePublisher)
-            {
-                emit publisherEditFail();
-            }
-            if (action == Action::UploadDApp)
-            {
-                emit appPublishFail();
-            }
-            if (action == Action::DeleteDApp)
-            {
-                emit appRemoveFail();
-            }
+            showErrorDialog(action);
         }
     }
 
@@ -1716,22 +1666,7 @@ namespace beamui::applications
                 {
                     LOG_ERROR() << "Failed to process shader TX: " << ", " << err;
 
-                    if (action == Action::CreatePublisher)
-                    {
-                        emit publisherCreateFail();
-                    }
-                    if (action == Action::UpdatePublisher)
-                    {
-                        emit publisherEditFail();
-                    }
-                    if (action == Action::UploadDApp)
-                    {
-                        emit appPublishFail();
-                    }
-                    if (action == Action::DeleteDApp)
-                    {
-                        emit appRemoveFail();
-                    }
+                    showErrorDialog(action);
 
                     return;
                 }
@@ -2102,5 +2037,25 @@ namespace beamui::applications
             });
 
         _ipfsIdsToUnpin.erase(start, _ipfsIdsToUnpin.end());
+    }
+
+    void AppsViewModel::showErrorDialog(Action action)
+    {
+        if (action == Action::CreatePublisher)
+        {
+            emit publisherCreateFail();
+        }
+        if (action == Action::UpdatePublisher)
+        {
+            emit publisherEditFail();
+        }
+        if (action == Action::UploadDApp)
+        {
+            emit appPublishFail();
+        }
+        if (action == Action::DeleteDApp)
+        {
+            emit appRemoveFail();
+        }
     }
 }

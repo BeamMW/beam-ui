@@ -771,11 +771,11 @@ ColumnLayout {
         publisherInfo: viewModel.publisherInfo
 
         onCreatePublisher: function(info) {
-            viewModel.createPublisher(info);
+            viewModel.changePublisherInfo(info, true);
         }
 
         onChangePublisherInfo: function(info) {
-            viewModel.changePublisherInfo(info);
+            viewModel.changePublisherInfo(info, false);
         }
     }
 

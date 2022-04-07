@@ -343,7 +343,7 @@ ColumnLayout {
         publisherInfo: control.viewModel.publisherInfo
 
         onChangePublisherInfo: function(info) {
-            control.viewModel.changePublisherInfo(info);
+            control.viewModel.changePublisherInfo(info, false);
         }
     }
 
