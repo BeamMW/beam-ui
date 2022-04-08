@@ -29,6 +29,7 @@
 
 namespace
 {
+    const uint8_t kCountApiVersionParts = 2;
     const uint8_t kCountDAppVersionParts = 4;
     const QString kBeamPublisherName = "Beam Development Limited";
     const QString kBeamPublisherKey = "";
@@ -309,6 +310,27 @@ namespace
             throw std::runtime_error(stream.str());
         }
     }
+
+    void checkVersion(const QString& version, uint8_t count = kCountApiVersionParts)
+    {
+        QStringList list = version.split(".");
+
+        if (list.length() > static_cast<int>(count))
+        {
+            throw std::runtime_error("Invalid version");
+        }
+
+        for (const auto& item : list)
+        {
+            bool ok;
+            item.toLongLong(&ok);
+
+            if (!ok)
+            {
+                throw std::runtime_error("Invalid version");
+            }
+        }
+    }
 }
 
 namespace beamui::applications
@@ -480,7 +502,10 @@ namespace beamui::applications
             {
                 throw std::runtime_error("Invalid api_version in the manifest file");
             }
-            app.insert(DApp::kApiVersion, QString::fromStdString(av.get<std::string>()));
+            QString version = QString::fromStdString(av.get<std::string>());
+
+            checkVersion(version);
+            app.insert(DApp::kApiVersion, version);
         }
 
         const auto& mav = json[DApp::kMinApiVersion];
@@ -490,7 +515,10 @@ namespace beamui::applications
             {
                 throw std::runtime_error("Invalid min_api_version in the manifest file");
             }
-            app.insert(DApp::kMinApiVersion, QString::fromStdString(mav.get<std::string>()));
+            QString version = QString::fromStdString(mav.get<std::string>());
+
+            checkVersion(version);
+            app.insert(DApp::kMinApiVersion, version);
         }
 
         const auto& v = json[DApp::kVersion];
@@ -500,7 +528,10 @@ namespace beamui::applications
             {
                 throw std::runtime_error("Invalid version in the manifest file");
             }
-            app.insert(DApp::kVersion, QString::fromStdString(v.get<std::string>()));
+            QString version = QString::fromStdString(v.get<std::string>());
+
+            checkVersion(version, kCountDAppVersionParts);
+            app.insert(DApp::kVersion, version);
         }
 
         const auto& categoryObj = json[DApp::kCategory];
@@ -525,17 +556,6 @@ namespace beamui::applications
                 throw std::runtime_error("Invalid publisher in the manifest file");
             }
             app.insert(DApp::kPublisherKey, QString::fromStdString(publisherObj.get<std::string>()));
-        }
-
-        // TODO: Make guid is required field after fixing all DApps
-        const auto& guidObj = json[DApp::kGuid];
-        if (!guidObj.empty())
-        {
-            if (!guidObj.is_string())
-            {
-                throw std::runtime_error("Invalid 'guid' in the manifest file");
-            }
-            app.insert(DApp::kGuid, QString::fromStdString(guidObj.get<std::string>()));
         }
 
         app.insert("local", true);
@@ -1403,7 +1423,6 @@ namespace beamui::applications
             version.append("0");
         }
 
-        // TODO roman.strilets must be numbers
         args.append(DApp::kMajor, version[0].toStdString());
         args.append(DApp::kMinor, version[1].toStdString());
         args.append(DApp::kRelease, version[2].toStdString());
