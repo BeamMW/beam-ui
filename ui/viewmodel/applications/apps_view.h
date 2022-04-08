@@ -135,6 +135,7 @@ namespace beamui::applications
         void onIPFSStatus(bool running, const QString& error, uint32_t peercnt);
         void unpinDeletedDApps();
         void showErrorDialog(Action action);
+        void checkManifestFile(QIODevice* ioDevice, const QString& expectedAppName, const QString& expectedGuid);
 
         WalletModel::Ptr m_walletModel;
 

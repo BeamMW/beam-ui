@@ -671,7 +671,6 @@ namespace beamui::applications
                         app.insert(DApp::kSupported, isAppSupported(app));
                         app.insert(DApp::kFromServer, true);
 
-                        // TODO: check order of the DApps
                         result.push_back(app);
                     }
                 }
@@ -781,7 +780,6 @@ namespace beamui::applications
                             app.insert(DApp::kDescription, decodeStringField(item.value(), DApp::kDescription));
                             app.insert(DApp::kName, decodeStringField(item.value(), DApp::kName));
                             app.insert(DApp::kIpfsId, parseStringField(item.value(), DApp::kIpfsId));
-                            // TODO: check if empty url is allowed for not installed app
                             app.insert(DApp::kUrl, "");
                             app.insert(DApp::kApiVersion, decodeStringField(item.value(), DApp::kApiVersion));
                             app.insert(DApp::kMinApiVersion, decodeStringField(item.value(), DApp::kMinApiVersion));
@@ -1481,8 +1479,7 @@ namespace beamui::applications
 
                         QBuffer buffer(&qData);
                         
-                        // TODO: does we need add additional verification of the DApp file?
-
+                        checkManifestFile(&buffer, appName, guid);
                         installFromBuffer(&buffer, guid);
 
                         emit appInstallOK(appName);
@@ -1930,7 +1927,7 @@ namespace beamui::applications
 
                         QBuffer buffer(&qData);
 
-                        // TODO: does we need add additional verification of the DApp file?
+                        checkManifestFile(&buffer, appName, guid);
 
                         const auto appsPath = AppSettings().getLocalAppsPath();
                         auto appsDir = QDir(appsPath);
@@ -2056,6 +2053,46 @@ namespace beamui::applications
         if (action == Action::DeleteDApp)
         {
             emit appRemoveFail();
+        }
+    }
+
+    void AppsViewModel::checkManifestFile(QIODevice* ioDevice, const QString& expectedAppName, const QString& expectedGuid)
+    {
+        QuaZip zip(ioDevice);
+        if (!zip.open(QuaZip::Mode::mdUnzip))
+        {
+            throw std::runtime_error("Failed to open the DApp archive");
+        }
+
+        bool isFound = false;
+        for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
+        {
+            const auto zipFname = zip.getCurrentFileName();
+            if (zipFname == "manifest.json")
+            {
+                QuaZipFile mfile(&zip);
+                if (!mfile.open(QIODevice::ReadOnly))
+                {
+                    throw std::runtime_error("Failed to read the DApp archive");
+                }
+
+                QTextStream in(&mfile);
+                const auto app = parseAppManifest(in, "");
+                if (expectedGuid != app[DApp::kGuid].value<QString>())
+                {
+                    throw std::runtime_error("Wrong guid");
+                }
+                if (expectedAppName != app[DApp::kName].value<QString>())
+                {
+                    throw std::runtime_error("Wrong name of app");
+                }
+                isFound = true;
+            }
+        }
+
+        if (!isFound)
+        {
+            throw std::runtime_error("Maybe dapp file is broken");
         }
     }
 }
