@@ -224,6 +224,31 @@ jobs:
           ./notarize.sh
           shasum -a 256 Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg > checksum.txt
 
+      - name: Configure GPG Key [ubuntu]
+        shell: bash
+        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+        run: |
+          echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg2 --import
+        env:
+          GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
+
+      - name: Sign AppImage [ubuntu]
+        shell: bash
+        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+        run: |
+          mkdir signing
+          cd signing
+          # Download AppImageTool
+          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+          sudo chmod +x appimagetool-x86_64.AppImage
+          cp ../Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage .
+          # Extract, sign and pack AppImage
+          Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage --appimage-extract
+          ./appimagetool-x86_64.AppImage squashfs-root --sign
+          mv Beam_Wallet_Masternet-x86_64.AppImage ../Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage
+          # Output signature
+          ../Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage --appimage-signature
+
       - name: Collect [ubuntu]
         shell: bash
         if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
