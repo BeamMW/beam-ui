@@ -228,7 +228,9 @@ jobs:
         shell: bash
         if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
         run: |
-          echo -n "${{ secrets.GPG_SIGNING_KEY }}" | base64 --decode | gpg2 --import
+          echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg2 --import
+        env:
+          GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
 
       - name: Sign AppImage [ubuntu]
         shell: bash
