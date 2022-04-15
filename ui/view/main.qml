@@ -262,7 +262,7 @@ Rectangle {
                     Item {
                         id: control
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 66
+                        Layout.preferredHeight: 58
                         Layout.alignment: Qt.AlignBottom
                         activeFocusOnTab: true
 
