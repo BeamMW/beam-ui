@@ -977,8 +977,8 @@ namespace beamui::applications
 
     QList<QVariantMap> AppsViewModel::getApps()
     {
-        // Apps order: Dev APP, *.dapp files, remote apps, installed from shader, not installed from shader
-        QList<QVariantMap> result = _devApps;
+        // Apps order: Dev APP, remote apps, *.dapp files, installed from shader, not installed from shader
+        QList<QVariantMap> result = _devApps + _remoteApps;
         QList<QVariantMap> notInstalled, installed;
 
         for (const auto& app : _shaderApps)
@@ -1031,8 +1031,6 @@ namespace beamui::applications
                 result.push_back(app);
             }
         }
-
-        result += _remoteApps;
 
         // installed and not installed from dapp store 
         if (_publisherInfo.empty())
