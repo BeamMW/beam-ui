@@ -59,7 +59,22 @@ ColumnLayout {
             stackView.push(Qt.createComponent("PublisherDetails.qml"), params)
         }
         else {
-            becomePublisherDialog.open();
+            const dialog = Qt.createComponent("qrc:/applications/BecomePublisher.qml")
+            const instance = dialog.createObject(control,
+                {
+                    newPublisher:  !viewModel.isPublisher,
+                    publisherInfo: viewModel.publisherInfo
+                });
+
+            instance.onCreatePublisher.connect(function(info) {
+                viewModel.changePublisherInfo(info, true);
+            });
+
+            instance.onChangePublisherInfo.connect(function(info) {
+                viewModel.changePublisherInfo(info, false);
+            });
+
+            instance.open();
         }
     }
 
@@ -762,21 +777,6 @@ ColumnLayout {
         okButtonText:            qsTrId("general-ok")
         okButton.palette.button: Style.accent_fail
         cancelButtonVisible:     false
-    }
-
-    BecomePublisher {
-        id:            becomePublisherDialog
-
-        newPublisher:  !viewModel.isPublisher
-        publisherInfo: viewModel.publisherInfo
-
-        onCreatePublisher: function(info) {
-            viewModel.changePublisherInfo(info, true);
-        }
-
-        onChangePublisherInfo: function(info) {
-            viewModel.changePublisherInfo(info, false);
-        }
     }
 
     StackView {
