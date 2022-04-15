@@ -764,7 +764,7 @@ namespace beamui::applications
 
                             QString publisherName = "";
 
-                            if (idx != _publishers.end())
+                            if (idx != _publishers.cend())
                             {
                                 publisherName = (*idx)[Publisher::kName].toString();
                             }
@@ -983,10 +983,10 @@ namespace beamui::applications
 
         for (const auto& app : _shaderApps)
         {
-            const auto it = std::find_if(_localApps.begin(), _localApps.end(),
+            const auto it = std::find_if(_localApps.cbegin(), _localApps.cend(),
                 [guid = app[DApp::kGuid]](const auto& tmp) -> bool {
                     const auto appIt = tmp.find(DApp::kGuid);
-                    if (appIt == tmp.end())
+                    if (appIt == tmp.cend())
                     {
                         return false;
                     }
@@ -994,7 +994,7 @@ namespace beamui::applications
                 }
             );
 
-            if (it != _localApps.end())
+            if (it != _localApps.cend())
             {
                 auto tmp = *it;
                 if (compareDAppVersion(app[DApp::kVersion].toString(), tmp[DApp::kVersion].toString()) > 0)
@@ -1015,10 +1015,10 @@ namespace beamui::applications
         // installed from dapp file
         for (const auto& app : _localApps)
         {
-            const auto it = std::find_if(installed.begin(), installed.end(),
+            const auto it = std::find_if(installed.cbegin(), installed.cend(),
                 [guid = app[DApp::kGuid]](const auto& tmp) -> bool {
                     const auto appIt = tmp.find(DApp::kGuid);
-                    if (appIt == tmp.end())
+                    if (appIt == tmp.cend())
                     {
                         return false;
                     }
@@ -1026,7 +1026,7 @@ namespace beamui::applications
                 }
             );
 
-            if (it == installed.end())
+            if (it == installed.cend())
             {
                 result.push_back(app);
             }
@@ -1099,7 +1099,7 @@ namespace beamui::applications
         const auto it = std::find_if(_publishers.cbegin(), _publishers.cend(),
             [publisherKey] (const auto& publisher) -> bool {
                 const auto publisherIt = publisher.find(Publisher::kPubkey);
-                if (publisherIt == publisher.end())
+                if (publisherIt == publisher.cend())
                 {
                     assert(false);
                     return false;
@@ -1108,7 +1108,7 @@ namespace beamui::applications
             }
         );
 
-        if (it == _publishers.end())
+        if (it == _publishers.cend())
         {
             return {};
         }
@@ -1171,9 +1171,9 @@ namespace beamui::applications
 
     bool AppsViewModel::uninstallLocalApp(const QString& appid)
     {
-        const auto it = std::find_if(_localApps.begin(), _localApps.end(), [appid](const auto& props) -> bool {
+        const auto it = std::find_if(_localApps.cbegin(), _localApps.cend(), [appid](const auto& props) -> bool {
             const auto ait = props.find(DApp::kAppid);
-            if (ait == props.end())
+            if (ait == props.cend())
             {
                 assert(false);
                 return false;
@@ -1181,14 +1181,14 @@ namespace beamui::applications
             return ait->toString() == appid;
         });
 
-        if (it == _localApps.end())
+        if (it == _localApps.cend())
         {
             assert(false);
             return false;
         }
 
         const auto pathit = it->find(DApp::kFullPath);
-        if (pathit == it->end())
+        if (pathit == it->cend())
         {
             assert(false);
             return false;
@@ -1787,7 +1787,7 @@ namespace beamui::applications
                         }
                     );
 
-                    if (idx != _publishers.end())
+                    if (idx != _publishers.cend())
                     {
                         app[DApp::kPublisherName] = (*idx)[Publisher::kName].toString();
                     }
@@ -1809,7 +1809,7 @@ namespace beamui::applications
         std::copy_if(apps.cbegin(), apps.cend(), std::back_inserter(publisherApps),
             [publisherKey] (const auto& app) -> bool {
                 const auto appFieldsIt = app.find(DApp::kPublisherKey);
-                if (appFieldsIt == app.end())
+                if (appFieldsIt == app.cend())
                 {
                     return false;
                 }
@@ -1828,7 +1828,7 @@ namespace beamui::applications
         const auto it = std::find_if(apps.cbegin(), apps.cend(),
             [guid](const auto& app) -> bool {
                 const auto appFieldsIt = app.find(DApp::kGuid);
-                if (appFieldsIt == app.end())
+                if (appFieldsIt == app.cend())
                 {
                     // TODO: uncomment when all DApps will have new full list of required fields 
                     // assert(false);
@@ -1837,7 +1837,7 @@ namespace beamui::applications
                 return appFieldsIt->toString() == guid;
             });
 
-        if (it == apps.end())
+        if (it == apps.cend())
         {
             return {};
         }
