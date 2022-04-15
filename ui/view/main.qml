@@ -269,7 +269,7 @@ Rectangle {
                         SvgImage {
                             id: icon
                             x: 21
-                            y: 16
+                            y: 14
                             width: 28
                             height: 28
                             source: "qrc:/assets/icon-" + modelData.name + (selectedItem == index ? "-active" : "") + ".svg"
@@ -280,7 +280,7 @@ Rectangle {
                                 id: indicator
                                 y: 6
                                 width: 4
-                                height: 48
+                                height: 44
                                 color: selectedItem == index ? Style.active : Style.passive
                             }
 
