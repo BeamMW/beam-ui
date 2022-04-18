@@ -34,6 +34,7 @@ namespace
     const QString kBeamPublisherName = "Beam Development Limited";
     const QString kBeamPublisherKey = "";
     const QString kLocalapp = "localapp";
+    const QString kManifestFile = "manifest.json";
 
     namespace DApp
     {
@@ -63,6 +64,8 @@ namespace
         const char kFromServer[] = "isFromServer";
         const char kDevApp[] = "devApp";
         const char kHasUpdate[] = "hasUpdate";
+        const char kReleaseDate[] = "release_date";
+        const char kLocal[] = "local";
 
         const int kNameMaxSize = 30;
         const int kDescriptionMaxSize = 1024;
@@ -427,141 +430,149 @@ namespace beamui::applications
 
         const auto utf = content.toUtf8();
 
-        // do not make json const or it will throw on missing keys
-        auto json = nlohmann::json::parse(utf.begin(), utf.end());
-        if (!json.is_object() || json.empty())
+        try
         {
-            throw std::runtime_error("Invalid manifest file");
-        }
-
-        const auto& guid = json[DApp::kGuid];
-        if (!guid.is_string() || guid.empty())
-        {
-            throw std::runtime_error("Invalid GUID in the manifest file");
-        }
-        app.insert(DApp::kGuid, QString::fromStdString(guid.get<std::string>()));
-
-        const auto& desc = json[DApp::kDescription];
-        if (!desc.is_string() || desc.empty())
-        {
-            throw std::runtime_error("Invalid description in the manifest file");
-        }
-        app.insert(DApp::kDescription, QString::fromStdString(desc.get<std::string>()));
-
-        const auto& name = json[DApp::kName];
-        if (!name.is_string() || name.empty())
-        {
-            throw std::runtime_error("Invalid app name in the manifest file");
-        }
-
-        const auto sname = name.get<std::string>();
-        app.insert(DApp::kName, QString::fromStdString(sname));
-
-        const auto& url = json[DApp::kUrl];
-        if (!url.is_string() || url.empty())
-        {
-            throw std::runtime_error("Invalid url in the manifest file");
-        }
-
-        const auto surl = url.get<std::string>();
-        app.insert(DApp::kUrl, expandLocalUrl(appFolder, surl));
-
-        const auto& icon = json[DApp::kIcon];
-        if (!icon.empty())
-        {
-            if (!icon.is_string())
+            // do not make json const or it will throw on missing keys
+            auto json = nlohmann::json::parse(utf.begin(), utf.end());
+            if (!json.is_object() || json.empty())
             {
-                throw std::runtime_error("Invalid icon in the manifest file");
+                throw std::runtime_error("Invalid manifest file");
             }
-            QString ipath = "";
 
-            if (needExpandIcon)
+            const auto& guid = json[DApp::kGuid];
+            if (!guid.is_string() || guid.empty())
             {
-                ipath = expandLocalFile(appFolder, icon.get<std::string>());
+                throw std::runtime_error("Invalid GUID in the manifest file");
             }
-            else
-            {
-                ipath = QString::fromStdString(json[DApp::kIcon].get<std::string>());
+            app.insert(DApp::kGuid, QString::fromStdString(guid.get<std::string>()));
 
-                if (ipath.startsWith(kLocalapp))
+            const auto& desc = json[DApp::kDescription];
+            if (!desc.is_string() || desc.empty())
+            {
+                throw std::runtime_error("Invalid description in the manifest file");
+            }
+            app.insert(DApp::kDescription, QString::fromStdString(desc.get<std::string>()));
+
+            const auto& name = json[DApp::kName];
+            if (!name.is_string() || name.empty())
+            {
+                throw std::runtime_error("Invalid app name in the manifest file");
+            }
+
+            const auto sname = name.get<std::string>();
+            app.insert(DApp::kName, QString::fromStdString(sname));
+
+            const auto& url = json[DApp::kUrl];
+            if (!url.is_string() || url.empty())
+            {
+                throw std::runtime_error("Invalid url in the manifest file");
+            }
+
+            const auto surl = url.get<std::string>();
+            app.insert(DApp::kUrl, expandLocalUrl(appFolder, surl));
+
+            const auto& icon = json[DApp::kIcon];
+            if (!icon.empty())
+            {
+                if (!icon.is_string())
                 {
-                    // remove "localapp/" substring
-                    ipath = ipath.remove(0, kLocalapp.size() + 1);
+                    throw std::runtime_error("Invalid icon in the manifest file");
                 }
+                QString ipath = "";
+
+                if (needExpandIcon)
+                {
+                    ipath = expandLocalFile(appFolder, icon.get<std::string>());
+                }
+                else
+                {
+                    ipath = QString::fromStdString(json[DApp::kIcon].get<std::string>());
+
+                    if (ipath.startsWith(kLocalapp))
+                    {
+                        // remove "localapp/" substring
+                        ipath = ipath.remove(0, kLocalapp.size() + 1);
+                    }
+                }
+
+                app.insert(DApp::kIcon, ipath);
+
+                LOG_INFO() << "App: " << sname << ", icon: " << ipath.toStdString();
             }
 
-            app.insert(DApp::kIcon, ipath);
-
-            LOG_INFO() << "App: " << sname << ", icon: " << ipath.toStdString();
-        }
-
-        const auto& av = json[DApp::kApiVersion];
-        if (!av.empty())
-        {
-            if (!av.is_string())
+            const auto& av = json[DApp::kApiVersion];
+            if (!av.empty())
             {
-                throw std::runtime_error("Invalid api_version in the manifest file");
+                if (!av.is_string())
+                {
+                    throw std::runtime_error("Invalid api_version in the manifest file");
+                }
+                QString version = QString::fromStdString(av.get<std::string>());
+
+                checkVersion(version);
+                app.insert(DApp::kApiVersion, version);
             }
-            QString version = QString::fromStdString(av.get<std::string>());
 
-            checkVersion(version);
-            app.insert(DApp::kApiVersion, version);
-        }
-
-        const auto& mav = json[DApp::kMinApiVersion];
-        if (!mav.empty())
-        {
-            if (!mav.is_string())
+            const auto& mav = json[DApp::kMinApiVersion];
+            if (!mav.empty())
             {
-                throw std::runtime_error("Invalid min_api_version in the manifest file");
+                if (!mav.is_string())
+                {
+                    throw std::runtime_error("Invalid min_api_version in the manifest file");
+                }
+                QString version = QString::fromStdString(mav.get<std::string>());
+
+                checkVersion(version);
+                app.insert(DApp::kMinApiVersion, version);
             }
-            QString version = QString::fromStdString(mav.get<std::string>());
 
-            checkVersion(version);
-            app.insert(DApp::kMinApiVersion, version);
-        }
-
-        const auto& v = json[DApp::kVersion];
-        if (!v.empty())
-        {
-            if (!v.is_string())
+            const auto& v = json[DApp::kVersion];
+            if (!v.empty())
             {
-                throw std::runtime_error("Invalid version in the manifest file");
+                if (!v.is_string())
+                {
+                    throw std::runtime_error("Invalid version in the manifest file");
+                }
+                QString version = QString::fromStdString(v.get<std::string>());
+
+                checkVersion(version, kCountDAppVersionParts);
+                app.insert(DApp::kVersion, version);
             }
-            QString version = QString::fromStdString(v.get<std::string>());
 
-            checkVersion(version, kCountDAppVersionParts);
-            app.insert(DApp::kVersion, version);
-        }
-
-        const auto& categoryObj = json[DApp::kCategory];
-        if (!categoryObj.empty())
-        {
-            if (!categoryObj.is_number_unsigned())
+            const auto& categoryObj = json[DApp::kCategory];
+            if (!categoryObj.empty())
             {
-                throw std::runtime_error("Invalid category in the manifest file");
+                if (!categoryObj.is_number_unsigned())
+                {
+                    throw std::runtime_error("Invalid category in the manifest file");
+                }
+                app.insert(DApp::kCategory, categoryObj.get<uint32_t>());
+
+                Category category = static_cast<Category>(categoryObj.get<uint32_t>());
+                app.insert(DApp::kCategoryName, converToString(category));
+                app.insert(DApp::kCategoryColor, getCategoryColor(category));
             }
-            app.insert(DApp::kCategory, categoryObj.get<uint32_t>());
 
-            Category category = static_cast<Category>(categoryObj.get<uint32_t>());
-            app.insert(DApp::kCategoryName, converToString(category));
-            app.insert(DApp::kCategoryColor, getCategoryColor(category));
-        }
-
-        const auto& publisherObj = json[DApp::kPublisherKey];
-        if (!publisherObj.empty())
-        {
-            if (!publisherObj.is_string())
+            const auto& publisherObj = json[DApp::kPublisherKey];
+            if (!publisherObj.empty())
             {
-                throw std::runtime_error("Invalid publisher in the manifest file");
+                if (!publisherObj.is_string())
+                {
+                    throw std::runtime_error("Invalid publisher in the manifest file");
+                }
+                app.insert(DApp::kPublisherKey, QString::fromStdString(publisherObj.get<std::string>()));
             }
-            app.insert(DApp::kPublisherKey, QString::fromStdString(publisherObj.get<std::string>()));
-        }
 
-        app.insert("local", true);
-        // TODO: check why we used surl instead of extended url - app["url"]
-        const auto appid = beam::wallet::GenerateAppID(sname, app[DApp::kUrl].toString().toStdString());
-        app.insert(DApp::kAppid, QString::fromStdString(appid));
+            app.insert(DApp::kLocal, true);
+            // TODO: check why we used surl instead of extended url - app["url"]
+            const auto appid = beam::wallet::GenerateAppID(sname, app[DApp::kUrl].toString().toStdString());
+            app.insert(DApp::kAppid, QString::fromStdString(appid));
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_ERROR() << "Invalid manifest file. exception: " << ex.what();
+            throw std::runtime_error("Invalid manifest file.");
+        }
 
         return app;
     }
@@ -584,7 +595,7 @@ namespace beamui::applications
         {
             const auto fullFolder = finfo.absoluteFilePath();
             const auto justFolder = finfo.fileName();
-            auto mpath = QDir(fullFolder).absoluteFilePath("manifest.json");
+            auto mpath = QDir(fullFolder).absoluteFilePath(kManifestFile);
 
             try
             {
@@ -1285,7 +1296,7 @@ namespace beamui::applications
             for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
             {
                 const auto zipFname = zip.getCurrentFileName();
-                if (zipFname == "manifest.json")
+                if (zipFname == kManifestFile)
                 {
                     QuaZipFile mfile(zip.getZipName(), zipFname);
                     if (!mfile.open(QIODevice::ReadOnly))
@@ -1323,7 +1334,7 @@ namespace beamui::applications
             }
             
             // add estimated release_date
-            app.insert("release_date", QLocale(QLocale::English).toString(QDate::currentDate(), "dd MMM yyyy"));
+            app.insert(DApp::kReleaseDate, QLocale(QLocale::English).toString(QDate::currentDate(), "dd MMM yyyy"));
 
             app.insert(DApp::kSupported, isAppSupported(app));
 
@@ -1566,7 +1577,7 @@ namespace beamui::applications
             for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
             {
                 const auto zipFname = zip.getCurrentFileName();
-                if (zipFname == "manifest.json")
+                if (zipFname == kManifestFile)
                 {
                     QuaZipFile mfile(zip.getZipName(), zipFname);
                     if (!mfile.open(QIODevice::ReadOnly))
@@ -2087,7 +2098,7 @@ namespace beamui::applications
         for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
         {
             const auto zipFname = zip.getCurrentFileName();
-            if (zipFname == "manifest.json")
+            if (zipFname == kManifestFile)
             {
                 QuaZipFile mfile(&zip);
                 if (!mfile.open(QIODevice::ReadOnly))
