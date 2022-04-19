@@ -2028,6 +2028,7 @@ namespace beamui::applications
 
     void AppsViewModel::unpinDeletedDApps()
     {
+#ifdef BEAM_IPFS_SUPPORT
         auto start = std::remove_if(_ipfsIdsToUnpin.begin(), _ipfsIdsToUnpin.end(),
             [this](const QString& ipfsId)
             {
@@ -2062,6 +2063,7 @@ namespace beamui::applications
             });
 
         _ipfsIdsToUnpin.erase(start, _ipfsIdsToUnpin.end());
+#endif // BEAM_IPFS_SUPPORT
     }
 
     void AppsViewModel::showErrorDialog(Action action)
