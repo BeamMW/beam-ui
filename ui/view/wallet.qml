@@ -146,7 +146,6 @@ Item {
 
             RowLayout {
                 Layout.topMargin: 25
-                Layout.preferredHeight: 38
                 spacing: 0
 
                 SFText {
@@ -165,18 +164,13 @@ Item {
                     text: qsTrId("wallet-assets-title")
                 }
 
-                CustomButton {
-                    id: removeFilterButton
+                LinkButton {
                     Layout.rightMargin: 20
-                    // Layout.alignment: Qt.AlignTop
-                    height: 32
-                    palette.button: Style.background_button
-                    palette.buttonText: Style.content_main
-                    icon.source: "qrc:/assets/icon-cancel-white.svg"
-                    visible: assets.selectedIds.length
                     //% "Remove filter"
                     text: qsTrId("wallet-remove-filter-button")
-                    font.pixelSize: 12
+                    linkColor: Style.content_main
+                    visible: assets.selectedIds.length
+                    bold: true
                     onClicked: {
                         assets.clearSelectedAssets()
                         showSelected = false
