@@ -3423,7 +3423,8 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished">所有</translation>
     </message>
     <message id="wallet-remove-filter-button">
-        <source>Remove filter</source>
+        <source>remove filter</source>
+        <oldsource>Remove filter</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-assets-title">

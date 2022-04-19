@@ -3415,7 +3415,8 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <translation type="unfinished">Alle</translation>
     </message>
     <message id="wallet-remove-filter-button">
-        <source>Remove filter</source>
+        <source>remove filter</source>
+        <oldsource>Remove filter</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="wallet-assets-title">

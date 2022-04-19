@@ -164,9 +164,27 @@ Item {
                     text: qsTrId("wallet-assets-title")
                 }
 
+                SvgImage {
+                    Layout.alignment: Qt.AlignHCenter
+                    source: "qrc:/assets/icon-cancel-white.svg"
+                    sourceSize: Qt.size(16, 16)
+                    visible: assets.selectedIds.length
+                    MouseArea {
+                        anchors.fill:      parent
+                        acceptedButtons:   Qt.LeftButton
+                        onClicked:         {
+                            assets.clearSelectedAssets()
+                            showSelected = false
+                        }
+                        hoverEnabled:      true
+                        cursorShape: Qt.PointingHandCursor
+                    }
+                }
+
                 LinkButton {
-                    Layout.rightMargin: 20
-                    //% "Remove filter"
+                    Layout.leftMargin: 15
+                    Layout.rightMargin: 32
+                    //% "remove filter"
                     text: qsTrId("wallet-remove-filter-button")
                     linkColor: Style.content_main
                     visible: assets.selectedIds.length
