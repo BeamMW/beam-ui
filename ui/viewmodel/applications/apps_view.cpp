@@ -1869,12 +1869,10 @@ namespace beamui::applications
 
             const auto ipfsID = app[DApp::kIpfsId].toString();
 
-            if (_ipfsIdsToUnpin.contains(ipfsID))
+            if (!_ipfsIdsToUnpin.contains(ipfsID))
             {
-                return;
+                _ipfsIdsToUnpin.push_back(ipfsID);
             }
-
-            _ipfsIdsToUnpin.push_back(ipfsID);
 
             deleteAppFromStore(guid);
         }
