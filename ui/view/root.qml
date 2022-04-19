@@ -11,7 +11,16 @@ Window {
     flags: Qt.Window | Qt.WindowFullscreenButtonHint
     title: BeamGlobals.getAppName()
     property int displayHeight: Screen.height
-    property string displaySN: Screen.serialNumber
+
+    DisplayResolutionObserver {
+        id: resolutionObserver
+
+        onPrimaryScreenChanged: {
+            console.log('onPrimaryScreenChanged');
+            
+            appWindow.setMinMax()
+        }
+    }
 
     function setMinMax () {
         var wlimit = appWindow.screen.width
@@ -35,10 +44,6 @@ Window {
     }
 
     onDisplayHeightChanged: {
-        appWindow.setMinMax()
-    }
-
-    onDisplaySNChanged: {
         appWindow.setMinMax()
     }
 
