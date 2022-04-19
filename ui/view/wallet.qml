@@ -117,22 +117,6 @@ Item {
                 spacing: 20
 
                 CustomButton {
-                    id: removeFilterButton
-                    height: 32
-                    palette.button: Style.background_button
-                    palette.buttonText: Style.content_main
-                    icon.source: "qrc:/assets/icon-cancel-white.svg"
-                    visible: assets.selectedIds.length
-                    //% "Remove filter"
-                    text: qsTrId("wallet-remove-filter-button")
-                    font.pixelSize: 12
-                    onClicked: {
-                        assets.clearSelectedAssets()
-                        showSelected = false
-                    }
-                }
-
-                CustomButton {
                     id: sendButton
                     height: 32
                     palette.button: Style.accent_outgoing
@@ -162,6 +146,7 @@ Item {
 
             RowLayout {
                 Layout.topMargin: 25
+                Layout.preferredHeight: 38
                 spacing: 0
 
                 SFText {
@@ -178,6 +163,24 @@ Item {
                     color: Style.content_main
                     //% "Assets"
                     text: qsTrId("wallet-assets-title")
+                }
+
+                CustomButton {
+                    id: removeFilterButton
+                    Layout.rightMargin: 20
+                    // Layout.alignment: Qt.AlignTop
+                    height: 32
+                    palette.button: Style.background_button
+                    palette.buttonText: Style.content_main
+                    icon.source: "qrc:/assets/icon-cancel-white.svg"
+                    visible: assets.selectedIds.length
+                    //% "Remove filter"
+                    text: qsTrId("wallet-remove-filter-button")
+                    font.pixelSize: 12
+                    onClicked: {
+                        assets.clearSelectedAssets()
+                        showSelected = false
+                    }
                 }
 
                 SFText {
