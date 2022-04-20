@@ -1172,6 +1172,8 @@ namespace beamui::applications
                 {
                     LOG_ERROR() << (isCreating ? "Failed to create a publisher" : "Failed to change a publisher info") 
                         << ", " << err;
+
+                    isCreating ? emit publisherCreateFail() : emit publisherEditFail();
                     return;
                 }
 
