@@ -16,16 +16,20 @@ Pane {
     property alias bkColor:           background.color
     property int   contentItemHeight: 0
     property alias tableOwner:        txTable.owner
+    horizontalPadding: 2
 
     property var content: Item {
         TxTable {
+            property bool isTransactionsView: control.state == "transactions"
+            anchors.leftMargin: isTransactionsView ? 25 : 0
+            anchors.rightMargin: isTransactionsView ? 25 : 0
             id: txTable
             owner: control
             emptyMessageMargin: 60
             headerShaderVisible: false
             dappFilter: control.dappFilter
             anchors.fill: parent
-            visible: control.state == "transactions"
+            visible: isTransactionsView
         }
         AssetsPanel {
             id: assetsList
@@ -68,6 +72,8 @@ Pane {
                 Layout.alignment: Qt.AlignTop
                 Layout.fillWidth: true
                 spacing: 0
+                Layout.leftMargin: 25
+                Layout.rightMargin: 25
 
                 TxFilter {
                     id: balanceTab

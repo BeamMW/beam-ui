@@ -328,7 +328,7 @@ Item
 
                     SFText {
                         Layout.alignment: Qt.AlignHCenter
-                        Layout.topMargin: 65
+                        Layout.topMargin: 64
                         //% "Restore wallet or create a new one"
                         text: qsTrId("general-restore-or-create-wallet")
                         color: Style.active
@@ -348,7 +348,7 @@ Item
 
                     Item {
                         Layout.fillWidth:       true
-                        Layout.preferredHeight:   67
+                        Layout.preferredHeight:   68
                     }
                 }
             }
@@ -1633,7 +1633,7 @@ Item
                     viewModel.openWallet(pass, callback);
                 }
                 property var loadWallet: function () {
-                    root.parent.setSource("qrc:/loading.qml", {"isRecoveryMode" : false, "isCreating" : false});
+                    startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : false, "isCreating" : false, "cancelCallback": startWizzardView.pop});
                 }
                 
                 property var checkCapsLockOnActivation: function () {
@@ -1679,7 +1679,7 @@ Item
                     SFText {
                         Layout.alignment:       Qt.AlignHCenter
                         Layout.preferredHeight: 16
-                        Layout.bottomMargin:    startLayout.isSqueezedHeight  ? 18 : 30
+                        Layout.bottomMargin:    startLayout.isSqueezedHeight  ? 10 : 20
                         //% "Enter your password to access the wallet"
                         text: qsTrId("start-open-pwd-invitation")
                         color: Style.content_main
@@ -1727,7 +1727,7 @@ Item
 
                     Row {
                         Layout.alignment: Qt.AlignHCenter
-                        Layout.topMargin: startLayout.isSqueezedHeight  ? 8 : 13
+                        Layout.topMargin: startLayout.isSqueezedHeight  ? 8 : 14
                         Layout.preferredHeight: 38
                         spacing:          15
                                 
@@ -1867,11 +1867,11 @@ Item
             }
         }
 
-        function restoreProcessBadPortMode() {
+        function restoreProcessBadPortMode(isRecoveryMode) {
             startWizzardView.pop();
             startWizzardView.push(nodeSetup);
             root.isBadPortMode = true;
-            viewModel.isRecoveryMode = true;
+            viewModel.isRecoveryMode = isRecoveryMode;
         }
 
         Component.onCompleted: {

@@ -5,7 +5,7 @@ import "."
 
 SFText {
     Layout.alignment:    Qt.AlignHCenter
-    Layout.bottomMargin: 30
+    Layout.bottomMargin: 27
     font.pixelSize:      12
     color:               Qt.rgba(255, 255, 255, 0.3)
     text:                [qsTrId("settings-version"), BeamGlobals.version()].join(' ')

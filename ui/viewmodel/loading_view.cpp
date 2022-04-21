@@ -19,8 +19,6 @@
 #include "wallet/client/filter.h"
 #include "viewmodel/ui_helpers.h"
 
-#include <qdebug.h>
-
 using namespace beam;
 using namespace std;
 

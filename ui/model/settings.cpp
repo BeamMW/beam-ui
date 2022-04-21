@@ -16,6 +16,7 @@
 #include <map>
 #include <QDataStream>
 #include <QFileDialog>
+#include <QtGlobal>
 #include <QtQuick>
 #include "model/app_model.h"
 #include "wallet/core/default_peers.h"
@@ -62,6 +63,10 @@ namespace
     const char* kLocalAppsPort   = "apps/local_port";
     const char* kIPFSPrefix      = "ipfsnode/";
     const char* kIPFSNodeStart   = "ipfs_node_start";
+
+    const char* kDappStoreCID = "dappstore/cid";
+    const char* kDappStorePath = "dappstore/path";
+    const char* kDappStoreUserPublishers = "dappstore/publishers";
 
     const char* kMpAnonymitySet = "max_privacy/anonymity_set";
     const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
@@ -122,14 +127,20 @@ const char* WalletSettings::LogsFolder = "logs";
 const char* WalletSettings::SettingsFile = "settings.ini";
 const char* WalletSettings::WalletDBFile = "wallet.db";
 const char* WalletSettings::NodeDBFile = "node.db";
+#if defined(Q_OS_MACOS)
+const char* WalletSettings::DappsStoreWasm = "../Resources/dapps_store_app.wasm";
+#else
+const char* WalletSettings::DappsStoreWasm = "dapps_store_app.wasm";
+#endif
 
 #if defined(BEAM_HW_WALLET)
 const char* WalletSettings::TrezorWalletDBFile = "trezor-wallet.db";
 #endif
 
-WalletSettings::WalletSettings(const QDir& appDataDir)
+WalletSettings::WalletSettings(const QDir& appDataDir, const QString& applicationDirPath)
     : m_data{appDataDir.filePath(SettingsFile), QSettings::IniFormat}
     , m_appDataDir{appDataDir}
+    , m_applicationDirPath{applicationDirPath}
 {
     LOG_INFO () << "UI Settings file: " << m_data.fileName().toStdString();
     const auto devapp = m_data.value(kDevAppName).toString().toStdString();
@@ -754,6 +765,35 @@ QString WalletSettings::getDevAppApiVer() const
 QString WalletSettings::getDevAppMinApiVer() const
 {
     return m_data.value(kDevAppMinApiVer).toString();
+}
+
+std::string WalletSettings::getDappStoreCID() const
+{
+    auto cid = m_data.value(kDappStoreCID).toString();
+    // TODO roman.strilets default cid value should be set for mainnet and testnet
+    // for masternet
+    return cid.isEmpty() ? "b76ca089082e38b23d5e68feeb8b6f459ae74f5012eb520c87169f88ced307e3" : cid.toStdString();
+}
+
+std::string WalletSettings::getDappStorePath() const
+{
+    auto path = m_data.value(kDappStorePath).toString();
+    return path.isEmpty()
+        ? QDir(m_applicationDirPath).filePath(DappsStoreWasm).toStdString()
+        : path.toStdString();
+}
+
+QStringList WalletSettings::getDappStoreUserPublishers() const
+{
+    Lock lock(m_mutex);
+    auto publishersList = m_data.value(kDappStoreUserPublishers).value<QStringList>();
+    return publishersList;
+}
+
+void WalletSettings::setDappStoreUserPublishers(const QStringList& publishersList)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kDappStoreUserPublishers, QVariant::fromValue(publishersList));
 }
 
 QString WalletSettings::getAppsCachePath(const QString& appid) const

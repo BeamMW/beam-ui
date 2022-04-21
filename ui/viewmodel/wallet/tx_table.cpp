@@ -42,7 +42,7 @@ TxTableViewModel::TxTableViewModel()
     _showCanceled = _settings.getShowCanceled();
     _showFailed = _settings.getShowFailed();
 
-    _model->getAsync()->getTransactions();
+    _model->getAsync()->getTransactionsSmoothly();
 }
 
 void TxTableViewModel::exportTxHistoryToCsv()
@@ -124,28 +124,29 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
         }
     }
 
+    std::vector<std::shared_ptr<TxObject>> modifiedTransactionsFiltered;
+    modifiedTransactionsFiltered.reserve(modifiedTransactions.size());
+    for (const auto& tx: modifiedTransactions)
+    {
+        if (!_showInProgress && tx->isInProgress())
+            continue;
+
+        if (!_showCompleted && tx->isCompleted())
+            continue;
+
+        if (!_showCanceled && tx->isCanceled())
+            continue;
+
+        if (!_showFailed && tx->isFailed())
+            continue;
+
+        modifiedTransactionsFiltered.push_back(tx);
+    }
+
     switch (action)
     {
         case ChangeAction::Reset:
             {
-                std::vector<std::shared_ptr<TxObject>> modifiedTransactionsFiltered;
-                modifiedTransactionsFiltered.reserve(modifiedTransactions.size());
-                for (const auto& tx: modifiedTransactions)
-                {
-                    if (!_showInProgress && tx->isInProgress())
-                        continue;
-
-                    if (!_showCompleted && tx->isCompleted())
-                        continue;
-
-                    if (!_showCanceled && tx->isCanceled())
-                        continue;
-
-                    if (!_showFailed && tx->isFailed())
-                        continue;
-
-                    modifiedTransactionsFiltered.push_back(tx);
-                }
                 _transactionsList.reset(modifiedTransactionsFiltered);
                 break;
             }
@@ -158,13 +159,13 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
 
         case ChangeAction::Added:
             {
-                _transactionsList.insert(modifiedTransactions);
+                _transactionsList.insert(modifiedTransactionsFiltered);
                 break;
             }
 
         case ChangeAction::Updated:
             {
-                _transactionsList.update(modifiedTransactions);
+                _transactionsList.update(modifiedTransactionsFiltered);
                 break;
             }
 
@@ -197,7 +198,8 @@ void TxTableViewModel::setShowInProgress(bool value)
     _showInProgress = value;
     _settings.setShowInProgress(value);
     emit showInProgressChanged();
-    _model->getAsync()->getTransactions();
+    emit showAllChanged();
+    _model->getAsync()->getTransactionsSmoothly();
 }
 
 bool TxTableViewModel::getShowCompleted() const
@@ -210,7 +212,8 @@ void TxTableViewModel::setShowCompleted(bool value)
     _showCompleted = value;
     _settings.setShowCompleted(value);
     emit showCompletedChanged();
-    _model->getAsync()->getTransactions();
+    emit showAllChanged();
+    _model->getAsync()->getTransactionsSmoothly();
 }
 
 bool TxTableViewModel::getShowCanceled() const
@@ -223,7 +226,8 @@ void TxTableViewModel::setShowCanceled(bool value)
     _showCanceled = value;
     _settings.setShowCanceled(value);
     emit showCanceledChanged();
-    _model->getAsync()->getTransactions();
+    emit showAllChanged();
+    _model->getAsync()->getTransactionsSmoothly();
 }
 
 bool TxTableViewModel::getShowFailed() const
@@ -236,7 +240,13 @@ void TxTableViewModel::setShowFailed(bool value)
     _showFailed = value;
     _settings.setShowFailed(value);
     emit showFailedCanged();
-    _model->getAsync()->getTransactions();
+    emit showAllChanged();
+    _model->getAsync()->getTransactionsSmoothly();
+}
+
+bool TxTableViewModel::getShowAll() const
+{
+    return _showInProgress && _showCompleted &&_showCanceled &&_showFailed;
 }
 
 void TxTableViewModel::cancelTx(const QVariant& variantTxID)

@@ -21,7 +21,6 @@ AssetsViewModel::AssetsViewModel()
 {
     connect(_wallet.get(), &WalletModel::normalCoinsChanged,  this, &AssetsViewModel::onNormalCoinsChanged);
     connect(_wallet.get(), &WalletModel::shieldedCoinChanged, this, &AssetsViewModel::onShieldedCoinChanged);
-    _selectedAssets = _settings.getLastAssetSelection();
     emit selectedAssetChanged();
 }
 
@@ -49,14 +48,12 @@ void AssetsViewModel::addAssetToSelected(int assetId)
     {
         _selectedAssets.remove(id);
     }
-    _settings.setLastAssetSelection(_selectedAssets);
     emit selectedAssetChanged();
 }
 
 void AssetsViewModel::clearSelectedAssets()
 {
     _selectedAssets.clear();
-    _settings.setLastAssetSelection(_selectedAssets);
     emit selectedAssetChanged();
 }
 

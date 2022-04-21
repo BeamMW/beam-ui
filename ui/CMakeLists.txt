@@ -116,6 +116,8 @@ set(UI_SRC
     viewmodel/applications/apps_api_ui.cpp
     viewmodel/applications/public.cpp
     viewmodel/applications/public.h
+    viewmodel/applications/publishers_view.h
+    viewmodel/applications/publishers_view.cpp
     viewmodel/helpers/list_model.h
     viewmodel/helpers/sortfilterproxymodel.h
     viewmodel/helpers/sortfilterproxymodel.cpp
@@ -288,7 +290,11 @@ if(BEAM_USE_STATIC AND LINUX)
     set(CMAKE_C_FLAGS "-no-pie ${CMAKE_C_FLAGS}")
     set(CMAKE_CXX_FLAGS "-no-pie ${CMAKE_CXX_FLAGS}")
 endif()
-add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns")
+if (APPLE)
+    add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" "${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm")
+else()
+    add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns")
+endif()
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${OUTPUT_NAME})
 
 if(BEAM_HW_WALLET)
@@ -481,6 +487,7 @@ endif()
 
 if(LINUX)
     install(TARGETS ${TARGET_NAME} DESTINATION bin)
+    install(FILES dapps_store_app.wasm DESTINATION bin)
 
     SET(BEAM_DESKTOP_DIR     "${CMAKE_INSTALL_PREFIX}/share/applications/")
     SET(BEAM_PIXMAPS_DIR     "${CMAKE_INSTALL_PREFIX}/share/icons/")
@@ -491,6 +498,7 @@ elseif(APPLE)
     #set(MACOSX_BUNDLE_ICON_FILE "Beam Wallet${BEAM_DISPLAY_SUFFIX}.icns")
     set(MACOSX_BUNDLE_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
     set_target_properties(${TARGET_NAME} PROPERTIES 
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
 
@@ -557,6 +565,7 @@ else()
         install(FILES ${OPENSSL_ROOT_DIR}/bin/libcrypto-1_1-x64.dll DESTINATION .)
         install(FILES ${OPENSSL_ROOT_DIR}/bin/libssl-1_1-x64.dll DESTINATION .)
         install(FILES beam-wallet.cfg DESTINATION .)
+        install(FILES dapps_store_app.wasm DESTINATION .)
         install(TARGETS ${TARGET_NAME} DESTINATION .)
     endif()
 
@@ -576,5 +585,12 @@ if (BEAM_IPFS_SUPPORT AND WIN32)
     add_custom_command(
             TARGET ${TARGET_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy ${IPFS_DLL} ${CMAKE_CURRENT_BINARY_DIR}
+    )
+endif()
+
+if(NOT APPLE)
+    add_custom_command(
+        TARGET ${TARGET_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm ${CMAKE_CURRENT_BINARY_DIR}
     )
 endif()

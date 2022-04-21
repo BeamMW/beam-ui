@@ -5,11 +5,12 @@ import QtQuick.Window 2.9
 import "controls"
 import Beam.Wallet 1.0
 
-Window  {
+Window {
     id: appWindow
     property alias source: rootLoader.source
     flags: Qt.Window | Qt.WindowFullscreenButtonHint
     title: BeamGlobals.getAppName()
+    property int displayHeight: Screen.height
 
     function setMinMax () {
         var wlimit = appWindow.screen.width
@@ -29,6 +30,10 @@ Window  {
     }
 
     onScreenChanged: function() {
+        appWindow.setMinMax()
+    }
+
+    onDisplayHeightChanged: {
         appWindow.setMinMax()
     }
 

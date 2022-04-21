@@ -117,22 +117,6 @@ Item {
                 spacing: 20
 
                 CustomButton {
-                    id: removeFilterButton
-                    height: 32
-                    palette.button: Style.background_button
-                    palette.buttonText: Style.content_main
-                    icon.source: "qrc:/assets/icon-cancel-white.svg"
-                    visible: assets.selectedIds.length
-                    //% "Remove filter"
-                    text: qsTrId("wallet-remove-filter-button")
-                    font.pixelSize: 12
-                    onClicked: {
-                        assets.clearSelectedAssets()
-                        showSelected = false
-                    }
-                }
-
-                CustomButton {
                     id: sendButton
                     height: 32
                     palette.button: Style.accent_outgoing
@@ -178,6 +162,37 @@ Item {
                     color: Style.content_main
                     //% "Assets"
                     text: qsTrId("wallet-assets-title")
+                }
+
+                SvgImage {
+                    Layout.alignment: Qt.AlignHCenter
+                    source: "qrc:/assets/icon-cancel-white.svg"
+                    sourceSize: Qt.size(16, 16)
+                    visible: assets.selectedIds.length
+                    MouseArea {
+                        anchors.fill:      parent
+                        acceptedButtons:   Qt.LeftButton
+                        onClicked:         {
+                            assets.clearSelectedAssets()
+                            showSelected = false
+                        }
+                        hoverEnabled:      true
+                        cursorShape: Qt.PointingHandCursor
+                    }
+                }
+
+                LinkButton {
+                    Layout.leftMargin: 15
+                    Layout.rightMargin: 32
+                    //% "remove filter"
+                    text: qsTrId("wallet-remove-filter-button")
+                    linkColor: Style.content_main
+                    visible: assets.selectedIds.length
+                    bold: true
+                    onClicked: {
+                        assets.clearSelectedAssets()
+                        showSelected = false
+                    }
                 }
 
                 SFText {

@@ -216,7 +216,7 @@ int main (int argc, char* argv[])
             // AppModel Model MUST BE created before the UI engine and destroyed after.
             // AppModel serves the UI and UI should be able to access AppModel at any time
             // even while being destroyed. Do not move engine above AppModel
-            WalletSettings settings(appDataDir);
+            WalletSettings settings(appDataDir, app.applicationDirPath());
             LOG_INFO() << "WalletDB: " << settings.getWalletStorage();
 
             AppModel appModel(settings);

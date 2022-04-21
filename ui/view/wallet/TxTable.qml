@@ -34,9 +34,12 @@ Control {
         State {
             name: "all"
             PropertyChanges { target: allTab; state: "active" }
-            PropertyChanges { target: emptyMessage;  
-                //% "Your transaction list is empty"
-                text: qsTrId("tx-empty")
+            PropertyChanges { target: emptyMessage; 
+                text: tableViewModel.showAll
+                    //% "Your transaction list is empty"
+                    ? qsTrId("tx-empty")
+                    //% "No transactions to show"
+                    : qsTrId("tx-no-transaction-filter")
             }
             
         },
@@ -184,7 +187,6 @@ Control {
                     Layout.rightMargin: 20
                 }
                 MultiSelectComboBox {
-                    Layout.preferredWidth: 150
                     fontPixelSize:       14
                     model: [
                         //% "In progress"
@@ -250,7 +252,7 @@ Control {
 
             SvgImage {
                 Layout.alignment: Qt.AlignHCenter
-                source: "qrc:/assets/icon-wallet-empty.svg"
+                source: tableViewModel.showAll ? "qrc:/assets/icon-wallet-empty.svg" : "qrc:/assets/icon-no-transaction-filter.svg" 
                 sourceSize: Qt.size(60, 60)
             }
 
@@ -263,8 +265,11 @@ Control {
                 color:                Style.content_main
                 opacity:              0.5
                 lineHeight:           1.43
-                //% "Your transaction list is empty"
-                text: qsTrId("tx-empty")
+                text: tableViewModel.showAll
+                    //% "Your transaction list is empty"
+                    ? qsTrId("tx-empty")
+                    //% "No transactions to show"
+                    : qsTrId("tx-no-transaction-filter")
             }
 
             Item {

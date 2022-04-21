@@ -63,9 +63,9 @@ Rectangle {
         showPopup(popup)
     }
 
-    function showAppTxPopup (comment, appname, appicon, txid) {
+    function showAppTxPopup (comment, appname, appicon, txid, isLinkToWalletMainTxTable=false) {
         var popup = Qt.createComponent("controls/AppTxNotification.qml").createObject(main, {
-            comment, appname, appicon, txid
+            comment, appname, appicon, txid, isLinkToWalletMainTxTable
         })
         showPopup(popup)
     }
@@ -262,14 +262,14 @@ Rectangle {
                     Item {
                         id: control
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 66
+                        Layout.preferredHeight: 58
                         Layout.alignment: Qt.AlignBottom
                         activeFocusOnTab: true
 
                         SvgImage {
                             id: icon
                             x: 21
-                            y: 16
+                            y: 14
                             width: 28
                             height: 28
                             source: "qrc:/assets/icon-" + modelData.name + (selectedItem == index ? "-active" : "") + ".svg"
@@ -280,7 +280,7 @@ Rectangle {
                                 id: indicator
                                 y: 6
                                 width: 4
-                                height: 48
+                                height: 44
                                 color: selectedItem == index ? Style.active : Style.passive
                             }
 

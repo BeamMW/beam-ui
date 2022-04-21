@@ -18,6 +18,7 @@
 #include "apps_view.h"
 #include "apps_api_ui.h"
 #include "webapi_creator.h"
+#include "publishers_view.h"
 
 namespace beamui::applications
 {
@@ -25,5 +26,7 @@ namespace beamui::applications
     {
         qmlRegisterType<AppsViewModel>("Beam.Wallet", 1, 0, "ApplicationsViewModel");
         qmlRegisterType<WebAPICreator>("Beam.Wallet", 1, 0, "WebAPICreator");
+        qmlRegisterType<PublishersViewModel>("Beam.Wallet", 1, 0, "PublishersViewModel");
+        qmlRegisterType<PublisherItem>("Beam.Wallet", 1, 0, "PublisherItem");
     }
 }
