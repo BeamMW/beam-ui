@@ -37,6 +37,10 @@ Window {
         appWindow.setMinMax()
     }
 
+    function windowMoved() {
+        appWindow.setMinMax()
+    }
+
     Component.onCompleted: function() {
         appWindow.setMinMax();
     }

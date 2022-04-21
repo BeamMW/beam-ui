@@ -65,6 +65,7 @@
 #include "viewmodel/applications/public.h"
 #include "model/qr.h"
 #include "viewmodel/dex/dex_view.h"
+#include "viewmodel/window_event_filter.h"
 
 #if defined(BEAM_USE_STATIC_QT)
 
@@ -297,12 +298,20 @@ int main (int argc, char* argv[])
             qmlRegisterType<AppNotificationHelper>("Beam.Wallet", 1, 0, "AppNotificationHelper");
             beamui::applications::RegisterQMLTypes();
 
+            WindowEventFilter filter;
+            app.installEventFilter(&filter);
+
             engine.load(QUrl("qrc:/root.qml"));
             if (engine.rootObjects().count() < 1)
             {
                 LOG_ERROR() << "Problem with QT";
                 return -1;
             }
+
+            QObject::connect(&filter,
+                             SIGNAL(windowMoved()),
+                             engine.rootObjects().takeFirst(),
+                             SLOT(windowMoved()));
 
             auto topLevel = engine.rootObjects().value(0);
             auto window = qobject_cast<QQuickWindow*>(topLevel);

@@ -208,6 +208,8 @@ set(UI_SRC
     viewmodel/dex/dex_view.cpp
     viewmodel/dex/dex_order_object.cpp
     viewmodel/dex/dex_orders_list.cpp
+    viewmodel/window_event_filter.h
+    viewmodel/window_event_filter.cpp
 
     model/wallet_model.h
     model/wallet_model.cpp
