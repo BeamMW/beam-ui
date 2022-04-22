@@ -84,6 +84,11 @@ QAbstractItemModel* TxTableViewModel::getTransactions()
     return &_transactionsList;
 }
 
+QAbstractItemModel* TxTableViewModel::getTransactionsNotFiltered()
+{
+    return &_transactionsListNotFiltered;
+}
+
 void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& transactions)
 {
     using namespace beam::wallet;
@@ -148,24 +153,28 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
         case ChangeAction::Reset:
             {
                 _transactionsList.reset(modifiedTransactionsFiltered);
+                _transactionsListNotFiltered.reset(modifiedTransactions);
                 break;
             }
 
         case ChangeAction::Removed:
             {
                 _transactionsList.remove(modifiedTransactions);
+                _transactionsListNotFiltered.remove(modifiedTransactions);
                 break;
             }
 
         case ChangeAction::Added:
             {
                 _transactionsList.insert(modifiedTransactionsFiltered);
+                _transactionsListNotFiltered.insert(modifiedTransactions);
                 break;
             }
 
         case ChangeAction::Updated:
             {
                 _transactionsList.update(modifiedTransactionsFiltered);
+                _transactionsListNotFiltered.update(modifiedTransactions);
                 break;
             }
 
