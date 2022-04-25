@@ -353,11 +353,11 @@ Control {
                     initTxDetailsFromRow(transactionsTable.model, index.row);
                     txDetails.open();
                 } else {
-                    index = tableViewModel.transactionsNotFiltered.index(0, 0);
-                    indexList = tableViewModel.transactionsNotFiltered.match(index, TxObjectList.Roles.TxID, id);
+                    index = tableViewModel.transactionsRejectedByFilter.index(0, 0);
+                    indexList = tableViewModel.transactionsRejectedByFilter.match(index, TxObjectList.Roles.TxID, id);
                     if (indexList.length > 0) {
                         index = indexList[0];
-                        initTxDetailsFromRow(transactionsTable.modelNotFiltered, index.row);
+                        initTxDetailsFromRow(transactionsTable.modelRejectedByFilter, index.row);
                         txDetails.open();
                     }
                 }
@@ -405,8 +405,8 @@ Control {
                     : Qt.DescendingOrder;
             }
 
-            property var modelNotFiltered: SortFilterProxyModel {
-                source: tableViewModel.transactionsNotFiltered
+            property var modelRejectedByFilter: SortFilterProxyModel {
+                source: tableViewModel.transactionsRejectedByFilter
             }
             model: SortFilterProxyModel {
                 id: txProxyModel

@@ -84,9 +84,9 @@ QAbstractItemModel* TxTableViewModel::getTransactions()
     return &_transactionsList;
 }
 
-QAbstractItemModel* TxTableViewModel::getTransactionsNotFiltered()
+QAbstractItemModel* TxTableViewModel::getTransactionsRejectedByFilter()
 {
-    return &_transactionsListNotFiltered;
+    return &_transactionsListRejectedByFilter;
 }
 
 void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& transactions)
@@ -131,19 +131,33 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
 
     std::vector<std::shared_ptr<TxObject>> modifiedTransactionsFiltered;
     modifiedTransactionsFiltered.reserve(modifiedTransactions.size());
+    std::vector<std::shared_ptr<TxObject>> modifiedTransactionsRejectedByFilter;
+    modifiedTransactionsRejectedByFilter.reserve(modifiedTransactions.size());
     for (const auto& tx: modifiedTransactions)
     {
         if (!_showInProgress && tx->isInProgress())
+        {
+            modifiedTransactionsRejectedByFilter.push_back(tx);
             continue;
+        }
 
         if (!_showCompleted && tx->isCompleted())
+        {
+            modifiedTransactionsRejectedByFilter.push_back(tx);
             continue;
+        }
 
         if (!_showCanceled && tx->isCanceled())
+        {
+            modifiedTransactionsRejectedByFilter.push_back(tx);
             continue;
+        }
 
         if (!_showFailed && tx->isFailed())
+        {
+            modifiedTransactionsRejectedByFilter.push_back(tx);
             continue;
+        }
 
         modifiedTransactionsFiltered.push_back(tx);
     }
@@ -153,28 +167,28 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
         case ChangeAction::Reset:
             {
                 _transactionsList.reset(modifiedTransactionsFiltered);
-                _transactionsListNotFiltered.reset(modifiedTransactions);
+                _transactionsListRejectedByFilter.reset(modifiedTransactionsRejectedByFilter);
                 break;
             }
 
         case ChangeAction::Removed:
             {
                 _transactionsList.remove(modifiedTransactions);
-                _transactionsListNotFiltered.remove(modifiedTransactions);
+                _transactionsListRejectedByFilter.remove(modifiedTransactionsRejectedByFilter);
                 break;
             }
 
         case ChangeAction::Added:
             {
                 _transactionsList.insert(modifiedTransactionsFiltered);
-                _transactionsListNotFiltered.insert(modifiedTransactions);
+                _transactionsListRejectedByFilter.insert(modifiedTransactionsRejectedByFilter);
                 break;
             }
 
         case ChangeAction::Updated:
             {
                 _transactionsList.update(modifiedTransactionsFiltered);
-                _transactionsListNotFiltered.update(modifiedTransactions);
+                _transactionsListRejectedByFilter.update(modifiedTransactionsRejectedByFilter);
                 break;
             }
 

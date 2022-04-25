@@ -27,6 +27,7 @@ ColumnLayout {
     function openAppTx (txid) {
         openedTxID = txid
         showTxDetails(txid)
+        openedTxID = "";
     }
 
     function uninstallApp (app) {
