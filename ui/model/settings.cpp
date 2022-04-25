@@ -881,8 +881,8 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     cfg.auto_relay = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTO_RELAY, cfg.auto_relay).toUInt();
     cfg.relay_hop = m_data.value(QString(kIPFSPrefix) + cli::IPFS_RELAY_HOP, cfg.relay_hop).toUInt();
     cfg.storage_max = m_data.value(QString(kIPFSPrefix) + cli::IPFS_STORAGE_MAX, QString::fromStdString(cfg.storage_max)).toString().toStdString();
-    cfg.api_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_API_PORT, cfg.api_port).toUInt();
-    cfg.gateway_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_GATEWAY_PORT, cfg.gateway_port).toUInt();
+    cfg.api_address = m_data.value(QString(kIPFSPrefix) + cli::IPFS_API_ADDR, QString::fromStdString(cfg.api_address)).toString().toStdString();
+    cfg.gateway_address = m_data.value(QString(kIPFSPrefix) + cli::IPFS_GATEWAY_ADDR, QString::fromStdString(cfg.gateway_address)).toString().toStdString();
     cfg.autonat = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT, cfg.autonat).toBool();
     cfg.autonat_limit = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_LIMIT, cfg.autonat_limit).toUInt();
     cfg.autonat_peer_limit = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_PEER_LIMIT, cfg.autonat_peer_limit).toUInt();
