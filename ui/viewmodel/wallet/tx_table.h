@@ -23,8 +23,8 @@
 
 class TxTableViewModel: public QObject {
     Q_OBJECT
-    Q_PROPERTY(QAbstractItemModel*  transactions            READ   getTransactions            NOTIFY transactionsChanged)
-    Q_PROPERTY(QAbstractItemModel*  transactionsNotFiltered READ   getTransactionsNotFiltered NOTIFY transactionsChanged)
+    Q_PROPERTY(QAbstractItemModel*  transactions READ getTransactions NOTIFY transactionsChanged)
+    Q_PROPERTY(QAbstractItemModel*  transactionsRejectedByFilter READ getTransactionsRejectedByFilter NOTIFY transactionsChanged)
     Q_PROPERTY(QString rateUnit     READ getRateUnit    NOTIFY rateChanged)
     Q_PROPERTY(bool showInProgress  READ getShowInProgress WRITE setShowInProgress NOTIFY showInProgressChanged)
     Q_PROPERTY(bool showCompleted   READ getShowCompleted  WRITE setShowCompleted  NOTIFY showCompletedChanged)
@@ -37,7 +37,7 @@ public:
     ~TxTableViewModel() override = default;
 
     QAbstractItemModel* getTransactions();
-    QAbstractItemModel* getTransactionsNotFiltered();
+    QAbstractItemModel* getTransactionsRejectedByFilter();
     QString getRateUnit() const;
     QString getRate() const;
 
@@ -73,7 +73,7 @@ private:
     WalletModel::Ptr     _model;
     QQueue<QString>      _txHistoryToCsvPaths;
     TxObjectList         _transactionsList;
-    TxObjectList         _transactionsListNotFiltered;
+    TxObjectList         _transactionsListRejectedByFilter;
     ExchangeRatesManager::Ptr _rates;
     WalletSettings&      _settings;
 
