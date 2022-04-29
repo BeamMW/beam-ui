@@ -123,8 +123,7 @@ namespace
             return _stream.str();
         }
     private:
-        ContractArgs()
-        {}
+        ContractArgs() = delete;
 
         std::stringstream _stream;
     };

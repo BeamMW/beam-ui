@@ -102,10 +102,10 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
     _contractFee = std::max(_tx.m_fee, Transaction::FeeSettings::get(h).get_DefaultStd());
 
     auto appendAsset = [&](Asset::ID aid, Amount amount, bool income) {
-        _assetAmounts.push_back(AmountToUIString(amount));
+        _assetAmounts.emplace_back(AmountToUIString(amount));
         _assetsList.push_back(aid);
         _assetAmountsIncome.push_back(income);
-        _assetRates.push_back(getRate(aid));
+        _assetRates.emplace_back(getRate(aid));
     };
 
     if (_tx.m_txType == wallet::TxType::Contract)
