@@ -342,7 +342,6 @@
         <file>assets/icon-trusted-node-status.svg</file>
         <file>assets/icon-delete-blue.svg</file>
         <file>utils.js</file>
-        <file>web_view_watcher.js</file>
         <file>qmldir</file>
         <file>assets/icon-notifications-swap-completed.svg</file>
         <file>assets/icon-notifications-swap-failed.svg</file>
