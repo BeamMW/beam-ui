@@ -10,7 +10,6 @@ Control {
     AssetsViewModel {
         id: viewModel
 
-        showValidationPromo: true
         onSelectedAssetChanged: function () {
             control.updateView()
         }
@@ -226,7 +225,7 @@ Control {
                     canHideValidationPromo: viewModel.canHideValidationPromo
                     itemHeight: 75
                     onShowSeedValidationPromoOff: function() {
-                        viewModel.showValidationPromo = false
+                        viewModel.showSeedValidationPromo = false
                     }
                     showFaucetPromo: viewModel.showFaucetPromo
                 }
@@ -243,7 +242,7 @@ Control {
             canHideValidationPromo: viewModel.canHideValidationPromo
             itemHeight: 75
             onShowSeedValidationPromoOff: function() {
-                viewModel.showValidationPromo = false
+                viewModel.showSeedValidationPromo = false
             }
             showFaucetPromo: viewModel.showFaucetPromo
         }
