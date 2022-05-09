@@ -45,6 +45,7 @@ signals:
 public slots:
     void lockWallet();
     void onLockTimeoutChanged();
+    void onGeneralMouseEvent();
 
 private slots:
     void onClipboardDataChanged();

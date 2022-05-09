@@ -28,5 +28,5 @@ protected:
 
 signals:
   void windowMoved();
-  void mouseMove();
+  void generalMouseEvent();
 };

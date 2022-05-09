@@ -25,7 +25,7 @@ bool WindowEventFilter::eventFilter(QObject *obj, QEvent *event)
     }
     if (event->type() == QEvent::MouseMove || event->type() == QEvent::Wheel || event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonRelease)
     {
-        emit mouseMove();
+        emit generalMouseEvent();
     }
     return false;
 }
