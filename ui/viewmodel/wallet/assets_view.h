@@ -25,7 +25,7 @@ class AssetsViewModel : public QObject {
     Q_PROPERTY(QVector<beam::Asset::ID> selectedAssets           
                                             READ getSelectedAssets         NOTIFY selectedAssetChanged)
     Q_PROPERTY(bool showFaucetPromo         READ getShowFaucetPromo        WRITE setShowFaucetPromo      NOTIFY showFaucetPromoChanged)
-    Q_PROPERTY(bool showValidationPromo     READ getShowValidationPromo    WRITE setShowValidationPromo  NOTIFY showValidationPromoChanged)
+    Q_PROPERTY(bool showSeedValidationPromo READ getShowValidationPromo    WRITE setShowValidationPromo  NOTIFY showValidationPromoChanged)
     Q_PROPERTY(bool canHideValidationPromo  READ getCanHideValidationPromo NOTIFY canHideValidationPromoChanged )
 
 public:
