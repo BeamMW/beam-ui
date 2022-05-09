@@ -308,10 +308,7 @@ int main (int argc, char* argv[])
                 return -1;
             }
 
-            QObject::connect(&filter,
-                             SIGNAL(windowMoved()),
-                             engine.rootObjects().takeFirst(),
-                             SLOT(windowMoved()));
+            QObject::connect(&filter,SIGNAL(windowMoved()),&settings,SIGNAL(lockTimeoutChanged()));
 
             auto topLevel = engine.rootObjects().value(0);
             auto window = qobject_cast<QQuickWindow*>(topLevel);

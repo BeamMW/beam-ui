@@ -14,22 +14,15 @@
 
 #include "window_event_filter.h"
 #include <QEvent>
+#include <QDebug>
 
 WindowEventFilter::WindowEventFilter(QObject *parent) : QObject(parent) {}
 
 bool WindowEventFilter::eventFilter(QObject *obj, QEvent *event)
 {
-    if (event->type() == QEvent::Close)
-    {
-        return false;
-    }
-    else if (event->type() == QEvent::Move)
+    if (event->type() == QEvent::MouseMove || event->type() == QEvent::Wheel || event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonRelease)
     {
         emit windowMoved();
-        return true;
     }
-    else
-    {
-        return QObject::eventFilter(obj, event);
-    }
+    return false;
 }
