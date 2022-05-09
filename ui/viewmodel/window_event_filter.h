@@ -15,7 +15,6 @@
 #pragma once
 
 #include <QObject>
-#include "main_view.h"
 
 class WindowEventFilter : public QObject
 {
@@ -29,4 +28,5 @@ protected:
 
 signals:
   void windowMoved();
+  void mouseMove();
 };
