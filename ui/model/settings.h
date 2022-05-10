@@ -191,6 +191,7 @@ signals:
     void secondCurrencyChanged();
     void dappsAllowedChanged();
     void IPFSSettingsChanged();
+    void generalMouseEvent();
 
 private:
     mutable QSettings m_data;

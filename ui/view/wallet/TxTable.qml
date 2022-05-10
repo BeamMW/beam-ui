@@ -25,8 +25,8 @@ Control {
     readonly property  bool actionVisible: dappFilter !== undefined && dappFilter != "all"
     property var       owner
 
-    function showTxDetails (txid) {
-        transactionsTable.showDetails (txid)
+    function showTxDetails(txid) {
+        transactionsTable.showDetails(txid)
     }
 
     state: "all"
@@ -352,6 +352,14 @@ Control {
 
                     initTxDetailsFromRow(transactionsTable.model, index.row);
                     txDetails.open();
+                } else {
+                    index = tableViewModel.transactionsRejectedByFilter.index(0, 0);
+                    indexList = tableViewModel.transactionsRejectedByFilter.match(index, TxObjectList.Roles.TxID, id);
+                    if (indexList.length > 0) {
+                        index = indexList[0];
+                        initTxDetailsFromRow(transactionsTable.modelRejectedByFilter, index.row);
+                        txDetails.open();
+                    }
                 }
             }
 
@@ -397,6 +405,9 @@ Control {
                     : Qt.DescendingOrder;
             }
 
+            property var modelRejectedByFilter: SortFilterProxyModel {
+                source: tableViewModel.transactionsRejectedByFilter
+            }
             model: SortFilterProxyModel {
                 id: txProxyModel
 

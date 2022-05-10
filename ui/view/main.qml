@@ -183,12 +183,10 @@ Rectangle {
         acceptedButtons: Qt.AllButtons
         hoverEnabled: true
         propagateComposedEvents: true
-        onMouseXChanged: resetLockTimer()
-        onPressedChanged: resetLockTimer()
     }
 
     Keys.onReleased: {
-        resetLockTimer()
+        viewModel.resetLockTimer();
     }
 
     function appsQml () {
@@ -455,10 +453,6 @@ Rectangle {
 
     function openApplications () {
         updateItem("applications")
-    }
-
-    function resetLockTimer() {
-        viewModel.resetLockTimer();
     }
 
     function openFaucet () {
