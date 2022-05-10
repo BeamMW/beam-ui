@@ -50,6 +50,7 @@ ComboBox {
         id: itemDelegate
         width: calculatedWidth
         padding: 0
+        leftPadding: control.leftPadding
 
         property var  iconW:    (Array.isArray(control.model)  ? modelData["iconWidth"]  : model["iconWidth"]) || 0
         property var  iconH:    (Array.isArray(control.model)  ? modelData["iconHeight"] : model["iconHeight"]) || 0
@@ -209,8 +210,8 @@ ComboBox {
 
         topPadding:    20
         bottomPadding: 20
-        leftPadding:   20
-        rightPadding:  20
+        leftPadding:   0
+        rightPadding:  0
 
         contentItem: ColumnLayout {
             spacing: 0
