@@ -45,7 +45,7 @@ MainViewModel::MainViewModel()
 
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(lockWallet()));
     connect(&m_settings, SIGNAL(lockTimeoutChanged()), this, SLOT(onLockTimeoutChanged()));
-    connect(&m_settings, SIGNAL(generalMouseEvent()), this, SLOT(resetLockTimer()));
+    connect(&m_settings, SIGNAL(generalMouseEvent()), this, SLOT(onGeneralMouseEvent()));
     connect(walletModelPtr, &WalletModel::walletStatusChanged, this, &MainViewModel::unsafeTxCountChanged);
     connect(walletModelPtr, SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SIGNAL(unsafeTxCountChanged()));
     connect(walletModelPtr, SIGNAL(notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)), SIGNAL(unreadNotificationsChanged()));
