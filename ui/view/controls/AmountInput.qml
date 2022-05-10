@@ -134,6 +134,7 @@ ColumnLayout {
                 textMaxLenDrop:      10
                 enableScroll:        true
                 showBackground:      false
+                leftPadding: 30
 
                 onActivated: {
                     if (multi) {
