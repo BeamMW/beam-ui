@@ -119,7 +119,6 @@ ColumnLayout {
             y: 10
             CustomComboBox {
                 id:                  currCombo
-                // width:               140
                 dropSpacing:         18
                 spacing:             0
                 fontPixelSize:       20
