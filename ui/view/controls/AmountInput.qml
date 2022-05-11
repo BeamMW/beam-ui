@@ -119,7 +119,7 @@ ColumnLayout {
             y: 10
             CustomComboBox {
                 id:                  currCombo
-                width:               140
+                // width:               140
                 dropSpacing:         18
                 spacing:             0
                 fontPixelSize:       20
@@ -134,7 +134,10 @@ ColumnLayout {
                 textMaxLenDrop:      10
                 enableScroll:        true
                 showBackground:      false
-                leftPadding: 30
+                leftPadding:         30
+                maxTextWidth:        80
+                dropDownIconSixe:    Qt.size(9, 5)
+                dropDownIconRightMargin: 14
 
                 onActivated: {
                     if (multi) {

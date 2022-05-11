@@ -23,7 +23,7 @@ ComboBox {
     property bool enableScroll: false
     property int textMaxLenDrop: 0
 
-    property var modelWidth: control.width
+    property var modelWidth: 140
     property var calculatedWidth: Math.max(control.width, modelWidth)
     property var transformText: undefined
 
@@ -31,6 +31,10 @@ ComboBox {
     property string controlFontStyle: "Regular"
     property color controlColor: control.enabled || control.colorConst ? control.color : Style.content_secondary
     property bool showBackground: true
+
+    property int maxTextWidth: 400 
+    property var dropDownIconSixe: Qt.size(5, 3)
+    property int dropDownIconRightMargin: 0
 
     property alias backgroundColor : backgroundRect.color
     backgroundColor: Style.content_main
@@ -158,6 +162,7 @@ ComboBox {
         SFText  {
             Layout.fillWidth:   true
             Layout.alignment:   Qt.AlignVCenter
+            Layout.maximumWidth: control.maxTextWidth
             Layout.rightMargin: control.enabled ? 10 : 0
 
             clip: true
@@ -173,15 +178,17 @@ ComboBox {
             id: imgDown
             source: "qrc:/assets/icon-down.svg"
             Layout.alignment: Qt.AlignVCenter
+            Layout.rightMargin: control.dropDownIconRightMargin
             visible: control.enabled && !control.down
-            sourceSize: Qt.size(5, 3)
+            sourceSize: control.dropDownIconSixe
         }
         SvgImage {
             id: imgUp
             source: "qrc:/assets/icon-up.svg"
             Layout.alignment: Qt.AlignVCenter
+            Layout.rightMargin: control.dropDownIconRightMargin
             visible: control.enabled && control.down
-            sourceSize: Qt.size(5, 3)
+            sourceSize: control.dropDownIconSixe
         }
     }
 
