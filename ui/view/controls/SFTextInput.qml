@@ -26,7 +26,7 @@ T.TextField {
     }
 
     padding: 6
-    leftPadding: 0
+    leftPadding: 8
 
     color: control.palette.text
     selectionColor: control.palette.highlight
@@ -37,6 +37,7 @@ T.TextField {
     property alias backgroundColor : backgroundRect.color
     property alias underlineVisible : backgroundRect.visible
     backgroundColor: Style.content_main
+    property bool highlight: false
 
     selectByMouse: true
 
@@ -63,10 +64,9 @@ T.TextField {
 
     background: Rectangle {
         id: backgroundRect
-        y: control.height - height - control.bottomPadding + 4
-        width: control.width - (control.leftPadding + control.rightPadding)
-        height: control.activeFocus || control.hovered ? 1 : 1
-        opacity: (control.activeFocus || control.hovered)? 0.3 : 0.1
+        anchors.fill: parent
+        radius: 10
+        opacity: (control.activeFocus || control.hovered || control.highlight) ? 0.1 : 0.05
     }
 
     MouseArea {

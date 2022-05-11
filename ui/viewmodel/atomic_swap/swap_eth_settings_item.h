@@ -40,7 +40,7 @@ class SwapEthSettingsItem : public QObject
     Q_PROPERTY(bool            canChangeConnection      READ canChangeConnection                                    NOTIFY canChangeConnectionChanged)
     Q_PROPERTY(bool            isConnected              READ getIsConnected                                         NOTIFY connectionChanged)
     Q_PROPERTY(QString         connectionStatus         READ getConnectionStatus                                    NOTIFY connectionStatusChanged)
-    Q_PROPERTY(QString         connectionErrorMsg       READ getConnectionErrorMsg                                  NOTIFY connectionErrorMsgChanged)
+    Q_PROPERTY(QString         connectionError          READ getConnectionError                                     NOTIFY connectionErrorChanged)
 
 
 public:
@@ -81,7 +81,7 @@ private:
     bool canChangeConnection() const;
     bool getIsConnected() const;
     QString getConnectionStatus() const;
-    QString getConnectionErrorMsg() const;
+    QString getConnectionError() const;
 
     std::vector<std::string> GetSeedPhraseFromSeedItems() const;
 
@@ -93,7 +93,7 @@ signals:
     void connectionChanged();
     void accountIndexChanged();
     void connectionStatusChanged();
-    void connectionErrorMsgChanged();
+    void connectionErrorChanged();
     void foldedChanged();
 
 private:

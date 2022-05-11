@@ -15,7 +15,7 @@ function(BEAM_TRANSLATIONS_UPDATE_TS supported_langs out_ts_files)
         set(TS_FILE "${CMAKE_CURRENT_SOURCE_DIR}/i18n/${SUPPORTED_LANG}.ts")
         list(APPEND TS_FILES "${TS_FILE}")
         message("update: ${TS_FILE}")
-        if (DISTR_NAME AND ("${DISTR_NAME}" STREQUAL "Fedora"))
+        if (${DISTR_NAME} MATCHES "Fedora")
             execute_process(COMMAND lupdate-qt5 -recursive -locations none -no-obsolete ${CMAKE_CURRENT_SOURCE_DIR} -ts "${TS_FILE}")
         else()
             execute_process(COMMAND lupdate -recursive -locations none -no-obsolete ${CMAKE_CURRENT_SOURCE_DIR} -ts "${TS_FILE}")
@@ -40,7 +40,7 @@ function(BEAM_TRANSLATIONS_COMPILE_QM ts_files out_qm_files)
         get_filename_component(TS_FILE_WE ${TS_FILE} NAME_WE)
         set(QM_FILE_NAME "${TS_FILE_WE}.qm")
         list(APPEND QM_FILES "${QM_FILE_NAME}")
-        if (DISTR_NAME AND ("${DISTR_NAME}" STREQUAL "Fedora"))
+        if (${DISTR_NAME} MATCHES "Fedora")
             execute_process(COMMAND lrelease-qt5 -idbased "${TS_FILE}" -qm "${CMAKE_CURRENT_SOURCE_DIR}/${QM_FILE_NAME}")
         else()
             execute_process(COMMAND lrelease -idbased "${TS_FILE}" -qm "${CMAKE_CURRENT_SOURCE_DIR}/${QM_FILE_NAME}")
@@ -116,6 +116,8 @@ set(UI_SRC
     viewmodel/applications/apps_api_ui.cpp
     viewmodel/applications/public.cpp
     viewmodel/applications/public.h
+    viewmodel/applications/publishers_view.h
+    viewmodel/applications/publishers_view.cpp
     viewmodel/helpers/list_model.h
     viewmodel/helpers/sortfilterproxymodel.h
     viewmodel/helpers/sortfilterproxymodel.cpp
@@ -206,6 +208,8 @@ set(UI_SRC
     viewmodel/dex/dex_view.cpp
     viewmodel/dex/dex_order_object.cpp
     viewmodel/dex/dex_orders_list.cpp
+    viewmodel/window_event_filter.h
+    viewmodel/window_event_filter.cpp
 
     model/wallet_model.h
     model/wallet_model.cpp
@@ -288,7 +292,11 @@ if(BEAM_USE_STATIC AND LINUX)
     set(CMAKE_C_FLAGS "-no-pie ${CMAKE_C_FLAGS}")
     set(CMAKE_CXX_FLAGS "-no-pie ${CMAKE_CXX_FLAGS}")
 endif()
-add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns")
+if (APPLE)
+    add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" "${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm")
+else()
+    add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns")
+endif()
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${OUTPUT_NAME})
 
 if(BEAM_HW_WALLET)
@@ -481,22 +489,22 @@ endif()
 
 if(LINUX)
     install(TARGETS ${TARGET_NAME} DESTINATION bin)
-    install(FILES beam-wallet.cfg DESTINATION bin)
+    install(FILES dapps_store_app.wasm DESTINATION bin)
 
-    SET(BEAM_DESKTOP_DIR     "/usr/share/applications/")
-    SET(BEAM_PIXMAPS_DIR     "/usr/share/icons/")
+    SET(BEAM_DESKTOP_DIR     "${CMAKE_INSTALL_PREFIX}/share/applications/")
+    SET(BEAM_PIXMAPS_DIR     "${CMAKE_INSTALL_PREFIX}/share/icons/")
 
     install (FILES beam.desktop DESTINATION ${BEAM_DESKTOP_DIR})
-    install (FILES beam.xml DESTINATION ${BEAM_DESKTOP_DIR})
     install (FILES beam.png DESTINATION ${BEAM_PIXMAPS_DIR})
 elseif(APPLE)
     #set(MACOSX_BUNDLE_ICON_FILE "Beam Wallet${BEAM_DISPLAY_SUFFIX}.icns")
     set(MACOSX_BUNDLE_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
     set_target_properties(${TARGET_NAME} PROPERTIES 
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
 
-    if (NOT BEAM_USE_STATIC_QT)
+    if (NOT BEAM_USE_STATIC_QT AND BEAM_SIGN_IDENTITY)
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
             COMMAND macdeployqt
             "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app"
@@ -559,6 +567,7 @@ else()
         install(FILES ${OPENSSL_ROOT_DIR}/bin/libcrypto-1_1-x64.dll DESTINATION .)
         install(FILES ${OPENSSL_ROOT_DIR}/bin/libssl-1_1-x64.dll DESTINATION .)
         install(FILES beam-wallet.cfg DESTINATION .)
+        install(FILES dapps_store_app.wasm DESTINATION .)
         install(TARGETS ${TARGET_NAME} DESTINATION .)
     endif()
 
@@ -570,4 +579,20 @@ else()
     #    TARGET signing-installer
     #    COMMAND ${SIGNTOOL_EXECUTABLE} sign ${SIGNTOOL_OPTIONS} ${CMAKE_CURRENT_BINARY_DIR}\\${BEAM_INSTALLER_NAME}
     #  )
+endif()
+
+if (BEAM_IPFS_SUPPORT AND WIN32)
+    # TODO: This if hacky AF and beacuse we place everything in different folders.
+    get_target_property(IPFS_DLL asio-ipfs IPFS_DLL)
+    add_custom_command(
+            TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy ${IPFS_DLL} ${CMAKE_CURRENT_BINARY_DIR}
+    )
+endif()
+
+if(NOT APPLE)
+    add_custom_command(
+        TARGET ${TARGET_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm ${CMAKE_CURRENT_BINARY_DIR}
+    )
 endif()

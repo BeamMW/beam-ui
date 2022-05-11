@@ -74,6 +74,9 @@ public:
 
     Q_INVOKABLE static QString getExplorerUrl();
 
+    Q_INVOKABLE static bool isAppActive();
+    Q_INVOKABLE static void setAppActive(bool value);
+
 private:
     QQmlEngine& _engine;
 };

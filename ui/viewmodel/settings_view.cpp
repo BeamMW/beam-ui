@@ -95,7 +95,7 @@ void SettingsViewModel::onAddressChecked(const QString& addr, bool isValid)
         if (m_isNeedToApplyChanges)
         {
             if (m_isValidNodeAddress)
-                applyChanges();
+                applyNodeChanges();
 
             m_isNeedToApplyChanges = false;
         }
@@ -170,12 +170,12 @@ void SettingsViewModel::setLocalNodeRun(bool value)
     }
 }
 
-QString SettingsViewModel::getLocalNodePort() const
+unsigned int SettingsViewModel::getLocalNodePort() const
 {
     return m_localNodePort;
 }
 
-void SettingsViewModel::setLocalNodePort(const QString& value)
+void SettingsViewModel::setLocalNodePort(unsigned int value)
 {
     if (value != m_localNodePort)
     {
@@ -184,6 +184,71 @@ void SettingsViewModel::setLocalNodePort(const QString& value)
         emit nodeSettingsChanged();
     }
 }
+
+bool SettingsViewModel::getIPFSSupported() const
+{
+    #ifdef BEAM_IPFS_SUPPORT
+    return true;
+    #else
+    reutrn false;
+    #endif
+}
+
+#ifdef BEAM_IPFS_SUPPORT
+unsigned int SettingsViewModel::getIPFSSwarmPort() const
+{
+    return m_IPFSSwarmPort;
+}
+
+void SettingsViewModel::setIPFSSwarmPort(unsigned int value)
+{
+    if (value != m_IPFSSwarmPort)
+    {
+        m_IPFSSwarmPort = value;
+        emit IPFSSwarmPortChanged();
+        emit IPFSSettingsChanged();
+    }
+}
+
+QString SettingsViewModel::getIPFSLocation() const
+{
+    auto cfg = m_settings.getIPFSConfig();
+    return QString::fromStdString(cfg.repo_root);
+}
+
+QString SettingsViewModel::getIPFSNodeStart() const
+{
+    return m_IPFSNodeStart;
+}
+
+void SettingsViewModel::setIPFSNodeStart(const QString& val)
+{
+    m_IPFSNodeStart = val;
+    emit IPFSNodeStartChanged();
+    emit IPFSSettingsChanged();
+}
+
+bool SettingsViewModel::getIPFSChanged() const
+{
+    auto icfg = m_settings.getIPFSConfig();
+    return m_IPFSSwarmPort != icfg.swarm_port ||
+           m_IPFSNodeStart != m_settings.getIPFSNodeStart();
+}
+
+void SettingsViewModel::applyIPFSChanges()
+{
+    if (!getIPFSChanged())
+    {
+        assert(false);
+        return;
+    }
+
+    m_settings.setIPFSPort(m_IPFSSwarmPort);
+    m_settings.setIPFSNodeStart(m_IPFSNodeStart);
+    m_settings.applyIPFSChanges();
+    emit IPFSSettingsChanged();
+}
+#endif
 
 int SettingsViewModel::getAppsPort() const
 {
@@ -384,12 +449,12 @@ QString SettingsViewModel::getOwnerKey(const QString& password) const
 bool SettingsViewModel::isNodeChanged() const
 {
     return formatAddress(m_nodeAddress, m_remoteNodePort) != m_settings.getNodeAddress()
-        || m_localNodeRun != m_settings.getRunLocalNode()
-        || static_cast<uint>(m_localNodePort.toInt()) != m_settings.getLocalNodePort()
+        || m_localNodeRun   != m_settings.getRunLocalNode()
+        || m_localNodePort  != m_settings.getLocalNodePort()
         || m_localNodePeers != m_settings.getLocalNodePeers();
 }
 
-void SettingsViewModel::applyChanges()
+void SettingsViewModel::applyNodeChanges()
 {
     if (!m_localNodeRun && m_isNeedToCheckAddress)
     {
@@ -399,9 +464,9 @@ void SettingsViewModel::applyChanges()
 
     m_settings.setNodeAddress(formatAddress(m_nodeAddress, m_remoteNodePort));
     m_settings.setRunLocalNode(m_localNodeRun);
-    m_settings.setLocalNodePort(m_localNodePort.toInt());
+    m_settings.setLocalNodePort(m_localNodePort);
     m_settings.setLocalNodePeers(m_localNodePeers);
-    m_settings.applyChanges();
+    m_settings.applyNodeChanges();
     emit nodeSettingsChanged();
 }
 
@@ -432,8 +497,14 @@ void SettingsViewModel::undoChanges()
     }
 
     setLocalNodeRun(m_settings.getRunLocalNode());
-    setLocalNodePort(formatPort(m_settings.getLocalNodePort()));
+    setLocalNodePort(m_settings.getLocalNodePort());
     setLocalNodePeers(m_settings.getLocalNodePeers());
+
+    #ifdef BEAM_IPFS_SUPPORT
+    m_IPFSNodeStart = m_settings.getIPFSNodeStart();
+    auto icfg = m_settings.getIPFSConfig();
+    setIPFSSwarmPort(icfg.swarm_port);
+    #endif
 }
 
 void SettingsViewModel::reportProblem()

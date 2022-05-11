@@ -19,19 +19,37 @@
 #include "model/wallet_model.h"
 #include "tx_object_list.h"
 #include "model/exchange_rates_manager.h"
+#include "model/settings.h"
 
 class TxTableViewModel: public QObject {
     Q_OBJECT
-    Q_PROPERTY(QAbstractItemModel*  transactions READ   getTransactions     NOTIFY transactionsChanged)
+    Q_PROPERTY(QAbstractItemModel*  transactions READ getTransactions NOTIFY transactionsChanged)
+    Q_PROPERTY(QAbstractItemModel*  transactionsRejectedByFilter READ getTransactionsRejectedByFilter NOTIFY transactionsChanged)
     Q_PROPERTY(QString rateUnit     READ getRateUnit    NOTIFY rateChanged)
+    Q_PROPERTY(bool showInProgress  READ getShowInProgress WRITE setShowInProgress NOTIFY showInProgressChanged)
+    Q_PROPERTY(bool showCompleted   READ getShowCompleted  WRITE setShowCompleted  NOTIFY showCompletedChanged)
+    Q_PROPERTY(bool showCanceled    READ getShowCanceled   WRITE setShowCanceled   NOTIFY showCanceledChanged)
+    Q_PROPERTY(bool showFailed      READ getShowFailed     WRITE setShowFailed     NOTIFY showFailedCanged)
+    Q_PROPERTY(bool showAll         READ getShowAll                                NOTIFY showAllChanged)
 
 public:
     TxTableViewModel();
     ~TxTableViewModel() override = default;
 
     QAbstractItemModel* getTransactions();
+    QAbstractItemModel* getTransactionsRejectedByFilter();
     QString getRateUnit() const;
     QString getRate() const;
+
+    bool getShowInProgress() const;
+    void setShowInProgress(bool value);
+    bool getShowCompleted() const;
+    void setShowCompleted(bool value);
+    bool getShowCanceled() const;
+    void setShowCanceled(bool value);
+    bool getShowFailed() const;
+    void setShowFailed(bool value);
+    bool getShowAll() const;
 
     Q_INVOKABLE void exportTxHistoryToCsv();
     Q_INVOKABLE void cancelTx(const QVariant& variantTxID);
@@ -45,10 +63,22 @@ public slots:
 signals:
     void transactionsChanged();
     void rateChanged();
+    void showInProgressChanged();
+    void showCompletedChanged();
+    void showCanceledChanged();
+    void showFailedCanged();
+    void showAllChanged();
 
 private:
     WalletModel::Ptr     _model;
     QQueue<QString>      _txHistoryToCsvPaths;
     TxObjectList         _transactionsList;
+    TxObjectList         _transactionsListRejectedByFilter;
     ExchangeRatesManager::Ptr _rates;
+    WalletSettings&      _settings;
+
+    bool _showInProgress = true;
+    bool _showCompleted = true;
+    bool _showCanceled = true;
+    bool _showFailed = true;
 };

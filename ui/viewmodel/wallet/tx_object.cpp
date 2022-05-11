@@ -102,10 +102,10 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
     _contractFee = std::max(_tx.m_fee, Transaction::FeeSettings::get(h).get_DefaultStd());
 
     auto appendAsset = [&](Asset::ID aid, Amount amount, bool income) {
-        _assetAmounts.push_back(AmountToUIString(amount));
+        _assetAmounts.emplace_back(AmountToUIString(amount));
         _assetsList.push_back(aid);
         _assetAmountsIncome.push_back(income);
-        _assetRates.push_back(getRate(aid));
+        _assetRates.emplace_back(getRate(aid));
     };
 
     if (_tx.m_txType == wallet::TxType::Contract)
@@ -165,9 +165,9 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
         appendAsset(_tx.m_assetId, _tx.m_amount, !_tx.m_sender);
     }
 
-    if (auto strdesc = _tx.GetParameter<std::string>(beam::wallet::TxParameterID::AppName); strdesc)
+    if (!_tx.m_appName.empty())
     {
-        _source = QString::fromStdString(*strdesc);
+        _source = QString::fromStdString(_tx.m_appName);
     }
     else if (_tx.m_txType == wallet::TxType::DexSimpleSwap)
     {
@@ -617,7 +617,10 @@ bool TxObject::isMultiAsset() const
 
 bool TxObject::canShowContractNotification() const
 {
-    if (isContractTx() && isActive())
+    auto dappStoreCID = AppModel::getInstance().getSettings().getDappStoreCID();
+    bool isDAppStoreTx = getCidsStr().compare(QString::fromStdString(dappStoreCID), Qt::CaseInsensitive) == 0;
+
+    if (isContractTx() && isActive() && !isDAppStoreTx)
     {
         bool isMarkedAsRead = false;
         _tx.GetParameter(beam::wallet::TxParameterID::IsContractNotificationMarkedAsRead, isMarkedAsRead);

@@ -295,13 +295,18 @@ Item
                             id: startMigration
 
                             //: migration screen, start auto migration button
-                            //% "Start auto migration"
+                            //% "start auto migration"
                             text: qsTrId("start-migration-button")
                             icon.source: "qrc:/assets/icon-repeat.svg"
-                            enabled: viewModel.isOnlyOneInstanceStarted
+                            enabled: viewModel.isOnlyOneInstanceStarted && viewModel.walletDBpaths[0].isPreferred
                             onClicked: 
                             {
-                                startWizzardView.push(selectWalletDBView);
+                                for (var path of viewModel.walletDBpaths) {
+                                    if (path.isPreferred) {
+                                        migrateWalletDB(path.fullPath);
+                                        break;
+                                    }
+                                }
                             }
                         }
 
@@ -311,23 +316,19 @@ Item
 
                         CustomButton {
                             //: migration screen, select db file button
-                            //% "Select wallet database file manually"
-                            text: qsTrId("start-migration-select-file-button")
+                            //% "start manual migration"
+                            text: qsTrId("start-migration-manual-button")
                             icon.source: "qrc:/assets/icon-folder.svg"
                             enabled: viewModel.isOnlyOneInstanceStarted
                             onClicked: {
-                                var path = viewModel.selectCustomWalletDB();
-
-                                if (path.length > 0) {
-                                    migrateWalletDB(path);
-                                }
+                                startWizzardView.push(selectWalletDBView);
                             }
                         }
                     }
 
                     SFText {
                         Layout.alignment: Qt.AlignHCenter
-                        Layout.topMargin: 65
+                        Layout.topMargin: 64
                         //% "Restore wallet or create a new one"
                         text: qsTrId("general-restore-or-create-wallet")
                         color: Style.active
@@ -347,8 +348,7 @@ Item
 
                     Item {
                         Layout.fillWidth:       true
-                        Layout.fillHeight:      true
-                        Layout.minimumHeight:   67
+                        Layout.preferredHeight:   68
                     }
                 }
             }
@@ -562,7 +562,34 @@ Item
 
                     Item {
                         Layout.fillHeight: true
-                        Layout.minimumHeight: 64
+                        Layout.minimumHeight: 16
+                    }
+
+                    SFText {
+                        Layout.alignment: Qt.AlignHCenter
+                        //% "Find the wallet database file manually"
+                        text: qsTrId("restore-find-db")
+                        color: Style.active
+                        font.pixelSize: 14
+
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                var path = viewModel.selectCustomWalletDB();
+
+                                if (path.length > 0) {
+                                    migrateWalletDB(path);
+                                }
+                            }
+                            hoverEnabled: true
+                        }
+                    }
+
+                    Item {
+                        Layout.fillHeight: true
+                        Layout.minimumHeight: 32
                     }
 
                     Row {
@@ -594,24 +621,6 @@ Item
                     Item {
                         Layout.minimumHeight: 30
                         Layout.preferredHeight: 100
-                    }
-
-                    SFText {
-                        Layout.alignment: Qt.AlignHCenter
-                        //% "Restore wallet or create a new one"
-                        text: qsTrId("general-restore-or-create-wallet")
-                        color: Style.active
-                        font.pixelSize: 14
-
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.LeftButton
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: {
-                                startWizzardView.push(start);
-                            }
-                            hoverEnabled: true
-                        }
                     }
 
                     Item {
@@ -1433,7 +1442,7 @@ Item
 
                             SFTextInput {
                                 id:portInput
-                                width: parent.width
+                                width: parent.width - 40
 
                                 font.pixelSize: 14
                                 color: Style.content_main
@@ -1441,35 +1450,32 @@ Item
                                 validator: RegExpValidator { regExp: /^\d{1,5}$/ }
                                 onTextChanged: if (portInput.text.length > 0) portError.text = ""
                             }
+
                             SFText {
                                 id: portError
                                 color: Style.validator_error
                                 font.pixelSize: 14
                             }
 
-                            RowLayout {
-                                width: parent.width
-                                spacing: 10
-
-                                SFText {
-                                    //% "Peer"
-                                    text: qsTrId("start-node-peer-label")
-                                    color: Style.content_main
-                                    font.pixelSize: 14
-                                    font.styleName: "Bold"; font.weight: Font.Bold
-                                }
-
-                                SFTextInput {
-                                    id: localNodePeer
-                                    Layout.fillWidth: true
-                                    activeFocusOnTab: true
-                                    font.pixelSize: 12
-                                    color: Style.content_main
-                                    text: viewModel.chooseRandomNode()
-                                    validator: RegExpValidator { regExp: /^(\s|\x180E)*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([\w.-]+(?:\.[\w\.-]+)+))(:([0-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?(\s|\x180E)*$/ }
-                                    onTextChanged: if (peerError.text.length > 0) peerError.text = ""
-                                }
+                            SFText {
+                                //% "Peer"
+                                text: qsTrId("start-node-peer-label")
+                                color: Style.content_main
+                                font.pixelSize: 14
+                                font.styleName: "Bold"; font.weight: Font.Bold
                             }
+
+                            SFTextInput {
+                                id: localNodePeer
+                                width: parent.width - 40
+                                activeFocusOnTab: true
+                                font.pixelSize: 14
+                                color: Style.content_main
+                                text: viewModel.chooseRandomNode()
+                                validator: RegExpValidator { regExp: /^(\s|\x180E)*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([\w.-]+(?:\.[\w\.-]+)+))(:([0-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?(\s|\x180E)*$/ }
+                                onTextChanged: if (peerError.text.length > 0) peerError.text = ""
+                            }
+
                             SFText {
                                 id: peerError
                                 color: Style.validator_error
@@ -1485,8 +1491,8 @@ Item
                             font.pixelSize: 14
                             enabled: viewModel.isRecoveryMode == false
                         }
-                        Row {
-                            width: parent.width
+                        RowLayout {
+                            Layout.fillWidth: true
                             spacing: 10
                             CustomRadioButton {
                                 id: remoteNodeButton
@@ -1497,6 +1503,7 @@ Item
                                 enabled: viewModel.isRecoveryMode == false
                             }
                             SFTextInput {
+                                Layout.alignment: Qt.AlignVCenter
                                 id:remoteNodeAddrInput
                                 visible: remoteNodeButton.checked
                                 width: parent.width - parent.spacing - remoteNodeButton.width
@@ -1505,7 +1512,6 @@ Item
                                 text: viewModel.defaultRemoteNodeAddr()
                                 validator: RegExpValidator { regExp: /^(\s|\x180E)*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([\w.-]+(?:\.[\w\.-]+)+))(:([0-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?(\s|\x180E)*$/ }
                                 onTextChanged: if (remoteNodeAddrInput.text.length > 0) remoteNodeAddrError.text = ""
-                                bottomPadding: 8 // TODO add default value of this item to controls
                             }
                         }
                         Column {
@@ -1589,8 +1595,8 @@ Item
 
                                 if (isBadPortMode) {
                                     viewModel.onNodeSettingsChanged();
-                                    root.parent.setSource("qrc:/loading.qml");
-                                } else {
+                                    startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : viewModel.isRecoveryMode, "isCreating" : true, "cancelCallback": startWizzardView.pop});
+                               } else {
                                     viewModel.createWallet(function (created) {
                                         if (created) { 
                                             startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : viewModel.isRecoveryMode, "isCreating" : true, "cancelCallback": startWizzardView.pop});
@@ -1627,7 +1633,7 @@ Item
                     viewModel.openWallet(pass, callback);
                 }
                 property var loadWallet: function () {
-                    root.parent.setSource("qrc:/loading.qml", {"isRecoveryMode" : false, "isCreating" : false});
+                    startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : false, "isCreating" : false, "cancelCallback": startWizzardView.pop});
                 }
                 
                 property var checkCapsLockOnActivation: function () {
@@ -1673,7 +1679,7 @@ Item
                     SFText {
                         Layout.alignment:       Qt.AlignHCenter
                         Layout.preferredHeight: 16
-                        Layout.bottomMargin:    startLayout.isSqueezedHeight  ? 18 : 48
+                        Layout.bottomMargin:    startLayout.isSqueezedHeight  ? 10 : 20
                         //% "Enter your password to access the wallet"
                         text: qsTrId("start-open-pwd-invitation")
                         color: Style.content_main
@@ -1700,11 +1706,12 @@ Item
                             focus: true
                             activeFocusOnTab: true
                             font.pixelSize: 14
-                            color: Style.content_main
+                            color: openPasswordError.text.length ? Style.validator_error : Style.content_main
                             echoMode: TextInput.Password
                             onAccepted: btnCurrentWallet.clicked()
                             onTextChanged: if (openPassword.text.length > 0) openPasswordError.text = ""
                             enabled: viewModel.isOnlyOneInstanceStarted
+                            backgroundColor: openPasswordError.text.length ? Style.validator_error : Style.content_main
                         }
 
                         SFText {
@@ -1720,9 +1727,9 @@ Item
 
                     Row {
                         Layout.alignment: Qt.AlignHCenter
-                        Layout.topMargin: startLayout.isSqueezedHeight  ? 8 : 18
+                        Layout.topMargin: startLayout.isSqueezedHeight  ? 8 : 14
                         Layout.preferredHeight: 38
-                        spacing:          20
+                        spacing:          15
                                 
                         function tryOpenWallet() {
                             if(openPassword.text.length == 0)
@@ -1769,7 +1776,7 @@ Item
                     Item {
                         Layout.alignment: Qt.AlignHCenter
                         Layout.preferredHeight: 36
-                        Layout.topMargin: startLayout.isSqueezedHeight  ? 9 : 20
+                        Layout.topMargin: startLayout.isSqueezedHeight  ? 9 : 15
                         Layout.bottomMargin: 9
                         Rectangle {
                             id: capsWarning
@@ -1858,6 +1865,13 @@ Item
                     }
                 }
             }
+        }
+
+        function restoreProcessBadPortMode(isRecoveryMode) {
+            startWizzardView.pop();
+            startWizzardView.push(nodeSetup);
+            root.isBadPortMode = true;
+            viewModel.isRecoveryMode = isRecoveryMode;
         }
 
         Component.onCompleted: {

@@ -31,7 +31,7 @@ namespace beamui::applications {
         connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &AppsApiUI::assetsChanged);
     }
 
-    void AppsApiUI::AnyThread_sendApiResponse(const std::string& result)
+    void AppsApiUI::AnyThread_sendApiResponse(std::string&& result)
     {
         //
         // Do not assume thread here

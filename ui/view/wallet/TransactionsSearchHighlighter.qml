@@ -37,7 +37,7 @@ RowLayout {
     }
 
     function getHighlitedText(text) {
-        return Utils.getHighlitedText(text, control.searchFilter, Style.active.toString());
+        return Utils.getHighlitedText(text, control.searchFilter, Style.accent_incoming.toString());
     }
 
     property bool hasToken: token.length > 0 

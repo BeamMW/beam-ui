@@ -31,7 +31,7 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(QString      nodeAddress                     READ getNodeAddress                 WRITE setNodeAddress    NOTIFY nodeAddressChanged)
     Q_PROPERTY(QString      version                         READ getVersion                     CONSTANT)
     Q_PROPERTY(bool         localNodeRun                    READ getLocalNodeRun                WRITE setLocalNodeRun   NOTIFY localNodeRunChanged)
-    Q_PROPERTY(QString      localNodePort                   READ getLocalNodePort               WRITE setLocalNodePort  NOTIFY localNodePortChanged)
+    Q_PROPERTY(unsigned int localNodePort                   READ getLocalNodePort               WRITE setLocalNodePort  NOTIFY localNodePortChanged)
     Q_PROPERTY(QString      remoteNodePort                  READ getRemoteNodePort              WRITE setRemoteNodePort NOTIFY remoteNodePortChanged)
     Q_PROPERTY(bool         isNodeChanged                   READ isNodeChanged                  NOTIFY nodeSettingsChanged)
     Q_PROPERTY(QStringList  localNodePeers                  READ getLocalNodePeers              NOTIFY localNodePeersChanged)
@@ -52,14 +52,20 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(bool         dappsAllowed                    READ getDAppsAllowed                WRITE  setDAppsAllowed NOTIFY dappsAllowedChanged)
     Q_PROPERTY(int          appsServerPort                  READ getAppsPort                    WRITE  setAppsPort     NOTIFY appsPortChanged)
 
+    Q_PROPERTY(bool ipfsSupported READ getIPFSSupported CONSTANT)
+
+    #ifdef BEAM_IPFS_SUPPORT
+    Q_PROPERTY(unsigned int ipfsSwarmPort READ getIPFSSwarmPort WRITE setIPFSSwarmPort  NOTIFY IPFSSettingsChanged)
+    Q_PROPERTY(QString ipfsNodeStart READ getIPFSNodeStart WRITE setIPFSNodeStart  NOTIFY IPFSNodeStartChanged)
+    Q_PROPERTY(bool ipfsChanged READ getIPFSChanged NOTIFY IPFSSettingsChanged)
+    Q_PROPERTY(QString ipfsLocation READ getIPFSLocation CONSTANT)
+    #endif
 
     Q_PROPERTY(QList<QObject*> swapCoinSettingsList READ getSwapCoinSettings    CONSTANT)
     Q_PROPERTY(QObject* notificationsSettings   READ getNotificationsSettings   CONSTANT)
-
-    Q_PROPERTY(int  maxPrivacyAnonymitySet  READ geMaxPrivacyAnonymitySet   WRITE setMaxPrivacyAnonymitySet NOTIFY maxPrivacyAnonymitySetChanged)
-    Q_PROPERTY(int  maxPrivacyLockTimeLimit READ getMaxPrivacyLockTimeLimit WRITE setMaxPrivacyLockTimeLimit NOTIFY maxPrivacyLockTimeLimitChanged)
+    Q_PROPERTY(int maxPrivacyAnonymitySet  READ geMaxPrivacyAnonymitySet   WRITE setMaxPrivacyAnonymitySet NOTIFY maxPrivacyAnonymitySetChanged)
+    Q_PROPERTY(int maxPrivacyLockTimeLimit READ getMaxPrivacyLockTimeLimit WRITE setMaxPrivacyLockTimeLimit NOTIFY maxPrivacyLockTimeLimitChanged)
     Q_PROPERTY(QObject* ethSettings   READ getEthSettings   CONSTANT)
-
     Q_PROPERTY(QString currentHeight READ getCurrentHeight NOTIFY stateChanged)
 
 public:
@@ -72,8 +78,21 @@ public:
     QString getVersion() const;
     bool getLocalNodeRun() const;
     void setLocalNodeRun(bool value);
-    QString getLocalNodePort() const;
-    void setLocalNodePort(const QString& value);
+
+    [[nodiscard]] unsigned int getLocalNodePort() const;
+    void setLocalNodePort(unsigned int value);
+
+    [[nodiscard]] bool getIPFSSupported() const;
+
+    #ifdef BEAM_IPFS_SUPPORT
+    [[nodiscard]] unsigned int getIPFSSwarmPort() const;
+    void setIPFSSwarmPort(unsigned int value);
+    [[nodiscard]] bool getIPFSChanged() const;
+    [[nodiscard]] QString getIPFSLocation() const;
+    [[nodiscard]] QString getIPFSNodeStart() const;
+    void setIPFSNodeStart(const QString&);
+    #endif
+
     QString getRemoteNodePort() const;
     void setRemoteNodePort(const QString& value);
     int getLockTimeout() const;
@@ -134,17 +153,20 @@ public:
     Q_INVOKABLE bool exportData() const;
     Q_INVOKABLE bool importData() const;
     Q_INVOKABLE bool hasPeer(const QString& peer) const;
+    Q_INVOKABLE void reportProblem();
+    Q_INVOKABLE void changeWalletPassword(const QString& pass);
 
 public slots:
-    void applyChanges();
-    void undoChanges();
-	void reportProblem();
+    void applyNodeChanges();
 
-    void changeWalletPassword(const QString& pass);
+    #ifdef BEAM_IPFS_SUPPORT
+    void applyIPFSChanges();
+    #endif
+
+    void undoChanges();
     void onNodeStarted();
     void onNodeStopped();
     void onAddressChecked(const QString& addr, bool isValid);
-private slots:
     void onPublicAddressChanged(const QString& publicAddr);
 
 signals:
@@ -169,6 +191,12 @@ signals:
     void stateChanged();
     void appsPortChanged();
 
+    #ifdef BEAM_IPFS_SUPPORT
+    void IPFSSwarmPortChanged();
+    void IPFSNodeStartChanged();
+    void IPFSSettingsChanged();
+    #endif
+
 protected:
     void timerEvent(QTimerEvent *event) override;
 
@@ -180,8 +208,14 @@ private:
 
     QString m_nodeAddress;
     bool m_localNodeRun;
-    QString m_localNodePort;
-    QString m_remoteNodePort;
+    unsigned int m_localNodePort = 0;
+    QString m_remoteNodePort; // TODO:change to unsigned int like localNodePort
+
+    #ifdef BEAM_IPFS_SUPPORT
+    unsigned int m_IPFSSwarmPort = 0;
+    QString m_IPFSNodeStart;
+    #endif
+
     QStringList m_localNodePeers;
     int m_lockTimeout;
     bool m_isPasswordReqiredToSpendMoney;
@@ -190,7 +224,6 @@ private:
     bool m_isNeedToCheckAddress;
     bool m_isNeedToApplyChanges;
     QStringList m_supportedLanguages;
-    QStringList m_supportedAmountUnits;
     int m_currentLanguageIndex;
     beam::wallet::Currency m_rateCurrency;
     int m_timerId;

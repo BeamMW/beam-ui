@@ -11,6 +11,8 @@ ComboBox {
     id: control
     
     spacing: 8
+    padding: 6
+    leftPadding: 8
     property int dropSpacing: 20
     property int fontPixelSize: 12
     property int dropFontPixelSize: 13
@@ -21,9 +23,21 @@ ComboBox {
     property bool enableScroll: false
     property int textMaxLenDrop: 0
 
-    property var modelWidth: control.width
+    property var modelWidth: 140
     property var calculatedWidth: Math.max(control.width, modelWidth)
     property var transformText: undefined
+
+    property var controlFont: Font.Normal
+    property string controlFontStyle: "Regular"
+    property color controlColor: control.enabled || control.colorConst ? control.color : Style.content_secondary
+    property bool showBackground: true
+
+    property int maxTextWidth: 400 
+    property var dropDownIconSixe: Qt.size(5, 3)
+    property int dropDownIconRightMargin: 0
+
+    property alias backgroundColor : backgroundRect.color
+    backgroundColor: Style.content_main
 
     TextMetrics {
         id: textMetrics
@@ -40,6 +54,7 @@ ComboBox {
         id: itemDelegate
         width: calculatedWidth
         padding: 0
+        leftPadding: control.leftPadding
 
         property var  iconW:    (Array.isArray(control.model)  ? modelData["iconWidth"]  : model["iconWidth"]) || 0
         property var  iconH:    (Array.isArray(control.model)  ? modelData["iconHeight"] : model["iconHeight"]) || 0
@@ -147,12 +162,15 @@ ComboBox {
         SFText  {
             Layout.fillWidth:   true
             Layout.alignment:   Qt.AlignVCenter
+            Layout.maximumWidth: control.maxTextWidth
             Layout.rightMargin: control.enabled ? 10 : 0
 
             clip: true
             text: control.editable ? control.editText : control.displayText
-            color: control.enabled || control.colorConst ? control.color : Style.content_secondary 
+            color: control.controlColor
             font.pixelSize: fontPixelSize
+            font.weight: control.controlFont
+            font.styleName: control.controlFontStyle
             elide: Text.ElideRight
         }
 
@@ -160,25 +178,28 @@ ComboBox {
             id: imgDown
             source: "qrc:/assets/icon-down.svg"
             Layout.alignment: Qt.AlignVCenter
+            Layout.rightMargin: control.dropDownIconRightMargin
             visible: control.enabled && !control.down
-            sourceSize: Qt.size(5, 3)
+            sourceSize: control.dropDownIconSixe
         }
         SvgImage {
             id: imgUp
             source: "qrc:/assets/icon-up.svg"
             Layout.alignment: Qt.AlignVCenter
+            Layout.rightMargin: control.dropDownIconRightMargin
             visible: control.enabled && control.down
-            sourceSize: Qt.size(5, 3)
+            sourceSize: control.dropDownIconSixe
         }
     }
 
     background: Item {
         Rectangle {
-            width:  control.width
-            height: 1
-            y: control.height - 1
+            id: backgroundRect
+            visible: control.showBackground
             color: control.underlineColor
             opacity: (control.activeFocus || control.hovered)? 0.3 : 0.1
+            anchors.fill: parent
+            radius: 10
         }
     }
 
@@ -196,8 +217,8 @@ ComboBox {
 
         topPadding:    20
         bottomPadding: 20
-        leftPadding:   20
-        rightPadding:  20
+        leftPadding:   0
+        rightPadding:  0
 
         contentItem: ColumnLayout {
             spacing: 0

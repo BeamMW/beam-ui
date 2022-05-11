@@ -40,7 +40,7 @@ signals:
     void txFinished();
 
 private:
-    TxID m_txId;
+    TxID m_txId = {};
     beam::Timestamp m_estimateBlockTime;
 
 };

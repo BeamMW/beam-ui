@@ -13,6 +13,7 @@ Item {
     property alias fontStyleName:   itemText.font.styleName
     property alias copyMenuEnabled: itemText.copyMenuEnabled
     property alias fontSizeMode:    itemText.fontSizeMode
+    property alias wrapMode:        itemText.wrapMode
 
     signal copyText
     anchors.fill: parent

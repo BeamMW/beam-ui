@@ -12,7 +12,7 @@ import "utils.js" as Utils
 Rectangle {
     id: main
 
-    property var    openedNotifications: 0
+    property var    openedNotifications: []
     property var    notificationOffset: 0
     property alias  hasNewerVersion : notificationManager.hasNewerVersion
     readonly property bool devMode: viewModel.isDevMode
@@ -29,11 +29,28 @@ Rectangle {
         if (main.notificationOffset < 0) main.notificationOffset = 0
     }
 
+    function closeNotification(popup) {
+        var closedNotificationIndex = openedNotifications.indexOf(popup)
+        openedNotifications.splice(closedNotificationIndex, 1)
+        
+        for (var i = closedNotificationIndex; i < openedNotifications.length; ++i) {
+            var oldVerticalOffset = openedNotifications[i].verticalOffset
+            
+            openedNotifications[i].verticalOffset  -= openedNotifications[i].nextVerticalOffset - openedNotifications[i].verticalOffset
+            if (openedNotifications[i].verticalOffset < 0)  openedNotifications[i].verticalOffset = 0
+                    
+            openedNotifications[i].nextVerticalOffset = oldVerticalOffset
+        }
+    }
+
     function showPopup(popup) {
         increaseNotificationOffset(popup)
+        openedNotifications.push(popup)
+
         popup.closed.connect(function () {
             if (main) {
                 main.decreaseNotificationOffset(popup)
+                main.closeNotification(popup)
             }
         })
         popup.open();
@@ -46,9 +63,9 @@ Rectangle {
         showPopup(popup)
     }
 
-    function showAppTxPopup (comment, appname, appicon, txid) {
+    function showAppTxPopup (comment, appname, appicon, txid, isLinkToWalletMainTxTable=false) {
         var popup = Qt.createComponent("controls/AppTxNotification.qml").createObject(main, {
-            comment, appname, appicon, txid
+            comment, appname, appicon, txid, isLinkToWalletMainTxTable
         })
         showPopup(popup)
     }
@@ -166,12 +183,10 @@ Rectangle {
         acceptedButtons: Qt.AllButtons
         hoverEnabled: true
         propagateComposedEvents: true
-        onMouseXChanged: resetLockTimer()
-        onPressedChanged: resetLockTimer()
     }
 
     Keys.onReleased: {
-        resetLockTimer()
+        viewModel.resetLockTimer();
     }
 
     function appsQml () {
@@ -188,8 +203,9 @@ Rectangle {
     property var contentItems : [
         {name: "wallet"},
         {name: "atomic_swap"},
-        {name: "applications", qml: appsQml},
+        {name: "applications", qml: appsQml, reloadable: true},
         {name: "daocore", qml: appsQml, args: () => appArgs("BeamX DAO", viewModel.daoCoreAppID, false)},
+        {name: "voting", qml: appsQml, args: () => appArgs("BeamX DAO Voting", viewModel.votingAppID, false)},
         // {name: "dex"},
         {name: "addresses"},
         {name: "notifications"},
@@ -244,14 +260,14 @@ Rectangle {
                     Item {
                         id: control
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 66
+                        Layout.preferredHeight: 58
                         Layout.alignment: Qt.AlignBottom
                         activeFocusOnTab: true
 
                         SvgImage {
                             id: icon
                             x: 21
-                            y: 16
+                            y: 14
                             width: 28
                             height: 28
                             source: "qrc:/assets/icon-" + modelData.name + (selectedItem == index ? "-active" : "") + ".svg"
@@ -262,7 +278,7 @@ Rectangle {
                                 id: indicator
                                 y: 6
                                 width: 4
-                                height: 48
+                                height: 44
                                 color: selectedItem == index ? Style.active : Style.passive
                             }
 
@@ -314,7 +330,7 @@ Rectangle {
 
                         Keys.onPressed: {
                             if ((event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space))
-                            if (selectedItem != index) {
+                            if (modelData.reloadable || selectedItem != index) {
                                 updateItem(index);
                             }
                         }
@@ -324,7 +340,7 @@ Rectangle {
                             anchors.fill: parent
                             onClicked: {
                                 control.focus = true
-                                if (selectedItem != index) {
+                                if (modelData.reloadable || selectedItem != index) {
                                     updateItem(index);
                                 }
                             }
@@ -338,7 +354,7 @@ Rectangle {
 
     Loader {
         id: content
-        anchors.topMargin: 45
+        anchors.topMargin: 30
         anchors.bottomMargin: 0
         anchors.rightMargin: 20
         anchors.leftMargin: 90
@@ -349,27 +365,24 @@ Rectangle {
     function updateItem(indexOrID, props)
     {
         var update = function(index) {
-            var sameTab = selectedItem == index;
-
             selectedItem = index
-            controls.itemAt(index).focus = true;
+            controls.itemAt(index).focus = true
 
             var item   = contentItems[index]
             var source = ["qrc:/", item.qml ? item.qml() : item.name, ".qml"].join('')
             var args   = item.args ? item.args() : {}
 
+            //content.setSource("")
             content.setSource(source, Object.assign(args, props))
-            viewModel.update(index)
         }
 
         var indexByName = function(name) {
             for (var index = 0; index < contentItems.length; index++) {
                 if (contentItems[index].name == name) {
-                    return index;
+                    return index
                 }
             }
-
-            return -1;
+            return -1
         }
 
         if ((typeof(indexOrID) == "number" && contentItems[indexOrID].name == "help") ||
@@ -388,7 +401,7 @@ Rectangle {
         }
         
         if (typeof(indexOrID) == "string") {
-            indexOrID = indexByName(indexOrID);
+            indexOrID = indexByName(indexOrID)
         }
 
         // here we always have a number
@@ -415,8 +428,8 @@ Rectangle {
         updateItem("wallet", {"openReceive": true, "token" : token})
     }
 
-    function openSwapSettings(coinID) {
-        updateItem("settings", {swapMode: typeof(coinID) == "string" ? coinID : "ALL"})
+    function openSettings(section) {
+        updateItem("settings", {"unfoldSection": section})
     }
 
     function openSwapActiveTransactionsList() {
@@ -440,10 +453,6 @@ Rectangle {
 
     function openApplications () {
         updateItem("applications")
-    }
-
-    function resetLockTimer() {
-        viewModel.resetLockTimer();
     }
 
     function openFaucet () {

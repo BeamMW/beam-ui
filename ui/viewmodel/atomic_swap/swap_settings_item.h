@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #pragma once
 
 #include <QObject>
@@ -36,28 +35,28 @@ class SwapCoinSettingsItem : public QObject
     Q_PROPERTY(QString  nodePass     READ getNodePass     WRITE setNodePass       NOTIFY nodePassChanged)
     Q_PROPERTY(QString  nodeAddress  READ getNodeAddress  WRITE setNodeAddress    NOTIFY nodeAddressChanged)
     Q_PROPERTY(QString  nodePort     READ getNodePort     WRITE setNodePort       NOTIFY nodePortChanged)
-    // electrum settings
-    Q_PROPERTY(bool            isSupportedElectrum      READ isSupportedElectrum                                  CONSTANT)
-    Q_PROPERTY(QChar           phrasesSeparatorElectrum READ getPhrasesSeparatorElectrum                          CONSTANT)
-    Q_PROPERTY(bool            isCurrentSeedValid       READ getIsCurrentSeedValid                                NOTIFY isCurrentSeedValidChanged)
-    Q_PROPERTY(bool            isCurrentSeedSegwit      READ getIsCurrentSeedSegwit                               NOTIFY isCurrentSeedSegwitChanged)
-    Q_PROPERTY(QList<QObject*> electrumSeedPhrases      READ getElectrumSeedPhrases                               NOTIFY electrumSeedPhrasesChanged)
-    Q_PROPERTY(QString         nodeAddressElectrum      READ getNodeAddressElectrum  WRITE setNodeAddressElectrum NOTIFY nodeAddressElectrumChanged)
-    Q_PROPERTY(QString         nodePortElectrum         READ getNodePortElectrum     WRITE setNodePortElectrum    NOTIFY nodePortElectrumChanged)
-    Q_PROPERTY(bool            selectServerAutomatically      READ getSelectServerAutomatically  WRITE setSelectServerAutomatically NOTIFY selectServerAutomaticallyChanged)
 
-    Q_PROPERTY(bool            canChangeConnection      READ canChangeConnection                                  NOTIFY canChangeConnectionChanged)
+    // electrum settings
+    Q_PROPERTY(bool            isSupportedElectrum       READ isSupportedElectrum                                  CONSTANT)
+    Q_PROPERTY(QChar           phrasesSeparatorElectrum  READ getPhrasesSeparatorElectrum                          CONSTANT)
+    Q_PROPERTY(bool            isCurrentSeedValid        READ getIsCurrentSeedValid                                             NOTIFY isCurrentSeedValidChanged)
+    Q_PROPERTY(bool            isCurrentSeedSegwit       READ getIsCurrentSeedSegwit                                            NOTIFY isCurrentSeedSegwitChanged)
+    Q_PROPERTY(QList<QObject*> electrumSeedPhrases       READ getElectrumSeedPhrases                                            NOTIFY electrumSeedPhrasesChanged)
+    Q_PROPERTY(QString         nodeAddressElectrum       READ getNodeAddressElectrum        WRITE setNodeAddressElectrum        NOTIFY nodeAddressElectrumChanged)
+    Q_PROPERTY(QString         nodePortElectrum          READ getNodePortElectrum           WRITE setNodePortElectrum           NOTIFY nodePortElectrumChanged)
+    Q_PROPERTY(bool            selectServerAutomatically READ getSelectServerAutomatically  WRITE setSelectServerAutomatically  NOTIFY selectServerAutomaticallyChanged)
+    Q_PROPERTY(bool            canChangeConnection       READ canChangeConnection                                               NOTIFY canChangeConnectionChanged)
 
     // connection properties
     Q_PROPERTY(bool isConnected             READ getIsConnected             NOTIFY connectionTypeChanged)
     Q_PROPERTY(bool isNodeConnection        READ getIsNodeConnection        NOTIFY connectionTypeChanged)
     Q_PROPERTY(bool isElectrumConnection    READ getIsElectrumConnection    NOTIFY connectionTypeChanged)
     Q_PROPERTY(QString connectionStatus     READ getConnectionStatus        NOTIFY connectionStatusChanged)
-    Q_PROPERTY(QString connectionErrorMsg   READ getConnectionErrorMsg      NOTIFY connectionErrorMsgChanged)
+    Q_PROPERTY(QString connectionError      READ getConnectionError         NOTIFY connectionErrorChanged)
 
 public:
     SwapCoinSettingsItem() = default;
-    SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin swapCoin);
+    explicit SwapCoinSettingsItem(beam::wallet::AtomicSwapCoin swapCoin);
     virtual ~SwapCoinSettingsItem();
 
     QString getTitle() const;
@@ -94,7 +93,7 @@ public:
     bool getIsNodeConnection() const;
     bool getIsElectrumConnection() const;
     QString getConnectionStatus() const;
-    QString getConnectionErrorMsg() const;
+    QString getConnectionError() const;
 
     Q_INVOKABLE void applyNodeSettings();
     Q_INVOKABLE void applyElectrumSettings();
@@ -138,7 +137,7 @@ signals:
     void canChangeConnectionChanged();
     void connectionTypeChanged();
     void connectionStatusChanged();
-    void connectionErrorMsgChanged();
+    void connectionErrorChanged();
 
 public slots:
 
@@ -157,16 +156,14 @@ private:
     void setIsCurrentSeedValid(bool value);
     void setIsCurrentSeedSegwit(bool value);
 
-    std::vector<std::string> GetSeedPhraseFromSeedItems() const;
+    [[nodiscard]] std::vector<std::string> GetSeedPhraseFromSeedItems() const;
 
 private:
     beam::wallet::AtomicSwapCoin m_swapCoin;
     std::weak_ptr<SwapCoinClientModel> m_coinClient;
-
     boost::optional<beam::bitcoin::Settings> m_settings;
+    beam::bitcoin::Settings::ConnectionType m_connectionType = beam::bitcoin::Settings::ConnectionType::None;
 
-    beam::bitcoin::Settings::ConnectionType
-        m_connectionType = beam::bitcoin::Settings::ConnectionType::None;
     QString m_nodeUser;
     QString m_nodePass;
     QString m_nodeAddress;
@@ -177,6 +174,7 @@ private:
     QString m_nodePortElectrum;
     bool m_selectServerAutomatically;
     bool m_isCurrentSeedValid = false;
+
     // "true" if current seed valid and segwit type
     bool m_isCurrentSeedSegwit = false;
     bool m_isFolded = true;
