@@ -896,7 +896,6 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
         auto list = m_data.value(keyBootstrap).toStringList();
         decltype(cfg.bootstrap)().swap(cfg.bootstrap);
 
-        std::vector<std::string> vlist;
         for (const auto& qsval : list)
         {
             cfg.bootstrap.push_back(qsval.toStdString());

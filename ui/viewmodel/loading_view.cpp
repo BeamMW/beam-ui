@@ -56,6 +56,7 @@ LoadingViewModel::LoadingViewModel()
     , m_estimateFilter(std::make_unique<wallet::Filter>(kFilterRange))
     , m_startTimestamp{0}
     , m_lastUpdateTimestamp{0}
+    , m_previousUpdateTimestamp{0}
     , m_estimate{0}
     , m_bpsRecessionCount{0}
 {
