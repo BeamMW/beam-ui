@@ -704,7 +704,7 @@ namespace beamui::applications
                         result.push_back(app);
                     }
                 }
-                catch (const std::runtime_error& err)
+                catch (const std::exception& err)
                 {
                     // TODO: mb need to transfer the error to QML(errorMessage)
                     LOG_ERROR() << "Failed to load remote applications list, " << err.what();
