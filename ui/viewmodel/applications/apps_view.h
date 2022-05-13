@@ -18,8 +18,6 @@
 #include "utility/common.h"
 #include "model/wallet_model.h"
 
-#include <QNetworkAccessManager>
-
 namespace beamui::applications
 {
     class AppsViewModel : public QObject
@@ -97,7 +95,6 @@ namespace beamui::applications
             beam::wallet::ChangeAction changeAction,
             const std::vector<beam::wallet::TxDescription>& transactions);
         void onUserPublishersChanged();
-        void onRequestFinished(QNetworkReply* reply);
 
     signals:
         void appsChanged();
@@ -159,7 +156,5 @@ namespace beamui::applications
         bool _runApp = false;
         bool _isIPFSAvailable = false;
         QList<QString> _ipfsIdsToUnpin;
-
-        QNetworkAccessManager m_networkManager;
     };
 }
