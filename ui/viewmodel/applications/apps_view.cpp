@@ -27,8 +27,6 @@
 #include "wallet/api/i_wallet_api.h"
 #include "wallet/client/apps_api/apps_utils.h"
 
-#include <QNetworkReply>
-
 namespace
 {
     const uint8_t kCountApiVersionParts = 2;
@@ -365,8 +363,6 @@ namespace beamui::applications
         _userAgent = defaultProfile->httpUserAgent() + " BEAM/" + QString::fromStdString(PROJECT_VERSION);
         _serverAddr = QString("127.0.0.1:") + QString::number(AppSettings().getAppsServerPort());
 
-        connect(&m_networkManager, &QNetworkAccessManager::finished, this, &AppsViewModel::onRequestFinished);
-
         if (runApp)
         {
             _runApp = true;
@@ -662,14 +658,64 @@ namespace beamui::applications
     void AppsViewModel::loadAppsFromServer()
     {
         // load apps from server
-#ifdef BEAM_BEAMX
-#elif defined(BEAM_TESTNET)
-        m_networkManager.get(QNetworkRequest(QUrl("https://apps-testnet.beam.mw/appslist.json")));
-#elif defined(BEAM_MAINNET)
-        m_networkManager.get(QNetworkRequest(QUrl("https://apps.beam.mw/appslist.json")));
-#else
-        m_networkManager.get(QNetworkRequest(QUrl("http://3.19.141.112/app/appslist.json")));
-#endif
+        QPointer<AppsViewModel> guard(this);
+        AppModel::getInstance().getWalletModel()->getAsync()->getAppsList(
+            [this, guard](bool isOk, const std::string& response)
+            {
+                if (!guard)
+                {
+                    return;
+                }
+
+                QList<QVariantMap> result;
+
+                try
+                {
+                    if (!isOk)
+                    {
+                        throw std::runtime_error("unsuccessful request");
+                    }
+
+                    auto json = nlohmann::json::parse(response);
+
+                    // parse & verify
+                    if (json.empty() || !json.is_array())
+                    {
+                        throw std::runtime_error("invalid response");
+                    }
+
+                    for (auto& item : json.items())
+                    {
+                        QVariantMap app;
+                        auto name = parseStringField(item.value(), DApp::kName);
+                        auto url = parseStringField(item.value(), DApp::kUrl);
+                        const auto appid = beam::wallet::GenerateAppID(name.toStdString(), url.toStdString());
+
+                        app.insert(DApp::kAppid, QString::fromStdString(appid));
+                        app.insert(DApp::kDescription, parseStringField(item.value(), DApp::kDescription));
+                        app.insert(DApp::kName, name);
+                        app.insert(DApp::kUrl, url);
+                        app.insert(DApp::kIcon, parseStringField(item.value(), DApp::kIcon));
+                        app.insert(DApp::kPublisherName, kBeamPublisherName);
+                        app.insert(DApp::kPublisherKey, kBeamPublisherKey);
+                        app.insert(DApp::kSupported, isAppSupported(app));
+                        app.insert(DApp::kFromServer, true);
+
+                        result.push_back(app);
+                    }
+                }
+                catch (const std::runtime_error& err)
+                {
+                    // TODO: mb need to transfer the error to QML(errorMessage)
+                    LOG_ERROR() << "Failed to load remote applications list, " << err.what();
+                }
+
+                if (_runApp || result != _remoteApps)
+                {
+                    _remoteApps = result;
+                    emit appsChanged();
+                }
+            });
     }
 
     void AppsViewModel::loadAppsFromStore()
@@ -1765,60 +1811,6 @@ namespace beamui::applications
         updater(_shaderApps);
 
         emit appsChanged();
-    }
-
-    void AppsViewModel::onRequestFinished(QNetworkReply* reply)
-    {
-        QList<QVariantMap> result;
-
-        try
-        {
-            if (reply->error() != QNetworkReply::NoError)
-            {
-                throw std::runtime_error(reply->errorString().toStdString());
-            }
-
-            auto json = nlohmann::json::parse(QString::fromUtf8(reply->readAll()).toStdString());
-
-            // parse & verify
-            if (json.empty() || !json.is_array())
-            {
-                throw std::runtime_error("invalid response");
-            }
-
-            for (auto& item : json.items())
-            {
-                QVariantMap app;
-                auto name = parseStringField(item.value(), DApp::kName);
-                auto url = parseStringField(item.value(), DApp::kUrl);
-                const auto appid = beam::wallet::GenerateAppID(name.toStdString(), url.toStdString());
-
-                app.insert(DApp::kAppid, QString::fromStdString(appid));
-                app.insert(DApp::kDescription, parseStringField(item.value(), DApp::kDescription));
-                app.insert(DApp::kName, name);
-                app.insert(DApp::kUrl, url);
-                app.insert(DApp::kIcon, parseStringField(item.value(), DApp::kIcon));
-                app.insert(DApp::kPublisherName, kBeamPublisherName);
-                app.insert(DApp::kPublisherKey, kBeamPublisherKey);
-                app.insert(DApp::kSupported, isAppSupported(app));
-                app.insert(DApp::kFromServer, true);
-
-                result.push_back(app);
-            }
-        }
-        catch (const std::exception& err)
-        {
-            // TODO: mb need to transfer the error to QML(errorMessage)
-            LOG_ERROR() << "Failed to load remote applications list, " << err.what();
-        }
-
-        if (_runApp || result != _remoteApps)
-        {
-            _remoteApps = result;
-            emit appsChanged();
-        }
-        
-        reply->deleteLater();
     }
 
     QList<QVariantMap> AppsViewModel::getPublisherDApps(const QString& publisherKey)
