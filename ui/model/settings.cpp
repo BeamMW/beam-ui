@@ -772,7 +772,14 @@ std::string WalletSettings::getDappStoreCID() const
     auto cid = m_data.value(kDappStoreCID).toString();
     // TODO roman.strilets default cid value should be set for mainnet and testnet
     // for masternet
-    return cid.isEmpty() ? "b76ca089082e38b23d5e68feeb8b6f459ae74f5012eb520c87169f88ced307e3" : cid.toStdString();
+    return cid.isEmpty() ?
+#ifdef BEAM_TESTNET
+        "c673c2b940d4f6813901165c426ab084e401259c9794d61e1f5f80453ee80317"
+#elif defined(BEAM_MAINNET)
+#else
+        "b76ca089082e38b23d5e68feeb8b6f459ae74f5012eb520c87169f88ced307e3"
+#endif
+        : cid.toStdString();
 }
 
 std::string WalletSettings::getDappStorePath() const
