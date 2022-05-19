@@ -108,7 +108,7 @@ jobs:
         with:
             version: "5.15.2"
             modules: "qtwebengine"
-          cached: ${{ steps.cache-qt.outputs.cache-hit }}
+            cached: ${{ steps.cache-qt.outputs.cache-hit }}
 
         ###############################################################################
         # Configure CMake
