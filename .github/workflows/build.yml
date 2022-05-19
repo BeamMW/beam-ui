@@ -245,7 +245,7 @@ jobs:
           # Extract, sign and pack AppImage
           ./Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage --appimage-extract
           ./appimagetool-x86_64.AppImage squashfs-root --sign
-          mv Beam_Wallet_Masternet-x86_64.AppImage ../Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage
+          mv Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-x86_64.AppImage ../Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage
           # Output signature
           ../Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage --appimage-signature
 
