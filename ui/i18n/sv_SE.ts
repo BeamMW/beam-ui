@@ -2258,8 +2258,9 @@ Please try again later or create an offer yourself.</translation>
         <translation>Är du säker på att du vill avbryta?</translation>
     </message>
     <message id="atomic-swap-title">
-        <source>Atomic Swaps</source>
-        <translation>Atomic Swap</translation>
+        <source>Swap</source>
+        <oldsource>Atomic Swaps</oldsource>
+        <translation type="unfinished">Atomic Swap</translation>
     </message>
     <message id="atomic-swap-accept">
         <source>Accept offer</source>

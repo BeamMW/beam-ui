@@ -2269,8 +2269,9 @@ Please try again later or create an offer yourself.</source>
         <translation>Вы уверены, что хотите отменить?</translation>
     </message>
     <message id="atomic-swap-title">
-        <source>Atomic Swaps</source>
-        <translation>Атомарный обмен</translation>
+        <source>Swap</source>
+        <oldsource>Atomic Swaps</oldsource>
+        <translation type="unfinished">Атомарный обмен</translation>
     </message>
     <message id="atomic-swap-accept">
         <source>Accept offer</source>

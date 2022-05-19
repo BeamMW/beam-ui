@@ -2255,8 +2255,8 @@ Please try again later or create an offer yourself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="atomic-swap-title">
-        <source>Atomic Swaps</source>
-        <translation type="unfinished"></translation>
+        <source>Swap</source>
+        <translation>Swap</translation>
     </message>
     <message id="atomic-swap-accept">
         <source>Accept offer</source>

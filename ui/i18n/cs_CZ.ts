@@ -2265,8 +2265,9 @@ Please try again later or create an offer yourself.</translation>
         <translation>Opravdu chcete zrušit?</translation>
     </message>
     <message id="atomic-swap-title">
-        <source>Atomic Swaps</source>
-        <translation>Okamžitý převod měn</translation>
+        <source>Swap</source>
+        <oldsource>Atomic Swaps</oldsource>
+        <translation type="unfinished">Okamžitý převod měn</translation>
     </message>
     <message id="atomic-swap-accept">
         <source>Accept offer</source>

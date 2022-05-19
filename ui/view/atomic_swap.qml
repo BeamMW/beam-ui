@@ -85,20 +85,12 @@ Item {
         }
     }
 
-    RowLayout {
+    // RowLayout {
         Title {
-            //% "Atomic Swaps"
+            //% "Swap"
             text: qsTrId("atomic-swap-title")
         }
-
-        SvgImage {
-            Layout.alignment: Qt.AlignLeft | Qt.AlignHCenter
-            Layout.maximumHeight: 15
-            Layout.maximumWidth: 51
-            Layout.topMargin: 8
-            source: "qrc:/assets/beta2-label.svg"
-        }
-    }
+    // }
 
     StatusBar {
         id: statusBar

@@ -2262,8 +2262,9 @@ Please try again later or create an offer yourself.</translation>
         <translation>¿Está seguro de que desea cancelar?</translation>
     </message>
     <message id="atomic-swap-title">
-        <source>Atomic Swaps</source>
-        <translation>Swap atómico</translation>
+        <source>Swap</source>
+        <oldsource>Atomic Swaps</oldsource>
+        <translation type="unfinished">Swap atómico</translation>
     </message>
     <message id="atomic-swap-accept">
         <source>Accept offer</source>

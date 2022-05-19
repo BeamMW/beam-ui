@@ -2259,8 +2259,9 @@ Probeer het later opnieuw of maak zelf een aanbieding aan.</translation>
         <translation>Weet u zeker dat u wilt annuleren?</translation>
     </message>
     <message id="atomic-swap-title">
-        <source>Atomic Swaps</source>
-        <translation>Atomic Swap</translation>
+        <source>Swap</source>
+        <oldsource>Atomic Swaps</oldsource>
+        <translation type="unfinished">Atomic Swap</translation>
     </message>
     <message id="atomic-swap-accept">
         <source>Accept offer</source>

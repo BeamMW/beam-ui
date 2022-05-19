@@ -2267,8 +2267,9 @@ Please try again later or create an offer yourself.</translation>
         <translation>Дали сте сигурни да желите да одустанете?</translation>
     </message>
     <message id="atomic-swap-title">
-        <source>Atomic Swaps</source>
-        <translation>Атомске Размене</translation>
+        <source>Swap</source>
+        <oldsource>Atomic Swaps</oldsource>
+        <translation type="unfinished">Атомске Размене</translation>
     </message>
     <message id="atomic-swap-accept">
         <source>Accept offer</source>
