@@ -1274,7 +1274,8 @@ namespace beamui::applications
 
     QVariantMap AppsViewModel::getDAppFileProperties(const QString& fname)
     {
-        QFileInfo fileInfo(fname);
+        auto dappFilePath = removeFilePrefix(fname);
+        QFileInfo fileInfo(dappFilePath);
 
         QVariantMap properties;
         properties.insert(DApp::kName, fileInfo.fileName());
