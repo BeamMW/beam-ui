@@ -17,7 +17,7 @@ jobs:
         #  os: [macos-10.15, ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2019]
         os: [macos-10.15, ubuntu-18.04, windows-2019]
 
-      steps:
+    steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -106,13 +106,13 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
-            version: "5.15.2"
-            modules: "qtwebengine"
-            cached: ${{ steps.cache-qt.outputs.cache-hit }}
+          version: "5.15.2"
+          modules: "qtwebengine"
+          cached: ${{ steps.cache-qt.outputs.cache-hit }}
 
-        ###############################################################################
-        # Configure CMake
-        ###############################################################################
+      ###############################################################################
+      # Configure CMake
+      ###############################################################################
       - name: Configure CMake [macos-10.15]
         if: matrix.os == 'macos-10.15'
         run: |
@@ -122,7 +122,7 @@ jobs:
       - name: Configure CMake [ununtu all]
         if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
         run: |
-            cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
+          cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
 
       - name: Configure CMake [windows]
         shell: bash
@@ -201,9 +201,9 @@ jobs:
         if: matrix.os == 'windows-2019'
         run: cpack.exe --verbose -G NSIS -C $BUILD_CONFIG
 
-        ###############################################################################
-        # Collect artifacts
-        ###############################################################################
+      ###############################################################################
+      # Collect artifacts
+      ###############################################################################
       - name: Collect [macos-10.15]
         shell: bash
         if: matrix.os == 'macos-10.15'
