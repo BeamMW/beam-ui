@@ -79,16 +79,16 @@ ConfirmationDialog {
         //% "Send"
         qsTrId("general-send")
 
-    okButtonColor: control.isSpend ? Style.accent_outgoing : Style.accent_incoming
+    okButtonColor:  control.isReceive ? Style.accent_incoming : Style.accent_outgoing
+
     okButtonIconSource: {
         if (control.appMode) {
             if (control.isSpend && control.isReceive) {
                 return "qrc:/assets/icon-send-receive-blue.svg"
             }
-            if (control.isSpend) {
-                return "qrc:/assets/icon-send-blue.svg"
+            if (control.isReceive) {
+                return "qrc:/assets/icon-receive-blue.svg"
             }
-            return "qrc:/assets/icon-receive-blue.svg"
         }
         return "qrc:/assets/icon-send-blue.svg"
     }

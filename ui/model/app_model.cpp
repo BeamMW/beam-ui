@@ -503,6 +503,7 @@ void AppModel::startWallet()
     additionalTxCreators->emplace(TxType::AssetInfo, std::make_shared<AssetInfoTransaction::Creator>());
 
     bool displayRate = m_settings.getRateCurrency() != beam::wallet::Currency::UNKNOWN();
+
     //m_wallet->getAsync()->enableBodyRequests(true);
     m_wallet->start(activeNotifications, displayRate, additionalTxCreators);
 }
@@ -523,7 +524,20 @@ void AppModel::registerSwapFactory(beam::wallet::AtomicSwapCoin swapCoin, beam::
     }
 }
 
-void AppModel::applySettingsChanges()
+#ifdef BEAM_IPFS_SUPPORT
+void AppModel::applyIPFSChanges()
+{
+    auto config = m_settings.getIPFSConfig();
+    m_wallet->getAsync()->stopIPFSNode();
+    m_wallet->getAsync()->setIPFSConfig(std::move(config));
+
+    if (m_settings.getIPFSNodeLaunch() == WalletSettings::IPFSLaunch::AtStart) {
+        m_wallet->getAsync()->startIPFSNode();
+    }
+}
+#endif
+
+void AppModel::applyNodeChanges()
 {
     if (m_nodeModel.isNodeRunning())
     {
@@ -548,7 +562,7 @@ void AppModel::applySettingsChanges()
 
 void AppModel::nodeSettingsChanged()
 {
-    applySettingsChanges();
+    applyNodeChanges();
     if (!m_settings.getRunLocalNode())
     {
         if (!m_wallet->isRunning())
@@ -620,6 +634,15 @@ void AppModel::start()
     {
         startWallet();
     }
+
+    #ifdef BEAM_IPFS_SUPPORT
+    auto ipfsConfig = m_settings.getIPFSConfig();
+    m_wallet->getAsync()->setIPFSConfig(std::move(ipfsConfig));
+
+    if (m_settings.getIPFSNodeLaunch() == WalletSettings::IPFSLaunch::AtStart) {
+        m_wallet->getAsync()->startIPFSNode();
+    }
+    #endif
 }
 
 void AppModel::startNode()

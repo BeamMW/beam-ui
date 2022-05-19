@@ -8,6 +8,7 @@ import "../controls"
 CustomDialog {
     id: "dialog"
 
+    property var dateField: ""
     property var sendAddress: ""
     property var receiveAddress: ""
     property var senderIdentity: ""
@@ -55,7 +56,7 @@ CustomDialog {
     property var getPaymentProof: function (rawTxId) { return null; }
 
     function getHighlitedText(text) {
-        return Utils.getHighlitedText(text, dialog.searchFilter, Style.active.toString());
+        return Utils.getHighlitedText(text, dialog.searchFilter, Style.accent_incoming.toString());
     }
 
     property PaymentInfoItem paymentInfo
@@ -70,7 +71,7 @@ CustomDialog {
     parent: Overlay.overlay
     padding: 0
 
-    closePolicy: Popup.NoAutoClose | Popup.CloseOnEscape
+    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
     header: ColumnLayout {
         SFText {
@@ -141,6 +142,27 @@ CustomDialog {
             columnSpacing: 40
             rowSpacing: 14
             columns: 2
+            
+            SFText {
+                font.pixelSize: 14
+                color: Style.content_secondary
+                //% "Date"
+                text: qsTrId("tx-details-date-label") + ":"
+                visible: true
+            }
+            RowLayout {
+                visible: true
+                SFLabel {
+                    id: dateField
+                    Layout.fillWidth: true
+                    copyMenuEnabled: true
+                    font.pixelSize: 14
+                    color: Style.content_main
+                    elide: Text.ElideMiddle
+                    text: getHighlitedText(dialog.dateField)
+                    onCopyText: textCopied(dialog.dateField)
+                }
+            }
             
             SFText {
                 font.pixelSize: 14
@@ -293,13 +315,33 @@ CustomDialog {
                 visible:          dialog.minConfirmations && stm.state == "tx_info"
             }
 
-            SFText {
-                Layout.alignment: Qt.AlignTop
-                font.pixelSize: 14
-                color: Style.content_secondary
-                //% "Amount"
-                text: qsTrId("tx-details-amount-label") + ":"
-                visible: !dialog.feeOnly
+            ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 5
+                visible: amountsList.visible
+
+                SFText {
+                    Layout.alignment: Qt.AlignTop
+                    font.pixelSize: 14
+                    color: Style.content_main
+                    //% "Amount"
+                    text: qsTrId("tx-details-amount-label") + ":"
+                }
+
+                SFLabel {
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 190
+                    id: detailsRateDescription
+                    font.pixelSize: 14
+                    color: Style.content_secondary
+                    text: dialog.assetRates.length ?
+                    //% "calculated with the exchange rate at the time of the transaction"
+                    "(" + qsTrId("tx-details-rate-notice") + ")"
+                    //% "exchange rate was not available at the time of the transaction"
+                    : "(" + qsTrId("tx-details-exchange-rate-not-available") + ")"
+                    wrapMode: Text.WordWrap
+                    elide: Text.ElideRight
+                }
             }
 
             ColumnLayout {
@@ -330,11 +372,6 @@ CustomDialog {
                             prefix:       this.amount == "0" ? "" : (dialog.assetIncome[index] ? "+ " : "- ")
                             rate:         dialog.assetRates ? (dialog.assetRates[index] || "") : ""
                             rateUnit:     this.rate != "0" ? dialog.rateUnit : ""
-                            ratePostfix:  this.rate != "0"
-                                //% "calculated with the exchange rate at the time of the transaction"
-                                ? "(" + qsTrId("tx-details-rate-notice") + ")"
-                                //% "exchange rate was not available at the time of the transaction"
-                                : "(" + qsTrId("tx-details-exchange-rate-not-available") + ")"
                             rateFontSize:     12
                             showTip:          false
                             maxUnitChars:     25
@@ -365,13 +402,16 @@ CustomDialog {
                             onCopyText: textCopied(dialog.assetIDs[index])
                             visible: dialog.assetIDs[index] != "0"
                         }
-                        CustomToolButton {
-                            Layout.alignment: Qt.AlignRight | Qt.AlignTop
-                            icon.source: "qrc:/assets/icon-copy.svg"
-                            onClicked: textCopied(dialog.assetIDs[index])
+
+                        OpenInBlockchainExplorer {
+                            Layout.alignment: Qt.AlignTop
+                            Layout.rightMargin: 8
                             visible: dialog.assetIDs[index] != "0"
-                            padding: 0
-                            background.implicitHeight: 16
+                            showText: false
+                            onTriggered: function(kernelID) {
+                                var url = BeamGlobals.getExplorerUrl() + "assets/details/" + dialog.assetIDs[index];
+                                Utils.openExternalWithConfirmation(url);
+                            }
                         }
                     }
                 }
@@ -535,24 +575,21 @@ CustomDialog {
                     elide: Text.ElideMiddle
                     onCopyText: textCopied(dialog.kernelID)
                 }
-                CustomToolButton {
-                    Layout.alignment: Qt.AlignRight
-                    icon.source: "qrc:/assets/icon-copy.svg"
-                    onClicked: textCopied(kernelID.text)
-                    padding: 0
-                    background.implicitHeight: 16
+          
+                OpenInBlockchainExplorer {
+                    Layout.alignment: Qt.AlignTop
+                    Layout.rightMargin: 8                    
+                    visible: dialog.isCompleted && kernelID.parent.visible
+                    showText: false
+                    onTriggered: function(kernelID) {
+                        openExternal(dialog.kernelID);
+                    }
                 }
             }
 
             Item {
                 height: 16
                 visible: dialog.isCompleted && kernelID.parent.visible
-            }
-            OpenInBlockchainExplorer {
-                visible: dialog.isCompleted && kernelID.parent.visible
-                onTriggered: function(kernelID) {
-                    openExternal(dialog.kernelID);
-                }
             }
 
             RowLayout {

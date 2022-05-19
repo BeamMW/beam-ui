@@ -20,8 +20,6 @@
 #include "model/app_model.h"
 #include "viewmodel/fee_helpers.h"
 
-#include <qdebug.h>
-
 using namespace beam;
 
 namespace
@@ -353,8 +351,7 @@ beam::wallet::AtomicSwapCoin SwapTxObject::getSwapCoinType() const
 
 auto SwapTxObject::getStatus() const -> QString
 {
-    beam::wallet::SwapTxStatusInterpreter interpreter(getTxDescription());
-    return interpreter.getStatus().c_str();
+    return beam::wallet::GetSwapTxStatusStr(getTxDescription()).c_str();
 }
 
 namespace

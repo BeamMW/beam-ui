@@ -116,13 +116,17 @@ SettingsFoldable {
                 font.pixelSize: 14
             }
             Item {}
-            CustomSecondCurrencySwitch {
+            TristateSwitch {
                 id: secondCurrencySwitch
-                width: 210 // generalBlock.width * 0.33
+                width: 210
                 height: 20
+                choices: ["usd", "btc", "eth"]
+                labels:  ["USD", "BTC", "ETH"]
                 state: viewModel.secondCurrency
-                onStateChanged: {
-                    viewModel.secondCurrency = secondCurrencySwitch.state;
+                Binding {
+                    target: viewModel
+                    property: "secondCurrency"
+                    value: secondCurrencySwitch.state
                 }
             }
         }

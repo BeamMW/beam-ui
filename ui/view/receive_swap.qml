@@ -74,7 +74,7 @@ ColumnLayout {
     SwapNADialog {
         id: swapna
         onRejected: thisView.onClosed()
-        onAccepted: main.openSwapSettings()
+        onAccepted: main.openSettings("ALL_COINS")
 /*% "You do not have any 3rd-party currencies connected.
 Update your settings and try again."
 */
@@ -491,7 +491,6 @@ please review your settings and try again"
                                 }
 
                                 SFText {
-                                    Layout.alignment:       Qt.AlignTop
                                     Layout.topMargin:       parent.showEstimatedFee ? 20 : 0
                                     font.pixelSize:         14
                                     color:                  Style.content_secondary
@@ -562,7 +561,6 @@ please review your settings and try again"
                                     SFText {
                                         id:               rateStart
                                         font.pixelSize:   14
-                                        Layout.alignment: Qt.AlignTop
                                         color:            rateRow.rateValid ? Style.content_main : Style.validator_error
                                         text:             viewModel.isSendBeam
                                             ? ["1", sentAmountInput.currencyUnit, "="].join(" ")
@@ -572,7 +570,7 @@ please review your settings and try again"
                                     SFTextInput {
                                         property string rate: "0"
                                         id:                  rateInput
-                                        padding:             0
+                                        padding:             3
                                         activeFocusOnTab:    true
                                         font.pixelSize:      14
                                         color:               rateRow.rateValid ? Style.content_main : Style.validator_error
@@ -619,7 +617,6 @@ please review your settings and try again"
 
                                     SFText {
                                         id:               rateEnd
-                                        Layout.alignment: Qt.AlignTop
                                         font.pixelSize:   14
                                         color:            rateRow.rateValid ? Style.content_main : Style.validator_error
                                         text:             viewModel.isSendBeam ? receiveAmountInput.currencyUnit : sentAmountInput.currencyUnit
@@ -652,36 +649,36 @@ please review your settings and try again"
 
                                 ColumnLayout {
                                     spacing: 11
-                                RowLayout {
-                                    Layout.fillWidth:        true
-                                    Layout.topMargin:        rateRow.rateValid ? 22 : 0
+                                    RowLayout {
+                                        Layout.fillWidth:        true
+                                        Layout.topMargin:        rateRow.rateValid ? 22 : 0
 
-                                    SFLabel {
-                                        id:                  tokenLabel
-                                        Layout.fillWidth:    true
-                                        font.pixelSize:      14
-                                        color:               Style.content_main
-                                        elide:               Text.ElideMiddle
-                                        text:                viewModel.transactionToken
-                                    }
-                                
-                                    LinkButton {
-                                            //% "Token details"
-                                            text: qsTrId("swap-token-details")
-                                        linkColor: Style.accent_incoming
-                                            enabled:  thisView.canSend()
-                                        onClicked: {
-                                            tokenInfoDialog.open();
+                                        SFLabel {
+                                            id:                  tokenLabel
+                                            Layout.fillWidth:    true
+                                            font.pixelSize:      14
+                                            color:               Style.content_main
+                                            elide:               Text.ElideMiddle
+                                            text:                viewModel.transactionToken
+                                        }
+                                    
+                                        LinkButton {
+                                                //% "Token details"
+                                                text: qsTrId("swap-token-details")
+                                            linkColor: Style.accent_incoming
+                                                enabled:  thisView.canSend()
+                                            onClicked: {
+                                                tokenInfoDialog.open();
+                                            }
                                         }
                                     }
-                                }
 
                                     CustomButton {
                                         //% "copy and close"
                                         text:                qsTrId("general-copy-and-close")
                                         palette.buttonText:  Style.content_main
                                         palette.button:      Style.background_button
-                                        icon.source:         "qrc:/assets/icon-copy.svg"
+                                        icon.source:         enabled ? "qrc:/assets/icon-copy.svg" : "qrc:/assets/icon-copy-gray.svg"
                                         enabled:             thisView.canSend()
                                         onClicked: {
                                             BeamGlobals.copyToClipboard(viewModel.transactionToken);

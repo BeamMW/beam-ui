@@ -3,9 +3,9 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
-import "controls"
 import Beam.Wallet 1.0
 import QtQuick.Layouts 1.12
+import "."
 
 Component {
     id: checkRecoveryPhrase
@@ -55,15 +55,12 @@ Component {
                 Repeater {
                     model:viewModel.checkPhrases
 
-                    Row {
+                    RowLayout {
                         width: 160
                         height: 38
-                        spacing: 20
                         Item {
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.leftMargin: 9
-                            width: 20
-                            height: 20
+                            x: 8
+                            y: 9
                             Rectangle {
                                 color: "transparent"
                                 border.color: Style.content_secondary
@@ -108,9 +105,8 @@ Component {
 
                         SFTextInput {
                             id: phraseValue
-                            anchors.bottom: parent.bottom
-                            anchors.bottomMargin: 6
-                            width: 121
+                            leftPadding: 36
+                            Layout.fillWidth: true
                             font.pixelSize: 14
                             color: (modelData.isCorrect || modelData.value.length == 0) ? Style.content_main : Style.validator_error
                             backgroundColor: (modelData.isCorrect || modelData.value.length == 0) ? Style.content_main : Style.validator_error

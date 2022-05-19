@@ -16,7 +16,7 @@ Control {
         id: tableViewModel
     }
 
-    property int       selectedAsset: -1
+    property var       selectedAssets: []
     property int       emptyMessageMargin: 90
     property int       activeTxCnt: 0
     property alias     headerShaderVisible: transactionsTable.headerShaderVisible
@@ -25,8 +25,8 @@ Control {
     readonly property  bool actionVisible: dappFilter !== undefined && dappFilter != "all"
     property var       owner
 
-    function showTxDetails (txid) {
-        transactionsTable.showDetails (txid)
+    function showTxDetails(txid) {
+        transactionsTable.showDetails(txid)
     }
 
     state: "all"
@@ -34,9 +34,12 @@ Control {
         State {
             name: "all"
             PropertyChanges { target: allTab; state: "active" }
-            PropertyChanges { target: emptyMessage;  
-                //% "Your transaction list is empty"
-                text: qsTrId("tx-empty")
+            PropertyChanges { target: emptyMessage; 
+                text: tableViewModel.showAll
+                    //% "Your transaction list is empty"
+                    ? qsTrId("tx-empty")
+                    //% "No transactions to show"
+                    : qsTrId("tx-no-transaction-filter")
             }
             
         },
@@ -138,7 +141,6 @@ Control {
         RowLayout {
             Layout.fillWidth:    true
             Layout.bottomMargin: 10
-            visible:             tableViewModel.transactions.rowCount() > 0
             TxFilter {
                 id: allTab
                 Layout.alignment: Qt.AlignVCenter
@@ -175,9 +177,46 @@ Control {
                 Layout.fillWidth: true
             }
 
+            RowLayout {
+                Layout.leftMargin: searchBox.searchInput.visible ? 0 : 260
+                Layout.rightMargin: searchBox.searchInput.visible ? -20 : -280
+                SFLabel {
+                    //% "Show"
+                    text: qsTrId("tx-table-filter-label")
+                    color: Style.content_secondary
+                    Layout.rightMargin: 20
+                }
+                MultiSelectComboBox {
+                    fontPixelSize:       14
+                    model: [
+                        //% "In progress"
+                        { text: qsTrId("tx-table-filter-in-progress"), checked: tableViewModel.showInProgress, id: "inProgress" },
+                        //% "Completed"
+                        { text: qsTrId("tx-table-filter-completed"), checked: tableViewModel.showCompleted, id: "completed" },
+                        //% "Canceled"
+                        { text: qsTrId("tx-table-filter-canceled"), checked: tableViewModel.showCanceled, id: "canceled" },
+                        //% "Failed"
+                        { text: qsTrId("tx-table-filter-failed"), checked: tableViewModel.showFailed, id: "failed" },
+                    ]
+                    onSelectChanged: function(id, state) {
+                        switch (id) {
+                            case "inProgress": tableViewModel.showInProgress = state; break;
+                            case "completed": tableViewModel.showCompleted = state; break;
+                            case "canceled": tableViewModel.showCanceled = state; break;
+                            case "failed": tableViewModel.showFailed = state; break;
+                            default: console.log("unknown filter id");
+                        }
+                    }
+                    showBackground: false
+                }
+                Item {
+                    Layout.preferredWidth: 20
+                }
+            }
+
             SearchBox {
                id: searchBox
-               Layout.preferredWidth: 300
+               Layout.preferredWidth: 280
                Layout.alignment: Qt.AlignVCenter
                //% "Enter search text..."
                placeholderText: qsTrId("wallet-search-transactions-placeholder")
@@ -213,7 +252,7 @@ Control {
 
             SvgImage {
                 Layout.alignment: Qt.AlignHCenter
-                source: "qrc:/assets/icon-wallet-empty.svg"
+                source: tableViewModel.showAll ? "qrc:/assets/icon-wallet-empty.svg" : "qrc:/assets/icon-no-transaction-filter.svg" 
                 sourceSize: Qt.size(60, 60)
             }
 
@@ -226,8 +265,11 @@ Control {
                 color:                Style.content_main
                 opacity:              0.5
                 lineHeight:           1.43
-                //% "Your transaction list is empty"
-                text: qsTrId("tx-empty")
+                text: tableViewModel.showAll
+                    //% "Your transaction list is empty"
+                    ? qsTrId("tx-empty")
+                    //% "No transactions to show"
+                    : qsTrId("tx-no-transaction-filter")
             }
 
             Item {
@@ -239,6 +281,7 @@ Control {
             id: transactionsTable
 
             property var initTxDetailsFromRow: function (model, row) {
+                txDetails.dateField        =  model.getRoleValue(row, "timeCreated") || ""
                 txDetails.sendAddress      =  model.getRoleValue(row, "addressFrom") || ""
                 txDetails.receiveAddress   =  model.getRoleValue(row, "addressTo") || ""
                 txDetails.senderIdentity   =  model.getRoleValue(row, "senderIdentity") || ""
@@ -309,6 +352,14 @@ Control {
 
                     initTxDetailsFromRow(transactionsTable.model, index.row);
                     txDetails.open();
+                } else {
+                    index = tableViewModel.transactionsRejectedByFilter.index(0, 0);
+                    indexList = tableViewModel.transactionsRejectedByFilter.match(index, TxObjectList.Roles.TxID, id);
+                    if (indexList.length > 0) {
+                        index = indexList[0];
+                        initTxDetailsFromRow(transactionsTable.modelRejectedByFilter, index.row);
+                        txDetails.open();
+                    }
                 }
             }
 
@@ -354,6 +405,9 @@ Control {
                     : Qt.DescendingOrder;
             }
 
+            property var modelRejectedByFilter: SortFilterProxyModel {
+                source: tableViewModel.transactionsRejectedByFilter
+            }
             model: SortFilterProxyModel {
                 id: txProxyModel
 
@@ -367,7 +421,7 @@ Control {
                     source: SortFilterProxyModel {
                         id:           assetFilterProxy
                         filterRole:   "assetFilter"
-                        filterString: control.selectedAsset < 0 ? "" : ["\\b", control.selectedAsset, "\\b"].join("")
+                        filterString: control.selectedAssets.reduce(function(sum, current) { return sum + ["|", "\\b", current, "\\b"].join(""); }, "").slice(1)
                         filterSyntax: SortFilterProxyModel.RegExp
 
                         source: SortFilterProxyModel {
@@ -424,6 +478,8 @@ Control {
                 }
 
                 onLeftClick: function() {
+                    if (!BeamGlobals.isAppActive()) return;
+                    
                     transactionsTable.initTxDetailsFromRow(transactionsTable.model, rowNumber);
                     txDetails.open();
                     return false;
@@ -471,7 +527,7 @@ Control {
 
                 //% "Coin"
                 title:     qsTrId("general-coin")
-                width:     100
+                width:     106
                 movable:   false
                 resizable: false
 

@@ -16,6 +16,9 @@ TableView {
     property color headerColor: Style.table_header
     // property var headerOpacity: 1
     property bool headerShaderVisible: true
+    property var isSortIndicatorHidenForColumn: function(styleData) {
+        return true;
+    }
 
     // Scrollbar fine-tuning
     __scrollBarTopMargin: tableView.headerHeight
@@ -138,7 +141,7 @@ TableView {
             font.family: "Proxima Nova"
             font.styleName: "Regular"
 
-            icon.source: styleData.value == "" ? "" : tableView.sortIndicatorColumn == styleData.column ? "qrc:/assets/icon-sort-active.svg" : "qrc:/assets/icon-sort.svg"
+            icon.source: (tableView.isSortIndicatorHidenForColumn(styleData) || styleData.value == "") ? "" : tableView.sortIndicatorColumn == styleData.column ? "qrc:/assets/icon-sort-active.svg" : "qrc:/assets/icon-sort.svg"
             icon.width: 5
             icon.height: 8
             spacing: 6

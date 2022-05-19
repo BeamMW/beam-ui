@@ -12,6 +12,7 @@
         <file>controls/SFLabel.qml</file>
         <file>controls/SFText.qml</file>
         <file>controls/SFTextInput.qml</file>
+        <file>controls/SFTextInputEx.qml</file>
         <file>controls/Led.qml</file>
         <file>controls/TxFilter.qml</file>
         <file>controls/TableItem.qml</file>
@@ -42,6 +43,7 @@
         <file>controls/CustomSwitch.qml</file>
         <file>controls/CustomCheckBox.qml</file>
         <file>controls/CustomComboBox.qml</file>
+        <file>controls/MultiSelectComboBox.qml</file>
         <file>controls/BeamAmount.qml</file>
         <file>controls/SecurityNote.qml</file>
         <file>controls/CustomProgressBar.qml</file>
@@ -56,7 +58,8 @@
         <file>controls/OpenExternalLinkConfirmation.qml</file>
         <file>controls/SeedInput.qml</file>
         <file>controls/CustomTripleSwitch.qml</file>
-        <file>controls/CustomSecondCurrencySwitch.qml</file>
+        <file>controls/DnDdappInstallDialog.qml</file>
+        <file>controls/TristateSwitch.qml</file>
         <file>controls/ConfirmRefreshDialog.qml</file>
         <file>controls/OwnerKeyDialog.qml</file>
         <file>controls/SettingsFoldable.qml</file>
@@ -94,7 +97,10 @@
         <file>controls/SimpleNotification.qml</file>
         <file>controls/AppTxNotification.qml</file>
         <file>controls/SettingsApps.qml</file>
+        <file>controls/SettingsIPFS.qml</file>
         <file>controls/OpenInBlockchainExplorer.qml</file>
+        <file>controls/CheckRecoveryPhrase.qml</file>
+        <file>controls/GenerateRecoveryPhrase.qml</file>
         <file>wallet/TxTable.qml</file>
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>
@@ -102,16 +108,24 @@
         <file>wallet/TransactionDetailsPopup.qml</file>
         <file>wallet/TransactionsSearchHighlighter.qml</file>
         <file>wallet/CoinsList.qml</file>
+        <file>wallet/SeedValidationPanel.qml</file>
         <file>dex/MarketPanel.qml</file>
         <file>dex/MarketTable.qml</file>
         <file>applications/applications.qml</file>
         <file>applications/applications_nofork.qml</file>
+        <file>applications/AppButton.qml</file>
+        <file>applications/AppPanel.qml</file>
         <file>applications/AppsList.qml</file>
+        <file>applications/AppInfoPanel.qml</file>
+        <file>applications/BecomePublisher.qml</file>
+        <file>applications/PublisherDetails.qml</file>
+        <file>applications/PublishersList.qml</file>
+        <file>applications/TransactionIsSent.qml</file>
+        <file>applications/YouArePublisher.qml</file>
+        <file>applications/UploadDApp.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
-        <file>CheckRecoveryPhrase.qml</file>
-        <file>GenerateRecoveryPhrase.qml</file>
         <file>loading.qml</file>
         <file>main.qml</file>
         <file>wallet.qml</file>
@@ -167,6 +181,34 @@
         <file>assets/icon-defapp-active.svg</file>
         <file>assets/icon-applications.svg</file>
         <file>assets/icon-applications-active.svg</file>
+        <file>assets/icon-dapps_store.svg</file>
+        <file>assets/icon-dapps_store-active.svg</file>
+        <file>assets/icon-dapps_store-add-publisher.svg</file>
+        <file>assets/icon-dapps_store-dapp-file.svg</file>
+        <file>assets/icon-dapps_store-become-a-publisher.svg</file>
+        <file>assets/icon-dapps_store-empty-dapps-list.svg</file>
+        <file>assets/icon-dapps_store-publisher-edit.svg</file>
+        <file>assets/icon-dapps_store-publisher-show-key.svg</file>
+        <file>assets/icon-dapps_store-publisher-upload-dapp.svg</file>
+        <file>assets/icon-dapps_store-publishers.svg</file>
+        <file>assets/icon-dapps_store-update.svg</file>
+        <file>assets/icon-dapps-store-transaction-is-sent.svg</file>
+        <file>assets/icon-dapps-store-user.svg</file>
+        <file>assets/icon-dapps-store-website.svg</file>
+        <file>assets/icon-dapps-store-twitter.svg</file>
+        <file>assets/icon-dapps-store-linkedin.svg</file>
+        <file>assets/icon-dapps-store-instagram.svg</file>
+        <file>assets/icon-dapps-store-telegram.svg</file>
+        <file>assets/icon-dapps-store-discord.svg</file>
+        <file>assets/icon-dapps-store-website-green.svg</file>
+        <file>assets/icon-dapps-store-twitter-green.svg</file>
+        <file>assets/icon-dapps-store-linkedin-green.svg</file>
+        <file>assets/icon-dapps-store-instagram-green.svg</file>
+        <file>assets/icon-dapps-store-telegram-green.svg</file>
+        <file>assets/icon-dapps-store-discord-green.svg</file>
+        <file>assets/icon-dapps-store-install.svg</file>
+        <file>assets/icon-dapps-store-launch.svg</file>
+        <file>assets/icon-dapps-store-update.svg</file>
         <file>assets/icon-dex.svg</file>
         <file>assets/icon-dex-active.svg</file>
         <file>assets/icon-addresses.svg</file>
@@ -189,6 +231,7 @@
         <file>assets/icon-notifications-sent.svg</file>
         <file>assets/icon-notifications-update.svg</file>
         <file>assets/icon-notifications-videos.svg</file>
+        <file>assets/icon-chevron-down.svg</file>
         <file>assets/icon-contract-completed.svg</file>
         <file>assets/icon-contract-expired.svg</file>
         <file>assets/icon-contract-failed.svg</file>
@@ -236,6 +279,8 @@
         <file>assets/icon-add-blue.svg</file>
         <file>assets/icon-add-green.svg</file>
         <file>assets/icon-copy.svg</file>
+        <file>assets/icon-copy-gray.svg</file>
+        <file>assets/icon-copy-green.svg</file>
         <file>assets/icon-down.svg</file>
         <file>assets/icon-up.svg</file>
         <file>assets/icon-send.svg</file>
@@ -344,6 +389,7 @@
         <file>assets/icon-wallet-empty.svg</file>
         <file>assets/icon-notifications-sent-offline.svg</file>
         <file>assets/icon-notifications-received-offline.svg</file>
+        <file>assets/icon-notifications-failed-receive-offline.svg</file>
         <file>assets/icon-notifications-failed-sent-offline.svg</file>
         <file>assets/icon-notifications-failed-sent-privacy.svg</file>
         <file>assets/icon-notifications-received-privacy.svg</file>
@@ -369,5 +415,12 @@
         <file>assets/icon-help.svg</file>
         <file>assets/icon-help-active.svg</file>
         <file>assets/icon-trusted-node-status-stale.svg</file>
+        <file>assets/upload-a-file.svg</file>
+        <file>assets/upload-error.svg</file>
+        <file>assets/upload-success.svg</file>
+        <file>assets/dnd-load-file.svg</file>
+        <file>assets/icon-voting.svg</file>
+        <file>assets/icon-voting-active.svg</file>
+        <file>assets/icon-no-transaction-filter.svg</file>
     </qresource>
 </RCC>

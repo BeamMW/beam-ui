@@ -19,7 +19,7 @@ RowLayout {
         SvgImage {
             Layout.leftMargin: index == 0 ? 20 : -6
             source: icons[index]
-            sourceSize: Qt.size(20, 20)
+            sourceSize: Qt.size(26, 26)
             z: -index
 
              SvgImage {

@@ -14,10 +14,7 @@
 #include <QQmlEngine>
 #include "webapi_creator.h"
 #include "wallet/api/i_wallet_api.h"
-#include "wallet/core/common.h"
 #include "wallet/client/apps_api/apps_utils.h"
-#include "bvm/invoke_data.h"
-#include "public.h"
 
 namespace beamui::applications
 {
@@ -25,6 +22,14 @@ namespace beamui::applications
     {
         WalletModel::Ptr getWalletModel() {
             return AppModel::getInstance().getWalletModel();
+        }
+
+        bool getUseIPFSNode () {
+            #ifdef BEAM_IPFS_SUPPORT
+            return AppModel::getInstance().getSettings().getIPFSNodeLaunch() != WalletSettings::IPFSLaunch::Never;
+            #else
+            return false;
+            #endif
         }
     }
 
@@ -66,14 +71,14 @@ namespace beamui::applications
 
         QPointer<WebAPICreator> guard = this;
         const auto appid = beam::wallet::GenerateAppID(appName.toStdString(), appUrl.toStdString());
+        const bool ipfsnode = getUseIPFSNode();
 
-        AppsApiUI::ClientThread_Create(getWalletModel().get(), version, appid, appName.toStdString(),
+        AppsApiUI::ClientThread_Create(getWalletModel().get(), version, appid, appName.toStdString(), ipfsnode,
             [this, guard, version, appName, appid] (AppsApiUI::Ptr api) {
                 if (guard)
                 {
                     _api = std::move(api);
                     emit apiCreated(_api.get());
-                    LOG_INFO() << "API created: " << version << ", " << appName.toStdString() << ", " << appid;
                 }
                 else
                 {

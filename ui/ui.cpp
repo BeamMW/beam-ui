@@ -65,6 +65,7 @@
 #include "viewmodel/applications/public.h"
 #include "model/qr.h"
 #include "viewmodel/dex/dex_view.h"
+#include "viewmodel/window_event_filter.h"
 
 #if defined(BEAM_USE_STATIC_QT)
 
@@ -129,13 +130,12 @@ int main (int argc, char* argv[])
 
     try
     {
-        auto [options, visibleOptions] = createOptionsDescription(GENERAL_OPTIONS | UI_OPTIONS | WALLET_OPTIONS, WalletSettings::WalletCfg);
-        visibleOptions;// unused
+        auto options = createOptionsDescription(GENERAL_OPTIONS | UI_OPTIONS | WALLET_OPTIONS, WalletSettings::WalletCfg).first;
         po::variables_map vm;
 
         try
         {
-#ifdef Q_OS_MACOS // on Big Sur we have broken current dir, let's restore it
+            #ifdef Q_OS_MACOS // on Big Sur we have broken current dir, let's restore it
             QDir t = app.applicationDirPath();
             if (t.dirName() == "MacOS" && t.cdUp() && t.dirName() == "Contents" && t.cdUp())
             {
@@ -161,7 +161,7 @@ int main (int argc, char* argv[])
                 LOG_INFO() << "You are on apple M1 chipset running an Intel application, forcing NativeTextRendering";
                 QQuickWindow::setTextRenderType(QQuickWindow::TextRenderType::NativeTextRendering);
             }
-#endif
+            #endif
             vm = getOptions(argc, argv, options, true);
         }
         catch (const po::error& e)
@@ -199,27 +199,25 @@ int main (int argc, char* argv[])
 
         beam::Crash::InstallHandler(appDataDir.filePath(QMLGlobals::getAppName()).toStdString().c_str());
 
-#define LOG_FILES_PREFIX "beam_ui_"
-
+        #define LOG_FILES_PREFIX "beam_ui_"
         const auto logFilesPath = appDataDir.filePath(WalletSettings::LogsFolder).toStdString();
         auto logger = beam::Logger::create(logLevel, logLevel, fileLogLevel, LOG_FILES_PREFIX, logFilesPath);
 
         unsigned logCleanupPeriod = vm[cli::LOG_CLEANUP_DAYS].as<uint32_t>() * 24 * 3600;
-
         clean_old_logfiles(logFilesPath, LOG_FILES_PREFIX, logCleanupPeriod);
 
         try
         {
             Rules::get().UpdateChecksum();
-            LOG_INFO() << "Beam Wallet UI " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
-            LOG_INFO() << "Beam Core " << BEAM_VERSION << " (" << BEAM_BRANCH_NAME << ")";
+            LOG_INFO() << "Beam Wallet UI "   << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
+            LOG_INFO() << "Beam Core "        << BEAM_VERSION << " (" << BEAM_BRANCH_NAME << ")";
             LOG_INFO() << "Rules signature: " << Rules::get().get_SignatureStr();
-            LOG_INFO() << "AppData folder: " << appDataDir.absolutePath().toStdString();
+            LOG_INFO() << "AppData folder: "  << appDataDir.absolutePath().toStdString();
 
             // AppModel Model MUST BE created before the UI engine and destroyed after.
             // AppModel serves the UI and UI should be able to access AppModel at any time
             // even while being destroyed. Do not move engine above AppModel
-            WalletSettings settings(appDataDir);
+            WalletSettings settings(appDataDir, app.applicationDirPath());
             LOG_INFO() << "WalletDB: " << settings.getWalletStorage();
 
             AppModel appModel(settings);
@@ -236,12 +234,12 @@ int main (int argc, char* argv[])
             }
 
             qmlRegisterSingletonType<Theme>(
-                    "Beam.Wallet", 1, 0, "Theme",
-                    [](QQmlEngine* engine, QJSEngine* scriptEngine) -> QObject* {
-                        Q_UNUSED(engine)
-                        Q_UNUSED(scriptEngine)
-                        return new Theme;
-                    });
+                "Beam.Wallet", 1, 0, "Theme",
+                [](QQmlEngine* engine, QJSEngine* scriptEngine) -> QObject* {
+                    Q_UNUSED(engine)
+                    Q_UNUSED(scriptEngine)
+                    return new Theme;
+                });
 
             qmlRegisterUncreatableType<OldWalletCurrency>("Beam.Wallet", 1, 0, "OldWalletCurrency", "You cannot create an instance of the Enums.");
             qRegisterMetaType<OldWalletCurrency::OldCurrency>("OldWalletCurrency::OldCurrency");
@@ -255,6 +253,7 @@ int main (int argc, char* argv[])
                     });
 
             qRegisterMetaType<beam::Asset::ID>("beam::Asset::ID");
+            qRegisterMetaType<QVector<beam::Asset::ID>>("QVector<beam::Asset::ID>");
             qRegisterMetaType<std::vector<beam::wallet::VerificationInfo>>("std::vector<beam::wallet::VerificationInfo>");
             qRegisterMetaType<beam::wallet::WalletAsset>("beam::wallet::WalletAsset");
             qmlRegisterType<StartViewModel>("Beam.Wallet", 1, 0, "StartViewModel");
@@ -299,12 +298,18 @@ int main (int argc, char* argv[])
             qmlRegisterType<AppNotificationHelper>("Beam.Wallet", 1, 0, "AppNotificationHelper");
             beamui::applications::RegisterQMLTypes();
 
+            WindowEventFilter filter;
+            app.installEventFilter(&filter);
+
             engine.load(QUrl("qrc:/root.qml"));
             if (engine.rootObjects().count() < 1)
             {
                 LOG_ERROR() << "Problem with QT";
                 return -1;
             }
+
+            QObject::connect(&filter, SIGNAL(windowMoved()), engine.rootObjects().takeFirst(), SLOT(windowMoved()));
+            QObject::connect(&filter, SIGNAL(generalMouseEvent()), &settings, SIGNAL(generalMouseEvent()));
 
             auto topLevel = engine.rootObjects().value(0);
             auto window = qobject_cast<QQuickWindow*>(topLevel);

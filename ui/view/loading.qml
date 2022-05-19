@@ -73,10 +73,7 @@ Item
     LoadingViewModel {
         id: viewModel 
         onSyncCompleted: {
-            if (isRecoveryMode || isCreating)
-                root.parent.source = "qrc:/main.qml";
-            else
-                rootLoading.parent.source = "qrc:/main.qml";
+            root.parent.source = "qrc:/main.qml";
         }
 
         onWalletError: {
@@ -85,7 +82,9 @@ Item
             confirmationDialog.okButtonVisible  = false;
             confirmationDialog.okButtonEnable   = false;
             confirmationDialog.closePolicy      = Popup.NoAutoClose;
-            confirmationDialog.rejectedCallback = isCreating ? cancelCreating : changeNodeSettings;
+            confirmationDialog.rejectedCallback = isRecoveryMode
+                ? changeNodeSettingsRecovery
+                : (isCreating ? cancelCreating : changeNodeSettings);
             confirmationDialog.open();
         }
 
@@ -100,8 +99,12 @@ Item
         viewModel.resetWallet();
     }
 
+    function changeNodeSettingsRecovery () {
+        rootLoading.parent.restoreProcessBadPortMode(true);
+    }
+
     function changeNodeSettings () {
-        rootLoading.parent.setSource("qrc:/start.qml", {"isBadPortMode": true});
+        rootLoading.parent.restoreProcessBadPortMode(false);
     }
 
     StartLayout {
@@ -166,7 +169,7 @@ Item
                 enabled: true
                 //% "Cancel"
                 text: qsTrId("general-cancel")
-                icon.source: "qrc:/assets/icon-cancel.svg"
+                icon.source: "qrc:/assets/icon-cancel-white.svg"
                 onClicked: {
                     this.enabled = false;
                     cancelCreating();

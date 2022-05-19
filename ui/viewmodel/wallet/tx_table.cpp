@@ -30,12 +30,19 @@ namespace
 TxTableViewModel::TxTableViewModel()
     : _model(AppModel::getInstance().getWalletModel())
     , _rates(AppModel::getInstance().getRates())
+    , _settings{AppModel::getInstance().getSettings()}
 {
     connect(_model.get(), SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SLOT(onTransactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
     connect(_model.get(), SIGNAL(txHistoryExportedToCsv(const QString&)), this, SLOT(onTxHistoryExportedToCsv(const QString&)));
     connect(_rates.get(), &ExchangeRatesManager::rateUnitChanged, this, &TxTableViewModel::rateChanged);
     connect(_rates.get(), &ExchangeRatesManager::activeRateChanged, this, &TxTableViewModel::rateChanged);
-    _model->getAsync()->getTransactions();
+
+    _showInProgress = _settings.getShowInProgress();
+    _showCompleted = _settings.getShowCompleted();
+    _showCanceled = _settings.getShowCanceled();
+    _showFailed = _settings.getShowFailed();
+
+    _model->getAsync()->getTransactionsSmoothly();
 }
 
 void TxTableViewModel::exportTxHistoryToCsv()
@@ -75,6 +82,11 @@ void TxTableViewModel::onTxHistoryExportedToCsv(const QString& data)
 QAbstractItemModel* TxTableViewModel::getTransactions()
 {
     return &_transactionsList;
+}
+
+QAbstractItemModel* TxTableViewModel::getTransactionsRejectedByFilter()
+{
+    return &_transactionsListRejectedByFilter;
 }
 
 void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& transactions)
@@ -117,29 +129,66 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
         }
     }
 
+    std::vector<std::shared_ptr<TxObject>> modifiedTransactionsFiltered;
+    modifiedTransactionsFiltered.reserve(modifiedTransactions.size());
+    std::vector<std::shared_ptr<TxObject>> modifiedTransactionsRejectedByFilter;
+    modifiedTransactionsRejectedByFilter.reserve(modifiedTransactions.size());
+    for (const auto& tx: modifiedTransactions)
+    {
+        if (!_showInProgress && tx->isInProgress())
+        {
+            modifiedTransactionsRejectedByFilter.push_back(tx);
+            continue;
+        }
+
+        if (!_showCompleted && tx->isCompleted())
+        {
+            modifiedTransactionsRejectedByFilter.push_back(tx);
+            continue;
+        }
+
+        if (!_showCanceled && tx->isCanceled())
+        {
+            modifiedTransactionsRejectedByFilter.push_back(tx);
+            continue;
+        }
+
+        if (!_showFailed && tx->isFailed())
+        {
+            modifiedTransactionsRejectedByFilter.push_back(tx);
+            continue;
+        }
+
+        modifiedTransactionsFiltered.push_back(tx);
+    }
+
     switch (action)
     {
         case ChangeAction::Reset:
             {
-                _transactionsList.reset(modifiedTransactions);
+                _transactionsList.reset(modifiedTransactionsFiltered);
+                _transactionsListRejectedByFilter.reset(modifiedTransactionsRejectedByFilter);
                 break;
             }
 
         case ChangeAction::Removed:
             {
                 _transactionsList.remove(modifiedTransactions);
+                _transactionsListRejectedByFilter.remove(modifiedTransactionsRejectedByFilter);
                 break;
             }
 
         case ChangeAction::Added:
             {
-                _transactionsList.insert(modifiedTransactions);
+                _transactionsList.insert(modifiedTransactionsFiltered);
+                _transactionsListRejectedByFilter.insert(modifiedTransactionsRejectedByFilter);
                 break;
             }
 
         case ChangeAction::Updated:
             {
-                _transactionsList.update(modifiedTransactions);
+                _transactionsList.update(modifiedTransactionsFiltered);
+                _transactionsListRejectedByFilter.update(modifiedTransactionsRejectedByFilter);
                 break;
             }
 
@@ -160,6 +209,67 @@ QString TxTableViewModel::getRate() const
 {
     auto rate = _rates->getRate(beam::wallet::Currency::BEAM());
     return beamui::AmountToUIString(rate);
+}
+
+bool TxTableViewModel::getShowInProgress() const
+{
+    return _showInProgress;
+}
+
+void TxTableViewModel::setShowInProgress(bool value)
+{
+    _showInProgress = value;
+    _settings.setShowInProgress(value);
+    emit showInProgressChanged();
+    emit showAllChanged();
+    _model->getAsync()->getTransactionsSmoothly();
+}
+
+bool TxTableViewModel::getShowCompleted() const
+{
+    return _showCompleted;
+}
+
+void TxTableViewModel::setShowCompleted(bool value)
+{
+    _showCompleted = value;
+    _settings.setShowCompleted(value);
+    emit showCompletedChanged();
+    emit showAllChanged();
+    _model->getAsync()->getTransactionsSmoothly();
+}
+
+bool TxTableViewModel::getShowCanceled() const
+{
+    return _showCanceled;
+}
+
+void TxTableViewModel::setShowCanceled(bool value)
+{
+    _showCanceled = value;
+    _settings.setShowCanceled(value);
+    emit showCanceledChanged();
+    emit showAllChanged();
+    _model->getAsync()->getTransactionsSmoothly();
+}
+
+bool TxTableViewModel::getShowFailed() const
+{
+    return _showFailed;
+}
+
+void TxTableViewModel::setShowFailed(bool value)
+{
+    _showFailed = value;
+    _settings.setShowFailed(value);
+    emit showFailedCanged();
+    emit showAllChanged();
+    _model->getAsync()->getTransactionsSmoothly();
+}
+
+bool TxTableViewModel::getShowAll() const
+{
+    return _showInProgress && _showCompleted &&_showCanceled &&_showFailed;
 }
 
 void TxTableViewModel::cancelTx(const QVariant& variantTxID)

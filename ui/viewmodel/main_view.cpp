@@ -45,6 +45,7 @@ MainViewModel::MainViewModel()
 
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(lockWallet()));
     connect(&m_settings, SIGNAL(lockTimeoutChanged()), this, SLOT(onLockTimeoutChanged()));
+    connect(&m_settings, SIGNAL(generalMouseEvent()), this, SLOT(onGeneralMouseEvent()));
     connect(walletModelPtr, &WalletModel::walletStatusChanged, this, &MainViewModel::unsafeTxCountChanged);
     connect(walletModelPtr, SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SIGNAL(unsafeTxCountChanged()));
     connect(walletModelPtr, SIGNAL(notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)), SIGNAL(unreadNotificationsChanged()));
@@ -58,11 +59,6 @@ MainViewModel::MainViewModel()
     onLockTimeoutChanged();
     m_settings.maxPrivacyLockTimeLimitInit();
     m_settings.minConfirmationsInit();
-}
-
-void MainViewModel::update(int page)
-{
-	// TODO: update page model or smth...
 }
 
 void MainViewModel::lockWallet()
@@ -84,6 +80,11 @@ void MainViewModel::onLockTimeoutChanged()
     {
         m_timer.stop();
     }
+}
+
+void MainViewModel::onGeneralMouseEvent()
+{
+    resetLockTimer();
 }
 
 void MainViewModel::onClipboardDataChanged()
@@ -126,6 +127,23 @@ QString MainViewModel::getDaoCoreAppID() const
     #else
     appURL = "http://3.19.141.112:80/app/plugin-dao-core/index.html";
     #endif
+
+    const auto appid = beam::wallet::GenerateAppID(appName, appURL);
+    return QString::fromStdString(appid);
+}
+
+QString MainViewModel::getVotingAppID() const
+{
+    const std::string appName = "BeamX DAO Voting";
+    std::string appURL  = "";
+
+#if defined(BEAM_TESTNET)
+    appURL = "https://apps-testnet.beam.mw/app/dao-voting-app/index.html";
+#elif defined(BEAM_MAINNET)
+    appURL = "https://apps.beam.mw/app/dao-voting-app/index.html";
+#else
+    appURL = "http://3.19.141.112:80/app-same-origin/dao-voting-app/index.html";
+#endif
 
     const auto appid = beam::wallet::GenerateAppID(appName, appURL);
     return QString::fromStdString(appid);

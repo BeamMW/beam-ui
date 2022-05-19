@@ -335,7 +335,6 @@ namespace beamui
         int value = 0;
         QString res;
         QTextStream ss(&res);
-        QString units;
 
         if (estimate >= kSecondsInHour)
         {

@@ -34,7 +34,7 @@ SwapCoinSettingsItem::SwapCoinSettingsItem(wallet::AtomicSwapCoin swapCoin)
 {
     auto coinClient = m_coinClient.lock();
     connect(coinClient.get(), SIGNAL(statusChanged()), this, SLOT(onStatusChanged()));
-    connect(coinClient.get(), SIGNAL(connectionErrorChanged()), this, SIGNAL(connectionErrorMsgChanged()));
+    connect(coinClient.get(), SIGNAL(connectionErrorChanged()), this, SIGNAL(connectionErrorChanged()));
     LoadSettings();
 }
 
@@ -430,7 +430,7 @@ QString SwapCoinSettingsItem::getConnectionStatus() const
     }
 }
 
-QString SwapCoinSettingsItem::getConnectionErrorMsg() const
+QString SwapCoinSettingsItem::getConnectionError() const
 {
     using beam::bitcoin::IBridge;
 
