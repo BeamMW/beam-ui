@@ -35,6 +35,7 @@ namespace
     const QString kBeamPublisherKey = "";
     const QString kLocalapp = "localapp";
     const QString kManifestFile = "manifest.json";
+    const qint64 kMaxFileSize = 50 * 1024 * 1024;
 
     namespace DApp
     {
@@ -1273,7 +1274,8 @@ namespace beamui::applications
 
     QVariantMap AppsViewModel::getDAppFileProperties(const QString& fname)
     {
-        QFileInfo fileInfo(fname);
+        auto dappFilePath = removeFilePrefix(fname);
+        QFileInfo fileInfo(dappFilePath);
 
         QVariantMap properties;
         properties.insert(DApp::kName, fileInfo.fileName());
@@ -1287,6 +1289,14 @@ namespace beamui::applications
         try
         {
             auto dappFilePath = removeFilePrefix(fname);
+
+            QFileInfo info(dappFilePath);
+
+            if (info.size() > kMaxFileSize)
+            {
+                throw std::runtime_error("File size should be less than 50mb");
+            }
+
             QuaZip zip(dappFilePath);
             if (!zip.open(QuaZip::Mode::mdUnzip))
             {
