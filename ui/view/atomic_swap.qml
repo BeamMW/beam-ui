@@ -85,12 +85,10 @@ Item {
         }
     }
 
-    // RowLayout {
-        Title {
-            //% "Swap"
-            text: qsTrId("atomic-swap-title")
-        }
-    // }
+    Title {
+        //% "Swap"
+        text: qsTrId("atomic-swap-title")
+    }
 
     StatusBar {
         id: statusBar
