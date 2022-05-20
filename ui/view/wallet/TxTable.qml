@@ -90,20 +90,6 @@ Control {
        }
     }
 
-    PaymentInfoItem {
-        id: verifyInfo
-    }
-
-    PaymentInfoDialog {
-        id: paymentInfoVerifyDialog
-        shouldVerify: true
-
-        model:verifyInfo
-        onTextCopied: function(text) {
-            BeamGlobals.copyToClipboard(text);
-        }
-    }
-
     TransactionDetailsPopup {
         id: txDetails
         onTextCopied: function(text) {
@@ -239,7 +225,8 @@ Control {
                 //% "Verify payment"
                 ToolTip.text: qsTrId("wallet-verify-payment")
                 onClicked: {
-                    paymentInfoVerifyDialog.model.reset();
+                    var paymentInfoVerifyDialog =
+                        Qt.createComponent("../controls/PaymentInfoDialog.qml").createObject(control);
                     paymentInfoVerifyDialog.open();
                 }
             }
