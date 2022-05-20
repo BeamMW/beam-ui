@@ -358,10 +358,6 @@
         <source>Copy details</source>
         <translation>Sao chép chi tiết</translation>
     </message>
-    <message id="payment-info-copy-code-button">
-        <source>Copy code</source>
-        <translation>Sao chép mã</translation>
-    </message>
     <message id="loading-try-again-button">
         <source>Try again</source>
         <translation>Thử lại lần nữa</translation>

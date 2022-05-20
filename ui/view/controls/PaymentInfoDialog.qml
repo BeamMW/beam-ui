@@ -51,6 +51,7 @@ CustomDialog {
                     font.styleName:         "Bold"
                     font.weight:            Font.Bold
                     color:                  Style.content_main
+                    //% "Payment proof verification"
                     text: qsTrId("payment-info-proof-verification")
                 }
 
