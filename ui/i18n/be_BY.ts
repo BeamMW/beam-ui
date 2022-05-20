@@ -358,10 +358,6 @@
         <source>Copy details</source>
         <translation>Капіяваць падрабязнасці</translation>
     </message>
-    <message id="payment-info-copy-code-button">
-        <source>Copy code</source>
-        <translation>Капіяваць код</translation>
-    </message>
     <message id="loading-try-again-button">
         <source>Try again</source>
         <translation>Паспрабуйце зноў</translation>
