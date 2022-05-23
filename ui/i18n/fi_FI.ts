@@ -358,10 +358,6 @@
         <source>Copy details</source>
         <translation>Kopioi tiedot</translation>
     </message>
-    <message id="payment-info-copy-code-button">
-        <source>Copy code</source>
-        <translation>Kopioi koodi</translation>
-    </message>
     <message id="loading-try-again-button">
         <source>Try again</source>
         <translation>Yritä uudelleen</translation>

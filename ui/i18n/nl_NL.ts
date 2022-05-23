@@ -358,10 +358,6 @@
         <source>Copy details</source>
         <translation>Kopieer details</translation>
     </message>
-    <message id="payment-info-copy-code-button">
-        <source>Copy code</source>
-        <translation>Kopieer code</translation>
-    </message>
     <message id="loading-try-again-button">
         <source>Try again</source>
         <translation>Probeer opnieuw</translation>

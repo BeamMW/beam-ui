@@ -358,10 +358,6 @@
         <source>Copy details</source>
         <translation>Detayları kopyala</translation>
     </message>
-    <message id="payment-info-copy-code-button">
-        <source>Copy code</source>
-        <translation>Kodu kopyala</translation>
-    </message>
     <message id="loading-try-again-button">
         <source>Try again</source>
         <translation>Tekrar deneyin</translation>
