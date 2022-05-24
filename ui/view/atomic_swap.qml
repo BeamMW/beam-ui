@@ -913,7 +913,6 @@ Please try again later or create an offer yourself."
                             collapsed:  true
                             rowInModel: styleData.row !== undefined && styleData.row >= 0 &&  styleData.row < txProxyModel.count
                             rowHeight:  transactionsTable.rowHeight
-                            tableView:  transactionsTable
                             backgroundColor: styleData.selected ? Style.row_selected : (styleData.alternate ? Style.background_row_even : Style.background_row_odd)
                             property var myModel: parent.model
 
