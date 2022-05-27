@@ -397,6 +397,14 @@ namespace beamui::applications
         assert(webView != nullptr);
     }
 
+    void AppsViewModel::prepareToLaunchApp()
+    {
+        // temporary hack. Wallet does not support working with multiple shaders at once,
+        // so turn off the update to avoid polling the Dapp Store contract
+        disconnect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadPublishers);
+        disconnect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadApps);
+    }
+
     QString AppsViewModel::getAppsUrl() const
     {
         auto& settings = AppModel::getInstance().getSettings();
