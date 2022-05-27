@@ -404,6 +404,9 @@ ColumnLayout {
             function createApi(app) {
                 try
                 {
+                   // temporary hack
+                   viewModel.prepareToLaunchApp()
+
                    var verWant = app.api_version || "current"
                    var verMin  = app.min_api_version || ""
                    webapiCreator.createApi(verWant, verMin, app.name, app.url)
