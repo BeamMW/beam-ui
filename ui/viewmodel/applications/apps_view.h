@@ -87,6 +87,7 @@ namespace beamui::applications
         Q_INVOKABLE void changePublisherInfo(const QVariantMap& publisherInfo, bool isCreating);
         Q_INVOKABLE void contractInfoApproved(int action, const QString& data);
         Q_INVOKABLE void contractInfoRejected();
+        Q_INVOKABLE void prepareToLaunchApp();
 
         Q_INVOKABLE [[nodiscard]] QList<QVariantMap> getPublisherDApps(const QString& publisherKey);
 
