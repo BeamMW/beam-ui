@@ -177,14 +177,6 @@ Rectangle {
         }
     }
 
-    MouseArea {
-        id: mainMouseArea
-        anchors.fill: parent
-        acceptedButtons: Qt.AllButtons
-        hoverEnabled: true
-        propagateComposedEvents: true
-    }
-
     Keys.onReleased: {
         viewModel.resetLockTimer();
     }

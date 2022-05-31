@@ -361,10 +361,6 @@
         <source>Copy details</source>
         <translation>复制详情</translation>
     </message>
-    <message id="payment-info-copy-code-button">
-        <source>Copy code</source>
-        <translation>复制代码</translation>
-    </message>
     <message id="loading-try-again-button">
         <source>Try again</source>
         <translation>请再试一次</translation>

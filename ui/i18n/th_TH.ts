@@ -358,10 +358,6 @@
         <source>Copy details</source>
         <translation>คัดลอกรายละเอียด</translation>
     </message>
-    <message id="payment-info-copy-code-button">
-        <source>Copy code</source>
-        <translation>คัดลอกโค้ด</translation>
-    </message>
     <message id="loading-try-again-button">
         <source>Try again</source>
         <translation>ลองอีกครั้ง</translation>

@@ -433,15 +433,11 @@ Control {
                 collapsed:  true
                 rowInModel: styleData.row !== undefined && styleData.row >= 0 && styleData.row < txProxyModel.count
                 rowHeight:  transactionsTable.rowHeight
-                tableView:  transactionsTable
 
-                backgroundColor: !rowInModel ? "transparent":
-                                 styleData.selected ?
-                                 Style.row_selected :
-                                 hovered 
-                                    ? Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.1)
-                                    : (styleData.alternate ? (!collapsed || animating ? Style.background_row_details_even : Style.background_row_even)
-                                                           : (!collapsed || animating ? Style.background_row_details_odd : Style.background_row_odd))
+                backgroundColor: hovered
+                    ? Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.1)
+                    : (styleData.alternate ? (!collapsed || animating ? Style.background_row_details_even : Style.background_row_even)
+                                            : (!collapsed || animating ? Style.background_row_details_odd : Style.background_row_odd))
 
                 property var model: parent.model
                 property bool hideFiltered: true
@@ -496,6 +492,7 @@ Control {
             }
 
             itemDelegate: Item {
+                width: parent.width
                 Item {
                     width: parent.width
                     height: transactionsTable.rowHeight

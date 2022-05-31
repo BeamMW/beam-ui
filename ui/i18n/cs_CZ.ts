@@ -358,10 +358,6 @@
         <source>Copy details</source>
         <translation>Kopírovat podrobnosti</translation>
     </message>
-    <message id="payment-info-copy-code-button">
-        <source>Copy code</source>
-        <translation>Kopírovat kód</translation>
-    </message>
     <message id="loading-try-again-button">
         <source>Try again</source>
         <translation>Zkusit znovu</translation>
