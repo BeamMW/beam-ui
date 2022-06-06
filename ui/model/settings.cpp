@@ -894,7 +894,6 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     cfg.autonat = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT, cfg.autonat).toBool();
     cfg.autonat_limit = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_LIMIT, cfg.autonat_limit).toUInt();
     cfg.autonat_peer_limit = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_PEER_LIMIT, cfg.autonat_peer_limit).toUInt();
-    cfg.swarm_key = m_data.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_KEY, QString::fromStdString(cfg.swarm_key)).toString().toStdString();
     cfg.routing_type = m_data.value(QString(kIPFSPrefix) + cli::IPFS_ROUTING_TYPE, QString::fromStdString(cfg.routing_type)).toString().toStdString();
     cfg.run_gc = m_data.value(QString(kIPFSPrefix) + cli::IPFS_RUN_GC, cfg.run_gc).toBool();
 
@@ -903,11 +902,31 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     {
         auto list = m_data.value(keyBootstrap).toStringList();
         decltype(cfg.bootstrap)().swap(cfg.bootstrap);
+        decltype(cfg.peering)().swap(cfg.peering);
 
         for (const auto& qsval : list)
         {
             cfg.bootstrap.push_back(qsval.toStdString());
+            cfg.peering.push_back(qsval.toStdString());
         }
+    }
+
+    const QString keyPeering = QString(kIPFSPrefix) + cli::IPFS_PEERING;
+    if (m_data.contains(keyPeering))
+    {
+        auto list = m_data.value(keyPeering).toStringList();
+        decltype(cfg.peering)().swap(cfg.peering);
+
+        for (const auto& qsval : list)
+        {
+            cfg.peering.push_back(qsval.toStdString());
+        }
+    }
+
+    const QString keySwarm = QString(kIPFSPrefix) + cli::IPFS_SWARM_KEY;
+    if (m_data.contains(keySwarm))
+    {
+        cfg.swarm_key = m_data.value(keySwarm).toString().toStdString();
     }
 
     return cfg;
