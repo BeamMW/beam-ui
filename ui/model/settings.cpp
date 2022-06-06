@@ -688,6 +688,8 @@ QString WalletSettings::getExplorerUrl() const
 {
     #ifdef BEAM_BEAMX
     return "https://beamx.explorer.beam.mw/";
+    #elif defined(BEAM_DAPPNET)
+    return "https://dappnet.explorer.beam.mw/";
     #elif defined(BEAM_TESTNET)
     return "https://testnet.explorer.beam.mw/";
     #elif defined(BEAM_MAINNET)
@@ -700,6 +702,8 @@ QString WalletSettings::getExplorerUrl() const
 QString WalletSettings::getFaucetUrl() const
 {
     #ifdef BEAM_BEAMX
+    return "https://faucet.beamprivacy.community/";
+    #elif defined(BEAM_DAPPNET)
     return "https://faucet.beamprivacy.community/";
     #elif defined(BEAM_TESTNET)
     return "https://faucet.beamprivacy.community/";
