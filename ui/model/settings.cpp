@@ -688,6 +688,8 @@ QString WalletSettings::getExplorerUrl() const
 {
     #ifdef BEAM_BEAMX
     return "https://beamx.explorer.beam.mw/";
+    #elif defined(BEAM_DAPPNET)
+    return "https://dappnet.explorer.beam.mw/";
     #elif defined(BEAM_TESTNET)
     return "https://testnet.explorer.beam.mw/";
     #elif defined(BEAM_MAINNET)
@@ -701,6 +703,8 @@ QString WalletSettings::getFaucetUrl() const
 {
     #ifdef BEAM_BEAMX
     return "https://faucet.beamprivacy.community/";
+    #elif defined(BEAM_DAPPNET)
+    return "https://faucet.beamprivacy.community/";
     #elif defined(BEAM_TESTNET)
     return "https://faucet.beamprivacy.community/";
     #elif defined(BEAM_MAINNET)
@@ -712,8 +716,8 @@ QString WalletSettings::getFaucetUrl() const
 
 QString WalletSettings::getAppsUrl() const
 {
-    #ifdef BEAM_BEAMX
-    return "";
+    #ifdef BEAM_DAPPNET
+    return "http://3.16.160.95/app/appslist.json";
     #elif defined(BEAM_TESTNET)
     return "https://apps-testnet.beam.mw/appslist.json";
     #elif defined(BEAM_MAINNET)
@@ -777,6 +781,8 @@ std::string WalletSettings::getDappStoreCID() const
         "c673c2b940d4f6813901165c426ab084e401259c9794d61e1f5f80453ee80317"
 #elif defined(BEAM_MAINNET)
         "e2d24b686e8d31a0fe97eade9cd23281e7059b74b5757bdb96c820ef9e2af41c"
+#elif defined(BEAM_DAPPNET)
+        "59c7b485463eff35c361157038bad32f88a4ef9814f0891298a5e65099b6b50b"
 #else
         "b76ca089082e38b23d5e68feeb8b6f459ae74f5012eb520c87169f88ced307e3"
 #endif
