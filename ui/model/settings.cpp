@@ -782,7 +782,7 @@ std::string WalletSettings::getDappStoreCID() const
 #elif defined(BEAM_MAINNET)
         "e2d24b686e8d31a0fe97eade9cd23281e7059b74b5757bdb96c820ef9e2af41c"
 #elif defined(BEAM_DAPPNET)
-        "b76ca089082e38b23d5e68feeb8b6f459ae74f5012eb520c87169f88ced307e3"
+        "59c7b485463eff35c361157038bad32f88a4ef9814f0891298a5e65099b6b50b"
 #else
         "b76ca089082e38b23d5e68feeb8b6f459ae74f5012eb520c87169f88ced307e3"
 #endif
