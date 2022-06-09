@@ -125,7 +125,7 @@ QString MainViewModel::getDaoCoreAppID() const
     #elif defined(BEAM_MAINNET)
     appURL = "https://apps.beam.mw/app/dao-core-app/index.html";
     #elif defined(BEAM_DAPPNET)
-    appURL = "http://3.19.141.112:80/app/plugin-dao-core/index.html";
+    appURL = "http://3.16.160.95:80/app/plugin-dao-core/index.html";
     #else
     appURL = "http://3.19.141.112:80/app/plugin-dao-core/index.html";
     #endif
@@ -144,7 +144,7 @@ QString MainViewModel::getVotingAppID() const
 #elif defined(BEAM_MAINNET)
     appURL = "https://apps.beam.mw/app/dao-voting-app/index.html";
 #elif defined(BEAM_DAPPNET)
-    appURL = "http://3.19.141.112:80/app-same-origin/dao-voting-app/index.html";
+    appURL = "http://3.16.160.95:80/app-same-origin/dao-voting-app/index.html";
 #else
     appURL = "http://3.19.141.112:80/app-same-origin/dao-voting-app/index.html";
 #endif
@@ -162,8 +162,8 @@ QString MainViewModel::getFaucetAppID() const
     appURL = "https://apps-testnet.beam.mw/app/plugin-faucet/index.html";
     #elif defined(BEAM_MAINNET)
     appURL = "https://apps.beam.mw/app/plugin-faucet/index.html";
-    #elif defined(BEAM_MAINNET)
-    appURL = "http://3.19.141.112:80/app/plugin-faucet/index.html";
+    #elif defined(BEAM_DAPPNET)
+    appURL = "http://3.16.160.95:80/app/plugin-faucet/index.html";
     #else
     appURL = "http://3.19.141.112:80/app/plugin-faucet/index.html";
     #endif
