@@ -46,7 +46,7 @@ namespace swapui
             result.push_back(info);
         };
 
-        append(OldWalletCurrency::OldCurrency::CurrBeam,       "qrc:/assets/icon-beam.svg");
+        // append(OldWalletCurrency::OldCurrency::CurrBeam,       "qrc:/assets/icon-beam.svg");
         append(OldWalletCurrency::OldCurrency::CurrBitcoin,    "qrc:/assets/icon-btc.svg");
         append(OldWalletCurrency::OldCurrency::CurrLitecoin,   "qrc:/assets/icon-ltc.svg");
         append(OldWalletCurrency::OldCurrency::CurrQtum,       "qrc:/assets/icon-qtum.svg");
@@ -58,6 +58,7 @@ namespace swapui
         append(OldWalletCurrency::OldCurrency::CurrDai,        "qrc:/assets/icon-dai.svg");
         append(OldWalletCurrency::OldCurrency::CurrUsdt,       "qrc:/assets/icon-usdt.svg");
         append(OldWalletCurrency::OldCurrency::CurrWrappedBTC, "qrc:/assets/icon-wbtc.svg");
+
 
         return result;
     }

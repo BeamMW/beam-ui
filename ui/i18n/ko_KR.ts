@@ -2264,14 +2264,6 @@ Please try again later or create an offer yourself.</translation>
         <source>Create offer</source>
         <translation>오퍼 만들기</translation>
     </message>
-    <message id="atomic-swap-1active-tx-count">
-        <source>1 active transaction</source>
-        <translation>1 활성화된 트랜잭션</translation>
-    </message>
-    <message id="atomic-swap-active-tx-count">
-        <source>%1 active transactions</source>
-        <translation>%1 활성화된 트랜잭션들</translation>
-    </message>
     <message id="swap-beta-tx-in-progress">
         <source>Transaction is in progress</source>
         <translation>트랜잭션 진행 중</translation>

@@ -2264,14 +2264,6 @@ Please try again later or create an offer yourself.</translation>
         <source>Create offer</source>
         <translation type="unfinished">Create offer</translation>
     </message>
-    <message id="atomic-swap-1active-tx-count">
-        <source>1 active transaction</source>
-        <translation type="unfinished">1 active transaction</translation>
-    </message>
-    <message id="atomic-swap-active-tx-count">
-        <source>%1 active transactions</source>
-        <translation type="unfinished">%1 active transactions</translation>
-    </message>
     <message id="swap-beta-tx-in-progress">
         <source>Transaction is in progress</source>
         <translation type="unfinished">Transaction is in progress</translation>

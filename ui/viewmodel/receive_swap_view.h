@@ -16,6 +16,7 @@
 #include <QObject>
 #include "model/wallet_model.h"
 #include "model/exchange_rates_manager.h"
+#include "model/assets_manager.h"
 #include "currencies.h"
 
 class ReceiveSwapViewModel: public QObject
@@ -157,4 +158,6 @@ private:
 
     beam::Amount _minimalBeamFeeGrothes;
     bool _feeChangedByUI = false;
+
+    AssetsManager::Ptr         _amgr;
 };

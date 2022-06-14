@@ -2275,14 +2275,6 @@ Please try again later or create an offer yourself.</translation>
         <source>Create offer</source>
         <translation>Креирај понуду</translation>
     </message>
-    <message id="atomic-swap-1active-tx-count">
-        <source>1 active transaction</source>
-        <translation>1 активна трансакција</translation>
-    </message>
-    <message id="atomic-swap-active-tx-count">
-        <source>%1 active transactions</source>
-        <translation>%1 активне трансакције</translation>
-    </message>
     <message id="swap-beta-tx-in-progress">
         <source>Transaction is in progress</source>
         <translation>Трансакције у току</translation>

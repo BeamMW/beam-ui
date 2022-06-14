@@ -2273,14 +2273,6 @@ Please try again later or create an offer yourself.</translation>
         <source>Create offer</source>
         <translation>Vytvořit nabídku</translation>
     </message>
-    <message id="atomic-swap-1active-tx-count">
-        <source>1 active transaction</source>
-        <translation>1 aktivní transakce</translation>
-    </message>
-    <message id="atomic-swap-active-tx-count">
-        <source>%1 active transactions</source>
-        <translation>%1 aktivních transakcí</translation>
-    </message>
     <message id="swap-beta-tx-in-progress">
         <source>Transaction is in progress</source>
         <translation>Transakce probíhá</translation>

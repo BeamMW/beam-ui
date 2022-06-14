@@ -74,6 +74,7 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     , _txParameters(beam::wallet::CreateSwapTransactionParameters())
     , _isBeamSide(false)
     , _minimalBeamFeeGrothes(minimalFee(OldWalletCurrency::OldCurrency::CurrBeam, false))
+    , _amgr(AppModel::getInstance().getAssets())
 {
     connect(_walletModel.get(),  &WalletModel::generatedNewAddress, this, &ReceiveSwapViewModel::onGeneratedNewAddress);
     connect(_walletModel.get(),  &WalletModel::swapParamsLoaded, this, &ReceiveSwapViewModel::onSwapParamsLoaded);
@@ -590,5 +591,7 @@ QString ReceiveSwapViewModel::getReceiveFeeTitle() const
 
 QList<QMap<QString, QVariant>> ReceiveSwapViewModel::getCurrList() const
 {
-    return swapui::getUICurrList();
+    auto assets = _amgr->getAssetsList();
+    auto currList = swapui::getUICurrList();
+    return  assets + currList;
 }

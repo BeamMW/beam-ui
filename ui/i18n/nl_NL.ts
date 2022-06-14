@@ -2267,14 +2267,6 @@ Probeer het later opnieuw of maak zelf een aanbieding aan.</translation>
         <source>Create offer</source>
         <translation>Aanbieding aanmaken</translation>
     </message>
-    <message id="atomic-swap-1active-tx-count">
-        <source>1 active transaction</source>
-        <translation>1 actieve transactie</translation>
-    </message>
-    <message id="atomic-swap-active-tx-count">
-        <source>%1 active transactions</source>
-        <translation>%1 actieve transacties</translation>
-    </message>
     <message id="swap-beta-tx-in-progress">
         <source>Transaction is in progress</source>
         <translation>Transactie is bezig</translation>

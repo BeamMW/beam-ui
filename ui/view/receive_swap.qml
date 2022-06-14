@@ -132,6 +132,7 @@ Update your settings and try again."
                         title:                   qsTrId("sent-amount-label")
                         Layout.fillWidth:        true
                         content:
+                        
                         AmountInput {
                             id:                         sentAmountInput
                             color:                      Style.accent_outgoing

@@ -2277,14 +2277,6 @@ Please try again later or create an offer yourself.</translation>
         <source>Create offer</source>
         <translation>创建报价</translation>
     </message>
-    <message id="atomic-swap-1active-tx-count">
-        <source>1 active transaction</source>
-        <translation>1 笔活动的交易</translation>
-    </message>
-    <message id="atomic-swap-active-tx-count">
-        <source>%1 active transactions</source>
-        <translation>%1  笔活动的交易</translation>
-    </message>
     <message id="swap-beta-tx-in-progress">
         <source>Transaction is in progress</source>
         <translation>交易正在进行中</translation>

@@ -247,7 +247,6 @@ ColumnLayout {
 
                         content: ColumnLayout {
                             spacing: 0
-
                             AmountInput {
                                 id:                sendAmountInput
                                 amount:            viewModel.sendAmount

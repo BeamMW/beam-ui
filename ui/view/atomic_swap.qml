@@ -4,6 +4,7 @@ import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.12
 import "controls"
+import "wallet"
 import "utils.js" as Utils
 import Beam.Wallet 1.0
 
@@ -211,25 +212,25 @@ Item {
                 columnSpacing: 10
                 columns: 4
 
-                SwapCurrencyAmountPane {
-                    function activeTxCountStr() {
-                        if (viewModel.activeTxCount == 1) {
-                            //% "1 active transaction"
-                            return qsTrId("atomic-swap-1active-tx-count")
-                        }
-                        return viewModel.activeTxCount
-                            //% "%1 active transactions"
-                            ? qsTrId("atomic-swap-active-tx-count")
-                                .arg(viewModel.activeTxCount)
-                            : "";
-                    }
-                    gradLeft:           Style.coinPaneLeft
-                    currencyIcon:       "qrc:/assets/icon-beam.svg"
-                    amount:             viewModel.beamAvailable
-                    unitName:           BeamGlobals.beamUnit
-                    valueSecondaryStr:  activeTxCountStr()
-                    visible:            true
-                }
+                // SwapCurrencyAmountPane {
+                //     function activeTxCountStr() {
+                //         if (viewModel.activeTxCount == 1) {
+                //             //% "1 active transaction"
+                //             return qsTrId("atomic-swap-1active-tx-count")
+                //         }
+                //         return viewModel.activeTxCount
+                //             //% "%1 active transactions"
+                //             ? qsTrId("atomic-swap-active-tx-count")
+                //                 .arg(viewModel.activeTxCount)
+                //             : "";
+                //     }
+                //     gradLeft:           Style.coinPaneLeft
+                //     currencyIcon:       "qrc:/assets/icon-beam.svg"
+                //     amount:             viewModel.beamAvailable
+                //     unitName:           BeamGlobals.beamUnit
+                //     valueSecondaryStr:  activeTxCountStr()
+                //     visible:            true
+                // }
 
                 //% "Transaction is in progress"
                 property string kTxInProgress: qsTrId("swap-beta-tx-in-progress")
@@ -339,6 +340,19 @@ Item {
                         }
                     }
                     swapOptions.visible = enabledCurrencies < viewModel.swapClientList.length;
+                }
+            }
+
+            AssetsPanel {
+                id: assets
+                Layout.topMargin: 25
+                Layout.fillWidth: true
+                showSelected: transactionsLayout.showSelected
+
+                Binding {
+                    target:    txTable
+                    property:  "selectedAssets"
+                    value:     assets.selectedIds
                 }
             }
 
