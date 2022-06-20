@@ -3778,5 +3778,9 @@ Please, check the file and try again.</source>
         <source>Dapp Store</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settings-blockchain-height">
+        <source>Blockchain height</source>
+        <translation>Blockchain height</translation>
+    </message>
 </context>
 </TS>
