@@ -717,7 +717,7 @@ QString WalletSettings::getFaucetUrl() const
 QString WalletSettings::getAppsUrl() const
 {
     #ifdef BEAM_DAPPNET
-    return "http://3.16.160.95/app/appslist.json";
+    return "https://apps-dappnet.beam.mw/app/appslist.json";
     #elif defined(BEAM_TESTNET)
     return "https://apps-testnet.beam.mw/appslist.json";
     #elif defined(BEAM_MAINNET)
