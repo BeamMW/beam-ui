@@ -204,156 +204,160 @@ Item {
                 }
             }
 
-            GridLayout {
-                id: amountPanes
-                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                Layout.fillWidth: true
-                Layout.topMargin: 29
-                columnSpacing: 10
-                columns: 4
+            // GridLayout {
+            //     id: amountPanes
+            //     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+            //     Layout.fillWidth: true
+            //     Layout.topMargin: 29
+            //     columnSpacing: 10
+            //     columns: 4
 
-                // SwapCurrencyAmountPane {
-                //     function activeTxCountStr() {
-                //         if (viewModel.activeTxCount == 1) {
-                //             //% "1 active transaction"
-                //             return qsTrId("atomic-swap-1active-tx-count")
+            //     // SwapCurrencyAmountPane {
+            //     //     function activeTxCountStr() {
+            //     //         if (viewModel.activeTxCount == 1) {
+            //     //             //% "1 active transaction"
+            //     //             return qsTrId("atomic-swap-1active-tx-count")
+            //     //         }
+            //     //         return viewModel.activeTxCount
+            //     //             //% "%1 active transactions"
+            //     //             ? qsTrId("atomic-swap-active-tx-count")
+            //     //                 .arg(viewModel.activeTxCount)
+            //     //             : "";
+            //     //     }
+            //     //     gradLeft:           Style.coinPaneLeft
+            //     //     currencyIcon:       "qrc:/assets/icon-beam.svg"
+            //     //     amount:             viewModel.beamAvailable
+            //     //     unitName:           BeamGlobals.beamUnit
+            //     //     valueSecondaryStr:  activeTxCountStr()
+            //     //     visible:            true
+            //     // }
+
+            //     //% "Transaction is in progress"
+            //     property string kTxInProgress: qsTrId("swap-beta-tx-in-progress")
+
+            //     Repeater {
+            //         model: viewModel.swapClientList
+
+            //         SwapCurrencyAmountPane {
+            //             gradLeft: modelData.gradientColor
+            //             currencyIcon: modelData.coinIcon
+            //             amount: modelData.hasActiveTx ? "" : modelData.available
+            //             unitName: modelData.coinLabel
+            //             valueSecondaryStr: activeTxStr()
+            //             isOk: modelData.isConnected
+            //             isConnecting: modelData.isConnecting
+            //             visible: BeamGlobals.haveSwapClient(modelData.currency)
+            //             swapSettingsPane: modelData.coinLabel
+            //             //% "Connecting..."
+            //             textConnecting: qsTrId("swap-connecting")
+            //             //% "Cannot connect to peer. Please check the address in Settings and try again."
+            //             textConnectionError: qsTrId("swap-beta-connection-error")
+
+            //             function activeTxStr() {
+            //                 return modelData.hasActiveTx ? amountPanes.kTxInProgress : "";
+            //             }
+            //         }
+            //     }
+
+                // Rectangle {
+                //     id:                         swapOptions
+                //     Layout.fillWidth:           true
+                //     Layout.preferredHeight:     67
+                    
+                //     Rectangle {
+                //         anchors.fill:           parent
+                //         opacity:                0.3
+                //         radius:                 10
+                //         border {
+                //             width:      1
+                //             color:      "#1af6d6"
                 //         }
-                //         return viewModel.activeTxCount
-                //             //% "%1 active transactions"
-                //             ? qsTrId("atomic-swap-active-tx-count")
-                //                 .arg(viewModel.activeTxCount)
-                //             : "";
+                //          color: "transparent"
                 //     }
-                //     gradLeft:           Style.coinPaneLeft
-                //     currencyIcon:       "qrc:/assets/icon-beam.svg"
-                //     amount:             viewModel.beamAvailable
-                //     unitName:           BeamGlobals.beamUnit
-                //     valueSecondaryStr:  activeTxCountStr()
-                //     visible:            true
+                //     color: "transparent"
+                //     // TODO: Shape doesn't work on 5.11 correctly. Need to investigate
+                //     //Shape {
+                //     //    id:             moreShape
+                //     //    asynchronous:   true
+                //     //    opacity:        0.3
+                //     //    anchors.fill:   parent
+                //     //    ShapePath {
+                //     //        id: shapePath
+                //     //        property var radius:    10
+                //     //        property var width2:    moreShape.width - 2*radius
+                //     //        property var height2:   moreShape.height - 2*radius
+                //     //        strokeWidth: 1
+                //     //        strokeColor: "#1af6d6"
+                //     //        fillColor: "transparent" // ignored with the gradient set
+                //     //        strokeStyle:    ShapePath.SolidLine //DashLine
+                //     //        dashPattern:    [ 4, 6 ]
+                //     //        startX:         shapePath.radius
+                //     //        startY:         0
+                //     //        PathLine { relativeX: shapePath.width2; relativeY: 0 }
+                //     //        PathArc  { relativeX: shapePath.radius; y: shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
+                //     //        PathLine { relativeX: 0; relativeY: shapePath.height2 }
+                //     //        PathArc  { relativeX: -shapePath.radius; relativeY: shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
+                //     //        PathLine { relativeX: -shapePath.width2; relativeY: 0 }
+                //     //        PathArc  { relativeX: -shapePath.radius; relativeY: -shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
+                //     //        PathLine { relativeX: 0; relativeY: -shapePath.height2 }
+                //     //        PathArc  { relativeX: shapePath.radius; relativeY: -shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
+                //     //    }
+                //     //}
+                //     RowLayout {
+                //         anchors.fill:   parent
+                //         SvgImage {
+                //             Layout.alignment:       Qt.AlignVCenter
+                //             Layout.leftMargin:      20
+                //             source:                 "qrc:/assets/icon-add-green.svg"
+                //             sourceSize:             Qt.size(16, 16)
+                //         }
+                //         SFText {
+                //             Layout.alignment:       Qt.AlignVCenter
+                //             Layout.fillWidth:       true
+                //             Layout.rightMargin:     20
+                //             font.pixelSize:         14
+                //             color:                  Style.active
+                //             wrapMode:               Text.WordWrap
+                //             //% "Connect more currencies"
+                //             text:                   qsTrId("atomic-swap-more-currency")
+                //         }
+                //     }
+                //     MouseArea {
+                //         id:                clickArea
+                //         anchors.fill:      parent
+                //         acceptedButtons:   Qt.LeftButton
+                //         onClicked:         main.openSettings("ALL_COINS")
+                //         hoverEnabled:      true
+                //         onPositionChanged: clickArea.cursorShape = Qt.PointingHandCursor;
+                //     }
                 // }
 
-                //% "Transaction is in progress"
-                property string kTxInProgress: qsTrId("swap-beta-tx-in-progress")
 
-                Repeater {
-                    model: viewModel.swapClientList
+                // Component.onCompleted: {
+                //     var enabledCurrencies = 0;
 
-                    SwapCurrencyAmountPane {
-                        gradLeft: modelData.gradientColor
-                        currencyIcon: modelData.coinIcon
-                        amount: modelData.hasActiveTx ? "" : modelData.available
-                        unitName: modelData.coinLabel
-                        valueSecondaryStr: activeTxStr()
-                        isOk: modelData.isConnected
-                        isConnecting: modelData.isConnecting
-                        visible: BeamGlobals.haveSwapClient(modelData.currency)
-                        swapSettingsPane: modelData.coinLabel
-                        //% "Connecting..."
-                        textConnecting: qsTrId("swap-connecting")
-                        //% "Cannot connect to peer. Please check the address in Settings and try again."
-                        textConnectionError: qsTrId("swap-beta-connection-error")
-
-                        function activeTxStr() {
-                            return modelData.hasActiveTx ? amountPanes.kTxInProgress : "";
-                        }
-                    }
-                }
-
-                Rectangle {
-                    id:                         swapOptions
-                    Layout.fillWidth:           true
-                    Layout.preferredHeight:     67
-                    
-                    Rectangle {
-                        anchors.fill:           parent
-                        opacity:                0.3
-                        radius:                 10
-                        border {
-                            width:      1
-                            color:      "#1af6d6"
-                        }
-                         color: "transparent"
-                    }
-                    color: "transparent"
-                    // TODO: Shape doesn't work on 5.11 correctly. Need to investigate
-                    //Shape {
-                    //    id:             moreShape
-                    //    asynchronous:   true
-                    //    opacity:        0.3
-                    //    anchors.fill:   parent
-                    //    ShapePath {
-                    //        id: shapePath
-                    //        property var radius:    10
-                    //        property var width2:    moreShape.width - 2*radius
-                    //        property var height2:   moreShape.height - 2*radius
-                    //        strokeWidth: 1
-                    //        strokeColor: "#1af6d6"
-                    //        fillColor: "transparent" // ignored with the gradient set
-                    //        strokeStyle:    ShapePath.SolidLine //DashLine
-                    //        dashPattern:    [ 4, 6 ]
-                    //        startX:         shapePath.radius
-                    //        startY:         0
-                    //        PathLine { relativeX: shapePath.width2; relativeY: 0 }
-                    //        PathArc  { relativeX: shapePath.radius; y: shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
-                    //        PathLine { relativeX: 0; relativeY: shapePath.height2 }
-                    //        PathArc  { relativeX: -shapePath.radius; relativeY: shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
-                    //        PathLine { relativeX: -shapePath.width2; relativeY: 0 }
-                    //        PathArc  { relativeX: -shapePath.radius; relativeY: -shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
-                    //        PathLine { relativeX: 0; relativeY: -shapePath.height2 }
-                    //        PathArc  { relativeX: shapePath.radius; relativeY: -shapePath.radius; radiusX: shapePath.radius; radiusY: shapePath.radius; direction: PathArc.Clockwise}
-                    //    }
-                    //}
-                    RowLayout {
-                        anchors.fill:   parent
-                        SvgImage {
-                            Layout.alignment:       Qt.AlignVCenter
-                            Layout.leftMargin:      20
-                            source:                 "qrc:/assets/icon-add-green.svg"
-                            sourceSize:             Qt.size(16, 16)
-                        }
-                        SFText {
-                            Layout.alignment:       Qt.AlignVCenter
-                            Layout.fillWidth:       true
-                            Layout.rightMargin:     20
-                            font.pixelSize:         14
-                            color:                  Style.active
-                            wrapMode:               Text.WordWrap
-                            //% "Connect more currencies"
-                            text:                   qsTrId("atomic-swap-more-currency")
-                        }
-                    }
-                    MouseArea {
-                        id:                clickArea
-                        anchors.fill:      parent
-                        acceptedButtons:   Qt.LeftButton
-                        onClicked:         main.openSettings("ALL_COINS")
-                        hoverEnabled:      true
-                        onPositionChanged: clickArea.cursorShape = Qt.PointingHandCursor;
-                    }
-                }
-                Component.onCompleted: {
-                    var enabledCurrencies = 0;
-
-                    for (var index = 0; index < viewModel.swapClientList.length; index++) {
-                        if (BeamGlobals.haveSwapClient(viewModel.swapClientList[index].currency)) {
-                            ++enabledCurrencies;
-                        }
-                    }
-                    swapOptions.visible = enabledCurrencies < viewModel.swapClientList.length;
-                }
-            }
+                //     for (var index = 0; index < viewModel.swapClientList.length; index++) {
+                //         if (BeamGlobals.haveSwapClient(viewModel.swapClientList[index].currency)) {
+                //             ++enabledCurrencies;
+                //         }
+                //     }
+                //     swapOptions.visible = enabledCurrencies < viewModel.swapClientList.length;
+                // }
+            // }
 
             AssetsPanel {
                 id: assets
                 Layout.topMargin: 25
                 Layout.fillWidth: true
-                showSelected: transactionsLayout.showSelected
+                selectable: false
+                show3rdCurrencies: true
+                swapClientList: viewModel.swapClientList
 
-                Binding {
-                    target:    txTable
-                    property:  "selectedAssets"
-                    value:     assets.selectedIds
-                }
+                // Binding {
+                //     target:    txTable
+                //     property:  "selectedAssets"
+                //     value:     assets.selectedIds
+                // }
             }
 
             RowLayout {
@@ -1299,6 +1303,7 @@ Please try again later or create an offer yourself."
             case "completed": return qsTrId("wallet-txs-status-completed");
             //% "canceled"
             case "canceled": return qsTrId("wallet-txs-status-cancelled");
+            // TODO(zavarza)
             // "canceling"
             case "canceling": return "canceling";
             //% "expired"

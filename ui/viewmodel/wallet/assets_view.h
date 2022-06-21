@@ -27,6 +27,7 @@ class AssetsViewModel : public QObject {
     Q_PROPERTY(bool showFaucetPromo         READ getShowFaucetPromo        WRITE setShowFaucetPromo      NOTIFY showFaucetPromoChanged)
     Q_PROPERTY(bool showSeedValidationPromo READ getShowValidationPromo    WRITE setShowValidationPromo  NOTIFY showValidationPromoChanged)
     Q_PROPERTY(bool canHideValidationPromo  READ getCanHideValidationPromo NOTIFY canHideValidationPromoChanged )
+    Q_PROPERTY(bool show3rdCurrencies       READ getShow3rdCurrencies      WRITE setShow3rdCurrencies    NOTIFY show3rdCurrenciesChanged)
 
 public:
     AssetsViewModel();
@@ -46,6 +47,9 @@ public:
 
     [[nodiscard]] bool getCanHideValidationPromo() const;
 
+    [[nodiscard]] bool getShow3rdCurrencies() const;
+    void setShow3rdCurrencies(bool value);
+
 public slots:
     void onNormalCoinsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
     void onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& items);
@@ -55,6 +59,7 @@ signals:
     void showFaucetPromoChanged();
     void showValidationPromoChanged();
     void canHideValidationPromoChanged();
+    void show3rdCurrenciesChanged();
 
 private:
     bool hasBeamAmount() const;
@@ -63,4 +68,5 @@ private:
     AssetsList::Ptr  _assets;
     WalletSettings&  _settings;
     QVector<beam::Asset::ID> _selectedAssets;
+    bool _show3rdCurrencies = false;
 };

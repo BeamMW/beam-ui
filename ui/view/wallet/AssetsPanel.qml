@@ -15,6 +15,19 @@ Control {
         }
     }
 
+    function getAssets(with3rd) {
+        if (with3rd) {
+            console.log('GET SWAP COINS WRAPPERS');
+            for (const asset in viewModel.assets) {
+                console.log(asset);
+                
+            }
+            return viewModel.assets;
+        } else {
+            return viewModel.assets;
+        }
+    }
+
     Connections {
         target: viewModel.assets
         function onDataChanged () {
@@ -52,6 +65,8 @@ Control {
     property real   itemHeight:     75
     property bool   showSelected:   false
     property bool   selectable:     true
+    property alias  show3rdCurrencies: viewModel.show3rdCurrencies
+    property var    swapClientList: []
 
     property bool  showFaucetPromo: viewModel.showFaucetPromo
     property bool  showValidationPromo: viewModel.showSeedValidationPromo && !seedValidationHelper.isSeedValidated
@@ -121,7 +136,7 @@ Control {
                 width:         parent.width
 
                 Repeater {
-                    model: viewModel.assets
+                    model: control.getAssets(show3rdCurrencies)
                     delegate: RowLayout {
                         Layout.fillWidth: (model.index +  1) % grid.columns == 0
                         spacing: 0

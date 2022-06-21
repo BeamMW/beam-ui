@@ -86,6 +86,17 @@ bool AssetsViewModel::getCanHideValidationPromo() const
     return availableL < 1000000000;
 }
 
+bool AssetsViewModel::getShow3rdCurrencies() const
+{
+    return _show3rdCurrencies;
+}
+
+void AssetsViewModel::setShow3rdCurrencies(bool value)
+{
+    _show3rdCurrencies = value;
+    emit show3rdCurrenciesChanged();
+}
+
 void AssetsViewModel::onNormalCoinsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
     emit showFaucetPromoChanged();
