@@ -93,23 +93,5 @@ SettingsFoldable {
                 utxoDialog.open()
             }
         }
-
-        RowLayout {
-            Layout.preferredWidth: parent.width
-            Layout.fillWidth: true
-            SFText {
-                Layout.alignment: Qt.AlignLeft
-                text: "Blockchain height"
-                color: Style.content_secondary
-                font.pixelSize: 14
-            }
-
-            SFLabel {
-                Layout.alignment: Qt.AlignRight
-                color: Style.content_main
-                text: viewModel.currentHeight
-                font.pixelSize: 14
-            }
-        }
     }
 }
