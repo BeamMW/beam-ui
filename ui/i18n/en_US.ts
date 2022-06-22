@@ -3790,5 +3790,9 @@ Please, check the file and try again.</source>
         <source>Blockchain height</source>
         <translation>Blockchain height</translation>
     </message>
+    <message id="assets-swap-title">
+        <source>Assets Swaps</source>
+        <translation>Assets Swaps</translation>
+    </message>
 </context>
 </TS>

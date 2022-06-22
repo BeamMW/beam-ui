@@ -133,6 +133,7 @@
         <file>settings.qml</file>
         <file>addresses.qml</file>
         <file>atomic_swap.qml</file>
+        <file>assets_swap.qml</file>
         <file>notifications.qml</file>
         <file>receive_regular.qml</file>
         <file>receive_swap.qml</file>
@@ -219,6 +220,8 @@
         <file>assets/icon-wallet-active.svg</file>
         <file>assets/icon-atomic_swap.svg</file>
         <file>assets/icon-atomic_swap-active.svg</file>
+        <file>assets/icon-assets_swap.svg</file>
+        <file>assets/icon-assets_swap-active.svg</file>
         <file>assets/icon-wallet-small.svg</file>
         <file>assets/icon-notifications.svg</file>
         <file>assets/icon-notifications-active.svg</file>
