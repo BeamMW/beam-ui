@@ -2391,10 +2391,6 @@ Update your settings and try again.</oldsource>
         <translation type="unfinished">서드파티에 연결된 화폐가 없습니다. 
 세팅을 업데이트한 후 재시도 하세요.</translation>
     </message>
-    <message id="wallet-receive-swap-title">
-        <source>Create a Swap Offer</source>
-        <translation>스왑 오퍼 만들기</translation>
-    </message>
     <message id="wallet-receive-offer-expires-label">
         <source>Offer expiration time</source>
         <translation>만기 시간 제안</translation>
@@ -3793,6 +3789,18 @@ Please, check the file and try again.</source>
     </message>
     <message id="assets-swap-title">
         <source>Assets Swaps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-asset-swap-title">
+        <source>Create a Asset Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-asset-swap-rate">
+        <source>Beam transaction fee (est)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-atomic-swap-title">
+        <source>Create Atomic Swap Offer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

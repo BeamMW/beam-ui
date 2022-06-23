@@ -2391,10 +2391,6 @@ Update your settings and try again.</oldsource>
         <translation type="unfinished">Bạn không có bất kỳ loại tiền tệ của bên thứ 3 nào được kết nối.
 Cập nhật cài đặt và thử lại.</translation>
     </message>
-    <message id="wallet-receive-swap-title">
-        <source>Create a Swap Offer</source>
-        <translation>Tạo đề nghị trao đổi</translation>
-    </message>
     <message id="wallet-receive-offer-expires-label">
         <source>Offer expiration time</source>
         <translation>Thời gian đề nghị hết hạn</translation>
@@ -3793,6 +3789,18 @@ Please, check the file and try again.</source>
     </message>
     <message id="assets-swap-title">
         <source>Assets Swaps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-asset-swap-title">
+        <source>Create a Asset Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-asset-swap-rate">
+        <source>Beam transaction fee (est)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-atomic-swap-title">
+        <source>Create Atomic Swap Offer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

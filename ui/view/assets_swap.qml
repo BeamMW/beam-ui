@@ -28,6 +28,10 @@ Item {
             Layout.fillHeight: true
             spacing: 0
 
+            function onClosed() {
+                assetsSwapStackView.pop();
+            }
+
             RowLayout {
                 Layout.alignment: Qt.AlignRight | Qt.AlignTop
                 Layout.topMargin: 30
@@ -63,6 +67,7 @@ Item {
 
                     onClicked: {
                         console.log('Create offer');
+                        assetsSwapStackView.push(Qt.createComponent("create_asset_swap.qml"), {"onClosed": assetsSwapLayout.onClosed});
                     }
                 }
             }

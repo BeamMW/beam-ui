@@ -2401,10 +2401,6 @@ Update your settings and try again.</oldsource>
         <translation type="unfinished">У вас няма звязаных валют.
 Абнавіце налады і паўтарыце спробу.</translation>
     </message>
-    <message id="wallet-receive-swap-title">
-        <source>Create a Swap Offer</source>
-        <translation>Create swap offer</translation>
-    </message>
     <message id="wallet-receive-offer-expires-label">
         <source>Offer expiration time</source>
         <translation>Час заканчэння прапановы</translation>
@@ -3811,6 +3807,18 @@ Please, check the file and try again.</source>
     </message>
     <message id="assets-swap-title">
         <source>Assets Swaps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-asset-swap-title">
+        <source>Create a Asset Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-asset-swap-rate">
+        <source>Beam transaction fee (est)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-atomic-swap-title">
+        <source>Create Atomic Swap Offer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

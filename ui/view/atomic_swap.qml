@@ -199,7 +199,7 @@ Item {
 
                     onClicked: {
                         function onClosed() {offersStackView.pop();}
-                        offersStackView.push(Qt.createComponent("receive_swap.qml"), {"onClosed": onClosed});
+                        offersStackView.push(Qt.createComponent("create_atomic_swap.qml"), {"onClosed": onClosed});
                     }
                 }
             }

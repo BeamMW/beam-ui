@@ -2404,10 +2404,6 @@ Update your settings and try again.</oldsource>
         <translation type="unfinished">无任何第三方货币连接
 请更新设置后重试</translation>
     </message>
-    <message id="wallet-receive-swap-title">
-        <source>Create a Swap Offer</source>
-        <translation>创建交换报价</translation>
-    </message>
     <message id="wallet-receive-offer-expires-label">
         <source>Offer expiration time</source>
         <translation>报价失效时间</translation>
@@ -3807,6 +3803,18 @@ Please, check the file and try again.</source>
     </message>
     <message id="assets-swap-title">
         <source>Assets Swaps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-receive-asset-swap-title">
+        <source>Create a Asset Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="general-asset-swap-rate">
+        <source>Beam transaction fee (est)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-atomic-swap-title">
+        <source>Create Atomic Swap Offer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
