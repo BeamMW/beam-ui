@@ -85,20 +85,11 @@ Item {
         }
     }
 
-    RowLayout {
-        Title {
-            //% "Atomic Swaps"
-            text: qsTrId("atomic-swap-title")
-        }
-
-        SvgImage {
-            Layout.alignment: Qt.AlignLeft | Qt.AlignHCenter
-            Layout.maximumHeight: 15
-            Layout.maximumWidth: 51
-            Layout.topMargin: 8
-            source: "qrc:/assets/beta2-label.svg"
-        }
+    Title {
+        //% "Atomic Swaps"
+        text: qsTrId("atomic-swap-title")
     }
+
 
     StatusBar {
         id: statusBar
@@ -1210,6 +1201,7 @@ Please try again later or create an offer yourself."
         id: offersStackView
 
         anchors.fill: parent
+        anchors.topMargin: -27
         initialItem: offersViewComponent
 
         pushEnter: Transition {

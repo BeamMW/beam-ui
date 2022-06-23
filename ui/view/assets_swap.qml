@@ -14,12 +14,9 @@ Item {
     Layout.fillWidth: true
     Layout.fillHeight: true
 
-    RowLayout {
-        Title {
-            //% "Assets Swaps"
-            text: qsTrId("assets-swap-title")
-        }
-
+    Title {
+        //% "Assets Swaps"
+        text: qsTrId("assets-swap-title")
     }
 
     Component {
@@ -29,7 +26,6 @@ Item {
             id: assetsSwapLayout
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.topMargin: 30
             spacing: 0
 
             RowLayout {
@@ -76,7 +72,6 @@ Item {
                 Layout.topMargin: 25
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignTop
-                showSelected: false
 
             }
 
@@ -91,6 +86,7 @@ Item {
         id: assetsSwapStackView
 
         anchors.fill: parent
+        anchors.topMargin: -27
         initialItem: assetsSwapComponent
 
         pushEnter: Transition {
