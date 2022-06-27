@@ -50,6 +50,7 @@ public:
     [[nodiscard]] QString getPaperUrl(beam::Asset::ID);
     [[nodiscard]] beam::Amount getRate(beam::Asset::ID);
     [[nodiscard]] QString getRateUnit();
+    [[nodiscard]] QList<QMap<QString, QVariant>> getAssetsListFull();
     [[nodiscard]] QList<QMap<QString, QVariant>> getAssetsList();
     [[nodiscard]] QMap<QString, QVariant> getAssetsMap(const std::set<beam::Asset::ID>& assets);
     [[nodiscard]] bool hasAsset(beam::Asset::ID) const;

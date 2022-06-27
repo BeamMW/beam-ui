@@ -22,5 +22,5 @@ AssetSwapCreateViewModel::AssetSwapCreateViewModel()
 
 QList<QMap<QString, QVariant>> AssetSwapCreateViewModel::getCurrenciesList() const
 {
-    return _amgr->getAssetsList();
+    return _amgr->getAssetsListFull();
 }

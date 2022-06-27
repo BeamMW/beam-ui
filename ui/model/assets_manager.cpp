@@ -408,6 +408,19 @@ QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
     return asset;
 }
 
+QList<QMap<QString, QVariant>> AssetsManager::getAssetsListFull()
+{
+    const auto assets = _wallet->getAssetsFull();
+    QList<QMap<QString, QVariant>> result;
+
+    for(auto assetId: assets)
+    {
+        result.push_back(getAssetProps(assetId));
+    }
+
+    return result;
+}
+
 QList<QMap<QString, QVariant>> AssetsManager::getAssetsList()
 {
     const auto assets = _wallet->getAssetsNZ();
