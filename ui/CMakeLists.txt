@@ -166,6 +166,8 @@ set(UI_SRC
     viewmodel/settings_view.cpp
     viewmodel/address_book_view.h
     viewmodel/address_book_view.cpp
+    viewmodel/asset_swap_create_view.h
+    viewmodel/asset_swap_create_view.cpp
     viewmodel/fee_helpers.h
     viewmodel/fee_helpers.cpp
     viewmodel/ui_helpers.h

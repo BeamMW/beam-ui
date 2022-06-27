@@ -14,6 +14,10 @@ ColumnLayout {
     // callbacks set by parent
     property var onClosed: undefined
 
+    AssetSwapCreateViewModel {
+        id: viewModel
+    }
+
     TopGradient {
         mainRoot: main
         topColor: Style.accent_incoming
@@ -73,7 +77,7 @@ ColumnLayout {
                         AmountInput {
                             id:                         sentAmountInput
                             color:                      Style.accent_outgoing
-                            currencies:                 ["BEAM"]
+                            currencies:                 viewModel.currenciesList
                             currencyIdx:                0
                             amount:                     "3"
                             rate:                       "2"
@@ -218,7 +222,7 @@ ColumnLayout {
                         AmountInput {
                             id:                         receiveAmountInput
                             color:                      Style.accent_outgoing
-                            currencies:                 ["ASSET"]
+                            currencies:                 viewModel.currenciesList
                             currencyIdx:                0
                             amount:                     "9"
                             rate:                       "1"
