@@ -26,7 +26,7 @@ Control {
     property var       owner
 
     function getStatusFilter (){
-        let f = [];
+        let f = ["none"];
         if (tableViewModel.showInProgress) {
             f.push("inProgress");
         }

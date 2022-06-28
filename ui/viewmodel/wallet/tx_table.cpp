@@ -42,7 +42,7 @@ TxTableViewModel::TxTableViewModel()
     _showCanceled = _settings.getShowCanceled();
     _showFailed = _settings.getShowFailed();
 
-    _model->getAsync()->getTransactionsSmoothly();
+    _model->getAsync()->getTransactions();
 }
 
 void TxTableViewModel::exportTxHistoryToCsv()
