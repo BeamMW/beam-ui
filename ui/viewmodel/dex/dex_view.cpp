@@ -54,8 +54,8 @@ namespace beamui::dex
             _receiverAddr.m_OwnID,
             DexMarket(5, 0),
             DexMarketSide::Sell,
+            5 * beam::Rules::Coin,
             10 * beam::Rules::Coin,
-            beam::Rules::Coin / 2,
             expires
          );
 
@@ -79,7 +79,7 @@ namespace beamui::dex
             DexMarket(5, 0),
             DexMarketSide::Buy,
             10 * beam::Rules::Coin,
-            beam::Rules::Coin / 2,
+            5 * beam::Rules::Coin,
             expires
          );
 

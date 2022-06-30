@@ -37,22 +37,22 @@ Item {
                 Layout.topMargin: 30
                 spacing: 20
 
-                CustomButton {
-                    id: acceptOfferButton
-                    Layout.minimumWidth: 172
-                    Layout.preferredHeight: 32
-                    Layout.maximumHeight: 32
-                    palette.button: Style.accent_outgoing
-                    palette.buttonText: Style.content_opposite
-                    icon.source: "qrc:/assets/icon-accept-offer.svg"
-                    //% "Accept offer"
-                    text: qsTrId("atomic-swap-accept")
-                    font.pixelSize: 12
-                    onClicked: {
-                        console.log('accept affer');
-                    }
-                }
-                
+                // CustomButton {
+                //     id: acceptOfferButton
+                //     Layout.minimumWidth: 172
+                //     Layout.preferredHeight: 32
+                //     Layout.maximumHeight: 32
+                //     palette.button: Style.accent_outgoing
+                //     palette.buttonText: Style.content_opposite
+                //     icon.source: "qrc:/assets/icon-accept-offer.svg"
+                //     //% "Accept offer"
+                //     text: qsTrId("atomic-swap-accept")
+                //     font.pixelSize: 12
+                //     onClicked: {
+                //         console.log('accept affer');
+                //     }
+                // }
+
                 CustomButton {
                     id: sendOfferButton
                     Layout.minimumWidth: 172

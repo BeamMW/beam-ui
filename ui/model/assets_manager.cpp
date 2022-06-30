@@ -404,6 +404,7 @@ QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
     asset.insert("iconHeight", 22);
     asset.insert("decimals",   static_cast<uint8_t>(std::log10(beam::Rules::Coin)));
     asset.insert("verified",   isVerified(assetId));
+    
 
     return asset;
 }

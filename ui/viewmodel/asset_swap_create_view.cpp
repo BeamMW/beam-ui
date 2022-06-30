@@ -14,6 +14,8 @@
 
 #include "asset_swap_create_view.h"
 #include "model/app_model.h"
+#include "viewmodel/ui_helpers.h"
+#include "wallet/client/extensions/dex_board/dex_order.h"
 
 AssetSwapCreateViewModel::AssetSwapCreateViewModel()
     : _amgr(AppModel::getInstance().getAssets())
@@ -22,5 +24,113 @@ AssetSwapCreateViewModel::AssetSwapCreateViewModel()
 
 QList<QMap<QString, QVariant>> AssetSwapCreateViewModel::getCurrenciesList() const
 {
-    return _amgr->getAssetsListFull();
+    auto list = _amgr->getAssetsListFull();
+    if (list.empty())
+    {
+        return getMyCurrenciesList();
+    }
+    return list;
 }
+
+QList<QMap<QString, QVariant>> AssetSwapCreateViewModel::getMyCurrenciesList() const
+{
+    return _amgr->getAssetsList();
+}
+
+QString AssetSwapCreateViewModel::getAmountToReceive() const
+{
+    return beamui::AmountToUIString(_amountToReceiveGrothes);
+}
+
+void AssetSwapCreateViewModel::setAmountToReceive(QString value)
+{
+    auto amount = beamui::UIStringToAmount(value);
+    if (amount != _amountToReceiveGrothes)
+    {
+        _amountToReceiveGrothes = amount;
+        emit amountReceiveChanged();
+    }
+}
+
+QString AssetSwapCreateViewModel::getAmountSend() const
+{
+    return beamui::AmountToUIString(_amountSendGrothes);
+}
+
+void AssetSwapCreateViewModel::setAmountSend(QString value)
+{
+    auto amount = beamui::UIStringToAmount(value);
+    if (amount != _amountSendGrothes)
+    {
+        _amountSendGrothes = amount;
+        emit amountSendChanged();
+    }
+}
+
+// unsigned int AssetSwapCreateViewModel::getFee() const
+// {
+//     return _feeGrothes;
+// }
+
+// void AssetSwapCreateViewModel::setFee(unsigned int value)
+// {
+
+// }
+
+uint AssetSwapCreateViewModel::getReceiveAssetIndex() const
+{
+    return _receiveAssetIndex;
+}
+
+void AssetSwapCreateViewModel::setReceiveAssetIndex(uint value)
+{
+    if (_receiveAssetIndex != value)
+    {
+        _receiveAssetIndex = value;
+        emit receiveAssetIndexChanged();
+    }
+}
+
+uint AssetSwapCreateViewModel::getSendAssetIndex() const
+{
+    return _sendAssetIndex;
+}
+
+void AssetSwapCreateViewModel::setSendAssetIndex(uint value)
+{
+    if (_sendAssetIndex != value)
+    {
+        _sendAssetIndex = value;
+        emit sendAssetIndexChanged();
+    }
+}
+
+void AssetSwapCreateViewModel::setOfferExpires(int value)
+{
+
+}
+
+int AssetSwapCreateViewModel::getOfferExpires() const
+{
+    return _offerExpires;
+}
+
+void AssetSwapCreateViewModel::setComment(const QString& value)
+{
+
+}
+
+QString AssetSwapCreateViewModel::getComment() const
+{
+    return _comment;
+}
+
+// void AssetSwapCreateViewModel::setTransactionToken(const QString& value)
+// {
+
+// }
+
+// QString AssetSwapCreateViewModel::getTransactionToken() const
+// {
+//     return _token;
+// }
