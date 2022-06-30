@@ -3816,10 +3816,6 @@ Please, check the file and try again.</source>
         <source>Create a Asset Swap Offer</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="general-asset-swap-rate">
-        <source>Beam transaction fee (est)</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="wallet-atomic-swap-title">
         <source>Create Atomic Swap Offer</source>
         <translation type="unfinished"></translation>
