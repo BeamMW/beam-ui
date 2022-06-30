@@ -27,7 +27,7 @@ TokenBootstrapManager::TokenBootstrapManager()
                         const std::vector<beam::wallet::TxDescription>&)),
         SLOT(onTransactionsChanged(beam::wallet::ChangeAction,
                         const std::vector<beam::wallet::TxDescription>&)));
-    _wallet_model->getAsync()->getTransactionsSmoothly();
+    _wallet_model->getAsync()->getTransactions();
 }
 
 TokenBootstrapManager::~TokenBootstrapManager() {}
