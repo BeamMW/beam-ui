@@ -94,6 +94,7 @@ public:
     QString getDevAppName() const;
     QString getDevAppApiVer() const;
     QString getDevAppMinApiVer() const;
+    uint32_t getShadersPrivilegeLvl() const;
 
     // DappStore
     std::string getDappStoreCID() const;
