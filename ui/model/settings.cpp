@@ -770,7 +770,12 @@ QString WalletSettings::getDevAppMinApiVer() const
 
 uint32_t WalletSettings::getShadersPrivilegeLvl() const
 {
+    #ifdef BEAM_DAPPNET
+    // On dappnet 2 by default
+    return m_data.value(kShadersPrivLvl, 2).toUInt();
+    #else
     return m_data.value(kShadersPrivLvl).toUInt();
+    #endif
 }
 
 std::string WalletSettings::getDappStoreCID() const
