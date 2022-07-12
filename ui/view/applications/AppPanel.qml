@@ -176,11 +176,17 @@ Item {
                         if (isPublisherAdminMode) {
                             control.update(modelData)
                         } else {
-                            if (!!app.notInstalled) 
+                            if (!!app.notInstalled) {
+                                button.enabled = false;
+                                //% "installing"
+                                button.text = qsTrId("dapps-store-installing")
                                 control.install(modelData)
-                            else if (!app.notInstalled && !!app.hasUpdate)
+                            } else if (!app.notInstalled && !!app.hasUpdate) {
+                                button.enabled = false;
+                                //% "updating"
+                                button.text = qsTrId("dapps-store-updating")
                                 control.update(modelData)
-                            else if (!app.notInstalled)
+                            } else if (!app.notInstalled)
                                 control.launch(modelData)
                         }
                     }

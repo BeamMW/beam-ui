@@ -3182,28 +3182,11 @@ cannot be canceled.</translation>
         <translation type="unfinished">sent to own address
 (offline)</translation>
     </message>
-    <message id="apps-version-error">
-        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
-        <translation type="unfinished">This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</translation>
-    </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
         <source>waiting for receiver
 (offline)</source>
         <translation type="unfinished">waiting for receiver
 (offline)</translation>
-    </message>
-    <message id="apps-uninstall">
-        <source>Uninstall</source>
-        <translation type="unfinished">Uninstall</translation>
-    </message>
-    <message id="apps-uninstall-confirm">
-        <source>Are you sure you want to uninstall %1 DApp?</source>
-        <oldsource>Are you sure you want to cancel %1 DApp?</oldsource>
-        <translation type="unfinished">Are you sure you want to uninstall %1 DApp?</translation>
-    </message>
-    <message id="app-uninstall-title">
-        <source>Uninstall DApp</source>
-        <translation type="unfinished">Uninstall DApp</translation>
     </message>
     <message id="apps-loading-app">
         <source>Please wait, %1 is loading</source>
@@ -3476,20 +3459,6 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>become a publisher</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="dapps-store-install">
-        <source>install</source>
-        <oldsource>Install</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-update">
-        <source>update</source>
-        <oldsource>Update</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-remove-dapp">
-        <source>remove dapp</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="dapps-store-become-publisher">
         <source>Become a publisher</source>
         <translation type="unfinished"></translation>
@@ -3743,10 +3712,6 @@ Let&apos;s start!</source>
         <source>Publisher link</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="dapps-store-launch">
-        <source>launch</source>
-        <translation type="unfinished">launch</translation>
-    </message>
     <message id="app-failed-create-publisher">
         <source>Oops... Failed to create Publisher.
 Please check the log and try again.</source>
@@ -3803,6 +3768,46 @@ Please, check the file and try again.</source>
     </message>
     <message id="settings-blockchain-height">
         <source>Blockchain height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-version-error">
+        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-uninstall">
+        <source>Uninstall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-remove-dapp">
+        <source>remove dapp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-uninstall-title">
+        <source>Uninstall DApp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-uninstall-confirm">
+        <source>Are you sure you want to uninstall %1 DApp?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-updating">
+        <source>updating</source>
+        <translation type="unfinished">正在更新</translation>
+    </message>
+    <message id="dapps-store-update">
+        <source>update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-installing">
+        <source>installing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-install">
+        <source>install</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-launch">
+        <source>launch</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
