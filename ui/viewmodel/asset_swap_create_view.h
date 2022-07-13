@@ -90,8 +90,10 @@ class AssetSwapCreateViewModel: public QObject
     beam::Amount _amountSendGrothes = 0;
 
     beam::Asset::ID  _receiveAsset;
+    std::string      _receiveAssetSname;
     uint             _receiveAssetIndex = 0;
     beam::Asset::ID  _sendAsset;
+    std::string      _sendAssetSname;
     uint             _sendAssetIndex = 0;
     int       _offerExpires;
     QString   _comment;

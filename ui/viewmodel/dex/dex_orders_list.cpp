@@ -77,11 +77,11 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
                 //% "Expired"
                 return qtTrId("dex-order-expired");
             }
-            else if (order.IsCompleted())
-            {
-                //% "Fulfilled"
-                return qtTrId("dex-order-fulfilled");
-            }
+            // else if (order.IsCompleted())
+            // {
+            //     //% "Fulfilled"
+            //     return qtTrId("dex-order-fulfilled");
+            // }
             else
             {
                 //% "Active"

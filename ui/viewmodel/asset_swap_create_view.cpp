@@ -16,9 +16,10 @@
 #include "model/app_model.h"
 #include "viewmodel/ui_helpers.h"
 #include "wallet/client/extensions/dex_board/dex_order.h"
+#include "wallet/client/extensions/dex_board/asset_swap_order.h"
 #include "viewmodel/dex/dex_orders_list.h"
 
-// #include <qdebug.h>
+#include <qdebug.h>
 
 AssetSwapCreateViewModel::AssetSwapCreateViewModel()
     : _walletModel(AppModel::getInstance().getWalletModel())
@@ -46,18 +47,32 @@ void AssetSwapCreateViewModel::publishOffer()
     auto expires = getTimestamp();
     expires += 60 * 60 * 24; // 24 hours for tests
 
-    DexOrder order(
+    // DexOrder order(
+    //     DexOrderID::generate(),
+    //     _receiverAddress.m_walletID,
+    //     _receiverAddress.m_OwnID,
+    //     DexMarket(_sendAsset, _receiveAsset),
+    //     DexMarketSide::Sell,
+    //     _amountSendGrothes,
+    //     _amountToReceiveGrothes,
+    //     expires
+    //     );
+
+    AssetSwapOrder orderObj(
         DexOrderID::generate(),
         _receiverAddress.m_walletID,
         _receiverAddress.m_OwnID,
-        DexMarket(_sendAsset, _receiveAsset),
-        DexMarketSide::Sell,
+        _sendAsset,
         _amountSendGrothes,
+        _sendAssetSname,
+        _receiveAsset,
         _amountToReceiveGrothes,
+        _receiveAssetSname,
         expires
-        );
+    );
 
-    _walletModel->getAsync()->publishDexOrder(order);
+    // _walletModel->getAsync()->publishDexOrder(order);
+    _walletModel->getAsync()->publishAssetSwapOrder(orderObj);
 }
 
 void AssetSwapCreateViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& addr)
@@ -120,6 +135,12 @@ void AssetSwapCreateViewModel::setReceiveAssetIndex(uint value)
 
         auto assetsInfoMap = _currenciesList[_receiveAssetIndex];
         _receiveAsset = assetsInfoMap["assetId"].toUInt();
+        _receiveAssetSname = assetsInfoMap["unitName"].toString().toStdString();
+
+        // for (auto it = assetsInfoMap.cbegin(); it != assetsInfoMap.cend(); ++it)
+        // {
+        //     qDebug() << it.key();
+        // }
     }
 }
 
@@ -137,6 +158,7 @@ void AssetSwapCreateViewModel::setSendAssetIndex(uint value)
 
         auto assetsInfoMap = _myCurrenciesList[_sendAssetIndex];
         _sendAsset = assetsInfoMap["assetId"].toUInt();
+        _sendAssetSname = assetsInfoMap["unitName"].toString().toStdString();
     }
 }
 

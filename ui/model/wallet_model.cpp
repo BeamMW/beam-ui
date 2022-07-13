@@ -193,6 +193,11 @@ void WalletModel::onDexOrdersChanged(beam::wallet::ChangeAction action, const st
     emit dexOrdersChanged(action, offers);
 }
 
+void WalletModel::onDexOrdersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::AssetSwapOrder>& offers)
+{
+    emit assetSwapOrdersChanged(action, offers);
+}
+
 void WalletModel::onCoinsByTx(const std::vector<beam::wallet::Coin>& coins)
 {
 }
