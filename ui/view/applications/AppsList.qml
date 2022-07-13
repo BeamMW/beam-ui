@@ -34,6 +34,7 @@ Item {
     signal update(var app)
     signal uninstall(var app)
     signal remove(var app)
+    signal stopProgress(var appGuid)
 
     // Actuall apps list
     ScrollView {
@@ -76,6 +77,12 @@ Item {
                     }
                     onRemove: function (app) {
                         control.remove(app)
+                    }
+                    Component.onCompleted: {
+                        control.stopProgress.connect(stopProgress);
+                    }
+                    Component.onDestruction: {
+                        control.stopProgress.disconnect(stopProgress);
                     }
                 }
             }

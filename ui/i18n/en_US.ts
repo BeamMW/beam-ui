@@ -3795,5 +3795,20 @@ Please, check the file and try again.</source>
         <source>launch</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="app-install-timeout-fail">
+        <source>Sorry, the installation failed.
+Please, restart the wallet and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-update-fail">
+        <source>Sorry, the update failed.
+Please, check the file and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-update-timeout-fail">
+        <source>Sorry, the update failed.
+Please, restart the wallet and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
