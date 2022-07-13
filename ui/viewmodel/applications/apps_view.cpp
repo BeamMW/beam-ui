@@ -36,7 +36,7 @@ namespace
     const QString kLocalapp = "localapp";
     const QString kManifestFile = "manifest.json";
     const qint64 kMaxFileSize = 50 * 1024 * 1024;
-    const uint32_t kIpfsTimeout = 10 * 1000; // 10 seconds
+    const uint32_t kIpfsTimeout = 20 * 1000; // 20 seconds
 
     namespace DApp
     {
