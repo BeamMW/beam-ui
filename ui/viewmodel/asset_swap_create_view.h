@@ -27,17 +27,17 @@ class AssetSwapCreateViewModel: public QObject
     Q_PROPERTY(QList<QMap<QString, QVariant>> myCurrenciesList READ getMyCurrenciesList NOTIFY myCurrenciesListChanged)
   
     Q_PROPERTY(QString amountToReceive   READ getAmountToReceive   WRITE setAmountToReceive   NOTIFY  amountReceiveChanged)
-    Q_PROPERTY(QString amountSend        READ getAmountSend        WRITE setAmountSend        NOTIFY  amountSendChanged)
+    Q_PROPERTY(QString amountToSend      READ getAmountToSend      WRITE setAmountToSend      NOTIFY  amountSendChanged)
     Q_PROPERTY(int     receiveAssetIndex READ getReceiveAssetIndex WRITE setReceiveAssetIndex NOTIFY  receiveAssetIndexChanged)
     Q_PROPERTY(int     sendAssetIndex    READ getSendAssetIndex    WRITE setSendAssetIndex    NOTIFY  sendAssetIndexChanged)
 
-    // Q_PROPERTY(unsigned int  fee                      READ getFee                WRITE  setFee               NOTIFY  receiveFeeChanged)
     Q_PROPERTY(int           offerExpires             READ getOfferExpires       WRITE  setOfferExpires      NOTIFY  offerExpiresChanged)
     Q_PROPERTY(QString       comment                  READ getComment            WRITE  setComment           NOTIFY  commentChanged)
     // Q_PROPERTY(QString       transactionToken         READ getTransactionToken   WRITE  setTransactionToken  NOTIFY  transactionTokenChanged)
 
   public:
     AssetSwapCreateViewModel();
+    Q_INVOKABLE void publishOffer();
 
   signals:
     void currenciesListChanged();
@@ -47,10 +47,12 @@ class AssetSwapCreateViewModel: public QObject
     void receiveAssetIndexChanged();
     void sendAssetIndexChanged();
 
-    // void receiveFeeChanged();
     void offerExpiresChanged();
     void commentChanged();
     // void transactionTokenChanged();
+
+  private slots:
+    void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
 
   private:
     QList<QMap<QString, QVariant>> getCurrenciesList() const;
@@ -59,11 +61,8 @@ class AssetSwapCreateViewModel: public QObject
     QString getAmountToReceive() const;
     void setAmountToReceive(QString value);
 
-    QString getAmountSend() const;
-    void setAmountSend(QString value);
-
-    // unsigned int getFee() const;
-    // void setFee(unsigned int value);
+    QString getAmountToSend() const;
+    void setAmountToSend(QString value);
 
     uint getReceiveAssetIndex() const;
     void setReceiveAssetIndex(uint value);
@@ -81,11 +80,14 @@ class AssetSwapCreateViewModel: public QObject
     // QString getTransactionToken() const;
 
 
+    WalletModel::Ptr _walletModel;
     AssetsManager::Ptr _amgr;
+    QList<QMap<QString, QVariant>> _currenciesList;
+    QList<QMap<QString, QVariant>> _myCurrenciesList;
+    beam::wallet::WalletAddress _receiverAddress;
 
     beam::Amount _amountToReceiveGrothes = 0;
     beam::Amount _amountSendGrothes = 0;
-    // beam::Amount _feeGrothes = 0;
 
     beam::Asset::ID  _receiveAsset;
     uint             _receiveAssetIndex = 0;

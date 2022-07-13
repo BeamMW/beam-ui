@@ -78,20 +78,29 @@ ColumnLayout {
                             id:                         sentAmountInput
                             color:                      Style.accent_outgoing
                             currencies:                 viewModel.myCurrenciesList
-                            currencyIdx:                viewModel.sentAssetIndex
-                            amount:                     viewModel.amountSent
-                            // rate:                       "2"
-                            // rateUnit:                   "USD"
+                            currencyIdx:                viewModel.sendAssetIndex
+                            amount:                     viewModel.amountToSend
                             multi:                      true
                             resetAmount:                false
                             currColor:                  Style.content_main
                             error:                      ""
 
                             onCurrencyIdxChanged: {
-                                viewModel.sentAssetIndex = currencyIdx;
                                 console.log('LEFT onCurrencyIdxChanged');
                             }
                         }
+                    }
+
+                    Binding {
+                        target:   viewModel
+                        property: "amountToSend"
+                        value:    sentAmountInput.amount
+                    }
+
+                    Binding {
+                        target:   viewModel
+                        property: "sendAssetIndex"
+                        value:    sentAmountInput.currencyIdx
                     }
 
                     //
@@ -226,8 +235,6 @@ ColumnLayout {
                             currencies:                 viewModel.currenciesList
                             currencyIdx:                viewModel.receiveAssetIndex
                             amount:                     viewModel.amountToReceive
-                            // rate:                       "1"
-                            // rateUnit:                   "USD"
                             multi:                      true
                             resetAmount:                false
                             currColor:                  Style.content_main
@@ -235,6 +242,18 @@ ColumnLayout {
                             onCurrencyIdxChanged: {
                                 console.log('RIGHT onCurrencyIdxChanged');
                             }
+                        }
+
+                        Binding {
+                            target:   viewModel
+                            property: "amountToReceive"
+                            value:    receiveAmountInput.amount
+                        }
+
+                        Binding {
+                            target:   viewModel
+                            property: "receiveAssetIndex"
+                            value:    receiveAmountInput.currencyIdx
                         }
                     }
 
@@ -359,6 +378,8 @@ ColumnLayout {
                     // enabled:             thisView.canSend()
                     onClicked: {
                         console.log('publish offer');
+                        viewModel.publishOffer();
+                        onClosed();
                     }
                 }
             }

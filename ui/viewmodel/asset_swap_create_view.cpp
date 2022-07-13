@@ -16,25 +16,64 @@
 #include "model/app_model.h"
 #include "viewmodel/ui_helpers.h"
 #include "wallet/client/extensions/dex_board/dex_order.h"
+#include "viewmodel/dex/dex_orders_list.h"
+
+// #include <qdebug.h>
 
 AssetSwapCreateViewModel::AssetSwapCreateViewModel()
-    : _amgr(AppModel::getInstance().getAssets())
+    : _walletModel(AppModel::getInstance().getWalletModel())
+    , _amgr(AppModel::getInstance().getAssets())
 {
+    connect(_walletModel.get(), &WalletModel::generatedNewAddress, this, &AssetSwapCreateViewModel::onGeneratedNewAddress);
+
+    _myCurrenciesList = _amgr->getAssetsList();
+    _currenciesList = _amgr->getAssetsListFull();
+    if (_currenciesList.empty())
+    {
+        _currenciesList = _myCurrenciesList;
+    }
+
+    _walletModel->getAsync()->generateNewAddress();
+}
+
+void AssetSwapCreateViewModel::publishOffer()
+{
+    using namespace beam;
+    using namespace beam::wallet;
+
+    _walletModel->getAsync()->saveAddress(_receiverAddress);
+
+    auto expires = getTimestamp();
+    expires += 60 * 60 * 24; // 24 hours for tests
+
+    DexOrder order(
+        DexOrderID::generate(),
+        _receiverAddress.m_walletID,
+        _receiverAddress.m_OwnID,
+        DexMarket(_sendAsset, _receiveAsset),
+        DexMarketSide::Sell,
+        _amountSendGrothes,
+        _amountToReceiveGrothes,
+        expires
+        );
+
+    _walletModel->getAsync()->publishDexOrder(order);
+}
+
+void AssetSwapCreateViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& addr)
+{
+    _receiverAddress = addr;
+    _walletModel->getAsync()->loadAssetSwapParams();
 }
 
 QList<QMap<QString, QVariant>> AssetSwapCreateViewModel::getCurrenciesList() const
 {
-    auto list = _amgr->getAssetsListFull();
-    if (list.empty())
-    {
-        return getMyCurrenciesList();
-    }
-    return list;
+    return _currenciesList;
 }
 
 QList<QMap<QString, QVariant>> AssetSwapCreateViewModel::getMyCurrenciesList() const
 {
-    return _amgr->getAssetsList();
+    return _myCurrenciesList;
 }
 
 QString AssetSwapCreateViewModel::getAmountToReceive() const
@@ -52,12 +91,12 @@ void AssetSwapCreateViewModel::setAmountToReceive(QString value)
     }
 }
 
-QString AssetSwapCreateViewModel::getAmountSend() const
+QString AssetSwapCreateViewModel::getAmountToSend() const
 {
     return beamui::AmountToUIString(_amountSendGrothes);
 }
 
-void AssetSwapCreateViewModel::setAmountSend(QString value)
+void AssetSwapCreateViewModel::setAmountToSend(QString value)
 {
     auto amount = beamui::UIStringToAmount(value);
     if (amount != _amountSendGrothes)
@@ -66,16 +105,6 @@ void AssetSwapCreateViewModel::setAmountSend(QString value)
         emit amountSendChanged();
     }
 }
-
-// unsigned int AssetSwapCreateViewModel::getFee() const
-// {
-//     return _feeGrothes;
-// }
-
-// void AssetSwapCreateViewModel::setFee(unsigned int value)
-// {
-
-// }
 
 uint AssetSwapCreateViewModel::getReceiveAssetIndex() const
 {
@@ -88,6 +117,9 @@ void AssetSwapCreateViewModel::setReceiveAssetIndex(uint value)
     {
         _receiveAssetIndex = value;
         emit receiveAssetIndexChanged();
+
+        auto assetsInfoMap = _currenciesList[_receiveAssetIndex];
+        _receiveAsset = assetsInfoMap["assetId"].toUInt();
     }
 }
 
@@ -102,6 +134,9 @@ void AssetSwapCreateViewModel::setSendAssetIndex(uint value)
     {
         _sendAssetIndex = value;
         emit sendAssetIndexChanged();
+
+        auto assetsInfoMap = _myCurrenciesList[_sendAssetIndex];
+        _sendAsset = assetsInfoMap["assetId"].toUInt();
     }
 }
 
