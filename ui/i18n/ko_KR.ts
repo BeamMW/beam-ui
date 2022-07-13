@@ -2822,10 +2822,6 @@ Update your settings and try again.</oldsource>
         <source>Active</source>
         <translation>활성화</translation>
     </message>
-    <message id="dex-order-fulfilled">
-        <source>Fulfilled</source>
-        <translation type="unfinished">Fulfilled</translation>
-    </message>
     <message id="dex-progress">
         <source>Progress</source>
         <translation type="unfinished">Progress</translation>
@@ -3798,6 +3794,29 @@ Please, check the file and try again.</source>
     <message id="wallet-atomic-swap-title">
         <source>Create Atomic Swap Offer</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="app-install-timeout-fail">
+        <source>Sorry, the installation failed.
+Please, restart the wallet and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-update-fail">
+        <source>Sorry, the update failed.
+Please, check the file and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-update-timeout-fail">
+        <source>Sorry, the update failed.
+Please, restart the wallet and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-installing">
+        <source>installing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-updating">
+        <source>updating</source>
+        <translation type="unfinished">업데이트 중</translation>
     </message>
 </context>
 </TS>
