@@ -80,10 +80,64 @@ Item {
 
             }
 
-            Item {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
+            AssetsSwapOrdersModel {
+                id: ordersModel
             }
+
+            CustomTableView {
+                id: ordersTable
+                Layout.alignment:     Qt.AlignTop
+                Layout.fillWidth:     true
+                Layout.fillHeight:    true
+                Layout.topMargin:     25
+                Layout.bottomMargin:  9
+
+                selectionMode: SelectionMode.NoSelection
+                sortIndicatorVisible: true
+                sortIndicatorColumn: 0
+                sortIndicatorOrder: Qt.DescendingOrder
+
+                model: ordersModel.orders
+                // visible: model.count > 0
+
+                property real rowHeight: 56
+                rowDelegate: Item {
+                    height: ordersTable.rowHeight
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+
+                    Rectangle {
+                        anchors.fill: parent
+                        color: styleData.selected ? Style.row_selected :
+                                (styleData.alternate ? Style.background_row_even : Style.background_row_odd)
+                    }
+                }
+
+                itemDelegate: TableItem {
+                    text:  styleData.value
+                    elide: styleData.elideMode
+                    onCopyText: BeamGlobals.copyToClipboard(styleData.value)
+                }
+
+                TableViewColumn {
+                    role: "id"
+                    id: coinColumn
+
+                    //% "Coin"
+                    title:     qsTrId("general-coin")
+                    width:     106
+                    movable:   false
+                    resizable: false
+                }
+            }
+
+            Item {
+                Layout.topMargin:  25
+                Layout.fillWidth:  true
+                Layout.fillHeight: true
+                visible:           !ordersTable.visible
+            }
+
         }
     }
 

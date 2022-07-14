@@ -28,6 +28,7 @@
 #include "viewmodel/utxo/utxo_view.h"
 #include "viewmodel/utxo/utxo_view_status.h"
 #include "viewmodel/utxo/utxo_view_type.h"
+#include "viewmodel/assets_swap/asset_swap_orders_model.h"
 #include "viewmodel/atomic_swap/swap_offers_view.h"
 #include "viewmodel/atomic_swap/swap_token_item.h"
 #include "viewmodel/address_book_view.h"
@@ -298,6 +299,7 @@ int main (int argc, char* argv[])
             qmlRegisterType<beamui::dex::DexView>("Beam.Wallet", 1, 0, "DexViewModel");
             qmlRegisterType<AppNotificationHelper>("Beam.Wallet", 1, 0, "AppNotificationHelper");
             qmlRegisterType<AssetSwapCreateViewModel>("Beam.Wallet", 1, 0, "AssetSwapCreateViewModel");
+            qmlRegisterType<AssetsSwapOrdersModel>("Beam.Wallet", 1, 0, "AssetsSwapOrdersModel");
             beamui::applications::RegisterQMLTypes();
 
             WindowEventFilter filter;

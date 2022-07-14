@@ -108,7 +108,7 @@ private:
     void onAddressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>& items) override;
     void onAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addrs) override;
     void onDexOrdersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::DexOrder>& offers) override;
-    void onDexOrdersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::AssetSwapOrder>& offers) override;
+    void onAssetSwapOrdersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::AssetSwapOrder>& offers) override;
 
     #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     void onSwapOffersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::SwapOffer>& offers) override;

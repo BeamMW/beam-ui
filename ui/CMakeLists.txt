@@ -212,6 +212,10 @@ set(UI_SRC
     viewmodel/dex/dex_orders_list.cpp
     viewmodel/window_event_filter.h
     viewmodel/window_event_filter.cpp
+    viewmodel/assets_swap/asset_swap_orders_model.h
+    viewmodel/assets_swap/asset_swap_orders_model.cpp
+    viewmodel/assets_swap/asset_swap_orders_list.h
+    viewmodel/assets_swap/asset_swap_orders_list.cpp
 
     model/wallet_model.h
     model/wallet_model.cpp
