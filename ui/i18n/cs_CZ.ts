@@ -2328,25 +2328,9 @@ Please try again later or create an offer yourself.</oldsource>
         <translation type="unfinished">Momentálně nejsou žádné aktivní nabídky.
 Zkuste to prosím později nebo vytvořte svou nabídku.</translation>
     </message>
-    <message id="atomic-swap-time-created">
-        <source>Created on</source>
-        <translation>Vytvořeno dne</translation>
-    </message>
     <message id="atomic-swap-amount-send">
         <source>Send</source>
         <translation>Odeslat</translation>
-    </message>
-    <message id="atomic-swap-amount-receive">
-        <source>Receive</source>
-        <translation>Přijmout</translation>
-    </message>
-    <message id="atomic-swap-rate">
-        <source>Rate</source>
-        <translation>Sazba</translation>
-    </message>
-    <message id="atomic-swap-expiration">
-        <source>Expiration</source>
-        <translation>Expirace</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3834,6 +3818,22 @@ Please, restart the wallet and try again.</source>
     <message id="dapps-store-updating">
         <source>updating</source>
         <translation type="unfinished">probíhá aktualizace</translation>
+    </message>
+    <message id="general-receive">
+        <source>Receive</source>
+        <translation type="unfinished">Přijmout</translation>
+    </message>
+    <message id="swap-rate">
+        <source>Rate</source>
+        <translation type="unfinished">Sazba</translation>
+    </message>
+    <message id="swap-time-created">
+        <source>Created on</source>
+        <translation type="unfinished">Vytvořeno dne</translation>
+    </message>
+    <message id="swap-expiration">
+        <source>Expiration</source>
+        <translation type="unfinished">Expirace</translation>
     </message>
 </context>
 </TS>

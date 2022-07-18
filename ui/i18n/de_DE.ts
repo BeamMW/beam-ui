@@ -2325,25 +2325,9 @@ Please try again later or create an offer yourself.</oldsource>
         <translation type="unfinished">Momentan gibt es keine aktiven Angebote.
 Bitte versuchen Sie es später noch einmal oder erstellen Sie selbst ein Angebot.</translation>
     </message>
-    <message id="atomic-swap-time-created">
-        <source>Created on</source>
-        <translation>Erstellt am</translation>
-    </message>
     <message id="atomic-swap-amount-send">
         <source>Send</source>
         <translation>Senden</translation>
-    </message>
-    <message id="atomic-swap-amount-receive">
-        <source>Receive</source>
-        <translation>Erhalten</translation>
-    </message>
-    <message id="atomic-swap-rate">
-        <source>Rate</source>
-        <translation>Rate</translation>
-    </message>
-    <message id="atomic-swap-expiration">
-        <source>Expiration</source>
-        <translation>Ablaufdatum</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3827,6 +3811,22 @@ Please, restart the wallet and try again.</source>
     <message id="dapps-store-updating">
         <source>updating</source>
         <translation type="unfinished">aktualisiere</translation>
+    </message>
+    <message id="general-receive">
+        <source>Receive</source>
+        <translation type="unfinished">Erhalten</translation>
+    </message>
+    <message id="swap-rate">
+        <source>Rate</source>
+        <translation type="unfinished">Rate</translation>
+    </message>
+    <message id="swap-time-created">
+        <source>Created on</source>
+        <translation type="unfinished">Erstellt am</translation>
+    </message>
+    <message id="swap-expiration">
+        <source>Expiration</source>
+        <translation type="unfinished">Ablaufdatum</translation>
     </message>
 </context>
 </TS>

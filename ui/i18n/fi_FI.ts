@@ -2325,25 +2325,9 @@ Please try again later or create an offer yourself.</oldsource>
         <translation type="unfinished">Ei yhtään voimassa olevaa tarjousta.
 Tee oma tarjous tai yritä myöhemmin uudelleen.</translation>
     </message>
-    <message id="atomic-swap-time-created">
-        <source>Created on</source>
-        <translation>Luotu</translation>
-    </message>
     <message id="atomic-swap-amount-send">
         <source>Send</source>
         <translation>Lähetä</translation>
-    </message>
-    <message id="atomic-swap-amount-receive">
-        <source>Receive</source>
-        <translation>Vastaanota</translation>
-    </message>
-    <message id="atomic-swap-rate">
-        <source>Rate</source>
-        <translation>Vaihtomaksu</translation>
-    </message>
-    <message id="atomic-swap-expiration">
-        <source>Expiration</source>
-        <translation>Vanhentuminen</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3827,6 +3811,22 @@ Please, restart the wallet and try again.</source>
     <message id="dapps-store-updating">
         <source>updating</source>
         <translation type="unfinished">päivittää</translation>
+    </message>
+    <message id="general-receive">
+        <source>Receive</source>
+        <translation type="unfinished">Vastaanota</translation>
+    </message>
+    <message id="swap-rate">
+        <source>Rate</source>
+        <translation type="unfinished">Vaihtomaksu</translation>
+    </message>
+    <message id="swap-time-created">
+        <source>Created on</source>
+        <translation type="unfinished">Luotu</translation>
+    </message>
+    <message id="swap-expiration">
+        <source>Expiration</source>
+        <translation type="unfinished">Vanhentuminen</translation>
     </message>
 </context>
 </TS>

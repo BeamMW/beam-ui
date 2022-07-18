@@ -650,7 +650,7 @@ Please try again later or create an offer yourself."
                         TableViewColumn {
                             role: "timeCreated"
                             //% "Created on"
-                            title: qsTrId("atomic-swap-time-created")
+                            title: qsTrId("swap-time-created")
                             width: offersTable.columnWidth
                             movable: false
                             resizable: false
@@ -674,7 +674,7 @@ Please try again later or create an offer yourself."
                         TableViewColumn {
                             role: "amountReceive"
                             //% "Receive"
-                            title: qsTrId("atomic-swap-amount-receive")
+                            title: qsTrId("general-receive")
                             width: offersTable.columnWidth
                             movable: false
                             resizable: false
@@ -689,7 +689,7 @@ Please try again later or create an offer yourself."
                         TableViewColumn {
                             role: "rate"
                             //% "Rate"
-                            title: qsTrId("atomic-swap-rate")
+                            title: qsTrId("swap-rate")
                             width: offersTable.columnWidth
                             movable: false
                             resizable: false
@@ -701,7 +701,7 @@ Please try again later or create an offer yourself."
                         TableViewColumn {
                             role: "expiration"
                             //% "Expiration"
-                            title: qsTrId("atomic-swap-expiration")
+                            title: qsTrId("swap-expiration")
                             width: offersTable.columnWidth
                             movable: false
                             resizable: false

@@ -2322,25 +2322,9 @@ Please try again later or create an offer yourself.</oldsource>
         <translation type="unfinished">Er zijn momenteel geen actieve aanbiedingen.
 Probeer het later opnieuw of maak zelf een aanbieding.</translation>
     </message>
-    <message id="atomic-swap-time-created">
-        <source>Created on</source>
-        <translation>Gemaakt op</translation>
-    </message>
     <message id="atomic-swap-amount-send">
         <source>Send</source>
         <translation>Verzend</translation>
-    </message>
-    <message id="atomic-swap-amount-receive">
-        <source>Receive</source>
-        <translation>Ontvang</translation>
-    </message>
-    <message id="atomic-swap-rate">
-        <source>Rate</source>
-        <translation>Rate</translation>
-    </message>
-    <message id="atomic-swap-expiration">
-        <source>Expiration</source>
-        <translation>Vervaltijd</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3823,6 +3807,22 @@ Please, restart the wallet and try again.</source>
     <message id="dapps-store-updating">
         <source>updating</source>
         <translation type="unfinished">bijwerken</translation>
+    </message>
+    <message id="general-receive">
+        <source>Receive</source>
+        <translation type="unfinished">Ontvang</translation>
+    </message>
+    <message id="swap-rate">
+        <source>Rate</source>
+        <translation type="unfinished">Rate</translation>
+    </message>
+    <message id="swap-time-created">
+        <source>Created on</source>
+        <translation type="unfinished">Gemaakt op</translation>
+    </message>
+    <message id="swap-expiration">
+        <source>Expiration</source>
+        <translation type="unfinished">Vervaltijd</translation>
     </message>
 </context>
 </TS>

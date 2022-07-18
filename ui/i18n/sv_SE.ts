@@ -2321,25 +2321,9 @@ Please try again later or create an offer yourself.</oldsource>
         <translation type="unfinished">Det finns inga aktiva erbjudanden för tillfället. 
 Vänligen testa igen senare eller skapa ett erbjudande själv.</translation>
     </message>
-    <message id="atomic-swap-time-created">
-        <source>Created on</source>
-        <translation>Skapat den</translation>
-    </message>
     <message id="atomic-swap-amount-send">
         <source>Send</source>
         <translation>Skicka</translation>
-    </message>
-    <message id="atomic-swap-amount-receive">
-        <source>Receive</source>
-        <translation>Ta emot</translation>
-    </message>
-    <message id="atomic-swap-rate">
-        <source>Rate</source>
-        <translation>Kurs</translation>
-    </message>
-    <message id="atomic-swap-expiration">
-        <source>Expiration</source>
-        <translation>Förfaller</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3823,6 +3807,22 @@ Please, restart the wallet and try again.</source>
     <message id="dapps-store-updating">
         <source>updating</source>
         <translation type="unfinished">uppdaterar</translation>
+    </message>
+    <message id="general-receive">
+        <source>Receive</source>
+        <translation type="unfinished">Ta emot</translation>
+    </message>
+    <message id="swap-rate">
+        <source>Rate</source>
+        <translation type="unfinished">Kurs</translation>
+    </message>
+    <message id="swap-time-created">
+        <source>Created on</source>
+        <translation type="unfinished">Skapat den</translation>
+    </message>
+    <message id="swap-expiration">
+        <source>Expiration</source>
+        <translation type="unfinished">Förfaller</translation>
     </message>
 </context>
 </TS>

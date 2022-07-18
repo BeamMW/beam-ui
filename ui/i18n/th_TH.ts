@@ -2320,25 +2320,9 @@ Please try again later or create an offer yourself.</oldsource>
         <translation type="unfinished">ไม่มีข้อเสนอการแลกเปลี่ยนใดๆในตอนนี้
 กรุณาลองอีกครั้งหรือสร้างข้อเสนอของตัวเองเลย</translation>
     </message>
-    <message id="atomic-swap-time-created">
-        <source>Created on</source>
-        <translation>สร้างเมื่อ</translation>
-    </message>
     <message id="atomic-swap-amount-send">
         <source>Send</source>
         <translation>โอน</translation>
-    </message>
-    <message id="atomic-swap-amount-receive">
-        <source>Receive</source>
-        <translation>รับ</translation>
-    </message>
-    <message id="atomic-swap-rate">
-        <source>Rate</source>
-        <translation>เรท</translation>
-    </message>
-    <message id="atomic-swap-expiration">
-        <source>Expiration</source>
-        <translation>วันหมดอายุ</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3817,6 +3801,22 @@ Please, restart the wallet and try again.</source>
     <message id="dapps-store-updating">
         <source>updating</source>
         <translation type="unfinished">กำลังอัพเดท</translation>
+    </message>
+    <message id="general-receive">
+        <source>Receive</source>
+        <translation type="unfinished">รับ</translation>
+    </message>
+    <message id="swap-rate">
+        <source>Rate</source>
+        <translation type="unfinished">เรท</translation>
+    </message>
+    <message id="swap-time-created">
+        <source>Created on</source>
+        <translation type="unfinished">สร้างเมื่อ</translation>
+    </message>
+    <message id="swap-expiration">
+        <source>Expiration</source>
+        <translation type="unfinished">วันหมดอายุ</translation>
     </message>
 </context>
 </TS>

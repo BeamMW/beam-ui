@@ -101,6 +101,8 @@ Item {
                 // visible: model.count > 0
 
                 property real rowHeight: 56
+                property double columnResizeRatio: width / 1000
+
                 rowDelegate: Item {
                     height: ordersTable.rowHeight
                     anchors.left: parent.left
@@ -125,7 +127,66 @@ Item {
 
                     //% "Coin"
                     title:     qsTrId("general-coin")
-                    width:     106
+                    width:     105 * ordersTable.columnResizeRatio
+                    movable:   false
+                    resizable: false
+                }
+
+                TableViewColumn {
+                    role: "id"
+
+                    //% "Send"
+                    title:     qsTrId("general-send")
+                    width:     150 * ordersTable.columnResizeRatio
+                    movable:   false
+                    resizable: false
+                }
+
+                TableViewColumn {
+                    role: "id"
+
+                    //% "Receive"
+                    title: qsTrId("general-receive")
+                    width:     150 * ordersTable.columnResizeRatio
+                    movable:   false
+                    resizable: false
+                }
+
+                TableViewColumn {
+                    role: "id"
+
+                    //% "Rate"
+                    title: qsTrId("swap-rate")
+                    width:     100 * ordersTable.columnResizeRatio
+                    movable:   false
+                    resizable: false
+                }
+
+                TableViewColumn {
+                    role: "id"
+
+                    //% "Created on"
+                    title: qsTrId("swap-time-created")
+                    width:     170 * ordersTable.columnResizeRatio
+                    movable:   false
+                    resizable: false
+                }
+
+                TableViewColumn {
+                    role: "id"
+
+                    //% "Expiration"
+                    title: qsTrId("swap-expiration")
+                    width:     120 * ordersTable.columnResizeRatio
+                    movable:   false
+                    resizable: false
+                }
+
+                TableViewColumn {
+                    role: "id"
+                    id:   actionColumn
+
+                    width:     ordersTable.getAdjustedColumnWidth(actionColumn)
                     movable:   false
                     resizable: false
                 }
