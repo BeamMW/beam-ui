@@ -133,7 +133,7 @@ Item {
                 }
 
                 TableViewColumn {
-                    role: "id"
+                    role: "send"
 
                     //% "Send"
                     title:     qsTrId("general-send")
@@ -143,7 +143,7 @@ Item {
                 }
 
                 TableViewColumn {
-                    role: "id"
+                    role: "receive"
 
                     //% "Receive"
                     title: qsTrId("general-receive")
@@ -153,7 +153,7 @@ Item {
                 }
 
                 TableViewColumn {
-                    role: "id"
+                    role: "rate"
 
                     //% "Rate"
                     title: qsTrId("swap-rate")

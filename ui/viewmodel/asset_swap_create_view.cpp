@@ -21,6 +21,13 @@
 
 #include <qdebug.h>
 
+namespace
+{
+    const char kBeamAssetSName[] = "BEAM";
+    const char kAssedIdField[] = "assetId";
+    const char kUnitNameField[] = "unitName";
+}  // namespace
+
 AssetSwapCreateViewModel::AssetSwapCreateViewModel()
     : _walletModel(AppModel::getInstance().getWalletModel())
     , _amgr(AppModel::getInstance().getAssets())
@@ -134,13 +141,10 @@ void AssetSwapCreateViewModel::setReceiveAssetIndex(uint value)
         emit receiveAssetIndexChanged();
 
         auto assetsInfoMap = _currenciesList[_receiveAssetIndex];
-        _receiveAsset = assetsInfoMap["assetId"].toUInt();
-        _receiveAssetSname = assetsInfoMap["unitName"].toString().toStdString();
-
-        // for (auto it = assetsInfoMap.cbegin(); it != assetsInfoMap.cend(); ++it)
-        // {
-        //     qDebug() << it.key();
-        // }
+        _receiveAsset = assetsInfoMap[kAssedIdField].toUInt();
+        _receiveAssetSname = _receiveAsset == beam::Asset::s_BeamID
+            ? kBeamAssetSName
+            : assetsInfoMap[kUnitNameField].toString().toStdString();
     }
 }
 
@@ -157,8 +161,10 @@ void AssetSwapCreateViewModel::setSendAssetIndex(uint value)
         emit sendAssetIndexChanged();
 
         auto assetsInfoMap = _myCurrenciesList[_sendAssetIndex];
-        _sendAsset = assetsInfoMap["assetId"].toUInt();
-        _sendAssetSname = assetsInfoMap["unitName"].toString().toStdString();
+        _sendAsset = assetsInfoMap[kAssedIdField].toUInt();
+        _sendAssetSname = _sendAsset == beam::Asset::s_BeamID
+            ? kBeamAssetSName
+            : assetsInfoMap[kUnitNameField].toString().toStdString();
     }
 }
 

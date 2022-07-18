@@ -26,7 +26,9 @@ public:
     enum class Roles
     {
         RId = Qt::UserRole + 1,
-
+        RSend,
+        RReceive,
+        RRate
     };
 
     Q_ENUM(Roles)

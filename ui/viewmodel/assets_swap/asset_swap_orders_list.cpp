@@ -14,6 +14,14 @@
 
 #include "asset_swap_orders_list.h"
 
+#include "viewmodel/qml_globals.h"
+#include "viewmodel/ui_helpers.h"
+
+namespace
+{
+    const uint kPrecission = 9;
+} // namespace
+
 AssetSwapOrdersList::AssetSwapOrdersList()
 {
 }
@@ -23,6 +31,9 @@ QHash<int, QByteArray> AssetSwapOrdersList::roleNames() const
     static const auto roles = QHash<int, QByteArray>
     {
         {static_cast<int>(Roles::RId),         "id"},
+        {static_cast<int>(Roles::RSend),       "send"},
+        {static_cast<int>(Roles::RReceive),    "receive"},
+        {static_cast<int>(Roles::RRate),       "rate"},
     };
     return roles;
 }
@@ -41,6 +52,15 @@ QVariant AssetSwapOrdersList::data(const QModelIndex &index, int role) const
     {
     case Roles::RId:
         return QString::fromStdString(order.getID().to_string());
+    case Roles::RSend:
+        return beamui::AmountToUIString(order.getSendAmount()) + " " + QString::fromStdString(order.getSendAssetSName());
+    case Roles::RReceive:
+        return beamui::AmountToUIString(order.getReceiveAmount()) + " " + QString::fromStdString(order.getReceiveAssetSName());
+    case Roles::RRate:
+        return QMLGlobals::divideWithPrecision(
+        beamui::AmountToUIString(order.getReceiveAmount()),
+        beamui::AmountToUIString(order.getSendAmount()),
+        kPrecission);
 
     default:
         return QVariant();
