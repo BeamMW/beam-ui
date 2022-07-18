@@ -26,6 +26,7 @@ namespace
     const char kBeamAssetSName[] = "BEAM";
     const char kAssedIdField[] = "assetId";
     const char kUnitNameField[] = "unitName";
+    const uint64_t kExpireOptions[] = {30 * 60, 60 * 60, 2 * 60 * 60, 6 * 60 * 60, 12 * 60 * 60};
 }  // namespace
 
 AssetSwapCreateViewModel::AssetSwapCreateViewModel()
@@ -51,9 +52,6 @@ void AssetSwapCreateViewModel::publishOffer()
 
     _walletModel->getAsync()->saveAddress(_receiverAddress);
 
-    auto expires = getTimestamp();
-    expires += 60 * 60 * 24; // 24 hours for tests
-
     // DexOrder order(
     //     DexOrderID::generate(),
     //     _receiverAddress.m_walletID,
@@ -75,7 +73,7 @@ void AssetSwapCreateViewModel::publishOffer()
         _receiveAsset,
         _amountToReceiveGrothes,
         _receiveAssetSname,
-        expires
+        _offerExpires
     );
 
     // _walletModel->getAsync()->publishDexOrder(order);
@@ -170,7 +168,8 @@ void AssetSwapCreateViewModel::setSendAssetIndex(uint value)
 
 void AssetSwapCreateViewModel::setOfferExpires(int value)
 {
-
+    _offerExpires = kExpireOptions[value];
+    emit offerExpiresChanged();
 }
 
 int AssetSwapCreateViewModel::getOfferExpires() const
@@ -180,7 +179,8 @@ int AssetSwapCreateViewModel::getOfferExpires() const
 
 void AssetSwapCreateViewModel::setComment(const QString& value)
 {
-
+    _comment = value;
+    emit commentChanged();
 }
 
 QString AssetSwapCreateViewModel::getComment() const

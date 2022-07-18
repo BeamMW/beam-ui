@@ -15,6 +15,7 @@
 
 #include "viewmodel/helpers/list_model.h"
 #include "wallet/client/extensions/dex_board/asset_swap_order.h"
+#include <QLocale>
 
 class AssetSwapOrdersList : public ListModel<beam::wallet::AssetSwapOrder>
 {
@@ -28,11 +29,17 @@ public:
         RId = Qt::UserRole + 1,
         RSend,
         RReceive,
-        RRate
+        RRate,
+        RIsMine,
+        RCreateTime,
+        RExpireTime
     };
 
     Q_ENUM(Roles)
 
     [[nodiscard]] QHash<int, QByteArray> roleNames() const override;
     [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
+
+private:
+    QLocale m_locale; // default
 };

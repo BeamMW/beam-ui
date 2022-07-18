@@ -122,7 +122,7 @@ Item {
                 }
 
                 TableViewColumn {
-                    role: "id"
+                    role: "coins"
                     id: coinColumn
 
                     //% "Coin"
@@ -157,38 +157,56 @@ Item {
 
                     //% "Rate"
                     title: qsTrId("swap-rate")
-                    width:     100 * ordersTable.columnResizeRatio
+                    width:     60 * ordersTable.columnResizeRatio
                     movable:   false
                     resizable: false
                 }
 
                 TableViewColumn {
-                    role: "id"
+                    role: "created"
 
                     //% "Created on"
                     title: qsTrId("swap-time-created")
-                    width:     170 * ordersTable.columnResizeRatio
+                    width:     150 * ordersTable.columnResizeRatio
                     movable:   false
                     resizable: false
                 }
 
                 TableViewColumn {
-                    role: "id"
+                    role: "expiration"
 
                     //% "Expiration"
                     title: qsTrId("swap-expiration")
-                    width:     120 * ordersTable.columnResizeRatio
+                    width:     150 * ordersTable.columnResizeRatio
                     movable:   false
                     resizable: false
                 }
 
                 TableViewColumn {
-                    role: "id"
+                    role: "isMine"
                     id:   actionColumn
 
                     width:     ordersTable.getAdjustedColumnWidth(actionColumn)
                     movable:   false
                     resizable: false
+
+                    delegate: Item {
+                        width: parent.width
+                        height: contactsView.rowHeight
+            
+                        SFLabel {
+                            font.pixelSize: 14
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.leftMargin: 20
+                            anchors.rightMargin: 80
+                            elide: Text.ElideMiddle
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: styleData.value ? "cancel" : "accept"
+                            color: Style.content_main
+                            copyMenuEnabled: false
+                        }
+                    }
                 }
             }
 

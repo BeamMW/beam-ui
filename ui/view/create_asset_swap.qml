@@ -131,11 +131,11 @@ ColumnLayout {
                                 ]
                             }
         
-                            // Binding {
-                            //     target:   viewModel
-                            //     property: "offerExpires"
-                            //     value:    expiresCombo.currentIndex
-                            // }
+                            Binding {
+                                target:   viewModel
+                                property: "offerExpires"
+                                value:    expiresCombo.currentIndex
+                            }
                         }
                     }
 

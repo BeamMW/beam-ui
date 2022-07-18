@@ -16,6 +16,7 @@
 
 #include "viewmodel/qml_globals.h"
 #include "viewmodel/ui_helpers.h"
+#include <QDateTime>
 
 namespace
 {
@@ -34,6 +35,9 @@ QHash<int, QByteArray> AssetSwapOrdersList::roleNames() const
         {static_cast<int>(Roles::RSend),       "send"},
         {static_cast<int>(Roles::RReceive),    "receive"},
         {static_cast<int>(Roles::RRate),       "rate"},
+        {static_cast<int>(Roles::RIsMine),     "isMine"},
+        {static_cast<int>(Roles::RCreateTime), "created"},
+        {static_cast<int>(Roles::RExpireTime), "expiration"},
     };
     return roles;
 }
@@ -50,19 +54,45 @@ QVariant AssetSwapOrdersList::data(const QModelIndex &index, int role) const
 
     switch (static_cast<Roles>(role))
     {
-    case Roles::RId:
-        return QString::fromStdString(order.getID().to_string());
-    case Roles::RSend:
-        return beamui::AmountToUIString(order.getSendAmount()) + " " + QString::fromStdString(order.getSendAssetSName());
-    case Roles::RReceive:
-        return beamui::AmountToUIString(order.getReceiveAmount()) + " " + QString::fromStdString(order.getReceiveAssetSName());
-    case Roles::RRate:
-        return QMLGlobals::divideWithPrecision(
-        beamui::AmountToUIString(order.getReceiveAmount()),
-        beamui::AmountToUIString(order.getSendAmount()),
-        kPrecission);
+        case Roles::RId:
+        {
+            return QString::fromStdString(order.getID().to_string());
+        }
+        case Roles::RSend:
+        {
+            return beamui::AmountToUIString(order.getSendAmount()) + " " + QString::fromStdString(order.getSendAssetSName());
+        }
+        case Roles::RReceive:
+        {
+            return beamui::AmountToUIString(order.getReceiveAmount()) + " " + QString::fromStdString(order.getReceiveAssetSName());
+        }
+        case Roles::RRate:
+        {
+            return QMLGlobals::divideWithPrecision(
+                beamui::AmountToUIString(order.getReceiveAmount()),
+                beamui::AmountToUIString(order.getSendAmount()),
+                kPrecission);
+        }
+        case Roles::RIsMine:
+        {
+            return order.isMine();
+        }
+        case Roles::RCreateTime:
+        {
+            QDateTime datetime;
+            datetime.setTime_t(order.getCreation());
+            return datetime.toString(m_locale.dateTimeFormat(QLocale::ShortFormat));
+        }
+        case Roles::RExpireTime:
+        {
+            QDateTime datetime;
+            datetime.setTime_t(order.getExpiration());
+            return datetime.toString(m_locale.dateTimeFormat(QLocale::ShortFormat));
+        }
 
-    default:
-        return QVariant();
+        default:
+        {
+            return QVariant();
+        }
     }
 }
