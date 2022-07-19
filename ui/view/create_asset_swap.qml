@@ -155,7 +155,7 @@ ColumnLayout {
                             backgroundColor:  Style.content_main
                             color:            Style.content_main
                             focus:            true
-                            text:             "Comment"
+                            text:             viewModel.comment
                             maximumLength:    BeamGlobals.maxCommentLength()
                             // enabled:          !thisView.addressSaved
                             //% "Comments are local and won't be shared"
@@ -303,7 +303,7 @@ ColumnLayout {
                                 SFText {
                                     font.pixelSize:   14
                                     color:            Style.content_main
-                                    text:             ""
+                                    text:             viewModel.rate
                                 }
 
                                 // SFText {

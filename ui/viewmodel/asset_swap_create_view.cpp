@@ -14,10 +14,11 @@
 
 #include "asset_swap_create_view.h"
 #include "model/app_model.h"
+#include "viewmodel/qml_globals.h"
 #include "viewmodel/ui_helpers.h"
-#include "wallet/client/extensions/dex_board/dex_order.h"
+// #include "wallet/client/extensions/dex_board/dex_order.h"
 #include "wallet/client/extensions/dex_board/asset_swap_order.h"
-#include "viewmodel/dex/dex_orders_list.h"
+// #include "viewmodel/dex/dex_orders_list.h"
 
 #include <qdebug.h>
 
@@ -108,6 +109,7 @@ void AssetSwapCreateViewModel::setAmountToReceive(QString value)
     {
         _amountToReceiveGrothes = amount;
         emit amountReceiveChanged();
+        emit rateChanged();
     }
 }
 
@@ -123,6 +125,7 @@ void AssetSwapCreateViewModel::setAmountToSend(QString value)
     {
         _amountSendGrothes = amount;
         emit amountSendChanged();
+        emit rateChanged();
     }
 }
 
@@ -186,6 +189,15 @@ void AssetSwapCreateViewModel::setComment(const QString& value)
 QString AssetSwapCreateViewModel::getComment() const
 {
     return _comment;
+}
+
+QString AssetSwapCreateViewModel::getRate() const
+{
+    if (!_amountSendGrothes || !_amountToReceiveGrothes) return "-";
+    return QMLGlobals::divideWithPrecision(
+                beamui::AmountToUIString(_amountToReceiveGrothes),
+                beamui::AmountToUIString(_amountSendGrothes),
+                beam::wallet::kAssetSwapOrderRatePrecission);
 }
 
 // void AssetSwapCreateViewModel::setTransactionToken(const QString& value)

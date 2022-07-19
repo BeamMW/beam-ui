@@ -13,6 +13,7 @@ ColumnLayout {
 
     // callbacks set by parent
     property var onClosed: undefined
+    property string orderId: ""
 
     // AssetSwapCreateViewModel {
     //     id: viewModel

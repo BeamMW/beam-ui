@@ -19,10 +19,10 @@
 #include "viewmodel/ui_helpers.h"
 #include <QDateTime>
 
-namespace
-{
-    const uint kPrecission = 9;
-} // namespace
+// namespace
+// {
+//     const uint kPrecission = 9;
+// } // namespace
 
 AssetSwapOrdersList::AssetSwapOrdersList()
     : m_amgr(AppModel::getInstance().getAssets())
@@ -74,7 +74,7 @@ QVariant AssetSwapOrdersList::data(const QModelIndex &index, int role) const
             return QMLGlobals::divideWithPrecision(
                 beamui::AmountToUIString(order.getReceiveAmount()),
                 beamui::AmountToUIString(order.getSendAmount()),
-                kPrecission);
+                beam::wallet::kAssetSwapOrderRatePrecission);
         }
         case Roles::RIsMine:
         {

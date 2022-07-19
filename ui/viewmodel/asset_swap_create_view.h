@@ -31,8 +31,9 @@ class AssetSwapCreateViewModel: public QObject
     Q_PROPERTY(int     receiveAssetIndex READ getReceiveAssetIndex WRITE setReceiveAssetIndex NOTIFY  receiveAssetIndexChanged)
     Q_PROPERTY(int     sendAssetIndex    READ getSendAssetIndex    WRITE setSendAssetIndex    NOTIFY  sendAssetIndexChanged)
 
-    Q_PROPERTY(int           offerExpires             READ getOfferExpires       WRITE  setOfferExpires      NOTIFY  offerExpiresChanged)
-    Q_PROPERTY(QString       comment                  READ getComment            WRITE  setComment           NOTIFY  commentChanged)
+    Q_PROPERTY(int        offerExpires   READ getOfferExpires      WRITE  setOfferExpires     NOTIFY  offerExpiresChanged)
+    Q_PROPERTY(QString    comment        READ getComment           WRITE  setComment          NOTIFY  commentChanged)
+    Q_PROPERTY(QString    rate           READ getRate                                         NOTIFY  rateChanged)
     // Q_PROPERTY(QString       transactionToken         READ getTransactionToken   WRITE  setTransactionToken  NOTIFY  transactionTokenChanged)
 
   public:
@@ -49,6 +50,7 @@ class AssetSwapCreateViewModel: public QObject
 
     void offerExpiresChanged();
     void commentChanged();
+    void rateChanged();
     // void transactionTokenChanged();
 
   private slots:
@@ -75,6 +77,8 @@ class AssetSwapCreateViewModel: public QObject
 
     void setComment(const QString& value);
     QString getComment() const;
+
+    QString getRate() const;
 
     // void setTransactionToken(const QString& value);
     // QString getTransactionToken() const;

@@ -96,8 +96,12 @@ Item {
                 sortIndicatorColumn: 0
                 sortIndicatorOrder: Qt.DescendingOrder
 
-                model: ordersModel.orders
-                // visible: model.count > 0
+                model: SortFilterProxyModel {
+                    id: ordersProxyModel
+
+                    source: ordersModel.orders
+                }
+                visible: model.count > 0
 
                 property real rowHeight: 56
                 property double columnResizeRatio: width / 1000
@@ -278,7 +282,13 @@ Item {
                                 acceptedButtons: Qt.LeftButton
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: {
-                                    assetsSwapStackView.push(Qt.createComponent("accept_asset_swap.qml"), {"onClosed": assetsSwapLayout.onClosed});
+                                    var orderId = ordersTable.model.getRoleValue(styleData.row, "id");
+                                    assetsSwapStackView.push(
+                                        Qt.createComponent("accept_asset_swap.qml"),
+                                        {
+                                            "onClosed": assetsSwapLayout.onClosed,
+                                            "orderId": orderId
+                                        });
                                 }
                             }
                         }
