@@ -31,8 +31,8 @@ ColumnLayout {
         Layout.topMargin:    100
         Layout.bottomMargin: 30
 
-        //% "Create a Asset Swap Offer"
-        text: qsTrId("wallet-receive-asset-swap-title")
+        //% "Create an Asset Swap Offer"
+        text: qsTrId("wallet-create-asset-swap-title")
         onBack: function () {
             onClosed()
         }

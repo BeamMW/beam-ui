@@ -66,7 +66,6 @@ Item {
                     font.pixelSize: 12
 
                     onClicked: {
-                        console.log('Create offer');
                         assetsSwapStackView.push(Qt.createComponent("create_asset_swap.qml"), {"onClosed": assetsSwapLayout.onClosed});
                     }
                 }
@@ -279,7 +278,7 @@ Item {
                                 acceptedButtons: Qt.LeftButton
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: {
-                                    console.log('accept offer');
+                                    assetsSwapStackView.push(Qt.createComponent("accept_asset_swap.qml"), {"onClosed": assetsSwapLayout.onClosed});
                                 }
                             }
                         }

@@ -3770,11 +3770,6 @@ Please, check the file and try again.</source>
         <source>Assets Swaps</source>
         <translation>Assets Swaps</translation>
     </message>
-    <message id="wallet-receive-asset-swap-title">
-        <source>Create a Asset Swap Offer</source>
-        <oldsource>Create Asset Swap Offer</oldsource>
-        <translation>Create Asset Swap Offer</translation>
-    </message>
     <message id="wallet-atomic-swap-title">
         <source>Create Atomic Swap Offer</source>
         <translation>Create Atomic Swap Offer</translation>
@@ -3825,6 +3820,14 @@ Please, restart the wallet and try again.</source>
     <message id="swap-accept-offer">
         <source>accept offer</source>
         <translation>accept offer</translation>
+    </message>
+    <message id="wallet-accept-asset-swap-title">
+        <source>Accept an Asset Swap Offer</source>
+        <translation>Accept an Asset Swap Offer<</translation>
+    </message>
+    <message id="wallet-create-asset-swap-title">
+        <source>Create an Asset Swap Offer</source>
+        <translation>Create an Asset Swap Offer</translation>
     </message>
 </context>
 </TS>

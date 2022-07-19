@@ -136,6 +136,7 @@
         <file>assets_swap.qml</file>
         <file>notifications.qml</file>
         <file>receive_regular.qml</file>
+        <file>accept_asset_swap.qml</file>
         <file>create_asset_swap.qml</file>
         <file>create_atomic_swap.qml</file>
         <file>send.qml</file>
