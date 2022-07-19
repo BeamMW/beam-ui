@@ -33,6 +33,7 @@
 #include "viewmodel/atomic_swap/swap_token_item.h"
 #include "viewmodel/address_book_view.h"
 #include "viewmodel/asset_swap_create_view.h"
+#include "viewmodel/asset_swap_accept_view.h"
 #include "viewmodel/wallet/wallet_view.h"
 #include "viewmodel/wallet/token_item.h"
 #include "viewmodel/wallet/assets_view.h"
@@ -300,6 +301,7 @@ int main (int argc, char* argv[])
             qmlRegisterType<AppNotificationHelper>("Beam.Wallet", 1, 0, "AppNotificationHelper");
             qmlRegisterType<AssetSwapCreateViewModel>("Beam.Wallet", 1, 0, "AssetSwapCreateViewModel");
             qmlRegisterType<AssetsSwapOrdersModel>("Beam.Wallet", 1, 0, "AssetsSwapOrdersModel");
+            qmlRegisterType<AssetSwapAcceptViewModel>("Beam.Wallet", 1, 0, "AssetSwapAcceptViewModel");
             beamui::applications::RegisterQMLTypes();
 
             WindowEventFilter filter;

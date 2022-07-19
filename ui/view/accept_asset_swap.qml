@@ -15,9 +15,9 @@ ColumnLayout {
     property var onClosed: undefined
     property string orderId: ""
 
-    // AssetSwapCreateViewModel {
-    //     id: viewModel
-    // }
+    AssetSwapAcceptViewModel {
+        id: viewModel
+    }
 
     TopGradient {
         mainRoot: main
@@ -78,7 +78,7 @@ ColumnLayout {
                         content:
                         AmountInput {
                             id:           sendAmountInput
-                            amount:       "10"
+                            amount:       viewModel.amountToSend
                             currencies:   [{"unitName":"BEAM", "isBeam": true, "rate": "-", "rateUnit": "-", "icon": "qrc:/assets/icon-beam.svg", "iconWidth": 22, "iconHeight": 22}]
                             currencyIdx:  0
                             readOnlyA:    true
@@ -110,11 +110,11 @@ ColumnLayout {
                                 placeholderText:  qsTrId("general-comment-local")
                             }
 
-                            // Binding {
-                            //     target:   viewModel
-                            //     property: "comment"
-                            //     value:    commentInput.text
-                            // }
+                            Binding {
+                                target:   viewModel
+                                property: "comment"
+                                value:    commentInput.text
+                            }
                         }
                     }
 
@@ -140,7 +140,7 @@ ColumnLayout {
 
                         AmountInput {
                             id:            receiveAmountInput
-                            amount:        "300"
+                            amount:        viewModel.amountToReceive
                             currencies:    [{"unitName":"ASSET", "rate": "-", "rateUnit": "-", "icon": "qrc:/assets/asset-1.svg", "iconWidth": 22, "iconHeight": 22}]
                             currencyIdx:   0
                             readOnlyA:     true
@@ -185,7 +185,7 @@ ColumnLayout {
                                 SFText {
                                     font.pixelSize:   14
                                     color:            Style.content_main
-                                    text:             "100"
+                                    text:             viewModel.fee
                                 }
 
                                 SFText {
@@ -200,7 +200,7 @@ ColumnLayout {
                                     id:               offered
                                     font.pixelSize:   14
                                     color:            Style.content_main
-                                    text:             "create time"
+                                    text:             viewModel.offerCreated
                                 }
 
                                 SFText {
@@ -215,7 +215,7 @@ ColumnLayout {
                                     id:               expires
                                     font.pixelSize:   14
                                     color:            Style.content_main
-                                    text:             "exp time"
+                                    text:             viewModel.offerExpires
                                 }
 
                                 SFText {
@@ -230,7 +230,7 @@ ColumnLayout {
                                     id:               rate
                                     font.pixelSize:   14
                                     color:            Style.content_main
-                                    text:             "rate"
+                                    text:             viewModel.rate
                                 }
 
 
