@@ -3823,11 +3823,15 @@ Please, restart the wallet and try again.</source>
     </message>
     <message id="wallet-accept-asset-swap-title">
         <source>Accept an Asset Swap Offer</source>
-        <translation>Accept an Asset Swap Offer<</translation>
+        <translation>Accept an Asset Swap Offer</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
         <source>Create an Asset Swap Offer</source>
         <translation>Create an Asset Swap Offer</translation>
+    </message>
+    <message id="asset-swap-fee">
+        <source>Transaction fee</source>
+        <translation>Transaction fee</translation>
     </message>
 </context>
 </TS>

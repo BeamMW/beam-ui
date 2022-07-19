@@ -155,7 +155,6 @@ ColumnLayout {
                             backgroundColor:  Style.content_main
                             color:            Style.content_main
                             focus:            true
-                            text:             viewModel.comment
                             maximumLength:    BeamGlobals.maxCommentLength()
                             // enabled:          !thisView.addressSaved
                             //% "Comments are local and won't be shared"
@@ -239,9 +238,6 @@ ColumnLayout {
                             resetAmount:                false
                             currColor:                  Style.content_main
                             error:                      ""
-                            onCurrencyIdxChanged: {
-                                console.log('RIGHT onCurrencyIdxChanged');
-                            }
                         }
 
                         Binding {

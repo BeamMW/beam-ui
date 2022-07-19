@@ -3830,5 +3830,9 @@ Please, restart the wallet and try again.</source>
         <source>Create an Asset Swap Offer</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="asset-swap-fee">
+        <source>Transaction fee</source>
+        <translation type="unfinished">거래 수수료</translation>
+    </message>
 </context>
 </TS>

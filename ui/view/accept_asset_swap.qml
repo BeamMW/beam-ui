@@ -48,342 +48,244 @@ ColumnLayout {
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         ScrollBar.vertical.policy:   ScrollBar.AsNeeded
 
-        // ColumnLayout {
-        //     width: scrollView.availableWidth
+        ColumnLayout {
+            width: scrollView.availableWidth
 
-        //     //
-        //     // Content row
-        //     //
-        //     RowLayout {
-        //         Layout.fillWidth:   true
-        //         spacing:  10
+            //
+            // Content row
+            //
+            RowLayout {
+                Layout.fillWidth:   true
+                spacing:  10
 
-        //         //
-        //         // Left column
-        //         //
-        //         ColumnLayout {
-        //             Layout.alignment:       Qt.AlignTop
-        //             Layout.fillWidth:       true
-        //             Layout.preferredWidth:  400
-        //             Layout.rightMargin:     -5
-        //             spacing:                10
-        //             //
-        //             // Send amount
-        //             //
-        //             Panel {
-        //                 //% "Send amount"
-        //                 title:                   qsTrId("sent-amount-label")
-        //                 Layout.fillWidth:        true
-        //                 content:
-        //                 AmountInput {
-        //                     id:                         sentAmountInput
-        //                     color:                      Style.accent_outgoing
-        //                     currencies:                 viewModel.myCurrenciesList
-        //                     currencyIdx:                viewModel.sendAssetIndex
-        //                     amount:                     viewModel.amountToSend
-        //                     multi:                      true
-        //                     resetAmount:                false
-        //                     currColor:                  Style.content_main
-        //                     error:                      ""
+                //
+                // Left column
+                //
+                ColumnLayout {
+                    Layout.alignment:       Qt.AlignTop
+                    Layout.fillWidth:       true
+                    Layout.preferredWidth:  400
+                    spacing:                10
 
-        //                     onCurrencyIdxChanged: {
-        //                         console.log('LEFT onCurrencyIdxChanged');
-        //                     }
-        //                 }
-        //             }
+                    //
+                    // Send amount
+                    //
+                    Panel {
+                        //% "Send amount"
+                        title:                   qsTrId("sent-amount-label")
+                        Layout.fillWidth:        true
 
-        //             Binding {
-        //                 target:   viewModel
-        //                 property: "amountToSend"
-        //                 value:    sentAmountInput.amount
-        //             }
+                        content:
+                        AmountInput {
+                            id:           sendAmountInput
+                            amount:       "10"
+                            currencies:   [{"unitName":"BEAM", "isBeam": true, "rate": "-", "rateUnit": "-", "icon": "qrc:/assets/icon-beam.svg", "iconWidth": 22, "iconHeight": 22}]
+                            currencyIdx:  0
+                            readOnlyA:    true
+                            multi:        false
+                            color:        Style.accent_outgoing
+                            currColor:    Style.content_main
+                            // error:        getErrorText()
+                        }
+                    }
 
-        //             Binding {
-        //                 target:   viewModel
-        //                 property: "sendAssetIndex"
-        //                 value:    sentAmountInput.currencyIdx
-        //             }
+                    //
+                    // Comment
+                    //
+                    FoldablePanel {
+                        //% "Comment"
+                        title:             qsTrId("general-comment")
+                        Layout.fillWidth:        true
 
-        //             //
-        //             // Offer expiration time
-        //             //
-        //             FoldablePanel {
-        //                 //% "Offer expiration time"
-        //                 title:                   qsTrId("wallet-receive-offer-expires-label")
-        //                 Layout.fillWidth:        true
-        //                 folded:                  false
-        //                 content: ColumnLayout {
-        //                     CustomComboBox {
-        //                         id:                  expiresCombo
-        //                         Layout.fillWidth:    true
-        //                         currentIndex:        0
-        //                         fontPixelSize:       14
-        //                         model: [
-        //                             //% "30 minutes"
-        //                             qsTrId("wallet-receive-expires-30m"),
-        //                             //% "1 hour"
-        //                             qsTrId("wallet-receive-expires-1"),
-        //                             //% "2 hours"
-        //                             qsTrId("wallet-receive-expires-2"),
-        //                             //% "6 hours"
-        //                             qsTrId("wallet-receive-expires-6"),
-        //                             //% "12 hours"
-        //                             qsTrId("wallet-receive-expires-12")
-        //                         ]
-        //                     }
-        
-        //                     Binding {
-        //                         target:   viewModel
-        //                         property: "offerExpires"
-        //                         value:    expiresCombo.currentIndex
-        //                     }
-        //                 }
-        //             }
+                        content:
+                        ColumnLayout {
+                            SFTextInput {
+                                id:               commentInput
+                                Layout.fillWidth: true
+                                font.pixelSize:   14
+                                color:            Style.content_main
+                                selectByMouse:    true
+                                maximumLength:    BeamGlobals.maxCommentLength()
+                                //% "Comments are local and won't be shared"
+                                placeholderText:  qsTrId("general-comment-local")
+                            }
 
-        //             //
-        //             // Comment
-        //             //
-        //             FoldablePanel {
-        //                 //% "Comment"
-        //                 title:                   qsTrId("general-comment")
-        //                 Layout.fillWidth:        true
-        //                 content: ColumnLayout {
-        //                 SFTextInput {
-        //                     id:               addressComment
-        //                     font.pixelSize:   14
-        //                     Layout.fillWidth: true
-        //                     // font.italic :     !viewModel.commentValid
-        //                     backgroundColor:  Style.content_main
-        //                     color:            Style.content_main
-        //                     focus:            true
-        //                     text:             "Comment"
-        //                     maximumLength:    BeamGlobals.maxCommentLength()
-        //                     // enabled:          !thisView.addressSaved
-        //                     //% "Comments are local and won't be shared"
-        //                     placeholderText:  qsTrId("general-comment-local")
-        //                 }
+                            // Binding {
+                            //     target:   viewModel
+                            //     property: "comment"
+                            //     value:    commentInput.text
+                            // }
+                        }
+                    }
 
-        //                     // Binding {
-        //                     //     target:   viewModel
-        //                     //     property: "addressComment"
-        //                     //     value:    addressComment.text
-        //                     // }
+                }  // ColumnLayout
 
-        //                     // Item {
-        //                     //     Layout.fillWidth: true
-        //                     //     SFText {
-        //                     //         //% "Address with the same comment already exists"
-        //                     //         text:           qsTrId("general-addr-comment-error")
-        //                     //         color:          Style.validator_error
-        //                     //         font.pixelSize: 12
-        //                     //         font.italic:    true
-        //                     //         visible:        !viewModel.commentValid
-        //                     //     }
-        //                     // }
-        //                 }
-        //             }
-        //         }  // ColumnLayout
+                //
+                // Right column
+                //
+                ColumnLayout {
+                    Layout.alignment:       Qt.AlignTop
+                    Layout.fillWidth:       true
+                    Layout.preferredWidth:  400
+                    spacing:                10
 
-        //         //
-        //         // Middle column
-        //         //
-        //         Rectangle {
-        //             Layout.alignment:       Qt.AlignTop
-        //             Layout.topMargin:       60
-        //             Layout.leftMargin:      -12
-        //             Layout.rightMargin:     -12
-        //             Layout.preferredHeight: 24
-        //             Layout.preferredWidth:  24
-        //             color:                  Style.background_main
-        //             z:                      1
-        //             radius:                 12
-        //             SvgImage {                 
-        //                 Layout.maximumHeight: 24
-        //                 Layout.maximumWidth:  24
-        //                 source: "qrc:/assets/icon-swap-currencies.svg"
-        //                 MouseArea {
-        //                     anchors.fill: parent
-        //                     acceptedButtons: Qt.LeftButton
-        //                     cursorShape: Qt.PointingHandCursor
-        //                     onClicked: {
-        //                         console.log('Swap columns');
-        //                     }
-        //                 }
-        //             }
-        //         } // Rectangle
+                    //
+                    // Receive amount
+                    //
+                    Panel {
+                        //% "Receive amount"
+                        title:                   qsTrId("receive-amount-swap-label")
+                        Layout.fillWidth:        true
+                        content:
 
-        //         //
-        //         // Right column
-        //         //
-        //         ColumnLayout {
-        //             Layout.alignment:       Qt.AlignTop
-        //             Layout.fillWidth:       true
-        //             Layout.preferredWidth:  400
-        //             Layout.leftMargin:      -5
-        //             spacing:                10
+                        AmountInput {
+                            id:            receiveAmountInput
+                            amount:        "300"
+                            currencies:    [{"unitName":"ASSET", "rate": "-", "rateUnit": "-", "icon": "qrc:/assets/asset-1.svg", "iconWidth": 22, "iconHeight": 22}]
+                            currencyIdx:   0
+                            readOnlyA:     true
+                            multi:         false
+                            color:         Style.accent_incoming
+                            currColor:     Style.content_main
+                            // error:         getErrorText()
+                        }
+                    }
 
-        //             //
-        //             // Receive amount
-        //             //
-        //             Panel {
-        //                 //% "Receive amount"
-        //                 title: qsTrId("receive-amount-swap-label")
-        //                 Layout.fillWidth:        true
-        //                 content:
-        //                 AmountInput {
-        //                     id:                         receiveAmountInput
-        //                     color:                      Style.accent_outgoing
-        //                     currencies:                 viewModel.currenciesList
-        //                     currencyIdx:                viewModel.receiveAssetIndex
-        //                     amount:                     viewModel.amountToReceive
-        //                     multi:                      true
-        //                     resetAmount:                false
-        //                     currColor:                  Style.content_main
-        //                     error:                      ""
-        //                     onCurrencyIdxChanged: {
-        //                         console.log('RIGHT onCurrencyIdxChanged');
-        //                     }
-        //                 }
+                    //
+                    // Summary pane
+                    //
+                    Pane {
+                        Layout.fillWidth:        true
+                        padding:                 20
 
-        //                 Binding {
-        //                     target:   viewModel
-        //                     property: "amountToReceive"
-        //                     value:    receiveAmountInput.amount
-        //                 }
+                        background: Rectangle {
+                            radius: 10
+                            color:  Style.background_button
+                        }
 
-        //                 Binding {
-        //                     target:   viewModel
-        //                     property: "receiveAssetIndex"
-        //                     value:    receiveAmountInput.currencyIdx
-        //                 }
-        //             }
+                        ColumnLayout {
+                            anchors.fill:        parent
+                            spacing:             20
+                            GridLayout {
+                                Layout.fillWidth:    true
+                                columnSpacing:       20
+                                rowSpacing:          20
+                                columns:             2
 
-        //             //
-        //             // Summary pane
-        //             //
-        //             Pane {
-        //                 Layout.fillWidth:        true
-        //                 padding:                 20
+                                property bool showEstimatedFee: true
 
-        //                 background: Rectangle {
-        //                     radius: 10
-        //                     color:  Style.background_button
-        //                 }
-
-        //                 ColumnLayout {
-        //                     anchors.fill:        parent
-        //                     spacing:             20
-
-        //                     GridLayout {
-        //                         Layout.fillWidth:    true
-        //                         columnSpacing:       20
-        //                         rowSpacing:          20
-        //                         columns:             2
-
-        //                         // SFText {
-        //                         //     Layout.alignment:       Qt.AlignTop
-        //                         //     font.pixelSize:         14
-        //                         //     color:                  Style.content_secondary
-        //                         //     //% "Beam transaction fee (est)"
-        //                         //     text:                   qsTrId("general-asset-swap-rate") + ":"
-        //                         // }
+                                SFText {
+                                    Layout.alignment:       Qt.AlignTop
+                                    font.pixelSize:         14
+                                    color:                  Style.content_secondary
+                                    //% "Transaction fee"
+                                    text:                   qsTrId("asset-swap-fee")
+                                }
     
-        //                         // SFText {
-        //                         //     font.pixelSize:   14
-        //                         //     color:            Style.content_main
-        //                         //     text:             ""
-        //                         // }
+                                SFText {
+                                    font.pixelSize:   14
+                                    color:            Style.content_main
+                                    text:             "100"
+                                }
 
-        //                         SFText {
-        //                             font.pixelSize:         14
-        //                             color:                  Style.content_secondary
-        //                             //% "Exchange rate"
-        //                             text:                   qsTrId("general-rate") + ":"
-        //                         }
+                                SFText {
+                                    Layout.alignment:       Qt.AlignTop
+                                    font.pixelSize:         14
+                                    color:                  Style.content_secondary
+                                    //% "Offered on"
+                                    text:                   qsTrId("wallet-send-swap-offered-label") + ":"
+                                }
+    
+                                SFText {
+                                    id:               offered
+                                    font.pixelSize:   14
+                                    color:            Style.content_main
+                                    text:             "create time"
+                                }
 
-        //                         SFText {
-        //                             font.pixelSize:   14
-        //                             color:            Style.content_main
-        //                             text:             ""
-        //                         }
+                                SFText {
+                                    id:                     expiresTitle
+                                    Layout.alignment:       Qt.AlignTop
+                                    font.pixelSize:         14
+                                    color:                  Style.content_secondary
+                                    //% "Expires on"
+                                    text:                   qsTrId("wallet-send-swap-expires-label") + ":"
+                                }
+                                SFText {
+                                    id:               expires
+                                    font.pixelSize:   14
+                                    color:            Style.content_main
+                                    text:             "exp time"
+                                }
 
-        //                         // SFText {
-        //                         //     Layout.alignment:       Qt.AlignTop
-        //                         //     Layout.topMargin:       20
-        //                         //     font.pixelSize:         14
-        //                         //     color:                  Style.content_secondary
-        //                         //     //% "Swap token"
-        //                         //     text:                   qsTrId("send-swap-token") + ":"
-        //                         // }
+                                SFText {
+                                    Layout.alignment:       Qt.AlignTop
+                                    font.pixelSize:         14
+                                    color:                  Style.content_secondary
+                                    //% "Exchange rate"
+                                    text:                   qsTrId("general-rate") + ":"
+                                }
+            
+                                SFText {
+                                    id:               rate
+                                    font.pixelSize:   14
+                                    color:            Style.content_main
+                                    text:             "rate"
+                                }
 
-        //                         // ColumnLayout {
-        //                         //     spacing: 11
-        //                         //     RowLayout {
-        //                         //         Layout.fillWidth:        true
-        //                         //         Layout.topMargin:        20
 
-        //                         //         SFLabel {
-        //                         //             id:                  tokenLabel
-        //                         //             Layout.fillWidth:    true
-        //                         //             font.pixelSize:      14
-        //                         //             color:               Style.content_main
-        //                         //             elide:               Text.ElideMiddle
-        //                         //             text:                "-"
-        //                         //         }
-                                    
-        //                         //         LinkButton {
-        //                         //             //% "Token details"
-        //                         //             text: qsTrId("swap-token-details")
-        //                         //             linkColor: Style.accent_incoming
-        //                         //             // enabled:  thisView.canSend()
-        //                         //             onClicked: {
-        //                         //                 console.log('tokenInfoDialog.open();');
-        //                         //             }
-        //                         //         }
-        //                         //     }
+                                // SFText {
+                                //     Layout.alignment:       Qt.AlignTop
+                                //     font.pixelSize:         14
+                                //     color:                  Style.content_secondary
+                                //     //% "Swap token"
+                                //     text:                   qsTrId("send-swap-token") + ":"
+                                // }
+                                // RowLayout {
+                                //     Layout.fillWidth:        true
+                                //     SFLabel {
+                                //         id:                  tokenLabel
+                                //         Layout.fillWidth:    true
+                                //         font.pixelSize:      14
+                                //         color:               Style.content_main
+                                //         elide:               Text.ElideMiddle
+                                //         text:                viewModel.token
+                                //     }
+                                
+                                //     LinkButton {
+                                //         //% "Token details"
+                                //         text: qsTrId("swap-token-details")
+                                //         linkColor: Style.accent_outgoing
+                                //         onClicked: {
+                                //             tokenInfoDialog.open();
+                                //         }
+                                //     }
+                                // }
 
-        //                         //     CustomButton {
-        //                         //         //% "copy and close"
-        //                         //         text:                qsTrId("general-copy-and-close")
-        //                         //         palette.buttonText:  Style.content_main
-        //                         //         palette.button:      Style.background_button
-        //                         //         icon.source:         enabled ? "qrc:/assets/icon-copy.svg" : "qrc:/assets/icon-copy-gray.svg"
-        //                         //         // enabled:             thisView.canSend()
-        //                         //         onClicked: {
-        //                         //             console.log('copy and close');
-        //                         //         }
-        //                         //     }
-        //                         // }
-        //                     }
-        //                 }
-        //             }
-        //         } // ColumnLayout
-        //     }
+                            } // GridLayoyut
+                        } // ColumnLayout
+                    }
+                }  // ColumnLayout
+            } // RowLayout
 
-        //     //
-        //     // Footer
-        //     //
-        //     RowLayout {
-        //         Layout.alignment:    Qt.AlignHCenter
-        //         Layout.topMargin:    30
-        //         Layout.bottomMargin: 30
-        //         spacing:             30
+            //
+            // Footer
+            //
+            CustomButton {
+                Layout.alignment:    Qt.AlignHCenter
+                Layout.topMargin:    30
+                Layout.bottomMargin: 30
+                //% "Swap"
+                text:                qsTrId("general-swap")
+                palette.buttonText:  Style.content_opposite
+                palette.button:      Style.accent_outgoing
+                icon.source:         "qrc:/assets/icon-create-offer.svg"
+                // enabled:             viewModel.canSend && sendSwapView.isValid()
+                onClicked: {
+                    console.log('Swap');
+                }
+            }  // CustomButton
 
-        //         CustomButton {
-        //             //% "publish offer"
-        //             text:                qsTrId("wallet-receive-swap-publish")
-        //             palette.buttonText:  Style.content_opposite
-        //             icon.color:          Style.content_opposite
-        //             palette.button:      Style.active
-        //             icon.source:         "qrc:/assets/icon-share.svg"
-        //             // enabled:             thisView.canSend()
-        //             onClicked: {
-        //                 console.log('publish offer');
-        //                 viewModel.publishOffer();
-        //                 onClosed();
-        //             }
-        //         }
-        //     }
-        // }  // ColumnLayout
+        }  // ColumnLayout
     } // Scroll
 }
