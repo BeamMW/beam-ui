@@ -3824,5 +3824,13 @@ Please, restart the wallet and try again.</source>
         <source>Expiration</source>
         <translation type="unfinished">Förfaller</translation>
     </message>
+    <message id="swap-cancel-offer">
+        <source>cancel offer</source>
+        <translation type="unfinished">avbryt erbjudande</translation>
+    </message>
+    <message id="swap-accept-offer">
+        <source>accept offer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

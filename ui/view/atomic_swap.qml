@@ -622,7 +622,7 @@ Please try again later or create an offer yourself."
                                 height: offersTable.rowHeight
                                 property var swapCoin: styleData.value
                                 property var isSendBeam: !!model && model.isSendBeam
-                                
+
                                 anchors.fill: parent
                                 anchors.leftMargin: 20
                                 anchors.rightMargin: 20

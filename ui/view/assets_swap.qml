@@ -141,7 +141,7 @@ Item {
                         anchors.topMargin: 12
 
                         RowLayout {
-                            spacing: -4
+                            spacing: -8
                             SvgImage {
                                 z: 1
                                 sourceSize: Qt.size(26, 26)
@@ -216,18 +216,72 @@ Item {
                     delegate: Item {
                         width: parent.width
                         height: ordersTable.rowHeight
-            
-                        SFLabel {
-                            font.pixelSize: 14
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.leftMargin: 20
-                            anchors.rightMargin: 80
-                            elide: Text.ElideMiddle
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: styleData.value ? "cancel" : "accept"
-                            color: Style.content_main
-                            copyMenuEnabled: false
+
+                        anchors.fill: parent
+                        anchors.leftMargin: 20
+                        anchors.topMargin: 16
+
+                        RowLayout {
+                            visible: styleData.value
+                            Layout.fillWidth: true
+                            SvgImage {
+                                z: 1
+                                sourceSize: Qt.size(16, 16)
+                                source: "qrc:/assets/icon-offer-cancel.svg"
+                            }
+                            SFLabel {
+                                Layout.fillWidth: true
+                                font {
+                                    styleName: "Bold"
+                                    weight:    Font.Bold
+                                    pixelSize: 16
+                                }
+                                //% "cancel offer"
+                                text: qsTrId("swap-cancel-offer")
+                                color: Style.accent_fail
+                                copyMenuEnabled: false
+                            }
+                            MouseArea {
+                                x: parent.x
+                                y: parent.y
+                                width: parent.width
+                                height: parent.height
+                                acceptedButtons: Qt.LeftButton
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: {
+                                    console.log('cancel offer');
+                                }
+                            }
+                        }
+                        RowLayout {
+                            visible: !styleData.value
+                            SvgImage {
+                                z: 1
+                                sourceSize: Qt.size(16, 16)
+                                source: "qrc:/assets/icon-offer-accept.svg"
+                            }
+                            SFLabel {
+                                font {
+                                    styleName: "Bold"
+                                    weight:    Font.Bold
+                                    pixelSize: 16
+                                }
+                                //% "accept offer"
+                                text: qsTrId("swap-accept-offer")
+                                color: Style.accent_incoming
+                                copyMenuEnabled: false
+                            }
+                            MouseArea {
+                                x: parent.x
+                                y: parent.y
+                                width: parent.width
+                                height: parent.height
+                                acceptedButtons: Qt.LeftButton
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: {
+                                    console.log('accept offer');
+                                }
+                            }
                         }
                     }
                 }
