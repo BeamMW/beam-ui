@@ -13,6 +13,7 @@
 // limitations under the License.
 #pragma once
 
+#include "model/assets_manager.h"
 #include "viewmodel/helpers/list_model.h"
 #include "wallet/client/extensions/dex_board/asset_swap_order.h"
 #include <QLocale>
@@ -32,7 +33,8 @@ public:
         RRate,
         RIsMine,
         RCreateTime,
-        RExpireTime
+        RExpireTime,
+        RCoins
     };
 
     Q_ENUM(Roles)
@@ -42,4 +44,5 @@ public:
 
 private:
     QLocale m_locale; // default
+    AssetsManager::Ptr m_amgr;
 };

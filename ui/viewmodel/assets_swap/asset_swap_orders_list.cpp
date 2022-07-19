@@ -14,6 +14,7 @@
 
 #include "asset_swap_orders_list.h"
 
+#include "model/app_model.h"
 #include "viewmodel/qml_globals.h"
 #include "viewmodel/ui_helpers.h"
 #include <QDateTime>
@@ -24,6 +25,7 @@ namespace
 } // namespace
 
 AssetSwapOrdersList::AssetSwapOrdersList()
+    : m_amgr(AppModel::getInstance().getAssets())
 {
 }
 
@@ -38,6 +40,7 @@ QHash<int, QByteArray> AssetSwapOrdersList::roleNames() const
         {static_cast<int>(Roles::RIsMine),     "isMine"},
         {static_cast<int>(Roles::RCreateTime), "created"},
         {static_cast<int>(Roles::RExpireTime), "expiration"},
+        {static_cast<int>(Roles::RCoins),      "coins"},
     };
     return roles;
 }
@@ -88,6 +91,13 @@ QVariant AssetSwapOrdersList::data(const QModelIndex &index, int role) const
             QDateTime datetime;
             datetime.setTime_t(order.getExpiration());
             return datetime.toString(m_locale.dateTimeFormat(QLocale::ShortFormat));
+        }
+        case Roles::RCoins:
+        {
+            QVariantMap res;
+            res.insert("sendIcon", m_amgr->getIcon(order.getSendAssetId()));
+            res.insert("receiveIcon", m_amgr->getIcon(order.getReceiveAssetId()));
+            return QVariant::fromValue(res);
         }
 
         default:

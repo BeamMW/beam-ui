@@ -130,6 +130,29 @@ Item {
                     width:     105 * ordersTable.columnResizeRatio
                     movable:   false
                     resizable: false
+
+                    delegate: Item {
+                        width: parent.width
+                        height: ordersTable.rowHeight
+
+                        anchors.fill: parent
+                        anchors.leftMargin: 20
+                        anchors.rightMargin: 20
+                        anchors.topMargin: 12
+
+                        RowLayout {
+                            spacing: -4
+                            SvgImage {
+                                z: 1
+                                sourceSize: Qt.size(26, 26)
+                                source: styleData.value["sendIcon"]
+                            }
+                            SvgImage {
+                                sourceSize: Qt.size(26, 26)
+                                source: styleData.value["receiveIcon"]
+                            }
+                        }
+                    }
                 }
 
                 TableViewColumn {
@@ -192,7 +215,7 @@ Item {
 
                     delegate: Item {
                         width: parent.width
-                        height: contactsView.rowHeight
+                        height: ordersTable.rowHeight
             
                         SFLabel {
                             font.pixelSize: 14
