@@ -19,11 +19,6 @@
 #include "viewmodel/ui_helpers.h"
 #include <QDateTime>
 
-// namespace
-// {
-//     const uint kPrecission = 9;
-// } // namespace
-
 AssetSwapOrdersList::AssetSwapOrdersList()
     : m_amgr(AppModel::getInstance().getAssets())
 {

@@ -14,19 +14,49 @@
 
 #include "asset_swap_accept_view.h"
 
-AssetSwapAcceptViewModel::AssetSwapAcceptViewModel()
-{
+#include "model/app_model.h"
+#include "viewmodel/qml_globals.h"
 
+namespace
+{
+    const char kNoValue[] = "-";
+}
+
+AssetSwapAcceptViewModel::AssetSwapAcceptViewModel()
+    : _walletModel(AppModel::getInstance().getWalletModel())
+    , _amgr(AppModel::getInstance().getAssets())
+{
+    connect(_walletModel.get(), &WalletModel::assetSwapOrdersFinded, this, &AssetSwapAcceptViewModel::onAssetSwapOrdersFinded);
+}
+
+void AssetSwapAcceptViewModel::onAssetSwapOrdersFinded(const beam::wallet::AssetSwapOrder& order)
+{
+    _amountToReceiveGrothes = order.getReceiveAmount();
+    _amountToSendGrothes = order.getSendAmount();
+
+    _receiveAsset = order.getReceiveAssetId();
+    _receiveAssetSname = order.getReceiveAssetSName();
+
+    _sendAsset = order.getSendAssetId();
+    _sendAssetSname = order.getSendAssetSName();
+
+    _offerCreated = order.getCreation();
+    _offerExpires = order.getExpiration();
+    emit orderChanged();
 }
 
 QString AssetSwapAcceptViewModel::getAmountToReceive() const
 {
-    return "100";
+    if (!_amountToReceiveGrothes)
+        return kNoValue;
+    return beamui::AmountToUIString(_amountToReceiveGrothes);
 }
 
 QString AssetSwapAcceptViewModel::getAmountToSend() const
 {
-    return "10";
+    if (!_amountToSendGrothes)
+        return kNoValue;
+    return beamui::AmountToUIString(_amountToSendGrothes);
 }
 
 QString AssetSwapAcceptViewModel::getFee() const
@@ -36,12 +66,22 @@ QString AssetSwapAcceptViewModel::getFee() const
 
 QString AssetSwapAcceptViewModel::getOfferCreated() const
 {
-    return "-";
+    if (!_offerCreated)
+        return kNoValue;
+
+    QDateTime datetime;
+    datetime.setTime_t(_offerCreated);
+    return datetime.toString(_locale.dateTimeFormat(QLocale::ShortFormat));
 }
 
 QString AssetSwapAcceptViewModel::getOfferExpires() const
 {
-    return "-";
+    if (!_offerExpires)
+        return kNoValue;
+
+    QDateTime datetime;
+    datetime.setTime_t(_offerExpires);
+    return datetime.toString(_locale.dateTimeFormat(QLocale::ShortFormat));
 }
 
 QString AssetSwapAcceptViewModel::getComment() const
@@ -57,5 +97,59 @@ void AssetSwapAcceptViewModel::setComment(QString value)
 
 QString AssetSwapAcceptViewModel::getRate() const
 {
-    return "-";
+    if (!_amountToReceiveGrothes || !_amountToSendGrothes)
+        return kNoValue;
+
+    return QMLGlobals::divideWithPrecision(
+                beamui::AmountToUIString(_amountToReceiveGrothes),
+                beamui::AmountToUIString(_amountToSendGrothes),
+                beam::wallet::kAssetSwapOrderRatePrecission);
+}
+
+QString AssetSwapAcceptViewModel::getOrderId() const
+{
+    return QString::fromStdString(_orderId.to_string());
+}
+
+void AssetSwapAcceptViewModel::setOrderId(QString value)
+{
+    beam::wallet::DexOrderID dexOrderId;
+    if (dexOrderId.FromHex(value.toStdString()))
+    {
+        _orderId = dexOrderId;
+        _walletModel->getAsync()->getAssetSwapOrder(dexOrderId);
+    }
+    else
+    {
+        _errorStr = "DexView::acceptOrder bad order id";
+    }
+}
+
+QList<QMap<QString, QVariant>> AssetSwapAcceptViewModel::getSendCurrencies() const
+{
+    return getCurrenciesList(_sendAsset, _sendAssetSname);
+}
+
+QList<QMap<QString, QVariant>> AssetSwapAcceptViewModel::getReceiveCurrencies() const
+{
+    return getCurrenciesList(_receiveAsset, _receiveAssetSname);
+}
+
+QList<QMap<QString, QVariant>> AssetSwapAcceptViewModel::getCurrenciesList(
+    beam::Asset::ID assetId, const std::string& assetSname) const
+{
+    QList<QMap<QString, QVariant>> result;
+    QMap<QString, QVariant> info;
+
+    info.insert("isBEAM",     assetId == beam::Asset::s_BeamID);
+    info.insert("unitName",   QString::fromStdString(assetSname));
+    info.insert("icon",       _amgr->getIcon(assetId));
+    info.insert("iconWidth",  22);
+    info.insert("iconHeight", 22);
+    info.insert("rate",       "-");
+    info.insert("rateUnit",   "-");
+
+    result.push_back(info);
+
+    return result;
 }

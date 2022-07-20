@@ -33,6 +33,8 @@ namespace
 AssetSwapCreateViewModel::AssetSwapCreateViewModel()
     : _walletModel(AppModel::getInstance().getWalletModel())
     , _amgr(AppModel::getInstance().getAssets())
+    , _receiveAssetSname(kBeamAssetSName)
+    , _sendAssetSname(kBeamAssetSName)
 {
     connect(_walletModel.get(), &WalletModel::generatedNewAddress, this, &AssetSwapCreateViewModel::onGeneratedNewAddress);
 

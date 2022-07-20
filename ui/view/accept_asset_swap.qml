@@ -17,6 +17,7 @@ ColumnLayout {
 
     AssetSwapAcceptViewModel {
         id: viewModel
+        orderId: thisView.orderId
     }
 
     TopGradient {
@@ -79,7 +80,7 @@ ColumnLayout {
                         AmountInput {
                             id:           sendAmountInput
                             amount:       viewModel.amountToSend
-                            currencies:   [{"unitName":"BEAM", "isBeam": true, "rate": "-", "rateUnit": "-", "icon": "qrc:/assets/icon-beam.svg", "iconWidth": 22, "iconHeight": 22}]
+                            currencies:   viewModel.sendCurrencies
                             currencyIdx:  0
                             readOnlyA:    true
                             multi:        false
@@ -141,7 +142,7 @@ ColumnLayout {
                         AmountInput {
                             id:            receiveAmountInput
                             amount:        viewModel.amountToReceive
-                            currencies:    [{"unitName":"ASSET", "rate": "-", "rateUnit": "-", "icon": "qrc:/assets/asset-1.svg", "iconWidth": 22, "iconHeight": 22}]
+                            currencies:    viewModel.receiveCurrencies
                             currencyIdx:   0
                             readOnlyA:     true
                             multi:         false
