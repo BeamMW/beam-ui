@@ -16,6 +16,7 @@
 
 #include "model/app_model.h"
 #include "viewmodel/qml_globals.h"
+#include "wallet/transactions/dex/dex_tx.h"
 
 namespace
 {
@@ -29,8 +30,22 @@ AssetSwapAcceptViewModel::AssetSwapAcceptViewModel()
     connect(_walletModel.get(), &WalletModel::assetSwapOrdersFinded, this, &AssetSwapAcceptViewModel::onAssetSwapOrdersFinded);
 }
 
+void AssetSwapAcceptViewModel::startSwap()
+{
+    auto params = beam::wallet::CreateDexTransactionParams(
+                    _orderId,
+                    _sbbsID,
+                    _sendAsset,
+                    _amountToSendGrothes,
+                    _receiveAsset,
+                    _amountToReceiveGrothes);
+
+    _walletModel->getAsync()->startTransaction(std::move(params));
+}
+
 void AssetSwapAcceptViewModel::onAssetSwapOrdersFinded(const beam::wallet::AssetSwapOrder& order)
 {
+    _sbbsID = order.getSBBSID();
     _amountToReceiveGrothes = order.getReceiveAmount();
     _amountToSendGrothes = order.getSendAmount();
 

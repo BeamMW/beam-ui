@@ -36,6 +36,7 @@ class AssetSwapAcceptViewModel: public QObject
 
   public:
     AssetSwapAcceptViewModel();
+    Q_INVOKABLE void startSwap();
 
   signals:
     void orderChanged();
@@ -66,6 +67,7 @@ class AssetSwapAcceptViewModel: public QObject
     AssetsManager::Ptr _amgr;
     QLocale _locale;
     beam::wallet::DexOrderID _orderId;
+    beam::wallet::WalletID   _sbbsID;
 
     beam::Amount _amountToReceiveGrothes = 0;
     beam::Amount _amountToSendGrothes = 0;

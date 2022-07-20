@@ -283,7 +283,8 @@ ColumnLayout {
                 icon.source:         "qrc:/assets/icon-create-offer.svg"
                 // enabled:             viewModel.canSend && sendSwapView.isValid()
                 onClicked: {
-                    console.log('Swap');
+                    viewModel.startSwap()
+                    thisView.onClosed()
                 }
             }  // CustomButton
 
