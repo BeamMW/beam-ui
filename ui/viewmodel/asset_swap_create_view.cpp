@@ -18,6 +18,7 @@
 #include "viewmodel/ui_helpers.h"
 // #include "wallet/client/extensions/dex_board/dex_order.h"
 #include "wallet/client/extensions/dex_board/asset_swap_order.h"
+#include "wallet/transactions/dex/dex_tx.h"
 // #include "viewmodel/dex/dex_orders_list.h"
 
 #include <qdebug.h>
@@ -55,23 +56,12 @@ void AssetSwapCreateViewModel::publishOffer()
 
     _walletModel->getAsync()->saveAddress(_receiverAddress);
 
-    // DexOrder order(
-    //     DexOrderID::generate(),
-    //     _receiverAddress.m_walletID,
-    //     _receiverAddress.m_OwnID,
-    //     DexMarket(_sendAsset, _receiveAsset),
-    //     DexMarketSide::Sell,
-    //     _amountSendGrothes,
-    //     _amountToReceiveGrothes,
-    //     expires
-    //     );
-
     AssetSwapOrder orderObj(
         DexOrderID::generate(),
         _receiverAddress.m_walletID,
         _receiverAddress.m_OwnID,
         _sendAsset,
-        _amountSendGrothes,
+        _amountToSendGrothes,
         _sendAssetSname,
         _receiveAsset,
         _amountToReceiveGrothes,
@@ -79,8 +69,17 @@ void AssetSwapCreateViewModel::publishOffer()
         _offerExpires
     );
 
-    // _walletModel->getAsync()->publishDexOrder(order);
     _walletModel->getAsync()->publishAssetSwapOrder(orderObj);
+
+    // auto params = beam::wallet::CreateDexTransactionParams(
+    //                 orderObj.getID(),
+    //                 _receiverAddress.m_walletID,
+    //                 _sendAsset,
+    //                 _amountToSendGrothes,
+    //                 _receiveAsset,
+    //                 _amountToReceiveGrothes);
+
+    // _walletModel->getAsync()->startTransaction(std::move(params));
 }
 
 void AssetSwapCreateViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& addr)
@@ -117,15 +116,15 @@ void AssetSwapCreateViewModel::setAmountToReceive(QString value)
 
 QString AssetSwapCreateViewModel::getAmountToSend() const
 {
-    return beamui::AmountToUIString(_amountSendGrothes);
+    return beamui::AmountToUIString(_amountToSendGrothes);
 }
 
 void AssetSwapCreateViewModel::setAmountToSend(QString value)
 {
     auto amount = beamui::UIStringToAmount(value);
-    if (amount != _amountSendGrothes)
+    if (amount != _amountToSendGrothes)
     {
-        _amountSendGrothes = amount;
+        _amountToSendGrothes = amount;
         emit amountSendChanged();
         emit rateChanged();
     }
@@ -195,10 +194,10 @@ QString AssetSwapCreateViewModel::getComment() const
 
 QString AssetSwapCreateViewModel::getRate() const
 {
-    if (!_amountSendGrothes || !_amountToReceiveGrothes) return "-";
+    if (!_amountToSendGrothes || !_amountToReceiveGrothes) return "-";
     return QMLGlobals::divideWithPrecision(
                 beamui::AmountToUIString(_amountToReceiveGrothes),
-                beamui::AmountToUIString(_amountSendGrothes),
+                beamui::AmountToUIString(_amountToSendGrothes),
                 beam::wallet::kAssetSwapOrderRatePrecission);
 }
 

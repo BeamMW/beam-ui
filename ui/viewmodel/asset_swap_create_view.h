@@ -91,7 +91,7 @@ class AssetSwapCreateViewModel: public QObject
     beam::wallet::WalletAddress _receiverAddress;
 
     beam::Amount _amountToReceiveGrothes = 0;
-    beam::Amount _amountSendGrothes = 0;
+    beam::Amount _amountToSendGrothes = 0;
 
     beam::Asset::ID  _receiveAsset = 0;
     std::string      _receiveAssetSname;
