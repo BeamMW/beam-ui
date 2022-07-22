@@ -79,7 +79,7 @@ Item {
 
             }
 
-            AssetsSwapOrdersModel {
+            DexOrdersModel {
                 id: ordersModel
             }
 

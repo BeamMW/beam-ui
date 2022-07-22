@@ -15,15 +15,15 @@
 
 #include "model/assets_manager.h"
 #include "viewmodel/helpers/list_model.h"
-#include "wallet/client/extensions/dex_board/asset_swap_order.h"
+#include "wallet/client/extensions/dex_board/dex_order.h"
 #include <QLocale>
 
-class AssetSwapOrdersList : public ListModel<beam::wallet::AssetSwapOrder>
+class DexOrdersList : public ListModel<beam::wallet::DexOrder>
 {
     Q_OBJECT
 public:
-    AssetSwapOrdersList();
-    ~AssetSwapOrdersList() override = default;
+    DexOrdersList();
+    ~DexOrdersList() override = default;
 
     enum class Roles
     {

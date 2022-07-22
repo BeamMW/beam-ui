@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "asset_swap_orders_list.h"
+#include "dex_orders_list.h"
 
 #include "model/app_model.h"
 #include "viewmodel/qml_globals.h"
 #include "viewmodel/ui_helpers.h"
 #include <QDateTime>
 
-AssetSwapOrdersList::AssetSwapOrdersList()
+DexOrdersList::DexOrdersList()
     : m_amgr(AppModel::getInstance().getAssets())
 {
 }
 
-QHash<int, QByteArray> AssetSwapOrdersList::roleNames() const
+QHash<int, QByteArray> DexOrdersList::roleNames() const
 {
     static const auto roles = QHash<int, QByteArray>
     {
@@ -40,7 +40,7 @@ QHash<int, QByteArray> AssetSwapOrdersList::roleNames() const
     return roles;
 }
 
-QVariant AssetSwapOrdersList::data(const QModelIndex &index, int role) const
+QVariant DexOrdersList::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || index.row() < 0 || index.row() >= m_list.size())
     {
@@ -69,7 +69,7 @@ QVariant AssetSwapOrdersList::data(const QModelIndex &index, int role) const
             return QMLGlobals::divideWithPrecision(
                 beamui::AmountToUIString(order.getReceiveAmount()),
                 beamui::AmountToUIString(order.getSendAmount()),
-                beam::wallet::kAssetSwapOrderRatePrecission);
+                beam::wallet::kDexOrderRatePrecission);
         }
         case Roles::RIsMine:
         {

@@ -15,16 +15,16 @@
 
 #include <QObject>
 #include "model/wallet_model.h"
-#include "asset_swap_orders_list.h"
+#include "dex_orders_list.h"
 
-class AssetsSwapOrdersModel : public QObject
+class DexOrdersModel : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QAbstractItemModel* orders READ getOrders NOTIFY ordersChanged)
 
 public:
-    AssetsSwapOrdersModel();
-    ~AssetsSwapOrdersModel();
+    DexOrdersModel();
+    ~DexOrdersModel();
 
     QAbstractItemModel* getOrders();
 
@@ -32,9 +32,9 @@ signals:
     void ordersChanged();
 
 public slots:
-    void onAssetSwapOrdersChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::AssetSwapOrder>&);
+    void onDexOrdersChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::DexOrder>&);
 
 private:
     WalletModel::Ptr _walletModel;
-    AssetSwapOrdersList _orders;
+    DexOrdersList _orders;
 };

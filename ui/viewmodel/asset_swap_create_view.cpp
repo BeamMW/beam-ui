@@ -16,10 +16,8 @@
 #include "model/app_model.h"
 #include "viewmodel/qml_globals.h"
 #include "viewmodel/ui_helpers.h"
-// #include "wallet/client/extensions/dex_board/dex_order.h"
-#include "wallet/client/extensions/dex_board/asset_swap_order.h"
+#include "wallet/client/extensions/dex_board/dex_order.h"
 #include "wallet/transactions/dex/dex_tx.h"
-// #include "viewmodel/dex/dex_orders_list.h"
 
 #include <qdebug.h>
 
@@ -56,7 +54,7 @@ void AssetSwapCreateViewModel::publishOffer()
 
     _walletModel->getAsync()->saveAddress(_receiverAddress);
 
-    AssetSwapOrder orderObj(
+    DexOrder orderObj(
         DexOrderID::generate(),
         _receiverAddress.m_walletID,
         _receiverAddress.m_OwnID,
@@ -69,23 +67,13 @@ void AssetSwapCreateViewModel::publishOffer()
         _offerExpires
     );
 
-    _walletModel->getAsync()->publishAssetSwapOrder(orderObj);
-
-    // auto params = beam::wallet::CreateDexTransactionParams(
-    //                 orderObj.getID(),
-    //                 _receiverAddress.m_walletID,
-    //                 _sendAsset,
-    //                 _amountToSendGrothes,
-    //                 _receiveAsset,
-    //                 _amountToReceiveGrothes);
-
-    // _walletModel->getAsync()->startTransaction(std::move(params));
+    _walletModel->getAsync()->publishDexOrder(orderObj);
 }
 
 void AssetSwapCreateViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& addr)
 {
     _receiverAddress = addr;
-    _walletModel->getAsync()->loadAssetSwapParams();
+    _walletModel->getAsync()->loadDexOrderParams();
 }
 
 QList<QMap<QString, QVariant>> AssetSwapCreateViewModel::getCurrenciesList() const
@@ -198,7 +186,7 @@ QString AssetSwapCreateViewModel::getRate() const
     return QMLGlobals::divideWithPrecision(
                 beamui::AmountToUIString(_amountToReceiveGrothes),
                 beamui::AmountToUIString(_amountToSendGrothes),
-                beam::wallet::kAssetSwapOrderRatePrecission);
+                beam::wallet::kDexOrderRatePrecission);
 }
 
 // void AssetSwapCreateViewModel::setTransactionToken(const QString& value)

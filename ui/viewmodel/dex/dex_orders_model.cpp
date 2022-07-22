@@ -12,31 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "asset_swap_orders_model.h"
+#include "dex_orders_model.h"
 
 #include "model/app_model.h"
 
 #include <qdebug.h>
 
-AssetsSwapOrdersModel::AssetsSwapOrdersModel()
+DexOrdersModel::DexOrdersModel()
     : _walletModel(AppModel::getInstance().getWalletModel())
 {
-    connect(_walletModel.get(), &WalletModel::assetSwapOrdersChanged, this, &AssetsSwapOrdersModel::onAssetSwapOrdersChanged);
+    connect(_walletModel.get(), &WalletModel::dexOrdersChanged, this, &DexOrdersModel::onDexOrdersChanged);
 
-    _walletModel->getAsync()->getAssetSwapOrders();
+    _walletModel->getAsync()->getDexOrders();
 }
 
-AssetsSwapOrdersModel::~AssetsSwapOrdersModel()
+DexOrdersModel::~DexOrdersModel()
 {
 }
 
-QAbstractItemModel* AssetsSwapOrdersModel::getOrders()
+QAbstractItemModel* DexOrdersModel::getOrders()
 {
     return &_orders;
 }
 
-void AssetsSwapOrdersModel::onAssetSwapOrdersChanged(
-    beam::wallet::ChangeAction action, const std::vector<beam::wallet::AssetSwapOrder>& orders)
+void DexOrdersModel::onDexOrdersChanged(
+    beam::wallet::ChangeAction action, const std::vector<beam::wallet::DexOrder>& orders)
 {
     using ChangeAction = beam::wallet::ChangeAction;
 

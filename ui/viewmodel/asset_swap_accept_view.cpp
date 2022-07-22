@@ -27,7 +27,7 @@ AssetSwapAcceptViewModel::AssetSwapAcceptViewModel()
     : _walletModel(AppModel::getInstance().getWalletModel())
     , _amgr(AppModel::getInstance().getAssets())
 {
-    connect(_walletModel.get(), &WalletModel::assetSwapOrdersFinded, this, &AssetSwapAcceptViewModel::onAssetSwapOrdersFinded);
+    connect(_walletModel.get(), &WalletModel::dexOrdersFinded, this, &AssetSwapAcceptViewModel::onDexOrdersFinded);
 }
 
 void AssetSwapAcceptViewModel::startSwap()
@@ -43,7 +43,7 @@ void AssetSwapAcceptViewModel::startSwap()
     _walletModel->getAsync()->startTransaction(std::move(params));
 }
 
-void AssetSwapAcceptViewModel::onAssetSwapOrdersFinded(const beam::wallet::AssetSwapOrder& order)
+void AssetSwapAcceptViewModel::onDexOrdersFinded(const beam::wallet::DexOrder& order)
 {
     _sbbsID = order.getSBBSID();
     _amountToReceiveGrothes = order.getReceiveAmount();
@@ -118,7 +118,7 @@ QString AssetSwapAcceptViewModel::getRate() const
     return QMLGlobals::divideWithPrecision(
                 beamui::AmountToUIString(_amountToReceiveGrothes),
                 beamui::AmountToUIString(_amountToSendGrothes),
-                beam::wallet::kAssetSwapOrderRatePrecission);
+                beam::wallet::kDexOrderRatePrecission);
 }
 
 QString AssetSwapAcceptViewModel::getOrderId() const
@@ -132,11 +132,11 @@ void AssetSwapAcceptViewModel::setOrderId(QString value)
     if (dexOrderId.FromHex(value.toStdString()))
     {
         _orderId = dexOrderId;
-        _walletModel->getAsync()->getAssetSwapOrder(dexOrderId);
+        _walletModel->getAsync()->getDexOrder(dexOrderId);
     }
     else
     {
-        _errorStr = "DexView::acceptOrder bad order id";
+        _errorStr = "DexView::setOrderId bad order id";
     }
 }
 

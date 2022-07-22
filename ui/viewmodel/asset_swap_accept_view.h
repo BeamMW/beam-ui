@@ -43,7 +43,7 @@ class AssetSwapAcceptViewModel: public QObject
     void commentChanged();
 
   private slots:
-    void onAssetSwapOrdersFinded(const beam::wallet::AssetSwapOrder& order);
+    void onDexOrdersFinded(const beam::wallet::DexOrder& order);
 
   private:
     QString getAmountToReceive() const;
