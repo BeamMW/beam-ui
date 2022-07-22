@@ -2154,53 +2154,6 @@ Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernst
         <source>This is your dev application</source>
         <translation>Dit is uw ontwikkelaar applicatie</translation>
     </message>
-    <message id="dex-all-tab">
-        <source>All orders</source>
-        <oldsource>All offers</oldsource>
-        <translation>Alle orders</translation>
-    </message>
-    <message id="dex-my-tab">
-        <source>Opened by me</source>
-        <translation>Door mij geopend</translation>
-    </message>
-    <message id="dex-other-tab">
-        <source>Opened by other users</source>
-        <translation>Geopend door andere gebruikers</translation>
-    </message>
-    <message id="dex-type">
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message id="dex-price">
-        <source>Price</source>
-        <translation>Prijs</translation>
-    </message>
-    <message id="dex-size">
-        <source>Size</source>
-        <translation>Grootte</translation>
-    </message>
-    <message id="dex-total">
-        <source>Total</source>
-        <translation>Totaal</translation>
-    </message>
-    <message id="dex-expiration">
-        <source>Expiration</source>
-        <translation>Vervaltijd</translation>
-    </message>
-    <message id="dex-accept-order">
-        <source>Accept Order</source>
-        <translation>Order accepteren</translation>
-    </message>
-    <message id="dex-no-orders">
-        <source>There are no active orders at the moment.
-Please try again later or create an offer yourself.</source>
-        <translation>Er zijn op dit moment geen actieve orders.
-Probeer het later opnieuw of maak zelf een aanbieding aan.</translation>
-    </message>
-    <message id="dex-title">
-        <source>Order Book</source>
-        <translation>Orderboek</translation>
-    </message>
     <message id="send-flat-fee">
         <source>%1 Transaction fee</source>
         <translation>%1 Transactiekosten</translation>
@@ -2801,18 +2754,6 @@ Update uw instellingen en probeer opnieuw.</translation>
     <message id="tx-details-confirmation-progress-label">
         <source>Confirmed (%1)</source>
         <translation>Bevestigd (%1)</translation>
-    </message>
-    <message id="dex-order-expired">
-        <source>Expired</source>
-        <translation>Verlopen</translation>
-    </message>
-    <message id="dex-order-active">
-        <source>Active</source>
-        <translation>Actief</translation>
-    </message>
-    <message id="dex-progress">
-        <source>Progress</source>
-        <translation>Voortgang</translation>
     </message>
     <message id="general-copy-and-close">
         <source>copy and close</source>

@@ -68,7 +68,6 @@ signals:
     void addressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>& addresses);
     void addressesChanged(bool own, const std::vector<beam::wallet::WalletAddress>& addresses);
     void swapOffersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::SwapOffer>& offers);
-    void dexOrdersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::DexOrder>& offers);
     void assetSwapOrdersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::AssetSwapOrder>& orders);
     void assetSwapOrdersFinded(const beam::wallet::AssetSwapOrder& order);
     void generatedNewAddress(const beam::wallet::WalletAddress& walletAddr);
@@ -108,7 +107,6 @@ private:
     void onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& items) override;
     void onAddressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>& items) override;
     void onAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addrs) override;
-    void onDexOrdersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::DexOrder>& offers) override;
     void onAssetSwapOrdersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::AssetSwapOrder>& offers) override;
     void onFindAssetSwapOrder(const beam::wallet::AssetSwapOrder& order) override;
 

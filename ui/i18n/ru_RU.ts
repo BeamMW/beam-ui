@@ -2164,53 +2164,6 @@ much longer for a transaction to complete.</oldsource>
         <source>This is your dev application</source>
         <translation>Это ваше разрабатываемое приложение</translation>
     </message>
-    <message id="dex-all-tab">
-        <source>All orders</source>
-        <oldsource>All offers</oldsource>
-        <translation>Все заявки</translation>
-    </message>
-    <message id="dex-my-tab">
-        <source>Opened by me</source>
-        <translation>Открытые мною</translation>
-    </message>
-    <message id="dex-other-tab">
-        <source>Opened by other users</source>
-        <translation>Открытые другими пользователями</translation>
-    </message>
-    <message id="dex-type">
-        <source>Type</source>
-        <translation>Тип</translation>
-    </message>
-    <message id="dex-price">
-        <source>Price</source>
-        <translation>Цена</translation>
-    </message>
-    <message id="dex-size">
-        <source>Size</source>
-        <translation>Размер</translation>
-    </message>
-    <message id="dex-total">
-        <source>Total</source>
-        <translation>Всего</translation>
-    </message>
-    <message id="dex-expiration">
-        <source>Expiration</source>
-        <translation>Срок действия</translation>
-    </message>
-    <message id="dex-accept-order">
-        <source>Accept Order</source>
-        <translation>Принять заказ</translation>
-    </message>
-    <message id="dex-no-orders">
-        <source>There are no active orders at the moment.
-Please try again later or create an offer yourself.</source>
-        <translation>На данный момент активных заказов нет.
-Пожалуйста, повторите попытку позже или создайте заказ самостоятельно.</translation>
-    </message>
-    <message id="dex-title">
-        <source>Order Book</source>
-        <translation>Книга заказов</translation>
-    </message>
     <message id="send-flat-fee">
         <source>%1 Transaction fee</source>
         <translation>Комиссия за транзакцию для %1</translation>
@@ -2812,18 +2765,6 @@ Update your settings and try again.</oldsource>
     <message id="tx-details-confirmation-progress-label">
         <source>Confirmed (%1)</source>
         <translation>Подтверждено (%1)</translation>
-    </message>
-    <message id="dex-order-expired">
-        <source>Expired</source>
-        <translation>Просрочено</translation>
-    </message>
-    <message id="dex-order-active">
-        <source>Active</source>
-        <translation>Действующие</translation>
-    </message>
-    <message id="dex-progress">
-        <source>Progress</source>
-        <translation>Прогресс</translation>
     </message>
     <message id="general-copy-and-close">
         <source>copy and close</source>

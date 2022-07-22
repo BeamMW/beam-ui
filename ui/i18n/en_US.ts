@@ -2151,52 +2151,6 @@ much longer for a transaction to complete.</oldsource>
         <source>This is your dev application</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="dex-all-tab">
-        <source>All orders</source>
-        <oldsource>All offers</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-my-tab">
-        <source>Opened by me</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-other-tab">
-        <source>Opened by other users</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-type">
-        <source>Type</source>
-        <translation type="unfinished">Type</translation>
-    </message>
-    <message id="dex-price">
-        <source>Price</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-size">
-        <source>Size</source>
-        <translation type="unfinished">Size</translation>
-    </message>
-    <message id="dex-total">
-        <source>Total</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-expiration">
-        <source>Expiration</source>
-        <translation type="unfinished">Expiration</translation>
-    </message>
-    <message id="dex-accept-order">
-        <source>Accept Order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-no-orders">
-        <source>There are no active orders at the moment.
-Please try again later or create an offer yourself.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-title">
-        <source>Order Book</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="send-flat-fee">
         <source>%1 Transaction fee</source>
         <translation type="unfinished"></translation>
@@ -2799,18 +2753,6 @@ Update your settings and try again.</oldsource>
     <message id="tx-details-confirmation-progress-label">
         <source>Confirmed (%1)</source>
         <translation>Confirmed (%1)</translation>
-    </message>
-    <message id="dex-order-expired">
-        <source>Expired</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-order-active">
-        <source>Active</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dex-progress">
-        <source>Progress</source>
-        <translation type="unfinished"></translation>
     </message>
     <message id="general-copy-and-close">
         <source>copy and close</source>

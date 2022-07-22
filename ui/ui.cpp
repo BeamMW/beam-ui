@@ -67,7 +67,6 @@
 #include "model/translator.h"
 #include "viewmodel/applications/public.h"
 #include "model/qr.h"
-#include "viewmodel/dex/dex_view.h"
 #include "viewmodel/window_event_filter.h"
 
 #if defined(BEAM_USE_STATIC_QT)
@@ -297,7 +296,6 @@ int main (int argc, char* argv[])
             qmlRegisterType<SortFilterProxyModel>("Beam.Wallet", 1, 0, "SortFilterProxyModel");
             qmlRegisterType<SeedValidationHelper>("Beam.Wallet", 1, 0, "SeedValidationHelper");
             qmlRegisterType<QR>("Beam.Wallet", 1, 0, "QR");
-            qmlRegisterType<beamui::dex::DexView>("Beam.Wallet", 1, 0, "DexViewModel");
             qmlRegisterType<AppNotificationHelper>("Beam.Wallet", 1, 0, "AppNotificationHelper");
             qmlRegisterType<AssetSwapCreateViewModel>("Beam.Wallet", 1, 0, "AssetSwapCreateViewModel");
             qmlRegisterType<AssetsSwapOrdersModel>("Beam.Wallet", 1, 0, "AssetsSwapOrdersModel");

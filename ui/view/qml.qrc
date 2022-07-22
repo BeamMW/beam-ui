@@ -110,8 +110,6 @@
         <file>wallet/TransactionsSearchHighlighter.qml</file>
         <file>wallet/CoinsList.qml</file>
         <file>wallet/SeedValidationPanel.qml</file>
-        <file>dex/MarketPanel.qml</file>
-        <file>dex/MarketTable.qml</file>
         <file>applications/applications.qml</file>
         <file>applications/applications_nofork.qml</file>
         <file>applications/AppButton.qml</file>
@@ -145,7 +143,6 @@
         <file>send_confirm.qml</file>
         <file>swap_confirm.qml</file>
         <file>send_expired.qml</file>
-        <file>dex.qml</file>
         <file>assets/fonts/Proxima Nova Black Italic.otf</file>
         <file>assets/fonts/Proxima Nova Black.otf</file>
         <file>assets/fonts/Proxima Nova Bold Italic.otf</file>

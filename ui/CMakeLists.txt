@@ -208,10 +208,6 @@ set(UI_SRC
         model/assets_manager.h
         model/assets_manager.cpp
     viewmodel/applications/webapi_creator.cpp
-    viewmodel/dex/dex_view.h
-    viewmodel/dex/dex_view.cpp
-    viewmodel/dex/dex_order_object.cpp
-    viewmodel/dex/dex_orders_list.cpp
     viewmodel/window_event_filter.h
     viewmodel/window_event_filter.cpp
     viewmodel/assets_swap/asset_swap_orders_model.h
