@@ -79,6 +79,77 @@ Item {
 
             }
 
+            Item {
+                id: tabSelector
+                Layout.fillWidth: true
+                Layout.topMargin: 25
+                Layout.bottomMargin: 15
+                height: 18
+
+                state: "offers"
+                states: [
+                    State {
+                        name: "offers"
+                        PropertyChanges { target: offersTab; state: "active" }
+                    },
+                    State {
+                        name: "transactions"
+                        PropertyChanges { target: txsTab; state: "active" }
+                    }
+                ]
+            
+                RowLayout {
+                    spacing: 25
+
+                    TxFilter {
+                        id: offersTab
+                        //% "Offers"
+                        label: qsTrId("dex-offers")
+                        Layout.alignment: Qt.AlignVCenter
+
+                        onClicked: function () {
+                            tabSelector.state = "offers"
+                        }
+
+                        showLed: false
+                        opacity: this.state != "active" ? 0.5 : 1
+                        activeColor: Style.active
+                        inactiveColor: Style.content_main
+
+                        font {
+                            styleName:      "Bold"
+                            weight:         Font.Bold
+                            pixelSize:      14
+                            letterSpacing:  3.11
+                            capitalization: Font.AllUppercase
+                        }
+                    }
+
+                    TxFilter {
+                        id: txsTab
+                        label: qsTrId("wallet-transactions-title")
+                        Layout.alignment: Qt.AlignVCenter
+
+                        onClicked: function () {
+                            tabSelector.state = "transactions"
+                        }
+
+                        showLed: false
+                        opacity: this.state != "active" ? 0.5 : 1
+                        activeColor: Style.active
+                        inactiveColor: Style.content_main
+
+                        font {
+                            styleName:      "Bold"
+                            weight:         Font.Bold
+                            pixelSize:      14
+                            letterSpacing:  3.11
+                            capitalization: Font.AllUppercase
+                        }
+                    }
+                }
+            }
+
             DexOrdersModel {
                 id: ordersModel
             }
@@ -88,7 +159,6 @@ Item {
                 Layout.alignment:     Qt.AlignTop
                 Layout.fillWidth:     true
                 Layout.fillHeight:    true
-                Layout.topMargin:     25
                 Layout.bottomMargin:  9
 
                 selectionMode: SelectionMode.NoSelection
@@ -101,7 +171,7 @@ Item {
 
                     source: ordersModel.orders
                 }
-                visible: model.count > 0
+                visible: tabSelector.state == "offers" && model.count > 0
 
                 property real rowHeight: 56
                 property double columnResizeRatio: width / 1000
@@ -296,11 +366,20 @@ Item {
                 }
             }
 
-            Item {
-                Layout.topMargin:  25
+            TxTable {
                 Layout.fillWidth:  true
                 Layout.fillHeight: true
-                visible:           !ordersTable.visible
+                id: txTable
+                owner: assetsSwapComponent
+                headerShaderVisible: false
+                dexFilter: true
+                visible: tabSelector.state == "transactions"
+            }
+
+            Item {
+                Layout.fillWidth:  true
+                Layout.fillHeight: true
+                visible:           tabSelector.state == "offers" && !ordersTable.visible
             }
 
         }

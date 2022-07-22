@@ -20,6 +20,7 @@ Control {
     property int       emptyMessageMargin: 90
     property int       activeTxCnt: 0
     property alias     headerShaderVisible: transactionsTable.headerShaderVisible
+    property bool      dexFilter: false
     property var       dappFilter: undefined
     readonly property  bool sourceVisible: dappFilter ? dappFilter == "all" : true
     readonly property  bool actionVisible: dappFilter !== undefined && dappFilter != "all"
@@ -431,7 +432,15 @@ Control {
                                 filterString: dappFilter ? (dappFilter == "all" ? "true" : dappFilter) : ""
                                 filterSyntax: SortFilterProxyModel.FixedString
                                 filterCaseSensitivity: Qt.CaseInsensitive
-                                source: tableViewModel.transactions
+
+                                source: SortFilterProxyModel {
+                                    id:           dexFilterProxy
+                                    filterRole:   dexFilter ? "isDexTx" : ""
+                                    filterString: dexFilter ? "true" : ""
+                                    filterSyntax: SortFilterProxyModel.FixedString
+                                    filterCaseSensitivity: Qt.CaseInsensitive
+                                    source: tableViewModel.transactions
+                                }
                             }
                         }
                     }

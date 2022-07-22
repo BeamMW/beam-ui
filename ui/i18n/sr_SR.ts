@@ -3794,5 +3794,9 @@ Please, restart the wallet and try again.</source>
         <source>Transaction fee</source>
         <translation type="unfinished">Transaction fee</translation>
     </message>
+    <message id="dex-offers">
+        <source>Offers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
