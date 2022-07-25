@@ -87,6 +87,7 @@ namespace beamui::applications
         Q_INVOKABLE void changePublisherInfo(const QVariantMap& publisherInfo, bool isCreating);
         Q_INVOKABLE void contractInfoApproved(int action, const QString& data);
         Q_INVOKABLE void contractInfoRejected();
+        Q_INVOKABLE void prepareToLaunchApp();
 
         Q_INVOKABLE [[nodiscard]] QList<QVariantMap> getPublisherDApps(const QString& publisherKey);
 
@@ -109,10 +110,14 @@ namespace beamui::applications
         void publisherEditFail();
         void appInstallOK(const QString& appName);
         void appInstallFail(const QString& appName);
+        void appInstallTimeoutFail(const QString& appName);
+        void appUpdateFail(const QString& appName);
+        void appUpdateTimeoutFail(const QString& appName);
         void appPublishFail();
         void appRemoveFail();
         void showDAppStoreTxPopup(const QString& comment, const QString& txid);
         void isIPFSAvailableChanged();
+        void stopProgress(const QString& appGuid);
 
     private:
         [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;

@@ -61,6 +61,7 @@ namespace
     const char* kDevAppApiVer    = "devapp/api_version";
     const char* kDevAppMinApiVer = "devapp/min_api_version";
     const char* kLocalAppsPort   = "apps/local_port";
+    const char* kShadersPrivLvl  = "apps/shaders_privilege";
     const char* kIPFSPrefix      = "ipfsnode/";
     const char* kIPFSNodeStart   = "ipfs_node_start";
 
@@ -767,6 +768,19 @@ QString WalletSettings::getDevAppMinApiVer() const
     return m_data.value(kDevAppMinApiVer).toString();
 }
 
+uint32_t WalletSettings::getShadersPrivilegeLvl() const
+{
+    #ifdef BEAM_DAPPNET
+    // On dappnet 2 by default
+    return m_data.value(kShadersPrivLvl, 2).toUInt();
+    #elif BEAM_TESTNET
+    // On testnet 2 by default
+    return m_data.value(kShadersPrivLvl, 2).toUInt();
+    #else
+    return m_data.value(kShadersPrivLvl).toUInt();
+    #endif
+}
+
 std::string WalletSettings::getDappStoreCID() const
 {
     auto cid = m_data.value(kDappStoreCID).toString();
@@ -776,6 +790,7 @@ std::string WalletSettings::getDappStoreCID() const
 #ifdef BEAM_TESTNET
         "c673c2b940d4f6813901165c426ab084e401259c9794d61e1f5f80453ee80317"
 #elif defined(BEAM_MAINNET)
+        "e2d24b686e8d31a0fe97eade9cd23281e7059b74b5757bdb96c820ef9e2af41c"
 #else
         "b76ca089082e38b23d5e68feeb8b6f459ae74f5012eb520c87169f88ced307e3"
 #endif

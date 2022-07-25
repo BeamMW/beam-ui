@@ -35,6 +35,8 @@ namespace
     const QString kBeamPublisherKey = "";
     const QString kLocalapp = "localapp";
     const QString kManifestFile = "manifest.json";
+    const qint64 kMaxFileSize = 50 * 1024 * 1024;
+    const uint32_t kIpfsTimeout = 20 * 1000; // 20 seconds
 
     namespace DApp
     {
@@ -394,6 +396,14 @@ namespace beamui::applications
     void AppsViewModel::onCompleted(QObject *webView)
     {
         assert(webView != nullptr);
+    }
+
+    void AppsViewModel::prepareToLaunchApp()
+    {
+        // temporary hack. Wallet does not support working with multiple shaders at once,
+        // so turn off the update to avoid polling the Dapp Store contract
+        disconnect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadPublishers);
+        disconnect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadApps);
     }
 
     QString AppsViewModel::getAppsUrl() const
@@ -1273,7 +1283,8 @@ namespace beamui::applications
 
     QVariantMap AppsViewModel::getDAppFileProperties(const QString& fname)
     {
-        QFileInfo fileInfo(fname);
+        auto dappFilePath = removeFilePrefix(fname);
+        QFileInfo fileInfo(dappFilePath);
 
         QVariantMap properties;
         properties.insert(DApp::kName, fileInfo.fileName());
@@ -1287,6 +1298,14 @@ namespace beamui::applications
         try
         {
             auto dappFilePath = removeFilePrefix(fname);
+
+            QFileInfo info(dappFilePath);
+
+            if (info.size() > kMaxFileSize)
+            {
+                throw std::runtime_error("File size should be less than 50mb");
+            }
+
             QuaZip zip(dappFilePath);
             if (!zip.open(QuaZip::Mode::mdUnzip))
             {
@@ -1491,8 +1510,7 @@ namespace beamui::applications
             QPointer<AppsViewModel> guard(this);
             auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
 
-            // TODO: check timeout value
-            ipfs->AnyThread_get(ipfsID.toStdString(), 0,
+            ipfs->AnyThread_get(ipfsID.toStdString(), kIpfsTimeout,
                 [this, guard, appName, guid](beam::ByteBuffer&& data) mutable
                 {
                     if (!guard)
@@ -1522,10 +1540,11 @@ namespace beamui::applications
                         emit appInstallFail(appName);
                     }
                 },
-                [this, guard, appName](std::string&& err)
+                [this, guard, appName, guid](std::string&& err)
                 {
                     LOG_ERROR() << "Failed to get app from ipfs: " << err;
-                    emit appInstallFail(appName);
+                    emit appInstallTimeoutFail(appName);
+                    emit stopProgress(guid);
                 }
                 );
         }
@@ -1938,7 +1957,7 @@ namespace beamui::applications
             QPointer<AppsViewModel> guard(this);
             auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
 
-            ipfs->AnyThread_get(ipfsID.toStdString(), 0,
+            ipfs->AnyThread_get(ipfsID.toStdString(), kIpfsTimeout,
                 [this, guard, guid, appName](beam::ByteBuffer&& data) mutable
                 {
                     if (!guard)
@@ -1993,13 +2012,14 @@ namespace beamui::applications
                     catch (std::runtime_error& err)
                     {
                         LOG_ERROR() << "Failed to update DApp: " << err.what();
-                        emit appInstallFail(appName);
+                        emit appUpdateFail(appName);
                     }
                 },
-                [this, guard, appName](std::string&& err)
+                [this, guard, appName, guid](std::string&& err)
                 {
                     LOG_ERROR() << "Failed to get app from ipfs: " << err;
-                    emit appInstallFail(appName);
+                    emit appUpdateTimeoutFail(appName);
+                    emit stopProgress(guid);
                 }
             );
         }

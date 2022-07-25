@@ -124,6 +124,24 @@ ColumnLayout {
             dappStoreFail.open()
         }
 
+        onAppInstallTimeoutFail: function (appName) {
+            //% "Sorry, the installation failed.\nPlease, restart the wallet and try again."
+            dappStoreFail.text = qsTrId("app-install-timeout-fail")
+            dappStoreFail.open()
+        }
+
+        onAppUpdateFail: function (appName) {
+            //% "Sorry, the update failed.\nPlease, check the file and try again."
+            dappStoreFail.text = qsTrId("app-update-fail")
+            dappStoreFail.open()
+        }
+
+        onAppUpdateTimeoutFail: function (appName) {
+            //% "Sorry, the update failed.\nPlease, restart the wallet and try again."
+            dappStoreFail.text = qsTrId("app-update-timeout-fail")
+            dappStoreFail.open()
+        }
+
         onShowTxIsSent: function() {
             transactionIsSent.open();
         }
@@ -404,6 +422,9 @@ ColumnLayout {
             function createApi(app) {
                 try
                 {
+                   // temporary hack
+                   viewModel.prepareToLaunchApp()
+
                    var verWant = app.api_version || "current"
                    var verMin  = app.min_api_version || ""
                    webapiCreator.createApi(verWant, verMin, app.name, app.url)
@@ -705,6 +726,7 @@ ColumnLayout {
 
             Component.onCompleted: {
                 viewModel.appsChanged.connect(loadAppsList)
+                viewModel.stopProgress.connect(appsListView.stopProgress);
                 control.reloadWebEngineView.connect(webView.reload)
                 control.showTxDetails.connect(txPanel.showTxDetails)
 
@@ -717,6 +739,7 @@ ColumnLayout {
 
             Component.onDestruction: {
                 viewModel.appsChanged.disconnect(loadAppsList)
+                viewModel.stopProgress.disconnect(appsListView.stopProgress);
                 control.reloadWebEngineView.disconnect(webView.reload)
                 control.showTxDetails.disconnect(txPanel.showTxDetails)
             }

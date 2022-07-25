@@ -358,10 +358,6 @@
         <source>Copy details</source>
         <translation type="unfinished">Copy details</translation>
     </message>
-    <message id="payment-info-copy-code-button">
-        <source>Copy code</source>
-        <translation type="unfinished">Copy code</translation>
-    </message>
     <message id="loading-try-again-button">
         <source>Try again</source>
         <translation>Coba lagi</translation>
@@ -3789,6 +3785,21 @@ Please, check the file and try again.</source>
     </message>
     <message id="dapp-store-dialog-title">
         <source>Dapp Store</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-install-timeout-fail">
+        <source>Sorry, the installation failed.
+Please, restart the wallet and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-update-fail">
+        <source>Sorry, the update failed.
+Please, check the file and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-update-timeout-fail">
+        <source>Sorry, the update failed.
+Please, restart the wallet and try again.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
