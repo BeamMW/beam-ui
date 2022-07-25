@@ -773,6 +773,9 @@ uint32_t WalletSettings::getShadersPrivilegeLvl() const
     #ifdef BEAM_DAPPNET
     // On dappnet 2 by default
     return m_data.value(kShadersPrivLvl, 2).toUInt();
+    #elif BEAM_TESTNET
+    // On testnet 2 by default
+    return m_data.value(kShadersPrivLvl, 2).toUInt();
     #else
     return m_data.value(kShadersPrivLvl).toUInt();
     #endif
