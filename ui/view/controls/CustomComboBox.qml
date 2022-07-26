@@ -227,7 +227,7 @@ ComboBox {
                 Layout.fillWidth: true
                 clip: true
                 spacing: control.dropSpacing
-                implicitHeight: contentHeight
+                implicitHeight: control.delegateModel.count > 12 ? 230 : contentHeight
                 model: control.popup.visible ? control.delegateModel : null
                 currentIndex: control.highlightedIndex
                 ScrollBar.vertical: ScrollBar {
