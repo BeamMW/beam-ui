@@ -137,6 +137,8 @@ ColumnLayout {
                 maxTextWidth:        80
                 dropDownIconSixe:    Qt.size(9, 5)
                 dropDownIconRightMargin: 14
+                //% "Enter asset name..."
+                searchPlaseholder: qsTrId("amount-input-asset-search")
 
                 onActivated: {
                     if (multi) {

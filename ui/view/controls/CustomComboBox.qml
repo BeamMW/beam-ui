@@ -38,6 +38,8 @@ ComboBox {
 
     property alias backgroundColor : backgroundRect.color
     backgroundColor: Style.content_main
+    property string searchPlaseholder: ""
+    property alias searchText: searchInput.text
 
     TextMetrics {
         id: textMetrics
@@ -50,11 +52,18 @@ ComboBox {
         }
     }
 
+    property var containSearchSubStr: function(text) {
+        if (!control.searchText.length) return true;
+        return text.toLowerCase().includes(control.searchText.toLowerCase());
+    }
+
     delegate: ItemDelegate {
         id: itemDelegate
         width: calculatedWidth
         padding: 0
         leftPadding: control.leftPadding
+        bottomPadding: control.dropSpacing
+        topPadding: 2
 
         property var  iconW:    (Array.isArray(control.model)  ? modelData["iconWidth"]  : model["iconWidth"]) || 0
         property var  iconH:    (Array.isArray(control.model)  ? modelData["iconHeight"] : model["iconHeight"]) || 0
@@ -62,7 +71,14 @@ ComboBox {
         property bool verified: (Array.isArray(control.model)  ? modelData["verified"]   : model["verified"]) || false
 
         contentItem: RowLayout {
+            id: contentRow
             spacing: 0
+            property int parentHeight: 0
+
+            visible: (Array.isArray(control.model) ? containSearchSubStr(modelData[control.textRole]) : containSearchSubStr(model[control.textRole]))
+            onVisibleChanged: {
+                parent.height = visible ? parentHeight : 0;
+            }
 
             SvgImage {
                 source: iconS
@@ -85,6 +101,7 @@ ComboBox {
             }
 
             SFText {
+                id: textLabel
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignVCenter
 
@@ -103,6 +120,10 @@ ComboBox {
                 font.letterSpacing: fontLetterSpacing
                 font.styleName: highlighted ? "DemiBold" : "Normal"
                 font.weight: highlighted ? Font.DemiBold : Font.Normal
+            }
+
+            Component.onCompleted: {
+                contentRow.parentHeight = contentRow.parent.height
             }
         }
 
@@ -222,16 +243,25 @@ ComboBox {
 
         contentItem: ColumnLayout {
             spacing: 0
+            SearchBox {
+               id: searchInput
+               Layout.fillWidth:     true
+               Layout.bottomMargin: 15
+               Layout.rightMargin:  15
+               Layout.leftMargin:   15
+               visible:             control.delegateModel.count > 12
+               alwaysVisibleInput:  true
+               placeholderText:     searchPlaseholder
+            }
             ListView {
                 id: listView
                 Layout.fillWidth: true
                 clip: true
-                spacing: control.dropSpacing
-                implicitHeight: control.delegateModel.count > 12 ? 230 : contentHeight
-                model: control.popup.visible ? control.delegateModel : null
+                implicitHeight: control.delegateModel.count > 12 ? Math.min(250, contentHeight) : contentHeight
+                model: control.delegateModel
                 currentIndex: control.highlightedIndex
                 ScrollBar.vertical: ScrollBar {
-                    policy: enableScroll && listView.contentHeight > listView.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
+                    policy: ScrollBar.AsNeeded
                 }
             }
         }

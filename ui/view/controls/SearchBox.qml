@@ -12,6 +12,7 @@ FocusScope {
     property alias searchInput:      input
     implicitHeight: 32
     implicitWidth: searcIconBtn.implicitWidth + (input.visible ? input.implicitWidth : 0)
+    property bool  alwaysVisibleInput: false
 
     Rectangle {
         id: rect
@@ -35,16 +36,18 @@ FocusScope {
             leftPadding:             15
             rightPadding:            15
             color:                   Style.content_main
-            visible:                 false
+            visible:                 control.alwaysVisibleInput
             inputMethodHints:        Qt.ImhNoPredictiveText
             focusablePlaceholder:    true
             background: Item {}
             onFocusChanged: {
+                if (control.alwaysVisibleInput) return;
                 if (!focus && text.length == 0 && !searcIconBtn.focus) {
                     visible = false;
                 }
             }
             onTextChanged: {
+                if (control.alwaysVisibleInput) return;
                 if (!focus && text.length == 0) {
                     visible = false;
                 }
@@ -70,6 +73,8 @@ FocusScope {
             //% "Search"
             ToolTip.text: qsTrId("wallet-search")
             onClicked: {
+                if (control.alwaysVisibleInput) return;
+
                 if (input.text.length == 0) {
                     input.visible = !input.visible
                     if(input.visible) input.forceActiveFocus()

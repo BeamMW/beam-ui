@@ -3788,5 +3788,9 @@ Please, restart the wallet and try again.</source>
         <source>Offers</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="amount-input-asset-search">
+        <source>Enter asset name...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
