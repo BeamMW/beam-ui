@@ -158,14 +158,3 @@ bool NodeModel::getPeersPersistent() const
 void NodeModel::onNodeThreadFinished()
 {
 }
-
-void NodeModel::onAllKnownAssetsChanged(const std::set<beam::Asset::ID>& assets)
-{
-    auto wallet = AppModel::getInstance().getWalletModel();
-    if (!wallet) return;
-
-    wallet->getAsync()->setAssetsFullList(assets);
-
-    for (auto assetId: assets)
-        wallet->getAsync()->getAssetInfo(assetId);
-}
