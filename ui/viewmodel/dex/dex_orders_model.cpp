@@ -35,6 +35,14 @@ QAbstractItemModel* DexOrdersModel::getOrders()
     return &_orders;
 }
 
+void DexOrdersModel::cancelOrder(QString orderId)
+{
+    beam::wallet::DexOrderID id;
+    id.FromHex(orderId.toStdString());
+
+    _walletModel->getAsync()->cancelDexOrder(id);
+}
+
 void DexOrdersModel::onDexOrdersChanged(
     beam::wallet::ChangeAction action, const std::vector<beam::wallet::DexOrder>& orders)
 {

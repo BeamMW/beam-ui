@@ -322,7 +322,8 @@ Item {
                                 acceptedButtons: Qt.LeftButton
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: {
-                                    console.log('cancel offer');
+                                    var orderId = ordersTable.model.getRoleValue(styleData.row, "id");
+                                    ordersModel.cancelOrder(orderId);
                                 }
                             }
                         }

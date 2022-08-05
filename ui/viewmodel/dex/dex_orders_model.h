@@ -27,6 +27,7 @@ public:
     ~DexOrdersModel();
 
     QAbstractItemModel* getOrders();
+    Q_INVOKABLE void cancelOrder(QString orderId);
 
 signals:
     void ordersChanged();
