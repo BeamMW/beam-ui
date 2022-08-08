@@ -36,6 +36,7 @@ namespace
     const QString kLocalapp = "localapp";
     const QString kManifestFile = "manifest.json";
     const qint64 kMaxFileSize = 50 * 1024 * 1024;
+    const uint32_t kIpfsTimeout = 20 * 1000; // 20 seconds
 
     namespace DApp
     {
@@ -1509,8 +1510,7 @@ namespace beamui::applications
             QPointer<AppsViewModel> guard(this);
             auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
 
-            // TODO: check timeout value
-            ipfs->AnyThread_get(ipfsID.toStdString(), 0,
+            ipfs->AnyThread_get(ipfsID.toStdString(), kIpfsTimeout,
                 [this, guard, appName, guid](beam::ByteBuffer&& data) mutable
                 {
                     if (!guard)
@@ -1540,10 +1540,11 @@ namespace beamui::applications
                         emit appInstallFail(appName);
                     }
                 },
-                [this, guard, appName](std::string&& err)
+                [this, guard, appName, guid](std::string&& err)
                 {
                     LOG_ERROR() << "Failed to get app from ipfs: " << err;
-                    emit appInstallFail(appName);
+                    emit appInstallTimeoutFail(appName);
+                    emit stopProgress(guid);
                 }
                 );
         }
@@ -1956,7 +1957,7 @@ namespace beamui::applications
             QPointer<AppsViewModel> guard(this);
             auto ipfs = AppModel::getInstance().getWalletModel()->getIPFS();
 
-            ipfs->AnyThread_get(ipfsID.toStdString(), 0,
+            ipfs->AnyThread_get(ipfsID.toStdString(), kIpfsTimeout,
                 [this, guard, guid, appName](beam::ByteBuffer&& data) mutable
                 {
                     if (!guard)
@@ -2011,13 +2012,14 @@ namespace beamui::applications
                     catch (std::runtime_error& err)
                     {
                         LOG_ERROR() << "Failed to update DApp: " << err.what();
-                        emit appInstallFail(appName);
+                        emit appUpdateFail(appName);
                     }
                 },
-                [this, guard, appName](std::string&& err)
+                [this, guard, appName, guid](std::string&& err)
                 {
                     LOG_ERROR() << "Failed to get app from ipfs: " << err;
-                    emit appInstallFail(appName);
+                    emit appUpdateTimeoutFail(appName);
+                    emit stopProgress(guid);
                 }
             );
         }

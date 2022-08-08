@@ -61,6 +61,7 @@ namespace
     const char* kDevAppApiVer    = "devapp/api_version";
     const char* kDevAppMinApiVer = "devapp/min_api_version";
     const char* kLocalAppsPort   = "apps/local_port";
+    const char* kShadersPrivLvl  = "apps/shaders_privilege";
     const char* kIPFSPrefix      = "ipfsnode/";
     const char* kIPFSNodeStart   = "ipfs_node_start";
 
@@ -765,6 +766,19 @@ QString WalletSettings::getDevAppApiVer() const
 QString WalletSettings::getDevAppMinApiVer() const
 {
     return m_data.value(kDevAppMinApiVer).toString();
+}
+
+uint32_t WalletSettings::getShadersPrivilegeLvl() const
+{
+    #ifdef BEAM_DAPPNET
+    // On dappnet 2 by default
+    return m_data.value(kShadersPrivLvl, 2).toUInt();
+    #elif BEAM_TESTNET
+    // On testnet 2 by default
+    return m_data.value(kShadersPrivLvl, 2).toUInt();
+    #else
+    return m_data.value(kShadersPrivLvl).toUInt();
+    #endif
 }
 
 std::string WalletSettings::getDappStoreCID() const

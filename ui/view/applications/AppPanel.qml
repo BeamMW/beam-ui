@@ -18,6 +18,13 @@ Item {
 
     readonly property int textWidth: 200
 
+    property var stopProgress: function(appGuid) {
+        if (!!control.app && !!control.app.guid && control.app.guid === appGuid) {
+            button.text = getButtonText();
+            button.enabled = true;
+        }
+    }
+
     signal launch(var app)
     signal install(var app)
     signal update(var app)
